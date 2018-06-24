@@ -9,7 +9,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(username: string, password: string) {
-    return this.http.post(global.apiRoot + '/api-token-auth/', {'username': username, 'password': password}).pipe(
+    return this.http.post(global.apiRoot + '/jwt-auth/', {'username': username, 'password': password}).pipe(
                       tap(result => this.setSession(result))
     );
   }

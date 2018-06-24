@@ -2,6 +2,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Services
@@ -12,14 +14,26 @@ import { BackendService } from './services/backend.service';
 
 // App Pages
 import { AppComponent } from './app.component';
+import { LandingComponent } from './pages/landing/landing.component';
+import { WaitingScreenComponent } from './pages/desktop/waiting-screen/waiting-screen.component';
+import { MobileLoginComponent } from './pages/mobile/login/mobile-login.component';
+import { MobileJoinComponent } from './pages/mobile/join/mobile-join.component';
+import { MobileWaitingScreenComponent } from './pages/mobile/waiting-screen/mobile-waiting-screen.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LandingComponent,
+    WaitingScreenComponent,
+    MobileLoginComponent,
+    MobileJoinComponent,
+    MobileWaitingScreenComponent
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [
     AuthService,

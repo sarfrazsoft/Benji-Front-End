@@ -1,0 +1,35 @@
+<div class="primary-navbar">
+  <div class="logo-wrapper"><img src="/assets/img/logo.svg" height="40"></div>
+</div>
+<div class="centred-aligned-screen-body-div welcome">
+  <div class="wide-content-slide-wrap">
+    <h1 class="grey-light-header">Welcome to</h1>
+    <h1 class="welcome-header">{{ sessionRunDetails.session.session_name }}</h1>
+    <h1 class="grey-light-header">Session</h1>
+  </div>
+</div>
+<div class="welcome-info-section">
+  <div class="welcome-screen-content-divider">
+    <div class="welcome-content-wrap">
+      <div class="class-code-wrap">
+        <div class="welcome-subheader">CLASS CODE</div>
+        <h1 class="heading">{{ sessionRunDetails.sessionrun_code }}</h1>
+      </div>
+      <div class="welcome-instructions-wrap">
+        <div class="welcome-screen-text">Go to <span class="dark-blue">join.mybenji.com</span> on your phone and enter this code to join the session.</div>
+      </div>
+    </div>
+    <div class="welcome-content-wrap right">
+      <h1 class="welcome-subheader"><span class="dark-blue">{{ whosHere.joined.length }}</span> Participants joined</h1>
+      <div class="participants-wrap">
+        <div class="participants-entered" *ngFor="let attendee of whosHere.joined">
+          <h1 class="welcome-screen-text dark-blue">{{ attendee.first_name }}<br></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer-welcome">
+  <div class="welcome-footer-content-wrap">
+    <h1 class="welcome-footer-header">Everyone ready to go?</h1><a href="1.html" class="welcome-button w-button">Start!</a></div>
+</div>

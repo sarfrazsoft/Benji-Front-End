@@ -1,0 +1,19 @@
+<div class="mobile-content-wrap">
+  <div class="mobile-navbar"><img src="assets/img/logo.svg" height="34"></div>
+  <div class="mobile-content-wrap-wide">
+    <h1 class="benji-blue-header name">Welcome to Benji</h1>
+    <div class="spaced-grey-header">Let us know who you are<br></div>
+    <div class="form-block w-form">
+      <form id="login-form" class="mobile-form" >
+        <input type="text" class="text-field w-input" maxlength="256" placeholder="Enter username" [(ngModel)]="username" name="username" required>
+        <input type="button" value="Login" data-wait="Please wait..." class="benji-blue-button form w-button" (click)="formSubmit()">
+      </form>
+      <div class="w-form-done">
+        <div>Thank you! Your submission has been received!</div>
+      </div>
+      <div class="w-form-fail">
+        <div>Oops! Something went wrong while submitting the form.</div>
+      </div>
+    </div>
+  </div>
+</div>
