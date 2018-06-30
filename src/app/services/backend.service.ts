@@ -29,4 +29,8 @@ export class BackendService {
   get_own_identity() {
     return this.http.get(global.apiRoot + '/mvp/config/users/who_am_i/');
   }
+
+  start_next_activity(sessionrunID) {
+    return this.http.post(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/start_activity/', {'activity': 'next'});
+  }
 }

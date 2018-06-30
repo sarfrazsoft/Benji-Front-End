@@ -17,7 +17,7 @@ export class LandingComponent implements OnInit {
   }
 
   loginAndStart() {
-    this.auth.login('admin', 'risk1234').subscribe(
+    this.auth.login('admin', 'benji112').subscribe(
       response => this.backend.get_runnable_sessions(1).subscribe(
                   resp => this.checkAndStart(resp),
                   err => console.log(err)

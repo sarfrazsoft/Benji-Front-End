@@ -6,6 +6,7 @@
     <div class="participants-joined">
       <h1 class="largest-dark-blue-header">{{ whosHere.joined.length }}</h1>
       <div class="text-block-3">participants joined</div>
+      <a href="#" class="dark-blue-button w-button" *ngIf="countDown">Starting in {{ whosHere.session_start_seconds }}</a>
     </div>
   </div>
 </div>
