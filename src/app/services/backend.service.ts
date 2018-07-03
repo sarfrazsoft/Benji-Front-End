@@ -33,4 +33,22 @@ export class BackendService {
   start_next_activity(sessionrunID) {
     return this.http.post(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/start_activity/', {'activity': 'next'});
   }
+
+  get_all_activities(sessionrunID) {
+    return this.http.get(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/all_activities/');
+  }
+
+  get_activity_status(sessionrunID) {
+    return this.http.get(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/current_activity/');
+  }
+
+  join_activity(activityID) {
+    return this.http.post(global.apiRoot + '/mvp/active/activity/' + activityID + '/join_activity/', {});
+  }
+
+  set_activity_user_parameter(activityRunID, paramName, paramValue) {
+    return this.http.post(global.apiRoot + '/mvp/active/activity/' + activityRunID + '/set_parameter/',
+                          {'param_name': paramName, 'param_value': paramValue});
+  }
+
 }

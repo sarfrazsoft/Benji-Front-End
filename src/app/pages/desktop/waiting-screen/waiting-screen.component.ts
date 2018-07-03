@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,11 +13,12 @@ import {startWith, switchMap, take, map, takeUntil, finalize} from 'rxjs/operato
   encapsulation: ViewEncapsulation.None
 })
 
-export class WaitingScreenComponent implements OnInit {
+export class WaitingScreenComponent implements OnInit, OnDestroy {
   sessionRunID: string;
   sessionRunDetails;
   whosHere;
   countDown;
+  poller;
 
   constructor(private backend: BackendService, route: ActivatedRoute, private router: Router) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
@@ -31,7 +32,7 @@ export class WaitingScreenComponent implements OnInit {
       err => console.log(err)
     );
 
-    interval(5000).pipe(
+    this.poller = interval(5000).pipe(
       startWith(0),
       switchMap(() => this.backend.get_sessionrun_attendance(this.sessionRunID))
     ).subscribe(
@@ -40,12 +41,18 @@ export class WaitingScreenComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.poller.unsubscribe();
+    this.countDown.unsubscribe();
+  }
+
   handleUpdate(resp) {
     if (this.countDown) {
       return;
     }
     this.whosHere = resp;
     if (this.whosHere.session_start_seconds >= 0) {
+      ++this.whosHere.session_start_seconds;
       this.countDown = timer(0, 1000).pipe(
         take(this.whosHere.session_start_seconds),
         map(() => --this.whosHere.session_start_seconds),
