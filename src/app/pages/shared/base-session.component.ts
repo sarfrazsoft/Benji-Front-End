@@ -45,7 +45,9 @@ export class BaseSessionComponent implements OnInit {
 
   activityUpdate(resp: CurrentActivityStatus) {
     console.log(resp);
-    this.activityStatus = resp;
+    if (resp.current_activity) {
+      this.activityStatus = resp;
+    }
   }
 
 }

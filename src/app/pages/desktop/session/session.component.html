@@ -18,16 +18,10 @@
                             [activityDetails]="activityStatus.current_activity"
                             [activityRun]="activityStatus.current_activityrun"
                             [sessionDetails]="sessionRunDetails"
+                            [footer]="footer"
                             (activityComplete)="next_activity($event)"></app-desktop-activity-thinkpairshare>
 
 
-<div class="screen-footer">
-  <div class="footer-wrap">
-    <div class="footer-text-wrap-left">
-      <div class="dark-blue-footer-text">{{ sessionRunDetails.session.session_name }}</div>
-    </div>
-    <div class="footer-text-wrap">
-      <div class="grey-footer-text">room code:  {{ sessionRunDetails.sessionrun_code }}</div>
-    </div>
-  </div>
-</div>
+<app-desktop-footer #footer [sessionName]="sessionRunDetails.session.session_name"
+                    [roomCode]="sessionRunDetails.sessionrun_code"
+                    [showProgress]="false"></app-desktop-footer>

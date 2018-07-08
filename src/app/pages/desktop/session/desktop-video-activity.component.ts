@@ -5,7 +5,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'app-desktop-activity-video',
   template:
-    '<div class="centred-aligned-screen-body-div"> \
+    '<div class="centred-aligned-screen-body-wpb"> \
         <h1 class="content-header">{{ activityDetails.title }}</h1> \
         <div> \
           <iframe [src]=\'safeURL\' frameborder="0" allowfullscreen style="width:912px; height:513px;" allow="autoplay"></iframe>\

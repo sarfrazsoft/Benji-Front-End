@@ -39,6 +39,7 @@ export class WaitingScreenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('Destroying websocket connection');
     this.lobbySocket.unsubscribe();
   }
 

@@ -24,6 +24,8 @@
     "@angular/router": "^6.0.3",
     "core-js": "^2.5.4",
     "jwt-decode": "^2.2.0",
+    "ngx-onsenui": "^4.2.2",
+    "onsenui": "^2.10.2",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

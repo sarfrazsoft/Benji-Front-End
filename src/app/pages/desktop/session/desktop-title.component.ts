@@ -6,7 +6,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-desktop-activity-title',
-  template: '<div class="centred-aligned-screen-body-div">\n' +
+  template: '<div class="centred-aligned-screen-body-wpb">\n' +
   '    <div class="wide-content-slide-wrap">\n' +
   '      <h1 class="content-header">{{ sessionDetails.session.session_name }}</h1>\n' +
   '      <div class="grey-text">This session will take about {{ sessionDetails.session.session_length }} minutes.<br>Here’s what we’ll do.<br></div>\n' +

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, Input, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
@@ -8,22 +8,17 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-desktop-activity-thinkpairshare',
-  template: '<div class="centred-aligned-screen-body-div" *ngIf="mode === \'partnering\'">\n' +
+  template: '<div class="centred-aligned-screen-body-wpb" *ngIf="mode === \'partnering\'">\n' +
   '    <div class="content-slide-wrap"><img src="assets/img/Partner.png" height="115">\n' +
   '      <h1 class="content-header">Find your partner</h1>\n' +
   '      <div class="grey-text"><strong>Press "Ready" when you’re ready for the discussion question.</strong><br></div>\n' +
-  '      <div class="participants-wrap">\n' +
-  '        <div class="participants-entered">\n' +
-  '          <h1 class="welcome-screen-text dark-blue">Partnered: {{ countPartners() }}<br></h1>\n' +
-  '          <h1 class="welcome-screen-text dark-blue">Remain: {{ countRemain() }}<br></h1>\n' +
-  '        </div>\n' +
-  '      </div>\n' +
   '    </div>\n' +
   '    <div class="timer-bar">\n' +
   '      <mat-progress-bar mode="indeterminate"></mat-progress-bar>' +
   '    </div>\n' +
   '  </div>\n' +
   '<div class="vertical-stack-body-div" *ngIf="mode === \'thinking\'">\n' +
+  '    <div class="content-wrap">\n' +
   '    <div class="screen-header-wrap">\n' +
   '      <div class="left-header-wrap">\n' +
   '        <h1 class="screen-header">Pair &amp; Share</h1>\n' +
@@ -32,22 +27,27 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   '        <div class="screen-text">Discuss the prompt with your partner for {{ activityDetails.thinkpairshareactivity.think_timer / 60 }} minutes, then get ready to share your ideas with the rest of the group.<br></div>\n' +
   '      </div>\n' +
   '    </div>\n' +
+  '    </div>\n' +
   '    <div class="body-div-wrap">\n' +
   '      <h1 class="subheader">Discussion question</h1>\n' +
   '      <div class="body-content-no-border">\n' +
   '        <div class="left-body-wrap">\n' +
   '          <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>\n' +
   '        </div>\n' +
-  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).min | number:\'1.0-0\'}}:{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).sec | number:\'2.0-0\' }}</h1><br></div>\n' +
-  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">Ready to present: {{ countPresenters() }} / {{ sessionDetails.sessionrunuser_set.length }}</h1><br></div>\n' +
+  '        <div class="right-body-wrap">' +
+  '          <div class="timer-container">' +
+  '            <div class="timer-svg"><ons-progress-circular style="width: 250px; height: 250px" modifier="blue" [value]="100 - (10 * (thinkCountdown / activityDetails.thinkpairshareactivity.think_timer))"></ons-progress-circular></div>' +
+  '            <div class="timer-centered number-text" style="color: #1248F2">{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).min | number:\'1.0-0\'}}:{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).sec | number:\'2.0-0\' }}</div>' +
+  '          </div>' +
+  '        </div>\n' +
   '      </div>\n' +
   '    </div>\n' +
   '    <div class="timer-bar">\n' +
   '      <mat-progress-bar mode="determinate" [value]="thinkCountdown * 10 / activityDetails.thinkpairshareactivity.think_timer"></mat-progress-bar>' +
   '    </div>\n' +
   '  </div>\n' +
-  '  <div class="centred-aligned-screen-body-div" *ngIf="mode === \'sharing\'">\n' +
-  '    <div class="div-block-2">\n' +
+  '  <div class="centred-aligned-screen-body" *ngIf="mode === \'sharing\'">\n' +
+  '    <div class="wide-body-wrap">\n' +
   '      <h1 class="subheader">Discussion question</h1>\n' +
   '      <div class="body-content-divider">\n' +
   '        <div class="left-body-wrap">\n' +
@@ -72,8 +72,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
-  @Input() activityRun;
+export class DesktopTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() footer;
 
   thinkCountdown = 0;
   shareCountdown = 0;
@@ -88,36 +88,52 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
 
   constructor(public matProgressBar: MatProgressBarModule, private backend: BackendService) { super(); }
 
-  ngOnInit() {
-    this.activityBeat = interval(500).subscribe(() => {
-      if (this.mode === 'partnering' && this.allPartnersFound()) {
-        this.mode = 'thinking';
-        this.thinkProgressBarInterval = interval(100).subscribe(() => ++this.thinkCountdown);
-        setTimeout(() => { if (this.mode === 'thinking') { this.mode = 'sharing'; }},
-          this.activityDetails.thinkpairshareactivity.think_timer * 1000);
-      }
-      if (this.mode === 'thinking' && this.stillThinking() === 0) {
-        this.mode = 'sharing';
-      }
-      if (this.mode === 'sharing' && (this.shareIndex === -1 || this.currentPresentersDone()) ) {
-        if (this.shareIndex === this.activityRun.activity_groups.length - 1) {
-          this.backend.start_next_activity(this.sessionDetails.session.id).subscribe();
-        } else {
-          ++this.shareIndex;
-          this.shareCountdown = 0;
-          if (this.shareProgressBarInterval) {
-            this.shareProgressBarInterval.unsubscribe();
-          }
-          this.shareProgressBarInterval = interval(100).subscribe(() => ++this.shareCountdown);
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+
+    if (this.mode === 'partnering' && !this.allPartnersFound()) {
+      this.footer.completed = this.countPartners();
+      this.footer.total = this.sessionDetails.sessionrunuser_set.length;
+      this.footer.statusText = 'People have found pairs';
+    } else if (this.mode === 'partnering' && this.allPartnersFound()) {
+      this.mode = 'thinking';
+      this.thinkProgressBarInterval = interval(100).subscribe(() => ++this.thinkCountdown);
+      setTimeout(() => { if (this.mode === 'thinking') { this.mode = 'sharing'; }},
+        this.activityDetails.thinkpairshareactivity.think_timer * 1000);
+    }
+
+    if (this.mode === 'thinking' && this.stillThinking() > 0) {
+      this.footer.completed = this.countPresenters();
+      this.footer.total = this.sessionDetails.sessionrunuser_set.length;
+      this.footer.statusText = 'People ready to present';
+    } else if (this.mode === 'thinking' && this.stillThinking() === 0) {
+      this.mode = 'sharing';
+      this.footer.showProgress = false;
+    }
+
+    if (this.mode === 'sharing' && (this.shareIndex === -1 || this.currentPresentersDone()) ) {
+      if (this.shareIndex === this.activityRun.activity_groups.length - 1) {
+        this.backend.start_next_activity(this.sessionDetails.session.id).subscribe();
+      } else {
+        ++this.shareIndex;
+        this.shareCountdown = 0;
+        if (this.shareProgressBarInterval) {
+          this.shareProgressBarInterval.unsubscribe();
         }
+        this.shareProgressBarInterval = interval(100).subscribe(() => ++this.shareCountdown);
       }
-    });
+    }
+  }
+
+  ngOnInit() {
+    this.footer.showProgress = true;
   }
 
   ngOnDestroy() {
     this.thinkProgressBarInterval.unsubscribe();
     this.shareProgressBarInterval.unsubscribe();
     this.activityBeat.unsubscribe();
+    this.footer.showProgress = false;
   }
 
   countPartners() {

@@ -1,7 +1,7 @@
 // Core
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -12,11 +12,15 @@ import { TokenInterceptor } from './services/auth.interceptor';
 import { BackendService } from './services/backend.service';
 import { WebsocketService } from './services/socket.service';
 
+// Cmponents
+import { RadialTimerComponent } from './ui-components/radial-timer.component';
+
 // App Pages
 import { AppComponent } from './app.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { WaitingScreenComponent } from './pages/desktop/waiting-screen/waiting-screen.component';
 import { SessionComponent } from './pages/desktop/session/session.component';
+import { DesktopFooterComponent } from './pages/desktop/session/desktop-footer.component';
 import { DesktopTitleComponent } from './pages/desktop/session/desktop-title.component';
 import { DesktopVideoActivityComponent } from './pages/desktop/session/desktop-video-activity.component';
 import { DesktopTPSActivityComponent } from './pages/desktop/session/desktop-tps-activity.component';
@@ -30,13 +34,16 @@ import { MobileTPSActivityComponent } from './pages/mobile/session/mobile-tps-ac
 
 // Plugins
 import { MatProgressBarModule } from '@angular/material';
+import { OnsenModule } from 'ngx-onsenui';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RadialTimerComponent,
     LandingComponent,
     WaitingScreenComponent,
     SessionComponent,
+    DesktopFooterComponent,
     DesktopTitleComponent,
     DesktopVideoActivityComponent,
     DesktopTPSActivityComponent,
@@ -53,6 +60,7 @@ import { MatProgressBarModule } from '@angular/material';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    OnsenModule,
     MatProgressBarModule
   ],
   providers: [
@@ -69,6 +77,7 @@ import { MatProgressBarModule } from '@angular/material';
     MobileVideoActivityComponent,
     MobileTPSActivityComponent
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

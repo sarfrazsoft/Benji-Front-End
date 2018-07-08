@@ -25,6 +25,8 @@
             "styles": [
               "src/assets/css/normalize.css",
               "src/assets/css/webflow.css",
+              "node_modules/onsenui/css/onsenui.css",
+              "node_modules/onsenui/css/onsen-css-components.css",
               "src/styles.css"
             ],
             "scripts": []
