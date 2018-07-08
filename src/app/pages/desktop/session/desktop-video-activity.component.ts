@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewEncapsulation, Input, Output, OnDestroy, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DesktopBaseActivityComponent } from './desktop-base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-desktop-activity-video',
@@ -16,7 +16,7 @@ import { DesktopBaseActivityComponent } from './desktop-base-activity.component'
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopVideoActivityComponent extends DesktopBaseActivityComponent implements OnInit, OnDestroy {
+export class DesktopVideoActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Output() videoComplete = new EventEmitter<boolean>();
   safeURL;
 

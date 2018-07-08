@@ -4,7 +4,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import {interval} from 'rxjs/internal/observable/interval';
 
-import { DesktopBaseActivityComponent } from './desktop-base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-desktop-activity-thinkpairshare',
@@ -72,7 +72,7 @@ import { DesktopBaseActivityComponent } from './desktop-base-activity.component'
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopTPSActivityComponent extends DesktopBaseActivityComponent implements OnInit, OnDestroy {
+export class DesktopTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Input() activityRun;
 
   thinkCountdown = 0;

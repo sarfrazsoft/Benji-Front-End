@@ -2,7 +2,7 @@ import {Component, OnInit, ViewEncapsulation, Input, Output, OnDestroy, EventEmi
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {interval} from 'rxjs/internal/observable/interval';
 
-import { DesktopBaseActivityComponent } from './desktop-base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-desktop-activity-title',
@@ -22,7 +22,7 @@ import { DesktopBaseActivityComponent } from './desktop-base-activity.component'
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopTitleComponent extends DesktopBaseActivityComponent implements OnInit, OnDestroy {
+export class DesktopTitleComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Output() timerUp = new EventEmitter<boolean>();
 
   countdown = 0;

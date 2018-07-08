@@ -1,10 +1,6 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-
-import {interval} from 'rxjs/internal/observable/interval';
-import {identity} from 'rxjs';
-
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-mobile-activity-thinkpairshare',
@@ -32,47 +28,38 @@ import {identity} from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileTPSActivityComponent implements OnInit, OnDestroy {
-  public activityDetails;
-  public sessionDetails;
+export class MobileTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   partner = '';
   myId = -1;
   partnerFound = false;
   thinkingDone = false;
 
-  constructor(public matProgressBar: MatProgressBarModule, private backend: BackendService) {
-    this.activityDetails = {'activity': {'titleactivity': {'timer': 30}}, 'activityrun': {}};
-  }
+  constructor(private backend: BackendService) { super(); }
 
   ngOnInit() {
+    this.setPartner(this.clientIdentity);
   }
 
   ngOnDestroy() {
   }
 
-  dataInit() {
-    this.backend.get_own_identity().subscribe(
-      resp => this.setPartner(resp),
-      err => console.log(err)
-    );
-  }
 
   indicateReady() {
-    this.backend.set_activity_user_parameter(this.activityDetails.current_activityrun.id, 'partner_found', '1').subscribe(
+    this.backend.set_activity_user_parameter(this.activityRun.id, 'partner_found', '1').subscribe(
       resp => this.partnerFound = true,
       err => console.log(err)
     );
   }
 
   indicateThinkingDone() {
-    this.backend.set_activity_user_parameter(this.activityDetails.current_activityrun.id, 'thinking_done', '1').subscribe(
+    this.backend.set_activity_user_parameter(this.activityRun.id, 'thinking_done', '1').subscribe(
       resp => this.thinkingDone = true,
       err => console.log(err)
     );
   }
 
   indicateSharingDone() {
-    this.backend.set_activity_user_parameter(this.activityDetails.current_activityrun.id, 'presentation_done', '1').subscribe(
+    this.backend.set_activity_user_parameter(this.activityRun.id, 'presentation_done', '1').subscribe(
       resp => this.thinkingDone = true,
       err => console.log(err)
     );
@@ -80,10 +67,10 @@ export class MobileTPSActivityComponent implements OnInit, OnDestroy {
 
   setPartner(resp) {
     this.myId = resp.id;
-    for (const elem of this.activityDetails.current_activityrun.activity_groups) {
+    for (const elem of this.activityRun.activity_groups) {
       const user1 = elem[0];
       const user2 = elem[1];
-      if(!user1 || !user2){
+      if(!user1 || !user2) {
         return;
       }
       if (user1.id === resp.id) {
@@ -100,8 +87,8 @@ export class MobileTPSActivityComponent implements OnInit, OnDestroy {
     try {
       const target_users = this.sessionDetails.sessionrunuser_set.map(x => x.user.id);
       const allusersjoined = target_users.every(
-        x => this.activityDetails.current_activityrun.activityrunuser_set.find(y => y.user === x) !== undefined);
-      const alljoineduserspartnered = this.activityDetails.current_activityrun.activityrunuser_set.every(
+        x => this.activityRun.activityrunuser_set.find(y => y.user === x) !== undefined);
+      const alljoineduserspartnered = this.activityRun.activityrunuser_set.every(
         x => x.activityrunuserparams_set.find(
           y => y.param_name === 'partner_found' && y.param_value === '1'));
 
@@ -112,14 +99,14 @@ export class MobileTPSActivityComponent implements OnInit, OnDestroy {
   }
 
   myTurnToPresent() {
-    const allgroupsthinkingdone = this.activityDetails.current_activityrun.activityrunuser_set.every(
+    const allgroupsthinkingdone = this.activityRun.activityrunuser_set.every(
       x => x.activityrunuserparams_set.find(
         y => y.param_name === 'thinking_done' && y.param_value === '1'));
 
-    const presentationgroups =  this.activityDetails.current_activityrun.activity_groups.map(x => x.map(y => y.id));
+    const presentationgroups =  this.activityRun.activity_groups.map(x => x.map(y => y.id));
 
     for (const group of presentationgroups) {
-      const groupusers = this.activityDetails.current_activityrun.activityrunuser_set.filter(x => group.includes(x.user));
+      const groupusers = this.activityRun.activityrunuser_set.filter(x => group.includes(x.user));
       const grouppresented = groupusers.find(x => x.activityrunuserparams_set.filter(
         y => y.param_name === 'presentation_done' && y.param_value === '1').length > 0);
 

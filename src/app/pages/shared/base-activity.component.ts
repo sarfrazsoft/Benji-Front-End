@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewEncapsulation, Input, Output, OnDestroy, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import {CurrentActivityStatus, Activity} from '../../../models/benji_models';
+import {OnInit, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 
-export abstract class DesktopBaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+export abstract class BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() activityDetails;
+  @Input() activityRun;
   @Input() sessionDetails;
+  @Input() clientIdentity;
 
   abstract ngOnInit(): void;
   abstract ngOnDestroy(): void;

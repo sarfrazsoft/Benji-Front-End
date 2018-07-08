@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as global from '../globals';
 
+import {CurrentActivityStatus, User} from '../models/benji_models';
+import {Observable} from 'rxjs';
+
 @Injectable()
 export class BackendService {
   constructor(private http: HttpClient) { }
@@ -26,8 +29,8 @@ export class BackendService {
     return this.http.post(global.apiRoot + '/mvp/active/session/code_join/', {'code': joinCode});
   }
 
-  get_own_identity() {
-    return this.http.get(global.apiRoot + '/mvp/config/users/who_am_i/');
+  get_own_identity(): Observable<User> {
+    return this.http.get<User>(global.apiRoot + '/mvp/config/users/who_am_i/');
   }
 
   start_next_activity(sessionrunID) {
