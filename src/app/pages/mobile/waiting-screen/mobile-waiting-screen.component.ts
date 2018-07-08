@@ -5,6 +5,10 @@ import {interval} from 'rxjs/internal/observable/interval';
 import {finalize, map, startWith, switchMap, take} from 'rxjs/operators';
 
 import {BackendService} from '../../../services/backend.service';
+import {WebsocketService} from '../../../services/socket.service';
+
+import { LobbyStatus } from '../../../models/benji_models';
+
 import {timer} from 'rxjs';
 
 @Component({
@@ -17,13 +21,14 @@ import {timer} from 'rxjs';
 export class MobileWaitingScreenComponent implements OnInit {
   sessionRunID: string;
   identity;
-  whosHere;
-  countDown;
+  whosHere: LobbyStatus;
 
-  constructor(private backend: BackendService, private router: Router, private route: ActivatedRoute) {
+  lobbySocket;
+
+  constructor(private backend: BackendService, private router: Router, private route: ActivatedRoute, private ws: WebsocketService) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
     this.identity = {'first_name': ''};
-    this.whosHere = {'joined': [], 'missing': [], 'start_session_seconds': -1};
+    this.whosHere = {'joined_users': [], 'missing_users': [], 'started': false};
   }
 
   ngOnInit() {
@@ -32,26 +37,17 @@ export class MobileWaitingScreenComponent implements OnInit {
       err => console.log(err)
     );
 
-    interval(5000).pipe(
-      startWith(0),
-      switchMap(() => this.backend.get_sessionrun_attendance(this.sessionRunID))
-    ).subscribe(
-      resp => this.handleUpdate(resp),
-      err => console.log(err)
-    );
+    this.lobbySocket = this.ws.getLobbySocket(this.sessionRunID)
+      .subscribe((message: LobbyStatus) => {
+        this.handleUpdate(message);
+      });
   }
 
   handleUpdate(resp) {
-    if (this.countDown) {
-      return;
-    }
     this.whosHere = resp;
-    if (this.whosHere.session_start_seconds >= 0) {
-      this.countDown = timer(0, 1000).pipe(
-        take(this.whosHere.session_start_seconds),
-        map(() => --this.whosHere.session_start_seconds),
-        finalize(() => this.router.navigate(['/mobile/session', {'sessionRunID': this.sessionRunID}]))
-      ).subscribe();
+    console.log(resp);
+    if (this.whosHere.started) {
+      this.router.navigate(['/mobile/session', {'sessionRunID': this.sessionRunID}]);
     }
   }
 

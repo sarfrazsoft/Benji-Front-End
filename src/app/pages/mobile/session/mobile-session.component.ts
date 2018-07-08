@@ -2,11 +2,12 @@ import { Component, OnInit, ViewEncapsulation, ComponentFactoryResolver, ViewChi
 import {BackendService} from '../../../services/backend.service';
 import { ActivatedRoute } from '@angular/router';
 
-import {interval} from 'rxjs/internal/observable/interval';
-import {startWith, switchMap} from 'rxjs/operators';
+import {CurrentActivityStatus, Activity} from '../../../models/benji_models';
+
 import {MobileTitleComponent} from './mobile-title.component';
 import {MobileVideoActivityComponent} from './mobile-video-activity.component';
 import {MobileTPSActivityComponent} from './mobile-tps-activity.component';
+import {WebsocketService} from '../../../services/socket.service';
 
 
 @Component({
@@ -19,16 +20,17 @@ import {MobileTPSActivityComponent} from './mobile-tps-activity.component';
 export class MobileSessionComponent implements OnInit {
   sessionRunID: string;
   sessionRunDetails;
-  activities;
-  activityDetails;
-  poller;
+  activityStatus: CurrentActivityStatus;
+
   @ViewChild('dynamicComponent', { read: ViewContainerRef }) appActivity;
   componentRef;
+  sessionSocket;
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver, private backend: BackendService, route: ActivatedRoute) {
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              private backend: BackendService, route: ActivatedRoute, private ws: WebsocketService) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
     this.sessionRunDetails = {'sessionrun_code': 0, 'session': {'session_name': '', 'session_length': 0, 'session_description': ''}};
-    this.activityDetails = {'activity': {'id': -1, 'titleactivity': {'timer': 500}}};
+    // this.activityDetails = {'activity': {'id': -1, 'titleactivity': {'timer': 500}}};
   }
 
   ngOnInit() {
@@ -37,43 +39,28 @@ export class MobileSessionComponent implements OnInit {
       err => console.log(err)
     );
 
-    this.backend.get_all_activities(this.sessionRunID).subscribe(
-      resp => this.activities = resp,
-      err => console.log(err)
-    );
-
-    this.poller = interval(5000).pipe(
-      startWith(0),
-      switchMap(() => this.backend.get_activity_status(this.sessionRunID))
-    ).subscribe(
-      resp => this.activityUpdate(resp),
-      err => console.log(err)
-    );
+    this.sessionSocket = this.ws.getSessionSocket(this.sessionRunID)
+      .subscribe((message: CurrentActivityStatus) => {
+        this.activityUpdate(message);
+      });
   }
 
-  activityUpdate(resp) {
-    if (!resp.activity || !resp.activityrun) {
-      this.backend.get_activity_status(this.sessionRunID).subscribe(
-        res => this.activityUpdate(res),
-        err => console.log(err)
-      );
-    }
-
-    if (this.activityDetails.activity.id !== resp.activity.id) {
-      const componentFactory = this.getActivityFactory(resp.activity);
+  activityUpdate(resp: CurrentActivityStatus) {
+    if (!this.activityStatus || this.activityStatus.current_activity.id !== resp.current_activity.id) {
+      const componentFactory = this.getActivityFactory(resp.current_activity);
       this.appActivity.clear();
       this.componentRef = this.appActivity.createComponent(componentFactory);
       this.componentRef.instance.activityDetails = resp;
       this.componentRef.instance.sessionDetails = this.sessionRunDetails;
       this.componentRef.instance.dataInit();
-      this.backend.join_activity(resp.activityrun.id).subscribe();
+      this.backend.join_activity(resp.current_activityrun.id).subscribe();
     }
-    this.activityDetails = resp;
+    this.activityStatus = resp;
     this.componentRef.instance.activityDetails = resp;
     this.componentRef.instance.sessionDetails = this.sessionRunDetails;
   }
 
-  getActivityFactory(activity) {
+  getActivityFactory(activity: Activity) {
     if (activity.titleactivity) {
       return this.componentFactoryResolver.resolveComponentFactory(MobileTitleComponent);
     } else if (activity.videoactivity) {

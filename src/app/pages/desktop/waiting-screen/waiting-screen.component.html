@@ -20,9 +20,9 @@
       </div>
     </div>
     <div class="welcome-content-wrap right">
-      <h1 class="welcome-subheader"><span class="dark-blue">{{ whosHere.joined.length }}</span> Participants joined</h1>
+      <h1 class="welcome-subheader"><span class="dark-blue">{{ whosHere.joined_users.length }}</span> Participants joined</h1>
       <div class="participants-wrap">
-        <div class="participants-entered" *ngFor="let attendee of whosHere.joined">
+        <div class="participants-entered" *ngFor="let attendee of whosHere.joined_users">
           <h1 class="welcome-screen-text dark-blue">{{ attendee.first_name }}<br></h1>
         </div>
       </div>
@@ -30,10 +30,7 @@
   </div>
 </div>
 <div class="footer-welcome">
-  <div class="welcome-footer-content-wrap" *ngIf="whosHere.session_start_seconds < 0">
+  <div class="welcome-footer-content-wrap">
     <h1 class="welcome-footer-header">Everyone ready to go?</h1><a class="welcome-button w-button" (click)="startFirstActivity()">Start!</a>
-  </div>
-  <div class="welcome-footer-content-wrap" *ngIf="whosHere.session_start_seconds >= 0">
-    <h1 class="welcome-footer-header">Starting in {{ whosHere.session_start_seconds }}</h1>
   </div>
 </div>

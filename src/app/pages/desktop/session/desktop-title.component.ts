@@ -16,7 +16,7 @@ import {interval} from 'rxjs/internal/observable/interval';
   '      </div>\n' +
   '    </div>\n' +
   '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="countdown * 10 / activityDetails.activity.titleactivity.timer"></mat-progress-bar>' +
+  '      <mat-progress-bar mode="determinate" [value]="countdown * 10 / activityDetails.current_activity.titleactivity.timer"></mat-progress-bar>' +
   '    </div>\n' +
   '  </div>',
   styleUrls: [],
@@ -43,7 +43,7 @@ export class DesktopTitleComponent implements OnInit, OnDestroy {
 
   dataInit() {
     setTimeout(() => this.backend.start_next_activity(this.sessionDetails.session.id).subscribe(),
-      (this.activityDetails.activity.titleactivity.timer - 7) * 1000);
+      (this.activityDetails.current_activity.titleactivity.timer) * 1000);
     this.progressBarInterval = interval(100).subscribe(val => ++this.countdown);
   }
 }

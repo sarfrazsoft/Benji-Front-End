@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
+import {WebsocketService} from '../../../services/socket.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { timer } from 'rxjs';
-import {interval} from 'rxjs/internal/observable/interval';
-import {startWith, switchMap, take, map, takeUntil, finalize} from 'rxjs/operators';
+
+import { LobbyStatus } from '../../../models/benji_models';
 
 @Component({
   selector: 'app-desktop-waiting-screen',
@@ -16,14 +16,14 @@ import {startWith, switchMap, take, map, takeUntil, finalize} from 'rxjs/operato
 export class WaitingScreenComponent implements OnInit, OnDestroy {
   sessionRunID: string;
   sessionRunDetails;
-  whosHere;
-  countDown;
-  poller;
+  whosHere: LobbyStatus;
 
-  constructor(private backend: BackendService, route: ActivatedRoute, private router: Router) {
+  lobbySocket;
+
+  constructor(private backend: BackendService, route: ActivatedRoute, private router: Router, private ws: WebsocketService) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
     this.sessionRunDetails = {'sessionrun_code': 0, 'session': {'session_name': 'Loading...'}};
-    this.whosHere = {'joined': [], 'missing': [], 'session_start_seconds': -1};
+    this.whosHere = {'joined_users': [], 'missing_users': [], 'started': false};
   }
 
   ngOnInit() {
@@ -32,38 +32,27 @@ export class WaitingScreenComponent implements OnInit, OnDestroy {
       err => console.log(err)
     );
 
-    this.poller = interval(5000).pipe(
-      startWith(0),
-      switchMap(() => this.backend.get_sessionrun_attendance(this.sessionRunID))
-    ).subscribe(
-      resp => this.handleUpdate(resp),
-      err => console.log(err)
-    );
+    this.lobbySocket = this.ws.getLobbySocket(this.sessionRunID)
+      .subscribe((message: LobbyStatus) => {
+        this.handleUpdate(message);
+      });
   }
 
   ngOnDestroy() {
-    this.poller.unsubscribe();
-    this.countDown.unsubscribe();
+    this.lobbySocket.unsubscribe();
   }
 
-  handleUpdate(resp) {
-    if (this.countDown) {
-      return;
-    }
+  handleUpdate(resp: LobbyStatus) {
     this.whosHere = resp;
-    if (this.whosHere.session_start_seconds >= 0) {
-      ++this.whosHere.session_start_seconds;
-      this.countDown = timer(0, 1000).pipe(
-        take(this.whosHere.session_start_seconds),
-        map(() => --this.whosHere.session_start_seconds),
-        finalize(() => this.router.navigate(['/desktop/session', {'sessionRunID': this.sessionRunID}]))
-      ).subscribe();
+    console.log(resp);
+    if (this.whosHere.started) {
+      this.router.navigate(['/desktop/session', {'sessionRunID': this.sessionRunID}]);
     }
   }
 
   startFirstActivity() {
     this.backend.start_next_activity(this.sessionRunID).subscribe(
-      resp => console.log('Activity Started'),
+      resp => this.router.navigate(['/desktop/session', {'sessionRunID': this.sessionRunID}]),
       err => console.log(err)
     );
   }

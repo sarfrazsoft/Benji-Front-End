@@ -28,21 +28,21 @@ import {interval} from 'rxjs/internal/observable/interval';
   '        <h1 class="screen-header">Pair &amp; Share</h1>\n' +
   '      </div>\n' +
   '      <div class="right-header-wrap">\n' +
-  '        <div class="screen-text">Discuss the prompt with your partner for {{ activityDetails.activity.thinkpairshareactivity.think_timer / 60 }} minutes, then get ready to share your ideas with the rest of the group.<br></div>\n' +
+  '        <div class="screen-text">Discuss the prompt with your partner for {{ activityDetails.current_activity.thinkpairshareactivity.think_timer / 60 }} minutes, then get ready to share your ideas with the rest of the group.<br></div>\n' +
   '      </div>\n' +
   '    </div>\n' +
   '    <div class="body-div-wrap">\n' +
   '      <h1 class="subheader">Discussion question</h1>\n' +
   '      <div class="body-content-no-border">\n' +
   '        <div class="left-body-wrap">\n' +
-  '          <h1 class="dark-blue-header">{{ activityDetails.activity.thinkpairshareactivity.question_text }}<br></h1>\n' +
+  '          <h1 class="dark-blue-header">{{ activityDetails.current_activity.thinkpairshareactivity.question_text }}<br></h1>\n' +
   '        </div>\n' +
-  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">{{ getTimer(thinkCountdown, activityDetails.activity.thinkpairshareactivity.think_timer).min | number:\'1.0-0\'}}:{{ getTimer(thinkCountdown, activityDetails.activity.thinkpairshareactivity.think_timer).sec | number:\'2.0-0\' }}</h1><br></div>\n' +
+  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">{{ getTimer(thinkCountdown, activityDetails.current_activity.thinkpairshareactivity.think_timer).min | number:\'1.0-0\'}}:{{ getTimer(thinkCountdown, activityDetails.current_activity.thinkpairshareactivity.think_timer).sec | number:\'2.0-0\' }}</h1><br></div>\n' +
   '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">Ready to present: {{ countPresenters() }} / {{ sessionDetails.sessionrunuser_set.length }}</h1><br></div>\n' +
   '      </div>\n' +
   '    </div>\n' +
   '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="thinkCountdown * 10 / activityDetails.activity.thinkpairshareactivity.think_timer"></mat-progress-bar>' +
+  '      <mat-progress-bar mode="determinate" [value]="thinkCountdown * 10 / activityDetails.current_activity.thinkpairshareactivity.think_timer"></mat-progress-bar>' +
   '    </div>\n' +
   '  </div>\n' +
   '  <div class="centred-aligned-screen-body-div" *ngIf="mode === \'sharing\'">\n' +
@@ -50,9 +50,9 @@ import {interval} from 'rxjs/internal/observable/interval';
   '      <h1 class="subheader">Discussion question</h1>\n' +
   '      <div class="body-content-divider">\n' +
   '        <div class="left-body-wrap">\n' +
-  '          <h1 class="dark-blue-header">{{ activityDetails.activity.thinkpairshareactivity.question_text }}<br></h1>\n' +
+  '          <h1 class="dark-blue-header">{{ activityDetails.current_activity.thinkpairshareactivity.question_text }}<br></h1>\n' +
   '        </div>\n' +
-  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">{{ getTimer(shareCountdown, activityDetails.activity.thinkpairshareactivity.share_timer).min | number:\'1.0-0\'}}:{{ getTimer(shareCountdown, activityDetails.activity.thinkpairshareactivity.share_timer).sec | number:\'2.0-0\' }}</h1></div>\n' +
+  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">{{ getTimer(shareCountdown, activityDetails.current_activity.thinkpairshareactivity.share_timer).min | number:\'1.0-0\'}}:{{ getTimer(shareCountdown, activityDetails.current_activity.thinkpairshareactivity.share_timer).sec | number:\'2.0-0\' }}</h1></div>\n' +
   '      </div>\n' +
   '      <div class="lower-content-wrap">\n' +
   '        <div class="left-body-wrap">\n' +
@@ -64,7 +64,7 @@ import {interval} from 'rxjs/internal/observable/interval';
   '      </div>\n' +
   '    </div>\n' +
   '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="shareCountdown * 10 / activityDetails.activity.thinkpairshareactivity.share_timer"></mat-progress-bar>' +
+  '      <mat-progress-bar mode="determinate" [value]="shareCountdown * 10 / activityDetails.current_activity.thinkpairshareactivity.share_timer"></mat-progress-bar>' +
   '    </div>\n' +
   '  </div>',
   styleUrls: [],
@@ -104,13 +104,13 @@ export class DesktopTPSActivityComponent implements OnInit, OnDestroy {
         this.mode = 'thinking';
         this.thinkProgressBarInterval = interval(100).subscribe(() => ++this.thinkCountdown);
         setTimeout(() => { if (this.mode === 'thinking') { this.mode = 'sharing'; }},
-          this.activityDetails.activity.thinkpairshareactivity.think_timer * 1000);
+          this.activityDetails.current_activity.thinkpairshareactivity.think_timer * 1000);
       }
       if (this.mode === 'thinking' && this.stillThinking() === 0) {
         this.mode = 'sharing';
       }
       if (this.mode === 'sharing' && (this.shareIndex === -1 || this.currentPresentersDone()) ) {
-        if (this.shareIndex === this.activityDetails.activityrun.activity_groups.length - 1) {
+        if (this.shareIndex === this.activityDetails.current_activityrun.activity_groups.length - 1) {
           this.backend.start_next_activity(this.sessionDetails.session.id).subscribe();
         } else {
           ++this.shareIndex;
@@ -125,7 +125,7 @@ export class DesktopTPSActivityComponent implements OnInit, OnDestroy {
   }
 
   countPartners() {
-    return this.activityDetails.activityrun.activityrunuser_set.filter(
+    return this.activityDetails.current_activityrun.activityrunuser_set.filter(
       x => x.activityrunuserparams_set.find(
         y => y.param_name === 'partner_found' && y.param_value === '1') !== undefined).length;
   }
@@ -135,7 +135,7 @@ export class DesktopTPSActivityComponent implements OnInit, OnDestroy {
   }
 
   countPresenters() {
-    return this.activityDetails.activityrun.activityrunuser_set.filter(
+    return this.activityDetails.current_activityrun.activityrunuser_set.filter(
       x => x.activityrunuserparams_set.find(
         y => y.param_name === 'thinking_done' && y.param_value === '1') !== undefined).length;
   }
@@ -148,8 +148,8 @@ export class DesktopTPSActivityComponent implements OnInit, OnDestroy {
     try {
       const target_users = this.sessionDetails.sessionrunuser_set.map(x => x.user.id);
       const allusersjoined = target_users.every(
-        x => this.activityDetails.activityrun.activityrunuser_set.find(y => y.user === x) !== undefined);
-      const alljoineduserspartnered = this.activityDetails.activityrun.activityrunuser_set.every(
+        x => this.activityDetails.current_activityrun.activityrunuser_set.find(y => y.user === x) !== undefined);
+      const alljoineduserspartnered = this.activityDetails.current_activityrun.activityrunuser_set.every(
         x => x.activityrunuserparams_set.find(
           y => y.param_name === 'partner_found' && y.param_value === '1'));
 
@@ -160,12 +160,12 @@ export class DesktopTPSActivityComponent implements OnInit, OnDestroy {
   }
 
   currentPresenters() {
-    return this.activityDetails.activityrun.activity_groups[this.shareIndex];
+    return this.activityDetails.current_activityrun.activity_groups[this.shareIndex];
   }
 
   nextPresenters() {
-    if (this.shareIndex <= this.activityDetails.activityrun.activity_groups.length - 2) {
-      return this.activityDetails.activityrun.activity_groups[this.shareIndex + 1];
+    if (this.shareIndex <= this.activityDetails.current_activityrun.activity_groups.length - 2) {
+      return this.activityDetails.current_activityrun.activity_groups[this.shareIndex + 1];
     } else {
       return null;
     }
@@ -190,7 +190,7 @@ export class DesktopTPSActivityComponent implements OnInit, OnDestroy {
       return true;
     } else {
       const target_ids = this.currentPresenters().map(x => x.id);
-      const target_user_params = this.activityDetails.activityrun.activityrunuser_set.filter(x => target_ids.includes(x.user));
+      const target_user_params = this.activityDetails.current_activityrun.activityrunuser_set.filter(x => target_ids.includes(x.user));
       return target_user_params.filter(
         x => x.activityrunuserparams_set.filter(y => y.param_name === 'presentation_done' && y.param_value === '1').length > 0).length > 0;
     }

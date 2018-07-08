@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './services/auth.interceptor';
 import { BackendService } from './services/backend.service';
+import { WebsocketService } from './services/socket.service';
 
 // App Pages
 import { AppComponent } from './app.component';
@@ -57,6 +58,7 @@ import { MatProgressBarModule } from '@angular/material';
   providers: [
     AuthService,
     BackendService,
+    WebsocketService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   entryComponents: [

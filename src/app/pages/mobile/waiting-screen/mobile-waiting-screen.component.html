@@ -4,9 +4,8 @@
     <h1 class="large-dark-blue-header">Hey {{ identity.first_name }}</h1>
     <div class="mobile-text">We’re waiting for the rest of your team to join<br></div>
     <div class="participants-joined">
-      <h1 class="largest-dark-blue-header">{{ whosHere.joined.length }}</h1>
+      <h1 class="largest-dark-blue-header">{{ whosHere.joined_users.length }}</h1>
       <div class="text-block-3">participants joined</div>
-      <a href="#" class="dark-blue-button w-button" *ngIf="countDown">Starting in {{ whosHere.session_start_seconds }}</a>
     </div>
   </div>
 </div>
