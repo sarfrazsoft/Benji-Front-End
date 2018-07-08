@@ -32,9 +32,9 @@ export class BaseSessionComponent implements OnInit {
     );
 
     this.sessionSocket = this.ws.getSessionSocket(this.sessionRunID)
-      .subscribe((message: CurrentActivityStatus) => {
-        this.activityUpdate(message);
-      });
+      .subscribe((message: CurrentActivityStatus) => this.activityUpdate(message),
+        (err) => console.log(err),
+      () => console.log('complete'));
   }
 
   next_activity(val: boolean) {
@@ -47,6 +47,8 @@ export class BaseSessionComponent implements OnInit {
     console.log(resp);
     if (resp.current_activity) {
       this.activityStatus = resp;
+    } else {
+      console.log('Recieved unexpected websocket response!');
     }
   }
 

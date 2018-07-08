@@ -35,7 +35,8 @@ export class WaitingScreenComponent implements OnInit, OnDestroy {
     this.lobbySocket = this.ws.getLobbySocket(this.sessionRunID)
       .subscribe((message: LobbyStatus) => {
         this.handleUpdate(message);
-      });
+      }, (err) => console.log(err),
+      () => console.log('complete'));
   }
 
   ngOnDestroy() {

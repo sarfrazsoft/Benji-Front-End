@@ -2,26 +2,28 @@
   <div class="logo-wrapper"><img src="/assets/img/logo.svg" height="40"></div>
 </div>
 
-<app-desktop-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
-                            [activityDetails]="activityStatus.current_activity"
-                            [activityRun]="activityStatus.current_activityrun"
-                            [sessionDetails]="sessionRunDetails"
-                            (timerUp)="next_activity($event)"></app-desktop-activity-title>
+<div *ngIf="sessionRunDetails && activityStatus && clientIdentity && sessionSocket">
+  <app-desktop-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
+                              [activityDetails]="activityStatus.current_activity"
+                              [activityRun]="activityStatus.current_activityrun"
+                              [sessionDetails]="sessionRunDetails"
+                              (timerUp)="next_activity($event)"></app-desktop-activity-title>
 
-<app-desktop-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
-                            [activityDetails]="activityStatus.current_activity"
-                            [activityRun]="activityStatus.current_activityrun"
-                            [sessionDetails]="sessionRunDetails"
-                            (videoComplete)="next_activity($event)"></app-desktop-activity-video>
+  <app-desktop-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
+                              [activityDetails]="activityStatus.current_activity"
+                              [activityRun]="activityStatus.current_activityrun"
+                              [sessionDetails]="sessionRunDetails"
+                              (videoComplete)="next_activity($event)"></app-desktop-activity-video>
 
-<app-desktop-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
-                            [activityDetails]="activityStatus.current_activity"
-                            [activityRun]="activityStatus.current_activityrun"
-                            [sessionDetails]="sessionRunDetails"
-                            [footer]="footer"
-                            (activityComplete)="next_activity($event)"></app-desktop-activity-thinkpairshare>
+  <app-desktop-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
+                              [activityDetails]="activityStatus.current_activity"
+                              [activityRun]="activityStatus.current_activityrun"
+                              [sessionDetails]="sessionRunDetails"
+                              [footer]="footer"
+                              (activityComplete)="next_activity($event)"></app-desktop-activity-thinkpairshare>
 
 
-<app-desktop-footer #footer [sessionName]="sessionRunDetails.session.session_name"
-                    [roomCode]="sessionRunDetails.sessionrun_code"
-                    [showProgress]="false"></app-desktop-footer>
+  <app-desktop-footer #footer [sessionName]="sessionRunDetails.session.session_name"
+                      [roomCode]="sessionRunDetails.sessionrun_code"
+                      [showProgress]="false"></app-desktop-footer>
+</div>

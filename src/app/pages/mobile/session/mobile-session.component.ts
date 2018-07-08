@@ -24,9 +24,11 @@ export class MobileSessionComponent extends BaseSessionComponent {
   }
 
   activityUpdate(resp: CurrentActivityStatus) {
-    if (!this.activityStatus || !this.activityStatus.current_activity ||
-          this.activityStatus.current_activity.id !== resp.current_activity.id) {
-      this.backend.join_activity(resp.current_activityrun.id).subscribe();
+    if (resp.current_activity) {
+      if (!this.activityStatus || !this.activityStatus.current_activity ||
+        this.activityStatus.current_activity.id !== resp.current_activity.id) {
+        this.backend.join_activity(resp.current_activityrun.id).subscribe();
+      }
     }
     super.activityUpdate(resp);
   }

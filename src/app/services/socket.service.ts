@@ -8,12 +8,25 @@ import { LobbyStatus } from '../models/benji_models';
 
 @Injectable()
 export class WebsocketService {
+  private subject;
+  private sessionrunID;
+
+  connect(sessionrunID) {
+    if (this.sessionrunID === sessionrunID && this.subject) {
+      return this.subject;
+    } else {
+      this.subject = webSocket('ws://192.168.2.200:8000/ws/session/' + sessionrunID + '/');
+      this.sessionrunID = sessionrunID;
+      return this.subject;
+    }
+  }
 
   getLobbySocket(sessionrunID) {
-    return webSocket('ws://localhost:8000/ws/lobby/' + sessionrunID + '/');
+    // return webSocket('ws://192.168.2.200:8000/ws/lobby/' + sessionrunID + '/');
+    return this.connect(sessionrunID);
   }
 
   getSessionSocket(sessionrunID) {
-    return webSocket('ws://localhost:8000/ws/session/' + sessionrunID + '/');
+    return this.connect(sessionrunID);
   }
 }

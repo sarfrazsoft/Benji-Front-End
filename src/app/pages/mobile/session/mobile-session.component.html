@@ -1,21 +1,23 @@
 <div class="mobile-navbar"><img src="/assets/img/logo.svg" height="34"></div>
 <div class="mobile-content-wrap">
+  <div *ngIf="sessionRunDetails && activityStatus && clientIdentity && sessionSocket">
 
-  <app-mobile-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
-                              [activityDetails]="activityStatus.current_activity"
-                              [sessionDetails]="sessionRunDetails"
-                              (timerUp)="next_activity($event)"></app-mobile-activity-title>
+    <app-mobile-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
+                                [activityDetails]="activityStatus.current_activity"
+                                [sessionDetails]="sessionRunDetails"
+                                (timerUp)="next_activity($event)"></app-mobile-activity-title>
 
-  <app-mobile-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
-                              [activityDetails]="activityStatus.current_activity"
-                              [sessionDetails]="sessionRunDetails"
-                              (videoComplete)="next_activity($event)"></app-mobile-activity-video>
+    <app-mobile-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
+                                [activityDetails]="activityStatus.current_activity"
+                                [sessionDetails]="sessionRunDetails"
+                                (videoComplete)="next_activity($event)"></app-mobile-activity-video>
 
-  <app-mobile-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
-                                       [activityDetails]="activityStatus.current_activity"
-                                       [activityRun]="activityStatus.current_activityrun"
-                                       [sessionDetails]="sessionRunDetails"
-                                       [clientIdentity]="clientIdentity"
-                                       (activityComplete)="next_activity($event)"></app-mobile-activity-thinkpairshare>
+    <app-mobile-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
+                                         [activityDetails]="activityStatus.current_activity"
+                                         [activityRun]="activityStatus.current_activityrun"
+                                         [sessionDetails]="sessionRunDetails"
+                                         [clientIdentity]="clientIdentity"
+                                         (activityComplete)="next_activity($event)"></app-mobile-activity-thinkpairshare>
+  </div>
 
 </div>

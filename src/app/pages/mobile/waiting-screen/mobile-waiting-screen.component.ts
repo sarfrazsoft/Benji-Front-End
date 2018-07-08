@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, NgModule } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, NgModule, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
 import {interval} from 'rxjs/internal/observable/interval';
@@ -18,7 +18,7 @@ import {timer} from 'rxjs';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileWaitingScreenComponent implements OnInit {
+export class MobileWaitingScreenComponent implements OnInit, OnDestroy {
   sessionRunID: string;
   identity;
   whosHere: LobbyStatus;
@@ -40,7 +40,12 @@ export class MobileWaitingScreenComponent implements OnInit {
     this.lobbySocket = this.ws.getLobbySocket(this.sessionRunID)
       .subscribe((message: LobbyStatus) => {
         this.handleUpdate(message);
-      });
+      }, (err) => console.log(err),
+        () => console.log('complete'));
+  }
+
+  ngOnDestroy () {
+    this.lobbySocket.unsubscribe();
   }
 
   handleUpdate(resp) {
