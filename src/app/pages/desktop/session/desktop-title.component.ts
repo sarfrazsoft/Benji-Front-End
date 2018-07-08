@@ -1,9 +1,8 @@
-import {Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy} from '@angular/core';
-import {BackendService} from '../../../services/backend.service';
+import {Component, OnInit, ViewEncapsulation, Input, Output, OnDestroy, EventEmitter } from '@angular/core';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-
 import {interval} from 'rxjs/internal/observable/interval';
 
+import { DesktopBaseActivityComponent } from './desktop-base-activity.component';
 
 @Component({
   selector: 'app-desktop-activity-title',
@@ -16,34 +15,27 @@ import {interval} from 'rxjs/internal/observable/interval';
   '      </div>\n' +
   '    </div>\n' +
   '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="countdown * 10 / activityDetails.current_activity.titleactivity.timer"></mat-progress-bar>' +
+  '      <mat-progress-bar mode="determinate" [value]="countdown * 10 / activityDetails.titleactivity.timer"></mat-progress-bar>' +
   '    </div>\n' +
   '  </div>',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopTitleComponent implements OnInit, OnDestroy {
-  public activityDetails;
-  public sessionDetails;
-  countdown = 0;
+export class DesktopTitleComponent extends DesktopBaseActivityComponent implements OnInit, OnDestroy {
+  @Output() timerUp = new EventEmitter<boolean>();
 
+  countdown = 0;
   progressBarInterval;
 
-  constructor(public matProgressBar: MatProgressBarModule, private backend: BackendService) {
-    this.activityDetails = {'activity': {'titleactivity': {'timer': 30}}};
-  }
+  constructor(public matProgressBar: MatProgressBarModule) { super(); }
 
   ngOnInit() {
+    setTimeout(() => this.timerUp.emit(true), (this.activityDetails.titleactivity.timer) * 1000);
+    this.progressBarInterval = interval(100).subscribe(val => ++this.countdown);
   }
 
   ngOnDestroy() {
     this.progressBarInterval.unsubscribe();
-  }
-
-  dataInit() {
-    setTimeout(() => this.backend.start_next_activity(this.sessionDetails.session.id).subscribe(),
-      (this.activityDetails.current_activity.titleactivity.timer) * 1000);
-    this.progressBarInterval = interval(100).subscribe(val => ++this.countdown);
   }
 }

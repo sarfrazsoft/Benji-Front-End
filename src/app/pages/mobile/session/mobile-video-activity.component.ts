@@ -6,7 +6,7 @@ import {interval} from 'rxjs/internal/observable/interval';
 
 
 @Component({
-  selector: 'app-desktop-activity-title',
+  selector: 'app-mobile-activity-video',
   template:
   '<div class="mobile-content-wrap">\n' +
   '    <div class="mobile-content-wrap-center"><img src="assets/img/cam.png" height="100">\n' +

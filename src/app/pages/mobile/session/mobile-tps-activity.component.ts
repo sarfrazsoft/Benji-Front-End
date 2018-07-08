@@ -7,7 +7,7 @@ import {identity} from 'rxjs';
 
 
 @Component({
-  selector: 'app-desktop-activity-title',
+  selector: 'app-mobile-activity-thinkpairshare',
   template: '<div class="mobile-content-wrap-wide" *ngIf="!allPartnersFound()">\n' +
   '    <img src="assets/img/Partner.png" height="100">\n' +
   '    <h1 class="heading-2">Your partner is {{ partner }} </h1>\n' +

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ComponentFactoryResolver } from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
 import {WebsocketService} from '../../../services/socket.service';
 import { ActivatedRoute } from '@angular/router';
@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import {DesktopTitleComponent} from './desktop-title.component';
 import {DesktopVideoActivityComponent} from './desktop-video-activity.component';
 import {DesktopTPSActivityComponent} from './desktop-tps-activity.component';
+
 import {CurrentActivityStatus, Activity} from '../../../models/benji_models';
 
 
@@ -22,8 +23,6 @@ export class SessionComponent implements OnInit {
   activityStatus: CurrentActivityStatus;
 
   sessionSocket;
-  @ViewChild('dynamicComponent', { read: ViewContainerRef }) appActivity;
-  componentRef;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver,
               private backend: BackendService, route: ActivatedRoute, private ws: WebsocketService) {
@@ -44,31 +43,15 @@ export class SessionComponent implements OnInit {
       });
   }
 
-  activityUpdate(resp: CurrentActivityStatus) {
-    console.log(resp);
-    if (!this.activityStatus || this.activityStatus.current_activity.id !== resp.current_activity.id) {
-      const componentFactory = this.getActivityFactory(resp.current_activity);
-      this.appActivity.clear();
-      this.componentRef = this.appActivity.createComponent(componentFactory);
-      this.componentRef.instance.activityDetails = resp;
-      this.componentRef.instance.sessionDetails = this.sessionRunDetails;
-      this.componentRef.instance.dataInit();
+  next_activity(val: boolean) {
+    if (val) {
+      this.backend.start_next_activity(this.sessionRunID).subscribe();
     }
-    this.activityStatus = resp;
-    this.componentRef.instance.activityDetails = resp;
-    this.componentRef.instance.sessionDetails = this.sessionRunDetails;
   }
 
-  getActivityFactory(activity: Activity) {
-    if (activity.titleactivity) {
-      return this.componentFactoryResolver.resolveComponentFactory(DesktopTitleComponent);
-    } else if (activity.videoactivity) {
-      return this.componentFactoryResolver.resolveComponentFactory(DesktopVideoActivityComponent);
-    } else if (activity.thinkpairshareactivity) {
-      return this.componentFactoryResolver.resolveComponentFactory(DesktopTPSActivityComponent);
-    } else {
-      console.log('Unknown Activity!');
-    }
+  activityUpdate(resp: CurrentActivityStatus) {
+    console.log(resp);
+    this.activityStatus = resp;
   }
 
 }

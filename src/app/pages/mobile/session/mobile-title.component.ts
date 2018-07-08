@@ -6,7 +6,7 @@ import {interval} from 'rxjs/internal/observable/interval';
 
 
 @Component({
-  selector: 'app-desktop-activity-title',
+  selector: 'app-mobile-activity-title',
   template: '<div class="mobile-content-wrap-wide">\n' +
   '    <h1 class="heading-2">{{ sessionDetails.session.session_name }}</h1>\n' +
   '      <div class="mobile-text">Get ready to begin! </div><a (click)="indicateReady()" class="dark-blue-button w-button">Ready</a>\n' +
