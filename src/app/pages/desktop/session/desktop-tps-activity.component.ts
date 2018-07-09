@@ -35,10 +35,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   '          <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>\n' +
   '        </div>\n' +
   '        <div class="right-body-wrap">' +
-  '          <div class="timer-container">' +
-  '            <div class="timer-svg"><ons-progress-circular style="width: 250px; height: 250px" modifier="blue" [value]="100 - (10 * (thinkCountdown / activityDetails.thinkpairshareactivity.think_timer))"></ons-progress-circular></div>' +
-  '            <div class="timer-centered number-text" style="color: #1248F2">{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).min | number:\'1.0-0\'}}:{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).sec | number:\'2.0-0\' }}</div>' +
-  '          </div>' +
+  '          <app-radial-timer [secondsElapsed]="thinkCountdown / 10" [totalSeconds]="activityDetails.thinkpairshareactivity.think_timer"></app-radial-timer>' +
   '        </div>\n' +
   '      </div>\n' +
   '    </div>\n' +
@@ -53,7 +50,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   '        <div class="left-body-wrap">\n' +
   '          <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>\n' +
   '        </div>\n' +
-  '        <div class="right-body-wrap"><h1 class="welcome-screen-text dark-blue">{{ getTimer(shareCountdown, activityDetails.thinkpairshareactivity.share_timer).min | number:\'1.0-0\'}}:{{ getTimer(shareCountdown, activityDetails.thinkpairshareactivity.share_timer).sec | number:\'2.0-0\' }}</h1></div>\n' +
+  '        <div class="right-body-wrap"><app-radial-timer [secondsElapsed]="shareCountdown / 10" [totalSeconds]="activityDetails.thinkpairshareactivity.share_timer"></app-radial-timer></div>\n' +
   '      </div>\n' +
   '      <div class="lower-content-wrap">\n' +
   '        <div class="left-body-wrap">\n' +

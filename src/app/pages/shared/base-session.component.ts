@@ -17,7 +17,7 @@ export class BaseSessionComponent implements OnInit {
 
   constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebsocketService) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
-    this.sessionRunDetails = {'sessionrun_code': 0, 'session': {'session_name': '', 'session_length': 0, 'session_description': ''}};
+    // this.sessionRunDetails = {'sessionrun_code': 0, 'session': {'session_name': '', 'session_length': 0, 'session_description': ''}};
   }
 
   ngOnInit() {

@@ -24,6 +24,7 @@ import { DesktopFooterComponent } from './pages/desktop/session/desktop-footer.c
 import { DesktopTitleComponent } from './pages/desktop/session/desktop-title.component';
 import { DesktopVideoActivityComponent } from './pages/desktop/session/desktop-video-activity.component';
 import { DesktopTPSActivityComponent } from './pages/desktop/session/desktop-tps-activity.component';
+import { DesktopMCQActivityComponent } from './pages/desktop/session/desktop-mcq-activity.component';
 import { MobileLoginComponent } from './pages/mobile/login/mobile-login.component';
 import { MobileJoinComponent } from './pages/mobile/join/mobile-join.component';
 import { MobileWaitingScreenComponent } from './pages/mobile/waiting-screen/mobile-waiting-screen.component';
@@ -31,6 +32,7 @@ import { MobileSessionComponent } from './pages/mobile/session/mobile-session.co
 import { MobileTitleComponent } from './pages/mobile/session/mobile-title.component';
 import { MobileVideoActivityComponent } from './pages/mobile/session/mobile-video-activity.component';
 import { MobileTPSActivityComponent } from './pages/mobile/session/mobile-tps-activity.component';
+import { MobileMCQActivityComponent } from './pages/mobile/session/mobile-mcq-activity.component';
 
 // Plugins
 import { MatProgressBarModule } from '@angular/material';
@@ -47,13 +49,15 @@ import { OnsenModule } from 'ngx-onsenui';
     DesktopTitleComponent,
     DesktopVideoActivityComponent,
     DesktopTPSActivityComponent,
+    DesktopMCQActivityComponent,
     MobileLoginComponent,
     MobileJoinComponent,
     MobileWaitingScreenComponent,
     MobileSessionComponent,
     MobileTitleComponent,
     MobileVideoActivityComponent,
-    MobileTPSActivityComponent
+    MobileTPSActivityComponent,
+    MobileMCQActivityComponent
   ],
   imports: [
     AppRoutingModule,
@@ -68,14 +72,6 @@ import { OnsenModule } from 'ngx-onsenui';
     BackendService,
     WebsocketService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
-  ],
-  entryComponents: [
-    DesktopTitleComponent,
-    DesktopVideoActivityComponent,
-    DesktopTPSActivityComponent,
-    MobileTitleComponent,
-    MobileVideoActivityComponent,
-    MobileTPSActivityComponent
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

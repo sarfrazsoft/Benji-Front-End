@@ -1,18 +1,32 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-radial-timer',
   template:
-    '<ons-progress-circular [value]="v"></ons-progress-circular>',
+    '<div class="timer-container">' +
+    '  <div class="timer-svg">' +
+    '    <ons-progress-circular style="width: 250px; height: 250px" modifier="blue" [value]="v"></ons-progress-circular>' +
+    '  </div>' +
+    '  <div class="timer-centered number-text" style="color: #1248F2">{{ getTimer(_secondsElapsed, _totalSeconds).min | number:\'1.0-0\'}}:{{ getTimer(_secondsElapsed, _totalSeconds).sec | number:\'2.0-0\' }}</div>' +
+    '</div>',
+  styleUrls: [],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class RadialTimerComponent {
-  _secondsRemain = 100;
+  getTimer(cd, max_timer) {
+    const seconds_remain = max_timer - cd;
+    const min = Math.floor( seconds_remain / 60);
+    const sec = seconds_remain - 60 * min;
+    return {'min': min, 'sec': sec};
+  }
+
+  _secondsElapsed = 100;
   _totalSeconds = 100;
 
   @Input()
-  set secondsRemain(secondsRemain: number) {
-    this._secondsRemain = secondsRemain;
+  set secondsElapsed(secondsElapsed: number) {
+    this._secondsElapsed = secondsElapsed;
     this.val();
   }
 
@@ -27,8 +41,10 @@ export class RadialTimerComponent {
   constructor() { }
 
   val() {
-    this.v = Math.ceil(100 * this.secondsRemain / this.totalSeconds);
+    this.v = Math.ceil(100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
   }
+
+
 }
 
 /*
