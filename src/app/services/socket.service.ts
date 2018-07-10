@@ -15,7 +15,7 @@ export class WebsocketService {
     if (this.sessionrunID === sessionrunID && this.subject) {
       return this.subject;
     } else {
-      this.subject = webSocket('ws://192.168.2.200:8000/ws/session/' + sessionrunID + '/');
+      this.subject = webSocket('ws://ec2-35-183-106-184.ca-central-1.compute.amazonaws.com:8000/ws/session/' + sessionrunID + '/');
       this.sessionrunID = sessionrunID;
       return this.subject;
     }
