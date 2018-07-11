@@ -22,7 +22,7 @@ export class MobileJoinComponent implements OnInit {
 
   formSubmit() {
     this.backend.join_session(this.roomCode).subscribe(
-      resp => this.router.navigate(['/mobile/waiting-screen', {sessionRunID: resp['id']}]),
+      resp => this.router.navigate(['/mobile/session', {sessionRunID: resp['id']}]),
       err => console.log(err)
     );
   }

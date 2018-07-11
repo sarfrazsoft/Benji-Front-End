@@ -79,11 +79,9 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
   shareProgressBarInterval;
 
   shareIndex = -1;
-
-  activityBeat;
   mode = 'partnering';
 
-  constructor(public matProgressBar: MatProgressBarModule, private backend: BackendService) { super(); }
+  constructor(private backend: BackendService) { super(); }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
@@ -131,7 +129,6 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
   ngOnDestroy() {
     this.thinkProgressBarInterval.unsubscribe();
     this.shareProgressBarInterval.unsubscribe();
-    this.activityBeat.unsubscribe();
     this.footer.showProgress = false;
   }
 
@@ -163,7 +160,8 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
       const alljoineduserspartnered = this.activityRun.activityrunuser_set.every(
         x => x.activityrunuserparams_set.find(
           y => y.param_name === 'partner_found' && y.param_value === '1'));
-
+      console.log(allusersjoined);
+      console.log(alljoineduserspartnered);
       return allusersjoined && alljoineduserspartnered;
     } catch (err) {
       return false;

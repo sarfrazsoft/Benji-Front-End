@@ -15,9 +15,10 @@ export class BaseSessionComponent implements OnInit {
 
   protected sessionSocket;
 
+  destroyComponents = false;
+
   constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebsocketService) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
-    // this.sessionRunDetails = {'sessionrun_code': 0, 'session': {'session_name': '', 'session_length': 0, 'session_description': ''}};
   }
 
   ngOnInit() {
@@ -45,11 +46,11 @@ export class BaseSessionComponent implements OnInit {
 
   activityUpdate(resp: CurrentActivityStatus) {
     console.log(resp);
-    if (resp.current_activity) {
-      this.activityStatus = resp;
-    } else {
-      console.log('Recieved unexpected websocket response!');
+    if (this.activityStatus && resp.current_activity && this.activityStatus.current_activity && this.activityStatus.current_activity.id !== resp.current_activity.id) {
+      this.destroyComponents = true;
+      setTimeout(() => this.destroyComponents = false, 50);
     }
+    this.activityStatus = resp;
   }
 
 }

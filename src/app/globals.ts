@@ -1,3 +1,6 @@
 'use strict';
 
-export const apiRoot = 'http://dev.mybenji.com:8000';
+const backend = 'localhost';
+
+export const apiRoot = 'http://' + backend + ':8000';
+export const wsRoot = 'ws://' + backend + ':8000';

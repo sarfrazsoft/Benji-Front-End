@@ -1,6 +1,12 @@
 <div class="mobile-navbar"><img src="/assets/img/logo.svg" height="34"></div>
 <div class="mobile-content-wrap">
-  <div *ngIf="sessionRunDetails && activityStatus && clientIdentity && sessionSocket">
+
+  <div *ngIf="activityStatus && clientIdentity && !activityStatus.started">
+    <app-mobile-lobby [clientIdentity]="clientIdentity"
+                               [joinedUsers]="activityStatus.joined_users"></app-mobile-lobby>
+  </div>
+
+  <div *ngIf="sessionRunDetails && activityStatus && clientIdentity && sessionSocket && activityStatus.started">
 
     <app-mobile-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
                                 [activityDetails]="activityStatus.current_activity"

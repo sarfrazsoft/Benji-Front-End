@@ -18,7 +18,7 @@ import { RadialTimerComponent } from './ui-components/radial-timer.component';
 // App Pages
 import { AppComponent } from './app.component';
 import { LandingComponent } from './pages/landing/landing.component';
-import { WaitingScreenComponent } from './pages/desktop/waiting-screen/waiting-screen.component';
+import { DesktopLobbyComponent } from './pages/desktop/session/desktop-lobby.component';
 import { SessionComponent } from './pages/desktop/session/session.component';
 import { DesktopFooterComponent } from './pages/desktop/session/desktop-footer.component';
 import { DesktopTitleComponent } from './pages/desktop/session/desktop-title.component';
@@ -27,7 +27,7 @@ import { DesktopTPSActivityComponent } from './pages/desktop/session/desktop-tps
 import { DesktopMCQActivityComponent } from './pages/desktop/session/desktop-mcq-activity.component';
 import { MobileLoginComponent } from './pages/mobile/login/mobile-login.component';
 import { MobileJoinComponent } from './pages/mobile/join/mobile-join.component';
-import { MobileWaitingScreenComponent } from './pages/mobile/waiting-screen/mobile-waiting-screen.component';
+import { MobileLobbyComponent } from './pages/mobile/session/mobile-lobby.component';
 import { MobileSessionComponent } from './pages/mobile/session/mobile-session.component';
 import { MobileTitleComponent } from './pages/mobile/session/mobile-title.component';
 import { MobileVideoActivityComponent } from './pages/mobile/session/mobile-video-activity.component';
@@ -43,7 +43,7 @@ import { OnsenModule } from 'ngx-onsenui';
     AppComponent,
     RadialTimerComponent,
     LandingComponent,
-    WaitingScreenComponent,
+    DesktopLobbyComponent,
     SessionComponent,
     DesktopFooterComponent,
     DesktopTitleComponent,
@@ -52,7 +52,7 @@ import { OnsenModule } from 'ngx-onsenui';
     DesktopMCQActivityComponent,
     MobileLoginComponent,
     MobileJoinComponent,
-    MobileWaitingScreenComponent,
+    MobileLobbyComponent,
     MobileSessionComponent,
     MobileTitleComponent,
     MobileVideoActivityComponent,

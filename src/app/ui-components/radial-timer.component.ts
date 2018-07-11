@@ -18,7 +18,12 @@ export class RadialTimerComponent {
     const seconds_remain = max_timer - cd;
     const min = Math.floor( seconds_remain / 60);
     const sec = seconds_remain - 60 * min;
-    return {'min': min, 'sec': sec};
+
+    if (min < 0) {
+      return {'min': 0, 'sec': 0};
+    } else {
+      return {'min': min, 'sec': sec};
+    }
   }
 
   _secondsElapsed = 100;
@@ -41,7 +46,10 @@ export class RadialTimerComponent {
   constructor() { }
 
   val() {
-    this.v = Math.ceil(100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
+    const val = Math.ceil(100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
+    if (!Number.isNaN(val) && val >= 0 && val <= 100) {
+      this.v = val;
+    }
   }
 
 

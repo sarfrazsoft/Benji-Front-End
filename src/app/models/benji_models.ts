@@ -7,12 +7,6 @@ export class User {
   email: string;
 }
 
-export class LobbyStatus {
-  joined_users: User[];
-  missing_users: User[];
-  started: boolean;
-}
-
 export class Activity {
   id: number;
   session: number;
@@ -47,4 +41,7 @@ export class ActivityRun {
 export class CurrentActivityStatus {
   current_activity: Activity;
   current_activityrun: ActivityRun;
+  joined_users: User[];
+  missing_users: User[];
+  started: boolean;
 }

@@ -2,9 +2,6 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { BackendService } from '../../../services/backend.service';
 import { ActivatedRoute } from '@angular/router';
 
-import {MobileTitleComponent} from './mobile-title.component';
-import {MobileVideoActivityComponent} from './mobile-video-activity.component';
-import {MobileTPSActivityComponent} from './mobile-tps-activity.component';
 import {WebsocketService} from '../../../services/socket.service';
 import {BaseSessionComponent} from '../../shared/base-session.component';
 import {CurrentActivityStatus} from '../../../models/benji_models';

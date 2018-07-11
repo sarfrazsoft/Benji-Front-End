@@ -31,7 +31,7 @@ export class LandingComponent implements OnInit {
       console.log('Error: No runnable sessions found');
     } else {
       this.backend.start_session(1, runnable_sessions[0].session_num).subscribe(
-        resp => this.router.navigate(['/desktop/waiting-screen', {sessionRunID: resp['id']}]),
+        resp => this.router.navigate(['/desktop/session', {sessionRunID: resp['id']}]),
         err => console.log(err)
       );
     }
