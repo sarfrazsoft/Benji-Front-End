@@ -71,6 +71,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 export class DesktopTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() footer;
+  @Input() joinedUsers;
 
   thinkCountdown = 0;
   shareCountdown = 0;
@@ -101,7 +102,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
 
     if (this.mode === 'thinking' && this.stillThinking() > 0) {
       this.footer.completed = this.countPresenters();
-      this.footer.total = this.sessionDetails.sessionrunuser_set.length;
+      this.footer.total = this.joinedUsers.length;
       this.footer.statusText = 'People ready to present';
     } else if (this.mode === 'thinking' && this.stillThinking() === 0) {
       this.mode = 'sharing';
@@ -154,14 +155,12 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
 
   allPartnersFound() {
     try {
-      const target_users = this.sessionDetails.sessionrunuser_set.map(x => x.user.id);
+      const target_users = this.joinedUsers.map(x => x.id);
       const allusersjoined = target_users.every(
         x => this.activityRun.activityrunuser_set.find(y => y.user === x) !== undefined);
       const alljoineduserspartnered = this.activityRun.activityrunuser_set.every(
         x => x.activityrunuserparams_set.find(
           y => y.param_name === 'partner_found' && y.param_value === '1'));
-      console.log(allusersjoined);
-      console.log(alljoineduserspartnered);
       return allusersjoined && alljoineduserspartnered;
     } catch (err) {
       return false;

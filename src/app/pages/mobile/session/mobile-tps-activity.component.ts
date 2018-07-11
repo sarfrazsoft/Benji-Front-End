@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, OnDestroy, Input} from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -29,6 +29,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 
 export class MobileTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+  @Input() joinedUsers;
   partner = '';
   myId = -1;
   partnerFound = false;
@@ -85,7 +86,7 @@ export class MobileTPSActivityComponent extends BaseActivityComponent implements
 
   allPartnersFound() {
     try {
-      const target_users = this.sessionDetails.sessionrunuser_set.map(x => x.user.id);
+      const target_users = this.joinedUsers.map(x => x.id);
       const allusersjoined = target_users.every(
         x => this.activityRun.activityrunuser_set.find(y => y.user === x) !== undefined);
       const alljoineduserspartnered = this.activityRun.activityrunuser_set.every(

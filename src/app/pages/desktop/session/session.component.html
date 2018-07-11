@@ -8,7 +8,7 @@
                      (activityComplete)="next_activity($event)"></app-desktop-lobby>
 </div>
 
-<div *ngIf="sessionRunDetails && activityStatus && clientIdentity && sessionSocket && sessionRunDetails && activityStatus.started &&!destroyComponents">
+<div *ngIf="sessionRunDetails && activityStatus && activityStatus.current_activity && activityStatus.current_activityrun && clientIdentity && sessionSocket && sessionRunDetails && activityStatus.started &&!destroyComponents">
   <app-desktop-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
                               [activityDetails]="activityStatus.current_activity"
                               [activityRun]="activityStatus.current_activityrun"
@@ -25,6 +25,7 @@
                               [activityDetails]="activityStatus.current_activity"
                               [activityRun]="activityStatus.current_activityrun"
                               [sessionDetails]="sessionRunDetails"
+                              [joinedUsers]="activityStatus.joined_users"
                               [footer]="footer"
                               (activityComplete)="next_activity($event)"></app-desktop-activity-thinkpairshare>
 

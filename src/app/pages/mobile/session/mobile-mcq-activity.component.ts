@@ -6,7 +6,7 @@ import {BackendService} from '../../../services/backend.service';
   selector: 'app-mobile-activity-mcq',
   template:
   '<div class="mobile-content-wrap-wide" *ngIf="!answer">\n' +
-  '      <h1 class="question-header">Which is the manager of the thinking hats?</h1>' +
+  '      <h1 class="question-header">{{ activityDetails.mcqactivity.question }}</h1>' +
   '      <a class="question-button w-button" *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="submitAnswer(q)">' +
   '        <strong>{{ numToLetter(q.order) }}.</strong>  {{ q.answer }}' +
   '      </a>' +
