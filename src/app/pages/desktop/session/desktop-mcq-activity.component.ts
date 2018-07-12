@@ -28,6 +28,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 export class DesktopMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() footer;
+  @Input() joinedUsers;
   @Output() timerUp = new EventEmitter<boolean>();
 
   countdown = 0;
@@ -48,7 +49,8 @@ export class DesktopMCQActivityComponent extends BaseActivityComponent implement
 
   showAnswerMode() {
     this.showAnswer = true;
-    setTimeout(() => this.timerUp.emit(true), 7000);
+    this.countdownInterval.unsubscribe();
+    setTimeout(() => { this.timerUp.emit(true); }, 7000);
   }
 
   ngOnDestroy() {
@@ -63,9 +65,8 @@ export class DesktopMCQActivityComponent extends BaseActivityComponent implement
       x => x.activityrunuserparams_set.find(y => y.param_name === 'answer') !== undefined).length;
     this.footer.total = this.activityRun.activityrunuser_set.length;
 
-    console.log(this.sessionDetails);
-    if (this.footer.completed >= this.sessionDetails.sessionrunuser_set.length) {
-      this.timerUp.emit(true);
+    if (this.footer.completed >= this.joinedUsers.length) {
+      this.showAnswerMode();
     }
   }
 

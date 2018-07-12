@@ -38,12 +38,6 @@ export class BaseSessionComponent implements OnInit {
       () => console.log('complete'));
   }
 
-  next_activity(val: boolean) {
-    if (val) {
-      this.backend.start_next_activity(this.sessionRunID).subscribe();
-    }
-  }
-
   activityUpdate(resp: CurrentActivityStatus) {
     console.log(resp);
     if (this.activityStatus && resp.current_activity && this.activityStatus.current_activity && this.activityStatus.current_activity.id !== resp.current_activity.id) {

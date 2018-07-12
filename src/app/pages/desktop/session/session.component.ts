@@ -17,4 +17,10 @@ export class SessionComponent extends BaseSessionComponent {
   constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebsocketService) {
     super(backend, route, ws);
   }
+
+  next_activity(val: boolean) {
+    if (val) {
+      this.backend.start_next_activity(this.sessionRunID).subscribe();
+    }
+  }
 }
