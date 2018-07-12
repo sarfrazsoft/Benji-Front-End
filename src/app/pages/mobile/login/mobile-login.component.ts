@@ -18,6 +18,9 @@ export class MobileLoginComponent implements OnInit {
   constructor(private backend: BackendService, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
+    if (this.auth.isLoggedIn()) {
+      this.auth.logout();
+    }
   }
 
   formSubmit() {

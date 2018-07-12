@@ -90,9 +90,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
 
     if (this.mode === 'partnering' && !this.allPartnersFound()) {
       this.footer.completed = this.countPartners();
-      if (this.sessionDetails.sessionrunuser_set) {
-        this.footer.total = this.sessionDetails.sessionrunuser_set.length;
-      }
+      this.footer.total = this.joinedUsers.length;
       this.footer.statusText = 'People have found pairs';
     } else if (this.mode === 'partnering' && this.allPartnersFound()) {
       this.mode = 'thinking';
