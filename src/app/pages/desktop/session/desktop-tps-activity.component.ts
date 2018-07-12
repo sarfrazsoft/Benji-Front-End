@@ -140,7 +140,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
   }
 
   countRemain() {
-    return this.sessionDetails.sessionrunuser_set.length - this.countPartners();
+    return this.joinedUsers.length - this.countPartners();
   }
 
   countPresenters() {
@@ -150,7 +150,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
   }
 
   stillThinking() {
-    return this.sessionDetails.sessionrunuser_set.length - this.countPresenters();
+    return this.joinedUsers.length - this.countPresenters();
   }
 
   allPartnersFound() {
