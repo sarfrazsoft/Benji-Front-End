@@ -111,6 +111,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
     if (this.mode === 'sharing' && (this.shareIndex === -1 || this.currentPresentersDone()) ) {
       if (this.shareIndex === this.activityRun.activity_groups.length - 1) {
         this.activityComplete.emit(true);
+        this.mode = 'complete';
       } else {
         ++this.shareIndex;
         this.shareCountdown = 0;
