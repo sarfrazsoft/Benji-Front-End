@@ -18,7 +18,7 @@ export class LandingComponent implements OnInit {
 
   loginAndStart() {
     this.auth.login('admin', 'benji112').subscribe(
-      response => this.backend.get_runnable_sessions(1).subscribe(
+      response => this.backend.create_courserun(1).subscribe(
                   resp => this.checkAndStart(resp),
                   err => console.log(err)
       ),
@@ -26,14 +26,10 @@ export class LandingComponent implements OnInit {
     );
   }
 
-  checkAndStart(runnable_sessions) {
-    if (runnable_sessions.length < 1) {
-      console.log('Error: No runnable sessions found');
-    } else {
-      this.backend.start_session(1, runnable_sessions[0].session_num).subscribe(
-        resp => this.router.navigate(['/desktop/session', {sessionRunID: resp['id']}]),
-        err => console.log(err)
-      );
-    }
+  checkAndStart(courserun) {
+    this.backend.start_next_session(courserun.id).subscribe(
+      resp => this.router.navigate(['/desktop/session', {sessionRunID: resp['id']}]),
+      err => console.log(err)
+    );
   }
 }
