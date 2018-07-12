@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, Input, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, Input, OnDestroy, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 
@@ -72,6 +72,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class DesktopTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() footer;
   @Input() joinedUsers;
+  @Output() activityComplete = new EventEmitter<boolean>();
 
   thinkCountdown = 0;
   shareCountdown = 0;
@@ -82,7 +83,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
   shareIndex = -1;
   mode = 'partnering';
 
-  constructor(private backend: BackendService) { super(); }
+  constructor() { super(); }
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
@@ -111,7 +112,7 @@ export class DesktopTPSActivityComponent extends BaseActivityComponent implement
 
     if (this.mode === 'sharing' && (this.shareIndex === -1 || this.currentPresentersDone()) ) {
       if (this.shareIndex === this.activityRun.activity_groups.length - 1) {
-        this.backend.start_next_activity(this.sessionDetails.session.id).subscribe();
+        this.activityComplete.emit(true);
       } else {
         ++this.shareIndex;
         this.shareCountdown = 0;
