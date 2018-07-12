@@ -23,7 +23,13 @@ export class MobileLoginComponent implements OnInit {
   formSubmit() {
     this.auth.login(this.username, 'test').subscribe(
       resp => this.router.navigate(['/mobile/join']),
-      err => console.log(err)
+      err => this.backend.create_user(this.username).subscribe(
+        resp2 => this.auth.login(this.username, 'test').subscribe(
+          resp3 => this.router.navigate(['/mobile/join']),
+          err3 => console.log(err3)
+        ),
+        err2 => console.log(err2)
+      )
     );
   }
 

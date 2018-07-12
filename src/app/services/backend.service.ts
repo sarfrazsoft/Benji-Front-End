@@ -13,8 +13,22 @@ export class BackendService {
     return this.http.get(global.apiRoot + '/mvp/active/course/' + courserun_num + '/runnable_sessions/');
   }
 
+  // DEMO ONLY
+  create_courserun(courseID: number) {
+    return this.http.post(global.apiRoot + '/mvp/debug/courserun/', {'course': courseID, 'courserunuser_set': []});
+  }
+
+  // DEMO ONLY
+  create_user(username: string) {
+    return this.http.post(global.apiRoot + '/mvp/debug/users/', {'username': username, 'password': 'test', 'first_name': username, 'last_name': '', 'email': ''});
+  }
+
   start_session(courserun_num: number, session_num: number) {
     return this.http.post(global.apiRoot + '/mvp/active/course/' + courserun_num + '/start_session/', {'session': session_num});
+  }
+
+  start_next_session(courserun_num: number) {
+    return this.http.post(global.apiRoot + '/mvp/active/course/' + courserun_num + '/start_next_session/', {});
   }
 
   get_sessionrun_details(sessionrunID) {
