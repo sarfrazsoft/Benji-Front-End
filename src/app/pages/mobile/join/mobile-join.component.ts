@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, NgModule } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import * as ons from 'onsenui';
 
 import {BackendService} from '../../../services/backend.service';
 import {Router} from '@angular/router';
@@ -23,7 +24,7 @@ export class MobileJoinComponent implements OnInit {
   formSubmit() {
     this.backend.join_session(this.roomCode).subscribe(
       resp => this.router.navigate(['/mobile/session', {sessionRunID: resp['id']}]),
-      err => console.log(err)
+      err => ons.notification.alert('Could not find the room code entered. Please try again.')
     );
   }
 
