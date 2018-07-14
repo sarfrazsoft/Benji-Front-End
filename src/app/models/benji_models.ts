@@ -21,6 +21,7 @@ export class Activity {
   videoactivity: object;
   textqactivity: object;
   ratingqactivity: object;
+  feedbackactivity: object;
 }
 
 export class ActivityRunParam {

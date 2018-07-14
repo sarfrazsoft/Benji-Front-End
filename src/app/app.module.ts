@@ -12,8 +12,9 @@ import { TokenInterceptor } from './services/auth.interceptor';
 import { BackendService } from './services/backend.service';
 import { WebsocketService } from './services/socket.service';
 
-// Cmponents
+// Components
 import { RadialTimerComponent } from './ui-components/radial-timer.component';
+import { FeedbackPromptComponent } from './ui-components/feedback-prompt.component';
 
 // App Pages
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ import { DesktopTitleComponent } from './pages/desktop/session/desktop-title.com
 import { DesktopVideoActivityComponent } from './pages/desktop/session/desktop-video-activity.component';
 import { DesktopTPSActivityComponent } from './pages/desktop/session/desktop-tps-activity.component';
 import { DesktopMCQActivityComponent } from './pages/desktop/session/desktop-mcq-activity.component';
+import { DesktopFeedbackActivityComponent } from './pages/desktop/session/desktop-feedback-activity.component';
 import { MobileLoginComponent } from './pages/mobile/login/mobile-login.component';
 import { MobileJoinComponent } from './pages/mobile/join/mobile-join.component';
 import { MobileLobbyComponent } from './pages/mobile/session/mobile-lobby.component';
@@ -33,6 +35,7 @@ import { MobileTitleComponent } from './pages/mobile/session/mobile-title.compon
 import { MobileVideoActivityComponent } from './pages/mobile/session/mobile-video-activity.component';
 import { MobileTPSActivityComponent } from './pages/mobile/session/mobile-tps-activity.component';
 import { MobileMCQActivityComponent } from './pages/mobile/session/mobile-mcq-activity.component';
+import { MobileFeedbackActivityComponent } from './pages/mobile/session/mobile-feedback-activity.component';
 
 // Plugins
 import { MatProgressBarModule } from '@angular/material';
@@ -42,6 +45,8 @@ import { OnsenModule } from 'ngx-onsenui';
   declarations: [
     AppComponent,
     RadialTimerComponent,
+    FeedbackPromptComponent,
+
     LandingComponent,
     DesktopLobbyComponent,
     SessionComponent,
@@ -50,6 +55,8 @@ import { OnsenModule } from 'ngx-onsenui';
     DesktopVideoActivityComponent,
     DesktopTPSActivityComponent,
     DesktopMCQActivityComponent,
+    DesktopFeedbackActivityComponent,
+
     MobileLoginComponent,
     MobileJoinComponent,
     MobileLobbyComponent,
@@ -57,7 +64,8 @@ import { OnsenModule } from 'ngx-onsenui';
     MobileTitleComponent,
     MobileVideoActivityComponent,
     MobileTPSActivityComponent,
-    MobileMCQActivityComponent
+    MobileMCQActivityComponent,
+    MobileFeedbackActivityComponent
   ],
   imports: [
     AppRoutingModule,

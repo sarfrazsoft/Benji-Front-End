@@ -37,6 +37,13 @@
                                        [footer]="footer"
                                        (timerUp)="next_activity($event)"></app-desktop-activity-mcq>
 
+  <app-desktop-activity-feedback *ngIf="activityStatus && activityStatus.current_activity.feedbackactivity"
+                            [activityDetails]="activityStatus.current_activity"
+                            [activityRun]="activityStatus.current_activityrun"
+                            [sessionDetails]="sessionRunDetails"
+                            [joinedUsers]="activityStatus.joined_users"
+                            (timerUp)="next_activity($event)"></app-desktop-activity-feedback>
+
 
   <app-desktop-footer #footer [sessionName]="sessionRunDetails.session.session_name"
                       [roomCode]="sessionRunDetails.sessionrun_code"
