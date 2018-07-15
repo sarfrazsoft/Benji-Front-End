@@ -48,9 +48,11 @@ export class DesktopMCQActivityComponent extends BaseActivityComponent implement
   }
 
   showAnswerMode() {
-    this.showAnswer = true;
-    this.countdownInterval.unsubscribe();
-    setTimeout(() => { this.timerUp.emit(true); }, 7000);
+    if (!this.showAnswer) {
+      this.showAnswer = true;
+      this.countdownInterval.unsubscribe();
+      setTimeout(() => { this.timerUp.emit(true); }, 7000);
+    }
   }
 
   ngOnDestroy() {
@@ -65,7 +67,7 @@ export class DesktopMCQActivityComponent extends BaseActivityComponent implement
       x => x.activityrunuserparams_set.find(y => y.param_name === 'answer') !== undefined).length;
     this.footer.total = this.activityRun.activityrunuser_set.length;
 
-    if (this.footer.completed >= this.joinedUsers.length) {
+    if (this.footer.completed >= this.joinedUsers.length && !this.showAnswer) {
       this.showAnswerMode();
     }
   }
