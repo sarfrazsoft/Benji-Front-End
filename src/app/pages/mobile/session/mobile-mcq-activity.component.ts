@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation, OnDestroy, OnChanges, SimpleChanges, Input} from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import {BackendService} from '../../../services/backend.service';
 
@@ -7,7 +7,7 @@ import {BackendService} from '../../../services/backend.service';
   template:
   '<div class="mobile-content-wrap-wide" *ngIf="!answer">\n' +
   '      <h1 class="question-header">{{ activityDetails.mcqactivity.question }}</h1>' +
-  '      <a *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="this.selected = q" [ngClass]="getClass(q)">' +
+  '      <a *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="submitAnswer(q)" [ngClass]="getClass(q)">' +
   '        <strong>{{ numToLetter(q.order) }}.</strong>  {{ q.answer }}' +
   '      </a>' +
   '</div>' +
@@ -26,7 +26,8 @@ import {BackendService} from '../../../services/backend.service';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class MobileMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() joinedUsers;
   answer;
   selected;
   isCorrect;
@@ -35,16 +36,30 @@ export class MobileMCQActivityComponent extends BaseActivityComponent implements
   constructor(private backend: BackendService) { super(); }
 
   ngOnInit() {
-    setTimeout(() => this.submitAnswer(this.selected), (this.activityDetails.mcqactivity.timer) * 1000);
+    setTimeout(() => this.showAnswerMode(), (this.activityDetails.mcqactivity.timer) * 1000);
   }
 
   ngOnDestroy() {
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    super.ngOnChanges(changes);
+
+    const completed = this.activityRun.activityrunuser_set.filter(
+      x => x.activityrunuserparams_set.find(y => y.param_name === 'answer') !== undefined).length;
+    const total = this.activityRun.activityrunuser_set.length;
+
+    if (completed >= this.joinedUsers.length && !this.answer) {
+      this.showAnswerMode();
+    }
+  }
+
   showAnswerMode() {
-    if (!this.answer) {
+    if (!this.selected) {
       this.noAnswer = true;
       this.answer = this.activityDetails.mcqactivity.mcqanswers_set.find(x => x.is_correct);
+    } else {
+      this.answer = this.selected;
     }
   }
 
@@ -53,10 +68,11 @@ export class MobileMCQActivityComponent extends BaseActivityComponent implements
   }
 
   submitAnswer(ans) {
-    this.answer = ans;
-    this.isCorrect = ans.is_correct;
-
-    this.backend.set_activity_user_parameter(this.activityRun.id, 'answer', ans.id).subscribe();
+    if (!this.selected) {
+      this.selected = ans;
+      this.isCorrect = ans.is_correct;
+      this.backend.set_activity_user_parameter(this.activityRun.id, 'answer', ans.id).subscribe();
+    }
   }
 
   getClass(q) {
