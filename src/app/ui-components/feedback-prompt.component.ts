@@ -19,9 +19,9 @@ import {Component, Input, Output, ViewEncapsulation, EventEmitter, OnInit } from
   '<div>\n' +
   '              <div class="div-block-4" style="margin-top:10px; text-align: center">\n' +
   '                <div class="text-block-4">STRONGLY DISAGREE</div>\n' +
-  '                <div class="text-block-4">DISAGREE</div>\n' +
-  '                <div class="text-block-4">NEUTRAL</div>\n' +
-  '                <div class="text-block-4">AGREE</div>\n' +
+  '                <div class="text-block-4">&nbsp;</div>\n' +
+  '                <div class="text-block-4">&nbsp;</div>\n' +
+  '                <div class="text-block-4">&nbsp;</div>\n' +
   '                <div class="text-block-4">STRONGLY AGREE</div>\n' +
   '              </div>\n' +
   '            </div>' +
