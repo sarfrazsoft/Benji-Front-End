@@ -7,7 +7,7 @@ import {BackendService} from '../../../services/backend.service';
   template:
   '<div class="mobile-content-wrap-wide" *ngIf="!answer">\n' +
   '      <h1 class="question-header">{{ activityDetails.mcqactivity.question }}</h1>' +
-  '      <a class="question-button w-button" *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="submitAnswer(q)">' +
+  '      <a *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="this.selected = q" [ngClass]="getClass(q)">' +
   '        <strong>{{ numToLetter(q.order) }}.</strong>  {{ q.answer }}' +
   '      </a>' +
   '</div>' +
@@ -28,13 +28,14 @@ import {BackendService} from '../../../services/backend.service';
 
 export class MobileMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   answer;
+  selected;
   isCorrect;
   noAnswer;
 
   constructor(private backend: BackendService) { super(); }
 
   ngOnInit() {
-    setTimeout(() => this.showAnswerMode(), (this.activityDetails.mcqactivity.timer) * 1000);
+    setTimeout(() => this.submitAnswer(this.selected), (this.activityDetails.mcqactivity.timer) * 1000);
   }
 
   ngOnDestroy() {
@@ -56,6 +57,14 @@ export class MobileMCQActivityComponent extends BaseActivityComponent implements
     this.isCorrect = ans.is_correct;
 
     this.backend.set_activity_user_parameter(this.activityRun.id, 'answer', ans.id).subscribe();
+  }
+
+  getClass(q) {
+    if (this.selected && this.selected.id === q.id) {
+      return 'w-button selected-button';
+    } else {
+      return 'w-button question-button';
+    }
   }
 
 
