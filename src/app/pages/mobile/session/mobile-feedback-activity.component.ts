@@ -53,8 +53,8 @@ export class MobileFeedbackActivityComponent extends BaseActivityComponent imple
 
   refreshQs() {
     const feedbackActivityPrompts = this.activityDetails.feedbackactivity.feedbackprompt_set;
-    this.q1_ans = null;
-    this.q2_ans = null;
+    this.q1_ans = '';
+    this.q2_ans = '';
     this.feedback_q1 = null;
     this.feedback_q2 = null;
 
