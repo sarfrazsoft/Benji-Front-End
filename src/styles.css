@@ -1224,8 +1224,8 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    margin-right: 45px;
-    margin-left: 45px;
+    margin-right: 20px;
+    margin-left: 20px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
@@ -1429,8 +1429,8 @@
   }
   .question-header {
     color: #00178a;
-    font-size: 35px;
-    line-height: 42px;
+    font-size: 28px;
+    line-height: 35px;
     text-align: center;
   }
   .question-button {

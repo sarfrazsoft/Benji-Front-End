@@ -7,7 +7,7 @@ import {BackendService} from '../../../services/backend.service';
   template:
   '<div class="mobile-content-wrap-wide" *ngIf="!answer">\n' +
   '      <h1 class="question-header">{{ activityDetails.mcqactivity.question }}</h1>' +
-  '      <a *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="submitAnswer(q)" [ngClass]="getClass(q)">' +
+  '      <a *ngFor="let q of activityDetails.mcqactivity.mcqanswers_set" (click)="submitAnswer(q)" [ngClass]="getClass(q)" style="font-size:20px">' +
   '        <strong>{{ numToLetter(q.order) }}.</strong>  {{ q.answer }}' +
   '      </a>' +
   '</div>' +
