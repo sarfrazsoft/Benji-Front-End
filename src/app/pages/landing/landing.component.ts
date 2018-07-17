@@ -16,9 +16,9 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
   }
 
-  loginAndStart() {
+  loginAndStart(courseNum) {
     this.auth.login('admin', 'benji112').subscribe(
-      response => this.backend.create_courserun(1).subscribe(
+      response => this.backend.create_courserun(courseNum).subscribe(
                   resp => this.checkAndStart(resp),
                   err => console.log(err)
       ),
