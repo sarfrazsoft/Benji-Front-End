@@ -57,7 +57,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   '          <h1 class="small-dark-blue-header"><span class="blue text-span">{{ currentPresenterNames() }}</span> are presenting<br></h1>\n' +
   '        </div>\n' +
   '        <div class="right-body-wrap">\n' +
-  '          <h1 class="small-spaced-header" *ngIf="nextPresenters()"><span class="grey text-span-3">UP NEXT:</span> nextPresenterNames()</h1>\n' +
+  '          <h1 class="small-spaced-header" *ngIf="nextPresenters()"><span class="grey text-span-3">UP NEXT:</span> {{ nextPresenterNames() }}</h1>\n' +
   '        </div>\n' +
   '      </div>\n' +
   '    </div>\n' +
