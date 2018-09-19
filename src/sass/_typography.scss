@@ -1,0 +1,78 @@
+/*FONTS*/
+@font-face {
+    font-family: 'ProximaNovaLight';
+    src: url('../assets/fonts/ProximaNovaLight.ttf') format("truetype"),
+    url('../assets/fonts/ProximaNovaLight.woff') format("woff");
+}
+
+@font-face {
+    font-family: 'ProximaNovaRegular';
+    src: url('../assets/fonts/ProximaNovaReg.ttf') format("truetype"),
+    url('../assets/fonts/ProximaNovaReg.woff') format("woff");
+}
+
+@font-face {
+    font-family: 'ProximaNovaMedium';
+    src: url('../assets/fonts/proxima-nova-medium.ttf') format("truetype"),
+    url('../assets/fonts/proxima-nova-medium.woff') format("woff");
+  }
+
+@font-face {
+    font-family: 'ProximaNovaSemiBold';
+    src: url('../assets/fonts/proximanova-semibold-webfont.ttf') format("truetype"),
+    url('../assets/fonts/proximanova-semibold-webfont.woff') format("woff");
+}
+
+@font-face {
+    font-family: 'ProximaNovaBold';
+    src: url('../assets/fonts/ProximaNovaBold.ttf') format("truetype"),
+    url('../assets/fonts/ProximaNovaBold.woff') format("woff");
+}
+
+/*Varaibles: Font weights*/
+$pn-light: 'ProximaNovaLight', 'Open-Sans', sans-serif;
+$pn-regular: 'ProximaNovaRegular', 'Open-Sans', sans-serif;
+$pn-medium: 'ProximaNovaMedium', 'Open-Sans', sans-serif;
+$pn-semi-bold: 'ProximaNovaSemiBold', 'Open-Sans', sans-serif;
+$pn-bold: 'ProximaNovaBold', 'Open-Sans', sans-serif;
+/*end of variables*/
+
+
+/*Utilities: Font weights*/
+.pn-200 {
+  font-family: $pn-light;
+  font-weight: 200;
+}
+
+.pn-400 {
+  font-family: $pn-regular;
+  font-weight: 400;
+}
+
+.pn-500 {
+  font-family: $pn-medium;
+  font-weight: 500;
+}
+
+.pn-600 {
+  font-family: $pn-semi-bold;
+  font-weight: 600;
+}
+
+.pn-700 {
+  font-family: $pn-bold;
+  font-weight: 700;
+}
+/*End of font weights*/
+
+
+/*Global Defaults*/
+body {
+  @extend .pn-400;
+}
+/*End of Global Defaults*/
+
+
+/*Legacy Type Styles (To be re written)*/
+
+/*End of Legacy Type Styles*/

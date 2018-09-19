@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as global from '../globals';
 
-import {CurrentActivityStatus, User} from '../models/benji_models';
+import { CurrentActivityStatus } from '../models/activity';
+import { User } from '../models/user';
 import {Observable} from 'rxjs';
 
 @Injectable()

@@ -3,11 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LandingComponent } from './pages/landing/landing.component';
 
-import { SessionComponent } from './pages/desktop/session/session.component';
+import { SessionComponent } from './pages/main-screen/session/session.component';
 
-import { MobileLoginComponent } from './pages/mobile/login/mobile-login.component';
-import { MobileJoinComponent } from './pages/mobile/join/mobile-join.component';
-import { MobileSessionComponent } from './pages/mobile/session/mobile-session.component';
+import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
+import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
+import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
 
 
 const routes: Routes = [
@@ -16,9 +16,9 @@ const routes: Routes = [
 
   { path: 'desktop/session', component: SessionComponent },
 
-  { path: 'mobile/login', component: MobileLoginComponent },
-  { path: 'mobile/join', component: MobileJoinComponent },
-  { path: 'mobile/session', component: MobileSessionComponent },
+  { path: 'participant/login', component: ParticipantLoginComponent },
+  { path: 'participant/join', component: ParticipantJoinComponent },
+  { path: 'participant/session', component: ParticipantSessionComponent },
 ];
 
 

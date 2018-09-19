@@ -1,0 +1,49 @@
+<app-primary-navbar></app-primary-navbar>
+
+<div *ngIf="sessionRunDetails && activityStatus && !activityStatus.started">
+  <app-desktop-lobby [joinedUsers]="activityStatus.joined_users"
+                     [sessionDetails]="sessionRunDetails"
+                     (activityComplete)="next_activity($event)"></app-desktop-lobby>
+</div>
+
+<div *ngIf="sessionRunDetails && activityStatus && activityStatus.current_activity && activityStatus.current_activityrun && clientIdentity && sessionSocket && sessionRunDetails && activityStatus.started &&!destroyComponents">
+  <app-desktop-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
+                              [activityDetails]="activityStatus.current_activity"
+                              [activityRun]="activityStatus.current_activityrun"
+                              [sessionDetails]="sessionRunDetails"
+                              (timerUp)="next_activity($event)"></app-desktop-activity-title>
+
+  <app-desktop-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
+                              [activityDetails]="activityStatus.current_activity"
+                              [activityRun]="activityStatus.current_activityrun"
+                              [sessionDetails]="sessionRunDetails"
+                              (videoComplete)="next_activity($event)"></app-desktop-activity-video>
+
+  <app-desktop-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
+                              [activityDetails]="activityStatus.current_activity"
+                              [activityRun]="activityStatus.current_activityrun"
+                              [sessionDetails]="sessionRunDetails"
+                              [joinedUsers]="activityStatus.joined_users"
+                              [footer]="footer"
+                              (activityComplete)="next_activity($event)"></app-desktop-activity-thinkpairshare>
+
+  <app-desktop-activity-mcq *ngIf="activityStatus && activityStatus.current_activity.mcqactivity"
+                                       [activityDetails]="activityStatus.current_activity"
+                                       [activityRun]="activityStatus.current_activityrun"
+                                       [sessionDetails]="sessionRunDetails"
+                                       [joinedUsers]="activityStatus.joined_users"
+                                       [footer]="footer"
+                                       (timerUp)="next_activity($event)"></app-desktop-activity-mcq>
+
+  <app-desktop-activity-feedback *ngIf="activityStatus && activityStatus.current_activity.feedbackactivity"
+                            [activityDetails]="activityStatus.current_activity"
+                            [activityRun]="activityStatus.current_activityrun"
+                            [sessionDetails]="sessionRunDetails"
+                            [joinedUsers]="activityStatus.joined_users"
+                            (timerUp)="next_activity($event)"></app-desktop-activity-feedback>
+
+
+  <app-desktop-footer #footer [sessionName]="sessionRunDetails.session.session_name"
+                      [roomCode]="sessionRunDetails.sessionrun_code"
+                      [showProgress]="false"></app-desktop-footer>
+</div>

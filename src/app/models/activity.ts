@@ -1,15 +1,6 @@
-/**
- * These can all be interfaces as they describe objects but don't create them or implement them.
- */
-export class User {
-  id: number;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-}
+import { User } from '../models/user';
 
-export class Activity {
+export interface Activity {
   id: number;
   session: number;
   activity_num: number;
@@ -26,12 +17,12 @@ export class Activity {
   feedbackactivity: object;
 }
 
-export class ActivityRunParam {
+export interface ActivityRunParam {
   param_name: string;
   param_value: string;
 }
 
-export class ActivityRun {
+export interface ActivityRun {
   id: number;
   activityrunuser_set: User[];
   activity_groups: User[][];
@@ -41,7 +32,7 @@ export class ActivityRun {
   end_time: string;
 }
 
-export class CurrentActivityStatus {
+export interface CurrentActivityStatus {
   current_activity: Activity;
   current_activityrun: ActivityRun;
   joined_users: User[];

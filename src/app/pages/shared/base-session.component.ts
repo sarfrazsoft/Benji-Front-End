@@ -4,7 +4,8 @@ import {BackendService} from '../../services/backend.service';
 import {ActivatedRoute} from '@angular/router';
 import {WebsocketService} from '../../services/socket.service';
 
-import {CurrentActivityStatus, User} from '../../models/benji_models';
+import { CurrentActivityStatus } from '../../models/activity';
+import { User } from '../../models/user';
 
 
 export class BaseSessionComponent implements OnInit {

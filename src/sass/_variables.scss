@@ -1,0 +1,82 @@
+/* COLORS */
+
+/* Variables: Colors */
+$vibrant-blue: #0a4cef;
+$brownish-grey: #6c6c6c;
+$indigo-blue: #4c188f;
+$deep-blue: #00178a;
+$lightish-red: #ee3e53;
+$cloudy-grey: #bec8ca;
+$dodger-blue: #4c83fc;
+$pale-grey: #dfe5e7;
+/* End of Variables*/
+
+
+/* Utilities: Backgrounds */
+.bg-vibrant-blue {
+  background: $vibrant-blue;
+}
+
+.bg-brownish-grey {
+  background: $brownish-grey;
+}
+
+.bg-indigo-blue {
+  background: $indigo-blue;
+}
+
+.bg-deep-blue {
+  background: $deep-blue;
+}
+
+.bg-lightish-red {
+  background: $lightish-red;
+}
+
+.bg-cloudy-grey {
+  background: $cloudy-grey;
+}
+
+.bg-dodger-blue {
+  background: $dodger-blue;
+}
+
+.bg-pale-grey {
+  background: $pale-grey;
+}
+/* End Of Backgrounds */
+
+
+/* Utilities: Font Colors */
+.vibrant-blue {
+  color: $vibrant-blue;
+}
+
+.brownish-grey {
+  color: $brownish-grey;
+}
+
+.indigo-blue {
+  color: $indigo-blue;
+}
+
+.deep-blue {
+  color: $deep-blue;
+}
+
+.lightish-red {
+  color: $lightish-red;
+}
+
+.cloudy-grey {
+  color: $cloudy-grey;
+}
+
+.dodger-blue {
+  color: $dodger-blue;
+}
+
+.pale-grey {
+  color: $pale-grey;
+}
+/* End of font colors*/

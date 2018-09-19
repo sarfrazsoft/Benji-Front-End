@@ -1,0 +1,20 @@
+.flexer {
+  display: flex;
+}
+.flexer--space-between {
+  @extend .flexer;
+  justify-content: space-between;
+}
+.flexer--space-around {
+  @extend .flexer;
+  justify-content: space-around;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-direction--column {
+  flex-direction: column;
+}
+.flex-direction--row {
+  flex-direction: row;
+}
