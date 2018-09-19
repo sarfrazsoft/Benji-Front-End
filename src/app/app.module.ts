@@ -13,8 +13,8 @@ import { BackendService } from './services/backend.service';
 import { WebsocketService } from './services/socket.service';
 
 // Components
-import { RadialTimerComponent } from './ui-components/radial-timer.component';
-import { FeedbackPromptComponent } from './ui-components/feedback-prompt.component';
+import { RadialTimerComponent } from './ui-components/radial-timer/radial-timer.component';
+import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedback-prompt.component';
 
 // App Pages
 import { AppComponent } from './app.component';

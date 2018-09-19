@@ -2,13 +2,7 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-radial-timer',
-  template:
-    '<div class="timer-container">' +
-    '  <div class="timer-svg">' +
-    '    <ons-progress-circular style="width: 250px; height: 250px" modifier="blue" [value]="v"></ons-progress-circular>' +
-    '  </div>' +
-    '  <div class="timer-centered number-text" style="color: #1248F2">{{ getTimer(_secondsElapsed, _totalSeconds).min | number:\'1.0-0\'}}:{{ getTimer(_secondsElapsed, _totalSeconds).sec | number:\'2.0-0\' }}</div>' +
-    '</div>',
+  templateUrl: './radial-timer.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })
