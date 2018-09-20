@@ -2,7 +2,7 @@ import {Component, OnInit, ViewEncapsulation, OnDestroy, Input} from '@angular/c
 import {BaseActivityComponent} from '../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-mobile-lobby',
+  selector: 'app-participant-lobby',
   templateUrl: './participant-lobby.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None

@@ -5,8 +5,8 @@ import {interval} from 'rxjs/internal/observable/interval';
 import { BaseActivityComponent } from '../../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-desktop-activity-mcq',
-  templateUrl: './desktop-mcq-activity.html',
+  selector: 'app-mainscreen-activity-mcq',
+  templateUrl: './main-screen-mcq-activity.component.html',
   styleUrls: [],
 })
 

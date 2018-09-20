@@ -5,19 +5,8 @@ import {interval} from 'rxjs/internal/observable/interval';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-desktop-activity-title',
-  template: '<div class="centred-aligned-screen-body-wpb">\n' +
-  '    <div class="wide-content-slide-wrap">\n' +
-  '      <h1 class="content-header">{{ sessionDetails.session.session_name }}</h1>\n' +
-  '      <div class="grey-text">This session will take about {{ sessionDetails.session.session_length }} minutes.<br>Here’s what we’ll do.<br></div>\n' +
-  '      <div class="bordered-text-wrap-div">\n' +
-  '        <div class="left-alligned-grey-text" [innerHTML]="sessionDetails.session.session_description"></div>\n' +
-  '      </div>\n' +
-  '    </div>\n' +
-  '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="countdown * 10 / activityDetails.titleactivity.timer"></mat-progress-bar>' +
-  '    </div>\n' +
-  '  </div>',
+  selector: 'app-mainscreen-activity-title',
+  templateUrl: './main-screen-title.component.html' ,
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

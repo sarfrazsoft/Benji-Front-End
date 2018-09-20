@@ -1,0 +1,12 @@
+<div class="centred-aligned-screen-body-wpb">
+      <div class="wide-content-slide-wrap">
+        <h1 class="content-header">{{ sessionDetails.session.session_name }}</h1>
+        <div class="grey-text">This session will take about {{ sessionDetails.session.session_length }} minutes.<br>Here’s what we’ll do.<br></div>
+        <div class="bordered-text-wrap-div">
+          <div class="left-alligned-grey-text" [innerHTML]="sessionDetails.session.session_description"></div>
+        </div>
+      </div>
+      <div class="timer-bar">
+        <mat-progress-bar mode="determinate" [value]="countdown * 10 / activityDetails.titleactivity.timer"></mat-progress-bar>' +
+      </div>
+  </div>

@@ -5,8 +5,8 @@ import {interval} from 'rxjs/internal/observable/interval';
 import { BaseActivityComponent } from '../../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-desktop-activity-feedback',
-  templateUrl: './desktop-feedback-activity.component.html',
+  selector: 'app-mainscreen-activity-feedback',
+  templateUrl: './main-screen-feedback-activity.component.html',
   styleUrls: []
 })
 

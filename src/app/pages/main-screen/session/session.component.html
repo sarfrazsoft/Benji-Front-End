@@ -1,49 +1,49 @@
 <app-primary-navbar></app-primary-navbar>
 
 <div *ngIf="sessionRunDetails && activityStatus && !activityStatus.started">
-  <app-desktop-lobby [joinedUsers]="activityStatus.joined_users"
+  <app-mainscreen-lobby [joinedUsers]="activityStatus.joined_users"
                      [sessionDetails]="sessionRunDetails"
-                     (activityComplete)="next_activity($event)"></app-desktop-lobby>
+                     (activityComplete)="next_activity($event)"></app-mainscreen-lobby>
 </div>
 
 <div *ngIf="sessionRunDetails && activityStatus && activityStatus.current_activity && activityStatus.current_activityrun && clientIdentity && sessionSocket && sessionRunDetails && activityStatus.started &&!destroyComponents">
-  <app-desktop-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
+  <app-mainscreen-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
                               [activityDetails]="activityStatus.current_activity"
                               [activityRun]="activityStatus.current_activityrun"
                               [sessionDetails]="sessionRunDetails"
-                              (timerUp)="next_activity($event)"></app-desktop-activity-title>
+                              (timerUp)="next_activity($event)"></app-mainscreen-activity-title>
 
-  <app-desktop-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
+  <app-mainscreen-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
                               [activityDetails]="activityStatus.current_activity"
                               [activityRun]="activityStatus.current_activityrun"
                               [sessionDetails]="sessionRunDetails"
-                              (videoComplete)="next_activity($event)"></app-desktop-activity-video>
+                              (videoComplete)="next_activity($event)"></app-mainscreen-activity-video>
 
-  <app-desktop-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
+  <app-mainscreen-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
                               [activityDetails]="activityStatus.current_activity"
                               [activityRun]="activityStatus.current_activityrun"
                               [sessionDetails]="sessionRunDetails"
                               [joinedUsers]="activityStatus.joined_users"
                               [footer]="footer"
-                              (activityComplete)="next_activity($event)"></app-desktop-activity-thinkpairshare>
+                              (activityComplete)="next_activity($event)"></app-mainscreen-activity-thinkpairshare>
 
-  <app-desktop-activity-mcq *ngIf="activityStatus && activityStatus.current_activity.mcqactivity"
+  <app-mainscreen-activity-mcq *ngIf="activityStatus && activityStatus.current_activity.mcqactivity"
                                        [activityDetails]="activityStatus.current_activity"
                                        [activityRun]="activityStatus.current_activityrun"
                                        [sessionDetails]="sessionRunDetails"
                                        [joinedUsers]="activityStatus.joined_users"
                                        [footer]="footer"
-                                       (timerUp)="next_activity($event)"></app-desktop-activity-mcq>
+                                       (timerUp)="next_activity($event)"></app-mainscreen-activity-mcq>
 
-  <app-desktop-activity-feedback *ngIf="activityStatus && activityStatus.current_activity.feedbackactivity"
+  <app-mainscreen-activity-feedback *ngIf="activityStatus && activityStatus.current_activity.feedbackactivity"
                             [activityDetails]="activityStatus.current_activity"
                             [activityRun]="activityStatus.current_activityrun"
                             [sessionDetails]="sessionRunDetails"
                             [joinedUsers]="activityStatus.joined_users"
-                            (timerUp)="next_activity($event)"></app-desktop-activity-feedback>
+                            (timerUp)="next_activity($event)"></app-mainscreen-activity-feedback>
 
 
-  <app-desktop-footer #footer [sessionName]="sessionRunDetails.session.session_name"
+  <app-mainscreen-footer #footer [sessionName]="sessionRunDetails.session.session_name"
                       [roomCode]="sessionRunDetails.sessionrun_code"
-                      [showProgress]="false"></app-desktop-footer>
+                      [showProgress]="false"></app-mainscreen-footer>
 </div>

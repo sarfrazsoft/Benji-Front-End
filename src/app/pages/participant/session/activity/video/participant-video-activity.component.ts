@@ -4,13 +4,8 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
 
 
 @Component({
-  selector: 'app-mobile-activity-video',
-  template:
-  '<div class="mobile-content-wrap">\n' +
-  '    <div class="mobile-content-wrap-center"><img src="assets/img/cam.png" height="100">\n' +
-  '    <h1 class="heading-2">Tune in</h1>\n' +
-  '    <div class="mobile-text">{{ activityDetails.description }}<br></div>\n' +
-  '</div>\n',
+  selector: 'app-participant-activity-video',
+  templateUrl: './participant-video-activity.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

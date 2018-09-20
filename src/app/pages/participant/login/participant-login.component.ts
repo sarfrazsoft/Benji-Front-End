@@ -25,10 +25,10 @@ export class ParticipantLoginComponent implements OnInit {
 
   formSubmit() {
     this.auth.login(this.username, 'test').subscribe(
-      resp => this.router.navigate(['/mobile/join']),
+      resp => this.router.navigate(['/participant/join']),
       err => this.backend.create_user(this.username).subscribe(
         resp2 => this.auth.login(this.username, 'test').subscribe(
-          resp3 => this.router.navigate(['/mobile/join']),
+          resp3 => this.router.navigate(['/participant/join']),
           err3 => console.log(err3)
         ),
         err2 => console.log(err2)

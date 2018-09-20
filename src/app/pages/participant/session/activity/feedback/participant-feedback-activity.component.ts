@@ -3,23 +3,8 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
 import {BackendService} from '../../../../../services/backend.service';
 
 @Component({
-  selector: 'app-mobile-activity-feedback',
-  template:
-  '<div class="mobile-content-wrap-wide" *ngIf="feedback_q1 || feedback_q2">\n' +
-  '      <h1 class="benji-blue-header">Review</h1>\n' +
-  '      <div class="form-block-2 w-form">\n' +
-  '        <form id="feedback-form" name="feedback-form" data-name="Feedback Form">\n' +
-  '          <app-feedback-prompt *ngIf="feedback_q1" [prompt]="feedback_q1" (value)="q1_ans = $event"></app-feedback-prompt>' +
-  '          <app-feedback-prompt *ngIf="feedback_q2" [prompt]="feedback_q2" (value)="q2_ans = $event"></app-feedback-prompt>' +
-  '          <input type="button" value="Submit"  (click)="submitAnswer()" class="benji-blue-button w-button">' +
-  '        </form>\n' +
-  '    </div>\n' +
-  '</div>' +
-  '<div class="mobile-content-wrap" *ngIf="!feedback_q1 && !feedback_q2">\n' +
-  '    <div class="mobile-content-wrap-wide"><img src="assets/img/party-popper_1f389.png" height="100">\n' +
-  '      <h1 class="heading-2">Thanks!</h1>\n' +
-  '      <div class="mobile-text">Thank you for sharing your feedback!</div>\n' +
-  '  </div>',
+  selector: 'app-participant-activity-feedback',
+  templateUrl: './participant-feedback-activity.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

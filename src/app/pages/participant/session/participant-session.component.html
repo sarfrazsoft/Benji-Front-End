@@ -2,39 +2,39 @@
 <div class="mobile-content-wrap">
 
   <div *ngIf="activityStatus && clientIdentity && !activityStatus.started">
-    <app-mobile-lobby [clientIdentity]="clientIdentity"
-                               [joinedUsers]="activityStatus.joined_users"></app-mobile-lobby>
+    <app-participant-lobby [clientIdentity]="clientIdentity"
+                               [joinedUsers]="activityStatus.joined_users"></app-participant-lobby>
   </div>
 
   <div *ngIf="sessionRunDetails && activityStatus && clientIdentity && sessionSocket && activityStatus.started && activityStatus.current_activity && activityStatus.current_activityrun && !destroyComponents">
 
-    <app-mobile-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
+    <app-participant-activity-title *ngIf="activityStatus && activityStatus.current_activity.titleactivity"
                                 [activityDetails]="activityStatus.current_activity"
-                                [sessionDetails]="sessionRunDetails"></app-mobile-activity-title>
+                                [sessionDetails]="sessionRunDetails"></app-participant-activity-title>
 
-    <app-mobile-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
+    <app-participant-activity-video *ngIf="activityStatus && activityStatus.current_activity.videoactivity"
                                 [activityDetails]="activityStatus.current_activity"
-                                [sessionDetails]="sessionRunDetails"></app-mobile-activity-video>
+                                [sessionDetails]="sessionRunDetails"></app-participant-activity-video>
 
-    <app-mobile-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
+    <app-participant-activity-thinkpairshare *ngIf="activityStatus && activityStatus.current_activity.thinkpairshareactivity"
                                          [activityDetails]="activityStatus.current_activity"
                                          [activityRun]="activityStatus.current_activityrun"
                                          [sessionDetails]="sessionRunDetails"
                                          [clientIdentity]="clientIdentity"
-                                         [joinedUsers]="activityStatus.joined_users"></app-mobile-activity-thinkpairshare>
+                                         [joinedUsers]="activityStatus.joined_users"></app-participant-activity-thinkpairshare>
 
-    <app-mobile-activity-mcq *ngIf="activityStatus && activityStatus.current_activity.mcqactivity"
+    <app-participant-activity-mcq *ngIf="activityStatus && activityStatus.current_activity.mcqactivity"
                                         [activityDetails]="activityStatus.current_activity"
                                         [activityRun]="activityStatus.current_activityrun"
                                         [sessionDetails]="sessionRunDetails"
                                         [clientIdentity]="clientIdentity"
-                                        [joinedUsers]="activityStatus.joined_users"></app-mobile-activity-mcq>
+                                        [joinedUsers]="activityStatus.joined_users"></app-participant-activity-mcq>
 
-    <app-mobile-activity-feedback *ngIf="activityStatus && activityStatus.current_activity.feedbackactivity"
+    <app-participant-activity-feedback *ngIf="activityStatus && activityStatus.current_activity.feedbackactivity"
                              [activityDetails]="activityStatus.current_activity"
                              [activityRun]="activityStatus.current_activityrun"
                              [sessionDetails]="sessionRunDetails"
-                             [clientIdentity]="clientIdentity"></app-mobile-activity-feedback>
+                             [clientIdentity]="clientIdentity"></app-participant-activity-feedback>
   </div>
 
 </div>

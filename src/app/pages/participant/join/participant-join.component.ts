@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 
 @Component({
-  selector: 'app-mobile-join',
+  selector: 'app-participant-join',
   templateUrl: './participant-join.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None

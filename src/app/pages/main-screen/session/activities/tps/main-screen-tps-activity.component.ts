@@ -7,64 +7,8 @@ import {interval} from 'rxjs/internal/observable/interval';
 import { BaseActivityComponent } from '../../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-desktop-activity-thinkpairshare',
-  template: '<div class="centred-aligned-screen-body-wpb" *ngIf="mode === \'partnering\'">\n' +
-  '    <div class="content-slide-wrap"><img src="assets/img/Partner.png" height="115">\n' +
-  '      <h1 class="content-header">Find your partner</h1>\n' +
-  '      <div class="grey-text"><strong>Press "Ready" when you’re ready for the discussion question.</strong><br></div>\n' +
-  '    </div>\n' +
-  '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="indeterminate"></mat-progress-bar>' +
-  '    </div>\n' +
-  '  </div>\n' +
-  '<div class="vertical-stack-body-div" *ngIf="mode === \'thinking\'">\n' +
-  '    <div class="content-wrap">\n' +
-  '    <div class="screen-header-wrap">\n' +
-  '      <div class="left-header-wrap">\n' +
-  '        <h1 class="screen-header">Pair &amp; Share</h1>\n' +
-  '      </div>\n' +
-  '      <div class="right-header-wrap">\n' +
-  '        <div class="screen-text">Discuss the prompt with your partner for {{ activityDetails.thinkpairshareactivity.think_timer / 60 }} minutes, then get ready to share your ideas with the rest of the group.<br></div>\n' +
-  '      </div>\n' +
-  '    </div>\n' +
-  '    </div>\n' +
-  '    <div class="body-div-wrap">\n' +
-  '      <h1 class="subheader">Discussion question</h1>\n' +
-  '      <div class="body-content-no-border">\n' +
-  '        <div class="left-body-wrap">\n' +
-  '          <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>\n' +
-  '        </div>\n' +
-  '        <div class="right-body-wrap">' +
-  '          <app-radial-timer [secondsElapsed]="thinkCountdown / 10" [totalSeconds]="activityDetails.thinkpairshareactivity.think_timer"></app-radial-timer>' +
-  '        </div>\n' +
-  '      </div>\n' +
-  '    </div>\n' +
-  '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="thinkCountdown * 10 / activityDetails.thinkpairshareactivity.think_timer"></mat-progress-bar>' +
-  '    </div>\n' +
-  '  </div>\n' +
-  '  <div class="centred-aligned-screen-body" *ngIf="mode === \'sharing\'">\n' +
-  '    <div class="wide-body-wrap">\n' +
-  '      <h1 class="subheader">Discussion question</h1>\n' +
-  '      <div class="body-content-divider">\n' +
-  '        <div class="left-body-wrap">\n' +
-  '          <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>\n' +
-  '        </div>\n' +
-  '        <div class="right-body-wrap"><app-radial-timer [secondsElapsed]="shareCountdown / 10" [totalSeconds]="activityDetails.thinkpairshareactivity.share_timer"></app-radial-timer></div>\n' +
-  '      </div>\n' +
-  '      <div class="lower-content-wrap">\n' +
-  '        <div class="left-body-wrap">\n' +
-  '          <h1 class="small-dark-blue-header"><span class="blue text-span">{{ currentPresenterNames() }}</span> are presenting<br></h1>\n' +
-  '        </div>\n' +
-  '        <div class="right-body-wrap">\n' +
-  '          <h1 class="small-spaced-header" *ngIf="nextPresenters()"><span class="grey text-span-3">UP NEXT:</span> {{ nextPresenterNames() }}</h1>\n' +
-  '        </div>\n' +
-  '      </div>\n' +
-  '    </div>\n' +
-  '    <div class="timer-bar">\n' +
-  '      <mat-progress-bar mode="determinate" [value]="shareCountdown * 10 / activityDetails.thinkpairshareactivity.share_timer"></mat-progress-bar>' +
-  '    </div>\n' +
-  '  </div>',
+  selector: 'app-mainscreen-activity-thinkpairshare',
+  templateUrl: './main-screen-tps-activity.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

@@ -1,0 +1,48 @@
+  <div class="vertical-stack-body-div" *ngIf="mode === 'thinking'">
+     <div class="content-wrap">
+     <div class="screen-header-wrap">
+       <div class="left-header-wrap">
+         <h1 class="screen-header">Pair &amp; Share</h1>
+       </div>
+       <div class="right-header-wrap">
+         <div class="screen-text">Discuss the prompt with your partner for {{ activityDetails.thinkpairshareactivity.think_timer / 60 }} minutes, then get ready to share your ideas with the rest of the group.<br></div>
+       </div>
+     </div>
+     </div>
+     <div class="body-div-wrap">
+       <h1 class="subheader">Discussion question</h1>
+       <div class="body-content-no-border">
+         <div class="left-body-wrap">
+           <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>
+         </div>
+         <div class="right-body-wrap">
+           <app-radial-timer [secondsElapsed]="thinkCountdown / 10" [totalSeconds]="activityDetails.thinkpairshareactivity.think_timer"></app-radial-timer>
+         </div>
+       </div>
+     </div>
+     <div class="timer-bar">
+       <mat-progress-bar mode="determinate" [value]="thinkCountdown * 10 / activityDetails.thinkpairshareactivity.think_timer"></mat-progress-bar>
+     </div>
+   </div>
+   <div class="centred-aligned-screen-body" *ngIf="mode === 'sharing'">
+     <div class="wide-body-wrap">
+       <h1 class="subheader">Discussion question</h1>
+       <div class="body-content-divider">
+         <div class="left-body-wrap">
+           <h1 class="dark-blue-header">{{ activityDetails.thinkpairshareactivity.question_text }}<br></h1>
+         </div>
+         <div class="right-body-wrap"><app-radial-timer [secondsElapsed]="shareCountdown / 10" [totalSeconds]="activityDetails.thinkpairshareactivity.share_timer"></app-radial-timer></div>
+       </div>
+       <div class="lower-content-wrap">
+         <div class="left-body-wrap">
+           <h1 class="small-dark-blue-header"><span class="blue text-span">{{ currentPresenterNames() }}</span> are presenting<br></h1>
+         </div>
+         <div class="right-body-wrap">
+           <h1 class="small-spaced-header" *ngIf="nextPresenters()"><span class="grey text-span-3">UP NEXT:</span> {{ nextPresenterNames() }}</h1>
+         </div>
+       </div>
+     </div>
+     <div class="timer-bar">
+       <mat-progress-bar mode="determinate" [value]="shareCountdown * 10 / activityDetails.thinkpairshareactivity.share_timer"></mat-progress-bar>
+     </div>
+   </div>

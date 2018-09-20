@@ -25,8 +25,8 @@ import { DesktopFooterComponent } from './pages/main-screen/session/footer/main-
 import { DesktopTitleComponent } from './pages/main-screen/session/title/main-screen-title.component';
 import { DesktopVideoActivityComponent } from './pages/main-screen/session/activities/video/main-screen-video-activity.component';
 import { DesktopTPSActivityComponent } from './pages/main-screen/session/activities/tps/main-screen-tps-activity.component';
-import { DesktopMCQActivityComponent } from './pages/main-screen/session/activities/mcq/desktop-mcq-activity.component';
-import { DesktopFeedbackActivityComponent } from './pages/main-screen/session/activities/feedback/desktop-feedback-activity.component';
+import { DesktopMCQActivityComponent } from './pages/main-screen/session/activities/mcq/main-screen-mcq-activity.component';
+import { DesktopFeedbackActivityComponent } from './pages/main-screen/session/activities/feedback/main-screen-feedback-activity.component';
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
 import { MobileLobbyComponent } from './pages/participant/session/lobby/participant-lobby.component';

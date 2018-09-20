@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseSessionComponent } from '../../shared/base-session.component';
 
 @Component({
-  selector: 'app-desktop-session',
+  selector: 'app-mainscreen-session',
   templateUrl: './session.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None

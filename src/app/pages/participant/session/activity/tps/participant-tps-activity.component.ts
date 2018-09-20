@@ -3,27 +3,8 @@ import {BackendService} from '../../../../../services/backend.service';
 import { BaseActivityComponent } from '../../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-mobile-activity-thinkpairshare',
-  template: '<div class="mobile-content-wrap-wide" *ngIf="!allPartnersFound()">\n' +
-  '    <img src="assets/img/Partner.png" height="100">\n' +
-  '    <h1 class="heading-2">Your partner is {{ partner }} </h1>\n' +
-  '      <div class="mobile-text" *ngIf="!partnerFound">Find your partner and hit ready when you’re both ready to start. </div>' +
-  '      <div class="mobile-text" *ngIf="partnerFound">Waiting for everyone else to find their partners. </div>' +
-  '        <a (click)="indicateReady()" class="dark-blue-button w-button" *ngIf="!partnerFound">Ready</a>\n' +
-  '     </div>\n' +
-  '<div class="mobile-content-wrap-wide" *ngIf="allPartnersFound() && !myTurnToPresent()">\n' +
-  '    <img src="assets/img/thinking-face_1f914.png" height="100">\n' +
-  '    <h1 class="heading-2">Pair and share </h1>\n' +
-  '      <div class="mobile-text">Discuss the prompt with your partner and get ready to share with the group.<br><br>Finished early? Hit Done.<br></div>' +
-  '        <a (click)="indicateThinkingDone()" class="dark-blue-button w-button" *ngIf="!thinkingDone">Done</a>\n' +
-  '        <a class="dark-blue-button w-button" *ngIf="thinkingDone">Waiting</a>\n' +
-  '     </div>\n' +
-  '<div class="mobile-content-wrap-wide" *ngIf="myTurnToPresent()">\n' +
-    '    <img src="assets/img/studio-microphone_1f399.png" height="100">\n' +
-  '    <h1 class="heading-2">Your turn </h1>\n' +
-  '      <div class="mobile-text">Share your ideas with the group.<br></div>' +
-  '        <a (click)="indicateSharingDone()" class="dark-blue-button w-button">Done</a>\n' +
-  '     </div>\n',
+  selector: 'app-participant-activity-thinkpairshare',
+  templateUrl: './participant-tps-activity.component.html' ,
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

@@ -2,7 +2,7 @@ import {Component, Input, Output, OnInit, OnDestroy, ViewEncapsulation, EventEmi
 import {BaseActivityComponent} from '../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-desktop-lobby',
+  selector: 'app-mainscreen-lobby',
   templateUrl: './main-screen-lobby.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None

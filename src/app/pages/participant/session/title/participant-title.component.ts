@@ -4,11 +4,8 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 
 @Component({
-  selector: 'app-mobile-activity-title',
-  template: '<div class="mobile-content-wrap-wide">\n' +
-  '    <h1 class="heading-2">{{ sessionDetails.session.session_name }}</h1>\n' +
-  '      <div class="mobile-text">Get ready to begin! </div>\n' +
-  '     </div>\n',
+  selector: 'app-participant-activity-title',
+  templateUrl: './participant-title.component.html' ,
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

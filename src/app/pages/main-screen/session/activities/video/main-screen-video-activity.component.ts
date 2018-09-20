@@ -3,15 +3,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { BaseActivityComponent } from '../../../../shared/base-activity.component';
 
 @Component({
-  selector: 'app-desktop-activity-video',
-  template:
-    '<div class="centred-aligned-screen-body-wpb"> \
-        <h1 class="content-header" style="font-size: 35px; margin-top:15px">{{ activityDetails.title }}</h1> \
-        <div> \
-          <iframe [src]=\'safeURL\' frameborder="0" allowfullscreen style="width:912px; height:513px;" allow="autoplay"></iframe>\
-        </div> \
-        <a class="welcome-button w-button" (click)="videoComplete.emit(true)" style="font-size: 25px">Next Activity</a> \
-     </div>',
+  selector: 'app-mainscreen-activity-video',
+  templateUrl: './main-screen-video-activity.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })

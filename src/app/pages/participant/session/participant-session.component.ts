@@ -8,7 +8,7 @@ import { CurrentActivityStatus } from '../../../models/activity';
 
 
 @Component({
-  selector: 'app-mobile-session',
+  selector: 'app-participant-session',
   templateUrl: './participant-session.component.html',
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
