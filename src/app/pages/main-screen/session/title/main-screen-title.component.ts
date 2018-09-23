@@ -11,7 +11,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopTitleComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class MainScreenTitleComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Output() timerUp = new EventEmitter<boolean>();
 
   countdown = 0;

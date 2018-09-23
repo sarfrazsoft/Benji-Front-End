@@ -8,7 +8,7 @@ import {BaseActivityComponent} from '../../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class ParticipantLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Input() joinedUsers;
 
   ngOnInit() {

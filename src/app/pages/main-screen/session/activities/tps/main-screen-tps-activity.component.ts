@@ -13,7 +13,7 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+export class MainScreenTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() footer;
   @Input() joinedUsers;
   @Output() activityComplete = new EventEmitter<boolean>();

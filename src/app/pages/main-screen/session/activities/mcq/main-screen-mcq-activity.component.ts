@@ -10,7 +10,7 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
   styleUrls: [],
 })
 
-export class DesktopMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+export class MainScreenMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() footer;
   @Input() joinedUsers;
   @Output() timerUp = new EventEmitter<boolean>();

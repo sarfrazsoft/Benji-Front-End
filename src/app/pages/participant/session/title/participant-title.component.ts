@@ -10,7 +10,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileTitleComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class ParticipantTitleComponent extends BaseActivityComponent implements OnInit, OnDestroy {
 
   constructor() { super(); }
 

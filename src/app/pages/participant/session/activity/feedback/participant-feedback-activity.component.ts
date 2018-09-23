@@ -9,7 +9,7 @@ import {BackendService} from '../../../../../services/backend.service';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class ParticipantFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   feedback_q1;
   feedback_q2;
   q1_ans;

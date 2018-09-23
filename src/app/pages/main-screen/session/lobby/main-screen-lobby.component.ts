@@ -8,7 +8,7 @@ import {BaseActivityComponent} from '../../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Input() joinedUsers;
   @Output() activityComplete = new EventEmitter();;
 

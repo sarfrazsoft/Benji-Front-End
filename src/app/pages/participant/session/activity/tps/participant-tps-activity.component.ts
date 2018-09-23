@@ -9,7 +9,7 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class ParticipantTPSActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Input() joinedUsers;
   partner = '';
   myId = -1;

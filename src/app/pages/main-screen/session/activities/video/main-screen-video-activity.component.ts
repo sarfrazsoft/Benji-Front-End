@@ -9,7 +9,7 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
   encapsulation: ViewEncapsulation.None
 })
 
-export class DesktopVideoActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class MainScreenVideoActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @Output() videoComplete = new EventEmitter<boolean>();
   safeURL;
 

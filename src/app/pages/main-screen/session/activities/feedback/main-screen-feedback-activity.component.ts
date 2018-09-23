@@ -10,7 +10,7 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
   styleUrls: []
 })
 
-export class DesktopFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+export class MainScreenFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Output() timerUp = new EventEmitter<boolean>();
   @Input() joinedUsers;
 

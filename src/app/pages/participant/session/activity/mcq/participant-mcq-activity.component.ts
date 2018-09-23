@@ -9,7 +9,7 @@ import {BackendService} from '../../../../../services/backend.service';
   encapsulation: ViewEncapsulation.None
 })
 
-export class MobileMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+export class ParticipantMCQActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   @Input() joinedUsers;
   answer;
   selected;
