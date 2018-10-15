@@ -1,0 +1,91 @@
+.b-standard-button {
+    width: 267px;
+    height: 50px;
+    border-radius: 115px;
+    background: $vibrant-blue;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    transition: all 0.2s;
+    margin: 15px 0 0;
+    &:focus {
+        outline-style: none;
+    }
+    &:hover
+    {
+        background: darken($vibrant-blue, 10);
+    }
+    @media screen and (max-width: 320px) {
+        width: 230px;
+    }
+}
+.b-standard-button.animated {
+  &:hover {
+    background: $vibrant-blue;
+  }
+}
+
+.b-standard-button--white {
+    background: #FFF;
+    color: $brownish-grey;
+    &:hover {
+        background: darken(#FFF, 10);
+    }
+
+}
+.b-standard-button--white.animated {
+  &:hover {
+    background: #FFF;
+  }
+}
+
+.b-standard-button--white-inactive {
+    background: #FFF;
+    color: lighten($brownish-grey, 30);
+    &:hover {
+        background: #FFF;
+        color: lighten($brownish-grey, 30);
+    }
+}
+
+.b-standard-button--inactive {
+    background: #a0afd4;
+    cursor: initial;
+    &:hover {
+        background: #a0afd4;
+    }
+}
+
+.b-standard-button--unselected {
+    background: $pale-grey;
+    color: $brownish-grey;
+    &:hover {
+        background: darken($pale-grey, 10);
+    }
+}
+
+.b-standard-button--selected {
+    background: $dodger-blue;
+    color: #FFF;
+    &:hover {
+        background: $dodger-blue;
+    }
+}
+
+.b-standard-button--incorrect {
+    background: $lightish-red;
+    &:hover {
+        background: $lightish-red;
+    }
+}
+
+.b-standard-button--correct {
+    background: #93dc66;
+    color: #FFF;
+    &:hover {
+        background: #93dc66;
+    }
+}

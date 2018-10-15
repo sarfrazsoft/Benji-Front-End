@@ -9,6 +9,8 @@ $lightish-red: #ee3e53;
 $cloudy-grey: #bec8ca;
 $dodger-blue: #4c83fc;
 $pale-grey: #dfe5e7;
+$dim-grey: #e9ebf3;
+$off-white: #f7f8fa;
 /* End of Variables*/
 
 
@@ -43,6 +45,15 @@ $pale-grey: #dfe5e7;
 
 .bg-pale-grey {
   background: $pale-grey;
+}
+.bg-dim-grey {
+  background: $dim-grey;
+}
+.bg-white {
+  background: #FFF;
+}
+.bg-off-white {
+  background: $off-white;
 }
 /* End Of Backgrounds */
 

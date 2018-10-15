@@ -4,10 +4,14 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
   selector: 'app-radial-timer',
   templateUrl: './radial-timer.component.html',
   styleUrls: [],
-  encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.None
 })
 
 export class RadialTimerComponent {
+  @Input() endStateText: string;
+  public timesUp: boolean;
+
+
   getTimer(cd, max_timer) {
     const seconds_remain = max_timer - cd;
     const min = Math.floor( seconds_remain / 60);
@@ -32,17 +36,25 @@ export class RadialTimerComponent {
   @Input()
   set totalSeconds(totalSeconds: number) {
     this._totalSeconds = totalSeconds;
-    this.val();
+    // this.val();
   }
+
 
   v = 100;
 
   constructor() { }
 
   val() {
-    const val = Math.ceil(100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
+    const val = (100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
     if (!Number.isNaN(val) && val >= 0 && val <= 100) {
       this.v = val;
+      if (this.v < 1) {
+        setTimeout(() => {
+          this.timesUp = true;
+          this.v = 100;
+        }, 100);
+      }
+
     }
   }
 

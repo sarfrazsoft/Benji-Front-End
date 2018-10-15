@@ -1,0 +1,37 @@
+.discussion-activity__share-status {
+  height: inherit;
+  border-right: 1px solid #979797;
+  width: 50%;
+  position: relative;
+  h2 {
+    font-size: 12vh;
+    line-height: 1.09;
+  }
+}
+.mainscreen-activity__column {
+  padding: 5vh 0;
+}
+.discussion-activity__share-queue {
+  width: 50%;
+  position: relative;
+  height: inherit;
+  h3 {
+    font-size: 8vh;
+    line-height: normal;
+  }
+  p {
+    font-size: 5vh;
+    line-height: normal;
+    margin-top: 5vh;
+  }
+}
+.discussion-activity__vertically-centered {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  right: 0;
+  padding: 0px 5vh;
+  top: 50%;
+  transform: translateY(-50%);
+}
+

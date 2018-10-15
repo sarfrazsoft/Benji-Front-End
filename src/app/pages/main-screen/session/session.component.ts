@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {BackendService} from '../../../services/backend.service';
-import {WebsocketService} from '../../../services/socket.service';
+import {WebSocketService} from '../../../services/socket.service';
 import { ActivatedRoute } from '@angular/router';
 
 import { BaseSessionComponent } from '../../shared/base-session.component';
@@ -14,7 +14,7 @@ import { BaseSessionComponent } from '../../shared/base-session.component';
 
 export class SessionComponent extends BaseSessionComponent {
 
-  constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebsocketService) {
+  constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebSocketService) {
     super(backend, route, ws);
   }
 

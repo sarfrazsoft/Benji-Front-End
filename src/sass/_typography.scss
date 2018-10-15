@@ -65,6 +65,26 @@ $pn-bold: 'ProximaNovaBold', 'Open-Sans', sans-serif;
 }
 /*End of font weights*/
 
+/*Utilities: Text alignment*/
+.center-text {
+  text-align: center;
+}
+.left-text {
+  text-align: left;
+}
+.right-text {
+  text-align: right;
+}
+
+/*End of text alignment*/
+
+/* Emojis */
+.lg-emoji {
+    font-size: 144px;
+    line-height: calc(144px * 1.5);
+}
+
+/* End of Emojis */
 
 /*Global Defaults*/
 body {
@@ -72,6 +92,11 @@ body {
 }
 /*End of Global Defaults*/
 
+
+/* Icons */
+.icon-white {
+  color: white;
+}
 
 /*Legacy Type Styles (To be re written)*/
 

@@ -1,0 +1,32 @@
+  <section class="mainscreen-activity teletrivia-activity" [class.mainscreen-activity--multi-column]="leadersReady">
+    <div class="mainscreen-activity__activity-detail center-text flexer flex-direction--column flexer--center"
+      [ngClass]="{'mainscreen-activity__column mainscreen-activity__column--50 left-text' : leadersReady}">
+      <div class="ms-emoji-container">
+        <app-b-twemoji emoji="☎️" (click)="end()"></app-b-twemoji>
+      </div>
+      <h1 class="vibrant-blue pn-700">Teletrivia</h1>
+      <p class="brownish-grey pn-500">Pass the message around your group.</p>
+      <p class="brownish-grey pn-500">Try to listen to each other while answering trivia questions on your phone. </p>
+      <p class="brownish-grey pn-500">Best of luck</p>
+    </div>
+    <!-- leaderboard -->
+    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey" *ngIf="leadersReady">
+      <div class="teletrivia-activity__leaderboard">
+        <p class="teletrivia-activity__section-text brownish-grey">Leaderboard</p>
+        <ol class="teletrivia-activity__leaders-list">
+          <li class="teletrivia-activity__leader pn-600" *ngFor="let leader of leaderBoardUsers; index as i;">
+            <div class="flexer flexer--space-between align-center">
+              <span class="teletrivia-activity__leader-name deep-blue">
+                <span class="teletrivia-activity__leader-rank deep-blue">
+                  {{i + 1}}.
+                </span>
+                {{leader.name}}
+              </span>
+              <span class="teletrivia-activity__leader-score">{{leader.score}}</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+  </section>

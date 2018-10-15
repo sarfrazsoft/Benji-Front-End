@@ -1,0 +1,54 @@
+.pair-activity {
+    .pair-activity__roleplay-instruction {
+        margin: 0px 60px;
+    }
+    .mainscreen-activity__column.pair-activity__pairs {
+        padding: 0px 60px;
+        position: relative;
+    }
+    .pair-activity__pair {
+        font-size: 50px;
+        line-height: 1.42;
+        list-style: none;
+    }
+    .pair-activity__ready-icon {
+        color: #7ed321;
+        margin-left: 15px;
+        font-size: 45px;
+    }
+    .mainscreen-acitivity__info-column {
+        .pair-activity__emoji-container {
+            width: 230px;
+        }
+    }
+    .pair-activity__title {
+        text-align: center;
+        border-bottom: 2px solid #979797;
+        p {
+            font-size: 3.75vh;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 35px 0;
+        }
+    }
+    .pair-activity__role {
+        width: 50%;
+        margin: 30px 0;
+        min-height: 70vh;
+        max-height: 70vh;
+        padding: 6vh 5vw;
+        h3 {
+            text-transform: uppercase;
+            font-size: 3.75vh;
+            letter-spacing: 2.5px;
+            margin: 40px 0;
+        }
+        p {
+            font-size: 4.1vh;
+            line-height: normal;
+        }
+    }
+    .pair-activity__role--2 {
+        border-left: 2px solid #979797;
+    }
+}

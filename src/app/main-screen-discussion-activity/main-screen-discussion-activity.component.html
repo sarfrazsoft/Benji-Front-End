@@ -1,0 +1,38 @@
+<ng-container *ngIf="!discussionOver">
+  <div class="mainscreen-activity mainscreen-activity--multi-column">
+    <div class="mainscreen-activity__column mainscreen-activity__column--50 mainscreen-activity__activity-detail bg-off-white">
+      <div class="ms-emoji-container">
+        <app-b-twemoji emoji="🤔"></app-b-twemoji>
+      </div>
+      <h1 class="vibrant-blue pn-700">Discuss</h1>
+
+      <p class="brownish-grey pn-500">{{discussionInstruction}}</p>
+    </div>
+    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey">
+      <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Done!"></app-radial-timer>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="discussionOver">
+  <div class="mainscreen-activity mainscreen-activity--multi-column discussion-activity">
+    <div class="mainscreen-activity__column mainscreen-activity__column--66  bg-off-white flexer">
+      <div class="discussion-activity__share-status">
+        <div class="discussion-activity__vertically-centered">
+          <div class="ms-emoji-container">
+            <app-b-twemoji emoji="📣"></app-b-twemoji>
+          </div>
+          <h2 class="pn-700 vibrant-blue">Share</h2>
+        </div>
+      </div>
+      <div class="discussion-activity__share-queue">
+        <div class="discussion-activity__vertically-centered">
+          <h3 class="pn-600 deep-blue">Abdullah and Andrew are sharing</h3>
+          <p class="brownish-grey pn-500">Natasia and Sean, you're up next</p>
+        </div>
+      </div>
+    </div>
+    <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey">
+      <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Done!"></app-radial-timer>
+    </div>
+  </div>
+</ng-container>

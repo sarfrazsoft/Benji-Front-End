@@ -2,7 +2,7 @@ import { OnInit } from '@angular/core';
 
 import {BackendService} from '../../services/backend.service';
 import {ActivatedRoute} from '@angular/router';
-import {WebsocketService} from '../../services/socket.service';
+import {WebSocketService} from '../../services/socket.service';
 
 import { CurrentActivityStatus } from '../../models/activity';
 import { User } from '../../models/user';
@@ -18,7 +18,7 @@ export class BaseSessionComponent implements OnInit {
 
   destroyComponents = false;
 
-  constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebsocketService) {
+  constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebSocketService) {
     this.sessionRunID = route.snapshot.params['sessionRunID'];
   }
 

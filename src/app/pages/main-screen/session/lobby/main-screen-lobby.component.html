@@ -1,4 +1,4 @@
-<div class="centred-aligned-screen-body-wpb welcome">
+<!-- <div class="centred-aligned-screen-body-wpb welcome">
   <div class="wide-content-slide-wrap">
     <h1 class="grey-light-header">Welcome to</h1>
     <h1 class="welcome-header">{{ sessionDetails.session.session_name }}</h1>
@@ -30,4 +30,27 @@
   <div class="welcome-footer-content-wrap">
     <h1 class="welcome-footer-header">Everyone ready to go?</h1><a class="welcome-button w-button" (click)="start_activities()">Start!</a>
   </div>
+</div> -->
+
+<div class="mainscreen-activity mainscreen-activity--multi-column lobby-activity">
+  <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-white lobby-activity__welcome-text">
+    <h1 class="pn-500">Welcome To <span class="lobby-activity__title vibrant-blue pn-700">Active Listening</span></h1>
+    <p class="pn-500 brownish-grey">Over the next 45 minutes, we’ll learn and practice how to be better active listeners.</p>
+  </div>
+  <div class="mainscreen-activity__column mainscreen-activity__column--25 flexer lobby-activity__column-content-flexer">
+    <div class="lobby-activity__instructions">
+      <p class="lobby-activity__instructions-title">Room Code</p>
+      <p class="lobby-acitivity__room-code pn-700 deep-blue">{{roomCode}}</p>
+      <p>Sign in at <span class="lobby-activity__join-url deep-blue pn-700">join.mybenji.com</span> on your phone and enter this code to join the session.</p>
+    </div>
+  </div>
+  <div class="mainscreen-activity__column mainscreen-activity__column--25  lobby-activity__joined-users bg-dim-grey">
+    <p><span class="lobby-activity__participant-number deep-blue">{{joinedUsers.length}}</span> Learners Joined</p>
+    <ul>
+      <li *ngFor="let participant of joinedUsers" class="deep-blue">{{participant}}</li>
+    </ul>
+  </div>
+</div>
+<div class="lobby-activity__footer bg-vibrant-blue flexer align-center">
+  <p class="pn-700">Everyone ready to go?</p><button class="b-standard-button b-standard-button--white pn-700" (click)="kickOffLesson()">Start!</button>
 </div>

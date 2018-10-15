@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { BackendService } from '../../../services/backend.service';
 import { ActivatedRoute } from '@angular/router';
 
-import {WebsocketService} from '../../../services/socket.service';
+import {WebSocketService} from '../../../services/socket.service';
 import {BaseSessionComponent} from '../../shared/base-session.component';
 import { CurrentActivityStatus } from '../../../models/activity';
 
@@ -16,7 +16,7 @@ import { CurrentActivityStatus } from '../../../models/activity';
 
 export class ParticipantSessionComponent extends BaseSessionComponent {
 
-  constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebsocketService) {
+  constructor(protected backend: BackendService, protected route: ActivatedRoute, protected ws: WebSocketService) {
     super(backend, route, ws);
   }
 

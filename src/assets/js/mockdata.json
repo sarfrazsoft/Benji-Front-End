@@ -1,0 +1,94 @@
+{
+  "currentActivityStatus": {
+    "current_activity": {
+      "id": 12,
+      "session": 200,
+      "activity_num": 1,
+      "title": "Teletrivia",
+      "description": "Pass the message around your group Try to listen to each other while answering trivia questions on your phone. Best of luck 😉",
+      "teletriviaActivity": {
+        "question_answer_set": [
+          {
+            "question": "The answer is c",
+            "answers": [
+              {
+                "isAnswer": false,
+                "answerValue": "Alpha"
+              },
+              {
+                "isAnswer": false,
+                "answerValue": "Beta"
+              },
+              {
+                "isAnswer": true,
+                "answerValue": "Charlie"
+              }
+            ]
+          },
+          {
+            "question": "The answer is B",
+            "answers": [
+              {
+                "isAnswer": false,
+                "answerValue": "Alpha"
+              },
+              {
+                "isAnswer": true,
+                "answerValue": "Beta"
+              },
+              {
+                "isAnswer": false,
+                "answerValue": "Charlie"
+              }
+            ]
+          },
+          {
+            "question": "The answer is C",
+            "answers": [
+              {
+                "isAnswer": false,
+                "answerValue": "Alpha"
+              },
+              {
+                "isAnswer": false,
+                "answerValue": "Beta"
+              },
+              {
+                "isAnswer": true,
+                "answerValue": "Charlie"
+              }
+            ]
+          }
+        ],
+        "telephone_params": {
+          "telephone_initiator_userId": 123,
+          "telephone_message": "This is a telephone message"
+        }
+      }
+    },
+    "current_activityrun": {
+      "id": 5,
+      "activityrunuser_set": [
+        {
+          "id": 123,
+          "username": "mockUserName1",
+          "first_name": "Andrew",
+          "last_name": "Thompson",
+          "email": "fakemail@mailserver.com"
+        },
+        {
+          "id": 153,
+          "username": "mockUserName2",
+          "first_name": "Michael",
+          "last_name": "Scott",
+          "email": "manager@dundermifflin.com"
+        }
+      ],
+      "activityrunparam_set": []
+    },
+    "started": true
+
+  }
+}
+
+

@@ -39,3 +39,13 @@ export interface CurrentActivityStatus {
   missing_users: User[];
   started: boolean;
 }
+
+
+// V2
+
+export interface ActivityStatus {
+    activity_type: string;
+    activity_id: string;
+    title: string;
+    countdown_time?: any;
+}

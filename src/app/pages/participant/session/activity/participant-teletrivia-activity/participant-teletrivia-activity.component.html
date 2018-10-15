@@ -1,0 +1,17 @@
+<ng-container>
+  <div class="b-flat-card center-text mc-card">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Multiple Choice</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <h3 class="pn-400 brownish-grey">{{questionsAnswersSet[currentQuestionIndex].question}}</h3>
+    </div>
+    <div class="b-flat-card__action">
+      <button class="b-standard-button b-standard-button--unselected" [ngClass]="{'b-standard-button--selected': i === selectedAnswerIndex, 'b-standard-button--correct': showAnswerDetail && answer.isAnswer }" *ngFor="let answer of questionsAnswersSet[currentQuestionIndex].answers; index as i" (click)="checkAnswer(answer, $event.target, i)">{{answer.answerValue}}</button>
+    </div>
+    <div class="b-flat-card__action-detail" *ngIf="showAnswerDetail">
+      <p>{{questionsAnswersSet[currentQuestionIndex].correctAnswerDetail}}</p>
+    </div>
+  </div>
+  <app-linear-timer [timerType]="gameStateTimerType" [timeRemaining]="timeRemaining" (timesUp)="handleTimesUp($event)" *ngIf="!killTimer"></app-linear-timer>
+</ng-container>

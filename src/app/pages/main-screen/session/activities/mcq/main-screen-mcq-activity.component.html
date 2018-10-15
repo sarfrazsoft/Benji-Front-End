@@ -9,7 +9,7 @@
             <div class="answer-text correct" *ngIf="showAnswer"><strong>{{ numToLetter(correctAnswer.order) }}.</strong> {{ correctAnswer.answer }}</div>
             <div class="explanation" *ngIf="showAnswer"><strong>{{ correctAnswer.explanation }}</strong></div>
           </div>
-          <div class="mcq-right-side"><app-radial-timer [secondsElapsed]="countdown / 10" [totalSeconds]="activityDetails.mcqactivity.timer"></app-radial-timer></div>
+          <div class="mcq-right-side"><app-radial-timer [secondsElapsed]="countdown / 10" [totalSeconds]="activityDetails.mcqactivity.timer" endStateText="Times Up!"></app-radial-timer></div>
         </div>
       </div>
     </div>

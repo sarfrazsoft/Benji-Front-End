@@ -5,6 +5,9 @@
 /tmp
 /out-tsc
 
+# andrew's HTML/CSS Test bed
+/src/app/elements
+
 # dependencies
 /node_modules
 

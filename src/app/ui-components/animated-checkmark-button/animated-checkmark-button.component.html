@@ -1,0 +1,5 @@
+<button [@validCheck]="valid ? 'checked' : 'unchecked' " [ngClass]="buttonClassList" (click)="emitClicked($event.target)">
+    <span *ngIf="!valid && !loadingState">{{innerHTML}}</span>
+    <span *ngIf="loadingState">{{loadingStateInnerHTML}}</span>
+    <mat-icon *ngIf="valid">check</mat-icon>
+</button>
