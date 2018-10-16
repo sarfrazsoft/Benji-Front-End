@@ -55,7 +55,7 @@ import { MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-import { ElementsComponent } from './elements/elements.component'; // gitignore
+import { ElementsComponent } from './elements/elements.component';
 import { LinearTimerComponent } from './ui-components/linear-timer/linear-timer.component';
 import { AnimatedCheckmarkButtonComponent } from './ui-components/animated-checkmark-button/animated-checkmark-button.component';
 import { BTwemojiComponent } from './ui-components/b-twemoji/b-twemoji.component';
@@ -93,7 +93,7 @@ import { ParticipantLessonComponent } from './pages/participant/participant-less
     ParticipantMCQActivityComponent,
     ParticipantFeedbackActivityComponent,
     PrimaryNavbarComponent,
-    ElementsComponent, // gitignore
+    ElementsComponent,
     LinearTimerComponent,
     AnimatedCheckmarkButtonComponent,
     BTwemojiComponent,
