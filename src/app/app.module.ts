@@ -67,6 +67,7 @@ import { MainScreenPairActivityComponent } from './main-screen-pair-activity/mai
 import { MainScreenDiscussionActivityComponent } from './main-screen-discussion-activity/main-screen-discussion-activity.component';
 import { ParticipantLessonComponent } from './pages/participant/participant-lesson/participant-lesson.component';
 import { ParticipantToolbarComponent } from './ui-components/participant-toolbar/participant-toolbar.component';
+import { ParticipantPairActivityComponent } from './pages/participant/participant-lesson/participant-pair-activity/participant-pair-activity.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { ParticipantToolbarComponent } from './ui-components/participant-toolbar
     MainScreenDiscussionActivityComponent,
     ParticipantLessonComponent,
     ParticipantToolbarComponent,
+    ParticipantPairActivityComponent,
 
   ],
   imports: [
