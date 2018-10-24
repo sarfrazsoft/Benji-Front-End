@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from "@angular/core";
 import { BaseActivityComponent } from "../../../../shared/base-activity.component";
+import {MatDialog} from '@angular/material';
+
 
 @Component({
   selector: "app-participant-teletrivia-activity",
@@ -73,7 +75,7 @@ export class ParticipantTeletriviaActivityComponent
     telephone_started: false
   };
 
-  public isTelephoneInitiator: boolean;
+  public isTelephoneInitiator = true;
   public message: string;
   public currentQuestionIndex: number;
   public correctAnswer: string;
@@ -85,7 +87,7 @@ export class ParticipantTeletriviaActivityComponent
   public gameStateTimerType: string;
 
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, public dialog: MatDialog) {
     super();
     this.clientIdentity = {
       id: 123,
@@ -155,5 +157,12 @@ export class ParticipantTeletriviaActivityComponent
 
   public numToLetter(num) {
     return 'ABCDEFGHIJK'.charAt(num - 1);
+  }
+
+  public triggerDialogue(templateRef) {
+    this.dialog.open(templateRef, {
+      width: '305px',
+      panelClass: 'dialog--indigo-blue'
+    });
   }
 }

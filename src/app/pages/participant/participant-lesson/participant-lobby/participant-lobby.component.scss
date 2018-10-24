@@ -1,0 +1,19 @@
+// lobby card
+.lobby-card {
+  h3 {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: normal;
+  }
+  p {
+      font-size: 16px;
+      line-height: normal;
+  }
+  mat-spinner {
+      margin: 8vh auto;
+  }
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+      stroke: #0a4cef;
+  }
+}

@@ -1,0 +1,22 @@
+.participant-toolbar {
+  padding: 10px 15px;
+  .benji-logo-container {
+      height: 30px;
+      img {
+          height: 100%;
+      }
+  }
+  button {
+      background: none;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      .mat-icon {
+          display: block;
+          margin: 0 auto;
+      }
+  }
+  .flexer--space-between {
+      align-items: center;
+  }
+}

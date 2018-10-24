@@ -41,6 +41,15 @@
   margin: 0 auto;
 }
 
+/*
+* Apply this css class to the user who is starting the telephone in teletrivia
+*/
+.mc-card__timer--starter-layout {
+  .linear-timer__timeline {
+    bottom: 80px !important;
+  }
+}
+
 //Legacy styles (To be re-written)
 
 .screen-text {

@@ -1,5 +1,5 @@
 <ng-container>
-  <div class="b-flat-card center-text mc-card">
+  <div class="b-flat-card center-text mc-card " [ngClass]="{'mc-card--starter-layout': isTelephoneInitiator }">
     <div class="b-flat-card__title">
       <h2 class="pn-400">Multiple Choice</h2>
     </div>
@@ -7,11 +7,50 @@
       <h3 class="pn-400 brownish-grey">{{questionsAnswersSet[currentQuestionIndex].question}}</h3>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button b-standard-button--unselected" [ngClass]="{'b-standard-button--selected': i === selectedAnswerIndex, 'b-standard-button--correct': showAnswerDetail && answer.isAnswer }" *ngFor="let answer of questionsAnswersSet[currentQuestionIndex].answers; index as i" (click)="checkAnswer(answer, $event.target, i)">{{answer.answerValue}}</button>
+      <button class="b-standard-button b-standard-button--unselected" [ngClass]="{'b-standard-button--selected': i === selectedAnswerIndex, 'b-standard-button--correct': showAnswerDetail && answer.isAnswer }"
+        *ngFor="let answer of questionsAnswersSet[currentQuestionIndex].answers; index as i" (click)="checkAnswer(answer, $event.target, i)">{{answer.answerValue}}</button>
     </div>
     <div class="b-flat-card__action-detail" *ngIf="showAnswerDetail">
       <p>{{questionsAnswersSet[currentQuestionIndex].correctAnswerDetail}}</p>
     </div>
   </div>
-  <app-linear-timer [timerType]="gameStateTimerType" [timeRemaining]="timeRemaining" (timesUp)="handleTimesUp($event)" *ngIf="!killTimer"></app-linear-timer>
+  <div class="mc-card__timer mc-card__timer--starter-layout" [ngClass]="{'mc-card__timer--starter-layout': isTelephoneInitiator }">
+    <app-linear-timer [timerType]="gameStateTimerType" [timeRemaining]="timeRemaining" (timesUp)="handleTimesUp($event)"
+      *ngIf="!killTimer"></app-linear-timer>
+  </div>
+  <div class="b-baseline-action bg-indigo-blue" *ngIf="isTelephoneInitiator">
+    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Done! The message is back" buttonStyle="white"></app-animated-checkmark-button>
+  </div>
 </ng-container>
+
+<!-- Dialogue Templates... see triggerDialogue method -->
+<ng-template #mytemplate>
+  <div class="b-dialog-template">
+    <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
+    <blockquote>“The fancy fox fought the frantic fairy.”</blockquote>
+    <p>Whisper it to your neighbour, and press START to get the game rolling. Hit the DONE button when the message gets
+      back to you!</p>
+    <div class="b-dialog-template__action">
+      <button class="b-standard-button b-standard-button--white" [mat-dialog-close]="true">Start the telephone!</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mytemplateTwo>
+  <div class="b-dialog-template">
+    <p>
+      Share the message you just received with the rest of the group.
+    </p>
+
+    <p>
+      Remember what the original message was?
+    </p>
+
+    <p>
+      “The fancy fox fought the frantic fairy.”
+    </p>
+    <div class="b-dialog-template__action">
+      <button class="b-standard-button b-standard-button--white" [mat-dialog-close]="true">Done</button>
+    </div>
+  </div>
+</ng-template>

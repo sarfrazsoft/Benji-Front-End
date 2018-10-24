@@ -14,6 +14,7 @@ import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-el
 import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
 import { MainScreenLessonComponent } from './main-screen-lesson/main-screen-lesson.component';
 import { MainScreenLobbyComponent } from './pages/main-screen/session/lobby/main-screen-lobby.component';
+import { ParticipantLessonComponent } from './pages/participant/participant-lesson/participant-lesson.component';
 
 
 const routes: Routes = [
@@ -24,9 +25,12 @@ const routes: Routes = [
   { path: 'screen/lesson/:lessonId', component: MainScreenLessonComponent, children: [
     {path: 'lobby', component: MainScreenLobbyComponent }
   ] },
+
   { path: 'participant/login', component: ParticipantLoginComponent },
   { path: 'participant/join', component: ParticipantJoinComponent },
   { path: 'participant/session', component: ParticipantSessionComponent },
+  { path: 'participant/lesson', component: ParticipantLessonComponent},
+
   { path: 'elements', component: ElementsComponent},
   { path: 'main-elements', component: MainscreenElementsComponent },
   { path: 'teletrivia', component: MainScreenTeletriviaActivityComponent }

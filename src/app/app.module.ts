@@ -28,13 +28,13 @@ import { MainScreenTitleComponent } from './pages/main-screen/session/title/main
 import { MainScreenVideoActivityComponent } from './pages/main-screen/session/activities/video/main-screen-video-activity.component';
 import { MainScreenTPSActivityComponent } from './pages/main-screen/session/activities/tps/main-screen-tps-activity.component';
 import { MainScreenMCQActivityComponent } from './pages/main-screen/session/activities/mcq/main-screen-mcq-activity.component';
-import {MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
+import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
 
 // tslint:disable-next-line:max-line-length
 import { MainScreenFeedbackActivityComponent } from './pages/main-screen/session/activities/feedback/main-screen-feedback-activity.component';
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
-import { ParticipantLobbyComponent } from './pages/participant/session/lobby/participant-lobby.component';
+import { ParticipantLobbyComponent } from './pages/participant/participant-lesson/participant-lobby/participant-lobby.component';
 import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
 import { ParticipantTitleComponent } from './pages/participant/session/title/participant-title.component';
 import { ParticipantVideoActivityComponent } from './pages/participant/session/activity/video/participant-video-activity.component';
@@ -66,6 +66,7 @@ import { MainScreenLessonComponent } from './main-screen-lesson/main-screen-less
 import { MainScreenPairActivityComponent } from './main-screen-pair-activity/main-screen-pair-activity.component';
 import { MainScreenDiscussionActivityComponent } from './main-screen-discussion-activity/main-screen-discussion-activity.component';
 import { ParticipantLessonComponent } from './pages/participant/participant-lesson/participant-lesson.component';
+import { ParticipantToolbarComponent } from './ui-components/participant-toolbar/participant-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { ParticipantLessonComponent } from './pages/participant/participant-less
     MainScreenLessonComponent,
     MainScreenPairActivityComponent,
     MainScreenDiscussionActivityComponent,
-    ParticipantLessonComponent
+    ParticipantLessonComponent,
+    ParticipantToolbarComponent,
 
   ],
   imports: [
