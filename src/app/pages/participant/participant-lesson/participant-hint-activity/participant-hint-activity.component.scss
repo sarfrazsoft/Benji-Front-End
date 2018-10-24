@@ -1,0 +1,68 @@
+.roleplay-card .b-flat-card__body {
+    h3 {
+        font-size: 35px;
+        line-height: normal;
+    }
+    p {
+        font-size: 14px;
+    }
+    .b-flat-card__twemoji {
+        width: 120px;
+        margin: 0 auto;
+    }
+}
+
+.b-standard-input {
+    width: 230px;
+}
+
+.roleplay-card {
+  overflow-y: scroll;
+}
+.b-baseline-action {
+  padding: 15px 0;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  button {
+      margin: 0;
+  }
+}
+
+@media screen and (min-width: 321px) {
+    .b-flat-card__body {
+        padding: 5vh 30px 10px;
+    }
+    .roleplay-card .b-flat-card__body {
+        .b-flat-card__twemoji {
+            width: 140px;
+        }
+        h3 {
+            font-size: 40px;
+            line-height: normal;
+        }
+        p {
+            font-size: 16px;
+        }
+    }
+    .b-standard-input {
+      width: 280px;
+  }
+}
+
+@media screen and (min-width: 414px) {
+    .b-flat-card__body {
+        padding: 5vh 50px 20px;
+    }
+    .roleplay-card .b-flat-card__body {
+        h3 {
+            font-size: 40px;
+            line-height: normal;
+        }
+        p {
+            font-size: 16px;
+            line-height: normal;
+        }
+    }
+}

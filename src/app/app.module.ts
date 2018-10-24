@@ -70,6 +70,7 @@ import { ParticipantLessonComponent } from './pages/participant/participant-less
 import { ParticipantToolbarComponent } from './ui-components/participant-toolbar/participant-toolbar.component';
 import { ParticipantPairActivityComponent } from './pages/participant/participant-lesson/participant-pair-activity/participant-pair-activity.component';
 import { ParticipantDiscussionActivityComponent } from './pages/participant/participant-lesson/participant-discussion-activity/participant-discussion-activity.component';
+import { ParticipantHintActivityComponent } from './pages/participant/participant-lesson/participant-hint-activity/participant-hint-activity.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { ParticipantDiscussionActivityComponent } from './pages/participant/part
     ParticipantToolbarComponent,
     ParticipantPairActivityComponent,
     ParticipantDiscussionActivityComponent,
+    ParticipantHintActivityComponent,
 
   ],
   imports: [
