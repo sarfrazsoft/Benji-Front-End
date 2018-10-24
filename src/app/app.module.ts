@@ -13,6 +13,7 @@ import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './services/auth.interceptor';
 import { BackendService } from './services/backend.service';
 import { WebSocketService } from './services/socket.service';
+import { EmojiLookupService } from './services/emoji-lookup.service';
 
 // Components
 import { RadialTimerComponent } from './ui-components/radial-timer/radial-timer.component';
@@ -68,6 +69,7 @@ import { MainScreenDiscussionActivityComponent } from './main-screen-discussion-
 import { ParticipantLessonComponent } from './pages/participant/participant-lesson/participant-lesson.component';
 import { ParticipantToolbarComponent } from './ui-components/participant-toolbar/participant-toolbar.component';
 import { ParticipantPairActivityComponent } from './pages/participant/participant-lesson/participant-pair-activity/participant-pair-activity.component';
+import { ParticipantDiscussionActivityComponent } from './pages/participant/participant-lesson/participant-discussion-activity/participant-discussion-activity.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +110,7 @@ import { ParticipantPairActivityComponent } from './pages/participant/participan
     ParticipantLessonComponent,
     ParticipantToolbarComponent,
     ParticipantPairActivityComponent,
+    ParticipantDiscussionActivityComponent,
 
   ],
   imports: [
@@ -127,6 +130,7 @@ import { ParticipantPairActivityComponent } from './pages/participant/participan
     AuthService,
     BackendService,
     WebSocketService,
+    EmojiLookupService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent],

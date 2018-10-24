@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EmojiLookupService } from '../../../../services/emoji-lookup.service';
 
 @Component({
   selector: 'app-participant-pair-activity',
@@ -7,12 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ParticipantPairActivityComponent implements OnInit {
 
-  constructor() { }
+  constructor(private emoji: EmojiLookupService) { }
 
   public isReady = false;
   public pairActivityStarted = true;
+  public roleEmoji: string;
 
   ngOnInit() {
+    this.roleEmoji = this.emoji.getEmoji('zipface');
   }
 
 
