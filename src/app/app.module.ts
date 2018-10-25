@@ -32,7 +32,7 @@ import { MainScreenMCQActivityComponent } from './pages/main-screen/session/acti
 import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
 
 // tslint:disable-next-line:max-line-length
-import { MainScreenFeedbackActivityComponent } from './pages/main-screen/session/activities/feedback/main-screen-feedback-activity.component';
+import { MainScreenFeedbackActivityComponent } from './pages/main-screen/lesson/main-screen-feedback-activity/main-screen-feedback-activity.component';
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
 import { ParticipantLobbyComponent } from './pages/participant/lesson/participant-lobby/participant-lobby.component';

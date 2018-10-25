@@ -22,13 +22,13 @@ import { WebSocketSubject } from "rxjs/webSocket";
 export class MainScreenLessonComponent implements OnInit, OnChanges {
   private lessonId;
   public socketData: any;
-  public activityLoading = true;
+  public activityLoading;
   private clientType: string;
   public currentActivity: string;
   public roomCode;
   public participants;
 
-  public showMainFooter: boolean;
+  public showMainFooter = true;
   public showVideoControls = false;
 
   public gameStarted: boolean;
