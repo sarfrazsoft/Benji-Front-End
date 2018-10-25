@@ -12,9 +12,9 @@ import { ElementsComponent } from './elements/elements.component';
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 // tslint:disable-next-line:max-line-length
 import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
-import { MainScreenLessonComponent } from './main-screen-lesson/main-screen-lesson.component';
+import { MainScreenLessonComponent } from './pages/main-screen/lesson/main-screen-lesson.component';
 import { MainScreenLobbyComponent } from './pages/main-screen/session/lobby/main-screen-lobby.component';
-import { ParticipantLessonComponent } from './pages/participant/participant-lesson/participant-lesson.component';
+import { ParticipantLessonComponent } from './pages/participant/lesson/participant-lesson.component';
 
 
 const routes: Routes = [

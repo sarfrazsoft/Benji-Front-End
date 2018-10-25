@@ -35,7 +35,7 @@ import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/sessi
 import { MainScreenFeedbackActivityComponent } from './pages/main-screen/session/activities/feedback/main-screen-feedback-activity.component';
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
-import { ParticipantLobbyComponent } from './pages/participant/participant-lesson/participant-lobby/participant-lobby.component';
+import { ParticipantLobbyComponent } from './pages/participant/lesson/participant-lobby/participant-lobby.component';
 import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
 import { ParticipantTitleComponent } from './pages/participant/session/title/participant-title.component';
 import { ParticipantVideoActivityComponent } from './pages/participant/session/activity/video/participant-video-activity.component';
@@ -62,15 +62,18 @@ import { AnimatedCheckmarkButtonComponent } from './ui-components/animated-check
 import { BTwemojiComponent } from './ui-components/b-twemoji/b-twemoji.component';
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 import { MainScreenToolbarComponent } from './ui-components/main-screen-toolbar/main-screen-toolbar.component';
+// tslint:disable-next-line:max-line-length
 import { ParticipantTeletriviaActivityComponent } from './pages/participant/session/activity/participant-teletrivia-activity/participant-teletrivia-activity.component';
-import { MainScreenLessonComponent } from './main-screen-lesson/main-screen-lesson.component';
-import { MainScreenPairActivityComponent } from './main-screen-pair-activity/main-screen-pair-activity.component';
-import { MainScreenDiscussionActivityComponent } from './main-screen-discussion-activity/main-screen-discussion-activity.component';
-import { ParticipantLessonComponent } from './pages/participant/participant-lesson/participant-lesson.component';
+import { MainScreenLessonComponent } from './pages/main-screen/lesson/main-screen-lesson.component';
+import { MainScreenPairActivityComponent } from './pages/main-screen/lesson/main-screen-pair-activity/main-screen-pair-activity.component';
+// tslint:disable-next-line:max-line-length
+import { MainScreenDiscussionActivityComponent } from './pages/main-screen/lesson/main-screen-discussion-activity/main-screen-discussion-activity.component';
+import { ParticipantLessonComponent } from './pages/participant/lesson/participant-lesson.component';
 import { ParticipantToolbarComponent } from './ui-components/participant-toolbar/participant-toolbar.component';
-import { ParticipantPairActivityComponent } from './pages/participant/participant-lesson/participant-pair-activity/participant-pair-activity.component';
-import { ParticipantDiscussionActivityComponent } from './pages/participant/participant-lesson/participant-discussion-activity/participant-discussion-activity.component';
-import { ParticipantHintActivityComponent } from './pages/participant/participant-lesson/participant-hint-activity/participant-hint-activity.component';
+import { ParticipantPairActivityComponent } from './pages/participant/lesson/participant-pair-activity/participant-pair-activity.component';
+// tslint:disable-next-line:max-line-length
+import { ParticipantDiscussionActivityComponent } from './pages/participant/lesson/participant-discussion-activity/participant-discussion-activity.component';
+import { ParticipantHintActivityComponent } from './pages/participant/lesson/participant-hint-activity/participant-hint-activity.component';
 
 @NgModule({
   declarations: [

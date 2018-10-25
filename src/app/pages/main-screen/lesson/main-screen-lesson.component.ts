@@ -7,12 +7,11 @@ import {
   ViewChild,
   ElementRef
 } from "@angular/core";
-import { AuthService } from "../services/auth.service";
+import { AuthService } from "../../../services/auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { WebSocketService } from "../services/socket.service";
+import { WebSocketService } from "../../../services/socket.service";
 import { Observable } from "rxjs";
-import { BackendService } from "../services/backend.service";
-import { ActivityStatus } from "../models/activity";
+import { BackendService } from "../../../services/backend.service";
 import { WebSocketSubject } from "rxjs/webSocket";
 
 @Component({
