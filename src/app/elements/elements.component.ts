@@ -2,7 +2,6 @@ import { Component, OnInit, TemplateRef, ElementRef, ViewChild, Inject } from '@
 import {MatDialog} from '@angular/material';
 
 declare var twemoji: any;
-declare var particlesJS: any;
 
 
 @Component({

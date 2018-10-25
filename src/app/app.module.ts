@@ -43,7 +43,7 @@ import { ParticipantTPSActivityComponent } from './pages/participant/session/act
 import { ParticipantMCQActivityComponent } from './pages/participant/session/activity/mcq/participant-mcq-activity.component';
 
 // tslint:disable-next-line:max-line-length
-import { ParticipantFeedbackActivityComponent } from './pages/participant/session/activity/feedback/participant-feedback-activity.component';
+// import { ParticipantFeedbackActivityComponent } from './pages/participant/session/activity/feedback/participant-feedback-activity.component';
 
 // Plugins
 import { MatProgressBarModule } from '@angular/material';
@@ -74,6 +74,8 @@ import { ParticipantPairActivityComponent } from './pages/participant/lesson/par
 // tslint:disable-next-line:max-line-length
 import { ParticipantDiscussionActivityComponent } from './pages/participant/lesson/participant-discussion-activity/participant-discussion-activity.component';
 import { ParticipantHintActivityComponent } from './pages/participant/lesson/participant-hint-activity/participant-hint-activity.component';
+// tslint:disable-next-line:max-line-length
+import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson/participant-feedback-activity/participant-feedback-activity.component';
 
 @NgModule({
   declarations: [
