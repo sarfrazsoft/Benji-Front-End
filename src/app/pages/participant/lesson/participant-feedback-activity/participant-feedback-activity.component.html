@@ -79,5 +79,8 @@
       <textarea placeholder="Put 'em in here!" id="" class="b-standard-textarea"></textarea>
     </div>
   </div>
-  <button class="b-standard-button">Submit</button>
+  <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive': submitted }" (click)="submitted = true">
+    <span *ngIf="submitted">Submitting</span>
+    <span *ngIf="!submitted">Submit</span>
+  </button>
 </div>
