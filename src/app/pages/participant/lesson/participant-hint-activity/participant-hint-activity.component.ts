@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-participant-hint-activity',
@@ -8,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class ParticipantHintActivityComponent implements OnInit {
 
   constructor() { }
+
+  public inputCharsRemaining: string;
+  public hintWord = new FormControl('', Validators.required);
 
   ngOnInit() {
   }

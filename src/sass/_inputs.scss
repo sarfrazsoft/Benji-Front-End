@@ -1,8 +1,22 @@
 .b-standard-input {
-  width: 280px;
+  width: 267px;
   padding: 15px 35px;
   text-align: center;
   background: #FFF;
   border-radius: 25px;
   border: 1px solid $pale-grey;
+}
+.b-standard-input__container {
+  position: relative;
+  width: 230px;
+  margin: 0 auto;
+  .b-standard-input__chars-remaining {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10%;
+  }
+  @media screen and (min-width: 321px) {
+    width: 267px;
+  }
 }

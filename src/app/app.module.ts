@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -126,6 +127,7 @@ import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     OnsenModule,
     MatProgressBarModule,
     MatMenuModule,

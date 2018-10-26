@@ -1,5 +1,5 @@
 <!-- Hint word input -->
-<!-- <div class="b-flat-card center-text roleplay-card">
+<div class="b-flat-card center-text roleplay-card">
   <div class="b-flat-card__title">
     <h2 class="pn-400">Hint Word</h2>
   </div>
@@ -11,10 +11,14 @@
     <p>Submit your hint word option below.</p>
   </div>
   <div class="b-flat-card__action">
-    <input type="text" placeholder="Your hint word" class="b-standard-input">
-    <button class="b-standard-button">Submit</button>
+    <div class="b-standard-input__container">
+      <input type="text" placeholder="Your hint word" maxlength="20" class="b-standard-input" [formControl]="hintWord">
+      <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value !== null">{{20 - hintWord.value.length}}</span>
+      <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value === null">20</span>
+    </div>
+    <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive': hintWord.invalid}">Submit</button>
   </div>
-</div> -->
+</div>
 
 <!-- Voting -->
 <!-- <div class="b-flat-card center-text roleplay-card">
@@ -50,7 +54,7 @@
   <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit vote" buttonStyle="white"></app-animated-checkmark-button>
 </div> -->
 
-<div class="b-flat-card center-text roleplay-card">
+<!-- <div class="b-flat-card center-text roleplay-card">
   <div class="b-flat-card__title">
     <h2 class="pn-400">Hint Word</h2>
   </div>
@@ -64,4 +68,4 @@
   <div class="b-flat-card__action">
     <button class="b-standard-button">Got it</button>
   </div>
-</div>
+</div> -->
