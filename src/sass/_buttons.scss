@@ -45,6 +45,7 @@
 .b-standard-button--white-inactive {
     background: #FFF;
     color: lighten($brownish-grey, 30);
+    cursor: default;
     &:hover {
         background: #FFF;
         color: lighten($brownish-grey, 30);

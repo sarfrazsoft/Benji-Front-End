@@ -6,7 +6,9 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
 @Component({
   selector: 'app-participant-activity-video',
   templateUrl: './participant-video-activity.component.html',
-  styleUrls: [],
+  styleUrls: [
+    './participant-video-activity.component.scss'
+  ],
   encapsulation: ViewEncapsulation.None
 })
 

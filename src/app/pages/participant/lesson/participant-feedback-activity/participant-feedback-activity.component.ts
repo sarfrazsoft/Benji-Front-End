@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./participant-feedback-activity.component.scss']
 })
 export class ParticipantFeedbackActivityComponent implements OnInit {
-  public submitted: boolean;
+  public feedbackSubmitted: boolean;
 
   constructor() { }
 

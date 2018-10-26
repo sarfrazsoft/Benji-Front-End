@@ -1,71 +1,73 @@
 <!-- Hint word input -->
-<div class="b-flat-card center-text roleplay-card">
-  <div class="b-flat-card__title">
-    <h2 class="pn-400">Hint Word</h2>
-  </div>
-  <div class="b-flat-card__body">
-    <div class="b-flat-card__twemoji">
-      <app-b-twemoji emoji="🛎️"></app-b-twemoji>
+<ng-container *ngIf="activityState === 'input'">
+  <div class="b-flat-card center-text hintword-card">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Hint Word</h2>
     </div>
-    <h3 class="pn-700 deep-blue">Choose a hint word</h3>
-    <p>Submit your hint word option below.</p>
-  </div>
-  <div class="b-flat-card__action">
-    <div class="b-standard-input__container">
-      <input type="text" placeholder="Your hint word" maxlength="20" class="b-standard-input" [formControl]="hintWord">
-      <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value !== null">{{20 - hintWord.value.length}}</span>
-      <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value === null">20</span>
+    <div class="b-flat-card__body">
+      <div class="b-flat-card__twemoji">
+        <app-b-twemoji emoji="🛎️"></app-b-twemoji>
+      </div>
+      <h3 class="pn-700 deep-blue">Choose a hint word</h3>
+      <p>Submit your hint word option below.</p>
     </div>
-    <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive': hintWord.invalid}">Submit</button>
-  </div>
-</div>
-
-<!-- Voting -->
-<!-- <div class="b-flat-card center-text roleplay-card">
-  <div class="b-flat-card__title">
-    <h2 class="pn-400">Hint Word</h2>
-  </div>
-  <div class="b-flat-card__body">
-    <h3 class="pn-700 deep-blue">Vote for your favorite!</h3>
-  </div>
-  <div class="b-flat-card__action">
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected b-standard-button--selected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-    <button class="b-standard-button b-standard-button--unselected">Loremipsum</button>
-  </div>
-</div>
-<div class="b-baseline-action bg-indigo-blue">
-  <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit vote" buttonStyle="white"></app-animated-checkmark-button>
-</div> -->
-
-<!-- <div class="b-flat-card center-text roleplay-card">
-  <div class="b-flat-card__title">
-    <h2 class="pn-400">Hint Word</h2>
-  </div>
-  <div class="b-flat-card__body">
-    <div class="b-flat-card__twemoji">
-      <app-b-twemoji emoji="🛎️"></app-b-twemoji>
+    <div class="b-flat-card__action">
+      <div class="b-standard-input__container">
+        <input type="text" placeholder="Your hint word" maxlength="20" class="b-standard-input" [formControl]="hintWord">
+        <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value !== null">{{20 -
+          hintWord.value.length}}</span>
+        <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value === null">20</span>
+      </div>
+      <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive': hintWord.invalid || hintWordSubmitted}"
+        (click)="submitHintWord()">
+        <span *ngIf="hintWordSubmitted">
+          Submitting
+        </span>
+        <span *ngIf="!hintWordSubmitted">
+          Submit
+        </span>
+      </button>
     </div>
-    <h3 class="pn-700 deep-blue">Tube socks</h3>
-    <p>Say ‘Tube socks’ to anyone in this group if you ever need to remind them to listen better.</p>
   </div>
-  <div class="b-flat-card__action">
-    <button class="b-standard-button">Got it</button>
+</ng-container>
+<ng-container *ngIf="activityState === 'vote'">
+  <div class="b-flat-card center-text hintword-card" [ngClass]="{'hintword-card--confirm-state': selectedWord}">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Hint Word</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <h3 class="pn-700 deep-blue">
+        <span *ngIf="winningWord === undefined">
+          Vote for your favorite!
+        </span>
+        <span *ngIf="winningWord !== undefined">
+          You voted for
+        </span>
+      </h3>
+    </div>
+    <div class="b-flat-card__action">
+      <button class="b-standard-button b-standard-button--unselected" [ngClass]="{'b-standard-button--selected': word === selectedWord }"
+        *ngFor="let word of hintWordList" (click)="selectWord(word)">{{word | titlecase}}</button>
+    </div>
   </div>
-</div> -->
+  <div class="b-baseline-action bg-indigo-blue" *ngIf="selectedWord">
+    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit vote" buttonStyle="white" (click)="confirmVote()"></app-animated-checkmark-button>
+  </div>
+</ng-container>
+<ng-container *ngIf="activityState === 'complete'">
+  <div class="b-flat-card center-text hintword-card">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Hint Word</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <div class="b-flat-card__twemoji">
+        <app-b-twemoji emoji="🛎️"></app-b-twemoji>
+      </div>
+      <h3 class="pn-700 deep-blue">{{winningWord | titlecase}}</h3>
+      <p>Say ‘{{winningWord | titlecase}}’ to anyone in this group if you ever need to remind them to listen better.</p>
+    </div>
+    <div class="b-flat-card__action">
+      <button class="b-standard-button">Got it</button>
+    </div>
+  </div>
+</ng-container>

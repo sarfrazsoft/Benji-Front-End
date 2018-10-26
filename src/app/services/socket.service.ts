@@ -61,4 +61,8 @@ export class WebSocketService {
   public sendSocketEventMessage(message: string) {
     this.subject.next({'event': message});
   }
+
+  public sendSocketFullMessage(message: any) {
+    this.subject.next(message);
+  }
 }

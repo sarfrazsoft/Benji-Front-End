@@ -22,7 +22,7 @@
         }
     }
     .feedback-card__question-box {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
         text-align: left;
         .feedback-card__response-radio {
             width: 31%;
@@ -61,7 +61,7 @@
             height: 74px;
             resize: none;
             padding: 10px;
-            // border-radius: 5px;
+            border-radius: 8px;
         }
     }
 }
