@@ -9,7 +9,9 @@ import {AuthService} from '../../../services/auth.service';
 @Component({
   selector: 'app-participant-join',
   templateUrl: './participant-join.component.html',
-  styleUrls: [],
+  styleUrls: [
+    './participant-join.component.scss'
+  ],
   encapsulation: ViewEncapsulation.None
 })
 export class ParticipantJoinComponent implements OnInit {
