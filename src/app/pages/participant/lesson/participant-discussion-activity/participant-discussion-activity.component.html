@@ -1,5 +1,5 @@
 <!-- Discussion Volunteer Card -->
-<!-- <ng-container>
+<ng-container *ngIf="!sharingStarted">
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title">
       <h2 class="pn-400">Roleplay</h2>
@@ -12,14 +12,14 @@
       <p>Press the button below if you want to share your thoughts with the group.</p>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button">We want to share</button>
+      <button class="b-standard-button" (click)="shareButton()">We want to share</button>
     </div>
     <app-linear-timer [timeRemaining]="10"></app-linear-timer>
   </div>
-</ng-container> -->
+</ng-container>
 
 <!-- Share With Group Card -->
-<!-- <ng-container>
+<ng-container *ngIf="sharingStarted && iAmSharing">
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title">
       <h2 class="pn-400">Roleplay</h2>
@@ -33,14 +33,14 @@
       <h3 class="pn-700 deep-blue">Share with the group</h3>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button">Done</button>
+      <button class="b-standard-button" (click)="doneButton()">Done</button>
     </div>
     <app-linear-timer [timeRemaining]="60"></app-linear-timer>
   </div>
-</ng-container> -->
+</ng-container>
 
 <!-- Listening Card -->
-<ng-container>
+<ng-container *ngIf="sharingStarted && !iAmSharing">
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title">
       <h2 class="pn-400">Roleplay</h2>

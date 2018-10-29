@@ -1,10 +1,10 @@
 <app-participant-toolbar></app-participant-toolbar>
-<!-- <app-participant-lobby></app-participant-lobby> -->
-<!-- <app-participant-teletrivia-activity></app-participant-teletrivia-activity> -->
-<!-- <app-participant-pair-activity></app-participant-pair-activity> -->
-<!-- <app-participant-discussion-activity></app-participant-discussion-activity> -->
-<!-- <app-participant-hint-activity></app-participant-hint-activity> -->
+<app-participant-lobby *ngIf="currentActivity === 'lobbyActivity'" [socketData]="socketData"></app-participant-lobby>
+<app-participant-teletrivia-activity *ngIf="currentActivity === '????'" [socketData]="socketData" (socketMessage)="sendSocketMessage($message)"></app-participant-teletrivia-activity>
+<app-participant-pair-activity *ngIf="currentActivity === 'pairActivity'" [socketData]="socketData" (socketMessage)="sendSocketMessage($message)"></app-participant-pair-activity>
+<app-participant-discussion-activity *ngIf="currentActivity === 'discussionActivity'" [socketData]="socketData" (socketMessage)="sendSocketMessage($message)"></app-participant-discussion-activity>
+<app-participant-hint-activity></app-participant-hint-activity>
 <app-participant-feedback-activity></app-participant-feedback-activity>
-<!-- <app-participant-activity-video></app-participant-activity-video> -->
+<app-participant-activity-video *ngIf="currentActivity === 'videoActivity'"></app-participant-activity-video>
 
 

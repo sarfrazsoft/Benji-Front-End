@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer2 } from "@angular/core";
+import {Component, OnInit, OnDestroy, Renderer2, Input} from '@angular/core';
 import { BaseActivityComponent } from "../../../../shared/base-activity.component";
 import {MatDialog} from '@angular/material';
 
@@ -8,9 +8,48 @@ import {MatDialog} from '@angular/material';
   templateUrl: "./participant-teletrivia-activity.component.html",
   styleUrls: ["./participant-teletrivia-activity.component.scss"]
 })
-export class ParticipantTeletriviaActivityComponent
-  extends BaseActivityComponent
-  implements OnInit, OnDestroy {
+export class ParticipantTeletriviaActivityComponent implements OnInit {
+
+  @Input()
+  set socketData(data) {
+    const activity = data.message.activity_status;
+
+    this.makingCircle = !activity.game_started;
+    this.gameStarted = activity.game_started;
+    this.sharingStarted = activity.sharing_started;
+
+    this.iAmInitiator = activity.chosen_user === data.message.your_identity.id;
+
+    this.questions = activity.distracting_questions;
+    /*Format: [{
+        "id": 0,
+        "question": "Is \"Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.\" a grammatically correct sentence?",
+        "choices": [{
+          "id": 0,
+          "choice_text": "Yes",
+          "is_correct": true,
+          "explanation_text": "Buffalo!"
+        }, {
+          "id": 1,
+          "choice_text": "No",
+          "is_correct": false,
+          "explanation_text": "Buffalo :("
+        }, {
+          "id": 2,
+          "choice_text": "Buffalo",
+          "is_correct": false,
+          "explanation_text": "Buffalo :("
+        }]
+      } */
+  }
+
+  public makingCircle;
+  public gameStarted;
+  public sharingStarted;
+  public iAmInitiator;
+  public questions;
+
+
 
   public questionsAnswersSet = [
     {
@@ -103,8 +142,6 @@ export class ParticipantTeletriviaActivityComponent
     this.timeRemaining = 3;
     this.gameStateTimerType = 'answerTime';
   }
-
-  ngOnDestroy() {}
 
 
 
