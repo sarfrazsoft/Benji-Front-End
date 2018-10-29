@@ -28,8 +28,8 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   public roomCode;
   public participants;
 
-  public showMainFooter = true;
-  public showVideoControls = false;
+  public showMainFooter;
+  public showVideoControls;
 
   public gameStarted: boolean;
   public leaders;
@@ -83,7 +83,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
       this.backend.startLesson(this.lessonId, data.id).subscribe(() => {
         // tell service to subscribe
         this.socket
-          .createSocketConnection(this.lessonId, this.clientType)
+          .createSocketConnection(this.clientType, this.lessonId)
           .subscribe((sd: any) => {
             console.log("new socket data...firing renderer");
             this.updateSocketData(sd);

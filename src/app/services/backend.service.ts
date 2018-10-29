@@ -10,6 +10,10 @@ import { Observable } from "rxjs";
 export class BackendService {
   constructor(private http: HttpClient) {}
 
+  public userFirstName;
+  public userId;
+  public userIdentity: Observable<User>;
+
   get_runnable_sessions(courserun_num: number) {
     return this.http.get(
       global.apiRoot +
@@ -29,12 +33,8 @@ export class BackendService {
 
   // DEMO ONLY
   create_user(username: string) {
-    return this.http.post(global.apiRoot + "/mvp/debug/users/", {
-      username: username,
-      password: "test",
-      first_name: username,
-      last_name: "",
-      email: ""
+    return this.http.post(global.apiRoot + "/tenants/users/auto_create/", {
+      username: username
     });
   }
 
@@ -77,7 +77,10 @@ export class BackendService {
   }
 
   get_own_identity(): Observable<User> {
-    return this.http.get<User>(global.apiRoot + "/mvp/config/users/who_am_i/");
+    if (!this.userIdentity) {
+      this.userIdentity = this.http.get<User>(global.apiRoot + "/tenants/users/who_am_i/");
+    }
+    return this.userIdentity;
   }
 
   start_next_activity(sessionrunID) {

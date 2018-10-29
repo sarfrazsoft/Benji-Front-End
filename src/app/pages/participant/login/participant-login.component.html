@@ -1,4 +1,4 @@
-<div class="mobile-content-wrap">
+<!-- <div class="mobile-content-wrap">
   <div class="mobile-navbar"><img src="assets/img/logo.svg" height="34"></div>
   <div class="mobile-content-wrap-wide">
     <h1 class="benji-blue-header name">Welcome to Benji</h1>
@@ -13,6 +13,23 @@
       </div>
       <div class="w-form-fail">
         <div>Oops! Something went wrong while submitting the form.</div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<app-participant-toolbar></app-participant-toolbar>
+<div class="participant-start">
+  <div class="container">
+
+    <div class="participant-start__vertical-center center-text">
+      <h1 class="pn-700 vibrant-blue">Let us know who you are</h1>
+      <!-- <p>Ready for your next Benji session? When your group is set up, you’ll find your room code up on the screen.</p> -->
+      <div class="participant-start__action-container">
+        <p *ngIf="username.invalid && username.touched">You must enter a username</p>
+        <div class="participant-start__input-container">
+          <input class="b-standard-input" type="text" placeholder="What is your name?" [formControl]="username">
+        </div>
+        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Login" buttonStyle="default" [valid]="isUserValid" (clicked)="createUser()" (animationEnd)="formSubmit()"></app-animated-checkmark-button>
       </div>
     </div>
   </div>

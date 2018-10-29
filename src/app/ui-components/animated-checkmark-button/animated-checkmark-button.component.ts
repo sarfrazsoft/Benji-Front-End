@@ -4,7 +4,7 @@ import {
   state,
   style,
   animate,
-  transition,
+  transition
 } from '@angular/animations';
 
 @Component({
@@ -13,48 +13,52 @@ import {
   styleUrls: ['./animated-checkmark-button.component.scss'],
   animations: [
     trigger('validCheck', [
-      state('checked', style({
-        width: '50px',
-        // color: '#6c6c6c',
-        fontSize: '20px'
-      })),
-      transition('* => checked', [
-        animate('0.4s')
-      ])
+      state(
+        'checked',
+        style({
+          width: '50px',
+          // color: '#6c6c6c',
+          fontSize: '20px'
+        })
+      ),
+      transition('* => checked', [animate('0.4s')])
     ])
   ]
 })
 export class AnimatedCheckmarkButtonComponent implements OnInit {
+  @Input()
+  loadingState: boolean;
+  @Input()
+  buttonStyle: string;
+  @Input()
+  innerHTML: string;
+  @Input()
+  loadingStateInnerHTML: string;
 
-  @Input() loadingState: boolean;
-  @Input() buttonStyle: string;
+  @Output()
+  clicked = new EventEmitter<boolean>();
+
+  @Output()
+  animationEnd = new EventEmitter<boolean>();
+
+  @Input()
+  set valid(isValid) {
+    this.loadingState = false;
+    this.setButtonStyles();
+    this._valid = isValid;
+  }
+  public _valid: boolean;
   public buttonClassList: string[];
 
-  @Output() clicked = new EventEmitter<boolean>();
-  @Input() innerHTML: string;
-  @Input() loadingStateInnerHTML: string;
-  public  valid = false;
-
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this.setButtonStyles();
   }
 
   public emitClicked() {
-    // change button state to inactive/loading state
-    if (!this.valid) {
-      this.setButtonLoadingState();
-      // notify parent that button was clicked
-      this.clicked.emit(true);
-      // parent to preform checks/validation
-      setTimeout(() => {
-        this.loadingState = false;
-        this.setButtonStyles();
-        this.valid = !this.valid;
-      }, 1000);
-    }
+    this.setButtonLoadingState();
+    this.clicked.emit(true);
   }
 
   // if valid
@@ -62,32 +66,52 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
   // else if invalid
   // return button to default/original state
 
-
   private setButtonStyles() {
     if (this.buttonStyle === 'default') {
       this.buttonClassList = ['b-standard-button'];
     } else if (this.buttonStyle === 'white') {
-      this.buttonClassList = ['b-standard-button', 'b-standard-button--white', 'animated'];
+      this.buttonClassList = [
+        'b-standard-button',
+        'b-standard-button--white',
+        'animated'
+      ];
     } else {
       console.error('Invalid button style...using "default" style.');
       this.buttonClassList = ['b-standard-button'];
     }
   }
 
-
   private setButtonLoadingState(): any {
-    if(!this.valid) {
+    if (!this._valid) {
       if (this.buttonStyle === 'default') {
-        this.loadingState = true;
-        this.buttonClassList = ['b-standard-button', 'b-standard-button--inactive'];
+        // this.loadingState = true;
+        this.buttonClassList = [
+          'b-standard-button',
+          // 'b-standard-button--inactive'
+        ];
       } else if (this.buttonStyle === 'white') {
-        this.loadingState = true;
-        this.buttonClassList = ['b-standard-button', 'b-standard-button--white', 'b-standard-button--white-inactive'];
+        // this.loadingState = true;
+        this.buttonClassList = [
+          'b-standard-button',
+          'b-standard-button--white',
+          // 'b-standard-button--white-inactive'
+        ];
       } else {
         console.error('Invalid button style...using "default" style.');
-        this.loadingState = true;
-        this.buttonClassList = ['b-standard-button', 'b-standard-button--inactive'];
+        // this.loadingState = true;
+        this.buttonClassList = [
+          'b-standard-button',
+          // 'b-standard-button--inactive'
+        ];
       }
+    }
+  }
+
+  public animationDone(e) {
+    if (e.toState === 'checked') {
+      setTimeout(() => {
+        this.animationEnd.emit(true);
+      }, e.totalTime)
     }
   }
 }

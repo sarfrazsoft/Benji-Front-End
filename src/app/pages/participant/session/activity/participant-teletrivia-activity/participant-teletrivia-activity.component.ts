@@ -127,14 +127,13 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
 
 
   constructor(private renderer: Renderer2, public dialog: MatDialog) {
-    super();
-    this.clientIdentity = {
-      id: 123,
-      username: 'mockUserName1',
-      first_name: 'Andrew',
-      last_name: 'Thompson',
-      email: 'fakemail@mailserver.com'
-    };
+    // this.clientIdentity = {
+    //   id: 123,
+    //   username: 'mockUserName1',
+    //   first_name: 'Andrew',
+    //   last_name: 'Thompson',
+    //   email: 'fakemail@mailserver.com'
+    // };
   }
 
   ngOnInit() {

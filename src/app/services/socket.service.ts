@@ -26,12 +26,12 @@ export class WebSocketService {
     return this.connect(sessionrunID);
   }
 
-  public createSocketConnection(lessonId, client) {
-    return this.getLessonSocket(client, lessonId);
+  public createSocketConnection(client, lessonId?, roomCode?) {
+    return this.getLessonSocket(client, lessonId, roomCode);
   }
 
 
-  public getLessonSocket(client, lessonId) {
+  public getLessonSocket(client, lessonId?, roomCode?, id?) {
     if (client === "screen" && !this.subject) {
       this.subject = webSocket(
         `${global.wsRoot}/ws/activityflow/id/${lessonId}/${client}/0/`
@@ -40,7 +40,7 @@ export class WebSocketService {
       return this.subject;
     } else if (client === "participant" && !this.subject) {
       this.subject = webSocket(
-        `${global.wsRoot}/ws/activityflow/${lessonId}/${client}/2/`
+        `${global.wsRoot}/ws/activityflow/code/${roomCode}/${client}/2/`
       );
       return this.subject;
     } else if (client !== "participant" && client !== "screen") {

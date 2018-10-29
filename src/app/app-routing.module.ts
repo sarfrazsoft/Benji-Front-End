@@ -28,8 +28,7 @@ const routes: Routes = [
 
   { path: 'participant/login', component: ParticipantLoginComponent },
   { path: 'participant/join', component: ParticipantJoinComponent },
-  { path: 'participant/session', component: ParticipantSessionComponent },
-  { path: 'participant/lesson', component: ParticipantLessonComponent},
+  { path: 'participant/lesson/:roomCode', component: ParticipantLessonComponent},
 
   { path: 'elements', component: ElementsComponent},
   { path: 'main-elements', component: MainscreenElementsComponent },
