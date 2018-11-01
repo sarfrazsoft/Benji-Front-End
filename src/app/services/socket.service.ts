@@ -6,7 +6,7 @@ import { of } from "rxjs";
 
 @Injectable()
 export class WebSocketService {
-  private subject: WebSocketSubject<any>;
+  public subject: WebSocketSubject<any>;
   private sessionrunID;
   public socketData;
 
@@ -26,10 +26,13 @@ export class WebSocketService {
     return this.connect(sessionrunID);
   }
 
-  public createSocketConnection(client, lessonId?, roomCode?) {
-    return this.getLessonSocket(client, lessonId, roomCode);
+  public createSocketConnection(client, lessonId?, roomCode?, id?) {
+    return this.getLessonSocket(client, lessonId, roomCode, id);
   }
 
+  public setSubjectOnJoin(url) {
+    this.subject = webSocket(`${global.wsRoot}${url}`);
+  }
 
   public getLessonSocket(client, lessonId?, roomCode?, id?) {
     if (client === "screen" && !this.subject) {
@@ -40,7 +43,7 @@ export class WebSocketService {
       return this.subject;
     } else if (client === "participant" && !this.subject) {
       this.subject = webSocket(
-        `${global.wsRoot}/ws/activityflow/code/${roomCode}/${client}/2/`
+        `${global.wsRoot}/ws/activityflow/code/${roomCode}/${client}/${id}/`
       );
       return this.subject;
     } else if (client !== "participant" && client !== "screen") {

@@ -85,7 +85,7 @@ export class MainScreenTeletriviaActivityComponent
 
   ngOnChanges(changes: SimpleChanges) {
     const currentLeaders: SimpleChange = changes.leaders;
-    if (currentLeaders.currentValue && this.leaders.length) {
+    if (currentLeaders.currentValue !== undefined && this.leaders.length) {
       this.leadersReady = true;
       this.getLeaders();
     }

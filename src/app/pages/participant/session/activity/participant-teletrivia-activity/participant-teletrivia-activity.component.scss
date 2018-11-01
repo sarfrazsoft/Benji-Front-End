@@ -21,3 +21,55 @@
 .mc-card.mc-card--starter-layout {
   height: calc(100vh - 65px - 125px);
 }
+
+.mc-card--circle .b-flat-card__body {
+  h3 {
+      font-size: 35px;
+      line-height: normal;
+  }
+  p {
+      font-size: 14px;
+  }
+  .b-flat-card__twemoji {
+      width: 120px;
+      margin: 0 auto;
+  }
+  .mc-card__loader {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+  }
+}
+@media screen and (min-width: 321px) {
+  .b-flat-card__body {
+      padding: 5vh 30px 10px;
+  }
+  .roleplay-card .b-flat-card__body {
+      .b-flat-card__twemoji {
+          width: 140px;
+      }
+      h3 {
+          font-size: 40px;
+          line-height: normal;
+      }
+      p {
+          font-size: 16px;
+      }
+  }
+}
+
+@media screen and (min-width: 414px) {
+  .b-flat-card__body {
+      padding: 5vh 50px 20px;
+  }
+  .roleplay-card .b-flat-card__body {
+      h3 {
+          font-size: 40px;
+          line-height: normal;
+      }
+      p {
+          font-size: 16px;
+          line-height: normal;
+      }
+  }
+}

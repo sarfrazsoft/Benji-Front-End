@@ -1,22 +1,48 @@
-import { Component, OnInit } from "@angular/core";
-import { WebSocketService } from "src/app/services/socket.service";
+import { Component, OnInit } from '@angular/core';
+import { WebSocketService } from 'src/app/services/socket.service';
+import { BackendService } from 'src/app/services/backend.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: "app-participant-lesson",
-  templateUrl: "./participant-lesson.component.html",
-  styleUrls: ["./participant-lesson.component.scss"]
+  selector: 'app-participant-lesson',
+  templateUrl: './participant-lesson.component.html',
+  styleUrls: ['./participant-lesson.component.scss']
 })
 export class ParticipantLessonComponent implements OnInit {
-  constructor(private socket: WebSocketService) {}
+  constructor(
+    private socket: WebSocketService,
+    private backend: BackendService,
+    private route: ActivatedRoute
+  ) {}
 
   public socketData;
   public identity;
+  public roomCode;
+  public currentActivity;
 
   ngOnInit() {
-    this.socket.createSocketConnection().subscribe(sd => {
-      this.updateSocketData(sd);
-      // this.activityRender(sd.message.activity_status);
+    this.backend.get_own_identity().subscribe(identity => {
+      this.identity = identity;
+      console.log(identity);
+      this.connectToLesson(this.identity.id);
     });
+  }
+
+  public sendSocketMessage(message) {
+    console.log('message sent');
+    this.socket.sendSocketFullMessage(message);
+  }
+
+
+  private connectToLesson(userId) {
+    this.roomCode = this.route.snapshot.paramMap.get('roomCode');
+    this.socket
+      .createSocketConnection('participant', null, this.roomCode, userId)
+      .subscribe(sd => {
+        this.updateSocketData(sd);
+        this.activityRender(sd.message.activity_status);
+
+      });
   }
 
   private updateSocketData(data) {
@@ -24,28 +50,25 @@ export class ParticipantLessonComponent implements OnInit {
     console.log(this.socketData);
   }
 
-  // private activityRender(activityStatus) {
-  //   console.log("Checking Activity type...");
-  //   switch (activityStatus.activity_type) {
-  //     case "LobbyActivity":
-  //       this.updateLobbyActivity();
-  //       break;
-  //     case "BrokenTelephoneActivity":
-  //       this.updateTeletriviaActivity();
-  //       break;
-  //     case "VideoActivity":
-  //       this.updateVideoActivity();
-  //       break;
-  //     case "RoleplayPairActivity":
-  //     case "ReverseRoleplayPairActivity":
-  //       console.log("pair activity");
-  //       console.log(activityStatus);
-  //       this.updatePairActivity(activityStatus.activity_type);
-  //       break;
-  //     case "RoleplayPairShareActivity":
-  //       this.updateDiscussionActivity();
-  //       break;
-  //     default:
-  //   }
-  // }
+  private activityRender(activityStatus) {
+    switch (activityStatus.activity_type) {
+      case 'LobbyActivity':
+        this.currentActivity = 'lobbyActivity';
+        break;
+      case 'BrokenTelephoneActivity':
+        this.currentActivity = 'teletrivia';
+        break;
+      case 'VideoActivity':
+        this.currentActivity = 'videoActivity';
+        break;
+      case 'RoleplayPairActivity':
+      case 'ReverseRoleplayPairActivity':
+      this.currentActivity = 'pairActivity';
+        break;
+      case 'RoleplayPairShareActivity':
+      this.currentActivity = 'discussionActivity';
+        break;
+      default:
+    }
+  }
 }

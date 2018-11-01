@@ -77,9 +77,9 @@ export class BackendService {
   }
 
   get_own_identity(): Observable<User> {
-    if (!this.userIdentity) {
-      this.userIdentity = this.http.get<User>(global.apiRoot + "/tenants/users/who_am_i/");
-    }
+    this.userIdentity = this.http.get<User>(
+      global.apiRoot + "/tenants/users/who_am_i/"
+    );
     return this.userIdentity;
   }
 
@@ -136,6 +136,15 @@ export class BackendService {
     return this.http.post(
       `${global.apiRoot}/course_details/course_run/${courserun}/start_lesson/ `,
       { lesson: lessonId }
+    );
+  }
+
+  public getLessonLink(roomCode) {
+    return this.http.post(
+      `${global.apiRoot}/course_details/course_run/get_lesson_link/`,
+      {
+        lessonrun_code: roomCode
+      }
     );
   }
 

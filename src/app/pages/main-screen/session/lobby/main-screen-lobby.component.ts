@@ -128,5 +128,6 @@ export class MainScreenLobbyComponent implements OnInit, OnDestroy {
   kickOffLesson() {
     this.activityComplete.emit(true);
     this.socket.sendSocketEventMessage('end');
+    console.log('Kick off sent from main');
   }
 }
