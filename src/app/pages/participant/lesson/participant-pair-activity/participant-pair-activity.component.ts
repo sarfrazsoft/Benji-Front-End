@@ -13,7 +13,6 @@ export class ParticipantPairActivityComponent implements OnInit {
     const activity = data.message.activity_status;
 
     this.pairActivityStarted = activity.all_pairs_found;
-<<<<<<< Updated upstream
     this.isReady = activity.user_pairs_found.indexOf(data.message.your_identity.id) > 0
 
     if (!this.timeSet) {
@@ -30,14 +29,6 @@ export class ParticipantPairActivityComponent implements OnInit {
         this.roleName = activity.primary_role.role_name;
         this.roleInstructions = activity.primary_role.role_instructions;
       } else if (group.secondary.indexOf(data.message.your_identity.id) > 0) {
-=======
-    this.isReady = activity.user_pairs_found.indexOf(data.your_identity.id) > 0;
-
-    for (const group of activity.user_groups) {
-      if (group.primary.indexOf(data.your_identity.id) > 0) {
-        this.roleEmoji = this.emoji.getEmoji('speech'); // TODO WHAT IS THE EMOJI FOR THE SEPAKER?
-      } else if (group.secondary.indexOf(data.your_identity.id) > 0) {
->>>>>>> Stashed changes
         this.roleEmoji = this.emoji.getEmoji('zipface');
         partnerID = group.primary[0];
         this.roleName = activity.secondary_role.role_name;
@@ -62,18 +53,11 @@ export class ParticipantPairActivityComponent implements OnInit {
   public isReady = false;
   public pairActivityStarted;
   public roleEmoji: string;
-<<<<<<< Updated upstream
   public partnerName = '';
   public roleName = '';
   public roleInstructions = '';
   public timeRemaining = 60;
   public timeSet = false;
-=======
-  public partner: string;
-  public roleInstructions: string;
-  public role: string;
-  public timeRemaining;
->>>>>>> Stashed changes
 
   ngOnInit() {
     this.roleEmoji = this.emoji.getEmoji('zipface');
