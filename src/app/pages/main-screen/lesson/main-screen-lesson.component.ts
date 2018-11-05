@@ -6,18 +6,18 @@ import {
   SimpleChanges,
   ViewChild,
   ElementRef
-} from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { WebSocketService } from '../../../services/socket.service';
-import { Observable } from 'rxjs';
-import { BackendService } from '../../../services/backend.service';
-import { WebSocketSubject } from 'rxjs/webSocket';
+} from "@angular/core";
+import { AuthService } from "../../../services/auth.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { WebSocketService } from "../../../services/socket.service";
+import { Observable } from "rxjs";
+import { BackendService } from "../../../services/backend.service";
+import { WebSocketSubject } from "rxjs/webSocket";
 
 @Component({
-  selector: 'app-main-screen-lesson',
-  templateUrl: './main-screen-lesson.component.html',
-  styleUrls: ['./main-screen-lesson.component.scss']
+  selector: "app-main-screen-lesson",
+  templateUrl: "./main-screen-lesson.component.html",
+  styleUrls: ["./main-screen-lesson.component.scss"]
 })
 export class MainScreenLessonComponent implements OnInit, OnChanges {
   private lessonId;
@@ -42,7 +42,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   public allPairsFound;
   public pairGameReversed;
 
-  @ViewChild('layoutContainer')
+  @ViewChild("layoutContainer")
   public container: ElementRef;
 
   constructor(
@@ -53,13 +53,13 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     private backend: BackendService,
     private renderer: Renderer2
   ) {
-    this.lessonId = this.route.snapshot.paramMap.get('lessonId');
-    this.clientType = 'screen';
+    this.lessonId = this.route.snapshot.paramMap.get("lessonId");
+    this.clientType = "screen";
   }
 
   ngOnInit() {
     this.auth
-      .login('sean', 'test')
+      .login("sean", "test")
       .subscribe(
         null,
         err => console.error(`Error on authentication: ${err}`),
@@ -85,7 +85,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
         this.socket
           .createSocketConnection(this.clientType, this.lessonId)
           .subscribe((sd: any) => {
-            console.log('new socket data...firing renderer');
+            console.log("new socket data...firing renderer");
             this.updateSocketData(sd);
             this.activityRender(sd.message.activity_status);
           });
@@ -99,27 +99,32 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   }
 
   private activityRender(activityStatus) {
-    console.log('Checking Activity type...');
-    switch (activityStatus.activity_type) {
-      case 'LobbyActivity':
-        this.updateLobbyActivity();
-        break;
-      case 'BrokenTelephoneActivity':
-        this.updateTeletriviaActivity();
-        break;
-      case 'VideoActivity':
-        this.updateVideoActivity();
-        break;
-      case 'RoleplayPairActivity':
-      case 'ReverseRoleplayPairActivity':
-        console.log('pair activity');
-        console.log(activityStatus);
-        this.updatePairActivity(activityStatus.activity_type);
-        break;
-      case 'RoleplayPairShareActivity':
-        this.updateDiscussionActivity();
-        break;
-      default:
+    console.log("Checking Activity type...");
+    if (activityStatus.end === undefined) {
+      switch (activityStatus.activity_type) {
+        case "LobbyActivity":
+          this.updateLobbyActivity();
+          break;
+        case "BrokenTelephoneActivity":
+          this.updateTeletriviaActivity();
+          break;
+        case "VideoActivity":
+          this.updateVideoActivity();
+          break;
+        case "RoleplayPairActivity":
+        case "ReverseRoleplayPairActivity":
+          this.updatePairActivity(activityStatus.activity_type);
+          break;
+        case "RoleplayPairShareActivity":
+          this.updateDiscussionActivity();
+          break;
+        case "WordVotingActivity":
+          this.updateHintWordActivity();
+          break;
+        default:
+      }
+    } else {
+      this.handleLessonEnd();
     }
   }
 
@@ -146,11 +151,11 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.showMainFooter = false;
     this.activityLoading = false;
-    this.currentActivity = 'lobbyActivity';
+    this.currentActivity = "lobbyActivity";
   }
 
   private updateTeletriviaActivity() {
-    this.currentActivity = 'teletrivia';
+    this.currentActivity = "teletrivia";
     this.activityLoading = false;
     this.showMainFooter = true;
     this.showVideoControls = false;
@@ -159,8 +164,17 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     this.sendLeaderBoard();
   }
 
+  private updateHintWordActivity() {
+    this.currentActivity = "hintWordActivity";
+    this.activityLoading = false;
+    this.showMainFooter = true;
+    this.showVideoControls = false;
+    this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
+    this.handleFooterLayoutChange(this.showMainFooter);
+  }
+
   private updateVideoActivity() {
-    this.currentActivity = 'videoActivity';
+    this.currentActivity = "videoActivity";
     this.activityLoading = false;
     this.showMainFooter = true;
     this.showVideoControls = true;
@@ -169,7 +183,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   }
 
   private updatePairActivity(pairActivityType) {
-    this.currentActivity = 'pairActivity';
+    this.currentActivity = "pairActivity";
     this.activityLoading = false;
     this.showMainFooter = true;
     this.pairGameStarted = false;
@@ -179,7 +193,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   }
 
   private updateDiscussionActivity() {
-    this.currentActivity = 'discussionActivity';
+    this.currentActivity = "discussionActivity";
     this.activityLoading = false;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.showMainFooter = true;
@@ -191,7 +205,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     const leaderArray = this.socketData.message.activity_status.leaderboard;
     // check the leader board participants
     const leaders = [];
-    if (leaderArray !== null && leaderArray['0'].correct > 0) {
+    if (leaderArray !== null && leaderArray["0"].correct > 0) {
       for (let i = 0; i < 6 && i < leaderArray.length; i++) {
         leaders.push(leaderArray[i]);
       }
@@ -208,7 +222,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     this.foundPairs = this.socketData.message.activity_status.user_pairs_found;
     this.allPairsFound = this.socketData.message.activity_status.all_pairs_found;
     console.log(this.allPairsFound);
-    if (pairActivityType === 'ReverseRoleplayPairActivity') {
+    if (pairActivityType === "ReverseRoleplayPairActivity") {
       console.log(`it is reverse roleplay`);
       this.pairGameReversed = true;
     } else {
@@ -217,6 +231,9 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     }
   }
 
+  private handleLessonEnd() {
+    this.currentActivity = "feedbackActivity";
+  }
   // private routeToActivity(activityStatus: ActivityStatus) {
   //   switch (activityStatus.activity_type) {
   //     case 'LobbyActivity':
@@ -235,12 +252,12 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     if (showFooter) {
       this.renderer.removeClass(
         this.container.nativeElement,
-        'ms-lesson__activity-container--lobby'
+        "ms-lesson__activity-container--lobby"
       );
     } else if (!showFooter) {
       this.renderer.addClass(
         this.container.nativeElement,
-        'ms-lesson__activity-container--lobby'
+        "ms-lesson__activity-container--lobby"
       );
     }
   }

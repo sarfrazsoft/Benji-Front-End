@@ -29,7 +29,7 @@ export class ParticipantLessonComponent implements OnInit {
   }
 
   public sendSocketMessage(message) {
-    console.log('message sent');
+    console.log('message submitted from parent')
     this.socket.sendSocketFullMessage(message);
   }
 
@@ -51,24 +51,33 @@ export class ParticipantLessonComponent implements OnInit {
   }
 
   private activityRender(activityStatus) {
-    switch (activityStatus.activity_type) {
-      case 'LobbyActivity':
-        this.currentActivity = 'lobbyActivity';
-        break;
-      case 'BrokenTelephoneActivity':
-        this.currentActivity = 'teletrivia';
-        break;
-      case 'VideoActivity':
-        this.currentActivity = 'videoActivity';
-        break;
-      case 'RoleplayPairActivity':
-      case 'ReverseRoleplayPairActivity':
-      this.currentActivity = 'pairActivity';
-        break;
-      case 'RoleplayPairShareActivity':
-      this.currentActivity = 'discussionActivity';
-        break;
-      default:
+    if(activityStatus.end === undefined) {
+      switch (activityStatus.activity_type) {
+        case 'LobbyActivity':
+          this.currentActivity = 'lobbyActivity';
+          break;
+        case 'BrokenTelephoneActivity':
+          this.currentActivity = 'teletrivia';
+          break;
+        case 'VideoActivity':
+          this.currentActivity = 'videoActivity';
+          break;
+        case 'RoleplayPairActivity':
+        case 'ReverseRoleplayPairActivity':
+        this.currentActivity = 'pairActivity';
+          break;
+        case 'RoleplayPairShareActivity':
+        this.currentActivity = 'discussionActivity';
+          break;
+        case 'WordVotingActivity':
+        this.currentActivity = 'hintWordActivity';
+          break;
+        default:
+      }
+
+    } else {
+      this.currentActivity = 'feedbackActivity';
     }
   }
+
 }

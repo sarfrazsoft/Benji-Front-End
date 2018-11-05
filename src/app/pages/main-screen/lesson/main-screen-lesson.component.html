@@ -11,7 +11,11 @@
     <app-main-screen-pair-activity *ngIf="currentActivity === 'pairActivity'" [reversed]="pairGameReversed" [startTime]="pairCountdownTime" [allPairsFound]="allPairsFound" [participants]="pairParticipants" [userPairs]="userPairs" [foundPairs]="foundPairs" [socketData]=socketData></app-main-screen-pair-activity>
 
     <app-main-screen-discussion-activity *ngIf="currentActivity === 'discussionActivity'" [socketData]="socketData"></app-main-screen-discussion-activity>
-    <!-- <app-main-screen-feedback-activity></app-main-screen-feedback-activity> -->
+    <app-main-screen-feedback-activity *ngIf="currentActivity === 'feedbackActivity'"></app-main-screen-feedback-activity>
+    <app-main-screen-hint-activity *ngIf="currentActivity === 'hintWordActivity'" [socketData]="socketData"></app-main-screen-hint-activity>
+
+
+
   </div>
   <app-main-screen-footer [showFooter]="showMainFooter" [showVideoControls]="showVideoControls" [roomCode]="roomCode" (videoState)="handleVideoControlEvent($event)"></app-main-screen-footer>
 </div>

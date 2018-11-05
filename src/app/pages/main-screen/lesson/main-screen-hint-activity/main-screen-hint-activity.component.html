@@ -1,0 +1,52 @@
+<div class="mainscreen-activity mainscreen-activity--multi-column hint-activity" *ngIf="activityState !== 'complete'">
+  <div class="mainscreen-activity__column mainscreen-activity__column--66 bg-off-white">
+    <div class="hint-activity__instruction-container flexer--center">
+      <div class="hint-activity__twemoji-container">
+        <app-b-twemoji emoji="🛎️"></app-b-twemoji>
+      </div>
+      <h2 class="vibrant-blue pn-700">Pssst</h2>
+      <p class="brownish-grey">{{instructions}}</p>
+    </div>
+    <div class="hint-activity__options-container" #listParent>
+      <div class="hint-activity__section-title">
+        <h3>Hint Word Options</h3>
+      </div>
+      <div class="hint-activity__options">
+        <ul>
+          <li class="deep-blue hint-activity__option" [ngStyle]="{'font-size.px': voteFontSize}" *ngFor="let word of words">{{word}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey hint-activity__status-column">
+    <p class="hint-activity__words-total pn-600 deep-blue">
+      {{words.length}}/{{expectedNumberOfWords}}<br> words submitted
+    </p>
+    <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Vote!"></app-radial-timer>
+  </div>
+</div>
+
+<div class="mainscreen-activity mainscreen-activity--multi-column hint-activity"  *ngIf="activityState === 'complete'">
+  <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-off-white">
+    <div class="hint-activity__instruction-container flexer--center">
+      <div class="hint-activity__twemoji-container">
+        <app-b-twemoji emoji="🛎️"></app-b-twemoji>
+      </div>
+      <h2 class="vibrant-blue pn-700">Pssst</h2>
+      <p class="brownish-grey">{{instructions}}</p>
+    </div>
+  </div>
+  <div class="mainscreen-activity__column mainscreen-activity__column--66 bg-dim-grey hint-activity__conclusion">
+    <div class="hint-activity__section-title">
+      <h3>Your Hint Word Is</h3>
+    </div>
+
+    <p class="hint-activity__winner pn-700 deep-blue">{{winningWord}}</p>
+
+    <p>If you’re chatting with anyone in this group and you see that they’re drifting off or distracted, just say “Hey…
+      Tube socks.”</p>
+
+    <p>It’s not a big deal, just a little reminder that we can listen a little better 👍</p>
+
+  </div>
+</div>

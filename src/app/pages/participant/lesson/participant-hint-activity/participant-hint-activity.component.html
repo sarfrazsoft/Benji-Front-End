@@ -21,7 +21,7 @@
       <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive': hintWord.invalid || hintWordSubmitted}"
         (click)="submitHintWord()">
         <span *ngIf="hintWordSubmitted">
-          Submitting
+          Waiting for others...
         </span>
         <span *ngIf="!hintWordSubmitted">
           Submit
@@ -37,17 +37,19 @@
     </div>
     <div class="b-flat-card__body">
       <h3 class="pn-700 deep-blue">
-        <span *ngIf="winningWord === undefined">
+        <span *ngIf="!voteSubmitted">
           Vote for your favorite!
         </span>
-        <span *ngIf="winningWord !== undefined">
+        <span *ngIf="voteSubmitted">
           You voted for
         </span>
       </h3>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button b-standard-button--unselected" [ngClass]="{'b-standard-button--selected': word === selectedWord }"
-        *ngFor="let word of hintWordList" (click)="selectWord(word)">{{word | titlecase}}</button>
+      <ng-container *ngIf="!voteSubmitted">
+        <button class="b-standard-button b-standard-button--unselected" [ngClass]="{'b-standard-button--selected': word === selectedWord }" *ngFor="let word of hintWordList" (click)="selectWord(word)">{{word | titlecase}}</button>
+      </ng-container>
+      <button class="b-standard-button b-standard-button--selected" *ngIf="voteSubmitted">{{selectedWord}}</button>
     </div>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="selectedWord">

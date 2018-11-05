@@ -32,6 +32,12 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
       this.triggerDialogue(this.initiatorModal);
     }
 
+    if (this.sharingStarted) {
+      this.timeRemaining = 0;
+      this.showAnswerDetail = true;
+      this.currentQuestionIndex = (this.questions.length - 1);
+    }
+
     this.questions = activity.distracting_questions;
     /*Format: [{
         "id": 0,
@@ -56,71 +62,6 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
   }
 
 
-
-
-
-  public questionsAnswersSet = [
-    {
-      question: "The answer is c",
-      answers: [
-        {
-          isAnswer: false,
-          answerValue: "Alpha"
-        },
-        {
-          isAnswer: false,
-          answerValue: "Beta"
-        },
-        {
-          isAnswer: true,
-          answerValue: "Charlie"
-        }
-      ],
-      correctAnswerDetail: "Here are a few facts about the answer"
-    },
-    {
-      question: "The answer is B",
-      answers: [
-        {
-          isAnswer: false,
-          answerValue: "Alpha"
-        },
-        {
-          isAnswer: true,
-          answerValue: 'Beta'
-        },
-        {
-          isAnswer: false,
-          answerValue: 'Charlie'
-        }
-      ],
-      correctAnswerDetail: "Here are a few facts about the answer"
-    },
-    {
-      question: 'The answer is C',
-      answers: [
-        {
-          isAnswer: false,
-          answerValue: 'Alpha'
-        },
-        {
-          isAnswer: false,
-          answerValue: 'Beta'
-        },
-        {
-          isAnswer: true,
-          answerValue: 'Charlie'
-        }
-      ],
-      correctAnswerDetail: "Here are a few facts about the answer"
-    }
-  ];
-
-  public telephoneActivityParams = {
-    telephone_initiator_userId: 123,
-    telephone_message: 'Do you know the way to San Jose',
-    telephone_started: false
-  };
 
   public message: string;
   public currentQuestionIndex: number;
@@ -167,14 +108,15 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
   public openEndModal() {
     this.triggerDialogue(this.endModal);
     this.timeRemaining = 0;
+    this.socketMessage.emit({
+      'event': 'done_button'
+    });
   }
 
   public endGame() {
+
     this.socketMessage.emit({
       'event': 'sharing_done_button'
-    });
-    this.socketMessage.emit({
-      'event': 'done_button'
     });
   }
 

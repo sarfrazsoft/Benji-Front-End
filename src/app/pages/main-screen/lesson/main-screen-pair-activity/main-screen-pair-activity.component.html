@@ -1,4 +1,4 @@
-<ng-container *ngIf="pairGameStarted && !reversed">
+<ng-container *ngIf="pairGameStarted && !_reversed">
   <div class="mainscreen-activity mainscreen-activity--multi-column pair-activity">
     <div class="mainscreen-activity__column mainscreen-activity__column--66 pair-activity__roleplay-instruction bg-off-white">
       <div class="pair-activity__title">
@@ -7,14 +7,14 @@
       <div class="mainscreen-activity__info-column-container pair-activity__role-flexer flexer">
         <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--1">
           <div class="pair-activity__emoji-container">
-            <app-b-twemoji emoji="💬"></app-b-twemoji>
+            <app-b-twemoji [emoji]="primaryEmoji"></app-b-twemoji>
           </div>
           <h3 class="brownish-grey pn-500">Partner #1</h3>
           <p class="brownish-grey pn-500">{{roleplayQuestion}}</p>
         </div>
         <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--2">
           <div class="pair-activity__emoji-container">
-            <app-b-twemoji emoji="🤐"></app-b-twemoji>
+            <app-b-twemoji [emoji]="secondaryEmoji"></app-b-twemoji>
           </div>
           <h3 class="brownish-grey pn-500">Partner #2</h3>
           <p class="deep-blue pn-600">{{secondaryRole.role_instructions}}</p>
@@ -26,23 +26,23 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="pairGameStarted && reversed">
+<ng-container *ngIf="pairGameStarted && _reversed">
   <div class="mainscreen-activity mainscreen-activity--multi-column pair-activity">
     <div class="mainscreen-activity__column mainscreen-activity__column--66 pair-activity__roleplay-instruction bg-off-white">
       <div class="pair-activity__title">
         <p class="brownish-grey pn-500">Roleplay</p>
       </div>
       <div class="mainscreen-activity__info-column-container pair-activity__role-flexer flexer">
-        <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--2">
+        <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--1">
           <div class="pair-activity__emoji-container">
-            <app-b-twemoji emoji="🤐"></app-b-twemoji>
+            <app-b-twemoji [emoji]="secondaryEmoji"></app-b-twemoji>
           </div>
           <h3 class="brownish-grey pn-500">Partner #1</h3>
           <p class="deep-blue pn-600">{{secondaryRole.role_instructions}}</p>
         </div>
-        <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--1">
+        <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--2">
           <div class="pair-activity__emoji-container">
-            <app-b-twemoji emoji="💬"></app-b-twemoji>
+            <app-b-twemoji [emoji]="primaryEmoji"></app-b-twemoji>
           </div>
           <h3 class="brownish-grey pn-500">Partner #2</h3>
           <p class="brownish-grey pn-500">{{roleplayQuestion}}</p>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey">
-      <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Switch!"></app-radial-timer>
+      <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Done!"></app-radial-timer>
     </div>
   </div>
 </ng-container>

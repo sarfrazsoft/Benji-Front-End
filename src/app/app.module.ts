@@ -77,6 +77,7 @@ import { ParticipantDiscussionActivityComponent } from './pages/participant/less
 import { ParticipantHintActivityComponent } from './pages/participant/lesson/participant-hint-activity/participant-hint-activity.component';
 // tslint:disable-next-line:max-line-length
 import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson/participant-feedback-activity/participant-feedback-activity.component';
+import { MainScreenHintActivityComponent } from './pages/main-screen/lesson/main-screen-hint-activity/main-screen-hint-activity.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson
     ParticipantPairActivityComponent,
     ParticipantDiscussionActivityComponent,
     ParticipantHintActivityComponent,
+    MainScreenHintActivityComponent,
 
   ],
   imports: [

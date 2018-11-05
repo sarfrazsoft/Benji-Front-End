@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { interval } from 'rxjs';
+import { EmojiLookupService } from "src/app/services/emoji-lookup.service";
+import { takeLast, take, takeUntil, takeWhile } from "rxjs/operators";
 
 
 @Component({
@@ -20,6 +22,10 @@ export class MainScreenPairActivityComponent implements OnInit {
   public totalSeconds;
   public data;
   private initialTimeRemaining: number;
+  public primaryEmoji;
+  public secondaryEmoji;
+  public _reversed: boolean;
+  private intervalSubscription;
 
 
   @Input()
@@ -51,6 +57,7 @@ export class MainScreenPairActivityComponent implements OnInit {
   @Input ()
   set reversed(isReversed) {
     if (isReversed === true) {
+      this._reversed = isReversed;
       this.startGame();
     }
   }
@@ -65,7 +72,7 @@ export class MainScreenPairActivityComponent implements OnInit {
   public pairs = [];
 
 
-  constructor() {}
+  constructor(private emoji: EmojiLookupService) {}
 
   ngOnInit() {
     this.listPairs();
@@ -93,21 +100,35 @@ export class MainScreenPairActivityComponent implements OnInit {
   }
 
   public startGame() {
+    if (this._reversed) {
+      this.primaryEmoji = this.emoji.getEmoji(this.data.message.activity_status.primary_role.role_emoji);
+      this.secondaryEmoji = this.emoji.getEmoji(this.data.message.activity_status.secondary_role.role_emoji);
+    } else {
+      this.primaryEmoji = this.emoji.getEmoji(this.data.message.activity_status.primary_role.role_emoji);
+      this.secondaryEmoji = this.emoji.getEmoji(this.data.message.activity_status.secondary_role.role_emoji);
+
+    }
     this.pairGameStarted = true;
     const countdown = Date.parse(this.data.message.activity_status.countdown_discussion) - Date.now();
     this.totalSeconds = (countdown / 1000);
     this.initialTimeRemaining = (countdown / 1000);
     this.secondsElapsed = 0;
     console.log(`${this.totalSeconds} left until switch`);
-    this.secondsElapsedInterval = interval(100).subscribe(() => {
-      ++this.secondsElapsed;
-      this.checktime();
+    this.secondsElapsedInterval = interval(100);
+
+    this.intervalSubscription = this.secondsElapsedInterval.pipe(
+      takeWhile((time: number) => time / 10 < this.initialTimeRemaining)
+    );
+
+    this.intervalSubscription.subscribe((time) => {
+      this.secondsElapsed = time;
     });
   }
 
   private checktime() {
     if ((this.secondsElapsed) / 10 >= this.initialTimeRemaining) {
-      this.secondsElapsedInterval.unsubscribe();
+      console.log('unsubscribed');
+      this.intervalSubscription.unsubscribe();
     }
   }
 

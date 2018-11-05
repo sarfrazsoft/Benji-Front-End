@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { WebSocketService } from 'src/app/services/socket.service';
 
@@ -11,49 +11,45 @@ export class ParticipantHintActivityComponent implements OnInit {
 
   constructor(private socket: WebSocketService) { }
 
+  @Input() set socketData(data) {
+    const activity = data.message.activity_status;
+
+    if (activity.submission_complete && !activity.voting_complete) {
+      this.activityState = 'vote';
+      this.hintWordList = activity.submitted_words;
+    } else if (activity.submission_complete && activity.voting_complete) {
+      this.winningWord = activity.voted_word;
+      this.activityState = 'complete';
+    }
+
+  }
+
+
+  @Output() socketMessage = new EventEmitter<any>();
   public inputCharsRemaining: string;
   public hintWord = new FormControl(null, Validators.required);
-  public activityState: string;
-  public hintWordList = [
-    'onion',
-    'vigorous',
-    'symbol',
-    'policy',
-    'gregarious',
-    'voice',
-    'course',
-    'cottage',
-    'routine',
-    'divorce',
-    'animal',
-    'abridge',
-    'hear',
-    'lifestyle',
-    'restrict',
-    'sensitive',
-    'young',
-    'advance',
-    'shaft',
-    'eat'
-  ];
+  public activityState = 'input';
+  public hintWordList;
   public hintWordSubmitted: boolean;
   public selectedWord: string;
+  public voteSubmitted: boolean;
   public winningWord: string;
 
   ngOnInit() {
-    this.activityState = 'input';
   }
 
   public submitHintWord() {
-    // const message = {
-    //   'event': 'submit_word',
-    //   'word': this.hintWord.value
-    // };
-    // this.socket.sendSocketFullMessage(message);
-    this.hintWordSubmitted = true;
-    setTimeout(() => {
-      this.activityState = 'vote';
-    }, 3000);
+    if (!this.hintWordSubmitted && this.hintWord.value !== undefined) {
+      console.log('submitting word');
+      this.socketMessage.emit(
+        {
+          'event': 'submit_word',
+          'word': this.hintWord.value
+        }
+      );
+      this.hintWordSubmitted = true;
+
+    }
   }
 
   public selectWord(word) {
@@ -61,11 +57,14 @@ export class ParticipantHintActivityComponent implements OnInit {
   }
 
   public confirmVote() {
-    this.hintWordList = [this.selectedWord];
-    this.winningWord = this.selectedWord;
-    setTimeout(() => {
-      this.activityState = 'complete';
-    }, 5000);
+    if(!this.voteSubmitted) {
+      this.socketMessage.emit({
+        'event': 'submit_vote',
+        'word': this.selectedWord
+      });
+      this.voteSubmitted = true;
+      this.hintWordList = [this.selectedWord];
+    }
   }
 
 }

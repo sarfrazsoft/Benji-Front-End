@@ -14,7 +14,7 @@
     <div class="b-flat-card__action">
       <button class="b-standard-button" (click)="shareButton()">We want to share</button>
     </div>
-    <app-linear-timer [timeRemaining]="10"></app-linear-timer>
+    <app-linear-timer [timeRemaining]="discussionSecondsRemaining"></app-linear-timer>
   </div>
 </ng-container>
 
@@ -35,7 +35,7 @@
     <div class="b-flat-card__action">
       <button class="b-standard-button" (click)="doneButton()">Done</button>
     </div>
-    <app-linear-timer [timeRemaining]="60"></app-linear-timer>
+    <app-linear-timer [timeRemaining]="secondsRemaining"></app-linear-timer>
   </div>
 </ng-container>
 
@@ -51,6 +51,5 @@
       </div>
       <h3 class="pn-700 deep-blue">Listen Up</h3>
     </div>
-    <app-linear-timer [timeRemaining]="60"></app-linear-timer>
   </div>
 </ng-container>
