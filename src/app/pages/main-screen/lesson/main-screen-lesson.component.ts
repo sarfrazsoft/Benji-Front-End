@@ -22,7 +22,7 @@ import { WebSocketSubject } from "rxjs/webSocket";
 export class MainScreenLessonComponent implements OnInit, OnChanges {
   private lessonId;
   public socketData: any;
-  public activityLoading;
+  public activityLoading = true;
   private clientType: string;
   public currentActivity: string;
   public roomCode;
@@ -33,6 +33,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
   public gameStarted: boolean;
   public leaders;
+  public triviaCircleTime;
 
   public userPairs;
   public pairGameStarted;
@@ -44,6 +45,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
   @ViewChild("layoutContainer")
   public container: ElementRef;
+  public videoURL: any;
 
   constructor(
     private auth: AuthService,
@@ -95,7 +97,6 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
   private updateSocketData(data) {
     this.socketData = data;
-    console.log(this.socketData);
   }
 
   private activityRender(activityStatus) {
@@ -149,24 +150,36 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
       this.socketData.message.participants
     );
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
-    this.showMainFooter = false;
-    this.activityLoading = false;
+    this.handleLoadingStates();
     this.currentActivity = "lobbyActivity";
   }
 
+  private handleLoadingStates() {
+    if (this.socketData.message.activity_status.next_activity_countdown !== null) {
+      this.activityLoading = true;
+    } else {
+      this.activityLoading = false;
+    }
+  }
+
   private updateTeletriviaActivity() {
+    console.log("new trivia packet");
     this.currentActivity = "teletrivia";
-    this.activityLoading = false;
+    this.handleLoadingStates();
     this.showMainFooter = true;
     this.showVideoControls = false;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.handleFooterLayoutChange(this.showMainFooter);
-    this.sendLeaderBoard();
+    this.triviaCircleTime = this.socketData.message.activity_status.circle_countdown;
+    if (this.socketData.message.activity_status.leaderboard !== null) {
+      this.sendLeaderBoard();
+    }
   }
 
   private updateHintWordActivity() {
     this.currentActivity = "hintWordActivity";
-    this.activityLoading = false;
+    this.handleLoadingStates();
+
     this.showMainFooter = true;
     this.showVideoControls = false;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
@@ -175,16 +188,19 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
   private updateVideoActivity() {
     this.currentActivity = "videoActivity";
-    this.activityLoading = false;
+    this.handleLoadingStates();
+
     this.showMainFooter = true;
     this.showVideoControls = true;
+    this.videoURL = this.socketData.message.activity_status.video_url;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.handleFooterLayoutChange(this.showMainFooter);
   }
 
   private updatePairActivity(pairActivityType) {
     this.currentActivity = "pairActivity";
-    this.activityLoading = false;
+    this.handleLoadingStates();
+
     this.showMainFooter = true;
     this.pairGameStarted = false;
     this.showVideoControls = false;
@@ -194,7 +210,8 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
   private updateDiscussionActivity() {
     this.currentActivity = "discussionActivity";
-    this.activityLoading = false;
+    this.handleLoadingStates();
+
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.showMainFooter = true;
     this.showVideoControls = false;
@@ -203,14 +220,16 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
   private sendLeaderBoard() {
     const leaderArray = this.socketData.message.activity_status.leaderboard;
+    console.log(`The leader array: ${leaderArray}`);
     // check the leader board participants
     const leaders = [];
     if (leaderArray !== null && leaderArray["0"].correct > 0) {
       for (let i = 0; i < 6 && i < leaderArray.length; i++) {
         leaders.push(leaderArray[i]);
       }
+      this.leaders = leaders;
+      console.log(`The leaders: ${this.leaders}`);
     }
-    this.leaders = leaders;
   }
 
   private sendPairData(pairActivityType) {

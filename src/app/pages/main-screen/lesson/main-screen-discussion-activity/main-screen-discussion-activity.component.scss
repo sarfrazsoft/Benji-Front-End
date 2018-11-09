@@ -8,6 +8,7 @@
     line-height: 1.09;
   }
 }
+
 .mainscreen-activity__column {
   padding: 5vh 0;
 }
@@ -35,3 +36,7 @@
   transform: translateY(-50%);
 }
 
+.discussion-activity .flexer--center{
+  height: inherit;
+  flex-direction: column;
+}

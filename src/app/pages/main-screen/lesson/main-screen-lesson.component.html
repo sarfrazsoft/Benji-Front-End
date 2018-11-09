@@ -6,8 +6,8 @@
   <div class="ms-lesson__activity-container" #layoutContainer>
 
     <app-mainscreen-lobby *ngIf="currentActivity === 'lobbyActivity'" [roomCode]="roomCode" [joinedUsers]="participants" (activityComplete)="startNextActivity()"></app-mainscreen-lobby>
-    <app-mainscreen-activity-teletrivia *ngIf="currentActivity === 'teletrivia'" [data]="socketData" [joinedUsers]="participants" [leaders]="leaders"></app-mainscreen-activity-teletrivia>
-    <app-mainscreen-activity-video *ngIf="currentActivity === 'videoActivity'" [video]="videoUrl" (videoComplete)="startNextActivity()"></app-mainscreen-activity-video>
+    <app-mainscreen-activity-teletrivia *ngIf="currentActivity === 'teletrivia'" [data]="socketData" [joinedUsers]="participants" [leaders]="leaders" [circleTimer]="triviaCircleTime"></app-mainscreen-activity-teletrivia>
+    <app-mainscreen-activity-video *ngIf="currentActivity === 'videoActivity'" [videoURL]="videoURL" (videoComplete)="startNextActivity()"></app-mainscreen-activity-video>
     <app-main-screen-pair-activity *ngIf="currentActivity === 'pairActivity'" [reversed]="pairGameReversed" [startTime]="pairCountdownTime" [allPairsFound]="allPairsFound" [participants]="pairParticipants" [userPairs]="userPairs" [foundPairs]="foundPairs" [socketData]=socketData></app-main-screen-pair-activity>
 
     <app-main-screen-discussion-activity *ngIf="currentActivity === 'discussionActivity'" [socketData]="socketData"></app-main-screen-discussion-activity>

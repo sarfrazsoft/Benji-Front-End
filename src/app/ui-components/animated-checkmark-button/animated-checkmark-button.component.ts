@@ -43,8 +43,6 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
 
   @Input()
   set valid(isValid) {
-    this.loadingState = false;
-    this.setButtonStyles();
     this._valid = isValid;
   }
   public _valid: boolean;
@@ -57,7 +55,7 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
   }
 
   public emitClicked() {
-    this.setButtonLoadingState();
+    // this.setButtonLoadingState();
     this.clicked.emit(true);
   }
 

@@ -1,16 +1,25 @@
-  <section class="mainscreen-activity teletrivia-activity" [class.mainscreen-activity--multi-column]="leadersReady">
-    <div class="mainscreen-activity__activity-detail center-text flexer flex-direction--column flexer--center"
-      [ngClass]="{'mainscreen-activity__column mainscreen-activity__column--50 left-text' : leadersReady}">
+  <section class="mainscreen-activity teletrivia-activity mainscreen-activity--multi-column">
+    <div class="mainscreen-activity__activity-detail center-text flexer flex-direction--column flexer--center mainscreen-activity__column mainscreen-activity__column--50 left-text">
       <div class="ms-emoji-container">
         <app-b-twemoji emoji="☎️" (click)="end()"></app-b-twemoji>
       </div>
       <h1 class="vibrant-blue pn-700">Teletrivia</h1>
-      <p class="brownish-grey pn-500">Pass the message around your group.</p>
-      <p class="brownish-grey pn-500">Try to listen to each other while answering trivia questions on your phone. </p>
-      <p class="brownish-grey pn-500">Best of luck</p>
+      <ng-container *ngIf="!makingCircle">
+        <p class="brownish-grey pn-500">Pass the message around your group.</p>
+        <p class="brownish-grey pn-500">Try to listen to each other while answering trivia questions on your phone. </p>
+        <p class="brownish-grey pn-500">Best of luck</p>
+      </ng-container>
+      <ng-container *ngIf="makingCircle">
+        <p class="brownish-grey pn-500">Ready to play a little warmup game?</p>
+        <p class="brownish-grey pn-500">Arrange yourselves in a circle (stand up and move if you have to!) and press ‘Ready’ when you’re set. </p>
+      </ng-container>
+    </div>
+    <!-- timer-->
+    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey" *ngIf="makingCircle">
+      <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Start!"></app-radial-timer>
     </div>
     <!-- leaderboard -->
-    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey" *ngIf="leadersReady">
+    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey" *ngIf="!makingCircle">
       <div class="teletrivia-activity__leaderboard">
         <p class="teletrivia-activity__section-text brownish-grey">Leaderboard</p>
         <ol class="teletrivia-activity__leaders-list">

@@ -12,7 +12,7 @@ export class ParticipantPairActivityComponent implements OnInit {
     const activity = data.message.activity_status;
 
     this.pairActivityStarted = activity.all_pairs_found;
-    this.isReady = activity.user_pairs_found.indexOf(data.your_identity.id) > 0;
+    this.isReady = activity.user_pairs_found.indexOf(data.your_identity.id) >= 0;
 
     if (!this.timeSet) {
       this.timeRemaining = activity.activity_timer;

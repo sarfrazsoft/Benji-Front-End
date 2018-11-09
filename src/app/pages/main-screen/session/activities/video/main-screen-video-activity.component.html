@@ -6,7 +6,7 @@
   <a class="welcome-button w-button" (click)="videoComplete.emit(true)" style="font-size: 25px">Next Activity</a>
 </div> -->
 <div class="mainscreen-activity mainscreen-activity--video">
-  <video height="100%" autoplay #player (ended)="videoEnd()">
-    <source src="../../assets/video/Steak.mp4" type="video/mp4">
+  <video height="100%" #player (ended)="videoEnd()">
+    <source [src]="_videoURL" type="video/mp4">
   </video>
 </div>

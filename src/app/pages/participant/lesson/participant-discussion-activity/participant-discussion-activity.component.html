@@ -12,7 +12,14 @@
       <p>Press the button below if you want to share your thoughts with the group.</p>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button" (click)="shareButton()">We want to share</button>
+      <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive' : isVolunteer}" (click)="shareButton()">
+        <ng-container *ngIf="!isVolunteer">
+            We want to share
+        </ng-container>
+        <ng-container *ngIf="isVolunteer">
+            Waiting...
+        </ng-container>
+      </button>
     </div>
     <app-linear-timer [timeRemaining]="discussionSecondsRemaining"></app-linear-timer>
   </div>
@@ -33,9 +40,16 @@
       <h3 class="pn-700 deep-blue">Share with the group</h3>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button" (click)="doneButton()">Done</button>
+      <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive' : isSharingDone}" (click)="doneButton()">
+        <ng-container *ngIf="!isSharingDone">
+            Done
+        </ng-container>
+        <ng-container *ngIf="isSharingDone">
+            Sharing Complete
+        </ng-container>
+      </button>
     </div>
-    <app-linear-timer [timeRemaining]="secondsRemaining"></app-linear-timer>
+    <app-linear-timer [timeRemaining]="sharingSecondsRemaining"></app-linear-timer>
   </div>
 </ng-container>
 

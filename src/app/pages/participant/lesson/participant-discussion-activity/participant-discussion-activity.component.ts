@@ -11,8 +11,11 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
     const activity = data.message.activity_status;
 
     // this.sharingStarted = activity.sharer_countdown_time.length === 0;
-    const countdown = Date.parse(activity.discussion_countdown_time) - Date.now();
-    this.discussionSecondsRemaining = countdown / 1000;
+    const countdown =
+      Date.parse(activity.discussion_countdown_time) - Date.now();
+    if (!this.discussionSecondsRemaining) {
+      this.discussionSecondsRemaining = countdown / 1000;
+    }
 
     setTimeout(() => {
       this.sharingStarted = true;
@@ -20,9 +23,22 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
 
     if (this.sharingStarted) {
       const currentGroup = activity.selected_sharers[activity.sharer_group_num];
-      this.iAmSharing =
-        data.your_identity.id === currentGroup.primary ||
-        data.your_identity.id === currentGroup.secondary;
+      console.log(`My ID: ${data.your_identity.id}`);
+      console.log(`Current Groups Primary ID: ${currentGroup.primary}`);
+      console.log(`Current Groups Secondary ID: ${currentGroup.secondary}`);
+      if (
+        data.your_identity.id === currentGroup.primary[0] ||
+        data.your_identity.id === currentGroup.secondary[0]
+      ) {
+        this.iAmSharing = true;
+        const sharingCountdown = Date.parse(activity.sharer_countdown_time) - Date.now();
+        if (!this.sharingSecondsRemaining) {
+          this.sharingSecondsRemaining = countdown / 1000;
+        }
+      } else {
+        this.iAmSharing = false;
+      }
+      console.log(`Am I sharing?: ${this.iAmSharing}`);
     }
   }
 
@@ -32,19 +48,28 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
   public sharingStarted;
   public iAmSharing;
   public discussionSecondsRemaining;
+  public sharingSecondsRemaining;
   public instructions;
+  public isVolunteer: boolean;
+  public isSharingDone: boolean;
 
   constructor() {}
 
   ngOnInit() {}
 
   shareButton() {
-    const message = { event: "share_button" };
-    this.socketMessage.emit(message);
+    if (!this.isVolunteer) {
+      this.isVolunteer = true;
+      const message = { event: "share_button" };
+      this.socketMessage.emit(message);
+    }
   }
 
   doneButton() {
-    const message = { event: "done_button" };
-    this.socketMessage.emit(message);
+    if (!this.isSharingDone) {
+      const message = { event: "done_button" };
+      this.socketMessage.emit(message);
+      this.isSharingDone = true;
+    }
   }
 }

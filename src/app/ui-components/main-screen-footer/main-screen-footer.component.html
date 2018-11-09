@@ -8,6 +8,9 @@
         <mat-icon class="icon-white" *ngIf="!videoPause" data-control="pause">pause</mat-icon>
         <mat-icon class="icon-white" *ngIf="videoPause" data-control="play">play_arrow</mat-icon>
       </button>
+      <button (click)="controlClicked(videoSkip, 'skip')" #videoSkip>
+          <mat-icon class="icon-white">skip_next</mat-icon>
+      </button>
     </ng-container>
   </div>
   <div class="mainscreen-footer__session-info">

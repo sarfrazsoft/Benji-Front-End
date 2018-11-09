@@ -24,6 +24,8 @@ export class MainScreenFooterComponent implements OnInit {
     } else if (eventType === 'toggleplayback') {
       this.videoPause = !this.videoPause;
       this.video.updateState(eventType);
+    } else if (eventType === 'skip') {
+      this.video.updateState(eventType);
     }
   }
 

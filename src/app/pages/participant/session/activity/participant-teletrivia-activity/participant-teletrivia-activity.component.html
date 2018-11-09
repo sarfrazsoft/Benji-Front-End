@@ -62,7 +62,7 @@
       *ngIf="!killTimer"></app-linear-timer>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="iAmInitiator">
-    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Done! The message is back" buttonStyle="white" (clicked)="openEndModal()"></app-animated-checkmark-button>
+    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Done! The message is back" buttonStyle="white" [valid]="messageBack" (clicked)="openEndModal()"></app-animated-checkmark-button>
   </div>
 </ng-container>
 
@@ -70,7 +70,7 @@
 <ng-template #kickofftemplate>
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
-    <blockquote>“The fancy fox fought the frantic fairy.”</blockquote>
+    <blockquote>“{{phrase}}”</blockquote>
     <p>Whisper it to your neighbour, and press START to get the game rolling. Hit the DONE button when the message gets
       back to you!</p>
     <div class="b-dialog-template__action">
@@ -91,7 +91,7 @@
     </p>
 
     <p>
-      “The fancy fox fought the frantic fairy.”
+      “{{phrase}}”
     </p>
     <div class="b-dialog-template__action">
       <button class="b-standard-button b-standard-button--white" [mat-dialog-close]="true" (click)="endGame()">Done</button>

@@ -15,9 +15,11 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
   public sharingStarted;
   public iAmInitiator;
   public questions;
+  public phrase;
 
   @ViewChild('kickofftemplate') initiatorModal;
   @ViewChild('endTemplate') endModal;
+  public messageBack: boolean;
 
   @Input()
   set socketData(data) {
@@ -26,6 +28,7 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
     this.makingCircle = !activity.all_in_circle;
     this.gameStarted = activity.game_started;
     this.sharingStarted = activity.sharing_started;
+    this.phrase = activity.secret_phrase;
 
     this.iAmInitiator = activity.chosen_user === data.your_identity.id;
     if (this.iAmInitiator && !this.makingCircle && !this.gameStarted) {
@@ -106,6 +109,7 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
   }
 
   public openEndModal() {
+    this.messageBack = true;
     this.triggerDialogue(this.endModal);
     this.timeRemaining = 0;
     this.socketMessage.emit({

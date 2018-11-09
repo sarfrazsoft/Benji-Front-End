@@ -1,6 +1,6 @@
 <ng-container *ngIf="!discussionOver">
-  <div class="mainscreen-activity mainscreen-activity--multi-column">
-    <div class="mainscreen-activity__column mainscreen-activity__column--50 mainscreen-activity__activity-detail bg-off-white">
+  <div class="mainscreen-activity mainscreen-activity--multi-column discussion-activity">
+    <div class="mainscreen-activity__column mainscreen-activity__column--50 mainscreen-activity__activity-detail bg-off-white flexer--center">
       <div class="ms-emoji-container">
         <app-b-twemoji emoji="🤔"></app-b-twemoji>
       </div>
@@ -26,8 +26,10 @@
       </div>
       <div class="discussion-activity__share-queue">
         <div class="discussion-activity__vertically-centered">
-          <h3 class="pn-600 deep-blue">Abdullah and Andrew are sharing</h3>
-          <p class="brownish-grey pn-500">Natasia and Sean, you're up next</p>
+          <h3 class="pn-600 deep-blue">{{presenterOne}} and {{presenterTwo}} are sharing</h3>
+          <ng-container *ngIf="nextUpOne !== undefined">
+            <p class="brownish-grey pn-500">{{nextUpOne}} and {{nextUpTwo}}, you're up next</p>
+          </ng-container>
         </div>
       </div>
     </div>

@@ -29,10 +29,16 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
   videoComplete = new EventEmitter<boolean>();
   safeURL;
 
+  @Input() set videoURL(URL) {
+    this._videoURL = URL;
+    this.player.nativeElement.load();
+    this.player.nativeElement.play();
+  }
+
   @ViewChild("player")
   player: ElementRef;
   private videoPlaying = true;
-
+  public _videoURL;
   private videoStateSubscription;
 
   constructor(
@@ -55,12 +61,19 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
         this.videoPlaying
           ? this.player.nativeElement.play()
           : this.player.nativeElement.pause();
+      } else if (state === "skip") {
+        this.skipVideo();
       }
     });
   }
 
   ngOnDestroy() {
     this.videoStateSubscription.unsubscribe();
+  }
+
+  public skipVideo() {
+    this.player.nativeElement.pause();
+    this.videoEnd();
   }
 
   public videoEnd() {

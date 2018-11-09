@@ -6,7 +6,9 @@ import {AuthService} from '../../services/auth.service';
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: [],
+  styleUrls: [
+    './landing.component.scss'
+  ],
   encapsulation: ViewEncapsulation.None
 })
 
@@ -16,14 +18,16 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
   }
 
-  loginAndStart(courseNum) {
-    this.auth.login('admin', 'benji112').subscribe(
-      response => this.backend.create_courserun(courseNum).subscribe(
-                  resp => this.checkAndStart(resp),
-                  err => console.log(err)
-      ),
-      err => console.log(err)
-    );
+  loginAndStart(courseNum?) {
+    // this.auth.login('admin', 'benji112').subscribe(
+    //   response => this.backend.create_courserun(courseNum).subscribe(
+    //               resp => this.checkAndStart(resp),
+    //               err => console.log(err)
+    //   ),
+    //   err => console.log(err)
+    // );
+    console.log('go')
+    this.router.navigate(['/screen/lesson/1']);
   }
 
   checkAndStart(courserun) {

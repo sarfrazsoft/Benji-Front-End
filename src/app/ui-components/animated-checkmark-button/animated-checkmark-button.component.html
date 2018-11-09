@@ -1,5 +1,4 @@
 <button [@validCheck]="_valid ? 'checked' : 'unchecked' " [ngClass]="buttonClassList" (click)="emitClicked($event.target)" (@validCheck.done)="animationDone($event)">
-    <span *ngIf="!_valid && !loadingState">{{innerHTML}}</span>
-    <span *ngIf="loadingState">{{loadingStateInnerHTML}}</span>
+    <span *ngIf="!_valid">{{innerHTML}}</span>
     <mat-icon *ngIf="_valid">check</mat-icon>
 </button>

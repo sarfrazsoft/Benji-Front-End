@@ -53,7 +53,7 @@
     </div>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="selectedWord">
-    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit vote" buttonStyle="white" (click)="confirmVote()"></app-animated-checkmark-button>
+    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit vote" buttonStyle="white" [valid]="voteSubmitted" (click)="confirmVote()"></app-animated-checkmark-button>
   </div>
 </ng-container>
 <ng-container *ngIf="activityState === 'complete'">

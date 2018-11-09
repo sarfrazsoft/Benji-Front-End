@@ -37,6 +37,7 @@ export class RadialTimerComponent {
   set totalSeconds(totalSeconds: number) {
     this._totalSeconds = totalSeconds;
     // this.val();
+    this.timesUp = false;
   }
 
 
