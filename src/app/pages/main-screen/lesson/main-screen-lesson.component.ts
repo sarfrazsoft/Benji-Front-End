@@ -251,7 +251,10 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   }
 
   private handleLessonEnd() {
+    console.log('lesson is over');
+    console.log(this.socketData.message.activity_status);
     this.currentActivity = "feedbackActivity";
+    this.handleLoadingStates();
   }
   // private routeToActivity(activityStatus: ActivityStatus) {
   //   switch (activityStatus.activity_type) {

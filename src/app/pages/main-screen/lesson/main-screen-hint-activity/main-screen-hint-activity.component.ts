@@ -22,6 +22,7 @@ export class MainScreenHintActivityComponent implements OnInit, AfterViewInit {
   public winningWord;
   public instructions;
   public expectedNumberOfWords;
+  public votingDone;
 
   @ViewChild('listParent') listParent: ElementRef;
 
@@ -40,11 +41,16 @@ export class MainScreenHintActivityComponent implements OnInit, AfterViewInit {
       this.secondsElapsedInterval = interval(100);
 
       this.intervalSubscription = this.secondsElapsedInterval.pipe(
-        takeWhile((time: number) => time / 10 < this.initialTimeRemaining)
+        takeWhile((time: number) => time / 10 < this.initialTimeRemaining),
+        takeWhile(() => !this.votingDone)
       );
       this.intervalSubscription.subscribe((time) => {
         this.secondsElapsed = time;
       });
+    }
+    if (this.expectedNumberOfWords === this.words.length) {
+      this.secondsElapsed = this.totalSeconds * 10;
+      this.votingDone = true;
     }
 
     if (activity.submission_complete && activity.voting_complete) {
