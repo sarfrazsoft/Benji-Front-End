@@ -29,7 +29,7 @@
         <div class="participant-start__input-container">
           <input class="b-standard-input" type="text" name="" placeholder="Enter room code" [formControl]="roomCode">
         </div>
-        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Join Session" buttonStyle="default" [valid]="isRoomCodeValid" (clicked)="validateRoomCode()" (animationEnd)="formSubmit()"></app-animated-checkmark-button>
+        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Join Session" buttonStyle="default" [valid]="isRoomCodeValid" (clicked)="validateRoomCode()"></app-animated-checkmark-button>
       </div>
     </div>
   </div>

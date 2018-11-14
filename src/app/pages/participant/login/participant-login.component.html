@@ -30,7 +30,7 @@
         <div class="participant-start__input-container">
           <input class="b-standard-input" type="text" placeholder="What is your first name?" [formControl]="username">
         </div>
-        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Login" buttonStyle="default" [valid]="isUserValid" (clicked)="createUser()" (animationEnd)="formSubmit()"></app-animated-checkmark-button>
+        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Login" buttonStyle="default" [valid]="isUserValid" (clicked)="createUser()"></app-animated-checkmark-button>
       </div>
     </div>
   </div>

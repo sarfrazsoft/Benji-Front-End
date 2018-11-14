@@ -35,7 +35,7 @@ export class ParticipantLoginComponent implements OnInit {
   }
 
   formSubmit() {
-    this.router.navigate([`/participant/join`]);
+
     // this.auth.login(this.username, 'test').subscribe(
     //   resp => this.router.navigate(['/participant/join']),
     //   err => this.backend.create_user(this.username).subscribe(
@@ -55,6 +55,7 @@ export class ParticipantLoginComponent implements OnInit {
         console.log('activated user');
         this.auth.login(res.username, 'test').subscribe(() => {
           this.isUserValid = true;
+          this.router.navigate([`/participant/join`]);
         });
       } else {
         this.loginError = true;

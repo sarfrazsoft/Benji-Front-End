@@ -12,17 +12,17 @@ import {
   templateUrl: './animated-checkmark-button.component.html',
   styleUrls: ['./animated-checkmark-button.component.scss'],
   animations: [
-    trigger('validCheck', [
-      state(
-        'checked',
-        style({
-          width: '50px',
-          // color: '#6c6c6c',
-          fontSize: '20px'
-        })
-      ),
-      transition('* => checked', [animate('0.4s')])
-    ])
+    // trigger('validCheck', [
+    //   state(
+    //     'checked',
+    //     style({
+    //       width: '50px',
+    //       // color: '#6c6c6c',
+    //       fontSize: '20px'
+    //     })
+    //   ),
+    //   transition('* => checked', [animate('0.4s')])
+    // ])
   ]
 })
 export class AnimatedCheckmarkButtonComponent implements OnInit {

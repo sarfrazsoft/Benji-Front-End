@@ -45,6 +45,8 @@ export class ParticipantJoinComponent implements OnInit {
         if (res.websocket_link) {
           this.socket.setSubjectOnJoin(res.websocket_link);
           this.isRoomCodeValid = true;
+          this.router.navigate([`/participant/lesson/${this.roomCode.value}`]);
+
         }
       },
       err => {
