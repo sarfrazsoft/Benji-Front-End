@@ -16,6 +16,7 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
   public iAmInitiator;
   public questions;
   public phrase;
+  public initialMessageShown;
 
   @ViewChild('kickofftemplate') initiatorModal;
   @ViewChild('endTemplate') endModal;
@@ -31,8 +32,9 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
     this.phrase = activity.secret_phrase;
 
     this.iAmInitiator = activity.chosen_user === data.your_identity.id;
-    if (this.iAmInitiator && !this.makingCircle && !this.gameStarted) {
+    if (this.iAmInitiator && !this.makingCircle && !this.gameStarted && !this.initialMessageShown) {
       this.triggerDialogue(this.initiatorModal);
+      this.initialMessageShown = true;
     }
 
     if (this.sharingStarted) {
