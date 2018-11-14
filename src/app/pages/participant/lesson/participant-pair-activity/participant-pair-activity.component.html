@@ -1,14 +1,14 @@
 <ng-container *ngIf="!pairActivityStarted">
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title">
-      <h2 class="pn-400">Roleplay</h2>
+      <h2 class="pn-400">FIND YOUR PARTNER</h2>
     </div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="👯"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">Your partner is {{ partnerName }}</h3>
-      <p>Go find {{ partnerName }} and sit together for the next activity. </p>
+      <p>Find  {{ partnerName }} and sit together. </p>
     </div>
     <div class="b-flat-card__action">
       <button class="b-standard-button" (click)="sendReadyState()" [ngClass]="{'b-standard-button--inactive': isReady}">

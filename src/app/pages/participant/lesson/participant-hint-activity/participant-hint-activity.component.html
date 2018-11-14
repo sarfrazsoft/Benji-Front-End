@@ -9,7 +9,7 @@
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">Choose a hint word</h3>
-      <p>Submit your hint word option below.</p>
+      <p>Submit your word below.</p>
     </div>
     <div class="b-flat-card__action">
       <div class="b-standard-input__container">
@@ -38,7 +38,7 @@
     <div class="b-flat-card__body">
       <h3 class="pn-700 deep-blue">
         <span *ngIf="!voteSubmitted">
-          Vote for your favorite!
+          Vote for your favorite
         </span>
         <span *ngIf="voteSubmitted">
           You voted for
@@ -53,7 +53,7 @@
     </div>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="selectedWord">
-    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit vote" buttonStyle="white" [valid]="voteSubmitted" (click)="confirmVote()"></app-animated-checkmark-button>
+    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit" buttonStyle="white" [valid]="voteSubmitted" (click)="confirmVote()"></app-animated-checkmark-button>
   </div>
 </ng-container>
 <ng-container *ngIf="activityState === 'complete'">
@@ -66,7 +66,7 @@
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">{{winningWord | titlecase}}</h3>
-      <p>Say ‘{{winningWord | titlecase}}’ to anyone in this group if you ever need to remind them to listen better.</p>
+      <p>Just say ‘{{winningWord | titlecase}}’ to anyone in this group if you ever need to remind them to listen a little better.</p>
     </div>
   </div>
 </ng-container>

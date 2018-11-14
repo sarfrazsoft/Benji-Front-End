@@ -2,14 +2,14 @@
 
   <div class="b-flat-card center-text mc-card--circle">
     <div class="b-flat-card__title">
-      <h2 class="pn-400">Multiple Choice</h2>
+      <h2 class="pn-400">TELETRIVIA</h2>
     </div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="⭕"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">Form a circle</h3>
-      <p>We'll start get started once everyone is ready</p>
+      <p>We’ll get started once everyone is in position.</p>
     </div>
     <div class="b-flat-card__action">
       <button class="b-standard-button" (click)="sendReadyState()" [ngClass]="{'b-standard-button--inactive': inCircle}">
@@ -71,11 +71,9 @@
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
     <blockquote>“{{phrase}}”</blockquote>
-    <p>Whisper it to your neighbour, and press START to get the game rolling. Hit the DONE button when the message gets
-      back to you!</p>
+    <p>Whisper this to your neighbour on the left, and press ‘Start’ To get the game rolling. Hit the ‘Done’ button when the message comes back to you!</p>
     <div class="b-dialog-template__action">
-      <button class="b-standard-button b-standard-button--white" (click)="initiateTelephone()" [mat-dialog-close]="true">Start
-        the telephone!</button>
+      <button class="b-standard-button b-standard-button--white" (click)="initiateTelephone()" [mat-dialog-close]="true">Start</button>
     </div>
   </div>
 </ng-template>
@@ -83,11 +81,11 @@
 <ng-template #endTemplate>
   <div class="b-dialog-template">
     <p>
-      Share the message you just received with the rest of the group.
+      Share the message you just received with everyone.
     </p>
 
     <p>
-      Remember what the original message was?
+      How close did it come to the original,
     </p>
 
     <p>

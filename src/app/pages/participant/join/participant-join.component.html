@@ -23,13 +23,13 @@
 
     <div class="participant-start__vertical-center center-text">
       <h1 class="pn-700 vibrant-blue">Hey {{ userName | titlecase}}</h1>
-      <p>Ready for your next Benji session? When your group is set up, you’ll find your room code up on the screen.</p>
+      <p>Look to the main screen to find your room code.</p>
       <div class="participant-start__action-container">
         <p *ngIf="roomCode.invalid && roomCode.touched || isRoomCodeValid === false">Invalid Room Code</p>
         <div class="participant-start__input-container">
           <input class="b-standard-input" type="text" name="" placeholder="Enter room code" [formControl]="roomCode">
         </div>
-        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Join Session" buttonStyle="default" [valid]="isRoomCodeValid" (clicked)="validateRoomCode()"></app-animated-checkmark-button>
+        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Join session" buttonStyle="default" [valid]="isRoomCodeValid" (clicked)="validateRoomCode()"></app-animated-checkmark-button>
       </div>
     </div>
   </div>
