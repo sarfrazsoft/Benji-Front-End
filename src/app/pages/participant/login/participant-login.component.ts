@@ -20,7 +20,7 @@ export class ParticipantLoginComponent implements OnInit {
 
   public isUserValid: boolean;
   public userId;
-
+  public loginError;
 
   public username = new FormControl(null, [
     Validators.required
@@ -50,11 +50,14 @@ export class ParticipantLoginComponent implements OnInit {
 
   public createUser() {
     this.backend.create_user(this.username.value).subscribe((res: any) => {
+      this.loginError = false;
       if (res.is_active) {
         console.log('activated user');
         this.auth.login(res.username, 'test').subscribe(() => {
           this.isUserValid = true;
         });
+      } else {
+        this.loginError = true;
       }
     });
   }
