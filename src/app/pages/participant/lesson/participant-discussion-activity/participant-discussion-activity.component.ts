@@ -17,7 +17,7 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
       this.discussionSecondsRemaining = countdown / 1000;
     }
 
-    if(activity.sharer_group_num) {
+    if (activity.sharer_group_num !== null) {
       this.sharingStarted = true;
     }
 

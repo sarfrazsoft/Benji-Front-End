@@ -26,7 +26,7 @@
       <!-- <p>Ready for your next Benji session? When your group is set up, you’ll find your room code up on the screen.</p> -->
       <div class="participant-start__action-container">
         <p *ngIf="username.invalid && username.touched">You must enter a username</p>
-        <p *ngIf="loginError">The account could not be activated. Try again.</p>
+        <p *ngIf="loginError">That name could not be used to activate an account.<br> Please try again.</p>
         <div class="participant-start__input-container">
           <input class="b-standard-input" type="text" placeholder="What is your first name?" [formControl]="username">
         </div>

@@ -27,7 +27,7 @@
       <div class="participant-start__action-container">
         <p *ngIf="roomCode.invalid && roomCode.touched || isRoomCodeValid === false">Invalid Room Code</p>
         <div class="participant-start__input-container">
-          <input class="b-standard-input" type="text" name="" placeholder="Enter 6-digit room code" [formControl]="roomCode">
+          <input class="b-standard-input" type="text" name="" placeholder="Enter room code" [formControl]="roomCode">
         </div>
         <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Join Session" buttonStyle="default" [valid]="isRoomCodeValid" (clicked)="validateRoomCode()" (animationEnd)="formSubmit()"></app-animated-checkmark-button>
       </div>
