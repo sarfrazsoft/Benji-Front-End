@@ -22,15 +22,15 @@
   <div class="container">
 
     <div class="participant-start__vertical-center center-text">
-      <h1 class="pn-700 vibrant-blue">Let us know who you are</h1>
+      <h1 class="pn-700 vibrant-blue">Welcome to Benji!</h1>
       <!-- <p>Ready for your next Benji session? When your group is set up, you’ll find your room code up on the screen.</p> -->
       <div class="participant-start__action-container">
         <p *ngIf="username.invalid && username.touched">You must enter a username</p>
-        <p *ngIf="loginError">The account could not be activated. Try again.</p>
+        <p *ngIf="loginError">That name could not be used to activate an account.<br> Please try again.</p>
         <div class="participant-start__input-container">
-          <input class="b-standard-input" type="text" placeholder="What is your name?" [formControl]="username">
+          <input class="b-standard-input" type="text" placeholder="What's your name?" [formControl]="username">
         </div>
-        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Login" buttonStyle="default" [valid]="isUserValid" (clicked)="createUser()" (animationEnd)="formSubmit()"></app-animated-checkmark-button>
+        <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Sign in" buttonStyle="default" [valid]="isUserValid" (clicked)="createUser()"></app-animated-checkmark-button>
       </div>
     </div>
   </div>

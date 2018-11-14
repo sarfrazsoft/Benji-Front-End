@@ -17,7 +17,10 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
       this.discussionSecondsRemaining = countdown / 1000;
     }
 
-    this.sharingStarted = activity.sharer_group_num !== null;
+    if (activity.sharer_group_num !== null) {
+      this.sharingStarted = true;
+    }
+
 
     if (this.sharingStarted) {
       const currentGroup = activity.selected_sharers[activity.sharer_group_num];
@@ -43,9 +46,7 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
   @Output()
   socketMessage = new EventEmitter<any>();
 
-  public firstTime = true;
-
-  public sharingStarted = false;
+  public sharingStarted;
   public iAmSharing;
   public discussionSecondsRemaining;
   public sharingSecondsRemaining;
