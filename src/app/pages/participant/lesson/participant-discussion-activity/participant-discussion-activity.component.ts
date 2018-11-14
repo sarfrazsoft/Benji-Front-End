@@ -17,9 +17,10 @@ export class ParticipantDiscussionActivityComponent implements OnInit {
       this.discussionSecondsRemaining = countdown / 1000;
     }
 
-    setTimeout(() => {
+    if(activity.sharer_group_num) {
       this.sharingStarted = true;
-    }, this.discussionSecondsRemaining * 1000);
+    }
+
 
     if (this.sharingStarted) {
       const currentGroup = activity.selected_sharers[activity.sharer_group_num];
