@@ -3,11 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LandingComponent } from './pages/landing/landing.component';
 
-import { SessionComponent } from './pages/main-screen/session/session.component';
 
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
-import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
+
 import { ElementsComponent } from './elements/elements.component';
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 // tslint:disable-next-line:max-line-length

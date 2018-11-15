@@ -2,7 +2,7 @@
     <span *ngIf="!_valid">{{innerHTML}}</span>
     <mat-icon *ngIf="_valid">check</mat-icon>
 </button> -->
-<button [ngClass]="buttonClassList" (click)="emitClicked($event.target)">
+<button [ngClass]="buttonClassList" (click)="emitClicked()">
   <span *ngIf="!_valid">{{innerHTML}}</span>
   <mat-icon *ngIf="_valid">check</mat-icon>
 </button>

@@ -283,4 +283,8 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
       );
     }
   }
+
+  public handleVideoControlEvent(event){
+
+  }
 }

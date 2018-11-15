@@ -24,7 +24,6 @@ import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedbac
 import { AppComponent } from './app.component';
 import { LandingComponent } from './pages/landing/landing.component';
 import { MainScreenLobbyComponent } from './pages/main-screen/session/lobby/main-screen-lobby.component';
-import { SessionComponent } from './pages/main-screen/session/session.component';
 import { MainScreenFooterComponent } from './ui-components/main-screen-footer/main-screen-footer.component';
 import { MainScreenTitleComponent } from './pages/main-screen/session/title/main-screen-title.component';
 import { MainScreenVideoActivityComponent } from './pages/main-screen/session/activities/video/main-screen-video-activity.component';
@@ -37,7 +36,6 @@ import { MainScreenFeedbackActivityComponent } from './pages/main-screen/lesson/
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
 import { ParticipantLobbyComponent } from './pages/participant/lesson/participant-lobby/participant-lobby.component';
-import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
 import { ParticipantTitleComponent } from './pages/participant/session/title/participant-title.component';
 import { ParticipantVideoActivityComponent } from './pages/participant/session/activity/video/participant-video-activity.component';
 import { ParticipantTPSActivityComponent } from './pages/participant/session/activity/tps/participant-tps-activity.component';
@@ -86,7 +84,6 @@ import { MainScreenHintActivityComponent } from './pages/main-screen/lesson/main
     FeedbackPromptComponent,
     LandingComponent,
     MainScreenLobbyComponent,
-    SessionComponent,
     MainScreenFooterComponent,
     MainScreenTitleComponent,
     MainScreenVideoActivityComponent,
@@ -98,7 +95,6 @@ import { MainScreenHintActivityComponent } from './pages/main-screen/lesson/main
     ParticipantLoginComponent,
     ParticipantJoinComponent,
     ParticipantLobbyComponent,
-    ParticipantSessionComponent,
     ParticipantTitleComponent,
     ParticipantVideoActivityComponent,
     ParticipantTPSActivityComponent,
