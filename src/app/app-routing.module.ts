@@ -3,17 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LandingComponent } from './pages/landing/landing.component';
 
-import { SessionComponent } from './pages/main-screen/session/session.component';
 
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
-import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
 import { ElementsComponent } from './elements/elements.component';
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 // tslint:disable-next-line:max-line-length
-import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
+import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/lesson/main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
 import { MainScreenLessonComponent } from './pages/main-screen/lesson/main-screen-lesson.component';
-import { MainScreenLobbyComponent } from './pages/main-screen/session/lobby/main-screen-lobby.component';
+import { MainScreenLobbyComponent } from './pages/main-screen/lesson/main-screen-lobby-activity/main-screen-lobby.component';
 import { ParticipantLessonComponent } from './pages/participant/lesson/participant-lesson.component';
 
 

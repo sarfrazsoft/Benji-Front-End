@@ -1,8 +1,6 @@
 import {Component, Input, Output, OnInit, OnDestroy, ViewEncapsulation, EventEmitter} from '@angular/core';
-import {BaseActivityComponent} from '../../../shared/base-activity.component';
 import { WebSocketService } from '../../../../services/socket.service';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

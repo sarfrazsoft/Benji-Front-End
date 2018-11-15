@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewEncapsulation, OnDestroy} from '@angular/core';
-import { BaseActivityComponent } from '../../../../shared/base-activity.component';
 
 
 
@@ -12,9 +11,9 @@ import { BaseActivityComponent } from '../../../../shared/base-activity.componen
   encapsulation: ViewEncapsulation.None
 })
 
-export class ParticipantVideoActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class ParticipantVideoActivityComponent implements OnInit, OnDestroy {
 
-  constructor() { super(); }
+  constructor() { }
 
   ngOnInit() {
   }

@@ -2,20 +2,16 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  Input,
-  OnChanges,
-  SimpleChange,
-  SimpleChanges
-} from "@angular/core";
-import { BaseActivityComponent } from "../../../../shared/base-activity.component";
-import { Observable, interval } from "rxjs";
-import { map, share, tap, takeWhile } from "rxjs/operators";
-import { WebSocketService } from "../../../../../services/socket.service";
+  Input
+} from '@angular/core';
+import { interval } from 'rxjs';
+import { share, tap, takeWhile } from 'rxjs/operators';
+import { WebSocketService } from '../../../../services/socket.service';
 
 @Component({
-  selector: "app-mainscreen-activity-teletrivia",
-  templateUrl: "./main-screen-teletrivia-activity.component.html",
-  styleUrls: ["./main-screen-teletrivia-activity.component.scss"]
+  selector: 'app-mainscreen-activity-teletrivia',
+  templateUrl: './main-screen-teletrivia-activity.component.html',
+  styleUrls: ['./main-screen-teletrivia-activity.component.scss']
 })
 export class MainScreenTeletriviaActivityComponent
   implements OnInit, OnDestroy {

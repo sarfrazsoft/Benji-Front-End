@@ -23,28 +23,23 @@ import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedbac
 // App Pages
 import { AppComponent } from './app.component';
 import { LandingComponent } from './pages/landing/landing.component';
-import { MainScreenLobbyComponent } from './pages/main-screen/session/lobby/main-screen-lobby.component';
-import { SessionComponent } from './pages/main-screen/session/session.component';
+import { MainScreenLobbyComponent } from './pages/main-screen/lesson/main-screen-lobby-activity/main-screen-lobby.component';
 import { MainScreenFooterComponent } from './ui-components/main-screen-footer/main-screen-footer.component';
-import { MainScreenTitleComponent } from './pages/main-screen/session/title/main-screen-title.component';
-import { MainScreenVideoActivityComponent } from './pages/main-screen/session/activities/video/main-screen-video-activity.component';
-import { MainScreenTPSActivityComponent } from './pages/main-screen/session/activities/tps/main-screen-tps-activity.component';
-import { MainScreenMCQActivityComponent } from './pages/main-screen/session/activities/mcq/main-screen-mcq-activity.component';
-import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/session/activities/teletrivia/main-screen-teletrivia-activity.component';
-
+// tslint:disable-next-line:max-line-length
+import { MainScreenVideoActivityComponent } from './pages/main-screen/lesson/main-screen-video-activity/main-screen-video-activity.component';
+// tslint:disable-next-line:max-line-length
+import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/lesson/main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
 // tslint:disable-next-line:max-line-length
 import { MainScreenFeedbackActivityComponent } from './pages/main-screen/lesson/main-screen-feedback-activity/main-screen-feedback-activity.component';
+
 import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
 import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
-import { ParticipantLobbyComponent } from './pages/participant/lesson/participant-lobby/participant-lobby.component';
-import { ParticipantSessionComponent } from './pages/participant/session/participant-session.component';
-import { ParticipantTitleComponent } from './pages/participant/session/title/participant-title.component';
-import { ParticipantVideoActivityComponent } from './pages/participant/session/activity/video/participant-video-activity.component';
-import { ParticipantTPSActivityComponent } from './pages/participant/session/activity/tps/participant-tps-activity.component';
-import { ParticipantMCQActivityComponent } from './pages/participant/session/activity/mcq/participant-mcq-activity.component';
+import { ParticipantLobbyComponent } from './pages/participant/lesson/participant-lobby-activity/participant-lobby.component';
+// tslint:disable-next-line:max-line-length
+import { ParticipantVideoActivityComponent } from './pages/participant/lesson/participant-video-activity/participant-video-activity.component';
 
 // tslint:disable-next-line:max-line-length
-// import { ParticipantFeedbackActivityComponent } from './pages/participant/session/activity/feedback/participant-feedback-activity.component';
+// import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson/activity/feedback/participant-feedback-activity.component';
 
 // Plugins
 import { MatProgressBarModule } from '@angular/material';
@@ -64,7 +59,7 @@ import { BTwemojiComponent } from './ui-components/b-twemoji/b-twemoji.component
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 import { MainScreenToolbarComponent } from './ui-components/main-screen-toolbar/main-screen-toolbar.component';
 // tslint:disable-next-line:max-line-length
-import { ParticipantTeletriviaActivityComponent } from './pages/participant/session/activity/participant-teletrivia-activity/participant-teletrivia-activity.component';
+import { ParticipantTeletriviaActivityComponent } from './pages/participant/lesson/participant-teletrivia-activity/participant-teletrivia-activity.component';
 import { MainScreenLessonComponent } from './pages/main-screen/lesson/main-screen-lesson.component';
 import { MainScreenPairActivityComponent } from './pages/main-screen/lesson/main-screen-pair-activity/main-screen-pair-activity.component';
 // tslint:disable-next-line:max-line-length
@@ -86,23 +81,15 @@ import { MainScreenHintActivityComponent } from './pages/main-screen/lesson/main
     FeedbackPromptComponent,
     LandingComponent,
     MainScreenLobbyComponent,
-    SessionComponent,
     MainScreenFooterComponent,
-    MainScreenTitleComponent,
     MainScreenVideoActivityComponent,
-    MainScreenTPSActivityComponent,
-    MainScreenMCQActivityComponent,
     MainScreenFeedbackActivityComponent,
     MainScreenTeletriviaActivityComponent,
 
     ParticipantLoginComponent,
     ParticipantJoinComponent,
     ParticipantLobbyComponent,
-    ParticipantSessionComponent,
-    ParticipantTitleComponent,
     ParticipantVideoActivityComponent,
-    ParticipantTPSActivityComponent,
-    ParticipantMCQActivityComponent,
     ParticipantFeedbackActivityComponent,
     PrimaryNavbarComponent,
     ElementsComponent,

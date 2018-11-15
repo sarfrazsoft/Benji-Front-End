@@ -1,12 +1,11 @@
 import {Component, OnInit, OnDestroy, Renderer2, Input, ViewChild, EventEmitter, Output} from '@angular/core';
-import { BaseActivityComponent } from "../../../../shared/base-activity.component";
 import {MatDialog} from '@angular/material';
 
 
 @Component({
-  selector: "app-participant-teletrivia-activity",
-  templateUrl: "./participant-teletrivia-activity.component.html",
-  styleUrls: ["./participant-teletrivia-activity.component.scss"]
+  selector: 'app-participant-teletrivia-activity',
+  templateUrl: './participant-teletrivia-activity.component.html',
+  styleUrls: ['./participant-teletrivia-activity.component.scss']
 })
 export class ParticipantTeletriviaActivityComponent implements OnInit {
 
@@ -163,7 +162,7 @@ export class ParticipantTeletriviaActivityComponent implements OnInit {
 
   public handleTimesUp(event) {
     console.log(event);
-    if(event === 'answerTime') {
+    if (event === 'answerTime') {
       this.killTimer = true;
       console.log('it is answer time');
       this.showAnswerDetail = true;
