@@ -37,7 +37,7 @@ export class RadialTimerComponent {
   set totalSeconds(totalSeconds: number) {
     this._totalSeconds = totalSeconds;
     // this.val();
-    this.timesUp = false;
+    // this.timesUp = false;
   }
 
 
@@ -49,11 +49,13 @@ export class RadialTimerComponent {
     const val = (100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
     if (!Number.isNaN(val) && val >= 0 && val <= 100) {
       this.v = val;
-      if (this.v < 1) {
+      if (Math.floor(this.v) === 0) {
         setTimeout(() => {
           this.timesUp = true;
           this.v = 100;
         }, 100);
+      } else {
+        this.timesUp = false;
       }
 
     }

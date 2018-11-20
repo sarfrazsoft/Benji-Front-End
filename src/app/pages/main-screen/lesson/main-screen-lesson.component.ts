@@ -223,7 +223,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     console.log(`The leader array: ${leaderArray}`);
     // check the leader board participants
     const leaders = [];
-    if (leaderArray !== null && leaderArray["0"].correct > 0) {
+    if (leaderArray !== null) {
       for (let i = 0; i < 6 && i < leaderArray.length; i++) {
         leaders.push(leaderArray[i]);
       }

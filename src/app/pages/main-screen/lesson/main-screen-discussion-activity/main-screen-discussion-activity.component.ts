@@ -19,7 +19,6 @@ export class MainScreenDiscussionActivityComponent implements OnInit {
   public secondsElapsed;
   public isActivityOver;
 
-  private sharingIntervalStarted;
   private discussionStarted;
   private secondsElapsedInterval;
   private intervalSubscription;
@@ -31,19 +30,30 @@ export class MainScreenDiscussionActivityComponent implements OnInit {
     this._socketData = data;
     const activity = data.message.activity_status;
     this.discussionInstruction = activity.instructions;
-
-    if (activity.next_activity_countdown && !this.isActivityOver) {
-      this.isActivityOver = true;
-    }
+    console.log(activity);
 
     if (!this.discussionOver) {
       this.setDiscussionTimer(activity);
-    } else if (this.discussionOver && !this.isActivityOver) {
+    }
+
+    if (activity.next_activity_countdown) {
+      this.stopTimer = true;
+      this.isActivityOver = true;
+    }
+
+    if (activity.sharer_group_num !== null && !this.isActivityOver) {
+      if (!this.discussionOver) {
+        this.discussionOver = true;
+      }
       if (!this.stopTimer) {
         this.stopTimer = true;
       }
       this.setSharingState(activity);
     }
+
+
+
+
   }
 
   constructor() {}
@@ -54,8 +64,7 @@ export class MainScreenDiscussionActivityComponent implements OnInit {
     if (!this.discussionStarted) {
       const timerSetupPromise = of(
         this.setupTimer(
-          activityData.discussion_countdown_time,
-          this.endDiscussion
+          activityData.discussion_countdown_time
         )
       ).toPromise();
       timerSetupPromise.then(() => {
@@ -78,22 +87,20 @@ export class MainScreenDiscussionActivityComponent implements OnInit {
     scope.stopTimer = true;
   }
   private setupTimer(timer, callback?) {
-    this.secondsElapsed = 0;
     const _scope = this;
     const countdown = Date.parse(timer) - Date.now();
+    this.secondsElapsed = 0;
     this.totalSeconds = countdown / 1000;
     this.secondsElapsedInterval = interval(100);
     this.intervalSubscription = this.secondsElapsedInterval.pipe(
       tap((time: number) => {
-        if (time / 10 >= this.totalSeconds) {
+        if (time / 10 >= this.totalSeconds && callback) {
           callback(_scope);
         }
       }),
       takeWhile((time: number) => time / 10 < this.totalSeconds),
-      takeWhile(() => !this.isActivityOver),
       takeWhile(() => !this.stopTimer)
     );
-    return true;
   }
 
   private setSharingState(activityData) {
@@ -101,16 +108,18 @@ export class MainScreenDiscussionActivityComponent implements OnInit {
     const presentersIdObject = activityData.selected_sharers[currentGroupIndex];
     const nextUpIdObject = activityData.selected_sharers[currentGroupIndex + 1];
     this.preparePresenters(presentersIdObject, nextUpIdObject);
-    this.setupTimer(
+    const timerPromise = of(this.setupTimer(
       activityData.sharer_countdown_time[currentGroupIndex],
       this.stopInterval
-    );
-    setTimeout(() => {
-      this.stopTimer = false;
-      this.intervalSubscription.subscribe(time => {
-        this.secondsElapsed = time;
-      });
-    }, 100);
+    )).toPromise();
+    timerPromise.then(() => {
+      setTimeout(() => {
+        this.stopTimer = false;
+        this.intervalSubscription.subscribe(time => {
+          this.secondsElapsed = time;
+        });
+      }, 100);
+    });
   }
 
   private preparePresenters(presenterIdObject, nextUpIdObject) {
