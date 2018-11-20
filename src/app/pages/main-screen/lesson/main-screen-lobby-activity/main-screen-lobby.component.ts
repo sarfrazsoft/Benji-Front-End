@@ -26,59 +26,7 @@ export class MainScreenLobbyComponent implements OnInit, OnDestroy {
   constructor(private socket: WebSocketService, private route: ActivatedRoute) {
 
 
-    const mockData = {
-      "type": "client_event",
-      "message": {
-        "course": "Test Course",
-        "lesson": "Test Lesson",
-        "lesson_title": "Active Listening",
-        "lesson_description": "Over the next 45 minutes, we’ll learn and practice how to be better active listeners.",
-        "room_code": "495137",
-        "lesson_run_id": 1,
-        "participants": [{
-          "id": 2,
-          "password": "",
-          "last_login": null,
-          "is_superuser": false,
-          "username": "matt",
-          "first_name": "Matt",
-          "last_name": "Parson",
-          "email": "matt@mybenji.com",
-          "is_staff": false,
-          "is_active": true,
-          "date_joined": "2018-09-23T18:11:58.145000-04:00",
-          "local_admin_permission": false,
-          "participant_permission": true,
-          "client": null,
-          "groups": [],
-          "user_permissions": []
-        },
-        {
-          "id": 2,
-          "password": "",
-          "last_login": null,
-          "is_superuser": false,
-          "username": "matt",
-          "first_name": "Andrew",
-          "last_name": "Thompson",
-          "email": "matt@mybenji.com",
-          "is_staff": false,
-          "is_active": true,
-          "date_joined": "2018-09-23T18:11:58.145000-04:00",
-          "local_admin_permission": false,
-          "participant_permission": true,
-          "client": null,
-          "groups": [],
-          "user_permissions": []
-        }],
-        "activity_status": {
-          "activity_type": "LobbyActivity",
-          "activity_id": "main_lobby",
-          "title": "Waiting for your peers to join",
-          "countdown_time": null
-        }
-      }
-    };
+
 
     // this.socket.createSocketConnection('1', 'screen').then((sd: any) => {
     //   sd.subscribe((data) => {

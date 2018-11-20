@@ -9,24 +9,35 @@ import { VideoStateService } from '../../services/video-state.service';
 export class MainScreenFooterComponent implements OnInit {
   @Input() showFooter: boolean;
   @Input() roomCode: string;
-  @Input() showVideoControls: boolean;
   public videoPause = false;
 
-  constructor(private video: VideoStateService) { }
+  constructor(private video: VideoStateService) {}
 
-  ngOnInit() {
-  }
+  @Output() socketMessage = new EventEmitter<any>();
+
+  ngOnInit() {}
+
+  // public controlClicked(element, eventType) {
+  //   if (eventType === 'rewind') {
+  //     this.video.updateState(eventType);
+  //     this.videoPause = false;
+  //   } else if (eventType === 'toggleplayback') {
+  //     this.videoPause = !this.videoPause;
+  //     this.video.updateState(eventType);
+  //   } else if (eventType === 'skip') {
+  //     this.video.updateState(eventType);
+  //   }
+  // }
 
   public controlClicked(element, eventType) {
     if (eventType === 'rewind') {
-      this.video.updateState(eventType);
-      this.videoPause = false;
-    } else if (eventType === 'toggleplayback') {
-      this.videoPause = !this.videoPause;
-      this.video.updateState(eventType);
+      this.socketMessage.emit({
+        'event': 'back'
+      });
     } else if (eventType === 'skip') {
-      this.video.updateState(eventType);
+      this.socketMessage.emit({
+        'event': 'end'
+      });
     }
   }
-
 }

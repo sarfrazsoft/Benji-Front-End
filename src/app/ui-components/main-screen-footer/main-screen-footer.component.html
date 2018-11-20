@@ -1,14 +1,14 @@
 <div class="mainscreen-footer bg-deep-blue flexer--space-between" *ngIf="showFooter">
   <div class="mainscreen-footer__controls">
-    <ng-container *ngIf="showVideoControls">
-      <button (click)="controlClicked(videoRewind, 'rewind')" #videoRewind>
-        <mat-icon class="icon-white">fast_rewind</mat-icon>
+    <ng-container>
+      <button (click)="controlClicked(activityRewind, 'rewind')" #activityRewind>
+        <mat-icon class="icon-white">skip_previous</mat-icon>
       </button>
-      <button (click)="controlClicked(videoPlayPause, 'toggleplayback')" #videoPlayPause>
+      <!-- <button (click)="controlClicked(videoPlayPause, 'toggleplayback')" #videoPlayPause>
         <mat-icon class="icon-white" *ngIf="!videoPause" data-control="pause">pause</mat-icon>
         <mat-icon class="icon-white" *ngIf="videoPause" data-control="play">play_arrow</mat-icon>
-      </button>
-      <button (click)="controlClicked(videoSkip, 'skip')" #videoSkip>
+      </button> -->
+      <button (click)="controlClicked(activitySkip, 'skip')" #activitySkip>
           <mat-icon class="icon-white">skip_next</mat-icon>
       </button>
     </ng-container>

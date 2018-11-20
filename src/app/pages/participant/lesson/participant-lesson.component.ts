@@ -29,7 +29,6 @@ export class ParticipantLessonComponent implements OnInit {
   }
 
   public sendSocketMessage(message) {
-    console.log('message submitted from parent')
     this.socket.sendSocketFullMessage(message);
   }
 

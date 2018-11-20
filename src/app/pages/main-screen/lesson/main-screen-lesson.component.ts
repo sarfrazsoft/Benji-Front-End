@@ -29,7 +29,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   public participants;
 
   public showMainFooter;
-  public showVideoControls;
+  public showVideoControls = true;
 
   public gameStarted: boolean;
   public leaders;
@@ -167,7 +167,6 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     this.currentActivity = "teletrivia";
     this.handleLoadingStates();
     this.showMainFooter = true;
-    this.showVideoControls = false;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.handleFooterLayoutChange(this.showMainFooter);
     this.triviaCircleTime = this.socketData.message.activity_status.circle_countdown;
@@ -181,7 +180,6 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     this.handleLoadingStates();
 
     this.showMainFooter = true;
-    this.showVideoControls = false;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.handleFooterLayoutChange(this.showMainFooter);
   }
@@ -203,7 +201,6 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
     this.showMainFooter = true;
     this.pairGameStarted = false;
-    this.showVideoControls = false;
     this.handleFooterLayoutChange(this.showMainFooter);
     this.sendPairData(pairActivityType);
   }
@@ -214,7 +211,6 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
 
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.showMainFooter = true;
-    this.showVideoControls = false;
     this.handleFooterLayoutChange(this.showMainFooter);
   }
 
@@ -282,5 +278,9 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
         "ms-lesson__activity-container--lobby"
       );
     }
+  }
+
+  public sendSocketMessage(message) {
+    this.socket.sendSocketFullMessage(message);
   }
 }
