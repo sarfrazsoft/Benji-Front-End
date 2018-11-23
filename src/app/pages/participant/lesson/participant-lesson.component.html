@@ -6,5 +6,6 @@
 <app-participant-hint-activity *ngIf="currentActivity === 'hintWordActivity'" (socketMessage)="sendSocketMessage($event)" [socketData]="socketData"></app-participant-hint-activity>
 <app-participant-feedback-activity *ngIf="currentActivity === 'feedbackActivity'"></app-participant-feedback-activity>
 <app-participant-activity-video *ngIf="currentActivity === 'videoActivity'"></app-participant-activity-video>
+<app-participant-mcq-activity *ngIf="currentActivity === 'mcqActivity'" [socketData]="socketData" (socketMessage)="sendSocketMessage($event)"></app-participant-mcq-activity>
 
 

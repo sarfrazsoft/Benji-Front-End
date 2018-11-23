@@ -122,6 +122,9 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
         case "WordVotingActivity":
           this.updateHintWordActivity();
           break;
+        case "MCQActivity":
+          this.updateMcqActivity();
+          break;
         default:
       }
     } else {
@@ -193,6 +196,13 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     this.videoURL = this.socketData.message.activity_status.video_url;
     this.roomCode = this.socketData.message.lesson_run.lessonrun_code;
     this.handleFooterLayoutChange(this.showMainFooter);
+  }
+
+  private updateMcqActivity() {
+    this.currentActivity = 'mcqActivity';
+    this.showMainFooter = true;
+    this.handleFooterLayoutChange(this.showMainFooter);
+    this.handleLoadingStates();
   }
 
   private updatePairActivity(pairActivityType) {

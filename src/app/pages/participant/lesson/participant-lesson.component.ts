@@ -71,6 +71,9 @@ export class ParticipantLessonComponent implements OnInit {
         case 'WordVotingActivity':
         this.currentActivity = 'hintWordActivity';
           break;
+        case 'MCQActivity':
+        this.currentActivity = 'mcqActivity';
+          break;
         default:
       }
 
