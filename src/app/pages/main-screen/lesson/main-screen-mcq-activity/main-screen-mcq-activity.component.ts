@@ -73,15 +73,16 @@ export class MainScreenMcqActivityComponent implements OnInit {
   }
 
   private onTimesUp(scope) {
-    scope.revealAnswer = true;
-
+    setTimeout(() => {
+      scope.revealAnswer = true;
+    }, 200)
   }
 
   private setNextPhaseTimer(dateTimeString?) {
-    const countdown = Date.parse(dateTimeString) - Date.now();
     setTimeout(() => {
+      const countdown = Date.parse(dateTimeString) - Date.now();
       this.nextPhaseTimeRemaining = countdown / 1000;
-    }, 500);
+    }, 100);
   }
 
   private setupTimer(timer, callback?) {

@@ -29,7 +29,7 @@ export class ParticipantMcqActivityComponent implements OnInit {
         const scope = this;
         this.answerDetailState = true;
         this.timeRemaining = (Date.parse(nextPhaseTimer) - Date.now()) / 1000;
-      }, 3000);
+      }, 3100);
     }
   }
 
