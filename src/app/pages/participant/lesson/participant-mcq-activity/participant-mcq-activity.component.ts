@@ -17,7 +17,10 @@ export class ParticipantMcqActivityComponent implements OnInit {
       this.answerSet = activity.question.choices;
       this.correctAnswerExplanation = this.getExplanation(this.answerSet);
       this.gameStateTimerType = "questionTime";
-      this.timeRemaining = (Date.parse(questionTimer) - Date.now()) / 1000;
+      if(!this.timeStarted) {
+        this.timeRemaining = (Date.parse(questionTimer) - Date.now()) / 1000;
+        this.timeStarted = true;
+      }
     }
 
     if (nextPhaseTimer !== null && !this.answerDetailState) {
@@ -41,6 +44,7 @@ export class ParticipantMcqActivityComponent implements OnInit {
   public selectedAnswerIndex;
   public timeRemaining;
   public correctAnswer;
+  private timeStarted;
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {}
