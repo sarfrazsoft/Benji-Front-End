@@ -82,10 +82,10 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
   private startLesson(lessonId) {
     // create course run first
     this.backend.createCourserun().subscribe((data: any) => {
-      this.backend.startLesson(this.lessonId, data.id).subscribe(() => {
+      this.backend.startLesson(this.lessonId, data.id).subscribe((lessonrunData: any) => {
         // tell service to subscribe
         this.socket
-          .createSocketConnection(this.clientType, this.lessonId)
+          .createSocketConnection(this.clientType, lessonrunData.id)
           .subscribe((sd: any) => {
             console.log("new socket data...firing renderer");
             this.updateSocketData(sd);
