@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { interval, of } from 'rxjs';
 import { tap, takeWhile } from 'rxjs/operators';
 import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
@@ -12,7 +12,6 @@ export class MainScreenMcqActivityComponent implements OnInit {
 
   @Input() set socketData(data) {
     const activity = data.message.activity_status;
-    console.log(activity);
     const questionTimer = activity.countdown_time;
     const nextPhaseTimer = activity.pause_time;
 
@@ -20,16 +19,16 @@ export class MainScreenMcqActivityComponent implements OnInit {
       this.question = activity.question.question;
       this.answerSet = activity.question.choices;
       this.correctAnswerExplanation = this.getExplanation(this.answerSet);
-      if(!this.timerStarted) {
+      if (!this.timerStarted) {
         this.startTimer(questionTimer);
       }
     }
 
-
     if (nextPhaseTimer !== null && !this.answerDetailState) {
+      this.playSfx('revealAnswer');
       this.revealAnswer = true;
       setTimeout(() => {
-        const scope = this;
+        this.playSfx('answerDetail');
         this.answerDetailState = true;
         this.setNextPhaseTimer(nextPhaseTimer);
       }, 3000);
@@ -38,6 +37,8 @@ export class MainScreenMcqActivityComponent implements OnInit {
 
 
   }
+
+  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
   public question;
   public answerSet;
 
@@ -50,6 +51,7 @@ export class MainScreenMcqActivityComponent implements OnInit {
   public nextPhaseTimeRemaining;
   public correctAnswerExplanation;
   public timerStarted;
+  public sfxFile: string;
 
   constructor() {
   }
@@ -74,8 +76,8 @@ export class MainScreenMcqActivityComponent implements OnInit {
 
   private onTimesUp(scope) {
     setTimeout(() => {
-      scope.revealAnswer = true;
-    }, 200)
+      // scope.revealAnswer = true;
+    }, 200);
   }
 
   private setNextPhaseTimer(dateTimeString?) {
@@ -108,6 +110,16 @@ export class MainScreenMcqActivityComponent implements OnInit {
     });
 
     return correctObject.explanation_text;
+  }
+
+  private playSfx(sfxType: string) {
+    if (sfxType === 'revealAnswer') {
+      this.sfxFile = `../../../../../assets/audio/Time's Up.wav`;
+    } else if (sfxType === 'answerDetail') {
+      this.sfxFile = '../../../../../assets/audio/Answers Submitted.mp3';
+    }
+    this.sfxPlayer.nativeElement.load();
+    this.sfxPlayer.nativeElement.play();
   }
 
 }

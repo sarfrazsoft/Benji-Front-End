@@ -73,4 +73,13 @@
         <app-linear-timer [timeRemaining]="timer" (timesUp)="startGame()"></app-linear-timer>
     </div>
   </div>
+  <audio
+  #sfxPlayer
+  autoplay
+  loop
+  class="hideAndShrink"
+  src="../../../../../assets/audio/Waiting Music.mp3"
+>
+  Your browser does not support the <code>audio</code> element.
+</audio>
 </ng-container>

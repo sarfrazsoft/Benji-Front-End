@@ -26,6 +26,7 @@
   </div>
 </div>
 
+
 <div class="mainscreen-activity mainscreen-activity--multi-column hint-activity"  *ngIf="activityState === 'complete'">
   <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-off-white">
     <div class="hint-activity__instruction-container flexer--center">
@@ -50,3 +51,11 @@
 
   </div>
 </div>
+
+<audio
+  class="hideAndShrink"
+  [src]="sfxFile"
+  #sfxPlayer
+>
+  Your browser does not support the <code>audio</code> element.
+</audio>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { interval } from 'rxjs';
 import { EmojiLookupService } from "src/app/services/emoji-lookup.service";
 import { takeLast, take, takeUntil, takeWhile } from "rxjs/operators";
@@ -26,7 +26,7 @@ export class MainScreenPairActivityComponent implements OnInit {
   public secondaryEmoji;
   public _reversed: boolean;
   private intervalSubscription;
-
+  @ViewChild('sfxPlayer') sfxPlyaer: ElementRef;
 
   @Input()
   participants: any[];
@@ -108,6 +108,7 @@ export class MainScreenPairActivityComponent implements OnInit {
       this.secondaryEmoji = this.emoji.getEmoji(this.data.message.activity_status.secondary_role.role_emoji);
 
     }
+    this.sfxPlyaer.nativeElement.pause();
     this.pairGameStarted = true;
     const countdown = Date.parse(this.data.message.activity_status.countdown_discussion) - Date.now();
     this.totalSeconds = (countdown / 1000);

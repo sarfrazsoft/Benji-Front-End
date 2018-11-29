@@ -23,12 +23,17 @@ export class MainScreenHintActivityComponent implements OnInit, AfterViewInit {
   public instructions;
   public expectedNumberOfWords;
   public votingDone;
+  public sfxFile;
 
   @ViewChild('listParent') listParent: ElementRef;
+  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   @Input() set socketData(data) {
     const activity = data.message.activity_status;
     this.expectedNumberOfWords = data.message.participants.length;
+    if (activity.submitted_words > 0 && this.winningWord === undefined) {
+      this.playSfx('voteSubmitted');
+    }
     this.words = activity.submitted_words;
     this.instructions = activity.instructions;
     const countdown = Date.parse(activity.submission_countdown) - Date.now();
@@ -54,6 +59,7 @@ export class MainScreenHintActivityComponent implements OnInit, AfterViewInit {
     }
 
     if (activity.submission_complete && activity.voting_complete) {
+      this.playSfx('revealWinner');
       this.winningWord = activity.voted_word;
       this.activityState = 'complete';
     }
@@ -86,4 +92,13 @@ export class MainScreenHintActivityComponent implements OnInit, AfterViewInit {
   }
 
 
+  private playSfx(sfxType: string) {
+    if (sfxType === 'voteSubmitted') {
+      this.sfxFile = `../../../../../assets/audio/191678__porphyr__waterdrop.wav`;
+    } else if (sfxType === 'revealWinner') {
+      this.sfxFile = '../../../../../assets/audio/Answers Submitted.mp3';
+    }
+    this.sfxPlayer.nativeElement.load();
+    this.sfxPlayer.nativeElement.play();
+  }
 }

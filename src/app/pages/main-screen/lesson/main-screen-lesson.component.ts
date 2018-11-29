@@ -20,7 +20,7 @@ import { WebSocketSubject } from "rxjs/webSocket";
   styleUrls: ["./main-screen-lesson.component.scss"]
 })
 export class MainScreenLessonComponent implements OnInit, OnChanges {
-  private lessonId;
+  private lessonNumber;
   public socketData: any;
   public activityLoading = true;
   private clientType: string;
@@ -55,7 +55,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     private backend: BackendService,
     private renderer: Renderer2
   ) {
-    this.lessonId = this.route.snapshot.paramMap.get("lessonId");
+    this.lessonNumber = this.route.snapshot.paramMap.get("lessonId");
     this.clientType = "screen";
   }
 
@@ -65,7 +65,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
       .subscribe(
         null,
         err => console.error(`Error on authentication: ${err}`),
-        () => this.startLesson(this.lessonId)
+        () => this.startLesson()
       );
     this.handleFooterLayoutChange(this.showMainFooter);
   }
@@ -79,13 +79,13 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
     }
   }
 
-  private startLesson(lessonId) {
+  private startLesson() {
     // create course run first
     this.backend.createCourserun().subscribe((data: any) => {
-      this.backend.startLesson(this.lessonId, data.id).subscribe(() => {
+      this.backend.startLesson(this.lessonNumber, data.id).subscribe((lessonrunData: any) => {
         // tell service to subscribe
         this.socket
-          .createSocketConnection(this.clientType, this.lessonId)
+          .createSocketConnection(this.clientType, lessonrunData.id)
           .subscribe((sd: any) => {
             console.log("new socket data...firing renderer");
             this.updateSocketData(sd);
@@ -94,6 +94,7 @@ export class MainScreenLessonComponent implements OnInit, OnChanges {
       });
     });
   }
+
 
   private updateSocketData(data) {
     this.socketData = data;

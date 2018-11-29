@@ -37,7 +37,8 @@ export class WebSocketService {
   public getLessonSocket(client, lessonId?, roomCode?, id?) {
     if (client === "screen" && !this.subject) {
       this.subject = webSocket(
-        `${global.wsRoot}/ws/activityflow/id/${lessonId}/${client}/0/`
+        // `${global.wsRoot}/ws/activityflow/id/${lessonId}/${client}/0/`
+        `${global.wsRoot}/ws/activityflow/id/1/${client}/0/`
       );
       console.log('returning screen client observable');
       return this.subject;

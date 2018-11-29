@@ -8,4 +8,9 @@
     </div>
     <div class="timer-centered number-text pn-500" style="color: #1248F2" *ngIf="!timesUp">{{ getTimer(_secondsElapsed, _totalSeconds).min | number:'1.0-0'}}:{{ getTimer(_secondsElapsed, _totalSeconds).sec | number:'2.0-0' }}<span>Left</span></div>
     <div class="timer-centered number-text pn-500 timer-endstate" style="color: #1248F2" *ngIf="timesUp">{{endStateText}}</div>
+    <audio class="hideAndShrink"
+        src="../../../assets/audio/Time's Up.wav" #sfxPlayer>
+            Your browser does not support the
+            <code>audio</code> element.
+    </audio>
 </div>
