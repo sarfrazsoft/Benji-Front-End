@@ -130,12 +130,12 @@ export class BackendService {
 
   /**
    * Creates a new lesson instance
-   * @param lessonId: string
+   * @param lessonNumber: string
    */
-  public startLesson(lessonId, courserun) {
+  public startLesson(lessonNumber, courserun) {
     return this.http.post(
       `${global.apiRoot}/course_details/course_run/${courserun}/start_lesson/ `,
-      { lesson: lessonId }
+      { lesson: lessonNumber }
     );
   }
 

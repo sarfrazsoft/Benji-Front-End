@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, OnDestroy, ViewEncapsulation, EventEmitter} from '@angular/core';
+import {Component, Input, Output, OnInit, OnDestroy, ViewEncapsulation, EventEmitter, ViewChild, ElementRef} from '@angular/core';
 import { WebSocketService } from '../../../../services/socket.service';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -15,18 +15,24 @@ export class MainScreenLobbyComponent implements OnInit, OnDestroy {
   @Output() activityComplete = new EventEmitter();
   public lessonTitle: string;
   public lessonDescription: string;
+  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
   @Input() roomCode: string;
-  @Input() joinedUsers;
+  @Input() set joinedUsers(data) {
+    if(data.length > 0 && !this.gameStarted) {
+      this.playSfx();
+    }
+
+    this._joinedUsers = data;
+  }
   public socketData$: Observable<any>;
   public socketSubscription;
   public lessonId;
+  public _joinedUsers = [];
+  public gameStarted;
 
 
 
   constructor(private socket: WebSocketService, private route: ActivatedRoute) {
-
-
-
 
     // this.socket.createSocketConnection('1', 'screen').then((sd: any) => {
     //   sd.subscribe((data) => {
@@ -73,7 +79,13 @@ export class MainScreenLobbyComponent implements OnInit, OnDestroy {
 
   kickOffLesson() {
     this.activityComplete.emit(true);
+    this.gameStarted = true;
     this.socket.sendSocketEventMessage('end');
     console.log('Kick off sent from main');
+  }
+
+  private playSfx () {
+    console.log('condition met, playing...');
+    this.sfxPlayer.nativeElement.play();
   }
 }

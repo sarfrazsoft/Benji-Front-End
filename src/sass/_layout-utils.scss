@@ -44,6 +44,11 @@
   position: absolute;
 }
 
+.hideAndShrink {
+  height: 0;
+  opacity: 0;
+}
+
 // mainscreen full height container
 .ms-fullheight-container {
     height: 100vh;

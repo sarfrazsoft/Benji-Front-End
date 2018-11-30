@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'app-radial-timer',
@@ -9,7 +9,10 @@ import {Component, Input, ViewEncapsulation} from '@angular/core';
 
 export class RadialTimerComponent {
   @Input() endStateText: string;
+  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
+
   public timesUp: boolean;
+  public soundIterationCount;
 
 
   getTimer(cd, max_timer) {
@@ -36,6 +39,7 @@ export class RadialTimerComponent {
   @Input()
   set totalSeconds(totalSeconds: number) {
     this._totalSeconds = totalSeconds;
+    this.soundIterationCount = undefined;
     // this.val();
     // this.timesUp = false;
   }
@@ -47,6 +51,12 @@ export class RadialTimerComponent {
 
   val() {
     const val = (100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
+    const remainingTime = (this._totalSeconds - this._secondsElapsed);
+
+    if (Math.floor(remainingTime) === 0) {
+      this.endSfx();
+    }
+
     if (!Number.isNaN(val) && val >= 0 && val <= 100) {
       this.v = val;
       if (Math.floor(this.v) === 0) {
@@ -61,9 +71,11 @@ export class RadialTimerComponent {
     }
   }
 
+  private endSfx() {
+    this.sfxPlayer.nativeElement.play();
+  }
+
 
 }
 
-/*
-<h1 class="welcome-screen-text dark-blue">{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).min | number:'1.0-0'}}:{{ getTimer(thinkCountdown, activityDetails.thinkpairshareactivity.think_timer).sec | number:'2.0-0' }}</h1>
- */
+
