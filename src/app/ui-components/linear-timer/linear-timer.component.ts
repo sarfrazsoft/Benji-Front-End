@@ -9,16 +9,8 @@ export class LinearTimerComponent implements OnInit {
 
   constructor() { }
 
-  @Input()
-  set timeRemaining(secondsRemaining) {
-    this._timeRemaining = parseInt(secondsRemaining, 10);
-    this.initialTimeRemaining = parseInt(secondsRemaining, 10);
-    this.startTimer();
-  }
-
-  @Input() timerType: string;
-
-  @Output() timesUp = new EventEmitter<string>();
+  @Input() timerSeconds: number;
+  @Output() callback = new EventEmitter();
 
   public _timeRemaining;
   public timerInterval: any;
@@ -26,30 +18,33 @@ export class LinearTimerComponent implements OnInit {
   public timeElapsed = 0;
   public progressBarWidth = '0';
 
+  public running = false;
+
   ngOnInit() {
   }
 
   public startTimer() {
+    this.running = true;
+    this.initialTimeRemaining = this.timerSeconds;
+    this._timeRemaining = this.initialTimeRemaining;
+
     this.timerInterval = setInterval( () => {
       this._timeRemaining = this._timeRemaining - 1;
       this.timeElapsed = this.timeElapsed + 1;
-      const timeElapsedPercentage = `${(this.timeElapsed / this.initialTimeRemaining) * 100}`;
-
-      this.progressBarWidth = timeElapsedPercentage;
+      this.progressBarWidth = `${(this.timeElapsed / this.initialTimeRemaining) * 100}`;
 
       if  (this._timeRemaining === 0.0) {
-        this.stopTimer();
+        this.stopTimer(true);
       }
 
     }, 1000);
   }
 
-  public stopTimer() {
+  public stopTimer(callback: boolean) {
+    this.running = false;
     clearInterval(this.timerInterval);
-    setTimeout(() => {
-      this.timesUp.emit(this.timerType);
-    }, 1000)
+    if (callback) {
+      this.callback.emit();
+    }
   }
-
-
 }

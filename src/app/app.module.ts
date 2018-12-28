@@ -10,10 +10,10 @@ import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // Services
-import { AuthService } from './services/auth.service';
-import { TokenInterceptor } from './services/auth.interceptor';
-import { BackendService } from './services/backend.service';
-import { WebSocketService } from './services/socket.service';
+import { AuthService } from './services/auth/auth.service';
+import { TokenInterceptor } from './services/auth/auth.interceptor';
+import { BackendRestService} from './services/backend/backend-rest.service';
+import {BackendSocketService} from './services/backend/backend-socket.service';
 import { EmojiLookupService } from './services/emoji-lookup.service';
 
 // Components
@@ -22,23 +22,16 @@ import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedbac
 
 // App Pages
 import { AppComponent } from './app.component';
-import { LandingComponent } from './pages/landing/landing.component';
-import { MainScreenLobbyComponent } from './pages/main-screen/lesson/main-screen-lobby-activity/main-screen-lobby.component';
+import { LandingComponent } from './pages/landing/main-screen/landing.component';
+import { MainScreenLobbyComponent } from './pages/lesson/main-screen/main-screen-lobby-activity/main-screen-lobby.component';
 import { MainScreenFooterComponent } from './ui-components/main-screen-footer/main-screen-footer.component';
-// tslint:disable-next-line:max-line-length
-import { MainScreenVideoActivityComponent } from './pages/main-screen/lesson/main-screen-video-activity/main-screen-video-activity.component';
-// tslint:disable-next-line:max-line-length
-import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/lesson/main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
-// tslint:disable-next-line:max-line-length
-import { MainScreenFeedbackActivityComponent } from './pages/main-screen/lesson/main-screen-feedback-activity/main-screen-feedback-activity.component';
-
-import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
-import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
-import { ParticipantLobbyComponent } from './pages/participant/lesson/participant-lobby-activity/participant-lobby.component';
-// tslint:disable-next-line:max-line-length
-import { ParticipantVideoActivityComponent } from './pages/participant/lesson/participant-video-activity/participant-video-activity.component';
-
-// tslint:disable-next-line:max-line-length
+import { MainScreenVideoActivityComponent } from './pages/lesson/main-screen/main-screen-video-activity/main-screen-video-activity.component';
+import { MainScreenTeletriviaActivityComponent } from './pages/lesson/main-screen/main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
+import { MainScreenFeedbackActivityComponent } from './pages/lesson/main-screen/main-screen-feedback-activity/main-screen-feedback-activity.component';
+import { ParticipantLoginComponent } from './pages/landing/participant/login/participant-login.component';
+import { ParticipantJoinComponent } from './pages/landing/participant/join/participant-join.component';
+import { ParticipantLobbyComponent } from './pages/lesson/participant/participant-lobby-activity/participant-lobby.component';
+import { ParticipantVideoActivityComponent } from './pages/lesson/participant/participant-video-activity/participant-video-activity.component';
 // import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson/activity/feedback/participant-feedback-activity.component';
 
 // Plugins
@@ -58,23 +51,20 @@ import { AnimatedCheckmarkButtonComponent } from './ui-components/animated-check
 import { BTwemojiComponent } from './ui-components/b-twemoji/b-twemoji.component';
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 import { MainScreenToolbarComponent } from './ui-components/main-screen-toolbar/main-screen-toolbar.component';
-// tslint:disable-next-line:max-line-length
-import { ParticipantTeletriviaActivityComponent } from './pages/participant/lesson/participant-teletrivia-activity/participant-teletrivia-activity.component';
-import { MainScreenLessonComponent } from './pages/main-screen/lesson/main-screen-lesson.component';
-import { MainScreenPairActivityComponent } from './pages/main-screen/lesson/main-screen-pair-activity/main-screen-pair-activity.component';
-// tslint:disable-next-line:max-line-length
-import { MainScreenDiscussionActivityComponent } from './pages/main-screen/lesson/main-screen-discussion-activity/main-screen-discussion-activity.component';
-import { ParticipantLessonComponent } from './pages/participant/lesson/participant-lesson.component';
+
+import { ParticipantTeletriviaActivityComponent } from './pages/lesson/participant/participant-teletrivia-activity/participant-teletrivia-activity.component';
+import { MainScreenLessonComponent } from './pages/lesson/main-screen/main-screen-lesson.component';
+import { MainScreenPairActivityComponent } from './pages/lesson/main-screen/main-screen-pair-activity/main-screen-pair-activity.component';
+import { MainScreenDiscussionActivityComponent } from './pages/lesson/main-screen/main-screen-discussion-activity/main-screen-discussion-activity.component';
+import { ParticipantLessonComponent } from './pages/lesson/participant/participant-lesson.component';
 import { ParticipantToolbarComponent } from './ui-components/participant-toolbar/participant-toolbar.component';
-import { ParticipantPairActivityComponent } from './pages/participant/lesson/participant-pair-activity/participant-pair-activity.component';
-// tslint:disable-next-line:max-line-length
-import { ParticipantDiscussionActivityComponent } from './pages/participant/lesson/participant-discussion-activity/participant-discussion-activity.component';
-import { ParticipantHintActivityComponent } from './pages/participant/lesson/participant-hint-activity/participant-hint-activity.component';
-// tslint:disable-next-line:max-line-length
-import { ParticipantFeedbackActivityComponent } from './pages/participant/lesson/participant-feedback-activity/participant-feedback-activity.component';
-import { MainScreenHintActivityComponent } from './pages/main-screen/lesson/main-screen-hint-activity/main-screen-hint-activity.component';
-import { MainScreenMcqActivityComponent } from './pages/main-screen/lesson/main-screen-mcq-activity/main-screen-mcq-activity.component';
-import { ParticipantMcqActivityComponent } from './pages/participant/lesson/participant-mcq-activity/participant-mcq-activity.component';
+import { ParticipantPairActivityComponent } from './pages/lesson/participant/participant-pair-activity/participant-pair-activity.component';
+import { ParticipantDiscussionActivityComponent } from './pages/lesson/participant/participant-discussion-activity/participant-discussion-activity.component';
+import { ParticipantHintActivityComponent } from './pages/lesson/participant/participant-hint-activity/participant-hint-activity.component';
+import { ParticipantFeedbackActivityComponent } from './pages/lesson/participant/participant-feedback-activity/participant-feedback-activity.component';
+import { MainScreenHintActivityComponent } from './pages/lesson/main-screen/main-screen-hint-activity/main-screen-hint-activity.component';
+import { MainScreenMcqActivityComponent } from './pages/lesson/main-screen/main-screen-mcq-activity/main-screen-mcq-activity.component';
+import { ParticipantMcqActivityComponent } from './pages/lesson/participant/participant-mcq-activity/participant-mcq-activity.component';
 
 @NgModule({
   declarations: [
@@ -130,8 +120,8 @@ import { ParticipantMcqActivityComponent } from './pages/participant/lesson/part
   ],
   providers: [
     AuthService,
-    BackendService,
-    WebSocketService,
+    BackendRestService,
+    BackendSocketService,
     EmojiLookupService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],

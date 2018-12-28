@@ -1,0 +1,75 @@
+@import "../../../../../sass/variables";
+
+
+.lobby-activity {
+    h1 {
+        font-size: 48px;
+        line-height: normal;
+        text-transform: uppercase;
+        letter-spacing: 3.6px;
+        .vibrant-blue {
+            font-size: 140px;
+            line-height: 1.09;
+            display: block;
+            text-transform: capitalize;
+        }
+    }
+    p {
+        font-size: 36px;
+        line-height: normal;
+    }
+    .lobby-activity__welcome-text {
+        padding: 10vh 7vw;
+    }
+    .lobby-activity__column-content-flexer {
+        align-items: center;
+    }
+    .lobby-activity__instructions {
+        padding: 0 3vw;
+        .lobby-activity__instructions-title {
+            text-transform: uppercase;
+        }
+        .lobby-acitivity__room-code {
+            font-size: 8vh;
+        }
+        .lobby-activity__reduced {
+          font-size: 25px;
+        }
+    }
+    .lobby-activity__joined-users {
+        padding: 5vh 3vw;
+        p {
+            text-transform: uppercase;
+        }
+        ul {
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            li {
+                list-style: none;
+                margin: 0;
+                font-size: 36px;
+                line-height: 1.33;
+            }
+        }
+    }
+}
+.lobby-activity__footer {
+  height: 190px;
+  justify-content: center;
+  p {
+    font-size: 48px;
+    color: #FFF;
+    line-height: normal;
+  }
+  button {
+    color: $vibrant-blue;
+    font-size: 36px;
+    height: 60px;
+    width: 310px;
+    position: relative;
+    bottom: 5px;
+    margin-left: 40px;
+  }
+}

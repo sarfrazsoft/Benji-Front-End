@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LandingComponent } from './pages/landing/landing.component';
+import { LandingComponent } from './pages/landing/main-screen/landing.component';
 
 
-import { ParticipantLoginComponent } from './pages/participant/login/participant-login.component';
-import { ParticipantJoinComponent } from './pages/participant/join/participant-join.component';
+import { ParticipantLoginComponent } from './pages/landing/participant/login/participant-login.component';
+import { ParticipantJoinComponent } from './pages/landing/participant/join/participant-join.component';
 import { ElementsComponent } from './elements/elements.component';
 import { MainscreenElementsComponent } from './mainscreen-elements/mainscreen-elements.component';
 // tslint:disable-next-line:max-line-length
-import { MainScreenTeletriviaActivityComponent } from './pages/main-screen/lesson/main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
-import { MainScreenLessonComponent } from './pages/main-screen/lesson/main-screen-lesson.component';
-import { MainScreenLobbyComponent } from './pages/main-screen/lesson/main-screen-lobby-activity/main-screen-lobby.component';
-import { ParticipantLessonComponent } from './pages/participant/lesson/participant-lesson.component';
+import { MainScreenTeletriviaActivityComponent } from './pages/lesson/main-screen/main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
+import { MainScreenLessonComponent } from './pages/lesson/main-screen/main-screen-lesson.component';
+import { MainScreenLobbyComponent } from './pages/lesson/main-screen/main-screen-lobby-activity/main-screen-lobby.component';
+import { ParticipantLessonComponent } from './pages/lesson/participant/participant-lesson.component';
 
 
 const routes: Routes = [
@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'landing', component: LandingComponent },
 
   // { path: 'desktop/session/:id', component: SessionComponent },
-  { path: 'screen/lesson/:lessonId', component: MainScreenLessonComponent, children: [
+  { path: 'screen/lesson/:roomCode', component: MainScreenLessonComponent, children: [
     {path: 'lobby', component: MainScreenLobbyComponent }
   ] },
 

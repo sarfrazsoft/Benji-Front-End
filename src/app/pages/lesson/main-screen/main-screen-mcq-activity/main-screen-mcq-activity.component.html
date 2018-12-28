@@ -1,0 +1,43 @@
+<div class="mainscreen-activity mainscreen-activity--multi-column mcq-activity">
+  <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-off-white">
+    <div class="mainscreen-activity__title">
+      <p class="brownish-grey pn-500">Multiple Choice</p>
+    </div>
+    <div class="mcq-activity__question-container">
+      <p class="pn-600 brownish-grey">{{ activityState.activity_status.question.question }}</p>
+      <ol>
+        <li
+          *ngFor="let answer of activityState.activity_status.question.choices"
+          class="brownish-grey pn-500"
+          [ngClass]="{'correct': reveal() && answer.is_correct, 'pn-600': reveal() && answer.is_correct, 'incorrect': reveal() && !answer.is_correct}">
+          {{ answer.choice_text }}
+        </li>
+      </ol>
+      <ng-container *ngIf="reveal()">
+        <p>
+          {{correctChoice().explanation_text}}
+        </p>
+      </ng-container>
+    </div>
+  </div>
+  <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey flexer--center">
+    <ng-container *ngIf="!reveal()">
+      <app-radial-timer [secondsElapsed]="questionElapsedTime / 1000" [totalSeconds]="questionTotalTime / 1000" endStateText="Times up!"></app-radial-timer>
+    </ng-container>
+    <ng-container *ngIf="reveal()">
+      <video src="https://media.giphy.com/media/3rlkI1QFJWRUsdRtha/giphy.mp4" autoplay></video>
+      <!-- <button class="b-arrow-button">Continue<span class="bg-vibrant-blue"><mat-icon class="icon-white">arrow_forward</mat-icon></span></button> -->
+    </ng-container>
+  </div>
+  <div class="mcq-activity__linear-timer-container">
+    <app-linear-timer *ngIf="reveal()" [timerSeconds]="pauseSeconds" #revealTimer></app-linear-timer>
+  </div>
+</div>
+
+<audio
+  class="hideAndShrink"
+  [src]="sfxFile"
+  #sfxPlayer
+>
+  Your browser does not support the <code>audio</code> element.
+</audio>

@@ -41,7 +41,7 @@ export class RadialTimerComponent {
     this._totalSeconds = totalSeconds;
     this.soundIterationCount = undefined;
     // this.val();
-    // this.timesUp = false;
+    // this.callback = false;
   }
 
 

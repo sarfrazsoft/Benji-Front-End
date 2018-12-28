@@ -1,0 +1,38 @@
+<ng-container *ngIf="!activityState.activity_status.all_pairs_found">
+  <div class="b-flat-card center-text roleplay-card">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">FIND YOUR PARTNER</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <div class="b-flat-card__twemoji">
+        <app-b-twemoji emoji="👯"></app-b-twemoji>
+      </div>
+      <h3 class="pn-700 deep-blue">{{ partnerText() }}</h3>
+      <p>Find them and sit together. </p>
+    </div>
+    <div class="b-flat-card__action">
+      <button class="b-standard-button" (click)="sendReadyState()" [ngClass]="{'b-standard-button--inactive': participantIsReady()}">
+        <span *ngIf="!participantIsReady()">We're ready!</span>
+        <span *ngIf="participantIsReady()">Waiting...</span>
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="activityState.activity_status.all_pairs_found">
+  <div class="b-flat-card center-text roleplay-card">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Roleplay</h2>
+    </div>
+    <div class="b-flat-card__body">
+
+      <div class="b-flat-card__twemoji">
+        <app-b-twemoji [emoji]="emoji.getEmoji(getParticipantRole().role_emoji)"></app-b-twemoji>
+      </div>
+
+      <h3 class="pn-700 deep-blue">You’re the {{ getParticipantRole().role_name }}</h3>
+      <p>{{ getParticipantRole().role_instructions }}</p>
+    </div>
+    <app-linear-timer [timerSeconds]="roleSeconds" #roleplayTimer></app-linear-timer>
+  </div>
+</ng-container>
