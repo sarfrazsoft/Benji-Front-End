@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewEncapsulation, NgModule} from '@angular/core';
 
-import { BackendRestService} from '../../../services/backend/backend-rest.service';
+import { BackendRestService} from '../../../../services/backend/backend-rest.service';
 import {Router} from '@angular/router';
 
-import {AuthService} from '../../../services/auth/auth.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({

@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { webSocket, WebSocketSubject } from "rxjs/webSocket";
+import { Injectable } from '@angular/core';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-import * as global from "../../globals";
+import * as global from '../../globals';
 import {Observable, of} from 'rxjs';
 import {ActivityFlowFrame, ActivityFlowServerMessage} from './schema/activity';
 
@@ -10,6 +10,19 @@ export class BackendSocketService {
   public subject: WebSocketSubject<any>;
   private sessionrunID;
   public socketData;
+
+
+  connectLessonSocket(clientType, roomCode, userID?): Observable<ActivityFlowFrame> {
+    let uri = null;
+    if (clientType === 'screen') {
+      uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/screen/0/`;
+    } else if (clientType === 'participant') {
+      uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/participant/${userID}/`;
+    }
+    console.log('connecting to: ' + uri);
+    return webSocket(uri);
+
+  }
 
   connect(sessionrunID) {
     if (this.sessionrunID === sessionrunID && this.subject) {

@@ -26,9 +26,10 @@ export class BackendRestService {
 
   // DEMO ONLY
   create_courserun(courseID: number): Observable<CourseRun> {
+    console.log(courseID);
     return this.http.post<CourseRun>(global.apiRoot + '/course_details/course_run/', {
-      course: courseID,
-      courserunuser_set: []
+      'course': courseID,
+      'courserunuser_set': []
     });
   }
 

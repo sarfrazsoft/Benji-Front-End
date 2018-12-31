@@ -33,13 +33,18 @@ export class BaseLessonComponent implements OnInit {
       ([lessonRun, identity]) => {
         this.lessonRun = lessonRun;
         this.user = identity;
-        this.socket = this.socketService.getLessonSocket(this.clientType, this.lessonRun.id);
+        this.socket = this.socketService.connectLessonSocket(this.clientType, this.lessonRun.lessonrun_code, this.user.id);
+        console.log('socket connected');
 
         this.socket.subscribe((msg: ActivityFlowFrame) => {
           this.handleServerMessage(msg);
         });
       }
     );
+  }
+
+  isConnected() {
+    return this.socket !== undefined;
   }
 
   handleServerMessage(msg: ActivityFlowFrame) {
