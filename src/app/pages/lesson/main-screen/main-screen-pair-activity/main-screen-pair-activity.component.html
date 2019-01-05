@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey">
-      <app-radial-timer [secondsElapsed]="secondsElapsed / 10" [totalSeconds]="totalSeconds" endStateText="Switch!"></app-radial-timer>
+      <app-radial-timer endStateText="Times up!" (initCallback)="discussionTimerInit($event)" #discussionTimer></app-radial-timer>
     </div>
   </div>
 </ng-container>
@@ -46,9 +46,9 @@
         <ul>
           <li class="pair-activity__pair brownish-grey pn-600"
               *ngFor="let userGroup of activityState.activity_status.user_groups"
-              [ngClass]="{'deep-blue' : isReady(userGroup)}">{{MainScreenPairActivityComponent.getGroupText(userGroup)}}<mat-icon class="pair-activity__ready-icon" *ngIf="isReady(userGroup)">check</mat-icon></li>
+              [ngClass]="{'deep-blue' : isReady(userGroup)}">{{getGroupText(userGroup)}}<mat-icon class="pair-activity__ready-icon" *ngIf="isReady(userGroup)">check</mat-icon></li>
         </ul>
-        <app-linear-timer [timerSeconds]="pairSeconds" #pairTimer></app-linear-timer>
+        <app-linear-timer #pairTimer></app-linear-timer>
     </div>
   </div>
   <audio

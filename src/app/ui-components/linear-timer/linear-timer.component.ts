@@ -8,9 +8,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class LinearTimerComponent implements OnInit {
 
   constructor() { }
-
-  @Input() timerSeconds: number;
   @Output() callback = new EventEmitter();
+  @Output() initCallback = new EventEmitter<LinearTimerComponent>();
 
   public _timeRemaining;
   public timerInterval: any;
@@ -21,11 +20,13 @@ export class LinearTimerComponent implements OnInit {
   public running = false;
 
   ngOnInit() {
+    if (this.initCallback !== undefined) {
+      this.initCallback.emit(this);
+    }
   }
-
-  public startTimer() {
+  public startTimer(timerSeconds) {
     this.running = true;
-    this.initialTimeRemaining = this.timerSeconds;
+    this.initialTimeRemaining = timerSeconds;
     this._timeRemaining = this.initialTimeRemaining;
 
     this.timerInterval = setInterval( () => {

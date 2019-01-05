@@ -1,4 +1,5 @@
-import {Component, Input, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
+import {Component, Input, Output, ViewChild, ElementRef, OnInit, EventEmitter, OnDestroy} from '@angular/core';
+import {init} from 'protractor/built/launcher';
 
 @Component({
   selector: 'app-radial-timer',
@@ -7,18 +8,64 @@ import {Component, Input, ViewEncapsulation, ViewChild, ElementRef} from '@angul
   // encapsulation: ViewEncapsulation.None
 })
 
-export class RadialTimerComponent {
+export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endStateText: string;
+  @Output() initCallback = new EventEmitter<RadialTimerComponent>();
+  @Output() timeUpCallback = new EventEmitter<RadialTimerComponent>();
+
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
-  public timesUp: boolean;
-  public soundIterationCount;
+  totalTime: number;
+  elapsedTime: number;
+  public running = false;
+  public timesUp = false;
+  timerInterval;
+
+  ngOnInit() {
+    if (this.initCallback !== undefined) {
+      this.initCallback.emit(this);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.running) {
+      clearInterval(this.timerInterval);
+    }
+  }
+
+  public startTimer(totalTime: number, startTime: number) {
+    this.totalTime = totalTime;
+    this.elapsedTime = startTime;
+    this.running = true;
+    this.timesUp = false;
+
+    this.timerInterval = setInterval( () => {
+      if  (this.elapsedTime < this.totalTime) {
+        this.elapsedTime += 100;
+      } else {
+        this.running = false;
+        this.timesUp = true;
+        this.elapsedTime = this.totalTime;
+        this.endSfx();
+        clearInterval(this.timerInterval);
+
+        if (this.timeUpCallback) {
+          this.timeUpCallback.emit(this);
+        }
+      }
+    }, 100);
+  }
+
+  public stopTimer() {
+    clearInterval(this.timerInterval);
+    this.running = false;
+  }
 
 
-  getTimer(cd, max_timer) {
-    const seconds_remain = max_timer - cd;
-    const min = Math.floor( seconds_remain / 60);
-    const sec = seconds_remain - 60 * min;
+  getTimer() {
+    const secondsRemaining = Math.floor((this.totalTime - this.elapsedTime) / 1000);
+    const min = Math.floor( secondsRemaining / 60);
+    const sec = secondsRemaining - 60 * min;
 
     if (min < 0) {
       return {'min': 0, 'sec': 0};
@@ -27,47 +74,11 @@ export class RadialTimerComponent {
     }
   }
 
-  _secondsElapsed = 100;
-  _totalSeconds = 100;
-
-  @Input()
-  set secondsElapsed(secondsElapsed: number) {
-    this._secondsElapsed = secondsElapsed;
-    this.val();
-  }
-
-  @Input()
-  set totalSeconds(totalSeconds: number) {
-    this._totalSeconds = totalSeconds;
-    this.soundIterationCount = undefined;
-    // this.val();
-    // this.callback = false;
-  }
-
-
-  v = 100;
-
-  constructor() { }
-
-  val() {
-    const val = (100 * (this._totalSeconds - this._secondsElapsed) / this._totalSeconds);
-    const remainingTime = (this._totalSeconds - this._secondsElapsed);
-
-    if (Math.floor(remainingTime) === 0) {
-      this.endSfx();
-    }
-
-    if (!Number.isNaN(val) && val >= 0 && val <= 100) {
-      this.v = val;
-      if (Math.floor(this.v) === 0) {
-        setTimeout(() => {
-          this.timesUp = true;
-          this.v = 100;
-        }, 100);
-      } else {
-        this.timesUp = false;
-      }
-
+  pctRemaining() {
+    if (this.timesUp || (!this.timesUp && !this.running)) {
+      return 100;
+    } else {
+      return (100 * (this.totalTime - this.elapsedTime) / this.totalTime);
     }
   }
 

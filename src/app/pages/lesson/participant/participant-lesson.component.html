@@ -1,44 +1,45 @@
 <app-participant-toolbar></app-participant-toolbar>
 
-<app-participant-lobby
-  *ngIf="getActivityType() === 'LobbyActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-lobby>
+<div *ngIf="isConnected() && serverMessage">
+  <app-participant-lobby
+    *ngIf="getActivityType() === 'LobbyActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-lobby>
 
-<app-participant-teletrivia-activity
-  *ngIf="getActivityType() === 'TeleTriviaActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-teletrivia-activity>
+  <app-participant-teletrivia-activity
+    *ngIf="getActivityType() === 'TeleTriviaActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-teletrivia-activity>
 
-<app-participant-pair-activity
-  *ngIf="(getActivityType() === 'RoleplayPairActivity') || (getActivityType() === 'ReverseRoleplayPairActivity')"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-pair-activity>
+  <app-participant-pair-activity
+    *ngIf="(getActivityType() === 'RoleplayPairActivity') || (getActivityType() === 'ReverseRoleplayPairActivity')"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-pair-activity>
 
-<app-participant-discussion-activity
-  *ngIf="getActivityType() === 'RoleplayPairShareActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-discussion-activity>
+  <app-participant-discussion-activity
+    *ngIf="getActivityType() === 'RoleplayPairShareActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-discussion-activity>
 
-<app-participant-hint-activity
-  *ngIf="getActivityType() === 'HintWordActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-hint-activity>
+  <app-participant-hint-activity
+    *ngIf="getActivityType() === 'HintWordActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-hint-activity>
 
-<app-participant-feedback-activity
-  *ngIf="getActivityType() === 'FeedbackActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-feedback-activity>
+  <app-participant-feedback-activity
+    *ngIf="getActivityType() === 'FeedbackActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-feedback-activity>
 
-<app-participant-activity-video
-  *ngIf="getActivityType() === 'VideoActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-activity-video>
+  <app-participant-activity-video
+    *ngIf="getActivityType() === 'VideoActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-activity-video>
 
-<app-participant-mcq-activity
-  *ngIf="getActivityType() === 'MCQActivity'"
-  [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
-</app-participant-mcq-activity>
-
+  <app-participant-mcq-activity
+    *ngIf="getActivityType() === 'MCQActivity'"
+    [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+  </app-participant-mcq-activity>
+</div>
 
 

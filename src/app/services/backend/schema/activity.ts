@@ -36,9 +36,9 @@ export interface ActivityStatus {
   // Teletrivia
   secret_phrase?: string;
   distracting_questions?: MCQuestion[];
-  chosen_user?: User;
+  chosen_user?: number;
   circle_countdown?: string; // Time?
-  users_in_circle?: User[];
+  users_in_circle?: number[];
   all_in_circle?: boolean;
   game_started?: boolean;
   sharing_started?: boolean;

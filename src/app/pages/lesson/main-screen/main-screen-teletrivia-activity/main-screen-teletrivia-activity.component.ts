@@ -6,21 +6,11 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   templateUrl: './main-screen-teletrivia-activity.component.html',
   styleUrls: ['./main-screen-teletrivia-activity.component.scss']
 })
-export class MainScreenTeletriviaActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
-  circleTimerSecondsElapsed: number;
-  interval;
-  totalSeconds;
+export class MainScreenTeletriviaActivityComponent extends BaseActivityComponent {
 
-  ngOnInit() {
-    this.totalSeconds = (Date.parse(this.activityState.activity_status.circle_countdown) - Date.now()) / 1000;
-    this.circleTimerSecondsElapsed = 0;
-    this.interval = setInterval(() => {
-      this.circleTimerSecondsElapsed++;
-    }, 1000);
+  timerInit(timer) {
+    const totalSeconds = (Date.parse(this.activityState.activity_status.circle_countdown) - Date.now()) / 1000;
+    const circleTimerSecondsElapsed = 0;
+    timer.startTimer(totalSeconds, circleTimerSecondsElapsed);
   }
-
-  ngOnDestroy() {
-    clearInterval(this.interval);
-  }
-
 }

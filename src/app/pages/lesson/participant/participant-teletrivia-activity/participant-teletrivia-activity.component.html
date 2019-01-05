@@ -61,8 +61,8 @@
     </div>
   </div>
   <div class="mc-card__timer mc-card__timer--starter-layout" [ngClass]="{'mc-card__timer--starter-layout': participantIsInitiator() }" *ngIf="!killTimer">
-    <app-linear-timer *ngIf="!revealAnswer" [timerSeconds]="questionTime" (callback)="questionTimeUpCallback()" #questionTimer></app-linear-timer>
-    <app-linear-timer *ngIf="revealAnswer" [timerSeconds]="revealTime" (callback)="submitAnswerCallback()" #revealTimer></app-linear-timer>
+    <app-linear-timer *ngIf="!revealAnswer" (callback)="questionTimeUpCallback()" (initCallback)="startQuestionTimer($event)" #questionTimer></app-linear-timer>
+    <app-linear-timer *ngIf="revealAnswer" (callback)="submitAnswerCallback()" (initCallback)="startRevealTimer($event)" #revealTimer></app-linear-timer>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="participantIsInitiator()">
     <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Done! The message is back" buttonStyle="white" [valid]="messageBack" (clicked)="openEndModal()"></app-animated-checkmark-button>

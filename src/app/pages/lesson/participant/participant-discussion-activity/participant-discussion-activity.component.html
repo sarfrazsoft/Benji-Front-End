@@ -21,7 +21,7 @@
         </ng-container>
       </button>
     </div>
-    <app-linear-timer [timerSeconds]="discussionTotalTime" #discussionTimer></app-linear-timer>
+    <app-linear-timer (initCallback)="discussionTimerInit($event)"></app-linear-timer>
   </div>
 </ng-container>
 
@@ -46,7 +46,7 @@
         </ng-container>
       </button>
     </div>
-    <app-linear-timer [timerSeconds]="sharingSecondsRemaining" #sharingTimer></app-linear-timer>
+    <app-linear-timer (initCallback)="sharingTimerInit($event)"></app-linear-timer>
   </div>
 </ng-container>
 

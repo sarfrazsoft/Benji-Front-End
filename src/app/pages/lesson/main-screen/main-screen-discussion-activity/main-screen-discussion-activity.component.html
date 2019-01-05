@@ -9,7 +9,7 @@
       <p class="brownish-grey pn-500">{{activityState.activity_status.instructions}}</p>
     </div>
     <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey">
-      <app-radial-timer [secondsElapsed]="discussionTimeElapsed / 1000" [totalSeconds]="discussionTotalTime / 1000" endStateText="Done!"></app-radial-timer>
+      <app-radial-timer (initCallback)="initDiscussionTimer($event)" endStateText="Done!"></app-radial-timer>
     </div>
   </div>
 </ng-container>
@@ -26,15 +26,15 @@
       </div>
       <div class="discussion-activity__share-queue">
         <div class="discussion-activity__vertically-centered">
-          <h3 class="pn-600 deep-blue">{{ MainScreenDiscussionActivityComponent.presenterGroupToText(currentPresenterGroup()) }} are sharing</h3>
+          <h3 class="pn-600 deep-blue">{{ presenterGroupToText(currentPresenterGroup()) }} are sharing</h3>
           <ng-container *ngIf="nextPresenterGroup() !== undefined">
-            <p class="brownish-grey pn-500">{{ MainScreenDiscussionActivityComponent.presenterGroupToText(nextPresenterGroup()) }} are up next</p>
+            <p class="brownish-grey pn-500">{{ presenterGroupToText(nextPresenterGroup()) }} are up next</p>
           </ng-container>
         </div>
       </div>
     </div>
     <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey">
-      <app-radial-timer [secondsElapsed]="shareTimeElapsed / 1000" [totalSeconds]="shareTotalTime" endStateText="Done!"></app-radial-timer>
+      <app-radial-timer (initCallback)="initShareTimer($event)" endStateText="Done!" #shareTimer></app-radial-timer>
     </div>
   </div>
 </ng-container>

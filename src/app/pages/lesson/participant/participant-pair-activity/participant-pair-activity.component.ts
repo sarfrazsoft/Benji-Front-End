@@ -8,22 +8,14 @@ import { concat, remove } from 'lodash';
   templateUrl: './participant-pair-activity.component.html',
   styleUrls: ['./participant-pair-activity.component.scss']
 })
-export class ParticipantPairActivityComponent extends BaseActivityComponent implements OnChanges {
-  roleSeconds: number;
-  @ViewChild('roleplayTimer') roleplayTimer;
-
+export class ParticipantPairActivityComponent extends BaseActivityComponent {
   constructor(private emoji: EmojiLookupService) {
     super();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['activityState'] &&
-              (changes['activityState'].previousValue.activity_status.all_pairs_found !==
-                changes['activityState'].currentValue.activity_status.all_pairs_found) &&
-              changes['activityState'].currentValue.activity_status.all_pairs_found) {
-      this.roleSeconds = (Date.parse(this.activityState.activity_status.discussion_countdown_time) - Date.now()) / 1000;
-      this.roleplayTimer.startTimer();
-    }
+  roleplayTimerStart(timer) {
+    const roleSeconds = (Date.parse(this.activityState.activity_status.discussion_countdown_time) - Date.now()) / 1000;
+    timer.startTimer(roleSeconds);
   }
 
   partnerText() {

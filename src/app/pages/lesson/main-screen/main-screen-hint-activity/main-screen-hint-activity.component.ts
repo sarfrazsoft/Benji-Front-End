@@ -6,37 +6,25 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   templateUrl: './main-screen-hint-activity.component.html',
   styleUrls: ['./main-screen-hint-activity.component.scss']
 })
-export class MainScreenHintActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
-
-  submitTotalTime: number;
-  submitTimeElapsed: number;
-  submitInterval;
+export class MainScreenHintActivityComponent extends BaseActivityComponent implements OnChanges {
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
   sfxFile;
 
-  ngOnInit() {
-    this.submitTotalTime = Date.parse(this.activityState.activity_status.submission_countdown) - Date.now();
-    this.submitTimeElapsed = 0;
-
-    this.submitInterval = setInterval(() => {
-      if (this.submitTimeElapsed < this.submitTotalTime) {
-        this.submitTimeElapsed += 100;
-      } else {
-        this.submitTimeElapsed = this.submitTotalTime;
-        clearInterval(this.submitInterval);
-      }
-    }, 100);
+  submitTimerInit(timer) {
+    const submitTotalTime = Date.parse(this.activityState.activity_status.submission_countdown) - Date.now();
+    const submitTimeElapsed = 0;
+    timer.startTimer(submitTotalTime, submitTimeElapsed);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['activityState'] &&
+    if (changes['activityState'] && changes['activityState'].previousValue &&
                 (changes['activityState'].previousValue.activity_status.submitted_words.length <
                 changes['activityState'].currentValue.activity_status.submitted_words.length)) {
       this.playSfx('voteSubmitted');
     }
 
-    if (changes['activityState'] &&
+    if (changes['activityState'] && changes['activityState'].previousValue &&
       (changes['activityState'].previousValue.activity_status.voting_complete !==
         changes['activityState'].currentValue.activity_status.voting_complete)) {
       this.playSfx('revealWinner');

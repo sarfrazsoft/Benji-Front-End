@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="mc-card__timer">
-    <app-linear-timer [timerSeconds]="questionSeconds" #questionTimer></app-linear-timer>
+    <app-linear-timer (initCallback)="questionTimerInit($event)"></app-linear-timer>
   </div>
 </ng-container>
 
@@ -53,7 +53,7 @@
       <p>{{ correctChoice().explanation_text }}</p>
     </div>
     <div class="mc-card__timer">
-      <app-linear-timer [timerSeconds]="revealSeconds" #revealTimer></app-linear-timer>
+      <app-linear-timer (initCallback)="revealTimerInit($event)"></app-linear-timer>
     </div>
   </div>
 </ng-container>

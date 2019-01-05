@@ -29,9 +29,9 @@ export class ParticipantLoginComponent implements OnInit {
   constructor(private backend: BackendRestService, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
-    // if (this.auth.isLoggedIn()) {
-    //   this.auth.logout();
-    // }
+    if (this.auth.isLoggedIn()) {
+      this.auth.logout();
+    }
   }
 
   formSubmit() {
@@ -49,6 +49,10 @@ export class ParticipantLoginComponent implements OnInit {
   }
 
   public createUser() {
+    if (this.auth.isLoggedIn()) {
+      this.auth.logout();
+    }
+
     this.backend.create_user(this.username.value).subscribe((res: any) => {
       this.loginError = false;
       if (res.is_active) {

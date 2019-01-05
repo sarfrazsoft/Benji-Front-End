@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, Renderer2, Input, ViewChild, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
+import {Component, Renderer2, ViewChild, OnChanges, SimpleChanges} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {BaseActivityComponent} from '../../shared/base-activity.component';
 
@@ -8,13 +8,11 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   templateUrl: './participant-teletrivia-activity.component.html',
   styleUrls: ['./participant-teletrivia-activity.component.scss']
 })
-export class ParticipantTeletriviaActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
+export class ParticipantTeletriviaActivityComponent extends BaseActivityComponent implements OnChanges {
 
   currentQuestionIndex = 0;
-  questionTime = 5;
 
   revealAnswer = false;
-  revealTime = 3;
   answerExplanation: string;
 
   initiatorModalVisible = false;
@@ -29,19 +27,15 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
     super();
   }
 
-  ngOnInit() {
-    if (this.activityState.activity_status.game_started) {
-      this.questionTimer.startTimer();
-    }
+  startQuestionTimer(timer) {
+    timer.startTimer(5);
+  }
+
+  startRevealTimer(timer) {
+    timer.startTimer(3);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['activityState'] &&
-            changes['activityState'].previousValue.activity_status.game_started !==
-            changes['activityState'].currentValue.activity_status.game_started) {
-      this.questionTimer.startTimer();
-    }
-
     if (this.participantIsInitiator() &&
             !this.activityState.activity_status.game_started &&
             this.activityState.activity_status.all_in_circle &&
@@ -51,10 +45,10 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
     }
 
     if (this.activityState.activity_status.sharing_started) {
-      if (this.questionTimer.running) {
+      if (this.questionTimer && this.questionTimer.running) {
         this.questionTimer.stopTimer();
       }
-      if (this.revealTimer.running) {
+      if (this.revealTimer && this.revealTimer.running) {
         this.revealTimer.stopTimer();
       }
     }
@@ -67,11 +61,11 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
 
   participantInCircle() {
     return this.activityState.activity_status.users_in_circle.find((e) =>
-                                      e.id === this.activityState.your_identity.id) !== undefined;
+                                      e === this.activityState.your_identity.id) !== undefined;
   }
 
   participantIsInitiator() {
-    return this.activityState.activity_status.chosen_user.id === this.activityState.your_identity.id;
+    return this.activityState.activity_status.chosen_user === this.activityState.your_identity.id;
   }
 
   sendReadyState() {
@@ -97,8 +91,6 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
     this.sendMessage.emit({'event': 'submit_answer', 'question_id': question.id, 'answer': choice.id});
     this.revealAnswer = true;
     this.answerExplanation = choice.explanation_text;
-
-    this.revealTimer.startTimer();
   }
 
   submitAnswerCallback() {

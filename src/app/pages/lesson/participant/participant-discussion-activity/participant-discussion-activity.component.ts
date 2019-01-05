@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseActivityComponent} from '../../shared/base-activity.component';
 import {RoleplayUserGroup} from '../../../../services/backend/schema/activity';
 
@@ -7,15 +7,9 @@ import {RoleplayUserGroup} from '../../../../services/backend/schema/activity';
   templateUrl: './participant-discussion-activity.component.html',
   styleUrls: ['./participant-discussion-activity.component.scss']
 })
-export class ParticipantDiscussionActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
+export class ParticipantDiscussionActivityComponent extends BaseActivityComponent {
 
-  discussionTotalTime: number;
-  @ViewChild('discussionTimer') discussionTimer;
-
-  sharingTotalTime: number;
-  @ViewChild('sharingTimer') sharingTimer;
-
-  static presenterGroupToList(presenterGroup: RoleplayUserGroup) {
+  presenterGroupToList(presenterGroup: RoleplayUserGroup) {
     return presenterGroup.primary.concat(presenterGroup.secondary);
   }
 
@@ -28,8 +22,10 @@ export class ParticipantDiscussionActivityComponent extends BaseActivityComponen
   }
 
   participantIsSharing() {
-    return ParticipantDiscussionActivityComponent.presenterGroupToList(
-            this.currentPresenterGroup()).indexOf(this.activityState.your_identity.id) > -1;
+    if (this.currentPresenterGroup() === undefined) {
+      return false;
+    }
+    return this.presenterGroupToList(this.currentPresenterGroup()).indexOf(this.activityState.your_identity.id) > -1;
   }
 
   shareButton() {
@@ -42,22 +38,14 @@ export class ParticipantDiscussionActivityComponent extends BaseActivityComponen
     this.sendMessage.emit({'event': 'done_button'});
   }
 
-  ngOnInit() {
-    this.discussionTotalTime = Date.parse(this.activityState.activity_status.discussion_countdown_time) - Date.now();
-    this.discussionTimer.startTimer();
+  discussionTimerInit(timer) {
+    const discussionTotalTime = Date.parse(this.activityState.activity_status.discussion_countdown_time) - Date.now();
+    timer.startTimer(discussionTotalTime);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-    if (changes['activityState'] &&
-      (changes['activityState'].previousValue.activity_status.sharer_group_num !==
-        changes['activityState'].currentValue.activity_status.sharer_group_num) &&
-      changes['activityState'].currentValue.activity_status.sharer_group_num !== null) {
-      if (this.participantIsSharing()) {
-        const timeStr = this.activityState.activity_status.sharer_countdown_time[this.activityState.activity_status.sharer_group_num];
-        this.sharingTotalTime = Date.parse(timeStr) - Date.now();
-        this.sharingTimer.startTimer();
-      }
-    }
+  sharingTimerInit(timer) {
+    const timeStr = this.activityState.activity_status.sharer_countdown_time[this.activityState.activity_status.sharer_group_num];
+    const sharingTotalTime = Date.parse(timeStr) - Date.now();
+    timer.startTimer(sharingTotalTime);
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseActivityComponent} from '../../shared/base-activity.component';
 
 @Component({
@@ -6,28 +6,18 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   templateUrl: './participant-mcq-activity.component.html',
   styleUrls: ['./participant-mcq-activity.component.scss']
 })
-export class ParticipantMcqActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
-
-  @ViewChild('questionTimer') questionTimer;
-  questionSeconds;
-
-  @ViewChild('revealTimer') revealTimer;
-  revealSeconds;
+export class ParticipantMcqActivityComponent extends BaseActivityComponent {
 
   selectedAnswer;
 
-  ngOnInit() {
-    this.questionSeconds = (Date.parse(this.activityState.activity_status.countdown_time) - Date.now()) / 1000;
-    this.questionTimer.startTimer();
+  questionTimerInit(timer) {
+    const questionSeconds = (Date.parse(this.activityState.activity_status.countdown_time) - Date.now()) / 1000;
+    timer.startTimer(questionSeconds);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['activityState'] &&
-      (changes['activityState'].previousValue.activity_status.pause_time === null || changes['activityState'].previousValue.activity_status.pause_time === undefined) &&
-      (changes['activityState'].currentValue.activity_status.pause_time !== null && changes['activityState'].currentValue.activity_status.pause_time !== undefined)) {
-      this.revealSeconds = (Date.parse(this.activityState.activity_status.pause_time) - Date.now()) / 1000;
-      this.revealTimer.startTimer();
-    }
+  revealTimerInit(timer) {
+    const revealSeconds = (Date.parse(this.activityState.activity_status.pause_time) - Date.now()) / 1000;
+    timer.startTimer(revealSeconds);
   }
 
   reveal() {

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, ViewChild, OnChanges, SimpleChanges, AfterViewInit} from '@angular/core';
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import {BaseActivityComponent} from '../../shared/base-activity.component';
 import { isEqual, concat } from 'lodash';
@@ -9,44 +9,30 @@ import {RoleplayUserGroup} from '../../../../services/backend/schema/activity';
   templateUrl: './main-screen-pair-activity.component.html',
   styleUrls: ['./main-screen-pair-activity.component.scss']
 })
-export class MainScreenPairActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
-
-  discussionTotalTime: number;
-  discussionElapsedTime: number;
-  discussionInterval;
+export class MainScreenPairActivityComponent extends BaseActivityComponent implements AfterViewInit {
 
   @ViewChild('pairTimer') pairTimer;
-  pairSeconds: number;
+  @ViewChild('discussionTimer') discussionTimer;
 
-  static getGroupText(userGroup: RoleplayUserGroup) {
-    return concat(userGroup.primary, userGroup.secondary).join(' + ');
+  getGroupText(userGroup: RoleplayUserGroup) {
+    return concat(userGroup.primary, userGroup.secondary).map((u) => this.idToName(u)).join(' + ');
   }
 
   constructor(private emoji: EmojiLookupService) {
     super();
   }
 
-  ngOnInit() {
-    this.pairSeconds = (Date.parse(this.activityState.activity_status.countdown_pair) - Date.now()) / 1000;
-    this.pairTimer.startTimer();
+  ngAfterViewInit() {
+    if (!this.activityState.activity_status.all_pairs_found) {
+      const pairSeconds = (Date.parse(this.activityState.activity_status.countdown_pair) - Date.now()) / 1000;
+      this.pairTimer.startTimer(pairSeconds);
+    }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['activityState'] &&
-                  (changes['activityState'].previousValue.activity_status.all_pairs_found !==
-                  changes['activityState'].currentValue.activity_status.all_pairs_found) &&
-                  changes['activityState'].currentValue.activity_status.all_pairs_found) {
-      this.discussionTotalTime = Date.parse(this.activityState.activity_status.discussion_countdown_time) - Date.now();
-      this.discussionElapsedTime = 0;
-      this.discussionInterval = setInterval(() => {
-        if (this.discussionElapsedTime < this.discussionTotalTime) {
-          this.discussionElapsedTime += 100;
-        } else {
-          this.discussionElapsedTime = this.discussionTotalTime;
-          clearInterval(this.discussionInterval);
-        }
-      });
-    }
+  discussionTimerInit(timer) {
+    const discussionTotalTime = Date.parse(this.activityState.activity_status.countdown_discussion) - Date.now();
+    const discussionElapsedTime = 0;
+    timer.startTimer(discussionTotalTime, discussionElapsedTime);
   }
 
   isReversed() {

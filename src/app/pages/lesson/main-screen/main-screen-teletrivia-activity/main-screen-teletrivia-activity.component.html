@@ -16,7 +16,7 @@
     </div>
     <!-- timer-->
     <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey" *ngIf="!activityState.activity_status.all_in_circle">
-      <app-radial-timer [secondsElapsed]="circleTimerSecondsElapsed" [totalSeconds]="totalSeconds" endStateText="Start!"></app-radial-timer>
+      <app-radial-timer (initCallback)="timerInit($event)" [endStateText]="'Start!'"></app-radial-timer>
     </div>
     <!-- leaderboard -->
     <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey" *ngIf="activityState.activity_status.all_in_circle">
@@ -29,7 +29,7 @@
                 <span class="teletrivia-activity__leader-rank deep-blue">
                   {{i + 1}}.
                 </span>
-                {{leader.user.first_name}}
+                {{idToName(leader.user)}}
               </span>
               <span class="teletrivia-activity__leader-score">{{leader.correct}}</span>
             </div>

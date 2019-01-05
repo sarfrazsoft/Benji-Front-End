@@ -22,7 +22,7 @@
   </div>
   <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey flexer--center">
     <ng-container *ngIf="!reveal()">
-      <app-radial-timer [secondsElapsed]="questionElapsedTime / 1000" [totalSeconds]="questionTotalTime / 1000" endStateText="Times up!"></app-radial-timer>
+      <app-radial-timer (initCallback)="initQuestionTimer($event)" endStateText="Times up!"></app-radial-timer>
     </ng-container>
     <ng-container *ngIf="reveal()">
       <video src="https://media.giphy.com/media/3rlkI1QFJWRUsdRtha/giphy.mp4" autoplay></video>
@@ -30,7 +30,7 @@
     </ng-container>
   </div>
   <div class="mcq-activity__linear-timer-container">
-    <app-linear-timer *ngIf="reveal()" [timerSeconds]="pauseSeconds" #revealTimer></app-linear-timer>
+    <app-linear-timer *ngIf="reveal()" [timerSeconds]="pauseSeconds" (initCallback)="startRevealTimer($event)" #revealTimer></app-linear-timer>
   </div>
 </div>
 

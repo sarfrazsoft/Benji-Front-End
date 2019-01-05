@@ -22,7 +22,7 @@
     <p class="hint-activity__words-total pn-600 deep-blue">
       {{activityState.activity_status.submitted_words.length}}<br> words submitted
     </p>
-    <app-radial-timer [secondsElapsed]="submitTimeElapsed / 1000" [totalSeconds]="submitTotalTime / 1000" endStateText="Vote!"></app-radial-timer>
+    <app-radial-timer (initCallback)="submitTimerInit($event)" endStateText="Vote!"></app-radial-timer>
   </div>
 </div>
 

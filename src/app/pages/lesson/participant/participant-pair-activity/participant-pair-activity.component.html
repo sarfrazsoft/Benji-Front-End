@@ -33,6 +33,6 @@
       <h3 class="pn-700 deep-blue">You’re the {{ getParticipantRole().role_name }}</h3>
       <p>{{ getParticipantRole().role_instructions }}</p>
     </div>
-    <app-linear-timer [timerSeconds]="roleSeconds" #roleplayTimer></app-linear-timer>
+    <app-linear-timer (initCallback)="roleplayTimerStart($event)"></app-linear-timer>
   </div>
 </ng-container>

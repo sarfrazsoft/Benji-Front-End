@@ -6,40 +6,30 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   templateUrl: './main-screen-mcq-activity.component.html',
   styleUrls: ['./main-screen-mcq-activity.component.scss']
 })
-export class MainScreenMcqActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
-
-  questionTotalTime: number;
-  questionElapsedTime: number;
-  questionInterval;
-
+export class MainScreenMcqActivityComponent extends BaseActivityComponent implements OnChanges {
   @ViewChild('revealTimer') revealTimer;
   pauseSeconds;
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
   sfxFile: string;
 
-  ngOnInit() {
-    this.questionTotalTime = Date.parse(this.activityState.activity_status.countdown_time) - Date.now();
-    this.questionElapsedTime = 0;
-
-    this.questionInterval = setInterval(() => {
-      if (this.questionElapsedTime < this.questionTotalTime) {
-        this.questionElapsedTime += 100;
-      } else {
-        this.questionElapsedTime = this.questionTotalTime;
-        clearInterval(this.questionInterval);
-      }
-    }, 100);
+  initQuestionTimer(timer) {
+    const questionTotalTime = Date.parse(this.activityState.activity_status.countdown_time) - Date.now();
+    const questionElapsedTime = 0;
+    timer.startTimer(questionTotalTime, questionElapsedTime);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['activityState'] &&
+    if (changes['activityState'] && changes['activityState'].previousValue &&
       (changes['activityState'].previousValue.activity_status.pause_time === null || changes['activityState'].previousValue.activity_status.pause_time === undefined) &&
       (changes['activityState'].currentValue.activity_status.pause_time !== null && changes['activityState'].currentValue.activity_status.pause_time !== undefined)) {
-      this.pauseSeconds = (Date.parse(this.activityState.activity_status.pause_time) - Date.now()) / 1000;
-      this.revealTimer.startTimer();
       this.playSfx('revealAnswer');
     }
+  }
+
+  startRevealTimer(timer) {
+    this.pauseSeconds = (Date.parse(this.activityState.activity_status.pause_time) - Date.now()) / 1000;
+    timer.startTimer();
   }
 
   reveal() {

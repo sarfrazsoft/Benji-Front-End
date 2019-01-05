@@ -4,7 +4,7 @@
   </div>
   <app-main-screen-toolbar></app-main-screen-toolbar>
   <div *ngIf="isConnected() && (serverMessage && serverMessage.activity_status.next_activity_countdown === null)"
-      [ngClass]="getActivityType() === 'LobbyActivity'? '.ms-lesson__activity-container.ms-lesson__activity-container--lobby' : '.ms-lesson__activity-container'">
+       [ngClass]="getActivityType() === 'LobbyActivity'? 'ms-lesson__activity-container ms-lesson__activity-container--lobby' : 'ms-lesson__activity-container'">
 
     <app-mainscreen-lobby
       *ngIf="getActivityType() === 'LobbyActivity'"
