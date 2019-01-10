@@ -9,8 +9,8 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
 export class MainScreenTeletriviaActivityComponent extends BaseActivityComponent {
 
   timerInit(timer) {
-    const totalSeconds = (Date.parse(this.activityState.activity_status.circle_countdown) - Date.now()) / 1000;
+    const totalTime = (Date.parse(this.activityState.activity_status.circle_countdown) - Date.now());
     const circleTimerSecondsElapsed = 0;
-    timer.startTimer(totalSeconds, circleTimerSecondsElapsed);
+    timer.startTimer(totalTime, circleTimerSecondsElapsed);
   }
 }
