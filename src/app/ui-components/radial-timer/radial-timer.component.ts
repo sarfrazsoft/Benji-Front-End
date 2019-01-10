@@ -46,7 +46,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
         this.running = false;
         this.timesUp = true;
         this.elapsedTime = this.totalTime;
-        this.endSfx();
+        // this.endSfx();
         clearInterval(this.timerInterval);
 
         if (this.timeUpCallback) {
