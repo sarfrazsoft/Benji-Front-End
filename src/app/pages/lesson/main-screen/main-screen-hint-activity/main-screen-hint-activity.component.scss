@@ -26,6 +26,13 @@
       width: 50%;
     }
   }
+  position: relative;
+  .hint-activity__linear-timer-container {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+  }
   .hint-activity__section-title {
     border-bottom: 1px solid #979797;
     margin-bottom: 30px;

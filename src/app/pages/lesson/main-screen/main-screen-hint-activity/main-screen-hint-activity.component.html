@@ -19,10 +19,15 @@
     </div>
   </div>
   <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey hint-activity__status-column">
-    <p class="hint-activity__words-total pn-600 deep-blue">
+    <p class="hint-activity__words-total pn-600 deep-blue" *ngIf="!activityState.activity_status.submission_complete">
       {{activityState.activity_status.submitted_words.length}}<br> words submitted
+      <app-radial-timer (initCallback)="submitTimerInit($event)" endStateText="Vote!"></app-radial-timer>
     </p>
-    <app-radial-timer (initCallback)="submitTimerInit($event)" endStateText="Vote!"></app-radial-timer>
+    <p class="hint-activity__words-total pn-600 deep-blue" *ngIf="activityState.activity_status.submission_complete">
+      {{activityState.activity_status.voted_users.length}}<br> votes submitted
+      <app-radial-timer (initCallback)="voteTimerInit($event)" endStateText="Times Up!"></app-radial-timer>
+    </p>
+
   </div>
 </div>
 
@@ -49,6 +54,9 @@
 
     <p>It’s not a big deal, just a little reminder that we can listen a little better.</p>
 
+  </div>
+  <div class="hint-activity__linear-timer-container">
+    <app-linear-timer (initCallback)="startEndTimer($event)"></app-linear-timer>
   </div>
 </div>
 

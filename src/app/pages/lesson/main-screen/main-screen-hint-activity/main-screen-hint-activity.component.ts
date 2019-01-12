@@ -17,6 +17,17 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent imple
     timer.startTimer(submitTotalTime, submitTimeElapsed);
   }
 
+  voteTimerInit(timer) {
+    const voteTotalTime = Date.parse(this.activityState.activity_status.voting_countdown) - Date.now();
+    const voteTimeElapsed = 0;
+    timer.startTimer(voteTotalTime, voteTimeElapsed);
+  }
+
+  startEndTimer(timer) {
+    const endTotalSeconds = (Date.parse(this.activityState.activity_status.end_countdown) - Date.now()) / 1000;
+    timer.startTimer(endTotalSeconds);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['activityState'] && changes['activityState'].previousValue &&
                 (changes['activityState'].previousValue.activity_status.submitted_words.length <
