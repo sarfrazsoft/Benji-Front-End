@@ -11,9 +11,8 @@ export class LinearTimerComponent implements OnInit {
   @Output() callback = new EventEmitter();
   @Output() initCallback = new EventEmitter<LinearTimerComponent>();
 
-  public _timeRemaining;
   public timerInterval: any;
-  public initialTimeRemaining;
+  public totalTime;
   public timeElapsed = 0;
   public progressBarWidth = '0';
 
@@ -29,19 +28,19 @@ export class LinearTimerComponent implements OnInit {
       clearInterval(this.timerInterval);
     }
     this.running = true;
-    this.initialTimeRemaining = timerSeconds;
-    this._timeRemaining = this.initialTimeRemaining;
+    this.totalTime = timerSeconds * 1000;
+    this.timeElapsed = 0;
 
     this.timerInterval = setInterval( () => {
-      this._timeRemaining = this._timeRemaining - 1;
-      this.timeElapsed = this.timeElapsed + 1;
-      this.progressBarWidth = `${(this.timeElapsed / this.initialTimeRemaining) * 100}`;
+      this.timeElapsed = this.timeElapsed + 100;
+      this.progressBarWidth = `${(this.timeElapsed / (this.totalTime - 1250)) * 100}`;
 
-      if  (this._timeRemaining === 0.0) {
+      if  (this.timeElapsed >= this.totalTime) {
+        this.timeElapsed = this.totalTime;
         this.stopTimer(true);
       }
 
-    }, 1000);
+    }, 100);
   }
 
   public stopTimer(callback: boolean) {
