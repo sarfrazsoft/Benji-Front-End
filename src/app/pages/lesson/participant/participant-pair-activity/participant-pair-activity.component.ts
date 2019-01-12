@@ -21,7 +21,7 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent {
   partnerText() {
     const myGroup = this.activityState.activity_status.user_groups.find((ug) =>
                         concat(ug.primary, ug.secondary).indexOf(this.activityState.your_identity.id) > -1);
-    const myGroupWithoutMe = remove(concat(myGroup.primary, myGroup.secondary), (e) => e === this.activityState.your_identity.id);
+    const myGroupWithoutMe = remove(concat(myGroup.primary, myGroup.secondary), (e) => e !== this.activityState.your_identity.id);
     if (myGroupWithoutMe.length === 1) {
       return 'Your partner is ' + this.idToName(myGroupWithoutMe[0]);
     } else {
