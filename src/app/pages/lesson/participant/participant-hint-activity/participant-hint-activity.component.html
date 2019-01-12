@@ -57,7 +57,7 @@
     <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit" buttonStyle="white" [valid]="participantHasVoted()" (click)="submitVote()"></app-animated-checkmark-button>
   </div>
 </ng-container>
-<ng-container *ngIf="!activityState.activity_status.submission_complete && activityState.activity_status.voting_complete">
+<ng-container *ngIf="activityState.activity_status.submission_complete && activityState.activity_status.voting_complete">
   <div class="b-flat-card center-text hintword-card">
     <div class="b-flat-card__title">
       <h2 class="pn-400">Hint Word</h2>
