@@ -25,6 +25,9 @@ export class LinearTimerComponent implements OnInit {
     }
   }
   public startTimer(timerSeconds) {
+    if (this.timerInterval !== undefined){
+      clearInterval(this.timerInterval);
+    }
     this.running = true;
     this.initialTimeRemaining = timerSeconds;
     this._timeRemaining = this.initialTimeRemaining;

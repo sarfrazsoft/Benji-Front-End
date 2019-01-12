@@ -81,7 +81,8 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
   }
 
   questionTimeUpCallback() {
-    this.currentQuestionIndex++;
+    this.revealAnswer = true;
+    this.answerExplanation = 'On no! You ran out of time! This was the correct answer.';
   }
 
   submitAnswer(choice) {
