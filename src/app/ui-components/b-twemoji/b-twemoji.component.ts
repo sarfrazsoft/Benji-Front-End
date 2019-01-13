@@ -14,12 +14,12 @@ export class BTwemojiComponent implements OnInit {
   @Input() emoji: string;
 
   ngOnInit() {
-
+    // return;
     const hostDiv = this.renderer.createElement('div');
     const text = this.renderer.createText(this.emoji);
     this.renderer.appendChild(hostDiv, text);
     this.renderer.appendChild(this.el.nativeElement, hostDiv);
-    console.log(hostDiv);
+    // console.log(hostDiv);
 
     twemoji.parse(this.el.nativeElement, {
       ext: '.svg',
