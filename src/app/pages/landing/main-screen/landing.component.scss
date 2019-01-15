@@ -1,3 +1,5 @@
+@import 'variables';
+
 .lesson-landing {
   height: 100vh;
   .lesson-landing__flexer,
@@ -40,7 +42,7 @@
       right: -272.5px;
       transform: translateY(-50%);
       top: 50%;
-      color: #FFF;
+      color: #fff;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -50,8 +52,10 @@
       height: 115px;
       font-size: 42px;
       border-radius: 70px;
+      &:focus {
+        background-color: $deep-blue;
+      }
       mat-icon {
-        // padding-left: 10px;
         font-size: 52px;
         position: relative;
         bottom: 10px;
