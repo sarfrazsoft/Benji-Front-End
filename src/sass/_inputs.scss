@@ -1,10 +1,29 @@
+@import 'variables';
+
+// Hide placeholder on focus on all inputs
+::-webkit-input-placeholder { opacity: 1; -webkit-transition: opacity .2s; transition: opacity .2s; }  /* Chrome <=56, Safari < 10 */
+:-moz-placeholder { opacity: 1; -moz-transition: opacity .2s; transition: opacity .2s; } /* FF 4-18 */
+::-moz-placeholder { opacity: 1; -moz-transition: opacity .2s; transition: opacity .2s; } /* FF 19-51 */
+:-ms-input-placeholder { opacity: 1; -ms-transition: opacity .2s; transition: opacity .2s; } /* IE 10+ */
+::placeholder { opacity: 1; transition: opacity .2s; } /* Modern Browsers */
+
+*:focus::-webkit-input-placeholder { opacity: 0; } /* Chrome <=56, Safari < 10 */
+*:focus:-moz-placeholder { opacity: 0; } /* FF 4-18 */
+*:focus::-moz-placeholder { opacity: 0; } /* FF 19-50 */
+*:focus:-ms-input-placeholder { opacity: 0; } /* IE 10+ */
+*:focus::placeholder { opacity: 0; } /* Modern Browsers */
+
 .b-standard-input {
+  outline: none;
   width: 267px;
   padding: 15px 40px;
   text-align: center;
-  background: #FFF;
+  background: #fff;
   border-radius: 25px;
   border: 1px solid $pale-grey;
+  &:focus {
+    box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+  }
 }
 .b-standard-input__container {
   position: relative;
