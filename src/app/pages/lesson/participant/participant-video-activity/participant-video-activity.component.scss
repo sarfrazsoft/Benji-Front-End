@@ -1,6 +1,12 @@
+// TODO: style duplication; discuss with Abdullah about making a scss files in the sass folder
+.b-flat-card__twemoji {
+  width: 120px;
+  margin: 0 auto;
+}
+
 .lobby-card {
-    h3 {
-        font-size: 35px;
-        line-height: normal;
-    }
+  h3 {
+    font-size: 35px;
+    line-height: normal;
+  }
 }
