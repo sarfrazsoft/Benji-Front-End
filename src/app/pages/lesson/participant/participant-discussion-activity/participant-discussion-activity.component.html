@@ -13,12 +13,7 @@
     </div>
     <div class="b-flat-card__action">
       <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive' : participantVolunteered()}" (click)="shareButton()">
-        <ng-container *ngIf="!participantVolunteered()">
-            We want to share
-        </ng-container>
-        <ng-container *ngIf="participantVolunteered()">
-            Waiting...
-        </ng-container>
+        We want to share
       </button>
     </div>
     <app-linear-timer (initCallback)="discussionTimerInit($event)"></app-linear-timer>
