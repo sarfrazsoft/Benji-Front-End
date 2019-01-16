@@ -11,8 +11,8 @@
             <app-b-twemoji [emoji]="emoji.getEmoji(activityState.activity_status.secondary_role.role_emoji)" *ngIf="isReversed()"></app-b-twemoji>
           </div>
           <h3 class="brownish-grey pn-500">Partner #1</h3>
-          <p class="brownish-grey pn-500" *ngIf="!isReversed()">{{activityState.activity_status.roleplay_question}}</p>
-          <p class="brownish-grey pn-500" *ngIf="isReversed()">{{activityState.activity_status.secondary_role.role_instructions}}</p>
+          <p class="deep-blue pn-600" *ngIf="!isReversed()">{{ activityState.activity_status.roleplay_question }}</p>
+          <p class="brownish-grey pn-500" *ngIf="isReversed()">{{ activityState.activity_status.secondary_role.role_instructions }}</p>
         </div>
         <div class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--2">
           <div class="pair-activity__emoji-container">
@@ -20,8 +20,8 @@
             <app-b-twemoji [emoji]="emoji.getEmoji(activityState.activity_status.primary_role.role_emoji)" *ngIf="isReversed()"></app-b-twemoji>
           </div>
           <h3 class="brownish-grey pn-500">Partner #2</h3>
-          <p class="deep-blue pn-600" *ngIf="!isReversed()">{{activityState.activity_status.secondary_role.role_instructions}}</p>
-          <p class="deep-blue pn-600" *ngIf="isReversed()">{{activityState.activity_status.roleplay_question}}</p>
+          <p class="brownish-grey pn-500" *ngIf="!isReversed()">{{ activityState.activity_status.secondary_role.role_instructions}} </p>
+          <p class="deep-blue pn-600" *ngIf="isReversed()">{{ activityState.activity_status.roleplay_question}} </p>
         </div>
       </div>
     </div>
