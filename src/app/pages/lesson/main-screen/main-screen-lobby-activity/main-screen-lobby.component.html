@@ -20,8 +20,10 @@
   </div>
   <div class="mainscreen-activity__column mainscreen-activity__column--25  lobby-activity__joined-users bg-dim-grey">
     <p>
-      <span class="lobby-activity__participant-number deep-blue">{{ activityState.participants.length }}</span>
-      Learners Joined
+      <span class="lobby-activity__participant-number deep-blue">
+        {{ activityState.participants.length }}
+      </span>
+      {{ activityState.participants.length === 1 ? 'Learner Joined' : 'Learners Joined' }}
     </p>
     <ul>
       <li *ngFor="let participant of activityState.participants" class="deep-blue">{{ participant.first_name }}</li>
