@@ -88,9 +88,10 @@
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
     <blockquote>“{{activityState.activity_status.secret_phrase}}”</blockquote>
-    <p>Here are your instructions. Once you are ready, press ‘Start’ to get the game rolling and then whisper this to your neighbour on the left. Hit the ‘Done’ button when the message comes back to you!</p>
+    <p>Whisper it to your neighbour, and follow the prompts below to get the game rolling. Hit the ‘Done’ button when the message gets back to you!</p>
     <div class="b-dialog-template__action">
-      <button class="b-standard-button b-standard-button--white" (click)="initiateTelephone()" [mat-dialog-close]="true">Start</button>
+      <button class="b-standard-button b-standard-button--white" *ngIf="!msessageShared" (click)="msessageShared = true">I shared the message</button>
+      <button class="b-standard-button b-standard-button--white" *ngIf="msessageShared" (click)="initiateTelephone()" [mat-dialog-close]="true">Start the game!</button>
     </div>
   </div>
 </ng-template>

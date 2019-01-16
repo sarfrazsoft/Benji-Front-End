@@ -12,6 +12,7 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
 
   currentQuestionIndex = 0;
 
+  msessageShared = false;
   revealAnswer = false;
   answerExplanation: string;
 
