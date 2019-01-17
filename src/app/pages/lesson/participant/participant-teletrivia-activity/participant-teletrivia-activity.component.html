@@ -51,9 +51,9 @@
     </div>
     <div class="b-flat-card__action">
       <button class="b-standard-button b-standard-button--unselected"
-              *ngFor="let choice of activityState.activity_status.distracting_questions[currentQuestionIndex].choices"
+              *ngFor="let choice of activityState.activity_status.distracting_questions[currentQuestionIndex].choices; let i = index"
               [ngClass]="{'b-standard-button--correct': revealAnswer && choice.is_correct,
-                          'b-standard-button--incorrect': revealAnswer && !choice.is_correct}"
+                          'b-standard-button--incorrect': revealAnswer && !choice.is_correct && i === selectedAnswerIndex}"
               (click)="submitAnswer(choice)">{{choice.choice_text}}</button>
     </div>
     <div class="b-flat-card__action-detail" *ngIf="revealAnswer">

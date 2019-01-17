@@ -15,6 +15,7 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
   msessageShared = false;
   revealAnswer = false;
   answerExplanation: string;
+  selectedAnswerIndex;
 
   initiatorModalVisible = false;
 
@@ -91,11 +92,13 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
 
     const question = this.activityState.activity_status.distracting_questions[this.currentQuestionIndex];
     this.sendMessage.emit({'event': 'submit_answer', 'question_id': question.id, 'answer': choice.id});
+    this.selectedAnswerIndex = choice.id;
     this.revealAnswer = true;
     this.answerExplanation = choice.explanation_text;
   }
 
   submitAnswerCallback() {
+    this.selectedAnswerIndex = null;
     this.revealAnswer = false;
     this.currentQuestionIndex++;
   }
