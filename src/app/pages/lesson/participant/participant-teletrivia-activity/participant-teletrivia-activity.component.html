@@ -27,14 +27,14 @@
 <ng-container *ngIf="!activityState.activity_status.game_started && activityState.activity_status.all_in_circle">
   <div class="b-flat-card center-text mc-card--circle">
     <div class="b-flat-card__title">
-      <h2 class="pn-400">Multiple Choice</h2>
+      <h2 class="pn-400">TELETRIVIA</h2>
     </div>
     <div class="b-flat-card__body">
       <h3 class="pn-700 vibrant-blue">Waiting...</h3>
       <div class="mc-card__loader">
         <mat-spinner></mat-spinner>
       </div>
-      <p>Get ready, the activity is about to start.</p>
+      <p>Get ready, the game is about to start.</p>
     </div>
   </div>
 </ng-container>
@@ -44,7 +44,7 @@
 <ng-container *ngIf="activityState.activity_status.game_started && activityState.activity_status.all_in_circle && !activityState.activity_status.sharing_started">
   <div class="b-flat-card center-text mc-card " [ngClass]="{'mc-card--starter-layout': participantIsInitiator() }">
     <div class="b-flat-card__title">
-      <h2 class="pn-400">Multiple Choice</h2>
+      <h2 class="pn-400">TELETRIVIA</h2>
     </div>
     <div class="b-flat-card__body">
       <h3 class="pn-400 brownish-grey">{{activityState.activity_status.distracting_questions[currentQuestionIndex].question}}</h3>
@@ -65,14 +65,14 @@
     <app-linear-timer *ngIf="revealAnswer" (callback)="submitAnswerCallback()" (initCallback)="startRevealTimer($event)" #revealTimer></app-linear-timer>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="participantIsInitiator()">
-    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Done! The message is back" buttonStyle="white" [valid]="messageBack" (clicked)="openEndModal()"></app-animated-checkmark-button>
+    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Stop! The message is back" buttonStyle="white" [valid]="messageBack" (clicked)="openEndModal()"></app-animated-checkmark-button>
   </div>
 </ng-container>
 
 <ng-container *ngIf="activityState.activity_status.game_started && activityState.activity_status.all_in_circle && activityState.activity_status.sharing_started">
   <div class="b-flat-card center-text mc-card--circle">
     <div class="b-flat-card__title">
-      <h2 class="pn-400">The message is back!</h2>
+      <h2 class="pn-400">TELETRIVIA</h2>
     </div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
@@ -89,7 +89,7 @@
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
     <blockquote>“{{activityState.activity_status.secret_phrase}}”</blockquote>
-    <p>Whisper it to your neighbour, and follow the prompts below to get the game rolling. Hit the ‘Done’ button when the message gets back to you!</p>
+    <p>Whisper it to your neighbour, and follow the prompts below to get the game rolling. Hit the ‘Stop’ button when the message gets back to you!</p>
     <div class="b-dialog-template__action">
       <button class="b-standard-button b-standard-button--white" *ngIf="!msessageShared" (click)="msessageShared = true">I shared the message</button>
       <button class="b-standard-button b-standard-button--white" *ngIf="msessageShared" (click)="initiateTelephone()" [mat-dialog-close]="true">Start the game!</button>
@@ -100,11 +100,11 @@
 <ng-template #endTemplate>
   <div class="b-dialog-template">
     <p>
-      Share the message you just received with everyone.
+      Share the message you just received with the rest of the group.
     </p>
 
     <p>
-      How close did it come to the original,
+      Remember what the original message was?
     </p>
 
     <p>
