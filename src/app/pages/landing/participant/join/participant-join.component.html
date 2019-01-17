@@ -22,7 +22,7 @@
   <div class="container">
 
     <div class="participant-start__vertical-center center-text">
-      <h1 class="pn-700 vibrant-blue">Hey {{ userName | titlecase}}</h1>
+      <h1 class="pn-700 vibrant-blue">Hey {{ userName | titlecase}}!</h1>
       <p>Look to the main screen to find your room code.</p>
       <div class="participant-start__action-container">
         <p *ngIf="roomCode.invalid && roomCode.touched || isRoomCodeValid === false">Invalid Room Code</p>
