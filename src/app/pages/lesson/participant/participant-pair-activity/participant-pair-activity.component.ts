@@ -9,6 +9,9 @@ import { concat, remove } from 'lodash';
   styleUrls: ['./participant-pair-activity.component.scss']
 })
 export class ParticipantPairActivityComponent extends BaseActivityComponent {
+
+  partnerName: string;
+
   constructor(private emoji: EmojiLookupService) {
     super();
   }
@@ -23,8 +26,10 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent {
                         concat(ug.primary, ug.secondary).indexOf(this.activityState.your_identity.id) > -1);
     const myGroupWithoutMe = remove(concat(myGroup.primary, myGroup.secondary), (e) => e !== this.activityState.your_identity.id);
     if (myGroupWithoutMe.length === 1) {
+      this.partnerName = this.idToName(myGroupWithoutMe[0]);
       return 'Your partner is ' + this.idToName(myGroupWithoutMe[0]);
     } else {
+      this.partnerName = this.idToName(myGroupWithoutMe[0]) + ' and ' + this.idToName(myGroupWithoutMe[1]);
       return 'Your partners are ' + this.idToName(myGroupWithoutMe[0]) + ' and ' + this.idToName(myGroupWithoutMe[1]);
     }
   }
