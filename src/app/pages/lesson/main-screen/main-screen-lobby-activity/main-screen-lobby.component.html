@@ -23,7 +23,7 @@
       <span class="lobby-activity__participant-number deep-blue">
         {{ activityState.participants.length }}
       </span>
-      {{ activityState.participants.length === 1 ? 'Learner Joined' : 'Learners Joined' }}
+      {{ activityState.participants.length === 1 ? 'Learner joined' : 'Learners joined' }}
     </p>
     <ul>
       <li *ngFor="let participant of activityState.participants" class="deep-blue">{{ participant.first_name }}</li>
