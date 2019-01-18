@@ -3,6 +3,9 @@
   padding: 9px;
   align-items: center;
   min-height: 70px;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
   .mainscreen-footer__session-info p {
     font-size: 24px;
     line-height: normal;
@@ -11,7 +14,6 @@
   }
   .mainscreen-footer__controls {
     button {
-      // margin: 0 10px;
       background: none;
       .mat-icon {
         width: 53px;
