@@ -6,14 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // Services
 import { AuthService } from './services/auth/auth.service';
 import { TokenInterceptor } from './services/auth/auth.interceptor';
-import { BackendRestService} from './services/backend/backend-rest.service';
-import {BackendSocketService} from './services/backend/backend-socket.service';
+import { BackendRestService } from './services/backend/backend-rest.service';
+import { BackendSocketService } from './services/backend/backend-socket.service';
 import { EmojiLookupService } from './services/emoji-lookup.service';
 
 // Components
@@ -39,11 +39,10 @@ import { MatProgressBarModule } from '@angular/material';
 import { OnsenModule } from 'ngx-onsenui';
 import { PrimaryNavbarComponent } from './ui-components/primary-navbar/primary-navbar.component';
 
-
 // Material Design Modules
-import { MatMenuModule} from '@angular/material/menu';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ElementsComponent } from './elements/elements.component';
 import { LinearTimerComponent } from './ui-components/linear-timer/linear-timer.component';
@@ -101,8 +100,7 @@ import { ParticipantMcqActivityComponent } from './pages/lesson/participant/part
     ParticipantHintActivityComponent,
     MainScreenHintActivityComponent,
     MainScreenMcqActivityComponent,
-    ParticipantMcqActivityComponent,
-
+    ParticipantMcqActivityComponent
   ],
   imports: [
     AppRoutingModule,
@@ -123,9 +121,9 @@ import { ParticipantMcqActivityComponent } from './pages/lesson/participant/part
     BackendRestService,
     BackendSocketService,
     EmojiLookupService,
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule { }
+export class AppModule {}
