@@ -1,7 +1,23 @@
 <div class="mainscreen-toolbar bg-vibrant-blue">
   <div class="flexer--space-between">
     <div class="benji-logo-container">
-      <img src="../../assets/img/Benji_logo_white.png" alt="Benji logo" class="benji-logo">
+      <img
+        src="../../assets/img/Benji_logo_white.png"
+        alt="Benji logo"
+        class="benji-logo"
+      />
     </div>
+    <mat-icon
+      *ngIf="!isFullscreen"
+      class="icon-white"
+      (click)="openfullscreen()"
+      >fullscreen</mat-icon
+    >
+    <mat-icon
+      *ngIf="isFullscreen"
+      class="icon-white"
+      (click)="closefullscreen()"
+      >fullscreen_exit</mat-icon
+    >
   </div>
 </div>
