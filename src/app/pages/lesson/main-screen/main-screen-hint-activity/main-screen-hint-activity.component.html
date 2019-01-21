@@ -1,71 +1,112 @@
-<div class="mainscreen-activity mainscreen-activity--multi-column hint-activity" *ngIf="!activityState.activity_status.voting_complete">
-  <div class="mainscreen-activity__column mainscreen-activity__column--66 bg-off-white">
+<div
+  class="mainscreen-activity mainscreen-activity--multi-column hint-activity"
+  *ngIf="!activityState.activity_status.voting_complete"
+>
+  <div
+    class="mainscreen-activity__column mainscreen-activity__column--66 bg-off-white"
+  >
     <div class="hint-activity__instruction-container flexer--center">
       <div class="hint-activity__twemoji-container">
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
       <h2 class="vibrant-blue pn-700">Pssst</h2>
-      <p class="brownish-grey">{{activityState.activity_status.instructions}}</p>
+      <p class="brownish-grey">
+        {{ activityState.activity_status.instructions }}
+      </p>
     </div>
     <div class="hint-activity__options-container" #listParent>
-      <div class="hint-activity__section-title">
-        <h3>Hint Word Options</h3>
-      </div>
+      <div class="hint-activity__section-title"><h3>Hint Word Options</h3></div>
       <div class="hint-activity__options">
         <ul>
-          <li class="deep-blue hint-activity__option" [ngStyle]="{'font-size.px': voteFontSize}" *ngFor="let word of activityState.activity_status.submitted_words">{{word}}</li>
+          <li
+            class="deep-blue hint-activity__option"
+            [ngStyle]="{ 'font-size.px': voteFontSize }"
+            *ngFor="let word of activityState.activity_status.submitted_words"
+          >
+            {{ word }}
+          </li>
         </ul>
       </div>
     </div>
   </div>
-  <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey hint-activity__status-column">
-    <p class="hint-activity__words-total pn-600 deep-blue" *ngIf="!activityState.activity_status.submission_complete">
-      {{ activityState.activity_status.submitted_words.length }} 
-      {{ activityState.activity_status.submitted_words.length === 1 ? 'Word submitted' : 'Words submitted' }}
-      <app-radial-timer (initCallback)="submitTimerInit($event)" endStateText="Vote!"></app-radial-timer>
+  <div
+    class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey hint-activity__status-column"
+  >
+    <p
+      class="hint-activity__words-total pn-600 deep-blue"
+      *ngIf="!activityState.activity_status.submission_complete"
+    >
+      {{ activityState.activity_status.submitted_words.length }}
+      {{
+        activityState.activity_status.submitted_words.length === 1
+          ? 'Word submitted'
+          : 'Words submitted'
+      }}
+      <app-radial-timer
+        (initCallback)="submitTimerInit($event)"
+        endStateText="Vote!"
+      ></app-radial-timer>
     </p>
-    <p class="hint-activity__words-total pn-600 deep-blue" *ngIf="activityState.activity_status.submission_complete">
-      {{ activityState.activity_status.voted_users.length }} 
-      {{ activityState.activity_status.voted_users.length === 1 ? 'Vote submitted' : 'Votes submitted' }}
-      <app-radial-timer (initCallback)="voteTimerInit($event)" endStateText="Times Up!"></app-radial-timer>
+    <p
+      class="hint-activity__words-total pn-600 deep-blue"
+      *ngIf="activityState.activity_status.submission_complete"
+    >
+      {{ activityState.activity_status.voted_users.length }}
+      {{
+        activityState.activity_status.voted_users.length === 1
+          ? 'Vote submitted'
+          : 'Votes submitted'
+      }}
+      <app-radial-timer
+        (initCallback)="voteTimerInit($event)"
+        endStateText="Times Up!"
+      ></app-radial-timer>
     </p>
-
   </div>
 </div>
 
-
-<div class="mainscreen-activity mainscreen-activity--multi-column hint-activity"  *ngIf="activityState.activity_status.voting_complete">
-  <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-off-white">
+<div
+  class="mainscreen-activity mainscreen-activity--multi-column hint-activity"
+  *ngIf="activityState.activity_status.voting_complete"
+>
+  <div
+    class="mainscreen-activity__column mainscreen-activity__column--33 bg-off-white"
+  >
     <div class="hint-activity__instruction-container flexer--center">
       <div class="hint-activity__twemoji-container">
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
       <h2 class="vibrant-blue pn-700">Pssst</h2>
-      <p class="brownish-grey">{{activityState.activity_status.instructions}}</p>
+      <p class="brownish-grey">
+        {{ activityState.activity_status.instructions }}
+      </p>
     </div>
   </div>
-  <div class="mainscreen-activity__column mainscreen-activity__column--66 bg-dim-grey hint-activity__conclusion">
-    <div class="hint-activity__section-title">
-      <h3>Your Hint Word Is</h3>
-    </div>
+  <div
+    class="mainscreen-activity__column mainscreen-activity__column--66 bg-dim-grey hint-activity__conclusion"
+  >
+    <div class="hint-activity__section-title"><h3>Your Hint Word Is</h3></div>
 
-    <p class="hint-activity__winner pn-700 deep-blue">{{activityState.activity_status.voted_word | titlecase}}</p>
+    <p class="hint-activity__winner pn-700 deep-blue">
+      {{ activityState.activity_status.voted_word | titlecase }}
+    </p>
 
-    <p>If you’re chatting with anyone in this group and you see that they’re drifting off or distracted, just say “Hey…
-      {{activityState.activity_status.voted_word | titlecase}}.”</p>
+    <p>
+      If you’re chatting with anyone in this group and you see that they’re
+      drifting off or distracted, just say “Hey…
+      {{ activityState.activity_status.voted_word | titlecase }}.”
+    </p>
 
-    <p>It’s not a big deal, just a little reminder that we can listen a little better.</p>
-
+    <p>
+      It’s not a big deal, just a little reminder that we can listen a little
+      better.
+    </p>
   </div>
   <div class="hint-activity__linear-timer-container">
     <app-linear-timer (initCallback)="startEndTimer($event)"></app-linear-timer>
   </div>
 </div>
 
-<audio
-  class="hideAndShrink"
-  [src]="sfxFile"
-  #sfxPlayer
->
+<audio class="hideAndShrink" [src]="sfxFile" #sfxPlayer>
   Your browser does not support the <code>audio</code> element.
 </audio>

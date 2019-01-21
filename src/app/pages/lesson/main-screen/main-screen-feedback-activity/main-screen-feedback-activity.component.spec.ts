@@ -8,9 +8,8 @@ describe('MainScreenFeedbackActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainScreenFeedbackActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [MainScreenFeedbackActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

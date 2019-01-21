@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { VideoStateService } from '../../../../services/video-state.service';
-import {BaseActivityComponent} from '../../shared/base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-mainscreen-activity-video',
@@ -18,9 +18,8 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })
-
-export class MainScreenVideoActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
-
+export class MainScreenVideoActivityComponent extends BaseActivityComponent
+  implements OnInit, OnDestroy {
   @ViewChild('player') player: ElementRef;
   private videoPlaying = true;
   public _videoURL;
@@ -62,6 +61,6 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent impl
   }
 
   public videoEnd() {
-    this.sendMessage.emit({'event': 'end'});
+    this.sendMessage.emit({ event: 'end' });
   }
 }

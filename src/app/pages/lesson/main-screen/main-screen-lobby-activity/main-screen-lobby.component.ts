@@ -1,6 +1,13 @@
-import {Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewEncapsulation,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
-import {BaseActivityComponent} from '../../shared/base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-mainscreen-lobby',
@@ -8,8 +15,8 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-lobby.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-
-export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class MainScreenLobbyComponent extends BaseActivityComponent
+  implements OnInit, OnDestroy {
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   ngOnInit() {
@@ -21,6 +28,6 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   }
 
   kickOffLesson() {
-    this.sendMessage.emit({'event': 'start_button'});
+    this.sendMessage.emit({ event: 'start_button' });
   }
 }

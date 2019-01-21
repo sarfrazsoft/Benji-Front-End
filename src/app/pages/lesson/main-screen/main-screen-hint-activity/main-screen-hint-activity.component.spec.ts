@@ -8,9 +8,8 @@ describe('MainScreenHintActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainScreenHintActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [MainScreenHintActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

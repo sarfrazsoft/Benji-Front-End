@@ -1,14 +1,23 @@
-import {Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy, AfterViewInit, ViewChild} from '@angular/core';
-import {BaseActivityComponent} from '../../shared/base-activity.component';
-import {RoleplayUserGroup} from '../../../../services/backend/schema/activity';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  AfterViewInit,
+  ViewChild
+} from '@angular/core';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { RoleplayUserGroup } from '../../../../services/backend/schema/activity';
 
 @Component({
   selector: 'app-main-screen-discussion-activity',
   templateUrl: './main-screen-discussion-activity.component.html',
   styleUrls: ['./main-screen-discussion-activity.component.scss']
 })
-
-export class MainScreenDiscussionActivityComponent extends BaseActivityComponent implements OnChanges {
+export class MainScreenDiscussionActivityComponent extends BaseActivityComponent
+  implements OnChanges {
   @ViewChild('shareTimer') shareTimer;
 
   presenterGroupToList(presenterGroup: RoleplayUserGroup) {
@@ -21,49 +30,69 @@ export class MainScreenDiscussionActivityComponent extends BaseActivityComponent
     }
 
     const presenterList = this.presenterGroupToList(presenterGroup);
-    const presenterNameList = presenterList.map((u) => this.idToName(u));
-    let text = presenterNameList.splice(0, presenterNameList.length - 1).join(', ');
+    const presenterNameList = presenterList.map(u => this.idToName(u));
+    let text = presenterNameList
+      .splice(0, presenterNameList.length - 1)
+      .join(', ');
     text += ' and ' + presenterNameList[0];
     return text;
   }
 
   initDiscussionTimer(timer) {
-    const discussionTotalTime = Date.parse(this.activityState.activity_status.discussion_countdown_time) - Date.now();
+    const discussionTotalTime =
+      Date.parse(this.activityState.activity_status.discussion_countdown_time) -
+      Date.now();
     const discussionTimeElapsed = 0;
     timer.startTimer(discussionTotalTime, discussionTimeElapsed);
-
   }
 
   initShareTimer(timer) {
     if (timer.running) {
       timer.stopTimer();
     }
-    const shareTimeStr = this.activityState.activity_status.sharer_countdown_time[this.activityState.activity_status.sharer_group_num];
+    const shareTimeStr = this.activityState.activity_status
+      .sharer_countdown_time[
+      this.activityState.activity_status.sharer_group_num
+    ];
     const shareTotalTime = Date.parse(shareTimeStr) - Date.now();
     const shareTimeElapsed = 0;
     timer.startTimer(shareTotalTime, shareTimeElapsed);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
-    if (changes['activityState'] && changes['activityState'].previousValue &&
-            (changes['activityState'].previousValue.activity_status.sharer_group_num !==
-              changes['activityState'].currentValue.activity_status.sharer_group_num) &&
-            changes['activityState'].currentValue.activity_status.sharer_group_num !== null) {
-
-      if (this.activityState.activity_status.sharer_group_num < this.activityState.activity_status.sharer_countdown_time.length - 1) {
+    if (
+      changes['activityState'] &&
+      changes['activityState'].previousValue &&
+      changes['activityState'].previousValue.activity_status
+        .sharer_group_num !==
+        changes['activityState'].currentValue.activity_status
+          .sharer_group_num &&
+      changes['activityState'].currentValue.activity_status.sharer_group_num !==
+        null
+    ) {
+      if (
+        this.activityState.activity_status.sharer_group_num <
+        this.activityState.activity_status.sharer_countdown_time.length - 1
+      ) {
         this.initShareTimer(this.shareTimer);
       }
     }
   }
 
   currentPresenterGroup() {
-    return this.activityState.activity_status.selected_sharers[this.activityState.activity_status.sharer_group_num];
+    return this.activityState.activity_status.selected_sharers[
+      this.activityState.activity_status.sharer_group_num
+    ];
   }
 
   nextPresenterGroup() {
-    if (this.activityState.activity_status.selected_sharers.length < this.activityState.activity_status.sharer_group_num + 1) {
-      return this.activityState.activity_status.selected_sharers[this.activityState.activity_status.sharer_group_num];
+    if (
+      this.activityState.activity_status.selected_sharers.length <
+      this.activityState.activity_status.sharer_group_num + 1
+    ) {
+      return this.activityState.activity_status.selected_sharers[
+        this.activityState.activity_status.sharer_group_num
+      ];
     } else {
       return undefined;
     }

@@ -1,53 +1,92 @@
 <div class="ms-fullheight-container">
-  <div class="ms-preloader flexer align-center" *ngIf="!isConnected()  || (serverMessage && serverMessage.activity_status.next_activity_countdown !== null)">
-      <mat-spinner></mat-spinner>
+  <div
+    class="ms-preloader flexer align-center"
+    *ngIf="
+      !isConnected() ||
+      (serverMessage &&
+        serverMessage.activity_status.next_activity_countdown !== null)
+    "
+  >
+    <mat-spinner></mat-spinner>
   </div>
   <app-main-screen-toolbar></app-main-screen-toolbar>
-  <div *ngIf="isConnected() && (serverMessage && serverMessage.activity_status.next_activity_countdown === null)"
-       [ngClass]="getActivityType() === 'LobbyActivity'? 'ms-lesson__activity-container ms-lesson__activity-container--lobby' : 'ms-lesson__activity-container'">
-
+  <div
+    *ngIf="
+      isConnected() &&
+      (serverMessage &&
+        serverMessage.activity_status.next_activity_countdown === null)
+    "
+    [ngClass]="
+      getActivityType() === 'LobbyActivity'
+        ? 'ms-lesson__activity-container ms-lesson__activity-container--lobby'
+        : 'ms-lesson__activity-container'
+    "
+  >
     <app-mainscreen-lobby
       *ngIf="getActivityType() === 'LobbyActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-mainscreen-lobby>
 
     <app-mainscreen-activity-teletrivia
       *ngIf="getActivityType() === 'TeleTriviaActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-mainscreen-activity-teletrivia>
 
     <app-mainscreen-activity-video
       *ngIf="getActivityType() === 'VideoActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-mainscreen-activity-video>
 
     <app-main-screen-pair-activity
-      *ngIf="(getActivityType() === 'RoleplayPairActivity') || (getActivityType() === 'ReverseRoleplayPairActivity')"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      *ngIf="
+        getActivityType() === 'RoleplayPairActivity' ||
+        getActivityType() === 'ReverseRoleplayPairActivity'
+      "
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-main-screen-pair-activity>
 
     <app-main-screen-discussion-activity
       *ngIf="getActivityType() === 'RoleplayPairShareActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-main-screen-discussion-activity>
 
     <app-main-screen-feedback-activity
       *ngIf="getActivityType() === 'FeedbackActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-main-screen-feedback-activity>
 
     <app-main-screen-hint-activity
       *ngIf="getActivityType() === 'HintWordActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-main-screen-hint-activity>
 
     <app-main-screen-mcq-activity
       *ngIf="getActivityType() === 'MCQActivity'"
-      [activityState]="serverMessage" (sendMessage)="sendSocketMessage($event)">
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
     </app-main-screen-mcq-activity>
 
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
-
   </div>
-  <app-main-screen-footer *ngIf="isConnected() && serverMessage" [showFooter]="(getActivityType() !== 'LobbyActivity')" [roomCode]="serverMessage.lesson_run.lessonrun_code" (socketMessage)="sendSocketMessage($event)"></app-main-screen-footer>
+  <app-main-screen-footer
+    *ngIf="isConnected() && serverMessage"
+    [showFooter]="getActivityType() !== 'LobbyActivity'"
+    [roomCode]="serverMessage.lesson_run.lessonrun_code"
+    (socketMessage)="sendSocketMessage($event)"
+  ></app-main-screen-footer>
 </div>

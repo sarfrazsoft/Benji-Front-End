@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {BaseActivityComponent} from '../../shared/base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-main-screen-feedback-activity',
@@ -8,7 +8,6 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-feedback-activity.component.scss']
 })
 export class MainScreenFeedbackActivityComponent extends BaseActivityComponent {
-
   constructor(private router: Router) {
     super();
   }
@@ -16,5 +15,4 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent {
   public backToStart() {
     this.router.navigate(['/landing']);
   }
-
 }

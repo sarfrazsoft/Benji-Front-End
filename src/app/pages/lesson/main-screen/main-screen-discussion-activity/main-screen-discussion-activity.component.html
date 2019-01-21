@@ -1,21 +1,36 @@
 <ng-container *ngIf="!activityState.activity_status.discussion_complete">
-  <div class="mainscreen-activity mainscreen-activity--multi-column discussion-activity">
-    <div class="mainscreen-activity__column mainscreen-activity__column--50 mainscreen-activity__activity-detail bg-off-white flexer--center">
+  <div
+    class="mainscreen-activity mainscreen-activity--multi-column discussion-activity"
+  >
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--50 mainscreen-activity__activity-detail bg-off-white flexer--center"
+    >
       <div class="ms-emoji-container smaller-emoji">
         <app-b-twemoji emoji="🤔"></app-b-twemoji>
       </div>
       <h1 class="vibrant-blue pn-700">Discuss</h1>
 
-      <h2 class="deep-blue pn-600 discuss-instruction">{{activityState.activity_status.instructions}}</h2>
+      <h2 class="deep-blue pn-600 discuss-instruction">
+        {{ activityState.activity_status.instructions }}
+      </h2>
     </div>
-    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey">
-      <app-radial-timer (initCallback)="initDiscussionTimer($event)" endStateText="Done!"></app-radial-timer>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
+    >
+      <app-radial-timer
+        (initCallback)="initDiscussionTimer($event)"
+        endStateText="Done!"
+      ></app-radial-timer>
     </div>
   </div>
 </ng-container>
 <ng-container *ngIf="activityState.activity_status.discussion_complete">
-  <div class="mainscreen-activity mainscreen-activity--multi-column discussion-activity">
-    <div class="mainscreen-activity__column mainscreen-activity__column--66  bg-off-white flexer">
+  <div
+    class="mainscreen-activity mainscreen-activity--multi-column discussion-activity"
+  >
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--66  bg-off-white flexer"
+    >
       <div class="discussion-activity__share-status">
         <div class="discussion-activity__vertically-centered">
           <div class="ms-emoji-container">
@@ -26,15 +41,25 @@
       </div>
       <div class="discussion-activity__share-queue">
         <div class="discussion-activity__vertically-centered">
-          <h3 class="pn-600 deep-blue">{{ presenterGroupToText(currentPresenterGroup()) }} are sharing</h3>
+          <h3 class="pn-600 deep-blue">
+            {{ presenterGroupToText(currentPresenterGroup()) }} are sharing
+          </h3>
           <ng-container *ngIf="nextPresenterGroup() !== undefined">
-            <p class="brownish-grey pn-500">{{ presenterGroupToText(nextPresenterGroup()) }} are up next</p>
+            <p class="brownish-grey pn-500">
+              {{ presenterGroupToText(nextPresenterGroup()) }} are up next
+            </p>
           </ng-container>
         </div>
       </div>
     </div>
-    <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey">
-      <app-radial-timer (initCallback)="initShareTimer($event)" endStateText="Done!" #shareTimer></app-radial-timer>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey"
+    >
+      <app-radial-timer
+        (initCallback)="initShareTimer($event)"
+        endStateText="Done!"
+        #shareTimer
+      ></app-radial-timer>
     </div>
   </div>
 </ng-container>

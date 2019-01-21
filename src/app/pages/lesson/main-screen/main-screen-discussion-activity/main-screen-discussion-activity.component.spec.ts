@@ -8,9 +8,8 @@ describe('MainScreenDiscussionActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainScreenDiscussionActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [MainScreenDiscussionActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

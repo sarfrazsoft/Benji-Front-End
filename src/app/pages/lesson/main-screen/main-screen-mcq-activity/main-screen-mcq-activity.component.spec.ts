@@ -8,9 +8,8 @@ describe('MainScreenMcqActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainScreenMcqActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [MainScreenMcqActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

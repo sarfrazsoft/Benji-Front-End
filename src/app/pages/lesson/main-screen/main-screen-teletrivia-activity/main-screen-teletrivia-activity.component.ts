@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {BaseActivityComponent} from '../../shared/base-activity.component';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-mainscreen-activity-teletrivia',
@@ -7,9 +7,10 @@ import {BaseActivityComponent} from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-teletrivia-activity.component.scss']
 })
 export class MainScreenTeletriviaActivityComponent extends BaseActivityComponent {
-
   timerInit(timer) {
-    const totalTime = (Date.parse(this.activityState.activity_status.circle_countdown) - Date.now());
+    const totalTime =
+      Date.parse(this.activityState.activity_status.circle_countdown) -
+      Date.now();
     const circleTimerSecondsElapsed = 0;
     timer.startTimer(totalTime, circleTimerSecondsElapsed);
   }
