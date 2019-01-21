@@ -1,20 +1,16 @@
-import {Component, OnInit, ViewEncapsulation, NgModule} from '@angular/core';
-
-import { BackendRestService} from '../../../../services/backend/backend-rest.service';
-import {Router} from '@angular/router';
-
-import { AuthService } from '../../../../services/auth/auth.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
+
+import { BackendRestService } from '../../../../services/backend/backend-rest.service';
+import { AuthService } from '../../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-participant-login',
   templateUrl: './participant-login.component.html',
-  styleUrls: [
-    './participant-login.component.scss'
-  ],
+  styleUrls: ['./participant-login.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-
 export class ParticipantLoginComponent implements OnInit {
   // username: string;
 
@@ -22,11 +18,13 @@ export class ParticipantLoginComponent implements OnInit {
   public userId;
   public loginError;
 
-  public username = new FormControl(null, [
-    Validators.required
-  ]);
+  public username = new FormControl(null, [Validators.required]);
 
-  constructor(private backend: BackendRestService, private auth: AuthService, private router: Router) { }
+  constructor(
+    private backend: BackendRestService,
+    private auth: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
@@ -35,7 +33,6 @@ export class ParticipantLoginComponent implements OnInit {
   }
 
   formSubmit() {
-
     // this.auth.login(this.username, 'test').subscribe(
     //   resp => this.router.navigate(['/participant/join']),
     //   err => this.restService.create_user(this.username).subscribe(
@@ -66,5 +63,4 @@ export class ParticipantLoginComponent implements OnInit {
       }
     });
   }
-
 }
