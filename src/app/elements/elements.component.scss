@@ -1,252 +1,249 @@
-@import "~src/sass/variables";
-//participant start
+@import 'variables';
+
+// TODO fix duplicate styles in elements.component.scss
 .participant-start {
-    height: 100vh;
-    padding-top: 9vh;
+  height: 100vh;
+  padding-top: 9vh;
+  .container {
+    width: 280px;
+  }
+  .participant-start__logo-text {
+    text-align: center;
+    img {
+      width: 143px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 20px;
+      line-height: normal;
+    }
+  }
+  .participant-start__action-toggle {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7vh;
+    button {
+      background: none;
+      font-size: 16px;
+      line-height: normal;
+    }
+    button.active {
+      color: $deep-blue;
+      border-bottom: 2px solid $deep-blue;
+    }
+  }
+  @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
+    height: auto;
+  }
+  @media screen and (min-width: 992px) {
+    padding-top: 15vh;
     .container {
+      width: 530px;
+      .b-standard-input {
         width: 280px;
+        display: block;
+        margin: 15px auto 0;
+      }
+      .participant-start__input-container {
+        margin-bottom: 15px;
+      }
     }
     .participant-start__logo-text {
-        text-align: center;
-        img {
-            width: 143px;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 20px;
-            line-height: normal;
-        }
+      img {
+        width: 338px;
+      }
+      p {
+        font-size: 24px;
+      }
     }
     .participant-start__action-toggle {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 7vh;
-        button {
-            background: none;
-            font-size: 16px;
-            line-height: normal;
-        }
-        button.active {
-            color: $deep-blue;
-            border-bottom: 2px solid $deep-blue;
-        }
+      width: 280px;
+      margin: 7vh auto 0;
     }
-    @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
-        height: auto;
-    }
-    @media screen and (min-width: 992px) {
-        padding-top: 15vh;
-        .container {
-            width: 530px;
-            .b-standard-input {
-                width: 280px;
-                display: block;
-                margin: 15px auto 0;
-            }
-            .participant-start__input-container {
-                margin-bottom: 15px;
-            }
-        }
-        .participant-start__logo-text {
-            img {
-                width: 338px;
-            }
-            p {
-                font-size: 24px;
-            }
-        }
-        .participant-start__action-toggle {
-            width: 280px;
-            margin: 7vh auto 0;
-        }
-    }
+  }
 }
 
 .participant-start__baseline-actions {
-    text-align: center;
-    margin-top: 9vh;
-    p {
-        color: $brownish-grey;
-        font-size: 16px;
-        line-height: normal;
-        margin-bottom: 0;
-    }
-    a {
-        color: $deep-blue;
-        font-size: 16px;
-        text-decoration: none;
-    }
+  text-align: center;
+  margin-top: 9vh;
+  p {
+    color: $brownish-grey;
+    font-size: 16px;
+    line-height: normal;
+    margin-bottom: 0;
+  }
+  a {
+    color: $deep-blue;
+    font-size: 16px;
+    text-decoration: none;
+  }
 }
 
 // login
 .participant-start__action-container input {
-    margin-top: 15px;
-    width: 100%;
+  margin-top: 15px;
+  width: 100%;
 }
 
 .participant-start__action-container button.b-standard-button {
-    width: 100%;
+  width: 100%;
 }
 
 .participant-start__password {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 //Toolbar
 .participant-toolbar {
-    padding: 10px 15px;
-    .benji-logo-container {
-        height: 30px;
-        img {
-            height: 100%;
-        }
+  padding: 10px 15px;
+  .benji-logo-container {
+    height: 30px;
+    img {
+      height: 100%;
     }
-    button {
-        background: none;
-        width: 45px;
-        height: 45px;
-        display: flex;
-        .mat-icon {
-            display: block;
-            margin: 0 auto;
-        }
+  }
+  button {
+    background: none;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    .mat-icon {
+      display: block;
+      margin: 0 auto;
     }
-    .flexer--space-between {
-        align-items: center;
-    }
+  }
+  .flexer--space-between {
+    align-items: center;
+  }
 }
-
 
 // tps/roleplay card
 .roleplay-card .b-flat-card__body {
-    h3 {
-        font-size: 35px;
-        line-height: normal;
-    }
-    p {
-        font-size: 14px;
-    }
-    .b-flat-card__twemoji {
-        width: 120px;
-        margin: 0 auto;
-    }
+  h3 {
+    font-size: 35px;
+    line-height: normal;
+  }
+  p {
+    font-size: 14px;
+  }
+  .b-flat-card__twemoji {
+    width: 120px;
+    margin: 0 auto;
+  }
 }
 
 //multiple choice card
 .mc-card {
-    .b-flat-card__body {
-        h3 {
-            font-size: 24px;
-        }
+  .b-flat-card__body {
+    h3 {
+      font-size: 24px;
     }
+  }
 }
 
 .buttons {
-    button {
-        display: block;
-        margin: 10px auto;
-    }
+  button {
+    display: block;
+    margin: 10px auto;
+  }
 }
 
 // lobby card
 .lobby-card {
-    h3 {
-        font-size: 48px;
-        font-weight: bold;
-        line-height: normal;
-    }
-    p {
-        font-size: 16px;
-        line-height: normal;
-    }
-    mat-spinner {
-        margin: 8vh auto;
-    }
-    .mat-progress-spinner circle,
-    .mat-spinner circle {
-        stroke: #0a4cef;
-    }
+  h3 {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: normal;
+  }
+  p {
+    font-size: 16px;
+    line-height: normal;
+  }
+  mat-spinner {
+    margin: 8vh auto;
+  }
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: #0a4cef;
+  }
 }
 
 @media screen and (min-width: 321px) {
-    .b-flat-card__body {
-        padding: 5vh 30px 10px;
+  .b-flat-card__body {
+    padding: 5vh 30px 10px;
+  }
+  .roleplay-card .b-flat-card__body {
+    .b-flat-card__twemoji {
+      width: 140px;
     }
-    .roleplay-card .b-flat-card__body {
-        .b-flat-card__twemoji {
-            width: 140px;
-        }
-        h3 {
-            font-size: 40px;
-            line-height: normal;
-        }
-        p {
-            font-size: 16px;
-        }
+    h3 {
+      font-size: 40px;
+      line-height: normal;
     }
+    p {
+      font-size: 16px;
+    }
+  }
 }
 
 @media screen and (min-width: 414px) {
-    .b-flat-card__body {
-        padding: 5vh 50px 20px;
+  .b-flat-card__body {
+    padding: 5vh 50px 20px;
+  }
+  .roleplay-card .b-flat-card__body {
+    h3 {
+      font-size: 40px;
+      line-height: normal;
     }
-    .roleplay-card .b-flat-card__body {
-        h3 {
-            font-size: 40px;
-            line-height: normal;
-        }
-        p {
-            font-size: 16px;
-            line-height: normal;
-        }
+    p {
+      font-size: 16px;
+      line-height: normal;
     }
+  }
 }
 
 @media screen and (min-width: 768px) {
-    .b-flat-card__body {
-        padding: 20vh 50px 20px;
-    }
+  .b-flat-card__body {
+    padding: 20vh 50px 20px;
+  }
 }
 
 //dialogues
 .b-dialog-template {
-    p {
-        font-size: 16px;
-        line-height: normal;
-        letter-spacing: 0.7px;
-    }
-    blockquote {
-        border-left: none;
-        font-weight: bold;
-        font-size: 24px;
-        line-height: normal;
-        letter-spacing: 1.1px;
-    }
-    button {
-        width: 210px;
-    }
+  p {
+    font-size: 16px;
+    line-height: normal;
+    letter-spacing: 0.7px;
+  }
+  blockquote {
+    border-left: none;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: normal;
+    letter-spacing: 1.1px;
+  }
+  button {
+    width: 210px;
+  }
 }
 
 //baseline-actions
 .b-baseline-action {
-    padding: 15px 0;
-    text-align: center;
-    button {
-        margin: 0;
-    }
+  padding: 15px 0;
+  text-align: center;
+  button {
+    margin: 0;
+  }
 }
 
 // /* ---- reset ---- */
 
 body {
-    margin: 0;
-    // font: normal 75% Arial, Helvetica, sans-serif;
+  margin: 0;
+  // font: normal 75% Arial, Helvetica, sans-serif;
 }
 
 canvas {
-    display: block;
-    vertical-align: bottom;
+  display: block;
+  vertical-align: bottom;
 }
-
-
-

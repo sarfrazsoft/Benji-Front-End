@@ -1,7 +1,11 @@
 <div class="mainscreen-toolbar bg-vibrant-blue">
   <div class="flexer--space-between">
     <div class="benji-logo-container">
-      <img src="../../assets/img/Benji_logo_white.png" alt="Benji logo" class="benji-logo">
+      <img
+        src="../../assets/img/Benji_logo_white.png"
+        alt="Benji logo"
+        class="benji-logo"
+      />
     </div>
   </div>
 </div>
@@ -9,8 +13,11 @@
 <div class="participant-start">
   <div class="container">
     <div class="participant-start__logo-text">
-      <img src="../../assets/img/Benji_logo.svg" alt="Benji Logo">
-      <p class="pn-600">Sign in to your Benji account to join or start a session and to view your dashboard.</p>
+      <img src="../../assets/img/Benji_logo.svg" alt="Benji Logo" />
+      <p class="pn-600">
+        Sign in to your Benji account to join or start a session and to view
+        your dashboard.
+      </p>
     </div>
     <div class="participant-start__action-toggle">
       <button class="cloudy-grey active pn-600">Login</button>
@@ -18,17 +25,34 @@
     </div>
     <div class="participant-start__action-container">
       <div class="participant-start__input-container">
-        <input class="b-standard-input" type="email" name="" placeholder="Email address">
-        <input class="b-standard-input participant-start__password" type="password" name="" placeholder="Password">
+        <input
+          class="b-standard-input"
+          type="email"
+          name=""
+          placeholder="Email address"
+        />
+        <input
+          class="b-standard-input participant-start__password"
+          type="password"
+          name=""
+          placeholder="Password"
+        />
       </div>
-      <app-animated-checkmark-button loadingStateInnerHTML="Verifying" innerHTML="Login" buttonStyle="default"></app-animated-checkmark-button>
+      <app-animated-checkmark-button
+        loadingStateInnerHTML="Verifying"
+        innerHTML="Login"
+        buttonStyle="default"
+      ></app-animated-checkmark-button>
 
       <div class="participant-start__baseline-actions">
         <p class="pn-600">New to Benji? <a href="#">Sign Up</a></p>
         <a href="#" class="pn-600">Forgot your password?</a>
       </div>
       <div class="mainscreen-login__calltoaction">
-        <p>What’s Benji? Learn about the future of workplace learning <a href="#" class="pn-700">here.</a></p>
+        <p>
+          What’s Benji? Learn about the future of workplace learning
+          <a href="#" class="pn-700">here.</a>
+        </p>
       </div>
     </div>
   </div>
@@ -39,39 +63,56 @@
 
   <div class="mainscreen-activity mainscreen-activity--video">
     <video height="100%" autoplay>
-      <source src="../../assets/video/Steak.mp4" type="video/mp4">
+      <source src="../../assets/video/Steak.mp4" type="video/mp4" />
     </video>
   </div>
 
   <div class="mainscreen-activity mainscreen-activity--multi-column">
-    <div class="mainscreen-activity__column mainscreen-activity__column--66"></div>
-    <div class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey">
-        <app-radial-timer  [secondsElapsed]="countdown / 10" [totalSeconds]="5"  endStateText="Switch!"></app-radial-timer>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--66"
+    ></div>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey"
+    >
+      <app-radial-timer
+        [secondsElapsed]="countdown / 10"
+        [totalSeconds]="5"
+        endStateText="Switch!"
+      ></app-radial-timer>
     </div>
   </div>
 
   <div class="mainscreen-activity mainscreen-activity--multi-column">
-    <div class="mainscreen-activity__column mainscreen-activity__column--50"></div>
-    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"></div>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--50"
+    ></div>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
+    ></div>
   </div>
 
   <div class="mainscreen-activity mainscreen-activity--multi-column">
-    <div class="mainscreen-activity__column mainscreen-activity__column--50 bg-white">
-    </div>
-    <div class="mainscreen-activity__column mainscreen-activity__column--25 bg-off-white"></div>
-    <div class="mainscreen-activity__column mainscreen-activity__column--25 bg-dim-grey">
-        <app-radial-timer  [secondsElapsed]="countdown / 10" [totalSeconds]="10"  endStateText="Vote!"></app-radial-timer>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--50 bg-white"
+    ></div>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--25 bg-off-white"
+    ></div>
+    <div
+      class="mainscreen-activity__column mainscreen-activity__column--25 bg-dim-grey"
+    >
+      <app-radial-timer
+        [secondsElapsed]="countdown / 10"
+        [totalSeconds]="10"
+        endStateText="Vote!"
+      ></app-radial-timer>
     </div>
   </div>
 
   <div class="mainscreen-footer bg-deep-blue flexer--space-between">
     <div class="mainscreen-footer__controls">
-      <button>
-        <mat-icon class="icon-white">fast_rewind</mat-icon>
-      </button>
-      <button>
-        <mat-icon class="icon-white">pause</mat-icon>
-      </button>
+      <button><mat-icon class="icon-white">fast_rewind</mat-icon></button>
+      <button><mat-icon class="icon-white">pause</mat-icon></button>
     </div>
     <div class="mainscreen-footer__session-info">
       <p>ACTIVE LISTENING | CLASS CODE: 495137</p>

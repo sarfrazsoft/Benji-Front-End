@@ -7,17 +7,12 @@ import { interval } from 'rxjs';
   styleUrls: ['./mainscreen-elements.component.scss']
 })
 export class MainscreenElementsComponent implements OnInit {
-
-  constructor() { }
   public countdown = 0;
   public countdownInterval;
-
-
 
   ngOnInit() {
     this.countdownInterval = interval(100).subscribe(() => {
       ++this.countdown;
     });
   }
-
 }
