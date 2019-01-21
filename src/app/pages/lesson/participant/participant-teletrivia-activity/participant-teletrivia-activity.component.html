@@ -1,9 +1,11 @@
-<ng-container *ngIf="!activityState.activity_status.game_started && !activityState.activity_status.all_in_circle">
-
+<ng-container
+  *ngIf="
+    !activityState.activity_status.game_started &&
+    !activityState.activity_status.all_in_circle
+  "
+>
   <div class="b-flat-card center-text mc-card--circle">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">TELETRIVIA</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">TELETRIVIA</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="💫"></app-b-twemoji>
@@ -12,68 +14,119 @@
       <p>We’ll get started once everyone is in position.</p>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button" (click)="sendReadyState()" [ngClass]="{'b-standard-button--inactive': participantInCircle()}">
-        <span *ngIf="!participantInCircle()">
-          I'm in the circle!
-        </span>
-        <span *ngIf="participantInCircle()">
-          Waiting...
-        </span>
+      <button
+        class="b-standard-button"
+        (click)="sendReadyState()"
+        [ngClass]="{ 'b-standard-button--inactive': participantInCircle() }"
+      >
+        <span *ngIf="!participantInCircle()"> I'm in the circle! </span>
+        <span *ngIf="participantInCircle()"> Waiting... </span>
       </button>
     </div>
   </div>
 </ng-container>
 
-<ng-container *ngIf="!activityState.activity_status.game_started && activityState.activity_status.all_in_circle">
+<ng-container
+  *ngIf="
+    !activityState.activity_status.game_started &&
+    activityState.activity_status.all_in_circle
+  "
+>
   <div class="b-flat-card center-text mc-card--circle">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">TELETRIVIA</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">TELETRIVIA</h2></div>
     <div class="b-flat-card__body">
       <h3 class="pn-700 vibrant-blue">Waiting...</h3>
-      <div class="mc-card__loader">
-        <mat-spinner></mat-spinner>
-      </div>
+      <div class="mc-card__loader"><mat-spinner></mat-spinner></div>
       <p>Get ready, the game is about to start.</p>
     </div>
   </div>
 </ng-container>
 
-
-
-<ng-container *ngIf="activityState.activity_status.game_started && activityState.activity_status.all_in_circle && !activityState.activity_status.sharing_started">
-  <div class="b-flat-card center-text mc-card " [ngClass]="{'mc-card--starter-layout': participantIsInitiator() }">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">TELETRIVIA</h2>
-    </div>
+<ng-container
+  *ngIf="
+    activityState.activity_status.game_started &&
+    activityState.activity_status.all_in_circle &&
+    !activityState.activity_status.sharing_started
+  "
+>
+  <div
+    class="b-flat-card center-text mc-card "
+    [ngClass]="{ 'mc-card--starter-layout': participantIsInitiator() }"
+  >
+    <div class="b-flat-card__title"><h2 class="pn-400">TELETRIVIA</h2></div>
     <div class="b-flat-card__body">
-      <h3 class="pn-400 brownish-grey">{{activityState.activity_status.distracting_questions[currentQuestionIndex].question}}</h3>
+      <h3 class="pn-400 brownish-grey">
+        {{
+          activityState.activity_status.distracting_questions[
+            currentQuestionIndex
+          ].question
+        }}
+      </h3>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button b-standard-button--unselected"
-              *ngFor="let choice of activityState.activity_status.distracting_questions[currentQuestionIndex].choices; let i = index"
-              [ngClass]="{'b-standard-button--correct': revealAnswer && choice.is_correct,
-                          'b-standard-button--incorrect': revealAnswer && !choice.is_correct && i === selectedAnswerIndex}"
-              (click)="submitAnswer(choice)">{{choice.choice_text}}</button>
+      <button
+        class="b-standard-button b-standard-button--unselected"
+        *ngFor="
+          let choice of activityState.activity_status.distracting_questions[
+            currentQuestionIndex
+          ].choices;
+          let i = index
+        "
+        [ngClass]="{
+          'b-standard-button--correct': revealAnswer && choice.is_correct,
+          'b-standard-button--incorrect':
+            revealAnswer && !choice.is_correct && i === selectedAnswerIndex
+        }"
+        (click)="submitAnswer(choice)"
+      >
+        {{ choice.choice_text }}
+      </button>
     </div>
     <div class="b-flat-card__action-detail" *ngIf="revealAnswer">
-      <p>{{answerExplanation}}</p>
+      <p>{{ answerExplanation }}</p>
     </div>
   </div>
-  <div class="mc-card__timer mc-card__timer--starter-layout" [ngClass]="{'mc-card__timer--starter-layout': participantIsInitiator() }" *ngIf="!killTimer">
-    <app-linear-timer *ngIf="!revealAnswer" (callback)="questionTimeUpCallback()" (initCallback)="startQuestionTimer($event)" #questionTimer></app-linear-timer>
-    <app-linear-timer *ngIf="revealAnswer" (callback)="submitAnswerCallback()" (initCallback)="startRevealTimer($event)" #revealTimer></app-linear-timer>
+  <div
+    class="mc-card__timer mc-card__timer--starter-layout"
+    [ngClass]="{ 'mc-card__timer--starter-layout': participantIsInitiator() }"
+    *ngIf="!killTimer"
+  >
+    <app-linear-timer
+      *ngIf="!revealAnswer"
+      (callback)="questionTimeUpCallback()"
+      (initCallback)="startQuestionTimer($event)"
+      #questionTimer
+    ></app-linear-timer>
+    <app-linear-timer
+      *ngIf="revealAnswer"
+      (callback)="submitAnswerCallback()"
+      (initCallback)="startRevealTimer($event)"
+      #revealTimer
+    ></app-linear-timer>
   </div>
-  <div class="b-baseline-action bg-indigo-blue" *ngIf="participantIsInitiator()">
-    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Stop! The message is back" buttonStyle="white" [valid]="messageBack" (clicked)="openEndModal()"></app-animated-checkmark-button>
+  <div
+    class="b-baseline-action bg-indigo-blue"
+    *ngIf="participantIsInitiator()"
+  >
+    <app-animated-checkmark-button
+      loadingStateInnerHTML="Loading"
+      innerHTML="Stop! The message is back"
+      buttonStyle="white"
+      [valid]="messageBack"
+      (clicked)="openEndModal()"
+    ></app-animated-checkmark-button>
   </div>
 </ng-container>
 
-<ng-container *ngIf="activityState.activity_status.game_started && activityState.activity_status.all_in_circle && activityState.activity_status.sharing_started">
+<ng-container
+  *ngIf="
+    activityState.activity_status.game_started &&
+    activityState.activity_status.all_in_circle &&
+    activityState.activity_status.sharing_started
+  "
+>
   <div class="b-flat-card center-text mc-card--circle">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">TELETRIVIA</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">TELETRIVIA</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="👂"></app-b-twemoji>
@@ -88,30 +141,46 @@
 <ng-template #kickofftemplate>
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
-    <blockquote>“{{activityState.activity_status.secret_phrase}}”</blockquote>
-    <p>Whisper it to your neighbour, and follow the prompts below to get the game rolling. Hit the ‘Stop’ button when the message gets back to you!</p>
+    <blockquote>“{{ activityState.activity_status.secret_phrase }}”</blockquote>
+    <p>
+      Whisper it to your neighbour, and follow the prompts below to get the game
+      rolling. Hit the ‘Stop’ button when the message gets back to you!
+    </p>
     <div class="b-dialog-template__action">
-      <button class="b-standard-button b-standard-button--white" *ngIf="!msessageShared" (click)="msessageShared = true">I shared the message</button>
-      <button class="b-standard-button b-standard-button--white" *ngIf="msessageShared" (click)="initiateTelephone()" [mat-dialog-close]="true">Start the game!</button>
+      <button
+        class="b-standard-button b-standard-button--white"
+        *ngIf="!msessageShared"
+        (click)="msessageShared = true"
+      >
+        I shared the message
+      </button>
+      <button
+        class="b-standard-button b-standard-button--white"
+        *ngIf="msessageShared"
+        (click)="initiateTelephone()"
+        [mat-dialog-close]="true"
+      >
+        Start the game!
+      </button>
     </div>
   </div>
 </ng-template>
 
 <ng-template #endTemplate>
   <div class="b-dialog-template">
-    <p>
-      Share the message you just received with the rest of the group.
-    </p>
+    <p>Share the message you just received with the rest of the group.</p>
 
-    <p>
-      Remember what the original message was?
-    </p>
+    <p>Remember what the original message was?</p>
 
-    <p>
-      “{{activityState.activity_status.secret_phrase}}”
-    </p>
+    <p>“{{ activityState.activity_status.secret_phrase }}”</p>
     <div class="b-dialog-template__action">
-      <button class="b-standard-button b-standard-button--white" [mat-dialog-close]="true" (click)="endGame()">Done</button>
+      <button
+        class="b-standard-button b-standard-button--white"
+        [mat-dialog-close]="true"
+        (click)="endGame()"
+      >
+        Done
+      </button>
     </div>
   </div>
 </ng-template>

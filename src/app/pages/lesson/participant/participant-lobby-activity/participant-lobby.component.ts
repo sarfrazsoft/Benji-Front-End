@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {BaseActivityComponent} from '../../shared/base-activity.component';
+import { Component } from '@angular/core';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-participant-lobby',

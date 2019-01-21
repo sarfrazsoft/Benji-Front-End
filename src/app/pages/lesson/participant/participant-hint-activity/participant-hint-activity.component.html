@@ -1,9 +1,12 @@
 <!-- Hint word input -->
-<ng-container *ngIf="!activityState.activity_status.submission_complete && !activityState.activity_status.voting_complete">
+<ng-container
+  *ngIf="
+    !activityState.activity_status.submission_complete &&
+    !activityState.activity_status.voting_complete
+  "
+>
   <div class="b-flat-card center-text hintword-card">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">Hint Word</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">Hint Word</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
@@ -13,61 +16,104 @@
     </div>
     <div class="b-flat-card__action">
       <div class="b-standard-input__container">
-        <input type="text" placeholder="Your hint word" maxlength="20" class="b-standard-input" [formControl]="hintWord">
-        <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value !== null">{{20 -
-          hintWord.value.length}}</span>
-        <span class="b-standard-input__chars-remaining cloudy-grey" *ngIf="hintWord.value === null">20</span>
+        <input
+          type="text"
+          placeholder="Your hint word"
+          maxlength="20"
+          class="b-standard-input"
+          [formControl]="hintWord"
+        />
+        <span
+          class="b-standard-input__chars-remaining cloudy-grey"
+          *ngIf="hintWord.value !== null"
+          >{{ 20 - hintWord.value.length }}</span
+        >
+        <span
+          class="b-standard-input__chars-remaining cloudy-grey"
+          *ngIf="hintWord.value === null"
+          >20</span
+        >
       </div>
-      <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive': hintWord.invalid || participantHasSubmitted()}"
-        (click)="submitHintWord()">
-        <span *ngIf="participantHasSubmitted()">
-          Waiting for others...
-        </span>
-        <span *ngIf="!participantHasSubmitted()">
-          Submit
-        </span>
+      <button
+        class="b-standard-button"
+        [ngClass]="{
+          'b-standard-button--inactive':
+            hintWord.invalid || participantHasSubmitted()
+        }"
+        (click)="submitHintWord()"
+      >
+        <span *ngIf="participantHasSubmitted()"> Waiting for others... </span>
+        <span *ngIf="!participantHasSubmitted()"> Submit </span>
       </button>
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="activityState.activity_status.submission_complete && !activityState.activity_status.voting_complete">
-  <div class="b-flat-card center-text hintword-card" [ngClass]="{'hintword-card--confirm-state': selectedWord}">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">Hint Word</h2>
-    </div>
+<ng-container
+  *ngIf="
+    activityState.activity_status.submission_complete &&
+    !activityState.activity_status.voting_complete
+  "
+>
+  <div
+    class="b-flat-card center-text hintword-card"
+    [ngClass]="{ 'hintword-card--confirm-state': selectedWord }"
+  >
+    <div class="b-flat-card__title"><h2 class="pn-400">Hint Word</h2></div>
     <div class="b-flat-card__body">
       <h3 class="pn-700 deep-blue">
-        <span *ngIf="!participantHasVoted()">
-          Vote for your favourite
-        </span>
-        <span *ngIf="participantHasVoted()">
-          You voted for
-        </span>
+        <span *ngIf="!participantHasVoted()"> Vote for your favourite </span>
+        <span *ngIf="participantHasVoted()"> You voted for </span>
       </h3>
     </div>
     <div class="b-flat-card__action">
       <ng-container *ngIf="!participantHasVoted()">
-        <button class="b-standard-button b-standard-button--unselected" *ngFor="let word of activityState.activity_status.submitted_words"
-                [ngClass]="{'b-standard-button--selected': word === selectedWord }" (click)="selectedWord = word">{{word | titlecase}}</button>
+        <button
+          class="b-standard-button b-standard-button--unselected"
+          *ngFor="let word of activityState.activity_status.submitted_words"
+          [ngClass]="{ 'b-standard-button--selected': word === selectedWord }"
+          (click)="selectedWord = word"
+        >
+          {{ word | titlecase }}
+        </button>
       </ng-container>
-      <button class="b-standard-button b-standard-button--selected" *ngIf="participantHasVoted()">{{selectedWord}}</button>
+      <button
+        class="b-standard-button b-standard-button--selected"
+        *ngIf="participantHasVoted()"
+      >
+        {{ selectedWord }}
+      </button>
     </div>
   </div>
   <div class="b-baseline-action bg-indigo-blue" *ngIf="selectedWord">
-    <app-animated-checkmark-button loadingStateInnerHTML="Loading" innerHTML="Submit" buttonStyle="white" [valid]="participantHasVoted()" (click)="submitVote()"></app-animated-checkmark-button>
+    <app-animated-checkmark-button
+      loadingStateInnerHTML="Loading"
+      innerHTML="Submit"
+      buttonStyle="white"
+      [valid]="participantHasVoted()"
+      (click)="submitVote()"
+    ></app-animated-checkmark-button>
   </div>
 </ng-container>
-<ng-container *ngIf="activityState.activity_status.submission_complete && activityState.activity_status.voting_complete">
+<ng-container
+  *ngIf="
+    activityState.activity_status.submission_complete &&
+    activityState.activity_status.voting_complete
+  "
+>
   <div class="b-flat-card center-text hintword-card">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">Hint Word</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">Hint Word</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
-      <h3 class="pn-700 deep-blue">{{activityState.activity_status.voted_word | titlecase}}</h3>
-      <p>Just say ‘{{activityState.activity_status.voted_word | titlecase}}’ to anyone in this group if you ever need to remind them to listen a little better.</p>
+      <h3 class="pn-700 deep-blue">
+        {{ activityState.activity_status.voted_word | titlecase }}
+      </h3>
+      <p>
+        Just say ‘{{ activityState.activity_status.voted_word | titlecase }}’ to
+        anyone in this group if you ever need to remind them to listen a little
+        better.
+      </p>
     </div>
   </div>
 </ng-container>

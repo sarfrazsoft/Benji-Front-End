@@ -1,9 +1,7 @@
 <!-- Discussion Volunteer Card -->
 <ng-container *ngIf="!activityState.activity_status.discussion_complete">
   <div class="b-flat-card center-text roleplay-card">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">Role-Play</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">Role-Play</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="🤔"></app-b-twemoji>
@@ -12,22 +10,29 @@
       <p>What were your takeaways from that role-play?</p>
     </div>
     <div class="b-flat-card__action">
-      <button class="b-standard-button" [ngClass]="{'b-standard-button--inactive' : participantVolunteered()}" (click)="shareButton()">
+      <button
+        class="b-standard-button"
+        [ngClass]="{ 'b-standard-button--inactive': participantVolunteered() }"
+        (click)="shareButton()"
+      >
         We want to share
       </button>
     </div>
-    <app-linear-timer (initCallback)="discussionTimerInit($event)"></app-linear-timer>
+    <app-linear-timer
+      (initCallback)="discussionTimerInit($event)"
+    ></app-linear-timer>
   </div>
 </ng-container>
 
 <!-- Share With Group Card -->
-<ng-container *ngIf="activityState.activity_status.discussion_complete && participantIsSharing()">
+<ng-container
+  *ngIf="
+    activityState.activity_status.discussion_complete && participantIsSharing()
+  "
+>
   <div class="b-flat-card center-text roleplay-card">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">Role-play</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">Role-play</h2></div>
     <div class="b-flat-card__body">
-
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="📣"></app-b-twemoji>
       </div>
@@ -36,21 +41,23 @@
     </div>
     <div class="b-flat-card__action">
       <button class="b-standard-button" (click)="doneButton()">
-        <ng-container>
-            Done
-        </ng-container>
+        <ng-container> Done </ng-container>
       </button>
     </div>
-    <app-linear-timer (initCallback)="sharingTimerInit($event)"></app-linear-timer>
+    <app-linear-timer
+      (initCallback)="sharingTimerInit($event)"
+    ></app-linear-timer>
   </div>
 </ng-container>
 
 <!-- Listening Card -->
-<ng-container *ngIf="activityState.activity_status.discussion_complete && !participantIsSharing()">
+<ng-container
+  *ngIf="
+    activityState.activity_status.discussion_complete && !participantIsSharing()
+  "
+>
   <div class="b-flat-card center-text roleplay-card">
-    <div class="b-flat-card__title">
-      <h2 class="pn-400">Role-play</h2>
-    </div>
+    <div class="b-flat-card__title"><h2 class="pn-400">Role-play</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="👂"></app-b-twemoji>

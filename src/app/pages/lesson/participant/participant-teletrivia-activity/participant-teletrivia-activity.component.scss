@@ -5,34 +5,34 @@
   bottom: 0;
   width: 100%;
   button {
-      margin: 0;
+    margin: 0;
   }
 }
 .mc-card {
   overflow-y: scroll;
 
   .b-flat-card__body {
-      h3 {
-          font-size: 24px;
-      }
+    h3 {
+      font-size: 24px;
+    }
   }
 }
 
 .b-dialog-template {
   p {
-      font-size: 16px;
-      line-height: normal;
-      letter-spacing: 0.7px;
+    font-size: 16px;
+    line-height: normal;
+    letter-spacing: 0.7px;
   }
   blockquote {
-      border-left: none;
-      font-weight: bold;
-      font-size: 24px;
-      line-height: normal;
-      letter-spacing: 1.1px;
+    border-left: none;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: normal;
+    letter-spacing: 1.1px;
   }
   button {
-      width: 210px;
+    width: 210px;
   }
 }
 
@@ -42,15 +42,15 @@
 
 .mc-card--circle .b-flat-card__body {
   h3 {
-      font-size: 35px;
-      line-height: normal;
+    font-size: 35px;
+    line-height: normal;
   }
   p {
-      font-size: 14px;
+    font-size: 14px;
   }
   .b-flat-card__twemoji {
-      width: 120px;
-      margin: 0 auto;
+    width: 120px;
+    margin: 0 auto;
   }
   .mc-card__loader {
     display: flex;
@@ -60,34 +60,34 @@
 }
 @media screen and (min-width: 321px) {
   .b-flat-card__body {
-      padding: 5vh 30px 10px;
+    padding: 5vh 30px 10px;
   }
   .roleplay-card .b-flat-card__body {
-      .b-flat-card__twemoji {
-          width: 140px;
-      }
-      h3 {
-          font-size: 40px;
-          line-height: normal;
-      }
-      p {
-          font-size: 16px;
-      }
+    .b-flat-card__twemoji {
+      width: 140px;
+    }
+    h3 {
+      font-size: 40px;
+      line-height: normal;
+    }
+    p {
+      font-size: 16px;
+    }
   }
 }
 
 @media screen and (min-width: 414px) {
   .b-flat-card__body {
-      padding: 5vh 50px 20px;
+    padding: 5vh 50px 20px;
   }
   .roleplay-card .b-flat-card__body {
-      h3 {
-          font-size: 40px;
-          line-height: normal;
-      }
-      p {
-          font-size: 16px;
-          line-height: normal;
-      }
+    h3 {
+      font-size: 40px;
+      line-height: normal;
+    }
+    p {
+      font-size: 16px;
+      line-height: normal;
+    }
   }
 }

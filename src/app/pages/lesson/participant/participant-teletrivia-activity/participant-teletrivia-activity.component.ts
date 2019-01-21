@@ -1,15 +1,21 @@
-import {Component, Renderer2, ViewChild, OnChanges, SimpleChanges} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {BaseActivityComponent} from '../../shared/base-activity.component';
-
+import {
+  Component,
+  Renderer2,
+  ViewChild,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-participant-teletrivia-activity',
   templateUrl: './participant-teletrivia-activity.component.html',
   styleUrls: ['./participant-teletrivia-activity.component.scss']
 })
-export class ParticipantTeletriviaActivityComponent extends BaseActivityComponent implements OnChanges {
-
+export class ParticipantTeletriviaActivityComponent
+  extends BaseActivityComponent
+  implements OnChanges {
   currentQuestionIndex = 0;
 
   msessageShared = false;
@@ -38,11 +44,13 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (this.participantIsInitiator() &&
-            !this.activityState.activity_status.game_started &&
-            this.activityState.activity_status.all_in_circle &&
-            !this.initiatorModalVisible) {
-            this.initiatorModalVisible = true;
+    if (
+      this.participantIsInitiator() &&
+      !this.activityState.activity_status.game_started &&
+      this.activityState.activity_status.all_in_circle &&
+      !this.initiatorModalVisible
+    ) {
+      this.initiatorModalVisible = true;
       this.triggerDialogue(this.initiatorModal);
     }
 
@@ -58,40 +66,53 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
 
   public openEndModal() {
     this.triggerDialogue(this.endModal);
-    this.sendMessage.emit({'event': 'done_button'});
+    this.sendMessage.emit({ event: 'done_button' });
   }
 
   participantInCircle() {
-    return this.activityState.activity_status.users_in_circle.find((e) =>
-                                      e === this.activityState.your_identity.id) !== undefined;
+    return (
+      this.activityState.activity_status.users_in_circle.find(
+        e => e === this.activityState.your_identity.id
+      ) !== undefined
+    );
   }
 
   participantIsInitiator() {
-    return this.activityState.activity_status.chosen_user === this.activityState.your_identity.id;
+    return (
+      this.activityState.activity_status.chosen_user ===
+      this.activityState.your_identity.id
+    );
   }
 
   sendReadyState() {
-    this.sendMessage.emit({'event': 'user_in_circle'});
+    this.sendMessage.emit({ event: 'user_in_circle' });
   }
 
   public initiateTelephone() {
-    this.sendMessage.emit({'event': 'start_game'});
+    this.sendMessage.emit({ event: 'start_game' });
   }
 
   public endGame() {
-    this.sendMessage.emit({'event': 'sharing_done_button'});
+    this.sendMessage.emit({ event: 'sharing_done_button' });
   }
 
   questionTimeUpCallback() {
     this.revealAnswer = true;
-    this.answerExplanation = 'On no! You ran out of time! This was the correct answer.';
+    this.answerExplanation =
+      'On no! You ran out of time! This was the correct answer.';
   }
 
   submitAnswer(choice) {
     this.questionTimer.stopTimer(false);
 
-    const question = this.activityState.activity_status.distracting_questions[this.currentQuestionIndex];
-    this.sendMessage.emit({'event': 'submit_answer', 'question_id': question.id, 'answer': choice.id});
+    const question = this.activityState.activity_status.distracting_questions[
+      this.currentQuestionIndex
+    ];
+    this.sendMessage.emit({
+      event: 'submit_answer',
+      question_id: question.id,
+      answer: choice.id
+    });
     this.selectedAnswerIndex = choice.id;
     this.revealAnswer = true;
     this.answerExplanation = choice.explanation_text;
@@ -109,5 +130,4 @@ export class ParticipantTeletriviaActivityComponent extends BaseActivityComponen
       panelClass: 'dialog--indigo-blue'
     });
   }
-
 }

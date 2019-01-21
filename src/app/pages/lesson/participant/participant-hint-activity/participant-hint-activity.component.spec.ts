@@ -8,9 +8,8 @@ describe('ParticipantHintActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParticipantHintActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [ParticipantHintActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

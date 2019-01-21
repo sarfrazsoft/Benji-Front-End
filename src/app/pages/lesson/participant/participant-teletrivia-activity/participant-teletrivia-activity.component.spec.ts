@@ -8,9 +8,8 @@ describe('ParticipantTeletriviaActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParticipantTeletriviaActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [ParticipantTeletriviaActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

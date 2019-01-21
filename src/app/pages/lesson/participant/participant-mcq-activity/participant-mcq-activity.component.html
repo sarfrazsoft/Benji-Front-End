@@ -1,20 +1,26 @@
- <ng-container *ngIf="!reveal()">
+<ng-container *ngIf="!reveal()">
   <div class="b-flat-card center-text mc-card">
     <div class="b-flat-card__title">
       <h2 class="pn-400">Multiple Choice</h2>
     </div>
     <div class="b-flat-card__body">
-      <h3 class="pn-400 brownish-grey">{{ activityState.activity_status.question.question }}</h3>
+      <h3 class="pn-400 brownish-grey">
+        {{ activityState.activity_status.question.question }}
+      </h3>
     </div>
     <div class="b-flat-card__action">
       <button
         class="b-standard-button b-standard-button--unselected"
         [ngClass]="{
           'b-standard-button--correct': reveal() && answer.is_correct,
-          'b-standard-button--incorrect': reveal() && !answer.is_correct && i === selectedAnswerIndex,
+          'b-standard-button--incorrect':
+            reveal() && !answer.is_correct && i === selectedAnswerIndex,
           'b-standard-button--selected': !reveal() && i === selectedAnswerIndex
         }"
-        *ngFor="let answer of activityState.activity_status.question.choices; index as i"
+        *ngFor="
+          let answer of activityState.activity_status.question.choices;
+          index as i
+        "
         (click)="submitAnswer(answer)"
       >
         {{ answer.choice_text }}
@@ -22,7 +28,9 @@
     </div>
   </div>
   <div class="mc-card__timer">
-    <app-linear-timer (initCallback)="questionTimerInit($event)"></app-linear-timer>
+    <app-linear-timer
+      (initCallback)="questionTimerInit($event)"
+    ></app-linear-timer>
   </div>
 </ng-container>
 
@@ -31,14 +39,18 @@
     <div class="b-flat-card__title">
       <h2 class="pn-400">Multiple Choice</h2>
     </div>
-    <ng-container *ngIf="selectedAnswer !== undefined && selectedAnswer.is_correct">
+    <ng-container
+      *ngIf="selectedAnswer !== undefined && selectedAnswer.is_correct"
+    >
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="🎉"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">Correct!</h3>
       <div class="b-flat-card__body"></div>
     </ng-container>
-    <ng-container *ngIf="selectedAnswer === undefined || !selectedAnswer.is_correct">
+    <ng-container
+      *ngIf="selectedAnswer === undefined || !selectedAnswer.is_correct"
+    >
       <div class="b-flat-card__twemoji">
         <app-b-twemoji emoji="🙊"></app-b-twemoji>
         <h3 class="pn-700 deep-blue">Oops!</h3>
@@ -53,7 +65,9 @@
       <p>{{ correctChoice().explanation_text }}</p>
     </div>
     <div class="mc-card__timer">
-      <app-linear-timer (initCallback)="revealTimerInit($event)"></app-linear-timer>
+      <app-linear-timer
+        (initCallback)="revealTimerInit($event)"
+      ></app-linear-timer>
     </div>
   </div>
 </ng-container>
