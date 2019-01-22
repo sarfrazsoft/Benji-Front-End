@@ -39,7 +39,6 @@
     h3 {
       font-size: 3.3vh;
       letter-spacing: 2.5px;
-      line-height: 1.7;
       text-align: center;
       text-transform: uppercase;
       margin-top: 0;
@@ -61,7 +60,8 @@
     }
   }
   .hint-activity__words-total {
-    font-size: 5vh;
+    font-size: 3.3vh;
+    text-transform: uppercase;
     line-height: normal;
     max-width: 80%;
     margin: 25px auto 0;
