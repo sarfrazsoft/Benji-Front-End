@@ -6,12 +6,15 @@ import * as global from '../../globals';
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    return this.http.post(global.apiRoot + '/jwt-auth/', {'username': username, 'password': password}).pipe(
-                      tap(result => this.setSession(result))
-    );
+    return this.http
+      .post(global.apiRoot + '/jwt-auth/', {
+        username: username,
+        password: password
+      })
+      .pipe(tap(result => this.setSession(result)));
   }
 
   private setSession(authResult) {
@@ -37,7 +40,9 @@ export class AuthService {
   public isLoggedIn() {
     const token = this.getToken();
     if (token) {
-      return this.decodeToken(token).exp > Math.round((new Date()).getTime() / 1000);
+      return (
+        this.decodeToken(token).exp > Math.round(new Date().getTime() / 1000)
+      );
     } else {
       return false;
     }
@@ -46,5 +51,12 @@ export class AuthService {
   isLoggedOut() {
     return !this.isLoggedIn();
   }
-}
 
+  getUserRole() {
+    // Do something
+    // admin
+    // mainscreenUser
+    // participant
+    return 'mainscreenUser';
+  }
+}

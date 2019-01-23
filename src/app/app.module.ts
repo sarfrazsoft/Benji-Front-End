@@ -14,6 +14,8 @@ import {
   ServicesProviders
 } from './index';
 
+import { LayoutModule } from './layout/layout.module';
+
 // Components
 import { RadialTimerComponent } from './ui-components/radial-timer/radial-timer.component';
 import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedback-prompt.component';
@@ -78,7 +80,8 @@ import { ParticipantToolbarComponent } from './ui-components/participant-toolbar
     MatMenuModule,
     MatIconModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LayoutModule
   ],
   providers: [...ServicesProviders],
   bootstrap: [AppComponent],
