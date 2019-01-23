@@ -42,6 +42,7 @@ import { PrimaryNavbarComponent } from './ui-components/primary-navbar/primary-n
 // Material Design Modules
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ElementsComponent } from './elements/elements.component';
@@ -110,6 +111,7 @@ import { ParticipantMcqActivityComponent } from './pages/lesson/participant/part
     FormsModule,
     ReactiveFormsModule,
     OnsenModule,
+    MatButtonModule,
     MatProgressBarModule,
     MatMenuModule,
     MatIconModule,
