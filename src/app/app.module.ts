@@ -4,19 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
 
-// Services
-import { AuthService } from './services/auth/auth.service';
-import { TokenInterceptor } from './services/auth/auth.interceptor';
-import { BackendRestService } from './services/backend/backend-rest.service';
-import { BackendSocketService } from './services/backend/backend-socket.service';
-import { EmojiLookupService } from './services/emoji-lookup.service';
-
-import { MainScreenComponents, ParticipantScreenComponents } from './index';
+import {
+  MainScreenComponents,
+  ParticipantScreenComponents,
+  ServicesProviders
+} from './index';
 
 // Components
 import { RadialTimerComponent } from './ui-components/radial-timer/radial-timer.component';
@@ -65,9 +61,9 @@ import { ParticipantToolbarComponent } from './ui-components/participant-toolbar
     BTwemojiComponent,
     MainscreenElementsComponent,
     MainScreenToolbarComponent,
+    ParticipantToolbarComponent,
     ...MainScreenComponents,
-    ...ParticipantScreenComponents,
-    ParticipantToolbarComponent
+    ...ParticipantScreenComponents
   ],
   imports: [
     AppRoutingModule,
@@ -84,13 +80,7 @@ import { ParticipantToolbarComponent } from './ui-components/participant-toolbar
     MatDialogModule,
     MatProgressSpinnerModule
   ],
-  providers: [
-    AuthService,
-    BackendRestService,
-    BackendSocketService,
-    EmojiLookupService,
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
-  ],
+  providers: [...ServicesProviders],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
