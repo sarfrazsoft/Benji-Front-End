@@ -3,7 +3,8 @@ import {
   Renderer2,
   ViewChild,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  OnDestroy
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -15,7 +16,10 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantTeletriviaActivityComponent
   extends BaseActivityComponent
-  implements OnChanges {
+  implements OnChanges, OnDestroy {
+  constructor(private renderer: Renderer2, public dialog: MatDialog) {
+    super();
+  }
   currentQuestionIndex = 0;
 
   msessageShared = false;
@@ -31,8 +35,8 @@ export class ParticipantTeletriviaActivityComponent
   @ViewChild('kickofftemplate') initiatorModal;
   @ViewChild('endTemplate') endModal;
 
-  constructor(private renderer: Renderer2, public dialog: MatDialog) {
-    super();
+  ngOnDestroy() {
+    this.dialog.closeAll();
   }
 
   startQuestionTimer(timer) {
