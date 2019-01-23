@@ -9,7 +9,19 @@
   .flexer--space-between {
     align-items: center;
   }
-}
-mat-icon {
-  cursor: pointer;
+  .fullscreen-container {
+    margin-top: -15px;
+    mat-icon {
+      cursor: pointer;
+      height: 36px;
+      width: 36px;
+      font-size: 36px;
+    }
+    span {
+      position: absolute;
+      margin-top: 36px;
+      color: #ecdddd;
+      right: 16px;
+    }
+  }
 }
