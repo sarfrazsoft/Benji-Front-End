@@ -8,6 +8,7 @@ import { ParticipantJoinComponent } from '../pages/landing/participant/join/part
 import { MainScreenLessonComponent } from '../pages/lesson/main-screen/main-screen-lesson.component';
 import { ParticipantLessonComponent } from '../pages/lesson/participant/participant-lesson.component';
 
+// TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
   // { canActivate: [AuthGuard], path: '', loadChildren: () => DashboardModule },
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
