@@ -47,10 +47,16 @@
   <div class="mcq-activity__linear-timer-container">
     <app-linear-timer
       *ngIf="reveal()"
-      [timerSeconds]="pauseSeconds"
       (initCallback)="startRevealTimer($event)"
       #revealTimer
     ></app-linear-timer>
+
+    <!-- <app-linear-timer
+    *ngIf="reveal()"
+    [timerSeconds]="pauseSeconds"
+    (initCallback)="startRevealTimer($event)"
+    #revealTimer
+  ></app-linear-timer> -->
   </div>
 </div>
 

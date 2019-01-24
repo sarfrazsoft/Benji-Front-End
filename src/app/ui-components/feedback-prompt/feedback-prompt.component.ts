@@ -1,4 +1,13 @@
-import {Component, Input, Output, ViewEncapsulation, EventEmitter, OnInit } from '@angular/core';
+// TODO; figure me out, I'm not being used anywhere
+
+import {
+  Component,
+  Input,
+  Output,
+  ViewEncapsulation,
+  EventEmitter,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'app-feedback-prompt',
@@ -6,14 +15,13 @@ import {Component, Input, Output, ViewEncapsulation, EventEmitter, OnInit } from
   styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })
-
 export class FeedbackPromptComponent implements OnInit {
   @Input() prompt;
   @Output() value = new EventEmitter();
 
   textVal;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.value.emit('Neutral');
@@ -27,4 +35,3 @@ export class FeedbackPromptComponent implements OnInit {
     this.value.emit(this.textVal);
   }
 }
-

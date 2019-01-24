@@ -48,24 +48,24 @@ import { ParticipantToolbarComponent } from './ui-components/participant-toolbar
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RadialTimerComponent,
-    FeedbackPromptComponent,
-    LandingComponent,
-    MainScreenFooterComponent,
+    AppComponent
+    // RadialTimerComponent,
+    // FeedbackPromptComponent,
+    // LandingComponent,
+    // MainScreenFooterComponent,
 
-    ParticipantLoginComponent,
-    ParticipantJoinComponent,
-    PrimaryNavbarComponent,
-    ElementsComponent,
-    LinearTimerComponent,
-    AnimatedCheckmarkButtonComponent,
-    BTwemojiComponent,
-    MainscreenElementsComponent,
-    MainScreenToolbarComponent,
-    ParticipantToolbarComponent,
-    ...MainScreenComponents,
-    ...ParticipantScreenComponents
+    // ParticipantLoginComponent,
+    // ParticipantJoinComponent,
+    // PrimaryNavbarComponent,
+    // ElementsComponent
+    // LinearTimerComponent,
+    // AnimatedCheckmarkButtonComponent,
+    // BTwemojiComponent,
+    // MainscreenElementsComponent,
+    // MainScreenToolbarComponent,
+    // ParticipantToolbarComponent
+    // ...MainScreenComponents,
+    // ...ParticipantScreenComponents
   ],
   imports: [
     AppRoutingModule,
@@ -75,12 +75,12 @@ import { ParticipantToolbarComponent } from './ui-components/participant-toolbar
     FormsModule,
     ReactiveFormsModule,
     OnsenModule,
-    MatButtonModule,
-    MatProgressBarModule,
+    // MatButtonModule,
+    // MatProgressBarModule,
     MatMenuModule,
-    MatIconModule,
+    // MatIconModule,
     MatDialogModule,
-    MatProgressSpinnerModule,
+    // MatProgressSpinnerModule,
     LayoutModule
   ],
   providers: [...ServicesProviders],

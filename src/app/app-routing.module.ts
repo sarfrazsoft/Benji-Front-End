@@ -12,26 +12,10 @@ import { MainScreenLobbyComponent } from './pages/lesson/main-screen/main-screen
 import { ParticipantLessonComponent } from './pages/lesson/participant/participant-lesson.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/landing', pathMatch: 'full' },
-  { path: 'landing', component: LandingComponent },
   {
-    path: 'screen/lesson/:roomCode',
-    component: MainScreenLessonComponent,
-    children: [{ path: 'lobby', component: MainScreenLobbyComponent }]
-  },
-  { path: 'participant/login', component: ParticipantLoginComponent },
-  { path: 'participant/join', component: ParticipantJoinComponent },
-  {
-    path: 'participant/lesson/:roomCode',
-    component: ParticipantLessonComponent
-  },
-  {
-    path: 'admin',
+    path: '',
     loadChildren: 'src/app/layout/layout.module#LayoutModule'
-  },
-  { path: 'elements', component: ElementsComponent },
-  { path: 'main-elements', component: MainscreenElementsComponent },
-  { path: 'teletrivia', component: MainScreenTeletriviaActivityComponent }
+  }
 ];
 
 @NgModule({

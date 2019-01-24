@@ -1,3 +1,5 @@
+// TODO figure me out, I'm not being used anywhere
+
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
 

@@ -46,9 +46,15 @@
   >
   </app-participant-feedback-activity>
 
-  <app-participant-activity-video
+  <!-- <app-participant-activity-video
     *ngIf="getActivityType() === 'VideoActivity'"
     [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </app-participant-activity-video> -->
+
+  <app-participant-activity-video
+    *ngIf="getActivityType() === 'VideoActivity'"
     (sendMessage)="sendSocketMessage($event)"
   >
   </app-participant-activity-video>

@@ -1,3 +1,5 @@
+// TODO get rid of me
+
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
