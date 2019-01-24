@@ -1,7 +1,6 @@
-import { Component, OnInit, Renderer2, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 
 declare var twemoji: any;
-
 
 @Component({
   selector: 'app-b-twemoji',
@@ -9,7 +8,7 @@ declare var twemoji: any;
   styleUrls: ['./b-twemoji.component.scss']
 })
 export class BTwemojiComponent implements OnInit {
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
+  constructor(private renderer: Renderer2, private el: ElementRef) {}
 
   @Input() emoji: string;
 
@@ -25,7 +24,5 @@ export class BTwemojiComponent implements OnInit {
       ext: '.svg',
       folder: 'svg'
     });
-
   }
-
 }
