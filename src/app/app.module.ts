@@ -17,8 +17,15 @@ import { AppComponent } from './app.component';
 // Plugins
 import { OnsenModule } from 'ngx-onsenui';
 
+import { ElementsComponent } from './elements/elements.component';
+import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedback-prompt.component';
+import { PrimaryNavbarComponent } from './ui-components/primary-navbar/primary-navbar.component';
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,
+    ElementsComponent,
+    FeedbackPromptComponent,
+    PrimaryNavbarComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
