@@ -14,11 +14,21 @@ import { LayoutModule } from './layout/layout.module';
 // App Pages
 import { AppComponent } from './app.component';
 
+// Temporary imports
+import { ElementsComponent } from './elements/elements.component';
+import { FeedbackPromptComponent } from './ui-components/feedback-prompt/feedback-prompt.component';
+import { PrimaryNavbarComponent } from './ui-components/primary-navbar/primary-navbar.component';
+
 // Plugins
 import { OnsenModule } from 'ngx-onsenui';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    ElementsComponent,
+    FeedbackPromptComponent,
+    PrimaryNavbarComponent
+  ],
   imports: [
     AppRoutingModule,
     BrowserModule,
