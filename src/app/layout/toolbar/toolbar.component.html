@@ -1,18 +1,34 @@
-<!-- <mat-toolbar *ngIf="authService.isOnline">
-  <mat-toolbar-row>
-    <a routerLink="" fxFlex="10%" fxLayoutAlign="start center">
-      <img src="./assets/icon.png" height="44" width="44" />
-    </a>
-    <div routerLink=""><span class="title">Reviewer</span></div>
-    <div fxFlex="1 1" class="search"><input type="text" /></div>
-    <div>
-      <button mat-icon-button class="search-button">
-        <mat-icon>search</mat-icon>
+<mat-toolbar>
+  <div class="logo"><img src="../../assets/img/logo.png" /></div>
+
+  <div class="right-controls">
+    <button mat-button class="user-controls" [matMenuTriggerFor]="menu">
+      <span class="acc-icon">
+        <app-avatar
+          class="toolbar-avatar"
+          [imgSrc]="'../../assets/img/george.png'"
+          [size]="'big'"
+        ></app-avatar>
+      </span>
+      <span>{{ firstName + ' ' + lastName }}</span>
+    </button>
+    <mat-menu
+      #menu="matMenu"
+      class="user-controls"
+      [overlapTrigger]="false"
+      xPosition="before"
+    >
+      <button mat-menu-item routerLink="/profile">
+        <span>Matt Parson</span>
       </button>
-    </div>
-    <div class="action">
-      <button mat-raised-button (click)="logout()">Logout</button>
-    </div>
-  </mat-toolbar-row>
-</mat-toolbar> -->
-<div>toolbar</div>
+      <hr />
+      <button mat-menu-item routerLink="/account"><span>Account</span></button>
+      <button mat-menu-item routerLink="/settings">
+        <span>Settings</span>
+      </button>
+      <button mat-menu-item routerLink="/help"><span>Help</span></button>
+      <hr />
+      <button mat-menu-item (click)="logout()"><span>Log out</span></button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
