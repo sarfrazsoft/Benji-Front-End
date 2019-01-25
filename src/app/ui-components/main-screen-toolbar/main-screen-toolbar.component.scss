@@ -11,8 +11,8 @@
   }
   .fullscreen-container {
     margin-top: -15px;
+    cursor: pointer;
     mat-icon {
-      cursor: pointer;
       height: 36px;
       width: 36px;
       font-size: 36px;
@@ -20,8 +20,9 @@
     span {
       position: absolute;
       margin-top: 36px;
-      color: #ecdddd;
+      color: #fff;
       right: 16px;
+      font-size: 16px;
     }
   }
 }

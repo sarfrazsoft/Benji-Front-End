@@ -2,11 +2,11 @@
 
 import {
   Component,
-  Input,
-  Output,
-  ViewEncapsulation,
   EventEmitter,
-  OnInit
+  Input,
+  OnInit,
+  Output,
+  ViewEncapsulation
 } from '@angular/core';
 
 @Component({

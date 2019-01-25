@@ -7,17 +7,9 @@
         class="benji-logo"
       />
     </div>
-    <div class="fullscreen-container">
-      <mat-icon
-        *ngIf="!isFullscreen"
-        class="icon-white"
-        (click)="openfullscreen()"
-        >fullscreen</mat-icon
-      >
-      <mat-icon
-        *ngIf="isFullscreen"
-        class="icon-white"
-        (click)="closefullscreen()"
+    <div (click)="toggleFullscreen()" class="fullscreen-container">
+      <mat-icon *ngIf="!isFullscreen()" class="icon-white">fullscreen</mat-icon>
+      <mat-icon *ngIf="isFullscreen()" class="icon-white"
         >fullscreen_exit</mat-icon
       >
       <span> Fullscreen </span>
