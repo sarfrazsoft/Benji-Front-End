@@ -15,7 +15,34 @@
       </p>
     </div>
     <div class="hint-activity__options-container" #listParent>
-      <div class="hint-activity__section-title"><h3>Hint Word Options</h3></div>
+      <div class="hint-activity__section-title">
+        <h3>
+          <ng-container
+            *ngIf="!activityState.activity_status.submission_complete"
+          >
+            <span class="deep-blue">
+              {{ activityState.activity_status.submitted_words.length }}
+            </span>
+            {{
+              activityState.activity_status.submitted_words.length === 1
+                ? 'Word submitted'
+                : 'Words submitted'
+            }}
+          </ng-container>
+          <ng-container
+            *ngIf="activityState.activity_status.submission_complete"
+          >
+            <span class="deep-blue">
+              {{ activityState.activity_status.voted_users.length }}
+            </span>
+            {{
+              activityState.activity_status.voted_users.length === 1
+                ? 'Vote submitted'
+                : 'Votes submitted'
+            }}
+          </ng-container>
+        </h3>
+      </div>
       <div class="hint-activity__options">
         <ul>
           <li
@@ -36,14 +63,6 @@
       class="hint-activity__words-total"
       *ngIf="!activityState.activity_status.submission_complete"
     >
-      <span class="deep-blue">
-        {{ activityState.activity_status.submitted_words.length }}
-      </span>
-      {{
-        activityState.activity_status.submitted_words.length === 1
-          ? 'Word submitted'
-          : 'Words submitted'
-      }}
       <app-radial-timer
         (initCallback)="submitTimerInit($event)"
         endStateText="Vote!"
@@ -53,14 +72,6 @@
       class="hint-activity__words-total"
       *ngIf="activityState.activity_status.submission_complete"
     >
-      <span class="deep-blue">
-        {{ activityState.activity_status.voted_users.length }}
-      </span>
-      {{
-        activityState.activity_status.voted_users.length === 1
-          ? 'Vote submitted'
-          : 'Votes submitted'
-      }}
       <app-radial-timer
         (initCallback)="voteTimerInit($event)"
         endStateText="Times Up!"
