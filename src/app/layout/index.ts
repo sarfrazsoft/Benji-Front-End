@@ -2,6 +2,7 @@ export * from './layout.component';
 
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { LayoutComponent } from './layout.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 import { MainscreenElementsComponent } from '../mainscreen-elements/mainscreen-elements.component';
@@ -35,5 +36,6 @@ export const LayoutDeclarations = [
   ParticipantToolbarComponent,
   MainScreenLessonComponent,
   RadialTimerComponent,
-  ToolbarComponent
+  ToolbarComponent,
+  SidenavComponent
 ];
