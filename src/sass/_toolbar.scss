@@ -1,0 +1,39 @@
+@import 'variables';
+
+mat-toolbar.mat-toolbar {
+  height: 90px;
+  background-color: #fff;
+  border-bottom: 2px solid $deep-blue;
+  .logo {
+    img {
+      height: 50px;
+    }
+  }
+}
+.avatar-size-big {
+  img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+  }
+}
+.right-controls {
+  .mat-button {
+    font-weight: 400;
+  }
+  .acc-icon {
+    display: inline-block;
+  }
+  .account-name {
+    font-size: 24px;
+    color: $vibrant-blue;
+    margin-left: 15px;
+  }
+}
+.mat-menu-content {
+  padding: 24px;
+  hr {
+    margin-left: -4px;
+    margin-right: -4px;
+  }
+}

@@ -1,4 +1,4 @@
-<mat-toolbar>
+<div fxLayoutAlign="space-between center" class="admin-toolbar">
   <div class="logo"><img src="../../assets/img/logo.png" /></div>
 
   <div class="right-controls">
@@ -6,11 +6,11 @@
       <span class="acc-icon">
         <app-avatar
           class="toolbar-avatar"
-          [imgSrc]="'../../assets/img/george.png'"
+          [imgSrc]=""
           [size]="'big'"
         ></app-avatar>
       </span>
-      <span>{{ firstName + ' ' + lastName }}</span>
+      <span class="account-name pn-600">{{ firstName + ' ' + lastName }}</span>
     </button>
     <mat-menu
       #menu="matMenu"
@@ -18,9 +18,11 @@
       [overlapTrigger]="false"
       xPosition="before"
     >
-      <button mat-menu-item routerLink="/profile">
-        <span>Matt Parson</span>
-      </button>
+      <div class="info">
+        <div class="name">Matt Parson</div>
+        <div class="email">matt@mybenji.com</div>
+        <div class="team">Sales</div>
+      </div>
       <hr />
       <button mat-menu-item routerLink="/account"><span>Account</span></button>
       <button mat-menu-item routerLink="/settings">
@@ -31,4 +33,4 @@
       <button mat-menu-item (click)="logout()"><span>Log out</span></button>
     </mat-menu>
   </div>
-</mat-toolbar>
+</div>

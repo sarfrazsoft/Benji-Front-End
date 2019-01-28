@@ -5,6 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './avatar.component.html'
 })
 export class CcrAvatarComponent {
-  @Input() imgSrc: string;
+  @Input() imgSrc = '../../assets/img/avatar.png';
   @Input() size: string;
 }
