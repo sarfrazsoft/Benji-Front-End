@@ -18,19 +18,21 @@
       [overlapTrigger]="false"
       xPosition="before"
     >
-      <div class="info">
+      <div class="menu-section info">
         <div class="name">Matt Parson</div>
-        <div class="email">matt@mybenji.com</div>
-        <div class="team">Sales</div>
+        <div class="email pn-400">matt@mybenji.com</div>
+        <div class="team pn-400">Sales</div>
       </div>
       <hr />
-      <button mat-menu-item routerLink="/account"><span>Account</span></button>
-      <button mat-menu-item routerLink="/settings">
-        <span>Settings</span>
-      </button>
-      <button mat-menu-item routerLink="/help"><span>Help</span></button>
+      <div class="menu-section options">
+        <div routerLink="/account">Account</div>
+        <div routerLink="/settings">Settings</div>
+        <div routerLink="/help">Help</div>
+      </div>
       <hr />
-      <button mat-menu-item (click)="logout()"><span>Log out</span></button>
+      <div class="menu-section logout">
+        <div (click)="logout()"><span>Log out</span></div>
+      </div>
     </mat-menu>
   </div>
 </div>

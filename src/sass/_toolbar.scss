@@ -31,9 +31,34 @@ mat-toolbar.mat-toolbar {
   }
 }
 .mat-menu-content {
-  padding: 24px;
+  padding: 0px 24px !important;
+  .menu-section {
+    margin: 15px 0px;
+    font-size: 20px;
+  }
+  .info {
+    div {
+      margin-bottom: 10px;
+    }
+    .name {
+      font-family: $pn-semi-bold;
+      font-weight: 500;
+      color: $deep-blue;
+    }
+  }
   hr {
-    margin-left: -4px;
-    margin-right: -4px;
+    margin: 0px -4px;
+    color: #979797;
+  }
+  .options,
+  .logout {
+    color: #aeb7b9;
+    > div {
+      margin-bottom: 5px;
+      cursor: pointer;
+      &:hover {
+        color: #6c6c6c;
+      }
+    }
   }
 }
