@@ -1,5 +1,5 @@
-import { CcrAvatarComponent } from './avatar/avatar.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
-export { CcrAvatarComponent };
+export { AvatarComponent };
 
-export const CmpComponents = [CcrAvatarComponent];
+export const CmpComponents = [AvatarComponent];
