@@ -37,6 +37,9 @@
 
 .smaller-emoji img {
   height: 205px;
+  @media #{$xxlarge-and-down} {
+    height: 170px;
+  }
 }
 
 .align-center {
