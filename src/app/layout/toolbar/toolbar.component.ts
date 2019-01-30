@@ -1,4 +1,3 @@
-// import { AuthService } from '@/shared';
 import { Component } from '@angular/core';
 
 @Component({
@@ -11,7 +10,7 @@ export class ToolbarComponent {
   lastName = 'Parson';
   constructor() {}
 
-  // logout(): void {
-  //   this.authService.logout();
-  // }
+  logout(): void {
+    // this.authService.logout();
+  }
 }
