@@ -1,3 +1,5 @@
+@import 'variables';
+
 .pair-activity {
   .pair-activity__roleplay-instruction {
     margin: 0px 60px;
@@ -38,6 +40,13 @@
     min-height: 65vh;
     max-height: 65vh;
     padding: 6vh 5vw;
+    @media #{$xxlarge-and-down} {
+      margin: 20px;
+      padding: 1vh 3vw;
+      flex-direction: column;
+      display: flex;
+      align-items: center;
+    }
     h3 {
       text-transform: uppercase;
       font-size: 3.25vh;
