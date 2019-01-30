@@ -1,6 +1,13 @@
+@import 'variables';
+
 .hint-activity__instruction-container {
   padding-left: 125px;
   padding-right: 65px;
+  @media #{$xxlarge-and-down} {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
   flex-direction: column;
   .hint-activity__twemoji-container {
     width: 230px;
