@@ -1,40 +1,35 @@
-
 /*
   hello world
   Bootstrap's Grid and Utilities
 */
-@import "../../node_modules/bootstrap/scss/bootstrap-grid.scss";
-
+@import '../../node_modules/bootstrap/scss/bootstrap-grid.scss';
 
 /*
  Benji Sass Partial Imports
 */
-@import
-"./layout-utils",
-"./typography",
-"./variables",
-"./buttons",
-"./inputs",
-"./activities",
-"./cards";
+@import './layout-utils', './typography', './variables', './buttons', './inputs',
+  './activities', './cards', './layout/toolbar', './layout/layout',
+  './layout/sidenav';
 
 /*
   Material Deisgn Theme
 */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .dialog--indigo-blue mat-dialog-container {
   background: $indigo-blue;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   border-radius: 11px;
 }
 
-.lobby-card .mat-progress-spinner circle, .mat-spinner circle {
+.lobby-card .mat-progress-spinner circle,
+.mat-spinner circle {
   stroke: #0a4cef;
   stroke-linecap: round;
 }
-.timer-svg .mat-progress-spinner circle, .mat-spinner circle {
+.timer-svg .mat-progress-spinner circle,
+.mat-spinner circle {
   stroke: #0a4cef;
   stroke-linecap: round;
 }
@@ -43,7 +38,8 @@
   margin: 0 auto;
 }
 
-.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate] circle {
+.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode='indeterminate']
+  circle {
   animation-duration: 6s;
 }
 
@@ -160,8 +156,6 @@
   -ms-flex: 0 auto;
   flex: 0 auto;
 }
-
-
 
 .body-div {
   display: -webkit-box;
@@ -1613,5 +1607,5 @@
 }
 
 .progress-circular--blue__primary {
-  stroke: #1248F2;
+  stroke: #1248f2;
 }

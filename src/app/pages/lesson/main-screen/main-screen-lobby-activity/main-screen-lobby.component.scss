@@ -6,19 +6,31 @@
     line-height: normal;
     text-transform: uppercase;
     letter-spacing: 3.6px;
+    @media #{$xxlarge-and-down} {
+      font-size: 36px;
+    }
     .vibrant-blue {
       font-size: 140px;
       line-height: 1.09;
       display: block;
       text-transform: capitalize;
+      @media #{$xxlarge-and-down} {
+        font-size: 80px;
+      }
     }
   }
   p {
     font-size: 36px;
     line-height: normal;
+    @media #{$xxlarge-and-down} {
+      font-size: 28px;
+    }
   }
   .lobby-activity__welcome-text {
     padding: 10vh 7vw;
+    @media #{$xxlarge-and-down} {
+      padding: 2vh 2vw;
+    }
   }
   .lobby-activity__column-content-flexer {
     align-items: center;

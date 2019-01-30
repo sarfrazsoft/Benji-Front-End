@@ -1,18 +1,38 @@
-<!-- <mat-toolbar *ngIf="authService.isOnline">
-  <mat-toolbar-row>
-    <a routerLink="" fxFlex="10%" fxLayoutAlign="start center">
-      <img src="./assets/icon.png" height="44" width="44" />
-    </a>
-    <div routerLink=""><span class="title">Reviewer</span></div>
-    <div fxFlex="1 1" class="search"><input type="text" /></div>
-    <div>
-      <button mat-icon-button class="search-button">
-        <mat-icon>search</mat-icon>
-      </button>
-    </div>
-    <div class="action">
-      <button mat-raised-button (click)="logout()">Logout</button>
-    </div>
-  </mat-toolbar-row>
-</mat-toolbar> -->
-<div>toolbar</div>
+<div fxLayoutAlign="space-between center" class="admin-toolbar">
+  <div class="logo"><img src="../../assets/img/logo.png" /></div>
+
+  <div class="right-controls">
+    <button mat-button class="user-controls" [matMenuTriggerFor]="menu">
+      <span class="acc-icon">
+        <app-avatar
+          class="toolbar-avatar"
+          [imgSrc]=""
+          [size]="'big'"
+        ></app-avatar>
+      </span>
+      <span class="account-name pn-600">{{ firstName + ' ' + lastName }}</span>
+    </button>
+    <mat-menu
+      #menu="matMenu"
+      class="user-controls"
+      [overlapTrigger]="false"
+      xPosition="before"
+    >
+      <div class="menu-section info" appClickStopPropagation>
+        <div class="name">Matt Parson</div>
+        <div class="email pn-400">matt@mybenji.com</div>
+        <div class="team pn-400">Sales</div>
+      </div>
+      <hr />
+      <div class="menu-section options">
+        <div routerLink="/account">Account</div>
+        <div routerLink="/settings">Settings</div>
+        <div routerLink="/help">Help</div>
+      </div>
+      <hr />
+      <div class="menu-section logout">
+        <div (click)="logout()"><span>Log out</span></div>
+      </div>
+    </mat-menu>
+  </div>
+</div>

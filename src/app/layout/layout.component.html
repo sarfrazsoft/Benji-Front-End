@@ -1,2 +1,17 @@
-<!-- <app-toolbar></app-toolbar> -->
-<router-outlet></router-outlet>
+<ng-container *ngIf="userRole === 'admin'">
+  <mat-toolbar> <app-topbar fxFlex></app-topbar> </mat-toolbar>
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav opened="true" mode="side" disableClose="true">
+      <app-menu></app-menu>
+    </mat-sidenav>
+    <div fxLayout="column">
+      <div fxLayout="row">
+        <div fxFlex><router-outlet></router-outlet></div>
+      </div>
+    </div>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-container *ngIf="userRole != 'admin'">
+  <router-outlet></router-outlet>
+</ng-container>

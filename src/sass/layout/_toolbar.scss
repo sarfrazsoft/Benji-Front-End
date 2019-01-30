@@ -1,0 +1,64 @@
+@import 'variables';
+
+mat-toolbar.mat-toolbar {
+  height: 90px;
+  background-color: #fff;
+  border-bottom: 2px solid $deep-blue;
+  .logo {
+    img {
+      height: 50px;
+    }
+  }
+}
+.avatar-size-big {
+  img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+  }
+}
+.right-controls {
+  .mat-button {
+    font-weight: 400;
+  }
+  .acc-icon {
+    display: inline-block;
+  }
+  .account-name {
+    font-size: 24px;
+    color: $vibrant-blue;
+    margin-left: 15px;
+  }
+}
+.mat-menu-content {
+  padding: 0px 24px !important;
+  .menu-section {
+    margin: 15px 0px;
+    font-size: 20px;
+  }
+  .info {
+    div {
+      margin-bottom: 10px;
+    }
+    .name {
+      font-family: $pn-semi-bold;
+      font-weight: 500;
+      color: $deep-blue;
+    }
+  }
+  hr {
+    margin: 0px -4px;
+    color: #979797;
+  }
+  .options,
+  .logout {
+    color: #aeb7b9;
+    > div {
+      margin-bottom: 5px;
+      cursor: pointer;
+      &:hover {
+        color: #6c6c6c;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-// TODO get rid of me
+// TODO figure me out, I'm not being used anywhere
 
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material';
