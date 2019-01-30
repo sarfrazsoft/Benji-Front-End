@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidenavComponent } from './sidenav.component';
+import { SidenavItemComponent } from './sidenav-item.component';
 
-describe('SidenavComponent', () => {
-  let component: SidenavComponent;
-  let fixture: ComponentFixture<SidenavComponent>;
+describe('SidenavItemComponent', () => {
+  let component: SidenavItemComponent;
+  let fixture: ComponentFixture<SidenavItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SidenavComponent]
+      declarations: [SidenavItemComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SidenavComponent);
+    fixture = TestBed.createComponent(SidenavItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

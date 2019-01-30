@@ -1,1 +1,10 @@
-mat sidenav content
+<div>launch a session</div>
+<div class="nav-container">
+  <div class="nav-section" *ngFor="let section of sidenavSections">
+    <hr />
+    <app-sidenav-item
+      *ngFor="let item of section.items"
+      [sidenavItem]="item"
+    ></app-sidenav-item>
+  </div>
+</div>

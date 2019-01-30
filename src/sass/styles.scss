@@ -8,7 +8,8 @@
  Benji Sass Partial Imports
 */
 @import './layout-utils', './typography', './variables', './buttons', './inputs',
-  './activities', './cards', './toolbar';
+  './activities', './cards', './layout/toolbar', './layout/layout',
+  './layout/sidenav';
 
 /*
   Material Deisgn Theme

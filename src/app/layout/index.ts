@@ -2,6 +2,7 @@ export * from './layout.component';
 
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { LayoutComponent } from './layout.component';
+import { SidenavItemComponent } from './sidenav/sidenav-item/sidenav-item.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
@@ -37,5 +38,6 @@ export const LayoutDeclarations = [
   MainScreenLessonComponent,
   RadialTimerComponent,
   ToolbarComponent,
-  SidenavComponent
+  SidenavComponent,
+  SidenavItemComponent
 ];

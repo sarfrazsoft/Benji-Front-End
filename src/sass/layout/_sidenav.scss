@@ -1,0 +1,32 @@
+@import 'variables';
+
+.nav-container {
+  padding: 20px 30px;
+  font-family: $pn-regular;
+
+  .nav-section {
+    margin: 15px 0px;
+
+    .item {
+      cursor: pointer;
+      font-size: 28px;
+      margin: 15px 0px;
+      .item-name {
+        transition: margin-left 0.1s linear;
+        &:hover {
+          margin-left: 10px;
+        }
+      }
+      .bullet-point {
+        opacity: 0;
+        transition: opacity 0.5s linear;
+      }
+      &:hover {
+        font-family: $pn-semi-bold;
+        .bullet-point {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
