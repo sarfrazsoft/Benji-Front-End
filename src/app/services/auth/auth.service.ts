@@ -57,6 +57,6 @@ export class AuthService {
     // admin
     // mainscreenUser
     // participant
-    return 'admin';
+    return 'mainscreenUser';
   }
 }
