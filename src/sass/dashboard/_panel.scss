@@ -1,0 +1,10 @@
+// TODO use variables for border color to keep it consistent across all panels
+.admin-panel {
+  padding: 20px 30px;
+  background-color: #f7f8fa;
+  .dashboard-heading {
+    color: $deep-blue;
+    padding: 0px $dash-subsection-sides-padding;
+    border-bottom: 1px solid $grey;
+  }
+}

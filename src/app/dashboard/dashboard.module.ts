@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { SharedModule } from '../shared/shared.module';
 import { DashboardRoutes } from './dashboard.routing';
 
 import {
@@ -18,7 +19,8 @@ import {
     CommonModule,
     DashboardRoutes,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [RouterModule],
   declarations: [...DashboardComponents],

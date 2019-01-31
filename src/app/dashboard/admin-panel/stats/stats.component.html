@@ -1,0 +1,8 @@
+<div class="dashboard-stats" fxLayoutGap="30px">
+  <div *ngFor="let stat of stats" fxFlex>
+    <benji-single-stat
+      [value]="stat.value"
+      [label]="stat.label"
+    ></benji-single-stat>
+  </div>
+</div>

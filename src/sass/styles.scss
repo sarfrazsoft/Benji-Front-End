@@ -7,9 +7,19 @@
 /*
  Benji Sass Partial Imports
 */
-@import './layout-utils', './typography', './variables', './buttons', './inputs',
-  './activities', './cards', './layout/toolbar', './layout/layout',
-  './layout/sidenav';
+@import './layout-utils';
+@import './typography';
+@import './variables';
+@import './buttons';
+@import './inputs';
+@import './activities';
+@import './cards';
+@import './layout/toolbar';
+@import './layout/layout';
+@import './layout/sidenav';
+@import './dashboard/variables';
+@import './dashboard/panel';
+@import './dashboard/stats';
 
 /*
   Material Deisgn Theme

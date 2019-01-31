@@ -1,0 +1,22 @@
+benji-stats {
+  padding: 0px $dash-subsection-sides-padding;
+  margin-top: 36px;
+  benji-single-stat {
+    > div {
+      border-radius: 5px;
+      padding: 36px 0px;
+      background-color: #fff;
+      .value {
+        font-family: $pn-semi-bold;
+        font-weight: 600;
+        font-size: 40px;
+        color: $deep-blue;
+      }
+      .label {
+        font-family: $pn-regular;
+        font-size: 24px;
+        margin-top: 20px;
+      }
+    }
+  }
+}
