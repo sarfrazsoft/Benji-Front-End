@@ -17,11 +17,39 @@ mat-dialog-container.mat-dialog-container {
   }
   .select-session {
     margin: 0px;
+    padding-bottom: 40px;
+    .select-container {
+      width: 200px;
+    }
+    .ng-select .ng-select-container {
+      border: none;
+      border-radius: 0px;
+      .ng-placeholder {
+        color: #9b9b9b;
+      }
+    }
+    .launch > button {
+      width: 200px;
+      padding: 15px 0px;
+      font-size: 24px;
+      color: #fff;
+      background-color: #a0afd4;
+      border-radius: 30px;
+      &.session-selected {
+        background-color: $vibrant-blue;
+      }
+    }
   }
 }
 .cdk-overlay-dark-backdrop {
   background: rgba(242, 247, 248, 0.8);
 }
-.select-container {
-  width: 200px;
+
+.ng-dropdown-panel.ng-select-bottom {
+  border-radius: 0px;
+  border: 0px;
+  background-color: $off-white;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: transparent;
 }
