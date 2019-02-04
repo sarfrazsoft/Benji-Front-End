@@ -1,9 +1,7 @@
 benji-stats {
-  padding: 0px $dash-subsection-sides-padding;
-  margin-top: 36px;
   benji-single-stat {
     > div {
-      border-radius: 5px;
+      border-radius: $subsection-border-radius;
       padding: 36px 0px;
       background-color: #fff;
       .value {

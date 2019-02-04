@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { LaunchSessionDialogComponent } from '../../shared';
 
 @Component({
   selector: 'benji-courses',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
+  constructor(private dialog: MatDialog) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  launchSession(): void {
+    this.dialog
+      .open(LaunchSessionDialogComponent, {})
+      .afterClosed()
+      .subscribe(user => {});
   }
-
 }

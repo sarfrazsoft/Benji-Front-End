@@ -3,8 +3,18 @@
   padding: 20px 30px;
   background-color: #f7f8fa;
   .dashboard-heading {
+    font-family: $pn-bold;
     color: $deep-blue;
     padding: 0px $dash-subsection-sides-padding;
-    border-bottom: 1px solid $grey;
+    border-bottom: $header-border-bottom solid $header-border-bottom-color;
+  }
+  .subsection-container {
+    padding: 0px $dash-subsection-sides-padding;
+    margin-top: $margin-between-panels;
+  }
+  .sub-heading {
+    color: $deep-blue;
+    padding: 0px $dash-subsection-sides-padding;
+    border-bottom: $header-border-bottom solid $header-border-bottom-color;
   }
 }

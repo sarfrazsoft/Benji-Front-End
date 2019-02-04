@@ -3,20 +3,11 @@
     <h1>Dashboard</h1>
   </div>
 
-  <benji-stats></benji-stats>
+  <div class="subsection-container">
+    <benji-stats></benji-stats>
+  </div>
 
-  <div class="dashboard-courses">
-    <div
-      class="panel-title"
-      fxLayout="row"
-      fxLayoutAlign="start end"
-      fxLayoutGap="10px"
-    >
-      <h2>Active Listening</h2>
-      <a mat-button routerLink="/course">
-        Launch session
-      </a>
-    </div>
-    <div class="course"></div>
+  <div class="subsection-container">
+    <benji-courses></benji-courses>
   </div>
 </div>

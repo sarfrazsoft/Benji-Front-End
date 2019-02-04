@@ -1,0 +1,35 @@
+benji-courses {
+  .course {
+    background-color: #fff;
+    border-radius: $subsection-border-radius;
+    padding: 10px 40px;
+  }
+  .course-detail {
+    padding: 12px $dash-subsection-sides-padding;
+    font-size: 20px;
+    .description {
+      padding: 20px 0px;
+    }
+    .course-preview-footer {
+      .overview-button {
+        cursor: pointer;
+        color: $vibrant-blue;
+        &:hover {
+          mat-icon {
+            margin-left: 10px;
+          }
+        }
+      }
+      span {
+        border-bottom: 1px solid $vibrant-blue;
+      }
+      mat-icon {
+        transition: margin-left 0.1s linear;
+        font-size: 32px;
+        font-weight: 300;
+        height: 32px;
+        width: 32px;
+      }
+    }
+  }
+}
