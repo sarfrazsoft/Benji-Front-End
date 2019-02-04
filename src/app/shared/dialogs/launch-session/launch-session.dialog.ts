@@ -7,6 +7,8 @@ import { MatDialogRef } from '@angular/material';
 })
 export class LaunchSessionDialogComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<LaunchSessionDialogComponent>) {}
+  selectedSession;
+  courses = [{ id: 1, name: 'Active Listening' }];
 
   ngOnInit() {}
 

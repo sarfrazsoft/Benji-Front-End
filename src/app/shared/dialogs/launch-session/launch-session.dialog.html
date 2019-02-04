@@ -4,25 +4,23 @@
       <mat-icon class="icon-white">clear</mat-icon>
     </button>
   </div>
-  <mat-dialog-content class="select-schedule">
-    <div fxLayout="column" fxLayoutAlign="center center">
+  <mat-dialog-content class="select-session">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
       <h2 class="dialog-heading">Launch a session</h2>
       <div class="dialog-instructions">
         Select a session to launch. Everyone in the room needs to be able to see
         this screen to participate.
       </div>
-      <!-- <div> -->
-      <div class="selectdiv ">
-        <label>
-          <select required>
-            <option value="" disabled selected hidden> Select session </option>
-            <option>Active Listening</option>
-            <option>Option 2</option>
-            <option>Last long option</option>
-          </select>
-        </label>
+      <div class="select-container ">
+        <ng-select
+          [items]="courses"
+          bindLabel="name"
+          placeholder="Select session"
+          [(ngModel)]="selectedSession"
+          appendTo="body"
+        >
+        </ng-select>
       </div>
-      <!-- </div> -->
       <div></div>
     </div>
   </mat-dialog-content>
