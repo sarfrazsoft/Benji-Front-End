@@ -35,7 +35,8 @@ import {
   MatTooltipModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { Components } from './index';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { Components, EntryComponents } from './index';
 
 const SHARED_MODULES = [
   FlexLayoutModule,
@@ -70,13 +71,14 @@ const SHARED_MODULES = [
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
+  NgSelectModule
 ];
 
 @NgModule({
   imports: [CommonModule, RouterModule, ...SHARED_MODULES],
   declarations: Components,
-  entryComponents: [],
+  entryComponents: [...EntryComponents],
   exports: [...Components, ...SHARED_MODULES]
 })
 export class SharedModule {}

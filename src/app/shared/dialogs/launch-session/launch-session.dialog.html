@@ -1,0 +1,29 @@
+<div class="launch-session-dialog" fxLayout="column">
+  <div fxLayoutAlign="end end">
+    <button class="close-button" matDialogClose>
+      <mat-icon class="icon-white">clear</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="select-schedule">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <h2 class="dialog-heading">Launch a session</h2>
+      <div class="dialog-instructions">
+        Select a session to launch. Everyone in the room needs to be able to see
+        this screen to participate.
+      </div>
+      <!-- <div> -->
+      <div class="selectdiv ">
+        <label>
+          <select required>
+            <option value="" disabled selected hidden> Select session </option>
+            <option>Active Listening</option>
+            <option>Option 2</option>
+            <option>Last long option</option>
+          </select>
+        </label>
+      </div>
+      <!-- </div> -->
+      <div></div>
+    </div>
+  </mat-dialog-content>
+</div>

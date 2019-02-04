@@ -1,3 +1,76 @@
 mat-dialog-container.mat-dialog-container {
   background-color: $dim-grey;
+  padding: 10px;
+  width: 480px;
+  box-shadow: none;
+  .close-button {
+    background: transparent;
+  }
+  .dialog-heading {
+    color: $deep-blue;
+    font-family: $pn-semi-bold;
+  }
+  .dialog-instructions {
+    width: 230px;
+    color: #6c6c6c;
+    text-align: center;
+  }
+  .select-schedule {
+    margin: 0px;
+  }
+}
+.cdk-overlay-dark-backdrop {
+  background: rgba(242, 247, 248, 0.8);
+}
+
+.selectdiv {
+  position: relative;
+  float: left;
+  // min-width: 200px;
+  /* margin: 50px 33%; */
+}
+
+.selectdiv:after {
+  content: '\f078';
+  font: normal normal 500 15px/1 FontAwesome;
+  color: #9b9b9b;
+  right: 11px;
+  top: 6px;
+  height: 34px;
+  padding: 15px 0px 0px 8px;
+  border-left: 0px solid #0ebeff;
+  position: absolute;
+  pointer-events: none;
+  -webkit-text-stroke: 1px white;
+}
+
+/* IE11 hide native button */
+select::-ms-expand {
+  display: none;
+}
+
+.selectdiv select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Add some styling */
+
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: 50px;
+  float: right;
+  margin: 5px 0px;
+  padding: 0px 24px;
+  font-size: 16px;
+  line-height: 1.75;
+  color: #333;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid transparent;
+  -ms-word-break: normal;
+  word-break: normal;
+}
+select:invalid {
+  color: gray !important;
 }
