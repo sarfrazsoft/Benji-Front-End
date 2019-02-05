@@ -10,7 +10,6 @@ import { AuthGuard } from '../services';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
-  // { canActivate: [AuthGuard], path: '', loadChildren: () => DashboardModule },
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
   {
