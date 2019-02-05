@@ -1,9 +1,12 @@
 @import 'variables';
 
+$toolbarHeight: 90px;
+
 mat-toolbar.mat-toolbar {
-  height: 90px;
+  height: $toolbarHeight;
   background-color: #fff;
   border-bottom: 2px solid $deep-blue;
+
   .logo {
     img {
       height: 50px;
@@ -20,6 +23,7 @@ mat-toolbar.mat-toolbar {
 .right-controls {
   .mat-button {
     font-weight: 400;
+    height: $toolbarHeight;
   }
   .acc-icon {
     display: inline-block;
