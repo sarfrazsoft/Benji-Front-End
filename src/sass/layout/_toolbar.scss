@@ -49,6 +49,10 @@ mat-toolbar.mat-toolbar {
       font-weight: 500;
       color: $deep-blue;
     }
+    .email,
+    .team {
+      color: #aeb7b9;
+    }
   }
   hr {
     margin: 0px -4px;
@@ -56,12 +60,12 @@ mat-toolbar.mat-toolbar {
   }
   .options,
   .logout {
-    color: #aeb7b9;
+    color: #6c6c6c;
     > div {
       margin-bottom: 5px;
       cursor: pointer;
       &:hover {
-        color: #6c6c6c;
+        color: #353535;
       }
     }
   }
