@@ -1,12 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import * as global from '../../globals';
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    // Set user roles. They should  be set on login based on info from backend.
+    // admin
+    // mainscreenUser
+    // participant
+    localStorage.setItem('userRole', 'mainscreenUser');
+  }
 
   login(username: string, password: string) {
     return this.http
@@ -52,11 +59,7 @@ export class AuthService {
     return !this.isLoggedIn();
   }
 
-  getUserRole() {
-    // Do something
-    // admin
-    // mainscreenUser
-    // participant
-    return 'mainscreenUser';
+  getUserRole(): string | Observable<string> {
+    return localStorage.getItem('userRole');
   }
 }

@@ -20,6 +20,7 @@ import { ParticipantToolbarComponent } from '../ui-components/participant-toolba
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
 import { MainScreenComponents, ParticipantScreenComponents } from '../index';
+import { LoginComponent } from '../pages/login/login.component';
 
 export const LayoutDeclarations = [
   ...MainScreenComponents,
@@ -29,6 +30,7 @@ export const LayoutDeclarations = [
   LandingComponent,
   LayoutComponent,
   LinearTimerComponent,
+  LoginComponent,
   MainscreenElementsComponent,
   MainScreenToolbarComponent,
   MainScreenFooterComponent,

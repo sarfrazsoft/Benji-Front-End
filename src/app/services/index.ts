@@ -6,6 +6,8 @@ import { BackendSocketService } from './backend/backend-socket.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { LayoutService } from './layout.service';
 
+export { AuthGuard } from './auth/auth.guard';
+
 export const ServicesProviders = [
   AuthService,
   BackendRestService,
