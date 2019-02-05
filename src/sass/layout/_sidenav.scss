@@ -10,11 +10,12 @@
       cursor: pointer;
       font-size: 28px;
       margin: 15px 0px;
+      transition: margin-left 0.1s linear;
+      &:hover {
+        margin-left: 10px;
+      }
       .item-name {
-        transition: margin-left 0.1s linear;
-        &:hover {
-          margin-left: 10px;
-        }
+        margin-left: 5px;
       }
       .bullet-point {
         opacity: 0;
