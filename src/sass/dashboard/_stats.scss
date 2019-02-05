@@ -4,11 +4,17 @@ benji-stats {
       border-radius: $subsection-border-radius;
       padding: 36px 0px;
       background-color: #fff;
+      transition: background-color 0.1s linear;
+      -webkit-transition: background-color 0.1s linear;
+      -ms-transition: background-color 0.1s linear;
+      &:hover {
+        background-color: #e9ebf3;
+      }
       .value {
         font-family: $pn-semi-bold;
         font-weight: 600;
         font-size: 40px;
-        color: $deep-blue;
+        color: $vibrant-blue;
       }
       .label {
         font-family: $pn-regular;
