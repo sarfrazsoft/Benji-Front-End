@@ -11,6 +11,8 @@
       font-size: 28px;
       margin: 15px 0px;
       transition: margin-left 0.1s linear;
+      -webkit-transition: margin-left 0.1s linear;
+      -ms-transition: margin-left 0.1s linear;
       &:hover {
         margin-left: 10px;
       }
@@ -20,6 +22,8 @@
       .bullet-point {
         opacity: 0;
         transition: opacity 0.5s linear;
+        -webkit-transition: opacity 0.5s linear;
+        -ms-transition: opacity 0.5s linear;
       }
       &:hover {
         font-family: $pn-semi-bold;

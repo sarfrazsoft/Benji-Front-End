@@ -25,6 +25,8 @@ benji-courses {
       }
       mat-icon {
         transition: margin-left 0.1s linear;
+        -webkit-transition: margin-left 0.1s linear;
+        -ms-transition: margin-left 0.1s linear;
         font-size: 32px;
         font-weight: 300;
         height: 32px;
