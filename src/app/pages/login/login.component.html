@@ -56,7 +56,6 @@
                     pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
                     formControlName="email"
                     placeholder="Email Address"
-                    floatLabel="never"
                   />
                   <mat-error>Email Address</mat-error>
                 </mat-form-field>
@@ -73,7 +72,6 @@
                 </mat-form-field>
 
                 <button
-                  color="primary"
                   type="button"
                   class="dashboard-button"
                   (click)="onSubmit()"
