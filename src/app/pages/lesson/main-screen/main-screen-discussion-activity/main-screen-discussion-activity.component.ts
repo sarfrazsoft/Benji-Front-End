@@ -1,15 +1,6 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy,
-  AfterViewInit,
-  ViewChild
-} from '@angular/core';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { Component, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { RoleplayUserGroup } from '../../../../services/backend/schema/activity';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-main-screen-discussion-activity',
@@ -72,7 +63,8 @@ export class MainScreenDiscussionActivityComponent extends BaseActivityComponent
     ) {
       if (
         this.activityState.activity_status.sharer_group_num <
-        this.activityState.activity_status.sharer_countdown_time.length - 1
+          this.activityState.activity_status.sharer_countdown_time.length &&
+        this.shareTimer
       ) {
         this.initShareTimer(this.shareTimer);
       }
