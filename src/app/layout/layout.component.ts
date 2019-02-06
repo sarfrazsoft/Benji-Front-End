@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'benji-layout',
   templateUrl: './layout.component.html'
 })
 export class LayoutComponent {
   userRole = 'admim';
   constructor(private auth: AuthService) {
-    this.userRole = auth.getUserRole();
+    this.userRole = auth.getUserRole() as string;
   }
 }
