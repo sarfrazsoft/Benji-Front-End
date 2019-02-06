@@ -22,7 +22,10 @@
         </ng-select>
       </div>
       <div class="launch">
-        <button [ngClass]="{ 'session-selected': selectedSession }">
+        <button
+          class="dashboard-button"
+          [ngClass]="{ active: selectedSession, inactive: !selectedSession }"
+        >
           Launch
         </button>
       </div>

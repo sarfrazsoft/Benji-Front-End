@@ -93,3 +93,16 @@ button {
     background: #93dc66;
   }
 }
+
+.dashboard-button {
+  padding: 15px 0px;
+  font-size: 24px;
+  color: #fff;
+  border-radius: 30px;
+  &.active {
+    background-color: $vibrant-blue;
+  }
+  &.inactive {
+    background-color: #a0afd4;
+  }
+}

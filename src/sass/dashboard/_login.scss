@@ -1,0 +1,80 @@
+.login-container {
+  height: 100%;
+  .left-side {
+    background-color: $vibrant-blue;
+  }
+  .right-side {
+    background-color: $off-white;
+  }
+}
+.controls {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 75vw;
+  height: 65vh;
+  @media #{$xxlarge-and-down} {
+    height: 70vh;
+  }
+  .welcome-heading {
+    color: #fff;
+    h1 {
+      font-family: $pn-bold;
+      font-size: 10vh;
+      line-height: normal;
+    }
+    span {
+      font-size: 3vh;
+      line-height: normal;
+    }
+  }
+  .form-container {
+    background-color: #fff;
+    .header {
+      margin-bottom: 8%;
+      @media #{$xxlarge-and-down} {
+        margin-bottom: 2%;
+      }
+      h1 {
+        color: $vibrant-blue;
+        font-size: 8vh;
+        font-family: $pn-bold;
+      }
+    }
+    .instruction {
+      margin: 20px 0px;
+      text-align: center;
+      font-size: 15px;
+    }
+    .footer {
+      margin-top: 8%;
+      @media #{$xxlarge-and-down} {
+        margin-top: 4%;
+      }
+    }
+    .form-tabs {
+      padding: 0 15%;
+    }
+    .mat-tab-label-active {
+      opacity: 1 !important;
+    }
+    .mat-tab-label {
+      height: 48px;
+      padding: 0px;
+      cursor: pointer;
+      opacity: 0.5;
+      font-size: 25px;
+      color: $vibrant-blue;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 160px;
+      text-align: left;
+      display: inline-flex;
+      justify-content: flex-start;
+      align-items: center;
+      white-space: nowrap;
+      position: relative;
+    }
+  }
+}

@@ -1,3 +1,105 @@
-<p>
-  login works!
-</p>
+<div class="login-container" fxLayout="row" fxLayout.lt-md="column">
+  <div class="left-side" fxLayoutAlign="start center" fxFlex="65%"></div>
+  <div class="right-side" fxFlex="35%"></div>
+</div>
+<div class="controls">
+  <div class="welcome-heading" fxFlex="1 1 100%" fxLayout="row">
+    <div
+      fxFlex="0 0 100%"
+      fxLayout="column"
+      fxLayoutGap="50px"
+      fxLayoutAlign="center"
+    >
+      <h1>Welcome to Benji!</h1>
+      <div class="intro-text">
+        <span fxFlex="0 0 75%">
+          What’s Benji? Learn about the future of workplace learning
+          <b>here</b>.
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="form-container"
+    fxLayout="column"
+    fxFlex="45%"
+    fxLayoutAlign="center"
+  >
+    <div>
+      <div class="header" fxLayoutAlign="center">
+        <h1>Benji</h1>
+      </div>
+      <div class="form-tabs">
+        <mat-tab-group>
+          <mat-tab label="Login">
+            <ng-template mat-tab-label>
+              <span class="tab-label">Login</span></ng-template
+            >
+            <div class="form-container" fxLayout="column">
+              <div class="instruction">
+                Sign in to your Benji account to join or start a session and to
+                view your dashboar.
+              </div>
+              <form
+                [formGroup]="form"
+                (keydown.enter)="onSubmit()"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
+                <mat-form-field floatLabel="never">
+                  <input
+                    autofocus
+                    matInput
+                    required
+                    type="email"
+                    pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                    formControlName="email"
+                    placeholder="Email Address"
+                    floatLabel="never"
+                  />
+                  <mat-error>Email Address</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input
+                    matInput
+                    required
+                    type="password"
+                    minlength="6"
+                    formControlName="password"
+                    placeholder="Password"
+                  />
+                </mat-form-field>
+
+                <button
+                  color="primary"
+                  type="button"
+                  class="dashboard-button"
+                  (click)="onSubmit()"
+                  class="dashboard-button"
+                  [ngClass]="{
+                    active: form.valid,
+                    inactive: !form.valid
+                  }"
+                >
+                  Login
+                </button>
+              </form>
+            </div>
+          </mat-tab>
+          <mat-tab label="Sign up"> Content 2 </mat-tab>
+        </mat-tab-group>
+      </div>
+      <div class="footer" fxLayout="column">
+        <div class="new-to-benji" fxLayoutAlign="center">
+          <span>New to Benji?</span>
+          <a href="">Sign up</a>
+        </div>
+        <div class="forgot-password" fxLayoutAlign="center">
+          <a href="">Forgot your password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
