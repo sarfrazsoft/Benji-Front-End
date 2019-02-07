@@ -31,7 +31,7 @@
         <h1>Benji</h1>
       </div>
       <div class="form-tabs">
-        <mat-tab-group>
+        <mat-tab-group [(selectedIndex)]="selectedTab">
           <mat-tab label="Login">
             <ng-template mat-tab-label>
               <span class="tab-label">Login</span></ng-template
@@ -43,36 +43,40 @@
               </div>
               <form
                 [formGroup]="form"
-                (keydown.enter)="onSubmit()"
+                (ngSubmit)="onSubmit()"
                 fxLayout="column"
                 fxLayoutGap="20px"
               >
-                <mat-form-field floatLabel="never">
-                  <input
-                    autofocus
-                    matInput
-                    required
-                    type="email"
-                    pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
-                    formControlName="email"
-                    placeholder="Email Address"
-                  />
-                  <mat-error>Email Address</mat-error>
-                </mat-form-field>
-
-                <mat-form-field>
-                  <input
-                    matInput
-                    required
-                    type="password"
-                    minlength="6"
-                    formControlName="password"
-                    placeholder="Password"
-                  />
-                </mat-form-field>
+                <div
+                  *ngIf="email.invalid && (email.dirty || email.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="email.errors.required">
+                    Email is required.
+                  </div>
+                  <div *ngIf="email.errors.email">
+                    It should be a valid email.
+                  </div>
+                </div>
+                <input
+                  id="email"
+                  class="b-standard-input"
+                  required
+                  type="email"
+                  pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                  formControlName="email"
+                  placeholder="Email Address"
+                />
+                <input
+                  class="b-standard-input"
+                  required
+                  type="password"
+                  formControlName="password"
+                  placeholder="Password"
+                />
 
                 <button
-                  type="button"
+                  type="submit"
                   class="dashboard-button"
                   (click)="onSubmit()"
                   class="dashboard-button"
@@ -89,13 +93,13 @@
           <mat-tab label="Sign up"> Content 2 </mat-tab>
         </mat-tab-group>
       </div>
-      <div class="footer" fxLayout="column">
+      <div class="footer" *ngIf="selectedTab === 0" fxLayout="column">
         <div class="new-to-benji" fxLayoutAlign="center">
-          <span>New to Benji?</span>
-          <a href="">Sign up</a>
+          <span>New to Benji?</span>&nbsp;
+          <span class="b-link" (click)="showSignupTab()"> Sign up</span>
         </div>
         <div class="forgot-password" fxLayoutAlign="center">
-          <a href="">Forgot your password?</a>
+          <a class="b-link" href="">Forgot your password?</a>
         </div>
       </div>
     </div>
