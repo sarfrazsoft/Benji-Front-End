@@ -1,11 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { EntryComponent } from '../pages/entry/entry.component';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/landing/participant/login/participant-login.component';
 import { MainScreenLessonComponent } from '../pages/lesson/main-screen/main-screen-lesson.component';
 import { ParticipantLessonComponent } from '../pages/lesson/participant/participant-lesson.component';
-import { LoginComponent } from '../pages/login/login.component';
 import { AuthGuard } from '../services';
 
 // TODO; make separate modules for main screen and particicpants
@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: EntryComponent
   }
 ];
 

@@ -14,7 +14,6 @@ import {
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  selectedTab = 0;
 
   constructor(private builder: FormBuilder) {}
 
@@ -27,10 +26,6 @@ export class LoginComponent implements OnInit {
 
   get email(): AbstractControl {
     return this.form.get('email');
-  }
-
-  showSignupTab(): void {
-    this.selectedTab = 1;
   }
 
   onSubmit(): void {

@@ -1,0 +1,53 @@
+<div class="form-container" fxLayout="column">
+  <div class="instruction">
+    Sign in to your Benji account to join or start a session and to view your
+    dashboar.
+  </div>
+  <form
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+    fxLayout="column"
+    fxLayoutGap="20px"
+  >
+    <div
+      *ngIf="email.invalid && (email.dirty || email.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="email.errors.required">
+        Email is required.
+      </div>
+      <div *ngIf="email.errors.email">
+        It should be a valid email.
+      </div>
+    </div>
+    <input
+      id="email"
+      class="b-standard-input"
+      required
+      type="email"
+      pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+      formControlName="email"
+      placeholder="Email Address"
+    />
+    <input
+      class="b-standard-input"
+      required
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+    />
+
+    <button
+      type="submit"
+      class="dashboard-button"
+      (click)="onSubmit()"
+      class="dashboard-button"
+      [ngClass]="{
+        active: form.valid,
+        inactive: !form.valid
+      }"
+    >
+      Login
+    </button>
+  </form>
+</div>
