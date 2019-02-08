@@ -7,6 +7,14 @@ benji-courses {
       font-family: $pn-semi-bold;
       color: $vibrant-blue;
       font-size: 20px;
+      cursor: pointer;
+      span {
+        transition: all $animation-time linear;
+        border-bottom: 1px solid #fff;
+        &:hover {
+          border-bottom-color: $vibrant-blue;
+        }
+      }
       img {
         margin-left: 3px;
         height: 17px;
@@ -35,7 +43,8 @@ benji-courses {
         cursor: pointer;
         color: $vibrant-blue;
         span {
-          border-bottom: 1px solid $vibrant-blue;
+          transition: all $animation-time linear;
+          border-bottom: 1px solid #fff;
         }
         img {
           margin-left: 12px;
@@ -48,6 +57,9 @@ benji-courses {
         &:hover {
           img {
             margin-left: 20px;
+          }
+          span {
+            border-bottom-color: $vibrant-blue;
           }
         }
       }
