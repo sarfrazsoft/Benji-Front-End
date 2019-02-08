@@ -36,22 +36,22 @@
       }
       &:hover {
         .rotate-180 {
-          transition: all 0.1s linear;
+          transition: all $animation-time linear;
           @include transform(rotate(180deg) translate3d(-5px, -5px, 0px));
         }
 
         .rotate-270 {
-          transition: all 0.1s linear;
+          transition: all $animation-time linear;
           @include transform(rotate(270deg) translate3d(-5px, -5px, 0px));
         }
 
         .rotate-90 {
-          transition: all 0.1s linear;
+          transition: all $animation-time linear;
           @include transform(rotate(90deg) translate3d(-5px, -5px, 0px));
         }
 
         .rotate-0 {
-          transition: all 0.1s linear;
+          transition: all $animation-time linear;
           @include transform(translate3d(-5px, -5px, 0px));
         }
       }

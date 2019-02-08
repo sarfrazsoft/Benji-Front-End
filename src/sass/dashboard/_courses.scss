@@ -12,9 +12,9 @@ benji-courses {
         height: 17px;
         padding-right: 0px;
 
-        transition: all 0.1s linear;
-        -webkit-transition: all 0.1s linear;
-        -ms-transition: all 0.1s linear;
+        transition: all $animation-time linear;
+        -webkit-transition: all $animation-time linear;
+        -ms-transition: all $animation-time linear;
       }
       &:hover {
         img {
@@ -41,9 +41,9 @@ benji-courses {
           margin-left: 12px;
           height: 17px;
           margin-bottom: -4px;
-          transition: margin-left 0.1s linear;
-          -webkit-transition: margin-left 0.1s linear;
-          -ms-transition: margin-left 0.1s linear;
+          transition: margin-left $animation-time linear;
+          -webkit-transition: margin-left $animation-time linear;
+          -ms-transition: margin-left $animation-time linear;
         }
         &:hover {
           img {
