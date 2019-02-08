@@ -1,3 +1,11 @@
+@mixin transform($property) {
+  -webkit-transform: $property;
+  -moz-transform: $property;
+  -o-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}
+
 .mat-sidenav-content {
   background-color: #f7f8fa;
 }
@@ -15,9 +23,41 @@
       &.join-session {
         border-right: 1px solid $grey;
       }
+      .rotate-180 {
+        @include transform(rotate(180deg));
+      }
+
+      .rotate-270 {
+        @include transform(rotate(270deg));
+      }
+
+      .rotate-90 {
+        @include transform(rotate(90deg));
+      }
+      &:hover {
+        .rotate-180 {
+          transition: all 0.1s linear;
+          @include transform(rotate(180deg) translate3d(-5px, -5px, 0px));
+        }
+
+        .rotate-270 {
+          transition: all 0.1s linear;
+          @include transform(rotate(270deg) translate3d(-5px, -5px, 0px));
+        }
+
+        .rotate-90 {
+          transition: all 0.1s linear;
+          @include transform(rotate(90deg) translate3d(-5px, -5px, 0px));
+        }
+
+        .rotate-0 {
+          transition: all 0.1s linear;
+          @include transform(translate3d(-5px, -5px, 0px));
+        }
+      }
     }
     img {
-      margin: 2px;
+      margin: 4px;
       height: 25px;
     }
     .session-text {
@@ -67,28 +107,4 @@
       }
     }
   }
-}
-
-.rotate-180 {
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transform: rotate(180deg);
-}
-
-.rotate-270 {
-  -webkit-transform: rotate(270deg);
-  -moz-transform: rotate(270deg);
-  -o-transform: rotate(270deg);
-  -ms-transform: rotate(270deg);
-  transform: rotate(270deg);
-}
-
-.rotate-90 {
-  -webkit-transform: rotate(90deg);
-  -moz-transform: rotate(90deg);
-  -o-transform: rotate(90deg);
-  -ms-transform: rotate(90deg);
-  transform: rotate(90deg);
 }
