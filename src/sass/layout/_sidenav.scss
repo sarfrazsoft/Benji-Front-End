@@ -1,7 +1,41 @@
+.mat-sidenav-content {
+  background-color: #f7f8fa;
+}
+
 .nav-container {
-  width: 280px;
+  width: 320px;
   padding: 20px 30px;
   font-family: $pn-regular;
+
+  .session-controls {
+    padding: 5px 0px;
+    > div {
+      padding: 10px 0px;
+      cursor: pointer;
+      &.join-session {
+        border-right: 1px solid $grey;
+      }
+    }
+    img {
+      margin: 2px;
+      height: 25px;
+    }
+    .session-text {
+      text-align: center;
+      color: $vibrant-blue;
+      margin-top: 20px;
+      span {
+        font-family: $pn-bold;
+        font-size: 28px;
+        letter-spacing: 0.65px;
+      }
+      span:last-of-type {
+        margin-top: 5px;
+        font-family: $pn-regular;
+        font-size: 16px;
+      }
+    }
+  }
 
   .nav-section {
     margin: 15px 0px;
@@ -33,4 +67,28 @@
       }
     }
   }
+}
+
+.rotate-180 {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.rotate-270 {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+
+.rotate-90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }

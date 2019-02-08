@@ -12,7 +12,7 @@ export class AuthService {
     // admin
     // mainscreenUser
     // participant
-    localStorage.setItem('userRole', 'mainscreenUser');
+    localStorage.setItem('userRole', 'admin');
   }
 
   login(username: string, password: string) {
