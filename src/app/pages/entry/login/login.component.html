@@ -1,7 +1,7 @@
 <div class="form-container" fxLayout="column">
   <div class="instruction">
     Sign in to your Benji account to join or start a session and to view your
-    dashboar.
+    dashboard.
   </div>
   <form
     [formGroup]="form"
@@ -50,4 +50,14 @@
       Login
     </button>
   </form>
+
+  <div class="footer" fxLayout="column">
+    <div class="new-to-benji" fxLayoutAlign="center">
+      <span>New to Benji?</span>&nbsp;
+      <span class="b-link" (click)="showSignupTab()"> Sign up</span>
+    </div>
+    <div class="forgot-password" fxLayoutAlign="center">
+      <a class="b-link" href="">Forgot your password?</a>
+    </div>
+  </div>
 </div>

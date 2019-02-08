@@ -24,37 +24,26 @@
     class="form-container"
     fxLayout="column"
     fxFlex="45%"
-    fxLayoutAlign="center"
+    fxLayoutAlign="start center"
   >
-    <div>
-      <div class="header" fxLayoutAlign="center">
-        <h1>Benji</h1>
-      </div>
-      <div class="form-tabs">
-        <mat-tab-group [(selectedIndex)]="selectedTab">
-          <mat-tab label="Login">
-            <ng-template mat-tab-label>
-              <span class="tab-label">Login</span>
-            </ng-template>
-            <benji-login></benji-login>
-          </mat-tab>
-          <mat-tab label="Sign up">
-            <ng-template mat-tab-label class="signup-label">
-              <span class="tab-label">Sign up</span>
-            </ng-template>
-            <benji-signup></benji-signup>
-          </mat-tab>
-        </mat-tab-group>
-      </div>
-      <div class="footer" *ngIf="selectedTab === 0" fxLayout="column">
-        <div class="new-to-benji" fxLayoutAlign="center">
-          <span>New to Benji?</span>&nbsp;
-          <span class="b-link" (click)="showSignupTab()"> Sign up</span>
-        </div>
-        <div class="forgot-password" fxLayoutAlign="center">
-          <a class="b-link" href="">Forgot your password?</a>
-        </div>
-      </div>
+    <div class="header" fxLayoutAlign="center">
+      <h1>Benji</h1>
+    </div>
+    <div class="form-tabs">
+      <mat-tab-group [(selectedIndex)]="selectedTab" dynamicHeight>
+        <mat-tab label="Login">
+          <ng-template mat-tab-label>
+            <span class="tab-label">Login</span>
+          </ng-template>
+          <benji-login (showSignupTab)="showSignupTab()"></benji-login>
+        </mat-tab>
+        <mat-tab label="Sign up">
+          <ng-template mat-tab-label class="signup-label">
+            <span class="tab-label">Sign up</span>
+          </ng-template>
+          <benji-signup></benji-signup>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,6 +14,7 @@ import {
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  @Output() showSignupTab = new EventEmitter();
 
   constructor(private builder: FormBuilder) {}
 
@@ -22,6 +23,10 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: ''
     });
+  }
+
+  showSignup(): void {
+    this.showSignupTab.emit();
   }
 
   get email(): AbstractControl {

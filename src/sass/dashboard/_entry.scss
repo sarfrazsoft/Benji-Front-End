@@ -13,10 +13,14 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 75vw;
-  height: 65vh;
+  height: 70vh;
   @media #{$xxlarge-and-down} {
-    height: 70vh;
+    height: 85vh;
   }
+  @media #{$fourK-display-and-up} {
+    height: unset;
+  }
+
   .welcome-heading {
     color: #fff;
     h1 {
@@ -31,10 +35,17 @@
   }
   .form-container {
     background-color: #fff;
+    padding-top: 2%;
+    @media #{$xxlarge-and-down} {
+      padding: 1%;
+    }
     .header {
-      margin-bottom: 8%;
+      margin-bottom: 30px;
       @media #{$xxlarge-and-down} {
-        margin-bottom: 2%;
+        margin-bottom: 30px;
+      }
+      @media #{$fourK-display-and-up} {
+        margin-bottom: 5%;
       }
       h1 {
         color: $vibrant-blue;
@@ -54,31 +65,36 @@
       margin-top: 8%;
       font-family: $pn-semi-bold;
       @media #{$xxlarge-and-down} {
-        margin-top: 4%;
+        margin-top: 10%;
       }
     }
     .form-tabs {
       padding: 0 15%;
     }
-    .mat-tab-label-active {
-      opacity: 1 !important;
-    }
-    .mat-tab-label {
-      height: 48px;
-      padding: 0px;
-      cursor: pointer;
-      opacity: 0.5;
-      font-size: 25px;
-      color: $vibrant-blue;
-      box-sizing: border-box;
-      width: 100%;
-      min-width: 160px;
-      text-align: left;
-      display: inline-flex;
-      justify-content: flex-start;
-      align-items: center;
-      white-space: nowrap;
-      position: relative;
+    .mat-tab-labels {
+      .mat-tab-label-active {
+        opacity: 1 !important;
+      }
+      .mat-tab-label {
+        height: 48px;
+        padding: 0px;
+        cursor: pointer;
+        opacity: 0.5;
+        font-size: 25px;
+        color: $vibrant-blue;
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 160px;
+        text-align: left;
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        white-space: nowrap;
+        position: relative;
+        &:nth-child(2) {
+          justify-content: flex-end;
+        }
+      }
     }
   }
 }
