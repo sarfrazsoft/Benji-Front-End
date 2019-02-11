@@ -6,105 +6,115 @@
   transform: $property;
 }
 
-.mat-sidenav-content {
-  background-color: #f7f8fa;
-}
+mat-sidenav-container.mat-sidenav-container {
+  height: -webkit-calc(100vh - 90px) !important;
+  height: -moz-calc(100vh - 90px) !important;
+  height: calc(100vh - 90px) !important;
 
-.nav-container {
-  width: 320px;
-  padding: 20px 30px;
-  font-family: $pn-regular;
+  min-height: -webkit-calc(100vh - 90px) !important;
+  min-height: -moz-calc(100vh - 90px) !important;
+  min-height: calc(100vh - 90px) !important;
 
-  .session-controls {
-    padding: 5px 0px;
-    > div {
-      padding: 10px 0px;
-      cursor: pointer;
-      &.join-session {
-        border-right: 1px solid $grey;
-      }
-      .rotate-180 {
-        @include transform(rotate(180deg));
-      }
+  .mat-sidenav-content {
+    background-color: #f7f8fa;
+  }
 
-      .rotate-270 {
-        @include transform(rotate(270deg));
-      }
+  .nav-container {
+    width: 320px;
+    padding: 20px 30px;
+    font-family: $pn-regular;
 
-      .rotate-90 {
-        @include transform(rotate(90deg));
-      }
-      &:hover {
+    .session-controls {
+      padding: 5px 0px;
+      > div {
+        padding: 10px 0px;
+        cursor: pointer;
+        &.join-session {
+          border-right: 1px solid $grey;
+        }
         .rotate-180 {
-          transition: all $animation-time linear;
-          @include transform(rotate(180deg) translate3d(-5px, -5px, 0px));
+          @include transform(rotate(180deg));
         }
 
         .rotate-270 {
-          transition: all $animation-time linear;
-          @include transform(rotate(270deg) translate3d(-5px, -5px, 0px));
+          @include transform(rotate(270deg));
         }
 
         .rotate-90 {
-          transition: all $animation-time linear;
-          @include transform(rotate(90deg) translate3d(-5px, -5px, 0px));
+          @include transform(rotate(90deg));
         }
+        &:hover {
+          .rotate-180 {
+            transition: all $animation-time linear;
+            @include transform(rotate(180deg) translate3d(-5px, -5px, 0px));
+          }
 
-        .rotate-0 {
-          transition: all $animation-time linear;
-          @include transform(translate3d(-5px, -5px, 0px));
+          .rotate-270 {
+            transition: all $animation-time linear;
+            @include transform(rotate(270deg) translate3d(-5px, -5px, 0px));
+          }
+
+          .rotate-90 {
+            transition: all $animation-time linear;
+            @include transform(rotate(90deg) translate3d(-5px, -5px, 0px));
+          }
+
+          .rotate-0 {
+            transition: all $animation-time linear;
+            @include transform(translate3d(-5px, -5px, 0px));
+          }
+        }
+      }
+      img {
+        margin: 4px;
+        height: 25px;
+      }
+      .session-text {
+        text-align: center;
+        color: $vibrant-blue;
+        margin-top: 20px;
+        span {
+          font-family: $pn-bold;
+          font-size: 28px;
+          letter-spacing: 0.65px;
+        }
+        span:last-of-type {
+          margin-top: 5px;
+          font-family: $pn-regular;
+          font-size: 16px;
         }
       }
     }
-    img {
-      margin: 4px;
-      height: 25px;
-    }
-    .session-text {
-      text-align: center;
-      color: $vibrant-blue;
-      margin-top: 20px;
-      span {
-        font-family: $pn-bold;
-        font-size: 28px;
-        letter-spacing: 0.65px;
-      }
-      span:last-of-type {
-        margin-top: 5px;
-        font-family: $pn-regular;
-        font-size: 16px;
-      }
-    }
-  }
 
-  .nav-section {
-    margin: 15px 0px;
-
-    .item {
-      cursor: pointer;
-      font-size: 28px;
+    .nav-section {
       margin: 15px 0px;
-      transition: margin-left 0.1s linear;
-      -webkit-transition: margin-left 0.1s linear;
-      -ms-transition: margin-left 0.1s linear;
-      &:hover {
-        margin-left: 10px;
-      }
-      .item-name {
-        margin-left: 5px;
-        color: #4a4a4a;
-      }
-      .bullet-point {
-        opacity: 0;
-        color: #76f5cb;
-        transition: opacity 0.5s linear;
-        -webkit-transition: opacity 0.5s linear;
-        -ms-transition: opacity 0.5s linear;
-      }
-      &:hover {
-        font-family: $pn-semi-bold;
+
+      .item {
+        cursor: pointer;
+        font-size: 28px;
+        margin: 15px 0px;
+        transition: margin-left 0.1s linear;
+        -webkit-transition: margin-left 0.1s linear;
+        -ms-transition: margin-left 0.1s linear;
+        &:hover {
+          margin-left: 10px;
+        }
+        .item-name {
+          margin-left: 5px;
+          color: #4a4a4a;
+        }
         .bullet-point {
-          opacity: 1;
+          opacity: 0;
+          color: #76f5cb;
+          transition: opacity 0.5s linear;
+          -webkit-transition: opacity 0.5s linear;
+          -ms-transition: opacity 0.5s linear;
+        }
+        &:hover {
+          font-family: $pn-semi-bold;
+          .bullet-point {
+            opacity: 1;
+          }
         }
       }
     }
