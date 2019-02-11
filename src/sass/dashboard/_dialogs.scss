@@ -18,18 +18,18 @@ mat-dialog-container.mat-dialog-container {
   .select-session {
     margin: 0px;
     padding-bottom: 40px;
-    .select-container {
+    .controls-container {
       width: 200px;
-    }
-    .ng-select .ng-select-container {
-      border: none;
-      border-radius: 0px;
-      .ng-placeholder {
-        color: #9b9b9b;
+      .dialog-controls {
+        width: 100%;
       }
-    }
-    .launch > .dashboard-button {
-      width: 200px;
+      .ng-select .ng-select-container {
+        border: none;
+        border-radius: 0px;
+        .ng-placeholder {
+          color: #9b9b9b;
+        }
+      }
     }
   }
 }

@@ -4,7 +4,12 @@
     fxLayout="row"
     fxLayoutAlign="space-around space-around"
   >
-    <div class="join-session" fxLayout="column" fxFlex="100%">
+    <div
+      class="join-session"
+      fxLayout="column"
+      fxFlex="100%"
+      (click)="joinSession()"
+    >
       <div class="join-icon">
         <div fxLayout="row" fxLayoutAlign="center">
           <img
@@ -36,7 +41,12 @@
         <span>a session</span>
       </div>
     </div>
-    <div class="launch-session" fxLayout="column" fxFlex="100%">
+    <div
+      class="launch-session"
+      fxLayout="column"
+      fxFlex="100%"
+      (click)="launchSession()"
+    >
       <div class="launch-icon">
         <div fxLayout="row" fxLayoutAlign="center">
           <img

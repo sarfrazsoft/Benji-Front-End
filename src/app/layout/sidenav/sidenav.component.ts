@@ -1,4 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import {
+  JoinSessionDialogComponent,
+  LaunchSessionDialogComponent
+} from '../../shared';
 
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
@@ -8,17 +13,31 @@ export interface SidenavSection {
 }
 
 @Component({
-  selector: 'app-menu',
+  selector: 'benji-menu',
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements OnInit {
   sidenavSections: any[] = [];
   route: string;
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
     this.initNavigation();
+  }
+
+  launchSession(): void {
+    this.dialog
+      .open(LaunchSessionDialogComponent, {})
+      .afterClosed()
+      .subscribe(user => {});
+  }
+
+  joinSession(): void {
+    this.dialog
+      .open(JoinSessionDialogComponent, {})
+      .afterClosed()
+      .subscribe(user => {});
   }
 
   initNavigation() {
