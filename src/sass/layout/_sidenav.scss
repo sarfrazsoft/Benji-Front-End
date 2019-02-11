@@ -96,6 +96,7 @@ mat-sidenav-container.mat-sidenav-container {
         transition: margin-left 0.1s linear;
         -webkit-transition: margin-left 0.1s linear;
         -ms-transition: margin-left 0.1s linear;
+        outline: none;
         &:hover {
           margin-left: 10px;
         }

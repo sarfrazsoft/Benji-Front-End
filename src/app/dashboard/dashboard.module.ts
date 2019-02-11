@@ -12,6 +12,7 @@ import {
   DashboardEntryComponents,
   DashboardProviders
 } from './';
+import { LearnersComponent } from './learners/learners.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,7 @@ import {
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [...DashboardComponents],
+  declarations: [...DashboardComponents, LearnersComponent],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders
 })

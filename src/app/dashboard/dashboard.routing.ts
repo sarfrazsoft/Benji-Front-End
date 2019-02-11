@@ -1,10 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
-import { AdminPanelComponent } from './';
+import { AdminPanelComponent, LearnersComponent } from './index';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminPanelComponent
+  },
+  {
+    path: 'learners',
+    component: LearnersComponent
   }
 ];
 

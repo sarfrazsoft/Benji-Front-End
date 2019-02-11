@@ -23,7 +23,7 @@ const routes: Routes = [
     component: ParticipantLessonComponent
   },
   {
-    path: 'admin',
+    path: 'dashboard',
     loadChildren: 'src/app/dashboard/dashboard.module#DashboardModule',
     canLoad: [AuthGuard]
   },

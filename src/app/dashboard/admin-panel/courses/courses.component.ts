@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { LaunchSessionDialogComponent } from '../../shared';
+import { LaunchSessionDialogComponent } from 'src/app/shared';
 
 @Component({
   selector: 'benji-courses',

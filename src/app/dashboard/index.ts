@@ -1,8 +1,12 @@
 export * from './admin-panel/';
+export * from './learners';
 
-import { AdminPanelComponent } from './admin-panel';
-import { SingleStatComponent, StatsComponent } from './admin-panel/stats';
-import { CoursesComponent } from './courses/courses.component';
+import {
+  AdminPanelComponent,
+  CoursesComponent,
+  SingleStatComponent,
+  StatsComponent
+} from './admin-panel';
 
 export const DashboardComponents = [
   AdminPanelComponent,
