@@ -4,6 +4,7 @@ mat-toolbar.mat-toolbar {
   height: $toolbar-height;
   background-color: #fff;
   border-bottom: 2px solid $deep-blue;
+  padding-left: 32px;
 
   .logo {
     cursor: pointer;
