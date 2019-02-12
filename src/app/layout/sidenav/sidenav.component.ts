@@ -51,11 +51,11 @@ export class SidenavComponent implements OnInit {
           },
           {
             navName: 'Groups',
-            route: 'groups'
+            route: 'dashboard/groups'
           },
           {
             navName: 'Past Sessions',
-            route: 'pastsessions'
+            route: 'dashboard/pastsessions'
           }
         ]
       },

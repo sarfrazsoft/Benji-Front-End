@@ -1,4 +1,11 @@
-<div fxFlex fxLayout="row" class="item" [routerLink]="sidenavItem.navRoute">
+<div
+  fxFlex
+  fxLayout="row"
+  class="item"
+  [routerLink]="[sidenavItem.navRoute]"
+  [routerLinkActiveOptions]="{ exact: true }"
+  routerLinkActive="active"
+>
   <div class="bullet-point">&bull;</div>
   <div class="item-name">{{ sidenavItem.navName }}</div>
 </div>

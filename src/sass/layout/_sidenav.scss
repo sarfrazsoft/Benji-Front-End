@@ -97,9 +97,6 @@ mat-sidenav-container.mat-sidenav-container {
         -webkit-transition: margin-left 0.1s linear;
         -ms-transition: margin-left 0.1s linear;
         outline: none;
-        &:hover {
-          margin-left: 10px;
-        }
         .item-name {
           margin-left: 5px;
           color: #4a4a4a;
@@ -111,7 +108,9 @@ mat-sidenav-container.mat-sidenav-container {
           -webkit-transition: opacity 0.5s linear;
           -ms-transition: opacity 0.5s linear;
         }
-        &:hover {
+        &:hover,
+        &.active {
+          margin-left: 10px;
           font-family: $pn-semi-bold;
           .bullet-point {
             opacity: 1;
