@@ -6,6 +6,8 @@ mat-toolbar.mat-toolbar {
   border-bottom: 2px solid $deep-blue;
 
   .logo {
+    cursor: pointer;
+    outline: none;
     img {
       height: 50px;
     }
