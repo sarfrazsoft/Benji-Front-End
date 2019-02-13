@@ -27,10 +27,14 @@
     fxLayoutAlign="start center"
   >
     <div class="header" fxLayoutAlign="center">
-      <h1>Benji</h1>
+      <img src="/assets/img/logo.png" />
     </div>
     <div class="form-tabs">
-      <mat-tab-group [(selectedIndex)]="selectedTab" dynamicHeight>
+      <mat-tab-group
+        [(selectedIndex)]="selectedTab"
+        dynamicHeight
+        [disableRipple]="true"
+      >
         <mat-tab label="Login">
           <ng-template mat-tab-label>
             <span class="tab-label">Login</span>
