@@ -1,32 +1,33 @@
 /*FONTS*/
 @font-face {
-    font-family: 'ProximaNovaLight';
-    src: url('../assets/fonts/ProximaNovaLight.ttf') format("truetype"),
-    url('../assets/fonts/ProximaNovaLight.woff') format("woff");
+  font-family: 'ProximaNovaLight';
+  src: url('../assets/fonts/ProximaNovaLight.ttf') format('truetype'),
+    url('../assets/fonts/ProximaNovaLight.woff') format('woff');
 }
 
 @font-face {
-    font-family: 'ProximaNovaRegular';
-    src: url('../assets/fonts/ProximaNovaReg.ttf') format("truetype"),
-    url('../assets/fonts/ProximaNovaReg.woff') format("woff");
+  font-family: 'ProximaNovaRegular';
+  src: url('../assets/fonts/ProximaNovaReg.ttf') format('truetype'),
+    url('../assets/fonts/ProximaNovaReg.woff') format('woff');
 }
 
 @font-face {
-    font-family: 'ProximaNovaMedium';
-    src: url('../assets/fonts/proxima-nova-medium.ttf') format("truetype"),
-    url('../assets/fonts/proxima-nova-medium.woff') format("woff");
-  }
-
-@font-face {
-    font-family: 'ProximaNovaSemiBold';
-    src: url('../assets/fonts/proximanova-semibold-webfont.ttf') format("truetype"),
-    url('../assets/fonts/proximanova-semibold-webfont.woff') format("woff");
+  font-family: 'ProximaNovaMedium';
+  src: url('../assets/fonts/proxima-nova-medium.ttf') format('truetype'),
+    url('../assets/fonts/proxima-nova-medium.woff') format('woff');
 }
 
 @font-face {
-    font-family: 'ProximaNovaBold';
-    src: url('../assets/fonts/ProximaNovaBold.ttf') format("truetype"),
-    url('../assets/fonts/ProximaNovaBold.woff') format("woff");
+  font-family: 'ProximaNovaSemiBold';
+  src: url('../assets/fonts/proximanova-semibold-webfont.ttf')
+      format('truetype'),
+    url('../assets/fonts/proximanova-semibold-webfont.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'ProximaNovaBold';
+  src: url('../assets/fonts/ProximaNovaBold.ttf') format('truetype'),
+    url('../assets/fonts/ProximaNovaBold.woff') format('woff');
 }
 
 /*Varaibles: Font weights*/
@@ -37,6 +38,57 @@ $pn-semi-bold: 'ProximaNovaSemiBold', 'Open-Sans', sans-serif;
 $pn-bold: 'ProximaNovaBold', 'Open-Sans', sans-serif;
 /*end of variables*/
 
+@import '~@angular/material/theming';
+
+// Define a custom typography config that overrides the font-family
+$custom-typography: mat-typography-config(
+  $font-family: $pn-regular
+);
+
+@include angular-material-typography($custom-typography);
+
+$benji-blue: (
+  50: #ebefff,
+  100: #b8b3ff,
+  200: #a0afd4,
+  300: #4b5cfa,
+  400: #4d55c9,
+  500: #0a4cef,
+  600: #3538e5,
+  700: #182664,
+  800: #2308bd,
+  900: #210cda,
+  A100: #0a4cef,
+  A200: #0a4cef,
+  A400: #0a4cef,
+  A700: #0a4cef,
+  contrast: (
+    50: #504c4a,
+    100: #504c4a,
+    200: #504c4a,
+    300: #504c4a,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #f5f5f5,
+    800: #dedede,
+    900: #dedede,
+    A100: #504c4a,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff
+  )
+);
+
+$primary: mat-palette($benji-blue);
+
+// $primary: mat-palette($mat-orange, 500);
+$accent: mat-palette($mat-blue-grey, 800);
+$warn: mat-palette($mat-red, 400);
+
+$app-theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($app-theme);
 
 /*Utilities: Font weights*/
 .pn-200 {
@@ -80,8 +132,8 @@ $pn-bold: 'ProximaNovaBold', 'Open-Sans', sans-serif;
 
 /* Emojis */
 .lg-emoji {
-    font-size: 144px;
-    line-height: calc(144px * 1.5);
+  font-size: 144px;
+  line-height: calc(144px * 1.5);
 }
 
 /* End of Emojis */
@@ -91,7 +143,6 @@ body {
   @extend .pn-400;
 }
 /*End of Global Defaults*/
-
 
 /* Icons */
 .icon-white {

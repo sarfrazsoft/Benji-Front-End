@@ -14,6 +14,7 @@ import {
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
+  isLoginClicked = false;
   @Output() showSignupTab = new EventEmitter();
 
   constructor(private builder: FormBuilder) {}
@@ -34,6 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isLoginClicked = true;
     if (this.form.valid) {
     }
   }

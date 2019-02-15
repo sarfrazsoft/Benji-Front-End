@@ -1,19 +1,25 @@
+import {
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
-import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+  constructor(public authService: AuthService) {}
 
-  constructor(public auth: AuthService) {}
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.auth.getToken()) {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
+    if (this.authService.getToken()) {
       request = request.clone({
         setHeaders: {
-          Authorization: 'JWT ' + this.auth.getToken()
+          Authorization: 'JWT ' + this.authService.getToken()
         }
       });
     }

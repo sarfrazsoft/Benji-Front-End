@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'benji-entry',
@@ -8,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 export class EntryComponent implements OnInit {
   selectedTab = 0;
 
-  constructor() {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   showSignupTab(): void {
     this.selectedTab = 1;

@@ -100,10 +100,10 @@ button {
   color: #fff;
   border-radius: 30px;
   &.active {
-    background-color: $vibrant-blue;
+    background-color: mat-color($benji-blue, 500);
   }
   &.inactive {
-    background-color: #a0afd4;
+    background-color: mat-color($benji-blue, 200);
   }
 }
 

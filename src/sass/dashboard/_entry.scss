@@ -13,13 +13,6 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 75vw;
-  height: 70vh;
-  @media #{$xxlarge-and-down} {
-    height: 85vh;
-  }
-  @media #{$fourK-display-and-up} {
-    height: 50vh;
-  }
 
   .welcome-heading {
     color: #fff;
@@ -35,41 +28,26 @@
   }
   .form-container {
     background-color: #fff;
-    padding-top: 2%;
-    @media #{$xxlarge-and-down} {
-      padding: 1%;
-    }
+    padding: 20px;
     .header {
-      margin-bottom: 30px;
-      @media #{$xxlarge-and-down} {
-        margin-bottom: 30px;
-      }
-      @media #{$fourK-display-and-up} {
-        margin-bottom: 5%;
-      }
-      h1 {
-        color: $vibrant-blue;
-        font-size: 8vh;
-        font-family: $pn-bold;
-      }
+      margin: 15px 0px;
+      min-height: 55px;
+      max-height: 55px;
+    }
+    .form-tabs {
+      padding: 0 15%;
     }
     .instruction {
       margin: 20px 0px;
       text-align: center;
-      font-size: 15px;
+      font-size: 20px;
     }
     .b-standard-input {
       width: 100%;
     }
     .footer {
-      margin-top: 8%;
+      margin-top: 50px;
       font-family: $pn-semi-bold;
-      @media #{$xxlarge-and-down} {
-        margin-top: 10%;
-      }
-    }
-    .form-tabs {
-      padding: 0 15%;
     }
     .mat-tab-labels {
       .mat-tab-label-active {

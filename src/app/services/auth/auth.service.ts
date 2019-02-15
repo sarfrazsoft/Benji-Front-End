@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import * as global from '../../globals';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class AuthService {
     // admin
     // mainscreenUser
     // participant
-    localStorage.setItem('userRole', 'admin');
+    localStorage.setItem('userRole', 'mainscreenUser');
   }
 
   login(username: string, password: string) {
@@ -22,6 +22,30 @@ export class AuthService {
         password: password
       })
       .pipe(tap(result => this.setSession(result)));
+  }
+
+  register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) {
+    this.logout();
+    return this.http
+      .post(global.apiRoot + '/rest-auth/registration/', {
+        username: firstName + lastName,
+        password1: password,
+        password2: password,
+        first_name: firstName,
+        last_name: lastName
+      })
+      .pipe(
+        map((res: Response) => {
+          console.log(res);
+          this.setSession(res);
+        }),
+        catchError(err => of(err.error))
+      );
   }
 
   private setSession(authResult) {
