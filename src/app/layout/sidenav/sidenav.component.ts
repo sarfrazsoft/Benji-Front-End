@@ -9,7 +9,7 @@ import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
 export interface SidenavSection {
   section: number;
-  items: SidenavItem;
+  items: Array<SidenavItem>;
 }
 
 @Component({
@@ -17,7 +17,7 @@ export interface SidenavSection {
   templateUrl: './sidenav.component.html'
 })
 export class SidenavComponent implements OnInit {
-  sidenavSections: any[] = [];
+  sidenavSections: Array<SidenavSection> = [];
   route: string;
 
   constructor(private dialog: MatDialog) {}
@@ -51,11 +51,11 @@ export class SidenavComponent implements OnInit {
           },
           {
             navName: 'Groups',
-            route: 'dashboard/groups'
+            navRoute: 'dashboard/groups'
           },
           {
             navName: 'Past Sessions',
-            route: 'dashboard/pastsessions'
+            navRoute: 'dashboard/pastsessions'
           }
         ]
       },
@@ -64,15 +64,15 @@ export class SidenavComponent implements OnInit {
         items: [
           {
             navName: 'Account',
-            route: 'accounts'
+            navRoute: 'accounts'
           },
           {
             navName: 'Settings',
-            route: 'settings'
+            navRoute: 'settings'
           },
           {
             navName: 'Help',
-            route: 'help'
+            navRoute: 'help'
           }
         ]
       },
@@ -81,7 +81,7 @@ export class SidenavComponent implements OnInit {
         items: [
           {
             navName: 'Logout',
-            route: 'logout'
+            navRoute: 'logout'
           }
         ]
       }
