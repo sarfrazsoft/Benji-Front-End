@@ -3,7 +3,6 @@ import { TokenInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
 import { BackendRestService } from './backend/backend-rest.service';
 import { BackendSocketService } from './backend/backend-socket.service';
-import { HttpErrorInterceptor } from './backend/http-error.interceptor';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { LayoutService } from './layout.service';
 
