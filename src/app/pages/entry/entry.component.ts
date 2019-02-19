@@ -13,7 +13,7 @@ export class EntryComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    if (this.authService.isLoggedIn) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
   }

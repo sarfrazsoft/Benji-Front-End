@@ -1,5 +1,5 @@
-<ng-container *ngIf="userRole === 'admin'">
-  <mat-toolbar> <app-topbar fxFlex></app-topbar> </mat-toolbar>
+<ng-container>
+  <mat-toolbar> <benji-topbar fxFlex></benji-topbar> </mat-toolbar>
   <mat-sidenav-container fxFlexFill>
     <mat-sidenav opened="true" mode="side" disableClose="true">
       <benji-menu></benji-menu>
@@ -10,8 +10,4 @@
       </div>
     </div>
   </mat-sidenav-container>
-</ng-container>
-
-<ng-container *ngIf="userRole != 'admin'">
-  <router-outlet></router-outlet>
 </ng-container>

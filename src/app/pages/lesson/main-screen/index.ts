@@ -8,6 +8,8 @@ import { MainScreenPairActivityComponent } from './main-screen-pair-activity/mai
 import { MainScreenTeletriviaActivityComponent } from './main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
 import { MainScreenVideoActivityComponent } from './main-screen-video-activity/main-screen-video-activity.component';
 
+export { MainScreenLessonComponent };
+
 export const MainScreenComponents = [
   MainScreenDiscussionActivityComponent,
   MainScreenFeedbackActivityComponent,

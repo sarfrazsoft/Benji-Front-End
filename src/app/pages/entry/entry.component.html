@@ -1,9 +1,14 @@
-<div class="login-container" fxLayout="row" fxLayout.lt-md="column">
+<div class="login-container" fxLayout="row" fxLayout.lt-sm="column">
   <div class="left-side" fxLayoutAlign="start center" fxFlex="65%"></div>
   <div class="right-side" fxFlex="35%"></div>
 </div>
-<div class="controls">
-  <div class="welcome-heading" fxFlex="1 1 100%" fxLayout="row">
+<div class="controls" fxLayout="row" fxLayout.lt-sm="column">
+  <div
+    class="welcome-heading"
+    fxFlex="1 1 100%"
+    fxLayout="row"
+    fxHide.lt-sm="true"
+  >
     <div
       fxFlex="0 0 100%"
       fxLayout="column"

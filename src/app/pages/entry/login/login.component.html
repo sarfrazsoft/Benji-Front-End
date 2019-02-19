@@ -41,11 +41,13 @@
         formControlName="password"
         placeholder="Password"
       />
+      <mat-error *ngIf="emailPasswordError">
+        Email or Password incorrect.</mat-error
+      >
     </div>
 
     <button
       type="submit"
-      (click)="onSubmit()"
       class="dashboard-button"
       [ngClass]="{
         active: form.valid,

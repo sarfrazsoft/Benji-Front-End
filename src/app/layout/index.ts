@@ -20,9 +20,6 @@ import { ParticipantToolbarComponent } from '../ui-components/participant-toolba
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
 import { MainScreenComponents, ParticipantScreenComponents } from '../index';
-import { EntryComponent } from '../pages/entry/entry.component';
-import { LoginComponent } from '../pages/entry/login/login.component';
-import { SignupComponent } from '../pages/entry/signup/signup.component';
 
 export const LayoutDeclarations = [
   ...MainScreenComponents,
@@ -32,9 +29,6 @@ export const LayoutDeclarations = [
   LandingComponent,
   LayoutComponent,
   LinearTimerComponent,
-  LoginComponent,
-  SignupComponent,
-  EntryComponent,
   MainscreenElementsComponent,
   MainScreenToolbarComponent,
   MainScreenFooterComponent,

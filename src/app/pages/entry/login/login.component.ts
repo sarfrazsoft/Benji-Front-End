@@ -6,6 +6,8 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'benji-login',
@@ -15,9 +17,14 @@ import {
 export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoginClicked = false;
+  emailPasswordError = false;
   @Output() showSignupTab = new EventEmitter();
 
-  constructor(private builder: FormBuilder) {}
+  constructor(
+    private builder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.form = this.builder.group({
@@ -37,6 +44,19 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.isLoginClicked = true;
     if (this.form.valid) {
+      const val = this.form.value;
+      this.authService.signIn(val.email, val.password).subscribe(
+        res => {
+          if (res) {
+            this.emailPasswordError = true;
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      );
     }
   }
 }
