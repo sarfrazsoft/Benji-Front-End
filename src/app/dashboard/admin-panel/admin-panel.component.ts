@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ContextService } from 'src/app/services';
+import {
+  JobInfoDialogComponent,
+  JoinSessionDialogComponent,
+  LaunchSessionDialogComponent
+} from '../../shared';
 import { AdminService } from './services/admin.service';
 
 @Component({
@@ -12,12 +18,26 @@ export class AdminPanelComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private contextService: ContextService
-  ) {}
-
-  ngOnInit() {
+    private contextService: ContextService,
+    private dialog: MatDialog
+  ) {
     this.route.data.forEach((data: any) => {
       console.log(data.userData);
+      if (!data.userData.job_title) {
+        this.dialog
+          .open(JobInfoDialogComponent, {
+            data: {
+              name: data.userData.first_name
+            },
+            disableClose: true
+          })
+          .afterClosed()
+          .subscribe(res => {
+            console.log(res);
+          });
+      }
     });
   }
+
+  ngOnInit() {}
 }

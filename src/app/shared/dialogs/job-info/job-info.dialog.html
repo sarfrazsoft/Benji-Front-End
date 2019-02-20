@@ -1,0 +1,45 @@
+<div class="launch-session-dialog" fxLayout="column">
+  <div fxLayoutAlign="end end">
+    <!-- <button class="close-button" matDialogClose>
+      <mat-icon class="icon-white">clear</mat-icon>
+    </button> -->
+  </div>
+  <mat-dialog-content class="select-session">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <h2 class="dialog-heading">Hi {{ name }}!</h2>
+      <div class="dialog-instructions">
+        Welcome to Benji! Just need a few more details about you before we
+        start.
+      </div>
+      <div class="controls-container" fxLayout="column" fxLayoutGap="15px">
+        <input
+          class="b-standard-input dialog-controls"
+          required
+          placeholder="Job title"
+          [(ngModel)]="jobTitle"
+        />
+        <ng-select
+          class="dialog-controls"
+          [items]="courses"
+          bindLabel="name"
+          placeholder="Affiliation"
+          [(ngModel)]="affiliation"
+          appendTo="body"
+        >
+        </ng-select>
+        <div class="launch">
+          <button
+            class="dashboard-button dialog-controls"
+            [ngClass]="{
+              active: jobTitle && affiliation,
+              inactive: !jobTitle || !affiliation
+            }"
+            (click)="submit()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>
