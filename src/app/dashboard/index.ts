@@ -3,9 +3,11 @@ export * from './learners';
 
 import {
   AdminPanelComponent,
+  AdminService,
   CoursesComponent,
   SingleStatComponent,
-  StatsComponent
+  StatsComponent,
+  UserResolver
 } from './admin-panel';
 
 export const DashboardComponents = [
@@ -17,4 +19,4 @@ export const DashboardComponents = [
 
 export const DashboardEntryComponents = [];
 
-export const DashboardProviders = [];
+export const DashboardProviders = [UserResolver, AdminService];

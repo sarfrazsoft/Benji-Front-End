@@ -4,11 +4,21 @@ import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { ContextService } from 'src/app/services/context.service';
 import * as global from '../../globals';
+
+export interface LoginResponse {
+  user: any;
+  token: string;
+}
 
 @Injectable()
 export class AuthService {
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private contextService: ContextService
+  ) {
     // Set user roles. They should  be set on login based on info from backend.
     // admin
     // mainscreenUser
@@ -69,8 +79,9 @@ export class AuthService {
         password: password
       })
       .pipe(
-        map((res: Response) => {
+        map((res: LoginResponse) => {
           this.setSession(res);
+          this.contextService.user = res.user;
         }),
         catchError(err => of(err.error))
       );
