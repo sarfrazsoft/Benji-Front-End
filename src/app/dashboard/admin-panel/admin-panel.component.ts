@@ -22,20 +22,20 @@ export class AdminPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.route.data.forEach((data: any) => {
-      console.log(data.userData);
-      if (!data.userData.job_title) {
-        this.dialog
-          .open(JobInfoDialogComponent, {
-            data: {
-              name: data.userData.first_name
-            },
-            disableClose: true
-          })
-          .afterClosed()
-          .subscribe(res => {
-            console.log(res);
-          });
-      }
+      console.log(data);
+      // if (!data.userData.job_title) {
+      //   this.dialog
+      //     .open(JobInfoDialogComponent, {
+      //       data: {
+      //         name: data.userData.first_name
+      //       },
+      //       disableClose: true
+      //     })
+      //     .afterClosed()
+      //     .subscribe(res => {
+      //       console.log(res);
+      //     });
+      // }
     });
   }
 

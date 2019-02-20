@@ -13,15 +13,13 @@ export class AdminService {
     private contextService: ContextService
   ) {}
 
-  getAdminPanelMetrics(args): Observable<any> {
-    return this.http
-      .post(global.apiRoot + '/rest-auth/user/', {
-        username: 'bleh'
-      })
-      .pipe(
-        map((res: Response) => res),
-        catchError(err => of(err.error))
-      );
+  getAdminPanelMetrics(): Observable<any> {
+    return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
+      map((res: Response) => {
+        return { learners: 106, groups: 14, sessions: 18 };
+      }),
+      catchError(err => of(err.error))
+    );
   }
 
   getUser(): Observable<any> {
@@ -29,6 +27,15 @@ export class AdminService {
     return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
       map(res => {
         this.contextService.selected = res;
+        return res;
+      })
+    );
+  }
+
+  getCourses(): Observable<any> {
+    return this.http.get(global.apiRoot + '/course_details/course/').pipe(
+      map(res => {
+        // this.contextService.selected = res;
         return res;
       })
     );

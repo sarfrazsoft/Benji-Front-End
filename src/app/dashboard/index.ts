@@ -5,6 +5,7 @@ import {
   AdminPanelComponent,
   AdminService,
   CoursesComponent,
+  CoursesResolver,
   SingleStatComponent,
   StatsComponent,
   UserResolver
@@ -19,4 +20,4 @@ export const DashboardComponents = [
 
 export const DashboardEntryComponents = [];
 
-export const DashboardProviders = [UserResolver, AdminService];
+export const DashboardProviders = [UserResolver, CoursesResolver, AdminService];
