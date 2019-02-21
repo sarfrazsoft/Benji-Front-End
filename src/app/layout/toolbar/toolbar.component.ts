@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contextService.selected$.subscribe(user => {
+    this.contextService.user$.subscribe(user => {
       if (user) {
         this.user = user;
       }

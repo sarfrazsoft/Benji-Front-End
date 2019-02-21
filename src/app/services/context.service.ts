@@ -7,19 +7,17 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ContextService {
-  user: any;
-
   constructor(private http: HttpClient, private router: Router) {}
 
   /**
-   * Selected User
+   * Current User
    */
-  selected$ = new BehaviorSubject<any>(null);
+  user$ = new BehaviorSubject<any>(null);
 
-  set selected(user: any) {
-    this.selected$.next(user);
+  set user(user: any) {
+    this.user$.next(user);
   }
-  get selected(): any {
-    return this.selected$.getValue();
+  get user(): any {
+    return this.user$.getValue();
   }
 }

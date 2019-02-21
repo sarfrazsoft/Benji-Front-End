@@ -109,11 +109,17 @@ button {
 
 .dashboard-secondary-button {
   background-color: transparent;
-  padding: 10px 8px;
-  border: 1px solid $grey;
-  color: $brownish-grey;
+  padding: 0px 8px;
+  height: 42px;
+  border: 1px solid $inactive-color;
+  color: $inactive-color;
   border-radius: 5px;
   font-size: 20px;
+  &.active {
+    border: 1px solid $vibrant-blue;
+    color: $vibrant-blue;
+    background-color: $off-white;
+  }
 }
 
 .b-link {

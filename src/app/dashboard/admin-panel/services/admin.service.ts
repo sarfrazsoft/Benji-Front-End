@@ -23,10 +23,9 @@ export class AdminService {
   }
 
   getUser(): Observable<any> {
-    const email = localStorage.getItem('email');
     return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
       map(res => {
-        this.contextService.selected = res;
+        this.contextService.user = res;
         return res;
       })
     );
@@ -35,7 +34,6 @@ export class AdminService {
   getCourses(): Observable<any> {
     return this.http.get(global.apiRoot + '/course_details/course/').pipe(
       map(res => {
-        // this.contextService.selected = res;
         return res;
       })
     );
