@@ -1,23 +1,21 @@
 <div class="courses">
-  <div class="course">
+  <div class="course" *ngFor="let course of courses">
     <div
       class="sub-heading"
       fxLayout="row"
       fxLayoutAlign="space-between center"
       fxLayoutGap="10px"
     >
-      <h2>Active Listening</h2>
+      <h2>{{ course.name }}</h2>
 
-      <div class="launch-session" (click)="launchSession()">
+      <div class="launch-session" (click)="launchSession(course.id)">
         <span>Launch session</span>
         <img src="/assets/img/launch_singlearrow.png" alt="launch" />
       </div>
     </div>
     <div class="course-detail">
       <div class="description">
-        Active Listening is a session that teaches participants the value of
-        active listening and provides opportunities to practice how to actively
-        listen.
+        {{ course.description }}
       </div>
       <div class="course-preview-footer" fxLayoutAlign="start center">
         <div class="overview-button" fxLayoutAlign="start center">

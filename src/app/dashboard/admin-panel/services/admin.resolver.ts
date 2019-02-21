@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/services';
 import { AdminService } from './admin.service';
 
 @Injectable()
-export class UserResolver implements Resolve<any> {
+export class AdminResolver implements Resolve<any> {
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -18,7 +18,9 @@ export class UserResolver implements Resolve<any> {
       // return metricsData;
 
       const user = await this.adminService.getUser().toPromise();
-      return user;
+
+      const courses = await this.adminService.getCourses().toPromise();
+      return { user: user, courses: courses };
     } catch (err) {
       console.log(err);
     }

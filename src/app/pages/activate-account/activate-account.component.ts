@@ -28,7 +28,6 @@ export class ActivateAccountComponent implements OnInit {
             } else {
               this.verified = false;
             }
-            console.log(res);
           },
           err => {
             console.log(err);

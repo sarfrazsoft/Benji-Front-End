@@ -1,18 +1,12 @@
 import { RouterModule, Routes } from '@angular/router';
-import {
-  AdminPanelComponent,
-  CoursesResolver,
-  LearnersComponent,
-  UserResolver
-} from './index';
+import { AdminPanelComponent, AdminResolver, LearnersComponent } from './index';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminPanelComponent,
     resolve: {
-      userData: UserResolver,
-      courses: CoursesResolver
+      dashData: AdminResolver
     }
   },
   {
