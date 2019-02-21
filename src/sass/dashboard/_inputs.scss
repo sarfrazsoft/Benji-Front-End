@@ -1,0 +1,20 @@
+$inactive-color: $cloudy-grey;
+
+.dash-input {
+  outline: none;
+  padding: 9px 10px;
+  background: #fff;
+  border: 1px solid $pale-grey;
+  &:focus {
+    box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+  }
+  &::placeholder {
+    color: $inactive-color;
+  }
+}
+
+mat-error > div {
+  font-size: 80%;
+  margin-left: 10px;
+  position: absolute;
+}

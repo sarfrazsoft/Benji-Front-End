@@ -38,11 +38,11 @@ export class AdminPanelComponent implements OnInit {
             'Active Listening is a session that teaches participants the value 2'
         }
       ];
-      // if (!data.userData.job_title) {
+      // if (!data.dashData.user.job_title) {
       //   this.dialog
       //     .open(JobInfoDialogComponent, {
       //       data: {
-      //         name: data.userData.first_name
+      //         name: data.dashData.user.first_name
       //       },
       //       disableClose: true
       //     })
