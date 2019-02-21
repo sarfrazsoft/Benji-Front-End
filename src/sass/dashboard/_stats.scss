@@ -3,6 +3,7 @@ benji-stats {
     > div {
       border-radius: $subsection-border-radius;
       padding: 36px 0px;
+      cursor: pointer;
       background-color: #fff;
       transition: background-color 0.1s linear;
       -webkit-transition: background-color 0.1s linear;
