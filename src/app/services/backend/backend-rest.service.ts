@@ -40,10 +40,8 @@ export class BackendRestService {
     });
   }
 
-  start_lesson(courserunID: number, lessonID: number): Observable<LessonRun> {
-    return this.http.post<LessonRun>(global.apiRoot + '/course_details/course_run/' + courserunID + '/start_lesson/',
-      { lesson: lessonID }
-    );
+  start_lesson(lessonID: number): Observable<LessonRun> {
+    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/');
   }
 
   get_lessonrun(roomCode: number): Observable<LessonRun> {
@@ -128,7 +126,7 @@ export class BackendRestService {
 
   public getLessonLink(roomCode) {
     return this.http.post(
-      `${global.apiRoot}/course_details/course_run/get_lesson_link/`,
+      `${global.apiRoot}/course_details/lesson/get_lessonrun_link/`,
       {
         lessonrun_code: roomCode
       }

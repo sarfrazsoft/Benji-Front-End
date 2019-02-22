@@ -18,28 +18,19 @@ export class LandingComponent {
     private router: Router
   ) {}
 
-  loginAndStart(courseID) {
+  loginAndStart(lessonID) {
     this.auth
-      .login('sean', 'test')
+      .login('matt', 'test')
       .subscribe(
         null,
         err => console.error(`Error on authentication: ${err}`),
-        () => this.startCourseRun(courseID)
+        () => this.startLesson(lessonID)
       );
   }
 
-  startCourseRun(courseID) {
+  startLesson(lessonID) {
     this.restService
-      .create_courserun(courseID)
-      .subscribe(
-        courseRun => this.startLesson(courseRun),
-        err => console.error(`Error creating a new course run: ${err}`)
-      );
-  }
-
-  startLesson(courseRun: CourseRun) {
-    this.restService
-      .start_lesson(courseRun.id, 1)
+      .start_lesson(lessonID)
       .subscribe(
         lessonRun =>
           this.router.navigate(['/screen/lesson/' + lessonRun.lessonrun_code]),
