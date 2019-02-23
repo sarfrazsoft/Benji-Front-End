@@ -8,6 +8,8 @@ import { ParticipantPairActivityComponent } from './participant-pair-activity/pa
 import { ParticipantTeletriviaActivityComponent } from './participant-teletrivia-activity/participant-teletrivia-activity.component';
 import { ParticipantVideoActivityComponent } from './participant-video-activity/participant-video-activity.component';
 
+export { ParticipantLessonComponent };
+
 export const ParticipantScreenComponents = [
   ParticipantDiscussionActivityComponent,
   ParticipantFeedbackActivityComponent,

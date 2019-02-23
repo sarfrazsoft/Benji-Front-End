@@ -1,0 +1,15 @@
+<div class="activate-container" fxLayout="row" fxLayout.lt-md="column">
+  <div class="" fxLayoutAlign="start center" fxFlex="100%">
+    <div *ngIf="verifying">
+      Hang tight! we're activating your account.
+    </div>
+    <div *ngIf="verified">
+      Success! You can <a [routerLink]="['/login']">login</a> using your email
+      and password.
+    </div>
+    <div *ngIf="!verified">
+      Some error occured while verifying your registration. Please
+      <a [routerLink]="['/login']">register</a> again.
+    </div>
+  </div>
+</div>

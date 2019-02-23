@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
@@ -13,11 +12,8 @@ import {
   DashboardProviders
 } from './';
 import { LearnersComponent, LearnersTableComponent } from './learners';
-import { ScrollContainerComponent } from './learners/learners-table/scroll-container/scroll-container.component';
-
 @NgModule({
   imports: [
-    HttpModule,
     CommonModule,
     DashboardRoutes,
     FormsModule,
@@ -28,8 +24,7 @@ import { ScrollContainerComponent } from './learners/learners-table/scroll-conta
   declarations: [
     ...DashboardComponents,
     LearnersComponent,
-    LearnersTableComponent,
-    ScrollContainerComponent
+    LearnersTableComponent
   ],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders
