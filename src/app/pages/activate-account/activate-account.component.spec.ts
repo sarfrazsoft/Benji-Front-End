@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScrollContainerComponent } from './scroll-container.component';
+import { ActivateAccountComponent } from './activate-account.component';
 
-describe('ScrollContainerComponent', () => {
-  let component: ScrollContainerComponent;
-  let fixture: ComponentFixture<ScrollContainerComponent>;
+describe('ActivateAccountComponent', () => {
+  let component: ActivateAccountComponent;
+  let fixture: ComponentFixture<ActivateAccountComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScrollContainerComponent ]
+      declarations: [ ActivateAccountComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScrollContainerComponent);
+    fixture = TestBed.createComponent(ActivateAccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

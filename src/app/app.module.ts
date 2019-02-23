@@ -9,6 +9,8 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ServicesProviders } from './index';
 
+import { ActivateAccountComponent, EntryComponents } from 'src/app/pages';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
 
 // App Pages
@@ -18,7 +20,7 @@ import { AppComponent } from './app.component';
 import { OnsenModule } from 'ngx-onsenui';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ...EntryComponents, ActivateAccountComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -27,6 +29,7 @@ import { OnsenModule } from 'ngx-onsenui';
     FormsModule,
     ReactiveFormsModule,
     OnsenModule,
+    SharedModule,
     LayoutModule
   ],
   providers: [...ServicesProviders],

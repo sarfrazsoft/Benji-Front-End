@@ -1,12 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { EntryComponent } from '../pages/entry/entry.component';
+import {
+  MainScreenLessonComponent,
+  ParticipantLessonComponent
+} from 'src/app/pages';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/landing/participant/login/participant-login.component';
-import { MainScreenLessonComponent } from '../pages/lesson/main-screen/main-screen-lesson.component';
-import { ParticipantLessonComponent } from '../pages/lesson/participant/participant-lesson.component';
 import { AuthGuard } from '../services';
+import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
@@ -24,12 +26,10 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
+    component: LayoutComponent,
     loadChildren: 'src/app/dashboard/dashboard.module#DashboardModule',
-    canLoad: [AuthGuard]
-  },
-  {
-    path: 'login',
-    component: EntryComponent
+    canLoad: [AuthGuard],
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -23,11 +23,12 @@ mat-dialog-container.mat-dialog-container {
       .dialog-controls {
         width: 100%;
       }
+      // TODO move these styles to dashboard/_input.scss
       .ng-select .ng-select-container {
         border: none;
         border-radius: 0px;
         .ng-placeholder {
-          color: #9b9b9b;
+          color: $inactive-color;
         }
       }
     }

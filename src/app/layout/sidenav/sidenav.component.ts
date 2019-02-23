@@ -47,15 +47,15 @@ export class SidenavComponent implements OnInit {
         items: [
           {
             navName: 'Learners',
-            navRoute: 'dashboard/learners'
+            navRoute: './learners'
           },
           {
             navName: 'Groups',
-            navRoute: 'dashboard/groups'
+            navRoute: './groups'
           },
           {
             navName: 'Past Sessions',
-            navRoute: 'dashboard/pastsessions'
+            navRoute: './pastsessions'
           }
         ]
       },
