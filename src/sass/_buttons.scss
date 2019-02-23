@@ -94,6 +94,27 @@ button {
   }
 }
 
+.indigo-launch-button {
+  color: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-left: 95px;
+  padding-right: 95px;
+  width: 545px;
+  height: 115px;
+  font-size: 42px;
+  border-radius: 70px;
+  &:focus {
+    background-color: #3a126e;
+  }
+  mat-icon {
+    font-size: 52px;
+    position: relative;
+    bottom: 10px;
+  }
+}
+
 .dashboard-button {
   padding: 15px 0px;
   font-size: 24px;

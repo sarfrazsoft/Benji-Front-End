@@ -1,6 +1,10 @@
 @import 'variables';
 
 .lobby-activity {
+  height: 100%;
+  .lesson-controls {
+    padding: 40px;
+  }
   h1 {
     font-size: 48px;
     line-height: normal;
@@ -20,7 +24,7 @@
     }
   }
   p {
-    font-size: 36px;
+    font-size: 48px;
     line-height: normal;
     @media #{$xxlarge-and-down} {
       font-size: 28px;
@@ -41,27 +45,37 @@
       text-transform: uppercase;
     }
     .lobby-acitivity__room-code {
-      font-size: 8vh;
+      font-size: 130px;
+      @media #{$xxlarge-and-down} {
+        font-size: 100px;
+      }
     }
     .lobby-activity__reduced {
-      font-size: 25px;
+      font-size: 48px;
     }
   }
   .lobby-activity__joined-users {
     padding: 5vh 3vw;
+    height: 100%;
+    overflow: hidden;
     p {
       text-transform: uppercase;
     }
     ul {
-      padding-left: 0;
       display: flex;
-      flex-direction: column;
       flex-wrap: wrap;
+      flex-direction: column;
+      padding-left: 0;
+      height: 100%;
       li {
         list-style: none;
         margin: 0;
-        font-size: 36px;
+        font-size: 72px;
         line-height: 1.33;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 40%;
+        text-overflow: ellipsis;
       }
     }
   }

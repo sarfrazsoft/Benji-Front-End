@@ -1,62 +1,67 @@
-<div
-  class="mainscreen-activity mainscreen-activity--multi-column lobby-activity"
->
-  <div
-    class="mainscreen-activity__column mainscreen-activity__column--50 bg-white lobby-activity__welcome-text"
-    fxLayout="column"
-    fxLayoutAlign="center start"
-  >
-    <h1 class="pn-500">
-      Welcome To
-      <span class="lobby-activity__title vibrant-blue pn-700">{{
-        activityState.lesson.lesson_name
-      }}</span>
-    </h1>
-    <p class="pn-500 brownish-grey">
-      {{ activityState.lesson.lesson_description }}
-    </p>
-  </div>
-  <div
-    class="mainscreen-activity__column mainscreen-activity__column--25 flexer lobby-activity__column-content-flexer"
-  >
-    <div class="lobby-activity__instructions">
-      <p class="lobby-activity__instructions-title">Room Code</p>
-      <p class="lobby-acitivity__room-code pn-700 deep-blue">
-        {{ activityState.lesson_run.lessonrun_code }}
-      </p>
-      <p class="lobby-activity__reduced">
-        Sign in at
-        <span class="lobby-activity__join-url deep-blue pn-700">
-          join.mybenji.com
+<div fxLayout="column" class="lobby-activity">
+  <div class="lesson-controls" fxLayout="row">
+    <div fxFlex="60%">
+      <h1 class="pn-500">
+        <span class="lobby-activity__title vibrant-blue pn-700 center-text">
+          {{ activityState.lesson.lesson_name }}
         </span>
-        on your phone and enter this code to join the session.
-      </p>
+      </h1>
+    </div>
+    <div fxFlex="40%" fxLayoutAlign="center center">
+      <button
+        class="indigo-launch-button bg-indigo-blue pn-700"
+        (click)="kickOffLesson()"
+      >
+        Start session <mat-icon class="icon-white">arrow_forward</mat-icon>
+      </button>
     </div>
   </div>
-  <div
-    class="mainscreen-activity__column mainscreen-activity__column--25  lobby-activity__joined-users bg-dim-grey"
-  >
-    <p>
-      <span class="lobby-activity__participant-number deep-blue">
-        {{ activityState.participants.length }}
-      </span>
-      {{
-        activityState.participants.length === 1
-          ? 'Learner joined'
-          : 'Learners joined'
-      }}
-    </p>
-    <ul>
-      <li
-        *ngFor="let participant of activityState.participants"
-        class="deep-blue"
+  <div fxFlex="1 0 0" fxLayout="row">
+    <div class="bg-dim-grey" fxFlex="50%" fxLayoutAlign="center center">
+      <div>
+        <div class="lobby-activity__instructions">
+          <p class="lobby-activity__instructions-title">Room Code</p>
+          <p class="lobby-acitivity__room-code pn-700 deep-blue">
+            {{ activityState.lesson_run.lessonrun_code }}
+          </p>
+          <p class="lobby-activity__reduced">
+            Sign in at
+            <span class="lobby-activity__join-url deep-blue pn-700">
+              join.mybenji.com
+            </span>
+            on your phone and enter this code to join the session.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white" fxFlex="50%">
+      <div
+        class="mainscreen-activity__column mainscreen-activity__column--25  lobby-activity__joined-users"
       >
-        {{ participant.first_name }}
-      </li>
-    </ul>
+        <p>
+          <span class="lobby-activity__participant-number deep-blue">
+            {{ activityState.participants.length }}
+          </span>
+          {{
+            activityState.participants.length === 1
+              ? 'Learner joined'
+              : 'Learners joined'
+          }}
+        </p>
+        <ul>
+          <li
+            *ngFor="let participant of activityState.participants"
+            class="deep-blue"
+          >
+            {{ participant.first_name }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
-<div class="lobby-activity__footer bg-vibrant-blue flexer align-center">
+
+<!-- <div class="lobby-activity__footer bg-vibrant-blue flexer align-center">
   <p class="pn-700">Everyone ready?</p>
   <button
     class="b-standard-button b-standard-button--white brownish-grey pn-700"
@@ -64,7 +69,7 @@
   >
     Start
   </button>
-</div>
+</div> -->
 <audio
   class="hideAndShrink"
   src="../../../../../assets/audio/191678__porphyr__waterdrop.wav"

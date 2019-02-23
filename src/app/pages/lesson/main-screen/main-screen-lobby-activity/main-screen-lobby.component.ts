@@ -1,10 +1,10 @@
 import {
   Component,
-  OnInit,
+  ElementRef,
   OnDestroy,
-  ViewEncapsulation,
+  OnInit,
   ViewChild,
-  ElementRef
+  ViewEncapsulation
 } from '@angular/core';
 
 import { BaseActivityComponent } from '../../shared/base-activity.component';
