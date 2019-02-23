@@ -12,8 +12,6 @@ import {
   DashboardProviders
 } from './';
 import { LearnersComponent, LearnersTableComponent } from './learners';
-import { ScrollContainerComponent } from './learners/learners-table/scroll-container/scroll-container.component';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -26,8 +24,7 @@ import { ScrollContainerComponent } from './learners/learners-table/scroll-conta
   declarations: [
     ...DashboardComponents,
     LearnersComponent,
-    LearnersTableComponent,
-    ScrollContainerComponent
+    LearnersTableComponent
   ],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders
