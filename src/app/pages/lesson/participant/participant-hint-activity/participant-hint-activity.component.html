@@ -1,8 +1,8 @@
 <!-- Hint word input -->
 <ng-container
   *ngIf="
-    !activityState.activity_status.submission_complete &&
-    !activityState.activity_status.voting_complete
+    !activityState.hintwordactivity.submission_complete &&
+    !activityState.hintwordactivity.voting_complete
   "
 >
   <div class="b-flat-card center-text hintword-card">
@@ -50,8 +50,8 @@
 </ng-container>
 <ng-container
   *ngIf="
-    activityState.activity_status.submission_complete &&
-    !activityState.activity_status.voting_complete
+    activityState.hintwordactivity.submission_complete &&
+    !activityState.hintwordactivity.voting_complete
   "
 >
   <div
@@ -69,18 +69,18 @@
       <ng-container *ngIf="!participantHasVoted()">
         <button
           class="b-standard-button b-standard-button--unselected"
-          *ngFor="let word of activityState.activity_status.submitted_words"
-          [ngClass]="{ 'b-standard-button--selected': word === selectedWord }"
+          *ngFor="let word of activityState.hintwordactivity.words_and_votes"
+          [ngClass]="{ 'b-standard-button--selected': word.id === selectedWord.id }"
           (click)="selectedWord = word"
         >
-          {{ word | titlecase }}
+          {{ word.word | titlecase }}
         </button>
       </ng-container>
       <button
         class="b-standard-button b-standard-button--selected"
         *ngIf="participantHasVoted()"
       >
-        {{ selectedWord }}
+        {{ selectedWord.word }}
       </button>
     </div>
   </div>
@@ -96,8 +96,8 @@
 </ng-container>
 <ng-container
   *ngIf="
-    activityState.activity_status.submission_complete &&
-    activityState.activity_status.voting_complete
+    activityState.hintwordactivity.submission_complete &&
+    activityState.hintwordactivity.voting_complete
   "
 >
   <div class="b-flat-card center-text hintword-card">
@@ -107,10 +107,10 @@
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">
-        {{ activityState.activity_status.voted_word | titlecase }}
+        {{ activityState.hintwordactivity.voted_word | titlecase }}
       </h3>
       <p>
-        Just say ‘{{ activityState.activity_status.voted_word | titlecase }}’ to
+        Just say ‘{{ activityState.hintwordactivity.voted_word | titlecase }}’ to
         anyone in this group if you ever need to remind them to listen a little
         better.
       </p>

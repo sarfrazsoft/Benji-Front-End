@@ -1,3 +1,4 @@
+import { User } from './user';
 
 export interface Course {
   id: number;
@@ -9,7 +10,7 @@ export interface Course {
 
 export interface Lesson {
   id: number;
-  course: Course;
+  course: number;
   lesson_id: string;
   lesson_name: string;
   lesson_length: number;
@@ -17,20 +18,10 @@ export interface Lesson {
   next_lesson: number;
 }
 
-export interface CourseRun {
-  id: number;
-  course: Course;
-  start_time: string;
-  end_time: string;
-}
-
-
 export interface LessonRun {
   id: number;
-  lesson: number;
-  lessonrun_code: number;
-  courserun: number;
   start_time: string;
   end_time: string;
-
+  lessonrun_code: number;
+  joined_users: User[];
 }

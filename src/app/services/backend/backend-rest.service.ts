@@ -4,7 +4,7 @@ import * as global from '../../globals';
 
 
 import { User } from './schema/user';
-import { Course, CourseRun, LessonRun } from './schema/course_details';
+import { Course, LessonRun } from './schema/course_details';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -24,14 +24,6 @@ export class BackendRestService {
     );
   }
 
-  // DEMO ONLY
-  create_courserun(courseID: number): Observable<CourseRun> {
-    console.log(courseID);
-    return this.http.post<CourseRun>(global.apiRoot + '/course_details/course_run/', {
-      'course': courseID,
-      'courserunuser_set': []
-    });
-  }
 
   // DEMO ONLY
   create_user(username: string) {

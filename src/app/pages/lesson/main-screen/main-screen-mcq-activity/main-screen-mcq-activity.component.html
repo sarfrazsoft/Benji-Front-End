@@ -7,11 +7,11 @@
     </div>
     <div class="mcq-activity__question-container">
       <p class="pn-600 brownish-grey">
-        {{ activityState.activity_status.question.question }}
+        {{ activityState.mcqactivity.question.question }}
       </p>
       <ol>
         <li
-          *ngFor="let answer of activityState.activity_status.question.choices"
+          *ngFor="let answer of activityState.mcqactivity.question.mcqchoice_set"
           class="brownish-grey pn-500"
           [ngClass]="{
             correct: reveal() && answer.is_correct,

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import {MCQSubmitAnswerEvent} from '../../../../services/backend/schema/messages';
+import {MCQChoice} from '../../../../services/backend/schema/utils';
 
 @Component({
   selector: 'app-participant-mcq-activity',
@@ -7,11 +9,11 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./participant-mcq-activity.component.scss']
 })
 export class ParticipantMcqActivityComponent extends BaseActivityComponent {
-  selectedAnswer;
+  selectedAnswer: MCQChoice;
 
   questionTimerInit(timer) {
     const questionSeconds =
-      (Date.parse(this.activityState.activity_status.countdown_time) -
+      (Date.parse(this.activityState.mcqactivity.question_timer.expiration_time) -
         Date.now()) /
       1000;
     timer.startTimer(questionSeconds);
@@ -19,20 +21,20 @@ export class ParticipantMcqActivityComponent extends BaseActivityComponent {
 
   revealTimerInit(timer) {
     const revealSeconds =
-      (Date.parse(this.activityState.activity_status.pause_time) - Date.now()) /
+      (Date.parse(this.activityState.base_activity.next_activity_start_timer.expiration_time) - Date.now()) /
       1000;
     timer.startTimer(revealSeconds);
   }
 
   reveal() {
     return (
-      this.activityState.activity_status.pause_time !== null &&
-      this.activityState.activity_status.pause_time !== undefined
+      this.activityState.base_activity.next_activity_start_timer !== null &&
+      this.activityState.base_activity.next_activity_start_timer !== undefined
     );
   }
 
   correctChoice() {
-    return this.activityState.activity_status.question.choices.find(
+    return this.activityState.mcqactivity.question.mcqchoice_set.find(
       choice => choice.is_correct
     );
   }
@@ -40,7 +42,7 @@ export class ParticipantMcqActivityComponent extends BaseActivityComponent {
   public submitAnswer(answer) {
     if (!this.reveal()) {
       this.selectedAnswer = answer;
-      this.sendMessage.emit({ event: 'submit_answer', answer: answer.id });
+      this.sendMessage.emit(new MCQSubmitAnswerEvent(answer));
     }
   }
 }

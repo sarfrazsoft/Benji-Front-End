@@ -20,7 +20,7 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
 
   submitTimerInit(timer) {
     const submitTotalTime =
-      Date.parse(this.activityState.activity_status.submission_countdown) -
+      Date.parse(this.activityState.hintwordactivity.submission_countdown_timer.expiration_time) -
       Date.now();
     const submitTimeElapsed = 0;
     timer.startTimer(submitTotalTime, submitTimeElapsed);
@@ -28,7 +28,7 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
 
   voteTimerInit(timer) {
     const voteTotalTime =
-      Date.parse(this.activityState.activity_status.voting_countdown) -
+      Date.parse(this.activityState.hintwordactivity.voting_countdown_timer.expiration_time) -
       Date.now();
     const voteTimeElapsed = 0;
     timer.startTimer(voteTotalTime, voteTimeElapsed);
@@ -36,7 +36,7 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
 
   startEndTimer(timer) {
     const endTotalSeconds =
-      (Date.parse(this.activityState.activity_status.end_countdown) -
+      (Date.parse(this.activityState.base_activity.next_activity_start_timer.expiration_time) -
         Date.now()) /
       1000;
     timer.startTimer(endTotalSeconds);
@@ -46,9 +46,9 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
     if (
       changes['activityState'] &&
       changes['activityState'].previousValue &&
-      changes['activityState'].previousValue.activity_status.submitted_words
+      changes['activityState'].previousValue.hintwordactivity.words_and_votes
         .length <
-        changes['activityState'].currentValue.activity_status.submitted_words
+        changes['activityState'].currentValue.hintwordactivity.words_and_votes
           .length
     ) {
       this.playSfx('voteSubmitted');
@@ -57,8 +57,8 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
     if (
       changes['activityState'] &&
       changes['activityState'].previousValue &&
-      changes['activityState'].previousValue.activity_status.voting_complete !==
-        changes['activityState'].currentValue.activity_status.voting_complete
+      changes['activityState'].previousValue.hintwordactivity.voting_complete !==
+        changes['activityState'].currentValue.hintwordactivity.voting_complete
     ) {
       this.playSfx('revealWinner');
     }
@@ -72,5 +72,10 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
     }
     this.sfxPlayer.nativeElement.load();
     this.sfxPlayer.nativeElement.play();
+  }
+
+  countVotes() {
+    return  this.activityState.hintwordactivity.words_and_votes.map(
+      w => w.votes).reduce((partial_sum, a) => partial_sum + a);
   }
 }

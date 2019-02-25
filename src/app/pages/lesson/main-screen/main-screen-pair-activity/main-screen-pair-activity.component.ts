@@ -9,7 +9,7 @@ import {
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { isEqual, concat } from 'lodash';
-import { RoleplayUserGroup } from '../../../../services/backend/schema/activity';
+import { RoleplayPair } from '../../../../services/backend/schema/activities';
 
 @Component({
   selector: 'app-main-screen-pair-activity',
@@ -21,9 +21,9 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   @ViewChild('pairTimer') pairTimer;
   @ViewChild('discussionTimer') discussionTimer;
 
-  getGroupText(userGroup: RoleplayUserGroup) {
-    return concat(userGroup.primary, userGroup.secondary)
-      .map(u => this.idToName(u))
+  getGroupText(userGroup: RoleplayPair) {
+    return concat(userGroup.primary_roleplayuser_set, userGroup.secondary_roleplayuser_set)
+      .map(u => u.user.first_name)
       .join(' + ');
   }
 
@@ -32,9 +32,9 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   }
 
   ngAfterViewInit() {
-    if (!this.activityState.activity_status.all_pairs_found) {
+    if (!this.activityState.roleplaypairactivity.all_pairs_found) {
       const pairSeconds =
-        (Date.parse(this.activityState.activity_status.countdown_pair) -
+        (Date.parse(this.activityState.roleplaypairactivity.grouping_countdown_timer.expiration_time) -
           Date.now()) /
         1000;
       this.pairTimer.startTimer(pairSeconds);
@@ -43,7 +43,7 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
 
   discussionTimerInit(timer) {
     const discussionTotalTime =
-      Date.parse(this.activityState.activity_status.countdown_discussion) -
+      Date.parse(this.activityState.roleplaypairactivity.activity_countdown_timer.expiration_time) -
       Date.now();
     const discussionElapsedTime = 0;
     timer.startTimer(discussionTotalTime, discussionElapsedTime);
@@ -51,16 +51,8 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
 
   isReversed() {
     return (
-      this.activityState.activity_status.activity_type ===
-      'ReverseRoleplayPairActivity'
-    );
-  }
-
-  isReady(userGroup: RoleplayUserGroup) {
-    return (
-      this.activityState.activity_status.groups_found.find(e =>
-        isEqual(userGroup, e)
-      ) !== undefined
+      this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
+      this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
     );
   }
 }

@@ -1,10 +1,7 @@
 <div class="ms-fullheight-container">
   <div
     class="ms-preloader flexer align-center"
-    *ngIf="
-      !isConnected() ||
-      (serverMessage &&
-        serverMessage.activity_status.next_activity_countdown !== null)
+    *ngIf="!isConnected()
     "
   >
     <mat-spinner></mat-spinner>
@@ -13,8 +10,7 @@
   <div
     *ngIf="
       isConnected() &&
-      (serverMessage &&
-        serverMessage.activity_status.next_activity_countdown === null)
+      serverMessage
     "
     [ngClass]="
       getActivityType() === 'LobbyActivity'

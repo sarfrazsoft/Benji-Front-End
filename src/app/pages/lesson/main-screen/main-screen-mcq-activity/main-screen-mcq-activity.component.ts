@@ -23,7 +23,7 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
 
   initQuestionTimer(timer) {
     const questionTotalTime =
-      Date.parse(this.activityState.activity_status.countdown_time) -
+      Date.parse(this.activityState.mcqactivity.question_timer.expiration_time) -
       Date.now();
     const questionElapsedTime = 0;
     timer.startTimer(questionTotalTime, questionElapsedTime);
@@ -33,13 +33,13 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
     if (
       changes['activityState'] &&
       changes['activityState'].previousValue &&
-      (changes['activityState'].previousValue.activity_status.pause_time ===
+      (changes['activityState'].previousValue.base_activity.next_activity_start_timer ===
         null ||
-        changes['activityState'].previousValue.activity_status.pause_time ===
+        changes['activityState'].previousValue.base_activity.next_activity_start_timer ===
           undefined) &&
-      (changes['activityState'].currentValue.activity_status.pause_time !==
+      (changes['activityState'].currentValue.base_activity.next_activity_start_timer !==
         null &&
-        changes['activityState'].currentValue.activity_status.pause_time !==
+        changes['activityState'].currentValue.base_activity.next_activity_start_timer !==
           undefined)
     ) {
       this.playSfx('revealAnswer');
@@ -48,20 +48,20 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
 
   startRevealTimer(timer) {
     this.pauseSeconds =
-      (Date.parse(this.activityState.activity_status.pause_time) - Date.now()) /
+      (Date.parse(this.activityState.base_activity.next_activity_start_timer.expiration_time) - Date.now()) /
       1000;
     timer.startTimer();
   }
 
   reveal() {
     return (
-      this.activityState.activity_status.pause_time !== null &&
-      this.activityState.activity_status.pause_time !== undefined
+      this.activityState.base_activity.next_activity_start_timer !== null &&
+      this.activityState.base_activity.next_activity_start_timer !== undefined
     );
   }
 
   correctChoice() {
-    return this.activityState.activity_status.question.choices.find(
+    return this.activityState.mcqactivity.question.mcqchoice_set.find(
       choice => choice.is_correct
     );
   }

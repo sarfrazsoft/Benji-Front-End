@@ -8,7 +8,7 @@
       <app-b-twemoji emoji="☎️"></app-b-twemoji>
     </div>
     <h1 class="vibrant-blue pn-700">Teletrivia</h1>
-    <ng-container *ngIf="activityState.activity_status.all_in_circle">
+    <ng-container *ngIf="activityState.teletriviaactivity.circle_complete">
       <p class="brownish-grey pn-500">
         Your objective: pass the message around the circle. No repeating!
       </p>
@@ -17,7 +17,7 @@
       </p>
       <p class="brownish-grey pn-500">Good luck!</p>
     </ng-container>
-    <ng-container *ngIf="!activityState.activity_status.all_in_circle">
+    <ng-container *ngIf="!activityState.teletriviaactivity.circle_complete">
       <p class="brownish-grey pn-500">Ready to play a warm-up game?</p>
       <p class="brownish-grey pn-500">
         Get into a circle (stand up and move if you have to) and press the
@@ -28,7 +28,7 @@
   <!-- timer-->
   <div
     class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
-    *ngIf="!activityState.activity_status.all_in_circle"
+    *ngIf="!activityState.teletriviaactivity.circle_complete"
   >
     <app-radial-timer
       (initCallback)="timerInit($event)"
@@ -38,7 +38,7 @@
   <!-- leaderboard -->
   <div
     class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
-    *ngIf="activityState.activity_status.all_in_circle"
+    *ngIf="activityState.teletriviaactivity.circle_complete"
   >
     <div class="teletrivia-activity__leaderboard">
       <p class="teletrivia-activity__section-text brownish-grey">Leaderboard</p>
@@ -46,7 +46,7 @@
         <li
           class="teletrivia-activity__leader pn-600"
           *ngFor="
-            let leader of activityState.activity_status.leaderboard;
+            let leader of activityState.teletriviaactivity.leaderboard;
             index as i
           "
         >
@@ -55,7 +55,7 @@
               <span class="teletrivia-activity__leader-rank deep-blue">
                 {{ i + 1 }}.
               </span>
-              {{ idToName(leader.user) }}
+              {{ leader.user.first_name }}
             </span>
             <span class="teletrivia-activity__leader-score">{{
               leader.correct

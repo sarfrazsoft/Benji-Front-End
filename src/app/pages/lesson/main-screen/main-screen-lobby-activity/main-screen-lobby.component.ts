@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { LobbyStartButtonClickEvent } from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-mainscreen-lobby',
@@ -28,6 +29,6 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
   }
 
   kickOffLesson() {
-    this.sendMessage.emit({ event: 'start_button' });
+    this.sendMessage.emit(new LobbyStartButtonClickEvent());
   }
 }

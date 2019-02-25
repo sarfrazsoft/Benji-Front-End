@@ -1,6 +1,6 @@
 <div
   class="mainscreen-activity mainscreen-activity--multi-column hint-activity"
-  *ngIf="!activityState.activity_status.voting_complete"
+  *ngIf="!activityState.hintwordactivity.voting_complete"
 >
   <div
     class="mainscreen-activity__column mainscreen-activity__column--66 bg-off-white"
@@ -11,32 +11,32 @@
       </div>
       <h2 class="vibrant-blue pn-700">Pssst</h2>
       <p class="brownish-grey">
-        {{ activityState.activity_status.instructions }}
+        {{ activityState.hintwordactivity.instructions }}
       </p>
     </div>
     <div class="hint-activity__options-container" #listParent>
       <div class="hint-activity__section-title">
         <h3>
           <ng-container
-            *ngIf="!activityState.activity_status.submission_complete"
+            *ngIf="!activityState.hintwordactivity.submission_complete"
           >
             <span class="deep-blue">
-              {{ activityState.activity_status.submitted_words.length }}
+              {{ activityState.hintwordactivity.words_and_votes.length }}
             </span>
             {{
-              activityState.activity_status.submitted_words.length === 1
+              activityState.hintwordactivity.words_and_votes.length === 1
                 ? 'Word submitted'
                 : 'Words submitted'
             }}
           </ng-container>
           <ng-container
-            *ngIf="activityState.activity_status.submission_complete"
+            *ngIf="activityState.hintwordactivity.submission_complete"
           >
             <span class="deep-blue">
-              {{ activityState.activity_status.voted_users.length }}
+              {{ countVotes() }}
             </span>
             {{
-              activityState.activity_status.voted_users.length === 1
+              countVotes() === 1
                 ? 'Vote submitted'
                 : 'Votes submitted'
             }}
@@ -48,9 +48,9 @@
           <li
             class="deep-blue hint-activity__option"
             [ngStyle]="{ 'font-size.px': voteFontSize }"
-            *ngFor="let word of activityState.activity_status.submitted_words"
+            *ngFor="let word of activityState.hintwordactivity.words_and_votes"
           >
-            {{ word }}
+            {{ word.word }}
           </li>
         </ul>
       </div>
@@ -61,7 +61,7 @@
   >
     <p
       class="hint-activity__words-total"
-      *ngIf="!activityState.activity_status.submission_complete"
+      *ngIf="!activityState.hintwordactivity.submission_complete"
     >
       <app-radial-timer
         (initCallback)="submitTimerInit($event)"
@@ -70,7 +70,7 @@
     </p>
     <p
       class="hint-activity__words-total"
-      *ngIf="activityState.activity_status.submission_complete"
+      *ngIf="activityState.hintwordactivity.submission_complete"
     >
       <app-radial-timer
         (initCallback)="voteTimerInit($event)"
@@ -82,7 +82,7 @@
 
 <div
   class="mainscreen-activity mainscreen-activity--multi-column hint-activity"
-  *ngIf="activityState.activity_status.voting_complete"
+  *ngIf="activityState.hintwordactivity.voting_complete"
 >
   <div
     class="mainscreen-activity__column mainscreen-activity__column--33 bg-off-white"
@@ -93,7 +93,7 @@
       </div>
       <h2 class="vibrant-blue pn-700">Pssst</h2>
       <p class="brownish-grey">
-        {{ activityState.activity_status.instructions }}
+        {{ activityState.hintwordactivity.instructions }}
       </p>
     </div>
   </div>
@@ -103,13 +103,13 @@
     <div class="hint-activity__section-title"><h3>Your Hint Word Is</h3></div>
 
     <p class="hint-activity__winner pn-700 deep-blue">
-      {{ activityState.activity_status.voted_word | titlecase }}
+      {{ activityState.hintwordactivity.voted_word | titlecase }}
     </p>
 
     <p>
       If you’re chatting with anyone in this group and you see that they’re
       drifting off or distracted, just say “Hey…
-      {{ activityState.activity_status.voted_word | titlecase }}.”
+      {{ activityState.hintwordactivity.voted_word | titlecase }}.”
     </p>
 
     <p>

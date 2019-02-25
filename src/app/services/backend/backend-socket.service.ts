@@ -4,6 +4,7 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import * as global from '../../globals';
 import {Observable, of} from 'rxjs';
 import {ActivityFlowFrame, ActivityFlowServerMessage} from './schema/activity';
+import { ServerMessage } from './schema/messages';
 
 @Injectable()
 export class BackendSocketService {
@@ -12,7 +13,7 @@ export class BackendSocketService {
   public socketData;
 
 
-  connectLessonSocket(clientType, roomCode, userID?): Observable<ActivityFlowFrame> {
+  connectLessonSocket(clientType, roomCode, userID?): Observable<ServerMessage> {
     let uri = null;
     if (clientType === 'screen') {
       uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/screen/0/`;

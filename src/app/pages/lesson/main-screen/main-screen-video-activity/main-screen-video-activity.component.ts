@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { VideoStateService } from '../../../../services/video-state.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { EndEvent } from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-mainscreen-activity-video',
@@ -30,7 +31,7 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
-    this._videoURL = this.activityState.activity_status.video_url;
+    this._videoURL = this.activityState.videoactivity.video_url;
     this.player.nativeElement.load();
     this.player.nativeElement.play();
 
@@ -61,6 +62,6 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
   }
 
   public videoEnd() {
-    this.sendMessage.emit({ event: 'end' });
+    this.sendMessage.emit(new EndEvent());
   }
 }

@@ -1,11 +1,12 @@
 import {Input, Output, EventEmitter} from '@angular/core';
-import {ActivityFlowServerMessage} from '../../../services/backend/schema/activity';
+import { UpdateMessage } from '../../../services/backend/schema/messages';
+import { ActivityEvent } from '../../../services/backend/schema/messages';
 
 export abstract class BaseActivityComponent {
-  @Input() activityState: ActivityFlowServerMessage;
-  @Output() sendMessage = new EventEmitter<any>();
+  @Input() activityState: UpdateMessage;
+  @Output() sendMessage = new EventEmitter<ActivityEvent>();
 
   public idToName(id: number) {
-    return this.activityState.participants.find((user) => user.id === id).first_name;
+    return this.activityState.lesson_run.joined_users.find((user) => user.id === id).first_name;
   }
 }

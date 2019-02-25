@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { VideoStateService } from '../../services/video-state.service';
+import { EndEvent } from '../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-main-screen-footer',
@@ -35,9 +36,7 @@ export class MainScreenFooterComponent implements OnInit {
         'event': 'back'
       });
     } else if (eventType === 'skip') {
-      this.socketMessage.emit({
-        'event': 'end'
-      });
+      this.socketMessage.emit(new EndEvent());
     }
   }
 }

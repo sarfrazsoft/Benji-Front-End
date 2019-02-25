@@ -1,7 +1,7 @@
 <ng-container
   *ngIf="
-    !activityState.activity_status.game_started &&
-    !activityState.activity_status.all_in_circle
+    !activityState.teletriviaactivity.game_started &&
+    !activityState.teletriviaactivity.circle_complete
   "
 >
   <div class="b-flat-card center-text mc-card--circle">
@@ -28,8 +28,8 @@
 
 <ng-container
   *ngIf="
-    !activityState.activity_status.game_started &&
-    activityState.activity_status.all_in_circle
+    !activityState.teletriviaactivity.game_started &&
+    activityState.teletriviaactivity.circle_complete
   "
 >
   <div class="b-flat-card center-text mc-card--circle">
@@ -44,9 +44,9 @@
 
 <ng-container
   *ngIf="
-    activityState.activity_status.game_started &&
-    activityState.activity_status.all_in_circle &&
-    !activityState.activity_status.sharing_started
+    activityState.teletriviaactivity.game_started &&
+    activityState.teletriviaactivity.circle_complete &&
+    !activityState.teletriviaactivity.sharing_started
   "
 >
   <div
@@ -57,7 +57,7 @@
     <div class="b-flat-card__body">
       <h3 class="pn-400 brownish-grey">
         {{
-          activityState.activity_status.distracting_questions[
+          activityState.teletriviaactivity.questions[
             currentQuestionIndex
           ].question
         }}
@@ -67,9 +67,9 @@
       <button
         class="b-standard-button b-standard-button--unselected"
         *ngFor="
-          let choice of activityState.activity_status.distracting_questions[
+          let choice of activityState.teletriviaactivity.questions[
             currentQuestionIndex
-          ].choices;
+          ].mcqchoice_set;
           let i = index
         "
         [ngClass]="{
@@ -120,9 +120,9 @@
 
 <ng-container
   *ngIf="
-    activityState.activity_status.game_started &&
-    activityState.activity_status.all_in_circle &&
-    activityState.activity_status.sharing_started
+    activityState.teletriviaactivity.game_started &&
+    activityState.teletriviaactivity.circle_complete &&
+    activityState.teletriviaactivity.sharing_started
   "
 >
   <div class="b-flat-card center-text mc-card--circle">
@@ -141,7 +141,7 @@
 <ng-template #kickofftemplate>
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
-    <blockquote>“{{ activityState.activity_status.secret_phrase }}”</blockquote>
+    <blockquote>“{{ activityState.teletriviaactivity.secret_phrase }}”</blockquote>
     <p>
       Whisper it to your neighbour, and follow the prompts below to get the game
       rolling. Hit the ‘Stop’ button when the message gets back to you!
@@ -172,7 +172,7 @@
 
     <p>Remember what the original message was?</p>
 
-    <p>“{{ activityState.activity_status.secret_phrase }}”</p>
+    <p>“{{ activityState.teletriviaactivity.secret_phrase }}”</p>
     <div class="b-dialog-template__action">
       <button
         class="b-standard-button b-standard-button--white"

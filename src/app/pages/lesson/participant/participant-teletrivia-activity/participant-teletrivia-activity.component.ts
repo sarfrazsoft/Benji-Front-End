@@ -8,6 +8,12 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import {
+  TeleTriviaMessageReturnedEvent,
+  TeleTriviaSharingDoneEvent,
+  TeleTriviaStartGameEvent, TeleTriviaSubmitAnswerEvent,
+  TeleTriviaUserInCircleEvent
+} from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-participant-teletrivia-activity',
@@ -50,15 +56,15 @@ export class ParticipantTeletriviaActivityComponent
   ngOnChanges(changes: SimpleChanges) {
     if (
       this.participantIsInitiator() &&
-      !this.activityState.activity_status.game_started &&
-      this.activityState.activity_status.all_in_circle &&
+      !this.activityState.teletriviaactivity.game_started &&
+      this.activityState.teletriviaactivity.circle_complete &&
       !this.initiatorModalVisible
     ) {
       this.initiatorModalVisible = true;
       this.triggerDialogue(this.initiatorModal);
     }
 
-    if (this.activityState.activity_status.sharing_started) {
+    if (this.activityState.teletriviaactivity.sharing_started) {
       if (this.questionTimer && this.questionTimer.running) {
         this.questionTimer.stopTimer();
       }
@@ -70,34 +76,34 @@ export class ParticipantTeletriviaActivityComponent
 
   public openEndModal() {
     this.triggerDialogue(this.endModal);
-    this.sendMessage.emit({ event: 'done_button' });
+    this.sendMessage.emit(new TeleTriviaMessageReturnedEvent());
   }
 
   participantInCircle() {
     return (
-      this.activityState.activity_status.users_in_circle.find(
-        e => e === this.activityState.your_identity.id
+      this.activityState.teletriviaactivity.users_in_circle.find(
+        e => e.id === this.activityState.your_identity.id
       ) !== undefined
     );
   }
 
   participantIsInitiator() {
     return (
-      this.activityState.activity_status.chosen_user ===
+      this.activityState.teletriviaactivity.first_user_in_chain.id ===
       this.activityState.your_identity.id
     );
   }
 
   sendReadyState() {
-    this.sendMessage.emit({ event: 'user_in_circle' });
+    this.sendMessage.emit(new TeleTriviaUserInCircleEvent());
   }
 
   public initiateTelephone() {
-    this.sendMessage.emit({ event: 'start_game' });
+    this.sendMessage.emit(new TeleTriviaStartGameEvent());
   }
 
   public endGame() {
-    this.sendMessage.emit({ event: 'sharing_done_button' });
+    this.sendMessage.emit(new TeleTriviaSharingDoneEvent());
   }
 
   questionTimeUpCallback() {
@@ -109,14 +115,10 @@ export class ParticipantTeletriviaActivityComponent
   submitAnswer(choice) {
     this.questionTimer.stopTimer(false);
 
-    const question = this.activityState.activity_status.distracting_questions[
+    const question = this.activityState.teletriviaactivity.questions[
       this.currentQuestionIndex
     ];
-    this.sendMessage.emit({
-      event: 'submit_answer',
-      question_id: question.id,
-      answer: choice.id
-    });
+    this.sendMessage.emit(new TeleTriviaSubmitAnswerEvent(question, choice));
     this.selectedAnswerIndex = choice.id;
     this.revealAnswer = true;
     this.answerExplanation = choice.explanation_text;

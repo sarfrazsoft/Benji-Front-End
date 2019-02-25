@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { BackendRestService } from '../../../services/backend/backend-rest.service';
 import { AuthService } from '../../../services/auth/auth.service';
 
-import { CourseRun } from '../../../services/backend/schema/course_details';
 
 @Component({
   selector: 'app-landing',

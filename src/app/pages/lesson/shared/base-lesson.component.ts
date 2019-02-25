@@ -7,9 +7,9 @@ import {ActivatedRoute} from '@angular/router';
 import {BackendSocketService} from '../../../services/backend/backend-socket.service';
 
 import { User } from '../../../services/backend/schema/user';
-import { LessonRun } from '../../../services/backend/schema/course_details';
-import {ActivityFlowFrame, ActivityFlowServerMessage} from '../../../services/backend/schema/activity';
+import { Course, Lesson, LessonRun } from '../../../services/backend/schema/course_details';
 
+import { ActivityEvent, ServerMessage, UpdateMessage } from '../../../services/backend/schema/messages';
 
 export class BaseLessonComponent implements OnInit {
   roomCode: number;
@@ -18,7 +18,7 @@ export class BaseLessonComponent implements OnInit {
   clientType: string;
 
   socket;
-  serverMessage: ActivityFlowServerMessage;
+  serverMessage: UpdateMessage;
 
   constructor(protected restService: BackendRestService, protected route: ActivatedRoute, protected socketService: BackendSocketService,
               clientType: string) {
@@ -36,7 +36,7 @@ export class BaseLessonComponent implements OnInit {
         this.socket = this.socketService.connectLessonSocket(this.clientType, this.lessonRun.lessonrun_code, this.user.id);
         console.log('socket connected');
 
-        this.socket.subscribe((msg: ActivityFlowFrame) => {
+        this.socket.subscribe((msg: ServerMessage) => {
           this.handleServerMessage(msg);
         });
       }
@@ -47,20 +47,24 @@ export class BaseLessonComponent implements OnInit {
     return this.socket !== undefined;
   }
 
-  handleServerMessage(msg: ActivityFlowFrame) {
-    this.serverMessage = msg.message;
+  handleServerMessage(msg: ServerMessage) {
+    if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
+      this.serverMessage = msg.updatemessage;
+    } else {
+      console.log(msg);
+    }
   }
 
   getActivityType() {
-    if (this.serverMessage.activity_status !== null || this.serverMessage.activity_status !== undefined) {
-      return this.serverMessage.activity_status.activity_type;
+    if (this.serverMessage.activity_type !== null) {
+      return this.serverMessage.activity_type;
     } else {
       return null;
     }
   }
 
-  public sendSocketMessage(message) {
-    this.socket.next(message);
+  public sendSocketMessage(evt: ActivityEvent) {
+    this.socket.next(evt.toMessage());
   }
 
 }

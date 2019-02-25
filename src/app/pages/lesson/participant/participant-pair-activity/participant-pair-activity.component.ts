@@ -2,6 +2,7 @@ import { Component, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { EmojiLookupService } from '../../../../services/emoji-lookup.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { concat, remove } from 'lodash';
+import {RoleplayPairUserFoundEvent} from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-participant-pair-activity',
@@ -18,66 +19,70 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent {
   roleplayTimerStart(timer) {
     const roleSeconds =
       (Date.parse(
-        this.activityState.activity_status.discussion_countdown_time
+        this.activityState.roleplaypairactivity.activity_countdown_timer.expiration_time
       ) -
         Date.now()) /
       1000;
     timer.startTimer(roleSeconds);
   }
 
-  partnerText() {
-    const myGroup = this.activityState.activity_status.user_groups.find(
+  myGroup() {
+    return this.activityState.roleplaypairactivity.roleplaypair_set.find(
       ug =>
-        concat(ug.primary, ug.secondary).indexOf(
+        concat(ug.primary_roleplayuser_set, ug.secondary_roleplayuser_set).map(
+          u => u.user.id ).indexOf(
           this.activityState.your_identity.id
         ) > -1
     );
+  }
+
+  partnerText() {
+    const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
-      concat(myGroup.primary, myGroup.secondary),
-      e => e !== this.activityState.your_identity.id
+      concat(myGroup.primary_roleplayuser_set, myGroup.secondary_roleplayuser_set),
+      e => e.user.id !== this.activityState.your_identity.id
     );
     if (myGroupWithoutMe.length === 1) {
-      this.partnerName = this.idToName(myGroupWithoutMe[0]);
-      return 'Your partner is ' + this.idToName(myGroupWithoutMe[0]);
+      this.partnerName = myGroupWithoutMe[0].user.first_name;
+      return 'Your partner is ' + this.partnerName;
     } else {
       this.partnerName =
-        this.idToName(myGroupWithoutMe[0]) +
+        myGroupWithoutMe[0].user.first_name +
         ' and ' +
-        this.idToName(myGroupWithoutMe[1]);
+        myGroupWithoutMe[1].user.first_name;
       return (
         'Your partners are ' +
-        this.idToName(myGroupWithoutMe[0]) +
+        myGroupWithoutMe[0].user.first_name +
         ' and ' +
-        this.idToName(myGroupWithoutMe[1])
+        myGroupWithoutMe[1].user.first_name
       );
     }
   }
 
+  myRoleplayUser() {
+    const myGroup = this.myGroup();
+    return concat(myGroup.primary_roleplayuser_set, myGroup.secondary_roleplayuser_set).find(
+      g => g.user.id === this.activityState.your_identity.id);
+  }
+
   participantIsPrimary() {
-    return (
-      this.activityState.activity_status.user_groups.find(
-        ug => ug.primary.indexOf(this.activityState.your_identity.id) > -1
-      ) !== undefined
-    );
+    return this.myGroup().primary_roleplayuser_set.find(
+      g => g.user.id === this.activityState.your_identity.id) !== undefined;
   }
 
   participantIsReady() {
-    return (
-      this.activityState.activity_status.user_pairs_found.indexOf(
-        this.activityState.your_identity.id
-      ) > -1
-    );
+    return this.myRoleplayUser().found;
   }
 
   getParticipantRole() {
     if (this.participantIsPrimary()) {
-      return this.activityState.activity_status.primary_role;
+      return this.activityState.roleplaypairactivity.primary_role;
     } else {
-      return this.activityState.activity_status.secondary_role;
+      return this.activityState.roleplaypairactivity.secondary_role;
     }
   }
 
   sendReadyState() {
-    this.sendMessage.emit({ event: 'pair_found' });
+    this.sendMessage.emit(new RoleplayPairUserFoundEvent());
   }
 }
