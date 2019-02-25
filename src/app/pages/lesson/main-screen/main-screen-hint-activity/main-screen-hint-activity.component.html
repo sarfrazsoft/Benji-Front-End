@@ -57,26 +57,21 @@
     </div>
   </div>
   <div
-    class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey hint-activity__status-column overflow-hidden"
+    fxLayoutAlign="center center"
+    class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey hint-activity__status-column"
   >
-    <p
-      class="hint-activity__words-total"
-      *ngIf="!activityState.activity_status.submission_complete"
-    >
+    <div *ngIf="!activityState.activity_status.submission_complete">
       <app-radial-timer
         (initCallback)="submitTimerInit($event)"
         endStateText="Vote!"
       ></app-radial-timer>
-    </p>
-    <p
-      class="hint-activity__words-total"
-      *ngIf="activityState.activity_status.submission_complete"
-    >
+    </div>
+    <div *ngIf="activityState.activity_status.submission_complete">
       <app-radial-timer
         (initCallback)="voteTimerInit($event)"
         endStateText="Times Up!"
       ></app-radial-timer>
-    </p>
+    </div>
   </div>
 </div>
 
