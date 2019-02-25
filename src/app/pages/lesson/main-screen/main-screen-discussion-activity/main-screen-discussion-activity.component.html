@@ -18,10 +18,9 @@
       <div
         class="activity-instructions bg-white"
         fxFlex="60%"
-        fxLayoutGap="20px"
-        fxLayoutAlign="center center"
+        fxLayoutAlign="start center"
       >
-        <div>
+        <div fxLayoutGap="20px">
           <div fxFlex="25%">
             <div class="ms-emoji-container smaller-emoji">
               <app-b-twemoji emoji="🤔"></app-b-twemoji>
@@ -29,7 +28,7 @@
           </div>
           <div fxFlex="75%">
             <h2 class="deep-blue pn-600 discuss-instruction">
-              {{ activityState.activity_status.instructions }}
+              {{ activityState.activity_status.title }}
             </h2>
           </div>
         </div>
@@ -44,68 +43,52 @@
   </div>
 </ng-container>
 
-<!-- <ng-container *ngIf="!activityState.activity_status.discussion_complete">
-  <div
-    class="mainscreen-activity mainscreen-activity--multi-column discussion-activity"
-  >
-    <div
-      class="mainscreen-activity__column mainscreen-activity__column--50 mainscreen-activity__activity-detail bg-off-white flexer--center"
-    >
-      <div class="ms-emoji-container smaller-emoji">
-        <app-b-twemoji emoji="🤔"></app-b-twemoji>
-      </div>
-      <h1 class="vibrant-blue pn-700">Discuss</h1>
-
-      <h2 class="deep-blue pn-600 discuss-instruction">
-        {{ activityState.activity_status.instructions }}
-      </h2>
-    </div>
-    <div
-      class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
-    >
-      <app-radial-timer
-        (initCallback)="initDiscussionTimer($event)"
-        endStateText="Done!"
-      ></app-radial-timer>
-    </div>
-  </div>
-</ng-container> -->
 <ng-container *ngIf="activityState.activity_status.discussion_complete">
-  <div
-    class="mainscreen-activity mainscreen-activity--multi-column discussion-activity"
-  >
-    <div
-      class="mainscreen-activity__column mainscreen-activity__column--66  bg-off-white flexer"
-    >
-      <div class="discussion-activity__share-status">
-        <div class="discussion-activity__vertically-centered">
-          <div class="ms-emoji-container">
-            <app-b-twemoji emoji="📣"></app-b-twemoji>
-          </div>
-          <h2 class="pn-700 vibrant-blue">Share</h2>
-        </div>
+  <div fxLayout="column" class="mainscreen-activity">
+    <div class="lesson-top-banner" fxLayout="row">
+      <div fxFlex="35%">
+        <h1 class="pn-500">
+          <span class="vibrant-blue pn-700">
+            Share
+          </span>
+        </h1>
       </div>
-      <div class="discussion-activity__share-queue">
-        <div class="discussion-activity__vertically-centered">
-          <h3 class="pn-600 deep-blue">
-            {{ presenterGroupToText(currentPresenterGroup()) }} are sharing
-          </h3>
-          <ng-container *ngIf="nextPresenterGroup() !== undefined">
-            <p class="brownish-grey pn-500">
-              {{ presenterGroupToText(nextPresenterGroup()) }} are up next
-            </p>
-          </ng-container>
-        </div>
+      <div fxFlex="65%" fxLayoutAlign="center center">
+        <h2 class="pn-600 discuss-instruction">
+          Tell the group what you learned. Keep an eye out for your names!
+        </h2>
       </div>
     </div>
-    <div
-      class="mainscreen-activity__column mainscreen-activity__column--33 bg-dim-grey overflow-hidden"
-    >
-      <app-radial-timer
-        (initCallback)="initShareTimer($event)"
-        endStateText="Done!"
-        #shareTimer
-      ></app-radial-timer>
+    <div class="" fxFlex="1 0 0" fxLayout="row">
+      <div
+        class="activity-instructions bg-white"
+        fxFlex="60%"
+        fxLayoutAlign="start center"
+      >
+        <div fxLayoutGap="20px">
+          <div fxFlex="25%">
+            <div class="ms-emoji-container smaller-emoji">
+              <app-b-twemoji emoji="📣"></app-b-twemoji>
+            </div>
+          </div>
+          <div fxFlex="75%">
+            <h2 class="deep-blue pn-600 discuss-names">
+              {{ presenterGroupToText(currentPresenterGroup()) }} are sharing
+            </h2>
+            <ng-container>
+              <p class="reduced brownish-grey pn-500">
+                {{ presenterGroupToText(nextPresenterGroup()) }} you're up next
+              </p>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+        <app-radial-timer
+          (initCallback)="initDiscussionTimer($event)"
+          endStateText="Done!"
+        ></app-radial-timer>
+      </div>
     </div>
   </div>
 </ng-container>

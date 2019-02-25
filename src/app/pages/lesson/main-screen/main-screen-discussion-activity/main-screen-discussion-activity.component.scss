@@ -20,17 +20,28 @@
       font-size: 100px;
     }
   }
+  p {
+    font-size: 48px;
+    line-height: normal;
+    @media #{$xxlarge-and-down} {
+      font-size: 28px;
+    }
+  }
 }
 .activity-instructions {
   padding: 3vw 3vw;
 
   .discuss-instruction {
     font-size: 65px;
-    line-height: 60px;
+    line-height: 72px;
     margin: 0px;
     @media #{$xxlarge-and-down} {
       font-size: 50px;
     }
+  }
+  .discuss-names {
+    font-size: 80px;
+    line-height: 100px;
   }
 }
 
