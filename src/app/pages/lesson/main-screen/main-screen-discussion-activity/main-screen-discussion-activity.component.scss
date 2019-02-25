@@ -1,6 +1,41 @@
-.discuss-instruction {
-  font-size: 4vh;
-  line-height: 4.3vh;
+@import 'variables';
+
+.mainscreen-activity {
+  .lesson-top-banner {
+    padding: 40px 3vw;
+    h2 {
+      font-size: 70px;
+      line-height: 60px;
+      @media #{$xxlarge-and-down} {
+        font-size: 55px;
+      }
+    }
+  }
+  h1 {
+    font-size: 140px;
+    line-height: 1.09;
+    text-transform: capitalize;
+    letter-spacing: 3.6px;
+    @media #{$xxlarge-and-down} {
+      font-size: 100px;
+    }
+  }
+}
+.activity-instructions {
+  padding: 3vw 3vw;
+
+  .discuss-instruction {
+    font-size: 65px;
+    line-height: 60px;
+    margin: 0px;
+    @media #{$xxlarge-and-down} {
+      font-size: 50px;
+    }
+  }
+}
+
+.mainscreen-radial-timer-column {
+  padding: 5vh 3vw;
 }
 
 .discussion-activity__share-status {

@@ -1,26 +1,16 @@
 @import 'variables';
 
-.lobby-activity {
-  height: 100%;
-  .lesson-controls {
-    padding: 40px;
+.mainscreen-activity {
+  .lesson-top-banner {
+    padding: 40px 3vw;
   }
   h1 {
-    font-size: 48px;
-    line-height: normal;
-    text-transform: uppercase;
+    font-size: 140px;
+    line-height: 1.09;
+    text-transform: capitalize;
     letter-spacing: 3.6px;
     @media #{$xxlarge-and-down} {
-      font-size: 36px;
-    }
-    .vibrant-blue {
-      font-size: 140px;
-      line-height: 1.09;
-      display: block;
-      text-transform: capitalize;
-      @media #{$xxlarge-and-down} {
-        font-size: 80px;
-      }
+      font-size: 100px;
     }
   }
   p {
@@ -30,27 +20,18 @@
       font-size: 28px;
     }
   }
-  .lobby-activity__welcome-text {
-    padding: 10vh 7vw;
-    @media #{$xxlarge-and-down} {
-      padding: 2vh 2vw;
-    }
-  }
-  .lobby-activity__column-content-flexer {
-    align-items: center;
-  }
-  .lobby-activity__instructions {
+  .activity-instructions {
     padding: 0 3vw;
-    .lobby-activity__instructions-title {
+    .title {
       text-transform: uppercase;
     }
-    .lobby-acitivity__room-code {
+    .room-code {
       font-size: 130px;
       @media #{$xxlarge-and-down} {
         font-size: 100px;
       }
     }
-    .lobby-activity__reduced {
+    .reduced {
       font-size: 48px;
     }
   }
@@ -70,7 +51,7 @@
       li {
         list-style: none;
         margin: 0;
-        font-size: 72px;
+        font-size: 36px;
         line-height: 1.33;
         white-space: nowrap;
         overflow: hidden;
@@ -78,22 +59,5 @@
         text-overflow: ellipsis;
       }
     }
-  }
-}
-.lobby-activity__footer {
-  height: 190px;
-  justify-content: center;
-  p {
-    font-size: 48px;
-    color: #fff;
-    line-height: normal;
-  }
-  button {
-    font-size: 36px;
-    height: 60px;
-    width: 230px;
-    position: relative;
-    bottom: 5px;
-    margin-left: 40px;
   }
 }
