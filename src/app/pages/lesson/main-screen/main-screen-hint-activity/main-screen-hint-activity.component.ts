@@ -18,25 +18,9 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
   sfxFile;
 
-  submitTimerInit(timer) {
-    const submitTotalTime =
-      Date.parse(this.activityState.hintwordactivity.submission_countdown_timer.expiration_time) -
-      Date.now();
-    const submitTimeElapsed = 0;
-    timer.startTimer(submitTotalTime, submitTimeElapsed);
-  }
-
-  voteTimerInit(timer) {
-    const voteTotalTime =
-      Date.parse(this.activityState.hintwordactivity.voting_countdown_timer.expiration_time) -
-      Date.now();
-    const voteTimeElapsed = 0;
-    timer.startTimer(voteTotalTime, voteTimeElapsed);
-  }
-
   startEndTimer(timer) {
     const endTotalSeconds =
-      (Date.parse(this.activityState.base_activity.next_activity_start_timer.expiration_time) -
+      (Date.parse(this.activityState.base_activity.next_activity_start_timer.end_time) -
         Date.now()) /
       1000;
     timer.startTimer(endTotalSeconds);

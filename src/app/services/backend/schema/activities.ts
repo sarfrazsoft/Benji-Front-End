@@ -99,4 +99,26 @@ export interface HintWordActivity {
   voted_users: User[];
 }
 
+export interface DiscussionGroupMember {
+  has_volunteered: boolean;
+  user: User;
+}
+
+export interface DiscussionGroup {
+  selected_for_sharing: boolean;
+  sharing_countdown_timer: Timer;
+  discussiongroupmember_set: DiscussionGroupMember[];
+}
+
+export interface DiscussionActivity {
+  instructions: string;
+  num_sharers: number;
+  discussion_seconds: number;
+  sharing_seconds: number;
+  discussion_countdown_timer: Timer;
+  discussion_complete: boolean;
+  discussiongroup_set: DiscussionGroup[];
+  currently_sharing_group: DiscussionGroup;
+  next_sharing_group: DiscussionGroup;
+}
 

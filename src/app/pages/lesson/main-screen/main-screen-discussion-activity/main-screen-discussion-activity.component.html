@@ -1,4 +1,4 @@
-<ng-container *ngIf="!activityState.activity_status.discussion_complete">
+<ng-container *ngIf="!activityState.discussionactivity.discussion_complete">
   <div
     class="mainscreen-activity mainscreen-activity--multi-column discussion-activity"
   >
@@ -11,20 +11,21 @@
       <h1 class="vibrant-blue pn-700">Discuss</h1>
 
       <h2 class="deep-blue pn-600 discuss-instruction">
-        {{ activityState.activity_status.instructions }}
+        {{ activityState.discussionactivity.instructions }}
       </h2>
     </div>
     <div
       class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
     >
       <app-radial-timer
-        (initCallback)="initDiscussionTimer($event)"
+        [timer]="activityState.discussionactivity.discussion_countdown_timer"
         endStateText="Done!"
       ></app-radial-timer>
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="activityState.activity_status.discussion_complete">
+<ng-container *ngIf="activityState.discussionactivity.discussion_complete &&
+                      activityState.discussionactivity.currently_sharing_group">
   <div
     class="mainscreen-activity mainscreen-activity--multi-column discussion-activity"
   >
@@ -42,11 +43,11 @@
       <div class="discussion-activity__share-queue">
         <div class="discussion-activity__vertically-centered">
           <h3 class="pn-600 deep-blue">
-            {{ presenterGroupToText(currentPresenterGroup()) }} are sharing
+            {{ presenterGroupToText(activityState.discussionactivity.currently_sharing_group) }} are sharing
           </h3>
-          <ng-container *ngIf="nextPresenterGroup() !== undefined">
+          <ng-container *ngIf="activityState.discussionactivity.next_sharing_group !== null">
             <p class="brownish-grey pn-500">
-              {{ presenterGroupToText(nextPresenterGroup()) }} are up next
+              {{ presenterGroupToText(activityState.discussionactivity.next_sharing_group) }} are up next
             </p>
           </ng-container>
         </div>
@@ -57,7 +58,7 @@
 
     >
       <app-radial-timer
-        (initCallback)="initShareTimer($event)"
+        [timer]="activityState.discussionactivity.currently_sharing_group.sharing_countdown_timer"
         endStateText="Done!"
         #shareTimer
       ></app-radial-timer>

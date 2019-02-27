@@ -1,9 +1,11 @@
 
 export interface Timer {
+  id: number;
   status: string;
   start_time: string;
-  expiration_time: string;
-  remaining_seconds: string;
+  end_time: string;
+  remaining_seconds: number;
+  total_seconds: number;
 }
 
 export interface MCQChoice {

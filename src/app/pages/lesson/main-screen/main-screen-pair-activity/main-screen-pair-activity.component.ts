@@ -1,14 +1,11 @@
 import {
   Component,
-  OnInit,
   ViewChild,
-  OnChanges,
-  SimpleChanges,
   AfterViewInit
 } from '@angular/core';
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-import { isEqual, concat } from 'lodash';
+import { concat } from 'lodash';
 import { RoleplayPair } from '../../../../services/backend/schema/activities';
 
 @Component({
@@ -34,19 +31,11 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   ngAfterViewInit() {
     if (!this.activityState.roleplaypairactivity.all_pairs_found) {
       const pairSeconds =
-        (Date.parse(this.activityState.roleplaypairactivity.grouping_countdown_timer.expiration_time) -
+        (Date.parse(this.activityState.roleplaypairactivity.grouping_countdown_timer.end_time) -
           Date.now()) /
         1000;
       this.pairTimer.startTimer(pairSeconds);
     }
-  }
-
-  discussionTimerInit(timer) {
-    const discussionTotalTime =
-      Date.parse(this.activityState.roleplaypairactivity.activity_countdown_timer.expiration_time) -
-      Date.now();
-    const discussionElapsedTime = 0;
-    timer.startTimer(discussionTotalTime, discussionElapsedTime);
   }
 
   isReversed() {

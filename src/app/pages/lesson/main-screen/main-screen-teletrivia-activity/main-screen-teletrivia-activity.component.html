@@ -31,7 +31,7 @@
     *ngIf="!activityState.teletriviaactivity.circle_complete"
   >
     <app-radial-timer
-      (initCallback)="timerInit($event)"
+      [timer]="activityState.teletriviaactivity.circle_countdown_timer"
       [endStateText]="'Start!'"
     ></app-radial-timer>
   </div>

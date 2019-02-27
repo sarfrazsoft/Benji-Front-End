@@ -32,7 +32,7 @@
   >
     <ng-container *ngIf="!reveal()">
       <app-radial-timer
-        (initCallback)="initQuestionTimer($event)"
+        [timer]="activityState.mcqactivity.question_timer"
         endStateText="Times up!"
       ></app-radial-timer>
     </ng-container>

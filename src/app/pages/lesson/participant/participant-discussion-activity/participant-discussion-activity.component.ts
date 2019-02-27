@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { RoleplayUserGroup } from '../../../../services/backend/schema/activity';
+import {DiscussionSharerDoneEvent, DiscussionSharingVolunteerEvent} from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-participant-discussion-activity',
@@ -12,52 +13,43 @@ export class ParticipantDiscussionActivityComponent extends BaseActivityComponen
     return presenterGroup.primary.concat(presenterGroup.secondary);
   }
 
-  currentPresenterGroup() {
-    return this.activityState.activity_status.selected_sharers[
-      this.activityState.activity_status.sharer_group_num
-    ];
-  }
 
   participantVolunteered() {
     return (
-      this.activityState.activity_status.sharers.indexOf(
-        this.activityState.your_identity.id
-      ) > -1
+      this.activityState.discussionactivity.discussiongroup_set.find(
+        g => g.discussiongroupmember_set.find(
+          m => m.has_volunteered &&
+            m.user.id === this.activityState.your_identity.id) !== undefined) !== undefined
     );
   }
 
   participantIsSharing() {
-    if (this.currentPresenterGroup() === undefined) {
-      return false;
-    }
     return (
-      this.presenterGroupToList(this.currentPresenterGroup()).indexOf(
-        this.activityState.your_identity.id
-      ) > -1
+      this.activityState.discussionactivity.currently_sharing_group.discussiongroupmember_set.find(
+        m => m.user.id === this.activityState.your_identity.id) !== undefined
     );
   }
 
   shareButton() {
     if (!this.participantVolunteered()) {
-      this.sendMessage.emit({ event: 'share_button' });
+      this.sendMessage.emit(new DiscussionSharingVolunteerEvent());
     }
   }
 
   doneButton() {
-    this.sendMessage.emit({ event: 'done_button' });
+    this.sendMessage.emit(new DiscussionSharerDoneEvent());
   }
 
   discussionTimerInit(timer) {
     const discussionTotalTime =
-      Date.parse(this.activityState.activity_status.discussion_countdown_time) -
+      Date.parse(this.activityState.discussionactivity.discussion_countdown_timer.end_time) -
       Date.now();
     timer.startTimer(discussionTotalTime);
   }
 
   sharingTimerInit(timer) {
-    const timeStr = this.activityState.activity_status.sharer_countdown_time[
-      this.activityState.activity_status.sharer_group_num
-    ];
+    const timeStr = this.activityState.discussionactivity
+      .currently_sharing_group.sharing_countdown_timer.end_time;
     const sharingTotalTime = Date.parse(timeStr) - Date.now();
     timer.startTimer(sharingTotalTime);
   }

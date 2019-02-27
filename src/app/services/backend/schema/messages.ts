@@ -1,4 +1,4 @@
-import { BaseActivity, HintWordActivity, LobbyActivity, MCQActivity, RoleplayPairActivity, TeleTriviaActivity, VideoActivity } from './activities';
+import { BaseActivity, DiscussionActivity, HintWordActivity, LobbyActivity, MCQActivity, RoleplayPairActivity, TeleTriviaActivity, VideoActivity } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
 import { MCQChoice, MCQQuestion } from './utils';
@@ -14,6 +14,7 @@ export interface UpdateMessage {
   teletriviaactivity?: TeleTriviaActivity;
   roleplaypairactivity?: RoleplayPairActivity;
   hintwordactivity?: HintWordActivity;
+  discussionactivity?: DiscussionActivity;
   your_identity?: User; // TODO: This is a hack and must go. Use the proper REST view (tenants/users/who_am_i) to get this.
 }
 
@@ -97,4 +98,12 @@ export class MCQSubmitAnswerEvent extends ActivityEvent {
     super();
     this.extra_args = {'answer': answer.id};
   }
+}
+
+export class DiscussionSharingVolunteerEvent extends ActivityEvent {
+  event_name = 'DiscussionSharingVolunteerEvent';
+}
+
+export class DiscussionSharerDoneEvent extends ActivityEvent {
+  event_name = 'DiscussionSharerDoneEvent';
 }

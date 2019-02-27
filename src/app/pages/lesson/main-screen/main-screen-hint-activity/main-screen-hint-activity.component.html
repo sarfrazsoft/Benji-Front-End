@@ -64,7 +64,7 @@
       *ngIf="!activityState.hintwordactivity.submission_complete"
     >
       <app-radial-timer
-        (initCallback)="submitTimerInit($event)"
+        [timer]="activityState.hintwordactivity.submission_countdown_timer"
         endStateText="Vote!"
       ></app-radial-timer>
     </p>
@@ -73,7 +73,7 @@
       *ngIf="activityState.hintwordactivity.submission_complete"
     >
       <app-radial-timer
-        (initCallback)="voteTimerInit($event)"
+        [timer]="activityState.hintwordactivity.voting_countdown_timer"
         endStateText="Times Up!"
       ></app-radial-timer>
     </p>

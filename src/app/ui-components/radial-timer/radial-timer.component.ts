@@ -1,5 +1,6 @@
 import {Component, Input, Output, ViewChild, ElementRef, OnInit, EventEmitter, OnDestroy} from '@angular/core';
 import {init} from 'protractor/built/launcher';
+import {Timer} from '../../services/backend/schema/utils';
 
 @Component({
   selector: 'app-radial-timer',
@@ -10,60 +11,46 @@ import {init} from 'protractor/built/launcher';
 
 export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endStateText: string;
-  @Output() initCallback = new EventEmitter<RadialTimerComponent>();
-  @Output() timeUpCallback = new EventEmitter<RadialTimerComponent>();
+  @Input() timer: Timer;
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   totalTime: number;
-  elapsedTime: number;
-  public running = false;
-  public timesUp = false;
+  remainingTime: number;
+
   timerInterval;
 
   ngOnInit() {
-    if (this.initCallback !== undefined) {
-      this.initCallback.emit(this);
+    this.timerInterval = setInterval(() => this.update(), 100);
+  }
+
+  update() {
+    if (this.timer) {
+      this.totalTime = this.timer.total_seconds * 1000;
+
+      if (this.timer.status === 'paused' ||
+            this.timer.status === 'cancelled' ||
+            this.timer.status === 'ended') {
+        this.remainingTime = this.timer.remaining_seconds * 1000;
+      } else {
+        this.remainingTime = Date.parse(this.timer.end_time) - Date.now();
+        if (this.remainingTime < 0) {
+          this.remainingTime = 0;
+        }
+      }
+    } else {
+      this.totalTime = 1;
+      this.remainingTime = 0;
     }
   }
 
   ngOnDestroy() {
-    if (this.running) {
-      clearInterval(this.timerInterval);
-    }
-  }
-
-  public startTimer(totalTime: number, startTime: number) {
-    this.totalTime = totalTime;
-    this.elapsedTime = startTime;
-    this.running = true;
-    this.timesUp = false;
-
-    this.timerInterval = setInterval( () => {
-      if  (this.elapsedTime < this.totalTime) {
-        this.elapsedTime += 100;
-      } else {
-        this.running = false;
-        this.timesUp = true;
-        this.elapsedTime = this.totalTime;
-        // this.endSfx();
-        clearInterval(this.timerInterval);
-
-        if (this.timeUpCallback) {
-          this.timeUpCallback.emit(this);
-        }
-      }
-    }, 100);
-  }
-
-  public stopTimer() {
     clearInterval(this.timerInterval);
-    this.running = false;
   }
 
 
-  getTimer() {
-    const secondsRemaining = Math.floor((this.totalTime - this.elapsedTime) / 1000);
+  get_min_sec() {
+    const secondsRemaining = Math.floor(this.remainingTime / 1000);
     const min = Math.floor( secondsRemaining / 60);
     const sec = secondsRemaining - 60 * min;
 
@@ -75,11 +62,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   }
 
   pctRemaining() {
-    if (this.timesUp || (!this.timesUp && !this.running)) {
-      return 100;
-    } else {
-      return (100 * (this.totalTime - this.elapsedTime) / this.totalTime);
-    }
+    return 100 * this.remainingTime / this.totalTime;
   }
 
   private endSfx() {

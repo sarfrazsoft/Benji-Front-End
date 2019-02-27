@@ -76,7 +76,7 @@
     >
       <app-radial-timer
         endStateText="Times up!"
-        (initCallback)="discussionTimerInit($event)"
+        [timer]="activityState.roleplaypairactivity.activity_countdown_timer"
         #discussionTimer
       ></app-radial-timer>
     </div>
