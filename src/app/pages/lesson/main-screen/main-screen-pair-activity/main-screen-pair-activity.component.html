@@ -114,12 +114,13 @@
           *ngFor="let userGroup of activityState.activity_status.user_groups"
           [ngClass]="{ 'deep-blue': isReady(userGroup) }"
         >
-          {{ getGroupText(userGroup)
-          }}<mat-icon
+          {{ getGroupText(userGroup) }}
+          <mat-icon
             class="pair-activity__ready-icon"
             *ngIf="isReady(userGroup)"
-            >check</mat-icon
           >
+            check
+          </mat-icon>
         </li>
       </ul>
       <app-linear-timer #pairTimer></app-linear-timer>

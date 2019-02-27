@@ -1,15 +1,15 @@
 import {
+  AfterViewInit,
   Component,
-  OnInit,
-  ViewChild,
   OnChanges,
+  OnInit,
   SimpleChanges,
-  AfterViewInit
+  ViewChild
 } from '@angular/core';
+import { concat, isEqual } from 'lodash';
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
-import { isEqual, concat } from 'lodash';
 import { RoleplayUserGroup } from '../../../../services/backend/schema/activity';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-main-screen-pair-activity',
@@ -17,7 +17,7 @@ import { RoleplayUserGroup } from '../../../../services/backend/schema/activity'
   styleUrls: ['./main-screen-pair-activity.component.scss']
 })
 export class MainScreenPairActivityComponent extends BaseActivityComponent
-  implements AfterViewInit {
+  implements AfterViewInit, OnChanges {
   @ViewChild('pairTimer') pairTimer;
   @ViewChild('discussionTimer') discussionTimer;
 
@@ -59,7 +59,7 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   isReady(userGroup: RoleplayUserGroup) {
     return (
       this.activityState.activity_status.groups_found.find(e =>
-        isEqual(userGroup, e)
+        isEqual(Object.values(userGroup), e)
       ) !== undefined
     );
   }
