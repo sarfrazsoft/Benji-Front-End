@@ -1,0 +1,54 @@
+.single-column-activity {
+  text-align: center;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  .twemoji-container {
+    width: 23vh;
+    margin: 0 auto;
+  }
+  h1 {
+    font-family: $pn-bold;
+    line-height: 1.09;
+    font-size: 13.5vh;
+    margin-bottom: 3vh;
+  }
+  h1.question {
+    font-size: 7vh;
+  }
+  p {
+    font-family: $pn-medium;
+    font-size: 6vh;
+    margin: 0 auto;
+    line-height: 1.42;
+  }
+  .forms-submitted {
+    margin-top: 6vh;
+    font-size: 4vh;
+  }
+  .exitSession {
+    font-size: 3.2vh;
+    position: absolute;
+    bottom: 12vh;
+    right: 6vh;
+    color: $vibrant-blue;
+    cursor: pointer;
+    button {
+      background-color: transparent;
+      height: 5vh;
+      width: 5vh;
+
+      margin-left: 0px;
+      transition: all $animation-time linear;
+      -webkit-transition: all $animation-time linear;
+      -ms-transition: all $animation-time linear;
+    }
+    &:hover {
+      button {
+        margin-right: -10px;
+        margin-left: 10px;
+      }
+    }
+  }
+}

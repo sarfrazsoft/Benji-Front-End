@@ -1,5 +1,5 @@
-<section *ngIf="!allFeedbackFormsSubmitted" class="feedback-activity">
-  <div class="feedback-activity__twemoji-container">
+<div *ngIf="!allFeedbackFormsSubmitted" class="single-column-activity">
+  <div class="twemoji-container">
     <app-b-twemoji emoji="✍️"></app-b-twemoji>
   </div>
   <h1 class="vibrant-blue pn-700">Thanks for playing!</h1>
@@ -10,11 +10,11 @@
   <div class="forms-submitted deep-blue pn-600">
     7/14 froms submitted
   </div>
-</section>
+</div>
 
-<section *ngIf="allFeedbackFormsSubmitted">
-  <div class="feedback-activity">
-    <div class="feedback-activity__twemoji-container">
+<div *ngIf="allFeedbackFormsSubmitted" class="single-column-activity">
+  <div>
+    <div class="twemoji-container">
       <app-b-twemoji emoji="🎉"></app-b-twemoji>
     </div>
     <h1 class="vibrant-blue pn-700">Thanks for playing!</h1>
@@ -31,4 +31,4 @@
       <img src="/assets/img/launch_singlearrow_blue.png" alt="launch" />
     </button>
   </div>
-</section>
+</div>
