@@ -3,14 +3,20 @@
 .mainscreen-activity {
   .lesson-top-banner {
     padding: 40px 3vw;
+    @media #{$fourK-display-and-up} {
+      padding: 60px 3vw;
+    }
   }
   h1 {
     font-size: 140px;
-    line-height: 1.09;
+    line-height: normal;
     text-transform: capitalize;
     letter-spacing: 3.6px;
     @media #{$xxlarge-and-down} {
       font-size: 100px;
+    }
+    @media #{$fourK-display-and-up} {
+      font-size: 200px;
     }
   }
   p {
@@ -18,6 +24,9 @@
     line-height: normal;
     @media #{$xxlarge-and-down} {
       font-size: 28px;
+    }
+    @media #{$fourK-display-and-up} {
+      font-size: 80px;
     }
   }
   .activity-instructions {
@@ -29,6 +38,9 @@
       font-size: 130px;
       @media #{$xxlarge-and-down} {
         font-size: 100px;
+      }
+      @media #{$fourK-display-and-up} {
+        font-size: 200px;
       }
     }
   }
