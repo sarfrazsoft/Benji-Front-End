@@ -4,10 +4,7 @@
   height: 100%;
   flex-direction: column;
   justify-content: center;
-  .twemoji-container {
-    width: 23vh;
-    margin: 0 auto;
-  }
+
   h1 {
     font-family: $pn-bold;
     line-height: 1.09;
@@ -51,4 +48,10 @@
       }
     }
   }
+}
+
+// TODO move to a better file
+.twemoji-container {
+  width: 23vh;
+  margin: 0 auto;
 }

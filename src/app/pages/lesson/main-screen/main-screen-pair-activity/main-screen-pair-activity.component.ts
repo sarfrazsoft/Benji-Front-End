@@ -17,7 +17,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-pair-activity.component.scss']
 })
 export class MainScreenPairActivityComponent extends BaseActivityComponent
-  implements AfterViewInit, OnChanges {
+  implements AfterViewInit {
   @ViewChild('pairTimer') pairTimer;
   @ViewChild('discussionTimer') discussionTimer;
 

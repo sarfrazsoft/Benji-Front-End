@@ -1,101 +1,150 @@
-<div
-  *ngIf="activityState.activity_status.icebreaker_stand"
-  class="single-column-activity"
->
-  <div class="twemoji-container">
-    <app-b-twemoji emoji="↔️"></app-b-twemoji>
-  </div>
-  <h1 class="vibrant-blue pn-700">Where do you stand?</h1>
-  <p class="brownish-grey pn-500">
-    How well do you know this group? Get ready to answer some questions and get
-    moving.
-  </p>
-</div>
-
-<div
-  *ngIf="activityState.activity_status.pets_question"
-  class="single-column-activity"
->
-  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
-    <div>
-      <div class="twemoji-container">
-        <app-b-twemoji emoji="🐈"></app-b-twemoji>
-      </div>
-    </div>
-    <div>
-      <div class="twemoji-container">
-        <app-b-twemoji emoji="🐕"></app-b-twemoji>
-      </div>
-    </div>
-  </div>
-  <h1 class="deep-blue pn-700 question">
-    Question
-    {{
-      activityState.activity_status.pets_question_1 ||
-      activityState.activity_status.sandwhich_question_1
-        ? '1'
-        : '2'
-    }}:
-  </h1>
-  <p
-    *ngIf="activityState.activity_status.pets_question_1"
-    class="brownish-grey pn-500"
+<div class="either-or-activity mainscreen-activity" fxLayoutAlign="center">
+  <div
+    *ngIf="activityState.activity_status.icebreaker_stand"
+    class="single-column-activity"
   >
-    Do you think this group has more
-    <span class="deep-blue">cat people</span> or more
-    <span class="deep-blue">dog people</span>?
-  </p>
-  <p
-    *ngIf="activityState.activity_status.pets_question_2"
-    class="brownish-grey pn-500"
-  >
-    Are
-    <span class="deep-blue">you</span> a cat person or a dog person
-  </p>
-  <div class="forms-submitted deep-blue pn-600">
-    7/14 answers submitted
+    <div class="twemoji-container">
+      <app-b-twemoji emoji="↔️"></app-b-twemoji>
+    </div>
+    <h1 class="vibrant-blue pn-700">Where do you stand?</h1>
+    <p class="brownish-grey pn-500">
+      How well do you know this group? Get ready to answer some questions and
+      get moving.
+    </p>
   </div>
-</div>
 
-<div
-  *ngIf="activityState.activity_status.pets_move"
-  class="single-column-activity"
->
-  <div fxLayoutAlign="center center">
+  <div
+    *ngIf="activityState.activity_status.pets_question"
+    class="single-column-activity"
+  >
     <div
-      class="move-your-side"
+      class="question-emojis"
       fxLayout="row"
-      fxLayoutAlign="stretch center"
-      fxLayoutGap="30px"
+      fxLayoutAlign="center center"
+      fxLayoutGap="3vw"
     >
-      <div>
-        <div class="twemoji-container">
-          <app-b-twemoji emoji="⬅️"></app-b-twemoji>
-        </div>
-      </div>
       <div>
         <div class="twemoji-container">
           <app-b-twemoji emoji="🐈"></app-b-twemoji>
         </div>
       </div>
-      <h1 fxFlex class="deep-blue pn-700 question">
-        Stand on your side
-      </h1>
       <div>
         <div class="twemoji-container">
           <app-b-twemoji emoji="🐕"></app-b-twemoji>
         </div>
       </div>
-      <div>
-        <div class="twemoji-container">
-          <app-b-twemoji emoji="➡️"></app-b-twemoji>
-        </div>
-      </div>
+    </div>
+    <h1 class="deep-blue pn-700 question">
+      Question
+      {{
+        activityState.activity_status.pets_question_1 ||
+        activityState.activity_status.sandwhich_question_1
+          ? '1'
+          : '2'
+      }}:
+    </h1>
+    <p
+      *ngIf="activityState.activity_status.pets_question_1"
+      class="brownish-grey pn-500"
+    >
+      Do you think this group has more
+      <span class="deep-blue">cat people</span> or more
+      <span class="deep-blue">dog people</span>?
+    </p>
+    <p
+      *ngIf="activityState.activity_status.pets_question_2"
+      class="brownish-grey pn-500"
+    >
+      Are
+      <span class="deep-blue">you</span> a cat person or a dog person
+    </p>
+    <div class="forms-submitted deep-blue pn-600">
+      7/14 answers submitted
     </div>
   </div>
 
-  <div class="forms-submitted deep-blue pn-600">
-    7/14 answers submitted
+  <div
+    *ngIf="activityState.activity_status.pets_move"
+    class="single-column-activity"
+  >
+    <div fxLayoutAlign="center center">
+      <div
+        class="move-your-side"
+        fxLayout="row"
+        fxLayoutAlign="stretch center"
+        fxLayoutGap="30px"
+      >
+        <div>
+          <div class="twemoji-container">
+            <app-b-twemoji emoji="⬅️"></app-b-twemoji>
+          </div>
+        </div>
+        <div>
+          <div class="twemoji-container">
+            <app-b-twemoji emoji="🐈"></app-b-twemoji>
+          </div>
+        </div>
+        <h1 fxFlex class="deep-blue pn-700 question">
+          Stand on your side
+        </h1>
+        <div>
+          <div class="twemoji-container">
+            <app-b-twemoji emoji="🐕"></app-b-twemoji>
+          </div>
+        </div>
+        <div>
+          <div class="twemoji-container">
+            <app-b-twemoji emoji="➡️"></app-b-twemoji>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="forms-submitted deep-blue pn-600">
+      7/14 answers submitted
+    </div>
+  </div>
+
+  <div
+    class="result"
+    fxLayout="row"
+    *ngIf="activityState.activity_status.result"
+  >
+    <div fxLayout="column" fxFlex>
+      <div>
+        <h1 class="deep-blue pn-700 question">
+          Prediction:
+        </h1>
+      </div>
+      <div>
+        <h1 class="brownish-grey pn-500 question">
+          64% of you thought that there would be more dog people in this group
+        </h1>
+      </div>
+      <div class="twemoji-container">
+        <app-b-twemoji emoji="🐕"></app-b-twemoji>
+      </div>
+    </div>
+    <div fxLayout="column" fxFlex>
+      <div>
+        <h1 class="deep-blue pn-700 question">
+          Reality:
+        </h1>
+      </div>
+      <div>
+        <h1 class="correct-answer pn-500 question">
+          Correct!
+        </h1>
+      </div>
+      <div>
+        <h1 class="brownish-grey pn-500 question">
+          57% of you are dog people
+        </h1>
+      </div>
+      <div class="twemoji-container">
+        <app-b-twemoji emoji="🐕"></app-b-twemoji>
+      </div>
+    </div>
   </div>
 </div>
 

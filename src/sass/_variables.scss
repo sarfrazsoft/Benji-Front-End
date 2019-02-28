@@ -6,6 +6,7 @@ $brownish-grey: #6c6c6c;
 $indigo-blue: #4c188f;
 $deep-blue: #00178a;
 $lightish-red: #ee3e53;
+$correct-answer: #7ed321;
 $cloudy-grey: #bec8ca;
 $inactive-color: $cloudy-grey;
 $dodger-blue: #4c83fc;
@@ -111,5 +112,9 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 
 .pale-grey {
   color: $pale-grey;
+}
+
+.correct-answer {
+  color: $correct-answer;
 }
 /* End of font colors*/
