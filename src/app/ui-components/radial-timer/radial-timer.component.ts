@@ -1,15 +1,24 @@
-import {Component, Input, Output, ViewChild, ElementRef, OnInit, EventEmitter, OnDestroy} from '@angular/core';
-import {init} from 'protractor/built/launcher';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import { init } from 'protractor/built/launcher';
 
 @Component({
   selector: 'app-radial-timer',
   templateUrl: './radial-timer.component.html',
-  styleUrls: [],
+  styleUrls: []
   // encapsulation: ViewEncapsulation.None
 })
-
 export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endStateText: string;
+  @Input() endAudio: string;
   @Output() initCallback = new EventEmitter<RadialTimerComponent>();
   @Output() timeUpCallback = new EventEmitter<RadialTimerComponent>();
 
@@ -28,6 +37,12 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.endAudio) {
+      const audio = new Audio();
+      audio.src = '../../../assets/audio/' + this.endAudio;
+      audio.load();
+      audio.play();
+    }
     if (this.running) {
       clearInterval(this.timerInterval);
     }
@@ -39,14 +54,13 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
     this.running = true;
     this.timesUp = false;
 
-    this.timerInterval = setInterval( () => {
-      if  (this.elapsedTime < this.totalTime) {
+    this.timerInterval = setInterval(() => {
+      if (this.elapsedTime < this.totalTime) {
         this.elapsedTime += 100;
       } else {
         this.running = false;
         this.timesUp = true;
         this.elapsedTime = this.totalTime;
-        // this.endSfx();
         clearInterval(this.timerInterval);
 
         if (this.timeUpCallback) {
@@ -61,16 +75,17 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
     this.running = false;
   }
 
-
   getTimer() {
-    const secondsRemaining = Math.floor((this.totalTime - this.elapsedTime) / 1000);
-    const min = Math.floor( secondsRemaining / 60);
+    const secondsRemaining = Math.floor(
+      (this.totalTime - this.elapsedTime) / 1000
+    );
+    const min = Math.floor(secondsRemaining / 60);
     const sec = secondsRemaining - 60 * min;
 
     if (min < 0) {
-      return {'min': 0, 'sec': 0};
+      return { min: 0, sec: 0 };
     } else {
-      return {'min': min, 'sec': sec};
+      return { min: min, sec: sec };
     }
   }
 
@@ -78,15 +93,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
     if (this.timesUp || (!this.timesUp && !this.running)) {
       return 100;
     } else {
-      return (100 * (this.totalTime - this.elapsedTime) / this.totalTime);
+      return (100 * (this.totalTime - this.elapsedTime)) / this.totalTime;
     }
   }
-
-  private endSfx() {
-    this.sfxPlayer.nativeElement.play();
-  }
-
-
 }
-
-

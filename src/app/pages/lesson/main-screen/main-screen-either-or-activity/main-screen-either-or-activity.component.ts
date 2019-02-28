@@ -9,17 +9,14 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   implements OnInit {
   ngOnInit() {
-    this.activityState.activity_status.icebreaker_stand = false;
-
-    this.activityState.activity_status.pets_question = true;
-    this.activityState.activity_status.pets_question_1 = true;
-    this.activityState.activity_status.pets_question_2 = false;
-
-    this.activityState.activity_status.sandwich_question = true;
-    this.activityState.activity_status.sandwich_question_1 = true;
-    this.activityState.activity_status.sandwich_question_2 = false;
-
-    this.activityState.activity_status.pets_move = false;
-    this.activityState.activity_status.result = false;
+    // this.activityState.activity_status.icebreaker_stand = false;
+    // this.activityState.activity_status.pets_question = true;
+    // this.activityState.activity_status.pets_question_1 = true;
+    // this.activityState.activity_status.pets_question_2 = false;
+    // this.activityState.activity_status.sandwich_question = true;
+    // this.activityState.activity_status.sandwich_question_1 = true;
+    // this.activityState.activity_status.sandwich_question_2 = false;
+    // this.activityState.activity_status.pets_move = false;
+    // this.activityState.activity_status.result = false;
   }
 }

@@ -18,10 +18,15 @@ export class MainScreenTeletriviaActivityComponent extends BaseActivityComponent
   }
 
   ngOnChanges() {
+    console.log(this.activityState.activity_status.circle_countdown);
     this.activityState.activity_status.leaderboard = orderBy(
       this.activityState.activity_status.leaderboard,
       ['correct'],
       ['desc']
     );
+  }
+
+  radialTimeUp($event) {
+    console.log('heelo');
   }
 }
