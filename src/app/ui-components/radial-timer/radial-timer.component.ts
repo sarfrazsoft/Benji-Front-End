@@ -18,7 +18,7 @@ import { init } from 'protractor/built/launcher';
 })
 export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endStateText: string;
-  @Input() endAudio: string;
+  @Input() endAudio = 'bell.wav';
   @Output() initCallback = new EventEmitter<RadialTimerComponent>();
   @Output() timeUpCallback = new EventEmitter<RadialTimerComponent>();
 
@@ -29,6 +29,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   public running = false;
   public timesUp = false;
   timerInterval;
+  audioStarted = false;
 
   ngOnInit() {
     if (this.initCallback !== undefined) {
@@ -37,12 +38,6 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.endAudio) {
-      const audio = new Audio();
-      audio.src = '../../../assets/audio/' + this.endAudio;
-      audio.load();
-      audio.play();
-    }
     if (this.running) {
       clearInterval(this.timerInterval);
     }
@@ -56,6 +51,13 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
 
     this.timerInterval = setInterval(() => {
       if (this.elapsedTime < this.totalTime) {
+        if (this.elapsedTime > this.totalTime - 100 && !this.audioStarted) {
+          this.audioStarted = true;
+
+          const audio = new Audio('../../../assets/audio/' + this.endAudio);
+          audio.load();
+          audio.play();
+        }
         this.elapsedTime += 100;
       } else {
         this.running = false;
