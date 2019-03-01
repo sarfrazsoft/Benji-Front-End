@@ -1,4 +1,5 @@
 import { ParticipantDiscussionActivityComponent } from './participant-discussion-activity/participant-discussion-activity.component';
+import { ParticipantEitherOrActivityComponent } from './participant-either-or-activity/participant-either-or-activity.component';
 import { ParticipantFeedbackActivityComponent } from './participant-feedback-activity/participant-feedback-activity.component';
 import { ParticipantHintActivityComponent } from './participant-hint-activity/participant-hint-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
@@ -12,6 +13,7 @@ export { ParticipantLessonComponent };
 
 export const ParticipantScreenComponents = [
   ParticipantDiscussionActivityComponent,
+  ParticipantEitherOrActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantHintActivityComponent,
   ParticipantLessonComponent,

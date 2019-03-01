@@ -1,0 +1,55 @@
+<ng-container>
+  <div class="b-flat-card center-text roleplay-card">
+    <div class="b-flat-card__title">
+      <h2 class="pn-500">Where do you stand?</h2>
+    </div>
+    <div
+      class="b-flat-card__body"
+      *ngIf="activityState.activity_status.question_1"
+    >
+      <div class="b-flat-card__question-no pn-500 brownish-grey">
+        Question 1:
+      </div>
+      <h3 class="pn-700 deep-blue b-flat-card__question">
+        Are you a cat person or a dog person?
+      </h3>
+      <div
+        class="pn-700"
+        fxLayout="row"
+        fxLayoutAlign="center"
+        fxLayoutGap="20px"
+      >
+        <div class="select-option-radio">
+          <input type="radio" value="notatall" id="not_1" />
+          <label for="not_1">
+            <app-b-twemoji emoji="🐈"></app-b-twemoji>
+            <span>I love cats!</span>
+          </label>
+        </div>
+
+        <div class="select-option-radio">
+          <input type="radio" value="kinda" id="kinda_1" />
+          <label for="kinda_1">
+            <app-b-twemoji emoji="🐕"></app-b-twemoji>
+            <span>Team doggo</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="b-flat-card__body">
+      <h1 class="pn-700 deep-blue b-flat-card__question">
+        Stand on your side
+      </h1>
+      <div class="pn-700">
+        <div class="twemoji-container">
+          <app-b-twemoji emoji="🐈"></app-b-twemoji>
+        </div>
+        <h3 class="pn-500 brownish-grey">
+          Cat people to the <span class="deep-blue">left</span> of the main
+          screen
+        </h3>
+      </div>
+    </div>
+  </div>
+</ng-container>
