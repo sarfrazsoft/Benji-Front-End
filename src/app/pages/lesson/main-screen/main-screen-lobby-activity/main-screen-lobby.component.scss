@@ -2,22 +2,20 @@
 
 .mainscreen-activity {
   .lesson-top-banner {
-    padding: 40px 3vw;
-    @media #{$fourK-display-and-up} {
-      padding: 60px 3vw;
-    }
+    padding: 2.5vw;
   }
   h1 {
-    font-size: 140px;
+    font-size: 11vh;
     line-height: normal;
     text-transform: capitalize;
     letter-spacing: 3.6px;
-    @media #{$xxlarge-and-down} {
-      font-size: 100px;
-    }
-    @media #{$fourK-display-and-up} {
-      font-size: 200px;
-    }
+    margin: 0;
+    // @media #{$xxlarge-and-down} {
+    //   font-size: 100px;
+    // }
+    // @media #{$fourK-display-and-up} {
+    //   font-size: 200px;
+    // }
   }
   p {
     font-size: 48px;
