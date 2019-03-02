@@ -13,7 +13,7 @@ export class ParticipantMcqActivityComponent extends BaseActivityComponent {
 
   questionTimerInit(timer) {
     const questionSeconds =
-      (Date.parse(this.activityState.mcqactivity.question_timer.expiration_time) -
+      (Date.parse(this.activityState.mcqactivity.question_timer.end_time) -
         Date.now()) /
       1000;
     timer.startTimer(questionSeconds);
@@ -21,7 +21,7 @@ export class ParticipantMcqActivityComponent extends BaseActivityComponent {
 
   revealTimerInit(timer) {
     const revealSeconds =
-      (Date.parse(this.activityState.base_activity.next_activity_start_timer.expiration_time) - Date.now()) /
+      (Date.parse(this.activityState.base_activity.next_activity_start_timer.end_time) - Date.now()) /
       1000;
     timer.startTimer(revealSeconds);
   }

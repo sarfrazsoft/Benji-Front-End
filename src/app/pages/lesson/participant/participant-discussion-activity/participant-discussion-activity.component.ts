@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-import { RoleplayUserGroup } from '../../../../services/backend/schema/activity';
 import {DiscussionSharerDoneEvent, DiscussionSharingVolunteerEvent} from '../../../../services/backend/schema/messages';
 
 @Component({

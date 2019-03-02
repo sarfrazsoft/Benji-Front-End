@@ -3,7 +3,6 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 import * as global from '../../globals';
 import {Observable, of} from 'rxjs';
-import {ActivityFlowFrame, ActivityFlowServerMessage} from './schema/activity';
 import { ServerMessage } from './schema/messages';
 
 @Injectable()
@@ -49,7 +48,7 @@ export class BackendSocketService {
     this.subject = webSocket(`${global.wsRoot}${url}`);
   }
 
-  public getLessonSocket(client, lessonId?, roomCode?, id?): Observable<ActivityFlowFrame> {
+  public getLessonSocket(client, lessonId?, roomCode?, id?): Observable<ServerMessage> {
     if (client === 'screen' && !this.subject) {
       this.subject = webSocket(
         // `${global.wsRoot}/socketService/activityflow/id/${lessonId}/${client}/0/`
