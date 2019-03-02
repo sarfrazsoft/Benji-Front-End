@@ -28,6 +28,7 @@
   <!-- timer-->
   <div
     class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
+    fxLayoutAlign="center center"
     *ngIf="!activityState.teletriviaactivity.circle_complete"
   >
     <app-radial-timer
@@ -46,8 +47,9 @@
         <li
           class="teletrivia-activity__leader pn-600"
           *ngFor="
-            let leader of activityState.teletriviaactivity.leaderboard;
-            index as i
+            let leader of (activityState.teletriviaactivity.leaderboard
+              | slice: 0:7);
+            let i = index
           "
         >
           <div class="flexer flexer--space-between align-center">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-linear-timer',
@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class LinearTimerComponent implements OnInit {
   constructor() {}
+  @Input() endAudio = 'bell.wav';
   @Output() callback = new EventEmitter();
   @Output() initCallback = new EventEmitter<LinearTimerComponent>();
 
@@ -14,6 +15,7 @@ export class LinearTimerComponent implements OnInit {
   public totalTime;
   public timeElapsed = 0;
   public progressBarWidth = '0';
+  audioStarted = false;
 
   public running = false;
 
@@ -32,6 +34,13 @@ export class LinearTimerComponent implements OnInit {
 
     this.timerInterval = setInterval(() => {
       this.timeElapsed = this.timeElapsed + 100;
+      if (this.timeElapsed > this.totalTime - 100 && !this.audioStarted) {
+        this.audioStarted = true;
+
+        const audio = new Audio('../../../assets/audio/' + this.endAudio);
+        audio.load();
+        audio.play();
+      }
       this.progressBarWidth = `${(this.timeElapsed / (this.totalTime - 1250)) *
         100}`;
 

@@ -1,0 +1,27 @@
+@import 'variables';
+
+.either-or-activity {
+  .result {
+    padding: 4vh 0vh;
+    > div {
+      padding: 5vh;
+    }
+    > :first-child {
+      border-right: 4px solid $grey;
+    }
+  }
+  h1 {
+    font-size: 13.5vh;
+    margin: 0;
+    line-height: normal;
+  }
+  h1.question {
+    font-size: 7vh;
+  }
+  .question-emojis {
+    margin-bottom: 5vh;
+  }
+  .twemoji-container {
+    margin: 0 0;
+  }
+}

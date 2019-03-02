@@ -32,6 +32,13 @@
     >
     </app-mainscreen-activity-teletrivia>
 
+    <!-- <benji-main-screen-either-or-activity
+      *ngIf="getActivityType() === 'TeleTriviaActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-main-screen-either-or-activity> -->
+
     <app-mainscreen-activity-video
       *ngIf="getActivityType() === 'VideoActivity'"
       [activityState]="serverMessage"

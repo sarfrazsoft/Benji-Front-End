@@ -1,122 +1,124 @@
 <ng-container *ngIf="!feedbackSubmitted">
-  <div class="b-flat-card center-text feedback-card">
-    <div class="b-flat-card__title"><h2 class="pn-400">Feedback</h2></div>
-    <div class="b-flat-card__body">
-      <div class="b-flat-card__twemoji">
-        <app-b-twemoji emoji="✍️"></app-b-twemoji>
-      </div>
-
-      <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
-      <p>We’d really appreciate your feedback on this Benji session.</p>
-    </div>
-    <div class="b-flat-card__action feedback-card__questions">
-      <div class="feedback-card__question-box">
-        <h2 class="brownish-grey pn-500">I found this session useful.</h2>
-        <div class="feedback-card__response-flexer flexer--center">
-          <div class="feedback-card__response-radio">
-            <input
-              type="radio"
-              name="feedbackQuestion1"
-              value="definitely"
-              id="def_1"
-            />
-            <label for="def_1">
-              <app-b-twemoji emoji="😁"></app-b-twemoji>
-              <span>Definitely!</span>
-            </label>
-          </div>
-
-          <div class="feedback-card__response-radio">
-            <input
-              type="radio"
-              name="feedbackQuestion1"
-              value="kinda"
-              id="kinda_1"
-            />
-            <label for="kinda_1">
-              <app-b-twemoji emoji="😐"></app-b-twemoji>
-              <span>Kinda</span>
-            </label>
-          </div>
-
-          <div class="feedback-card__response-radio">
-            <input
-              type="radio"
-              name="feedbackQuestion1"
-              value="notatall"
-              id="not_1"
-            />
-            <label for="not_1">
-              <app-b-twemoji emoji="☹️"></app-b-twemoji>
-              <span>Not at all</span>
-            </label>
-          </div>
+  <form [formGroup]="form" (ngSubmit)="submitFeedback()">
+    <div class="b-flat-card center-text feedback-card">
+      <div class="b-flat-card__title"><h2 class="pn-400">Feedback</h2></div>
+      <div class="b-flat-card__body">
+        <div class="b-flat-card__twemoji">
+          <app-b-twemoji emoji="✍️"></app-b-twemoji>
         </div>
-        <textarea
-          placeholder="What makes you say that?"
-          id=""
-          class="b-standard-textarea"
-        ></textarea>
+
+        <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
+        <p>We’d really appreciate your feedback on this Benji session.</p>
       </div>
-      <div class="feedback-card__question-box">
-        <h2 class="brownish-grey pn-500">I found this session fun.</h2>
-        <div class="feedback-card__response-flexer flexer--center">
-          <div class="feedback-card__response-radio">
-            <input
-              type="radio"
-              name="feedbackQuestion2"
-              value="definitely"
-              id="def_2"
-            />
-            <label for="def_2">
-              <app-b-twemoji emoji="😁"></app-b-twemoji>
-              <span>Definitely!</span>
-            </label>
+      <div class="b-flat-card__action feedback-card__questions">
+        <div class="feedback-card__question-box">
+          <h2 class="brownish-grey pn-500">I found this session useful.</h2>
+          <div class="feedback-card__response-flexer flexer--center">
+            <div class="feedback-card__response-radio">
+              <input
+                type="radio"
+                formControlName="usefulSession"
+                value="notatall"
+                id="not_1"
+              />
+              <label for="not_1">
+                <app-b-twemoji emoji="☹️"></app-b-twemoji>
+                <span>Not at all</span>
+              </label>
+            </div>
+            <div class="feedback-card__response-radio">
+              <input
+                type="radio"
+                formControlName="usefulSession"
+                value="kinda"
+                id="kinda_1"
+              />
+              <label for="kinda_1">
+                <app-b-twemoji emoji="😐"></app-b-twemoji>
+                <span>Kinda</span>
+              </label>
+            </div>
+            <div class="feedback-card__response-radio">
+              <input
+                type="radio"
+                formControlName="usefulSession"
+                value="definitely"
+                id="def_1"
+              />
+              <label for="def_1">
+                <app-b-twemoji emoji="😁"></app-b-twemoji>
+                <span>Definitely!</span>
+              </label>
+            </div>
           </div>
-
-          <div class="feedback-card__response-radio">
-            <input
-              type="radio"
-              name="feedbackQuestion2"
-              value="kinda"
-              id="kinda_2"
-            />
-            <label for="kinda_2">
-              <app-b-twemoji emoji="😐"></app-b-twemoji>
-              <span>Kinda</span>
-            </label>
-          </div>
-
-          <div class="feedback-card__response-radio">
-            <input
-              type="radio"
-              name="feedbackQuestion2"
-              value="notatall"
-              id="not_2"
-            />
-            <label for="not_2">
-              <app-b-twemoji emoji="☹️"></app-b-twemoji>
-              <span>Not at all</span>
-            </label>
-          </div>
+          <textarea
+            placeholder="What makes you say that?"
+            formControlName="usefulSessionComment"
+            class="b-standard-textarea"
+          ></textarea>
         </div>
-        <textarea
-          placeholder="What makes you say that?"
-          class="b-standard-textarea"
-        ></textarea>
+        <div class="feedback-card__question-box">
+          <h2 class="brownish-grey pn-500">I found this session fun.</h2>
+          <div class="feedback-card__response-flexer flexer--center">
+            <div class="feedback-card__response-radio">
+              <input
+                type="radio"
+                formControlName="funSession"
+                value="notatall"
+                id="not_2"
+              />
+              <label for="not_2">
+                <app-b-twemoji emoji="☹️"></app-b-twemoji>
+                <span>Not at all</span>
+              </label>
+            </div>
+
+            <div class="feedback-card__response-radio">
+              <input
+                type="radio"
+                formControlName="funSession"
+                value="kinda"
+                id="kinda_2"
+              />
+              <label for="kinda_2">
+                <app-b-twemoji emoji="😐"></app-b-twemoji>
+                <span>Kinda</span>
+              </label>
+            </div>
+
+            <div class="feedback-card__response-radio">
+              <input
+                type="radio"
+                formControlName="funSession"
+                value="definitely"
+                id="def_2"
+              />
+              <label for="def_2">
+                <app-b-twemoji emoji="😁"></app-b-twemoji>
+                <span>Definitely!</span>
+              </label>
+            </div>
+          </div>
+          <textarea
+            placeholder="What makes you say that?"
+            formControlName="funSessionComments"
+            class="b-standard-textarea"
+          ></textarea>
+        </div>
+        <div class="feedback-card__question-box">
+          <h2 class="brownish-grey pn-500">Any other comments?</h2>
+          <textarea
+            formControlName="otherComments"
+            placeholder="Put 'em in here!"
+            class="b-standard-textarea"
+          ></textarea>
+        </div>
       </div>
-      <div class="feedback-card__question-box">
-        <h2 class="brownish-grey pn-500">Any other comments?</h2>
-        <textarea
-          placeholder="Put 'em in here!"
-          class="b-standard-textarea"
-        ></textarea>
-      </div>
+      <button class="b-standard-button" type="submit">
+        Submit
+      </button>
     </div>
-    <button class="b-standard-button" (click)="feedbackSubmitted = true">
-      Submit
-    </button>
-  </div>
+  </form>
 </ng-container>
 <ng-container *ngIf="feedbackSubmitted">
   <div class="b-flat-card center-text feedback-card">

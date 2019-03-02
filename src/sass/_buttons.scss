@@ -99,20 +99,30 @@ button {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-left: 95px;
-  padding-right: 95px;
-  width: 545px;
-  height: 115px;
-  font-size: 42px;
-  border-radius: 70px;
+  padding-left: 6vh;
+  padding-right: 6vh;
+  width: 34vw;
+  height: 12vh;
+  font-size: 6vh;
+  border-radius: 12vh;
   &:focus {
     background-color: #3a126e;
   }
   mat-icon {
-    font-size: 52px;
+    font-size: 6vh;
+    height: 6vh;
     position: relative;
-    bottom: 10px;
+    width: 6vh;
   }
+
+  // @media #{$fourK-display-and-up} {
+  //   padding-left: 100px;
+  //   padding-right: 100px;
+  //   width: 900px;
+  //   height: 150px;
+  //   font-size: 80px;
+  //   border-radius: 77px;
+  // }
 }
 
 .dashboard-button {

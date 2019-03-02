@@ -8,10 +8,6 @@ import {DiscussionSharerDoneEvent, DiscussionSharingVolunteerEvent} from '../../
   styleUrls: ['./participant-discussion-activity.component.scss']
 })
 export class ParticipantDiscussionActivityComponent extends BaseActivityComponent {
-  presenterGroupToList(presenterGroup: RoleplayUserGroup) {
-    return presenterGroup.primary.concat(presenterGroup.secondary);
-  }
-
 
   participantVolunteered() {
     return (

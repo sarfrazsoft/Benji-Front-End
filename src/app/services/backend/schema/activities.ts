@@ -111,6 +111,7 @@ export interface DiscussionGroup {
 }
 
 export interface DiscussionActivity {
+  title: string;
   instructions: string;
   num_sharers: number;
   discussion_seconds: number;

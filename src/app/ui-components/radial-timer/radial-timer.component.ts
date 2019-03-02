@@ -5,12 +5,12 @@ import {Timer} from '../../services/backend/schema/utils';
 @Component({
   selector: 'app-radial-timer',
   templateUrl: './radial-timer.component.html',
-  styleUrls: [],
+  styleUrls: []
   // encapsulation: ViewEncapsulation.None
 })
-
 export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endStateText: string;
+  @Input() endAudio = 'bell.wav';
   @Input() timer: Timer;
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
@@ -19,6 +19,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   remainingTime: number;
 
   timerInterval;
+  audioStarted = false;
 
   ngOnInit() {
     this.timerInterval = setInterval(() => this.update(), 100);
@@ -32,8 +33,17 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
             this.timer.status === 'cancelled' ||
             this.timer.status === 'ended') {
         this.remainingTime = this.timer.remaining_seconds * 1000;
+
+        if (this.endAudio && !this.audioStarted) {
+          const audio = new Audio();
+          audio.src = '../../../assets/audio/' + this.endAudio;
+          audio.load();
+          audio.play();
+        }
+
       } else {
         this.remainingTime = Date.parse(this.timer.end_time) - Date.now();
+        this.audioStarted = false;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }
@@ -64,12 +74,4 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   pctRemaining() {
     return 100 * this.remainingTime / this.totalTime;
   }
-
-  private endSfx() {
-    this.sfxPlayer.nativeElement.play();
-  }
-
-
 }
-
-

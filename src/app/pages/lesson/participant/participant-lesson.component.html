@@ -15,6 +15,13 @@
   >
   </app-participant-teletrivia-activity>
 
+  <!-- <benji-participant-either-or-activity
+    *ngIf="getActivityType() === 'TeleTriviaActivity'"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-participant-either-or-activity> -->
+
   <app-participant-pair-activity
     *ngIf="
       getActivityType() === 'RoleplayPairActivity' ||

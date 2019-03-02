@@ -1,6 +1,64 @@
-.discuss-instruction {
-  font-size: 4vh;
-  line-height: 4.3vh;
+@import 'variables';
+
+.mainscreen-activity {
+  .lesson-top-banner {
+    padding: 40px 3vw;
+    h2 {
+      font-size: 70px;
+      line-height: normal;
+      @media #{$xxlarge-and-down} {
+        font-size: 55px;
+      }
+    }
+  }
+  h1 {
+    font-size: 140px;
+    line-height: 1.09;
+    text-transform: capitalize;
+    letter-spacing: 3.6px;
+    @media #{$xxlarge-and-down} {
+      font-size: 100px;
+    }
+    @media #{$fourK-display-and-up} {
+      font-size: 200px;
+    }
+  }
+  p {
+    font-size: 48px;
+    line-height: normal;
+    @media #{$xxlarge-and-down} {
+      font-size: 28px;
+    }
+    @media #{$fourK-display-and-up} {
+      font-size: 80px;
+    }
+  }
+}
+.activity-instructions {
+  padding: 3vw 3vw;
+
+  .discuss-instruction {
+    font-size: 65px;
+    line-height: normal;
+    margin: 0px;
+    @media #{$xxlarge-and-down} {
+      font-size: 50px;
+    }
+    @media #{$fourK-display-and-up} {
+      font-size: 85px;
+    }
+  }
+  .discuss-names {
+    font-size: 80px;
+    line-height: normal;
+    @media #{$fourK-display-and-up} {
+      font-size: 150px;
+    }
+  }
+}
+
+.mainscreen-radial-timer-column {
+  padding: 5vh 3vw;
 }
 
 .discussion-activity__share-status {
