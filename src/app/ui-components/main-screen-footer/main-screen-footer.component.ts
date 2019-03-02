@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { VideoStateService } from '../../services/video-state.service';
-import { EndEvent } from '../../services/backend/schema/messages';
+import {EndEvent, PauseActivityEvent, ResumeActivityEvent} from '../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-main-screen-footer',
@@ -10,7 +10,7 @@ import { EndEvent } from '../../services/backend/schema/messages';
 export class MainScreenFooterComponent implements OnInit {
   @Input() showFooter: boolean;
   @Input() roomCode: string;
-  public videoPause = false;
+  @Input() isPaused: boolean;
 
   constructor(private video: VideoStateService) {}
 
@@ -30,13 +30,13 @@ export class MainScreenFooterComponent implements OnInit {
   //   }
   // }
 
-  public controlClicked(element, eventType) {
-    if (eventType === 'rewind') {
-      this.socketMessage.emit({
-        'event': 'back'
-      });
-    } else if (eventType === 'skip') {
+  controlClicked(eventType) {
+    if (eventType === 'pause') {
+      this.socketMessage.emit(new PauseActivityEvent());
+    } else if (eventType === 'next') {
       this.socketMessage.emit(new EndEvent());
+    } else if (eventType === 'resume') {
+      this.socketMessage.emit(new ResumeActivityEvent());
     }
   }
 }

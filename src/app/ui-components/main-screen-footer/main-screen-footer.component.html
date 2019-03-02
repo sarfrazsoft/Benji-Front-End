@@ -7,11 +7,13 @@
       <!-- <button (click)="controlClicked(activityRewind, 'rewind')" #activityRewind>
         <mat-icon class="icon-white">skip_previous</mat-icon>
       </button> -->
-      <!-- <button (click)="controlClicked(videoPlayPause, 'toggleplayback')" #videoPlayPause>
-        <mat-icon class="icon-white" *ngIf="!videoPause" data-control="pause">pause</mat-icon>
-        <mat-icon class="icon-white" *ngIf="videoPause" data-control="play">play_arrow</mat-icon>
-      </button> -->
-      <button (click)="controlClicked(activitySkip, 'skip')" #activitySkip>
+      <button (click)="controlClicked('pause')" *ngIf="!isPaused">
+        <mat-icon class="icon-white">pause</mat-icon>
+      </button>
+      <button (click)="controlClicked('resume')" *ngIf="isPaused">
+        <mat-icon class="icon-white">play_arrow</mat-icon>
+      </button>
+      <button (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
       </button>
     </ng-container>

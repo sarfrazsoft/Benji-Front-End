@@ -32,6 +32,15 @@ export class ActivityEvent {
   }
 }
 
+export class PauseActivityEvent extends ActivityEvent {
+  event_name = 'PauseActivityEvent';
+}
+
+export class ResumeActivityEvent extends ActivityEvent {
+  event_name = 'ResumeActivityEvent';
+}
+
+
 export class LobbyStartButtonClickEvent extends ActivityEvent {
   event_name = 'LobbyStartButtonClickEvent';
 }

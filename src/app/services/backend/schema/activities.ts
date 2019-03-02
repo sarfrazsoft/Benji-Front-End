@@ -8,6 +8,7 @@ export interface BaseActivity {
   end_time: string;
   next_activity_delay_seconds: number;
   next_activity_start_timer: Timer;
+  is_paused: boolean;
 }
 
 export interface LobbyActivity {
@@ -47,9 +48,9 @@ export interface TeleTriviaActivity {
 }
 
 export interface Role {
-  role_name: string;
-  role_emoji: string;
-  role_instructions: string;
+  name: string;
+  emoji: string;
+  instructions: string;
 }
 
 export interface RoleplayPairUser {
