@@ -11,7 +11,7 @@ export class MainScreenDiscussionActivityComponent extends BaseActivityComponent
   @ViewChild('shareTimer') shareTimer;
 
   presenterGroupToText(presenterGroup: DiscussionGroup) {
-    if (presenterGroup === undefined) {
+    if (presenterGroup === undefined || presenterGroup == null) {
       return undefined;
     }
 

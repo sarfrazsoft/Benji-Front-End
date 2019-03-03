@@ -1,4 +1,4 @@
-<ng-container *ngIf="activityState.roleplaypairactivity.all_pairs_found">
+<ng-container *ngIf="activityState.roleplaypairactivity.grouping_complete">
   <div
     class="mainscreen-activity mainscreen-activity--multi-column pair-activity"
   >
@@ -18,7 +18,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.primary_role.role_emoji
+                  activityState.roleplaypairactivity.primary_role.emoji
                 )
               "
               *ngIf="!isReversed()"
@@ -26,7 +26,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.secondary_role.role_emoji
+                  activityState.roleplaypairactivity.secondary_role.emoji
                 )
               "
               *ngIf="isReversed()"
@@ -37,7 +37,7 @@
             {{ activityState.roleplaypairactivity.roleplay_question }}
           </p>
           <p class="brownish-grey pn-500" *ngIf="isReversed()">
-            {{ activityState.roleplaypairactivity.secondary_role.role_instructions }}
+            {{ activityState.roleplaypairactivity.secondary_role.instructions }}
           </p>
         </div>
         <div
@@ -47,7 +47,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.secondary_role.role_emoji
+                  activityState.roleplaypairactivity.secondary_role.emoji
                 )
               "
               *ngIf="!isReversed()"
@@ -55,7 +55,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.primary_role.role_emoji
+                  activityState.roleplaypairactivity.primary_role.emoji
                 )
               "
               *ngIf="isReversed()"
@@ -63,7 +63,7 @@
           </div>
           <h3 class="brownish-grey pn-500">Partner #2</h3>
           <p class="brownish-grey pn-500" *ngIf="!isReversed()">
-            {{ activityState.roleplaypairactivity.secondary_role.role_instructions }}
+            {{ activityState.roleplaypairactivity.secondary_role.instructions }}
           </p>
           <p class="deep-blue pn-600" *ngIf="isReversed()">
             {{ activityState.roleplaypairactivity.roleplay_question }}
@@ -83,7 +83,7 @@
     </div>
   </div>
 </ng-container>
-<ng-container *ngIf="!activityState.roleplaypairactivity.all_pairs_found">
+<ng-container *ngIf="!activityState.roleplaypairactivity.grouping_complete">
   <div
     class="mainscreen-activity mainscreen-activity--multi-column pair-activity"
   >
@@ -118,10 +118,7 @@
           <mat-icon
             class="pair-activity__ready-icon"
             *ngIf="userGroup.group_found"
-            >check</mat-icon
-          >
-            check
-          </mat-icon>
+            >check</mat-icon>
         </li>
       </ul>
       <app-linear-timer #pairTimer></app-linear-timer>

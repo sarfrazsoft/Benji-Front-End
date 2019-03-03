@@ -77,6 +77,8 @@ export interface RoleplayPairActivity {
   reverse_group_activity: number;
   all_pairs_found: boolean;
   all_discussions_complete: boolean;
+  grouping_complete: boolean;
+  discussion_complete: boolean;
   roleplaypair_set: RoleplayPair[];
 }
 
@@ -95,7 +97,7 @@ export interface HintWordActivity {
   submission_complete: boolean;
   voting_complete: boolean;
   words_and_votes: HintWordsAndVotes[];
-  voted_word: string;
+  voted_word_text: string;
   submitted_users: User[];
   voted_users: User[];
 }
@@ -122,5 +124,9 @@ export interface DiscussionActivity {
   discussiongroup_set: DiscussionGroup[];
   currently_sharing_group: DiscussionGroup;
   next_sharing_group: DiscussionGroup;
+}
+
+export interface FeedbackActivity {
+  id: number;
 }
 

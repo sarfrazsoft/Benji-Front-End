@@ -1,4 +1,14 @@
-import { BaseActivity, DiscussionActivity, HintWordActivity, LobbyActivity, MCQActivity, RoleplayPairActivity, TeleTriviaActivity, VideoActivity } from './activities';
+import {
+  BaseActivity,
+  DiscussionActivity,
+  FeedbackActivity,
+  HintWordActivity,
+  LobbyActivity,
+  MCQActivity,
+  RoleplayPairActivity,
+  TeleTriviaActivity,
+  VideoActivity
+} from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
 import { MCQChoice, MCQQuestion } from './utils';
@@ -15,6 +25,7 @@ export interface UpdateMessage {
   roleplaypairactivity?: RoleplayPairActivity;
   hintwordactivity?: HintWordActivity;
   discussionactivity?: DiscussionActivity;
+  feedbackactivity?: FeedbackActivity;
   your_identity?: User; // TODO: This is a hack and must go. Use the proper REST view (tenants/users/who_am_i) to get this.
 }
 

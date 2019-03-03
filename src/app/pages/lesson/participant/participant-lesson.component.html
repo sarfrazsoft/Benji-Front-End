@@ -24,8 +24,7 @@
 
   <app-participant-pair-activity
     *ngIf="
-      getActivityType() === 'RoleplayPairActivity' ||
-      getActivityType() === 'ReverseRoleplayPairActivity'
+      getActivityType() === 'RoleplayPairActivity'
     "
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
@@ -33,7 +32,7 @@
   </app-participant-pair-activity>
 
   <app-participant-discussion-activity
-    *ngIf="getActivityType() === 'RoleplayPairShareActivity'"
+    *ngIf="getActivityType() === 'DiscussionActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >

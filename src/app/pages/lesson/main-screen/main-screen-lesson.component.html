@@ -48,8 +48,7 @@
 
     <app-main-screen-pair-activity
       *ngIf="
-        getActivityType() === 'RoleplayPairActivity' ||
-        getActivityType() === 'ReverseRoleplayPairActivity'
+        getActivityType() === 'RoleplayPairActivity'
       "
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
@@ -57,7 +56,7 @@
     </app-main-screen-pair-activity>
 
     <app-main-screen-discussion-activity
-      *ngIf="getActivityType() === 'RoleplayPairShareActivity'"
+      *ngIf="getActivityType() === 'DiscussionActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
@@ -90,6 +89,7 @@
     *ngIf="isConnected() && serverMessage"
     [showFooter]="getActivityType() !== 'LobbyActivity'"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
+    [isPaused]="serverMessage.base_activity.is_paused"
     (socketMessage)="sendSocketMessage($event)"
   ></app-main-screen-footer>
 </div>

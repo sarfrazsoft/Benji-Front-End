@@ -1,4 +1,4 @@
-<ng-container *ngIf="!activityState.activity_status.all_pairs_found">
+<ng-container *ngIf="!activityState.roleplaypairactivity.grouping_complete">
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title">
       <h2 class="pn-400">FIND YOUR PARTNER</h2>
@@ -23,20 +23,20 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="activityState.activity_status.all_pairs_found">
+<ng-container *ngIf="activityState.roleplaypairactivity.grouping_complete">
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title"><h2 class="pn-400">Role-play</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
         <app-b-twemoji
-          [emoji]="emoji.getEmoji(getParticipantRole().role_emoji)"
+          [emoji]="emoji.getEmoji(getParticipantRole().emoji)"
         ></app-b-twemoji>
       </div>
 
       <h3 class="pn-700 deep-blue">
-        You’re the {{ getParticipantRole().role_name }}
+        You’re the {{ getParticipantRole().name }}
       </h3>
-      <p>{{ getParticipantRole().role_instructions }}</p>
+      <p>{{ getParticipantRole().instructions }}</p>
     </div>
     <app-linear-timer
       (initCallback)="roleplayTimerStart($event)"
