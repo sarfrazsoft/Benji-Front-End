@@ -7,7 +7,7 @@ import {
   MCQActivity,
   RoleplayPairActivity,
   TeleTriviaActivity,
-  VideoActivity
+  VideoActivity, WhereDoYouStandActivity, WhereDoYouStandChoice
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
@@ -26,6 +26,7 @@ export interface UpdateMessage {
   hintwordactivity?: HintWordActivity;
   discussionactivity?: DiscussionActivity;
   feedbackactivity?: FeedbackActivity;
+  wheredoyoustandactivity?: WhereDoYouStandActivity;
   your_identity?: User; // TODO: This is a hack and must go. Use the proper REST view (tenants/users/who_am_i) to get this.
 }
 
@@ -126,4 +127,13 @@ export class DiscussionSharingVolunteerEvent extends ActivityEvent {
 
 export class DiscussionSharerDoneEvent extends ActivityEvent {
   event_name = 'DiscussionSharerDoneEvent';
+}
+
+export class WhereDoYouStandSubmitChoiceEvent extends ActivityEvent {
+  event_name = 'DiscussionSharerDoneEvent';
+
+  constructor(choice: WhereDoYouStandChoice) {
+    super();
+    this.extra_args = {'choice': choice.id};
+  }
 }

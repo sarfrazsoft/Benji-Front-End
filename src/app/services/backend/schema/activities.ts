@@ -130,3 +130,32 @@ export interface FeedbackActivity {
   id: number;
 }
 
+export interface WhereDoYouStandChoice {
+  id: number;
+  choice_name: string;
+  choice_text: string;
+  choice_img_url: string;
+}
+
+export interface WhereDoYouStandChoiceStats {
+  id: number;
+  choice_name: string;
+  num_choices: number;
+}
+
+export interface WhereDoYouStandActivity {
+  question_title: string;
+  question_text_screen: string;
+  question_text_participant: string;
+  left_choice: WhereDoYouStandChoice;
+  right_choice: WhereDoYouStandChoice;
+  question_seconds: number;
+  stand_on_side_seconds: number;
+  question_countdown_timer: Timer;
+  stand_on_side_countdown_timer: Timer;
+  question_complete: boolean;
+  standing_complete: boolean;
+  submitted_users: User[];
+  choice_stats: WhereDoYouStandChoiceStats[];
+}
+
