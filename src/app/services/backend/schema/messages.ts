@@ -30,10 +30,29 @@ export interface UpdateMessage {
   your_identity?: User; // TODO: This is a hack and must go. Use the proper REST view (tenants/users/who_am_i) to get this.
 }
 
+export interface ClientError {
+  error_type: string;
+  severity: string;
+  error_detail: any;
+}
+
+export interface ServerError {
+  error_type: string;
+  severity: string;
+  error_detail: any;
+}
+
+export interface ServerNotification {
+  notification_type: string;
+  description: string;
+  detail: any;
+}
+
 export interface ServerMessage {
   updatemessage?: UpdateMessage;
-  clienterror?: any;
-  servererror?: any;
+  clienterror?: ClientError;
+  servererror?: ServerError;
+  servernotification?: ServerNotification;
 }
 
 export class ActivityEvent {

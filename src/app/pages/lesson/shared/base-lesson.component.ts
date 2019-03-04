@@ -50,7 +50,12 @@ export class BaseLessonComponent implements OnInit {
   handleServerMessage(msg: ServerMessage) {
     if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
       this.serverMessage = msg.updatemessage;
-    } else {
+    } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
+      console.log(msg);
+    } else if (msg.servererror !== null && msg.servererror !== undefined) {
+      console.log(msg);
+    } else if (msg.servernotification !== null && msg.servernotification !== undefined) {
+      // Do something
       console.log(msg);
     }
   }
