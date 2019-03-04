@@ -1,17 +1,25 @@
-import { OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 
 import { forkJoin } from 'rxjs';
 
-import {BackendRestService} from '../../../services/backend/backend-rest.service';
-import {ActivatedRoute} from '@angular/router';
-import {BackendSocketService} from '../../../services/backend/backend-socket.service';
+import { ActivatedRoute } from '@angular/router';
+import { BackendRestService } from '../../../services/backend/backend-rest.service';
+import { BackendSocketService } from '../../../services/backend/backend-socket.service';
 
+import {
+  Course,
+  Lesson,
+  LessonRun
+} from '../../../services/backend/schema/course_details';
 import { User } from '../../../services/backend/schema/user';
-import { Course, Lesson, LessonRun } from '../../../services/backend/schema/course_details';
 
-import { ActivityEvent, ServerMessage, UpdateMessage } from '../../../services/backend/schema/messages';
+import {
+  ActivityEvent,
+  ServerMessage,
+  UpdateMessage
+} from '../../../services/backend/schema/messages';
 
-export class BaseLessonComponent implements OnInit {
+export class BaseLessonComponent implements OnInit, OnDestroy {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
@@ -20,8 +28,13 @@ export class BaseLessonComponent implements OnInit {
   socket;
   serverMessage: UpdateMessage;
 
-  constructor(protected restService: BackendRestService, protected route: ActivatedRoute, protected socketService: BackendSocketService,
-              clientType: string) {
+  constructor(
+    protected restService: BackendRestService,
+    protected route: ActivatedRoute,
+    protected socketService: BackendSocketService,
+    clientType: string,
+    protected ref?: ChangeDetectorRef
+  ) {
     this.roomCode = parseInt(this.route.snapshot.paramMap.get('roomCode'), 10);
     this.clientType = clientType;
   }
@@ -29,18 +42,23 @@ export class BaseLessonComponent implements OnInit {
   ngOnInit() {
     // this.clientType = (this.route.snapshot.url.join('').includes('screen')) ? 'screen' : 'participant';
 
-    forkJoin([this.restService.get_lessonrun(this.roomCode), this.restService.get_own_identity()]).subscribe(
-      ([lessonRun, identity]) => {
-        this.lessonRun = lessonRun;
-        this.user = identity;
-        this.socket = this.socketService.connectLessonSocket(this.clientType, this.lessonRun.lessonrun_code, this.user.id);
-        console.log('socket connected');
+    forkJoin([
+      this.restService.get_lessonrun(this.roomCode),
+      this.restService.get_own_identity()
+    ]).subscribe(([lessonRun, identity]) => {
+      this.lessonRun = lessonRun;
+      this.user = identity;
+      this.socket = this.socketService.connectLessonSocket(
+        this.clientType,
+        this.lessonRun.lessonrun_code,
+        this.user.id
+      );
+      console.log('socket connected');
 
-        this.socket.subscribe((msg: ServerMessage) => {
-          this.handleServerMessage(msg);
-        });
-      }
-    );
+      this.socket.subscribe((msg: ServerMessage) => {
+        this.handleServerMessage(msg);
+      });
+    });
   }
 
   isConnected() {
@@ -49,7 +67,9 @@ export class BaseLessonComponent implements OnInit {
 
   handleServerMessage(msg: ServerMessage) {
     if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
-      this.serverMessage = msg.updatemessage;
+      this.serverMessage = undefined;
+      this.ref.detectChanges();
+      this.serverMessage = Object.assign({}, msg.updatemessage);
     } else {
       console.log(msg);
     }
@@ -66,5 +86,4 @@ export class BaseLessonComponent implements OnInit {
   public sendSocketMessage(evt: ActivityEvent) {
     this.socket.next(evt.toMessage());
   }
-
 }
