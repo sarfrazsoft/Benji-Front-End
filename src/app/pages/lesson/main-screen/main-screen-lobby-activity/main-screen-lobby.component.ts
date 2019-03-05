@@ -7,8 +7,8 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
+import { LobbyStartButtonClickEvent } from 'src/app/services/backend/schema/messages';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-import { LobbyStartButtonClickEvent } from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-mainscreen-lobby',

@@ -19,7 +19,7 @@ import {
   UpdateMessage
 } from '../../../services/backend/schema/messages';
 
-export class BaseLessonComponent implements OnInit, OnDestroy {
+export class BaseLessonComponent implements OnInit {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
@@ -66,15 +66,25 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
   }
 
   handleServerMessage(msg: ServerMessage) {
+    // TODO show a loading spinner when notification_type = no_facilitator
     if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
-      this.serverMessage = undefined;
-      this.ref.detectChanges();
-      this.serverMessage = Object.assign({}, msg.updatemessage);
+      if (
+        this.serverMessage &&
+        this.serverMessage.base_activity.activity_id !==
+          msg.updatemessage.base_activity.activity_id
+      ) {
+        this.serverMessage = null;
+        this.ref.detectChanges();
+      }
+      this.serverMessage = msg.updatemessage;
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       console.log(msg);
     } else if (msg.servererror !== null && msg.servererror !== undefined) {
       console.log(msg);
-    } else if (msg.servernotification !== null && msg.servernotification !== undefined) {
+    } else if (
+      msg.servernotification !== null &&
+      msg.servernotification !== undefined
+    ) {
       console.log(msg);
     }
   }
