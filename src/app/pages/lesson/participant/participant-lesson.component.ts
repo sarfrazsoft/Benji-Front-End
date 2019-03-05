@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BackendRestService } from '../../../services/backend/backend-rest.service';
@@ -15,8 +15,9 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
   constructor(
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
-    protected socketService: BackendSocketService
+    protected socketService: BackendSocketService,
+    protected ref: ChangeDetectorRef
   ) {
-    super(restService, route, socketService, 'participant');
+    super(restService, route, socketService, 'participant', ref);
   }
 }

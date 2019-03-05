@@ -78,6 +78,7 @@
       <app-radial-timer
         endStateText="Times up!"
         [timer]="activityState.roleplaypairactivity.activity_countdown_timer"
+        [endAudio]="'bell.wav'"
         #discussionTimer
       ></app-radial-timer>
     </div>
@@ -111,17 +112,20 @@
       <ul>
         <li
           class="pair-activity__pair brownish-grey pn-600"
-          *ngFor="let userGroup of activityState.roleplaypairactivity.roleplaypair_set"
+          *ngFor="
+            let userGroup of activityState.roleplaypairactivity.roleplaypair_set
+          "
           [ngClass]="{ 'deep-blue': userGroup.group_found }"
         >
           {{ getGroupText(userGroup) }}
           <mat-icon
             class="pair-activity__ready-icon"
             *ngIf="userGroup.group_found"
-            >check</mat-icon>
+            >check</mat-icon
+          >
         </li>
       </ul>
-      <app-linear-timer #pairTimer></app-linear-timer>
+      <app-linear-timer #pairTimer [endAudio]="'bell.wav'"></app-linear-timer>
     </div>
   </div>
   <!-- <audio

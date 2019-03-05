@@ -1,12 +1,8 @@
-import {
-  Component,
-  ViewChild,
-  AfterViewInit
-} from '@angular/core';
-import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { concat } from 'lodash';
+import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import { RoleplayPair } from '../../../../services/backend/schema/activities';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-main-screen-pair-activity',
@@ -19,7 +15,10 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   @ViewChild('discussionTimer') discussionTimer;
 
   getGroupText(userGroup: RoleplayPair) {
-    return concat(userGroup.primary_roleplayuser_set, userGroup.secondary_roleplayuser_set)
+    return concat(
+      userGroup.primary_roleplayuser_set,
+      userGroup.secondary_roleplayuser_set
+    )
       .map(u => u.user.first_name)
       .join(' + ');
   }
@@ -29,9 +28,15 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   }
 
   ngAfterViewInit() {
-    if (!this.activityState.roleplaypairactivity.all_pairs_found) {
+    if (
+      !this.activityState.roleplaypairactivity.all_pairs_found &&
+      !this.activityState.roleplaypairactivity.skip_pairing
+    ) {
       const pairSeconds =
-        (Date.parse(this.activityState.roleplaypairactivity.grouping_countdown_timer.end_time) -
+        (Date.parse(
+          this.activityState.roleplaypairactivity.grouping_countdown_timer
+            .end_time
+        ) -
           Date.now()) /
         1000;
       this.pairTimer.startTimer(pairSeconds);
@@ -41,7 +46,8 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
   isReversed() {
     return (
       this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
-      this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
+      this.activityState.roleplaypairactivity.reverse_group_activity !==
+        undefined
     );
   }
 }

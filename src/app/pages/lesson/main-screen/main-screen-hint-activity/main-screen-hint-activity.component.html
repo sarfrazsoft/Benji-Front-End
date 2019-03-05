@@ -35,11 +35,7 @@
             <span class="deep-blue">
               {{ countVotes() }}
             </span>
-            {{
-              countVotes() === 1
-                ? 'Vote submitted'
-                : 'Votes submitted'
-            }}
+            {{ countVotes() === 1 ? 'Vote submitted' : 'Votes submitted' }}
           </ng-container>
         </h3>
       </div>
@@ -64,6 +60,7 @@
       <app-radial-timer
         [timer]="activityState.hintwordactivity.submission_countdown_timer"
         endStateText="Vote!"
+        [endAudio]="'bell.wav'"
       ></app-radial-timer>
     </div>
     <div *ngIf="activityState.hintwordactivity.submission_complete">
@@ -114,7 +111,10 @@
     </p>
   </div>
   <div class="hint-activity__linear-timer-container">
-    <app-linear-timer (initCallback)="startEndTimer($event)"></app-linear-timer>
+    <app-linear-timer
+      (initCallback)="startEndTimer($event)"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
   </div>
 </div>
 

@@ -11,7 +11,9 @@
       </p>
       <ol>
         <li
-          *ngFor="let answer of activityState.mcqactivity.question.mcqchoice_set"
+          *ngFor="
+            let answer of activityState.mcqactivity.question.mcqchoice_set
+          "
           class="brownish-grey pn-500"
           [ngClass]="{
             correct: reveal() && answer.is_correct,
@@ -34,6 +36,7 @@
       <app-radial-timer
         [timer]="activityState.mcqactivity.question_timer"
         endStateText="Times up!"
+        [endAudio]="'bell.wav'"
       ></app-radial-timer>
     </ng-container>
     <ng-container *ngIf="reveal()">
@@ -48,6 +51,7 @@
     <app-linear-timer
       *ngIf="reveal()"
       (initCallback)="startRevealTimer($event)"
+      [endAudio]="'bell.wav'"
       #revealTimer
     ></app-linear-timer>
 
