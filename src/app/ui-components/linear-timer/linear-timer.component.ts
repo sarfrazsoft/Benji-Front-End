@@ -43,7 +43,6 @@ export class LinearTimerComponent implements OnInit {
         const audio = new Audio('../../../assets/audio/' + this.endAudio);
         audio.load();
         audio.play();
-        console.log('linear timer baja');
       }
       this.progressBarWidth = `${(this.timeElapsed / (this.totalTime - 1250)) *
         100}`;

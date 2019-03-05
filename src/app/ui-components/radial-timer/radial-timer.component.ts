@@ -46,7 +46,6 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
         this.remainingTime = this.timer.remaining_seconds * 1000;
       } else {
         this.remainingTime = Date.parse(this.timer.end_time) - Date.now();
-        console.log(this.timer.status);
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }
@@ -55,7 +54,6 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
           const audio = new Audio('../../../assets/audio/' + this.endAudio);
           audio.load();
           audio.play();
-          console.log('radial timer baja');
         }
       }
     } else {
