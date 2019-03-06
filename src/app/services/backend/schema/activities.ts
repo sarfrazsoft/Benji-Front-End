@@ -147,7 +147,8 @@ export interface WhereDoYouStandChoice {
 export interface WhereDoYouStandChoiceStats {
   id: number;
   choice_name: string;
-  num_choices: number;
+  num_predictions: number;
+  num_preferences: number;
 }
 
 export interface WhereDoYouStandUserAnswers {
@@ -157,17 +158,21 @@ export interface WhereDoYouStandUserAnswers {
 
 export interface WhereDoYouStandActivity {
   question_title: string;
-  question_text_screen: string;
-  question_text_participant: string;
+  prediction_text: string;
+  preference_text: string;
   left_choice: WhereDoYouStandChoice;
   right_choice: WhereDoYouStandChoice;
-  question_seconds: number;
+  prediction_seconds: number;
+  preference_seconds: number;
   stand_on_side_seconds: number;
-  question_countdown_timer: Timer;
+  prediction_countdown_timer: Timer;
+  preference_countdown_timer: Timer;
   stand_on_side_countdown_timer: Timer;
-  question_complete: boolean;
+  prediction_complete: boolean;
+  preference_complete: boolean;
   standing_complete: boolean;
-  wheredoyoustanduseranswers_set: WhereDoYouStandUserAnswers[];
+  user_predictions: WhereDoYouStandUserAnswers[];
+  user_preferences: WhereDoYouStandUserAnswers[];
   choice_stats: WhereDoYouStandChoiceStats[];
 }
 
