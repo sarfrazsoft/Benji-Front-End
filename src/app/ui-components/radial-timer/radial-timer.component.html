@@ -2,19 +2,49 @@
 <div class="timer-container">
   <div class="timer-svg">
     <mat-progress-spinner
-      strokeWidth="24"
-      diameter="480"
+      [strokeWidth]="textWidth"
+      [diameter]="timerDiameter"
       mode="determinate"
       [value]="pctRemaining()"
     ></mat-progress-spinner>
+  </div>
 
-    </div>
-  
-    <div class="timer-centered number-text pn-500" style="color: #1248F2" *ngIf="timer && timer.status == 'running'">{{ get_min_sec().min |
-      number:'1.0-0'}}:{{ get_min_sec().sec | number:'2.0-0' }}<span>Left</span></div>
-    
-    <div class="timer-centered number-text pn-500 timer-endstate" style="color: #1248F2" *ngIf="!timer || timer.status == 'not_started'">Waiting</div>
-    <div class="timer-centered number-text pn-500 timer-endstate" style="color: #1248F2" *ngIf="timer && timer.status == 'paused'">Paused</div>
-    <div class="timer-centered number-text pn-500 timer-endstate" style="color: #1248F2" *ngIf="timer && timer.status == 'cancelled'">Cancelled</div>
-    <div class="timer-centered number-text pn-500 timer-endstate" style="color: #1248F2" *ngIf="timer && timer.status == 'ended'">{{endStateText}}</div>
+  <div
+    class="timer-centered number-text pn-500"
+    style="color: #1248F2"
+    *ngIf="timer && timer.status == 'running'"
+  >
+    {{ get_min_sec().min | number: '1.0-0' }}:{{
+      get_min_sec().sec | number: '2.0-0'
+    }}<span>Left</span>
+  </div>
+
+  <div
+    class="timer-centered number-text pn-500 timer-endstate"
+    style="color: #1248F2"
+    *ngIf="!timer || timer.status == 'not_started'"
+  >
+    Waiting
+  </div>
+  <div
+    class="timer-centered number-text pn-500 timer-endstate"
+    style="color: #1248F2"
+    *ngIf="timer && timer.status == 'paused'"
+  >
+    Paused
+  </div>
+  <div
+    class="timer-centered number-text pn-500 timer-endstate"
+    style="color: #1248F2"
+    *ngIf="timer && timer.status == 'cancelled'"
+  >
+    Cancelled
+  </div>
+  <div
+    class="timer-centered number-text pn-500 timer-endstate"
+    style="color: #1248F2"
+    *ngIf="timer && timer.status == 'ended'"
+  >
+    {{ endStateText }}
+  </div>
 </div>

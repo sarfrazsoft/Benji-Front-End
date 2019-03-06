@@ -1,11 +1,10 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild
 } from '@angular/core';
 import { init } from 'protractor/built/launcher';
@@ -15,9 +14,11 @@ import { Timer } from '../../services/backend/schema/utils';
   selector: 'app-radial-timer',
   templateUrl: './radial-timer.component.html',
   styleUrls: []
-  // encapsulation: ViewEncapsulation.None
 })
 export class RadialTimerComponent implements OnInit, OnDestroy {
+  timerDiameter = 1;
+  textWidth = 1;
+
   @Input() endStateText: string;
   @Input() endAudio;
   @Input() timer: Timer;
@@ -29,6 +30,17 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
 
   timerInterval;
   audioStarted = false;
+
+  constructor() {
+    this.getScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.timerDiameter = window.innerWidth / 4;
+    this.timerDiameter = Math.ceil(this.timerDiameter / 5) * 5;
+    this.textWidth = this.timerDiameter / 20;
+  }
 
   ngOnInit() {
     this.timerInterval = setInterval(() => this.update(), 100);
