@@ -150,6 +150,11 @@ export interface WhereDoYouStandChoiceStats {
   num_choices: number;
 }
 
+export interface WhereDoYouStandUserAnswers {
+  user: User[];
+  choice: WhereDoYouStandChoice;
+}
+
 export interface WhereDoYouStandActivity {
   question_title: string;
   question_text_screen: string;
@@ -162,7 +167,7 @@ export interface WhereDoYouStandActivity {
   stand_on_side_countdown_timer: Timer;
   question_complete: boolean;
   standing_complete: boolean;
-  submitted_users: User[];
+  wheredoyoustanduseranswers_set: WhereDoYouStandUserAnswers[];
   choice_stats: WhereDoYouStandChoiceStats[];
 }
 
