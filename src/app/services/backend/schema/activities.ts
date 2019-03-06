@@ -15,6 +15,13 @@ export interface LobbyActivity {
   lobby_text: string;
 }
 
+export interface TitleActivity {
+  main_title: string;
+  title_text: string;
+  title_emoji: string;
+  title_image: string;
+}
+
 export interface MCQActivity {
   question: MCQQuestion;
   question_seconds: number;

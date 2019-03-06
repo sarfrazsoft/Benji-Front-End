@@ -23,6 +23,8 @@ export class EmojiLookupService {
         return '📣';
       case 'ear':
         return '👂';
+      case 'leftrightarrow':
+        return '⟷';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

@@ -6,7 +6,7 @@ import {
   LobbyActivity,
   MCQActivity,
   RoleplayPairActivity,
-  TeleTriviaActivity,
+  TeleTriviaActivity, TitleActivity,
   VideoActivity, WhereDoYouStandActivity, WhereDoYouStandChoice
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
@@ -19,6 +19,7 @@ export interface UpdateMessage {
   base_activity: BaseActivity;
   activity_type: string;
   lobbyactivity?: LobbyActivity;
+  titleactivity?: TitleActivity;
   mcqactivity?: MCQActivity;
   videoactivity?: VideoActivity;
   teletriviaactivity?: TeleTriviaActivity;
