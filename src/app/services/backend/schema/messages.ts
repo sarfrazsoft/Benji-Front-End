@@ -149,8 +149,17 @@ export class DiscussionSharerDoneEvent extends ActivityEvent {
   event_name = 'DiscussionSharerDoneEvent';
 }
 
-export class WhereDoYouStandSubmitChoiceEvent extends ActivityEvent {
-  event_name = 'DiscussionSharerDoneEvent';
+export class WhereDoYouStandSubmitPredictionEvent extends ActivityEvent {
+  event_name = 'WhereDoYouStandSubmitPredictionEvent';
+
+  constructor(choice: WhereDoYouStandChoice) {
+    super();
+    this.extra_args = {'choice': choice.id};
+  }
+}
+
+export class WhereDoYouStandSubmitPreferenceEvent extends ActivityEvent {
+  event_name = 'WhereDoYouStandSubmitPreferenceEvent';
 
   constructor(choice: WhereDoYouStandChoice) {
     super();
