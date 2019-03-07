@@ -140,7 +140,8 @@ export interface FeedbackActivity {
 export interface WhereDoYouStandChoice {
   id: number;
   choice_name: string;
-  choice_text: string;
+  prediction_text: string;
+  preference_text: string;
   choice_img_url: string;
 }
 
