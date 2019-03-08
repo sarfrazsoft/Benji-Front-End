@@ -18,7 +18,7 @@ export interface LobbyActivity {
 export interface TitleActivity {
   main_title: string;
   title_text: string;
-  title_emoji: string;
+  title_emoji: string; // To be deprecated. Do not use. Instead, parse emoji://xxxx from title_image
   title_image: string;
 }
 
@@ -56,7 +56,8 @@ export interface TeleTriviaActivity {
 
 export interface Role {
   name: string;
-  emoji: string;
+  emoji: string; // To be deprecated. Do not use. Instead, parse emoji://xxxx from image_url
+  image_url: string;
   instructions: string;
 }
 
