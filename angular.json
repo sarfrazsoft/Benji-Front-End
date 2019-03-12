@@ -28,8 +28,6 @@
             },
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/assets/css/normalize.css",
-              "src/assets/css/webflow.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "src/sass/styles.scss"
             ],
