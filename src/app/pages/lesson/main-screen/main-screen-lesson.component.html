@@ -1,17 +1,11 @@
 <div class="ms-fullheight-container">
-  <div
-    class="ms-preloader flexer align-center"
-    *ngIf="!isConnected()
-    "
-  >
+  <div class="ms-preloader flexer align-center" *ngIf="!isConnected()">
     <mat-spinner></mat-spinner>
   </div>
   <app-main-screen-toolbar></app-main-screen-toolbar>
+
   <div
-    *ngIf="
-      isConnected() &&
-      serverMessage
-    "
+    *ngIf="isConnected() && serverMessage"
     [ngClass]="
       getActivityType() === 'LobbyActivity'
         ? 'ms-lesson__activity-container ms-lesson__activity-container--lobby'
@@ -25,6 +19,13 @@
     >
     </app-mainscreen-lobby>
 
+    <benji-main-screen-title-activity
+      *ngIf="getActivityType() === 'TitleActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-main-screen-title-activity>
+
     <app-mainscreen-activity-teletrivia
       *ngIf="getActivityType() === 'TeleTriviaActivity'"
       [activityState]="serverMessage"
@@ -32,12 +33,12 @@
     >
     </app-mainscreen-activity-teletrivia>
 
-    <!-- <benji-main-screen-either-or-activity
-      *ngIf="getActivityType() === 'TeleTriviaActivity'"
+    <benji-main-screen-either-or-activity
+      *ngIf="getActivityType() === 'WhereDoYouStandActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-main-screen-either-or-activity> -->
+    </benji-main-screen-either-or-activity>
 
     <app-mainscreen-activity-video
       *ngIf="getActivityType() === 'VideoActivity'"
@@ -47,9 +48,7 @@
     </app-mainscreen-activity-video>
 
     <app-main-screen-pair-activity
-      *ngIf="
-        getActivityType() === 'RoleplayPairActivity'
-      "
+      *ngIf="getActivityType() === 'RoleplayPairActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >

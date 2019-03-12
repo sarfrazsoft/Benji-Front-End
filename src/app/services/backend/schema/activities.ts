@@ -91,9 +91,9 @@ export interface RoleplayPairActivity {
 }
 
 export interface HintWordsAndVotes {
-    id: number;
-    word: string;
-    votes: number;
+  id: number;
+  word: string;
+  votes: number;
 }
 
 export interface HintWordActivity {
@@ -144,6 +144,7 @@ export interface WhereDoYouStandChoice {
   prediction_text: string;
   preference_text: string;
   choice_img_url: string;
+  collective_name: string;
 }
 
 export interface WhereDoYouStandChoiceStats {
@@ -154,8 +155,8 @@ export interface WhereDoYouStandChoiceStats {
 }
 
 export interface WhereDoYouStandUserAnswers {
-  user: User[];
-  choice: WhereDoYouStandChoice;
+  user: User;
+  wheredoyoustandchoice: WhereDoYouStandChoice;
 }
 
 export interface WhereDoYouStandActivity {
@@ -177,4 +178,3 @@ export interface WhereDoYouStandActivity {
   user_preferences: WhereDoYouStandUserAnswers[];
   choice_stats: WhereDoYouStandChoiceStats[];
 }
-

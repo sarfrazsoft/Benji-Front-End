@@ -117,4 +117,8 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 .correct-answer {
   color: $correct-answer;
 }
+
+.incorrect-answer {
+  color: $lightish-red;
+}
 /* End of font colors*/

@@ -1,0 +1,24 @@
+<div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+  <div
+    class="twemoji-container"
+    *ngIf="activityState.titleactivity.title_image.includes('emoji://')"
+  >
+    <app-b-twemoji
+      [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"
+    >
+    </app-b-twemoji>
+  </div>
+  <div class="activity-title-container">
+    <h1 class="vibrant-blue pn-700">
+      {{ activityState.titleactivity.main_title }}
+    </h1>
+  </div>
+  <div class="activity-title-description-container">
+    <p class="brownish-grey pn-500">
+      {{ activityState.titleactivity.title_text }}
+    </p>
+  </div>
+  <div class="linear-timer-container">
+    <app-linear-timer #titleTimer [endAudio]="'bell.wav'"></app-linear-timer>
+  </div>
+</div>

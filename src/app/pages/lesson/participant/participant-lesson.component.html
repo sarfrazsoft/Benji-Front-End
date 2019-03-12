@@ -8,6 +8,13 @@
   >
   </app-participant-lobby>
 
+  <benji-participant-title-activity
+    *ngIf="getActivityType() === 'TitleActivity'"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-participant-title-activity>
+
   <app-participant-teletrivia-activity
     *ngIf="getActivityType() === 'TeleTriviaActivity'"
     [activityState]="serverMessage"
@@ -15,17 +22,15 @@
   >
   </app-participant-teletrivia-activity>
 
-  <!-- <benji-participant-either-or-activity
-    *ngIf="getActivityType() === 'TeleTriviaActivity'"
+  <benji-participant-either-or-activity
+    *ngIf="getActivityType() === 'WhereDoYouStandActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-either-or-activity> -->
+  </benji-participant-either-or-activity>
 
   <app-participant-pair-activity
-    *ngIf="
-      getActivityType() === 'RoleplayPairActivity'
-    "
+    *ngIf="getActivityType() === 'RoleplayPairActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >

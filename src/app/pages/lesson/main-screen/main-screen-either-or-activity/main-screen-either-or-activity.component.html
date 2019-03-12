@@ -1,20 +1,6 @@
 <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center">
   <div
-    *ngIf="activityState.activity_status.icebreaker_stand"
-    class="single-column-activity"
-  >
-    <div class="twemoji-container">
-      <app-b-twemoji emoji="↔️"></app-b-twemoji>
-    </div>
-    <h1 class="vibrant-blue pn-700">Where do you stand?</h1>
-    <p class="brownish-grey pn-500">
-      How well do you know this group? Get ready to answer some questions and
-      get moving.
-    </p>
-  </div>
-
-  <div
-    *ngIf="activityState.activity_status.pets_question"
+    *ngIf="!state.standing_complete && !state.preference_complete"
     class="single-column-activity"
   >
     <div
@@ -24,47 +10,68 @@
       fxLayoutGap="3vw"
     >
       <div>
-        <div class="twemoji-container">
-          <app-b-twemoji emoji="🐈"></app-b-twemoji>
+        <div
+          class="twemoji-container"
+          *ngIf="isEmoji(state.left_choice.choice_img_url)"
+        >
+          <app-b-twemoji
+            [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+          ></app-b-twemoji>
         </div>
       </div>
       <div>
-        <div class="twemoji-container">
-          <app-b-twemoji emoji="🐕"></app-b-twemoji>
+        <div
+          class="twemoji-container"
+          *ngIf="isEmoji(state.right_choice.choice_img_url)"
+        >
+          <app-b-twemoji
+            [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+          ></app-b-twemoji>
         </div>
       </div>
     </div>
-    <h1 class="deep-blue pn-700 question">
-      Question
-      {{
-        activityState.activity_status.pets_question_1 ||
-        activityState.activity_status.sandwhich_question_1
-          ? '1'
-          : '2'
-      }}:
-    </h1>
-    <p
-      *ngIf="activityState.activity_status.pets_question_1"
-      class="brownish-grey pn-500"
-    >
-      Do you think this group has more
-      <span class="deep-blue">cat people</span> or more
-      <span class="deep-blue">dog people</span>?
-    </p>
-    <p
-      *ngIf="activityState.activity_status.pets_question_2"
-      class="brownish-grey pn-500"
-    >
-      Are
-      <span class="deep-blue">you</span> a cat person or a dog person
-    </p>
+    <div class="activity-question-title-container">
+      <h1 *ngIf="!state.prediction_complete" class="deep-blue pn-700 question">
+        Question 1:
+      </h1>
+      <h1 *ngIf="state.prediction_complete" class="deep-blue pn-700 question">
+        Question 2:
+      </h1>
+    </div>
+    <div class="activity-question-description-container">
+      <p
+        *ngIf="!state.prediction_complete"
+        class="brownish-grey pn-500"
+        [innerHTML]="state.prediction_text"
+      ></p>
+
+      <p
+        *ngIf="state.prediction_complete"
+        class="brownish-grey pn-500"
+        [innerHTML]="state.preference_text"
+      ></p>
+    </div>
     <div class="forms-submitted deep-blue pn-600">
-      7/14 answers submitted
+      <ng-container *ngIf="!state.prediction_complete">
+        {{ state.user_predictions.length }}/{{
+          activityState.lesson_run.joined_users.length
+        }}
+      </ng-container>
+      <ng-container *ngIf="state.prediction_complete">
+        {{ state.user_preferences.length }}/{{
+          activityState.lesson_run.joined_users.length
+        }}
+      </ng-container>
+      answers submitted
     </div>
   </div>
 
   <div
-    *ngIf="activityState.activity_status.pets_move"
+    *ngIf="
+      !state.standing_complete &&
+      state.preference_complete &&
+      state.prediction_complete
+    "
     class="single-column-activity"
   >
     <div fxLayoutAlign="center center">
@@ -80,16 +87,26 @@
           </div>
         </div>
         <div>
-          <div class="twemoji-container">
-            <app-b-twemoji emoji="🐈"></app-b-twemoji>
+          <div
+            class="twemoji-container"
+            *ngIf="isEmoji(state.left_choice.choice_img_url)"
+          >
+            <app-b-twemoji
+              [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+            ></app-b-twemoji>
           </div>
         </div>
         <h1 fxFlex class="deep-blue pn-700 question">
           Stand on your side
         </h1>
         <div>
-          <div class="twemoji-container">
-            <app-b-twemoji emoji="🐕"></app-b-twemoji>
+          <div
+            class="twemoji-container"
+            *ngIf="isEmoji(state.right_choice.choice_img_url)"
+          >
+            <app-b-twemoji
+              [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+            ></app-b-twemoji>
           </div>
         </div>
         <div>
@@ -99,16 +116,16 @@
         </div>
       </div>
     </div>
-
-    <div class="forms-submitted deep-blue pn-600">
-      7/14 answers submitted
-    </div>
   </div>
 
   <div
     class="result"
     fxLayout="row"
-    *ngIf="activityState.activity_status.result"
+    *ngIf="
+      state.standing_complete &&
+      state.preference_complete &&
+      state.prediction_complete
+    "
   >
     <div fxLayout="column" fxFlex>
       <div>
@@ -118,11 +135,19 @@
       </div>
       <div>
         <h1 class="brownish-grey pn-500 question">
-          64% of you thought that there would be more dog people in this group
+          <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that
+          there would be more
+          <em>{{ getGroupPredictionChoice().collective_name }}</em> in this
+          group
         </h1>
       </div>
-      <div class="twemoji-container">
-        <app-b-twemoji emoji="🐕"></app-b-twemoji>
+      <div
+        class="twemoji-container"
+        *ngIf="isEmoji(getGroupPredictionChoice().choice_img_url)"
+      >
+        <app-b-twemoji
+          [emoji]="emoji.getEmoji(getGroupPredictionChoice().choice_img_url)"
+        ></app-b-twemoji>
       </div>
     </div>
     <div fxLayout="column" fxFlex>
@@ -132,25 +157,34 @@
         </h1>
       </div>
       <div>
-        <h1 class="correct-answer pn-500 question">
-          Correct!
+        <h1
+          class="pn-500 question"
+          [ngClass]="{
+            'correct-answer': getGroupPredictionEvaluation(),
+            'incorrect-answer': !getGroupPredictionEvaluation()
+          }"
+        >
+          {{ getGroupPredictionEvaluation() ? 'Correct!' : 'Incorrect!' }}
         </h1>
       </div>
       <div>
         <h1 class="brownish-grey pn-500 question">
-          57% of you are dog people
+          <em>{{ getGroupPercentagePreference() }}%</em> of you are
+          <em>{{ getGroupPreferredChoice().collective_name }}</em>
         </h1>
       </div>
-      <div class="twemoji-container">
-        <app-b-twemoji emoji="🐕"></app-b-twemoji>
+      <div
+        class="twemoji-container"
+        *ngIf="isEmoji(getGroupPreferredChoice().choice_img_url)"
+      >
+        <app-b-twemoji
+          [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
+        ></app-b-twemoji>
       </div>
     </div>
   </div>
-</div>
 
-<div class="hint-activity__linear-timer-container">
-  <app-linear-timer
-    #whereDoYouStandTimer
-    [endAudio]="'bell.wav'"
-  ></app-linear-timer>
+  <div class="hint-activity__linear-timer-container">
+    <app-linear-timer #timer [endAudio]="'bell.wav'"></app-linear-timer>
+  </div>
 </div>

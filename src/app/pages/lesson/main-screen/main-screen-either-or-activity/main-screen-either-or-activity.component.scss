@@ -1,6 +1,33 @@
 @import 'variables';
 
 .either-or-activity {
+  position: relative;
+  .question-emojis {
+    margin-bottom: 5vh;
+  }
+  .twemoji-container {
+    margin: 0 0;
+  }
+  h1 {
+    font-size: 13.5vh;
+    margin: 0;
+    line-height: normal;
+    text-transform: none;
+  }
+  h1.question {
+    font-size: 7vh;
+  }
+  .activity-question-description-container {
+    width: 60vw;
+    p {
+      font-size: 4vw;
+      line-height: normal;
+    }
+  }
+  .activity-question-title-container {
+    margin-bottom: 2vh;
+  }
+
   .result {
     padding: 4vh 0vh;
     > div {
@@ -9,19 +36,5 @@
     > :first-child {
       border-right: 4px solid $grey;
     }
-  }
-  h1 {
-    font-size: 13.5vh;
-    margin: 0;
-    line-height: normal;
-  }
-  h1.question {
-    font-size: 7vh;
-  }
-  .question-emojis {
-    margin-bottom: 5vh;
-  }
-  .twemoji-container {
-    margin: 0 0;
   }
 }

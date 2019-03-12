@@ -1,18 +1,38 @@
 <ng-container>
   <div class="b-flat-card center-text roleplay-card">
     <div class="b-flat-card__title">
-      <h2 class="pn-500">Where do you stand?</h2>
+      <h2 class="pn-500">
+        Where do you stand?
+      </h2>
     </div>
     <div
       class="b-flat-card__body"
-      *ngIf="activityState.activity_status.question_1"
+      *ngIf="!state.standing_complete && !state.preference_complete"
     >
-      <div class="b-flat-card__question-no pn-500 brownish-grey">
-        Question 1:
+      <div
+        *ngIf="!state.prediction_complete"
+        class="b-flat-card__question-no pn-500 brownish-grey"
+      >
+        Question: 1
       </div>
-      <h3 class="pn-700 deep-blue b-flat-card__question">
-        Are you a cat person or a dog person?
-      </h3>
+      <div
+        *ngIf="state.prediction_complete"
+        class="b-flat-card__question-no pn-500 brownish-grey"
+      >
+        Question: 2
+      </div>
+
+      <h3
+        *ngIf="!state.prediction_complete"
+        class="pn-700 deep-blue b-flat-card__question"
+        [innerHTML]="state.prediction_text"
+      ></h3>
+      <h3
+        *ngIf="state.prediction_complete"
+        class="pn-700 deep-blue b-flat-card__question"
+        [innerHTML]="state.preference_text"
+      ></h3>
+
       <div
         class="pn-700"
         fxLayout="row"
@@ -20,34 +40,108 @@
         fxLayoutGap="20px"
       >
         <div class="select-option-radio">
-          <input type="radio" value="notatall" id="not_1" />
-          <label for="not_1">
-            <app-b-twemoji emoji="🐈"></app-b-twemoji>
-            <span>I love cats!</span>
+          <input
+            type="radio"
+            name="choice"
+            id="left_choice"
+            [(ngModel)]="choice"
+            (click)="
+              state.prediction_complete
+                ? choosePreference(state.left_choice)
+                : choosePrediction(state.left_choice)
+            "
+          />
+          <label
+            for="left_choice"
+            *ngIf="isEmoji(state.left_choice.choice_img_url)"
+          >
+            <app-b-twemoji
+              [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+            ></app-b-twemoji>
+            <span *ngIf="!state.prediction_complete">
+              {{ state.left_choice.prediction_text }}
+            </span>
+            <span *ngIf="state.prediction_complete">
+              {{ state.left_choice.preference_text }}
+            </span>
           </label>
         </div>
 
         <div class="select-option-radio">
-          <input type="radio" value="kinda" id="kinda_1" />
-          <label for="kinda_1">
-            <app-b-twemoji emoji="🐕"></app-b-twemoji>
-            <span>Team doggo</span>
+          <input
+            type="radio"
+            value="right_choice"
+            id="right_choice"
+            [(ngModel)]="choice"
+            (click)="
+              state.prediction_complete
+                ? choosePreference(state.right_choice)
+                : choosePrediction(state.right_choice)
+            "
+          />
+          <label
+            for="right_choice"
+            *ngIf="isEmoji(state.left_choice.choice_img_url)"
+          >
+            <app-b-twemoji
+              [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+            ></app-b-twemoji>
+            <span *ngIf="!state.prediction_complete">
+              {{ state.right_choice.prediction_text }}
+            </span>
+            <span *ngIf="state.prediction_complete">
+              {{ state.right_choice.preference_text }}
+            </span>
           </label>
         </div>
       </div>
     </div>
 
-    <div class="b-flat-card__body">
+    <div
+      *ngIf="
+        !state.standing_complete &&
+        state.preference_complete &&
+        state.prediction_complete
+      "
+      class="b-flat-card__body"
+    >
       <h1 class="pn-700 deep-blue b-flat-card__question">
         Stand on your side
       </h1>
       <div class="pn-700">
         <div class="twemoji-container">
-          <app-b-twemoji emoji="🐈"></app-b-twemoji>
+          <app-b-twemoji
+            [emoji]="emoji.getEmoji(getUserPreferredChoice().choice_img_url)"
+          >
+          </app-b-twemoji>
         </div>
         <h3 class="pn-500 brownish-grey">
-          Cat people to the <span class="deep-blue">left</span> of the main
-          screen
+          {{ getUserPreferredChoice().collective_name }} to the
+          <span class="deep-blue">{{ getUserSide() }}</span> of the main screen
+        </h3>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        state.standing_complete &&
+        state.preference_complete &&
+        state.prediction_complete
+      "
+      class="b-flat-card__body"
+    >
+      <h1 class="pn-700 deep-blue b-flat-card__question">
+        Your prediction was {{ evaluateUserPrediction() }}
+      </h1>
+      <div class="pn-700">
+        <div class="twemoji-container">
+          <app-b-twemoji
+            [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
+          ></app-b-twemoji>
+        </div>
+        <h3 class="pn-500 brownish-grey">
+          Most of this group are
+          {{ getGroupPreferredChoice().collective_name }}.
         </h3>
       </div>
     </div>

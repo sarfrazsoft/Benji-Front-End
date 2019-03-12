@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EmojiLookupService {
-
-  constructor() { }
+  constructor() {}
 
   public getEmoji(string) {
+    string = string.split('//')[1];
     switch (string) {
       case 'speech':
         return '💬';
@@ -24,7 +24,15 @@ export class EmojiLookupService {
       case 'ear':
         return '👂';
       case 'leftrightarrow':
-        return '⟷';
+        return '↔️';
+      case 'cat':
+        return '🐈';
+      case 'dog':
+        return '🐕';
+      case 'burger':
+        return '🍔';
+      case 'hotdog':
+        return '🌭';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

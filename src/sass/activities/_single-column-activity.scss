@@ -4,22 +4,30 @@
   height: 100%;
   flex-direction: column;
   justify-content: center;
+  position: relative;
 
-  h1 {
-    font-family: $pn-bold;
-    line-height: 1.09;
-    font-size: 13.5vh;
-    margin-bottom: 3vh;
+  .activity-title-container {
+    h1 {
+      font-family: $pn-bold;
+      line-height: normal;
+      font-size: 13.5vh;
+      // h1 and p tags should not have margin of their own
+      margin: 0;
+    }
+    h1.question {
+      font-size: 7vh;
+    }
   }
-  h1.question {
-    font-size: 7vh;
+  .activity-title-description-container {
+    padding: 0vw 2vw;
+    p {
+      font-family: $pn-medium;
+      font-size: 6vh;
+      margin: 0 auto;
+      line-height: normal;
+    }
   }
-  p {
-    font-family: $pn-medium;
-    font-size: 6vh;
-    margin: 0 auto;
-    line-height: 1.42;
-  }
+
   .forms-submitted {
     margin-top: 6vh;
     font-size: 4vh;
