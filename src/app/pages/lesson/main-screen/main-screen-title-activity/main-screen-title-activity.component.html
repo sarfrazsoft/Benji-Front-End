@@ -1,7 +1,7 @@
 <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
   <div
     class="twemoji-container"
-    *ngIf="activityState.titleactivity.title_image.includes('emoji://')"
+    *ngIf="isEmoji(activityState.titleactivity.title_image)"
   >
     <app-b-twemoji
       [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"

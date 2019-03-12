@@ -24,7 +24,6 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent
       ) -
         Date.now()) /
       1000;
-    console.log(titleSeconds);
     this.titleTimer.startTimer(titleSeconds);
   }
 }
