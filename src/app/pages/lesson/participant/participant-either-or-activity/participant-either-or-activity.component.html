@@ -126,7 +126,8 @@
       *ngIf="
         state.standing_complete &&
         state.preference_complete &&
-        state.prediction_complete
+        state.prediction_complete &&
+        getGroupPercentagePreference() !== 50
       "
       class="b-flat-card__body"
     >
@@ -142,6 +143,43 @@
         <h3 class="pn-500 brownish-grey">
           Most of this group are
           {{ getGroupPreferredChoice().collective_name }}.
+        </h3>
+      </div>
+    </div>
+
+    <div
+      *ngIf="
+        state.standing_complete &&
+        state.preference_complete &&
+        state.prediction_complete &&
+        getGroupPercentagePreference() === 50
+      "
+      class="b-flat-card__body"
+    >
+      <h1 class="pn-700 deep-blue b-flat-card__question">
+        Wow, a tie!
+      </h1>
+      <div fxLayout="column" fxLayoutGap="5vh" fxLayoutAlign="center center">
+        <div class="result-tie-emoji" fxLayout="row">
+          <div
+            class="twemoji-container"
+            *ngIf="isEmoji(state.right_choice.choice_img_url)"
+          >
+            <app-b-twemoji
+              [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+            ></app-b-twemoji>
+          </div>
+          <div
+            class="twemoji-container"
+            *ngIf="isEmoji(state.right_choice.choice_img_url)"
+          >
+            <app-b-twemoji
+              [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+            ></app-b-twemoji>
+          </div>
+        </div>
+        <h3 class="pn-700 brownish-grey">
+          Your group is a perfectly even split.
         </h3>
       </div>
     </div>

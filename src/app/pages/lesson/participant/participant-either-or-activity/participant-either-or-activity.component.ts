@@ -98,6 +98,19 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     return userPrediction.wheredoyoustandchoice;
   }
 
+  getGroupPercentagePreference() {
+    const numberOfUsers = this.activityState.lesson_run.joined_users.length;
+
+    const groupPreference = Math.max.apply(
+      Math,
+      this.state.choice_stats.map(function(o) {
+        return o.num_preferences;
+      })
+    );
+
+    return Math.trunc((groupPreference / numberOfUsers) * 100);
+  }
+
   evaluateUserPrediction(): string {
     const groupPreference = this.getGroupPreferredChoice();
     const userPrediction = this.getUserPredictedChoice();

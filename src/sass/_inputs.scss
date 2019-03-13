@@ -75,6 +75,7 @@
 .select-option-radio {
   background: none;
   label {
+    display: block;
     width: 135px;
     padding: 25px 18px;
     border: 1px solid #dfe5e7;
@@ -102,4 +103,8 @@
     opacity: 1;
     background-color: #dfe5e7;
   }
+}
+
+.mb-auto {
+  margin-bottom: auto;
 }

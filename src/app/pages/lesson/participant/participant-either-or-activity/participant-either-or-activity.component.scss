@@ -1,4 +1,6 @@
 .b-flat-card__question-no {
+  font-weight: 600;
+  margin-bottom: 3vh;
   font-size: 18px;
 }
 .b-flat-card__question {
@@ -8,4 +10,8 @@
 .select-option-radio label {
   height: 200px;
   overflow: hidden;
+}
+
+.result-tie-emoji {
+  width: 70vw;
 }

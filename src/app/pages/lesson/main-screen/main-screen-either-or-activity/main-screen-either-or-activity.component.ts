@@ -6,12 +6,14 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
 import {
   WhereDoYouStandActivity,
   WhereDoYouStandChoice
 } from 'src/app/services/backend/schema/activities';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { LowResponseDialogComponent } from '../../shared/dialogs';
 
 @Component({
   selector: 'benji-main-screen-either-or-activity',
@@ -25,7 +27,8 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
 
   constructor(
     private emoji: EmojiLookupService,
-    private eitherOrActivityService: EitherOrActivityService
+    private eitherOrActivityService: EitherOrActivityService,
+    private dialog: MatDialog
   ) {
     super();
   }
@@ -36,7 +39,19 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   }
 
   ngAfterViewInit() {
-    this.initTimer('prediction_countdown_timer');
+    this.initTimer(this.state.prediction_countdown_timer.end_time);
+  }
+
+  openLowResponseDialog(): void {
+    this.dialog
+      .open(LowResponseDialogComponent, {
+        disableClose: true,
+        panelClass: 'low-response-dialog'
+      })
+      .afterClosed()
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -45,20 +60,28 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
       this.state.prediction_complete &&
       this.state.user_preferences.length === 0
     ) {
-      this.initTimer('preference_countdown_timer');
+      this.initTimer(this.state.preference_countdown_timer.end_time);
     } else if (
       this.state.prediction_complete &&
-      this.state.preference_complete
+      this.state.preference_complete &&
+      !this.state.standing_complete
     ) {
-      this.initTimer('stand_on_side_countdown_timer');
+      this.initTimer(this.state.stand_on_side_countdown_timer.end_time);
+    } else if (
+      this.state.prediction_complete &&
+      this.state.preference_complete &&
+      this.state.standing_complete
+    ) {
+      this.initTimer(
+        this.activityState.base_activity.next_activity_start_timer.end_time
+      );
     }
     console.log(this.activityState);
   }
 
-  initTimer(timerProperty: string) {
+  initTimer(endTime: string) {
     this.timer.startTimer(0);
-    const seconds =
-      (Date.parse(this.state[timerProperty].end_time) - Date.now()) / 1000;
+    const seconds = (Date.parse(endTime) - Date.now()) / 1000;
     this.timer.startTimer(seconds);
   }
 
@@ -102,9 +125,21 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
     return Math.trunc((groupPreference / numberOfUsers) * 100);
   }
 
-  getGroupPredictionEvaluation(): boolean {
+  getGroupPredictionEvaluation(): string {
+    if (this.getGroupPercentagePreference() === 50) {
+      return 'Tie!';
+    }
     const preferredChoice = this.getGroupPreferredChoice();
     const predictedChoice = this.getGroupPredictionChoice();
-    return preferredChoice.id === predictedChoice.id;
+    return preferredChoice.id === predictedChoice.id
+      ? 'Correct!'
+      : 'Incorrect!';
+  }
+
+  isGroupPredictionEvaluationTie(): boolean {
+    if (this.getGroupPredictionEvaluation() === 'Tie!') {
+      return true;
+    }
+    return false;
   }
 }

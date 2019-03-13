@@ -1,4 +1,8 @@
-<div class="either-or-activity mainscreen-activity" fxLayoutAlign="center">
+<div
+  (click)="openLowResponseDialog()"
+  class="either-or-activity mainscreen-activity"
+  fxLayoutAlign="center"
+>
   <div
     *ngIf="!state.standing_complete && !state.preference_complete"
     class="single-column-activity"
@@ -133,7 +137,7 @@
           Prediction:
         </h1>
       </div>
-      <div>
+      <div class="mb-auto">
         <h1 class="brownish-grey pn-500 question">
           <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that
           there would be more
@@ -160,26 +164,66 @@
         <h1
           class="pn-500 question"
           [ngClass]="{
-            'correct-answer': getGroupPredictionEvaluation(),
-            'incorrect-answer': !getGroupPredictionEvaluation()
+            'correct-answer':
+              getGroupPredictionEvaluation() === 'Correct!' ||
+              getGroupPredictionEvaluation() === 'Tie!',
+            'incorrect-answer': getGroupPredictionEvaluation() === 'Incorrect!'
           }"
         >
-          {{ getGroupPredictionEvaluation() ? 'Correct!' : 'Incorrect!' }}
+          {{ getGroupPredictionEvaluation() }}
         </h1>
       </div>
-      <div>
-        <h1 class="brownish-grey pn-500 question">
+      <div class="mb-auto">
+        <h1
+          *ngIf="!isGroupPredictionEvaluationTie()"
+          class="brownish-grey pn-500 question"
+        >
           <em>{{ getGroupPercentagePreference() }}%</em> of you are
           <em>{{ getGroupPreferredChoice().collective_name }}</em>
         </h1>
+        <h1
+          *ngIf="isGroupPredictionEvaluationTie()"
+          class="brownish-grey pn-500 question"
+        >
+          You're an even 50/50 split!
+        </h1>
       </div>
-      <div
-        class="twemoji-container"
-        *ngIf="isEmoji(getGroupPreferredChoice().choice_img_url)"
-      >
-        <app-b-twemoji
-          [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
-        ></app-b-twemoji>
+      <div>
+        <div
+          class="twemoji-container"
+          *ngIf="
+            !isGroupPredictionEvaluationTie() &&
+            isEmoji(getGroupPreferredChoice().choice_img_url)
+          "
+        >
+          <app-b-twemoji
+            [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
+          ></app-b-twemoji>
+        </div>
+        <div *ngIf="isGroupPredictionEvaluationTie()">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3vw">
+            <div>
+              <div
+                class="twemoji-container"
+                *ngIf="isEmoji(state.left_choice.choice_img_url)"
+              >
+                <app-b-twemoji
+                  [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+                ></app-b-twemoji>
+              </div>
+            </div>
+            <div>
+              <div
+                class="twemoji-container"
+                *ngIf="isEmoji(state.right_choice.choice_img_url)"
+              >
+                <app-b-twemoji
+                  [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+                ></app-b-twemoji>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
