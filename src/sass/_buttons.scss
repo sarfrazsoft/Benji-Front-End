@@ -1,5 +1,7 @@
 button {
   outline: none;
+  cursor: pointer;
+  border: 0px;
 }
 
 .b-standard-button {
@@ -105,6 +107,7 @@ button {
   height: 12vh;
   font-size: 6vh;
   border-radius: 12vh;
+  border: 0px;
   &:focus {
     background-color: #3a126e;
   }
