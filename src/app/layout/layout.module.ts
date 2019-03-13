@@ -5,37 +5,19 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from './../shared/shared.module';
 
-import { LayoutComponent, LayoutDeclarations } from './';
+import { EntryComponents, LayoutComponent, LayoutDeclarations } from './';
 import { LayoutRoutes } from './layout.routing';
-
-import {
-  MatButtonModule,
-  MatDialogModule,
-  MatIconModule,
-  MatMenuModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSidenavModule,
-  MatToolbarModule
-} from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     LayoutRoutes,
-    // MatButtonModule,
-    // MatDialogModule,
-    // MatIconModule,
-    // MatMenuModule,
-    // MatProgressBarModule,
-    // MatProgressSpinnerModule,
-    // MatSidenavModule,
-    // MatToolbarModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule
   ],
   exports: [RouterModule, LayoutComponent],
-  declarations: [...LayoutDeclarations]
+  declarations: [...LayoutDeclarations],
+  entryComponents: [...EntryComponents]
 })
 export class LayoutModule {}

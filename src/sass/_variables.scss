@@ -82,6 +82,10 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 /* End Of Backgrounds */
 
 /* Utilities: Font Colors */
+
+.white-color {
+  color: #fff;
+}
 .vibrant-blue {
   color: $vibrant-blue;
 }

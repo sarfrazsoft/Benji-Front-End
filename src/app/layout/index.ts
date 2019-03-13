@@ -19,11 +19,16 @@ import { MainScreenToolbarComponent } from '../ui-components/main-screen-toolbar
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
-import { MainScreenComponents, ParticipantScreenComponents } from '../index';
+import {
+  LowResponseDialogComponent,
+  MainScreenComponents,
+  ParticipantScreenComponents
+} from '../index';
 
 export const LayoutDeclarations = [
   ...MainScreenComponents,
   ...ParticipantScreenComponents,
+  LowResponseDialogComponent,
   AnimatedCheckmarkButtonComponent,
   BTwemojiComponent,
   LandingComponent,
@@ -41,3 +46,5 @@ export const LayoutDeclarations = [
   SidenavComponent,
   SidenavItemComponent
 ];
+
+export const EntryComponents = [LowResponseDialogComponent];

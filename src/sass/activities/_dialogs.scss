@@ -1,0 +1,16 @@
+.low-response-dialog {
+  mat-dialog-container.mat-dialog-container {
+    width: 75vw;
+    background-color: $indigo-blue;
+    box-shadow: none;
+
+    .low-response {
+      padding: 2vw 6vw;
+      font-size: 2.5vw;
+      text-align: center;
+      p {
+        margin-bottom: 8vh;
+      }
+    }
+  }
+}
