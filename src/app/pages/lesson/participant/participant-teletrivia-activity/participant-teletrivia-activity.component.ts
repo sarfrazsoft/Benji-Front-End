@@ -1,19 +1,20 @@
 import {
   Component,
-  Renderer2,
-  ViewChild,
   OnChanges,
+  OnDestroy,
+  Renderer2,
   SimpleChanges,
-  OnDestroy
+  ViewChild
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
 import {
   TeleTriviaMessageReturnedEvent,
   TeleTriviaSharingDoneEvent,
-  TeleTriviaStartGameEvent, TeleTriviaSubmitAnswerEvent,
+  TeleTriviaStartGameEvent,
+  TeleTriviaSubmitAnswerEvent,
   TeleTriviaUserInCircleEvent
 } from '../../../../services/backend/schema/messages';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'app-participant-teletrivia-activity',
@@ -121,7 +122,7 @@ export class ParticipantTeletriviaActivityComponent
     this.sendMessage.emit(new TeleTriviaSubmitAnswerEvent(question, choice));
     this.selectedAnswerIndex = choice.id;
     this.revealAnswer = true;
-    this.answerExplanation = choice.explanation_text;
+    this.answerExplanation = choice.explanation;
   }
 
   submitAnswerCallback() {

@@ -1,34 +1,36 @@
-mat-dialog-container.mat-dialog-container {
-  background-color: $dim-grey;
-  padding: 10px;
-  width: 480px;
-  box-shadow: none;
-  .close-button {
-    background: transparent;
-  }
-  .dialog-heading {
-    color: $deep-blue;
-    font-family: $pn-semi-bold;
-  }
-  .dialog-instructions {
-    width: 230px;
-    color: $brownish-grey;
-    text-align: center;
-  }
-  .select-session {
-    margin: 0px;
-    padding-bottom: 40px;
-    .controls-container {
-      width: 200px;
-      .dialog-controls {
-        width: 100%;
-      }
-      // TODO move these styles to dashboard/_input.scss
-      .ng-select .ng-select-container {
-        border: none;
-        border-radius: 0px;
-        .ng-placeholder {
-          color: $inactive-color;
+.dashboard-dialog {
+  mat-dialog-container.mat-dialog-container {
+    background-color: $dim-grey;
+    padding: 10px;
+    width: 480px;
+    box-shadow: none;
+    .close-button {
+      background: transparent;
+    }
+    .dialog-heading {
+      color: $deep-blue;
+      font-family: $pn-semi-bold;
+    }
+    .dialog-instructions {
+      width: 230px;
+      color: $brownish-grey;
+      text-align: center;
+    }
+    .select-session {
+      margin: 0px;
+      padding-bottom: 40px;
+      .controls-container {
+        width: 200px;
+        .dialog-controls {
+          width: 100%;
+        }
+        // TODO move these styles to dashboard/_input.scss
+        .ng-select .ng-select-container {
+          border: none;
+          border-radius: 0px;
+          .ng-placeholder {
+            color: $inactive-color;
+          }
         }
       }
     }
