@@ -44,7 +44,8 @@ export class AdminPanelComponent implements OnInit {
       //       data: {
       //         name: data.dashData.user.first_name
       //       },
-      //       disableClose: true
+      //       disableClose: true,
+      //       panelClass: 'dashboard-dialog'
       //     })
       //     .afterClosed()
       //     .subscribe(res => {
