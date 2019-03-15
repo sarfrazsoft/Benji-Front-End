@@ -8,7 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-feedback-activity.component.scss']
 })
 export class MainScreenFeedbackActivityComponent extends BaseActivityComponent {
-  allFeedbackFormsSubmitted = true;
+  allFeedbackFormsSubmitted = false;
 
   constructor(private router: Router) {
     super();

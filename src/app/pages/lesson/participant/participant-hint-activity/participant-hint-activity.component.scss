@@ -1,7 +1,6 @@
 .hintword-card .b-flat-card__body {
   h3 {
-    font-size: 35px;
-    line-height: normal;
+    font-size: 25px;
   }
   p {
     font-size: 14px;
@@ -42,13 +41,6 @@
     .b-flat-card__twemoji {
       width: 140px;
     }
-    h3 {
-      font-size: 40px;
-      line-height: normal;
-    }
-    p {
-      font-size: 16px;
-    }
   }
   .b-standard-input {
     width: 267px;
@@ -58,15 +50,5 @@
 @media screen and (min-width: 414px) {
   .b-flat-card__body {
     padding: 5vh 50px 20px;
-  }
-  .hintword-card .b-flat-card__body {
-    h3 {
-      font-size: 40px;
-      line-height: normal;
-    }
-    p {
-      font-size: 16px;
-      line-height: normal;
-    }
   }
 }
