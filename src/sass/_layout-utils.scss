@@ -32,14 +32,14 @@
 }
 
 .ms-emoji-container img {
-  height: 236px;
+  height: 30vh;
 }
 
 .smaller-emoji img {
-  height: 205px;
-  @media #{$xxlarge-and-down} {
-    height: 170px;
-  }
+  height: 25vh;
+  // @media #{$xxlarge-and-down} {
+  //   height: 17vh;
+  // }
 }
 
 .align-center {
@@ -73,30 +73,30 @@
       padding: 5vh 10vw;
       transition: all 0.3s;
       h1 {
-        font-size: 140px;
+        font-size: 10vh;
         margin: 0;
         line-height: 1.69;
-        @media #{$xxlarge-and-down} {
-          font-size: 80px;
-          line-height: 1.09;
-        }
+        // @media #{$xxlarge-and-down} {
+        //   font-size: 80px;
+        //   line-height: 1.09;
+        // }
       }
       p {
         span img {
           height: 36px;
         }
-        font-size: 26px;
+        font-size: 3vh;
         line-height: 1.42;
         margin-bottom: 20px;
       }
     }
     .mainscreen-activity__section-text {
-      font-size: 40px;
+      font-size: 5vh;
       line-height: normal;
       text-transform: uppercase;
       letter-spacing: 2.5px;
       text-align: center;
-      padding: 30px 0;
+      padding: 3vh 0;
       border-bottom: 1px solid #979797;
     }
   }

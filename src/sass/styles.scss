@@ -31,6 +31,7 @@
 @import './dashboard/learners';
 @import './activities/single-column-activity';
 @import './activities/dialogs';
+@import './activities/timers';
 
 /*
   Material Deisgn Theme
@@ -396,25 +397,6 @@
 
 .answer-text.correct {
   color: #2ecc71;
-}
-
-.number-text {
-  margin-bottom: 0px;
-  color: #00178a;
-  font-size: 120px;
-  line-height: normal;
-  letter-spacing: 1px;
-  text-align: center;
-  span {
-    display: block;
-    font-size: 40px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-  }
-}
-.timer-endstate {
-  font-size: 100px;
-  letter-spacing: 0.8px;
 }
 
 .answers-submitted-div {

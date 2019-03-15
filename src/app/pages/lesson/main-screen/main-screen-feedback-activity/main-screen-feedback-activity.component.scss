@@ -1,0 +1,37 @@
+@import 'variables';
+
+.activity-title-description-container {
+  padding: 0 10vw;
+}
+
+.forms-submitted {
+  margin-top: 6vh;
+  font-size: 4vh;
+}
+.exitSession {
+  font-size: 4vh;
+  position: absolute;
+  bottom: 10vh;
+  right: 6vh;
+  color: $vibrant-blue;
+  cursor: pointer;
+  button {
+    background-color: transparent;
+    height: 5vh;
+    width: 5vh;
+
+    margin-left: 10px;
+    transition: all $animation-time linear;
+    -webkit-transition: all $animation-time linear;
+    -ms-transition: all $animation-time linear;
+    img {
+      width: 80%;
+    }
+  }
+  &:hover {
+    button {
+      margin-right: -20px;
+      margin-left: 30px;
+    }
+  }
+}

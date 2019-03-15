@@ -18,7 +18,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.primary_role.emoji
+                  activityState.roleplaypairactivity.primary_role.image_url
                 )
               "
               *ngIf="!isReversed()"
@@ -26,7 +26,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.secondary_role.emoji
+                  activityState.roleplaypairactivity.secondary_role.image_url
                 )
               "
               *ngIf="isReversed()"
@@ -47,7 +47,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.secondary_role.emoji
+                  activityState.roleplaypairactivity.secondary_role.image_url
                 )
               "
               *ngIf="!isReversed()"
@@ -55,7 +55,7 @@
             <app-b-twemoji
               [emoji]="
                 emoji.getEmoji(
-                  activityState.roleplaypairactivity.primary_role.emoji
+                  activityState.roleplaypairactivity.primary_role.image_url
                 )
               "
               *ngIf="isReversed()"

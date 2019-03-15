@@ -74,7 +74,7 @@ mat-sidenav-container.mat-sidenav-container {
         color: $vibrant-blue;
         margin-top: 20px;
         span {
-          font-family: $pn-bold;
+          font-family: $pn-regular;
           font-size: 28px;
           letter-spacing: 0.65px;
         }
@@ -111,7 +111,7 @@ mat-sidenav-container.mat-sidenav-container {
         &:hover,
         &.active {
           margin-left: 10px;
-          font-family: $pn-semi-bold;
+          font-family: $pn-regular;
           .bullet-point {
             opacity: 1;
           }

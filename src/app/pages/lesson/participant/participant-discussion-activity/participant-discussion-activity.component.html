@@ -27,7 +27,8 @@
 <!-- Share With Group Card -->
 <ng-container
   *ngIf="
-    activityState.discussionactivity.discussion_complete && participantIsSharing()
+    activityState.discussionactivity.discussion_complete &&
+    participantIsSharing()
   "
 >
   <div class="b-flat-card center-text roleplay-card">
@@ -53,7 +54,8 @@
 <!-- Listening Card -->
 <ng-container
   *ngIf="
-    activityState.discussionactivity.discussion_complete && !participantIsSharing()
+    activityState.discussionactivity.discussion_complete &&
+    !participantIsSharing()
   "
 >
   <div class="b-flat-card center-text roleplay-card">

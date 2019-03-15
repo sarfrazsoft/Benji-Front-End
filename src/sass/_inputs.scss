@@ -43,6 +43,11 @@
   opacity: 0;
 } /* Modern Browsers */
 
+// input setting
+input {
+  color: inherit;
+}
+
 .b-standard-input {
   outline: none;
   width: 267px;

@@ -1,12 +1,7 @@
 /*FONTS*/
 
 /*Varaibles: Font weights*/
-$pn-light: 'proxima-nova', 'Open-Sans', sans-serif;
 $pn-regular: 'proxima-nova', 'Open-Sans', sans-serif;
-$pn-medium: 'proxima-nova', 'Open-Sans', sans-serif;
-$pn-semi-bold: 'proxima-nova', 'Open-Sans', sans-serif;
-$pn-bold: 'proxima-nova', 'Open-Sans', sans-serif;
-/*end of variables*/
 
 @import '~@angular/material/theming';
 
@@ -62,7 +57,7 @@ $app-theme: mat-light-theme($primary, $accent, $warn);
 
 /*Utilities: Font weights*/
 .pn-200 {
-  font-family: $pn-light;
+  font-family: $pn-regular;
   font-weight: 200;
 }
 
@@ -72,17 +67,17 @@ $app-theme: mat-light-theme($primary, $accent, $warn);
 }
 
 .pn-500 {
-  font-family: $pn-medium;
+  font-family: $pn-regular;
   font-weight: 500;
 }
 
 .pn-600 {
-  font-family: $pn-semi-bold;
+  font-family: $pn-regular;
   font-weight: 600;
 }
 
 .pn-700 {
-  font-family: $pn-bold;
+  font-family: $pn-regular;
   font-weight: 700;
 }
 /*End of font weights*/

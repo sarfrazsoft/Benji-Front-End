@@ -9,9 +9,6 @@
   }
 
   flex-direction: column;
-  .hint-activity__twemoji-container {
-    width: 230px;
-  }
   h2 {
     font-size: 11vh;
     line-height: 1.09;
@@ -42,15 +39,13 @@
   }
   .hint-activity__section-title {
     border-bottom: 1px solid #979797;
-    margin-bottom: 30px;
+    margin-bottom: 3vh;
     h3 {
       font-size: 3.3vh;
       letter-spacing: 2.5px;
       text-align: center;
       text-transform: uppercase;
-      margin-top: 0;
-      margin-bottom: 35px;
-      line-height: normal;
+      margin: 2vh 0;
     }
   }
   .hint-activity__options-container {
@@ -79,17 +74,12 @@
   display: block;
   padding: 0px 60px;
   text-align: center;
-  h3 {
-    line-height: 2.2;
-  }
   .hint-activity__winner {
     font-size: 11vh;
-    line-height: 1.46;
   }
   p {
-    font-size: 3vh;
+    font-size: 4vh;
     line-height: 1.42;
-    max-width: 800px;
-    margin: 60px auto 0;
+    margin: 5vh 0;
   }
 }

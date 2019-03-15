@@ -9,7 +9,7 @@
     position: relative;
   }
   .pair-activity__pair {
-    font-size: 50px;
+    font-size: 5vh;
     line-height: 1.42;
     list-style: none;
   }
@@ -20,7 +20,7 @@
   }
   .mainscreen-acitivity__info-column {
     .pair-activity__emoji-container {
-      width: 230px;
+      width: 30vh;
     }
   }
   .pair-activity__title {
@@ -51,7 +51,7 @@
       text-transform: uppercase;
       font-size: 3.25vh;
       letter-spacing: 2.5px;
-      margin: 40px 0;
+      margin: 4vh 0;
     }
     p {
       font-size: 3.6vh;

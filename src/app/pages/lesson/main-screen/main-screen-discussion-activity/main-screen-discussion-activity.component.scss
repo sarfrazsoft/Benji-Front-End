@@ -31,15 +31,9 @@
   padding: 0 3vw;
 
   .discuss-instruction {
-    font-size: 65px;
+    font-size: 7.5vh;
     line-height: normal;
     margin: 0px;
-    @media #{$xxlarge-and-down} {
-      font-size: 50px;
-    }
-    @media #{$fourK-display-and-up} {
-      font-size: 85px;
-    }
   }
   .discuss-names {
     font-size: 80px;

@@ -8,7 +8,7 @@
 
   .activity-title-container {
     h1 {
-      font-family: $pn-bold;
+      font-family: $pn-regular;
       line-height: normal;
       font-size: 13.5vh;
       // h1 and p tags should not have margin of their own
@@ -21,39 +21,10 @@
   .activity-title-description-container {
     padding: 0vw 2vw;
     p {
-      font-family: $pn-medium;
+      font-family: $pn-regular;
       font-size: 6vh;
       margin: 0 auto;
       line-height: normal;
-    }
-  }
-
-  .forms-submitted {
-    margin-top: 6vh;
-    font-size: 4vh;
-  }
-  .exitSession {
-    font-size: 3.2vh;
-    position: absolute;
-    bottom: 12vh;
-    right: 6vh;
-    color: $vibrant-blue;
-    cursor: pointer;
-    button {
-      background-color: transparent;
-      height: 5vh;
-      width: 5vh;
-
-      margin-left: 0px;
-      transition: all $animation-time linear;
-      -webkit-transition: all $animation-time linear;
-      -ms-transition: all $animation-time linear;
-    }
-    &:hover {
-      button {
-        margin-right: -10px;
-        margin-left: 10px;
-      }
     }
   }
 }

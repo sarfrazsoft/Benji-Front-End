@@ -2,11 +2,15 @@
   <div class="twemoji-container">
     <app-b-twemoji emoji="✍️"></app-b-twemoji>
   </div>
-  <h1 class="vibrant-blue pn-700">Thanks for playing!</h1>
-  <p class="brownish-grey pn-500">
-    We’d really appreciate your feedback. Submit on your phone- it’ll only take
-    a minute!
-  </p>
+  <div class="activity-title-container">
+    <h1 class="vibrant-blue pn-700">Thanks for playing!</h1>
+  </div>
+  <div class="activity-title-description-container">
+    <p class="brownish-grey pn-500">
+      We’d really appreciate your feedback. Submit on your phone- it’ll only
+      take a minute!
+    </p>
+  </div>
   <div class="forms-submitted deep-blue pn-600">
     7/14 froms submitted
   </div>
@@ -17,17 +21,25 @@
     <div class="twemoji-container">
       <app-b-twemoji emoji="🎉"></app-b-twemoji>
     </div>
-    <h1 class="vibrant-blue pn-700">Thanks for playing!</h1>
-    <p class="brownish-grey">
-      We hope you enjoyed this Benji session.
-    </p>
-    <p class="brownish-grey">
-      See you again soon!
-    </p>
+    <div class="activity-title-container">
+      <h1 class="vibrant-blue pn-700">Thanks for playing!</h1>
+    </div>
+    <div class="activity-title-description-container">
+      <p class="brownish-grey">
+        We hope you enjoyed this Benji session.
+      </p>
+      <p class="brownish-grey">
+        See you again soon!
+      </p>
+    </div>
   </div>
-  <div class="exitSession pn-500" (click)="backToStart()">
+  <div
+    class="exitSession pn-500"
+    (click)="backToStart()"
+    fxLayoutAlign="center center"
+  >
     Exit session
-    <button class="launch-session">
+    <button class="launch-session" fxLayoutAlign="center center">
       <img src="/assets/img/launch_singlearrow_blue.png" alt="launch" />
     </button>
   </div>
