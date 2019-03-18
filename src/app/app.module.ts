@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ServicesProviders } from './index';
 
-import { ActivateAccountComponent, EntryComponents } from 'src/app/pages';
+import { EntryComponents } from 'src/app/pages';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LayoutModule } from './layout/layout.module';
 
@@ -18,15 +18,9 @@ import { AppComponent } from './app.component';
 
 // Plugins
 import { OnsenModule } from 'ngx-onsenui';
-import { BTwemoji2Component } from 'src/app/pages/activate-account/b-twemoji2/b-twemoji.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ...EntryComponents,
-    BTwemoji2Component,
-    ActivateAccountComponent
-  ],
+  declarations: [AppComponent, ...EntryComponents],
   imports: [
     AppRoutingModule,
     BrowserModule,
