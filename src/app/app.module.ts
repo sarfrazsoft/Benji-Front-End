@@ -18,9 +18,15 @@ import { AppComponent } from './app.component';
 
 // Plugins
 import { OnsenModule } from 'ngx-onsenui';
+import { BTwemoji2Component } from 'src/app/pages/activate-account/b-twemoji2/b-twemoji.component';
 
 @NgModule({
-  declarations: [AppComponent, ...EntryComponents, ActivateAccountComponent],
+  declarations: [
+    AppComponent,
+    ...EntryComponents,
+    BTwemoji2Component,
+    ActivateAccountComponent
+  ],
   imports: [
     AppRoutingModule,
     BrowserModule,

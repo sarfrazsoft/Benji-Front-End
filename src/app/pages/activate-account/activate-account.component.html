@@ -1,15 +1,31 @@
-<div class="activate-container" fxLayout="row" fxLayout.lt-md="column">
-  <div class="" fxLayoutAlign="start center" fxFlex="100%">
+<div class="activate-container" fxLayout="row">
+  <div class="" fxLayoutAlign="center center" fxFlex="100%">
     <div *ngIf="verifying">
       Hang tight! we're activating your account.
     </div>
-    <div *ngIf="verified">
-      Success! You can <a [routerLink]="['/login']">login</a> using your email
-      and password.
+    <div *ngIf="verified" class="content">
+      <div fxLayout="column">
+        <div class="twemoji-container">
+          <app-b-twemoji2 emoji="🎂"></app-b-twemoji2>
+        </div>
+        <p>
+          Your Benji Account has been successfully created!
+          <a [routerLink]="['/login']">Login to your account</a> using your
+          email and password.
+        </p>
+      </div>
     </div>
-    <div *ngIf="!verified">
-      Some error occured while verifying your registration. Please
-      <a [routerLink]="['/login']">register</a> again.
+    <div *ngIf="!verified" class="content">
+      <div fxLayout="column">
+        <div class="twemoji-container">
+          <app-b-twemoji2 emoji="🙊"></app-b-twemoji2>
+        </div>
+        <p>
+          Oops, something went wrong with your registration. Either your
+          activation link expired or we encountered another error.
+          <a [routerLink]="['/login']">Try again.</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>
