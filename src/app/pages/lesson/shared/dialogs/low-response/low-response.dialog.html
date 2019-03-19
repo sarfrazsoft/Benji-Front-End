@@ -1,4 +1,4 @@
-<div class="white-color" fxLayout="column">
+<div class="white-color" fxLayout="column" style="position: relative">
   <div fxLayoutAlign="end end">
     <button class="close-button" matDialogClose>
       <mat-icon class="icon-white">clear</mat-icon>
@@ -13,5 +13,8 @@
       </p>
       <p>Remember, you can pause the session if something comes up.</p>
     </div>
+  </div>
+  <div class="hint-activity__linear-timer-container">
+    <app-linear-timer #timer [endAudio]="'bell.wav'"></app-linear-timer>
   </div>
 </div>

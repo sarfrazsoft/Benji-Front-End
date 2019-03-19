@@ -12,5 +12,14 @@
         margin-bottom: 8vh;
       }
     }
+
+    button {
+      background-color: $indigo-blue;
+      .mat-icon {
+        height: 3vh;
+        width: 3vh;
+        font-size: 3vh;
+      }
+    }
   }
 }

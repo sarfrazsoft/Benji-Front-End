@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
 @Component({
@@ -8,6 +8,11 @@ import { MatDialogRef } from '@angular/material';
 export class LowResponseDialogComponent implements OnInit {
   roomCode;
   constructor(private dialogRef: MatDialogRef<LowResponseDialogComponent>) {}
+  @ViewChild('timer') timer;
+  ngOnInit() {
+    // const seconds = (Date.parse(endTime) - Date.now()) / 1000;
 
-  ngOnInit() {}
+    const seconds = 200;
+    this.timer.startTimer(seconds);
+  }
 }
