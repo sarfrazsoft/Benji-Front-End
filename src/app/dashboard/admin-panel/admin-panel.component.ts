@@ -24,20 +24,7 @@ export class AdminPanelComponent implements OnInit {
   ) {
     this.route.data.forEach((data: any) => {
       console.log(data);
-      this.courses = [
-        {
-          id: 1,
-          name: 'Active Listening 1',
-          description:
-            'Active Listening is a session that teaches participants the value'
-        },
-        {
-          id: 2,
-          name: 'Active Listening 2',
-          description:
-            'Active Listening is a session that teaches participants the value 2'
-        }
-      ];
+      this.courses = data.dashData.courses;
       // if (!data.dashData.user.job_title) {
       //   this.dialog
       //     .open(JobInfoDialogComponent, {

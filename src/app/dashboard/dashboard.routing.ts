@@ -1,5 +1,10 @@
 import { RouterModule, Routes } from '@angular/router';
-import { AdminPanelComponent, AdminResolver, LearnersComponent } from './index';
+import {
+  AdminPanelComponent,
+  AdminResolver,
+  LearnerResolver,
+  LearnersComponent
+} from './index';
 
 const routes: Routes = [
   {
@@ -14,7 +19,10 @@ const routes: Routes = [
       },
       {
         path: 'learners',
-        component: LearnersComponent
+        component: LearnersComponent,
+        resolve: {
+          learner: LearnerResolver
+        }
       }
     ]
   }

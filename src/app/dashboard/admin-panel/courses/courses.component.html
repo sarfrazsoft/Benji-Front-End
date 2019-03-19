@@ -6,16 +6,16 @@
       fxLayoutAlign="space-between center"
       fxLayoutGap="10px"
     >
-      <h2>{{ course.name }}</h2>
+      <h2>{{ course.course_name }}</h2>
 
-      <div class="launch-session" (click)="launchSession(course.id)">
+      <div class="launch-session" (click)="launchSession(course.course_id)">
         <span>Launch session</span>
         <img src="/assets/img/launch_singlearrow.png" alt="launch" />
       </div>
     </div>
     <div class="course-detail">
       <div class="description">
-        {{ course.description }}
+        {{ course.course_description }}
       </div>
       <div class="course-preview-footer" fxLayoutAlign="start center">
         <div class="overview-button" fxLayoutAlign="start center">
