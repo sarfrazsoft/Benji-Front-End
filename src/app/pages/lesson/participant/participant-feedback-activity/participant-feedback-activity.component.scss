@@ -30,6 +30,7 @@
       width: 31%;
       background: none;
       label {
+        display: block;
         padding: 10px;
         cursor: pointer;
         &:hover,
@@ -60,6 +61,7 @@
     }
     // TODO: combine focus properties on all inputs and textareas into a shared scss file
     textarea {
+      color: inherit;
       outline: none;
       width: 100%;
       height: 74px;
