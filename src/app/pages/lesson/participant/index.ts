@@ -6,10 +6,10 @@ import { ParticipantLessonComponent } from './participant-lesson.component';
 import { ParticipantLobbyComponent } from './participant-lobby-activity/participant-lobby.component';
 import { ParticipantMcqActivityComponent } from './participant-mcq-activity/participant-mcq-activity.component';
 import { ParticipantPairActivityComponent } from './participant-pair-activity/participant-pair-activity.component';
+import { ParticipantPopQuizComponent } from './participant-pop-quiz/participant-pop-quiz.component';
 import { ParticipantTeletriviaActivityComponent } from './participant-teletrivia-activity/participant-teletrivia-activity.component';
 import { ParticipantTitleActivityComponent } from './participant-title-activity/participant-title-activity.component';
 import { ParticipantVideoActivityComponent } from './participant-video-activity/participant-video-activity.component';
-
 export { ParticipantLessonComponent };
 
 export const ParticipantScreenComponents = [
@@ -21,6 +21,7 @@ export const ParticipantScreenComponents = [
   ParticipantLobbyComponent,
   ParticipantMcqActivityComponent,
   ParticipantPairActivityComponent,
+  ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,
   ParticipantTitleActivityComponent,
   ParticipantVideoActivityComponent
