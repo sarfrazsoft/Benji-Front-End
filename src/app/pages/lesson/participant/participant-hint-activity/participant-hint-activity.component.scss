@@ -5,10 +5,6 @@
   p {
     font-size: 14px;
   }
-  .b-flat-card__twemoji {
-    width: 120px;
-    margin: 0 auto;
-  }
 }
 .hintword-card.hintword-card--confirm-state {
   height: calc(100vh - 65px - 125px);
@@ -36,11 +32,6 @@
 @media screen and (min-width: 321px) {
   .b-flat-card__body {
     padding: 5vh 30px 10px;
-  }
-  .hintword-card .b-flat-card__body {
-    .b-flat-card__twemoji {
-      width: 140px;
-    }
   }
   .b-standard-input {
     width: 267px;
