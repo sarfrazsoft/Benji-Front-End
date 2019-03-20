@@ -1,11 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 
 @Component({
   selector: 'app-linear-timer',
   templateUrl: './linear-timer.component.html',
   styleUrls: ['./linear-timer.component.scss']
 })
-export class LinearTimerComponent implements OnInit {
+export class LinearTimerComponent implements OnInit, OnDestroy {
   constructor() {}
   @Input() endAudio;
   @Output() callback = new EventEmitter();
@@ -24,6 +31,11 @@ export class LinearTimerComponent implements OnInit {
       this.initCallback.emit(this);
     }
   }
+
+  ngOnDestroy() {
+    clearInterval(this.timerInterval);
+  }
+
   public startTimer(timerSeconds) {
     if (this.timerInterval !== undefined) {
       clearInterval(this.timerInterval);
