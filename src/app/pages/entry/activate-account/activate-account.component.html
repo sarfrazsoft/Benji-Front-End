@@ -1,9 +1,6 @@
 <div class="activate-container" fxLayout="row">
   <div class="" fxLayoutAlign="center center" fxFlex="100%">
-    <div *ngIf="verifying">
-      Hang tight! we're activating your account.
-    </div>
-    <div *ngIf="verified" class="content">
+    <div *ngIf="verified && !verifying" class="content">
       <div fxLayout="column">
         <div class="twemoji-container">
           <app-b-twemoji2 emoji="🎂"></app-b-twemoji2>
@@ -15,7 +12,7 @@
         </p>
       </div>
     </div>
-    <div *ngIf="!verified" class="content">
+    <div *ngIf="!verified && !verifying" class="content">
       <div fxLayout="column">
         <div class="twemoji-container">
           <app-b-twemoji2 emoji="🙊"></app-b-twemoji2>

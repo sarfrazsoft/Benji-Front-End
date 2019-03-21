@@ -21,13 +21,13 @@ export class ActivateAccountComponent implements OnInit {
         .checkConfirmationCode(params['confirmationCode'])
         .subscribe(
           res => {
-            this.verifying = false;
             // Tell people the account was activated and they can login on this link
             if (res.detail === 'ok') {
               this.verified = true;
             } else {
               this.verified = false;
             }
+            this.verifying = false;
           },
           err => {
             console.log(err);
