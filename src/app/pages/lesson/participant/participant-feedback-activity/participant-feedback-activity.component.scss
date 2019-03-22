@@ -55,14 +55,13 @@
       display: block;
       text-align: center;
     }
-    // TODO: combine focus properties on all inputs and textareas into a shared scss file
     textarea {
       color: inherit;
       outline: none;
-      width: 100%;
+      width: 80%;
       height: 74px;
       resize: none;
-      padding: 10px;
+      padding: 10px 9%;
       border-radius: 8px;
       &:focus {
         box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
