@@ -18,20 +18,14 @@
     margin-left: 15px;
     font-size: 45px;
   }
-  .mainscreen-acitivity__info-column {
-    .pair-activity__emoji-container {
-      width: 30vh;
-    }
+  .pair-activity__emoji-container {
+    width: 25vh;
   }
   .pair-activity__title {
     text-align: center;
     border-bottom: 2px solid #979797;
     p {
-      font-size: 3.75vh;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      padding: 35px 0;
-      margin: 0px;
+      padding: 25px 0;
     }
   }
   .pair-activity__role {
@@ -39,13 +33,10 @@
     margin: 30px 0;
     min-height: 65vh;
     max-height: 65vh;
-    padding: 6vh 5vw;
+    padding: 3vh 5vw;
     @media #{$xxlarge-and-down} {
       margin: 20px;
       padding: 1vh 3vw;
-      flex-direction: column;
-      display: flex;
-      align-items: center;
     }
     h3 {
       text-transform: uppercase;
@@ -54,7 +45,7 @@
       margin: 4vh 0;
     }
     p {
-      font-size: 3.6vh;
+      font-size: 4.6vh;
       line-height: normal;
     }
   }

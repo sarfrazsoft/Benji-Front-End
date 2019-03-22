@@ -37,9 +37,9 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-    this.timerDiameter = window.innerWidth / 4;
+    this.timerDiameter = window.innerWidth / 4.5;
     this.timerDiameter = Math.ceil(this.timerDiameter / 5) * 5;
-    this.textWidth = this.timerDiameter / 20;
+    this.textWidth = this.timerDiameter / 25;
   }
 
   ngOnInit() {

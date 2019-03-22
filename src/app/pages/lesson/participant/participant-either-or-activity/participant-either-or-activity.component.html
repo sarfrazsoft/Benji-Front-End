@@ -13,25 +13,25 @@
         *ngIf="!state.prediction_complete"
         class="b-flat-card__question-no pn-500 brownish-grey"
       >
-        Question: 1
+        Question 1:
       </div>
       <div
         *ngIf="state.prediction_complete"
         class="b-flat-card__question-no pn-500 brownish-grey"
       >
-        Question: 2
+        Question 2:
       </div>
 
-      <h3
+      <h2
         *ngIf="!state.prediction_complete"
         class="pn-700 deep-blue b-flat-card__question"
         [innerHTML]="state.prediction_text"
-      ></h3>
-      <h3
+      ></h2>
+      <h2
         *ngIf="state.prediction_complete"
         class="pn-700 deep-blue b-flat-card__question"
         [innerHTML]="state.preference_text"
-      ></h3>
+      ></h2>
 
       <div
         class="pn-700"
@@ -115,10 +115,10 @@
           >
           </app-b-twemoji>
         </div>
-        <h3 class="pn-500 brownish-grey">
+        <h2 class="pn-500 brownish-grey">
           {{ getUserPreferredChoice().collective_name }} to the
           <span class="deep-blue">{{ getUserSide() }}</span> of the main screen
-        </h3>
+        </h2>
       </div>
     </div>
 
@@ -140,10 +140,10 @@
             [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
           ></app-b-twemoji>
         </div>
-        <h3 class="pn-500 brownish-grey">
+        <h2 class="pn-500 brownish-grey">
           Most of this group are
           {{ getGroupPreferredChoice().collective_name }}.
-        </h3>
+        </h2>
       </div>
     </div>
 

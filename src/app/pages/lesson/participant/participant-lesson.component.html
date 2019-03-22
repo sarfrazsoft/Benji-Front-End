@@ -15,6 +15,13 @@
   >
   </benji-participant-title-activity>
 
+  <!-- <benji-participant-pop-quiz
+    *ngIf="getActivityType() === 'TitleActivity'"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-participant-pop-quiz> -->
+
   <app-participant-teletrivia-activity
     *ngIf="getActivityType() === 'TeleTriviaActivity'"
     [activityState]="serverMessage"

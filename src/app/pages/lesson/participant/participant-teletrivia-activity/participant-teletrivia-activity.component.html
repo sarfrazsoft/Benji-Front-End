@@ -11,7 +11,7 @@
         <app-b-twemoji emoji="💫"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">Form a circle</h3>
-      <p>We’ll get started once everyone is in position.</p>
+      <p class="instruction">We’ll get started once everyone is in position.</p>
     </div>
     <div class="b-flat-card__action">
       <button
@@ -57,9 +57,8 @@
     <div class="b-flat-card__body">
       <h3 class="pn-400 brownish-grey">
         {{
-          activityState.teletriviaactivity.questions[
-            currentQuestionIndex
-          ].question
+          activityState.teletriviaactivity.questions[currentQuestionIndex]
+            .question
         }}
       </h3>
     </div>
@@ -141,7 +140,9 @@
 <ng-template #kickofftemplate>
   <div class="b-dialog-template">
     <p>You’re starting telephone! Shh… don’t show anyone the secret message.</p>
-    <blockquote>“{{ activityState.teletriviaactivity.secret_phrase }}”</blockquote>
+    <blockquote>
+      “{{ activityState.teletriviaactivity.secret_phrase }}”
+    </blockquote>
     <p>
       Whisper it to your neighbour, and follow the prompts below to get the game
       rolling. Hit the ‘Stop’ button when the message gets back to you!

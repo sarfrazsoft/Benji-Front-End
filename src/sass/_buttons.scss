@@ -99,13 +99,13 @@ button {
 .indigo-launch-button {
   color: #fff;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding-left: 6vh;
-  padding-right: 6vh;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  padding-left: 7vh;
+  padding-right: 7vh;
   width: 34vw;
-  height: 12vh;
-  font-size: 6vh;
+  height: 12.5vh;
+  font-size: 5.5vh;
   border-radius: 12vh;
   border: 0px;
   &:focus {

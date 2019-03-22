@@ -5,15 +5,13 @@
     <div
       class="mainscreen-activity__column mainscreen-activity__column--66 pair-activity__roleplay-instruction bg-off-white"
     >
-      <div class="pair-activity__title">
+      <div class="pair-activity__title all-caps-title">
         <p class="brownish-grey pn-500">Role-play</p>
       </div>
       <div
         class="mainscreen-activity__info-column-container pair-activity__role-flexer flexer"
       >
-        <div
-          class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--1"
-        >
+        <div class=" pair-activity__role pair-activity__role--1">
           <div class="pair-activity__emoji-container">
             <app-b-twemoji
               [emoji]="
@@ -40,9 +38,7 @@
             {{ activityState.roleplaypairactivity.secondary_role.instructions }}
           </p>
         </div>
-        <div
-          class="mainscreen-acitivity__info-column pair-activity__role pair-activity__role--2"
-        >
+        <div class=" pair-activity__role pair-activity__role--2">
           <div class="pair-activity__emoji-container">
             <app-b-twemoji
               [emoji]="
@@ -78,7 +74,7 @@
       <app-radial-timer
         endStateText="Times up!"
         [timer]="activityState.roleplaypairactivity.activity_countdown_timer"
-        [endAudio]="'bell.wav'"
+        [endAudio]="'attention-seeker.mp3'"
         #discussionTimer
       ></app-radial-timer>
     </div>

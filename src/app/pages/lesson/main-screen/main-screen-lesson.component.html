@@ -26,6 +26,12 @@
     >
     </benji-main-screen-title-activity>
 
+    <!-- <benji-main-screen-pop-quiz
+      *ngIf="getActivityType() === 'TitleActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    ></benji-main-screen-pop-quiz> -->
+
     <app-mainscreen-activity-teletrivia
       *ngIf="getActivityType() === 'TeleTriviaActivity'"
       [activityState]="serverMessage"

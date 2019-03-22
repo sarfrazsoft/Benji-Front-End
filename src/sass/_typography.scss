@@ -119,6 +119,17 @@ em {
   color: $deep-blue;
 }
 
-/*Legacy Type Styles (To be re written)*/
+// All caps title
+// main-screen
+.all-caps-title {
+  text-transform: uppercase;
+  letter-spacing: 0.5vh;
+  font-size: 4.5vh;
+}
 
-/*End of Legacy Type Styles*/
+// Participant screen grey instruction
+.b-flat-card__body {
+  .instruction {
+    font-size: 20px;
+  }
+}

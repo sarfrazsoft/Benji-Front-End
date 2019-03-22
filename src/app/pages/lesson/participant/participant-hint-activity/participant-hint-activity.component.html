@@ -12,7 +12,7 @@
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
       </div>
       <h3 class="pn-700 deep-blue">Choose a hint word</h3>
-      <p>Submit your word below.</p>
+      <p class="instruction">Submit your word below.</p>
     </div>
     <div class="b-flat-card__action">
       <div class="b-standard-input__container">
@@ -70,7 +70,10 @@
         <button
           class="b-standard-button b-standard-button--unselected"
           *ngFor="let word of activityState.hintwordactivity.words_and_votes"
-          [ngClass]="{ 'b-standard-button--selected': selectedWord && (word.id === selectedWord.id) }"
+          [ngClass]="{
+            'b-standard-button--selected':
+              selectedWord && word.id === selectedWord.id
+          }"
           (click)="selectedWord = word"
         >
           {{ word.word | titlecase }}
@@ -109,10 +112,11 @@
       <h3 class="pn-700 deep-blue">
         {{ activityState.hintwordactivity.voted_word_text | titlecase }}
       </h3>
-      <p>
-        Just say ‘{{ activityState.hintwordactivity.voted_word_text | titlecase }}’ to
-        anyone in this group if you ever need to remind them to listen a little
-        better.
+      <p class="instruction">
+        Just say ‘{{
+          activityState.hintwordactivity.voted_word_text | titlecase
+        }}’ to anyone in this group if you ever need to remind them to listen a
+        little better.
       </p>
     </div>
   </div>

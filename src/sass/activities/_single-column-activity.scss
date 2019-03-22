@@ -19,7 +19,7 @@
     }
   }
   .activity-title-description-container {
-    padding: 0vw 2vw;
+    padding: 0vw 10vw;
     p {
       font-family: $pn-regular;
       font-size: 6vh;
@@ -33,4 +33,9 @@
 .twemoji-container {
   width: 23vh;
   margin: 0 auto;
+}
+
+.forms-submitted {
+  margin-top: 3vh;
+  font-size: 5vh;
 }
