@@ -3,22 +3,29 @@
     width: 75vw;
     background-color: $indigo-blue;
     box-shadow: none;
+    padding: 0px;
 
-    .low-response {
-      padding: 2vw 6vw;
-      font-size: 2.5vw;
-      text-align: center;
-      p {
-        margin-bottom: 8vh;
+    .content {
+      padding-bottom: 20px;
+      > div {
+        padding: 20px;
       }
-    }
+      button {
+        background-color: $indigo-blue;
+        .mat-icon {
+          height: 3vh;
+          width: 3vh;
+          font-size: 3vh;
+        }
+      }
 
-    button {
-      background-color: $indigo-blue;
-      .mat-icon {
-        height: 3vh;
-        width: 3vh;
-        font-size: 3vh;
+      .low-response {
+        padding: 2vw 6vw;
+        font-size: 2.5vw;
+        text-align: center;
+        p {
+          margin-bottom: 8vh;
+        }
       }
     }
   }

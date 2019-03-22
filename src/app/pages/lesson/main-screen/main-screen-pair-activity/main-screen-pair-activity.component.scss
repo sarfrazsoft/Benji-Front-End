@@ -4,6 +4,9 @@
   .pair-activity__roleplay-instruction {
     margin: 0px 60px;
   }
+  .instruction-columns {
+    height: 85%;
+  }
   .mainscreen-activity__column.pair-activity__pairs {
     padding: 0px 60px;
     position: relative;
@@ -31,8 +34,6 @@
   .pair-activity__role {
     width: 50%;
     margin: 30px 0;
-    min-height: 65vh;
-    max-height: 65vh;
     padding: 3vh 5vw;
     @media #{$xxlarge-and-down} {
       margin: 20px;
