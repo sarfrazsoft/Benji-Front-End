@@ -6,12 +6,13 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
 import {
   WhereDoYouStandActivity,
   WhereDoYouStandChoice
 } from 'src/app/services/backend/schema/activities';
+import { Timer } from 'src/app/services/backend/schema/utils';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { LowResponseDialogComponent } from '../../shared/dialogs';
 
@@ -23,6 +24,7 @@ import { LowResponseDialogComponent } from '../../shared/dialogs';
 export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   implements OnInit, AfterViewInit, OnChanges {
   state: WhereDoYouStandActivity;
+  dialogRef;
   @ViewChild('timer') timer;
 
   constructor(
@@ -42,9 +44,10 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
     this.initTimer(this.state.prediction_countdown_timer.end_time);
   }
 
-  openLowResponseDialog(): void {
-    this.dialog
+  openLowResponseDialog(timer: Timer): void {
+    this.dialogRef = this.dialog
       .open(LowResponseDialogComponent, {
+        data: { timer: timer },
         disableClose: true,
         panelClass: 'low-response-dialog'
       })
@@ -57,15 +60,36 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   ngOnChanges(changes: SimpleChanges) {
     this.state = this.activityState.wheredoyoustandactivity;
     if (
-      this.state.prediction_complete &&
-      this.state.user_preferences.length === 0
+      this.state.prediction_extra_countdown_timer &&
+      this.state.prediction_extra_countdown_timer.status !== 'ended' &&
+      !this.state.prediction_extra_time_complete
     ) {
+      if (!this.dialogRef) {
+        this.openLowResponseDialog(this.state.prediction_extra_countdown_timer);
+      }
+    } else if (
+      this.state.prediction_complete &&
+      this.state.user_preferences.length === 0 &&
+      this.state.preference_extra_countdown_timer === null
+    ) {
+      this.dialog.closeAll();
+      this.dialogRef = undefined;
       this.initTimer(this.state.preference_countdown_timer.end_time);
+    } else if (
+      this.state.preference_extra_countdown_timer &&
+      this.state.preference_extra_countdown_timer.status !== 'ended' &&
+      !this.state.preference_extra_time_complete
+    ) {
+      if (!this.dialogRef) {
+        this.openLowResponseDialog(this.state.preference_extra_countdown_timer);
+      }
     } else if (
       this.state.prediction_complete &&
       this.state.preference_complete &&
       !this.state.standing_complete
     ) {
+      this.dialog.closeAll();
+      this.dialogRef = undefined;
       this.initTimer(this.state.stand_on_side_countdown_timer.end_time);
     } else if (
       this.state.prediction_complete &&

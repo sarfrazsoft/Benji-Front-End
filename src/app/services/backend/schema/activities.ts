@@ -169,7 +169,11 @@ export interface WhereDoYouStandActivity {
   preference_seconds: number;
   stand_on_side_seconds: number;
   prediction_countdown_timer: Timer;
+  prediction_extra_time_complete: boolean;
+  prediction_extra_countdown_timer: Timer;
   preference_countdown_timer: Timer;
+  preference_extra_countdown_timer: Timer;
+  preference_extra_time_complete: boolean;
   stand_on_side_countdown_timer: Timer;
   prediction_complete: boolean;
   preference_complete: boolean;

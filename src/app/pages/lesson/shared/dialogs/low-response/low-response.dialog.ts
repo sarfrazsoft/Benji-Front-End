@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'benji-low-response-dialog',
@@ -7,12 +7,19 @@ import { MatDialogRef } from '@angular/material';
 })
 export class LowResponseDialogComponent implements OnInit {
   roomCode;
-  constructor(private dialogRef: MatDialogRef<LowResponseDialogComponent>) {}
+  timeObj;
   @ViewChild('timer') timer;
-  ngOnInit() {
-    // const seconds = (Date.parse(endTime) - Date.now()) / 1000;
 
-    const seconds = 200;
+  constructor(
+    private dialogRef: MatDialogRef<LowResponseDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.timeObj = data.timer;
+  }
+
+  ngOnInit() {
+    this.timer.startTimer(0);
+    const seconds = (Date.parse(this.timeObj.end_time) - Date.now()) / 1000;
     this.timer.startTimer(seconds);
   }
 }

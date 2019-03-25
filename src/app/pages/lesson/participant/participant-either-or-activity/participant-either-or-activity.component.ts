@@ -52,14 +52,57 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     console.log(this.activityState);
     this.state = this.activityState.wheredoyoustandactivity;
     if (
-      this.state.prediction_complete &&
-      this.state.user_preferences.length === 0
+      this.state.prediction_extra_countdown_timer &&
+      this.state.prediction_extra_countdown_timer.status !== 'ended' &&
+      !this.state.prediction_extra_time_complete
     ) {
+      // Show prediction extra time modal
+    } else if (
+      this.state.prediction_complete &&
+      this.state.user_preferences.length === 0 &&
+      this.state.preference_extra_countdown_timer === null
+    ) {
+      // Show user preferences screen
       this.resetChoices();
+    } else if (
+      this.state.preference_extra_countdown_timer &&
+      this.state.preference_extra_countdown_timer.status !== 'ended' &&
+      !this.state.preference_extra_time_complete
+    ) {
+      // Show preferences extra countdown timer
+    } else if (
+      this.state.prediction_complete &&
+      this.state.preference_complete &&
+      !this.state.standing_complete
+    ) {
+      // Show stand on side sceen
+      this.resetChoices();
+    } else if (
+      this.state.prediction_complete &&
+      this.state.preference_complete &&
+      this.state.standing_complete
+    ) {
     }
+    console.log(this.activityState);
   }
 
-  getUserPreferredChoice(): WhereDoYouStandChoice {
+  predictionComplete(): boolean {
+    return (
+      this.state.prediction_complete &&
+      (this.state.prediction_extra_time_complete ||
+        this.state.prediction_extra_time_complete === null)
+    );
+  }
+
+  preferenceComplete(): boolean {
+    return (
+      this.state.preference_complete &&
+      (this.state.preference_extra_time_complete ||
+        this.state.preference_extra_time_complete === null)
+    );
+  }
+
+  getUserPreferredChoice() {
     const pref = this.activityState.wheredoyoustandactivity.user_preferences.find(
       p => {
         return p.user.id === this.user.id;
@@ -67,7 +110,11 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     );
 
     console.log(pref);
-    return pref.wheredoyoustandchoice;
+    if (pref) {
+      return pref.wheredoyoustandchoice;
+    } else {
+      return undefined;
+    }
   }
 
   getGroupPreferredChoice(): WhereDoYouStandChoice {
@@ -92,10 +139,14 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     }
   }
 
-  getUserPredictedChoice(): WhereDoYouStandChoice {
+  getUserPredictedChoice() {
     const predictions = this.state.user_predictions;
     const userPrediction = predictions.find(p => p.user.id === this.user.id);
-    return userPrediction.wheredoyoustandchoice;
+    if (userPrediction) {
+      return userPrediction.wheredoyoustandchoice;
+    } else {
+      return undefined;
+    }
   }
 
   getGroupPercentagePreference() {
@@ -114,6 +165,9 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   evaluateUserPrediction(): string {
     const groupPreference = this.getGroupPreferredChoice();
     const userPrediction = this.getUserPredictedChoice();
+    if (userPrediction === undefined) {
+      return undefined;
+    }
 
     if (groupPreference.id === userPrediction.id) {
       return 'correct :)';
