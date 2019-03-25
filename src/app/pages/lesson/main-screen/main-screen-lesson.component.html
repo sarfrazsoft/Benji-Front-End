@@ -1,7 +1,8 @@
+<div class="ms-preloader flexer align-center" *ngIf="!isConnected()">
+  <mat-spinner></mat-spinner>
+</div>
+
 <div class="ms-fullheight-container">
-  <div class="ms-preloader flexer align-center" *ngIf="!isConnected()">
-    <mat-spinner></mat-spinner>
-  </div>
   <app-main-screen-toolbar></app-main-screen-toolbar>
 
   <div

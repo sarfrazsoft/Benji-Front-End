@@ -4,9 +4,10 @@
 .ms-lesson__activity-container.ms-lesson__activity-container--lobby {
   height: calc(100vh - 101px);
 }
+
 .ms-preloader {
   width: 100%;
-  height: inherit;
+  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
