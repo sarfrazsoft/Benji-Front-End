@@ -15,12 +15,12 @@
   >
   </benji-participant-title-activity>
 
-  <!-- <benji-participant-pop-quiz
-    *ngIf="getActivityType() === 'TitleActivity'"
+  <benji-participant-pop-quiz
+    *ngIf="getActivityType() === 'MCQActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-pop-quiz> -->
+  </benji-participant-pop-quiz>
 
   <app-participant-teletrivia-activity
     *ngIf="getActivityType() === 'TeleTriviaActivity'"
@@ -64,23 +64,16 @@
   >
   </app-participant-feedback-activity>
 
-  <!-- <app-participant-activity-video
-    *ngIf="getActivityType() === 'VideoActivity'"
-    [activityState]="serverMessage"
-    (sendMessage)="sendSocketMessage($event)"
-  >
-  </app-participant-activity-video> -->
-
   <app-participant-activity-video
     *ngIf="getActivityType() === 'VideoActivity'"
     (sendMessage)="sendSocketMessage($event)"
   >
   </app-participant-activity-video>
 
-  <app-participant-mcq-activity
+  <!-- <app-participant-mcq-activity
     *ngIf="getActivityType() === 'MCQActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-mcq-activity>
+  </app-participant-mcq-activity> -->
 </div>

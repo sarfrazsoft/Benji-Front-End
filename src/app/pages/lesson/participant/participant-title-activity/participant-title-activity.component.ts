@@ -11,7 +11,7 @@ export class ParticipantTitleActivityComponent extends BaseActivityComponent
   implements OnInit {
   @ViewChild('titleTimer') titleTimer;
 
-  constructor(private emoji: EmojiLookupService) {
+  constructor(public emoji: EmojiLookupService) {
     super();
   }
 

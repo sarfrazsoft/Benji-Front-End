@@ -15,7 +15,7 @@ export abstract class BaseActivityComponent {
     ).first_name;
   }
 
-  isEmoji(url: string) {
+  public isEmoji(url: string) {
     return url.includes('emoji://');
   }
 }

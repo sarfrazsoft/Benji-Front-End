@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -7,10 +7,16 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-pop-quiz.component.scss']
 })
 export class MainScreenPopQuizComponent extends BaseActivityComponent
-  implements OnInit {
+  implements OnInit, OnChanges {
   constructor() {
     super();
   }
 
-  ngOnInit() {}
+  optionIdentifiers = ['A', 'B', 'C', 'D'];
+
+  ngOnInit() {
+    console.log(this.activityState);
+  }
+
+  ngOnChanges() {}
 }

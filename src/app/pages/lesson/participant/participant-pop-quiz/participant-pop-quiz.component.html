@@ -1,59 +1,27 @@
 <ng-container>
-  <div class="b-flat-card center-text mc-card " *ngIf="false">
+  <div class="b-flat-card center-text mc-card " *ngIf="true">
     <div class="b-flat-card__title"><h2 class="pn-400">Pop quiz</h2></div>
     <div class="b-flat-card__body">
       <h3 class="pn-600 deep-blue">
-        What percentage of workplace performance issues are caused by strained
-        relationships?
+        {{ activityState.mcqactivity.question.question }}
       </h3>
     </div>
     <div class="b-flat-card__action">
       <button
+        *ngFor="
+          let option of activityState.mcqactivity.question.mcqchoice_set;
+          let i = index
+        "
         class="b-standard-button b-standard-button--unselected"
         [ngClass]="{
-          'b-standard-button--correct': revealAnswer && choice.is_correct,
+          'b-standard-button--selected': option.id === selectedAnswerId,
+          'b-standard-button--correct': revealAnswer && option.is_correct,
           'b-standard-button--incorrect':
-            revealAnswer && !choice.is_correct && i === selectedAnswerIndex
+            revealAnswer && !option.is_correct && option.id === selectedAnswerId
         }"
-        (click)="submitAnswer(choice)"
+        (click)="submitAnswer(option)"
       >
-        A. 30%
-      </button>
-
-      <button
-        class="b-standard-button b-standard-button--unselected"
-        [ngClass]="{
-          'b-standard-button--correct': revealAnswer && choice.is_correct,
-          'b-standard-button--incorrect':
-            revealAnswer && !choice.is_correct && i === selectedAnswerIndex
-        }"
-        (click)="submitAnswer(choice)"
-      >
-        A. 30%
-      </button>
-
-      <button
-        class="b-standard-button b-standard-button--unselected"
-        [ngClass]="{
-          'b-standard-button--correct': revealAnswer && choice.is_correct,
-          'b-standard-button--incorrect':
-            revealAnswer && !choice.is_correct && i === selectedAnswerIndex
-        }"
-        (click)="submitAnswer(choice)"
-      >
-        A. 30%
-      </button>
-
-      <button
-        class="b-standard-button b-standard-button--unselected"
-        [ngClass]="{
-          'b-standard-button--correct': revealAnswer && choice.is_correct,
-          'b-standard-button--incorrect':
-            revealAnswer && !choice.is_correct && i === selectedAnswerIndex
-        }"
-        (click)="submitAnswer(choice)"
-      >
-        A. 30%
+        {{ optionIdentifiers[i] }}. {{ option.choice_text }}
       </button>
     </div>
   </div>
@@ -95,7 +63,7 @@
     </div>
   </div>
 
-  <div class="b-flat-card center-text mc-card " *ngIf="true">
+  <div class="b-flat-card center-text mc-card " *ngIf="false">
     <div class="b-flat-card__title"><h2 class="pn-400">Pop quiz</h2></div>
     <div class="b-flat-card__body">
       <div class="b-flat-card__twemoji">
@@ -110,12 +78,12 @@
     </div>
   </div>
 
-  <div class="mc-card__timer mc-card__timer--starter-layout" *ngIf="!killTimer">
+  <!-- <div class="mc-card__timer mc-card__timer--starter-layout" *ngIf="!killTimer">
     <app-linear-timer
       *ngIf="!revealAnswer"
       (callback)="questionTimeUpCallback()"
       (initCallback)="startQuestionTimer($event)"
       #questionTimer
     ></app-linear-timer>
-  </div>
+  </div> -->
 </ng-container>
