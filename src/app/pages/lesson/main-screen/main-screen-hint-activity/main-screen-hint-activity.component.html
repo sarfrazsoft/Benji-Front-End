@@ -16,7 +16,7 @@
     </div>
     <div class="hint-activity__options-container" #listParent>
       <div class="hint-activity__section-title">
-        <h3>
+        <h3 class="pn-500">
           <ng-container
             *ngIf="!activityState.hintwordactivity.submission_complete"
           >
@@ -79,6 +79,8 @@
 >
   <div
     class="mainscreen-activity__column mainscreen-activity__column--33 bg-off-white"
+    fxLayout="column"
+    fxLayoutAlign="center start"
   >
     <div class="hint-activity__instruction-container flexer--center">
       <div class="ms-emoji-container">

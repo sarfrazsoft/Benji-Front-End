@@ -29,13 +29,10 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   state: WhereDoYouStandActivity;
+  selectedPreference;
+  selectedPrediction;
   user: User;
   choice = null;
-
-  @ViewChild('radioInput_1') radioInput_1;
-  @ViewChild('radioInput_2') radioInput_2;
-  @ViewChild('radioInput_3') radioInput_3;
-  @ViewChild('radioInput_4') radioInput_4;
 
   constructor(
     private emoji: EmojiLookupService,
@@ -51,10 +48,12 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   }
 
   choosePrediction(choice): void {
+    this.selectedPrediction = choice.id;
     this.sendMessage.emit(new WhereDoYouStandSubmitPredictionEvent(choice));
   }
 
   choosePreference(choice): void {
+    this.selectedPreference = choice.id;
     this.sendMessage.emit(new WhereDoYouStandSubmitPreferenceEvent(choice));
   }
 
@@ -128,7 +127,6 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
 
   resetChoices(): void {
     this.choice = null;
-    this.radioInput_1.nativeElement.blur();
   }
 
   getUserSide(): string {

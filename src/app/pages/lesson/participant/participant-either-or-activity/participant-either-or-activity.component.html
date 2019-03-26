@@ -30,17 +30,13 @@
         fxLayoutAlign="center"
         fxLayoutGap="20px"
       >
-        <div class="select-option-radio">
-          <input
-            #radioInput_1
-            type="radio"
-            name="choice"
-            id="left_choice"
-            [(ngModel)]="choice"
+        <div class="">
+          <div
+            class="radio-mock-button"
+            [ngClass]="{
+              'selected-option': state.left_choice.id === selectedPrediction
+            }"
             (click)="choosePrediction(state.left_choice)"
-          />
-          <label
-            for="left_choice"
             *ngIf="isEmoji(state.left_choice.choice_img_url)"
           >
             <app-b-twemoji
@@ -49,21 +45,17 @@
             <span>
               {{ state.left_choice.prediction_text }}
             </span>
-          </label>
+          </div>
         </div>
 
-        <div class="select-option-radio">
-          <input
-            #radioInput_2
-            type="radio"
-            value="right_choice"
-            id="right_choice"
-            [(ngModel)]="choice"
+        <div class="">
+          <div
+            class="radio-mock-button"
+            [ngClass]="{
+              'selected-option': state.right_choice.id === selectedPrediction
+            }"
             (click)="choosePrediction(state.right_choice)"
-          />
-          <label
-            for="right_choice"
-            *ngIf="isEmoji(state.left_choice.choice_img_url)"
+            *ngIf="isEmoji(state.right_choice.choice_img_url)"
           >
             <app-b-twemoji
               [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
@@ -74,7 +66,7 @@
             <span>
               {{ state.right_choice.preference_text }}
             </span>
-          </label>
+          </div>
         </div>
       </div>
     </div>
@@ -103,18 +95,14 @@
         fxLayoutAlign="center"
         fxLayoutGap="20px"
       >
-        <div class="select-option-radio">
-          <input
-            #radioInput_3
-            type="radio"
-            name="choice"
-            id="left_choice"
-            [(ngModel)]="choice"
-            (click)="choosePreference(state.left_choice)"
-          />
-          <label
-            for="left_choice"
+        <div class="">
+          <div
             *ngIf="isEmoji(state.left_choice.choice_img_url)"
+            class="radio-mock-button"
+            [ngClass]="{
+              'selected-option': state.left_choice.id === selectedPreference
+            }"
+            (click)="choosePreference(state.left_choice)"
           >
             <app-b-twemoji
               [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
@@ -122,21 +110,17 @@
             <span>
               {{ state.left_choice.preference_text }}
             </span>
-          </label>
+          </div>
         </div>
 
-        <div class="select-option-radio">
-          <input
-            #radioInput_4
-            type="radio"
-            value="right_choice"
-            id="right_choice"
-            [(ngModel)]="choice"
+        <div class="">
+          <div
+            class="radio-mock-button"
+            [ngClass]="{
+              'selected-option': state.right_choice.id === selectedPreference
+            }"
             (click)="choosePreference(state.right_choice)"
-          />
-          <label
-            for="right_choice"
-            *ngIf="isEmoji(state.left_choice.choice_img_url)"
+            *ngIf="isEmoji(state.right_choice.choice_img_url)"
           >
             <app-b-twemoji
               [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
@@ -144,7 +128,7 @@
             <span>
               {{ state.right_choice.preference_text }}
             </span>
-          </label>
+          </div>
         </div>
       </div>
     </div>
