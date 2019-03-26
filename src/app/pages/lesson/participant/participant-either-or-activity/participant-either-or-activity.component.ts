@@ -1,4 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {
   BackendRestService,
   EitherOrActivityService,
@@ -25,6 +31,11 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   state: WhereDoYouStandActivity;
   user: User;
   choice = null;
+
+  @ViewChild('radioInput_1') radioInput_1;
+  @ViewChild('radioInput_2') radioInput_2;
+  @ViewChild('radioInput_3') radioInput_3;
+  @ViewChild('radioInput_4') radioInput_4;
 
   constructor(
     private emoji: EmojiLookupService,
@@ -117,6 +128,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
 
   resetChoices(): void {
     this.choice = null;
+    this.radioInput_1.nativeElement.blur();
   }
 
   getUserSide(): string {

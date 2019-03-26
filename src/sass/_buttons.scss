@@ -108,7 +108,7 @@ button {
   font-size: 5.5vh;
   border-radius: 12vh;
   border: 0px;
-  &:focus {
+  &:active {
     background-color: #3a126e;
   }
   mat-icon {
