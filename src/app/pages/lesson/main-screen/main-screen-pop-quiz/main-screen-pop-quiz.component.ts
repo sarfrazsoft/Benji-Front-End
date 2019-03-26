@@ -14,9 +14,7 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
 
   optionIdentifiers = ['A', 'B', 'C', 'D'];
 
-  ngOnInit() {
-    console.log(this.activityState);
-  }
+  ngOnInit() {}
 
   ngOnChanges() {}
 }

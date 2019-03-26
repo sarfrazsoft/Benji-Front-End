@@ -37,7 +37,6 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   ngOnInit() {
     this.user = this.activityState.your_identity;
     this.state = this.activityState.wheredoyoustandactivity;
-    console.log(this.activityState);
   }
 
   choosePrediction(choice): void {
@@ -49,7 +48,6 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(this.activityState);
     this.state = this.activityState.wheredoyoustandactivity;
     if (
       this.state.prediction_extra_countdown_timer &&
@@ -77,13 +75,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     ) {
       // Show stand on side sceen
       this.resetChoices();
-    } else if (
-      this.state.prediction_complete &&
-      this.state.preference_complete &&
-      this.state.standing_complete
-    ) {
     }
-    console.log(this.activityState);
   }
 
   predictionComplete(): boolean {
@@ -109,7 +101,6 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
       }
     );
 
-    console.log(pref);
     if (pref) {
       return pref.wheredoyoustandchoice;
     } else {

@@ -19,9 +19,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
 
   optionIdentifiers = ['A', 'B', 'C', 'D'];
 
-  ngOnInit() {
-    console.log(this.activityState);
-  }
+  ngOnInit() {}
 
   submitAnswer(option: MCQChoice) {
     // this.revealAnswer = true;

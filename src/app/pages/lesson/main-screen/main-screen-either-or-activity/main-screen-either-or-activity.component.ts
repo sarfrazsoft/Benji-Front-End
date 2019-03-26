@@ -37,7 +37,6 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
 
   ngOnInit() {
     this.state = this.activityState.wheredoyoustandactivity;
-    console.log(this.activityState);
   }
 
   ngAfterViewInit() {
@@ -52,9 +51,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
         panelClass: 'low-response-dialog'
       })
       .afterClosed()
-      .subscribe(res => {
-        console.log(res);
-      });
+      .subscribe(res => {});
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -100,7 +97,6 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
         this.activityState.base_activity.next_activity_start_timer.end_time
       );
     }
-    console.log(this.activityState);
   }
 
   initTimer(endTime: string) {
@@ -125,6 +121,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
 
   getGroupPercentagePrediction() {
     const numberOfUsers = this.activityState.lesson_run.joined_users.length;
+    let numberOfUsersWhoPredicted;
 
     const groupPrediction = Math.max.apply(
       Math,
@@ -132,6 +129,10 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
         return o.num_predictions;
       })
     );
+
+    numberOfUsersWhoPredicted =
+      this.state.choice_stats[0].num_predictions +
+      this.state.choice_stats[1].num_predictions;
 
     return Math.trunc((groupPrediction / numberOfUsers) * 100);
   }
