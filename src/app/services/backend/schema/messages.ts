@@ -6,8 +6,11 @@ import {
   LobbyActivity,
   MCQActivity,
   RoleplayPairActivity,
-  TeleTriviaActivity, TitleActivity,
-  VideoActivity, WhereDoYouStandActivity, WhereDoYouStandChoice
+  TeleTriviaActivity,
+  TitleActivity,
+  VideoActivity,
+  WhereDoYouStandActivity,
+  WhereDoYouStandChoice
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
@@ -60,7 +63,7 @@ export class ActivityEvent {
   event_name = 'Event';
   extra_args = {};
   toMessage() {
-    return {'event_type': this.event_name, ...this.extra_args };
+    return { event_type: this.event_name, ...this.extra_args };
   }
 }
 
@@ -72,13 +75,16 @@ export class ResumeActivityEvent extends ActivityEvent {
   event_name = 'ResumeActivityEvent';
 }
 
-
 export class LobbyStartButtonClickEvent extends ActivityEvent {
   event_name = 'LobbyStartButtonClickEvent';
 }
 
 export class EndEvent extends ActivityEvent {
   event_name = 'EndEvent';
+}
+
+export class NextInternalEvent extends ActivityEvent {
+  event_name = 'NextInternalEvent';
 }
 
 export class TeleTriviaUserInCircleEvent extends ActivityEvent {
@@ -94,7 +100,7 @@ export class TeleTriviaSubmitAnswerEvent extends ActivityEvent {
 
   constructor(question: MCQQuestion, answer: MCQChoice) {
     super();
-    this.extra_args = {'question': question.id, 'answer': answer.id};
+    this.extra_args = { question: question.id, answer: answer.id };
   }
 }
 
@@ -119,7 +125,7 @@ export class HintWordSubmitWordEvent extends ActivityEvent {
 
   constructor(word: string) {
     super();
-    this.extra_args = {'word': word};
+    this.extra_args = { word: word };
   }
 }
 
@@ -128,7 +134,7 @@ export class HintWordSubmitVoteEvent extends ActivityEvent {
 
   constructor(word_id: number) {
     super();
-    this.extra_args = {'hintwordword': word_id};
+    this.extra_args = { hintwordword: word_id };
   }
 }
 
@@ -137,7 +143,7 @@ export class MCQSubmitAnswerEvent extends ActivityEvent {
 
   constructor(answer: MCQChoice) {
     super();
-    this.extra_args = {'answer': answer.id};
+    this.extra_args = { answer: answer.id };
   }
 }
 
@@ -154,7 +160,7 @@ export class WhereDoYouStandSubmitPredictionEvent extends ActivityEvent {
 
   constructor(choice: WhereDoYouStandChoice) {
     super();
-    this.extra_args = {'choice': choice.id};
+    this.extra_args = { choice: choice.id };
   }
 }
 
@@ -163,6 +169,6 @@ export class WhereDoYouStandSubmitPreferenceEvent extends ActivityEvent {
 
   constructor(choice: WhereDoYouStandChoice) {
     super();
-    this.extra_args = {'choice': choice.id};
+    this.extra_args = { choice: choice.id };
   }
 }

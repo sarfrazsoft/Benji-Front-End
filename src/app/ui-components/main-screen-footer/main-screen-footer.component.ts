@@ -1,6 +1,11 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  EndEvent,
+  NextInternalEvent,
+  PauseActivityEvent,
+  ResumeActivityEvent
+} from '../../services/backend/schema/messages';
 import { VideoStateService } from '../../services/video-state.service';
-import {EndEvent, PauseActivityEvent, ResumeActivityEvent} from '../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-main-screen-footer',
@@ -34,7 +39,8 @@ export class MainScreenFooterComponent implements OnInit {
     if (eventType === 'pause') {
       this.socketMessage.emit(new PauseActivityEvent());
     } else if (eventType === 'next') {
-      this.socketMessage.emit(new EndEvent());
+      // this.socketMessage.emit(new EndEvent());
+      this.socketMessage.emit(new NextInternalEvent());
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());
     }

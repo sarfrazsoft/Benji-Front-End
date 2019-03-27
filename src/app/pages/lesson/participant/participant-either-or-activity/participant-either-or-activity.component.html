@@ -39,9 +39,11 @@
             (click)="choosePrediction(state.left_choice)"
             *ngIf="isEmoji(state.left_choice.choice_img_url)"
           >
-            <app-b-twemoji
-              [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-            ></app-b-twemoji>
+            <div class="emoji-div">
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+              ></app-b-twemoji>
+            </div>
             <span>
               {{ state.left_choice.prediction_text }}
             </span>
@@ -57,14 +59,13 @@
             (click)="choosePrediction(state.right_choice)"
             *ngIf="isEmoji(state.right_choice.choice_img_url)"
           >
-            <app-b-twemoji
-              [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-            ></app-b-twemoji>
+            <div class="emoji-div">
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+              ></app-b-twemoji>
+            </div>
             <span>
               {{ state.right_choice.prediction_text }}
-            </span>
-            <span>
-              {{ state.right_choice.preference_text }}
             </span>
           </div>
         </div>
@@ -104,9 +105,11 @@
             }"
             (click)="choosePreference(state.left_choice)"
           >
-            <app-b-twemoji
-              [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-            ></app-b-twemoji>
+            <div class="emoji-div">
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+              ></app-b-twemoji>
+            </div>
             <span>
               {{ state.left_choice.preference_text }}
             </span>
@@ -122,9 +125,11 @@
             (click)="choosePreference(state.right_choice)"
             *ngIf="isEmoji(state.right_choice.choice_img_url)"
           >
-            <app-b-twemoji
-              [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-            ></app-b-twemoji>
+            <div class="emoji-div">
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+              ></app-b-twemoji>
+            </div>
             <span>
               {{ state.right_choice.preference_text }}
             </span>

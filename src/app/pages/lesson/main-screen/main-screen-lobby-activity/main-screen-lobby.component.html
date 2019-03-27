@@ -52,6 +52,9 @@
           <li
             *ngFor="let participant of activityState.lesson_run.joined_users"
             class="deep-blue"
+            [ngClass]="{
+              'long-list': activityState.lesson_run.joined_users.length > 20
+            }"
           >
             {{ participant.first_name }}
           </li>

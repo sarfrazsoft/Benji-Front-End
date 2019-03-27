@@ -33,17 +33,17 @@ export class EmojiLookupService {
         return '🍔';
       case 'hotdog':
         return '🌭';
-      case 'future':
+      case 'rocket':
         return '🚀';
-      case 'past':
+      case 'dinosaur':
         return '🦕';
-      case 'alllanguages':
+      case 'world':
         return '🌎';
-      case 'animals':
+      case 'penguin':
         return '🐧';
-      case 'famous':
+      case 'mic':
         return '👩‍🎤';
-      case 'notfamous':
+      case 'woman-cross':
         return '🙅‍♀️';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
