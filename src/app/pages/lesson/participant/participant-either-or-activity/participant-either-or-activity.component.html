@@ -157,9 +157,9 @@
             </app-b-twemoji>
           </div>
           <h2 class="pn-500 brownish-grey">
-            {{ getUserPreferredChoice().collective_name }} to the
-            <span class="deep-blue">{{ getUserSide() }}</span> of the main
-            screen
+            <span [innerHTML]="getUserPreferredChoice().collective_name"></span>
+            to the <span class="deep-blue">{{ getUserSide() }}</span> of the
+            main screen
           </h2>
         </div>
       </ng-container>
@@ -223,7 +223,9 @@
           </div>
           <h2 class="pn-500 brownish-grey">
             Most of this group are
-            {{ getGroupPreferredChoice().collective_name }}.
+            <span
+              [innerHTML]="getGroupPreferredChoice().collective_name"
+            ></span>
           </h2>
         </div>
       </ng-container>

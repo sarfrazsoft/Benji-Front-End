@@ -137,8 +137,12 @@
         <h1 class="brownish-grey pn-500 question">
           <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that
           there would be more
-          <em>{{ getGroupPredictionChoice().collective_name }}</em> in this
-          group
+          <em
+            ><span
+              [innerHTML]="getGroupPredictionChoice().collective_name"
+            ></span
+          ></em>
+          in this group
         </h1>
       </div>
       <div
@@ -175,7 +179,11 @@
           class="brownish-grey pn-500 question"
         >
           <em>{{ getGroupPercentagePreference() }}%</em> of you are
-          <em>{{ getGroupPreferredChoice().collective_name }}</em>
+          <em>
+            <span
+              [innerHTML]="getGroupPreferredChoice().collective_name"
+            ></span>
+          </em>
         </h1>
         <h1
           *ngIf="isGroupPredictionEvaluationTie()"
