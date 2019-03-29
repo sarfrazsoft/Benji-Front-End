@@ -54,7 +54,17 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
         this.audioStarted = true;
         const audio = new Audio('../../../assets/audio/' + this.endAudio);
         audio.load();
-        audio.play();
+        const promise = audio.play();
+        if (promise !== undefined) {
+          promise
+            .then(() => {
+              // Autoplay started!
+            })
+            .catch(error => {
+              // Autoplay was prevented.
+              // Show a "Play" button so that user can start playback.
+            });
+        }
       }
       this.progressBarWidth = `${(this.timeElapsed / (this.totalTime - 1250)) *
         100}`;

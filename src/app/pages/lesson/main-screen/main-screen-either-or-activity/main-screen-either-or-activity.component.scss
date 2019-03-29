@@ -29,10 +29,15 @@
     margin-bottom: 2vh;
   }
 
+  .move-your-side {
+    padding: 0vw 4vw;
+  }
+
   .result {
     padding: 4vh 0vh;
     > div {
       padding: 5vh;
+      overflow: hidden;
     }
     > :first-child {
       border-right: 4px solid $grey;
