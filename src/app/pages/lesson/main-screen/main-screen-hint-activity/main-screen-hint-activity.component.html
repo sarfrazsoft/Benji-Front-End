@@ -45,6 +45,10 @@
             class="deep-blue hint-activity__option"
             [ngStyle]="{ 'font-size.px': voteFontSize }"
             *ngFor="let word of activityState.hintwordactivity.words_and_votes"
+            [ngClass]="{
+              'long-list':
+                activityState.hintwordactivity.words_and_votes.length > 15
+            }"
           >
             {{ word.word }}
           </li>
