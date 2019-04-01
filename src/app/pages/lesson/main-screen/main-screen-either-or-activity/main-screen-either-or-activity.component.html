@@ -147,7 +147,9 @@
       </div>
       <div
         class="twemoji-container"
-        *ngIf="isEmoji(getGroupPredictionChoice().choice_img_url)"
+        *ngIf="
+          isEmoji(getGroupPredictionChoice().choice_img_url) && !hideResultEmoji
+        "
       >
         <app-b-twemoji
           [emoji]="emoji.getEmoji(getGroupPredictionChoice().choice_img_url)"

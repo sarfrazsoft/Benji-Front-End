@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  HostListener,
   OnChanges,
   OnInit,
   SimpleChanges,
@@ -24,8 +25,18 @@ import { LowResponseDialogComponent } from '../../shared/dialogs';
 export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   implements OnInit, AfterViewInit, OnChanges {
   state: WhereDoYouStandActivity;
+  hideResultEmoji = false;
   dialogRef;
   @ViewChild('timer') timer;
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    if (window.innerWidth < 1400) {
+      this.hideResultEmoji = true;
+    } else {
+      this.hideResultEmoji = false;
+    }
+  }
 
   constructor(
     private emoji: EmojiLookupService,
@@ -37,6 +48,12 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
 
   ngOnInit() {
     this.state = this.activityState.wheredoyoustandactivity;
+
+    if (window.innerWidth < 1400) {
+      this.hideResultEmoji = true;
+    } else {
+      this.hideResultEmoji = false;
+    }
   }
 
   ngAfterViewInit() {
