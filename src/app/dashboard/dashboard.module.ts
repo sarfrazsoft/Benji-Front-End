@@ -12,7 +12,6 @@ import {
   DashboardProviders
 } from './';
 import { LearnersComponent, LearnersTableComponent } from './learners';
-import { InfiniteScrollListComponent } from './learners/infinite-scroll-list/infinite-scroll-list.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -25,8 +24,7 @@ import { InfiniteScrollListComponent } from './learners/infinite-scroll-list/inf
   declarations: [
     ...DashboardComponents,
     LearnersComponent,
-    LearnersTableComponent,
-    InfiniteScrollListComponent
+    LearnersTableComponent
   ],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders

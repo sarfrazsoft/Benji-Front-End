@@ -25,7 +25,6 @@ export class LearnerService {
   getUsers(): Observable<any> {
     return this.http.get(global.apiRoot + '/tenants/users/').pipe(
       map(res => {
-        this.contextService.user = res;
         return res;
       })
     );
@@ -38,17 +37,4 @@ export class LearnerService {
   //     })
   //   );
   // }
-}
-
-import { Http } from '@angular/http';
-
-const BASE_URL = 'http://node-hnapi.herokuapp.com';
-
-@Injectable()
-export class HackerNewsService {
-  constructor(private http: Http) {}
-
-  getLatestStories(page: number = 1) {
-    return this.http.get(`${BASE_URL}/news?page=${page}`);
-  }
 }

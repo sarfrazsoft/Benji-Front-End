@@ -20,7 +20,7 @@ export class LearnerResolver implements Resolve<any> {
       const users = await this.learnerService.getUsers().toPromise();
 
       // const courses = await this.adminService.getCourses().toPromise();
-      return { user: users };
+      return { users: users };
     } catch (err) {
       console.log(err);
     }
