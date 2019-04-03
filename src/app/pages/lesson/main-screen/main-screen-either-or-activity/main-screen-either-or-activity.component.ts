@@ -57,7 +57,9 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   }
 
   ngAfterViewInit() {
-    this.initTimer(this.state.prediction_countdown_timer.end_time);
+    if (this.state.prediction_countdown_timer.end_time) {
+      this.initTimer(this.state.prediction_countdown_timer.end_time);
+    }
   }
 
   openLowResponseDialog(timer: Timer): void {
@@ -86,8 +88,11 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
       this.state.user_preferences.length === 0 &&
       this.state.preference_extra_countdown_timer === null
     ) {
-      this.dialog.closeAll();
-      this.dialogRef = undefined;
+      if (this.dialog) {
+        this.dialog.closeAll();
+        this.dialogRef = undefined;
+      }
+      console.log(this.state.preference_countdown_timer);
       this.initTimer(this.state.preference_countdown_timer.end_time);
     } else if (
       this.state.preference_extra_countdown_timer &&
@@ -102,8 +107,10 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
       this.state.preference_complete &&
       !this.state.standing_complete
     ) {
-      this.dialog.closeAll();
-      this.dialogRef = undefined;
+      if (this.dialog) {
+        this.dialog.closeAll();
+        this.dialogRef = undefined;
+      }
       this.initTimer(this.state.stand_on_side_countdown_timer.end_time);
     } else if (
       this.state.prediction_complete &&
