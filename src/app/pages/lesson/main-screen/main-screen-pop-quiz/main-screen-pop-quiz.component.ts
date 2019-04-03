@@ -8,6 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
+  radialTimer;
   constructor() {
     super();
   }
@@ -16,5 +17,19 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
 
   ngOnInit() {}
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    const as = this.activityState;
+    if (
+      as.mcqactivity.question_timer &&
+      as.mcqactivity.question_timer.status === 'running'
+    ) {
+      this.radialTimer = as.mcqactivity.question_timer;
+    } else if (
+      as.base_activity.next_activity_start_timer &&
+      as.base_activity.next_activity_start_timer.status === 'running'
+    ) {
+      this.radialTimer = as.base_activity.next_activity_start_timer;
+    }
+    console.log(this.activityState);
+  }
 }

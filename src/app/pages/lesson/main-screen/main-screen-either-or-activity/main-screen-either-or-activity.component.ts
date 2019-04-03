@@ -92,7 +92,6 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
         this.dialog.closeAll();
         this.dialogRef = undefined;
       }
-      console.log(this.state.preference_countdown_timer);
       this.initTimer(this.state.preference_countdown_timer.end_time);
     } else if (
       this.state.preference_extra_countdown_timer &&
