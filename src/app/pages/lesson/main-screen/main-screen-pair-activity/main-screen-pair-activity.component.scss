@@ -49,32 +49,24 @@
   .pair-activity__role--2 {
     border-left: 2px solid #979797;
   }
-  .pair-activity__pair {
-    margin: 0;
-    font-size: 4vh;
-    line-height: 1.33;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 45%;
-    text-overflow: ellipsis;
-    list-style: none;
-  }
-}
-
-.ul-find-partner {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  padding-left: 0;
-  height: 70vh;
-  .li-find-partner {
-    margin: 0;
-    font-size: 3.5vh;
-    line-height: 1.33;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 45%;
-    text-overflow: ellipsis;
-    list-style: none;
+  .ul-find-partner {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding-left: 0;
+    height: 68vh;
+    .li-find-partner {
+      margin: 0;
+      font-size: 3.5vh;
+      display: flex;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      list-style: none;
+      margin-bottom: 1vh;
+      &.long-list {
+        font-size: 2vh;
+      }
+    }
   }
 }

@@ -111,7 +111,11 @@
           *ngFor="
             let userGroup of activityState.roleplaypairactivity.roleplaypair_set
           "
-          [ngClass]="{ 'deep-blue': userGroup.group_found }"
+          [ngClass]="{
+            'deep-blue': userGroup.group_found,
+            'long-list':
+              activityState.roleplaypairactivity.roleplaypair_set.length > 15
+          }"
         >
           {{ getGroupText(userGroup) }}
           <mat-icon
@@ -124,13 +128,4 @@
       <app-linear-timer #pairTimer [endAudio]="'bell.wav'"></app-linear-timer>
     </div>
   </div>
-  <!-- <audio
-  #sfxPlayer
-  autoplay
-  loop
-  class="hideAndShrink"
-  src="../../../../../assets/audio/Waiting%20Music.mp3"
->
-  Your browser does not support the <code>audio</code> element.
-</audio> -->
 </ng-container>
