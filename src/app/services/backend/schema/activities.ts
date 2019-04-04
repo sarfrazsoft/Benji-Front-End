@@ -30,6 +30,16 @@ export interface MCQActivity {
   all_users_answered: boolean;
 }
 
+export interface MCQResultsActivity {
+  results_summary: UserScore[];
+  total: number;
+}
+
+export interface UserScore {
+  id: number;
+  score: number;
+}
+
 export interface VideoActivity {
   video_url: string;
 }

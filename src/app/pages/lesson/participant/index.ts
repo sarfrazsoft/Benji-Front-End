@@ -5,6 +5,7 @@ import { ParticipantHintActivityComponent } from './participant-hint-activity/pa
 import { ParticipantLessonComponent } from './participant-lesson.component';
 import { ParticipantLobbyComponent } from './participant-lobby-activity/participant-lobby.component';
 import { ParticipantMcqActivityComponent } from './participant-mcq-activity/participant-mcq-activity.component';
+import { ParticipantMcqresultActivityComponent } from './participant-mcqresult-activity/participant-mcqresult-activity.component';
 import { ParticipantPairActivityComponent } from './participant-pair-activity/participant-pair-activity.component';
 import { ParticipantPopQuizComponent } from './participant-pop-quiz/participant-pop-quiz.component';
 import { ParticipantTeletriviaActivityComponent } from './participant-teletrivia-activity/participant-teletrivia-activity.component';
@@ -20,6 +21,7 @@ export const ParticipantScreenComponents = [
   ParticipantLessonComponent,
   ParticipantLobbyComponent,
   ParticipantMcqActivityComponent,
+  ParticipantMcqresultActivityComponent,
   ParticipantPairActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,

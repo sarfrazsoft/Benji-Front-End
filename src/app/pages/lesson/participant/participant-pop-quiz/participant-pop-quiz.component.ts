@@ -10,6 +10,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
+  questionTimerStarted = false;
+  showResults = false;
   selectedChoice: MCQChoice = {
     id: null,
     is_correct: null,
@@ -31,35 +33,45 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
     const as = this.activityState;
     if (
       as.mcqactivity.question_timer &&
-      as.mcqactivity.question_timer.status === 'running'
+      (as.mcqactivity.question_timer.status === 'running' ||
+        as.mcqactivity.question_timer.status === 'paused')
     ) {
-      this.revealAnswer = false;
-      this.selectedChoice = {
-        id: null,
-        is_correct: null,
-        choice_text: null,
-        explanation: null
-      };
-      this.initTimer(as.mcqactivity.question_timer.end_time);
+      if (!this.questionTimerStarted) {
+        this.selectedChoice = {
+          id: null,
+          is_correct: null,
+          choice_text: null,
+          explanation: null
+        };
+        this.questionTimerStarted = true;
+        this.initTimer(as.mcqactivity.question_timer.end_time);
+      }
     } else if (
       as.base_activity.next_activity_start_timer &&
-      as.base_activity.next_activity_start_timer.status === 'running'
+      (as.base_activity.next_activity_start_timer.status === 'running' ||
+        as.base_activity.next_activity_start_timer.status === 'paused')
     ) {
-      this.revealAnswer = true;
+      this.questionTimerStarted = false;
       this.initTimer(as.base_activity.next_activity_start_timer.end_time);
+    } else if (as.mcqresultsactivity) {
+      this.showResults = true;
     }
   }
 
   submitAnswer(option: MCQChoice) {
-    if (!this.revealAnswer) {
-      this.selectedChoice = option;
-      // this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
-    }
+    this.selectedChoice = option;
+    this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
   }
 
   initTimer(endTime: string) {
     this.timer.startTimer(0);
     const seconds = (Date.parse(endTime) - Date.now()) / 1000;
     this.timer.startTimer(seconds);
+  }
+
+  getCorrectAnswer() {
+    return this.activityState.mcqactivity.question.mcqchoice_set.find(
+      q => q.is_correct
+    );
   }
 }

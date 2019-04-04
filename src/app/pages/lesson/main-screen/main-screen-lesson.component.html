@@ -33,6 +33,12 @@
       (sendMessage)="sendSocketMessage($event)"
     ></benji-main-screen-pop-quiz>
 
+    <benji-main-screen-mcqresult-activity
+      *ngIf="getActivityType() === 'MCQResultsActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    ></benji-main-screen-mcqresult-activity>
+
     <app-mainscreen-activity-teletrivia
       *ngIf="getActivityType() === 'TeleTriviaActivity'"
       [activityState]="serverMessage"

@@ -21,12 +21,14 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
     const as = this.activityState;
     if (
       as.mcqactivity.question_timer &&
-      as.mcqactivity.question_timer.status === 'running'
+      (as.mcqactivity.question_timer.status === 'running' ||
+        as.mcqactivity.question_timer.status === 'paused')
     ) {
       this.radialTimer = as.mcqactivity.question_timer;
     } else if (
       as.base_activity.next_activity_start_timer &&
-      as.base_activity.next_activity_start_timer.status === 'running'
+      (as.base_activity.next_activity_start_timer.status === 'running' ||
+        as.base_activity.next_activity_start_timer.status === 'paused')
     ) {
       this.radialTimer = as.base_activity.next_activity_start_timer;
     }

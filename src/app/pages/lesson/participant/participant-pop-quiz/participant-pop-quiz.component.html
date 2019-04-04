@@ -16,12 +16,7 @@
         "
         class="b-standard-button b-standard-button--unselected"
         [ngClass]="{
-          'b-standard-button--selected': option.id === selectedChoice.id,
-          'b-standard-button--correct': revealAnswer && option.is_correct,
-          'b-standard-button--incorrect':
-            revealAnswer &&
-            !option.is_correct &&
-            option.id === selectedChoice.id
+          'b-standard-button--selected': option.id === selectedChoice.id
         }"
         (click)="submitAnswer(option)"
       >
@@ -63,32 +58,20 @@
           *ngIf="option.id === selectedChoice.id"
           class="b-standard-button b-standard-button--unselected"
           [ngClass]="{
-            'b-standard-button--correct': revealAnswer && option.is_correct,
-            'b-standard-button--incorrect': revealAnswer && !option.is_correct
+            'b-standard-button--correct': option.is_correct,
+            'b-standard-button--incorrect': !option.is_correct
           }"
         >
           {{ optionIdentifiers[i] }}. {{ option.choice_text }}
         </button>
       </ng-container>
     </div>
-  </ng-container>
-
-  <ng-container *ngIf="false">
-    <div class="b-flat-card__title"><h2 class="pn-400">Pop quiz</h2></div>
-    <div class="b-flat-card__body">
-      <div class="b-flat-card__twemoji">
-        <app-b-twemoji emoji="🏆"></app-b-twemoji>🏁
-      </div>
-      <h1 class="pn-700 deep-blue">
-        4/4 correct!
-      </h1>
-    </div>
-    <div class="b-flat-card__action-detail">
-      <p>Perfect score, great job!</p>
+    <div *ngIf="!selectedChoice.is_correct" class="b-flat-card__action-detail">
+      <p>The correct answer is {{ getCorrectAnswer().choice_text }}</p>
     </div>
   </ng-container>
 
   <div class="mc-card__timer">
-    <app-linear-timer #timer [endAudio]="'bell.wav'"></app-linear-timer>
+    <app-linear-timer #timer></app-linear-timer>
   </div>
 </div>

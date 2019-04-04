@@ -5,6 +5,7 @@ import {
   HintWordActivity,
   LobbyActivity,
   MCQActivity,
+  MCQResultsActivity,
   RoleplayPairActivity,
   TeleTriviaActivity,
   TitleActivity,
@@ -24,6 +25,7 @@ export interface UpdateMessage {
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
   mcqactivity?: MCQActivity;
+  mcqresultsactivity?: MCQResultsActivity;
   videoactivity?: VideoActivity;
   teletriviaactivity?: TeleTriviaActivity;
   roleplaypairactivity?: RoleplayPairActivity;

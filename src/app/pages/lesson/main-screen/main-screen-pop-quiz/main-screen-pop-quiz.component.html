@@ -30,7 +30,9 @@
               [ngClass]="{
                 'correct-answer':
                   option.is_correct &&
-                  activityState.mcqactivity.question_timer.status === 'ended'
+                  (activityState.base_activity.next_activity_start_timer &&
+                    activityState.base_activity.next_activity_start_timer
+                      .status === 'running')
               }"
             >
               <div fxFlex="4vw">{{ optionIdentifiers[i] }}.</div>
