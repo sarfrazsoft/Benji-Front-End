@@ -15,7 +15,7 @@ import {
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
-import { MCQChoice, MCQQuestion } from './utils';
+import {FeedbackQuestion, MCQChoice, MCQQuestion} from './utils';
 
 export interface UpdateMessage {
   lesson: Lesson; // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
@@ -172,5 +172,34 @@ export class WhereDoYouStandSubmitPreferenceEvent extends ActivityEvent {
   constructor(choice: WhereDoYouStandChoice) {
     super();
     this.extra_args = { choice: choice.id };
+  }
+}
+
+
+export class FeedbackSubmitEventAnswer {
+  feedbackquestion: number;
+  choice_answer: number;
+  rating_answer: number;
+  text_answer: string;
+
+  constructor(q: FeedbackQuestion, answer) {
+    this.feedbackquestion = q.id;
+    if (q.question_type === 'choice') {
+      // We expect the answer to be a FeedbackChoice object
+      this.choice_answer = answer.id;
+    } else if (q.question_type === 'rating') {
+      this.rating_answer = answer;
+    } else {
+      this.text_answer = answer;
+    }
+  }
+}
+
+export class FeedbackSubmitEvent extends ActivityEvent {
+  event_name = 'FeedbackSubmitEvent';
+
+  constructor(feedbacksubmiteventanswer_set: FeedbackSubmitEventAnswer[]) {
+    super();
+    this.extra_args = { feedbacksubmiteventanswer_set: feedbacksubmiteventanswer_set };
   }
 }

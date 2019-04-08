@@ -1,5 +1,5 @@
 import { User } from './user';
-import { MCQQuestion, Timer } from './utils';
+import { FeedbackQuestion, MCQQuestion, Timer } from './utils';
 
 export interface BaseActivity {
   activity_id: string;
@@ -146,6 +146,7 @@ export interface DiscussionActivity {
 
 export interface FeedbackActivity {
   id: number;
+  feedbackquestion_set: FeedbackQuestion[];
 }
 
 export interface WhereDoYouStandChoice {

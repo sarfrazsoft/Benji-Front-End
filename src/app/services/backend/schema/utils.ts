@@ -20,3 +20,17 @@ export interface MCQQuestion {
   question: string;
   mcqchoice_set: MCQChoice[];
 }
+
+export interface FeedbackChoice {
+  id: number;
+  choice_text: string;
+}
+
+export interface FeedbackQuestion {
+  id: number;
+  question_type: string;
+  question_text: string;
+  rating_min: number;
+  rating_max: number;
+  feedbackchoice_set: FeedbackChoice[];
+}
