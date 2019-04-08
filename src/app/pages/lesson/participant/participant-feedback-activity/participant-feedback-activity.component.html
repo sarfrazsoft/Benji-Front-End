@@ -8,48 +8,72 @@
         </div>
 
         <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
-        <p>We’d really appreciate your feedback on this Benji session.</p>
+        <p>How much do you agree with the following statements?</p>
       </div>
       <div class="b-flat-card__action feedback-card__questions">
         <div class="feedback-card__question-box">
           <h2 class="brownish-grey pn-500">I found this session useful.</h2>
-          <div class="feedback-card__response-flexer flexer--center">
-            <div class="feedback-card__response-radio">
-              <input
-                type="radio"
-                formControlName="usefulSession"
-                value="notatall"
-                id="not_1"
-              />
-              <label for="not_1">
-                <app-b-twemoji emoji="☹️"></app-b-twemoji>
-                <span>Not at all</span>
-              </label>
-            </div>
-            <div class="feedback-card__response-radio">
-              <input
-                type="radio"
-                formControlName="usefulSession"
-                value="kinda"
-                id="kinda_1"
-              />
-              <label for="kinda_1">
-                <app-b-twemoji emoji="😐"></app-b-twemoji>
-                <span>Kinda</span>
-              </label>
-            </div>
-            <div class="feedback-card__response-radio">
-              <input
-                type="radio"
-                formControlName="usefulSession"
-                value="definitely"
-                id="def_1"
-              />
-              <label for="def_1">
-                <app-b-twemoji emoji="😁"></app-b-twemoji>
-                <span>Definitely!</span>
-              </label>
-            </div>
+          <div class="feedback-rating">
+            <form class="form">
+              <ol class="nodes">
+                <li class="node">
+                  <input
+                    class="form__radio"
+                    type="radio"
+                    id="r1"
+                    name="radio-set"
+                  />
+                  <label class="form__label" for="r1">
+                    <span class="indicator">Strongly disagree</span>
+                  </label>
+                </li>
+                <li class="node">
+                  <input
+                    class="form__radio"
+                    type="radio"
+                    id="r2"
+                    name="radio-set"
+                    checked
+                  />
+                  <label class="form__label" for="r2">
+                    <span class="indicator"></span>
+                  </label>
+                </li>
+                <li class="node">
+                  <input
+                    class="form__radio"
+                    type="radio"
+                    id="r3"
+                    name="radio-set"
+                  />
+                  <label class="form__label" for="r3">
+                    <span class="indicator">Neutral</span>
+                  </label>
+                </li>
+                <li class="node">
+                  <input
+                    class="form__radio"
+                    type="radio"
+                    id="r4"
+                    name="radio-set"
+                  />
+                  <label class="form__label" for="r4">
+                    <span class="indicator"></span>
+                  </label>
+                </li>
+                <li class="node">
+                  <input
+                    class="form__radio"
+                    type="radio"
+                    id="r5"
+                    name="radio-set"
+                  />
+                  <label class="form__label" for="r5">
+                    <span class="indicator">Strongly agree</span>
+                  </label>
+                </li>
+              </ol>
+            </form>
           </div>
           <textarea
             placeholder="What makes you say that?"
