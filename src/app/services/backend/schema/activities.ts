@@ -147,6 +147,7 @@ export interface DiscussionActivity {
 export interface FeedbackActivity {
   id: number;
   feedbackquestion_set: FeedbackQuestion[];
+  answered_users: User[];
 }
 
 export interface WhereDoYouStandChoice {

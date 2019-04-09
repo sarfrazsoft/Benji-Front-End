@@ -178,20 +178,13 @@ export class WhereDoYouStandSubmitPreferenceEvent extends ActivityEvent {
 
 export class FeedbackSubmitEventAnswer {
   feedbackquestion: number;
-  choice_answer: number;
   rating_answer: number;
   text_answer: string;
 
-  constructor(q: FeedbackQuestion, answer) {
+  constructor(q: FeedbackQuestion, rating, text) {
     this.feedbackquestion = q.id;
-    if (q.question_type === 'choice') {
-      // We expect the answer to be a FeedbackChoice object
-      this.choice_answer = answer.id;
-    } else if (q.question_type === 'rating') {
-      this.rating_answer = answer;
-    } else {
-      this.text_answer = answer;
-    }
+    this.rating_answer = rating;
+    this.text_answer = text;
   }
 }
 
