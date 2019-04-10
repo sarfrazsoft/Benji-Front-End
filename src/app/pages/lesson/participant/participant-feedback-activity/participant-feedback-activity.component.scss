@@ -62,8 +62,7 @@
 $color-base: $cloudy-grey;
 $field-size: 25px;
 
-.form {
-  postion: relative;
+.linked-radio-btns {
   height: 100%;
 
   .nodes {
@@ -173,10 +172,10 @@ $field-size: 25px;
   }
 }
 
-.form__radio:checked + .form__label::after {
+.linked-radio-btns__radio:checked + .linked-radio-btns__label::after {
   background-color: $color-base;
 }
 
-.form__radio:checked + .form__label > .indicator {
+.linked-radio-btns__radio:checked + .linked-radio-btns__label > .indicator {
   color: darken($color-base, 20%);
 }

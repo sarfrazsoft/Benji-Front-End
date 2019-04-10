@@ -64,12 +64,12 @@
   >
   </app-participant-hint-activity>
 
-  <app-participant-feedback-activity
+  <benji-participant-feedback-activity
     *ngIf="getActivityType() === 'FeedbackActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-feedback-activity>
+  </benji-participant-feedback-activity>
 
   <app-participant-activity-video
     *ngIf="getActivityType() === 'VideoActivity'"

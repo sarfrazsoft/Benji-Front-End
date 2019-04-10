@@ -21,4 +21,15 @@
   <div class="linear-timer-container">
     <app-linear-timer #titleTimer [endAudio]="'bell.wav'"></app-linear-timer>
   </div>
+  <div
+    *ngIf="isEndSession"
+    class="exitSession pn-500"
+    (click)="backToStart()"
+    fxLayoutAlign="center center"
+  >
+    Exit session
+    <button class="launch-session" fxLayoutAlign="center center">
+      <img src="/assets/img/launch_singlearrow_blue.png" alt="launch" />
+    </button>
+  </div>
 </div>

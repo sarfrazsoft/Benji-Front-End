@@ -10,132 +10,125 @@
         <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
         <p>How much do you agree with the following statements?</p>
       </div>
-      <div class="b-flat-card__action feedback-card__questions">
-        <div class="feedback-card__question-box">
-          <h2 class="brownish-grey pn-500">I found this session useful.</h2>
-          <div class="feedback-rating">
-            <form class="form">
-              <ol class="nodes">
-                <li class="node">
-                  <input
-                    class="form__radio"
-                    type="radio"
-                    id="r1"
-                    name="radio-set"
-                  />
-                  <label class="form__label" for="r1">
-                    <span class="indicator">Strongly disagree</span>
-                  </label>
-                </li>
-                <li class="node">
-                  <input
-                    class="form__radio"
-                    type="radio"
-                    id="r2"
-                    name="radio-set"
-                    checked
-                  />
-                  <label class="form__label" for="r2">
-                    <span class="indicator"></span>
-                  </label>
-                </li>
-                <li class="node">
-                  <input
-                    class="form__radio"
-                    type="radio"
-                    id="r3"
-                    name="radio-set"
-                  />
-                  <label class="form__label" for="r3">
-                    <span class="indicator">Neutral</span>
-                  </label>
-                </li>
-                <li class="node">
-                  <input
-                    class="form__radio"
-                    type="radio"
-                    id="r4"
-                    name="radio-set"
-                  />
-                  <label class="form__label" for="r4">
-                    <span class="indicator"></span>
-                  </label>
-                </li>
-                <li class="node">
-                  <input
-                    class="form__radio"
-                    type="radio"
-                    id="r5"
-                    name="radio-set"
-                  />
-                  <label class="form__label" for="r5">
-                    <span class="indicator">Strongly agree</span>
-                  </label>
-                </li>
-              </ol>
-            </form>
-          </div>
-          <textarea
-            placeholder="What makes you say that?"
-            formControlName="usefulSessionComment"
-            class="b-standard-textarea"
-          ></textarea>
-        </div>
-        <div class="feedback-card__question-box">
-          <h2 class="brownish-grey pn-500">I found this session fun.</h2>
-          <div class="feedback-card__response-flexer flexer--center">
-            <div class="feedback-card__response-radio">
-              <input
-                type="radio"
-                formControlName="funSession"
-                value="notatall"
-                id="not_2"
-              />
-              <label for="not_2">
-                <app-b-twemoji emoji="☹️"></app-b-twemoji>
-                <span>Not at all</span>
-              </label>
+      <div
+        class="b-flat-card__action feedback-card__questions"
+        formArrayName="questions"
+      >
+        <div
+          class="feedback-card__question-box"
+          *ngFor="let question of questions.controls; let i = index"
+        >
+          <div [formGroupName]="i">
+            <h2 class="brownish-grey pn-500">
+              {{ fback.feedbackquestion_set[i].question_text }}
+            </h2>
+            <!-- <input formControlName="rating_answer" type="text" /> -->
+            <div
+              class="rating-question"
+              *ngIf="
+                fback.feedbackquestion_set[i].question_type ===
+                'rating_agreedisagree'
+              "
+            >
+              <div class="feedback-rating">
+                <div class="linked-radio-btns">
+                  <ol class="nodes">
+                    <li class="node">
+                      <input
+                        class="linked-radio-btns__radio"
+                        type="radio"
+                        id="{{ 'r1' + fback.feedbackquestion_set[i].id }}"
+                        formControlName="rating_answer"
+                        [value]="1"
+                      />
+                      <label
+                        class="linked-radio-btns__label"
+                        for="{{ 'r1' + fback.feedbackquestion_set[i].id }}"
+                      >
+                        <span class="indicator">Strongly disagree</span>
+                      </label>
+                    </li>
+                    <li class="node">
+                      <input
+                        class="linked-radio-btns__radio"
+                        type="radio"
+                        id="{{ 'r2' + fback.feedbackquestion_set[i].id }}"
+                        formControlName="rating_answer"
+                        [value]="2"
+                      />
+                      <label
+                        class="linked-radio-btns__label"
+                        for="{{ 'r2' + fback.feedbackquestion_set[i].id }}"
+                      >
+                        <span class="indicator"></span>
+                      </label>
+                    </li>
+                    <li class="node">
+                      <input
+                        class="linked-radio-btns__radio"
+                        type="radio"
+                        id="{{ 'r3' + fback.feedbackquestion_set[i].id }}"
+                        formControlName="rating_answer"
+                        [value]="3"
+                      />
+                      <label
+                        class="linked-radio-btns__label"
+                        for="{{ 'r3' + fback.feedbackquestion_set[i].id }}"
+                      >
+                        <span class="indicator">Neutral</span>
+                      </label>
+                    </li>
+                    <li class="node">
+                      <input
+                        class="linked-radio-btns__radio"
+                        type="radio"
+                        id="{{ 'r4' + fback.feedbackquestion_set[i].id }}"
+                        formControlName="rating_answer"
+                        [value]="4"
+                      />
+                      <label
+                        class="linked-radio-btns__label"
+                        for="{{ 'r4' + fback.feedbackquestion_set[i].id }}"
+                      >
+                        <span class="indicator"></span>
+                      </label>
+                    </li>
+                    <li class="node">
+                      <input
+                        class="linked-radio-btns__radio"
+                        type="radio"
+                        id="{{ 'r5' + fback.feedbackquestion_set[i].id }}"
+                        formControlName="rating_answer"
+                        [value]="5"
+                      />
+                      <label
+                        class="linked-radio-btns__label"
+                        for="{{ 'r5' + fback.feedbackquestion_set[i].id }}"
+                      >
+                        <span class="indicator">Strongly agree</span>
+                      </label>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+              <textarea
+                placeholder="What makes you say that?"
+                formControlName="text_answer"
+                class="b-standard-textarea"
+              ></textarea>
             </div>
 
-            <div class="feedback-card__response-radio">
-              <input
-                type="radio"
-                formControlName="funSession"
-                value="kinda"
-                id="kinda_2"
-              />
-              <label for="kinda_2">
-                <app-b-twemoji emoji="😐"></app-b-twemoji>
-                <span>Kinda</span>
-              </label>
-            </div>
-
-            <div class="feedback-card__response-radio">
-              <input
-                type="radio"
-                formControlName="funSession"
-                value="definitely"
-                id="def_2"
-              />
-              <label for="def_2">
-                <app-b-twemoji emoji="😁"></app-b-twemoji>
-                <span>Definitely!</span>
-              </label>
+            <div
+              class=""
+              *ngIf="fback.feedbackquestion_set[i].question_type === 'text'"
+            >
+              <textarea
+                formControlName="text_answer"
+                placeholder="Put 'em in here!"
+                class="b-standard-textarea"
+              ></textarea>
             </div>
           </div>
-          <textarea
-            placeholder="What makes you say that?"
-            formControlName="funSessionComments"
-            class="b-standard-textarea"
-          ></textarea>
-        </div>
-        <div class="feedback-card__question-box">
-          <h2 class="brownish-grey pn-500">Any other comments?</h2>
-          <textarea
-            formControlName="otherComments"
-            placeholder="Put 'em in here!"
-            class="b-standard-textarea"
-          ></textarea>
         </div>
       </div>
       <button class="b-standard-button" type="submit">

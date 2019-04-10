@@ -45,6 +45,8 @@ export class EmojiLookupService {
         return '👩‍🎤';
       case 'woman-cross':
         return '🙅‍♀️';
+      case 'party-poppers':
+        return '🎉';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

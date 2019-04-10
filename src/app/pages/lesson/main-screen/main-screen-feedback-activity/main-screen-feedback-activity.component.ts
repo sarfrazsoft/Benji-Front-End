@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -8,13 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./main-screen-feedback-activity.component.scss']
 })
 export class MainScreenFeedbackActivityComponent extends BaseActivityComponent {
-  allFeedbackFormsSubmitted = false;
-
-  constructor(private router: Router) {
+  constructor() {
     super();
-  }
-
-  public backToStart() {
-    this.router.navigate(['/landing']);
   }
 }

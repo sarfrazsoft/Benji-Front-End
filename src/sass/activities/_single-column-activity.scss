@@ -29,6 +29,34 @@
   }
 }
 
+.exitSession {
+  font-size: 4vh;
+  position: absolute;
+  bottom: 10vh;
+  right: 6vh;
+  color: $vibrant-blue;
+  cursor: pointer;
+  button {
+    background-color: transparent;
+    height: 5vh;
+    width: 5vh;
+
+    margin-left: 10px;
+    transition: all $animation-time linear;
+    -webkit-transition: all $animation-time linear;
+    -ms-transition: all $animation-time linear;
+    img {
+      width: 80%;
+    }
+  }
+  &:hover {
+    button {
+      margin-right: -20px;
+      margin-left: 30px;
+    }
+  }
+}
+
 // TODO move to a better file
 .twemoji-container {
   width: 23vh;
