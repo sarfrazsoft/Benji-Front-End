@@ -1,17 +1,17 @@
 import {
   Component,
-  OnInit,
-  ViewEncapsulation,
-  Input,
-  Output,
-  OnDestroy,
-  EventEmitter,
   ElementRef,
-  ViewChild
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation
 } from '@angular/core';
+import { EndEvent } from '../../../../services/backend/schema/messages';
 import { VideoStateService } from '../../../../services/video-state.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-import { EndEvent } from '../../../../services/backend/schema/messages';
 
 @Component({
   selector: 'app-mainscreen-activity-video',
