@@ -1,0 +1,61 @@
+<div class="b-flat-card center-text feedback-card">
+  <div class="b-flat-card__title"><h2 class="pn-400">Build-a-pitch</h2></div>
+  <div class="b-flat-card__body">
+    <div class="b-flat-card__twemoji">
+      <app-b-twemoji emoji="🏗️"></app-b-twemoji>
+    </div>
+    <h1 class="pn-700 deep-blue">Build-a-pitch</h1>
+    <p>Fill in the blanks to build a concise pitch for Georgian Partners.</p>
+    <div class="pitch-form">
+      <div class="pitch-segment" fxLayout="column">
+        <div class="segment-label">Georgian Partners helps</div>
+        <div class="segment-blank" fxLayout="row" fxLayoutAlign="start start">
+          <div class="blank" fxFlex>
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="2"
+              cdkAutosizeMaxRows="5"
+              placeholder="(the audience)"
+            ></textarea>
+          </div>
+          <div class="info">
+            <button
+              mat-icon-button
+              class="example-button"
+              #tooltip="matTooltip"
+              matTooltipPosition="left"
+              (click)="tooltip.toggle()"
+              matTooltip="What is your unique offering that helps address the problem? "
+              matTooltipClass="pitch-tooltip"
+            >
+              <mat-icon>
+                info_outline
+              </mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="pitch-segment">
+        <div class="segment-label"></div>
+        <div class="segment-blank"></div>
+      </div>
+      <div class="pitch-segment">
+        <div class="segment-label"></div>
+        <div class="segment-blank"></div>
+      </div>
+      <div class="pitch-segment">
+        <div class="segment-label"></div>
+        <div class="segment-blank"></div>
+      </div>
+    </div>
+    <button
+      class="b-standard-button"
+      [ngClass]="{ 'b-standard-button--inactive': !formValid }"
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</div>

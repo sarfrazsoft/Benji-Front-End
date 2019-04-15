@@ -8,6 +8,13 @@
   >
   </app-participant-lobby>
 
+  <!-- <benji-participant-build-pitch-activity
+    *ngIf="getActivityType() === 'LobbyActivity'"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-participant-build-pitch-activity> -->
+
   <benji-participant-title-activity
     *ngIf="getActivityType() === 'TitleActivity'"
     [activityState]="serverMessage"

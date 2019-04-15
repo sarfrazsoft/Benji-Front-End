@@ -13,6 +13,13 @@
         : 'ms-lesson__activity-container'
     "
   >
+    <!-- <benji-main-screen-build-pitch-activity
+      *ngIf="getActivityType() === 'LobbyActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-main-screen-build-pitch-activity> -->
+
     <app-mainscreen-lobby
       *ngIf="getActivityType() === 'LobbyActivity'"
       [activityState]="serverMessage"
@@ -87,13 +94,6 @@
       (sendMessage)="sendSocketMessage($event)"
     >
     </app-main-screen-hint-activity>
-
-    <!-- <app-main-screen-mcq-activity
-      *ngIf="getActivityType() === 'MCQActivity'"
-      [activityState]="serverMessage"
-      (sendMessage)="sendSocketMessage($event)"
-    >
-    </app-main-screen-mcq-activity> -->
 
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
   </div>

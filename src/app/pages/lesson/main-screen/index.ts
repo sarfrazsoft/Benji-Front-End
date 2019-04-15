@@ -1,3 +1,4 @@
+import { MainScreenBuildPitchActivityComponent } from './main-screen-build-pitch-activity/main-screen-build-pitch-activity.component';
 import { MainScreenDiscussionActivityComponent } from './main-screen-discussion-activity/main-screen-discussion-activity.component';
 import { MainScreenEitherOrActivityComponent } from './main-screen-either-or-activity/main-screen-either-or-activity.component';
 import { MainScreenFeedbackActivityComponent } from './main-screen-feedback-activity/main-screen-feedback-activity.component';
@@ -15,6 +16,7 @@ import { MainScreenVideoActivityComponent } from './main-screen-video-activity/m
 export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
+  MainScreenBuildPitchActivityComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,
   MainScreenFeedbackActivityComponent,

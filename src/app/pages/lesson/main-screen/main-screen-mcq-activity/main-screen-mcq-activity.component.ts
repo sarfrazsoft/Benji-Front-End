@@ -1,10 +1,11 @@
+// TODO remove activity if not used
 import {
   Component,
-  OnInit,
   ElementRef,
-  ViewChild,
   OnChanges,
-  SimpleChanges
+  OnInit,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -25,14 +26,14 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
     if (
       changes['activityState'] &&
       changes['activityState'].previousValue &&
-      (changes['activityState'].previousValue.base_activity.next_activity_start_timer ===
-        null ||
-        changes['activityState'].previousValue.base_activity.next_activity_start_timer ===
-          undefined) &&
-      (changes['activityState'].currentValue.base_activity.next_activity_start_timer !==
-        null &&
-        changes['activityState'].currentValue.base_activity.next_activity_start_timer !==
-          undefined)
+      (changes['activityState'].previousValue.base_activity
+        .next_activity_start_timer === null ||
+        changes['activityState'].previousValue.base_activity
+          .next_activity_start_timer === undefined) &&
+      (changes['activityState'].currentValue.base_activity
+        .next_activity_start_timer !== null &&
+        changes['activityState'].currentValue.base_activity
+          .next_activity_start_timer !== undefined)
     ) {
       this.playSfx('revealAnswer');
     }
@@ -40,7 +41,10 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
 
   startRevealTimer(timer) {
     this.pauseSeconds =
-      (Date.parse(this.activityState.base_activity.next_activity_start_timer.end_time) - Date.now()) /
+      (Date.parse(
+        this.activityState.base_activity.next_activity_start_timer.end_time
+      ) -
+        Date.now()) /
       1000;
     timer.startTimer();
   }
