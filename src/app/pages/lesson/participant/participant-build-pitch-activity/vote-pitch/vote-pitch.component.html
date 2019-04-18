@@ -1,0 +1,28 @@
+<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
+  <button
+    class="b-standard-button b-standard-button--unselected"
+    [ngClass]="{ 'b-standard-button--selected': selectedUser.id === user.id }"
+    (click)="selectUser(user)"
+  >
+    {{ user.name }}
+  </button>
+  <img
+    class="participant-utility-icons"
+    src="/assets/img/add_icon.png"
+    alt="expand"
+    *ngIf="!expanded"
+    (click)="expanded = true"
+  />
+  <img
+    class="participant-utility-icons"
+    src="/assets/img/close_icon.png"
+    alt="launch"
+    *ngIf="expanded"
+    (click)="expanded = false"
+  />
+</div>
+<div
+  *ngIf="expanded"
+  class="pitch-details left-text"
+  [innerHTML]="user.pitch"
+></div>

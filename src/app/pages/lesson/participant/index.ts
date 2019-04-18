@@ -1,4 +1,4 @@
-import { ParticipantBuildPitchActivityComponent } from './participant-build-pitch-activity/participant-build-pitch-activity.component';
+import { BuildPitchComponents } from './participant-build-pitch-activity';
 import { ParticipantDiscussionActivityComponent } from './participant-discussion-activity/participant-discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './participant-either-or-activity/participant-either-or-activity.component';
 import { ParticipantFeedbackActivityComponent } from './participant-feedback-activity/participant-feedback-activity.component';
@@ -15,7 +15,7 @@ import { ParticipantVideoActivityComponent } from './participant-video-activity/
 export { ParticipantLessonComponent };
 
 export const ParticipantScreenComponents = [
-  ParticipantBuildPitchActivityComponent,
+  ...BuildPitchComponents,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantFeedbackActivityComponent,

@@ -73,10 +73,18 @@ button {
 }
 
 .b-standard-button--selected {
-  background: $dodger-blue;
+  background: $carolina-blue;
   color: #fff;
   &:hover {
-    background: $dodger-blue;
+    background: $carolina-blue;
+  }
+}
+
+.b-standard-button--valid {
+  background: $vibrant-blue;
+  color: #fff;
+  &:hover {
+    background: $vibrant-blue;
   }
 }
 
@@ -117,15 +125,6 @@ button {
     position: relative;
     width: 6vh;
   }
-
-  // @media #{$fourK-display-and-up} {
-  //   padding-left: 100px;
-  //   padding-right: 100px;
-  //   width: 900px;
-  //   height: 150px;
-  //   font-size: 80px;
-  //   border-radius: 77px;
-  // }
 }
 
 .dashboard-button {

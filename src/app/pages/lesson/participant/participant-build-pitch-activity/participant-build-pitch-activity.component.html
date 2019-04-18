@@ -1,6 +1,6 @@
 <div class="b-flat-card center-text feedback-card">
   <div class="b-flat-card__title"><h2 class="pn-400">Build-a-pitch</h2></div>
-  <div class="b-flat-card__body">
+  <div class="b-flat-card__body" *ngIf="createPitch">
     <div class="b-flat-card__twemoji">
       <app-b-twemoji emoji="🏗️"></app-b-twemoji>
     </div>
@@ -23,16 +23,17 @@
           <div class="info">
             <button
               mat-icon-button
-              class="example-button"
               #tooltip="matTooltip"
               matTooltipPosition="left"
               (click)="tooltip.toggle()"
               matTooltip="What is your unique offering that helps address the problem? "
               matTooltipClass="pitch-tooltip"
             >
-              <mat-icon>
-                info_outline
-              </mat-icon>
+              <img
+                class="participant-utility-icons"
+                src="/assets/img/question_mark.png"
+                alt="launch"
+              />
             </button>
           </div>
         </div>
@@ -58,4 +59,34 @@
       Submit
     </button>
   </div>
+
+  <div class="b-flat-card__body" *ngIf="pitchSubmitted">
+    <div class="your-pitch-label left-text">Your pitch:</div>
+    <p class="your-pitch left-text">
+      Georgian Partners helps <em>growth-stage software companies</em> with
+      <em>growing their businesses</em> by <em>providing funding</em> because
+      <em>we want good ideas to succeed</em>.
+    </p>
+  </div>
+
+  <div class="b-flat-card__body" *ngIf="voteNow">
+    <h1 class="pn-700 deep-blue">Vote on the best pitch</h1>
+    <p>Press the + icon next to each name to review the pitches.</p>
+    <div *ngFor="let user of users; let i = index">
+      <benji-vote-pitch
+        [user]="user"
+        [(selectedUser)]="selectedUser"
+        (userSelected)="userSelected($event)"
+      ></benji-vote-pitch>
+    </div>
+  </div>
+</div>
+<div class="b-baseline-action bg-white" *ngIf="voteNow">
+  <button
+    class="b-standard-button b-standard-button--unselected"
+    [ngClass]="{ 'b-standard-button--valid': selectedUser.id }"
+    (click)="submitVote()"
+  >
+    Submit
+  </button>
 </div>

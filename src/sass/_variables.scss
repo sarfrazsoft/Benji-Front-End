@@ -10,6 +10,7 @@ $correct-answer: #7ed321;
 $cloudy-grey: #bec8ca;
 $inactive-color: $cloudy-grey;
 $dodger-blue: #4c83fc;
+$carolina-blue: #80a8ff;
 $grey: #979797;
 $pale-grey: #dfe5e7;
 $dim-grey: #e9ebf3;
@@ -67,6 +68,10 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
   background: $dodger-blue;
 }
 
+.bg-carolina-blue {
+  background: $carolina-blue;
+}
+
 .bg-pale-grey {
   background: $pale-grey;
 }
@@ -112,6 +117,10 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 
 .dodger-blue {
   color: $dodger-blue;
+}
+
+.carolina-blue {
+  color: $carolina-blue;
 }
 
 .pale-grey {

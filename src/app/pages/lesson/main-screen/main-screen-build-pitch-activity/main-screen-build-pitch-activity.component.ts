@@ -11,6 +11,10 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   constructor() {
     super();
   }
+  createPitches = false;
+  sharePitches = true;
+  voteNow = false;
+  votesComplete = false;
 
   ngOnInit() {}
 }

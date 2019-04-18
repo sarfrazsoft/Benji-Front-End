@@ -1,5 +1,34 @@
+@import 'variables';
 .activity-instructions {
   .discuss-instruction {
     font-size: 6vh;
+    &.pitch-text > em {
+      color: $vibrant-blue;
+    }
+  }
+  .winning-pitch {
+    margin-top: 2vh;
+    .qoutation-marks {
+      font-size: 10vh;
+    }
+  }
+}
+
+.info-subsection {
+  margin-top: 10vh;
+  font-size: 5vh;
+  mat-icon {
+    height: 5vh;
+    width: 5vh;
+    font-size: 5vh;
+  }
+  .instruction {
+    margin-left: 1vw;
+  }
+  button {
+    // override width of .indigo-launch-button
+    width: fit-content;
+    height: 10.5vh;
+    margin-left: 1vw;
   }
 }

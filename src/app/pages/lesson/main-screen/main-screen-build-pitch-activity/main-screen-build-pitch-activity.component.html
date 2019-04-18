@@ -8,12 +8,17 @@
       </h1>
     </div>
     <div fxFlex="65%" fxLayoutAlign="center center">
-      <h2 class="pn-500 discuss-instruction">
+      <h2 class="pn-500 discuss-instruction" *ngIf="createPitches">
         Fill in the blanks to build a concise pitch.
       </h2>
     </div>
   </div>
-  <div class="" fxFlex="1 0 0" fxLayout="row">
+  <div
+    class="create-pitches"
+    *ngIf="createPitches"
+    fxFlex="1 0 0"
+    fxLayout="row"
+  >
     <div
       class="activity-instructions bg-white"
       fxFlex="60%"
@@ -26,21 +31,160 @@
           </div>
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction">
+          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
             Georgian Partners helps <em>(the audience)</em> with
             <em>(the problem)</em> by <em>(the solution)</em> because
             <em>(the why)</em>.
           </h2>
-          <div class="forms-submitted deep-blue pn-600">7/14 submitted</div>
+          <div
+            class="info-subsection carolina-blue pn-500"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+          >
+            <img src="/assets/img/check_icon.png" alt="launch" />
+            <div class="instruction">
+              7/14 submitted
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
-      <app-radial-timer
+      <!-- <app-radial-timer
         [timer]="activityState.discussionactivity.discussion_countdown_timer"
         endStateText="Done!"
         [endAudio]="'attention-seeker.mp3'"
-      ></app-radial-timer>
+      ></app-radial-timer> -->
+    </div>
+  </div>
+
+  <div class="start-pitches" *ngIf="sharePitches" fxFlex="1 0 0" fxLayout="row">
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="100%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="15%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
+          <h2 class="brownish-grey pn-600 discuss-instruction">
+            <em>Emily,</em> you’re kicking off the sharing. Everyone present
+            your pitches in a clockwise direction.
+          </h2>
+          <div
+            class="info-subsection carolina-blue pn-500"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+          >
+            <div>
+              <img
+                class="main-screen-utility-icons"
+                src="/assets/img/info_icon.png"
+                alt="launch"
+              />
+            </div>
+
+            <div class="instruction">
+              Once everyone has shared, press the ‘Done’ button on this device
+              to finish the activity.
+            </div>
+            <div>
+              <button
+                class="indigo-launch-button bg-indigo-blue pn-700"
+                (click)="nextActivity()"
+              >
+                Done
+                <mat-icon class="icon-white">arrow_forward</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vote-for-pitches" *ngIf="voteNow" fxFlex="1 0 0" fxLayout="row">
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="60%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="25%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
+            Vote on your favourite pitch!
+          </h2>
+          <div
+            class="info-subsection carolina-blue pn-500"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+          >
+            <img
+              class="main-screen-utility-icons"
+              src="/assets/img/check_icon.png"
+              alt="launch"
+            />
+            <div class="instruction">
+              7/14 votes submitted
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <!-- <app-radial-timer
+        [timer]="activityState.discussionactivity.discussion_countdown_timer"
+        endStateText="Done!"
+        [endAudio]="'attention-seeker.mp3'"
+      ></app-radial-timer> -->
+    </div>
+  </div>
+
+  <div
+    class="votes-complete"
+    *ngIf="votesComplete"
+    fxFlex="1 0 0"
+    fxLayout="row"
+  >
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="100%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="15%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
+          <h2 class="brownish-grey pn-600 discuss-instruction">
+            Aaaand the best pitch goes to <em>Emily!</em>
+          </h2>
+          <div class="winning-pitch" fxLayout="row" fxLayoutAlign="start start">
+            <div class="qoutation-marks">
+              “
+            </div>
+
+            <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
+              Georgian Partners helps
+              <em>growth-stage software companies</em> with
+              <em>growing their businesses</em> by
+              <em>providing funding</em> because
+              <em>we want good ideas to succeed</em>.
+            </h2>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

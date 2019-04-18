@@ -13,19 +13,19 @@
         : 'ms-lesson__activity-container'
     "
   >
-    <!-- <benji-main-screen-build-pitch-activity
+    <benji-main-screen-build-pitch-activity
       *ngIf="getActivityType() === 'LobbyActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-main-screen-build-pitch-activity> -->
+    </benji-main-screen-build-pitch-activity>
 
-    <app-mainscreen-lobby
+    <!-- <app-mainscreen-lobby
       *ngIf="getActivityType() === 'LobbyActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-mainscreen-lobby>
+    </app-mainscreen-lobby> -->
 
     <benji-main-screen-title-activity
       *ngIf="getActivityType() === 'TitleActivity'"

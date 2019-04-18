@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { MCQSubmitAnswerEvent } from '../../../../services/backend/schema/messages';
+import { MCQChoice } from '../../../../services/backend/schema/utils';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-import {MCQSubmitAnswerEvent} from '../../../../services/backend/schema/messages';
-import {MCQChoice} from '../../../../services/backend/schema/utils';
 
 @Component({
   selector: 'app-participant-mcq-activity',
@@ -21,7 +21,10 @@ export class ParticipantMcqActivityComponent extends BaseActivityComponent {
 
   revealTimerInit(timer) {
     const revealSeconds =
-      (Date.parse(this.activityState.base_activity.next_activity_start_timer.end_time) - Date.now()) /
+      (Date.parse(
+        this.activityState.base_activity.next_activity_start_timer.end_time
+      ) -
+        Date.now()) /
       1000;
     timer.startTimer(revealSeconds);
   }
