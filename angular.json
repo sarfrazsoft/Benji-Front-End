@@ -29,9 +29,13 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
+              "node_modules/videogular2/fonts/videogular.css",
               "src/sass/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/dashjs/dist/dash.all.min.js",
+              "node_modules/hls.js/dist/hls.min.js"
+            ]
           },
           "configurations": {
             "production": {
