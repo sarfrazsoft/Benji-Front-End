@@ -1,86 +1,79 @@
 <app-participant-toolbar></app-participant-toolbar>
 
 <div *ngIf="isConnected() && serverMessage">
-  <!-- <app-participant-lobby
+  <benji-ps-lobby
     *ngIf="getActivityType() === 'LobbyActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-lobby> -->
+  </benji-ps-lobby>
 
-  <benji-participant-build-pitch-activity
-    *ngIf="getActivityType() === 'LobbyActivity'"
-    [activityState]="serverMessage"
-    (sendMessage)="sendSocketMessage($event)"
-  >
-  </benji-participant-build-pitch-activity>
-
-  <benji-participant-title-activity
+  <benji-ps-title-activity
     *ngIf="getActivityType() === 'TitleActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-title-activity>
+  </benji-ps-title-activity>
 
-  <benji-participant-pop-quiz
+  <benji-ps-pop-quiz
     *ngIf="getActivityType() === 'MCQActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-pop-quiz>
+  </benji-ps-pop-quiz>
 
-  <benji-participant-mcqresult-activity
+  <benji-ps-mcqresult-activity
     *ngIf="getActivityType() === 'MCQResultsActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-mcqresult-activity>
+  </benji-ps-mcqresult-activity>
 
-  <app-participant-teletrivia-activity
+  <benji-ps-teletrivia-activity
     *ngIf="getActivityType() === 'TeleTriviaActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-teletrivia-activity>
+  </benji-ps-teletrivia-activity>
 
-  <benji-participant-either-or-activity
+  <benji-ps-either-or-activity
     *ngIf="getActivityType() === 'WhereDoYouStandActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-either-or-activity>
+  </benji-ps-either-or-activity>
 
-  <app-participant-pair-activity
+  <benji-ps-pair-activity
     *ngIf="getActivityType() === 'RoleplayPairActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-pair-activity>
+  </benji-ps-pair-activity>
 
-  <app-participant-discussion-activity
+  <benji-ps-discussion-activity
     *ngIf="getActivityType() === 'DiscussionActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-discussion-activity>
+  </benji-ps-discussion-activity>
 
-  <app-participant-hint-activity
+  <benji-ps-hint-activity
     *ngIf="getActivityType() === 'HintWordActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-hint-activity>
+  </benji-ps-hint-activity>
 
-  <benji-participant-feedback-activity
+  <benji-ps-feedback-activity
     *ngIf="getActivityType() === 'FeedbackActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-participant-feedback-activity>
+  </benji-ps-feedback-activity>
 
-  <app-participant-activity-video
+  <benji-ps-activity-video
     *ngIf="getActivityType() === 'VideoActivity'"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </app-participant-activity-video>
+  </benji-ps-activity-video>
 </div>

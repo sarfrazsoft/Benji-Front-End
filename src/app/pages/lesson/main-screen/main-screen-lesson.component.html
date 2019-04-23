@@ -20,80 +20,81 @@
     >
     </benji-main-screen-build-pitch-activity>
 
-    <!-- <app-mainscreen-lobby
+    <!-- <benji-ms-lobby
       *ngIf="getActivityType() === 'LobbyActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-mainscreen-lobby> -->
+    </benji-ms-lobby> -->
+    </benji-ms-lobby>
 
-    <benji-main-screen-title-activity
+    <benji-ms-title-activity
       *ngIf="getActivityType() === 'TitleActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-main-screen-title-activity>
+    </benji-ms-title-activity>
 
-    <benji-main-screen-pop-quiz
+    <benji-ms-pop-quiz
       *ngIf="getActivityType() === 'MCQActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
-    ></benji-main-screen-pop-quiz>
+    ></benji-ms-pop-quiz>
 
-    <benji-main-screen-mcqresult-activity
+    <benji-ms-mcqresult-activity
       *ngIf="getActivityType() === 'MCQResultsActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
-    ></benji-main-screen-mcqresult-activity>
+    ></benji-ms-mcqresult-activity>
 
-    <app-mainscreen-activity-teletrivia
+    <benji-ms-activity-teletrivia
       *ngIf="getActivityType() === 'TeleTriviaActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-mainscreen-activity-teletrivia>
+    </benji-ms-activity-teletrivia>
 
-    <benji-main-screen-either-or-activity
+    <benji-ms-either-or-activity
       *ngIf="getActivityType() === 'WhereDoYouStandActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-main-screen-either-or-activity>
+    </benji-ms-either-or-activity>
 
-    <app-mainscreen-activity-video
+    <benji-ms-activity-video
       *ngIf="getActivityType() === 'VideoActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-mainscreen-activity-video>
+    </benji-ms-activity-video>
 
-    <app-main-screen-pair-activity
+    <benji-ms-pair-activity
       *ngIf="getActivityType() === 'RoleplayPairActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-main-screen-pair-activity>
+    </benji-ms-pair-activity>
 
-    <app-main-screen-discussion-activity
+    <benji-ms-discussion-activity
       *ngIf="getActivityType() === 'DiscussionActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-main-screen-discussion-activity>
+    </benji-ms-discussion-activity>
 
-    <app-main-screen-feedback-activity
+    <benji-ms-feedback-activity
       *ngIf="getActivityType() === 'FeedbackActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-main-screen-feedback-activity>
+    </benji-ms-feedback-activity>
 
-    <app-main-screen-hint-activity
+    <benji-ms-hint-activity
       *ngIf="getActivityType() === 'HintWordActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </app-main-screen-hint-activity>
+    </benji-ms-hint-activity>
 
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
   </div>
