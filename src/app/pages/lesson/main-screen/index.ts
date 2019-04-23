@@ -1,16 +1,16 @@
-import { MainScreenDiscussionActivityComponent } from './main-screen-discussion-activity/main-screen-discussion-activity.component';
-import { MainScreenEitherOrActivityComponent } from './main-screen-either-or-activity/main-screen-either-or-activity.component';
-import { MainScreenFeedbackActivityComponent } from './main-screen-feedback-activity/main-screen-feedback-activity.component';
-import { MainScreenHintActivityComponent } from './main-screen-hint-activity/main-screen-hint-activity.component';
+import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
+import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
+import { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
+import { MainScreenHintActivityComponent } from './hint-activity/hint-activity.component';
+import { MainScreenLobbyComponent } from './lobby-activity/lobby.component';
 import { MainScreenLessonComponent } from './main-screen-lesson.component';
-import { MainScreenLobbyComponent } from './main-screen-lobby-activity/main-screen-lobby.component';
-import { MainScreenMcqActivityComponent } from './main-screen-mcq-activity/main-screen-mcq-activity.component';
-import { MainScreenMcqresultActivityComponent } from './main-screen-mcqresult-activity/main-screen-mcqresult-activity.component';
-import { MainScreenPairActivityComponent } from './main-screen-pair-activity/main-screen-pair-activity.component';
-import { MainScreenPopQuizComponent } from './main-screen-pop-quiz/main-screen-pop-quiz.component';
-import { MainScreenTeletriviaActivityComponent } from './main-screen-teletrivia-activity/main-screen-teletrivia-activity.component';
-import { MainScreenTitleActivityComponent } from './main-screen-title-activity/main-screen-title-activity.component';
-import { MainScreenVideoActivityComponent } from './main-screen-video-activity/main-screen-video-activity.component';
+import { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
+import { MainScreenMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
+import { MainScreenPairActivityComponent } from './pair-activity/pair-activity.component';
+import { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
+import { MainScreenTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
+import { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
+import { MainScreenVideoActivityComponent } from './video-activity/video-activity.component';
 
 export { MainScreenLessonComponent };
 

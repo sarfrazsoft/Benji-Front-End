@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { BackendRestService } from '../../../services/backend/backend-rest.service';
-import { BackendSocketService } from '../../../services/backend/backend-socket.service';
+import { BackendRestService, BackendSocketService } from 'src/app/services';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
-  selector: 'app-main-screen-lesson',
+  selector: 'benji-main-screen-lesson',
   templateUrl: './main-screen-lesson.component.html',
   styleUrls: ['./main-screen-lesson.component.scss']
 })

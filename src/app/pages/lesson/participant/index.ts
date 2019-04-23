@@ -1,16 +1,16 @@
-import { ParticipantDiscussionActivityComponent } from './participant-discussion-activity/participant-discussion-activity.component';
-import { ParticipantEitherOrActivityComponent } from './participant-either-or-activity/participant-either-or-activity.component';
-import { ParticipantFeedbackActivityComponent } from './participant-feedback-activity/participant-feedback-activity.component';
-import { ParticipantHintActivityComponent } from './participant-hint-activity/participant-hint-activity.component';
+import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
+import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
+import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
+import { ParticipantHintActivityComponent } from './hint-activity/hint-activity.component';
+import { ParticipantLobbyComponent } from './lobby-activity/lobby.component';
+import { ParticipantMcqActivityComponent } from './mcq-activity/mcq-activity.component';
+import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
+import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
-import { ParticipantLobbyComponent } from './participant-lobby-activity/participant-lobby.component';
-import { ParticipantMcqActivityComponent } from './participant-mcq-activity/participant-mcq-activity.component';
-import { ParticipantMcqresultActivityComponent } from './participant-mcqresult-activity/participant-mcqresult-activity.component';
-import { ParticipantPairActivityComponent } from './participant-pair-activity/participant-pair-activity.component';
-import { ParticipantPopQuizComponent } from './participant-pop-quiz/participant-pop-quiz.component';
-import { ParticipantTeletriviaActivityComponent } from './participant-teletrivia-activity/participant-teletrivia-activity.component';
-import { ParticipantTitleActivityComponent } from './participant-title-activity/participant-title-activity.component';
-import { ParticipantVideoActivityComponent } from './participant-video-activity/participant-video-activity.component';
+import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
+import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
+import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
+import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 export { ParticipantLessonComponent };
 
 export const ParticipantScreenComponents = [
