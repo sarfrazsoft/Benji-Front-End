@@ -13,12 +13,18 @@
         : 'ms-lesson__activity-container'
     "
   >
-    <benji-main-screen-build-pitch-activity
+    <benji-ms-generate-pitch-activity
       *ngIf="getActivityType() === 'LobbyActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-main-screen-build-pitch-activity>
+    </benji-ms-generate-pitch-activity>
+    <!-- <benji-ms-build-pitch-activity
+      *ngIf="getActivityType() === 'LobbyActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-build-pitch-activity> -->
 
     <!-- <benji-ms-lobby
       *ngIf="getActivityType() === 'LobbyActivity'"
@@ -26,7 +32,6 @@
       (sendMessage)="sendSocketMessage($event)"
     >
     </benji-ms-lobby> -->
-    </benji-ms-lobby>
 
     <benji-ms-title-activity
       *ngIf="getActivityType() === 'TitleActivity'"

@@ -1,11 +1,11 @@
+import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
+import { MainScreenGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { MainScreenHintActivityComponent } from './hint-activity/hint-activity.component';
 import { MainScreenLobbyComponent } from './lobby-activity/lobby.component';
 import { MainScreenLessonComponent } from './main-screen-lesson.component';
-
-import { MainScreenBuildPitchActivityComponent } from './main-screen-build-pitch-activity/main-screen-build-pitch-activity.component';
 import { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { MainScreenMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
 import { MainScreenPairActivityComponent } from './pair-activity/pair-activity.component';
@@ -22,6 +22,7 @@ export const MainScreenComponents = [
   MainScreenEitherOrActivityComponent,
   MainScreenFeedbackActivityComponent,
   MainScreenHintActivityComponent,
+  MainScreenGeneratePitchActivityComponent,
   MainScreenLessonComponent,
   MainScreenLobbyComponent,
   MainScreenMcqActivityComponent,

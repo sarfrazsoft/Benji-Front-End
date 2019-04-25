@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainScreenBuildPitchActivityComponent } from './main-screen-build-pitch-activity.component';
+import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity.component';
 
 describe('MainScreenBuildPitchActivityComponent', () => {
   let component: MainScreenBuildPitchActivityComponent;
@@ -8,9 +8,8 @@ describe('MainScreenBuildPitchActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainScreenBuildPitchActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [MainScreenBuildPitchActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

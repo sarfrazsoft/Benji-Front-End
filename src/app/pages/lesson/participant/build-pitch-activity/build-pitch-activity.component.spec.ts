@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ParticipantBuildPitchActivityComponent } from './participant-build-pitch-activity.component';
+import { ParticipantBuildPitchActivityComponent } from './build-pitch-activity.component';
 
 describe('ParticipantBuildPitchActivityComponent', () => {
   let component: ParticipantBuildPitchActivityComponent;
@@ -8,9 +8,8 @@ describe('ParticipantBuildPitchActivityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParticipantBuildPitchActivityComponent ]
-    })
-    .compileComponents();
+      declarations: [ParticipantBuildPitchActivityComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

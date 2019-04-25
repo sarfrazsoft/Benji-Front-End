@@ -1,3 +1,4 @@
+import { BuildPitchComponents } from './build-pitch-activity';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
@@ -6,7 +7,6 @@ import { ParticipantLobbyComponent } from './lobby-activity/lobby.component';
 import { ParticipantMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
-import { BuildPitchComponents } from './participant-build-pitch-activity';
 import { ParticipantLessonComponent } from './participant-lesson.component';
 import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 

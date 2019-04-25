@@ -1,0 +1,77 @@
+@import 'variables';
+
+.time-to-pitch {
+  .pitches {
+    height: 45vh;
+    > :first-child {
+      border-right: 1px solid $brownish-grey;
+    }
+  }
+  .activity-instructions {
+    margin: 4vh 4vh;
+  }
+}
+
+.share-feedback {
+  .instructions {
+    h3 {
+      font-size: 5vh;
+      margin-top: 8vh;
+    }
+    > :first-child {
+      border-right: 1px solid $brownish-grey;
+    }
+  }
+  .activity-instructions {
+    margin: 5vh 0vh;
+    padding: 3vh 3vw;
+  }
+}
+
+.info-subsection {
+  margin-top: 10vh;
+  font-size: 5vh;
+  .instruction {
+    margin-left: 1vw;
+  }
+  button {
+    // override width of .indigo-launch-button
+    width: fit-content;
+    height: 10.5vh;
+    margin-left: 1vw;
+  }
+}
+
+.split-group {
+  padding: 0vw 2vw;
+  .heading {
+    text-align: center;
+    color: $brownish-grey;
+    font-size: 4vh;
+    padding: 3vh 0vh;
+    border-bottom: 1px solid $brownish-grey;
+    margin-bottom: 3vh;
+  }
+}
+
+// list styles
+.ul-find-partner {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding-left: 0;
+
+  .li-find-partner {
+    margin: 0;
+    font-size: 3.5vh;
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    list-style: none;
+    margin-bottom: 1vh;
+    &.long-list {
+      font-size: 2vh;
+    }
+  }
+}
