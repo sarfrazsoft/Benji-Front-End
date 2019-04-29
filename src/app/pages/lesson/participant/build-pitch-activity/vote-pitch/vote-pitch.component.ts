@@ -6,8 +6,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./vote-pitch.component.scss']
 })
 export class VotePitchComponent implements OnInit {
-  @Input() user = {};
-  @Input() selectedUser = {};
+  @Input() user = { id: null, name: null };
+  @Input() selectedUser = { id: null, name: null };
   @Output() userSelected = new EventEmitter();
   expanded = false;
   constructor() {}

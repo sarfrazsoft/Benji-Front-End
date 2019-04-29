@@ -1,27 +1,16 @@
-<div class="b-flat-card center-text" fxLayout="column">
-  <div class="b-flat-card__title">
-    <!-- TODO: Get this title from backend displaying the current activity -->
-    <h2 class="pn-400">{{ activityState.titleactivity.main_title }}</h2>
-  </div>
-  <div class="b-flat-card__body">
-    <div class="b-flat-card__twemoji">
-      <app-b-twemoji
-        [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"
-      >
-      </app-b-twemoji>
-    </div>
-    <div class="activity-title-container">
-      <h1 class="vibrant-blue pn-700">
-        {{ activityState.titleactivity.main_title }}
-      </h1>
-    </div>
-    <div class="activity-title-description-container">
-      <p class="brownish-grey pn-500 instruction">
-        {{ activityState.titleactivity.title_text }}
-      </p>
-    </div>
-    <!-- <div class="linear-timer-container">
-      <app-linear-timer #titleTimer [endAudio]="'bell.wav'"></app-linear-timer>
-    </div> -->
-  </div>
-</div>
+<benji-ps-instruction-template>
+  <ng-container class="body-title">
+    {{ activityState.titleactivity.main_title }}
+  </ng-container>
+  <app-b-twemoji
+    class="body-emoji"
+    [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"
+  >
+  </app-b-twemoji>
+  <h1 class="body-heading pn-700 deep-blue">
+    {{ activityState.titleactivity.main_title }}
+  </h1>
+  <ng-container class="body-text">
+    {{ activityState.titleactivity.title_text }}
+  </ng-container>
+</benji-ps-instruction-template>

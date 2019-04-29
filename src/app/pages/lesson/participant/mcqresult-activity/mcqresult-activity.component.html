@@ -1,21 +1,21 @@
-<div class="b-flat-card center-text mc-card ">
-  <div class="b-flat-card__title"><h2 class="pn-400">Pop quiz</h2></div>
-  <div class="b-flat-card__body">
-    <div class="b-flat-card__twemoji">
-      <app-b-twemoji
-        *ngIf="getPercentageScore() > 75"
-        emoji="🏆"
-      ></app-b-twemoji>
-      <app-b-twemoji
-        *ngIf="getPercentageScore() <= 75"
-        emoji="🏁"
-      ></app-b-twemoji>
-    </div>
-    <h1 class="pn-700 deep-blue">
-      {{ getUserScore() }}/{{ getTotalQuestions() }} correct!
-    </h1>
-  </div>
-  <div class="b-flat-card__action-detail">
+<benji-ps-instruction-template>
+  <ng-container class="body-title">
+    Pop quiz
+  </ng-container>
+  <app-b-twemoji
+    class="body-emoji"
+    *ngIf="getPercentageScore() > 75"
+    emoji="🏆"
+  ></app-b-twemoji>
+  <app-b-twemoji
+    class="body-emoji"
+    *ngIf="getPercentageScore() <= 75"
+    emoji="🏁"
+  ></app-b-twemoji>
+  <h1 class="body-heading pn-700 deep-blue">
+    {{ getUserScore() }}/{{ getTotalQuestions() }} correct!
+  </h1>
+  <ng-container class="body-text">
     <p *ngIf="getPercentageScore() === 100">Perfect score, great job!</p>
     <p *ngIf="getPercentageScore() > 50 && getPercentageScore() < 100">
       Good job!
@@ -23,5 +23,5 @@
     <p *ngIf="getPercentageScore() < 50">
       Oops, try to listen a little better.
     </p>
-  </div>
-</div>
+  </ng-container>
+</benji-ps-instruction-template>
