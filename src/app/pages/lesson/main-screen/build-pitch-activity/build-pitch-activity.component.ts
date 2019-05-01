@@ -8,6 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   implements OnInit {
+  statement: string;
   constructor() {
     super();
   }
@@ -16,5 +17,13 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   voteNow = false;
   votesComplete = false;
 
-  ngOnInit() {}
+  ngOnInit() {
+    const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
+    this.statement = '';
+    blanks.forEach(b => {
+      this.statement =
+        this.statement + b.label + ' <em>(' + b.temp_text + ')</em> ';
+    });
+    console.log(this.statement);
+  }
 }

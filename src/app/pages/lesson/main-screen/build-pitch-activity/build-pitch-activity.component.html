@@ -31,11 +31,10 @@
           </div>
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
-            Georgian Partners helps <em>(the audience)</em> with
-            <em>(the problem)</em> by <em>(the solution)</em> because
-            <em>(the why)</em>.
-          </h2>
+          <h2
+            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            innerHTML="{{ statement }}"
+          ></h2>
           <div
             class="info-subsection carolina-blue pn-500"
             fxLayout="row"
@@ -43,18 +42,20 @@
           >
             <img src="/assets/img/check_icon.png" alt="launch" />
             <div class="instruction">
-              7/14 submitted
+              {{
+                activityState.buildapitchactivity.buildapitchpitch_set.length
+              }}/{{ activityState.lesson_run.joined_users.length }} submitted
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
-      <!-- <app-radial-timer
-        [timer]="activityState.discussionactivity.discussion_countdown_timer"
+      <app-radial-timer
+        [timer]="activityState.buildapitchactivity.build_countdown_timer"
         endStateText="Done!"
         [endAudio]="'attention-seeker.mp3'"
-      ></app-radial-timer> -->
+      ></app-radial-timer>
     </div>
   </div>
 

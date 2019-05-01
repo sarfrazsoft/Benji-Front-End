@@ -1,4 +1,3 @@
-
 export interface Timer {
   id: number;
   status: string;
@@ -26,4 +25,25 @@ export interface FeedbackQuestion {
   question_type: string;
   question_text: string;
   is_combo: boolean;
+}
+
+//
+// Build a pitch intefaces
+
+export interface BuildAPitchBlank {
+  id: Number;
+  order: Number;
+  label: string;
+  temp_text: string;
+  help_text: string;
+}
+
+export interface BuildAPitchEntry {
+  buildapitchblank: Number;
+  value: string;
+}
+
+export interface BuildAPitchPitch {
+  user: Number;
+  buildapitchentry_set: Array<BuildAPitchEntry>;
 }

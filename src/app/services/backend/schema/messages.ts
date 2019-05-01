@@ -1,5 +1,6 @@
 import {
   BaseActivity,
+  BuildAPitchActivity,
   DiscussionActivity,
   FeedbackActivity,
   HintWordActivity,
@@ -15,12 +16,18 @@ import {
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
-import {FeedbackQuestion, MCQChoice, MCQQuestion} from './utils';
+import {
+  BuildAPitchBlank,
+  FeedbackQuestion,
+  MCQChoice,
+  MCQQuestion
+} from './utils';
 
 export interface UpdateMessage {
   lesson: Lesson; // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson_run: LessonRun;
   base_activity: BaseActivity;
+  buildapitchactivity: BuildAPitchActivity;
   activity_type: string;
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
@@ -175,7 +182,6 @@ export class WhereDoYouStandSubmitPreferenceEvent extends ActivityEvent {
   }
 }
 
-
 export class FeedbackSubmitEventAnswer {
   feedbackquestion: number;
   rating_answer: number;
@@ -193,6 +199,31 @@ export class FeedbackSubmitEvent extends ActivityEvent {
 
   constructor(feedbacksubmiteventanswer_set: FeedbackSubmitEventAnswer[]) {
     super();
-    this.extra_args = { feedbacksubmiteventanswer_set: feedbacksubmiteventanswer_set };
+    this.extra_args = {
+      feedbacksubmiteventanswer_set: feedbacksubmiteventanswer_set
+    };
+  }
+}
+
+export class BuildAPitchSubmitEventEntry {
+  buildapitchblank: Number;
+  value: string;
+
+  constructor(entry: BuildAPitchBlank, value: string) {
+    this.buildapitchblank = entry.id;
+    this.value = value;
+  }
+}
+
+export class BuildAPitchSubmitPitchEvent extends ActivityEvent {
+  event_name = 'BuildAPitchSubmitPitchEvent';
+
+  constructor(
+    buildapitchsubmissionentry_set: Array<BuildAPitchSubmitEventEntry>
+  ) {
+    super();
+    this.extra_args = {
+      buildapitchsubmissionentry_set: buildapitchsubmissionentry_set
+    };
   }
 }

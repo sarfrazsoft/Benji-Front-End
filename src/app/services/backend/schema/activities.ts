@@ -1,5 +1,12 @@
 import { User } from './user';
-import { FeedbackQuestion, MCQQuestion, Timer } from './utils';
+import {
+  BuildAPitchBlank,
+  BuildAPitchEntry,
+  BuildAPitchPitch,
+  FeedbackQuestion,
+  MCQQuestion,
+  Timer
+} from './utils';
 
 export interface BaseActivity {
   activity_id: string;
@@ -194,3 +201,62 @@ export interface WhereDoYouStandActivity {
   user_preferences: WhereDoYouStandUserAnswers[];
   choice_stats: WhereDoYouStandChoiceStats[];
 }
+
+export interface BuildAPitchActivity {
+  build_countdown_timer: Timer;
+  buildapitchblank_set: Array<BuildAPitchBlank>;
+  buildapitchpitch_set: Array<BuildAPitchPitch>;
+  building_done: boolean;
+  instructions: string;
+  share_start_user: User;
+  sharing_done: boolean;
+  vote_countdown_timer: Timer;
+  votes: Array<{ id: Number; num_votes: Number }>;
+  voting_done: boolean;
+  winning_user: User;
+}
+
+// "buildapitchpitch_set": [
+//   {
+//     "user": 1,
+//     "buildapitchentry_set": [
+//       {
+//         "buildapitchblank": 1,
+//         "value": "growth-stage software companies"
+//       },
+//       {
+//         "buildapitchblank": 2,
+//         "value": "growing their businesses"
+//       },
+//       {
+//         "buildapitchblank": 3,
+//         "value": "providing funding"
+//       },
+//       {
+//         "buildapitchblank": 4,
+//         "value": "we want good ideas to succeed"
+//       }
+//     ]
+//   },
+//   {
+//     "user": 2,
+//     "buildapitchentry_set": [
+//       {
+//         "buildapitchblank": 1,
+//         "value": "yo momma"
+//       },
+//       {
+//         "buildapitchblank": 2,
+//         "value": "getting fatter"
+//       },
+//       {
+//         "buildapitchblank": 3,
+//         "value": "feeding lard"
+//       },
+//       {
+//         "buildapitchblank": 4,
+//         "value": "heart disease is a bitch"
+//       }
+//     ]
+//   }
+// ]

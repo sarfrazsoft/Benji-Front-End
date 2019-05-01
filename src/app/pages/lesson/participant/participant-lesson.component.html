@@ -1,12 +1,12 @@
 <app-participant-toolbar></app-participant-toolbar>
 
 <div *ngIf="isConnected() && serverMessage">
-  <!-- <benji-ps-lobby
+  <benji-ps-lobby
     *ngIf="getActivityType() === 'LobbyActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-ps-lobby> -->
+  </benji-ps-lobby>
 
   <benji-ps-build-pitch-activity
     *ngIf="getActivityType() === 'BuildAPitchActivity'"
@@ -16,7 +16,7 @@
   </benji-ps-build-pitch-activity>
 
   <benji-ps-generate-pitch-activity
-    *ngIf="getActivityType() === 'LobbyActivity'"
+    *ngIf="getActivityType() === 'GenerateAPitchActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
