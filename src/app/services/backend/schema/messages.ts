@@ -227,3 +227,16 @@ export class BuildAPitchSubmitPitchEvent extends ActivityEvent {
     };
   }
 }
+
+export class BuildAPitchSharingDoneEvent extends ActivityEvent {
+  event_name = 'BuildAPitchSharingDoneEvent';
+}
+
+export class BuildAPitchSubmitVoteEvent extends ActivityEvent {
+  event_name = 'BuildAPitchSubmitVoteEvent';
+
+  constructor(choice: number) {
+    super();
+    this.extra_args = { voted_user: choice };
+  }
+}
