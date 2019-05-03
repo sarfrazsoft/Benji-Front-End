@@ -22,9 +22,9 @@
             <h2 class="brownish-grey pn-500">
               {{ fback.feedbackquestion_set[i].question_text }}
             </h2>
-            <!-- <input formControlName="rating_answer" type="text" /> -->
+
             <div
-              class="rating-question"
+              fxLayout="column"
               *ngIf="
                 fback.feedbackquestion_set[i].question_type ===
                 'rating_agreedisagree'
@@ -119,7 +119,7 @@
             </div>
 
             <div
-              class=""
+              fxLayout="column"
               *ngIf="fback.feedbackquestion_set[i].question_type === 'text'"
             >
               <textarea
