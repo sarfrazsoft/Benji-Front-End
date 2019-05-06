@@ -10,133 +10,15 @@
         <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
         <p>How much do you agree with the following statements?</p>
       </div>
-      <div
-        class="b-flat-card__action feedback-card__questions"
-        formArrayName="questions"
-      >
-        <div
-          class="feedback-card__question-box"
-          *ngFor="let question of questions.controls; let i = index"
-        >
-          <div [formGroupName]="i">
-            <h2 class="brownish-grey pn-500">
-              {{ fback.feedbackquestion_set[i].question_text }}
-            </h2>
 
-            <div
-              fxLayout="column"
-              *ngIf="
-                fback.feedbackquestion_set[i].question_type ===
-                'rating_agreedisagree'
-              "
-            >
-              <div class="feedback-rating">
-                <div class="linked-radio-btns">
-                  <ol class="nodes">
-                    <li class="node">
-                      <input
-                        class="linked-radio-btns__radio"
-                        type="radio"
-                        id="{{ 'r1' + fback.feedbackquestion_set[i].id }}"
-                        formControlName="rating_answer"
-                        [value]="1"
-                      />
-                      <label
-                        class="linked-radio-btns__label"
-                        for="{{ 'r1' + fback.feedbackquestion_set[i].id }}"
-                      >
-                        <span class="indicator">Strongly disagree</span>
-                      </label>
-                    </li>
-                    <li class="node">
-                      <input
-                        class="linked-radio-btns__radio"
-                        type="radio"
-                        id="{{ 'r2' + fback.feedbackquestion_set[i].id }}"
-                        formControlName="rating_answer"
-                        [value]="2"
-                      />
-                      <label
-                        class="linked-radio-btns__label"
-                        for="{{ 'r2' + fback.feedbackquestion_set[i].id }}"
-                      >
-                        <span class="indicator"></span>
-                      </label>
-                    </li>
-                    <li class="node">
-                      <input
-                        class="linked-radio-btns__radio"
-                        type="radio"
-                        id="{{ 'r3' + fback.feedbackquestion_set[i].id }}"
-                        formControlName="rating_answer"
-                        [value]="3"
-                      />
-                      <label
-                        class="linked-radio-btns__label"
-                        for="{{ 'r3' + fback.feedbackquestion_set[i].id }}"
-                      >
-                        <span class="indicator">Neutral</span>
-                      </label>
-                    </li>
-                    <li class="node">
-                      <input
-                        class="linked-radio-btns__radio"
-                        type="radio"
-                        id="{{ 'r4' + fback.feedbackquestion_set[i].id }}"
-                        formControlName="rating_answer"
-                        [value]="4"
-                      />
-                      <label
-                        class="linked-radio-btns__label"
-                        for="{{ 'r4' + fback.feedbackquestion_set[i].id }}"
-                      >
-                        <span class="indicator"></span>
-                      </label>
-                    </li>
-                    <li class="node">
-                      <input
-                        class="linked-radio-btns__radio"
-                        type="radio"
-                        id="{{ 'r5' + fback.feedbackquestion_set[i].id }}"
-                        formControlName="rating_answer"
-                        [value]="5"
-                      />
-                      <label
-                        class="linked-radio-btns__label"
-                        for="{{ 'r5' + fback.feedbackquestion_set[i].id }}"
-                      >
-                        <span class="indicator">Strongly agree</span>
-                      </label>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-              <textarea
-                placeholder="What makes you say that?"
-                formControlName="text_answer"
-                class="b-standard-textarea"
-              ></textarea>
-            </div>
-
-            <div
-              fxLayout="column"
-              *ngIf="fback.feedbackquestion_set[i].question_type === 'text'"
-            >
-              <textarea
-                formControlName="text_answer"
-                placeholder="Put 'em in here!"
-                class="b-standard-textarea"
-              ></textarea>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button class="b-standard-button" type="submit">
-        Submit
-      </button>
+      <benji-question-form
+        [activity]="activityState.feedbackactivity"
+        (submitResponse)="submitFeedback($event)"
+      ></benji-question-form>
     </div>
   </form>
 </ng-container>
+
 <ng-container *ngIf="feedbackSubmitted">
   <div class="b-flat-card center-text feedback-card">
     <div class="b-flat-card__title"><h2 class="pn-400">Thank You</h2></div>

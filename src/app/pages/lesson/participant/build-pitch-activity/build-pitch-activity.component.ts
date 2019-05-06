@@ -20,6 +20,7 @@ export class ParticipantBuildPitchActivityComponent
   builtPitch_set;
   act: BuildAPitchActivity;
   createPitch = true;
+  noPitchSubmitted = false;
   pitchValid = false;
   showMyPitch = false;
   voteNow = false;
@@ -64,7 +65,10 @@ export class ParticipantBuildPitchActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.buildapitchactivity;
-    if (
+    if (this.act.build_countdown_timer.status === 'ended') {
+      this.createPitch = false;
+      this.noPitchSubmitted = true;
+    } else if (
       this.act.buildapitchpitch_set.filter(
         e => e.user === this.activityState.your_identity.id
       ).length > 0 &&
@@ -75,12 +79,14 @@ export class ParticipantBuildPitchActivityComponent
       !this.thanksForVote
     ) {
       this.createPitch = false;
+      this.noPitchSubmitted = false;
       this.showMyPitch = true;
       this.voteNow = false;
     } else if (
       this.act.sharing_done &&
       !this.act.voting_done &&
-      !this.thanksForVote
+      !this.thanksForVote &&
+      this.act.vote_countdown_timer.status === 'running'
     ) {
       this.createPitch = false;
       this.showMyPitch = false;
@@ -99,12 +105,6 @@ export class ParticipantBuildPitchActivityComponent
         this.lookAtWinningPitch = true;
       }
     }
-
-    // else if (this.activityState.buildapitchactivity.building_done) {
-    //   this.voteNow = true;
-    //   this.showMyPitch = true;
-    //   this.createPitch = false;
-    // }
   }
 
   checkValidity() {
