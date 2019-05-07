@@ -42,6 +42,7 @@
         overflow: hidden;
         width: 40%;
         text-overflow: ellipsis;
+        text-transform: capitalize;
         &.long-list {
           font-size: 2.8vh;
         }
