@@ -108,7 +108,7 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 }
 
 .lightish-red {
-  color: $lightish-red;
+  color: $lightish-red !important;
 }
 
 .cloudy-grey {

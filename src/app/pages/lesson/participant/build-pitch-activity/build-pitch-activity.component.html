@@ -20,7 +20,7 @@
               matInput
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="2"
+              cdkAutosizeMinRows="1"
               cdkAutosizeMaxRows="5"
               placeholder="{{ blank.temp_text }}"
               [(ngModel)]="blank.value"
@@ -55,7 +55,7 @@
     </button>
   </div>
 
-  <div class="b-flat-card__body" *ngIf="noPitchSubmitted">
+  <!-- <div class="b-flat-card__body" *ngIf="noPitchSubmitted">
     <div class="b-flat-card__twemoji">
       <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
     </div>
@@ -67,7 +67,7 @@
         Waiting for everyone else to finish voting
       </p>
     </div>
-  </div>
+  </div> -->
 
   <div class="b-flat-card__body" *ngIf="showMyPitch">
     <div class="your-pitch-label left-text">Your pitch:</div>

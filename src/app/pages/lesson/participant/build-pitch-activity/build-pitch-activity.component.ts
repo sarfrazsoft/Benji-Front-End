@@ -20,7 +20,7 @@ export class ParticipantBuildPitchActivityComponent
   builtPitch_set;
   act: BuildAPitchActivity;
   createPitch = true;
-  noPitchSubmitted = false;
+  blankPitch = false;
   pitchValid = false;
   showMyPitch = false;
   voteNow = false;
@@ -65,13 +65,18 @@ export class ParticipantBuildPitchActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.buildapitchactivity;
-    if (this.act.build_countdown_timer.status === 'ended') {
-      this.createPitch = false;
-      this.noPitchSubmitted = true;
-    } else if (
+    if (
+      this.act.build_countdown_timer.status === 'running' &&
       this.act.buildapitchpitch_set.filter(
         e => e.user === this.activityState.your_identity.id
-      ).length > 0 &&
+      ).length === 0
+    ) {
+      this.createPitch = true;
+    } else if (
+      (this.act.buildapitchpitch_set.filter(
+        e => e.user === this.activityState.your_identity.id
+      ).length > 0 ||
+        this.act.build_countdown_timer.status === 'ended') &&
       !this.showMyPitch &&
       !this.voteNow &&
       !this.act.winning_user &&
@@ -79,7 +84,6 @@ export class ParticipantBuildPitchActivityComponent
       !this.thanksForVote
     ) {
       this.createPitch = false;
-      this.noPitchSubmitted = false;
       this.showMyPitch = true;
       this.voteNow = false;
     } else if (
@@ -146,16 +150,37 @@ export class ParticipantBuildPitchActivityComponent
 
   getPitchText(userId) {
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
-    const pitch = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
+    const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
       e => e.user === userId
-    )[0].buildapitchentry_set;
+    );
+
+    console.log(buildAPitchPitchSet);
 
     let statement = '';
-    blanks.forEach((b, i) => {
-      statement = statement + b.label + ' <em>' + pitch[i].value + '</em> ';
-    });
-    console.log(statement);
-    return statement;
+    if (buildAPitchPitchSet.length === 0) {
+      blanks.forEach((b, i) => {
+        statement =
+          statement +
+          b.label +
+          ' <em class="lightish-red">(' +
+          b.temp_text +
+          ')</em> ';
+      });
+      this.blankPitch = true;
+      return statement;
+    } else {
+      const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+      blanks.forEach((b, i) => {
+        statement =
+          statement +
+          b.label +
+          ' <em>' +
+          buildAPitchEntrySet[i].value +
+          '</em> ';
+      });
+      console.log(statement);
+      return statement;
+    }
   }
 
   getUserName(userId) {
