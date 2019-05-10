@@ -1,0 +1,26 @@
+.mainscreen-activity {
+  .lesson-top-banner {
+    padding: 2.5vw;
+    h2 {
+      margin: 0;
+      font-size: 6vh;
+      line-height: normal;
+    }
+  }
+  h1 {
+    font-size: 11vh;
+    line-height: normal;
+    text-transform: capitalize;
+    margin: 0;
+  }
+  p {
+    font-size: 4.5vh;
+    line-height: normal;
+  }
+  .activity-instructions {
+    padding: 0 3vw;
+    .room-code {
+      font-size: 14vh;
+    }
+  }
+}

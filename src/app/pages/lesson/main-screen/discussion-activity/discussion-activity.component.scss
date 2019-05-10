@@ -1,34 +1,6 @@
 @import 'variables';
 
-.mainscreen-activity {
-  .lesson-top-banner {
-    padding: 2.5vw;
-    h2 {
-      margin: 0;
-      font-size: 6vh;
-      line-height: normal;
-    }
-  }
-  h1 {
-    font-size: 11vh;
-    line-height: normal;
-    text-transform: capitalize;
-    margin: 0;
-  }
-  p {
-    font-size: 48px;
-    line-height: normal;
-    @media #{$xxlarge-and-down} {
-      font-size: 28px;
-    }
-    @media #{$fourK-display-and-up} {
-      font-size: 80px;
-    }
-  }
-}
 .activity-instructions {
-  padding: 0 3vw;
-
   .discuss-instruction {
     font-size: 7.5vh;
     line-height: normal;
