@@ -1,19 +1,6 @@
 @import 'variables';
 
 .mainscreen-activity {
-  .lesson-top-banner {
-    padding: 2.5vw;
-  }
-  p {
-    font-size: 4.5vh;
-    line-height: normal;
-  }
-  .activity-instructions {
-    padding: 0 3vw;
-    .room-code {
-      font-size: 14vh;
-    }
-  }
   .lobby-activity__joined-users {
     p {
       margin-top: 3vh;
