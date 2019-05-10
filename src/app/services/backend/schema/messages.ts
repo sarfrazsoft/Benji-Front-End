@@ -240,3 +240,24 @@ export class BuildAPitchSubmitVoteEvent extends ActivityEvent {
     this.extra_args = { voted_user: choice };
   }
 }
+
+export class PitchoMaticUserInGroupEvent extends ActivityEvent {
+  event_name = 'PitchoMaticUserInGroupEvent';
+}
+
+export class PitchoMaticUserReadyEvent extends ActivityEvent {
+  event_name = 'PitchoMaticUserReadyEvent';
+}
+
+export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
+  event_name = 'PitchoMaticSubmitFeedbackEvent';
+
+  constructor(pitchfeedbacksubmiteventanswer_set: FeedbackSubmitEventAnswer[]) {
+    super();
+    this.extra_args = {
+      pitchfeedbacksubmiteventanswer_set: pitchfeedbacksubmiteventanswer_set
+    };
+  }
+}
+
+

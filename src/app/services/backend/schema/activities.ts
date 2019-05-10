@@ -216,6 +216,54 @@ export interface BuildAPitchActivity {
   winning_user: User;
 }
 
+
+export interface PitchoMaticActivity {
+  activity_status: string;
+  generate_timer: Timer;
+  group_timer: Timer;
+  prepare_timer: Timer;
+  pitch_timer: Timer;
+  feedback_timer: Timer;
+  pitchomaticblank_set: PitchoMaticBlank[];
+  pitchomaticgroup_set: PitchoMaticGroup[];
+  feedbackquestion_set: FeedbackQuestion[];
+}
+
+export interface PitchoMaticBlank {
+  order: number;
+  label: string;
+  pitchomaticblankchoice_set: PitchoMaticBlankChoice[];
+
+}
+
+export interface PitchoMaticBlankChoice {
+  id: number;
+  value: string;
+}
+
+export interface PitchoMaticGroup {
+  group_emoji: string;
+  pitchomaticgroupmember_set: PitchoMaticGroupMember[];
+}
+
+export interface PitchoMaticGroupMember {
+  user: User;
+  is_grouped: boolean;
+  is_pitching: boolean;
+  pitch_done: boolean;
+  pitch_prep_text: string;
+  pitch: PitchoMaticGroupMemberPitch;
+}
+
+export interface PitchoMaticGroupMemberPitch {
+  pitchomaticgroupmemberpitchchoice_set: PitchoMaticGroupMemberPitchChoice[];
+}
+
+export interface PitchoMaticGroupMemberPitchChoice {
+  pitchomaticblank: number;
+  choice: number;
+}
+
 // "buildapitchpitch_set": [
 //   {
 //     "user": 1,
