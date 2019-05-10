@@ -62,6 +62,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-transform: capitalize;
       list-style: none;
       margin-bottom: 1vh;
       &.long-list {

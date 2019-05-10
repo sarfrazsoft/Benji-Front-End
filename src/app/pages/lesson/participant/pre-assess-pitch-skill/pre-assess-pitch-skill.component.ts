@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
-  selector: 'benji-ps-feedback-activity',
-  templateUrl: './feedback-activity.component.html',
-  styleUrls: ['./feedback-activity.component.scss']
+  selector: 'benji-ps-pre-assess-pitch-skill',
+  templateUrl: './pre-assess-pitch-skill.component.html',
+  styleUrls: ['./pre-assess-pitch-skill.component.scss']
 })
-export class ParticipantFeedbackActivityComponent extends BaseActivityComponent
+export class ParticipantPreAssessPitchSkillComponent
+  extends BaseActivityComponent
   implements OnInit {
   answersSubmitted: boolean;
 

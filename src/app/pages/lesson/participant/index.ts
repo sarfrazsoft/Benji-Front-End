@@ -10,6 +10,7 @@ import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqr
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
 import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
+import { ParticipantPreAssessPitchSkillComponent } from './pre-assess-pitch-skill/pre-assess-pitch-skill.component';
 import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
 import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
@@ -31,6 +32,7 @@ export const ParticipantScreenComponents = [
   ParticipantMcqActivityComponent,
   ParticipantMcqresultActivityComponent,
   ParticipantPairActivityComponent,
+  ParticipantPreAssessPitchSkillComponent,
   ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,
   ParticipantTitleActivityComponent,

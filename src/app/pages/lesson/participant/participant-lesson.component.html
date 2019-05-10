@@ -8,15 +8,15 @@
   >
   </benji-ps-lobby>
 
-  <benji-ps-build-pitch-activity
+  <!-- <benji-ps-build-pitch-activity
     *ngIf="getActivityType() === 'BuildAPitchActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-ps-build-pitch-activity>
+  </benji-ps-build-pitch-activity> -->
 
   <benji-ps-generate-pitch-activity
-    *ngIf="getActivityType() === 'GenerateAPitchActivity'"
+    *ngIf="getActivityType() === 'BuildAPitchActivity'"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
@@ -84,6 +84,12 @@
     (sendMessage)="sendSocketMessage($event)"
   >
   </benji-ps-feedback-activity>
+
+  <!-- <benji-ps-pre-assess-pitch-skill
+    *ngIf="getActivityType() === 'FeedbackActivity'"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  ></benji-ps-pre-assess-pitch-skill> -->
 
   <benji-ps-activity-video
     *ngIf="getActivityType() === 'VideoActivity'"

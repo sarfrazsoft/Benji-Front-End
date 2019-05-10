@@ -19,10 +19,11 @@ export class ParticipantBuildPitchActivityComponent
   implements OnInit, OnChanges {
   builtPitch_set;
   act: BuildAPitchActivity;
-  createPitch = true;
-  blankPitch = false;
+  createPitch = false;
+  pitchSubmitted = true;
+  blankPitch = true;
   pitchValid = false;
-  showMyPitch = false;
+  showMyPitch = true;
   voteNow = false;
   thanksForVote = false;
   lookAtWinningPitch = false;
@@ -83,6 +84,9 @@ export class ParticipantBuildPitchActivityComponent
       !this.act.voting_done &&
       !this.thanksForVote
     ) {
+      if (!this.pitchSubmitted) {
+        this.submitPitch();
+      }
       this.createPitch = false;
       this.showMyPitch = true;
       this.voteNow = false;
@@ -137,6 +141,7 @@ export class ParticipantBuildPitchActivityComponent
     this.sendMessage.emit(
       new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set)
     );
+    this.pitchSubmitted = true;
   }
 
   userSelected($event) {

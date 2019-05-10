@@ -1,0 +1,15 @@
+<benji-question-layout *ngIf="!answersSubmitted">
+  <ng-container class="body-title">
+    Post-Assess
+  </ng-container>
+  <app-b-twemoji class="body-emoji" emoji="📝"> </app-b-twemoji>
+  <h1 class="body-heading pn-700 deep-blue">What about now?</h1>
+  <ng-container class="body-text">
+    How do you feel about your pitching skills now?
+  </ng-container>
+
+  <benji-question-form
+    [activity]="activityState.feedbackactivity"
+    (submitResponse)="submitAnswers($event)"
+  ></benji-question-form>
+</benji-question-layout>

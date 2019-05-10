@@ -40,8 +40,13 @@
       resize: none;
       padding: 10px 10px;
       border-radius: 8px;
+      border: $pale-grey 1px solid;
       &:focus {
         box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+      }
+      &::placeholder {
+        color: $grey;
+        opacity: 1;
       }
     }
   }

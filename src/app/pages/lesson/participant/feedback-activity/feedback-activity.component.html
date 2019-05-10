@@ -1,33 +1,21 @@
-<ng-container *ngIf="!feedbackSubmitted">
-  <form [formGroup]="form" (ngSubmit)="submitFeedback()">
-    <div class="b-flat-card center-text feedback-card">
-      <div class="b-flat-card__title"><h2 class="pn-400">Feedback</h2></div>
-      <div class="b-flat-card__body">
-        <div class="b-flat-card__twemoji">
-          <app-b-twemoji emoji="✍️"></app-b-twemoji>
-        </div>
+<benji-question-layout *ngIf="!answersSubmitted">
+  <ng-container class="body-title">
+    Feedback
+  </ng-container>
+  <app-b-twemoji class="body-emoji" emoji="✍️"> </app-b-twemoji>
+  <h1 class="body-heading pn-700 deep-blue">Thanks for playing!</h1>
+  <ng-container class="body-text">
+    How much do you agree with the following statements?
+  </ng-container>
 
-        <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
-        <p>How much do you agree with the following statements?</p>
-      </div>
+  <benji-question-form
+    [activity]="activityState.feedbackactivity"
+    (submitResponse)="submitAnswers($event)"
+  ></benji-question-form>
+</benji-question-layout>
 
-      <benji-question-form
-        [activity]="activityState.feedbackactivity"
-        (submitResponse)="submitFeedback($event)"
-      ></benji-question-form>
-    </div>
-  </form>
-</ng-container>
-
-<ng-container *ngIf="feedbackSubmitted">
-  <div class="b-flat-card center-text feedback-card">
-    <div class="b-flat-card__title"><h2 class="pn-400">Thank You</h2></div>
-    <div class="b-flat-card__body">
-      <div class="b-flat-card__twemoji">
-        <app-b-twemoji emoji="🎉"></app-b-twemoji>
-      </div>
-
-      <h3 class="pn-700 deep-blue">Thanks for playing!</h3>
-    </div>
-  </div>
-</ng-container>
+<benji-ps-instruction-template *ngIf="answersSubmitted">
+  <ng-container class="body-title">Thank You</ng-container>
+  <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
+  <h1 class="body-heading pn-700 deep-blue">Thanks for playing!</h1>
+</benji-ps-instruction-template>

@@ -55,26 +55,31 @@
     </button>
   </div>
 
-  <!-- <div class="b-flat-card__body" *ngIf="noPitchSubmitted">
-    <div class="b-flat-card__twemoji">
-      <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
-    </div>
-    <h1 class="body-heading pn-700 deep-blue">
-      You didn't submit a pitch
-    </h1>
-    <div class="activity-title-description-container">
-      <p class="brownish-grey pn-500 instruction">
-        Waiting for everyone else to finish voting
-      </p>
-    </div>
-  </div> -->
-
   <div class="b-flat-card__body" *ngIf="showMyPitch">
     <div class="your-pitch-label left-text">Your pitch:</div>
     <p
       class="your-pitch left-text"
       innerHTML="{{ getPitchText(activityState.your_identity.id) }}"
     ></p>
+
+    <div *ngIf="blankPitch">
+      <div
+        class="info-subsection carolina-blue pn-500"
+        fxLayout="row"
+        fxLayoutGap="10px"
+        fxLayoutAlign="start start"
+      >
+        <img
+          class="main-screen-utility-icons"
+          src="/assets/img/check_icon.png"
+          alt="info"
+        />
+        <div class="instruction lightish-red left-text">
+          Oops! You didn’t finish your pitch on time. Try to think of something-
+          you still need to present to the group.
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="b-flat-card__body" *ngIf="voteNow">

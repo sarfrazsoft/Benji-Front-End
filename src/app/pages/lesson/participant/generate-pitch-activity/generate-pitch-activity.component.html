@@ -1,3 +1,47 @@
+<div *ngIf="generatePitchSection">
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
+    <h1 class="body-heading pn-700 deep-blue">Pitch-o-matic 3000</h1>
+    <ng-container class="body-text">
+      Press the button to generate your pitch criteria!
+    </ng-container>
+
+    <ng-container class="content">
+      <div class="generate-pitch">
+        <button
+          class="b-standard-button"
+          [ngClass]="{ 'b-standard-button--inactive': !pitchValid }"
+          (click)="generatePitch()"
+        >
+          Generate
+        </button>
+
+        <div class="pitch-form">
+          <div
+            class="pitch-segment left-text"
+            fxLayout="column"
+            *ngFor="let blank of generatePitch_set"
+          >
+            <div class="segment-label">{{ blank.label }}</div>
+            <div
+              class="segment-blank"
+              fxLayout="row"
+              fxLayoutAlign="start start"
+            >
+              <div class="blank" fxFlex fxLayoutAlign="center center">
+                <div *ngFor="let word of blank.value.split(' '); let i = index">
+                  <div class="{{ 'odoo_' + i + '_' + word }}"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </benji-ps-instruction-template>
+</div>
+
 <div *ngIf="shareFeedback">
   <benji-ps-instruction-template>
     <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
