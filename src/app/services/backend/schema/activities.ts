@@ -218,10 +218,10 @@ export interface BuildAPitchActivity {
 
 
 export interface PitchoMaticActivity {
-  activity_status: string;
-  generate_timer: Timer;
-  group_timer: Timer;
+  instructions: string;
+  activity_status: string;  // = preparing, grouping, pitching+, feedback+
   prepare_timer: Timer;
+  group_timer: Timer;
   pitch_timer: Timer;
   feedback_timer: Timer;
   pitchomaticblank_set: PitchoMaticBlank[];
@@ -230,6 +230,7 @@ export interface PitchoMaticActivity {
 }
 
 export interface PitchoMaticBlank {
+  id: number;
   order: number;
   label: string;
   pitchomaticblankchoice_set: PitchoMaticBlankChoice[];
@@ -249,8 +250,16 @@ export interface PitchoMaticGroup {
 export interface PitchoMaticGroupMember {
   user: User;
   is_grouped: boolean;
-  is_pitching: boolean;
-  pitch_done: boolean;
+  has_generated: boolean;
+  has_prepared: boolean;
+  pitch_status: string; // = waiting, pitching, feedback, done
+  // states:
+  // is_pitching=false, pitch_done=false := user never pitched yet
+  // is_pitching=true, pitch_done=false := user is pitching
+  // is_pitching=true, pitch_done=true := user is recieving feedback
+  // is_pitching=false, pitch_done=true := user is done with their pitch and feedback
+  is_pitching: boolean; // true when user is pitching. remains true while feedback for user is going on. becomes false after feedback
+  pitch_done: boolean;  // becomes true after pitch is done.
   pitch_prep_text: string;
   pitch: PitchoMaticGroupMemberPitch;
 }
@@ -260,8 +269,8 @@ export interface PitchoMaticGroupMemberPitch {
 }
 
 export interface PitchoMaticGroupMemberPitchChoice {
-  pitchomaticblank: number;
-  choice: number;
+  pitchomaticblank: number; // is the PitchoMaticBlank.id. You will need to lookup
+  choice: number; // is the PitchoMaticBlankChoice.id for that PitchoMaticBlank
 }
 
 // "buildapitchpitch_set": [

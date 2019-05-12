@@ -241,12 +241,21 @@ export class BuildAPitchSubmitVoteEvent extends ActivityEvent {
   }
 }
 
+export class PitchoMaticUserGeneratedEvent extends ActivityEvent {
+  event_name = 'PitchoMaticUserGeneratedEvent';
+}
+
 export class PitchoMaticUserInGroupEvent extends ActivityEvent {
   event_name = 'PitchoMaticUserInGroupEvent';
 }
 
 export class PitchoMaticUserReadyEvent extends ActivityEvent {
   event_name = 'PitchoMaticUserReadyEvent';
+
+  constructor(pitch_prep_text?: string) {
+    super();
+    this.extra_args = { pitch_prep_text: pitch_prep_text };
+  }
 }
 
 export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
