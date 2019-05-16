@@ -9,7 +9,7 @@
   </ng-container>
 
   <benji-question-form
-    [activity]="activityState.feedbackactivity"
+    [question_set]="activityState.feedbackactivity.feedbackquestion_set"
     (submitResponse)="submitAnswers($event)"
   ></benji-question-form>
 </benji-question-layout>

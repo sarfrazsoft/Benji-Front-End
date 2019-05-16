@@ -20,30 +20,24 @@ import {
   styleUrls: ['./question-form.component.scss']
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
-  @Input() activity: FeedbackActivity;
+  @Input() question_set;
   @Output() submitResponse = new EventEmitter();
   form: FormGroup;
-  fback: FeedbackActivity;
-  feedbackSubmitted: boolean;
   constructor(private builder: FormBuilder) {}
 
   ngOnInit() {
     this.buildForm();
   }
 
-  ngOnChanges() {
-    this.fback = this.activity;
-  }
+  ngOnChanges() {}
 
   buildForm() {
-    const question_set = this.activity.feedbackquestion_set;
-
     this.form = this.builder.group({
       questions: this.builder.array([])
     });
 
-    for (let i = 0; i < question_set.length; i++) {
-      const question = question_set[i];
+    for (let i = 0; i < this.question_set.length; i++) {
+      const question = this.question_set[i];
       this.addItem(question);
     }
   }
@@ -88,6 +82,5 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       }
     }
     this.submitResponse.emit(new FeedbackSubmitEvent(answers));
-    this.feedbackSubmitted = true;
   }
 }

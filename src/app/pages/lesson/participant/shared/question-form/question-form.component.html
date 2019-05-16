@@ -10,15 +10,12 @@
       >
         <div [formGroupName]="i">
           <h2 class="brownish-grey pn-500">
-            {{ fback.feedbackquestion_set[i].question_text }}
+            {{ question_set[i].question_text }}
           </h2>
 
           <div
             fxLayout="column"
-            *ngIf="
-              fback.feedbackquestion_set[i].question_type ===
-              'rating_agreedisagree'
-            "
+            *ngIf="question_set[i].question_type === 'rating_agreedisagree'"
           >
             <div class="feedback-rating">
               <div class="linked-radio-btns">
@@ -27,13 +24,13 @@
                     <input
                       class="linked-radio-btns__radio"
                       type="radio"
-                      id="{{ 'r1' + fback.feedbackquestion_set[i].id }}"
+                      id="{{ 'r1' + question_set[i].id }}"
                       formControlName="rating_answer"
                       [value]="1"
                     />
                     <label
                       class="linked-radio-btns__label"
-                      for="{{ 'r1' + fback.feedbackquestion_set[i].id }}"
+                      for="{{ 'r1' + question_set[i].id }}"
                     >
                       <span class="indicator">Strongly disagree</span>
                     </label>
@@ -42,13 +39,13 @@
                     <input
                       class="linked-radio-btns__radio"
                       type="radio"
-                      id="{{ 'r2' + fback.feedbackquestion_set[i].id }}"
+                      id="{{ 'r2' + question_set[i].id }}"
                       formControlName="rating_answer"
                       [value]="2"
                     />
                     <label
                       class="linked-radio-btns__label"
-                      for="{{ 'r2' + fback.feedbackquestion_set[i].id }}"
+                      for="{{ 'r2' + question_set[i].id }}"
                     >
                       <span class="indicator"></span>
                     </label>
@@ -57,13 +54,13 @@
                     <input
                       class="linked-radio-btns__radio"
                       type="radio"
-                      id="{{ 'r3' + fback.feedbackquestion_set[i].id }}"
+                      id="{{ 'r3' + question_set[i].id }}"
                       formControlName="rating_answer"
                       [value]="3"
                     />
                     <label
                       class="linked-radio-btns__label"
-                      for="{{ 'r3' + fback.feedbackquestion_set[i].id }}"
+                      for="{{ 'r3' + question_set[i].id }}"
                     >
                       <span class="indicator">Neutral</span>
                     </label>
@@ -72,13 +69,13 @@
                     <input
                       class="linked-radio-btns__radio"
                       type="radio"
-                      id="{{ 'r4' + fback.feedbackquestion_set[i].id }}"
+                      id="{{ 'r4' + question_set[i].id }}"
                       formControlName="rating_answer"
                       [value]="4"
                     />
                     <label
                       class="linked-radio-btns__label"
-                      for="{{ 'r4' + fback.feedbackquestion_set[i].id }}"
+                      for="{{ 'r4' + question_set[i].id }}"
                     >
                       <span class="indicator"></span>
                     </label>
@@ -87,13 +84,13 @@
                     <input
                       class="linked-radio-btns__radio"
                       type="radio"
-                      id="{{ 'r5' + fback.feedbackquestion_set[i].id }}"
+                      id="{{ 'r5' + question_set[i].id }}"
                       formControlName="rating_answer"
                       [value]="5"
                     />
                     <label
                       class="linked-radio-btns__label"
-                      for="{{ 'r5' + fback.feedbackquestion_set[i].id }}"
+                      for="{{ 'r5' + question_set[i].id }}"
                     >
                       <span class="indicator">Strongly agree</span>
                     </label>
@@ -110,7 +107,7 @@
 
           <div
             fxLayout="column"
-            *ngIf="fback.feedbackquestion_set[i].question_type === 'text'"
+            *ngIf="question_set[i].question_type === 'text'"
           >
             <textarea
               formControlName="text_answer"
