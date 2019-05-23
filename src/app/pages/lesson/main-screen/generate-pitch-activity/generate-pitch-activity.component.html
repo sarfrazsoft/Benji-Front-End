@@ -8,18 +8,113 @@
       </h1>
     </div>
     <div fxFlex="35%" fxLayoutAlign="center center">
+      <h2 class="pn-500 discuss-instruction" *ngIf="preparing">
+        Write your pitches
+      </h2>
       <h2 class="pn-500 discuss-instruction" *ngIf="splitIntoGroups">
         Find your groups.
       </h2>
-      <h2 class="pn-500 discuss-instruction" *ngIf="timeToPitch">
+      <h2
+        class="pn-500 discuss-instruction"
+        *ngIf="timeToPitchLT8 || timeToPitchMT8"
+      >
         Time to pitch!
       </h2>
-      <h2 class="pn-500 discuss-instruction" *ngIf="shareFeedback">
+      <h2
+        class="pn-500 discuss-instruction"
+        *ngIf="shareFeedbackLT8 || shareFeedbackMT8"
+      >
         Share your feedback.
       </h2>
     </div>
   </div>
 
+  <!-- Prepare your pitches -->
+  <div
+    class="prepare-for-pitches"
+    *ngIf="preparing"
+    fxFlex="1 0 0"
+    fxLayout="row"
+  >
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="60%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="25%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🎲"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
+            Generate your unique pitches. You have 5 minutes to plan your 30
+            second pitch.
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <app-radial-timer
+        [timer]="activityState.pitchomaticactivity.prepare_timer"
+        endStateText="Done!"
+        [endAudio]="'attention-seeker.mp3'"
+      ></app-radial-timer>
+    </div>
+  </div>
+
+  <!-- Time to pitch One group -->
+  <div
+    class="time-to-pitches"
+    *ngIf="timeToPitchLT8"
+    fxFlex="1 0 0"
+    fxLayout="row"
+  >
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="60%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="25%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🎲"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+          <h2
+            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            innerHTML="{{ getGroupedPitchingUserInfo(0) }}"
+          ></h2>
+          <div
+            class="info-subsection carolina-blue pn-500"
+            fxFlex="1 0 0"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+          >
+            <img
+              class="main-screen-utility-icons"
+              src="/assets/img/info_icon.png"
+              alt="information"
+            />
+            <div class="instruction">
+              Everyone else, pay attention and be ready to provide feedback.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <app-radial-timer
+        [timer]="activityState.pitchomaticactivity.pitch_timer"
+        endStateText="Done!"
+        [endAudio]="'attention-seeker.mp3'"
+      ></app-radial-timer>
+    </div>
+  </div>
+
+  <!--Split into groups  -->
   <div
     class="split-into-groups"
     *ngIf="splitIntoGroups"
@@ -61,20 +156,23 @@
         <div fxLayout="row">
           <div fxFlex="30%">
             <div class="">
-              <app-b-twemoji emoji="️️️️️️️🥑"></app-b-twemoji>
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(getGroupEmoji(0))"
+              ></app-b-twemoji>
             </div>
           </div>
           <div fxFlex="70%">
             <ul class="ul-find-partner">
+              <!-- move *ngFor code to component file -->
               <li
                 class="pair-activity__pair li-find-partner brownish-grey pn-600"
-                *ngFor="let user of userList1"
+                *ngFor="let user of getGroupMembers(0)"
                 [ngClass]="{
-                  'deep-blue': user.found,
+                  'deep-blue': user.is_grouped,
                   'long-list': userList1.length > 15
                 }"
               >
-                {{ user.name }}
+                {{ user.user.first_name }}
                 <mat-icon class="pair-activity__ready-icon" *ngIf="user.found">
                   check
                 </mat-icon>
@@ -88,20 +186,22 @@
         <div fxLayout="row">
           <div fxFlex="30%">
             <div class="">
-              <app-b-twemoji emoji="️️️️️️️🍌"></app-b-twemoji>
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(getGroupEmoji(1))"
+              ></app-b-twemoji>
             </div>
           </div>
           <div fxFlex="70%">
             <ul class="ul-find-partner">
               <li
                 class="pair-activity__pair li-find-partner brownish-grey pn-600"
-                *ngFor="let user of userList1"
+                *ngFor="let user of getGroupMembers(1)"
                 [ngClass]="{
-                  'deep-blue': user.found,
+                  'deep-blue': user.is_grouped,
                   'long-list': userList1.length > 15
                 }"
               >
-                {{ user.name }}
+                {{ user.user.first_name }}
                 <mat-icon class="pair-activity__ready-icon" *ngIf="user.found">
                   check
                 </mat-icon>
@@ -113,32 +213,33 @@
     </div>
   </div>
 
+  <!-- Time to pitch Two groups -->
   <div
-    class="time-to-pitch bg-white"
-    *ngIf="timeToPitch"
+    class="time-to-pitch bg-white "
+    *ngIf="timeToPitchMT8"
     fxFlex="1 0 0"
     fxLayout="column"
   >
     <div class="pitches">
       <div
         class="activity-instructions bg-white"
-        fxLayoutAlign="center center"
+        fxLayoutAlign="center start"
         fxFlex="50%"
       >
-        <h2 class="brownish-grey pn-600 discuss-instruction">
-          <em>Omar</em> is pitching Whole Foods to a 5-year-old using an
-          analogy.
-        </h2>
+        <h2
+          class="brownish-grey pn-600 discuss-instruction"
+          innerHTML="{{ getGroupedPitchingUserInfo(0) }}"
+        ></h2>
       </div>
       <div
         class="activity-instructions bg-white"
-        fxLayoutAlign="center center"
+        fxLayoutAlign="center start"
         fxFlex="50%"
       >
-        <h2 class="brownish-grey pn-600 discuss-instruction">
-          <em>Farah</em> is pitching Netflix to a Chief Technology Officer using
-          a story.
-        </h2>
+        <h2
+          class="brownish-grey pn-600 discuss-instruction"
+          innerHTML="{{ getGroupedPitchingUserInfo(1) }}"
+        ></h2>
       </div>
     </div>
 
@@ -154,48 +255,230 @@
         alt="information"
       />
       <div class="instruction">
-        Use your group’s emoji to find each other if you need to!
+        Everyone else, pay attention and be ready to provide feedback.
       </div>
     </div>
   </div>
 
+  <!-- Give feedback One group -->
   <div
     class="share-feedback bg-white"
-    *ngIf="shareFeedback"
+    *ngIf="giveFeedbackLT8"
+    fxFlex="1 0 0"
+    fxLayout="row"
+  >
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="60%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="25%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🎲"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+          <h3
+            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            innerHTML="{{
+              'Thanks <em>' +
+                getCurrentPitchingUser(0) +
+                '!</em> <br/><br/>' +
+                ' Everyone else, please fill out your feedback forms.'
+            }}"
+          ></h3>
+          <div
+            class="info-subsection carolina-blue pn-500"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+          >
+            <img
+              class="main-screen-utility-icons"
+              src="/assets/img/check_icon.png"
+              alt="launch"
+            />
+            <div class="instruction">
+              {{ getFbackSubmittedCount(0) }}/{{ getGroupUsersCount(0) - 1 }}
+              forms submitted
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <app-radial-timer
+        [timer]="activityState.pitchomaticactivity.feedback_timer"
+        endStateText="Done!"
+        [endAudio]="'attention-seeker.mp3'"
+      ></app-radial-timer>
+    </div>
+  </div>
+
+  <!-- Share feedback One group -->
+  <div
+    class="share-feedback bg-white"
+    *ngIf="shareFeedbackLT8"
+    fxFlex="1 0 0"
+    fxLayout="row"
+  >
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="60%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="25%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🎲"></app-b-twemoji>
+          </div>
+        </div>
+        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+          <h2
+            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            innerHTML="{{
+              'What did everyone think of <em>' +
+                getCurrentPitchingUser(0) +
+                '</em> \’s pitch? <br/> <br/>' +
+                '<em>' +
+                getDiscussionStarterUser(0) +
+                '</em>' +
+                ', start the discussion. ' +
+                'What’s 1 thing you liked and 1 thing that could be better?'
+            }}"
+          ></h2>
+
+          <h3></h3>
+        </div>
+      </div>
+    </div>
+    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <app-radial-timer
+        [timer]="activityState.pitchomaticactivity.discuss_timer"
+        endStateText="Done!"
+        [endAudio]="'attention-seeker.mp3'"
+      ></app-radial-timer>
+    </div>
+  </div>
+
+  <!-- Give feedback Two groups -->
+  <div
+    class="share-feedback bg-white"
+    *ngIf="giveFeedbackMT8"
     fxFlex="1 0 0"
     fxLayout="column"
   >
     <div class="instructions">
       <div
         class="activity-instructions bg-white"
-        fxLayoutAlign="center center"
+        fxLayoutAlign="center start"
         fxLayout="column"
         fxFlex="50%"
       >
         <h2 class="brownish-grey pn-600 discuss-instruction">
-          What did Group 1 think of <em>Omar’s</em> pitch?
+          Thanks <em>{{ getCurrentPitchingUser(0) }}</em
+          >!
         </h2>
 
-        <h3>
-          <em>Geneva</em>, start the discussion. What’s 1 thing you liked and 1
-          thing that could be better?
+        <h3 class="brownish-grey pn-600 discuss-instruction">
+          Everyone else, please fill out your feedback forms.
+        </h3>
+        <div
+          class="info-subsection carolina-blue pn-500"
+          fxFlex="1 0 0"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <img
+            class="main-screen-utility-icons"
+            src="/assets/img/info_icon.png"
+            alt="information"
+          />
+          <div class="instruction">
+            {{ getFbackSubmittedCount(0) }}/{{ getGroupUsersCount(0) - 1 }}
+            forms submitted
+          </div>
+        </div>
+      </div>
+      <div
+        class="activity-instructions bg-white"
+        fxLayoutAlign="center start"
+        fxLayout="column"
+        fxFlex="50%"
+      >
+        <h2 class="brownish-grey pn-600 discuss-instruction">
+          Thanks <em>{{ getCurrentPitchingUser(1) }}</em
+          >!
+        </h2>
+
+        <h3 class="brownish-grey pn-600 discuss-instruction">
+          Everyone else, please fill out your feedback forms.
+        </h3>
+        <div
+          class="info-subsection carolina-blue pn-500"
+          fxFlex="1 0 0"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+        >
+          <img
+            class="main-screen-utility-icons"
+            src="/assets/img/info_icon.png"
+            alt="information"
+          />
+          <div class="instruction">
+            {{ getFbackSubmittedCount(1) }}/{{ getGroupUsersCount(1) - 1 }}
+            forms submitted
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share feedback Two groups -->
+  <div
+    class="share-feedback bg-white"
+    *ngIf="shareFeedbackMT8"
+    fxFlex="1 0 0"
+    fxLayout="column"
+  >
+    <div class="instructions">
+      <div
+        class="activity-instructions bg-white"
+        fxLayoutAlign="center start"
+        fxLayout="column"
+        fxFlex="50%"
+      >
+        <h2 class="brownish-grey pn-600 discuss-instruction">
+          What did Group 1 think of
+          <em>{{ getCurrentPitchingUser(0) }}</em> pitch?
+        </h2>
+
+        <h3 class="brownish-grey pn-600 discuss-instruction">
+          <em> {{ getDiscussionStarterUser(0) }} </em>, start the discussion.
+          What’s 1 thing you liked and 1 thing that could be better?
         </h3>
       </div>
       <div
         class="activity-instructions bg-white"
-        fxLayoutAlign="center center"
+        fxLayoutAlign="center start"
         fxLayout="column"
         fxFlex="50%"
       >
         <h2 class="brownish-grey pn-600 discuss-instruction">
-          What did Group 2 think of <em>Farah’s</em> pitch?
+          What did Group 2 think of
+          <em>{{ getCurrentPitchingUser(1) }}</em> pitch?
         </h2>
 
-        <h3>
-          <em>Polly</em>, start the discussion. What’s 1 thing you liked and 1
-          thing that could be better?
+        <h3 class="brownish-grey pn-600 discuss-instruction">
+          <em>{{ getDiscussionStarterUser(1) }}</em
+          >, start the discussion. What’s 1 thing you liked and 1 thing that
+          could be better?
         </h3>
       </div>
     </div>
+  </div>
+
+  <div class="linear-timer-container">
+    <app-linear-timer #timer [endAudio]="'bell.wav'"></app-linear-timer>
   </div>
 </div>

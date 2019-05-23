@@ -1,4 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import { EmojiLookupService } from 'src/app/services';
+import {
+  FeedbackSubmitEventAnswer,
+  PitchoMaticActivity,
+  PitchoMaticBlank,
+  PitchoMaticGroupMember,
+  PitchoMaticSubmitFeedbackEvent,
+  PitchoMaticUserGeneratedEvent,
+  PitchoMaticUserInGroupEvent,
+  PitchoMaticUserReadyEvent
+} from 'src/app/services/backend/schema';
 import * as odoo from 'src/assets/js/odoo.js';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -9,50 +20,331 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantGeneratePitchActivityComponent
   extends BaseActivityComponent
-  implements OnInit {
-  generatePitchSection = true;
-  shareFeedback = false;
+  implements OnInit, OnChanges {
+  // variable to store current user
+  currentMember;
 
-  generatePitch_set = [
-    { id: 1, label: 'The company you are pitching is', value: 'IKEA' },
-    { id: 2, label: 'You are pitching to:', value: 'a five year old child' },
-    { id: 3, label: 'And the technique you need to use is:', value: 'analogy' }
-  ];
-  constructor() {
+  // variable to show split into groups section
+  splitIntoGroups = false;
+  // variable to store if the user has clicked I'm ready in group button
+  userInGroup = false;
+
+  // variable to show generate pitch screen
+  generatePitchSection = false;
+
+  // variable to play animation only once
+  pitchCriteriaRevealed = false;
+
+  // variable to show draft your pitch screen
+  draftPitchSection = false;
+  // variable to store draft of the pitch
+  pitchDraftNotes = '';
+  // variable to store if pitch notes have to saved to backend
+  pitchNotesSaved = false;
+
+  // variable to show share your pitch
+  sharePitchSection = false;
+  // varible to show wait for your turn to share your pitch
+  listenToPitchSection = false;
+
+  // variable to show form to give feedback to others
+  giveOthersFeedbackSection = false;
+  // variable to show when current user is getting feedback from others
+  gettingFeedbackSection = false;
+  // variable to show when current user has submitted feedback
+  thanksForFeedback = false;
+
+  // variable to share what you liked about pitch
+  shareFeedbackSection = false;
+
+  pitch_set = [];
+
+  constructor(private emoji: EmojiLookupService) {
     super();
   }
 
   ngOnInit() {}
 
+  ngOnChanges() {
+    const state = this.activityState;
+
+    const currentUserID = state.your_identity.id;
+    let currentMember: PitchoMaticGroupMember;
+    state.pitchomaticactivity.pitchomaticgroup_set.forEach(group => {
+      group.pitchomaticgroupmember_set.forEach(member => {
+        if (member.user.id === currentUserID) {
+          currentMember = member;
+        }
+      });
+    });
+
+    this.currentMember = currentMember;
+
+    if (state.pitchomaticactivity.activity_status === 'grouping') {
+      this.splitIntoGroups = true;
+      this.draftPitchSection = false;
+      this.generatePitchSection = false;
+    } else if (state.pitchomaticactivity.activity_status === 'preparing') {
+      this.splitIntoGroups = false;
+      this.getCurrentUserPitchSet();
+      if (!currentMember.has_generated) {
+        this.generatePitchSection = true;
+      } else if (currentMember.has_generated && !currentMember.has_prepared) {
+        this.generatePitchSection = false;
+        this.draftPitchSection = true;
+      }
+    } else if (state.pitchomaticactivity.activity_status === 'pitching') {
+      this.thanksForFeedback = false;
+      this.splitIntoGroups = false;
+      this.gettingFeedbackSection = false;
+      this.giveOthersFeedbackSection = false;
+      this.shareFeedbackSection = false;
+      if (!this.pitchNotesSaved) {
+        this.savePitchNotes();
+      }
+      this.draftPitchSection = false;
+      this.generatePitchSection = false;
+      if (this.isCurrentUserPitching()) {
+        this.sharePitchSection = true;
+        this.listenToPitchSection = false;
+      } else {
+        this.sharePitchSection = false;
+        this.listenToPitchSection = true;
+      }
+    } else if (state.pitchomaticactivity.activity_status === 'feedback') {
+      this.listenToPitchSection = false;
+      this.draftPitchSection = false;
+      this.generatePitchSection = false;
+      this.sharePitchSection = false;
+      if (this.isCurrentUserPitching()) {
+        this.gettingFeedbackSection = true;
+      } else {
+        if (!this.thanksForFeedback) {
+          this.giveOthersFeedbackSection = true;
+        }
+      }
+    } else if (state.pitchomaticactivity.activity_status === 'discussion') {
+      this.listenToPitchSection = false;
+      this.draftPitchSection = false;
+      this.generatePitchSection = false;
+      this.sharePitchSection = false;
+      this.thanksForFeedback = false;
+      this.giveOthersFeedbackSection = false;
+      if (this.isCurrentUserPitching()) {
+        this.shareFeedbackSection = false;
+        this.gettingFeedbackSection = true;
+      } else {
+        this.shareFeedbackSection = true;
+      }
+    }
+  }
+
+  getCurrentUserPitchSet() {
+    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
+    const blank_set: Array<PitchoMaticBlank> = act.pitchomaticblank_set;
+    blank_set.sort((a, b) => a.order - b.order);
+    // blank_set
+    // 0:
+    // id: 16
+    // label: "The company you are pitching is:"
+    // order: 0
+    // pitchomaticblankchoice_set: Array(6)
+    //    0: {id: 66, value: "Netflix"}
+    //    1: {id: 67, value: "Google"}
+    //    2: {id: 68, value: "Uber"}
+    //    3: {id: 69, value: "Exxon"}
+    //    4: {id: 70, value: "Apple"}
+    //    5: {id: 71, value: "Ikea"}
+
+    // 1:
+    // id: 17
+    // label: "You are pitching to:"
+    // order: 1
+    // pitchomaticblankchoice_set: Array(4)
+    //    0: {id: 72, value: "dwarves"}
+    //    1: {id: 73, value: "elves"}
+    //    2: {id: 74, value: "orcs"}
+    //    3: {id: 75, value: "your mom"}
+
+    // 2:
+    // id: 18
+    // label: "And the technique you need to use is:"
+    // order: 2
+    // pitchomaticblankchoice_set: Array(3)
+    //    0: {id: 76, value: "hypnosis"}
+    //    1: {id: 77, value: "jedi mind-trick"}
+    //    2: {id: 78, value: "analogy"}
+
+    const currentUserID = this.activityState.your_identity.id;
+    let currentMember: PitchoMaticGroupMember;
+    act.pitchomaticgroup_set.forEach(group => {
+      group.pitchomaticgroupmember_set.forEach(member => {
+        if (member.user.id === currentUserID) {
+          currentMember = member;
+        }
+      });
+    });
+
+    // has_generated: false
+    // has_prepared: false
+    // is_grouped: false
+    // is_pitching: false
+    // pitch:
+    //    pitchomaticgroupmemberpitchchoice_set: Array(3)
+    //      0: {pitchomaticblank: 16, choice: 70}
+    //      1: {pitchomaticblank: 17, choice: 73}
+    //      2: {pitchomaticblank: 18, choice: 76}
+    // pitch_done: false
+    // pitch_prep_text: null
+    // pitch_status: "waiting"
+    // user: {id: 8, username: "61511", first_name: "61511", last_name: "", email: "", …}
+    if (this.pitch_set.length === 0) {
+      // [
+      //   { id: 1, label: 'The company you are pitching is', value: 'IKEA' },
+      //   { id: 2, label: 'You are pitching to:', value: 'a five year old child' },
+      //   { id: 3, label: 'And the technique you need to use is:', value: 'analogy' }
+      // ];
+
+      blank_set.forEach(blank => {
+        const choice = currentMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(
+          el => {
+            return el.pitchomaticblank === blank.id;
+          }
+        )[0].choice;
+
+        const value = blank.pitchomaticblankchoice_set.filter(el => {
+          return el.id === choice;
+        })[0].value;
+
+        this.pitch_set.push({
+          id: blank.id,
+          label: blank.label,
+          order: blank.order,
+          value: value
+        });
+      });
+    }
+  }
+
   generatePitch() {
-    this.generatePitch_set[0].value.split(' ').forEach((el, index) => {
-      odoo.default({
-        el: '.odoo_' + index + '_' + el,
-        from: '',
-        letterSpacing: 1,
-        to: 'IKEA',
-        animationDelay: 1000
+    if (!this.pitchCriteriaRevealed) {
+      this.pitch_set.forEach(blank => {
+        blank.value.split(' ').forEach((el, index) => {
+          odoo.default({
+            el: '.odoo_' + index + '_' + el,
+            from: '',
+            to: el,
+            animationDelay: 1000
+          });
+        });
       });
-    });
+      this.pitchCriteriaRevealed = true;
 
-    this.generatePitch_set[1].value.split(' ').forEach((el, index) => {
-      odoo.default({
-        el: '.odoo_' + index + '_' + el,
-        from: '',
-        letterSpacing: 0.5,
-        to: el,
-        animationDelay: 1000
-      });
-    });
+      setTimeout(() => {
+        this.generatePitchSection = false;
+        this.draftPitchSection = true;
 
-    this.generatePitch_set[2].value.split(' ').forEach((el, index) => {
-      odoo.default({
-        el: '.odoo_' + index + '_' + el,
-        from: '',
-        letterSpacing: 1,
-        to: 'analogy',
-        animationDelay: 1000
-      });
-    });
+        this.sendMessage.emit(new PitchoMaticUserGeneratedEvent());
+      }, 6000);
+    }
+  }
+
+  getUserPitchPrompt() {
+    if (localStorage.getItem('pitchDraftNotes')) {
+      this.pitchDraftNotes = localStorage.getItem('pitchDraftNotes');
+    }
+    return (
+      'Pitch <em class="vibrant-blue">' +
+      this.pitch_set[0].value +
+      '</em> to <em class="vibrant-blue">' +
+      this.pitch_set[1].value +
+      '</em> using <em class="vibrant-blue">' +
+      this.pitch_set[2].value +
+      '</em>'
+    );
+  }
+
+  locallySaveDraft() {
+    localStorage.setItem('pitchDraftNotes', this.pitchDraftNotes);
+  }
+
+  savePitchNotes() {
+    this.sendMessage.emit(new PitchoMaticUserReadyEvent(this.pitchDraftNotes));
+    this.pitchNotesSaved = true;
+  }
+
+  isCurrentUserPitching() {
+    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
+    const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
+    const pitchingMember = act.pitchomaticgroup_set[
+      groupIndex
+    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
+
+    return pitchingMember.user.id === this.activityState.your_identity.id;
+  }
+
+  submitAnswers(val) {
+    if (this.thanksForFeedback) {
+      return;
+    }
+    const answers: Array<FeedbackSubmitEventAnswer> = [];
+    for (let i = 0; i < val.questions.length; i++) {
+      if (val.questions[i].question_type === 'rating_agreedisagree') {
+        const ans = new FeedbackSubmitEventAnswer(
+          val.questions[i].q,
+          val.questions[i].rating_answer,
+          val.questions[i].text_answer
+        );
+        answers.push(ans);
+      }
+      if (val.questions[i].question_type === 'text') {
+        const ans = new FeedbackSubmitEventAnswer(
+          val.questions[i].q,
+          val.questions[i].rating_answer,
+          val.questions[i].text_answer
+        );
+        answers.push(ans);
+      }
+    }
+    this.sendMessage.emit(new PitchoMaticSubmitFeedbackEvent(answers));
+    this.giveOthersFeedbackSection = false;
+    this.thanksForFeedback = true;
+  }
+
+  getCurrentUserGroup(): string {
+    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
+    const pitchingMember = act.pitchomaticgroup_set[0].pitchomaticgroupmember_set.filter(
+      member => member.user.id === this.activityState.your_identity.id
+    )[0];
+    if (pitchingMember) {
+      return '1';
+    } else {
+      return '2';
+    }
+  }
+
+  userInGroupEvent() {
+    if (!this.userInGroup) {
+      this.sendMessage.emit(new PitchoMaticUserInGroupEvent());
+      this.userInGroup = true;
+    }
+  }
+
+  getGroupEmoji() {
+    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
+    const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
+    return act.pitchomaticgroup_set[groupIndex].group_emoji;
+  }
+
+  // Get pitching user of same group as current user
+  getCurrentPitchingUser() {
+    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
+
+    const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
+    const pitchingMember = act.pitchomaticgroup_set[
+      groupIndex
+    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
+    const name = pitchingMember.user.first_name;
+    return name.charAt(0).toUpperCase() + name.slice(1);
   }
 }

@@ -216,14 +216,14 @@ export interface BuildAPitchActivity {
   winning_user: User;
 }
 
-
 export interface PitchoMaticActivity {
   instructions: string;
-  activity_status: string;  // = preparing, grouping, pitching+, feedback+
+  activity_status: string; // = preparing, grouping, pitching+, feedback+
   prepare_timer: Timer;
   group_timer: Timer;
   pitch_timer: Timer;
   feedback_timer: Timer;
+  discuss_timer: Timer;
   pitchomaticblank_set: PitchoMaticBlank[];
   pitchomaticgroup_set: PitchoMaticGroup[];
   feedbackquestion_set: FeedbackQuestion[];
@@ -234,7 +234,6 @@ export interface PitchoMaticBlank {
   order: number;
   label: string;
   pitchomaticblankchoice_set: PitchoMaticBlankChoice[];
-
 }
 
 export interface PitchoMaticBlankChoice {
@@ -252,6 +251,7 @@ export interface PitchoMaticGroupMember {
   is_grouped: boolean;
   has_generated: boolean;
   has_prepared: boolean;
+  feedback_count: number;
   pitch_status: string; // = waiting, pitching, feedback, done
   // states:
   // is_pitching=false, pitch_done=false := user never pitched yet
@@ -259,7 +259,7 @@ export interface PitchoMaticGroupMember {
   // is_pitching=true, pitch_done=true := user is recieving feedback
   // is_pitching=false, pitch_done=true := user is done with their pitch and feedback
   is_pitching: boolean; // true when user is pitching. remains true while feedback for user is going on. becomes false after feedback
-  pitch_done: boolean;  // becomes true after pitch is done.
+  pitch_done: boolean; // becomes true after pitch is done.
   pitch_prep_text: string;
   pitch: PitchoMaticGroupMemberPitch;
 }
@@ -272,48 +272,3 @@ export interface PitchoMaticGroupMemberPitchChoice {
   pitchomaticblank: number; // is the PitchoMaticBlank.id. You will need to lookup
   choice: number; // is the PitchoMaticBlankChoice.id for that PitchoMaticBlank
 }
-
-// "buildapitchpitch_set": [
-//   {
-//     "user": 1,
-//     "buildapitchentry_set": [
-//       {
-//         "buildapitchblank": 1,
-//         "value": "growth-stage software companies"
-//       },
-//       {
-//         "buildapitchblank": 2,
-//         "value": "growing their businesses"
-//       },
-//       {
-//         "buildapitchblank": 3,
-//         "value": "providing funding"
-//       },
-//       {
-//         "buildapitchblank": 4,
-//         "value": "we want good ideas to succeed"
-//       }
-//     ]
-//   },
-//   {
-//     "user": 2,
-//     "buildapitchentry_set": [
-//       {
-//         "buildapitchblank": 1,
-//         "value": "yo momma"
-//       },
-//       {
-//         "buildapitchblank": 2,
-//         "value": "getting fatter"
-//       },
-//       {
-//         "buildapitchblank": 3,
-//         "value": "feeding lard"
-//       },
-//       {
-//         "buildapitchblank": 4,
-//         "value": "heart disease is a bitch"
-//       }
-//     ]
-//   }
-// ]

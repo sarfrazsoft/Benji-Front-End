@@ -1,13 +1,62 @@
 @import 'variables';
 
 .pitch-form {
-  .blank {
-    text-align: center;
-    height: 100px;
-    border: $pale-grey 1px solid;
-    flex-wrap: wrap;
-    // font-family: 'Inconsolata';
-    font-size: 24px;
-    fill: $vibrant-blue;
+  .pitch-segment {
+    margin: 20px 0px;
+    .segment-label {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .blank {
+      text-align: center;
+      height: 100px;
+      border: $pale-grey 1px solid;
+      flex-wrap: wrap;
+      font-size: 24px;
+      fill: $vibrant-blue;
+      font-family: monospace;
+    }
+  }
+}
+
+.content {
+  width: 90%;
+  margin: 0 auto;
+  .your-prompt {
+    margin-bottom: 20px;
+    .your-pitch {
+      font-size: 26px;
+      line-height: 1.5;
+      padding: 20px 0px;
+      em {
+        color: $vibrant-blue;
+      }
+    }
+  }
+
+  .your-notes {
+    textarea,
+    .draft-pitch-finalized {
+      font-size: 20px;
+      width: 100%;
+      margin-bottom: 30px;
+      color: $brownish-grey;
+      padding: 4px;
+      box-sizing: border-box;
+      border: 1px solid $pale-grey;
+      &:focus {
+        outline: none;
+      }
+    }
+    .draft-pitch-finalized {
+      height: 250px;
+      overflow: scroll;
+    }
+  }
+  .your-pitch-label {
+    text-transform: uppercase;
+    color: $cloudy-grey;
+    font-size: 16px;
+    margin-bottom: 10px;
   }
 }

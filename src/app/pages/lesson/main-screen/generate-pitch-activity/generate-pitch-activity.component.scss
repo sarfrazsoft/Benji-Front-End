@@ -1,5 +1,22 @@
 @import 'variables';
 
+// Overrides for pitchomatic
+.mainscreen-activity {
+  position: relative;
+  h1 {
+    font-size: 9vh;
+  }
+  .lesson-top-banner {
+    padding: 0.5vw 2.5vw;
+  }
+  .linear-timer-container {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+  }
+}
+
 .time-to-pitch {
   .pitches {
     height: 45vh;
@@ -8,7 +25,10 @@
     }
   }
   .activity-instructions {
-    margin: 4vh 4vh;
+    margin-top: 3vh;
+    h2 {
+      margin-top: 5vh;
+    }
   }
 }
 
@@ -25,6 +45,9 @@
   .activity-instructions {
     margin: 5vh 0vh;
     padding: 3vh 3vw;
+    .discuss-instruction {
+      font-size: 5.5vh;
+    }
   }
 }
 
@@ -70,6 +93,7 @@
     text-overflow: ellipsis;
     list-style: none;
     margin-bottom: 1vh;
+    text-transform: capitalize;
     &.long-list {
       font-size: 2vh;
     }

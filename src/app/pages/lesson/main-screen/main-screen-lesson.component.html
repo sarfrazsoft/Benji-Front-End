@@ -13,12 +13,12 @@
         : 'ms-lesson__activity-container'
     "
   >
-    <!-- <benji-ms-generate-pitch-activity
-      *ngIf="getActivityType() === 'LobbyActivity'"
+    <benji-ms-generate-pitch-activity
+      *ngIf="getActivityType() === 'PitchoMaticActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-generate-pitch-activity> -->
+    </benji-ms-generate-pitch-activity>
 
     <benji-ms-build-pitch-activity
       *ngIf="getActivityType() === 'BuildAPitchActivity'"

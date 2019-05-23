@@ -62,25 +62,6 @@ export class QuestionFormComponent implements OnInit, OnChanges {
 
   submitFeedback() {
     const val = this.form.value;
-    const answers: Array<FeedbackSubmitEventAnswer> = [];
-    for (let i = 0; i < val.questions.length; i++) {
-      if (val.questions[i].question_type === 'rating_agreedisagree') {
-        const ans = new FeedbackSubmitEventAnswer(
-          val.questions[i].q,
-          val.questions[i].rating_answer,
-          val.questions[i].text_answer
-        );
-        answers.push(ans);
-      }
-      if (val.questions[i].question_type === 'text') {
-        const ans = new FeedbackSubmitEventAnswer(
-          val.questions[i].q,
-          val.questions[i].rating_answer,
-          val.questions[i].text_answer
-        );
-        answers.push(ans);
-      }
-    }
-    this.submitResponse.emit(new FeedbackSubmitEvent(answers));
+    this.submitResponse.emit(val);
   }
 }

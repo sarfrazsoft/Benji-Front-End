@@ -47,6 +47,10 @@ export class EmojiLookupService {
         return '🙅‍♀️';
       case 'party-poppers':
         return '🎉';
+      case 'avocado':
+        return '🥑';
+      case 'banana':
+        return '🍌';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

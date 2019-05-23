@@ -7,6 +7,7 @@ import {
   LobbyActivity,
   MCQActivity,
   MCQResultsActivity,
+  PitchoMaticActivity,
   RoleplayPairActivity,
   TeleTriviaActivity,
   TitleActivity,
@@ -28,6 +29,7 @@ export interface UpdateMessage {
   lesson_run: LessonRun;
   base_activity: BaseActivity;
   buildapitchactivity: BuildAPitchActivity;
+  pitchomaticactivity: PitchoMaticActivity;
   activity_type: string;
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
@@ -268,5 +270,3 @@ export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
     };
   }
 }
-
-
