@@ -20,7 +20,7 @@ export class ParticipantBuildPitchActivityComponent
   builtPitch_set;
   act: BuildAPitchActivity;
   createPitch = false;
-  pitchSubmitted = true;
+  pitchSubmitted = false;
   blankPitch = false;
   pitchValid = false;
   showMyPitch = false;
@@ -69,6 +69,7 @@ export class ParticipantBuildPitchActivityComponent
       !this.thanksForVote
     ) {
       if (!this.pitchSubmitted) {
+        this.pitchValid = true;
         this.submitPitch();
       }
       this.createPitch = false;
