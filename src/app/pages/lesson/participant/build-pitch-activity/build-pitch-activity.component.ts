@@ -21,9 +21,9 @@ export class ParticipantBuildPitchActivityComponent
   act: BuildAPitchActivity;
   createPitch = false;
   pitchSubmitted = true;
-  blankPitch = true;
+  blankPitch = false;
   pitchValid = false;
-  showMyPitch = true;
+  showMyPitch = false;
   voteNow = false;
   thanksForVote = false;
   lookAtWinningPitch = false;
@@ -31,22 +31,6 @@ export class ParticipantBuildPitchActivityComponent
 
   selectedUser = null;
 
-  users = [
-    {
-      id: 1,
-      name: 'Harold',
-      pitch:
-        'wing their businesses by providing funding because we want good ideas to succeed.'
-    },
-    {
-      id: 2,
-      name: 'Farah',
-      pitch:
-        'Georgian Partners helps <em>growth-stage software companies</em>' +
-        ' with <em>growing their businesses</ em> by <em>providing funding</em>' +
-        ' because <em>we want good ideas to succeed</em>.'
-    }
-  ];
   constructor() {
     super();
     this.builtPitch_set = [];
@@ -129,13 +113,18 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   submitPitch() {
+    if (!this.pitchValid) {
+      return;
+    }
     const buildapitchsubmissionentry_set = [];
     this.builtPitch_set.forEach(p => {
-      const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(
-        p,
-        p.value
-      );
-      buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
+      if (p.value) {
+        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(
+          p,
+          p.value
+        );
+        buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
+      }
     });
 
     this.sendMessage.emit(
@@ -159,33 +148,23 @@ export class ParticipantBuildPitchActivityComponent
       e => e.user === userId
     );
 
-    console.log(buildAPitchPitchSet);
-
     let statement = '';
-    if (buildAPitchPitchSet.length === 0) {
-      blanks.forEach((b, i) => {
-        statement =
-          statement +
-          b.label +
-          ' <em class="lightish-red">(' +
-          b.temp_text +
-          ')</em> ';
-      });
-      this.blankPitch = true;
-      return statement;
-    } else {
-      const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-      blanks.forEach((b, i) => {
-        statement =
-          statement +
-          b.label +
-          ' <em>' +
-          buildAPitchEntrySet[i].value +
-          '</em> ';
-      });
-      console.log(statement);
-      return statement;
-    }
+    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+    blanks.forEach((b, i) => {
+      const currentBlanksValue = buildAPitchEntrySet.filter(
+        v => v.buildapitchblank === b.id
+      );
+
+      let value = '';
+      if (currentBlanksValue.length === 1) {
+        value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+      } else {
+        value = ' <em class="lightish-red">(' + b.temp_text + ')</em> ';
+        this.blankPitch = true;
+      }
+      statement = statement + b.label + value;
+    });
+    return statement;
   }
 
   getUserName(userId) {
@@ -195,7 +174,6 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   submitVote(user) {
-    console.log(user);
     this.sendMessage.emit(new BuildAPitchSubmitVoteEvent(user));
     this.voteNow = false;
     this.showMyPitch = false;

@@ -65,23 +65,30 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
       return o.num_votes === v;
     });
 
-    console.log(obj);
-    console.log(this.getPitchText(obj.id));
-
     return this.getPitchText(obj.id);
   }
 
   getPitchText(userId) {
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
-    const pitch = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
+    const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
       e => e.user === userId
-    )[0].buildapitchentry_set;
+    );
 
     let statement = '';
+    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
     blanks.forEach((b, i) => {
-      statement = statement + b.label + ' <em>' + pitch[i].value + '</em> ';
+      const currentBlanksValue = buildAPitchEntrySet.filter(
+        v => v.buildapitchblank === b.id
+      );
+
+      let value = '';
+      if (currentBlanksValue.length === 1) {
+        value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+      } else {
+        value = ' <em class="lightish-red">(' + b.temp_text + ')</em> ';
+      }
+      statement = statement + b.label + value;
     });
-    console.log(statement);
     return statement;
   }
 }

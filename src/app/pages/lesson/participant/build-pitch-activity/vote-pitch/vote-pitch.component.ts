@@ -14,9 +14,7 @@ export class VotePitchComponent implements OnInit {
   expanded = false;
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.user);
-  }
+  ngOnInit() {}
 
   selectUser(user) {
     this.userSelected.emit(user);
