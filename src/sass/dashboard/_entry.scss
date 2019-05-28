@@ -36,6 +36,9 @@
     }
     .form-tabs {
       padding: 0 15%;
+      @media #{$small-and-down} {
+        padding: 0 0;
+      }
     }
     .instruction {
       margin: 20px 0px;
@@ -63,6 +66,10 @@
         box-sizing: border-box;
         width: 100%;
         min-width: 160px;
+        @media #{$small-and-down} {
+          width: -webkit-fill-available;
+          min-width: auto;
+        }
         text-align: left;
         display: inline-flex;
         justify-content: flex-start;

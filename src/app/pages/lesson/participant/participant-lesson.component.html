@@ -64,6 +64,13 @@
   >
   </benji-ps-pair-activity>
 
+  <benji-ps-pair-grouping-activity
+    *ngIf="getActivityType() === 'PairGroupingActivity'"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-pair-grouping-activity>
+
   <benji-ps-discussion-activity
     *ngIf="getActivityType() === 'DiscussionActivity'"
     [activityState]="serverMessage"

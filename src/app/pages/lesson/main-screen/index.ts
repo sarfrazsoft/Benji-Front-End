@@ -9,6 +9,7 @@ import { MainScreenLessonComponent } from './main-screen-lesson.component';
 import { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { MainScreenMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
 import { MainScreenPairActivityComponent } from './pair-activity/pair-activity.component';
+import { MainScreenPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 import { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { MainScreenTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
 import { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
@@ -28,6 +29,7 @@ export const MainScreenComponents = [
   MainScreenMcqActivityComponent,
   MainScreenMcqresultActivityComponent,
   MainScreenPairActivityComponent,
+  MainScreenPairGroupingActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTeletriviaActivityComponent,
   MainScreenTitleActivityComponent,

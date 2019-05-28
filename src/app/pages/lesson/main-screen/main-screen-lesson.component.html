@@ -74,6 +74,13 @@
     >
     </benji-ms-activity-video>
 
+    <benji-ms-pair-grouping-activity
+      *ngIf="getActivityType() === 'PairGroupingActivity'"
+      [activityState]="serverMessage"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-pair-grouping-activity>
+
     <benji-ms-pair-activity
       *ngIf="getActivityType() === 'RoleplayPairActivity'"
       [activityState]="serverMessage"

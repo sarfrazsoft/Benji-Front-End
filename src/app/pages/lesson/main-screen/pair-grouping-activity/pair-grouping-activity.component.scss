@@ -1,0 +1,36 @@
+@import 'variables';
+
+.pair-activity {
+  .mainscreen-activity__column.pair-activity__pairs {
+    padding: 0px 60px;
+    position: relative;
+    .ul-find-partner {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      padding-left: 0;
+      height: 68vh;
+      .li-find-partner {
+        margin: 0;
+        font-size: 3.5vh;
+        display: flex;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+        list-style: none;
+        margin-bottom: 1vh;
+        &.long-list {
+          font-size: 2vh;
+        }
+        .pair-activity__ready-icon {
+          color: #7ed321;
+          margin-left: 15px;
+          font-size: 3.5vh;
+          height: 3.5vh;
+          width: 3.5vh;
+        }
+      }
+    }
+  }
+}

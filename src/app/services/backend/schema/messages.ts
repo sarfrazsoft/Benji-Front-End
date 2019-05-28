@@ -7,6 +7,7 @@ import {
   LobbyActivity,
   MCQActivity,
   MCQResultsActivity,
+  PairGroupingActivity,
   PitchoMaticActivity,
   RoleplayPairActivity,
   TeleTriviaActivity,
@@ -38,6 +39,7 @@ export interface UpdateMessage {
   videoactivity?: VideoActivity;
   teletriviaactivity?: TeleTriviaActivity;
   roleplaypairactivity?: RoleplayPairActivity;
+  pairgroupingactivity?: PairGroupingActivity;
   hintwordactivity?: HintWordActivity;
   discussionactivity?: DiscussionActivity;
   feedbackactivity?: FeedbackActivity;
@@ -121,6 +123,10 @@ export class TeleTriviaMessageReturnedEvent extends ActivityEvent {
 
 export class TeleTriviaSharingDoneEvent extends ActivityEvent {
   event_name = 'TeleTriviaSharingDoneEvent';
+}
+
+export class GroupingUserFoundEvent extends ActivityEvent {
+  event_name = 'GroupingUserFoundEvent';
 }
 
 export class RoleplayPairUserFoundEvent extends ActivityEvent {

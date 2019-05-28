@@ -90,6 +90,16 @@ export interface RoleplayPair {
   group_found: boolean;
 }
 
+export interface PairGroupingActivity {
+  grouping_complete: boolean;
+  grouping_countdown_timer: Timer;
+  usergroup_set: UserGroupUserSet[];
+}
+
+export interface UserGroupUserSet {
+  usergroupuser_set: RoleplayPairUser[];
+}
+
 export interface RoleplayPairActivity {
   roleplay_question: string;
   primary_role: Role;

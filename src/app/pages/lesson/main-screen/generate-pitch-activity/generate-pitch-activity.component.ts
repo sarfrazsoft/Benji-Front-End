@@ -46,8 +46,10 @@ export class MainScreenGeneratePitchActivityComponent
     const state = this.activityState;
     if (state.pitchomaticactivity.activity_status === 'grouping') {
       this.preparing = false;
-      this.initTimer(state.pitchomaticactivity.group_timer.end_time);
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 2) {
+        if (!this.splitIntoGroups) {
+          this.initTimer(state.pitchomaticactivity.group_timer.end_time);
+        }
         this.splitIntoGroups = true;
       }
     } else if (state.pitchomaticactivity.activity_status === 'preparing') {
@@ -70,21 +72,31 @@ export class MainScreenGeneratePitchActivityComponent
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 1) {
         this.timeToPitchLT8 = false;
         this.giveFeedbackLT8 = true;
+        // if (!this.giveFeedbackLT8) {
+        //   this.initTimer(state.pitchomaticactivity.feedback_timer.end_time);
+        // }
       } else {
         this.timeToPitchMT8 = false;
+        if (!this.giveFeedbackMT8) {
+          this.initTimer(state.pitchomaticactivity.feedback_timer.end_time);
+        }
         this.giveFeedbackMT8 = true;
-        this.initTimer(state.pitchomaticactivity.feedback_timer.end_time);
       }
     } else if (state.pitchomaticactivity.activity_status === 'discussion') {
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 1) {
         this.timeToPitchLT8 = false;
         this.giveFeedbackLT8 = false;
+        // if (!this.shareFeedbackLT8) {
+        //   this.initTimer(state.pitchomaticactivity.discuss_timer.end_time);
+        // }
         this.shareFeedbackLT8 = true;
       } else {
         this.timeToPitchMT8 = false;
         this.giveFeedbackMT8 = false;
+        if (!this.shareFeedbackMT8) {
+          this.initTimer(state.pitchomaticactivity.discuss_timer.end_time);
+        }
         this.shareFeedbackMT8 = true;
-        this.initTimer(state.pitchomaticactivity.discuss_timer.end_time);
       }
     }
   }

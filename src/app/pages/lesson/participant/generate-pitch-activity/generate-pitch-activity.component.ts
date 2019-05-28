@@ -348,3 +348,57 @@ export class ParticipantGeneratePitchActivityComponent
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 }
+
+// from activity_flow.models import LobbyActivity, PitchoMaticActivity, BuildAPitchActivity
+
+// from lesson_builder.common import LessonPlan
+
+// class TestingLesson(LessonPlan):
+//     def build_lesson(self):
+
+//         lobby = LobbyActivity.objects.create(activity_id='main_lobby',
+//                                              description='Waiting for participants to join',
+//                                              next_activity_delay_seconds=0,
+//                                              lessonrun=self.lessonrun)
+
+//         # pom = PitchoMaticActivity.objects.create(
+//         #     activity_id='pom_test',
+//         #     description='PitchoMatic',
+//         #     instructions='Test Instructions',
+//         #     prepare_seconds=15,
+//         #     group_seconds=30,
+//         #     pitch_seconds=10,
+//         #     feedback_seconds=30,
+//         #     discuss_seconds=30,
+//         #     next_activity_delay_seconds=15,
+//         #     lessonrun=self.lessonrun)
+
+//         # pom.add_question(question_type='rating_agreedisagree', question_text="The pitch was concise", is_combo=False)
+//         # pom.add_question(question_type='rating_agreedisagree', question_text="The delivery was strong and confident",
+//         #                  is_combo=False)
+//         # pom.add_question(question_type='text', question_text="Do you have any comments?", is_combo=False)
+//         # pom.set_madlibs(('The company you are pitching is: <Netflix|Google|Uber|Exxon|Apple|Ikea>'
+//         #                  'You are pitching to: <dwarves|elves|orcs|your mom>'
+//         #                  'And the technique you need to use is: <hypnosis|jedi mind-trick|analogy>'))
+
+//         # lobby.set_downstream(pom)
+
+//         # return lobby
+
+//         bap = BuildAPitchActivity.objects.create(
+//             activity_id='bap_test',
+//             description='Building a Pitch',
+//             next_activity_delay_seconds=1,
+//             instructions='Fill in the blanks to build a concise pitch for Georgian Partners.',
+//             build_seconds=20,
+//             vote_seconds=20,
+//             lessonrun=self.lessonrun)
+
+//         bap.set_madlibs(('Georgian Partners helps <the audience|Who are target audience>'
+//                          ' with <the problem|What is the problem that it helps with?>'
+//                          ' by <the solution|how does it help them?>'
+//                          ' because <the why|why do they need this solution?>'))
+
+//         lobby.set_downstream(bap)
+
+//         return lobby

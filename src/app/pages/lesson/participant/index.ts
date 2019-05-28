@@ -8,6 +8,7 @@ import { ParticipantLobbyComponent } from './lobby-activity/lobby.component';
 import { ParticipantMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
+import { ParticipantPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
 import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { ParticipantPreAssessPitchSkillComponent } from './pre-assess-pitch-skill/pre-assess-pitch-skill.component';
@@ -32,6 +33,7 @@ export const ParticipantScreenComponents = [
   ParticipantMcqActivityComponent,
   ParticipantMcqresultActivityComponent,
   ParticipantPairActivityComponent,
+  ParticipantPairGroupingActivityComponent,
   ParticipantPreAssessPitchSkillComponent,
   ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,
