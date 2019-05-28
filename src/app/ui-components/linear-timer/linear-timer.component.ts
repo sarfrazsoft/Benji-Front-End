@@ -79,6 +79,7 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
   public stopTimer(callback: boolean) {
     this.running = false;
     clearInterval(this.timerInterval);
+    this.progressBarWidth = `${0}`;
     if (callback) {
       this.callback.emit();
     }
