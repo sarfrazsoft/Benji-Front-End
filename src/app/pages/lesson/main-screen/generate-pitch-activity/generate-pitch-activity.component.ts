@@ -53,6 +53,9 @@ export class MainScreenGeneratePitchActivityComponent
         this.splitIntoGroups = true;
       }
     } else if (state.pitchomaticactivity.activity_status === 'preparing') {
+      if (this.splitIntoGroups) {
+        this.timer.stopTimer();
+      }
       this.splitIntoGroups = false;
       this.preparing = true;
     } else if (state.pitchomaticactivity.activity_status === 'pitching') {
@@ -72,9 +75,6 @@ export class MainScreenGeneratePitchActivityComponent
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 1) {
         this.timeToPitchLT8 = false;
         this.giveFeedbackLT8 = true;
-        // if (!this.giveFeedbackLT8) {
-        //   this.initTimer(state.pitchomaticactivity.feedback_timer.end_time);
-        // }
       } else {
         this.timeToPitchMT8 = false;
         if (!this.giveFeedbackMT8) {
@@ -86,9 +86,6 @@ export class MainScreenGeneratePitchActivityComponent
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 1) {
         this.timeToPitchLT8 = false;
         this.giveFeedbackLT8 = false;
-        // if (!this.shareFeedbackLT8) {
-        //   this.initTimer(state.pitchomaticactivity.discuss_timer.end_time);
-        // }
         this.shareFeedbackLT8 = true;
       } else {
         this.timeToPitchMT8 = false;
