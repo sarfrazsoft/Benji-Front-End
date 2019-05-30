@@ -13,6 +13,9 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 75vw;
+  @media #{$small-and-down} {
+    width: 85vw;
+  }
 
   .welcome-heading {
     color: #fff;
@@ -29,6 +32,9 @@
   .form-container {
     background-color: #fff;
     padding: 20px;
+    @media #{$small-and-down} {
+      padding: 12px;
+    }
     .header {
       margin: 15px 0px;
       min-height: 55px;

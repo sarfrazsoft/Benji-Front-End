@@ -7,7 +7,7 @@
         </span>
       </h1>
     </div>
-    <div fxFlex="35%" fxLayoutAlign="center center">
+    <div fxFlex="35%" fxLayoutAlign="end center">
       <h2 class="pn-500 discuss-instruction" *ngIf="preparing">
         Write your pitches
       </h2>
@@ -91,7 +91,7 @@
             class="info-subsection carolina-blue pn-500"
             fxFlex="1 0 0"
             fxLayout="row"
-            fxLayoutAlign="start center"
+            fxLayoutAlign="start start"
           >
             <img
               class="main-screen-utility-icons"
@@ -339,7 +339,7 @@
             innerHTML="{{
               'What did everyone think of <em>' +
                 getCurrentPitchingUser(0) +
-                '</em> \’s pitch? <br/> <br/>' +
+                '</em>’s pitch? <br/> <br/>' +
                 '<em>' +
                 getDiscussionStarterUser(0) +
                 '</em>' +
@@ -455,8 +455,9 @@
         </h2>
 
         <h3 class="brownish-grey pn-600 discuss-instruction">
-          <em> {{ getDiscussionStarterUser(0) }} </em>, start the discussion.
-          What’s 1 thing you liked and 1 thing that could be better?
+          <em>{{ getDiscussionStarterUser(0) }}</em
+          >, start the discussion. What’s 1 thing you liked and 1 thing that
+          could be better?
         </h3>
       </div>
       <div

@@ -8,6 +8,7 @@
   .pitch-form {
     text-align: left;
     .pitch-segment {
+      margin-top: 25px;
       .segment-label {
         font-size: 24px;
       }
@@ -21,6 +22,13 @@
         &:focus {
           outline: none;
         }
+        &::placeholder {
+          color: $cloudy-grey;
+          font-weight: 300;
+        }
+      }
+      button {
+        margin: 0px auto;
       }
     }
   }
@@ -35,9 +43,6 @@
     em {
       color: $vibrant-blue;
       border-bottom: 0.5px solid $vibrant-blue;
-      // text-decoration: underline;
-      // text-decoration-color: $vibrant-blue;
-      // text-decoration-line:
     }
   }
 }

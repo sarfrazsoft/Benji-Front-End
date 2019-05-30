@@ -85,6 +85,7 @@ export class ParticipantGeneratePitchActivityComponent
       this.draftPitchSection = false;
       this.generatePitchSection = false;
     } else if (state.pitchomaticactivity.activity_status === 'preparing') {
+      this.checkUserActivity();
       this.splitIntoGroups = false;
       this.getCurrentUserPitchSet();
       if (!currentMember.has_generated) {
@@ -234,7 +235,7 @@ export class ParticipantGeneratePitchActivityComponent
             el: '.odoo_' + index + '_' + el,
             from: '',
             to: el,
-            animationDelay: 1000
+            animationDelay: 0
           });
         });
       });
@@ -245,8 +246,22 @@ export class ParticipantGeneratePitchActivityComponent
         this.draftPitchSection = true;
 
         this.sendMessage.emit(new PitchoMaticUserGeneratedEvent());
-      }, 6000);
+      }, 10000);
     }
+  }
+
+  checkUserActivity() {
+    // If user has no activity in 30 seconds
+    // move to draft screen automatically
+
+    setTimeout(() => {
+      if (!this.pitchCriteriaRevealed) {
+        this.pitchCriteriaRevealed = true;
+        this.generatePitchSection = false;
+        this.draftPitchSection = true;
+        this.sendMessage.emit(new PitchoMaticUserGeneratedEvent());
+      }
+    }, 30000);
   }
 
   getUserPitchPrompt() {
