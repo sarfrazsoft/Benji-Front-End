@@ -118,7 +118,11 @@
         </div>
       </div>
     </div>
-    <button class="b-standard-button" type="submit">
+    <button
+      class="b-standard-button"
+      [ngClass]="{ 'b-standard-button--inactive': !form.valid }"
+      type="submit"
+    >
       Submit
     </button>
   </div>

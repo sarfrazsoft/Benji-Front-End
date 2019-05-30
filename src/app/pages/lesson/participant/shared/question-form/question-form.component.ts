@@ -43,12 +43,19 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   }
 
   createQuestion(q: FeedbackQuestion): FormGroup {
-    return this.builder.group({
-      q: q,
-      question_type: q.question_type,
-      rating_answer: null,
-      text_answer: null
-    });
+    return this.builder.group(
+      {
+        q: q,
+        question_type: q.question_type,
+        rating_answer: null,
+        text_answer: null
+      },
+      {
+        validator: (formGroup: FormGroup) => {
+          return this.validateForm(formGroup);
+        }
+      }
+    );
   }
 
   addItem(q: FeedbackQuestion): void {
@@ -60,8 +67,21 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     return this.form.get('questions') as FormArray;
   }
 
+  validateForm(formgroup: FormGroup) {
+    if (
+      formgroup.controls['rating_answer'].value ||
+      formgroup.controls['text_answer'].value
+    ) {
+      return null;
+    } else {
+      return { validateForm: true };
+    }
+  }
+
   submitFeedback() {
-    const val = this.form.value;
-    this.submitResponse.emit(val);
+    if (this.form.valid) {
+      const val = this.form.value;
+      this.submitResponse.emit(val);
+    }
   }
 }
