@@ -125,6 +125,7 @@ export class ParticipantGeneratePitchActivityComponent
         }
       }
     } else if (state.pitchomaticactivity.activity_status === 'discussion') {
+      localStorage.removeItem('pitchDraftNotes');
       this.listenToPitchSection = false;
       this.draftPitchSection = false;
       this.generatePitchSection = false;
