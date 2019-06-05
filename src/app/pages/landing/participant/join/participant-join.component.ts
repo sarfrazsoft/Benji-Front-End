@@ -7,7 +7,7 @@ import { BackendSocketService } from '../../../../services/backend/backend-socke
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-participant-join',
+  selector: 'benji-participant-join',
   templateUrl: './participant-join.component.html',
   styleUrls: ['./participant-join.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -29,9 +29,14 @@ export class ParticipantJoinComponent implements OnInit {
 
   ngOnInit() {
     if (!this.userName) {
-      this.backend.get_own_identity().subscribe(res => {
-        this.userName = res.first_name;
-      });
+      this.backend.get_own_identity().subscribe(
+        res => {
+          this.userName = res.first_name;
+        },
+        err => {
+          this.router.navigate([`/login`]);
+        }
+      );
     }
   }
 

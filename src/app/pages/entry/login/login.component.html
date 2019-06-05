@@ -59,6 +59,12 @@
   </form>
 
   <div class="footer" fxLayout="column">
+    <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
+      <span class="b-link" (click)="router.navigate(['/participant/login'])">
+        Continue as guest
+      </span>
+    </div>
+    <br />
     <div class="new-to-benji" fxLayoutAlign="center">
       <span>New to Benji?</span>&nbsp;
       <span class="b-link" (click)="showSignup()"> Sign up</span>

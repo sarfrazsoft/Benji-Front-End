@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import { BackendRestService } from '../../../../services/backend/backend-rest.service';
 import { AuthService } from '../../../../services/auth/auth.service';
+import { BackendRestService } from '../../../../services/backend/backend-rest.service';
 
 @Component({
-  selector: 'app-participant-login',
+  selector: 'benji-participant-login',
   templateUrl: './participant-login.component.html',
   styleUrls: ['./participant-login.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -29,6 +29,7 @@ export class ParticipantLoginComponent implements OnInit {
   ngOnInit() {
     if (this.auth.isLoggedIn()) {
       this.auth.logout();
+      this.router.navigate([`/login`]);
     }
   }
 

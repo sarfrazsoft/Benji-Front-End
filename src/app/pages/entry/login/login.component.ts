@@ -18,13 +18,19 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoginClicked = false;
   emailPasswordError = false;
+  isDemoSite = false;
   @Output() showSignupTab = new EventEmitter();
 
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) {
+    // demo.mybenji.com
+    if (window.location.href.split('.')[0].includes('demo')) {
+      this.isDemoSite = true;
+    }
+  }
 
   ngOnInit() {
     this.form = this.builder.group({
@@ -50,7 +56,8 @@ export class LoginComponent implements OnInit {
           if (res) {
             this.emailPasswordError = true;
           } else {
-            this.router.navigate(['/dashboard']);
+            // this.router.navigate(['/dashboard']);
+            this.router.navigate(['/participant/join']);
           }
         },
         err => {

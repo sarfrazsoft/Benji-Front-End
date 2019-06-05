@@ -1,9 +1,13 @@
 <benji-question-layout *ngIf="!answersSubmitted">
-  <ng-container class="body-title">
+  <!-- <ng-container class="body-title">
     Feedback
+  </ng-container> -->
+
+  <ng-container class="body-title">
+    Assessment
   </ng-container>
   <app-b-twemoji class="body-emoji" emoji="✍️"> </app-b-twemoji>
-  <h1 class="body-heading pn-700 deep-blue">Thanks for playing!</h1>
+  <h1 class="body-heading pn-700 deep-blue">Fill out the form!</h1>
   <ng-container class="body-text">
     How much do you agree with the following statements?
   </ng-container>
@@ -17,5 +21,5 @@
 <benji-ps-instruction-template *ngIf="answersSubmitted">
   <ng-container class="body-title">Thank You</ng-container>
   <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
-  <h1 class="body-heading pn-700 deep-blue">Thanks for playing!</h1>
+  <h1 class="body-heading pn-700 deep-blue">Thanks for submitting!</h1>
 </benji-ps-instruction-template>

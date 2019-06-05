@@ -27,7 +27,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
     super();
   }
 
-  optionIdentifiers = ['A', 'B', 'C', 'D'];
+  optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   ngOnInit() {}
 

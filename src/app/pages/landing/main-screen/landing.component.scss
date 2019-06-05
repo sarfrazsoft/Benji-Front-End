@@ -28,7 +28,7 @@
       left: 40px;
     }
     h1 {
-      font-size: 8vh;
+      font-size: 12vh;
       color: #fff;
       line-height: normal;
     }
@@ -37,9 +37,12 @@
       color: #fff;
       line-height: normal;
     }
-    button {
+    .lesson-launch-button {
+      button:first-child {
+        margin-bottom: 50px;
+      }
       position: absolute;
-      right: -272.5px;
+      right: -23%;
       transform: translateY(-50%);
       top: 50%;
       @media #{$fourK-display-and-up} {

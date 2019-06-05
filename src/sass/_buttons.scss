@@ -127,6 +127,32 @@ button {
   }
 }
 
+.indigo-launch-button-sub {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5vh;
+  padding-right: 5vh;
+  width: 30vw;
+  height: 10.5vh;
+  font-size: 4.5vh;
+  border-radius: 12vh;
+  border: 0px;
+  &:active {
+    background-color: #3a126e;
+  }
+  span {
+    margin-right: 20px;
+  }
+  mat-icon {
+    font-size: 6vh;
+    height: 6vh;
+    position: relative;
+    width: 6vh;
+  }
+}
+
 .dashboard-button {
   padding: 15px 0px;
   font-size: 24px;

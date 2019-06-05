@@ -28,14 +28,14 @@ export class SidenavComponent implements OnInit {
 
   launchSession(): void {
     this.dialog
-      .open(LaunchSessionDialogComponent, {})
+      .open(LaunchSessionDialogComponent, { panelClass: 'dashboard-dialog' })
       .afterClosed()
       .subscribe(user => {});
   }
 
   joinSession(): void {
     this.dialog
-      .open(JoinSessionDialogComponent, {})
+      .open(JoinSessionDialogComponent, { panelClass: 'dashboard-dialog' })
       .afterClosed()
       .subscribe(user => {});
   }

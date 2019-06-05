@@ -3,6 +3,9 @@
 
   .content {
     width: 40vw;
+    @media #{$small-and-down} {
+      width: 85vw;
+    }
     background-color: #fff;
     text-align: center;
     padding: 3vw;
