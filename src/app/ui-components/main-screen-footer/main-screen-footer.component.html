@@ -7,9 +7,6 @@
 >
   <div class="mainscreen-footer__controls">
     <ng-container>
-      <!-- <button (click)="controlClicked(activityRewind, 'rewind')" #activityRewind>
-          <mat-icon class="icon-white">skip_previous</mat-icon>
-        </button> -->
       <button (click)="controlClicked('pause')" *ngIf="!isPaused">
         <mat-icon class="icon-white">pause</mat-icon>
       </button>
@@ -22,6 +19,6 @@
     </ng-container>
   </div>
   <div class="mainscreen-footer__session-info">
-    <p>ACTIVE LISTENING | ROOM CODE: {{ roomCode }}</p>
+    <p>{{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
   </div>
 </div>

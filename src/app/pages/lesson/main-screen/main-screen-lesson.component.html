@@ -115,6 +115,7 @@
     *ngIf="isConnected() && serverMessage"
     [showFooter]="getActivityType() !== 'LobbyActivity'"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
+    [lessonName]="serverMessage.lesson.lesson_name"
     [isPaused]="serverMessage.base_activity.is_paused"
     (socketMessage)="sendSocketMessage($event)"
   ></app-main-screen-footer>

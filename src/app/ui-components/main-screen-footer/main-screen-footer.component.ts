@@ -14,6 +14,7 @@ import { VideoStateService } from '../../services/video-state.service';
 })
 export class MainScreenFooterComponent implements OnInit {
   @Input() showFooter: boolean;
+  @Input() lessonName: string;
   @Input() roomCode: string;
   @Input() isPaused: boolean;
 
@@ -22,18 +23,6 @@ export class MainScreenFooterComponent implements OnInit {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {}
-
-  // public controlClicked(element, eventType) {
-  //   if (eventType === 'rewind') {
-  //     this.video.updateState(eventType);
-  //     this.videoPause = false;
-  //   } else if (eventType === 'toggleplayback') {
-  //     this.videoPause = !this.videoPause;
-  //     this.video.updateState(eventType);
-  //   } else if (eventType === 'skip') {
-  //     this.video.updateState(eventType);
-  //   }
-  // }
 
   controlClicked(eventType) {
     if (eventType === 'pause') {
