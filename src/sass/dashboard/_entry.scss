@@ -34,7 +34,11 @@
     padding: 20px;
     @media #{$small-and-down} {
       padding: 12px;
+      .confirmation-container {
+        padding: 100px 0px;
+      }
     }
+
     .header {
       margin: 15px 0px;
       min-height: 55px;

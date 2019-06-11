@@ -3,9 +3,6 @@
 // Overrides for pitchomatic
 .mainscreen-activity {
   position: relative;
-  h1 {
-    font-size: 9vh;
-  }
   .lesson-top-banner {
     padding: 0.5vw 2.5vw;
   }
@@ -16,7 +13,7 @@
     left: 0;
   }
 
-  .time-to-pitch {
+  .time-to-pitches {
     .pitches {
       height: 45vh;
       > :first-child {
@@ -27,6 +24,14 @@
       margin-top: 3vh;
       h2 {
         margin-top: 5vh;
+      }
+    }
+  }
+
+  .time-to-pitch {
+    .activity-instructions {
+      .discuss-instruction {
+        font-size: 3vw;
       }
     }
   }

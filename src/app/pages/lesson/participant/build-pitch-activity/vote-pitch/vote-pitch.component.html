@@ -1,31 +1,33 @@
-<div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
-  <button
-    class="b-standard-button b-standard-button--unselected"
-    [ngClass]="{
-      'b-standard-button--selected':
-        selectedUser === user && selectedUser != null
-    }"
-    (click)="selectUser(user)"
-  >
-    {{ name }}
-  </button>
-  <img
-    class="participant-utility-icons"
-    src="/assets/img/add_icon.png"
-    alt="expand"
-    *ngIf="!expanded"
-    (click)="expanded = true"
-  />
-  <img
-    class="participant-utility-icons"
-    src="/assets/img/close_icon.png"
-    alt="launch"
+<div class="vote-pitch-column" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button
+      class="b-standard-button b-standard-button--unselected"
+      [ngClass]="{
+        'b-standard-button--selected':
+          selectedUser === user && selectedUser != null
+      }"
+      (click)="selectUser(user)"
+    >
+      {{ name }}
+    </button>
+    <img
+      class="participant-utility-icons"
+      src="/assets/img/add_icon.png"
+      alt="expand"
+      *ngIf="!expanded"
+      (click)="expanded = true"
+    />
+    <img
+      class="participant-utility-icons"
+      src="/assets/img/close_icon.png"
+      alt="launch"
+      *ngIf="expanded"
+      (click)="expanded = false"
+    />
+  </div>
+  <div
     *ngIf="expanded"
-    (click)="expanded = false"
-  />
+    class="pitch-details left-text"
+    [innerHTML]="pitchText"
+  ></div>
 </div>
-<div
-  *ngIf="expanded"
-  class="pitch-details left-text"
-  [innerHTML]="pitchText"
-></div>

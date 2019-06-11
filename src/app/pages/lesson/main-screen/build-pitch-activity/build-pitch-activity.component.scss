@@ -1,7 +1,7 @@
 @import 'variables';
 .activity-instructions {
   .discuss-instruction {
-    font-size: 6vh;
+    font-size: 3vw;
     &.pitch-text > em {
       color: $vibrant-blue;
     }
@@ -16,7 +16,7 @@
 
 .info-subsection {
   margin-top: 10vh;
-  font-size: 5vh;
+  font-size: 3vw;
   .instruction {
     margin-left: 1vw;
   }

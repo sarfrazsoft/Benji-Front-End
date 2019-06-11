@@ -102,6 +102,7 @@
               placeholder="What makes you say that?"
               formControlName="text_answer"
               class="b-standard-textarea"
+              *ngIf="question_set[i].is_combo"
             ></textarea>
           </div>
 

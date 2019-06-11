@@ -138,12 +138,15 @@
     </div>
   </div>
 </div>
-<div class="b-baseline-action bg-white" *ngIf="voteNow">
-  <button
-    class="b-standard-button b-standard-button--unselected"
-    [ngClass]="{ 'b-standard-button--valid': selectedUser != null }"
+<div
+  class="b-baseline-action bg-indigo-blue"
+  *ngIf="selectedUser && !userVoted"
+>
+  <app-animated-checkmark-button
+    loadingStateInnerHTML="Loading"
+    innerHTML="Submit"
+    buttonStyle="white"
+    [valid]="userVoted"
     (click)="submitVote(selectedUser)"
-  >
-    Submit
-  </button>
+  ></app-animated-checkmark-button>
 </div>

@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-
-import { BackendRestService } from '../../../../services/backend/backend-rest.service';
-import { BackendSocketService } from '../../../../services/backend/backend-socket.service';
-
 import { Router } from '@angular/router';
+
+import { BackendRestService, BackendSocketService } from 'src/app/services';
 
 @Component({
   selector: 'benji-participant-join',

@@ -2,8 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../../../../services/auth/auth.service';
-import { BackendRestService } from '../../../../services/backend/backend-rest.service';
+import { AuthService, BackendRestService } from 'src/app/services';
 
 @Component({
   selector: 'benji-participant-login',

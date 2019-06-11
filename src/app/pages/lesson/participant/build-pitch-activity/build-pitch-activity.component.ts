@@ -26,6 +26,7 @@ export class ParticipantBuildPitchActivityComponent
   showMyPitch = false;
   voteNow = false;
   thanksForVote = false;
+  userVoted = false;
   lookAtWinningPitch = false;
   yourPitchWon = false;
 
@@ -175,9 +176,12 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   submitVote(user) {
-    this.sendMessage.emit(new BuildAPitchSubmitVoteEvent(user));
-    this.voteNow = false;
-    this.showMyPitch = false;
-    this.thanksForVote = true;
+    if (!this.userVoted) {
+      this.sendMessage.emit(new BuildAPitchSubmitVoteEvent(user));
+      this.voteNow = false;
+      this.showMyPitch = false;
+      this.userVoted = true;
+      this.thanksForVote = true;
+    }
   }
 }

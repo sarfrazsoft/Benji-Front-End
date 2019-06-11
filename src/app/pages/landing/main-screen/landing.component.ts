@@ -1,11 +1,9 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { BackendRestService } from '../../../services/backend/backend-rest.service';
-import { AuthService } from '../../../services/auth/auth.service';
-
+import { AuthService, BackendRestService } from 'src/app/services';
 
 @Component({
-  selector: 'app-landing',
+  selector: 'benji-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
   encapsulation: ViewEncapsulation.None

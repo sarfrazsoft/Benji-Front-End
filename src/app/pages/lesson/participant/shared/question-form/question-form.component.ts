@@ -7,12 +7,7 @@ import {
   Output
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import {
-  FeedbackActivity,
-  FeedbackQuestion,
-  FeedbackSubmitEvent,
-  FeedbackSubmitEventAnswer
-} from 'src/app/services/backend/schema';
+import { FeedbackQuestion } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-question-form',

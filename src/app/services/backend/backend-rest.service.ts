@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import * as global from '../../globals';
 
-
-import { User } from './schema/user';
-import { Course, LessonRun } from './schema/course_details';
 import { Observable } from 'rxjs';
+import { Course, LessonRun } from './schema/course_details';
+import { User } from './schema/user';
 
 @Injectable()
 export class BackendRestService {
@@ -24,7 +23,6 @@ export class BackendRestService {
     );
   }
 
-
   // DEMO ONLY
   create_user(username: string) {
     return this.http.post(global.apiRoot + '/tenants/users/auto_create/', {
@@ -33,11 +31,14 @@ export class BackendRestService {
   }
 
   start_lesson(lessonID: number): Observable<LessonRun> {
-    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/');
+    return this.http.get<LessonRun>(
+      global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/'
+    );
   }
 
   get_lessonrun(roomCode: number): Observable<LessonRun> {
-    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson_run/' + roomCode + '/'
+    return this.http.get<LessonRun>(
+      global.apiRoot + '/course_details/lesson_run/' + roomCode + '/'
     );
   }
 

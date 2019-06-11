@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit } from '@angular/core';
 import { EmojiLookupService } from 'src/app/services';
 import {
   FeedbackSubmitEventAnswer,
@@ -59,7 +59,10 @@ export class ParticipantGeneratePitchActivityComponent
 
   pitch_set = [];
 
-  constructor(private emoji: EmojiLookupService) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private elementRef: ElementRef
+  ) {
     super();
   }
 
@@ -230,14 +233,27 @@ export class ParticipantGeneratePitchActivityComponent
 
   generatePitch() {
     if (!this.pitchCriteriaRevealed) {
+      const ua = window.navigator.userAgent;
+      const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+      const webkit = !!ua.match(/WebKit/i);
+      const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
       this.pitch_set.forEach(blank => {
         blank.value.split(' ').forEach((el, index) => {
-          odoo.default({
-            el: '.odoo_' + index + '_' + el,
-            from: '',
-            to: el,
-            animationDelay: 0
-          });
+          if (iOS) {
+            const d1 = this.elementRef.nativeElement.querySelector(
+              '.odoo_' + index + '_' + el
+            );
+
+            d1.innerText = el;
+          } else {
+            odoo.default({
+              el: '.odoo_' + index + '_' + el,
+              from: '',
+              to: el,
+              animationDelay: 0
+            });
+          }
         });
       });
       this.pitchCriteriaRevealed = true;
