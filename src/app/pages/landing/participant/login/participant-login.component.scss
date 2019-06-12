@@ -1,5 +1,5 @@
 @import '~src/sass/variables';
-//participant start
+
 .participant-start {
   position: relative;
   height: calc(100vh - 65px - 40px);
@@ -20,10 +20,10 @@
     width: 280px;
   }
   @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
-    height: auto;
+    // height: auto;
   }
   @media screen and (min-width: 992px) {
-    padding-top: 15vh;
+    // padding-top: 15vh;
     .container {
       width: 530px;
       .b-standard-input {
