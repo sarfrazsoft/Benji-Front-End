@@ -7,6 +7,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService } from 'src/app/services';
 
 @Component({
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private deviceService: DeviceDetectorService
   ) {
     // demo.mybenji.com
     if (window.location.href.split('.')[0].includes('demo')) {
@@ -56,8 +58,9 @@ export class LoginComponent implements OnInit {
           if (res) {
             this.emailPasswordError = true;
           } else {
-            this.router.navigate(['/dashboard']);
-            // this.router.navigate(['/participant/join']);
+            this.deviceService.isMobile()
+              ? this.router.navigate(['/participant/join'])
+              : this.router.navigate(['/dashboard']);
           }
         },
         err => {

@@ -36,6 +36,7 @@ import {
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
 const SHARED_MODULES = [
@@ -76,7 +77,12 @@ const SHARED_MODULES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, ...SHARED_MODULES],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ...SHARED_MODULES,
+    DeviceDetectorModule.forRoot()
+  ],
   declarations: Components,
   entryComponents: [...EntryComponents],
   exports: [...Components, ...SHARED_MODULES]
