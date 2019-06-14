@@ -9,7 +9,6 @@ import {
   SingleStatComponent,
   StatsComponent
 } from './admin-panel';
-import { LearnerResolver, LearnerService } from './learners';
 
 export const DashboardComponents = [
   AdminPanelComponent,
@@ -20,9 +19,4 @@ export const DashboardComponents = [
 
 export const DashboardEntryComponents = [];
 
-export const DashboardProviders = [
-  AdminResolver,
-  AdminService,
-  LearnerService,
-  LearnerResolver
-];
+export const DashboardProviders = [AdminResolver, AdminService];

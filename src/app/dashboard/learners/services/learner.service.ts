@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
+import { User } from 'src/app/services/backend/schema';
 
 @Injectable()
 export class LearnerService {
@@ -28,6 +29,11 @@ export class LearnerService {
         return res;
       })
     );
+  }
+
+  getLearners(sort: string, order: string, page: number): Observable<User> {
+    const request = 'http://localhost:8000/tenants/users/';
+    return this.http.get<User>(request);
   }
 
   // getCourses(): Observable<any> {

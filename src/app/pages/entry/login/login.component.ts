@@ -56,8 +56,8 @@ export class LoginComponent implements OnInit {
           if (res) {
             this.emailPasswordError = true;
           } else {
-            // this.router.navigate(['/dashboard']);
-            this.router.navigate(['/participant/join']);
+            this.router.navigate(['/dashboard']);
+            // this.router.navigate(['/participant/join']);
           }
         },
         err => {

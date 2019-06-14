@@ -1,15 +1,11 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
+import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { User } from 'src/app/services/backend/schema';
+import { LearnerService } from '../services';
 
 @Component({
   selector: 'benji-learners-table',
@@ -17,9 +13,83 @@ import { catchError, map, startWith, switchMap } from 'rxjs/operators';
   styleUrls: ['./learners-table.component.scss']
 })
 export class LearnersTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
-  exampleDatabase: ExampleHttpDatabase | null;
-  data: GithubIssue[] = [];
+  displayedColumns: string[] = [
+    'select',
+    'id',
+    'firstName',
+    'lastName',
+    'job_title'
+  ];
+  dataa = [
+    {
+      id: 11,
+      username: 'tutenstineatgmaildotcom',
+      first_name: 'mahin',
+      last_name: 'khan',
+      email: 'tutenstine@gmail.com',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 11,
+      username: 'tutenstineatgmaildotcom',
+      first_name: 'mahin',
+      last_name: 'khan',
+      email: 'tutenstine@gmail.com',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 11,
+      username: 'tutenstineatgmaildotcom',
+      first_name: 'mahin',
+      last_name: 'khan',
+      email: 'tutenstine@gmail.com',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 11,
+      username: 'tutenstineatgmaildotcom',
+      first_name: 'mahin',
+      last_name: 'khan',
+      email: 'tutenstine@gmail.com',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 11,
+      username: 'tutenstineatgmaildotcom',
+      first_name: 'mahin',
+      last_name: 'khan',
+      email: 'tutenstine@gmail.com',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      local_admin_permission: false,
+      participant_permission: true
+    }
+  ];
+
+  data: any = [];
+  selection = new SelectionModel<any>(true, []);
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -28,11 +98,12 @@ export class LearnersTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private learnerService: LearnerService
+  ) {}
 
   ngAfterViewInit() {
-    this.exampleDatabase = new ExampleHttpDatabase(this.http);
-
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
@@ -41,7 +112,7 @@ export class LearnersTableComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase.getRepoIssues(
+          return this.learnerService.getLearners(
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex
@@ -51,9 +122,9 @@ export class LearnersTableComponent implements AfterViewInit {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
-          this.resultsLength = data.total_count;
+          this.resultsLength = 41; // data.total_count;
 
-          return data.items;
+          return data;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -62,35 +133,31 @@ export class LearnersTableComponent implements AfterViewInit {
           return observableOf([]);
         })
       )
-      .subscribe(data => (this.data = data));
+      .subscribe(data => (this.data = this.dataa));
   }
-}
 
-export interface GithubApi {
-  items: GithubIssue[];
-  total_count: number;
-}
+  // Selection code
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.data.length;
+    return numSelected === numRows;
+  }
 
-export interface GithubIssue {
-  created_at: string;
-  number: string;
-  state: string;
-  title: string;
-}
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.data.forEach(row => this.selection.select(row));
+  }
 
-/** An example database that the data source uses to retrieve data for the table. */
-export class ExampleHttpDatabase {
-  constructor(private http: HttpClient) {}
-
-  getRepoIssues(
-    sort: string,
-    order: string,
-    page: number
-  ): Observable<GithubApi> {
-    const href = 'https://api.github.com/search/issues';
-    const requestUrl = `${href}?q=repo:angular/material2&sort=${sort}&order=${order}&page=${page +
-      1}`;
-
-    return this.http.get<GithubApi>(requestUrl);
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${
+      this.selection.isSelected(row) ? 'deselect' : 'select'
+    } row ${row.position + 1}`;
   }
 }

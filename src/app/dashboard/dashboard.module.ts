@@ -4,14 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
-import { DashboardRoutes } from './dashboard.routing';
-
 import {
   DashboardComponents,
   DashboardEntryComponents,
   DashboardProviders
 } from './';
-import { LearnersComponent, LearnersTableComponent } from './learners';
+import { DashboardRoutes } from './dashboard.routing';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,11 +20,7 @@ import { LearnersComponent, LearnersTableComponent } from './learners';
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [
-    ...DashboardComponents,
-    LearnersComponent,
-    LearnersTableComponent
-  ],
+  declarations: [...DashboardComponents],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders
 })

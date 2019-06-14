@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
+import { AdminResolver } from '../admin-panel';
 import {
-  AdminPanelComponent,
-  AdminResolver,
+  AddLearnersComponent,
   LearnerResolver,
   LearnersComponent
 } from './index';
@@ -15,15 +15,17 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: AdminPanelComponent
+        component: LearnersComponent,
+        resolve: {
+          learner: LearnerResolver
+        }
       },
       {
-        path: 'learners',
-        loadChildren:
-          'src/app/dashboard/learners/learners.module#LearnersModule'
+        path: 'add',
+        component: AddLearnersComponent
       }
     ]
   }
 ];
 
-export const DashboardRoutes = RouterModule.forChild(routes);
+export const LearnersRoutes = RouterModule.forChild(routes);

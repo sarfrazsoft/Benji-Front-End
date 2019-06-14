@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
 import {
   debounceTime,
@@ -16,7 +16,7 @@ import {
   styleUrls: ['./learners.component.scss']
 })
 export class LearnersComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.data.forEach((data: any) => {
       console.log(data);
     });
@@ -29,5 +29,9 @@ export class LearnersComponent implements OnInit {
     // const example = source.pipe(map(event => `Event time: ${event.timeStamp}`));
     // // output (example): 'Event time: 7276.390000000001'
     // const subscribe = example.subscribe(val => console.log(val));
+  }
+
+  addLearners() {
+    this.router.navigate(['/dashboard/learners/add']);
   }
 }

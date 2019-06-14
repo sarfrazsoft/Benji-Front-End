@@ -14,7 +14,7 @@ export class EntryComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
-      // this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard']);
     }
   }
 
