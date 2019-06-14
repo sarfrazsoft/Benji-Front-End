@@ -25,17 +25,6 @@ export class MainScreenGeneratePitchActivityComponent
   shareFeedbackLT8 = false;
   shareFeedbackMT8 = false;
 
-  userList1 = [
-    { name: 'Omar', found: false },
-    { name: 'Reagon', found: true },
-    { name: 'Emily', found: false }
-  ];
-  userList2 = [
-    { name: 'Polly', found: false },
-    { name: 'Harold', found: false },
-    { name: 'Marie-Ann', found: true }
-  ];
-
   constructor(private emoji: EmojiLookupService) {
     super();
   }
@@ -104,48 +93,6 @@ export class MainScreenGeneratePitchActivityComponent
     this.timer.startTimer(seconds);
   }
 
-  getSinglePitchingUserInfo() {
-    const pitch_set = [];
-    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
-    const blank_set: Array<PitchoMaticBlank> = act.pitchomaticblank_set;
-    blank_set.sort((a, b) => a.order - b.order);
-
-    let pitchInfo = '';
-    const pitchingMember = act.pitchomaticgroup_set[0].pitchomaticgroupmember_set.filter(
-      member => member.is_pitching
-    )[0];
-
-    blank_set.forEach(blank => {
-      const choice = pitchingMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(
-        el => {
-          return el.pitchomaticblank === blank.id;
-        }
-      )[0].choice;
-
-      const value = blank.pitchomaticblankchoice_set.filter(el => {
-        return el.id === choice;
-      })[0].value;
-
-      pitch_set.push({
-        id: blank.id,
-        label: blank.label,
-        order: blank.order,
-        value: value
-      });
-    });
-
-    pitchInfo =
-      '<em>' +
-      pitchingMember.user.first_name +
-      '</em> is pitching ' +
-      pitch_set[0].value +
-      ' to ' +
-      pitch_set[1].value +
-      ' using ' +
-      pitch_set[2].value;
-    return pitchInfo;
-  }
-
   getGroupedPitchingUserInfo(groupIndex) {
     const pitch_set = [];
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
@@ -176,16 +123,23 @@ export class MainScreenGeneratePitchActivityComponent
       });
     });
 
+    let pitchText = '';
+    const helpText = ['is pitching', 'to', 'using'];
+    pitch_set.forEach((v, i) => {
+      pitchText =
+        pitchText +
+        helpText[i] +
+        ' <em class="vibrant-blue">' +
+        v.value +
+        '</em> ';
+    });
+
     pitchInfo =
-      '<em>' +
+      '<em class="vibrant-blue">' +
       pitchingMember.user.first_name.charAt(0).toUpperCase() +
       pitchingMember.user.first_name.slice(1) +
-      '</em> is pitching ' +
-      pitch_set[0].value +
-      ' to ' +
-      pitch_set[1].value +
-      ' using ' +
-      pitch_set[2].value;
+      '</em> ' +
+      pitchText;
     return pitchInfo;
   }
 

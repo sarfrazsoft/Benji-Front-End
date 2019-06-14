@@ -285,15 +285,17 @@ export class ParticipantGeneratePitchActivityComponent
     if (localStorage.getItem('pitchDraftNotes')) {
       this.pitchDraftNotes = localStorage.getItem('pitchDraftNotes');
     }
-    return (
-      'Pitch <em class="vibrant-blue">' +
-      this.pitch_set[0].value +
-      '</em> to <em class="vibrant-blue">' +
-      this.pitch_set[1].value +
-      '</em> using <em class="vibrant-blue">' +
-      this.pitch_set[2].value +
-      '</em>'
-    );
+    let pitchText = '';
+    const helpText = ['Pitch', 'to', 'using'];
+    this.pitch_set.forEach((v, i) => {
+      pitchText =
+        pitchText +
+        helpText[i] +
+        ' <em class="vibrant-blue">' +
+        v.value +
+        '</em> ';
+    });
+    return pitchText;
   }
 
   locallySaveDraft() {

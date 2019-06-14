@@ -169,7 +169,7 @@
                 *ngFor="let user of getGroupMembers(0)"
                 [ngClass]="{
                   'deep-blue': user.is_grouped,
-                  'long-list': userList1.length > 15
+                  'long-list': getGroupMembers(0).length > 15
                 }"
               >
                 {{ user.user.first_name }}
@@ -198,7 +198,7 @@
                 *ngFor="let user of getGroupMembers(1)"
                 [ngClass]="{
                   'deep-blue': user.is_grouped,
-                  'long-list': userList1.length > 15
+                  'long-list': getGroupMembers(1).length > 15
                 }"
               >
                 {{ user.user.first_name }}
