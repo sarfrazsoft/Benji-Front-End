@@ -7,7 +7,7 @@ import { BackendRestService, BackendSocketService } from 'src/app/services';
 @Component({
   selector: 'benji-participant-join',
   templateUrl: './participant-join.component.html',
-  styleUrls: ['./participant-join.component.scss'],
+  styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })
 export class ParticipantJoinComponent implements OnInit {

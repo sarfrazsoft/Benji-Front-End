@@ -7,7 +7,7 @@ import { AuthService, BackendRestService } from 'src/app/services';
 @Component({
   selector: 'benji-participant-login',
   templateUrl: './participant-login.component.html',
-  styleUrls: ['./participant-login.component.scss'],
+  styleUrls: [],
   encapsulation: ViewEncapsulation.None
 })
 export class ParticipantLoginComponent implements OnInit {
