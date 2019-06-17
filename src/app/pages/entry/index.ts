@@ -4,12 +4,19 @@ import { EntryComponent } from './entry.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 
+import { LoginComponent as MobLoginComponent } from './mobile/login/login.component';
+import { MobileComponent } from './mobile/mobile.component';
+import { SignupComponent as MobSignupComponent } from './mobile/signup/signup.component';
+
 export {
   ActivateAccountComponent,
   BTwemoji2Component,
   EntryComponent,
   LoginComponent,
-  SignupComponent
+  SignupComponent,
+  MobLoginComponent,
+  MobSignupComponent,
+  MobileComponent
 };
 
 export const EntryComponents = [
@@ -17,5 +24,8 @@ export const EntryComponents = [
   BTwemoji2Component,
   EntryComponent,
   LoginComponent,
-  SignupComponent
+  MobLoginComponent,
+  MobSignupComponent,
+  SignupComponent,
+  MobileComponent
 ];

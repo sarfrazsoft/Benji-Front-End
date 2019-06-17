@@ -1,8 +1,13 @@
-<div class="login-container" fxLayout="row" fxLayout.lt-sm="column">
+<div
+  class="login-container"
+  fxLayout="row"
+  fxLayout.lt-sm="column"
+  *ngIf="!isMobile"
+>
   <div class="left-side" fxLayoutAlign="start center" fxFlex="65%"></div>
   <div class="right-side" fxFlex="35%"></div>
 </div>
-<div class="controls" fxLayout="row" fxLayout.lt-sm="column">
+<div class="controls" fxLayout="row" fxLayout.lt-sm="column" *ngIf="!isMobile">
   <div
     class="welcome-heading"
     fxFlex="1 1 100%"
@@ -55,4 +60,8 @@
       </mat-tab-group>
     </div>
   </div>
+</div>
+
+<div *ngIf="isMobile">
+  <benji-mobile-entry></benji-mobile-entry>
 </div>

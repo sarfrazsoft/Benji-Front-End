@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService } from 'src/app/services';
 
 @Component({
@@ -9,8 +10,16 @@ import { AuthService } from 'src/app/services';
 })
 export class EntryComponent implements OnInit {
   selectedTab = 0;
+  isMobile = false;
+  showLoginMob = true;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private deviceService: DeviceDetectorService
+  ) {
+    // this.isMobile = this.deviceService.isMobile();
+  }
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {

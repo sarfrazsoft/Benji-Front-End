@@ -1,0 +1,30 @@
+<div
+  class="loginFormMob"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="20px"
+>
+  <div class="mob-login-input-container" fxLayoutAlign="center">
+    <input
+      class="b-standard-input"
+      type="text"
+      placeholder="email address"
+      [formControl]="username"
+    />
+  </div>
+  <div class="mob-login-input-container" fxLayoutAlign="center">
+    <input
+      class="b-standard-input"
+      type="text"
+      placeholder="Password"
+      [formControl]="username"
+    />
+  </div>
+  <button
+    class="b-standard-button"
+    [ngClass]="{ 'b-standard-button--inactive': !pitchValid }"
+    (click)="submitPitch()"
+  >
+    Submit
+  </button>
+</div>
