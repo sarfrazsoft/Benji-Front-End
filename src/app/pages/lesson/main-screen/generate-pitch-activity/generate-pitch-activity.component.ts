@@ -15,7 +15,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenGeneratePitchActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
-  @ViewChild('timer') timer;
   preparing = false;
   splitIntoGroups = false;
   timeToPitchLT8 = false;
@@ -37,13 +36,13 @@ export class MainScreenGeneratePitchActivityComponent
       this.preparing = false;
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 2) {
         if (!this.splitIntoGroups) {
-          this.initTimer(state.pitchomaticactivity.group_timer.end_time);
+          // this.initTimer(state.pitchomaticactivity.group_timer.end_time);
         }
         this.splitIntoGroups = true;
       }
     } else if (state.pitchomaticactivity.activity_status === 'preparing') {
       if (this.splitIntoGroups) {
-        this.timer.stopTimer();
+        // this.timer.stopTimer();
       }
       this.splitIntoGroups = false;
       this.preparing = true;
@@ -58,7 +57,7 @@ export class MainScreenGeneratePitchActivityComponent
       } else {
         this.shareFeedbackMT8 = false;
         this.timeToPitchMT8 = true;
-        this.initTimer(state.pitchomaticactivity.pitch_timer.end_time);
+        // this.initTimer(state.pitchomaticactivity.pitch_timer.end_time);
       }
     } else if (state.pitchomaticactivity.activity_status === 'feedback') {
       if (state.pitchomaticactivity.pitchomaticgroup_set.length === 1) {
@@ -67,7 +66,7 @@ export class MainScreenGeneratePitchActivityComponent
       } else {
         this.timeToPitchMT8 = false;
         if (!this.giveFeedbackMT8) {
-          this.initTimer(state.pitchomaticactivity.feedback_timer.end_time);
+          // this.initTimer(state.pitchomaticactivity.feedback_timer.end_time);
         }
         this.giveFeedbackMT8 = true;
       }
@@ -80,17 +79,11 @@ export class MainScreenGeneratePitchActivityComponent
         this.timeToPitchMT8 = false;
         this.giveFeedbackMT8 = false;
         if (!this.shareFeedbackMT8) {
-          this.initTimer(state.pitchomaticactivity.discuss_timer.end_time);
+          // this.initTimer(state.pitchomaticactivity.discuss_timer.end_time);
         }
         this.shareFeedbackMT8 = true;
       }
     }
-  }
-
-  initTimer(endTime: string) {
-    this.timer.startTimer(0);
-    const seconds = (Date.parse(endTime) - Date.now()) / 1000;
-    this.timer.startTimer(seconds);
   }
 
   getGroupedPitchingUserInfo(groupIndex) {

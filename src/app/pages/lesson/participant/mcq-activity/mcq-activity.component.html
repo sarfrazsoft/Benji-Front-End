@@ -29,7 +29,7 @@
   </div>
   <div class="mc-card__timer">
     <app-linear-timer
-      (initCallback)="questionTimerInit($event)"
+      [timer]="activityState.mcqactivity.question_timer"
     ></app-linear-timer>
   </div>
 </ng-container>
@@ -66,7 +66,7 @@
     </div>
     <div class="mc-card__timer">
       <app-linear-timer
-        (initCallback)="revealTimerInit($event)"
+        [timer]="activityState.base_activity.next_activity_start_timer"
       ></app-linear-timer>
     </div>
   </div>

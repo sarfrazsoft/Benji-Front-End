@@ -50,9 +50,8 @@
   <div class="mcq-activity__linear-timer-container">
     <app-linear-timer
       *ngIf="reveal()"
-      (initCallback)="startRevealTimer($event)"
+      [timer]="activityState.base_activity.next_activity_start_timer"
       [endAudio]="'bell.wav'"
-      #revealTimer
     ></app-linear-timer>
 
     <!-- <app-linear-timer

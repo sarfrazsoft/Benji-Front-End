@@ -18,16 +18,6 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
   sfxFile;
 
-  startEndTimer(timer) {
-    const endTotalSeconds =
-      (Date.parse(
-        this.activityState.base_activity.next_activity_start_timer.end_time
-      ) -
-        Date.now()) /
-      1000;
-    timer.startTimer(endTotalSeconds);
-  }
-
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes['activityState'] &&

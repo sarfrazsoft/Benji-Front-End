@@ -118,7 +118,7 @@
   </div>
   <div class="hint-activity__linear-timer-container">
     <app-linear-timer
-      (initCallback)="startEndTimer($event)"
+      [timer]="activityState.base_activity.next_activity_start_timer"
       [endAudio]="'bell.wav'"
     ></app-linear-timer>
   </div>

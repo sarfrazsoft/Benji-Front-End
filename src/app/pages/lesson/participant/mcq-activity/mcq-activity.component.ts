@@ -13,24 +13,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantMcqActivityComponent extends BaseActivityComponent {
   selectedAnswer: MCQChoice;
 
-  questionTimerInit(timer) {
-    const questionSeconds =
-      (Date.parse(this.activityState.mcqactivity.question_timer.end_time) -
-        Date.now()) /
-      1000;
-    timer.startTimer(questionSeconds);
-  }
-
-  revealTimerInit(timer) {
-    const revealSeconds =
-      (Date.parse(
-        this.activityState.base_activity.next_activity_start_timer.end_time
-      ) -
-        Date.now()) /
-      1000;
-    timer.startTimer(revealSeconds);
-  }
-
   reveal() {
     return (
       this.activityState.base_activity.next_activity_start_timer !== null &&

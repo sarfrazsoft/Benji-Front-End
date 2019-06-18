@@ -41,20 +41,4 @@ export class ParticipantDiscussionActivityComponent extends BaseActivityComponen
   doneButton() {
     this.sendMessage.emit(new DiscussionSharerDoneEvent());
   }
-
-  discussionTimerInit(timer) {
-    const discussionTotalTime =
-      Date.parse(
-        this.activityState.discussionactivity.discussion_countdown_timer
-          .end_time
-      ) - Date.now();
-    timer.startTimer(discussionTotalTime);
-  }
-
-  sharingTimerInit(timer) {
-    const timeStr = this.activityState.discussionactivity
-      .currently_sharing_group.sharing_countdown_timer.end_time;
-    const sharingTotalTime = Date.parse(timeStr) - Date.now();
-    timer.startTimer(sharingTotalTime);
-  }
 }

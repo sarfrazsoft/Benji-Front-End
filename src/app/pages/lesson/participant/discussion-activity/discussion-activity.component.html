@@ -19,7 +19,7 @@
       </button>
     </div>
     <app-linear-timer
-      (initCallback)="discussionTimerInit($event)"
+      [timer]="this.activityState.discussionactivity.discussion_countdown_timer"
     ></app-linear-timer>
   </div>
 </ng-container>
@@ -46,7 +46,7 @@
       </button>
     </div>
     <app-linear-timer
-      (initCallback)="sharingTimerInit($event)"
+      [timer]="this.activityState.discussionactivity.currently_sharing_group.sharing_countdown_timer"
     ></app-linear-timer>
   </div>
 </ng-container>
