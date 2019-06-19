@@ -25,7 +25,6 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
   audioStarted = false;
 
   ngOnInit() {
-    console.log('init');
     this.timerInterval = setInterval(() => this.update(), 100);
   }
 
