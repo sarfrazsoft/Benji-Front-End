@@ -5,6 +5,7 @@ import {
   LaunchSessionDialogComponent
 } from '../../shared';
 
+import { ActivatedRoute } from '@angular/router';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
 export interface SidenavSection {
@@ -18,9 +19,9 @@ export interface SidenavSection {
 })
 export class SidenavComponent implements OnInit {
   sidenavSections: Array<SidenavSection> = [];
-  route: string;
+  courses;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.initNavigation();
@@ -28,54 +29,58 @@ export class SidenavComponent implements OnInit {
 
   launchSession(): void {
     this.dialog
-      .open(LaunchSessionDialogComponent, { panelClass: 'dashboard-dialog' })
+      .open(LaunchSessionDialogComponent, {
+        panelClass: 'dashboard-dialog'
+      })
       .afterClosed()
       .subscribe(user => {});
   }
 
   joinSession(): void {
     this.dialog
-      .open(JoinSessionDialogComponent, { panelClass: 'dashboard-dialog' })
+      .open(JoinSessionDialogComponent, {
+        panelClass: 'dashboard-dialog'
+      })
       .afterClosed()
       .subscribe(user => {});
   }
 
   initNavigation() {
     this.sidenavSections = [
-      {
-        section: 1,
-        items: [
-          {
-            navName: 'Learners',
-            navRoute: './learners'
-          },
-          {
-            navName: 'Groups',
-            navRoute: './groups'
-          },
-          {
-            navName: 'Past Sessions',
-            navRoute: './pastsessions'
-          }
-        ]
-      },
-      {
-        section: 2,
-        items: [
-          {
-            navName: 'Account',
-            navRoute: 'accounts'
-          },
-          {
-            navName: 'Settings',
-            navRoute: 'settings'
-          },
-          {
-            navName: 'Help',
-            navRoute: 'help'
-          }
-        ]
-      },
+      // {
+      //   section: 1,
+      //   items: [
+      //     {
+      //       navName: 'Learners',
+      //       navRoute: './learners'
+      //     },
+      //     {
+      //       navName: 'Groups',
+      //       navRoute: './groups'
+      //     },
+      //     {
+      //       navName: 'Past Sessions',
+      //       navRoute: './pastsessions'
+      //     }
+      //   ]
+      // },
+      // {
+      //   section: 2,
+      //   items: [
+      //     {
+      //       navName: 'Account',
+      //       navRoute: 'accounts'
+      //     },
+      //     {
+      //       navName: 'Settings',
+      //       navRoute: 'settings'
+      //     },
+      //     {
+      //       navName: 'Help',
+      //       navRoute: 'help'
+      //     }
+      //   ]
+      // },
       {
         section: 3,
         items: [

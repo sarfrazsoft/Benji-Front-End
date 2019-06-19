@@ -1,4 +1,4 @@
-<div class="courses">
+<div class="courses" fxLayoutGap="40px" fxLayout="column">
   <div class="course" *ngFor="let course of courses">
     <div
       class="sub-heading"
@@ -8,7 +8,12 @@
     >
       <h2>{{ course.course_name }}</h2>
 
-      <div class="launch-session" (click)="launchSession(course.course_id)">
+      <div
+        class="launch-session"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        (click)="launchSession(course.id)"
+      >
         <span>Launch session</span>
         <img src="/assets/img/launch_singlearrow.png" alt="launch" />
       </div>
@@ -17,14 +22,14 @@
       <div class="description">
         {{ course.course_description }}
       </div>
-      <div class="course-preview-footer" fxLayoutAlign="start center">
+      <!-- <div class="course-preview-footer" fxLayoutAlign="start center">
         <div class="overview-button" fxLayoutAlign="start center">
           <span>
             Course overview
           </span>
           <img src="/assets/img/right_caret.png" alt="Right caret" />
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

@@ -7,21 +7,32 @@
   <mat-dialog-content class="select-session">
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
       <h2 class="dialog-heading">Join a session</h2>
-      <div class="dialog-instructions">
+      <!-- <div class="dialog-instructions">
         Participating in a session? Enter your room code below. (Psst… mobile
         works best)
+      </div> -->
+      <div class="dialog-instructions">
+        Use a mobile to join a session.
       </div>
       <div class="controls-container" fxLayout="column" fxLayoutGap="15px">
-        <input
+        <!-- <input
           class="dash-input dialog-controls"
           required
           placeholder="Enter room code"
           [(ngModel)]="roomCode"
-        />
-        <div class="launch">
+        /> -->
+        <!-- <div class="launch">
           <button
             class="dashboard-button dialog-controls"
             [ngClass]="{ active: roomCode, inactive: !roomCode }"
+          >
+            Join
+          </button>
+        </div> -->
+        <div class="launch">
+          <button
+            class="dashboard-button active dialog-controls"
+            (click)="joinSession()"
           >
             Join
           </button>

@@ -7,13 +7,12 @@ export interface Course {
   course_sponsor: string;
 }
 
-
 export interface Lesson {
   id: number;
   course: number;
   lesson_id: string;
   lesson_name: string;
-  lesson_length: number;
+  lesson_length_minutes: number;
   lesson_description: string;
   next_lesson: number;
 }

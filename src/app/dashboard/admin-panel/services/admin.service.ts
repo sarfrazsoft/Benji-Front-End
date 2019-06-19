@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
 
 @Injectable()
 export class AdminService {
@@ -34,8 +35,19 @@ export class AdminService {
   getCourses(): Observable<any> {
     return this.http.get(global.apiRoot + '/course_details/course/').pipe(
       map(res => {
+        this.contextService.courses = res;
         return res;
       })
     );
+  }
+
+  getCourseDetails(courseID: string): Observable<any> {
+    return this.http
+      .get(global.apiRoot + '/course_details/course/' + courseID + '/lessons/')
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
   }
 }

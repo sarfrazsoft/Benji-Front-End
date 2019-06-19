@@ -20,4 +20,16 @@ export class ContextService {
   get user(): any {
     return this.user$.getValue();
   }
+
+  /**
+   * Courses
+   */
+  courses$ = new BehaviorSubject<any>(null);
+
+  set courses(courses: any) {
+    this.courses$.next(courses);
+  }
+  get courses(): any {
+    return this.courses$.getValue();
+  }
 }

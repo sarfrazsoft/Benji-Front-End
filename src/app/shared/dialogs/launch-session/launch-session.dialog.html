@@ -15,7 +15,7 @@
         <ng-select
           class="dialog-controls"
           [items]="courses"
-          bindLabel="name"
+          bindLabel="course_name"
           placeholder="Select session"
           [(ngModel)]="selectedSession"
           appendTo="body"
@@ -24,6 +24,7 @@
         <div class="launch">
           <button
             class="dashboard-button dialog-controls"
+            (click)="launchSession()"
             [ngClass]="{ active: selectedSession, inactive: !selectedSession }"
           >
             Launch

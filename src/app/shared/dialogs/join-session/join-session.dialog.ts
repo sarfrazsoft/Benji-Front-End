@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'benji-join-session-dialog',
@@ -7,7 +8,10 @@ import { MatDialogRef } from '@angular/material';
 })
 export class JoinSessionDialogComponent implements OnInit {
   roomCode;
-  constructor(private dialogRef: MatDialogRef<JoinSessionDialogComponent>) {}
+  constructor(
+    private dialogRef: MatDialogRef<JoinSessionDialogComponent>,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
@@ -17,5 +21,10 @@ export class JoinSessionDialogComponent implements OnInit {
 
   public select(course: any): void {
     this.dialogRef.close(course);
+  }
+
+  joinSession() {
+    this.dialogRef.close({});
+    this.router.navigate(['/participant/join']);
   }
 }
