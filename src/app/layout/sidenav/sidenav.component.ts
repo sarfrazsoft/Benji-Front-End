@@ -6,6 +6,7 @@ import {
 } from '../../shared';
 
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/services';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
 export interface SidenavSection {
@@ -21,7 +22,11 @@ export class SidenavComponent implements OnInit {
   sidenavSections: Array<SidenavSection> = [];
   courses;
 
-  constructor(private dialog: MatDialog, private route: ActivatedRoute) {}
+  constructor(
+    private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.initNavigation();
@@ -43,6 +48,10 @@ export class SidenavComponent implements OnInit {
       })
       .afterClosed()
       .subscribe(user => {});
+  }
+
+  logout() {
+    this.authService.signOut();
   }
 
   initNavigation() {

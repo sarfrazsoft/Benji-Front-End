@@ -84,6 +84,7 @@
     <benji-sidenav-item
       *ngFor="let item of section.items"
       [sidenavItem]="item"
+      (click)="logout()"
     ></benji-sidenav-item>
   </div>
 </div>

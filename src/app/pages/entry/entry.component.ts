@@ -11,20 +11,18 @@ import { AuthService } from 'src/app/services';
 export class EntryComponent implements OnInit {
   selectedTab = 0;
   isMobile = false;
-  showLoginMob = true;
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private deviceService: DeviceDetectorService
-  ) {
-    // this.isMobile = this.deviceService.isMobile();
-  }
+  ) {}
 
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
+      // this.router.navigate(['/dashboard']);
     }
+    this.isMobile = this.deviceService.isMobile();
   }
 
   showSignupTab(): void {
