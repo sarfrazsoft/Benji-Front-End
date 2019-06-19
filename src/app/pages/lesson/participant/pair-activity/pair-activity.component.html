@@ -41,7 +41,7 @@
       <p class="instruction">{{ getParticipantRole().instructions }}</p>
     </div>
     <app-linear-timer
-      (initCallback)="roleplayTimerStart($event)"
+      [timer]="activityState.roleplaypairactivity.activity_countdown_timer"
     ></app-linear-timer>
   </div>
 </ng-container>

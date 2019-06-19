@@ -6,6 +6,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
+import {Timer} from '../../services/backend/schema';
 
 @Component({
   selector: 'app-linear-timer',
@@ -15,73 +16,51 @@ import {
 export class LinearTimerComponent implements OnInit, OnDestroy {
   constructor() {}
   @Input() endAudio;
-  @Output() callback = new EventEmitter();
-  @Output() initCallback = new EventEmitter<LinearTimerComponent>();
+  @Input() timer: Timer;
 
-  public timerInterval: any;
-  public totalTime;
-  public timeElapsed = 0;
-  public progressBarWidth = '0';
+  totalTime: number;
+  remainingTime: number;
+
+  timerInterval;
   audioStarted = false;
 
-  public running = false;
-
   ngOnInit() {
-    if (this.initCallback !== undefined) {
-      this.initCallback.emit(this);
-    }
+    this.timerInterval = setInterval(() => this.update(), 100);
   }
 
   ngOnDestroy() {
     clearInterval(this.timerInterval);
   }
 
-  public startTimer(timerSeconds) {
-    if (this.timerInterval !== undefined) {
-      clearInterval(this.timerInterval);
-    }
-    this.running = true;
-    this.totalTime = timerSeconds * 1000;
-    this.timeElapsed = 0;
+  update() {
+    if (this.timer) {
+      this.totalTime = this.timer.total_seconds * 1000;
 
-    this.timerInterval = setInterval(() => {
-      this.timeElapsed = this.timeElapsed + 100;
       if (
-        this.timeElapsed > this.totalTime - 100 &&
-        !this.audioStarted &&
-        this.endAudio
+        this.timer.status === 'paused' ||
+        this.timer.status === 'cancelled' ||
+        this.timer.status === 'ended'
       ) {
-        this.audioStarted = true;
-        const audio = new Audio('../../../assets/audio/' + this.endAudio);
-        audio.load();
-        const promise = audio.play();
-        if (promise !== undefined) {
-          promise
-            .then(() => {
-              // Autoplay started!
-            })
-            .catch(error => {
-              // Autoplay was prevented.
-              // Show a "Play" button so that user can start playback.
-            });
+        this.remainingTime = this.timer.remaining_seconds * 1000;
+      } else {
+        this.remainingTime = Date.parse(this.timer.end_time) - Date.now();
+        if (this.remainingTime < 0) {
+          this.remainingTime = 0;
+        }
+        if (this.remainingTime === 0 && this.endAudio && !this.audioStarted) {
+          this.audioStarted = true;
+          const audio = new Audio('../../../assets/audio/' + this.endAudio);
+          audio.load();
+          audio.play();
         }
       }
-      this.progressBarWidth = `${(this.timeElapsed / (this.totalTime - 1250)) *
-        100}`;
-
-      if (this.timeElapsed >= this.totalTime) {
-        this.timeElapsed = this.totalTime;
-        this.stopTimer(true);
-      }
-    }, 100);
+    } else {
+      this.totalTime = 1;
+      this.remainingTime = 0;
+    }
   }
 
-  public stopTimer(callback: boolean) {
-    this.running = false;
-    clearInterval(this.timerInterval);
-    this.progressBarWidth = `${0}`;
-    if (callback) {
-      this.callback.emit();
-    }
+  progressBarWidth() {
+    return 100 * (this.totalTime - this.remainingTime) / this.totalTime;
   }
 }

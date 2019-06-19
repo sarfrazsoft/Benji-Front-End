@@ -16,17 +16,6 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent {
     super();
   }
 
-  roleplayTimerStart(timer) {
-    const roleSeconds =
-      (Date.parse(
-        this.activityState.roleplaypairactivity.activity_countdown_timer
-          .end_time
-      ) -
-        Date.now()) /
-      1000;
-    timer.startTimer(roleSeconds);
-  }
-
   myGroup() {
     return this.activityState.roleplaypairactivity.roleplaypair_set.find(
       ug =>

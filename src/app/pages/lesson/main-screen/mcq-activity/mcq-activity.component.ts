@@ -16,7 +16,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenMcqActivityComponent extends BaseActivityComponent
   implements OnChanges {
-  @ViewChild('revealTimer') revealTimer;
   pauseSeconds;
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
@@ -37,16 +36,6 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
     ) {
       this.playSfx('revealAnswer');
     }
-  }
-
-  startRevealTimer(timer) {
-    this.pauseSeconds =
-      (Date.parse(
-        this.activityState.base_activity.next_activity_start_timer.end_time
-      ) -
-        Date.now()) /
-      1000;
-    timer.startTimer();
   }
 
   reveal() {

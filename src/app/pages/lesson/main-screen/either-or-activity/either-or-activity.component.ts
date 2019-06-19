@@ -23,7 +23,7 @@ import { LowResponseDialogComponent } from '../../shared/dialogs';
   styleUrls: ['./either-or-activity.component.scss']
 })
 export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
-  implements OnInit, AfterViewInit, OnChanges {
+  implements OnInit, OnChanges {
   state: WhereDoYouStandActivity;
   hideResultEmoji = false;
   dialogRef;
@@ -53,12 +53,6 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
       this.hideResultEmoji = true;
     } else {
       this.hideResultEmoji = false;
-    }
-  }
-
-  ngAfterViewInit() {
-    if (this.state.prediction_countdown_timer.end_time) {
-      this.initTimer(this.state.prediction_countdown_timer.end_time);
     }
   }
 
@@ -92,7 +86,6 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
         this.dialog.closeAll();
         this.dialogRef = undefined;
       }
-      this.initTimer(this.state.preference_countdown_timer.end_time);
     } else if (
       this.state.preference_extra_countdown_timer &&
       this.state.preference_extra_countdown_timer.status !== 'ended' &&
@@ -110,22 +103,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
         this.dialog.closeAll();
         this.dialogRef = undefined;
       }
-      this.initTimer(this.state.stand_on_side_countdown_timer.end_time);
-    } else if (
-      this.state.prediction_complete &&
-      this.state.preference_complete &&
-      this.state.standing_complete
-    ) {
-      this.initTimer(
-        this.activityState.base_activity.next_activity_start_timer.end_time
-      );
     }
-  }
-
-  initTimer(endTime: string) {
-    this.timer.startTimer(0);
-    const seconds = (Date.parse(endTime) - Date.now()) / 1000;
-    this.timer.startTimer(seconds);
   }
 
   getGroupPreferredChoice(): WhereDoYouStandChoice {

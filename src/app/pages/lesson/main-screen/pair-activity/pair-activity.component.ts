@@ -9,10 +9,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './pair-activity.component.html',
   styleUrls: ['./pair-activity.component.scss']
 })
-export class MainScreenPairActivityComponent extends BaseActivityComponent
-  implements AfterViewInit {
-  @ViewChild('pairTimer') pairTimer;
-  @ViewChild('discussionTimer') discussionTimer;
+export class MainScreenPairActivityComponent extends BaseActivityComponent {
 
   getGroupText(userGroup: RoleplayPair) {
     return concat(
@@ -25,22 +22,6 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent
 
   constructor(private emoji: EmojiLookupService) {
     super();
-  }
-
-  ngAfterViewInit() {
-    if (
-      !this.activityState.roleplaypairactivity.all_pairs_found &&
-      !this.activityState.roleplaypairactivity.skip_pairing
-    ) {
-      const pairSeconds =
-        (Date.parse(
-          this.activityState.roleplaypairactivity.grouping_countdown_timer
-            .end_time
-        ) -
-          Date.now()) /
-        1000;
-      this.pairTimer.startTimer(pairSeconds);
-    }
   }
 
   isReversed() {

@@ -9,7 +9,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./title-activity.component.scss']
 })
 export class MainScreenTitleActivityComponent extends BaseActivityComponent
-  implements OnInit, AfterViewInit {
+  implements OnInit {
   isEndSession = false;
   @ViewChild('titleTimer') titleTimer;
 
@@ -27,17 +27,5 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent
 
   public backToStart() {
     this.router.navigate(['/landing']);
-  }
-
-  ngAfterViewInit() {
-    if (!this.isEndSession) {
-      const titleSeconds =
-        (Date.parse(
-          this.activityState.base_activity.next_activity_start_timer.end_time
-        ) -
-          Date.now()) /
-        1000;
-      this.titleTimer.startTimer(titleSeconds);
-    }
   }
 }

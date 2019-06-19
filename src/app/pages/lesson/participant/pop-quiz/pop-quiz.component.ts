@@ -46,7 +46,6 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
           explanation: null
         };
         this.questionTimerStarted = true;
-        this.initTimer(as.mcqactivity.question_timer.end_time);
       }
     } else if (
       as.base_activity.next_activity_start_timer &&
@@ -54,7 +53,6 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
         as.base_activity.next_activity_start_timer.status === 'paused')
     ) {
       this.questionTimerStarted = false;
-      this.initTimer(as.base_activity.next_activity_start_timer.end_time);
     } else if (as.mcqresultsactivity) {
       this.showResults = true;
     }
@@ -63,12 +61,6 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   submitAnswer(option: MCQChoice) {
     this.selectedChoice = option;
     this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
-  }
-
-  initTimer(endTime: string) {
-    this.timer.startTimer(0);
-    const seconds = (Date.parse(endTime) - Date.now()) / 1000;
-    this.timer.startTimer(seconds);
   }
 
   getCorrectAnswer() {
