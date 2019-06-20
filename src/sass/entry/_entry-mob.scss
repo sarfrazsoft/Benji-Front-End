@@ -1,0 +1,21 @@
+.login-container-mob {
+  padding: 100px 15px;
+  overflow: auto;
+  .header {
+    padding-bottom: 30px;
+  }
+  .login-signup-section {
+    .active {
+      text-decoration: underline;
+      color: $deep-blue;
+    }
+  }
+  .mat-error {
+    width: 267px;
+  }
+
+  .confirmation-container {
+    padding: 40px 30px;
+    text-align: center;
+  }
+}
