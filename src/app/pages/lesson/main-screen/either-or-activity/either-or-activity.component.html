@@ -235,9 +235,21 @@
   </div>
 
   <div class="hint-activity__linear-timer-container">
-    <app-linear-timer *ngIf="state.prediction_countdown_timer.status === 'running'" [timer]="state.prediction_countdown_timer" [endAudio]="'bell.wav'"></app-linear-timer>
-    <app-linear-timer *ngIf="state.preference_countdown_timer && state.preference_countdown_timer.status === 'running'" [timer]="state.preference_countdown_timer" [endAudio]="'bell.wav'"></app-linear-timer>
-    <app-linear-timer *ngIf="state.stand_on_side_countdown_timer && state.stand_on_side_countdown_timer.status === 'running'" [timer]="state.stand_on_side_countdown_timer" [endAudio]="'bell.wav'"></app-linear-timer>
-    <app-linear-timer *ngIf="activityState.base_activity.next_activity_start_timer && activityState.base_activity.next_activity_start_timer.status === 'running'" [timer]="activityState.base_activity.next_activity_start_timer" [endAudio]="'bell.wav'"></app-linear-timer>
+    <app-linear-timer
+      [timer]="state.prediction_countdown_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="state.preference_countdown_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="state.stand_on_side_countdown_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.base_activity.next_activity_start_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
   </div>
 </div>

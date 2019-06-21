@@ -55,14 +55,17 @@
     </button>
   </div>
 
-  <div class="b-flat-card__body" *ngIf="showMyPitch">
+  <div
+    class="b-flat-card__body"
+    *ngIf="showMyPitch && userPitchExists(activityState.your_identity.id)"
+  >
     <div class="your-pitch-label left-text">Your pitch:</div>
     <p
       class="your-pitch left-text"
       innerHTML="{{ getPitchText(activityState.your_identity.id) }}"
     ></p>
 
-    <div *ngIf="blankPitch">
+    <div *ngIf="isPitchBlank(activityState.your_identity.id)">
       <div
         class="info-subsection carolina-blue pn-500"
         fxLayout="row"

@@ -46,7 +46,10 @@
       </button>
     </div>
     <app-linear-timer
-      [timer]="this.activityState.discussionactivity.currently_sharing_group.sharing_countdown_timer"
+      [timer]="
+        this.activityState.discussionactivity.currently_sharing_group
+          .sharing_countdown_timer
+      "
     ></app-linear-timer>
   </div>
 </ng-container>

@@ -27,6 +27,10 @@
     span {
       font-size: 3vh;
       line-height: normal;
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
     }
   }
   .form-container {
@@ -72,7 +76,8 @@
         cursor: pointer;
         opacity: 0.5;
         font-size: 25px;
-        color: $vibrant-blue;
+        font-weight: 600;
+        color: $deep-blue;
         box-sizing: border-box;
         width: 100%;
         min-width: 160px;
@@ -90,6 +95,11 @@
           justify-content: flex-end;
         }
       }
+    }
+
+    .mat-tab-group.mat-primary .mat-ink-bar {
+      background-color: $deep-blue;
+      height: 3px;
     }
   }
 }

@@ -2,7 +2,7 @@
   class="login-container-mob bg-off-white"
   fxLayout="column"
   fxLayoutAlign="center"
-  fxLayoutGap="20px"
+  fxLayoutGap="10px"
 >
   <div class="header center-text" fxLayout="column" fxLayoutAlign="center">
     <div><img src="/assets/img/logo.png" /></div>
@@ -14,7 +14,6 @@
       class="section-buttons pn-600"
       fxLayout="row"
       fxLayoutAlign="space-between"
-      fxFlex="75%"
     >
       <div [ngClass]="{ active: showLoginMob }" (click)="showLoginMob = true">
         Login
@@ -29,18 +28,19 @@
   <benji-signup-mobile *ngIf="!showLoginMob"></benji-signup-mobile>
 
   <div class="footer" fxLayout="column">
-    <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
+    <!-- <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
       <span class="b-link" (click)="router.navigate(['/participant/login'])">
         Continue as guest
       </span>
-    </div>
+    </div> -->
     <br />
     <div class="new-to-benji" fxLayoutAlign="center">
       <span>New to Benji?</span>&nbsp;
-      <span class="b-link" (click)="showSignup()"> Sign up</span>
+      <!-- <span class="b-link" (click)="showSignup()"> Sign up</span> -->
+      <span> Sign up</span>
     </div>
-    <div class="forgot-password" fxLayoutAlign="center">
+    <!-- <div class="forgot-password" fxLayoutAlign="center">
       <a class="b-link" href="">Forgot your password?</a>
-    </div>
+    </div> -->
   </div>
 </div>

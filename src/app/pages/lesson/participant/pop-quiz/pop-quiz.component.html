@@ -72,7 +72,11 @@
   </ng-container>
 
   <div class="mc-card__timer">
-    <app-linear-timer *ngIf="activityState.mcqactivity.question_timer && activityState.mcqactivity.question_timer.status==='running'" [timer]="activityState.mcqactivity.question_timer"></app-linear-timer>
-    <app-linear-timer *ngIf="activityState.base_activity.next_activity_start_timer && activityState.base_activity.next_activity_start_timer==='running'" [timer]="activityState.base_activity.next_activity_start_timer"></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.mcqactivity.question_timer"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.base_activity.next_activity_start_timer"
+    ></app-linear-timer>
   </div>
 </div>

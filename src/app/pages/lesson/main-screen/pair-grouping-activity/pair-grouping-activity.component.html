@@ -45,7 +45,11 @@
           >
         </li>
       </ul>
-      <app-linear-timer #pairTimer [endAudio]="'bell.wav'"></app-linear-timer>
+      <app-linear-timer
+        [timer]="activityState.pairgroupingactivity.grouping_countdown_timer"
+        #pairTimer
+        [endAudio]="'bell.wav'"
+      ></app-linear-timer>
     </div>
   </div>
 </ng-container>

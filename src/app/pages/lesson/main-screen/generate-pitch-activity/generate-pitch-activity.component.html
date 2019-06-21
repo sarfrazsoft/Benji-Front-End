@@ -482,9 +482,21 @@
   </div>
 
   <div class="linear-timer-container">
-    <app-linear-timer *ngIf="activityState.pitchomaticactivity.group_timer && activityState.pitchomaticactivity.group_timer.status==='running'" [timer]="activityState.pitchomaticactivity.group_timer" [endAudio]="'bell.wav'"></app-linear-timer>
-    <app-linear-timer *ngIf="activityState.pitchomaticactivity.pitch_timer && activityState.pitchomaticactivity.pitch_timer.status==='running'" [timer]="activityState.pitchomaticactivity.pitch_timer" [endAudio]="'bell.wav'"></app-linear-timer>
-    <app-linear-timer *ngIf="activityState.pitchomaticactivity.feedback_timer && activityState.pitchomaticactivity.feedback_timer.status==='running'" [timer]="activityState.pitchomaticactivity.feedback_timer" [endAudio]="'bell.wav'"></app-linear-timer>
-    <app-linear-timer *ngIf="activityState.pitchomaticactivity.discuss_timer && activityState.pitchomaticactivity.discuss_timer.status==='running'" [timer]="activityState.pitchomaticactivity.discuss_timer" [endAudio]="'bell.wav'"></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.pitchomaticactivity.group_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.pitchomaticactivity.pitch_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.pitchomaticactivity.feedback_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.pitchomaticactivity.discuss_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
   </div>
 </div>

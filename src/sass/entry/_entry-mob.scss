@@ -1,21 +1,33 @@
 .login-container-mob {
   padding: 100px 15px;
+  font-weight: 600;
   overflow: auto;
   .header {
     padding-bottom: 30px;
   }
   .login-signup-section {
-    .active {
-      text-decoration: underline;
-      color: $deep-blue;
+    .section-buttons {
+      width: 235px;
+      .active {
+        text-decoration: underline;
+        color: $deep-blue;
+      }
     }
   }
+  .b-standard-button {
+    margin: 0px;
+  }
+
   .mat-error {
     width: 267px;
   }
-
   .confirmation-container {
     padding: 40px 30px;
     text-align: center;
+  }
+
+  .footer {
+    margin-top: 30px;
+    // font-weight: 600;
   }
 }

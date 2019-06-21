@@ -1,5 +1,11 @@
 import { useAnimation } from '@angular/animations';
-import { Component, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnChanges,
+  OnInit,
+  ViewEncapsulation
+} from '@angular/core';
 import {
   BuildAPitchActivity,
   BuildAPitchSubmitEventEntry,
@@ -32,7 +38,7 @@ export class ParticipantBuildPitchActivityComponent
 
   selectedUser = null;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     super();
     this.builtPitch_set = [];
   }
@@ -144,6 +150,12 @@ export class ParticipantBuildPitchActivityComponent
     return this.getPitchText(this.activityState.your_identity.id);
   }
 
+  userPitchExists(userId) {
+    return this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
+      e => e.user === userId
+    ).length;
+  }
+
   getPitchText(userId) {
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
@@ -167,6 +179,27 @@ export class ParticipantBuildPitchActivityComponent
       statement = statement + b.label + value;
     });
     return statement;
+  }
+
+  isPitchBlank(userId) {
+    const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
+    const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
+      e => e.user === userId
+    );
+
+    // let statement = '';
+    let blankPitch = false;
+    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+    blanks.forEach((b, i) => {
+      const currentBlanksValue = buildAPitchEntrySet.filter(
+        v => v.buildapitchblank === b.id
+      );
+
+      if (currentBlanksValue.length === 0) {
+        blankPitch = true;
+      }
+    });
+    return blankPitch;
   }
 
   getUserName(userId) {
