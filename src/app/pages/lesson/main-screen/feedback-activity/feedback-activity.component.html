@@ -3,11 +3,13 @@
     <app-b-twemoji emoji="✍️"></app-b-twemoji>
   </div>
   <div class="activity-title-container">
-    <h1 class="vibrant-blue pn-700">Fill out the form</h1>
+    <h1 class="vibrant-blue pn-700">
+      {{ activityState.feedbackactivity.titlecomponent.title }}
+    </h1>
   </div>
   <div class="activity-title-description-container">
     <p class="brownish-grey pn-500">
-      Take a minute to fill out and submit the form on your mobile screens.
+      {{ activityState.feedbackactivity.titlecomponent.screen_instructions }}
     </p>
   </div>
   <div class="forms-submitted deep-blue pn-600">

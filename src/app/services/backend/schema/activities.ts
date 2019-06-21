@@ -5,7 +5,8 @@ import {
   BuildAPitchPitch,
   FeedbackQuestion,
   MCQQuestion,
-  Timer
+  Timer,
+  TitleComponent
 } from './utils';
 
 export interface BaseActivity {
@@ -165,6 +166,7 @@ export interface FeedbackActivity {
   id: number;
   feedbackquestion_set: FeedbackQuestion[];
   answered_users: User[];
+  titlecomponent: TitleComponent;
 }
 
 export interface WhereDoYouStandChoice {

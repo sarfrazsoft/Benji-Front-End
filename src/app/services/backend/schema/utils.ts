@@ -47,3 +47,9 @@ export interface BuildAPitchPitch {
   user: Number;
   buildapitchentry_set: Array<BuildAPitchEntry>;
 }
+
+export interface TitleComponent {
+  participant_instructions: string;
+  screen_instructions: string;
+  title: string;
+}
