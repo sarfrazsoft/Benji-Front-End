@@ -28,16 +28,15 @@
   <benji-signup-mobile *ngIf="!showLoginMob"></benji-signup-mobile>
 
   <div class="footer" fxLayout="column">
-    <!-- <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
-      <span class="b-link" (click)="router.navigate(['/participant/login'])">
-        Continue as guest
-      </span>
-    </div> -->
-    <br />
     <div class="new-to-benji" fxLayoutAlign="center">
-      <span>New to Benji?</span>&nbsp;
+      <span>Want to jump right in?</span>&nbsp;
       <!-- <span class="b-link" (click)="showSignup()"> Sign up</span> -->
-      <span> Sign up</span>
+      <!-- <span> Sign up</span> -->
+    </div>
+    <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
+      <a class="b-link" (click)="router.navigate(['/participant/login'])">
+        Continue as guest
+      </a>
     </div>
     <!-- <div class="forgot-password" fxLayoutAlign="center">
       <a class="b-link" href="">Forgot your password?</a>

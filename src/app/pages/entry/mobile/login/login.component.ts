@@ -19,19 +19,13 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoginClicked = false;
   emailPasswordError = false;
-  isDemoSite = false;
 
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private deviceService: DeviceDetectorService
-  ) {
-    // demo.mybenji.com
-    if (window.location.href.split('.')[0].includes('demo')) {
-      this.isDemoSite = true;
-    }
-  }
+  ) {}
 
   ngOnInit() {
     this.form = this.builder.group({
