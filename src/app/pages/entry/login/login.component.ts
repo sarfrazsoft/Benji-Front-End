@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoginClicked = false;
   emailPasswordError = false;
-  isDemoSite = false;
+  isDemoSite = true;
   @Output() showSignupTab = new EventEmitter();
 
   constructor(
