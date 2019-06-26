@@ -12,7 +12,7 @@ import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
-  { path: '', redirectTo: '/landing', pathMatch: 'full' },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'landing', component: LandingComponent },
   {
     path: 'screen/lesson/:roomCode',
