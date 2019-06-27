@@ -91,10 +91,13 @@
     <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
       <benji-vote-pitch
         [user]="pitchSet.user"
+        [expanded]="expandedUserArray['' + pitchSet.user]"
         [pitchText]="getPitchText(pitchSet.user)"
         [name]="getUserName(pitchSet.user)"
         [(selectedUser)]="selectedUser"
         (userSelected)="userSelected($event)"
+        (userExpanded)="userExpanded($event)"
+        (userCollapsed)="userCollapsed($event)"
       ></benji-vote-pitch>
     </div>
   </div>

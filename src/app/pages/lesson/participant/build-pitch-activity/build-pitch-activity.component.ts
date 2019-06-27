@@ -35,6 +35,7 @@ export class ParticipantBuildPitchActivityComponent
   userVoted = false;
   lookAtWinningPitch = false;
   yourPitchWon = false;
+  expandedUserArray = {};
 
   selectedUser = null;
 
@@ -51,6 +52,7 @@ export class ParticipantBuildPitchActivityComponent
     this.act = this.activityState.buildapitchactivity;
 
     this.act.buildapitchblank_set.forEach(v => {
+      console.log(v);
       this.builtPitch_set.push({ ...v, ...{ value: null } });
     });
   }
@@ -88,6 +90,12 @@ export class ParticipantBuildPitchActivityComponent
       !this.thanksForVote &&
       this.act.vote_countdown_timer.status === 'running'
     ) {
+      if (
+        Object.entries(this.expandedUserArray).length === 0 &&
+        this.expandedUserArray.constructor === Object
+      ) {
+        this.fillExpandedUserArray();
+      }
       this.createPitch = false;
       this.showMyPitch = false;
       this.voteNow = true;
@@ -105,6 +113,13 @@ export class ParticipantBuildPitchActivityComponent
         this.lookAtWinningPitch = true;
       }
     }
+  }
+
+  fillExpandedUserArray() {
+    this.activityState.buildapitchactivity.buildapitchpitch_set.forEach(v => {
+      this.expandedUserArray['' + v.user] = false;
+    });
+    console.log(this.expandedUserArray);
   }
 
   checkValidity() {
@@ -144,6 +159,14 @@ export class ParticipantBuildPitchActivityComponent
   userSelected($event) {
     console.log($event);
     this.selectedUser = $event;
+  }
+
+  userExpanded($event) {
+    this.expandedUserArray['' + $event] = true;
+  }
+
+  userCollapsed($event) {
+    this.expandedUserArray['' + $event] = false;
   }
 
   yourPitchText() {

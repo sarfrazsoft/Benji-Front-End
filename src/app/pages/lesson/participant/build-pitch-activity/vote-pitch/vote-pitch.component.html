@@ -15,14 +15,14 @@
       src="/assets/img/add_icon.png"
       alt="expand"
       *ngIf="!expanded"
-      (click)="expanded = true"
+      (click)="expand(user)"
     />
     <img
       class="participant-utility-icons"
       src="/assets/img/close_icon.png"
       alt="launch"
       *ngIf="expanded"
-      (click)="expanded = false"
+      (click)="collapse(user)"
     />
   </div>
   <div
