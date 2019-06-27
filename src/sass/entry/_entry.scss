@@ -65,6 +65,12 @@
     .footer {
       margin-top: 50px;
       font-family: $pn-regular;
+      .new-to-benji {
+        span,
+        .guest-link {
+          font-size: 20px;
+        }
+      }
     }
     .mat-tab-labels {
       .mat-tab-label-active {

@@ -70,8 +70,11 @@
       <!-- <span class="b-link" (click)="showSignup()"> Sign up</span> -->
       <!-- <span> Sign up</span> -->
     </div>
-    <div *ngIf="isDemoSite" class="new-to-benji fs" fxLayoutAlign="center">
-      <a class="b-link" (click)="router.navigate(['/participant/login'])">
+    <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
+      <a
+        class="b-link guest-link"
+        (click)="router.navigate(['/participant/login'])"
+      >
         Continue as guest
       </a>
     </div>
