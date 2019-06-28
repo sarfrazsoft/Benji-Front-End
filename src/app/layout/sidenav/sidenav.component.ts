@@ -56,23 +56,23 @@ export class SidenavComponent implements OnInit {
 
   initNavigation() {
     this.sidenavSections = [
-      // {
-      //   section: 1,
-      //   items: [
-      //     {
-      //       navName: 'Learners',
-      //       navRoute: './learners'
-      //     },
-      //     {
-      //       navName: 'Groups',
-      //       navRoute: './groups'
-      //     },
-      //     {
-      //       navName: 'Past Sessions',
-      //       navRoute: './pastsessions'
-      //     }
-      //   ]
-      // },
+      {
+        section: 1,
+        items: [
+          {
+            navName: 'Learners',
+            navRoute: './learners'
+          }
+          // {
+          //   navName: 'Groups',
+          //   navRoute: './groups'
+          // },
+          // {
+          //   navName: 'Past Sessions',
+          //   navRoute: './pastsessions'
+          // }
+        ]
+      },
       // {
       //   section: 2,
       //   items: [

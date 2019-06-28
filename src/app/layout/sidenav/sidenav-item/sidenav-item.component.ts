@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AuthService } from 'src/app/services';
 
 export interface SidenavItem {
   navName: string;
@@ -11,4 +12,14 @@ export interface SidenavItem {
 })
 export class SidenavItemComponent {
   @Input() sidenavItem: SidenavItem;
+  constructor(private authService: AuthService) {}
+  itemClicked(navName: string) {
+    if (navName === 'Logout') {
+      this.logout();
+    }
+  }
+
+  logout() {
+    this.authService.signOut();
+  }
 }

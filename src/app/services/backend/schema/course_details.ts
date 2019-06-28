@@ -1,5 +1,12 @@
 import { User } from './user';
 
+export interface PaginatedResponse<T> {
+  count: Number;
+  next: string;
+  previous: string;
+  results: Array<T>;
+}
+
 export interface Course {
   id: number;
   course_name: string;

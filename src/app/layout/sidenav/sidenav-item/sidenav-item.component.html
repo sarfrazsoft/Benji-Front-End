@@ -5,6 +5,7 @@
   [routerLink]="[sidenavItem.navRoute]"
   [routerLinkActiveOptions]="{ exact: true }"
   routerLinkActive="active"
+  (click)="itemClicked(sidenavItem.navName)"
 >
   <div class="bullet-point">&bull;</div>
   <div class="item-name">{{ sidenavItem.navName }}</div>
