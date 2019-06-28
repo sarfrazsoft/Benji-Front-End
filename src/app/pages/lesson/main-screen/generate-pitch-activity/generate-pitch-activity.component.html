@@ -487,14 +487,17 @@
       [endAudio]="'bell.wav'"
     ></app-linear-timer>
     <app-linear-timer
+      *ngIf="timeToPitchMT8"
       [timer]="activityState.pitchomaticactivity.pitch_timer"
       [endAudio]="'bell.wav'"
     ></app-linear-timer>
     <app-linear-timer
+      *ngIf="giveFeedbackMT8"
       [timer]="activityState.pitchomaticactivity.feedback_timer"
       [endAudio]="'bell.wav'"
     ></app-linear-timer>
     <app-linear-timer
+      *ngIf="shareFeedbackMT8"
       [timer]="activityState.pitchomaticactivity.discuss_timer"
       [endAudio]="'bell.wav'"
     ></app-linear-timer>

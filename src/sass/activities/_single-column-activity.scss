@@ -10,7 +10,7 @@
     h1 {
       font-family: $pn-regular;
       line-height: normal;
-      font-size: 13.5vh;
+      font-size: 5.5vw;
       // h1 and p tags should not have margin of their own
       margin: 0;
     }
@@ -22,7 +22,7 @@
     padding: 0vw 10vw;
     p {
       font-family: $pn-regular;
-      font-size: 6vh;
+      font-size: 4vw;
       margin: 0 auto;
       line-height: normal;
     }
@@ -65,5 +65,5 @@
 
 .forms-submitted {
   margin-top: 3vh;
-  font-size: 5vh;
+  font-size: 3vw;
 }
