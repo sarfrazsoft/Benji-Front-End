@@ -5,6 +5,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/services/backend/schema';
+import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 import { LearnerService } from '../services';
 
 @Component({
@@ -19,73 +20,6 @@ export class LearnersTableComponent implements AfterViewInit {
     'firstName',
     'lastName',
     'job_title'
-  ];
-  dataa = [
-    {
-      id: 11,
-      username: 'tutenstineatgmaildotcom',
-      first_name: 'mahin',
-      last_name: 'khan',
-      email: 'tutenstine@gmail.com',
-      verified_email: false,
-      job_title: null,
-      organization_name: null,
-      orggroup_name: null,
-      local_admin_permission: false,
-      participant_permission: true
-    },
-    {
-      id: 11,
-      username: 'tutenstineatgmaildotcom',
-      first_name: 'mahin',
-      last_name: 'khan',
-      email: 'tutenstine@gmail.com',
-      verified_email: false,
-      job_title: null,
-      organization_name: null,
-      orggroup_name: null,
-      local_admin_permission: false,
-      participant_permission: true
-    },
-    {
-      id: 11,
-      username: 'tutenstineatgmaildotcom',
-      first_name: 'mahin',
-      last_name: 'khan',
-      email: 'tutenstine@gmail.com',
-      verified_email: false,
-      job_title: null,
-      organization_name: null,
-      orggroup_name: null,
-      local_admin_permission: false,
-      participant_permission: true
-    },
-    {
-      id: 11,
-      username: 'tutenstineatgmaildotcom',
-      first_name: 'mahin',
-      last_name: 'khan',
-      email: 'tutenstine@gmail.com',
-      verified_email: false,
-      job_title: null,
-      organization_name: null,
-      orggroup_name: null,
-      local_admin_permission: false,
-      participant_permission: true
-    },
-    {
-      id: 11,
-      username: 'tutenstineatgmaildotcom',
-      first_name: 'mahin',
-      last_name: 'khan',
-      email: 'tutenstine@gmail.com',
-      verified_email: false,
-      job_title: null,
-      organization_name: null,
-      orggroup_name: null,
-      local_admin_permission: false,
-      participant_permission: true
-    }
   ];
 
   data: any = [];
@@ -118,13 +52,13 @@ export class LearnersTableComponent implements AfterViewInit {
             this.paginator.pageIndex
           );
         }),
-        map(data => {
+        map((data: any) => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
-          this.resultsLength = 41; // data.total_count;
+          this.resultsLength = data.count;
 
-          return data;
+          return data.results;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -133,7 +67,10 @@ export class LearnersTableComponent implements AfterViewInit {
           return observableOf([]);
         })
       )
-      .subscribe(data => (this.data = this.dataa));
+      .subscribe(data => {
+        this.data = data;
+        return data;
+      });
   }
 
   // Selection code

@@ -32,7 +32,8 @@ export class LearnerService {
   }
 
   getLearners(sort: string, order: string, page: number): Observable<User> {
-    const request = 'http://localhost:8000/tenants/users/';
+    // django expects page index starting from 1
+    const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);
     return this.http.get<User>(request);
   }
 
