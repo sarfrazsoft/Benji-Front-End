@@ -109,6 +109,7 @@ export class ParticipantGeneratePitchActivityComponent
       this.draftPitchSection = false;
       this.generatePitchSection = false;
       if (this.isCurrentUserPitching()) {
+        this.getCurrentUserPitchSet();
         this.sharePitchSection = true;
         this.listenToPitchSection = false;
       } else {
