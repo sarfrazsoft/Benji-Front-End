@@ -62,16 +62,15 @@
     video {
       height: 100%;
       display: block;
-      width: auto;
+      width: 100%;
       margin: 0 auto;
     }
     .mainscreen-activity__activity-detail {
       padding: 5vh 10vw;
       transition: all 0.3s;
       h1 {
-        font-size: 10vh;
+        font-size: 7vw;
         margin: 0;
-        line-height: 1.69;
       }
       p {
         span img {

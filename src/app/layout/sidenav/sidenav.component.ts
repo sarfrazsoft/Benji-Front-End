@@ -73,23 +73,23 @@ export class SidenavComponent implements OnInit {
           // }
         ]
       },
-      // {
-      //   section: 2,
-      //   items: [
-      //     {
-      //       navName: 'Account',
-      //       navRoute: 'accounts'
-      //     },
-      //     {
-      //       navName: 'Settings',
-      //       navRoute: 'settings'
-      //     },
-      //     {
-      //       navName: 'Help',
-      //       navRoute: 'help'
-      //     }
-      //   ]
-      // },
+      {
+        section: 2,
+        items: [
+          {
+            navName: 'Account',
+            navRoute: 'account'
+          }
+          // {
+          //   navName: 'Settings',
+          //   navRoute: 'settings'
+          // },
+          // {
+          //   navName: 'Help',
+          //   navRoute: 'help'
+          // }
+        ]
+      },
       {
         section: 3,
         items: [

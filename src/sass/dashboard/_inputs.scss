@@ -21,3 +21,25 @@ mat-error > div {
   margin-left: 10px;
   position: absolute;
 }
+
+.dashboard-form {
+  margin-top: 30px;
+  .field {
+    margin-bottom: 30px;
+    .dash-input {
+      border-radius: 3px;
+      text-align: left;
+      padding: 15px 15px;
+      width: 400px;
+      font-size: 22px;
+    }
+    .label {
+      font-size: 22px;
+      color: $brownish-grey;
+      margin-bottom: 10px;
+    }
+  }
+  .dashboard-button {
+    width: 400px;
+  }
+}

@@ -1,0 +1,23 @@
+.add-learners-section {
+  margin-top: 30px;
+  .b-standard-textarea {
+    width: 100%;
+    text-align: left;
+    padding: 15px 15px;
+  }
+}
+
+.field {
+  margin-bottom: 30px;
+  .dash-input {
+    border-radius: 3px;
+    text-align: left;
+    padding: 15px 15px;
+    font-size: 22px;
+  }
+  .label {
+    font-size: 22px;
+    color: $brownish-grey;
+    margin-bottom: 10px;
+  }
+}

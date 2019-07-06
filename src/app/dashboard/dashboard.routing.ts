@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import {
+  AccountComponent,
   AdminPanelComponent,
   AdminResolver,
   LearnerResolver,
@@ -21,6 +22,10 @@ const routes: Routes = [
         path: 'learners',
         loadChildren:
           'src/app/dashboard/learners/learners.module#LearnersModule'
+      },
+      {
+        path: 'account',
+        component: AccountComponent
       }
     ]
   }

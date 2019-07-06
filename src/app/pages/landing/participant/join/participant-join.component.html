@@ -6,6 +6,7 @@
       <p>Look to the main screen to find your room code.</p>
       <div class="participant-start__action-container">
         <p
+          class="incorrect-answer"
           *ngIf="
             (roomCode.invalid && roomCode.touched) || isRoomCodeValid === false
           "

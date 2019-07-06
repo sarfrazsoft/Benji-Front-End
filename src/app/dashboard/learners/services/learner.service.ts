@@ -37,6 +37,11 @@ export class LearnerService {
     return this.http.get<User>(request);
   }
 
+  addLearners(emails: string) {
+    const request = global.apiRoot + '/tenants/users/';
+    return this.http.get<User>(request);
+  }
+
   // getCourses(): Observable<any> {
   //   return this.http.get(global.apiRoot + '/course_details/course/').pipe(
   //     map(res => {

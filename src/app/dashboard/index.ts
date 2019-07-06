@@ -1,22 +1,18 @@
 export * from './admin-panel/';
 export * from './learners';
+export * from './account';
 
+import { AccountComponents, AccountProviders } from './account';
 import {
+  AdminComponents,
   AdminPanelComponent,
+  AdminProviders,
   AdminResolver,
-  AdminService,
-  CoursesComponent,
-  SingleStatComponent,
-  StatsComponent
+  AdminService
 } from './admin-panel';
 
-export const DashboardComponents = [
-  AdminPanelComponent,
-  CoursesComponent,
-  SingleStatComponent,
-  StatsComponent
-];
+export const DashboardComponents = [...AccountComponents, ...AdminComponents];
 
 export const DashboardEntryComponents = [];
 
-export const DashboardProviders = [AdminResolver, AdminService];
+export const DashboardProviders = [...AdminProviders, ...AccountProviders];

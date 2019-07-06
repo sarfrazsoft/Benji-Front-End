@@ -1,3 +1,81 @@
-<p>
-  add-learners works!
-</p>
+<div class="admin-panel" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Add Learners</h1>
+  </div>
+
+  <div class="add-learners-section dashboard-form" fxLayout="column">
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      fxLayout="column"
+      fxLayoutGap="20px"
+    >
+      <div class="field">
+        <div class="label">
+          Add comma separated emails
+        </div>
+        <textarea
+          id="email"
+          class="dash-input b-standard-textarea"
+          required
+          type="emails"
+          pattern="^(\s?[^\s,]+@[^\s,]+\.[^\s,]+\s?,)*(\s?[^\s,]+@[^\s,]+\.[^\s,]+)$"
+          formControlName="emails"
+          placeholder="Email Address"
+          (keydown)="emailChanged()"
+        ></textarea>
+        <mat-error
+          *ngIf="
+            emails.invalid &&
+            (emails.dirty || emails.touched) &&
+            isSignupClicked
+          "
+          class="alert alert-danger"
+        >
+          <div *ngIf="emails.errors.required">
+            Email is required.
+          </div>
+          <div *ngIf="emails.errors.emailErr">
+            {{ emailErrMsg }}
+          </div>
+          <div *ngIf="emails.errors.email">
+            It should be a valid email.
+          </div>
+        </mat-error>
+        <mat-error *ngIf="emailErr" class="alert alert-danger">
+          <div>
+            {{ emailErrMsg }}
+          </div>
+        </mat-error>
+      </div>
+
+      <button
+        type="submit"
+        class="dashboard-button"
+        [ngClass]="{
+          active: form.valid,
+          inactive: !form.valid
+        }"
+      >
+        Add learners
+      </button>
+    </form>
+  </div>
+
+  <button
+    (click)="importCSV()"
+    class="dashboard-button"
+    [ngClass]="{
+      active: form.valid,
+      inactive: !form.valid
+    }"
+  >
+    import csv
+  </button>
+
+  <input
+    type="file"
+    class="upload"
+    (change)="changeListener($event.target.files)"
+  />
+</div>
