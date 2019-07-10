@@ -1,0 +1,45 @@
+.poll-result {
+  .header {
+    width: 95vw;
+    font-size: 2.5vw;
+    text-transform: uppercase;
+    padding: 2.5vh 0;
+    border-bottom: 2px solid #979797;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  .content {
+    width: 75vw;
+    text-align: center;
+    font-size: 3vw;
+    .question {
+      font-weight: 600;
+      margin-bottom: 4vh;
+    }
+    .options {
+      font-size: 2.5vw;
+      #progressbar {
+        background-color: $cloudy-grey;
+        border-radius: 2px;
+        padding: 1px;
+      }
+
+      #progressbar > div {
+        background-color: $brownish-grey;
+        width: 40%;
+        height: 4px;
+        border-radius: 2px;
+      }
+    }
+  }
+}
+
+// TODO move to appropriate file
+.chart-container {
+  width: 75vw;
+  position: relative;
+  canvas {
+    width: 75vw !important;
+    height: 55vh !important;
+  }
+}

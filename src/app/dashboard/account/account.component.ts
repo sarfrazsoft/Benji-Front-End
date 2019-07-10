@@ -36,7 +36,8 @@ export class AccountComponent implements OnInit {
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      job_title: ''
+      job_title: '',
+      oldPassword: ''
     });
 
     this.route.data.forEach((data: any) => {
@@ -59,6 +60,10 @@ export class AccountComponent implements OnInit {
 
   get job_title(): AbstractControl {
     return this.form.get('job_title');
+  }
+
+  get oldPassword(): AbstractControl {
+    return this.form.get('oldPassword');
   }
 
   emailChanged() {

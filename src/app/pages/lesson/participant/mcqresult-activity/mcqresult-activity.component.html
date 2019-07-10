@@ -25,3 +25,19 @@
     </p>
   </ng-container>
 </benji-ps-instruction-template>
+
+<div *ngIf="showStatistics">
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Poll</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
+    <h1 class="body-heading pn-700 deep-blue">The most votes went to...</h1>
+
+    <ng-container class="content">
+      <div class="b-flat-card__action">
+        <button class="b-standard-button--correct b-standard-button">
+          A. Crossbow
+        </button>
+      </div>
+    </ng-container>
+  </benji-ps-instruction-template>
+</div>

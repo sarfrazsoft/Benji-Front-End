@@ -1,4 +1,9 @@
-<div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+<div
+  class="single-column-activity"
+  fxLayout="column"
+  fxLayoutGap="2.5vh"
+  *ngIf="!showStatistics"
+>
   <div class="twemoji-container">
     <app-b-twemoji emoji="🏁"> </app-b-twemoji>
   </div>
@@ -13,6 +18,48 @@
     </p>
   </div>
   <div class="linear-timer-container">
-    <app-linear-timer [timer]="activityState.base_activity.next_activity_start_timer" [endAudio]="'bell.wav'"></app-linear-timer>
+    <app-linear-timer
+      [timer]="activityState.base_activity.next_activity_start_timer"
+      [endAudio]="'bell.wav'"
+    ></app-linear-timer>
+  </div>
+</div>
+
+<div
+  class="poll-result"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  *ngIf="showStatistics"
+>
+  <div class="header" fxLayout="column" fxFlex="100%">
+    POLL
+  </div>
+  <div class="content" fxLayout="column">
+    <div class="question">
+      What's the best defense against zombies?
+    </div>
+    <div class="options" *ngIf="!showChart">
+      <div class="option">
+        <div class="info" fxLayout="row">
+          <div
+            class="option-detail"
+            fxFlex="100%"
+            fxLayout="row"
+            fxLayoutGap="2vw"
+          >
+            <div class="identifier">A.</div>
+            <div class="text">Crossbow</div>
+          </div>
+          <div class="percentage">12%</div>
+        </div>
+        <div id="progressbar">
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-container" *ngIf="showChart">
+    <canvas id="myChart" width="500" height="400"></canvas>
   </div>
 </div>

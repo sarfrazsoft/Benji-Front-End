@@ -123,6 +123,32 @@
           </mat-error>
         </div>
 
+        <div class="field">
+          <div class="label">
+            Old password
+          </div>
+          <input
+            class="dash-input"
+            required
+            type="password"
+            formControlName="oldPassword"
+            placeholder="Password"
+            minlength="8"
+          />
+          <mat-error
+            *ngIf="
+              oldPassword.invalid &&
+              (oldPassword.dirty || oldPassword.touched) &&
+              isSignupClicked
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="oldPassword.errors.required">
+              Password is required.
+            </div>
+          </mat-error>
+        </div>
+
         <!-- <div class="password-control">
           <input
             class="dash-input"
