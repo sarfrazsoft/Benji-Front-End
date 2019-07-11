@@ -50,10 +50,14 @@ export class ParticipantLoginComponent implements OnInit {
       this.auth.logout();
     }
 
+    if (!isNaN(this.username.value)) {
+      this.loginError = true;
+      return false;
+    }
+
     this.backend.create_user(this.username.value).subscribe((res: any) => {
       this.loginError = false;
       if (res.participant_permission) {
-        console.log('activated user');
         this.auth.login(res.username, 'test').subscribe(() => {
           this.isUserValid = true;
           this.router.navigate([`/participant/join`]);
