@@ -29,7 +29,11 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
 
   optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activityState.mcqactivity.question.mcqchoice_set.sort(
+      (a, b) => a.id - b.id
+    );
+  }
 
   ngOnChanges() {
     const as = this.activityState;
