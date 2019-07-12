@@ -26,7 +26,7 @@
 </ng-container>
 
 <!-- Share With Group Card -->
-<ng-container
+<!-- <ng-container
   *ngIf="
     activityState.discussionactivity.discussion_complete &&
     participantIsSharing()
@@ -53,6 +53,32 @@
       "
     ></app-linear-timer>
   </div>
+</ng-container> -->
+
+<ng-container
+  *ngIf="
+    activityState.discussionactivity.discussion_complete &&
+    participantIsSharing()
+  "
+>
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Role-play</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="📣"></app-b-twemoji>
+    <h3 class="body-heading pn-700 deep-blue">Share with the group</h3>
+    <ng-container class="content">
+      <div class="b-flat-card__action">
+        <button class="b-standard-button" (click)="doneButton()">
+          <ng-container> Done </ng-container>
+        </button>
+      </div>
+      <app-linear-timer
+        [timer]="
+          activityState.discussionactivity.currently_sharing_group
+            .sharing_countdown_timer
+        "
+      ></app-linear-timer>
+    </ng-container>
+  </benji-ps-instruction-template>
 </ng-container>
 
 <!-- Listening Card -->
