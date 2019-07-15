@@ -1,60 +1,35 @@
 <!-- Discussion Volunteer Card -->
 <ng-container *ngIf="!activityState.discussionactivity.discussion_complete">
-  <div class="b-flat-card center-text roleplay-card">
-    <div class="b-flat-card__title"><h2 class="pn-400">Role-Play</h2></div>
-    <div class="b-flat-card__body">
-      <div class="b-flat-card__twemoji">
-        <app-b-twemoji emoji="🤔"></app-b-twemoji>
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Role-play</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="🤔"></app-b-twemoji>
+    <h1 class="body-heading pn-700 deep-blue">Discuss with your partner</h1>
+    <ng-container class="body-text">
+      What were your takeaways from that role-play?</ng-container
+    >
+    <ng-container class="content">
+      <div class="b-flat-card__action">
+        <button
+          class="b-standard-button"
+          [ngClass]="{
+            'b-standard-button--inactive': participantVolunteered()
+          }"
+          (click)="shareButton()"
+          *ngIf="activityState.discussionactivity.sharing_seconds > 0"
+        >
+          We want to share
+        </button>
       </div>
-      <h3 class="pn-700 deep-blue">Discuss with your partner</h3>
-      <p class="instruction">What were your takeaways from that role-play?</p>
-    </div>
-    <div class="b-flat-card__action">
-      <button
-        class="b-standard-button"
-        [ngClass]="{ 'b-standard-button--inactive': participantVolunteered() }"
-        (click)="shareButton()"
-        *ngIf="activityState.discussionactivity.sharing_seconds > 0"
-      >
-        We want to share
-      </button>
-    </div>
-    <app-linear-timer
-      [timer]="this.activityState.discussionactivity.discussion_countdown_timer"
-    ></app-linear-timer>
-  </div>
+      <app-linear-timer
+        [timer]="
+          this.activityState.discussionactivity.discussion_countdown_timer
+        "
+      ></app-linear-timer>
+    </ng-container>
+  </benji-ps-instruction-template>
 </ng-container>
 
 <!-- Share With Group Card -->
-<!-- <ng-container
-  *ngIf="
-    activityState.discussionactivity.discussion_complete &&
-    participantIsSharing()
-  "
->
-  <div class="b-flat-card center-text roleplay-card">
-    <div class="b-flat-card__title"><h2 class="pn-400">Role-play</h2></div>
-    <div class="b-flat-card__body">
-      <div class="b-flat-card__twemoji">
-        <app-b-twemoji emoji="📣"></app-b-twemoji>
-      </div>
-
-      <h3 class="pn-700 deep-blue">Share with the group</h3>
-    </div>
-    <div class="b-flat-card__action">
-      <button class="b-standard-button" (click)="doneButton()">
-        <ng-container> Done </ng-container>
-      </button>
-    </div>
-    <app-linear-timer
-      [timer]="
-        this.activityState.discussionactivity.currently_sharing_group
-          .sharing_countdown_timer
-      "
-    ></app-linear-timer>
-  </div>
-</ng-container> -->
-
 <ng-container
   *ngIf="
     activityState.discussionactivity.discussion_complete &&

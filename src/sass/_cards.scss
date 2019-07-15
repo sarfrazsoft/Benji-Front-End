@@ -7,7 +7,6 @@
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;
-  // max-width: 90%;
   margin: 20px;
   .b-flat-card__title * {
     border-bottom: 2px solid #dfe5e7;
@@ -20,11 +19,17 @@
     margin-top: 0;
   }
   .b-flat-card__body {
-    padding: 5vh 20px 22px;
-    > h3,
+    padding: 5vh 20px 0px;
+    > h1,
+    h2,
+    h3,
     .b-flat-card__twemoji,
     p {
-      padding-bottom: 3.5vh;
+      padding-bottom: 22px;
+    }
+    h1 {
+      margin: 0px;
+      font-size: 35px;
     }
   }
   .b-flat-card__twemoji {
@@ -35,14 +40,7 @@
     height: auto;
     padding-bottom: 60px;
   }
-  // @media screen and (min-width: 992px) {
-  //   .b-flat-card__body {
-  //     padding: 20vh 20px 10px;
-  //   }
-  // }
   @media screen and (min-width: 1200px) {
-    // max-width: 1140px;
-    // height: auto;
     min-height: 600px;
   }
   button {
