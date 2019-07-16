@@ -4,7 +4,8 @@ import {
   AdminPanelComponent,
   AdminResolver,
   LearnerResolver,
-  LearnersComponent
+  LearnersComponent,
+  PastSessionsComponent
 } from './index';
 
 const routes: Routes = [
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent
+      },
+      {
+        path: 'pastsessions',
+        component: PastSessionsComponent
       }
     ]
   }
