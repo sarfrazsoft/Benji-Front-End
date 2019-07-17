@@ -37,8 +37,13 @@ export class LearnerService {
     return this.http.get<User>(request);
   }
 
-  addLearners(emails: string) {
-    const request = global.apiRoot + '/tenants/users/';
+  addLearners(emails) {
+    const request = global.apiRoot + '/tenants/org_invites/';
+    return this.http.post(request, emails);
+  }
+
+  getUserDetails(id) {
+    const request = global.apiRoot + '/tenants/users/?id=' + id;
     return this.http.get<User>(request);
   }
 

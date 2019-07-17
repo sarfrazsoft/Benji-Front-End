@@ -19,6 +19,7 @@
           class="dash-input b-standard-textarea"
           required
           type="emails"
+          rows="6"
           pattern="^(\s?[^\s,]+@[^\s,]+\.[^\s,]+\s?,)*(\s?[^\s,]+@[^\s,]+\.[^\s,]+)$"
           formControlName="emails"
           placeholder="Email Address"
@@ -49,6 +50,10 @@
         </mat-error>
       </div>
 
+      <div *ngIf="invitationsSent" class="invitations-sent">
+        Invitations sent
+      </div>
+
       <button
         type="submit"
         class="dashboard-button"
@@ -62,7 +67,7 @@
     </form>
   </div>
 
-  <button
+  <!-- <button
     (click)="importCSV()"
     class="dashboard-button"
     [ngClass]="{
@@ -77,5 +82,5 @@
     type="file"
     class="upload"
     (change)="changeListener($event.target.files)"
-  />
+  /> -->
 </div>

@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { LearnerService } from '../services';
 
 @Component({
@@ -15,14 +16,22 @@ import { LearnerService } from '../services';
 })
 export class AddLearnersComponent implements OnInit {
   form: FormGroup;
-  isSubmitted = false;
   emailErr = false;
   emailErrMsg = '';
+  invitationsSent = false;
+  userId: number;
+  orgId: number;
 
   constructor(
     private builder: FormBuilder,
-    private learnerService: LearnerService
-  ) {}
+    private learnerService: LearnerService,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.forEach((data: any) => {
+      this.userId = data.dashData.user.id;
+      this.orgId = data.dashData.user.organization;
+    });
+  }
 
   ngOnInit() {
     this.form = this.builder.group({
@@ -40,12 +49,21 @@ export class AddLearnersComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // this.isSignupClicked = true;
     if (this.form.valid) {
-      console.log(this.form.value);
-      const val = this.form.value;
-      this.learnerService.addLearners(val.emails).subscribe(
-        res => {},
+      const emails = this.form.value.emails.split(',');
+      const json = [];
+      emails.forEach(email => {
+        json.push({
+          email: email.trim(),
+          organization: this.orgId,
+          inviter: this.userId
+        });
+      });
+      this.learnerService.addLearners(json).subscribe(
+        res => {
+          this.form.reset();
+          this.invitationsSent = true;
+        },
         err => {
           console.log(err);
         }
