@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
+// import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { LearnerService } from '../services';
 
@@ -21,6 +22,9 @@ export class AddLearnersComponent implements OnInit {
   invitationsSent = false;
   userId: number;
   orgId: number;
+  // serverString;
+
+  // loadAPI: Promise<any>;
 
   constructor(
     private builder: FormBuilder,
@@ -88,4 +92,59 @@ export class AddLearnersComponent implements OnInit {
       };
     }
   }
+
+  // getSeverString() {
+  //   this.loadAPI = new Promise(resolve => {
+  //     this.loadScript();
+  //     resolve(true);
+  //   });
+  //   const dangerousHTML = `<!DOCTYPE html
+  //   <html>
+  //     <head>
+  //       <meta charset='UTF-8'>
+  //       <title>title</title>
+  //     </head>
+  //     <body>
+  //       <div onclick="javascript:ddd();" class="server-class">mahin</div>
+  //       i like ass
+  //     </body>
+  //   </html>
+  //   <script>
+  //         function ddd(){
+  //             alert('hello ');
+  //         };
+  //         </script>`;
+
+  //   // this.serverString = this.sanitizer.bypassSecurityTrustUrl(dangerousHTML);
+  //   // this.serverString = this.sanitizer.bypassSecurityTrustScript(dangerousHTML);
+  //   this.serverString = this.sanitizer.bypassSecurityTrustHtml(dangerousHTML);
+  // }
+
+  // public loadScript() {
+  //   let isFound = false;
+  //   const scripts = document.getElementsByTagName('script');
+  //   for (let i = 0; i < scripts.length; ++i) {
+  //     if (
+  //       scripts[i].getAttribute('src') != null &&
+  //       scripts[i].getAttribute('src').includes('loader')
+  //     ) {
+  //       isFound = true;
+  //     }
+  //   }
+
+  //   if (!isFound) {
+  //     const dynamicScripts = [
+  //       'https://widgets.skyscanner.net/widget-server/js/loader.js'
+  //     ];
+
+  //     for (let i = 0; i < dynamicScripts.length; i++) {
+  //       const node = document.createElement('script');
+  //       node.src = dynamicScripts[i];
+  //       node.type = 'text/javascript';
+  //       node.async = false;
+  //       node.charset = 'utf-8';
+  //       document.getElementsByTagName('head')[0].appendChild(node);
+  //     }
+  //   }
+  // }
 }
