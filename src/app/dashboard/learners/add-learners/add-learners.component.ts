@@ -41,6 +41,16 @@ export class AddLearnersComponent implements OnInit {
     this.form = this.builder.group({
       emails: new FormControl('', [Validators.required])
     });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        // stop running expensive task
+        console.log('hidden');
+      } else {
+        // page has focus, begin running task
+        console.log('shown');
+      }
+    });
   }
 
   get emails(): AbstractControl {
