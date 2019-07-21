@@ -33,7 +33,10 @@ export class AddLearnersComponent implements OnInit {
   ) {
     this.route.data.forEach((data: any) => {
       this.userId = data.dashData.user.id;
-      this.orgId = data.dashData.user.organization;
+    });
+
+    learnerService.getOrganization().subscribe((res: any) => {
+      this.orgId = res.results[0].id;
     });
   }
 
