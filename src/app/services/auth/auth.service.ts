@@ -45,8 +45,9 @@ export class AuthService {
     lastName: string
   ) {
     this.logout();
-    return this.http
-      .post(global.apiRoot + '/rest-auth/registration/', {
+    let obj;
+    if (this.userInvitation) {
+      obj = {
         // TODO get rid of username when backend gets rid of it
         // Is there a character limit on the username?
         username: email.replace('@', 'at').replace('.', 'dot'),
@@ -57,7 +58,21 @@ export class AuthService {
         email: email,
         invitation: this.userInvitation ? this.userInvitation.id : null,
         invitation_token: this.invitationToken ? this.invitationToken : null
-      })
+      };
+    } else {
+      obj = {
+        // TODO get rid of username when backend gets rid of it
+        // Is there a character limit on the username?
+        username: email.replace('@', 'at').replace('.', 'dot'),
+        password1: password,
+        password2: password,
+        first_name: firstName,
+        last_name: lastName,
+        email: email
+      };
+    }
+    return this.http
+      .post(global.apiRoot + '/rest-auth/registration/', obj)
       .pipe(
         map((res: Response) => res),
         catchError(err => of(err.error))
