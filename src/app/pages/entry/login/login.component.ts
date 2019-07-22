@@ -39,6 +39,10 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: ''
     });
+
+    if (this.authService.userInvitation) {
+      this.showSignupTab.emit();
+    }
   }
 
   showSignup(): void {

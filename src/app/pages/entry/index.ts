@@ -1,3 +1,4 @@
+import { AcceptInviteComponent } from './accept-invite/accept-invite.component';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
 import { BTwemoji2Component } from './activate-account/b-twemoji2/b-twemoji.component';
 import { EntryComponent } from './entry.component';
@@ -9,6 +10,7 @@ import { MobileComponent } from './mobile/mobile.component';
 import { SignupComponent as MobSignupComponent } from './mobile/signup/signup.component';
 
 export {
+  AcceptInviteComponent,
   ActivateAccountComponent,
   BTwemoji2Component,
   EntryComponent,
@@ -20,6 +22,7 @@ export {
 };
 
 export const EntryComponents = [
+  AcceptInviteComponent,
   ActivateAccountComponent,
   BTwemoji2Component,
   EntryComponent,

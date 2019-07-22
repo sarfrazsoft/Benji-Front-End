@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 import * as global from '../../globals';
+import { UserInvitation } from '../backend/schema';
 
 export interface LoginResponse {
   user: any;
@@ -14,6 +15,8 @@ export interface LoginResponse {
 
 @Injectable()
 export class AuthService {
+  userInvitation: UserInvitation;
+  invitationToken: number;
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -51,7 +54,9 @@ export class AuthService {
         password2: password,
         first_name: firstName,
         last_name: lastName,
-        email: email
+        email: email,
+        invitation: this.userInvitation ? this.userInvitation.id : null,
+        invitation_token: this.invitationToken ? this.invitationToken : null
       })
       .pipe(
         map((res: Response) => res),
@@ -75,6 +80,7 @@ export class AuthService {
     return this.http
       .post(global.apiRoot + '/rest-auth/login/', {
         username: email.replace('@', 'at').replace('.', 'dot'),
+        // username: email.split('@')[0],
         email: email,
         password: password
       })
@@ -129,5 +135,16 @@ export class AuthService {
 
   getUserRole(): string | Observable<string> {
     return localStorage.getItem('userRole');
+  }
+
+  getInivitationDetails(inviteId: string, token: string) {
+    const request =
+      global.apiRoot +
+      '/tenants/org_invites/view_invite/' +
+      inviteId +
+      '/' +
+      token +
+      '/';
+    return this.http.get<UserInvitation>(request);
   }
 }

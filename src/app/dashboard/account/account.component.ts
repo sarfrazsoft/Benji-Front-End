@@ -36,8 +36,8 @@ export class AccountComponent implements OnInit {
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      job_title: '',
-      oldPassword: ''
+      job_title: ''
+      // oldPassword: ''
     });
 
     this.route.data.forEach((data: any) => {

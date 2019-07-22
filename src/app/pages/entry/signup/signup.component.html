@@ -55,6 +55,7 @@
         </mat-error>
       </div>
       <div class="email-control">
+        <!-- Remove ID if not used anywhere -->
         <input
           id="email"
           class="dash-input"
@@ -63,6 +64,7 @@
           pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
           formControlName="email"
           placeholder="Email Address"
+          autocomplete="email"
           (keydown)="emailChanged()"
         />
         <mat-error
@@ -94,6 +96,7 @@
           required
           type="password"
           formControlName="password"
+          autocomplete="new-password"
           placeholder="Password"
           minlength="8"
         />
@@ -123,6 +126,7 @@
           required
           type="password"
           formControlName="confirmPassword"
+          autocomplete="new-password"
           placeholder="Confirm Password"
         />
         <mat-error

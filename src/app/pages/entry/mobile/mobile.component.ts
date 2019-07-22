@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services';
 
 @Component({
   selector: 'benji-mobile-entry',
@@ -8,13 +9,17 @@ import { Router } from '@angular/router';
 })
 export class MobileComponent implements OnInit {
   isDemoSite = true;
-  constructor(private router: Router) {
+  showLoginMob = true;
+  constructor(private router: Router, private authService: AuthService) {
     // demo.mybenji.com
     if (window.location.href.split('.')[0].includes('demo')) {
       this.isDemoSite = true;
     }
   }
-  showLoginMob = true;
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.authService.userInvitation) {
+      this.showLoginMob = false;
+    }
+  }
 }

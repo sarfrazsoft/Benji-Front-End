@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActivateAccountComponent, EntryComponent } from 'src/app/pages';
+import {
+  AcceptInviteComponent,
+  ActivateAccountComponent,
+  EntryComponent
+} from 'src/app/pages';
 
 const routes: Routes = [
   {
@@ -14,6 +18,10 @@ const routes: Routes = [
   {
     path: 'activate/:confirmationCode',
     component: ActivateAccountComponent
+  },
+  {
+    path: 'accept_invite/:inviteId/:inviteToken',
+    component: AcceptInviteComponent
   }
 ];
 

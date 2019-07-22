@@ -39,6 +39,18 @@ export class SignupComponent implements OnInit {
         validator: this.checkIfMatchingPasswords('password', 'confirmPassword')
       }
     );
+
+    if (this.authService.userInvitation) {
+      this.form.get('email').setValue(this.authService.userInvitation.email);
+      if (this.authService.userInvitation.suggested_first_name) {
+        this.form
+          .get('firstName')
+          .setValue(this.authService.userInvitation.suggested_first_name);
+        this.form
+          .get('lastName')
+          .setValue(this.authService.userInvitation.suggested_last_name);
+      }
+    }
   }
 
   checkIfMatchingPasswords(
