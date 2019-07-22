@@ -8,6 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantMcqresultActivityComponent extends BaseActivityComponent
   implements OnInit {
+  showStatistics = false;
   constructor() {
     super();
   }
