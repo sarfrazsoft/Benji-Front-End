@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'lodash';
 import { AuthService } from 'src/app/services';
 import { AccountService } from './services';
@@ -28,7 +28,8 @@ export class AccountComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private accountService: AccountService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -98,5 +99,9 @@ export class AccountComponent implements OnInit {
         }
       );
     }
+  }
+
+  passwordPage(): void {
+    this.router.navigate(['/dashboard/account/password']);
   }
 }

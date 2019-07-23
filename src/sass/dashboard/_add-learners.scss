@@ -5,10 +5,11 @@
     text-align: left;
     padding: 15px 15px;
   }
-  .invitations-sent {
-    font-size: 24px;
-    color: $vibrant-blue;
-  }
+}
+// move to utils styles
+.success-message {
+  font-size: 24px;
+  color: $vibrant-blue;
 }
 
 .field {

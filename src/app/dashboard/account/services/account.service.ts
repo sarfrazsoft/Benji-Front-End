@@ -13,6 +13,7 @@ export class AccountService {
     private http: HttpClient,
     private contextService: ContextService
   ) {}
+
   saveUser(user): Observable<any> {
     return this.http
       .put(global.apiRoot + '/tenants/users/' + user.id + '/', user)
@@ -21,5 +22,17 @@ export class AccountService {
           return res;
         })
       );
+  }
+
+  resetPassword(oldPassword, newPassword1, newPassword2): Observable<any> {
+    const passwords = {
+      old_password: oldPassword,
+      new_password1: newPassword1,
+      new_password2: newPassword2
+    };
+    return this.http.post(
+      global.apiRoot + '/rest-auth/password/change/',
+      passwords
+    );
   }
 }

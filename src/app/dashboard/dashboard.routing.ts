@@ -5,7 +5,8 @@ import {
   AdminResolver,
   LearnerResolver,
   LearnersComponent,
-  PastSessionsComponent
+  PastSessionsComponent,
+  ResetPasswordComponent
 } from './index';
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent
+      },
+      {
+        path: 'account/password',
+        component: ResetPasswordComponent
       },
       {
         path: 'pastsessions',
