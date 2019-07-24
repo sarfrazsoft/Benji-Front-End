@@ -16,7 +16,7 @@ export class AccountService {
 
   saveUser(user): Observable<any> {
     return this.http
-      .put(global.apiRoot + '/tenants/users/' + user.id + '/', user)
+      .patch(global.apiRoot + '/tenants/users/' + user.id + '/', user)
       .pipe(
         map(res => {
           return res;

@@ -61,7 +61,8 @@
             </div>
           </mat-error>
         </div>
-        <div class="field">
+
+        <!-- <div class="field">
           <div class="label">
             Email
           </div>
@@ -96,7 +97,7 @@
               {{ emailErrMsg }}
             </div>
           </mat-error>
-        </div>
+        </div> -->
 
         <div class="field">
           <div class="label">
@@ -206,6 +207,10 @@
             </div>
           </mat-error>
         </div> -->
+
+        <div *ngIf="isSubmitted" class="success-message">
+          Information updated
+        </div>
 
         <button
           type="submit"

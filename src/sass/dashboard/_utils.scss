@@ -1,0 +1,14 @@
+.link {
+  font-family: $pn-regular;
+  color: $vibrant-blue;
+  font-size: 22px;
+  span {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.success-message {
+  font-size: 24px;
+  color: $vibrant-blue;
+}
