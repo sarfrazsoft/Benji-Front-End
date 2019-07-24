@@ -7,7 +7,7 @@ import { BackendSocketService } from '../../../services/backend/backend-socket.s
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
-  selector: 'app-participant-lesson',
+  selector: 'benji-participant-lesson',
   templateUrl: './participant-lesson.component.html',
   styleUrls: ['./participant-lesson.component.scss']
 })

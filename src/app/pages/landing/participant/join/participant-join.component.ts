@@ -52,8 +52,4 @@ export class ParticipantJoinComponent implements OnInit {
       }
     );
   }
-
-  /*formSubmit() {
-    this.router.navigate([`/participant/lesson/${this.roomCode.value}`]);
-  }*/
 }

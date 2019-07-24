@@ -1,23 +1,19 @@
 import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
-
-import { forkJoin } from 'rxjs';
-
 import { ActivatedRoute } from '@angular/router';
-import { BackendRestService } from '../../../services/backend/backend-rest.service';
-import { BackendSocketService } from '../../../services/backend/backend-socket.service';
-
+import { forkJoin } from 'rxjs';
+import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
+import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
+import {
+  ActivityEvent,
+  ServerMessage,
+  UpdateMessage,
+  User
+} from 'src/app/services/backend/schema';
 import {
   Course,
   Lesson,
   LessonRun
-} from '../../../services/backend/schema/course_details';
-import { User } from '../../../services/backend/schema/user';
-
-import {
-  ActivityEvent,
-  ServerMessage,
-  UpdateMessage
-} from '../../../services/backend/schema/messages';
+} from 'src/app/services/backend/schema/course_details';
 
 export class BaseLessonComponent implements OnInit {
   roomCode: number;
@@ -40,8 +36,23 @@ export class BaseLessonComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.clientType = (this.route.snapshot.url.join('').includes('screen')) ? 'screen' : 'participant';
+    this.initSocket();
 
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        // stop running expensive task
+        // console.log('hidden');
+      } else {
+        // page has focus, begin running task
+        // console.log('shown');
+        if (!this.isConnected()) {
+          this.initSocket();
+        }
+      }
+    });
+  }
+
+  initSocket() {
     forkJoin([
       this.restService.get_lessonrun(this.roomCode),
       this.restService.get_own_identity()
