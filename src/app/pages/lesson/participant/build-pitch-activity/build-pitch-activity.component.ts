@@ -52,7 +52,6 @@ export class ParticipantBuildPitchActivityComponent
     this.act = this.activityState.buildapitchactivity;
 
     this.act.buildapitchblank_set.forEach(v => {
-      console.log(v);
       this.builtPitch_set.push({ ...v, ...{ value: null } });
     });
   }
