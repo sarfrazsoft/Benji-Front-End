@@ -1,0 +1,68 @@
+benji-ms-mcq-activity {
+  .mcq-activity__question-container {
+    width: 75%;
+    margin: 5vh 0 0 7vw;
+    p {
+      font-size: 3rem;
+      line-height: normal;
+      max-width: 650px;
+    }
+    ol {
+      padding-left: 55px;
+      margin-top: 20px;
+    }
+    ol li {
+      list-style-type: upper-alpha;
+      font-size: 3.1rem;
+      line-height: 2.19;
+      padding-left: 35px;
+    }
+    .incorrect {
+      opacity: 0.5;
+    }
+    .correct {
+      color: $vibrant-blue;
+    }
+    .hideAndShrink {
+      height: 0;
+      opacity: 0;
+    }
+  }
+  .mcq-activity {
+    position: relative;
+    .mcq-activity__linear-timer-container {
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+    }
+    .b-arrow-button {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      font-size: 2.5rem;
+      background: transparent;
+      span {
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+      }
+      mat-icon {
+        font-size: 35px;
+      }
+    }
+  }
+}
+
+benji-ps-mcq-activity {
+  .mc-card {
+    position: relative;
+    .b-flat-card__twemoji {
+      margin-top: 10vh;
+    }
+  }
+}
