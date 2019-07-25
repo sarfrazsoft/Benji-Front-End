@@ -10,8 +10,8 @@ export interface PaginatedResponse<T> {
 export interface Course {
   id: number;
   course_name: string;
-  course_creator: string;
-  course_sponsor: string;
+  course_description: string;
+  course_id: number;
 }
 
 export interface Lesson {

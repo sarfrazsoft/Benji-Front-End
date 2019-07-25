@@ -1,0 +1,119 @@
+$color-base: $cloudy-grey;
+$field-size: 25px;
+
+.linked-radio-btns {
+  height: 100%;
+
+  .nodes {
+    display: flex;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .node {
+    display: flex;
+    position: relative;
+    height: 50px;
+    width: 20%;
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    align-items: center;
+
+    &:after {
+      display: block;
+      position: absolute;
+      z-index: -1;
+      left: 60%;
+      right: 0;
+      bottom: 0;
+      top: 46%;
+      content: ' ';
+      height: 3px;
+      width: 100%;
+      background-color: $color-base;
+    }
+
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  .indicator {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 45px;
+    margin: auto;
+    z-index: 3;
+    width: 100%;
+    text-align: center;
+    color: $brownish-grey;
+    font-size: 14px;
+  }
+
+  &__radio {
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  &__label {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    transition: 0.5s;
+
+    &:before {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      margin: auto;
+      z-index: 1;
+      width: $field-size;
+      height: $field-size;
+      content: ' ';
+      border-radius: 50%;
+      background-color: $color-base;
+    }
+
+    &:after {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      margin: auto;
+      z-index: 2;
+      width: $field-size - 6px;
+      height: $field-size - 6px;
+      content: ' ';
+      border-radius: 50%;
+      background-color: $off-white;
+    }
+  }
+}
+
+.linked-radio-btns__radio:checked + .linked-radio-btns__label::after {
+  background-color: $color-base;
+}
+
+.linked-radio-btns__radio:checked + .linked-radio-btns__label > .indicator {
+  color: darken($color-base, 20%);
+}

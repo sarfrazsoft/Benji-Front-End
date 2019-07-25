@@ -6,7 +6,6 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-// import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { LearnerService } from '../services';
 
@@ -22,9 +21,6 @@ export class AddLearnersComponent implements OnInit {
   invitationsSent = false;
   userId: number;
   orgId: number;
-  // serverString;
-
-  // loadAPI: Promise<any>;
 
   constructor(
     private builder: FormBuilder,

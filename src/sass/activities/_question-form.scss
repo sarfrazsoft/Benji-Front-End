@@ -1,0 +1,81 @@
+benji-question-form {
+  .questionForm {
+    h2 {
+      margin: 0;
+    }
+    .b-flat-card__body {
+      margin-bottom: 0;
+    }
+    h3 {
+      font-size: 35px;
+      line-height: normal;
+    }
+    .feedback-card__questions {
+      padding: 0 20px;
+      h2 {
+        font-size: 24px;
+        line-height: normal;
+        margin: 10px 0;
+      }
+    }
+    .feedback-card__question-box {
+      margin-bottom: 40px;
+      text-align: left;
+      border-top: $grey 1px solid;
+      padding-top: 12px;
+      .feedback-rating {
+        margin: 40px -10px 20px -10px;
+      }
+      span {
+        font-size: 13px;
+        margin-top: 5px;
+        display: block;
+        text-align: center;
+      }
+      textarea {
+        color: inherit;
+        outline: none;
+        height: 74px;
+        resize: none;
+        padding: 10px 10px;
+        border-radius: 8px;
+        border: $pale-grey 1px solid;
+        &:focus {
+          box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+          &::placeholder {
+            color: $grey;
+            opacity: 0;
+          }
+        }
+        &::placeholder {
+          color: $grey;
+          opacity: 1;
+        }
+      }
+    }
+  }
+  @media screen and (min-width: 415px) {
+    .b-flat-card__action.feedback-card__questions {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+  }
+  @media screen and (min-width: 992px) {
+    .b-flat-card__body {
+      padding: 5vh 20px 10px;
+    }
+  }
+}
+
+textarea:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+textarea:focus:-moz-placeholder {
+  color: transparent;
+} /* FF 4-18 */
+textarea:focus::-moz-placeholder {
+  color: transparent;
+} /* FF 19+ */
+textarea:focus:-ms-input-placeholder {
+  color: transparent;
+}

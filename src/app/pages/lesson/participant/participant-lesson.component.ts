@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { BackendRestService } from '../../../services/backend/backend-rest.service';
-import { BackendSocketService } from '../../../services/backend/backend-socket.service';
+import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
+import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 

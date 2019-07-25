@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
+import { User } from 'src/app/services/backend/schema';
 import {
   Course,
   Lesson,
@@ -27,16 +28,16 @@ export class AdminService {
     );
   }
 
-  getUser(): Observable<any> {
+  getUser(): Observable<User> {
     return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
-      map(res => {
+      map((res: User) => {
         this.contextService.user = res;
         return res;
       })
     );
   }
 
-  getCourses(): Observable<any> {
+  getCourses(): Observable<Course[]> {
     return this.http
       .get(global.apiRoot + '/course_details/course/?page=1')
       .pipe(
@@ -47,11 +48,11 @@ export class AdminService {
       );
   }
 
-  getCourseDetails(courseID: string): Observable<any> {
+  getCourseDetails(courseID: string): Observable<Course> {
     return this.http
       .get(global.apiRoot + '/course_details/course/' + courseID + '/lessons/')
       .pipe(
-        map(res => {
+        map((res: Course) => {
           return res;
         })
       );

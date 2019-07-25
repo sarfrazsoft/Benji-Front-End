@@ -24,6 +24,7 @@ export class AccountService {
       );
   }
 
+  // TODO implement types
   resetPassword(oldPassword, newPassword1, newPassword2): Observable<any> {
     const passwords = {
       old_password: oldPassword,
