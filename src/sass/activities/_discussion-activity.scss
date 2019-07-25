@@ -53,3 +53,12 @@ $instruction-font-size: 3.8vw;
   height: inherit;
   flex-direction: column;
 }
+
+benji-ps-discussion-activity {
+  .roleplay-card .b-flat-card__body {
+    h3 {
+      font-size: 35px;
+      line-height: normal;
+    }
+  }
+}
