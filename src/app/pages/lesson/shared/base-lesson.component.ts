@@ -41,12 +41,15 @@ export class BaseLessonComponent implements OnInit {
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         // stop running expensive task
+        this.socket = undefined;
         // console.log('hidden');
       } else {
         // page has focus, begin running task
         // console.log('shown');
         if (!this.isConnected()) {
-          this.initSocket();
+          setTimeout(() => {
+            this.initSocket();
+          }, 1000);
         }
       }
     });

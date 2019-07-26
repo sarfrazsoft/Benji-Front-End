@@ -92,12 +92,6 @@
   >
   </benji-ps-feedback-activity>
 
-  <!-- <benji-ps-pre-assess-pitch-skill
-    *ngIf="getActivityType() === 'FeedbackActivity'"
-    [activityState]="serverMessage"
-    (sendMessage)="sendSocketMessage($event)"
-  ></benji-ps-pre-assess-pitch-skill> -->
-
   <benji-ps-activity-video
     *ngIf="getActivityType() === 'VideoActivity'"
     (sendMessage)="sendSocketMessage($event)"
