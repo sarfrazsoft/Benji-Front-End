@@ -14,11 +14,12 @@ export class AccountService {
     private contextService: ContextService
   ) {}
 
-  saveUser(user): Observable<any> {
+  saveUser(user): Observable<User> {
     return this.http
       .patch(global.apiRoot + '/tenants/users/' + user.id + '/', user)
       .pipe(
-        map(res => {
+        map((res: User) => {
+          this.contextService.user = res;
           return res;
         })
       );

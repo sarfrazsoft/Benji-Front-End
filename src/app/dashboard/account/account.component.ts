@@ -8,7 +8,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'lodash';
-import { AuthService } from 'src/app/services';
+import { AuthService, ContextService } from 'src/app/services';
+import { User } from 'src/app/services/backend/schema';
 import { AccountService } from './services';
 
 @Component({
@@ -23,28 +24,25 @@ export class AccountComponent implements OnInit {
   passwordMinLenErr = false;
   emailErr = false;
   emailErrMsg = '';
-  accontInfo;
+  accontInfo: User;
 
   constructor(
     private builder: FormBuilder,
     private accountService: AccountService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private contextService: ContextService
   ) {}
 
   ngOnInit() {
     this.form = this.builder.group({
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
-      // email: new FormControl('', [Validators.required, Validators.email]),
       job_title: ''
-      // oldPassword: ''
     });
 
-    this.route.data.forEach((data: any) => {
-      this.accontInfo = data.dashData.user;
-      this.form.patchValue(this.accontInfo);
-    });
+    this.accontInfo = this.contextService.user;
+    this.form.patchValue(this.accontInfo);
   }
 
   get email(): AbstractControl {
@@ -79,22 +77,9 @@ export class AccountComponent implements OnInit {
       merge(val, {
         id: this.accontInfo.id
       });
-      console.log(val);
       this.accountService.saveUser(val).subscribe(
         res => {
-          // if (res.token) {
           this.isSubmitted = true;
-          //   return;
-          // }
-
-          // if (res.password1) {
-          //   this.passwordMinLenErr = true;
-          // }
-
-          // if (res.email) {
-          //   this.emailErr = true;
-          //   this.emailErrMsg = res.email[0];
-          // }
         },
         err => {
           console.log(err);

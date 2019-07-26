@@ -1,0 +1,169 @@
+benji-ms-generate-pitch-activity {
+  // Overrides for pitchomatic
+  .mainscreen-activity {
+    position: relative;
+    .lesson-top-banner {
+      padding: 0.5vw 2.5vw;
+    }
+    .linear-timer-container {
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+    }
+
+    .time-to-pitches {
+      .pitches {
+        height: 45vh;
+        > :first-child {
+          border-right: 1px solid $brownish-grey;
+        }
+      }
+      .activity-instructions {
+        margin-top: 3vh;
+        h2 {
+          margin-top: 5vh;
+        }
+      }
+    }
+
+    .time-to-pitch {
+      .activity-instructions {
+        .discuss-instruction {
+          font-size: 3vw;
+        }
+      }
+    }
+
+    .share-feedback {
+      .instructions {
+        h3 {
+          font-size: 5vh;
+          margin-top: 8vh;
+        }
+        > :first-child {
+          border-right: 1px solid $brownish-grey;
+        }
+      }
+      .activity-instructions {
+        margin: 5vh 0vh;
+        padding: 3vh 3vw;
+        .discuss-instruction {
+          font-size: 5.5vh;
+        }
+      }
+    }
+
+    .info-subsection {
+      margin-top: 10vh;
+      font-size: 5vh;
+      .instruction {
+        margin-left: 1vw;
+      }
+      button {
+        // override width of .indigo-launch-button
+        width: fit-content;
+        height: 10.5vh;
+        margin-left: 1vw;
+      }
+    }
+
+    .split-group {
+      padding: 0vw 2vw;
+      .heading {
+        text-align: center;
+        color: $brownish-grey;
+        font-size: 4vh;
+        padding: 3vh 0vh;
+        border-bottom: 1px solid $brownish-grey;
+        margin-bottom: 3vh;
+      }
+      // list styles
+      .ul-find-partner {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        padding-left: 0;
+
+        .li-find-partner {
+          margin: 0;
+          font-size: 3.5vh;
+          display: flex;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          list-style: none;
+          margin-bottom: 1vh;
+          margin-left: 2vh;
+          text-transform: capitalize;
+          &.long-list {
+            font-size: 2vh;
+          }
+        }
+      }
+    }
+  }
+}
+
+benji-ps-generate-pitch-activity {
+  .pitch-form {
+    .pitch-segment {
+      margin: 20px 0px;
+      .segment-label {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+      .blank {
+        text-align: center;
+        height: 100px;
+        border: $pale-grey 1px solid;
+        flex-wrap: wrap;
+        font-size: 24px;
+        fill: $vibrant-blue;
+        font-family: monospace;
+      }
+    }
+  }
+
+  .content {
+    width: 90%;
+    margin: 0 auto;
+    .your-prompt {
+      margin-bottom: 20px;
+      .your-pitch {
+        font-size: 26px;
+        line-height: 1.5;
+        padding: 20px 0px;
+        em {
+          color: $vibrant-blue;
+        }
+      }
+    }
+
+    .your-notes {
+      textarea,
+      .draft-pitch-finalized {
+        font-size: 20px;
+        width: 100%;
+        margin-bottom: 30px;
+        color: $brownish-grey;
+        padding: 4px;
+        box-sizing: border-box;
+        border: 1px solid $pale-grey;
+        &:focus {
+          outline: none;
+        }
+      }
+      .draft-pitch-finalized {
+        height: 250px;
+        overflow: scroll;
+      }
+    }
+    .your-pitch-label {
+      text-transform: uppercase;
+      color: $cloudy-grey;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+}
