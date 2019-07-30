@@ -1,0 +1,122 @@
+benji-ms-hint-activity {
+  .hint-activity__instruction-container {
+    padding-left: 125px;
+    padding-right: 65px;
+    @media #{$xxlarge-and-down} {
+      padding-left: 25px;
+      padding-right: 25px;
+    }
+
+    flex-direction: column;
+    h2 {
+      font-size: 11vh;
+      line-height: 1.09;
+    }
+    p {
+      font-size: 3.3vh;
+      line-height: 1.42;
+    }
+  }
+  .hint-activity {
+    .hint-activity__instruction-container {
+      height: inherit;
+    }
+    .mainscreen-activity__column--66 {
+      display: flex;
+      // padding: 35px 70px;
+      .hint-activity__instruction-container,
+      .hint-activity__options-container {
+        width: 50%;
+      }
+    }
+    position: relative;
+    .hint-activity__linear-timer-container {
+      width: 100%;
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+    }
+    .hint-activity__section-title {
+      border-bottom: 1px solid #979797;
+      margin-bottom: 3vh;
+      h3 {
+        font-size: 3.3vh;
+        letter-spacing: 2.5px;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 2vh 0;
+      }
+    }
+    .hint-activity__options-container {
+      border-left: 1px solid #979797;
+      padding-left: 60px;
+      padding-right: 60px;
+      margin: 35px 0;
+
+      .hint-activity__options li {
+        font-size: 4.4vh;
+        line-height: 1.21;
+        list-style: none;
+        height: auto;
+        transition: all 0.3s;
+        &.long-list {
+          font-size: 2.2vh;
+        }
+      }
+    }
+    .hint-activity__words-total {
+      font-size: 3.3vh;
+      text-transform: uppercase;
+      line-height: normal;
+      max-width: 80%;
+      margin: 25px auto 0;
+    }
+  }
+  .hint-activity .hint-activity__conclusion {
+    display: block;
+    padding: 0px 60px;
+    text-align: center;
+    .hint-activity__winner {
+      font-size: 11vh;
+    }
+    p {
+      font-size: 4vh;
+      line-height: 1.42;
+      margin: 5vh 0;
+    }
+  }
+}
+
+benji-ps-hint-activity {
+  .hintword-card .b-flat-card__body {
+    h3 {
+      font-size: 25px;
+    }
+  }
+  .hintword-card.hintword-card--confirm-state {
+    height: calc(100vh - 65px - 125px);
+  }
+
+  .b-standard-input {
+    width: 230px;
+  }
+
+  .hintword-card {
+    overflow-y: scroll;
+  }
+
+  @media screen and (min-width: 321px) {
+    .b-flat-card__body {
+      padding: 5vh 30px 10px;
+    }
+    .b-standard-input {
+      width: 267px;
+    }
+  }
+
+  @media screen and (min-width: 414px) {
+    .b-flat-card__body {
+      padding: 5vh 50px 20px;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+benji-ps-lobby {
+  .lobby-card {
+    h3 {
+      font-size: 48px;
+      font-weight: bold;
+      line-height: normal;
+    }
+    mat-spinner {
+      margin: 8vh auto;
+    }
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: #0a4cef;
+    }
+  }
+}
+
+benji-ms-lobby {
+  .mainscreen-activity {
+    .lobby-activity__joined-users {
+      p {
+        margin-top: 3vh;
+      }
+      padding: 0 3vw;
+      height: 100%;
+      overflow: hidden;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        padding-left: 0;
+        height: 50vh;
+        li {
+          list-style: none;
+          margin: 0;
+          font-size: 4vh;
+          line-height: 1.33;
+          white-space: nowrap;
+          overflow: hidden;
+          width: 40%;
+          text-overflow: ellipsis;
+          text-transform: capitalize;
+          &.long-list {
+            font-size: 2.8vh;
+          }
+        }
+      }
+    }
+  }
+}

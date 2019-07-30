@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
-  selector: 'benji-ms-activity-teletrivia',
+  selector: 'benji-ms-teletrivia-activity',
   templateUrl: './teletrivia-activity.component.html',
   styleUrls: ['./teletrivia-activity.component.scss']
 })

@@ -53,12 +53,12 @@
       (sendMessage)="sendSocketMessage($event)"
     ></benji-ms-mcqresult-activity>
 
-    <benji-ms-activity-teletrivia
+    <benji-ms-teletrivia-activity
       *ngIf="getActivityType() === 'TeleTriviaActivity'"
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-activity-teletrivia>
+    </benji-ms-teletrivia-activity>
 
     <benji-ms-either-or-activity
       *ngIf="getActivityType() === 'WhereDoYouStandActivity'"
