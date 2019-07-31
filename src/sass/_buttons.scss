@@ -8,7 +8,7 @@ button {
   width: 267px;
   height: 50px;
   border-radius: 115px;
-  background: $vibrant-blue;
+  background: $primary-color;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -21,7 +21,7 @@ button {
     outline-style: none;
   }
   &:hover {
-    background: darken($vibrant-blue, 10);
+    background: darken($primary-color, 10);
   }
   @media screen and (max-width: 320px) {
     width: 230px;
@@ -29,13 +29,13 @@ button {
 }
 .b-standard-button.animated {
   &:hover {
-    background: $vibrant-blue;
+    background: $primary-color;
   }
 }
 
 .b-standard-button--white {
   background: #fff;
-  color: $brownish-grey;
+  color: $secondary-color-dark;
   &:hover {
     background: darken(#fff, 10);
   }
@@ -48,11 +48,11 @@ button {
 
 .b-standard-button--white-inactive {
   background: #fff;
-  color: lighten($brownish-grey, 30);
+  color: lighten($secondary-color-dark, 30);
   cursor: default;
   &:hover {
     background: #fff;
-    color: lighten($brownish-grey, 30);
+    color: lighten($secondary-color-dark, 30);
   }
 }
 
@@ -65,34 +65,34 @@ button {
 }
 
 .b-standard-button--unselected {
-  background: $pale-grey;
-  color: $brownish-grey;
+  background: $secondary-color-lighter;
+  color: $secondary-color-dark;
   &:hover {
-    background: darken($pale-grey, 10);
+    background: darken($secondary-color-lighter, 10);
   }
 }
 
 .b-standard-button--selected {
-  background: $carolina-blue;
+  background: $primary-color-lighter;
   color: #fff;
   &:hover {
-    background: $carolina-blue;
+    background: $primary-color-lighter;
   }
 }
 
 .b-standard-button--valid {
-  background: $vibrant-blue;
+  background: $primary-color;
   color: #fff;
   &:hover {
-    background: $vibrant-blue;
+    background: $primary-color;
   }
 }
 
 .b-standard-button--incorrect {
-  background: $lightish-red;
+  background: $warning-color;
   color: #fff;
   &:hover {
-    background: $lightish-red;
+    background: $warning-color;
   }
 }
 
@@ -117,7 +117,7 @@ button {
   border-radius: 12vh;
   border: 0px;
   &:active {
-    background-color: #3a126e;
+    background-color: $primary-color-darker;
   }
   mat-icon {
     font-size: 6vh;
@@ -140,7 +140,7 @@ button {
   border-radius: 12vh;
   border: 0px;
   &:active {
-    background-color: #3a126e;
+    background-color: $primary-color-darker;
   }
   span {
     margin-right: 20px;
@@ -170,19 +170,19 @@ button {
   background-color: transparent;
   padding: 0px 8px;
   height: 42px;
-  border: 1px solid $inactive-color;
-  color: $inactive-color;
+  border: 1px solid $secondary-color-light;
+  color: $secondary-color-light;
   border-radius: 5px;
   font-size: 20px;
   &.active {
-    border: 1px solid $vibrant-blue;
-    color: $vibrant-blue;
+    border: 1px solid $primary-color;
+    color: $primary-color;
     background-color: $off-white;
   }
 }
 
 .b-link {
-  color: $deep-blue;
+  color: $primary-color-darkest;
   font-family: $pn-regular;
   text-decoration: underline;
   font-size: 16px;

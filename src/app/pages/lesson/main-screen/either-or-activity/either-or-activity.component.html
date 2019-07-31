@@ -31,27 +31,27 @@
       </div>
     </div>
     <div class="activity-question-title-container">
-      <h1 *ngIf="!state.prediction_complete" class="deep-blue pn-700 question">
+      <h1 *ngIf="!state.prediction_complete" class="primary-color-darkest pn-700 question">
         Question 1:
       </h1>
-      <h1 *ngIf="state.prediction_complete" class="deep-blue pn-700 question">
+      <h1 *ngIf="state.prediction_complete" class="primary-color-darkest pn-700 question">
         Question 2:
       </h1>
     </div>
     <div class="activity-question-description-container">
       <p
         *ngIf="!state.prediction_complete"
-        class="brownish-grey pn-500"
+        class="secondary-color-dark pn-500"
         [innerHTML]="state.prediction_text"
       ></p>
 
       <p
         *ngIf="state.prediction_complete"
-        class="brownish-grey pn-500"
+        class="secondary-color-dark pn-500"
         [innerHTML]="state.preference_text"
       ></p>
     </div>
-    <div class="forms-submitted deep-blue pn-600">
+    <div class="forms-submitted primary-color-darkest pn-600">
       <ng-container *ngIf="!state.prediction_complete">
         {{ state.user_predictions.length }}/{{
           activityState.lesson_run.joined_users.length
@@ -96,7 +96,7 @@
             ></app-b-twemoji>
           </div>
         </div>
-        <h1 fxFlex class="deep-blue pn-700 question">
+        <h1 fxFlex class="primary-color-darkest pn-700 question">
           Stand on your side
         </h1>
         <div>
@@ -129,12 +129,12 @@
   >
     <div fxLayout="column" fxFlex>
       <div>
-        <h1 class="deep-blue pn-700 question">
+        <h1 class="primary-color-darkest pn-700 question">
           Prediction:
         </h1>
       </div>
       <div class="mb-auto">
-        <h1 class="brownish-grey pn-500 question">
+        <h1 class="secondary-color-dark pn-500 question">
           <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that
           there would be more
           <em
@@ -158,7 +158,7 @@
     </div>
     <div fxLayout="column" fxFlex>
       <div>
-        <h1 class="deep-blue pn-700 question">
+        <h1 class="primary-color-darkest pn-700 question">
           Reality:
         </h1>
       </div>
@@ -166,10 +166,10 @@
         <h1
           class="pn-500 question"
           [ngClass]="{
-            'correct-answer':
+            'success-color':
               getGroupPredictionEvaluation() === 'Correct!' ||
               getGroupPredictionEvaluation() === 'Tie!',
-            'incorrect-answer': getGroupPredictionEvaluation() === 'Incorrect!'
+            'warning-color': getGroupPredictionEvaluation() === 'Incorrect!'
           }"
         >
           {{ getGroupPredictionEvaluation() }}
@@ -178,7 +178,7 @@
       <div class="mb-auto">
         <h1
           *ngIf="!isGroupPredictionEvaluationTie()"
-          class="brownish-grey pn-500 question"
+          class="secondary-color-dark pn-500 question"
         >
           <em>{{ getGroupPercentagePreference() }}%</em> of you are
           <em>
@@ -189,7 +189,7 @@
         </h1>
         <h1
           *ngIf="isGroupPredictionEvaluationTie()"
-          class="brownish-grey pn-500 question"
+          class="secondary-color-dark pn-500 question"
         >
           You're an even 50/50 split!
         </h1>

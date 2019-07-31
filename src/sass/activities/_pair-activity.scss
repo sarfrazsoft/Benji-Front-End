@@ -12,7 +12,7 @@ benji-ms-pair-activity {
     }
 
     .pair-activity__ready-icon {
-      color: #7ed321;
+      color: $success-color;
       margin-left: 15px;
       font-size: 45px;
     }
@@ -21,7 +21,7 @@ benji-ms-pair-activity {
     }
     .pair-activity__title {
       text-align: center;
-      border-bottom: 2px solid #979797;
+      border-bottom: 2px solid $secondary-color;
       p {
         padding: 25px 0;
       }
@@ -46,7 +46,7 @@ benji-ms-pair-activity {
       }
     }
     .pair-activity__role--2 {
-      border-left: 2px solid #979797;
+      border-left: 2px solid $secondary-color;
     }
     .ul-find-partner {
       display: flex;

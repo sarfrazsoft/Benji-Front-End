@@ -2,7 +2,7 @@
   <div class="lesson-top-banner" fxLayout="row">
     <div fxFlex="65%">
       <h1 class="pn-500">
-        <span class="vibrant-blue pn-700">
+        <span class="primary-color pn-700">
           Pitch-o-matic 3000
         </span>
       </h1>
@@ -48,14 +48,18 @@
           </div>
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
+          <h2 class="secondary-color-dark pn-600 discuss-instruction pitch-text">
             Generate your unique pitches. You have 5 minutes to plan your 30
             second pitch.
           </h2>
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
       <app-radial-timer
         [timer]="activityState.pitchomaticactivity.prepare_timer"
         endStateText="Done!"
@@ -84,11 +88,11 @@
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
           <h2
-            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
             innerHTML="{{ getGroupedPitchingUserInfo(0) }}"
           ></h2>
           <div
-            class="info-subsection carolina-blue pn-500"
+            class="info-subsection primary-color-lighter pn-500"
             fxFlex="1 0 0"
             fxLayout="row"
             fxLayoutAlign="start start"
@@ -105,7 +109,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
       <app-radial-timer
         [timer]="activityState.pitchomaticactivity.pitch_timer"
         endStateText="Done!"
@@ -128,11 +136,11 @@
     >
       <div fxLayoutGap="4vw">
         <div fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
+          <h2 class="secondary-color-dark pn-600 discuss-instruction pitch-text">
             Split into 2 groups and get ready to share.
           </h2>
           <div
-            class="info-subsection carolina-blue pn-500"
+            class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
@@ -148,7 +156,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="50%" fxLayoutAlign="center start">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="50%"
+      fxLayoutAlign="center start"
+    >
       <div class="split-group" fxFlex="50%" fxLayout="column">
         <div class="heading">
           Group 1
@@ -165,10 +177,10 @@
             <ul class="ul-find-partner">
               <!-- move *ngFor code to component file -->
               <li
-                class="pair-activity__pair li-find-partner brownish-grey pn-600"
+                class="pair-activity__pair li-find-partner secondary-color-dark pn-600"
                 *ngFor="let user of getGroupMembers(0)"
                 [ngClass]="{
-                  'deep-blue': user.is_grouped,
+                  'primary-color-darkest': user.is_grouped,
                   'long-list': getGroupMembers(0).length > 15
                 }"
               >
@@ -194,10 +206,10 @@
           <div fxFlex="70%">
             <ul class="ul-find-partner">
               <li
-                class="pair-activity__pair li-find-partner brownish-grey pn-600"
+                class="pair-activity__pair li-find-partner secondary-color-dark pn-600"
                 *ngFor="let user of getGroupMembers(1)"
                 [ngClass]="{
-                  'deep-blue': user.is_grouped,
+                  'primary-color-darkest': user.is_grouped,
                   'long-list': getGroupMembers(1).length > 15
                 }"
               >
@@ -227,7 +239,7 @@
         fxFlex="50%"
       >
         <h2
-          class="brownish-grey pn-600 discuss-instruction"
+          class="secondary-color-dark pn-600 discuss-instruction"
           innerHTML="{{ getGroupedPitchingUserInfo(0) }}"
         ></h2>
       </div>
@@ -237,14 +249,14 @@
         fxFlex="50%"
       >
         <h2
-          class="brownish-grey pn-600 discuss-instruction"
+          class="secondary-color-dark pn-600 discuss-instruction"
           innerHTML="{{ getGroupedPitchingUserInfo(1) }}"
         ></h2>
       </div>
     </div>
 
     <div
-      class="activity-instructions info-subsection carolina-blue pn-500"
+      class="activity-instructions info-subsection primary-color-lighter pn-500"
       fxFlex="1 0 0"
       fxLayout="row"
       fxLayoutAlign="start center"
@@ -280,7 +292,7 @@
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
           <h3
-            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
             innerHTML="{{
               'Thanks <em>' +
                 getCurrentPitchingUser(0) +
@@ -289,7 +301,7 @@
             }}"
           ></h3>
           <div
-            class="info-subsection carolina-blue pn-500"
+            class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
@@ -306,7 +318,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
       <app-radial-timer
         [timer]="activityState.pitchomaticactivity.feedback_timer"
         endStateText="Done!"
@@ -335,7 +351,7 @@
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
           <h2
-            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
             innerHTML="{{
               'What did everyone think of <em>' +
                 getCurrentPitchingUser(0) +
@@ -352,7 +368,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
       <app-radial-timer
         [timer]="activityState.pitchomaticactivity.discuss_timer"
         endStateText="Done!"
@@ -375,16 +395,16 @@
         fxLayout="column"
         fxFlex="50%"
       >
-        <h2 class="brownish-grey pn-600 discuss-instruction">
+        <h2 class="secondary-color-dark pn-600 discuss-instruction">
           Thanks <em>{{ getCurrentPitchingUser(0) }}</em
           >!
         </h2>
 
-        <h3 class="brownish-grey pn-600 discuss-instruction">
+        <h3 class="secondary-color-dark pn-600 discuss-instruction">
           Everyone else, please fill out your feedback forms.
         </h3>
         <div
-          class="info-subsection carolina-blue pn-500"
+          class="info-subsection primary-color-lighter pn-500"
           fxFlex="1 0 0"
           fxLayout="row"
           fxLayoutAlign="start center"
@@ -406,16 +426,16 @@
         fxLayout="column"
         fxFlex="50%"
       >
-        <h2 class="brownish-grey pn-600 discuss-instruction">
+        <h2 class="secondary-color-dark pn-600 discuss-instruction">
           Thanks <em>{{ getCurrentPitchingUser(1) }}</em
           >!
         </h2>
 
-        <h3 class="brownish-grey pn-600 discuss-instruction">
+        <h3 class="secondary-color-dark pn-600 discuss-instruction">
           Everyone else, please fill out your feedback forms.
         </h3>
         <div
-          class="info-subsection carolina-blue pn-500"
+          class="info-subsection primary-color-lighter pn-500"
           fxFlex="1 0 0"
           fxLayout="row"
           fxLayoutAlign="start center"
@@ -448,13 +468,13 @@
         fxLayout="column"
         fxFlex="50%"
       >
-        <h2 class="brownish-grey pn-600 discuss-instruction">
+        <h2 class="secondary-color-dark pn-600 discuss-instruction">
           What did Group 1 think of
           <em>{{ getCurrentPitchingUser(0) }}</em
           >’s pitch?
         </h2>
 
-        <h3 class="brownish-grey pn-600 discuss-instruction">
+        <h3 class="secondary-color-dark pn-600 discuss-instruction">
           <em>{{ getDiscussionStarterUser(0) }}</em
           >, start the discussion. What’s 1 thing you liked and 1 thing that
           could be better?
@@ -466,13 +486,13 @@
         fxLayout="column"
         fxFlex="50%"
       >
-        <h2 class="brownish-grey pn-600 discuss-instruction">
+        <h2 class="secondary-color-dark pn-600 discuss-instruction">
           What did Group 2 think of
           <em>{{ getCurrentPitchingUser(1) }}</em
           >’s pitch?
         </h2>
 
-        <h3 class="brownish-grey pn-600 discuss-instruction">
+        <h3 class="secondary-color-dark pn-600 discuss-instruction">
           <em>{{ getDiscussionStarterUser(1) }}</em
           >, start the discussion. What’s 1 thing you liked and 1 thing that
           could be better?

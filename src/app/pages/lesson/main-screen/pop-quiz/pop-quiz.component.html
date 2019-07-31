@@ -3,7 +3,7 @@
     <div class="lesson-top-banner" fxLayout="row">
       <div fxFlex="35%">
         <h1 class="pn-500">
-          <span class="vibrant-blue pn-700">
+          <span class="primary-color pn-700">
             Pop quiz!
           </span>
         </h1>
@@ -17,7 +17,7 @@
         fxLayoutAlign="start center"
       >
         <div fxLayout="column" fxLayoutGap="2.8vh">
-          <div class="quiz-question deep-blue">
+          <div class="quiz-question primary-color-darkest">
             {{ activityState.mcqactivity.question.question }}
           </div>
           <div class="quiz-answers" fxLayout="column" fxLayoutGap="2.8vh">
@@ -28,7 +28,7 @@
                 let i = index
               "
               [ngClass]="{
-                'correct-answer':
+                'success-color':
                   option.is_correct &&
                   (activityState.base_activity.next_activity_start_timer &&
                     activityState.base_activity.next_activity_start_timer
@@ -41,7 +41,11 @@
           </div>
         </div>
       </div>
-      <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <div
+        class="bg-secondary-color-lightest"
+        fxFlex="40%"
+        fxLayoutAlign="center center"
+      >
         <app-radial-timer
           [timer]="radialTimer"
           endStateText="Times Up!"

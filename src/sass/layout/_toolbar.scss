@@ -3,7 +3,7 @@
 mat-toolbar.mat-toolbar {
   height: $toolbar-height;
   background-color: #fff;
-  border-bottom: 2px solid $deep-blue;
+  border-bottom: 2px solid $primary-color-darkest;
   padding-left: 32px;
 
   .logo {
@@ -31,7 +31,7 @@ mat-toolbar.mat-toolbar {
   }
   .account-name {
     font-size: 24px;
-    color: $vibrant-blue;
+    color: $primary-color;
     margin-left: 15px;
   }
 }
@@ -48,7 +48,7 @@ mat-toolbar.mat-toolbar {
     .name {
       font-family: $pn-regular;
       font-weight: 500;
-      color: $deep-blue;
+      color: $primary-color-darkest;
     }
     .email,
     .team {
@@ -57,11 +57,11 @@ mat-toolbar.mat-toolbar {
   }
   hr {
     margin: 0px -4px;
-    color: #979797;
+    color: $secondary-color;
   }
   .options,
   .logout {
-    color: #6c6c6c;
+    color: $secondary-color-dark;
     > div {
       margin-bottom: 5px;
       cursor: pointer;

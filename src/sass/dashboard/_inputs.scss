@@ -3,16 +3,16 @@
   padding: 15px 0px;
   text-align: center;
   background: #fff;
-  border: 1px solid $pale-grey;
+  border: 1px solid $secondary-color-lighter;
   border-radius: 25px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   &:focus {
-    box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+    box-shadow: 0px 0px 0pt 0.2pt $primary-color;
   }
   &::placeholder {
-    color: $inactive-color;
+    color: $secondary-color-light;
   }
 }
 
@@ -35,7 +35,7 @@ mat-error > div {
     }
     .label {
       font-size: 22px;
-      color: $brownish-grey;
+      color: $secondary-color-dark;
       margin-bottom: 10px;
     }
   }

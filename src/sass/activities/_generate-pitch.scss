@@ -16,7 +16,7 @@ benji-ms-generate-pitch-activity {
       .pitches {
         height: 45vh;
         > :first-child {
-          border-right: 1px solid $brownish-grey;
+          border-right: 1px solid $secondary-color-dark;
         }
       }
       .activity-instructions {
@@ -42,7 +42,7 @@ benji-ms-generate-pitch-activity {
           margin-top: 8vh;
         }
         > :first-child {
-          border-right: 1px solid $brownish-grey;
+          border-right: 1px solid $secondary-color-dark;
         }
       }
       .activity-instructions {
@@ -72,10 +72,10 @@ benji-ms-generate-pitch-activity {
       padding: 0vw 2vw;
       .heading {
         text-align: center;
-        color: $brownish-grey;
+        color: $secondary-color-dark;
         font-size: 4vh;
         padding: 3vh 0vh;
-        border-bottom: 1px solid $brownish-grey;
+        border-bottom: 1px solid $secondary-color-dark;
         margin-bottom: 3vh;
       }
       // list styles
@@ -116,10 +116,10 @@ benji-ps-generate-pitch-activity {
       .blank {
         text-align: center;
         height: 100px;
-        border: $pale-grey 1px solid;
+        border: $secondary-color-lighter 1px solid;
         flex-wrap: wrap;
         font-size: 24px;
-        fill: $vibrant-blue;
+        fill: $primary-color;
         font-family: monospace;
       }
     }
@@ -135,7 +135,7 @@ benji-ps-generate-pitch-activity {
         line-height: 1.5;
         padding: 20px 0px;
         em {
-          color: $vibrant-blue;
+          color: $primary-color;
         }
       }
     }
@@ -146,10 +146,10 @@ benji-ps-generate-pitch-activity {
         font-size: 20px;
         width: 100%;
         margin-bottom: 30px;
-        color: $brownish-grey;
+        color: $secondary-color-dark;
         padding: 4px;
         box-sizing: border-box;
-        border: 1px solid $pale-grey;
+        border: 1px solid $secondary-color-lighter;
         &:focus {
           outline: none;
         }
@@ -161,7 +161,7 @@ benji-ps-generate-pitch-activity {
     }
     .your-pitch-label {
       text-transform: uppercase;
-      color: $cloudy-grey;
+      color: $secondary-color-light;
       font-size: 16px;
       margin-bottom: 10px;
     }

@@ -55,9 +55,9 @@ input {
   text-align: center;
   background: #fff;
   border-radius: 25px;
-  border: 1px solid $pale-grey;
+  border: 1px solid $secondary-color-lighter;
   &:focus {
-    box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+    box-shadow: 0px 0px 0pt 0.2pt $primary-color;
   }
 }
 
@@ -83,12 +83,12 @@ input {
     display: block;
     width: 135px;
     padding: 25px 18px;
-    border: 1px solid #dfe5e7;
+    border: 1px solid $secondary-color-lighter;
     border-radius: 5px;
     cursor: pointer;
     &:hover,
     &:focus {
-      background-color: #dfe5e7;
+      background-color: $secondary-color-lighter;
       transition: all 0.3s;
     }
     img.emoji {
@@ -102,11 +102,11 @@ input {
   }
   input[type='radio']:active ~ label {
     opacity: 1;
-    background-color: #dfe5e7;
+    background-color: $secondary-color-lighter;
   }
   input[type='radio']:checked ~ label {
     opacity: 1;
-    background-color: #dfe5e7;
+    background-color: $secondary-color-lighter;
   }
 }
 

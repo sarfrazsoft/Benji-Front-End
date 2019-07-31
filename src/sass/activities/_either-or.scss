@@ -39,7 +39,7 @@ benji-ms-either-or-activity {
         overflow: hidden;
       }
       > :first-child {
-        border-right: 4px solid $grey;
+        border-right: 4px solid $secondary-color;
       }
     }
   }
@@ -58,7 +58,7 @@ benji-ps-either-or-activity {
   div.radio-mock-button {
     display: block;
     padding: 25px 18px;
-    border: 1px solid #dfe5e7;
+    border: 1px solid $secondary-color-lighter;
     border-radius: 5px;
     cursor: pointer;
 
@@ -81,7 +81,7 @@ benji-ps-either-or-activity {
   }
 
   .selected-option {
-    background-color: #dfe5e7;
+    background-color: $secondary-color-lighter;
     transition: all 0.3s;
   }
 }

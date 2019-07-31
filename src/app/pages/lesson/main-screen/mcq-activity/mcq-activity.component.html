@@ -3,10 +3,10 @@
     class="mainscreen-activity__column mainscreen-activity__column--50 bg-off-white"
   >
     <div class="mainscreen-activity__title">
-      <p class="brownish-grey pn-500">Multiple Choice</p>
+      <p class="secondary-color-dark pn-500">Multiple Choice</p>
     </div>
     <div class="mcq-activity__question-container">
-      <p class="pn-600 brownish-grey">
+      <p class="pn-600 secondary-color-dark">
         {{ activityState.mcqactivity.question.question }}
       </p>
       <ol>
@@ -14,7 +14,7 @@
           *ngFor="
             let answer of activityState.mcqactivity.question.mcqchoice_set
           "
-          class="brownish-grey pn-500"
+          class="secondary-color-dark pn-500"
           [ngClass]="{
             correct: reveal() && answer.is_correct,
             'pn-600': reveal() && answer.is_correct,
@@ -30,7 +30,7 @@
     </div>
   </div>
   <div
-    class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey flexer--center"
+    class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest flexer--center"
   >
     <ng-container *ngIf="!reveal()">
       <app-radial-timer
@@ -44,7 +44,7 @@
         src="https://media.giphy.com/media/3rlkI1QFJWRUsdRtha/giphy.mp4"
         autoplay
       ></video>
-      <!-- <button class="b-arrow-button">Continue<span class="bg-vibrant-blue"><mat-icon class="icon-white">arrow_forward</mat-icon></span></button> -->
+      <!-- <button class="b-arrow-button">Continue<span class="bg-primary-color"><mat-icon class="icon-white">arrow_forward</mat-icon></span></button> -->
     </ng-container>
   </div>
   <div class="mcq-activity__linear-timer-container">

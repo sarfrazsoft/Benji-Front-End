@@ -3,17 +3,22 @@
     .mainscreen-activity__title {
       width: 87%;
       margin: 0 auto;
-      border-bottom: 2px solid #979797;
+      border-bottom: 2px solid $secondary-color;
       text-transform: uppercase;
       text-align: center;
       padding: 30px 0;
-      h1,h2,h3,h4,h5, h6, p {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p {
         font-size: 3.3vh;
-        color: $brownish-grey;
+        color: $secondary-color-dark;
         letter-spacing: 2.5px;
         margin-bottom: 0;
       }
     }
-
   }
 }

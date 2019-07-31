@@ -122,13 +122,13 @@ export class MainScreenGeneratePitchActivityComponent
       pitchText =
         pitchText +
         helpText[i] +
-        ' <em class="vibrant-blue">' +
+        ' <em class="primary-color">' +
         v.value +
         '</em> ';
     });
 
     pitchInfo =
-      '<em class="vibrant-blue">' +
+      '<em class="primary-color">' +
       pitchingMember.user.first_name.charAt(0).toUpperCase() +
       pitchingMember.user.first_name.slice(1) +
       '</em> ' +

@@ -3,7 +3,7 @@ benji-ms-build-pitch-activity {
     .discuss-instruction {
       font-size: 2.7vw;
       &.pitch-text > em {
-        color: $vibrant-blue;
+        color: $primary-color;
       }
     }
     .winning-pitch {
@@ -46,12 +46,12 @@ benji-ps-build-pitch-activity {
           font-size: 24px;
         }
         textarea {
-          color: $vibrant-blue;
+          color: $primary-color;
           font-size: 24px;
           margin-top: 10px;
           width: 100%;
           border: 0;
-          border-bottom: 1px solid $vibrant-blue;
+          border-bottom: 1px solid $primary-color;
           // for iOS safari mobile
           -webkit-appearance: none;
           box-shadow: none !important;
@@ -59,7 +59,7 @@ benji-ps-build-pitch-activity {
             outline: none;
           }
           &::placeholder {
-            color: $cloudy-grey;
+            color: $secondary-color-light;
             font-weight: 300;
           }
         }
@@ -69,7 +69,7 @@ benji-ps-build-pitch-activity {
       }
     }
     .your-pitch-label {
-      color: $cloudy-grey;
+      color: $secondary-color-light;
       font-size: 24px;
       margin-bottom: 10px;
     }
@@ -77,8 +77,8 @@ benji-ps-build-pitch-activity {
       font-size: 26px;
       line-height: 1.5;
       em {
-        color: $vibrant-blue;
-        border-bottom: 0.5px solid $vibrant-blue;
+        color: $primary-color;
+        border-bottom: 0.5px solid $primary-color;
       }
     }
   }
@@ -97,8 +97,8 @@ benji-ps-build-pitch-activity {
 
 .pitch-tooltip {
   background-color: white;
-  color: $vibrant-blue !important;
-  border: 1px solid $pale-grey;
+  color: $primary-color !important;
+  border: 1px solid $secondary-color-lighter;
   box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
   max-width: 150px !important;
   margin-right: -5px !important;

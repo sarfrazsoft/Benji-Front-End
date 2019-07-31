@@ -7,19 +7,19 @@
     <div class="ms-emoji-container">
       <app-b-twemoji emoji="☎️"></app-b-twemoji>
     </div>
-    <h1 class="vibrant-blue pn-700">Teletrivia</h1>
+    <h1 class="primary-color pn-700">Teletrivia</h1>
     <ng-container *ngIf="activityState.teletriviaactivity.circle_complete">
-      <p class="brownish-grey pn-500">
+      <p class="secondary-color-dark pn-500">
         Your objective: pass the message around the circle. No repeating!
       </p>
-      <p class="brownish-grey pn-500">
+      <p class="secondary-color-dark pn-500">
         Also your objective: get the most trivia questions correct.
       </p>
-      <p class="brownish-grey pn-500">Good luck!</p>
+      <p class="secondary-color-dark pn-500">Good luck!</p>
     </ng-container>
     <ng-container *ngIf="!activityState.teletriviaactivity.circle_complete">
-      <p class="brownish-grey pn-500">Ready to play a warm-up game?</p>
-      <p class="brownish-grey pn-500">
+      <p class="secondary-color-dark pn-500">Ready to play a warm-up game?</p>
+      <p class="secondary-color-dark pn-500">
         Get into a circle (stand up and move if you have to) and press the
         button on your phone to tell us when you’re ready.
       </p>
@@ -27,7 +27,7 @@
   </div>
   <!-- timer-->
   <div
-    class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
+    class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest"
     fxLayoutAlign="center center"
     *ngIf="!activityState.teletriviaactivity.circle_complete"
   >
@@ -39,11 +39,11 @@
   </div>
   <!-- leaderboard -->
   <div
-    class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey"
+    class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest"
     *ngIf="activityState.teletriviaactivity.circle_complete"
   >
     <div class="teletrivia-activity__leaderboard">
-      <p class="teletrivia-activity__section-text brownish-grey">Leaderboard</p>
+      <p class="teletrivia-activity__section-text secondary-color-dark">Leaderboard</p>
       <ol class="teletrivia-activity__leaders-list">
         <li
           class="teletrivia-activity__leader pn-600"
@@ -54,8 +54,8 @@
           "
         >
           <div class="flexer flexer--space-between align-center">
-            <span class="teletrivia-activity__leader-name deep-blue">
-              <span class="teletrivia-activity__leader-rank deep-blue">
+            <span class="teletrivia-activity__leader-name primary-color-darkest">
+              <span class="teletrivia-activity__leader-rank primary-color-darkest">
                 {{ i + 1 }}.
               </span>
               {{ leader.user.first_name }}

@@ -134,7 +134,7 @@ export class ParticipantTeletriviaActivityComponent
   public triggerDialogue(templateRef) {
     this.dialog.open(templateRef, {
       width: '305px',
-      panelClass: 'dialog--indigo-blue'
+      panelClass: 'dialog--primary-color-dark'
     });
   }
 }

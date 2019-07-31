@@ -4,7 +4,7 @@
 
   .dashboard-heading {
     font-family: $pn-regular;
-    color: $deep-blue;
+    color: $primary-color-darkest;
     padding: 0px $dash-subsection-sides-padding;
     border-bottom: $header-border-bottom solid $header-border-bottom-color;
   }
@@ -13,7 +13,7 @@
     margin-top: $margin-between-panels;
   }
   .sub-heading {
-    color: $deep-blue;
+    color: $primary-color-darkest;
     padding: 20px $dash-subsection-sides-padding;
     border-bottom: $header-border-bottom solid $header-border-bottom-color;
   }

@@ -21,7 +21,7 @@ benji-question-form {
     .feedback-card__question-box {
       margin-bottom: 40px;
       text-align: left;
-      border-top: $grey 1px solid;
+      border-top: $secondary-color 1px solid;
       padding-top: 12px;
       .feedback-rating {
         margin: 40px -10px 20px -10px;
@@ -39,16 +39,16 @@ benji-question-form {
         resize: none;
         padding: 10px 10px;
         border-radius: 8px;
-        border: $pale-grey 1px solid;
+        border: $secondary-color-lighter 1px solid;
         &:focus {
-          box-shadow: 0px 0px 0pt 0.2pt $vibrant-blue;
+          box-shadow: 0px 0px 0pt 0.2pt $primary-color;
           &::placeholder {
-            color: $grey;
+            color: $secondary-color;
             opacity: 0;
           }
         }
         &::placeholder {
-          color: $grey;
+          color: $secondary-color;
           opacity: 1;
         }
       }

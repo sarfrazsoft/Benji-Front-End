@@ -10,29 +10,29 @@
       <div class="ms-emoji-container">
         <app-b-twemoji emoji="👯"></app-b-twemoji>
       </div>
-      <h1 class="vibrant-blue pn-700">Pair up</h1>
+      <h1 class="primary-color pn-700">Pair up</h1>
 
-      <p class="brownish-grey pn-500">
+      <p class="secondary-color-dark pn-500">
         Find your partner and sit with them for the next activity.
       </p>
-      <p class="brownish-grey pn-500">
+      <p class="secondary-color-dark pn-500">
         Hit the ‘We’re ready’ button when you’re set!
       </p>
     </div>
     <div
-      class="mainscreen-activity__column mainscreen-activity__column--50 bg-dim-grey pair-activity__pairs"
+      class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
     >
-      <p class="mainscreen-activity__section-text brownish-grey">
+      <p class="mainscreen-activity__section-text secondary-color-dark">
         Find your partner
       </p>
       <ul class="ul-find-partner">
         <li
-          class="pair-activity__pair li-find-partner brownish-grey pn-600"
+          class="pair-activity__pair li-find-partner secondary-color-dark pn-600"
           *ngFor="
             let userGroup of activityState.pairgroupingactivity.usergroup_set
           "
           [ngClass]="{
-            'deep-blue': isGroupFound(userGroup),
+            'primary-color-darkest': isGroupFound(userGroup),
             'long-list':
               activityState.pairgroupingactivity.usergroup_set.length > 15
           }"

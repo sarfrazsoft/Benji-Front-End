@@ -292,7 +292,7 @@ export class ParticipantGeneratePitchActivityComponent
       pitchText =
         pitchText +
         helpText[i] +
-        ' <em class="vibrant-blue">' +
+        ' <em class="primary-color">' +
         v.value +
         '</em> ';
     });

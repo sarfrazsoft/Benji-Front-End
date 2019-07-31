@@ -1,20 +1,22 @@
 /* COLORS */
 
 /* Variables: Colors */
-$vibrant-blue: #0a4cef;
-$brownish-grey: #6c6c6c;
-$indigo-blue: #4c188f;
-$deep-blue: #00178a;
-$lightish-red: #ee3e53;
-$correct-answer: #7ed321;
-$cloudy-grey: #bec8ca;
-$inactive-color: $cloudy-grey;
-$dodger-blue: #4c83fc;
-$carolina-blue: #80a8ff;
-$grey: #979797;
-$pale-grey: #dfe5e7;
-$dim-grey: #e9ebf3;
+$primary-color-lighter: #80a8ff;
+$primary-color-light: #4c83fc;
+$primary-color: #0a4cef;
+$primary-color-dark: #4c188f;
+$primary-color-darker: #3a126e;
+$primary-color-darkest: #00178a;
+
+$warning-color: #ee3e53;
+$success-color: #7ed321;
+
 $off-white: #f7f8fa;
+$secondary-color-lightest: #e9ebf3;
+$secondary-color-lighter: #dfe5e7;
+$secondary-color-light: #bec8ca;
+$secondary-color: #979797;
+$secondary-color-dark: #6c6c6c;
 
 $animation-time: 0.1s;
 
@@ -40,43 +42,43 @@ $medium-and-large: 'only screen and (min-width : #{$small-screen-up}) and (max-w
 $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width : #{$large-screen})' !default;
 
 /* Utilities: Backgrounds */
-.bg-vibrant-blue {
-  background: $vibrant-blue;
+.bg-primary-color {
+  background: $primary-color;
 }
 
-.bg-brownish-grey {
-  background: $brownish-grey;
+.bg-secondary-color-dark {
+  background: $secondary-color-dark;
 }
 
-.bg-indigo-blue {
-  background: $indigo-blue;
+.bg-primary-color-dark {
+  background: $primary-color-dark;
 }
 
-.bg-deep-blue {
-  background: $deep-blue;
+.bg-primary-color-darkest {
+  background: $primary-color-darkest;
 }
 
-.bg-lightish-red {
-  background: $lightish-red;
+.bg-warning-color {
+  background: $warning-color;
 }
 
-.bg-cloudy-grey {
-  background: $cloudy-grey;
+.bg-secondary-color-light {
+  background: $secondary-color-light;
 }
 
-.bg-dodger-blue {
-  background: $dodger-blue;
+.bg-primary-color-light {
+  background: $primary-color-light;
 }
 
-.bg-carolina-blue {
-  background: $carolina-blue;
+.bg-primary-color-lighter {
+  background: $primary-color-lighter;
 }
 
-.bg-pale-grey {
-  background: $pale-grey;
+.bg-secondary-color-lighter {
+  background: $secondary-color-lighter;
 }
-.bg-dim-grey {
-  background: $dim-grey;
+.bg-secondary-color-lightest {
+  background: $secondary-color-lightest;
 }
 .bg-white {
   background: #fff;
@@ -91,47 +93,47 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 .white-color {
   color: #fff;
 }
-.vibrant-blue {
-  color: $vibrant-blue;
+.primary-color {
+  color: $primary-color;
 }
 
-.brownish-grey {
-  color: $brownish-grey;
+.secondary-color-dark {
+  color: $secondary-color-dark;
 }
 
-.indigo-blue {
-  color: $indigo-blue;
+.primary-color-dark {
+  color: $primary-color-dark;
 }
 
-.deep-blue {
-  color: $deep-blue;
+.primary-color-darkest {
+  color: $primary-color-darkest;
 }
 
-.lightish-red {
-  color: $lightish-red !important;
+.warning-color {
+  color: $warning-color !important;
 }
 
-.cloudy-grey {
-  color: $cloudy-grey;
+.secondary-color-light {
+  color: $secondary-color-light;
 }
 
-.dodger-blue {
-  color: $dodger-blue;
+.primary-color-light {
+  color: $primary-color-light;
 }
 
-.carolina-blue {
-  color: $carolina-blue;
+.primary-color-lighter {
+  color: $primary-color-lighter;
 }
 
-.pale-grey {
-  color: $pale-grey;
+.secondary-color-lighter {
+  color: $secondary-color-lighter;
 }
 
-.correct-answer {
-  color: $correct-answer;
+.success-color {
+  color: $success-color;
 }
 
-.incorrect-answer {
-  color: $lightish-red;
+.warning-color {
+  color: $warning-color;
 }
 /* End of font colors*/

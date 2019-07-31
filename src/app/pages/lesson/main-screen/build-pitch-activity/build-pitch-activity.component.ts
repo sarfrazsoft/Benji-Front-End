@@ -85,7 +85,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
       if (currentBlanksValue.length === 1) {
         value = ' <em>' + currentBlanksValue[0].value + '</em> ';
       } else {
-        value = ' <em class="lightish-red">(' + b.temp_text + ')</em> ';
+        value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
       }
       statement = statement + b.label + value;
     });

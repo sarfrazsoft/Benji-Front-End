@@ -3,7 +3,7 @@
     <div class="lesson-top-banner" fxLayout="row">
       <div fxFlex="35%">
         <h1 class="pn-500">
-          <span class="vibrant-blue pn-700">
+          <span class="primary-color pn-700">
             Discuss
           </span>
         </h1>
@@ -27,13 +27,13 @@
             </div>
           </div>
           <div fxFlex="75%" fxLayoutAlign="center center">
-            <h2 class="deep-blue pn-600 discuss-instruction">
+            <h2 class="primary-color-darkest pn-600 discuss-instruction">
               {{ activityState.discussionactivity.title }}
             </h2>
           </div>
         </div>
       </div>
-      <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
         <app-radial-timer
           [timer]="activityState.discussionactivity.discussion_countdown_timer"
           endStateText="Done!"
@@ -54,7 +54,7 @@
     <div class="lesson-top-banner" fxLayout="row">
       <div fxFlex="35%">
         <h1 class="pn-500">
-          <span class="vibrant-blue pn-700">
+          <span class="primary-color pn-700">
             Share
           </span>
         </h1>
@@ -78,7 +78,7 @@
             </div>
           </div>
           <div fxFlex="75%" fxLayoutAlign="center start" fxLayout="column">
-            <h2 class="deep-blue pn-600 discuss-names">
+            <h2 class="primary-color-darkest pn-600 discuss-names">
               {{
                 presenterGroupToText(
                   activityState.discussionactivity.currently_sharing_group
@@ -89,7 +89,7 @@
             <ng-container
               *ngIf="activityState.discussionactivity.next_sharing_group"
             >
-              <p class="reduced brownish-grey pn-500">
+              <p class="reduced secondary-color-dark pn-500">
                 {{
                   presenterGroupToText(
                     activityState.discussionactivity.next_sharing_group
@@ -101,7 +101,7 @@
           </div>
         </div>
       </div>
-      <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+      <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
         <app-radial-timer
           [timer]="
             activityState.discussionactivity.currently_sharing_group

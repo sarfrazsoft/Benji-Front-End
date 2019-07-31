@@ -1,29 +1,17 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {
-  trigger,
+  animate,
   state,
   style,
-  animate,
-  transition
+  transition,
+  trigger
 } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-animated-checkmark-button',
   templateUrl: './animated-checkmark-button.component.html',
   styleUrls: ['./animated-checkmark-button.component.scss'],
-  animations: [
-    // trigger('validCheck', [
-    //   state(
-    //     'checked',
-    //     style({
-    //       width: '50px',
-    //       // color: '#6c6c6c',
-    //       fontSize: '20px'
-    //     })
-    //   ),
-    //   transition('* => checked', [animate('0.4s')])
-    // ])
-  ]
+  animations: []
 })
 export class AnimatedCheckmarkButtonComponent implements OnInit {
   @Input()
@@ -84,21 +72,21 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
       if (this.buttonStyle === 'default') {
         // this.loadingState = true;
         this.buttonClassList = [
-          'b-standard-button',
+          'b-standard-button'
           // 'b-standard-button--inactive'
         ];
       } else if (this.buttonStyle === 'white') {
         // this.loadingState = true;
         this.buttonClassList = [
           'b-standard-button',
-          'b-standard-button--white',
+          'b-standard-button--white'
           // 'b-standard-button--white-inactive'
         ];
       } else {
         console.error('Invalid button style...using "default" style.');
         // this.loadingState = true;
         this.buttonClassList = [
-          'b-standard-button',
+          'b-standard-button'
           // 'b-standard-button--inactive'
         ];
       }
@@ -109,7 +97,7 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
     if (e.toState === 'checked') {
       setTimeout(() => {
         this.animationEnd.emit(true);
-      }, e.totalTime)
+      }, e.totalTime);
     }
   }
 }

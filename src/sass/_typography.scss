@@ -18,15 +18,15 @@ $benji-blue: (
   200: #a0afd4,
   300: #4b5cfa,
   400: #4d55c9,
-  500: #0a4cef,
+  500: $primary-color,
   600: #3538e5,
   700: #182664,
   800: #2308bd,
   900: #210cda,
-  A100: #0a4cef,
-  A200: #0a4cef,
-  A400: #0a4cef,
-  A700: #0a4cef,
+  A100: $primary-color,
+  A200: $primary-color,
+  A400: $primary-color,
+  A700: $primary-color,
   contrast: (
     50: #504c4a,
     100: #504c4a,
@@ -116,7 +116,7 @@ body {
 
 em {
   font-style: normal;
-  color: $deep-blue;
+  color: $primary-color-darkest;
 }
 
 .capitalize {

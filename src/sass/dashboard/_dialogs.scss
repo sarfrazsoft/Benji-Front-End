@@ -1,6 +1,6 @@
 .dashboard-dialog {
   mat-dialog-container.mat-dialog-container {
-    background-color: $dim-grey;
+    background-color: $secondary-color-lightest;
     padding: 10px;
     width: 480px;
     box-shadow: none;
@@ -8,12 +8,12 @@
       background: transparent;
     }
     .dialog-heading {
-      color: $deep-blue;
+      color: $primary-color-darkest;
       font-family: $pn-regular;
     }
     .dialog-instructions {
       width: 230px;
-      color: $brownish-grey;
+      color: $secondary-color-dark;
       text-align: center;
     }
     .select-session {
@@ -29,7 +29,7 @@
           border: none;
           border-radius: 0px;
           .ng-placeholder {
-            color: $inactive-color;
+            color: $secondary-color-light;
           }
         }
       }

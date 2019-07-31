@@ -5,7 +5,7 @@
     <div class="b-flat-card__twemoji">
       <app-b-twemoji emoji="🏗️"></app-b-twemoji>
     </div>
-    <h1 class="pn-700 deep-blue">Build-a-pitch</h1>
+    <h1 class="pn-700 primary-color-darkest">Build-a-pitch</h1>
     <p>{{ activityState.buildapitchactivity.instructions }}</p>
     <div class="pitch-form">
       <div
@@ -67,7 +67,7 @@
 
     <div *ngIf="isPitchBlank(activityState.your_identity.id)">
       <div
-        class="info-subsection carolina-blue pn-500"
+        class="info-subsection primary-color-lighter pn-500"
         fxLayout="row"
         fxLayoutGap="10px"
         fxLayoutAlign="start start"
@@ -77,7 +77,7 @@
           src="/assets/img/red_info_icon.png"
           alt="info"
         />
-        <div class="instruction lightish-red left-text">
+        <div class="instruction warning-color left-text">
           Oops! You didn’t finish your pitch on time. Try to think of something-
           you still need to present to the group.
         </div>
@@ -86,7 +86,7 @@
   </div>
 
   <div class="b-flat-card__body" *ngIf="voteNow">
-    <h1 class="pn-700 deep-blue">Vote on the best pitch</h1>
+    <h1 class="pn-700 primary-color-darkest">Vote on the best pitch</h1>
     <p>Press the + icon next to each name to review the pitches.</p>
     <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
       <benji-vote-pitch
@@ -106,11 +106,11 @@
     <div class="b-flat-card__twemoji">
       <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
     </div>
-    <h1 class="body-heading pn-700 deep-blue">
+    <h1 class="body-heading pn-700 primary-color-darkest">
       Thanks for your vote
     </h1>
     <div class="activity-title-description-container">
-      <p class="brownish-grey pn-500 instruction">
+      <p class="secondary-color-dark pn-500 instruction">
         Waiting for everyone else to finish voting
       </p>
     </div>
@@ -120,11 +120,11 @@
     <div class="b-flat-card__twemoji">
       <app-b-twemoji class="body-emoji" emoji="🏗️"></app-b-twemoji>
     </div>
-    <h1 class="body-heading pn-700 deep-blue">
+    <h1 class="body-heading pn-700 primary-color-darkest">
       Woo!
     </h1>
     <div class="activity-title-description-container">
-      <p class="brownish-grey pn-500 instruction">
+      <p class="secondary-color-dark pn-500 instruction">
         Take a look at the winning pitch.
       </p>
     </div>
@@ -134,18 +134,18 @@
     <div class="b-flat-card__twemoji">
       <app-b-twemoji class="body-emoji" emoji="👏"></app-b-twemoji>
     </div>
-    <h1 class="body-heading pn-700 deep-blue">
+    <h1 class="body-heading pn-700 primary-color-darkest">
       Congrats!!
     </h1>
     <div class="activity-title-description-container">
-      <p class="brownish-grey pn-500 instruction">
+      <p class="secondary-color-dark pn-500 instruction">
         Your pitch was voted the best.
       </p>
     </div>
   </div>
 </div>
 <div
-  class="b-baseline-action bg-indigo-blue"
+  class="b-baseline-action bg-primary-color-dark"
   *ngIf="selectedUser && !userVoted"
 >
   <app-animated-checkmark-button

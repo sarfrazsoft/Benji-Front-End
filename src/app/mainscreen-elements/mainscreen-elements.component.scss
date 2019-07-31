@@ -30,8 +30,8 @@
       line-height: normal;
     }
     button.active {
-      color: $deep-blue;
-      border-bottom: 2px solid $deep-blue;
+      color: $primary-color-darkest;
+      border-bottom: 2px solid $primary-color-darkest;
     }
   }
   @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
@@ -79,13 +79,13 @@
   text-align: center;
   margin-top: 9vh;
   p {
-    color: $brownish-grey;
+    color: $secondary-color-dark;
     font-size: 16px;
     line-height: normal;
     margin-bottom: 0;
   }
   a {
-    color: $deep-blue;
+    color: $primary-color-darkest;
     font-size: 16px;
     text-decoration: none;
   }

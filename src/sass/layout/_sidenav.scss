@@ -16,7 +16,7 @@ mat-sidenav-container.mat-sidenav-container {
   min-height: calc(100vh - 90px) !important;
 
   .mat-sidenav-content {
-    background-color: #f7f8fa;
+    background-color: $secondary-color-lightest;
   }
 
   .nav-container {
@@ -30,7 +30,7 @@ mat-sidenav-container.mat-sidenav-container {
         padding: 10px 0px;
         cursor: pointer;
         &.join-session {
-          border-right: 1px solid $grey;
+          border-right: 1px solid $secondary-color;
         }
         .rotate-180 {
           @include transform(rotate(180deg));
@@ -71,7 +71,7 @@ mat-sidenav-container.mat-sidenav-container {
       }
       .session-text {
         text-align: center;
-        color: $vibrant-blue;
+        color: $primary-color;
         margin-top: 20px;
         span {
           font-family: $pn-regular;

@@ -9,19 +9,19 @@ benji-stats {
       -webkit-transition: background-color 0.1s linear;
       -ms-transition: background-color 0.1s linear;
       &:hover {
-        background-color: #e9ebf3;
+        background-color: $secondary-color-lightest;
       }
       .value {
         font-family: $pn-regular;
         font-weight: 600;
         font-size: 50px;
-        color: $vibrant-blue;
+        color: $primary-color;
       }
       .label {
         font-family: $pn-regular;
         font-size: 24px;
         margin-top: 28px;
-        color: $brownish-grey;
+        color: $secondary-color-dark;
       }
     }
   }

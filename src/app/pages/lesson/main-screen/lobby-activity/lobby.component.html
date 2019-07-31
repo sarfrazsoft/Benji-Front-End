@@ -2,14 +2,14 @@
   <div class="lesson-top-banner" fxLayout="row">
     <div fxFlex="60%">
       <h1 class="pn-500">
-        <span class="vibrant-blue pn-700">
+        <span class="primary-color pn-700">
           {{ activityState.lesson.lesson_name }}
         </span>
       </h1>
     </div>
     <div fxFlex="40%" fxLayoutAlign="end center">
       <button
-        class="indigo-launch-button bg-indigo-blue pn-700"
+        class="indigo-launch-button bg-primary-color-dark pn-700"
         (click)="kickOffLesson()"
       >
         Start session <mat-icon class="icon-white">arrow_forward</mat-icon>
@@ -17,16 +17,20 @@
     </div>
   </div>
   <div fxFlex="1 0 0" fxLayout="row">
-    <div class="bg-dim-grey" fxFlex="50%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="50%"
+      fxLayoutAlign="center center"
+    >
       <div>
         <div class="activity-instructions">
           <p class="all-caps-title">Room Code</p>
-          <p class="room-code pn-700 deep-blue">
+          <p class="room-code pn-700 primary-color-darkest">
             {{ activityState.lesson_run.lessonrun_code }}
           </p>
           <p>
             Sign in at
-            <span class="deep-blue pn-700">
+            <span class="primary-color-darkest pn-700">
               join.mybenji.com
             </span>
             on your phone and enter this code to join the session.
@@ -39,7 +43,7 @@
         class="mainscreen-activity__column mainscreen-activity__column--25  lobby-activity__joined-users"
       >
         <p class="all-caps-title">
-          <span class="lobby-activity__participant-number deep-blue">
+          <span class="lobby-activity__participant-number primary-color-darkest">
             {{ activityState.lesson_run.joined_users.length }}
           </span>
           {{
@@ -51,7 +55,7 @@
         <ul>
           <li
             *ngFor="let participant of activityState.lesson_run.joined_users"
-            class="deep-blue"
+            class="primary-color-darkest"
             [ngClass]="{
               'long-list': activityState.lesson_run.joined_users.length > 20
             }"

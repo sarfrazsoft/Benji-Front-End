@@ -15,12 +15,12 @@
         !preferenceComplete()
       "
     >
-      <div class="b-flat-card__question-no pn-500 brownish-grey">
+      <div class="b-flat-card__question-no pn-500 secondary-color-dark">
         Question 1:
       </div>
 
       <h2
-        class="pn-700 deep-blue b-flat-card__question"
+        class="pn-700 primary-color-darkest b-flat-card__question"
         [innerHTML]="state.prediction_text"
       ></h2>
 
@@ -81,12 +81,12 @@
         !preferenceComplete()
       "
     >
-      <div class="b-flat-card__question-no pn-500 brownish-grey">
+      <div class="b-flat-card__question-no pn-500 secondary-color-dark">
         Question 2:
       </div>
 
       <h2
-        class="pn-700 deep-blue b-flat-card__question"
+        class="pn-700 primary-color-darkest b-flat-card__question"
         [innerHTML]="state.preference_text"
       ></h2>
 
@@ -146,7 +146,7 @@
       class="b-flat-card__body"
     >
       <ng-container *ngIf="getUserPreferredChoice()">
-        <h1 class="pn-700 deep-blue b-flat-card__question">
+        <h1 class="pn-700 primary-color-darkest b-flat-card__question">
           Stand on your side
         </h1>
         <div class="pn-700">
@@ -156,15 +156,15 @@
             >
             </app-b-twemoji>
           </div>
-          <h2 class="pn-500 brownish-grey">
+          <h2 class="pn-500 secondary-color-dark">
             <span [innerHTML]="getUserPreferredChoice().collective_name"></span>
-            to the <span class="deep-blue">{{ getUserSide() }}</span> of the
+            to the <span class="primary-color-darkest">{{ getUserSide() }}</span> of the
             main screen
           </h2>
         </div>
       </ng-container>
       <ng-container *ngIf="getUserPreferredChoice() === undefined">
-        <h1 class="pn-700 deep-blue b-flat-card__question">
+        <h1 class="pn-700 primary-color-darkest b-flat-card__question">
           Really? Can’t decide? Stand in the middle of the room
         </h1>
       </ng-container>
@@ -179,7 +179,7 @@
     >
       <!-- Show It's a tie -->
       <ng-container *ngIf="getGroupPercentagePreference() === 50">
-        <h1 class="pn-700 deep-blue b-flat-card__question">
+        <h1 class="pn-700 primary-color-darkest b-flat-card__question">
           Wow, a tie!
         </h1>
         <div fxLayout="column" fxLayoutGap="5vh" fxLayoutAlign="center center">
@@ -201,7 +201,7 @@
               ></app-b-twemoji>
             </div>
           </div>
-          <h3 class="pn-700 brownish-grey">
+          <h3 class="pn-700 secondary-color-dark">
             Your group is a perfectly even split.
           </h3>
         </div>
@@ -211,7 +211,7 @@
       <ng-container *ngIf="getGroupPercentagePreference() !== 50">
         <h1
           *ngIf="evaluateUserPrediction()"
-          class="pn-700 deep-blue b-flat-card__question"
+          class="pn-700 primary-color-darkest b-flat-card__question"
         >
           Your prediction was {{ evaluateUserPrediction() }}
         </h1>
@@ -221,7 +221,7 @@
               [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
             ></app-b-twemoji>
           </div>
-          <h2 class="pn-500 brownish-grey">
+          <h2 class="pn-500 secondary-color-dark">
             Most of this group are
             <span
               [innerHTML]="getGroupPreferredChoice().collective_name"

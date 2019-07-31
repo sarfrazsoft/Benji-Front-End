@@ -2,7 +2,7 @@
   <div class="lesson-top-banner" fxLayout="row">
     <div fxFlex="40%">
       <h1 class="pn-500">
-        <span class="vibrant-blue pn-700">
+        <span class="primary-color pn-700">
           Build-a-pitch
         </span>
       </h1>
@@ -32,11 +32,11 @@
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
           <h2
-            class="brownish-grey pn-600 discuss-instruction pitch-text"
+            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
             innerHTML="{{ statement }}"
           ></h2>
           <div
-            class="info-subsection carolina-blue pn-500"
+            class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
@@ -50,7 +50,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
       <app-radial-timer
         [timer]="activityState.buildapitchactivity.build_countdown_timer"
         endStateText="Done!"
@@ -72,7 +76,7 @@
           </div>
         </div>
         <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction">
+          <h2 class="secondary-color-dark pn-600 discuss-instruction">
             <em class="capitalize">
               {{
                 activityState.buildapitchactivity.share_start_user.first_name
@@ -82,7 +86,7 @@
             clockwise direction.
           </h2>
           <div
-            class="info-subsection carolina-blue pn-500"
+            class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
@@ -100,7 +104,7 @@
             </div>
             <div>
               <button
-                class="indigo-launch-button bg-indigo-blue pn-700"
+                class="indigo-launch-button bg-primary-color-dark pn-700"
                 (click)="nextActivity()"
               >
                 Done
@@ -126,11 +130,11 @@
           </div>
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction pitch-text">
+          <h2 class="secondary-color-dark pn-600 discuss-instruction pitch-text">
             Vote on your favourite pitch!
           </h2>
           <div
-            class="info-subsection carolina-blue pn-500"
+            class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
@@ -149,7 +153,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-dim-grey" fxFlex="40%" fxLayoutAlign="center center">
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
       <app-radial-timer
         [timer]="activityState.buildapitchactivity.vote_countdown_timer"
         endStateText="Done!"
@@ -176,7 +184,7 @@
           </div>
         </div>
         <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="brownish-grey pn-600 discuss-instruction">
+          <h2 class="secondary-color-dark pn-600 discuss-instruction">
             Aaaand the best pitch goes to
             <em class="capitalize">
               {{ activityState.buildapitchactivity.winning_user.first_name }}
@@ -188,7 +196,7 @@
             </div>
 
             <h2
-              class="brownish-grey pn-600 discuss-instruction pitch-text"
+              class="secondary-color-dark pn-600 discuss-instruction pitch-text"
               [innerHTML]="getWinningPitch()"
             ></h2>
           </div>
