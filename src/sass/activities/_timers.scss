@@ -3,13 +3,11 @@
   font-size: 4vw;
   line-height: normal;
   text-align: center;
+  color: $primary-color;
   span {
     display: block;
     font-size: 2.5vw;
     text-transform: uppercase;
     letter-spacing: 3px;
   }
-}
-.timer-endstate {
-  font-size: 4vw;
 }

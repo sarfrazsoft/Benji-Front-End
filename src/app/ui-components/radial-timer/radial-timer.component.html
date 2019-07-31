@@ -11,7 +11,6 @@
 
   <div
     class="timer-centered number-text pn-500"
-    style="color: #1248F2"
     *ngIf="timer && timer.status == 'running'"
   >
     {{ get_min_sec().min | number: '1.0-0' }}:{{
@@ -20,29 +19,25 @@
   </div>
 
   <div
-    class="timer-centered number-text pn-500 timer-endstate"
-    style="color: #1248F2"
+    class="timer-centered number-text pn-500"
     *ngIf="!timer || timer.status == 'not_started'"
   >
     Waiting
   </div>
   <div
-    class="timer-centered number-text pn-500 timer-endstate"
-    style="color: #1248F2"
+    class="timer-centered number-text pn-500"
     *ngIf="timer && timer.status == 'paused'"
   >
     Paused
   </div>
   <div
-    class="timer-centered number-text pn-500 timer-endstate"
-    style="color: #1248F2"
+    class="timer-centered number-text pn-500"
     *ngIf="timer && timer.status == 'cancelled'"
   >
     Cancelled
   </div>
   <div
-    class="timer-centered number-text pn-500 timer-endstate"
-    style="color: #1248F2"
+    class="timer-centered number-text pn-500"
     *ngIf="timer && timer.status == 'ended'"
   >
     {{ endStateText }}
