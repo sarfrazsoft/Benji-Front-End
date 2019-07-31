@@ -59,7 +59,9 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   ngOnChanges() {
-    this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
+    this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort(
+      (a, b) => a.order - b.order
+    );
 
     this.act = this.activityState.buildapitchactivity;
     if (
