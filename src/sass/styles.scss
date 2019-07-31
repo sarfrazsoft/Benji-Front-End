@@ -95,29 +95,29 @@
 
 //Legacy styles (To be re-written)
 
-.screen-text {
-  font-size: 24px;
-  line-height: 30px;
-}
-.subheader {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  color: $secondary-color-dark;
-  font-size: 18px;
-  line-height: auto;
-  font-weight: 400;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
+// .screen-text {
+//   font-size: 24px;
+//   line-height: 30px;
+// }
+// .subheader {
+//   margin-top: 0px;
+//   margin-bottom: 0px;
+//   color: $secondary-color-dark;
+//   font-size: 18px;
+//   line-height: auto;
+//   font-weight: 400;
+//   letter-spacing: 3px;
+//   text-transform: uppercase;
+// }
 
-.left-body-wrap {
-  display: block;
-  width: 70%;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 auto;
-  -ms-flex: 0 auto;
-  flex: 0 auto;
-}
+// .left-body-wrap {
+//   display: block;
+//   width: 70%;
+//   -webkit-box-flex: 0;
+//   -webkit-flex: 0 auto;
+//   -ms-flex: 0 auto;
+//   flex: 0 auto;
+// }
 
 // .right-body-wrap {
 //   display: -webkit-box;
@@ -241,31 +241,31 @@
 //   border-right: 1px solid $secondary-color-dark;
 // }
 
-.dark-blue-footer-text {
-  color: $primary-color-darkest;
-  font-size: 25px;
-  line-height: 25px;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
+// .dark-blue-footer-text {
+//   color: $primary-color-darkest;
+//   font-size: 25px;
+//   line-height: 25px;
+//   letter-spacing: 1.2px;
+//   text-transform: uppercase;
+// }
 
-.footer-text-wrap {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  padding-right: 10px;
-  padding-left: 10px;
-}
+// .footer-text-wrap {
+//   display: -webkit-box;
+//   display: -webkit-flex;
+//   display: -ms-flexbox;
+//   display: flex;
+//   padding-right: 10px;
+//   padding-left: 10px;
+// }
 
-.grey-footer-text {
-  background-color: $secondary-color-lightest;
-  color: $secondary-color-dark;
-  font-size: 25px;
-  line-height: 25px;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-}
+// .grey-footer-text {
+//   background-color: $secondary-color-lightest;
+//   color: $secondary-color-dark;
+//   font-size: 25px;
+//   line-height: 25px;
+//   letter-spacing: 1.2px;
+//   text-transform: uppercase;
+// }
 
 // this style is being used
 .body {
@@ -1464,10 +1464,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100;
-}
-
-.progress-circular--blue__primary {
-  stroke: #1248f2;
 }
 
 .overflow-hidden {

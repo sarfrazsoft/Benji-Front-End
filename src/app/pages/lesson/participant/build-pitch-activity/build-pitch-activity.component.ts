@@ -51,12 +51,16 @@ export class ParticipantBuildPitchActivityComponent
 
     this.act = this.activityState.buildapitchactivity;
 
-    this.act.buildapitchblank_set.forEach(v => {
-      this.builtPitch_set.push({ ...v, ...{ value: null } });
-    });
+    this.act.buildapitchblank_set
+      .sort((a, b) => a.order - b.order)
+      .forEach(v => {
+        this.builtPitch_set.push({ ...v, ...{ value: null } });
+      });
   }
 
   ngOnChanges() {
+    this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
+
     this.act = this.activityState.buildapitchactivity;
     if (
       this.act.build_countdown_timer.status === 'running' &&
@@ -115,10 +119,10 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   fillExpandedUserArray() {
+    // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     this.activityState.buildapitchactivity.buildapitchpitch_set.forEach(v => {
       this.expandedUserArray['' + v.user] = false;
     });
-    console.log(this.expandedUserArray);
   }
 
   checkValidity() {
@@ -173,12 +177,14 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   userPitchExists(userId) {
+    // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     return this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
       e => e.user === userId
     ).length;
   }
 
   getPitchText(userId) {
+    this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
       e => e.user === userId
@@ -204,6 +210,7 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   isPitchBlank(userId) {
+    this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
       e => e.user === userId
