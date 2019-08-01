@@ -31,20 +31,20 @@ export interface FeedbackQuestion {
 // Build a pitch intefaces
 
 export interface BuildAPitchBlank {
-  id: Number;
-  order: Number;
+  id: number;
+  order: number;
   label: string;
   temp_text: string;
   help_text: string;
 }
 
 export interface BuildAPitchEntry {
-  buildapitchblank: Number;
+  buildapitchblank: number;
   value: string;
 }
 
 export interface BuildAPitchPitch {
-  user: Number;
+  user: number;
   buildapitchentry_set: Array<BuildAPitchEntry>;
 }
 

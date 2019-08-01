@@ -59,11 +59,10 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   ngOnChanges() {
+    this.act = this.activityState.buildapitchactivity;
     this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort(
       (a, b) => a.order - b.order
     );
-
-    this.act = this.activityState.buildapitchactivity;
     if (
       this.act.build_countdown_timer.status === 'running' &&
       this.act.buildapitchpitch_set.filter(
