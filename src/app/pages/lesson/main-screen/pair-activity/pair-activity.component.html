@@ -73,6 +73,7 @@
         endStateText="Times up!"
         [timer]="activityState.roleplaypairactivity.activity_countdown_timer"
         [endAudio]="'attention-seeker.mp3'"
+        [timerOffset]="avgServerTimeOffset"
         #discussionTimer
       ></app-radial-timer>
     </div>
@@ -128,6 +129,7 @@
       <app-linear-timer
         [timer]="activityState.roleplaypairactivity.grouping_countdown_timer"
         [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-linear-timer>
     </div>
   </div>

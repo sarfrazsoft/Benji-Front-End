@@ -19,7 +19,7 @@
     </p>
   </div>
   <div class="linear-timer-container">
-    <app-linear-timer [timer]="activityState.base_activity.next_activity_start_timer" [endAudio]="'bell.wav'"></app-linear-timer>
+    <app-linear-timer [timer]="activityState.base_activity.next_activity_start_timer" [endAudio]="'bell.wav'" [timerOffset]="avgServerTimeOffset"></app-linear-timer>
   </div>
   <div
     *ngIf="isEndSession"

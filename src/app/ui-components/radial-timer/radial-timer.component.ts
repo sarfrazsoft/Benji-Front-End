@@ -22,6 +22,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endStateText: string;
   @Input() endAudio;
   @Input() timer: Timer;
+  @Input() timerOffset: number;
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
@@ -57,7 +58,13 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
       ) {
         this.remainingTime = this.timer.remaining_seconds * 1000;
       } else {
-        this.remainingTime = Date.parse(this.timer.end_time) - Date.now();
+        let offset;
+        if (this.timerOffset !== null && this.timerOffset !== undefined) {
+          offset = this.timerOffset;
+        } else {
+          offset = 0;
+        }
+        this.remainingTime = Date.parse(this.timer.end_time) - Date.now() - offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }
