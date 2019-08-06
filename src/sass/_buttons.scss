@@ -23,6 +23,10 @@ button {
   &:hover {
     background: darken($primary-color, 10);
   }
+  &.b-standard-button--inactive {
+    opacity: 0.5;
+    cursor: initial;
+  }
   @media screen and (max-width: 320px) {
     width: 230px;
   }
@@ -53,14 +57,6 @@ button {
   &:hover {
     background: #fff;
     color: lighten($secondary-color-dark, 30);
-  }
-}
-
-.b-standard-button--inactive {
-  background: #a0afd4;
-  cursor: initial;
-  &:hover {
-    background: #a0afd4;
   }
 }
 
@@ -117,7 +113,7 @@ button {
   border-radius: 12vh;
   border: 0px;
   &:active {
-    background-color: $primary-color-darker;
+    @include background(primary-darker);
   }
   mat-icon {
     font-size: 6vh;
@@ -140,7 +136,7 @@ button {
   border-radius: 12vh;
   border: 0px;
   &:active {
-    background-color: $primary-color-darker;
+    @include background(primary-darker);
   }
   span {
     margin-right: 20px;

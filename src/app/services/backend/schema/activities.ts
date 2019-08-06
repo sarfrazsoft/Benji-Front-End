@@ -223,7 +223,7 @@ export interface BuildAPitchActivity {
   share_start_user: User;
   sharing_done: boolean;
   vote_countdown_timer: Timer;
-  votes: Array<{ id: Number; num_votes: Number }>;
+  votes: Array<{ id: number; num_votes: number }>;
   voting_done: boolean;
   winning_user: User;
 }
@@ -270,7 +270,9 @@ export interface PitchoMaticGroupMember {
   // is_pitching=true, pitch_done=false := user is pitching
   // is_pitching=true, pitch_done=true := user is recieving feedback
   // is_pitching=false, pitch_done=true := user is done with their pitch and feedback
-  is_pitching: boolean; // true when user is pitching. remains true while feedback for user is going on. becomes false after feedback
+  // true when user is pitching. remains true while feedback for user is going on.
+  // becomes false after feedback
+  is_pitching: boolean;
   pitch_done: boolean; // becomes true after pitch is done.
   pitch_prep_text: string;
   pitch: PitchoMaticGroupMemberPitch;

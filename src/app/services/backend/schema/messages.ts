@@ -214,7 +214,7 @@ export class FeedbackSubmitEvent extends ActivityEvent {
 }
 
 export class BuildAPitchSubmitEventEntry {
-  buildapitchblank: Number;
+  buildapitchblank: number;
   value: string;
 
   constructor(entry: BuildAPitchBlank, value: string) {

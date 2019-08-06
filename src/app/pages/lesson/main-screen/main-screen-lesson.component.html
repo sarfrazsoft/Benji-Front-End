@@ -2,8 +2,15 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div class="ms-fullheight-container">
-  <app-main-screen-toolbar></app-main-screen-toolbar>
+<div
+  class="ms-fullheight-container"
+  [ngClass]="{
+    'holistic-theme':
+      contextService.partnerInfo.primaryClass === 'holistic-theme',
+    'benji-theme': contextService.partnerInfo.primaryClass === 'benji-theme'
+  }"
+>
+  <benji-main-screen-toolbar></benji-main-screen-toolbar>
 
   <div
     *ngIf="isConnected() && serverMessage"
