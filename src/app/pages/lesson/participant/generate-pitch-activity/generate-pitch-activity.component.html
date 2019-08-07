@@ -16,7 +16,7 @@
       <div class="generate-pitch">
         <button
           [ngClass]="{
-            'b-standard-button--inactive': userInGroup
+            inactive: userInGroup
           }"
           class="b-standard-button"
           (click)="userInGroupEvent()"
@@ -32,7 +32,9 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Pitch-o-matic 3000</h1>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Pitch-o-matic 3000
+    </h1>
     <ng-container class="body-text">
       Press the button to generate your pitch criteria!
     </ng-container>
@@ -176,7 +178,9 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Thanks for your feedback</h1>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Thanks for your feedback
+    </h1>
     <ng-container class="body-text">
       Waiting for everyone else to finish giving feedback
     </ng-container>

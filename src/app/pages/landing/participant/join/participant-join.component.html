@@ -1,4 +1,4 @@
-<app-participant-toolbar></app-participant-toolbar>
+<benji-participant-toolbar></benji-participant-toolbar>
 <div class="participant-start">
   <div class="container">
     <div class="participant-start__vertical-center center-text">
@@ -22,13 +22,13 @@
             [formControl]="roomCode"
           />
         </div>
-        <app-animated-checkmark-button
+        <benji-animated-checkmark-button
           loadingStateInnerHTML="Verifying"
           innerHTML="Join session"
           buttonStyle="default"
           [valid]="isRoomCodeValid"
           (clicked)="validateRoomCode()"
-        ></app-animated-checkmark-button>
+        ></benji-animated-checkmark-button>
       </div>
     </div>
   </div>

@@ -14,9 +14,9 @@
     </div>
     <div class="b-flat-card__action">
       <button
-        class="b-standard-button"
+        class="b-standard-button bg-primary-color"
         (click)="sendReadyState()"
-        [ngClass]="{ 'b-standard-button--inactive': participantIsReady() }"
+        [ngClass]="{ inactive: participantIsReady() }"
       >
         <span *ngIf="!participantIsReady()">We're ready!</span>
         <span *ngIf="participantIsReady()">Waiting...</span>

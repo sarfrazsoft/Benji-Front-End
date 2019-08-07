@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ContextService } from './services/context.service';
 import { LayoutService } from './services/layout.service';
 
 @Component({
@@ -8,7 +9,10 @@ import { LayoutService } from './services/layout.service';
 })
 export class AppComponent {
   title = 'app';
-  constructor(private layoutService: LayoutService) {
+  constructor(
+    private layoutService: LayoutService,
+    private contextService: ContextService
+  ) {
     layoutService.getPartnerInfo();
   }
 }

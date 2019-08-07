@@ -53,6 +53,14 @@ $colors: (
   }
 }
 
+@mixin stroke($color) {
+  stroke: map-get(map-get($colors, default), $color);
+
+  .holistic-theme & {
+    stroke: map-get(map-get($colors, holistic-theme), $color);
+  }
+}
+
 /* Variables: Colors */
 $primary-color-lighter: #80a8ff;
 $primary-color-light: #4c83fc;

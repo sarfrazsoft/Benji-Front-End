@@ -158,10 +158,9 @@
   <div class="mob-login-input-container" fxLayoutAlign="center">
     <button
       type="submit"
-      class="b-standard-button"
+      class="b-standard-button bg-primary-color inactive"
       [ngClass]="{
-        'b-standard-button--active': form.valid,
-        'b-standard-button--inactive': !form.valid
+        inactive: !form.valid
       }"
     >
       Create account

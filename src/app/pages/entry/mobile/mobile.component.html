@@ -15,10 +15,24 @@
       fxLayout="row"
       fxLayoutAlign="space-between"
     >
-      <div [ngClass]="{ active: showLoginMob }" (click)="showLoginMob = true">
+      <div
+        [ngClass]="{
+          active: showLoginMob,
+          'primary-color-darkest': showLoginMob,
+          'secondary-color-dark': !showLoginMob
+        }"
+        (click)="showLoginMob = true"
+      >
         Login
       </div>
-      <div [ngClass]="{ active: !showLoginMob }" (click)="showLoginMob = false">
+      <div
+        [ngClass]="{
+          active: !showLoginMob,
+          'primary-color-darkest': !showLoginMob,
+          'secondary-color-dark': showLoginMob
+        }"
+        (click)="showLoginMob = false"
+      >
         Sign up
       </div>
     </div>
@@ -33,7 +47,11 @@
       <!-- <span class="b-link" (click)="showSignup()"> Sign up</span> -->
       <!-- <span> Sign up</span> -->
     </div>
-    <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
+    <div
+      *ngIf="isDemoSite"
+      class="new-to-benji primary-color-darkest"
+      fxLayoutAlign="center"
+    >
       <a class="b-link" (click)="router.navigate(['/participant/login'])">
         Continue as guest
       </a>

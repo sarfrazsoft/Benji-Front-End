@@ -48,7 +48,7 @@
     </div>
     <button
       class="b-standard-button"
-      [ngClass]="{ 'b-standard-button--inactive': !pitchValid }"
+      [ngClass]="{ inactive: !pitchValid }"
       (click)="submitPitch()"
     >
       Submit
@@ -148,11 +148,11 @@
   class="b-baseline-action bg-primary-color-dark"
   *ngIf="selectedUser && !userVoted"
 >
-  <app-animated-checkmark-button
+  <benji-animated-checkmark-button
     loadingStateInnerHTML="Loading"
     innerHTML="Submit"
     buttonStyle="white"
     [valid]="userVoted"
     (click)="submitVote(selectedUser)"
-  ></app-animated-checkmark-button>
+  ></benji-animated-checkmark-button>
 </div>

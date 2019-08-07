@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
+import { Observable, of } from 'rxjs';
 import * as global from '../../globals';
-import {Observable, of} from 'rxjs';
 import { ServerMessage } from './schema/messages';
 
 @Injectable()
@@ -11,17 +11,21 @@ export class BackendSocketService {
   private sessionrunID;
   public socketData;
 
-
-  connectLessonSocket(clientType, roomCode, userID?): Observable<ServerMessage> {
+  connectLessonSocket(
+    clientType,
+    roomCode,
+    userID?
+  ): Observable<ServerMessage> {
     let uri = null;
     if (clientType === 'screen') {
       uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/screen/0/`;
     } else if (clientType === 'participant') {
-      uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/participant/${userID}/`;
+      uri = `${
+        global.wsRoot
+      }/ws/activityflow/code/${roomCode}/participant/${userID}/`;
     }
     console.log('connecting to: ' + uri);
     return webSocket(uri);
-
   }
 
   connect(sessionrunID) {
@@ -48,7 +52,12 @@ export class BackendSocketService {
     this.subject = webSocket(`${global.wsRoot}${url}`);
   }
 
-  public getLessonSocket(client, lessonId?, roomCode?, id?): Observable<ServerMessage> {
+  public getLessonSocket(
+    client,
+    lessonId?,
+    roomCode?,
+    id?
+  ): Observable<ServerMessage> {
     if (client === 'screen' && !this.subject) {
       this.subject = webSocket(
         // `${global.wsRoot}/socketService/activityflow/id/${lessonId}/${client}/0/`
@@ -77,7 +86,7 @@ export class BackendSocketService {
   }
 
   public sendSocketEventMessage(message: string) {
-    this.subject.next({'event': message});
+    this.subject.next({ event: message });
   }
 
   public sendSocketFullMessage(message: any) {

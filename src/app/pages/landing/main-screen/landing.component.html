@@ -1,12 +1,4 @@
-<section
-  class="lesson-landing"
-  [ngClass]="{
-    'holistic-theme':
-      contextService.partnerInfo.primaryClass === 'holistic-theme',
-    'benji-theme': contextService.partnerInfo.primaryClass === 'benji-theme'
-  }"
-  (click)="isDarkTheme = !isDarkTheme"
->
+<section class="lesson-landing" (click)="isDarkTheme = !isDarkTheme">
   <div class="lesson-landing__flexer flexer testerrr">
     <div class="bg-primary-color lesson-landing__content-container">
       <img [src]="contextService.partnerInfo.logo" alt="Benji Logo" />

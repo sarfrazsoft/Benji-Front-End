@@ -21,7 +21,7 @@ export class LayoutService {
       name: 'Welcome to Holistic Learning!',
       description: 'What\'s Holistic Learning? Learn about your future here.',
       link: 'www.holisticlearning.com',
-      logo: './assets/img/logo.png',
+      logo: './assets/img/logo_black.png',
       primaryClass: 'holistic-theme'
     };
     // this.contextService.partnerInfo = {

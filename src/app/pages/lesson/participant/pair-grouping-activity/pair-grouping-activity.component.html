@@ -2,7 +2,9 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">FIND YOUR PARTNER</ng-container>
     <app-b-twemoji class="body-emoji" emoji="👯"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">{{ partnerText() }}</h1>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      {{ partnerText() }}
+    </h1>
     <ng-container class="body-text">
       Find {{ partnerName }} and sit together for the next activity.
     </ng-container>
@@ -11,7 +13,7 @@
         <button
           class="b-standard-button"
           (click)="sendReadyState()"
-          [ngClass]="{ 'b-standard-button--inactive': participantIsReady() }"
+          [ngClass]="{ inactive: participantIsReady() }"
         >
           <span *ngIf="!participantIsReady()">We're ready!</span>
           <span *ngIf="participantIsReady()">Waiting...</span>

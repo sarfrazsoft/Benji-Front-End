@@ -116,7 +116,7 @@ body {
 
 em {
   font-style: normal;
-  color: $primary-color-darkest;
+  @include color(primary-darkest);
 }
 
 .capitalize {

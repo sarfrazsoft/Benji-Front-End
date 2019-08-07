@@ -71,7 +71,7 @@
 .lobby-card .mat-progress-spinner circle,
 .timer-svg .mat-progress-spinner circle,
 .mat-spinner circle {
-  stroke: $primary-color;
+  @include stroke(primary);
   stroke-linecap: round;
 }
 

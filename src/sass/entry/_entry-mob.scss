@@ -7,11 +7,12 @@
     padding-bottom: 30px;
   }
   .login-signup-section {
+    @include color(primary-darkest);
     .section-buttons {
       width: 235px;
+      @include color(primary-darkest);
       .active {
         text-decoration: underline;
-        color: $primary-color-darkest;
       }
     }
   }

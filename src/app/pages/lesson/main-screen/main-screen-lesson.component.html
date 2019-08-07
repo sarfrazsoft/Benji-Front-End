@@ -2,14 +2,7 @@
   <mat-spinner></mat-spinner>
 </div>
 
-<div
-  class="ms-fullheight-container"
-  [ngClass]="{
-    'holistic-theme':
-      contextService.partnerInfo.primaryClass === 'holistic-theme',
-    'benji-theme': contextService.partnerInfo.primaryClass === 'benji-theme'
-  }"
->
+<div class="ms-fullheight-container">
   <benji-main-screen-toolbar></benji-main-screen-toolbar>
 
   <div

@@ -3,16 +3,18 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">Role-play</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🤔"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Discuss with your partner</h1>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Discuss with your partner
+    </h1>
     <ng-container class="body-text">
       What were your takeaways from that role-play?</ng-container
     >
     <ng-container class="content">
       <div class="b-flat-card__action">
         <button
-          class="b-standard-button"
+          class="b-standard-button bg-primary-color"
           [ngClass]="{
-            'b-standard-button--inactive': participantVolunteered()
+            inactive: participantVolunteered()
           }"
           (click)="shareButton()"
           *ngIf="activityState.discussionactivity.sharing_seconds > 0"
@@ -39,10 +41,15 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">Role-play</ng-container>
     <app-b-twemoji class="body-emoji" emoji="📣"></app-b-twemoji>
-    <h3 class="body-heading pn-700 primary-color-darkest">Share with the group</h3>
+    <h3 class="body-heading pn-700 primary-color-darkest">
+      Share with the group
+    </h3>
     <ng-container class="content">
       <div class="b-flat-card__action">
-        <button class="b-standard-button" (click)="doneButton()">
+        <button
+          class="b-standard-button bg-primary-color"
+          (click)="doneButton()"
+        >
           <ng-container> Done </ng-container>
         </button>
       </div>
