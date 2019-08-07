@@ -33,7 +33,11 @@
           </div>
         </div>
       </div>
-      <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
+      <div
+        class="bg-secondary-color-lightest"
+        fxFlex="40%"
+        fxLayoutAlign="center center"
+      >
         <app-radial-timer
           [timer]="activityState.discussionactivity.discussion_countdown_timer"
           endStateText="Done!"
@@ -84,7 +88,13 @@
                   activityState.discussionactivity.currently_sharing_group
                 )
               }}
-              are sharing
+              {{
+                activityState.discussionactivity.currently_sharing_group
+                  .discussiongroupmember_set.length === 1
+                  ? 'is'
+                  : 'are'
+              }}
+              sharing
             </h2>
             <ng-container
               *ngIf="activityState.discussionactivity.next_sharing_group"
@@ -101,7 +111,11 @@
           </div>
         </div>
       </div>
-      <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
+      <div
+        class="bg-secondary-color-lightest"
+        fxFlex="40%"
+        fxLayoutAlign="center center"
+      >
         <app-radial-timer
           [timer]="
             activityState.discussionactivity.currently_sharing_group
