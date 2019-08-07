@@ -65,6 +65,7 @@
         [timer]="activityState.hintwordactivity.submission_countdown_timer"
         endStateText="Vote!"
         [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>
     <div *ngIf="activityState.hintwordactivity.submission_complete">
@@ -72,6 +73,7 @@
         [timer]="activityState.hintwordactivity.voting_countdown_timer"
         endStateText="Times Up!"
         [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>
   </div>
@@ -120,6 +122,7 @@
     <app-linear-timer
       [timer]="activityState.base_activity.next_activity_start_timer"
       [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
     ></app-linear-timer>
   </div>
 </div>

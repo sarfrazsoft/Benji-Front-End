@@ -6,6 +6,7 @@ import {
 
 export abstract class BaseActivityComponent {
   @Input() activityState: UpdateMessage;
+  @Input() avgServerTimeOffset: number;
   @Output() sendMessage = new EventEmitter<ActivityEvent>();
 
   // TODO remove idToName it is not being used anywhere

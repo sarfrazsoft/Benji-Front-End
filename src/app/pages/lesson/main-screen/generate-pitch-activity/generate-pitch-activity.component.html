@@ -64,6 +64,7 @@
         [timer]="activityState.pitchomaticactivity.prepare_timer"
         endStateText="Done!"
         [endAudio]="'attention-seeker.mp3'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>
   </div>
@@ -118,6 +119,7 @@
         [timer]="activityState.pitchomaticactivity.pitch_timer"
         endStateText="Done!"
         [endAudio]="'attention-seeker.mp3'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>
   </div>
@@ -327,6 +329,7 @@
         [timer]="activityState.pitchomaticactivity.feedback_timer"
         endStateText="Done!"
         [endAudio]="'attention-seeker.mp3'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>
   </div>
@@ -377,6 +380,7 @@
         [timer]="activityState.pitchomaticactivity.discuss_timer"
         endStateText="Done!"
         [endAudio]="'attention-seeker.mp3'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>
   </div>
@@ -505,21 +509,25 @@
     <app-linear-timer
       [timer]="activityState.pitchomaticactivity.group_timer"
       [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
     ></app-linear-timer>
     <app-linear-timer
       *ngIf="timeToPitchMT8"
       [timer]="activityState.pitchomaticactivity.pitch_timer"
       [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
     ></app-linear-timer>
     <app-linear-timer
       *ngIf="giveFeedbackMT8"
       [timer]="activityState.pitchomaticactivity.feedback_timer"
       [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
     ></app-linear-timer>
     <app-linear-timer
       *ngIf="shareFeedbackMT8"
       [timer]="activityState.pitchomaticactivity.discuss_timer"
       [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
     ></app-linear-timer>
   </div>
 </div>

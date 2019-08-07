@@ -66,6 +66,7 @@ export interface ServerNotification {
 }
 
 export interface ServerMessage {
+  messagetime: number;
   updatemessage?: UpdateMessage;
   clienterror?: ClientError;
   servererror?: ServerError;
