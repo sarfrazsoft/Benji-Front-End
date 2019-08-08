@@ -29,7 +29,7 @@ export class EntryComponent implements OnInit {
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
         console.log(info);
-        this.partnerName = info;
+        this.partnerName = info.name;
       }
     });
   }

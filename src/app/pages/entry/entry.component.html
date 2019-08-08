@@ -37,7 +37,7 @@
     fxLayoutAlign="start center"
   >
     <div class="header" fxLayoutAlign="center">
-      <img src="/assets/img/logo.png" />
+      <img [src]="contextService.partnerInfo.logo" />
     </div>
     <div class="form-tabs">
       <mat-tab-group
@@ -47,13 +47,13 @@
       >
         <mat-tab label="Login">
           <ng-template mat-tab-label>
-            <span class="tab-label">Login</span>
+            <span class="tab-label primary-color-darkest">Login</span>
           </ng-template>
           <benji-login (showSignupTab)="showSignupTab()"></benji-login>
         </mat-tab>
         <mat-tab label="Sign up">
           <ng-template mat-tab-label class="signup-label">
-            <span class="tab-label">Sign up</span>
+            <span class="tab-label primary-color-darkest">Sign up</span>
           </ng-template>
           <benji-signup></benji-signup>
         </mat-tab>

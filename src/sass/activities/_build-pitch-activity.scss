@@ -3,7 +3,7 @@ benji-ms-build-pitch-activity {
     .discuss-instruction {
       font-size: 2.7vw;
       &.pitch-text > em {
-        color: $primary-color;
+        @include color(primary);
       }
     }
     .winning-pitch {
@@ -46,12 +46,13 @@ benji-ps-build-pitch-activity {
           font-size: 24px;
         }
         textarea {
-          color: $primary-color;
+          @include color(primary);
           font-size: 24px;
           margin-top: 10px;
           width: 100%;
           border: 0;
-          border-bottom: 1px solid $primary-color;
+          border-bottom: 1px solid;
+          @include border-bottom-color(primary);
           // for iOS safari mobile
           -webkit-appearance: none;
           box-shadow: none !important;
@@ -77,8 +78,9 @@ benji-ps-build-pitch-activity {
       font-size: 26px;
       line-height: 1.5;
       em {
-        color: $primary-color;
-        border-bottom: 0.5px solid $primary-color;
+        @include color(primary);
+        border-bottom: 0.5px solid;
+        @include border-bottom-color(primary);
       }
     }
   }
@@ -97,7 +99,7 @@ benji-ps-build-pitch-activity {
 
 .pitch-tooltip {
   background-color: white;
-  color: $primary-color !important;
+  // @include color(primary);
   border: 1px solid $secondary-color-lighter;
   box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
   max-width: 150px !important;

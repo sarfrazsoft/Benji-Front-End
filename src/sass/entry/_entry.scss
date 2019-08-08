@@ -1,7 +1,7 @@
 .login-container {
   height: 100%;
   .left-side {
-    background-color: $primary-color;
+    @include background(primary);
   }
   .right-side {
     background-color: $off-white;
@@ -83,7 +83,6 @@
         opacity: 0.5;
         font-size: 25px;
         font-weight: 600;
-        color: $primary-color-darkest;
         box-sizing: border-box;
         width: 100%;
         min-width: 160px;
@@ -104,7 +103,7 @@
     }
 
     .mat-tab-group.mat-primary .mat-ink-bar {
-      background-color: $primary-color-darkest;
+      @include background(primary-darkest);
       height: 3px;
     }
   }

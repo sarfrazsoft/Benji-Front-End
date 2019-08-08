@@ -272,6 +272,10 @@
   background-color: $off-white;
   color: $secondary-color-dark;
 }
+
+app-root > div {
+  height: 100%;
+}
 //
 
 .two-column-body {

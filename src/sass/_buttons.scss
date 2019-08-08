@@ -20,7 +20,7 @@ button {
     outline-style: none;
   }
   &:hover {
-    background: darken($primary-color, 10);
+    @include background(primary-dark);
   }
   &.inactive {
     opacity: 0.5;
@@ -60,8 +60,6 @@ button {
 }
 
 .b-standard-button--unselected {
-  // background: $secondary-color-lighter;
-  // color: $secondary-color-dark;
   @include background(secondary-lighter);
   @include color(secondary-dark);
   &:hover {
@@ -70,18 +68,10 @@ button {
 }
 
 .b-standard-button--selected {
-  @include background(primary-lighter);
+  @include background(primary);
   color: #fff;
   &:hover {
-    @include background(primary-lighter);
-  }
-}
-
-.b-standard-button--valid {
-  background: $primary-color;
-  color: #fff;
-  &:hover {
-    background: $primary-color;
+    @include background(primary);
   }
 }
 
@@ -156,10 +146,10 @@ button {
   color: #fff;
   border-radius: 30px;
   &.active {
-    background-color: mat-color($benji-blue, 500);
+    @include background(primary);
   }
   &.inactive {
-    background-color: mat-color($benji-blue, 200);
+    opacity: 0.5;
   }
 }
 
