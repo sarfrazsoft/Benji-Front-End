@@ -23,6 +23,8 @@ export class BaseLessonComponent implements OnInit {
 
   socket;
   serverMessage: UpdateMessage;
+  serverOffsets: number[];
+  avgServerTimeOffset: number;
 
   constructor(
     protected restService: BackendRestService,
@@ -33,6 +35,8 @@ export class BaseLessonComponent implements OnInit {
   ) {
     this.roomCode = parseInt(this.route.snapshot.paramMap.get('roomCode'), 10);
     this.clientType = clientType;
+    this.avgServerTimeOffset = 0;
+    this.serverOffsets = [];
   }
 
   ngOnInit() {
@@ -100,6 +104,14 @@ export class BaseLessonComponent implements OnInit {
       msg.servernotification !== undefined
     ) {
       console.log(msg);
+    }
+    if (msg.messagetime !== null && msg.updatemessage !== undefined) {
+      this.serverOffsets.push(msg.messagetime - Date.now());
+      if (this.serverOffsets.length > 10) {
+        this.serverOffsets.shift();
+      }
+      this.avgServerTimeOffset = this.serverOffsets.reduce(function(a, b) { return a + b; })
+        / this.serverOffsets.length;
     }
   }
 

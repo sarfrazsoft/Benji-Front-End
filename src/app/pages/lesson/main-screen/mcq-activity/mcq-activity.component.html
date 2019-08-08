@@ -37,6 +37,7 @@
         [timer]="activityState.mcqactivity.question_timer"
         endStateText="Times up!"
         [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </ng-container>
     <ng-container *ngIf="reveal()">
@@ -52,6 +53,7 @@
       *ngIf="reveal()"
       [timer]="activityState.base_activity.next_activity_start_timer"
       [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
     ></app-linear-timer>
 
     <!-- <app-linear-timer

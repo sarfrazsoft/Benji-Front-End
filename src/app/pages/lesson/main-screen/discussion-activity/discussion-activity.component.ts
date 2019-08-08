@@ -18,6 +18,11 @@ export class MainScreenDiscussionActivityComponent extends BaseActivityComponent
     const presenterNameList = presenterGroup.discussiongroupmember_set.map(
       u => u.user.first_name
     );
+
+    if (presenterNameList.length === 1) {
+      return presenterNameList[0];
+    }
+
     let text = presenterNameList
       .splice(0, presenterNameList.length - 1)
       .join(', ');
