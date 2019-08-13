@@ -53,7 +53,7 @@ export class BaseLessonComponent implements OnInit {
         if (!this.isConnected()) {
           setTimeout(() => {
             this.initSocket();
-          }, 1000);
+          }, 500);
         }
       }
     });
@@ -110,8 +110,10 @@ export class BaseLessonComponent implements OnInit {
       if (this.serverOffsets.length > 10) {
         this.serverOffsets.shift();
       }
-      this.avgServerTimeOffset = this.serverOffsets.reduce(function(a, b) { return a + b; })
-        / this.serverOffsets.length;
+      this.avgServerTimeOffset =
+        this.serverOffsets.reduce(function(a, b) {
+          return a + b;
+        }) / this.serverOffsets.length;
     }
   }
 
