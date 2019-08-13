@@ -26,10 +26,7 @@ export class ParticipantLoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.auth.isLoggedIn()) {
-      this.auth.logout();
-      this.router.navigate([`/login`]);
-    }
+    this.auth.logout();
   }
 
   formSubmit() {
