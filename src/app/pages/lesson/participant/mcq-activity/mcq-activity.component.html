@@ -10,12 +10,12 @@
     </div>
     <div class="b-flat-card__action">
       <button
-        class="b-standard-button b-standard-button--unselected"
+        class="b-standard-button unselected"
         [ngClass]="{
           'b-standard-button--correct': reveal() && answer.is_correct,
           'b-standard-button--incorrect':
             reveal() && !answer.is_correct && i === selectedAnswerIndex,
-          'b-standard-button--selected': !reveal() && i === selectedAnswerIndex
+          selected: !reveal() && i === selectedAnswerIndex
         }"
         *ngFor="
           let answer of activityState.activity_status.question.choices;

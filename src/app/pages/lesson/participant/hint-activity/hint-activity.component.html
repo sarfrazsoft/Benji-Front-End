@@ -67,21 +67,17 @@
     <div class="b-flat-card__action">
       <ng-container *ngIf="!participantHasVoted()">
         <button
-          class="b-standard-button b-standard-button--unselected bg-primary-color"
+          class="b-standard-button unselected bg-primary-color"
           *ngFor="let word of activityState.hintwordactivity.words_and_votes"
           [ngClass]="{
-            'b-standard-button--selected':
-              selectedWord && word.id === selectedWord.id
+            selected: selectedWord && word.id === selectedWord.id
           }"
           (click)="selectedWord = word"
         >
           {{ word.word | titlecase }}
         </button>
       </ng-container>
-      <button
-        class="b-standard-button b-standard-button--selected"
-        *ngIf="participantHasVoted()"
-      >
+      <button class="b-standard-button selected" *ngIf="participantHasVoted()">
         {{ selectedWord.word }}
       </button>
     </div>

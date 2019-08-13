@@ -4,8 +4,12 @@
   fxLayout.lt-sm="column"
   *ngIf="!isMobile"
 >
-  <div class="left-side" fxLayoutAlign="start center" fxFlex="65%"></div>
-  <div class="right-side" fxFlex="35%"></div>
+  <div
+    class="left-side bg-primary-color"
+    fxLayoutAlign="start center"
+    fxFlex="65%"
+  ></div>
+  <div class="right-side bg-off-white" fxFlex="35%"></div>
 </div>
 <div class="controls" fxLayout="row" fxLayout.lt-sm="column" *ngIf="!isMobile">
   <div
@@ -20,7 +24,7 @@
       fxLayoutGap="50px"
       fxLayoutAlign="center"
     >
-      <h1>Welcome to {{ partnerName }}</h1>
+      <h1>{{ partnerName }}</h1>
       <div class="intro-text">
         <span fxFlex="0 0 75%">
           What’s Benji? Learn about the future of workplace learning

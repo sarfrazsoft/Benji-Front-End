@@ -27,7 +27,11 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
     this.statement = '';
     blanks.forEach(b => {
       this.statement =
-        this.statement + b.label + ' <em>(' + b.temp_text + ')</em> ';
+        this.statement +
+        b.label +
+        ' <em class="primary-color">(' +
+        b.temp_text +
+        ')</em> ';
     });
   }
 
@@ -87,7 +91,10 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
 
       let value = '';
       if (currentBlanksValue.length === 1) {
-        value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+        value =
+          ' <em class="primary-color">' +
+          currentBlanksValue[0].value +
+          '</em> ';
       } else {
         value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
       }

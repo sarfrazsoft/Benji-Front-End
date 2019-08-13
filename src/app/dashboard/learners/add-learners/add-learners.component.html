@@ -52,7 +52,7 @@
 
       <button
         type="submit"
-        class="dashboard-button"
+        class="dashboard-button bg-primary-color"
         [ngClass]="{
           active: form.valid,
           inactive: !form.valid
@@ -68,6 +68,7 @@
     class="dashboard-button"
     [ngClass]="{
       active: form.valid,
+      bg-primary-color: form.valid,
       inactive: !form.valid
     }"
   >

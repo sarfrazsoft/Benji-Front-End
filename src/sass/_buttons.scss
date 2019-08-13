@@ -20,11 +20,26 @@ button {
     outline-style: none;
   }
   &:hover {
-    @include background(primary-dark);
+    // Style applied from BE code
   }
   &.inactive {
     opacity: 0.5;
     cursor: initial;
+  }
+  &.unselected {
+    background: $secondary-color-lighter;
+    color: $secondary-color-dark;
+    &:hover {
+      background: darken($secondary-color-lighter, 10);
+    }
+  }
+
+  &.selected {
+    color: #fff;
+    // Style applied from BE code
+    &:hover {
+      // Style applied from BE code
+    }
   }
   @media screen and (max-width: 320px) {
     width: 230px;
@@ -59,22 +74,6 @@ button {
   }
 }
 
-.b-standard-button--unselected {
-  @include background(secondary-lighter);
-  @include color(secondary-dark);
-  &:hover {
-    background: darken($secondary-color-lighter, 10);
-  }
-}
-
-.b-standard-button--selected {
-  @include background(primary);
-  color: #fff;
-  &:hover {
-    @include background(primary);
-  }
-}
-
 .b-standard-button--incorrect {
   background: $warning-color;
   color: #fff;
@@ -104,7 +103,7 @@ button {
   border-radius: 12vh;
   border: 0px;
   &:active {
-    @include background(primary-darker);
+    // Style applied from BE
   }
   mat-icon {
     font-size: 6vh;
@@ -127,7 +126,7 @@ button {
   border-radius: 12vh;
   border: 0px;
   &:active {
-    @include background(primary-darker);
+    // Style applied from BE
   }
   span {
     margin-right: 20px;
@@ -145,9 +144,6 @@ button {
   font-size: 24px;
   color: #fff;
   border-radius: 30px;
-  &.active {
-    @include background(primary);
-  }
   &.inactive {
     opacity: 0.5;
   }

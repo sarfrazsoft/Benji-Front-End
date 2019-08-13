@@ -22,7 +22,22 @@ export class LayoutService {
       description: 'What\'s Holistic Learning? Learn about your future here.',
       link: 'www.holisticlearning.com',
       logo: './assets/img/logo_black.png',
-      primaryClass: 'holistic-theme'
+      favicon: './assets/img/favicon_holistic.ico',
+      primaryClass: 'holistic-theme',
+      colors: {
+        // primaryLighter: '#80a8ff',
+        // primaryLight: '#4c83fc',
+        // primary: '#0a4cef',
+        // primaryDark: '#4c188f',
+        // primaryDarker: '#3a126e',
+        // primaryDarkest: '#00178a'
+        primaryLighter: '#f8b0ac',
+        primaryLight: '#fa8b85',
+        primary: '#fd4b42',
+        primaryDark: '#fd261b',
+        primaryDarker: '#c91006',
+        primaryDarkest: '#830700'
+      }
     };
     // this.contextService.partnerInfo = {
     //   name: 'Welcome to Benji!',

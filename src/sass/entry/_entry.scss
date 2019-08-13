@@ -1,11 +1,5 @@
 .login-container {
   height: 100%;
-  .left-side {
-    @include background(primary);
-  }
-  .right-side {
-    background-color: $off-white;
-  }
 }
 .controls {
   position: absolute;
@@ -103,7 +97,6 @@
     }
 
     .mat-tab-group.mat-primary .mat-ink-bar {
-      @include background(primary-darkest);
       height: 3px;
     }
   }

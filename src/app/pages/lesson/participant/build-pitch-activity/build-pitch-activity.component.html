@@ -17,6 +17,7 @@
         <div class="segment-blank" fxLayout="row" fxLayoutAlign="start start">
           <div class="blank" fxFlex>
             <textarea
+              class="primary-color"
               matInput
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
@@ -34,7 +35,7 @@
               matTooltipPosition="left"
               (click)="tooltip.toggle()"
               matTooltip="{{ blank.help_text }}"
-              matTooltipClass="pitch-tooltip"
+              matTooltipClass="pitch-tooltip primary-color"
             >
               <img
                 class="participant-utility-icons"
