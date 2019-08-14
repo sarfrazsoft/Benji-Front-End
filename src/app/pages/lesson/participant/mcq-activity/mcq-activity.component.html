@@ -12,8 +12,8 @@
       <button
         class="b-standard-button unselected"
         [ngClass]="{
-          'b-standard-button--correct': reveal() && answer.is_correct,
-          'b-standard-button--incorrect':
+          correct: reveal() && answer.is_correct,
+          incorrect:
             reveal() && !answer.is_correct && i === selectedAnswerIndex,
           selected: !reveal() && i === selectedAnswerIndex
         }"

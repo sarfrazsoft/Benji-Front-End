@@ -72,8 +72,8 @@
           let i = index
         "
         [ngClass]="{
-          'b-standard-button--correct': revealAnswer && choice.is_correct,
-          'b-standard-button--incorrect':
+          correct: revealAnswer && choice.is_correct,
+          incorrect:
             revealAnswer && !choice.is_correct && i === selectedAnswerIndex
         }"
         (click)="submitAnswer(choice)"

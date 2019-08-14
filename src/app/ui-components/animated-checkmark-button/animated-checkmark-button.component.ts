@@ -80,7 +80,6 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
         this.buttonClassList = [
           'b-standard-button',
           'b-standard-button--white'
-          // 'b-standard-button--white-inactive'
         ];
       } else {
         console.error('Invalid button style...using "default" style.');

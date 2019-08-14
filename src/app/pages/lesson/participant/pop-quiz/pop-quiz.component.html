@@ -64,8 +64,8 @@
           *ngIf="option.id === selectedChoice.id"
           class="b-standard-button unselected"
           [ngClass]="{
-            'b-standard-button--correct': option.is_correct,
-            'b-standard-button--incorrect': !option.is_correct
+            correct: option.is_correct,
+            incorrect: !option.is_correct
           }"
         >
           {{ optionIdentifiers[i] }}. {{ option.choice_text }}

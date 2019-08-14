@@ -41,10 +41,27 @@ button {
       // Style applied from BE code
     }
   }
+
+  &.incorrect {
+    background: $warning-color;
+    color: #fff;
+    &:hover {
+      background: $warning-color;
+    }
+  }
+
+  &.correct {
+    background: #93dc66;
+    color: #fff;
+    &:hover {
+      background: #93dc66;
+    }
+  }
   @media screen and (max-width: 320px) {
     width: 230px;
   }
 }
+
 .b-standard-button.animated {
   &:hover {
     background: $primary-color;
@@ -56,37 +73,6 @@ button {
   color: $secondary-color-dark;
   &:hover {
     background: darken(#fff, 10);
-  }
-}
-.b-standard-button--white.animated {
-  &:hover {
-    background: #fff;
-  }
-}
-
-.b-standard-button--white-inactive {
-  background: #fff;
-  color: lighten($secondary-color-dark, 30);
-  cursor: default;
-  &:hover {
-    background: #fff;
-    color: lighten($secondary-color-dark, 30);
-  }
-}
-
-.b-standard-button--incorrect {
-  background: $warning-color;
-  color: #fff;
-  &:hover {
-    background: $warning-color;
-  }
-}
-
-.b-standard-button--correct {
-  background: #93dc66;
-  color: #fff;
-  &:hover {
-    background: #93dc66;
   }
 }
 
