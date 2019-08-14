@@ -46,10 +46,8 @@ export class BaseLessonComponent implements OnInit {
       if (document.hidden) {
         // stop running expensive task
         this.socket = undefined;
-        // console.log('hidden');
       } else {
         // page has focus, begin running task
-        // console.log('shown');
         if (!this.isConnected()) {
           setTimeout(() => {
             this.initSocket();
