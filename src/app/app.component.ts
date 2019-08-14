@@ -115,6 +115,13 @@ export class AppComponent implements OnInit {
           color: ${info.colors.primaryDarkest};
         }
 
+        .low-response-dialog mat-dialog-container {
+          background-color: ${info.colors.primaryDark};
+        }
+
+        .low-response-dialog mat-dialog-container.mat-dialog-container .content button {
+          background-color: ${info.colors.primaryDark};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');
