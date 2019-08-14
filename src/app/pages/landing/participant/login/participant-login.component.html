@@ -5,12 +5,8 @@
       <h1 class="pn-700 primary-color">Welcome to Benji!</h1>
       <!-- <p>Ready for your next Benji session? When your group is set up, you’ll find your room code up on the screen.</p> -->
       <div class="participant-start__action-container">
-        <p *ngIf="username.invalid && username.touched">
-          Please enter your name.
-        </p>
-        <p *ngIf="loginError">
-          That name could not be used to activate an account.<br />
-          Please try again.
+        <p class="warning-color" *ngIf="loginError">
+          Oops! What should we call you? Drop in your name.<br />
         </p>
         <div class="participant-start__input-container">
           <input
