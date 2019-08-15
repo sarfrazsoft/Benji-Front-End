@@ -1,5 +1,5 @@
 <div class="mainscreen-activity mainscreen-activity--video">
-  <video height="100%" #player (ended)="videoEnd()">
+  <video height="100%" #player (ended)="videoEnd()" controls>
     <source [src]="_videoURL" type="video/mp4" />
   </video>
 </div>
