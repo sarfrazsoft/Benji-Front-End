@@ -45,4 +45,12 @@
       ></app-linear-timer>
     </ng-container>
   </benji-ps-instruction-template>
+
+  <div class="time-ending" *ngIf="timer">
+    <div class="middle">
+      <div class="seconds">
+        <div [@zoomIn]="animationState">{{ timer }}</div>
+      </div>
+    </div>
+  </div>
 </ng-container>
