@@ -1,4 +1,14 @@
-import { Component } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+  // ...
+} from '@angular/animations';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { zoomInAnimation } from 'angular-animations';
 import { concat, remove } from 'lodash';
 import { EmojiLookupService } from 'src/app/services';
 import { RoleplayPairUserFoundEvent } from 'src/app/services/backend/schema';
@@ -7,13 +17,42 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-pair-activity',
   templateUrl: './pair-activity.component.html',
-  styleUrls: ['./pair-activity.component.scss']
+  styleUrls: ['./pair-activity.component.scss'],
+  animations: [zoomInAnimation()]
 })
-export class ParticipantPairActivityComponent extends BaseActivityComponent {
+export class ParticipantPairActivityComponent extends BaseActivityComponent
+  implements OnInit, OnDestroy {
   partnerName: string;
 
-  constructor(private emoji: EmojiLookupService) {
+  timerInterval;
+  timer;
+  animationState = false;
+  animationWithState = false;
+
+  constructor(private emoji: EmojiLookupService, private dialog: MatDialog) {
     super();
+  }
+
+  ngOnInit() {
+    // this.timer = 1;
+    // this.timerInterval = setInterval(() => this.showAttentionDialog(), 1000);
+  }
+
+  showAttentionDialog() {
+    this.timer = this.timer + 1;
+    this.animate();
+  }
+
+  animate() {
+    this.animationState = false;
+    setTimeout(() => {
+      this.animationState = true;
+      this.animationWithState = !this.animationWithState;
+    }, 1);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timerInterval);
   }
 
   myGroup() {

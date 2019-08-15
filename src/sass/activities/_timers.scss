@@ -11,3 +11,26 @@
     letter-spacing: 3px;
   }
 }
+
+.time-ending {
+  display: table;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.87);
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+    .seconds {
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      text-align: center;
+      font-size: 80px;
+      font-weight: 900;
+      color: #fff;
+    }
+  }
+}
