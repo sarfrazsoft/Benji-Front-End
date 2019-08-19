@@ -1,4 +1,5 @@
 import { RouterModule, Routes } from '@angular/router';
+import { IsAdminGuard } from 'src/app/services/auth/is-admin.guard';
 import {
   AccountComponent,
   AdminPanelComponent,
@@ -23,7 +24,8 @@ const routes: Routes = [
       {
         path: 'learners',
         loadChildren:
-          'src/app/dashboard/learners/learners.module#LearnersModule'
+          'src/app/dashboard/learners/learners.module#LearnersModule',
+        canLoad: [IsAdminGuard]
       },
       {
         path: 'account',
