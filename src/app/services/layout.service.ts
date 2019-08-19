@@ -16,7 +16,7 @@ export class LayoutService {
   }
 
   getPartnerInfo(): any {
-    console.log('brr');
+    // console.log('brrrrr');
     this.contextService.partnerInfo = {
       name: 'Welcome to Holistic Learning!',
       description: 'What\'s Holistic Learning? Learn about your future here.',
@@ -46,14 +46,17 @@ export class LayoutService {
     //   partnerLogo: './assets/img/Benji_logo_white.png',
     //   primaryClass: 'benji-theme'
     // };
-    return this.http.get(global.apiRoot + '/tenants/users/').pipe(
-      map(res => {
+    // 1
+    // api/tenants/orgs/{id}/white_label_info
+    this.http
+      .get(global.apiRoot + '/tenants/orgs/' + '1' + '/white_label_info')
+      .subscribe(res => {
+        console.log(res);
         console.log('brr');
         // this.contextService.partnerInfo = 'Benji Hud';
         console.log(this.contextService.partnerInfo);
         // return res;
-      })
-    );
+      });
   }
 
   toggleFullscreen() {
