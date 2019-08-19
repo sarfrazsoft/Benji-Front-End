@@ -28,16 +28,17 @@ const routes: Routes = [
         canLoad: [IsAdminGuard]
       },
       {
+        path: 'pastsessions',
+        loadChildren:
+          'src/app/dashboard/past-sessions/past-sessions.module#PastSessionsModule'
+      },
+      {
         path: 'account',
         component: AccountComponent
       },
       {
         path: 'account/password',
         component: ResetPasswordComponent
-      },
-      {
-        path: 'pastsessions',
-        component: PastSessionsComponent
       }
     ]
   }

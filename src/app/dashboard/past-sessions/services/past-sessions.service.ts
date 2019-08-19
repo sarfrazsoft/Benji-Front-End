@@ -14,21 +14,15 @@ export class PastSessionsService {
     private contextService: ContextService
   ) {}
 
-  // getAdminPanelMetrics(): Observable<any> {
-  //   return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
-  //     map((res: Response) => {
-  //       return { learners: 106, groups: 14, sessions: 18 };
-  //     }),
-  //     catchError(err => of(err.error))
-  //   );
-  // }
-
-  getUsers(): Observable<any> {
-    return this.http.get(global.apiRoot + '/tenants/users/').pipe(
-      map(res => {
-        return res;
-      })
-    );
+  // api/course_details/lesson_run/{room_code}/summary/
+  getReports(id: string): Observable<any> {
+    return this.http
+      .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
   }
 
   getLearners(sort: string, order: string, page: number): Observable<User> {

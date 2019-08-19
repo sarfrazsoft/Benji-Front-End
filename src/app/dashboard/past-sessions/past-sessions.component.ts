@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/services/backend/schema';
@@ -66,7 +67,9 @@ export class PastSessionsComponent implements AfterViewInit {
 
   constructor(
     private http: HttpClient,
-    private pastSessionsService: PastSessionsService
+    private pastSessionsService: PastSessionsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngAfterViewInit() {
@@ -103,6 +106,17 @@ export class PastSessionsComponent implements AfterViewInit {
         this.data = this.dataa.results;
         return data;
       });
+  }
+
+  showReports(row) {
+    console.log(row);
+    // this.router.navigate(['reports'], {
+    //   queryParams: row.id,
+    //   relativeTo: this.activatedRoute
+    // });
+    // this.router.navigate(['/dashboard/pastsessions/1']);
+    this.router.navigate([row.id], { relativeTo: this.activatedRoute });
+    // this.router.navigate(['/reports']);
   }
 
   // Selection code

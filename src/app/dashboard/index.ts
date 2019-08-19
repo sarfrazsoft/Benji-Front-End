@@ -4,25 +4,10 @@ export * from './account';
 export * from './past-sessions';
 
 import { AccountComponents, AccountProviders } from './account';
-import {
-  AdminComponents,
-  AdminPanelComponent,
-  AdminProviders,
-  AdminResolver,
-  AdminService
-} from './admin-panel';
-import { PastSessionsComponents, PastSessionsProviders } from './past-sessions';
+import { AdminComponents, AdminProviders } from './admin-panel';
 
-export const DashboardComponents = [
-  ...AccountComponents,
-  ...AdminComponents,
-  ...PastSessionsComponents
-];
+export const DashboardComponents = [...AccountComponents, ...AdminComponents];
 
 export const DashboardEntryComponents = [];
 
-export const DashboardProviders = [
-  ...AdminProviders,
-  ...AccountProviders,
-  ...PastSessionsProviders
-];
+export const DashboardProviders = [...AdminProviders, ...AccountProviders];
