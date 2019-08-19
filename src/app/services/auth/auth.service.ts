@@ -103,6 +103,7 @@ export class AuthService {
         map((res: LoginResponse) => {
           this.setSession(res);
           this.contextService.user = res.user;
+          localStorage.setItem('benji_user', JSON.stringify(res.user));
         }),
         catchError(err => of(err.error))
       );
