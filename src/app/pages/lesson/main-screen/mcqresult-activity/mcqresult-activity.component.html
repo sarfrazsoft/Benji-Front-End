@@ -35,26 +35,36 @@
   <div class="header" fxLayout="column" fxFlex="100%">
     POLL
   </div>
-  <div class="content" fxLayout="column">
+  <div class="content" fxLayout="column" fxLayoutGap="3%">
     <div class="question">
-      What's the best defense against zombies?
+      {{ question }}
     </div>
-    <div class="options" *ngIf="!showChart">
-      <div class="option">
-        <div class="info" fxLayout="row">
+    <div fxLayoutGap="5%" *ngFor="let choice of choices; let i = index">
+      <div class="question-row" fxLayoutAlign="center center">
+        <span>{{ choice.responsePercent }}%</span>
+      </div>
+      <div class="options" fxFlex="100%">
+        <div class="option">
           <div
-            class="option-detail"
-            fxFlex="100%"
+            class="info white-color"
             fxLayout="row"
-            fxLayoutGap="2vw"
+            fxLayoutAlign="space-between"
           >
-            <div class="identifier">A.</div>
-            <div class="text">Crossbow</div>
+            <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
+              <div class="identifier">{{ optionIdentifiers[i] }}.</div>
+              <div class="text">{{ choice.text }}</div>
+            </div>
+            <div class="percentage" fxLayoutAlign="center center">
+              {{ choice.noOfResponses }}
+              {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
+            </div>
           </div>
-          <div class="percentage">12%</div>
-        </div>
-        <div id="progressbar">
-          <div></div>
+          <div id="progressbar" class="bg-primary-color-lighter">
+            <div
+              class="bg-primary-color-light"
+              [style.width.%]="choice.responsePercent"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
