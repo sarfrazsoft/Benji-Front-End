@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FlexAlignStyleBuilder } from '@angular/flex-layout';
+import { AfterViewInit, Component, OnChanges } from '@angular/core';
 import * as Chart from 'chart.js';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -9,23 +8,50 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./mcqresult-activity.component.scss']
 })
 export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
-  implements AfterViewInit {
-  canvas: any;
-  ctx: any;
+  implements AfterViewInit, OnChanges {
   showStatistics = false;
-  showChart = false;
+  showChart = true;
+  choices: Array<any> = [];
+  question = '';
+  optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
 
-  ngAfterViewInit() {
-    this.canvas = document.getElementById('myChart');
-    this.ctx = this.canvas.getContext('2d');
-    const myChart = new Chart(this.ctx, {
+  ngOnChanges() {
+    const act = this.activityState.mcqresultsactivity;
+
+    if (act.poll_mode) {
+      this.showStatistics = true;
+      this.showChart = false;
+
+      this.question = act.question_list[0].question;
+
+      this.choices = act.question_list[0].mcqchoice_set.map((choice, i) => {
+        const answer_count = act.choices_summary.find(c => c.id === choice.id)
+          .answer_count;
+
+        const totalResponse = this.activityState.lesson_run.joined_users.length;
+
+        return {
+          text: choice.choice_text,
+          noOfResponses: answer_count,
+          responsePercent: Math.round((answer_count / totalResponse) * 100)
+        };
+      });
+    }
+  }
+
+  renderChart() {
+    const act = this.activityState.mcqresultsactivity;
+    const labels = act.question_list.map(q => q.question);
+    const canvas: any = document.getElementById('myChart');
+    const ctx = canvas.getContext('2d');
+    const chartOptions = {
       type: 'bar',
       data: {
-        labels: ['Bazooka', 'Crossbow', 'Boat'],
+        labels: labels,
         datasets: [
           {
             label: '',
-            data: [1, 2, 3],
+            data: [1, 2, 3, 4],
             borderWidth: 1
           }
         ]
@@ -69,6 +95,13 @@ export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
           ]
         }
       }
-    });
+    };
+    const myChart = new Chart(ctx, chartOptions);
+  }
+
+  ngAfterViewInit() {
+    if (this.showChart) {
+      this.renderChart();
+    }
   }
 }

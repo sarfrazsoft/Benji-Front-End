@@ -39,6 +39,9 @@ export interface MCQActivity {
 }
 
 export interface MCQResultsActivity {
+  choices_summary: Array<{ id: number; answer_count: number }>;
+  poll_mode: boolean;
+  question_list: MCQQuestion[];
   results_summary: UserScore[];
   total: number;
 }
