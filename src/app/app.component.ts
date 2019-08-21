@@ -25,102 +25,102 @@ export class AppComponent implements OnInit {
           .getElementById('appFavicon')
           .setAttribute('href', info.favicon);
 
-        console.log(info.colors);
+        // console.log(info);
 
         // const cssCode = 'body {background-color: yellow}';
 
         const cssCode = `
         .bg-primary-color {
-          background: ${info.colors.primary};
+          background: ${info.parameters.primary};
         }
 
         .bg-primary-color-dark {
-          background: ${info.colors.primaryDark};
+          background: ${info.parameters.primary_dark};
         }
 
         .bg-primary-color-darkest {
-          background: ${info.colors.primaryDarkest};
+          background: ${info.parameters.primary_darkest};
         }
 
         .bg-primary-color-light {
-          background: ${info.colors.primaryLight};
+          background: ${info.parameters.primary_light};
         }
 
         .bg-primary-color-lighter {
-          background: ${info.colors.primaryLighter};
+          background: ${info.parameters.primary_lighter};
         }
 
         .mat-ink-bar {
-          background: ${info.colors.primaryDarkest} !important;
+          background: ${info.parameters.primary_darkest} !important;
         }
 
         .primary-color {
-          color: ${info.colors.primary} !important;
+          color: ${info.parameters.primary} !important;
         }
 
         .primary-color-dark {
-          color: ${info.colors.primaryDark};
+          color: ${info.parameters.primary_dark};
         }
 
         .primary-color-darkest {
-          color: ${info.colors.primaryDarkest};
+          color: ${info.parameters.primary_darkest};
         }
 
         .primary-color-light {
-          color: ${info.colors.primaryLight};
+          color: ${info.parameters.primary_light};
         }
 
         .primary-color-lighter {
-          color: ${info.colors.primaryLighter};
+          color: ${info.parameters.primary_lighter};
         }
 
         .b-standard-button:hover {
-          background: ${info.colors.primaryDark};
+          background: ${info.parameters.primary_dark};
         }
 
         .b-standard-button.selected {
-          background: ${info.colors.primary};
+          background: ${info.parameters.primary};
         }
 
         .b-standard-button.selected:hover {
-          background: ${info.colors.primary};
+          background: ${info.parameters.primary};
         }
 
         .indigo-launch-button:active {
-          background: ${info.colors.primaryDarker};
+          background: ${info.parameters.primary_darker};
         }
 
         .indigo-launch-button-sub:active {
-          background: ${info.colors.primaryDarker};
+          background: ${info.parameters.primary_darker};
         }
 
         em {
-          color: ${info.colors.primaryDarkest};
+          color: ${info.parameters.primary_darkest};
         }
 
         benji-ps-build-pitch-activity .b-flat-card__body .pitch-form .pitch-segment textarea {
-          border-bottom-color: ${info.colors.primary};
+          border-bottom-color: ${info.parameters.primary};
         }
 
         benji-ps-build-pitch-activity .b-flat-card__body .your-pitch em {
-          color: ${info.colors.primary};
-          border-bottom-color: ${info.colors.primary};
+          color: ${info.parameters.primary};
+          border-bottom-color: ${info.parameters.primary};
         }
 
         .login-container-mob .login-signup-section {
-          color: ${info.colors.primaryDarkest};
+          color: ${info.parameters.primary_darkest};
         }
 
         .login-container-mob .login-signup-section .section-buttons {
-          color: ${info.colors.primaryDarkest};
+          color: ${info.parameters.primary_darkest};
         }
 
         .low-response-dialog mat-dialog-container {
-          background-color: ${info.colors.primaryDark};
+          background-color: ${info.parameters.primary_dark};
         }
 
         .low-response-dialog mat-dialog-container.mat-dialog-container .content button {
-          background-color: ${info.colors.primaryDark};
+          background-color: ${info.parameters.primary_dark};
         }
         `;
 

@@ -11,7 +11,7 @@ import { AuthService, ContextService } from 'src/app/services';
 export class EntryComponent implements OnInit {
   selectedTab = 0;
   isMobile = false;
-  partnerName: string;
+  welcomeText: string;
 
   constructor(
     private authService: AuthService,
@@ -29,7 +29,7 @@ export class EntryComponent implements OnInit {
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
         console.log(info);
-        this.partnerName = info.name;
+        this.welcomeText = info.welcome_text;
       }
     });
   }
