@@ -159,3 +159,7 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
   color: $warning-color;
 }
 /* End of font colors*/
+
+.border-bottom {
+  border-bottom: 1px solid $secondary-color;
+}

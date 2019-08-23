@@ -31,7 +31,7 @@ export class LayoutService {
         // primaryDarkest: '#00178a'
         primary_lighter: '#f8b0ac',
         primary_light: '#fa8b85',
-        primary: '#fd4b42',
+        primary: '#0a4cef',
         primary_dark: '#fd261b',
         primary_darker: '#c91006',
         primary_darkest: '#830700'
