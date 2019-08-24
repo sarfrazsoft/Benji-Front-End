@@ -14,13 +14,50 @@ benji-ms-brainstorming-activity {
         font-size: 1.2vw;
         padding: 25px;
         overflow: hidden;
-        width: 21%;
-        margin: 25px 20px;
+        width: 20%;
+        margin: 20px 20px;
+        border: 1px solid $secondary-color-lighter;
+        border-radius: 5px;
         background: white;
         &.long-list {
           font-size: 2.8vh;
         }
       }
+    }
+  }
+}
+
+benji-ps-brainstorming-activity {
+  textarea {
+    color: inherit;
+    outline: none;
+    max-height: 130px;
+    min-height: 130px;
+    width: 60vw;
+    padding: 10px 10px;
+    border-radius: 8px;
+    border: #dfe5e7 1px solid;
+    &:focus {
+      box-shadow: 0px 0px 0pt 0.2pt $primary-color;
+      &::placeholder {
+        color: $secondary-color;
+        opacity: 0;
+      }
+    }
+    &::placeholder {
+      color: $secondary-color;
+      opacity: 1;
+    }
+  }
+
+  .b-standard-button {
+    text-align: center;
+    span {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
     }
   }
 }

@@ -1,0 +1,68 @@
+<benji-ps-instruction-template *ngIf="submitIdeas">
+  <ng-container class="body-title">Brainstorming</ng-container>
+  <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
+  <h1 class="body-heading pn-700 primary-color-darkest">
+    Submit your idea
+  </h1>
+  <ng-container class="body-text">
+    What’s one thing that we can do this week to be better active listeners?
+  </ng-container>
+  <ng-container class="content">
+    <div class="draft-idea">
+      <textarea
+        class="b-standard-textarea"
+        (ngModelChange)="locallySaveDraft($event)"
+      ></textarea>
+      <!-- [(ngModel)]="" -->
+    </div>
+    <button class="b-standard-button bg-primary-color" type="submit">
+      <!-- [ngClass]="{ inactive: !form.valid }" -->
+      Submit
+    </button>
+    <!-- <app-linear-timer
+      [timer]="this.activityState.discussionactivity.discussion_countdown_timer"
+      [timerOffset]="avgServerTimeOffset"
+    ></app-linear-timer> -->
+  </ng-container>
+</benji-ps-instruction-template>
+<benji-ps-instruction-template *ngIf="submitVote">
+  <ng-container class="body-title">Brainstorming</ng-container>
+  <h1 class="body-heading pn-700 primary-color-darkest">
+    Vote on your favorite idea
+  </h1>
+  <!-- <ng-container class="body-text">
+    Vote on your favorite idea
+  </ng-container> -->
+  <ng-container class="content">
+    <!-- <p>Press the + icon next to each name to review the pitches.</p> -->
+    <div *ngFor="let idea of ideas; let i = index">
+      <benji-vote-idea
+        [ideaText]="idea.text"
+        [(selectedIdea)]="selectedIdea"
+        (userSelected)="userSelected($event)"
+        (userExpanded)="userExpanded($event)"
+        (userCollapsed)="userCollapsed($event)"
+      ></benji-vote-idea>
+    </div>
+    <!-- [user]="idea.user" -->
+    <!-- [name]="getUserName(pitchSet.user)" -->
+    <!-- [expanded]="expandedUserArray['' + pitchSet.user]" -->
+    <!-- <app-linear-timer
+        [timer]="this.activityState.discussionactivity.discussion_countdown_timer"
+        [timerOffset]="avgServerTimeOffset"
+      ></app-linear-timer> -->
+  </ng-container>
+</benji-ps-instruction-template>
+
+<div
+  class="b-baseline-action bg-primary-color-dark"
+  *ngIf="selectedUser && !userVoted"
+>
+  <benji-animated-checkmark-button
+    loadingStateInnerHTML="Loading"
+    innerHTML="Submit"
+    buttonStyle="white"
+    [valid]="userVoted"
+    (click)="submitVote(selectedUser)"
+  ></benji-animated-checkmark-button>
+</div>

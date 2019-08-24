@@ -1,3 +1,4 @@
+import { BrainStormingComponents } from './brainstorming-activity';
 import { BuildPitchComponents } from './build-pitch-activity';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
@@ -22,6 +23,7 @@ export { ParticipantLessonComponent };
 export const ParticipantScreenComponents = [
   ...BuildPitchComponents,
   ...ParticipantSharedComponents,
+  ...BrainStormingComponents,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantFeedbackActivityComponent,

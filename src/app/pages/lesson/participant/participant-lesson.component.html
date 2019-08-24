@@ -1,13 +1,21 @@
 <benji-participant-toolbar></benji-participant-toolbar>
 
 <div *ngIf="isConnected() && serverMessage">
-  <benji-ps-lobby
+  <benji-ps-brainstorming-activity
     *ngIf="getActivityType() === 'LobbyActivity'"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-ps-lobby>
+  </benji-ps-brainstorming-activity>
+
+  <!-- <benji-ps-lobby
+    *ngIf="getActivityType() === 'LobbyActivity'"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-lobby> -->
 
   <benji-ps-build-pitch-activity
     *ngIf="getActivityType() === 'BuildAPitchActivity'"
