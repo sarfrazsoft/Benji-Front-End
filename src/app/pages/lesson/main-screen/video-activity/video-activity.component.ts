@@ -33,7 +33,6 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
     this.player.nativeElement.play();
 
     this.video.videoState$.subscribe(state => {
-      console.log(state);
       if (state === 'pause') {
         this.player.nativeElement.pause();
       } else if (state === 'resume') {
