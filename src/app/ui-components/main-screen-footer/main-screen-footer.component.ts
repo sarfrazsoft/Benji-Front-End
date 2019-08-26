@@ -8,7 +8,7 @@ import {
 import { VideoStateService } from '../../services/video-state.service';
 
 @Component({
-  selector: 'app-main-screen-footer',
+  selector: 'benji-main-screen-footer',
   templateUrl: './main-screen-footer.component.html',
   styleUrls: ['./main-screen-footer.component.scss']
 })
@@ -18,13 +18,20 @@ export class MainScreenFooterComponent implements OnInit {
   @Input() roomCode: string;
   @Input() isPaused: boolean;
 
-  constructor(private video: VideoStateService) {}
+  constructor(private videoStateService: VideoStateService) {}
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.isPaused) {
+      this.videoStateService.videoState = 'pause';
+    } else if (!this.isPaused) {
+      this.videoStateService.videoState = 'resume';
+    }
+  }
 
   controlClicked(eventType) {
+    this.videoStateService.videoState = eventType;
     if (eventType === 'pause') {
       this.socketMessage.emit(new PauseActivityEvent());
     } else if (eventType === 'next') {
