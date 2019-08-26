@@ -7,7 +7,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VideoStateService } from 'src/app/services';
-import { EndEvent } from 'src/app/services/backend/schema';
+import { EndEvent, PauseActivityEvent } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -36,7 +36,11 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
       if (state === 'pause') {
         this.player.nativeElement.pause();
       } else if (state === 'resume') {
-        this.player.nativeElement.play();
+        if (!this.player.nativeElement) {
+          // this.player.nativeElement.play();
+          // this.socketMessage.emit(new PauseActivityEvent());
+          // this.sendMessage.emit(new PauseActivityEvent());
+        }
       }
     });
   }
@@ -44,7 +48,7 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
   ngOnAfterViewInit() {}
 
   ngOnDestroy() {
-    this.videoStateSubscription.unsubscribe();
+    // this.videoStateSubscription.unsubscribe();
   }
 
   public skipVideo() {
