@@ -18,11 +18,13 @@
     <ul>
       <li
         *ngFor="let idea of ideas"
-        class="primary-color-darkest"
+        class=""
         [ngClass]="{
           'long-list': ideas.length > 20
         }"
       >
+        <mat-icon class="">clear</mat-icon>
+
         {{ idea.text }}
       </li>
     </ul>
