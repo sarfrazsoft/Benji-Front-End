@@ -6,29 +6,29 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./vote-idea.component.scss']
 })
 export class VoteIdeaComponent implements OnInit {
-  @Input() user = null;
-  @Input() selectedIdea = null;
+  @Input() ideaId = null;
+  @Input() selectedIdeas = [];
   @Input() ideaText = '';
   @Input() name = '';
   @Input() expanded = false;
-  @Output() userSelected = new EventEmitter();
-  @Output() userExpanded = new EventEmitter();
-  @Output() userCollapsed = new EventEmitter();
+  @Output() ideaSelected = new EventEmitter();
+  @Output() ideaExpanded = new EventEmitter();
+  @Output() ideaCollapsed = new EventEmitter();
   constructor() {}
 
   ngOnInit() {}
 
-  selectUser(user) {
-    this.userSelected.emit(user);
+  selectIdea(idea) {
+    this.ideaSelected.emit(idea);
   }
 
-  expand(user) {
+  expand(idea) {
     this.expanded = true;
-    this.userExpanded.emit(user);
+    this.ideaExpanded.emit(idea);
   }
 
-  collapse(user) {
+  collapse(idea) {
     this.expanded = false;
-    this.userCollapsed.emit(user);
+    this.ideaCollapsed.emit(idea);
   }
 }

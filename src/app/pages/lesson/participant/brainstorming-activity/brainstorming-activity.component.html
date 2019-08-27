@@ -37,11 +37,12 @@
     <!-- <p>Press the + icon next to each name to review the pitches.</p> -->
     <div *ngFor="let idea of ideas; let i = index">
       <benji-vote-idea
+        [ideaId]="idea.id"
         [ideaText]="idea.text"
-        [(selectedIdea)]="selectedIdea"
-        (userSelected)="userSelected($event)"
-        (userExpanded)="userExpanded($event)"
-        (userCollapsed)="userCollapsed($event)"
+        [(selectedIdeas)]="selectedIdeas"
+        (ideaSelected)="ideaSelected($event)"
+        (ideaExpanded)="ideaExpanded($event)"
+        (ideaCollapsed)="ideaCollapsed($event)"
       ></benji-vote-idea>
     </div>
     <!-- [user]="idea.user" -->
@@ -60,7 +61,7 @@
 >
   <benji-animated-checkmark-button
     loadingStateInnerHTML="Loading"
-    innerHTML="Submit"
+    innerHTML="Submit 3 votes"
     buttonStyle="white"
     [valid]="userVoted"
     (click)="submitVote(selectedUser)"

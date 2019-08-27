@@ -3,12 +3,12 @@
     <button
       class="b-standard-button unselected"
       [ngClass]="{
-        selected: selectedUser === user && selectedUser != null
+        selected: selectedIdeas.includes(ideaId)
       }"
-      (click)="selectUser(user)"
+      (click)="selectIdea(ideaId)"
       fxLayoutAlign="center center"
     >
-      <span>
+      <span class="idea-text">
         {{ ideaText }}
       </span>
     </button>
@@ -17,14 +17,14 @@
       src="/assets/img/add_icon.png"
       alt="expand"
       *ngIf="!expanded"
-      (click)="expand(user)"
+      (click)="expand(ideaId)"
     />
     <img
       class="participant-utility-icons"
       src="/assets/img/close_icon.png"
       alt="launch"
       *ngIf="expanded"
-      (click)="collapse(user)"
+      (click)="collapse(ideaId)"
     />
   </div>
   <div
