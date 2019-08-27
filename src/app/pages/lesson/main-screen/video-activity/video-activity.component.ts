@@ -36,8 +36,8 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
       if (state === 'pause') {
         this.player.nativeElement.pause();
       } else if (state === 'resume') {
+        this.player.nativeElement.play();
         if (!this.player.nativeElement) {
-          // this.player.nativeElement.play();
           // this.socketMessage.emit(new PauseActivityEvent());
           // this.sendMessage.emit(new PauseActivityEvent());
         }
