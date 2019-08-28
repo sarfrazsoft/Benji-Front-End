@@ -104,7 +104,6 @@ export class SidenavComponent implements OnInit {
 
   initNavigation() {
     this.contextService.user$.subscribe(user => {
-      console.log(user);
       if (user.local_admin_permission) {
         this.sidenavSections = [
           this.adminSection,
