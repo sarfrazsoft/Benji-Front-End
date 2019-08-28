@@ -11,24 +11,25 @@
   .content {
     width: 90vw;
     text-align: center;
-    font-size: 2vw;
+    font-size: 2.3vw;
     .question {
       font-weight: 600;
       margin-bottom: 4vh;
     }
     .question-row {
-      min-width: 62px;
+      min-width: 70px;
     }
     .options {
       position: relative;
       text-align: left;
       .info {
-        padding: 5px 30px;
+        padding: 8px 30px;
         .percentage {
           min-width: 270px;
         }
       }
       #progressbar {
+        background: #bec8ca;
         border-radius: 8px;
         padding: 0px;
         position: absolute;
@@ -37,7 +38,6 @@
         top: 0;
         z-index: -1;
       }
-
       #progressbar > div {
         height: 100%;
         border-radius: 8px 0px 0px 8px;
