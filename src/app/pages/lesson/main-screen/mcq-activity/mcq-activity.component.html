@@ -49,19 +49,19 @@
     </ng-container>
   </div>
   <div class="mcq-activity__linear-timer-container">
-    <app-linear-timer
+    <benji-linear-timer
       *ngIf="reveal()"
       [timer]="activityState.base_activity.next_activity_start_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
+    ></benji-linear-timer>
 
-    <!-- <app-linear-timer
+    <!-- <benji-linear-timer
     *ngIf="reveal()"
     [timerSeconds]="pauseSeconds"
     (initCallback)="startRevealTimer($event)"
     #revealTimer
-  ></app-linear-timer> -->
+  ></benji-linear-timer> -->
   </div>
 </div>
 

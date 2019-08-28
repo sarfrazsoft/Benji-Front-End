@@ -10,7 +10,7 @@ import * as moment from 'moment';
 import { Timer } from '../../services/backend/schema';
 
 @Component({
-  selector: 'app-linear-timer',
+  selector: 'benji-linear-timer',
   templateUrl: './linear-timer.component.html',
   styleUrls: ['./linear-timer.component.scss']
 })
