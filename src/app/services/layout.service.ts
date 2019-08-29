@@ -11,73 +11,7 @@ export class LayoutService {
   constructor(
     private http: HttpClient,
     private contextService: ContextService
-  ) {
-    this.getPartnerInfo();
-  }
-
-  getPartnerInfo(): any {
-    this.contextService.partnerInfo = {
-      name: '',
-      description: '',
-      link: '',
-      logo: '',
-      favicon: '',
-      parameters: {
-        // primaryLighter: '#80a8ff',
-        // primaryLight: '#4c83fc',
-        // primary: '#0a4cef',
-        // primaryDark: '#4c188f',
-        // primaryDarker: '#3a126e',
-        // primaryDarkest: '#00178a'
-        primary_lighter: '#f8b0ac',
-        primary_light: '#fa8b85',
-        primary: '#0a4cef',
-        primary_dark: '#fd261b',
-        primary_darker: '#c91006',
-        primary_darkest: '#830700'
-      }
-    };
-    // this.contextService.partnerInfo = {
-    //   name: 'Welcome to Holistic Learning!',
-    //   description: 'What\'s Holistic Learning? Learn about your future here.',
-    //   link: 'www.holisticlearning.com',
-    //   logo: './assets/img/logo_black.png',
-    //   favicon: './assets/img/favicon_holistic.ico',
-    //   primaryClass: 'holistic-theme',
-    //   colors: {
-    //     // primaryLighter: '#80a8ff',
-    //     // primaryLight: '#4c83fc',
-    //     // primary: '#0a4cef',
-    //     // primaryDark: '#4c188f',
-    //     // primaryDarker: '#3a126e',
-    //     // primaryDarkest: '#00178a'
-    //     primaryLighter: '#f8b0ac',
-    //     primaryLight: '#fa8b85',
-    //     primary: '#fd4b42',
-    //     primaryDark: '#fd261b',
-    //     primaryDarker: '#c91006',
-    //     primaryDarkest: '#830700'
-    //   }
-    // };
-    // this.contextService.partnerInfo = {
-    //   name: 'Welcome to Benji!',
-    //   description: 'What\'s Holistic Learning? Learn about your future here.',
-    //   partnerLink: 'www.holisticlearning.com',
-    //   partnerLogo: './assets/img/Benji_logo_white.png',
-    //   primaryClass: 'benji-theme'
-    // };
-    // 1
-    // api/tenants/orgs/{id}/white_label_info
-    this.http
-      .get(global.apiRoot + '/tenants/orgs/' + '1' + '/white_label_info')
-      .subscribe((res: any) => {
-        this.contextService.partnerInfo = res;
-        // this.contextService.partnerInfo.colors = res.parameters;
-        // this.contextService.partnerInfo = 'Benji Hud';
-        // console.log(this.contextService.partnerInfo);
-        // return res;
-      });
-  }
+  ) {}
 
   toggleFullscreen() {
     if (this.isFullscreen) {

@@ -14,9 +14,7 @@ export class AppComponent implements OnInit {
     private layoutService: LayoutService,
     private contextService: ContextService,
     @Inject(DOCUMENT) private _document: HTMLDocument
-  ) {
-    layoutService.getPartnerInfo();
-  }
+  ) {}
 
   ngOnInit() {
     this.contextService.partnerInfo$.subscribe(info => {
@@ -24,10 +22,6 @@ export class AppComponent implements OnInit {
         this._document
           .getElementById('appFavicon')
           .setAttribute('href', info.favicon);
-
-        // console.log(info);
-
-        // const cssCode = 'body {background-color: yellow}';
 
         const cssCode = `
         .bg-primary-color {
