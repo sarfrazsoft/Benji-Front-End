@@ -5,15 +5,29 @@ import {
   ActivateAccountComponent,
   EntryComponent
 } from 'src/app/pages';
+import { WhiteLabelResolver } from './services';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: 'src/app/layout/layout.module#LayoutModule'
+    loadChildren: 'src/app/layout/layout.module#LayoutModule',
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
+  },
+  {
+    path: 'login/:partner',
+    component: EntryComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
   },
   {
     path: 'login',
-    component: EntryComponent
+    component: EntryComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
   },
   {
     path: 'activate/:confirmationCode',

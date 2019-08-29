@@ -7,7 +7,14 @@ import { ContextService } from 'src/app/services';
   styleUrls: ['./participant-toolbar.component.scss']
 })
 export class ParticipantToolbarComponent implements OnInit {
+  logo;
   constructor(private contextService: ContextService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contextService.partnerInfo$.subscribe(info => {
+      if (info) {
+        this.logo = info.logo;
+      }
+    });
+  }
 }

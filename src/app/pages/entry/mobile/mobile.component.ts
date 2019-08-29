@@ -10,6 +10,7 @@ import { AuthService, ContextService } from 'src/app/services';
 export class MobileComponent implements OnInit {
   isDemoSite = true;
   showLoginMob = true;
+  logo;
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -25,5 +26,11 @@ export class MobileComponent implements OnInit {
     if (this.authService.userInvitation) {
       this.showLoginMob = false;
     }
+
+    this.contextService.partnerInfo$.subscribe(info => {
+      if (info) {
+        this.logo = info.logo;
+      }
+    });
   }
 }

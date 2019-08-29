@@ -12,6 +12,8 @@ export class EntryComponent implements OnInit {
   selectedTab = 0;
   isMobile = false;
   welcomeText: string;
+  link: string;
+  logo;
 
   constructor(
     private authService: AuthService,
@@ -28,8 +30,9 @@ export class EntryComponent implements OnInit {
 
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
-        console.log(info);
         this.welcomeText = info.welcome_text;
+        this.link = info.link;
+        this.logo = info.logo;
       }
     });
   }

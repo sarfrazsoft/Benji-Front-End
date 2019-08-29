@@ -25,10 +25,6 @@ export class AppComponent implements OnInit {
           .getElementById('appFavicon')
           .setAttribute('href', info.favicon);
 
-        // console.log(info);
-
-        // const cssCode = 'body {background-color: yellow}';
-
         const cssCode = `
         .bg-primary-color {
           background: ${info.parameters.primary};

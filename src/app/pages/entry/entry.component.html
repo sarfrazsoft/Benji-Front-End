@@ -28,7 +28,7 @@
       <div class="intro-text">
         <span fxFlex="0 0 75%">
           What’s Benji? Learn about the future of workplace learning
-          <b> <a href="http://mybenji.com">here</a> </b>.
+          <b> <a [attr.href]="link">here</a> </b>.
         </span>
       </div>
     </div>
@@ -41,7 +41,7 @@
     fxLayoutAlign="start center"
   >
     <div class="header" fxLayoutAlign="center">
-      <img [src]="contextService.partnerInfo.logo" />
+      <img [src]="logo" />
     </div>
     <div class="form-tabs">
       <mat-tab-group
