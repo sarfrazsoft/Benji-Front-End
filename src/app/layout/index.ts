@@ -20,6 +20,7 @@ import { ParticipantToolbarComponent } from '../ui-components/participant-toolba
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
 import {
+  LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   MainScreenComponents,
   ParticipantScreenComponents
@@ -28,6 +29,7 @@ import {
 export const LayoutDeclarations = [
   ...MainScreenComponents,
   ...ParticipantScreenComponents,
+  LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   AnimatedCheckmarkButtonComponent,
   BTwemojiComponent,
@@ -47,4 +49,7 @@ export const LayoutDeclarations = [
   SidenavItemComponent
 ];
 
-export const EntryComponents = [LowResponseDialogComponent];
+export const EntryComponents = [
+  LowAttendanceDialogComponent,
+  LowResponseDialogComponent
+];

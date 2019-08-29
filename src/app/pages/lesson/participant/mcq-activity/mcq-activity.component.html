@@ -28,10 +28,10 @@
     </div>
   </div>
   <div class="mc-card__timer">
-    <app-linear-timer
+    <benji-linear-timer
       [timer]="activityState.mcqactivity.question_timer"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
+    ></benji-linear-timer>
   </div>
 </ng-container>
 
@@ -66,10 +66,10 @@
       <p>{{ correctChoice().explanation_text }}</p>
     </div>
     <div class="mc-card__timer">
-      <app-linear-timer
+      <benji-linear-timer
         [timer]="activityState.base_activity.next_activity_start_timer"
         [timerOffset]="avgServerTimeOffset"
-      ></app-linear-timer>
+      ></benji-linear-timer>
     </div>
   </div>
 </ng-container>
