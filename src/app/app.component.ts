@@ -14,9 +14,7 @@ export class AppComponent implements OnInit {
     private layoutService: LayoutService,
     private contextService: ContextService,
     @Inject(DOCUMENT) private _document: HTMLDocument
-  ) {
-    layoutService.getPartnerInfo();
-  }
+  ) {}
 
   ngOnInit() {
     this.contextService.partnerInfo$.subscribe(info => {
