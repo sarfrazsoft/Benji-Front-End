@@ -22,12 +22,12 @@
           We want to share
         </button>
       </div>
-      <app-linear-timer
+      <benji-linear-timer
         [timer]="
           this.activityState.discussionactivity.discussion_countdown_timer
         "
         [timerOffset]="avgServerTimeOffset"
-      ></app-linear-timer>
+      ></benji-linear-timer>
     </ng-container>
   </benji-ps-instruction-template>
 </ng-container>
@@ -54,13 +54,13 @@
           <ng-container> Done </ng-container>
         </button>
       </div>
-      <app-linear-timer
+      <benji-linear-timer
         [timer]="
           activityState.discussionactivity.currently_sharing_group
             .sharing_countdown_timer
         "
         [timerOffset]="avgServerTimeOffset"
-      ></app-linear-timer>
+      ></benji-linear-timer>
     </ng-container>
   </benji-ps-instruction-template>
 </ng-container>

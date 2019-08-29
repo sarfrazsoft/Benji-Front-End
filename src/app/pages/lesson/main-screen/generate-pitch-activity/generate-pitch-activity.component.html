@@ -506,28 +506,28 @@
   </div>
 
   <div class="linear-timer-container">
-    <app-linear-timer
+    <benji-linear-timer
       [timer]="activityState.pitchomaticactivity.group_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
-    <app-linear-timer
+    ></benji-linear-timer>
+    <benji-linear-timer
       *ngIf="timeToPitchMT8"
       [timer]="activityState.pitchomaticactivity.pitch_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
-    <app-linear-timer
+    ></benji-linear-timer>
+    <benji-linear-timer
       *ngIf="giveFeedbackMT8"
       [timer]="activityState.pitchomaticactivity.feedback_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
-    <app-linear-timer
+    ></benji-linear-timer>
+    <benji-linear-timer
       *ngIf="shareFeedbackMT8"
       [timer]="activityState.pitchomaticactivity.discuss_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
+    ></benji-linear-timer>
   </div>
 </div>

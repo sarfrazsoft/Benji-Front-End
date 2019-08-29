@@ -18,11 +18,11 @@
     </p>
   </div>
   <div class="linear-timer-container">
-    <app-linear-timer
+    <benji-linear-timer
       [timer]="activityState.base_activity.next_activity_start_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
-    ></app-linear-timer>
+    ></benji-linear-timer>
   </div>
 </div>
 
@@ -35,7 +35,7 @@
   <div class="header" fxLayout="column" fxFlex="100%">
     POLL
   </div>
-  <div class="content" fxLayout="column" fxLayoutGap="3%">
+  <div class="content" fxLayout="column" fxLayoutGap="2.5%">
     <div class="question">
       {{ question }}
     </div>
@@ -59,7 +59,7 @@
               {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
             </div>
           </div>
-          <div id="progressbar" class="bg-primary-color-lighter">
+          <div id="progressbar">
             <div
               class="bg-primary-color-light"
               [style.width.%]="choice.responsePercent"
