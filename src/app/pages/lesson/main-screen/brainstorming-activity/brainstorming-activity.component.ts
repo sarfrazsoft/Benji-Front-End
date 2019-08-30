@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -58,5 +59,9 @@ export class MainScreenBrainstormingActivityComponent
           'talking and wait till the end to ask questions'
       }
     ];
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.ideas, event.previousIndex, event.currentIndex);
   }
 }
