@@ -1,9 +1,7 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -36,17 +34,14 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
 const SHARED_MODULES = [
-  // BrowserAnimationsModule,
   FlexLayoutModule,
   FormsModule,
-  DragDropModule,
   ReactiveFormsModule,
   MatAutocompleteModule,
   MatButtonModule,

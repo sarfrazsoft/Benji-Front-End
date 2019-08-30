@@ -15,11 +15,10 @@
     </div>
   </div>
   <div class="submitted-ideas">
-    <ul cdkDropList (cdkDropListDropped)="drop($event)">
+    <ul>
       <li
         *ngFor="let idea of ideas"
         class=""
-        cdkDrag
         [ngClass]="{
           'long-list': ideas.length > 20
         }"
