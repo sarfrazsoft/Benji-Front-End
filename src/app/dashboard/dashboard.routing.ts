@@ -28,6 +28,11 @@ const routes: Routes = [
         canLoad: [IsAdminGuard]
       },
       {
+        path: 'groups',
+        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule',
+        canLoad: [IsAdminGuard]
+      },
+      {
         path: 'account',
         component: AccountComponent
       },

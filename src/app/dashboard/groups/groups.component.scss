@@ -1,0 +1,24 @@
+.group-card {
+  width: 320px;
+  margin: 20px;
+  div {
+    margin-bottom: 12px;
+    font-size: 24px;
+  }
+  .title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #6c6c6c;
+  }
+}
+
+#progressbar {
+  background: #bec8ca;
+  padding: 0px;
+  width: 100%;
+  height: 10px;
+  z-index: 0;
+}
+#progressbar > div {
+  height: 100%;
+}
