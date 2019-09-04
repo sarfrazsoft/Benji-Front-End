@@ -1,3 +1,8 @@
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem
+} from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -9,10 +14,49 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit {
-  ideas = [];
   constructor() {
     super();
   }
+  ideas = [];
+
+  categories = [
+    {
+      name: 'Category 1',
+      list: [
+        'Category 1 task 1',
+        'Category 1 task 2',
+        'Category 1 task 3',
+        'Category 1 task 4'
+      ]
+    },
+    {
+      name: 'Category 2',
+      list: [
+        'Category 2 task 1',
+        'Category 2 task 2',
+        'Category 2 task 3',
+        'Category 2 task 4'
+      ]
+    },
+    {
+      name: 'Category 3',
+      list: [
+        'Category 3 task 1',
+        'Category 3 task 2',
+        'Category 3 task 3',
+        'Category 3 task 4'
+      ]
+    },
+    {
+      name: 'Category 4',
+      list: [
+        'Category 4 task 1',
+        'Category 4 task 2',
+        'Category 4 task 3',
+        'Category 4 task 4'
+      ]
+    }
+  ];
 
   ngOnInit() {
     this.ideas = [
@@ -49,8 +93,6 @@ export class MainScreenBrainstormingActivityComponent
       { id: 10, text: 'Summarize and paraphrase what people are saying' },
       { id: 11, text: 'Summarize and paraphrase what people are saying' },
       { id: 12, text: 'Summarize and paraphrase what people are saying' },
-      // { id: 13, text: 'Summarize and paraphrase what people are saying' },
-      // { id: 14, text: 'Summarize and paraphrase what people are saying' },
       {
         id: 15,
         text:
@@ -58,5 +100,22 @@ export class MainScreenBrainstormingActivityComponent
           'talking and wait till the end to ask questions'
       }
     ];
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
   }
 }
