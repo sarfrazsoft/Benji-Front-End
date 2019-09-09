@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatButtonModule,
+  MatCardModule,
   MatCheckboxModule,
   MatChipsModule,
   MatCommonModule,
@@ -47,6 +48,7 @@ const SHARED_MODULES = [
   ReactiveFormsModule,
   MatAutocompleteModule,
   MatButtonModule,
+  MatCardModule,
   MatCheckboxModule,
   MatChipsModule,
   MatCommonModule,
