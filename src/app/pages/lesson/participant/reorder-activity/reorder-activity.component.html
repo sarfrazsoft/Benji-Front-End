@@ -1,0 +1,30 @@
+<div class="b-flat-card center-text mc-card ">
+  <ng-container>
+    <div class="b-flat-card__title"><h2 class="pn-400">Pop quiz</h2></div>
+    <div class="b-flat-card__body">
+      <h3 class="pn-600 primary-color-darkest">
+        Reorder
+      </h3>
+    </div>
+    <div class="b-flat-card__action">
+      <div class="listsrrr-container" cdkDropListGroup>
+        <div
+          class="vote-pitch-column"
+          cdkDropList
+          [cdkDropListData]="items"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <button
+            class="b-standard-button unselected"
+            *ngFor="let item of items"
+            cdkDrag
+          >
+            <span class="idea-text">
+              {{ item.text }}
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

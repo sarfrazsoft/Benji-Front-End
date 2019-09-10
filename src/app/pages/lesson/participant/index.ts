@@ -12,6 +12,7 @@ import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.
 import { ParticipantPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
 import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
+import { ReorderComponents } from './reorder-activity';
 import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
 import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
@@ -24,6 +25,7 @@ export const ParticipantScreenComponents = [
   ...BuildPitchComponents,
   ...ParticipantSharedComponents,
   ...BrainStormingComponents,
+  ...ReorderComponents,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantFeedbackActivityComponent,
