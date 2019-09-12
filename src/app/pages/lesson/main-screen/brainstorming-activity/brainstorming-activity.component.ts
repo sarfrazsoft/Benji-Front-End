@@ -63,41 +63,118 @@ export class MainScreenBrainstormingActivityComponent
       {
         id: 1,
         text:
-          'Put away my phone when people are trying to have a conversation with me'
+          'Put away my phone when people are trying to have a conversation with me',
+        showClose: false
       },
       {
         id: 2,
-        text: 'Be more mindful of my thoughts while in conversation'
+        text: 'Be more mindful of my thoughts while in conversation',
+        showClose: false
       },
       {
         id: 3,
         text:
           'Remember not to interrupt people while they’re' +
-          ' talking and wait till the end to ask questions'
+          ' talking and wait till the end to ask questions',
+        showClose: false
       },
-      { id: 40, text: 'Get rid of distractions' },
-      { id: 41, text: 'Get rid of distractions' },
-      { id: 42, text: 'Get rid of distractions' },
-      { id: 43, text: 'Get rid of distractions' },
-      { id: 5, text: 'Remind people to pay attention if they get distracted' },
-      { id: 6, text: 'Summarize and paraphrase what people are saying' },
-      { id: 7, text: 'Be more mindful of my thoughts while in conversation' },
-      { id: 8, text: 'Summarize and paraphrase what people are saying' },
+      { id: 40, text: 'Get rid of distractions', showClose: false },
+      { id: 41, text: 'Get rid of distractions', showClose: false },
+      { id: 42, text: 'Get rid of distractions', showClose: false },
+      { id: 43, text: 'Get rid of distractions', showClose: false },
+      {
+        id: 5,
+        text: 'Remind people to pay attention if they get distracted',
+        showClose: false
+      },
+      {
+        id: 6,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 7,
+        text: 'Be more mindful of my thoughts while in conversation',
+        showClose: false
+      },
+      {
+        id: 8,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
       {
         id: 9,
         text:
           'Summarize and paraphrase what people are saying' +
           'Summarize and paraphrase what people are saying' +
-          'Summarize and paraphrase what people are saying'
+          'Summarize and paraphrase what people are saying',
+        showClose: false
       },
-      { id: 10, text: 'Summarize and paraphrase what people are saying' },
-      { id: 11, text: 'Summarize and paraphrase what people are saying' },
-      { id: 12, text: 'Summarize and paraphrase what people are saying' },
+      {
+        id: 10,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 11,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 12,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
       {
         id: 15,
         text:
           'Remember not to interrupt people while they’re' +
-          'talking and wait till the end to ask questions'
+          'talking and wait till the end to ask questions',
+        showClose: false
+      },
+      {
+        id: 10,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 11,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 12,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 15,
+        text:
+          'Remember not to interrupt people while they’re' +
+          'talking and wait till the end to ask questions',
+        showClose: false
+      },
+      {
+        id: 10,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 11,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 12,
+        text: 'Summarize and paraphrase what people are saying',
+        showClose: false
+      },
+      {
+        id: 15,
+        text:
+          'Remember not to interrupt people while they’re' +
+          'talking and wait till the end to ask questions',
+        showClose: false
       }
     ];
   }
