@@ -40,9 +40,9 @@
       {{ question }}
     </div>
     <div fxLayoutGap="5%" *ngFor="let choice of choices; let i = index">
-      <div class="question-row" fxLayoutAlign="center center">
+      <!-- <div class="question-row" fxLayoutAlign="center center">
         <span>{{ choice.responsePercent }}%</span>
-      </div>
+      </div> -->
       <div class="options" fxFlex="100%">
         <div class="option">
           <div
@@ -55,8 +55,9 @@
               <div class="text">{{ choice.text }}</div>
             </div>
             <div class="percentage" fxLayoutAlign="center center">
-              {{ choice.noOfResponses }}
-              {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
+              {{ choice.noOfResponses }}/{{
+                activityState.lesson_run.joined_users.length
+              }}
             </div>
           </div>
           <div id="progressbar">
