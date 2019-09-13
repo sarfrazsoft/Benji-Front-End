@@ -32,7 +32,9 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Pitch-o-matic 3000</h1>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Pitch-o-matic 3000
+    </h1>
     <ng-container class="body-text">
       Press the button to generate your pitch criteria!
     </ng-container>
@@ -74,7 +76,10 @@
   </benji-ps-instruction-template>
 </div>
 
-<div class="b-flat-card center-text feedback-card" *ngIf="draftPitchSection">
+<div
+  class="b-flat-card center-text feedback-card heightAuto"
+  *ngIf="draftPitchSection"
+>
   <div class="b-flat-card__title">
     <h2 class="pn-400">Pitch-o-matic 3000</h2>
   </div>
@@ -98,7 +103,6 @@
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="7"
-          cdkAutosizeMaxRows="10"
           [(ngModel)]="pitchDraftNotes"
           (ngModelChange)="locallySaveDraft($event)"
         ></textarea>
@@ -176,7 +180,9 @@
   <benji-ps-instruction-template>
     <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Thanks for your feedback</h1>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Thanks for your feedback
+    </h1>
     <ng-container class="body-text">
       Waiting for everyone else to finish giving feedback
     </ng-container>

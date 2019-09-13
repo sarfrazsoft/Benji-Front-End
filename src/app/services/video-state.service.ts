@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VideoStateService {
-  private stateChangedSource = new Subject<any>();
+  /**
+   * Current State of video
+   */
+  videoState$ = new BehaviorSubject<any>(null);
 
-  public stateChanged$ = this.stateChangedSource.asObservable();
-
-  constructor() {
+  set videoState(videoState: any) {
+    this.videoState$.next(videoState);
   }
-  public updateState(videoState) {
-    this.stateChangedSource.next(videoState);
+  get videoState(): any {
+    return this.videoState$.getValue();
   }
-
-
 }

@@ -9,26 +9,35 @@
     text-align: center;
   }
   .content {
-    width: 75vw;
+    width: 90vw;
     text-align: center;
-    font-size: 3vw;
+    font-size: 2.3vw;
     .question {
       font-weight: 600;
       margin-bottom: 4vh;
     }
     .options {
-      font-size: 2.5vw;
-      #progressbar {
-        background-color: $secondary-color-light;
-        border-radius: 2px;
-        padding: 1px;
+      position: relative;
+      text-align: left;
+      .info {
+        padding: 8px 30px;
+        .percentage {
+          min-width: 80px;
+        }
       }
-
+      #progressbar {
+        background: #bec8ca;
+        border-radius: 8px;
+        padding: 0px;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        z-index: -1;
+      }
       #progressbar > div {
-        background-color: $secondary-color-dark;
-        width: 40%;
-        height: 4px;
-        border-radius: 2px;
+        height: 100%;
+        border-radius: 8px 0px 0px 8px;
       }
     }
   }

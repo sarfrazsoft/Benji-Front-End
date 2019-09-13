@@ -11,9 +11,6 @@ benji-courses {
       span {
         transition: all $animation-time linear;
         border-bottom: 1px solid #fff;
-        &:hover {
-          border-bottom-color: $primary-color;
-        }
       }
       img {
         margin-left: 8px;
@@ -29,6 +26,9 @@ benji-courses {
           margin-right: -10px;
           margin-left: 18px;
         }
+        span {
+          border-bottom-color: $primary-color;
+        }
       }
     }
   }
@@ -38,30 +38,33 @@ benji-courses {
     .description {
       padding: 20px 0px;
     }
-    .course-preview-footer {
-      .overview-button {
-        cursor: pointer;
-        color: $primary-color;
-        span {
-          transition: all $animation-time linear;
-          border-bottom: 1px solid #fff;
-        }
-        img {
-          margin-left: 12px;
-          height: 17px;
-          margin-bottom: -4px;
-          transition: margin-left $animation-time linear;
-          -webkit-transition: margin-left $animation-time linear;
-          -ms-transition: margin-left $animation-time linear;
-        }
-        &:hover {
-          img {
-            margin-left: 20px;
-          }
-          span {
-            border-bottom-color: $primary-color;
-          }
-        }
+  }
+}
+
+// move to better file
+.course-preview-footer,
+.view-details-link {
+  .overview-button {
+    cursor: pointer;
+    color: $primary-color;
+    span {
+      transition: all $animation-time linear;
+      border-bottom: 1px solid #fff;
+    }
+    img {
+      margin-left: 12px;
+      height: 17px;
+      margin-bottom: -4px;
+      transition: margin-left $animation-time linear;
+      -webkit-transition: margin-left $animation-time linear;
+      -ms-transition: margin-left $animation-time linear;
+    }
+    &:hover {
+      img {
+        margin-left: 20px;
+      }
+      span {
+        border-bottom-color: $primary-color;
       }
     }
   }

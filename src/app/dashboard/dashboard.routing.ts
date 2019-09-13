@@ -33,6 +33,11 @@ const routes: Routes = [
           'src/app/dashboard/past-sessions/past-sessions.module#PastSessionsModule'
       },
       {
+        path: 'groups',
+        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule',
+        canLoad: [IsAdminGuard]
+      },
+      {
         path: 'account',
         component: AccountComponent
       },

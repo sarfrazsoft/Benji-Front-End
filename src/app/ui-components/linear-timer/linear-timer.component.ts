@@ -6,10 +6,11 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import {Timer} from '../../services/backend/schema';
+import * as moment from 'moment';
+import { Timer } from '../../services/backend/schema';
 
 @Component({
-  selector: 'app-linear-timer',
+  selector: 'benji-linear-timer',
   templateUrl: './linear-timer.component.html',
   styleUrls: ['./linear-timer.component.scss']
 })
@@ -50,7 +51,8 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
         } else {
           offset = 0;
         }
-        this.remainingTime = Date.parse(this.timer.end_time) - Date.now() - offset;
+        this.remainingTime =
+          moment(this.timer.end_time).valueOf() - moment().valueOf() - offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }
@@ -68,6 +70,6 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
   }
 
   progressBarWidth() {
-    return 100 * (this.totalTime - this.remainingTime) / this.totalTime;
+    return (100 * (this.totalTime - this.remainingTime)) / this.totalTime;
   }
 }

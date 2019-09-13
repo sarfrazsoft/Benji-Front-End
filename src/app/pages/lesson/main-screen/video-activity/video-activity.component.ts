@@ -7,7 +7,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { VideoStateService } from 'src/app/services';
-import { EndEvent } from 'src/app/services/backend/schema';
+import { EndEvent, PauseActivityEvent } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -32,19 +32,15 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
     this.player.nativeElement.load();
     this.player.nativeElement.play();
 
-    this.videoStateSubscription = this.video.stateChanged$.subscribe(state => {
-      if (state === 'rewind') {
-        this.player.nativeElement.currentTime = 0;
-        this.videoPlaying = true;
+    this.video.videoState$.subscribe(state => {
+      if (state === 'pause') {
+        this.player.nativeElement.pause();
+      } else if (state === 'resume') {
         this.player.nativeElement.play();
-      } else if (state === 'toggleplayback') {
-        // this.player
-        this.videoPlaying = !this.videoPlaying;
-        this.videoPlaying
-          ? this.player.nativeElement.play()
-          : this.player.nativeElement.pause();
-      } else if (state === 'skip') {
-        this.skipVideo();
+        if (!this.player.nativeElement) {
+          // this.socketMessage.emit(new PauseActivityEvent());
+          // this.sendMessage.emit(new PauseActivityEvent());
+        }
       }
     });
   }
@@ -52,7 +48,7 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
   ngOnAfterViewInit() {}
 
   ngOnDestroy() {
-    this.videoStateSubscription.unsubscribe();
+    // this.videoStateSubscription.unsubscribe();
   }
 
   public skipVideo() {
