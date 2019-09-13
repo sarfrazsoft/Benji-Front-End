@@ -11,9 +11,6 @@ benji-courses {
       span {
         transition: all $animation-time linear;
         border-bottom: 1px solid #fff;
-        &:hover {
-          border-bottom-color: $primary-color;
-        }
       }
       img {
         margin-left: 8px;
@@ -28,6 +25,9 @@ benji-courses {
         img {
           margin-right: -10px;
           margin-left: 18px;
+        }
+        span {
+          border-bottom-color: $primary-color;
         }
       }
     }
