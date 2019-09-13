@@ -77,22 +77,23 @@ mat-sidenav-container.mat-sidenav-container {
           font-family: $pn-regular;
           font-size: 28px;
           letter-spacing: 0.65px;
+          font-weight: 600;
         }
         span:last-of-type {
           margin-top: 5px;
-          font-family: $pn-regular;
           font-size: 16px;
+          font-weight: 500;
         }
       }
     }
 
     .nav-section {
-      margin: 15px 0px;
+      margin: 0px 0px;
 
       .item {
         cursor: pointer;
         font-size: 28px;
-        margin: 15px 0px;
+        margin: 20px 0px;
         transition: margin-left 0.1s linear;
         -webkit-transition: margin-left 0.1s linear;
         -ms-transition: margin-left 0.1s linear;
