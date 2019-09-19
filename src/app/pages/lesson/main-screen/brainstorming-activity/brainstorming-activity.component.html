@@ -1,4 +1,4 @@
-<div fxLayout="column" class="mainscreen-activity">
+<div fxLayout="column" class="mainscreen-activity brainstorming-ms">
   <div class="lesson-top-banner compact">
     <div class="border-bottom" fxLayout="row" fxLayoutGap="3vw">
       <h1 class="pn-500">
@@ -8,13 +8,18 @@
       </h1>
       <div fxLayoutAlign="end center">
         <h2 class="pn-500 discuss-instruction">
-          What’s one thing that we can do this week to be better active
-          listeners?
+          {{ activityState.brainstormactivity.instructions }}
         </h2>
       </div>
     </div>
   </div>
-  <div class="submitted-ideas">
+  <div
+    class="submitted-ideas"
+    *ngIf="
+      !activityState.brainstormactivity.submission_complete &&
+      !activityState.brainstormactivity.voting_complete
+    "
+  >
     <ul>
       <li
         *ngFor="let idea of ideas"
@@ -25,13 +30,68 @@
           'long-list': ideas.length > 20
         }"
       >
-        <mat-icon [style.opacity]="idea.showClose ? 1 : 0" class=""
+        <mat-icon
+          [style.opacity]="idea.showClose ? 1 : 0"
+          (click)="deleteIdea(idea.id)"
           >clear</mat-icon
         >
 
-        {{ idea.text }}
+        {{ idea.idea }}
       </li>
     </ul>
+  </div>
+  <div
+    class="top-ideas"
+    *ngIf="
+      activityState.brainstormactivity.submission_complete &&
+      activityState.brainstormactivity.voting_complete
+    "
+  >
+    <ul fxLayout="row" fxLayoutAlign="center space-around">
+      <li *ngFor="let idea of ideas | slice: 0:3; let i = index">
+        <mat-icon
+          [style.opacity]="idea.showClose ? 1 : 0"
+          (click)="deleteIdea(idea.id)"
+          >clear</mat-icon
+        >
+        <div class="primary-color idea-index">
+          <span> {{ i + 1 }}. </span>
+        </div>
+        <div class="idea-text">
+          {{ idea.idea }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="linear-timer-container">
+    <benji-linear-timer
+      *ngIf="
+        !activityState.brainstormactivity.submission_complete &&
+        !showThankyouForSubmission
+      "
+      [timer]="activityState.brainstormactivity.submission_countdown_timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+    <benji-linear-timer
+      *ngIf="
+        activityState.brainstormactivity.voting_countdown_timer &&
+        !activityState.brainstormactivity.voting_complete
+      "
+      [timer]="activityState.brainstormactivity.voting_countdown_timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+
+    <benji-linear-timer
+      *ngIf="
+        activityState.brainstormactivity.submission_complete &&
+        activityState.brainstormactivity.voting_complete
+      "
+      [timer]="activityState.base_activity.next_activity_start_timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
   </div>
 </div>
 

@@ -217,6 +217,28 @@ export interface WhereDoYouStandActivity {
   choice_stats: WhereDoYouStandChoiceStats[];
 }
 
+export interface BrainstormActivity {
+  idea_rankings: Array<IdeaRanking>;
+  instructions: string;
+  max_user_submissions: number;
+  max_user_votes: number;
+  submission_complete: boolean;
+  submission_countdown_timer: Timer;
+  submission_seconds: number;
+  user_submission_counts: Array<{ id: number; count: number }>;
+  user_vote_counts: any[];
+  voting_complete: boolean;
+  voting_countdown_timer: Timer;
+  voting_seconds: number;
+}
+
+export interface IdeaRanking {
+  id: number;
+  submitted_by_user: User;
+  idea: string;
+  num_votes: number;
+}
+
 export interface BuildAPitchActivity {
   build_countdown_timer: Timer;
   buildapitchblank_set: Array<BuildAPitchBlank>;
