@@ -9,7 +9,5 @@ import { LayoutService } from '../services/layout.service';
 export class LayoutComponent {
   constructor(private router: Router, private layoutService: LayoutService) {
     // this.router.navigate(['/login']);
-
-    console.log('brr');
   }
 }
