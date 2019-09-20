@@ -51,6 +51,8 @@ export class EmojiLookupService {
         return '🥑';
       case 'banana':
         return '🍌';
+      case 'speakinghead':
+        return '🗣️';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }
