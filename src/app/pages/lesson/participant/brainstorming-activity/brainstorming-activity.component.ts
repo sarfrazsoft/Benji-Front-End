@@ -37,7 +37,6 @@ export class ParticipantBrainstormingActivityComponent
 
   ngOnChanges() {
     this.bsAct = this.activityState.brainstormactivity;
-    console.log(this.activityState.brainstormactivity);
 
     const uid = this.getUserId();
     const obj = this.bsAct.user_submission_counts.find(v => v.id === uid);
@@ -82,7 +81,7 @@ export class ParticipantBrainstormingActivityComponent
         this.activityState.brainstormactivity.max_user_votes
       );
     }
-    console.log(this.selectedIdeas);
+    // console.log(this.selectedIdeas);
     if (this.selectedIdeas.length) {
       this.showVoteSubmitButton = true;
     } else {
@@ -100,7 +99,7 @@ export class ParticipantBrainstormingActivityComponent
   }
 
   submitIdea(text: string) {
-    console.log(text);
+    // console.log(text);
     this.sendMessage.emit(new BrainstormSubmitEvent(text));
     this.userIdeaText = '';
   }
@@ -110,7 +109,7 @@ export class ParticipantBrainstormingActivityComponent
   }
 
   submitIdeaVote() {
-    console.log(this.selectedIdeas);
+    // console.log(this.selectedIdeas);
     this.selectedIdeas.forEach(idea => {
       this.sendMessage.emit(new BrainstormVoteEvent(idea));
     });

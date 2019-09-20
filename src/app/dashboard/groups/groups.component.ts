@@ -45,9 +45,7 @@ export class GroupsComponent implements OnInit {
   ];
 
   constructor(private route: ActivatedRoute, private router: Router) {
-    this.route.data.forEach((data: any) => {
-      console.log(data);
-    });
+    this.route.data.forEach((data: any) => {});
   }
 
   ngOnInit() {

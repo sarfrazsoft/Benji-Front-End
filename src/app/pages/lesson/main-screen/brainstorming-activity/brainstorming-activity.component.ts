@@ -59,9 +59,7 @@ export class MainScreenBrainstormingActivityComponent
   //   }
   // ];
 
-  ngOnInit() {
-    console.log(this.activityState.brainstormactivity);
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     const bsAct = this.activityState.brainstormactivity;
@@ -69,9 +67,7 @@ export class MainScreenBrainstormingActivityComponent
     bsAct.idea_rankings.forEach(idea => {
       this.ideas.push({ ...idea, showClose: false });
     });
-    // this.ideas.sort((a, b) => b.num_votes - a.num_votes);
-    console.log(this.ideas);
-    // this.ideas = bsAct.idea_ranking;
+    this.ideas.sort((a, b) => b.num_votes - a.num_votes);
   }
 
   drop(event: CdkDragDrop<string[]>) {
