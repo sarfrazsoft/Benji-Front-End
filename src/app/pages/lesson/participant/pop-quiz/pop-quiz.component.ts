@@ -37,6 +37,9 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
 
   ngOnChanges() {
     const as = this.activityState;
+    this.activityState.mcqactivity.question.mcqchoice_set.sort(
+      (a, b) => a.id - b.id
+    );
     if (
       as.mcqactivity.question_timer &&
       (as.mcqactivity.question_timer.status === 'running' ||

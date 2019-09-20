@@ -84,6 +84,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
 
     let statement = '';
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+    blanks.sort((a, b) => a.order - b.order);
     blanks.forEach((b, i) => {
       const currentBlanksValue = buildAPitchEntrySet.filter(
         v => v.buildapitchblank === b.id

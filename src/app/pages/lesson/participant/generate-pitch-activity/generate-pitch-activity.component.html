@@ -76,7 +76,10 @@
   </benji-ps-instruction-template>
 </div>
 
-<div class="b-flat-card center-text feedback-card" *ngIf="draftPitchSection">
+<div
+  class="b-flat-card center-text feedback-card heightAuto"
+  *ngIf="draftPitchSection"
+>
   <div class="b-flat-card__title">
     <h2 class="pn-400">Pitch-o-matic 3000</h2>
   </div>
@@ -100,7 +103,6 @@
           cdkTextareaAutosize
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="7"
-          cdkAutosizeMaxRows="10"
           [(ngModel)]="pitchDraftNotes"
           (ngModelChange)="locallySaveDraft($event)"
         ></textarea>

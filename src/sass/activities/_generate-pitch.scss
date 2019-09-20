@@ -103,6 +103,9 @@ benji-ms-generate-pitch-activity {
 }
 
 benji-ps-generate-pitch-activity {
+  .heightAuto {
+    height: auto;
+  }
   .pitch-form {
     .pitch-segment {
       margin: 20px 0px;

@@ -16,16 +16,13 @@
       font-weight: 600;
       margin-bottom: 4vh;
     }
-    .question-row {
-      min-width: 70px;
-    }
     .options {
       position: relative;
       text-align: left;
       .info {
         padding: 8px 30px;
         .percentage {
-          min-width: 270px;
+          min-width: 80px;
         }
       }
       #progressbar {

@@ -37,7 +37,9 @@ export class LaunchSessionDialogComponent implements OnInit {
       this.restService.start_lesson(res[0].id).subscribe(
         lessonRun => {
           this.dialogRef.close({});
-          this.router.navigate(['/screen/lesson/' + lessonRun.lessonrun_code]);
+          this.router.navigate([]).then(result => {
+            window.open('/screen/lesson/' + lessonRun.lessonrun_code, '_blank');
+          });
         },
         err => console.log(err)
       );
