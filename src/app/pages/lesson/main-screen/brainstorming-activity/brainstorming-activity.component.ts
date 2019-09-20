@@ -97,7 +97,8 @@ export class MainScreenBrainstormingActivityComponent
 // max_user_submissions: 2
 // max_user_votes: 3
 // submission_complete: false
-// submission_countdown_timer: {id: 5, status: "paused", start_time: "2019-09-17T14:39:47.275652-04:00", end_time: null, total_seconds: 90, …}
+// submission_countdown_timer: {id: 5, status: "paused", start_time: "2019-09-17T1
+// 4:39:47.275652-04:00", end_time: null, total_seconds: 90, …}
 // submission_seconds: 90
 // user_submission_counts: []
 // user_vote_counts: []
