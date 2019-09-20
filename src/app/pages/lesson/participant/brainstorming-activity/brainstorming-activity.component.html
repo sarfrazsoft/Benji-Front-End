@@ -1,45 +1,40 @@
 <!-- Submit ideas -->
-<benji-ps-instruction-template
-  *ngIf="submitIdeas && !showThankyouForSubmission"
->
-  <ng-container class="body-title">Brainstorming</ng-container>
-  <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
-  <h1 class="body-heading pn-700 primary-color-darkest">
-    Submit your idea
-  </h1>
-  <ng-container class="body-text">
-    {{ bsAct.instructions }} <br />
-    <!-- show submission limit  -->
-    <ng-container *ngIf="bsAct.max_user_submissions < 5">
-      You can submit only{{ ' ' + bsAct.max_user_submissions + ' ' }}
-      {{ bsAct.max_user_submissions == 1 ? 'idea' : 'ideas' }}
+<ng-container *ngIf="showSubmitIdeas">
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Brainstorming</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Submit your idea
+    </h1>
+    <ng-container class="body-text">
+      {{ bsAct.instructions }} <br />
+      <!-- show submission limit  -->
+      <ng-container *ngIf="bsAct.max_user_submissions < 5">
+        You can submit only{{ ' ' + bsAct.max_user_submissions + ' ' }}
+        {{ bsAct.max_user_submissions == 1 ? 'idea' : 'ideas' }}
+      </ng-container>
     </ng-container>
-  </ng-container>
-  <ng-container class="content">
-    <div class="draft-idea">
-      <textarea
-        class="b-standard-textarea"
-        [(ngModel)]="userIdeaText"
-      ></textarea>
-    </div>
-    <button
-      class="b-standard-button bg-primary-color"
-      [ngClass]="{ inactive: noOfIdeasSumitted >= bsAct.max_user_submissions }"
-      type="submit"
-      (click)="submitIdea(userIdeaText)"
-    >
-      Submit
-    </button>
-  </ng-container>
-</benji-ps-instruction-template>
-<benji-linear-timer
-  *ngIf="
-    !activityState.brainstormactivity.submission_complete &&
-    !showThankyouForSubmission
-  "
-  [timer]="activityState.brainstormactivity.submission_countdown_timer"
-  [timerOffset]="avgServerTimeOffset"
-></benji-linear-timer>
+    <ng-container class="content">
+      <div class="draft-idea">
+        <textarea
+          class="b-standard-textarea"
+          [(ngModel)]="userIdeaText"
+        ></textarea>
+      </div>
+      <button
+        class="b-standard-button bg-primary-color"
+        type="submit"
+        (click)="submitIdea()"
+      >
+        Submit
+      </button>
+    </ng-container>
+  </benji-ps-instruction-template>
+  <benji-linear-timer
+    [timer]="activityState.brainstormactivity.submission_countdown_timer"
+    [timerOffset]="avgServerTimeOffset"
+  ></benji-linear-timer>
+</ng-container>
 
 <!-- Thank you for submitting Idea -->
 <benji-ps-instruction-template *ngIf="showThankyouForSubmission">
@@ -51,68 +46,76 @@
 </benji-ps-instruction-template>
 
 <!-- Submit Votes on ideas -->
-<benji-ps-instruction-template *ngIf="submitVote && !showLookAtScreen">
-  <ng-container class="body-title">Brainstorming</ng-container>
-  <h1 class="body-heading pn-700 primary-color-darkest">
-    Vote on your favorite idea
-  </h1>
-  <ng-container class="body-text">
-    You can submit{{
-      ' ' + activityState.brainstormactivity.max_user_votes + ' '
-    }}
-    {{
-      activityState.brainstormactivity.max_user_votes === 1 ? 'vote' : 'votes'
-    }}
-  </ng-container>
-  <ng-container class="content">
-    <!-- <p>Press the + icon next to each name to review the pitches.</p> -->
-    <div *ngFor="let idea of ideas; let i = index">
-      <benji-vote-idea
-        [ideaId]="idea.id"
-        [ideaText]="idea.idea"
-        [(selectedIdeas)]="selectedIdeas"
-        (ideaSelected)="ideaSelected($event)"
-      ></benji-vote-idea>
-    </div>
-  </ng-container>
-</benji-ps-instruction-template>
+<ng-container *ngIf="showSubmitVote">
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Brainstorming</ng-container>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Vote on your favorite idea
+    </h1>
+    <ng-container class="body-text">
+      You can submit{{
+        ' ' + activityState.brainstormactivity.max_user_votes + ' '
+      }}
+      {{
+        activityState.brainstormactivity.max_user_votes === 1 ? 'vote' : 'votes'
+      }}
+    </ng-container>
+    <ng-container class="content">
+      <!-- <p>Press the + icon next to each name to review the pitches.</p> -->
+      <div *ngFor="let idea of ideas; let i = index">
+        <benji-vote-idea
+          [ideaId]="idea.id"
+          [ideaText]="idea.idea"
+          [(selectedIdeas)]="selectedIdeas"
+          (ideaSelected)="ideaSelected($event)"
+        ></benji-vote-idea>
+      </div>
+    </ng-container>
+  </benji-ps-instruction-template>
 
-<div
-  class="b-baseline-action bg-primary-color-dark"
-  *ngIf="showVoteSubmitButton"
->
-  <benji-animated-checkmark-button
-    loadingStateInnerHTML="Loading"
-    innerHTML="Submit"
-    buttonStyle="white"
-    [valid]="userVoted"
-    (click)="submitIdeaVote()"
-  ></benji-animated-checkmark-button>
-</div>
+  <div
+    class="b-baseline-action bg-primary-color-dark"
+    *ngIf="showVoteSubmitButton"
+  >
+    <benji-animated-checkmark-button
+      loadingStateInnerHTML="Loading"
+      innerHTML="Submit"
+      buttonStyle="white"
+      [valid]="userVoted"
+      (click)="submitIdeaVote()"
+    ></benji-animated-checkmark-button>
+  </div>
 
-<benji-linear-timer
-  *ngIf="
-    activityState.brainstormactivity.voting_countdown_timer &&
-    !activityState.brainstormactivity.voting_complete
-  "
-  [timer]="activityState.brainstormactivity.voting_countdown_timer"
-  [timerOffset]="avgServerTimeOffset"
-></benji-linear-timer>
+  <benji-linear-timer
+    [timer]="activityState.brainstormactivity.voting_countdown_timer"
+    [timerOffset]="avgServerTimeOffset"
+  ></benji-linear-timer>
+</ng-container>
 
-<!-- Look at the winning ideas -->
-<benji-ps-instruction-template *ngIf="showLookAtScreen">
+<!-- Thank you for voting -->
+<benji-ps-instruction-template *ngIf="showThankyouForVoting">
   <ng-container class="body-title">Brainstorming</ng-container>
   <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
   <h1 class="body-heading pn-700 primary-color-darkest">
-    Woo!
+    Thanks for voting!
   </h1>
-  <ng-container class="body-text">
-    Take a look at the top submissions.
-  </ng-container>
 </benji-ps-instruction-template>
 
-<benji-linear-timer
-  *ngIf="showLookAtScreen"
-  [timer]="activityState.base_activity.next_activity_start_timer"
-  [timerOffset]="avgServerTimeOffset"
-></benji-linear-timer>
+<!-- Look at the winning ideas -->
+<ng-container *ngIf="showVoteResults">
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Brainstorming</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Woo!
+    </h1>
+    <ng-container class="body-text">
+      Take a look at the top submissions.
+    </ng-container>
+  </benji-ps-instruction-template>
+
+  <benji-linear-timer
+    [timer]="activityState.base_activity.next_activity_start_timer"
+    [timerOffset]="avgServerTimeOffset"
+  ></benji-linear-timer>
+</ng-container>

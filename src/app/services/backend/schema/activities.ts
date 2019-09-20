@@ -28,6 +28,7 @@ export interface TitleActivity {
   title_text: string;
   title_emoji: string; // To be deprecated. Do not use. Instead, parse emoji://xxxx from title_image
   title_image: string;
+  hide_timer: boolean;
 }
 
 export interface MCQActivity {

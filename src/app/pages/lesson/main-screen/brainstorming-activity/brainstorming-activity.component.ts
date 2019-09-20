@@ -20,45 +20,6 @@ export class MainScreenBrainstormingActivityComponent
   }
   ideas = [];
 
-  // categories = [
-  //   {
-  //     name: 'Category 1',
-  //     list: [
-  //       'Category 1 task 1',
-  //       'Category 1 task 2',
-  //       'Category 1 task 3',
-  //       'Category 1 task 4'
-  //     ]
-  //   },
-  //   {
-  //     name: 'Category 2',
-  //     list: [
-  //       'Category 2 task 1',
-  //       'Category 2 task 2',
-  //       'Category 2 task 3',
-  //       'Category 2 task 4'
-  //     ]
-  //   },
-  //   {
-  //     name: 'Category 3',
-  //     list: [
-  //       'Category 3 task 1',
-  //       'Category 3 task 2',
-  //       'Category 3 task 3',
-  //       'Category 3 task 4'
-  //     ]
-  //   },
-  //   {
-  //     name: 'Category 4',
-  //     list: [
-  //       'Category 4 task 1',
-  //       'Category 4 task 2',
-  //       'Category 4 task 3',
-  //       'Category 4 task 4'
-  //     ]
-  //   }
-  // ];
-
   ngOnInit() {}
 
   ngOnChanges() {
@@ -92,19 +53,57 @@ export class MainScreenBrainstormingActivityComponent
   }
 }
 
-// idea_rankings: []
-// instructions: "How can we take over the world?"
-// max_user_submissions: 2
-// max_user_votes: 3
-// submission_complete: false
-// submission_countdown_timer: {id: 5, status: "paused", start_time: "2019-09-17T1
-// 4:39:47.275652-04:00", end_time: null, total_seconds: 90, …}
-// submission_seconds: 90
-// user_submission_counts: []
-// user_vote_counts: []
-// voting_complete: false
-// voting_countdown_timer: null
-// voting_seconds: 45
+// categories = [
+//   {
+//     name: 'Category 1',
+//     list: [
+//       'Category 1 task 1',
+//       'Category 1 task 2',
+//       'Category 1 task 3',
+//       'Category 1 task 4'
+//     ]
+//   },
+//   {
+//     name: 'Category 2',
+//     list: [
+//       'Category 2 task 1',
+//       'Category 2 task 2',
+//       'Category 2 task 3',
+//       'Category 2 task 4'
+//     ]
+//   },
+//   {
+//     name: 'Category 3',
+//     list: [
+//       'Category 3 task 1',
+//       'Category 3 task 2',
+//       'Category 3 task 3',
+//       'Category 3 task 4'
+//     ]
+//   },
+//   {
+//     name: 'Category 4',
+//     list: [
+//       'Category 4 task 1',
+//       'Category 4 task 2',
+//       'Category 4 task 3',
+//       'Category 4 task 4'
+//     ]
+//   }
+// ];
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 // this.ideas = [
 //   {

@@ -16,7 +16,7 @@ export class LandingComponent {
   partnerName: string;
   constructor(
     private restService: BackendRestService,
-    private contextService: ContextService,
+    public contextService: ContextService,
     private auth: AuthService,
     private router: Router
   ) {}

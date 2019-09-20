@@ -65,10 +65,7 @@
   </div>
   <div class="linear-timer-container">
     <benji-linear-timer
-      *ngIf="
-        !activityState.brainstormactivity.submission_complete &&
-        !showThankyouForSubmission
-      "
+      *ngIf="!activityState.brainstormactivity.submission_complete"
       [timer]="activityState.brainstormactivity.submission_countdown_timer"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"

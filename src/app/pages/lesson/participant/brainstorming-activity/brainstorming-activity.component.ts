@@ -14,18 +14,18 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
-  submitIdeas = true;
-  submitVote = false;
-  userIdeaText = '';
-  selectedIdea;
   bsAct: BrainstormActivity;
+  userIdeaText = '';
   selectedIdeas = [];
-  noOfIdeasSumitted = 0;
-  showThankyouForSubmission = false;
-  expandedUserArray = {};
   ideas = [];
   showVoteSubmitButton = false;
-  showLookAtScreen = false;
+
+  // Screens
+  showSubmitIdeas = true;
+  showThankyouForSubmission = false;
+  showSubmitVote = false;
+  showThankyouForVoting = false;
+  showVoteResults = false;
 
   constructor() {
     super();
@@ -37,33 +37,50 @@ export class ParticipantBrainstormingActivityComponent
 
   ngOnChanges() {
     this.bsAct = this.activityState.brainstormactivity;
+    const userID = this.getUserId();
 
-    const uid = this.getUserId();
-    const obj = this.bsAct.user_submission_counts.find(v => v.id === uid);
-    if (obj) {
-      this.noOfIdeasSumitted = obj.count;
-    }
-    if (this.noOfIdeasSumitted >= this.bsAct.max_user_submissions) {
+    // The activity starts by showing Submit idea screen
+
+    // Show thank you for idea submission
+    const userVote = this.bsAct.user_submission_counts.find(
+      v => v.id === userID
+    );
+    if (userVote && userVote.count >= this.bsAct.max_user_submissions) {
+      this.showSubmitIdeas = false;
       this.showThankyouForSubmission = true;
     }
 
+    // Show Vote for ideas screen
     if (this.bsAct.submission_complete && this.bsAct.voting_countdown_timer) {
+      this.showSubmitIdeas = false;
       this.showThankyouForSubmission = false;
-      this.submitIdeas = false;
-      this.submitVote = true;
+      this.showSubmitVote = true;
       this.ideas = [];
       this.bsAct.idea_rankings.forEach(idea => {
         this.ideas.push(idea);
       });
     }
 
-    if (this.bsAct.submission_complete && this.bsAct.voting_complete) {
+    // Show thank you for vote submission
+    const userVotes = this.bsAct.user_vote_counts.find(v => v.id === userID);
+    if (userVotes && userVotes.count >= this.bsAct.max_user_votes) {
+      this.showSubmitIdeas = false;
       this.showThankyouForSubmission = false;
-      this.showLookAtScreen = true;
+      this.showSubmitVote = false;
+      this.showThankyouForVoting = true;
+    }
+
+    // Show the winning ideas screen
+    if (this.bsAct.submission_complete && this.bsAct.voting_complete) {
+      this.showSubmitIdeas = false;
+      this.showThankyouForSubmission = false;
+      this.showSubmitVote = false;
+      this.showThankyouForVoting = false;
+      this.showVoteResults = true;
     }
   }
 
-  ideaSelected($event) {
+  ideaSelected($event): void {
     if (this.selectedIdeas.includes($event)) {
       const index = this.selectedIdeas.indexOf($event);
       if (index !== -1) {
@@ -81,7 +98,6 @@ export class ParticipantBrainstormingActivityComponent
         this.activityState.brainstormactivity.max_user_votes
       );
     }
-    // console.log(this.selectedIdeas);
     if (this.selectedIdeas.length) {
       this.showVoteSubmitButton = true;
     } else {
@@ -89,30 +105,18 @@ export class ParticipantBrainstormingActivityComponent
     }
   }
 
-  userExpanded($event) {
-    // console.log($event);
-    this.expandedUserArray['' + $event] = true;
-  }
-
-  userCollapsed($event) {
-    this.expandedUserArray['' + $event] = false;
-  }
-
-  submitIdea(text: string) {
-    // console.log(text);
-    this.sendMessage.emit(new BrainstormSubmitEvent(text));
+  submitIdea(): void {
+    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText));
     this.userIdeaText = '';
   }
 
-  getUserId() {
+  getUserId(): number {
     return this.activityState.your_identity.id;
   }
 
-  submitIdeaVote() {
-    // console.log(this.selectedIdeas);
+  submitIdeaVote(): void {
     this.selectedIdeas.forEach(idea => {
       this.sendMessage.emit(new BrainstormVoteEvent(idea));
     });
-    // this.selectedIdeas
   }
 }

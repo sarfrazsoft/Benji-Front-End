@@ -11,7 +11,7 @@ import { LayoutService } from '../../services/layout.service';
 export class MainScreenToolbarComponent {
   constructor(
     private layoutService: LayoutService,
-    private contextService: ContextService
+    public contextService: ContextService
   ) {}
 
   toggleFullscreen() {
