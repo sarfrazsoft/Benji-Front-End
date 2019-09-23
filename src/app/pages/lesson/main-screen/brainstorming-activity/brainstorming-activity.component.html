@@ -26,9 +26,6 @@
         (mouseenter)="idea.showClose = true"
         (mouseleave)="idea.showClose = false"
         cdkDrag
-        [ngClass]="{
-          'long-list': ideas.length > 20
-        }"
       >
         <mat-icon
           [style.opacity]="idea.showClose ? 1 : 0"
