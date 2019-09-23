@@ -5,6 +5,7 @@ benji-ms-brainstorming-activity {
     ul {
       display: flex;
       flex-wrap: wrap;
+      align-content: flex-start;
       flex-direction: column;
       overflow-x: scroll;
       padding-left: 0;
