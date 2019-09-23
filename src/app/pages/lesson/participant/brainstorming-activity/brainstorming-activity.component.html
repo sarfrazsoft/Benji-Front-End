@@ -87,6 +87,7 @@
   </div>
 
   <benji-linear-timer
+    [classes]="showVoteSubmitButton ? 'bottom80px' : ''"
     [timer]="activityState.brainstormactivity.voting_countdown_timer"
     [timerOffset]="avgServerTimeOffset"
   ></benji-linear-timer>
