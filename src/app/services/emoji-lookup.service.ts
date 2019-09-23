@@ -65,6 +65,8 @@ export class EmojiLookupService {
         return '🤦‍♀️';
       case 'womandancing':
         return '💃🏽';
+      case 'wave':
+        return '👋';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }
