@@ -26,7 +26,7 @@
   </ng-container>
 </benji-ps-instruction-template>
 
-<div *ngIf="showStatistics">
+<!-- <div *ngIf="showStatistics">
   <benji-ps-instruction-template>
     <ng-container class="body-title">Poll</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
@@ -39,5 +39,15 @@
         </button>
       </div>
     </ng-container>
+  </benji-ps-instruction-template>
+</div> -->
+
+<div *ngIf="showStatistics">
+  <benji-ps-instruction-template>
+    <ng-container class="body-title">Poll</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="📊"></app-b-twemoji>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      Look to the main screen to see the results
+    </h1>
   </benji-ps-instruction-template>
 </div>

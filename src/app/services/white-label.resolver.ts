@@ -47,7 +47,7 @@ export class WhiteLabelResolver implements Resolve<any> {
       name: 'Benji',
       welcome_text: 'Welcome to Benji',
       link: 'https://wwww.benji.com',
-      logo: './assets/img/logo.png',
+      logo: './assets/img/Benji_logo_white.png',
       favicon: './assets/img/favicon.ico',
       parameters: {
         primary_lighter: '#80a8ff',
