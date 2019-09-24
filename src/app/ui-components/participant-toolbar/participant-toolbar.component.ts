@@ -13,7 +13,7 @@ export class ParticipantToolbarComponent implements OnInit {
   ngOnInit() {
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
-        this.logo = info.logo;
+        this.logo = info.lightLogo;
       }
     });
   }

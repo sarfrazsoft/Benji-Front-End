@@ -36,6 +36,13 @@ export class MainScreenFooterComponent implements OnInit {
       this.socketMessage.emit(new PauseActivityEvent());
     } else if (eventType === 'next') {
       // this.socketMessage.emit(new EndEvent());
+      // Remove pitch notes if that activity was
+      // fowarded without completion
+      // The concerned activity should be told that it has been
+      // skipped over so the activity can close properly
+      if (localStorage.getItem('pitchDraftNotes')) {
+        localStorage.removeItem('pitchDraftNotes');
+      }
       this.socketMessage.emit(new NextInternalEvent());
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());

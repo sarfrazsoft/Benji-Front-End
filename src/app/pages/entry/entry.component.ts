@@ -32,7 +32,7 @@ export class EntryComponent implements OnInit {
       if (info) {
         this.welcomeText = info.welcome_text;
         this.link = info.link;
-        this.logo = info.logo;
+        this.logo = info.darkLogo;
       }
     });
   }
