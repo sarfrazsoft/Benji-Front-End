@@ -17,13 +17,7 @@ import { LayoutModule } from './layout/layout.module';
 import { AppComponent } from './app.component';
 
 // Plugins
-import { OnsenModule } from 'ngx-onsenui';
-
-import { VgBufferingModule } from 'videogular2/buffering';
-import { VgControlsModule } from 'videogular2/controls';
-import { VgCoreModule } from 'videogular2/core';
-import { VgOverlayPlayModule } from 'videogular2/overlay-play';
-import { VgStreamingModule } from 'videogular2/streaming';
+// import { OnsenModule } from 'ngx-onsenui';
 
 @NgModule({
   declarations: [AppComponent, ...EntryComponents],
@@ -34,14 +28,8 @@ import { VgStreamingModule } from 'videogular2/streaming';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    OnsenModule,
     SharedModule,
-    LayoutModule,
-    VgCoreModule,
-    VgControlsModule,
-    VgOverlayPlayModule,
-    VgBufferingModule,
-    VgStreamingModule
+    LayoutModule
   ],
   providers: [...ServicesProviders],
   bootstrap: [AppComponent],

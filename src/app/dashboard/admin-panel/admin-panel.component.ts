@@ -23,7 +23,6 @@ export class AdminPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.route.data.forEach((data: any) => {
-      console.log(data);
       this.courses = data.dashData.courses;
       // if (!data.dashData.user.job_title) {
       //   this.dialog

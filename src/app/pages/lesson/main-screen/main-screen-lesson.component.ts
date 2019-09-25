@@ -1,7 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { BackendRestService, BackendSocketService } from 'src/app/services';
+import {
+  BackendRestService,
+  BackendSocketService,
+  ContextService
+} from 'src/app/services';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -13,6 +17,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent
   implements OnInit {
   constructor(
     protected restService: BackendRestService,
+    private contextService: ContextService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
     protected ref: ChangeDetectorRef

@@ -39,6 +39,5 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
     ) {
       this.radialTimer = as.base_activity.next_activity_start_timer;
     }
-    console.log(this.activityState);
   }
 }

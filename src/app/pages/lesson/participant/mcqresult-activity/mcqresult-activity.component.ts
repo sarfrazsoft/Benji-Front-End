@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -7,13 +7,20 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./mcqresult-activity.component.scss']
 })
 export class ParticipantMcqresultActivityComponent extends BaseActivityComponent
-  implements OnInit {
+  implements OnInit, OnChanges {
   showStatistics = false;
   constructor() {
     super();
   }
 
   ngOnInit() {}
+  ngOnChanges() {
+    const act = this.activityState.mcqresultsactivity;
+
+    if (act.poll_mode) {
+      this.showStatistics = true;
+    }
+  }
   getUserScore() {
     const scoreCard = this.activityState.mcqresultsactivity.results_summary.find(
       r => {

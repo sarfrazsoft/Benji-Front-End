@@ -17,9 +17,9 @@
           let option of activityState.mcqactivity.question.mcqchoice_set;
           let i = index
         "
-        class="b-standard-button b-standard-button--unselected"
+        class="b-standard-button unselected"
         [ngClass]="{
-          'b-standard-button--selected': option.id === selectedChoice.id
+          selected: option.id === selectedChoice.id
         }"
         (click)="submitAnswer(option)"
       >
@@ -62,10 +62,10 @@
       >
         <button
           *ngIf="option.id === selectedChoice.id"
-          class="b-standard-button b-standard-button--unselected"
+          class="b-standard-button unselected"
           [ngClass]="{
-            'b-standard-button--correct': option.is_correct,
-            'b-standard-button--incorrect': !option.is_correct
+            correct: option.is_correct,
+            incorrect: !option.is_correct
           }"
         >
           {{ optionIdentifiers[i] }}. {{ option.choice_text }}

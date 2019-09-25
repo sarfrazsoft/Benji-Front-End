@@ -17,7 +17,7 @@
       <button
         class="b-standard-button"
         (click)="sendReadyState()"
-        [ngClass]="{ 'b-standard-button--inactive': participantInCircle() }"
+        [ngClass]="{ inactive: participantInCircle() }"
       >
         <span *ngIf="!participantInCircle()"> I'm in the circle! </span>
         <span *ngIf="participantInCircle()"> Waiting... </span>
@@ -64,7 +64,7 @@
     </div>
     <div class="b-flat-card__action">
       <button
-        class="b-standard-button b-standard-button--unselected"
+        class="b-standard-button unselected"
         *ngFor="
           let choice of activityState.teletriviaactivity.questions[
             currentQuestionIndex
@@ -72,8 +72,8 @@
           let i = index
         "
         [ngClass]="{
-          'b-standard-button--correct': revealAnswer && choice.is_correct,
-          'b-standard-button--incorrect':
+          correct: revealAnswer && choice.is_correct,
+          incorrect:
             revealAnswer && !choice.is_correct && i === selectedAnswerIndex
         }"
         (click)="submitAnswer(choice)"
@@ -107,13 +107,13 @@
     class="b-baseline-action bg-primary-color-dark"
     *ngIf="participantIsInitiator()"
   >
-    <app-animated-checkmark-button
+    <benji-animated-checkmark-button
       loadingStateInnerHTML="Loading"
       innerHTML="Stop! The message is back"
       buttonStyle="white"
       [valid]="messageBack"
       (clicked)="openEndModal()"
-    ></app-animated-checkmark-button>
+    ></benji-animated-checkmark-button>
   </div>
 </ng-container>
 

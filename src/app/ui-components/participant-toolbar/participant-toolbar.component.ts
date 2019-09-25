@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { ContextService } from 'src/app/services';
 
 @Component({
-  selector: 'app-participant-toolbar',
+  selector: 'benji-participant-toolbar',
   templateUrl: './participant-toolbar.component.html',
   styleUrls: ['./participant-toolbar.component.scss']
 })
 export class ParticipantToolbarComponent implements OnInit {
-
-  constructor() { }
+  logo;
+  constructor(private contextService: ContextService) {}
 
   ngOnInit() {
+    this.contextService.partnerInfo$.subscribe(info => {
+      if (info) {
+        this.logo = info.lightLogo;
+      }
+    });
   }
-
 }

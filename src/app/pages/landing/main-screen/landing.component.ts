@@ -1,6 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService, BackendRestService } from 'src/app/services';
+import {
+  AuthService,
+  BackendRestService,
+  ContextService
+} from 'src/app/services';
 
 @Component({
   selector: 'benji-landing',
@@ -9,8 +13,10 @@ import { AuthService, BackendRestService } from 'src/app/services';
   encapsulation: ViewEncapsulation.None
 })
 export class LandingComponent {
+  partnerName: string;
   constructor(
     private restService: BackendRestService,
+    public contextService: ContextService,
     private auth: AuthService,
     private router: Router
   ) {}

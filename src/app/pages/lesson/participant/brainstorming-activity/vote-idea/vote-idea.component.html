@@ -1,0 +1,35 @@
+<div class="vote-pitch-column" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <button
+      class="b-standard-button unselected"
+      [ngClass]="{
+        selected: selectedIdeas.includes(ideaId)
+      }"
+      (click)="selectIdea(ideaId)"
+      fxLayoutAlign="center center"
+    >
+      <span class="idea-text">
+        {{ ideaText }}
+      </span>
+    </button>
+    <img
+      class="participant-utility-icons"
+      src="/assets/img/add_icon.png"
+      alt="expand"
+      *ngIf="!expanded"
+      (click)="expand(ideaId)"
+    />
+    <img
+      class="participant-utility-icons"
+      src="/assets/img/close_icon.png"
+      alt="launch"
+      *ngIf="expanded"
+      (click)="collapse(ideaId)"
+    />
+  </div>
+  <div
+    *ngIf="expanded"
+    class="pitch-details left-text"
+    [innerHTML]="ideaText"
+  ></div>
+</div>

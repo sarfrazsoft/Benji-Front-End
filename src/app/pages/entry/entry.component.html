@@ -4,8 +4,12 @@
   fxLayout.lt-sm="column"
   *ngIf="!isMobile"
 >
-  <div class="left-side" fxLayoutAlign="start center" fxFlex="65%"></div>
-  <div class="right-side" fxFlex="35%"></div>
+  <div
+    class="left-side bg-primary-color"
+    fxLayoutAlign="start center"
+    fxFlex="65%"
+  ></div>
+  <div class="right-side bg-off-white" fxFlex="35%"></div>
 </div>
 <div class="controls" fxLayout="row" fxLayout.lt-sm="column" *ngIf="!isMobile">
   <div
@@ -20,11 +24,11 @@
       fxLayoutGap="50px"
       fxLayoutAlign="center"
     >
-      <h1>Welcome to Benji!</h1>
+      <h1>{{ welcomeText }}</h1>
       <div class="intro-text">
         <span fxFlex="0 0 75%">
           What’s Benji? Learn about the future of workplace learning
-          <b> <a href="http://mybenji.com">here</a> </b>.
+          <b> <a [attr.href]="link">here</a> </b>.
         </span>
       </div>
     </div>
@@ -37,7 +41,7 @@
     fxLayoutAlign="start center"
   >
     <div class="header" fxLayoutAlign="center">
-      <img src="/assets/img/logo.png" />
+      <img [src]="logo" />
     </div>
     <div class="form-tabs">
       <mat-tab-group
@@ -47,13 +51,13 @@
       >
         <mat-tab label="Login">
           <ng-template mat-tab-label>
-            <span class="tab-label">Login</span>
+            <span class="tab-label primary-color-darkest">Login</span>
           </ng-template>
           <benji-login (showSignupTab)="showSignupTab()"></benji-login>
         </mat-tab>
         <mat-tab label="Sign up">
           <ng-template mat-tab-label class="signup-label">
-            <span class="tab-label">Sign up</span>
+            <span class="tab-label primary-color-darkest">Sign up</span>
           </ng-template>
           <benji-signup></benji-signup>
         </mat-tab>

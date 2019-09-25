@@ -16,9 +16,9 @@
       <div class="generate-pitch">
         <button
           [ngClass]="{
-            'b-standard-button--inactive': userInGroup
+            inactive: userInGroup
           }"
-          class="b-standard-button"
+          class="b-standard-button bg-primary-button"
           (click)="userInGroupEvent()"
         >
           We're ready!
@@ -41,7 +41,7 @@
 
     <ng-container class="content">
       <div class="generate-pitch">
-        <button class="b-standard-button" (click)="generatePitch()">
+        <button class="b-standard-button selected" (click)="generatePitch()">
           Generate
         </button>
         <div class="pitch-form">

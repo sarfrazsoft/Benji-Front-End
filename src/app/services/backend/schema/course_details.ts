@@ -1,7 +1,7 @@
 import { User } from './user';
 
 export interface PaginatedResponse<T> {
-  count: Number;
+  count: number;
   next: string;
   previous: string;
   results: Array<T>;

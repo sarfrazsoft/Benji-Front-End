@@ -28,6 +28,7 @@ export interface TitleActivity {
   title_text: string;
   title_emoji: string; // To be deprecated. Do not use. Instead, parse emoji://xxxx from title_image
   title_image: string;
+  hide_timer: boolean;
 }
 
 export interface MCQActivity {
@@ -217,6 +218,28 @@ export interface WhereDoYouStandActivity {
   choice_stats: WhereDoYouStandChoiceStats[];
 }
 
+export interface BrainstormActivity {
+  idea_rankings: Array<IdeaRanking>;
+  instructions: string;
+  max_user_submissions: number;
+  max_user_votes: number;
+  submission_complete: boolean;
+  submission_countdown_timer: Timer;
+  submission_seconds: number;
+  user_submission_counts: Array<{ id: number; count: number }>;
+  user_vote_counts: any[];
+  voting_complete: boolean;
+  voting_countdown_timer: Timer;
+  voting_seconds: number;
+}
+
+export interface IdeaRanking {
+  id: number;
+  submitted_by_user: User;
+  idea: string;
+  num_votes: number;
+}
+
 export interface BuildAPitchActivity {
   build_countdown_timer: Timer;
   buildapitchblank_set: Array<BuildAPitchBlank>;
@@ -226,7 +249,7 @@ export interface BuildAPitchActivity {
   share_start_user: User;
   sharing_done: boolean;
   vote_countdown_timer: Timer;
-  votes: Array<{ id: Number; num_votes: Number }>;
+  votes: Array<{ id: number; num_votes: number }>;
   voting_done: boolean;
   winning_user: User;
 }
@@ -273,7 +296,9 @@ export interface PitchoMaticGroupMember {
   // is_pitching=true, pitch_done=false := user is pitching
   // is_pitching=true, pitch_done=true := user is recieving feedback
   // is_pitching=false, pitch_done=true := user is done with their pitch and feedback
-  is_pitching: boolean; // true when user is pitching. remains true while feedback for user is going on. becomes false after feedback
+  // true when user is pitching. remains true while feedback for user is going on.
+  // becomes false after feedback
+  is_pitching: boolean;
   pitch_done: boolean; // becomes true after pitch is done.
   pitch_prep_text: string;
   pitch: PitchoMaticGroupMemberPitch;

@@ -1,6 +1,7 @@
 <div *ngIf="timer && (timer.status === 'running' || timer.status === 'paused')">
   <div
     class="linear-timer__timeline bg-primary-color"
+    [ngClass]="classes"
     [style.width.%]="progressBarWidth()"
   ></div>
 </div>

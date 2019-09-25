@@ -7,11 +7,12 @@
     padding-bottom: 30px;
   }
   .login-signup-section {
+    // Color applied from BE
     .section-buttons {
       width: 235px;
+      // Color applied from BE
       .active {
         text-decoration: underline;
-        color: $primary-color-darkest;
       }
     }
   }

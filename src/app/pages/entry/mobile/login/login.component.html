@@ -50,10 +50,9 @@
       <button
         fxLayoutAlign="center"
         type="submit"
-        class="b-standard-button "
+        class="b-standard-button bg-primary-color inactive"
         [ngClass]="{
-          'b-standard-button--active': form.valid,
-          'b-standard-button--inactive': !form.valid
+          inactive: !form.valid
         }"
       >
         Submit

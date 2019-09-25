@@ -35,10 +35,9 @@
         >
       </div>
       <button
-        class="b-standard-button"
+        class="b-standard-button bg-primary-color"
         [ngClass]="{
-          'b-standard-button--inactive':
-            hintWord.invalid || participantHasSubmitted()
+          inactive: hintWord.invalid || participantHasSubmitted()
         }"
         (click)="submitHintWord()"
       >
@@ -68,33 +67,29 @@
     <div class="b-flat-card__action">
       <ng-container *ngIf="!participantHasVoted()">
         <button
-          class="b-standard-button b-standard-button--unselected"
+          class="b-standard-button unselected bg-primary-color"
           *ngFor="let word of activityState.hintwordactivity.words_and_votes"
           [ngClass]="{
-            'b-standard-button--selected':
-              selectedWord && word.id === selectedWord.id
+            selected: selectedWord && word.id === selectedWord.id
           }"
           (click)="selectedWord = word"
         >
           {{ word.word | titlecase }}
         </button>
       </ng-container>
-      <button
-        class="b-standard-button b-standard-button--selected"
-        *ngIf="participantHasVoted()"
-      >
+      <button class="b-standard-button selected" *ngIf="participantHasVoted()">
         {{ selectedWord.word }}
       </button>
     </div>
   </div>
   <div class="b-baseline-action bg-primary-color-dark" *ngIf="selectedWord">
-    <app-animated-checkmark-button
+    <benji-animated-checkmark-button
       loadingStateInnerHTML="Loading"
       innerHTML="Submit"
       buttonStyle="white"
       [valid]="participantHasVoted()"
       (click)="submitVote()"
-    ></app-animated-checkmark-button>
+    ></benji-animated-checkmark-button>
   </div>
 </ng-container>
 <ng-container

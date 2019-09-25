@@ -1,11 +1,13 @@
 <div class="b-flat-card center-text feedback-card">
-  <div class="b-flat-card__title"><h2 class="pn-400">Build-a-pitch</h2></div>
+  <div class="b-flat-card__title">
+    <h2 class="pn-400">Fill-in-the-blank</h2>
+  </div>
 
   <div class="b-flat-card__body" *ngIf="createPitch">
     <div class="b-flat-card__twemoji">
       <app-b-twemoji emoji="🏗️"></app-b-twemoji>
     </div>
-    <h1 class="pn-700 primary-color-darkest">Build-a-pitch</h1>
+    <h1 class="pn-700 primary-color-darkest">Fill-in-the-blank</h1>
     <p>{{ activityState.buildapitchactivity.instructions }}</p>
     <div class="pitch-form">
       <div
@@ -17,6 +19,7 @@
         <div class="segment-blank" fxLayout="row" fxLayoutAlign="start start">
           <div class="blank" fxFlex>
             <textarea
+              class="primary-color"
               matInput
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
@@ -34,7 +37,7 @@
               matTooltipPosition="left"
               (click)="tooltip.toggle()"
               matTooltip="{{ blank.help_text }}"
-              matTooltipClass="pitch-tooltip"
+              matTooltipClass="pitch-tooltip primary-color"
             >
               <img
                 class="participant-utility-icons"
@@ -47,8 +50,8 @@
       </div>
     </div>
     <button
-      class="b-standard-button"
-      [ngClass]="{ 'b-standard-button--inactive': !pitchValid }"
+      class="b-standard-button bg-primary-color"
+      [ngClass]="{ inactive: !pitchValid }"
       (click)="submitPitch()"
     >
       Submit
@@ -59,7 +62,7 @@
     class="b-flat-card__body"
     *ngIf="showMyPitch && userPitchExists(activityState.your_identity.id)"
   >
-    <div class="your-pitch-label left-text">Your pitch:</div>
+    <div class="your-pitch-label left-text">Your statement:</div>
     <p
       class="your-pitch left-text"
       innerHTML="{{ getPitchText(activityState.your_identity.id) }}"
@@ -78,8 +81,8 @@
           alt="info"
         />
         <div class="instruction warning-color left-text">
-          Oops! You didn’t finish your pitch on time. Try to think of something-
-          you still need to present to the group.
+          Oops! You didn’t finish in time. Try to think of something- you still
+          need to present to the group.
         </div>
       </div>
     </div>
@@ -148,11 +151,11 @@
   class="b-baseline-action bg-primary-color-dark"
   *ngIf="selectedUser && !userVoted"
 >
-  <app-animated-checkmark-button
+  <benji-animated-checkmark-button
     loadingStateInnerHTML="Loading"
     innerHTML="Submit"
     buttonStyle="white"
     [valid]="userVoted"
     (click)="submitVote(selectedUser)"
-  ></app-animated-checkmark-button>
+  ></benji-animated-checkmark-button>
 </div>

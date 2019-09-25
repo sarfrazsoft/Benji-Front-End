@@ -2,9 +2,6 @@ benji-ms-generate-pitch-activity {
   // Overrides for pitchomatic
   .mainscreen-activity {
     position: relative;
-    .lesson-top-banner {
-      padding: 0.5vw 2.5vw;
-    }
     .linear-timer-container {
       width: 100%;
       position: absolute;
@@ -137,9 +134,6 @@ benji-ps-generate-pitch-activity {
         font-size: 26px;
         line-height: 1.5;
         padding: 20px 0px;
-        em {
-          color: $primary-color;
-        }
       }
     }
 

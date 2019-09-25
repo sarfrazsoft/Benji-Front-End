@@ -23,9 +23,12 @@
         </ng-select>
         <div class="launch">
           <button
-            class="dashboard-button dialog-controls"
+            class="dashboard-button bg-primary-color dialog-controls"
             (click)="launchSession()"
-            [ngClass]="{ active: selectedSession, inactive: !selectedSession }"
+            [ngClass]="{
+              active: selectedSession,
+              inactive: !selectedSession
+            }"
           >
             Launch
           </button>

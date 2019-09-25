@@ -33,8 +33,6 @@ export class LaunchSessionDialogComponent implements OnInit {
 
   // duplicate code in courses.componnt.ts
   public launchSession(): void {
-    console.log(this.selectedSession);
-    // this.dialogRef.close(course);
     this.getCourseDetails(this.selectedSession.id).subscribe(res => {
       this.restService.start_lesson(res[0].id).subscribe(
         lessonRun => {

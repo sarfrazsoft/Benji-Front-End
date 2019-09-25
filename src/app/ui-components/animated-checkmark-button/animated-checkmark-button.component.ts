@@ -8,7 +8,7 @@ import {
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-animated-checkmark-button',
+  selector: 'benji-animated-checkmark-button',
   templateUrl: './animated-checkmark-button.component.html',
   styleUrls: ['./animated-checkmark-button.component.scss'],
   animations: []
@@ -54,7 +54,7 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
 
   private setButtonStyles() {
     if (this.buttonStyle === 'default') {
-      this.buttonClassList = ['b-standard-button'];
+      this.buttonClassList = ['b-standard-button bg-primary-color'];
     } else if (this.buttonStyle === 'white') {
       this.buttonClassList = [
         'b-standard-button',
@@ -72,22 +72,21 @@ export class AnimatedCheckmarkButtonComponent implements OnInit {
       if (this.buttonStyle === 'default') {
         // this.loadingState = true;
         this.buttonClassList = [
-          'b-standard-button'
-          // 'b-standard-button--inactive'
+          'b-standard-button bg-primary-color'
+          // 'inactive'
         ];
       } else if (this.buttonStyle === 'white') {
         // this.loadingState = true;
         this.buttonClassList = [
           'b-standard-button',
           'b-standard-button--white'
-          // 'b-standard-button--white-inactive'
         ];
       } else {
         console.error('Invalid button style...using "default" style.');
         // this.loadingState = true;
         this.buttonClassList = [
-          'b-standard-button'
-          // 'b-standard-button--inactive'
+          'b-standard-button bg-primary-color'
+          // 'inactive'
         ];
       }
     }

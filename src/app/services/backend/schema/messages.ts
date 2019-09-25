@@ -1,5 +1,6 @@
 import {
   BaseActivity,
+  BrainstormActivity,
   BuildAPitchActivity,
   DiscussionActivity,
   FeedbackActivity,
@@ -29,6 +30,7 @@ export interface UpdateMessage {
   lesson: Lesson; // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson_run: LessonRun;
   base_activity: BaseActivity;
+  brainstormactivity: BrainstormActivity;
   buildapitchactivity: BuildAPitchActivity;
   pitchomaticactivity: PitchoMaticActivity;
   activity_type: string;
@@ -215,7 +217,7 @@ export class FeedbackSubmitEvent extends ActivityEvent {
 }
 
 export class BuildAPitchSubmitEventEntry {
-  buildapitchblank: Number;
+  buildapitchblank: number;
   value: string;
 
   constructor(entry: BuildAPitchBlank, value: string) {
@@ -277,3 +279,34 @@ export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
     };
   }
 }
+
+export class BrainstormSubmitEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitEvent';
+
+  constructor(text: string) {
+    super();
+    this.extra_args = { idea: text };
+  }
+}
+
+export class BrainstormRemoveSubmissionEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveSubmissionEvent';
+
+  constructor(id: number) {
+    super();
+    this.extra_args = { brainstormidea: id };
+  }
+}
+
+export class BrainstormVoteEvent extends ActivityEvent {
+  event_name = 'BrainstormVoteEvent';
+
+  constructor(id: number) {
+    super();
+    this.extra_args = { brainstormidea: id };
+  }
+}
+
+// {'event_type': 'BrainstormSubmitEvent', 'idea': 'Random idea #27 from user 1'}
+// {'event_type': 'BrainstormRemoveSubmissionEvent', 'brainstormidea': 1 // ID of idea from the brainstorm_idea list}
+// {'event_type': 'BrainstormVoteEvent', 'brainstormidea': 1 // ID of idea from the brainstorm_idea list}

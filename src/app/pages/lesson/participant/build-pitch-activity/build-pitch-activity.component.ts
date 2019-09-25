@@ -161,7 +161,6 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   userSelected($event) {
-    console.log($event);
     this.selectedUser = $event;
   }
 

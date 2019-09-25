@@ -14,13 +14,16 @@ export class AdminResolver implements Resolve<any> {
 
   async resolve(route: ActivatedRouteSnapshot): Promise<any> {
     try {
-      // const metricsData = await this.adminService.getAdminPanelMetrics(id);
-      // return metricsData;
-
       const user = await this.adminService.getUser().toPromise();
 
       const courses = await this.adminService.getCourses().toPromise();
-      return { user: user, courses: courses };
+
+      // const whiteLabelInfo = await this.adminService
+      //   .getWhiteLabelDetails(user.organization)
+      //   .toPromise();
+      const whiteLabelInfo = {};
+
+      return { user: user, courses: courses, whiteLabelInfo: whiteLabelInfo };
     } catch (err) {
       console.log(err);
     }

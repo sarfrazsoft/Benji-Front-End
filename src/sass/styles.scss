@@ -46,6 +46,7 @@
 @import './activities/mcq-activity';
 @import './activities/pair-grouping';
 @import './activities/generate-pitch';
+@import './activities/brainstorm-activity';
 @import './entry/demo-participant-join';
 @import './entry/entry';
 @import './entry/entry-mob';
@@ -71,7 +72,7 @@
 .lobby-card .mat-progress-spinner circle,
 .timer-svg .mat-progress-spinner circle,
 .mat-spinner circle {
-  stroke: $primary-color;
+  @include stroke(primary);
   stroke-linecap: round;
 }
 
@@ -271,6 +272,10 @@
 .body {
   background-color: $off-white;
   color: $secondary-color-dark;
+}
+
+app-root > div {
+  height: 100%;
 }
 //
 

@@ -1,5 +1,66 @@
 /* COLORS */
 
+$colors: (
+  default: (
+    primary-lighter: #80a8ff,
+    primary-light: #4c83fc,
+    primary: #0a4cef,
+    primary-dark: #4c188f,
+    primary-darker: #3a126e,
+    primary-darkest: #00178a
+  ),
+  holistic-theme: (
+    primary-lighter: #f8b0ac,
+    primary-light: #fa8b85,
+    primary: #fd4b42,
+    primary-dark: #fd261b,
+    primary-darker: #c91006,
+    primary-darkest: #830700
+  )
+);
+
+// $white: #fff;
+// $off-white: #f7f8fa;
+// $secondary-lightest: #e9ebf3;
+// $secondary-lighter: #dfe5e7;
+// $secondary-light: #bec8ca;
+// $secondary: #979797;
+// $secondary-dark: #6c6c6c;
+// $warning: #ee3e53;
+// $success: #7ed321;
+
+// @mixin background($color) {
+//   background: map-get(map-get($colors, default), $color);
+
+//   .holistic-theme & {
+//     background: map-get(map-get($colors, holistic-theme), $color);
+//   }
+// }
+
+// @mixin color($color) {
+//   color: map-get(map-get($colors, default), $color);
+
+//   .holistic-theme & {
+//     color: map-get(map-get($colors, holistic-theme), $color);
+//   }
+// }
+
+@mixin stroke($color) {
+  stroke: map-get(map-get($colors, default), $color);
+
+  .holistic-theme & {
+    stroke: map-get(map-get($colors, holistic-theme), $color);
+  }
+}
+
+@mixin border-bottom-color($color) {
+  border-bottom-color: map-get(map-get($colors, default), $color);
+
+  .holistic-theme & {
+    border-bottom-color: map-get(map-get($colors, holistic-theme), $color);
+  }
+}
+
 /* Variables: Colors */
 $primary-color-lighter: #80a8ff;
 $primary-color-light: #4c83fc;
@@ -41,21 +102,8 @@ $medium-only: 'only screen and (min-width : #{$small-screen-up}) and (max-width 
 $medium-and-large: 'only screen and (min-width : #{$small-screen-up}) and (max-width : #{$large-screen})' !default;
 $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width : #{$large-screen})' !default;
 
-/* Utilities: Backgrounds */
-.bg-primary-color {
-  background: $primary-color;
-}
-
 .bg-secondary-color-dark {
   background: $secondary-color-dark;
-}
-
-.bg-primary-color-dark {
-  background: $primary-color-dark;
-}
-
-.bg-primary-color-darkest {
-  background: $primary-color-darkest;
 }
 
 .bg-warning-color {
@@ -66,20 +114,14 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
   background: $secondary-color-light;
 }
 
-.bg-primary-color-light {
-  background: $primary-color-light;
-}
-
-.bg-primary-color-lighter {
-  background: $primary-color-lighter;
-}
-
 .bg-secondary-color-lighter {
   background: $secondary-color-lighter;
 }
+
 .bg-secondary-color-lightest {
   background: $secondary-color-lightest;
 }
+
 .bg-white {
   background: #fff;
 }
@@ -93,36 +135,16 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 .white-color {
   color: #fff;
 }
-.primary-color {
-  color: $primary-color;
-}
 
 .secondary-color-dark {
   color: $secondary-color-dark;
 }
-
-.primary-color-dark {
-  color: $primary-color-dark;
-}
-
-.primary-color-darkest {
-  color: $primary-color-darkest;
-}
-
 .warning-color {
   color: $warning-color !important;
 }
 
 .secondary-color-light {
   color: $secondary-color-light;
-}
-
-.primary-color-light {
-  color: $primary-color-light;
-}
-
-.primary-color-lighter {
-  color: $primary-color-lighter;
 }
 
 .secondary-color-lighter {
@@ -137,3 +159,7 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
   color: $warning-color;
 }
 /* End of font colors*/
+
+.border-bottom {
+  border-bottom: 1px solid $secondary-color;
+}

@@ -19,6 +19,7 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
   @Input() endAudio;
   @Input() timer: Timer;
   @Input() timerOffset: number;
+  @Input() classes: string;
 
   totalTime: number;
   remainingTime: number;

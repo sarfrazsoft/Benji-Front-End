@@ -11,38 +11,37 @@ benji-ps-lobby {
     .mat-progress-spinner circle,
     .mat-spinner circle {
       stroke: $primary-color;
+      @include stroke(primary);
     }
   }
 }
 
 benji-ms-lobby {
-  .mainscreen-activity {
-    .lobby-activity__joined-users {
-      p {
-        margin-top: 3vh;
-      }
-      padding: 0 3vw;
-      height: 100%;
-      overflow: hidden;
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        padding-left: 0;
-        height: 50vh;
-        li {
-          list-style: none;
-          margin: 0;
-          font-size: 4vh;
-          line-height: 1.33;
-          white-space: nowrap;
-          overflow: hidden;
-          width: 40%;
-          text-overflow: ellipsis;
-          text-transform: capitalize;
-          &.long-list {
-            font-size: 2.8vh;
-          }
+  .joined-users {
+    p {
+      margin-top: 3vh;
+    }
+    padding: 0 3vw;
+    height: 100%;
+    overflow: hidden;
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      padding-left: 0;
+      height: 50vh;
+      li {
+        list-style: none;
+        margin: 0;
+        font-size: 4vh;
+        line-height: 1.33;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 40%;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+        &.long-list {
+          font-size: 2.8vh;
         }
       }
     }

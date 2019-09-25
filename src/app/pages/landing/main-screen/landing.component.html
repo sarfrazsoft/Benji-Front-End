@@ -1,10 +1,10 @@
 <section class="lesson-landing">
-  <div class="lesson-landing__flexer flexer">
+  <div class="lesson-landing__flexer flexer testerrr">
     <div class="bg-primary-color lesson-landing__content-container">
-      <img src="../../../../assets/img/Benji_logo_white.png" alt="Benji Logo" />
+      <img [src]="contextService.partnerInfo.lightLogo" alt="Benji Logo" />
       <div class="lesson-landing__width-container">
         <!-- <h1 class="pn-700">Welcome to Benji’s Active Listening session</h1> -->
-        <h1 class="pn-700">Welcome to Benji</h1>
+        <h1 class="pn-700">{{ contextService.partnerInfo.name }}</h1>
         <p>
           Make sure everyone can see this screen and that your speakers are
           working.

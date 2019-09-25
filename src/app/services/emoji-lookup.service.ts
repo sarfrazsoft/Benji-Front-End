@@ -51,6 +51,24 @@ export class EmojiLookupService {
         return '🥑';
       case 'banana':
         return '🍌';
+      case 'speakinghead':
+        return '🗣️';
+      case 'grimacing':
+        return '😬';
+      case 'raisinghand':
+        return '🙋‍♀️';
+      case 'weary':
+        return '😩';
+      case 'handshake':
+        return '🤝';
+      case 'womanfacepalming':
+        return '🤦‍♀️';
+      case 'womandancing':
+        return '💃🏽';
+      case 'wave':
+        return '👋';
+      case 'explodinghead':
+        return '🤯';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

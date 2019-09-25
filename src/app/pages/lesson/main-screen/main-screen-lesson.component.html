@@ -3,7 +3,7 @@
 </div>
 
 <div class="ms-fullheight-container">
-  <app-main-screen-toolbar></app-main-screen-toolbar>
+  <benji-main-screen-toolbar></benji-main-screen-toolbar>
 
   <div
     *ngIf="isConnected() && serverMessage"
@@ -13,6 +13,22 @@
         : 'ms-lesson__activity-container'
     "
   >
+    <!-- <benji-ms-brainstorming-activity
+      *ngIf="getActivityType() === 'VideoActivity'"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-brainstorming-activity> -->
+
+    <benji-ms-brainstorming-activity
+      *ngIf="getActivityType() === 'BrainstormActivity'"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-brainstorming-activity>
+
     <benji-ms-generate-pitch-activity
       *ngIf="getActivityType() === 'PitchoMaticActivity'"
       [activityState]="serverMessage"
@@ -74,13 +90,13 @@
     >
     </benji-ms-either-or-activity>
 
-    <benji-ms-activity-video
+    <!-- <benji-ms-activity-video
       *ngIf="getActivityType() === 'VideoActivity'"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-activity-video>
+    </benji-ms-activity-video> -->
 
     <benji-ms-pair-grouping-activity
       *ngIf="getActivityType() === 'PairGroupingActivity'"

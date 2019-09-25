@@ -1,9 +1,12 @@
 .mainscreen-activity {
   .lesson-top-banner {
     padding: 2.5vw;
+    &.compact {
+      padding: 0.5vw 2.5vw;
+    }
     h2 {
       margin: 0;
-      font-size: 3vw;
+      font-size: 2.8vw;
       line-height: normal;
     }
   }

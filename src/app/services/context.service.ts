@@ -32,4 +32,16 @@ export class ContextService {
   get courses(): any {
     return this.courses$.getValue();
   }
+
+  /**
+   * Current partner details
+   */
+  partnerInfo$ = new BehaviorSubject<any>(null);
+
+  set partnerInfo(partnerInfo: any) {
+    this.partnerInfo$.next(partnerInfo);
+  }
+  get partnerInfo(): any {
+    return this.partnerInfo$.getValue();
+  }
 }

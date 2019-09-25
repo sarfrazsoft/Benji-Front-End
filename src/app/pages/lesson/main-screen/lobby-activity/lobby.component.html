@@ -40,10 +40,12 @@
     </div>
     <div class="bg-white" fxFlex="50%">
       <div
-        class="mainscreen-activity__column mainscreen-activity__column--25  lobby-activity__joined-users"
+        class="mainscreen-activity__column mainscreen-activity__column--25 joined-users"
       >
         <p class="all-caps-title">
-          <span class="lobby-activity__participant-number primary-color-darkest">
+          <span
+            class="lobby-activity__participant-number primary-color-darkest"
+          >
             {{ activityState.lesson_run.joined_users.length }}
           </span>
           {{
