@@ -1,0 +1,18 @@
+<div class="bar-container" fxFlex="100%" fxLayoutAlign="center">
+  <div class="evaluation-bar" fxFlex="75%">
+    <div class="scale">
+      <div fxFlex="25%" *ngFor="let scaleUnit of scale">
+        <span>{{ scaleUnit }}%</span>
+      </div>
+    </div>
+    <div class="progressbar-report">
+      <div
+        class="{{ score.class }}"
+        *ngFor="let score of scores"
+        [style.width.%]="score.width"
+      >
+        {{ score.score }}%
+      </div>
+    </div>
+  </div>
+</div>

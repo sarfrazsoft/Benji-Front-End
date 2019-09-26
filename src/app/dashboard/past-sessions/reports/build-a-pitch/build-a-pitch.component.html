@@ -1,7 +1,12 @@
-<div class="example-container">
-  <table mat-table [dataSource]="bapTableData" class="mat-elevation-z8">
+<div class="bap-table-container">
+  <table
+    mat-table
+    [dataSource]="bapTableData"
+    class="mat-elevation-z8"
+    [style.width.px]="200 * displayedColumns.length"
+  >
     <!-- Prompts Column -->
-    <ng-container matColumnDef="prompt">
+    <ng-container matColumnDef="prompt" sticky>
       <th mat-header-cell *matHeaderCellDef>Prompts</th>
       <td mat-cell *matCellDef="let element">{{ element.prompt }}</td>
       <td mat-footer-cell *matFooterCellDef>Total</td>
