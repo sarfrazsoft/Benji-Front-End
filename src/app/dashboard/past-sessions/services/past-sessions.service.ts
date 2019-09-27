@@ -133,10 +133,9 @@ export class PastSessionsService {
             titlecomponent: {
               title: 'Please leave some feedback for us!',
               title_image: 'emoji://memo',
-              screen_instructions:
-                "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
+              screen_instructions: 'We\'d really apprectake a minute!',
               participant_instructions:
-                "What did you think about today's lesson?"
+                'What did you think about today\'s lesson?'
             },
             activity_type: 'FeedbackActivity'
           };
@@ -223,7 +222,7 @@ export class PastSessionsService {
           //         label: 'we help',
           //         temp_text: 'the audience',
           //         help_text:
-          //           ' Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)'
+          //           ' Who do you help? Try and be as specific as possible'
           //       },
           //       {
           //         id: 28,

@@ -13,14 +13,6 @@
         : 'ms-lesson__activity-container'
     "
   >
-    <!-- <benji-ms-brainstorming-activity
-      *ngIf="getActivityType() === 'VideoActivity'"
-      [activityState]="serverMessage"
-      [avgServerTimeOffset]="avgServerTimeOffset"
-      (sendMessage)="sendSocketMessage($event)"
-    >
-    </benji-ms-brainstorming-activity> -->
-
     <benji-ms-brainstorming-activity
       *ngIf="getActivityType() === 'BrainstormActivity'"
       [activityState]="serverMessage"

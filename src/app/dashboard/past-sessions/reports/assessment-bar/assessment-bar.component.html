@@ -1,17 +1,40 @@
-<div class="bar-container" fxFlex="100%" fxLayoutAlign="center">
-  <div class="evaluation-bar" fxFlex="75%">
-    <div class="scale">
-      <div fxFlex="25%" *ngFor="let scaleUnit of scale">
-        <span>{{ scaleUnit }}%</span>
+<div fxLayout="column">
+  <div
+    class="bar-container"
+    fxFlex="100%"
+    fxLayoutAlign="center"
+    *ngFor="let question of questionSet; let i = index"
+  >
+    <div class="evaluation-bar" fxFlex="75%">
+      <div class="scale">
+        <div fxFlex="25%" *ngFor="let scaleUnit of scale[i]">
+          <span>{{ scaleUnit }}%</span>
+        </div>
       </div>
-    </div>
-    <div class="progressbar-report">
+      <div class="progressbar-report">
+        <div
+          class="{{ score.class }}"
+          *ngFor="let score of scores[i]"
+          fxFlex="{{ score.score + '%' }}"
+        >
+          <span *ngIf="score.score">
+            {{ score.score + '%' }}
+          </span>
+        </div>
+      </div>
       <div
-        class="{{ score.class }}"
-        *ngFor="let score of scores"
-        [style.width.%]="score.width"
+        class="legend"
+        fxLayout="row"
+        fxLayoutAlign="center"
+        fxLayoutGap="30px"
       >
-        {{ score.score }}%
+        <div *ngFor="let item of legend" fxLayout="row" fxLayoutGap="20px">
+          <div class="color" [ngClass]="item.color"></div>
+          <div class="text">{{ item.text }}</div>
+        </div>
+      </div>
+      <div class="question-text">
+        {{ question.question_text }}
       </div>
     </div>
   </div>
