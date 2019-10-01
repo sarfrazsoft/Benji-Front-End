@@ -31,15 +31,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.pastSessionsService.getReports('73103').subscribe(res => {
       console.log(res);
-      res.assessments.forEach(fback => {
-        let avg = 0;
-        const noOfQuestions = fback.feedbackquestion_set.length;
-        fback.feedbackquestion_set.forEach(question => {
-          avg = avg + parseFloat(question.average_rating);
-        });
-        avg = avg / noOfQuestions;
-        this.assessments.push(Math.round(avg * 100) / 100);
-      });
+      // res.assessments.forEach(fback => {
+      //   let avg = 0;
+      //   const noOfQuestions = fback.feedbackquestion_set.length;
+      //   fback.feedbackquestion_set.forEach(question => {
+      //     avg = avg + parseFloat(question.average_rating);
+      //   });
+      //   avg = avg / noOfQuestions;
+      //   this.assessments.push(Math.round(avg * 100) / 100);
+      // });
       console.log(this.assessments);
       this.myChart.chart.update();
     });

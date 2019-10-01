@@ -1,0 +1,14 @@
+.bap-table-container {
+  width: 75vw;
+  overflow: auto;
+  .mat-table-sticky {
+    border-right: 1px solid #e0e0e0;
+  }
+
+  td.mat-cell,
+  td.mat-footer-cell,
+  th.mat-header-cell {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
