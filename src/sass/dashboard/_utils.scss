@@ -12,3 +12,11 @@
   font-size: 24px;
   color: $primary-color;
 }
+
+.card-container {
+  .card {
+    background-color: #fff;
+    border-radius: $subsection-border-radius;
+    padding: 10px 40px;
+  }
+}

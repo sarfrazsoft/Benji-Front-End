@@ -1,9 +1,29 @@
 <!-- <benji-assessment-bar></benji-assessment-bar> -->
 
-<benji-mcqs></benji-mcqs>
+<!-- <div class="admin-panel" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Session report</h1>
+  </div> -->
 
-<div class="chart-container">
-  <canvas #chartCanvas id="myChart" width="500" height="400"></canvas>
+<!-- <div class="subsection-container">
+      <benji-stats></benji-stats>
+    </div> -->
+
+<!-- <div class="subsection-container">
+    <div class="card-container" fxLayoutGap="40px" fxLayout="column"> -->
+<!-- <div class="card">
+        <benji-build-a-pitch-report></benji-build-a-pitch-report>
+      </div> -->
+
+<!-- <div class="card">
+        <div class="chart-container">
+          <canvas #chartCanvas id="myChart" width="500" height="400"></canvas>
+        </div>
+      </div> -->
+
+<div class="card">
+  <benji-mcqs [mcqs]="mcqs"></benji-mcqs>
 </div>
-
-<benji-build-a-pitch-report></benji-build-a-pitch-report>
+<!-- </div>
+  </div>
+</div> -->

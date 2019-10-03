@@ -1,34 +1,29 @@
 benji-courses {
-  .course {
-    background-color: #fff;
-    border-radius: $subsection-border-radius;
-    padding: 10px 40px;
-    .launch-session {
-      font-family: $pn-regular;
-      color: $primary-color;
-      font-size: 20px;
-      cursor: pointer;
-      span {
-        transition: all $animation-time linear;
-        border-bottom: 1px solid #fff;
-      }
-      img {
-        margin-left: 8px;
-        height: 17px;
-        padding-right: 0px;
+  .launch-session {
+    font-family: $pn-regular;
+    color: $primary-color;
+    font-size: 20px;
+    cursor: pointer;
+    span {
+      transition: all $animation-time linear;
+      border-bottom: 1px solid #fff;
+    }
+    img {
+      margin-left: 8px;
+      height: 17px;
+      padding-right: 0px;
 
-        transition: all $animation-time linear;
-        -webkit-transition: all $animation-time linear;
-        -ms-transition: all $animation-time linear;
+      transition: all $animation-time linear;
+      -webkit-transition: all $animation-time linear;
+      -ms-transition: all $animation-time linear;
+    }
+    &:hover {
+      img {
+        margin-right: -10px;
+        margin-left: 18px;
       }
-      &:hover {
-        img {
-          margin-right: -10px;
-          margin-left: 18px;
-        }
-        span {
-          border-bottom-color: $primary-color;
-        }
+      span {
+        border-bottom-color: $primary-color;
       }
     }
   }
@@ -41,7 +36,7 @@ benji-courses {
   }
 }
 
-// move to better file
+// Footer link on the bottom of course card
 .course-preview-footer,
 .view-details-link {
   .overview-button {

@@ -1,16 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'benji-mcqs',
   templateUrl: './mcqs.component.html',
   styleUrls: ['./mcqs.component.scss']
 })
-export class McqsComponent implements OnInit {
+export class McqsComponent implements OnInit, OnChanges {
   questions = [question3, question4];
   ratingLevels = ratingLevels2;
+  @Input() mcqs = {};
+  participants = [];
   constructor() {}
 
   ngOnInit() {}
+
+  ngOnChanges() {
+    if (this.mcqs.joined_users) {
+      this.participants = this.mcqs.joined_users.map(a => {
+        return { name: a.first_name + ' ' + a.last_name, id: a.id };
+      });
+    }
+  }
+
+  getColumnHeaders(mcq) {
+    const columnHeaderMap = {};
+    mcq.question.mcqchoice_set.forEach((q, i) => {
+      columnHeaderMap['option' + (i + 1)] = q.choice_text;
+    });
+    return columnHeaderMap;
+  }
 }
 
 // question with 5 options

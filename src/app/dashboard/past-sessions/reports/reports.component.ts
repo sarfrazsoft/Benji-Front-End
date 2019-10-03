@@ -20,6 +20,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   ctx: CanvasRenderingContext2D;
   data: any;
   myChart: any;
+  mcqs = {};
   assessments = [];
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
@@ -31,6 +32,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.pastSessionsService.getReports('73103').subscribe(res => {
       console.log(res);
+      this.mcqs = res;
       // res.assessments.forEach(fback => {
       //   let avg = 0;
       //   const noOfQuestions = fback.feedbackquestion_set.length;
@@ -40,8 +42,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       //   avg = avg / noOfQuestions;
       //   this.assessments.push(Math.round(avg * 100) / 100);
       // });
-      console.log(this.assessments);
-      this.myChart.chart.update();
+      // console.log(this.assessments);
+      // this.myChart.chart.update();
     });
   }
 

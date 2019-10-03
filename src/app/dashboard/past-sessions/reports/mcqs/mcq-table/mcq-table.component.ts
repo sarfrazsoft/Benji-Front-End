@@ -1,83 +1,87 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'benji-mcq-table',
   templateUrl: './mcq-table.component.html',
   styleUrls: ['./mcq-table.component.scss']
 })
-export class McqTableComponent implements OnInit {
+export class McqTableComponent implements OnInit, OnChanges {
   @Input() questionStatement = '';
+  @Input() mcq = {};
+  @Input() participants = [];
+
+  @Input() columnHeaderMap = {};
+
   displayedColumns: string[] = [
     'prompt',
-    'person1',
-    'person2',
-    'person3',
-    'person4',
-    'person5',
-    'person6',
-    'person7',
-    'person8',
-    'person9',
-    'person10'
+    'option1',
+    'option2',
+    'option3',
+    'option4'
   ];
   bapTableData = [
-    {
-      prompt: 'Matthew Parson',
-      person1: '-',
-      person2: '-',
-      person3: '-',
-      person4: '-'
-    },
-    {
-      prompt: 'Abdullah M',
-      person1: '-',
-      person2: '-',
-      person3: '-',
-      person4: '-'
-    },
-    {
-      prompt: 'Mahin Khan',
-      person1: '-',
-      person2: '-',
-      person3: '-',
-      person4: '-'
-    },
-    {
-      prompt: 'Azim Wazeer',
-      person1: '-',
-      person2: '-',
-      person3: '-',
-      person4: '-'
-    }
+    // {
+    //   prompt: 'Matthew Parson',
+    //   option1: '-',
+    //   option2: '-',
+    //   option3: '-',
+    //   option4: '-'
+    // },
+    // {
+    //   prompt: 'Abdullah M',
+    //   option1: '-',
+    //   option2: '-',
+    //   option3: '-',
+    //   option4: '-'
+    // },
+    // {
+    //   prompt: 'Mahin Khan',
+    //   option1: '-',
+    //   option2: '-',
+    //   option3: '-',
+    //   option4: '-'
+    // },
+    // {
+    //   prompt: 'Azim Wazeer',
+    //   option1: '-',
+    //   option2: '-',
+    //   option3: '-',
+    //   option4: '-'
+    // }
   ];
 
   getColumnHeader(name: string) {
-    const columnHeaderMap = {
-      person1: 'Make it relatable',
-      person2: 'Make it surprising',
-      person3: 'Make it short',
-      person4: 'All of the above'
-    };
-
-    return columnHeaderMap[name];
-  }
-
-  getTotalVotes(name: string) {
-    const votesMap = {
-      person1: '2',
-      person2: '3',
-      person3: '4',
-      person4: '1',
-      person5: '0',
-      person6: '0',
-      person7: '1',
-      person8: '2',
-      person9: '0',
-      person10: '0'
-    };
-
-    return votesMap[name];
+    return this.columnHeaderMap[name];
   }
 
   ngOnInit() {}
+
+  ngOnChanges() {
+    console.log(this.mcq);
+    // this.createColumnHeaderMap();
+    // console.log(this.participants);
+    this.createTableData();
+  }
+
+  createTableData() {
+    // console.log(this.mcq);
+    this.participants.forEach((p, i) => {
+      this.bapTableData.push({ prompt: p.name });
+      this.mcq.question.mcqchoice_set.forEach((choice, j) => {
+        const answer = this.mcq.mcqactivityuseranswer_set.find(
+          ans => ans.user.id === p.id
+        );
+        this.bapTableData[i]['option' + (j + 1)] =
+          answer.answer === choice.id ? 'x' : '-';
+        // did this pID ID select this choice id
+      });
+    });
+  }
+
+  createColumnHeaderMap() {
+    this.mcq.question.mcqchoice_set.forEach((q, i) => {
+      this.columnHeaderMap['opiton' + (i + 1)] = q.choice_text;
+    });
+    // console.log(this.columnHeaderMap);
+  }
 }

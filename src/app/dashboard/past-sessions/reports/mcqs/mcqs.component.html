@@ -1,8 +1,26 @@
-<benji-assessment-bar
+<!-- <benji-assessment-bar
   [questionSet]="questions"
   [ratingLevels]="ratingLevels"
-></benji-assessment-bar>
+></benji-assessment-bar> -->
+<div class="admin-panel" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Multiple choice questions</h1>
+  </div>
 
-<benji-mcq-table
-  [questionStatement]="'How can you make your pitch more memorable?'"
-></benji-mcq-table>
+  <!-- <div class="subsection-container">
+        <benji-stats></benji-stats>
+      </div> -->
+
+  <div class="subsection-container">
+    <div class="card-container" fxLayoutGap="40px" fxLayout="column">
+      <div *ngFor="let mcq of mcqs.mcqs">
+        <benji-mcq-table
+          [questionStatement]="mcq.question.question"
+          [mcq]="mcq"
+          [participants]="participants"
+          [columnHeaderMap]="getColumnHeaders(mcq)"
+        ></benji-mcq-table>
+      </div>
+    </div>
+  </div>
+</div>
