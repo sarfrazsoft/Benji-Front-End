@@ -32,23 +32,24 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
     this.player.nativeElement.load();
     this.player.nativeElement.play();
 
-    this.video.videoState$.subscribe(state => {
-      if (state === 'pause') {
-        this.player.nativeElement.pause();
-      } else if (state === 'resume') {
-        this.player.nativeElement.play();
-        if (!this.player.nativeElement) {
-          // this.socketMessage.emit(new PauseActivityEvent());
-          // this.sendMessage.emit(new PauseActivityEvent());
-        }
-      }
-    });
+    // this.video.videoState$.subscribe(state => {
+    //   if (state === 'pause') {
+    //     this.player.nativeElement.pause();
+    //   } else if (state === 'resume') {
+    //     this.player.nativeElement.play();
+    //     if (!this.player.nativeElement) {
+    //       // this.socketMessage.emit(new PauseActivityEvent());
+    //       // this.sendMessage.emit(new PauseActivityEvent());
+    //     }
+    //   }
+    // });
   }
 
   ngOnAfterViewInit() {}
 
   ngOnDestroy() {
     // this.videoStateSubscription.unsubscribe();
+    // this.video.videoState$.unsubscribe();
   }
 
   public skipVideo() {

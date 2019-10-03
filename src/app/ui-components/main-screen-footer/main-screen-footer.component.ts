@@ -23,15 +23,16 @@ export class MainScreenFooterComponent implements OnInit {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    if (this.isPaused) {
-      this.videoStateService.videoState = 'pause';
-    } else if (!this.isPaused) {
-      this.videoStateService.videoState = 'resume';
-    }
+    // if (this.isPaused) {
+    //   this.videoStateService.videoState = 'pause';
+    // } else if (!this.isPaused) {
+    //   this.videoStateService.videoState = 'resume';
+    // }
   }
 
   controlClicked(eventType) {
-    this.videoStateService.videoState = eventType;
+    // if (this.videoStateService.videoState) {
+    // this.videoStateService.videoState = eventType;
     if (eventType === 'pause') {
       this.socketMessage.emit(new PauseActivityEvent());
     } else if (eventType === 'next') {
@@ -47,5 +48,6 @@ export class MainScreenFooterComponent implements OnInit {
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());
     }
+    // }
   }
 }
