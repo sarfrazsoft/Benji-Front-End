@@ -41,9 +41,9 @@ export class MainScreenFooterComponent implements OnInit {
       // fowarded without completion
       // The concerned activity should be told that it has been
       // skipped over so the activity can close properly
-      if (localStorage.getItem('pitchDraftNotes')) {
-        localStorage.removeItem('pitchDraftNotes');
-      }
+      // if (localStorage.getItem('pitchDraftNotes')) {
+      //   localStorage.removeItem('pitchDraftNotes');
+      // }
       this.socketMessage.emit(new NextInternalEvent());
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());
