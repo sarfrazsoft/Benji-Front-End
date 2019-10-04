@@ -103,8 +103,10 @@ export class ParticipantGeneratePitchActivityComponent
       this.gettingFeedbackSection = false;
       this.giveOthersFeedbackSection = false;
       this.shareFeedbackSection = false;
-      if (!this.pitchNotesSaved) {
+      if (!this.pitchNotesSaved && localStorage.getItem('pitchDraftNotes')) {
         this.savePitchNotes();
+      } else {
+        this.getUserPitchDraftNotes();
       }
       this.draftPitchSection = false;
       this.generatePitchSection = false;
@@ -129,7 +131,7 @@ export class ParticipantGeneratePitchActivityComponent
         }
       }
     } else if (state.pitchomaticactivity.activity_status === 'discussion') {
-      localStorage.removeItem('pitchDraftNotes');
+      // localStorage.removeItem('pitchDraftNotes');
       this.listenToPitchSection = false;
       this.draftPitchSection = false;
       this.generatePitchSection = false;
@@ -306,6 +308,7 @@ export class ParticipantGeneratePitchActivityComponent
   savePitchNotes() {
     this.sendMessage.emit(new PitchoMaticUserReadyEvent(this.pitchDraftNotes));
     this.pitchNotesSaved = true;
+    localStorage.removeItem('pitchDraftNotes');
   }
 
   isCurrentUserPitching() {
@@ -381,5 +384,21 @@ export class ParticipantGeneratePitchActivityComponent
     ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
     const name = pitchingMember.user.first_name;
     return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  getUserPitchDraftNotes() {
+    const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
+    const blank_set: Array<PitchoMaticBlank> = act.pitchomaticblank_set;
+    blank_set.sort((a, b) => a.order - b.order);
+    const currentUserID = this.activityState.your_identity.id;
+    let currentMember: PitchoMaticGroupMember;
+    act.pitchomaticgroup_set.forEach(group => {
+      group.pitchomaticgroupmember_set.forEach(member => {
+        if (member.user.id === currentUserID) {
+          currentMember = member;
+        }
+      });
+    });
+    this.pitchDraftNotes = currentMember.pitch_prep_text;
   }
 }
