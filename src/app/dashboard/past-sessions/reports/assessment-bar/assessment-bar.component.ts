@@ -8,8 +8,9 @@ import { PastSessionsService } from 'src/app/dashboard/past-sessions/services/pa
   styleUrls: ['./assessment-bar.component.scss']
 })
 export class AssessmentBarComponent implements OnInit {
-  @Input() questionSet: Array<any> = [];
+  @Input() question: any = {};
   @Input() ratingLevels = [];
+  @Input() rankingQuestion = false;
 
   scale = ['25', '50', '75', '100'];
   scores = [];
@@ -22,8 +23,6 @@ export class AssessmentBarComponent implements OnInit {
   ];
   legend = [];
 
-  assessments = [];
-
   constructor(private pastSessionsService: PastSessionsService) {}
 
   ngOnInit() {
@@ -35,30 +34,24 @@ export class AssessmentBarComponent implements OnInit {
   }
 
   calculateRating(): void {
-    this.questionSet.forEach((q, i) => {
-      this.scores.push([]);
-      this.ratingLevels.forEach((r, j) => {
-        this.scores[i][j] = { width: 0, score: 0, class: this.colors[j] };
-      });
+    const arr = [];
+    this.ratingLevels.forEach((r, i) => {
+      this.scores[i] = { width: 0, score: 0, class: this.colors[i] };
+      arr.push(0);
     });
 
-    this.questionSet.forEach((question, questionIndex) => {
-      const arr = [];
-      this.ratingLevels.forEach(val => {
-        arr.push(0);
-      });
-      question.feedbackuseranswer_set.forEach(ans => {
-        const idx = this.ratingLevels.findIndex(
-          val => ans.rating_answer === val.rating
-        );
-        arr[idx] = arr[idx] + 1;
-      });
-      const sum = arr.reduce((a, b) => a + b, 0);
-      arr.forEach((n, i) => {
-        let scoreOnScale = (n / sum) * 100;
-        scoreOnScale = Math.round(scoreOnScale * 10) / 10;
-        this.scores[questionIndex][i].score = scoreOnScale;
-      });
+    this.question.feedbackuseranswer_set.forEach(ans => {
+      const idx = this.ratingLevels.findIndex(
+        val => ans.rating_answer === val.rating
+      );
+      arr[idx] = arr[idx] + 1;
+    });
+
+    const sum = arr.reduce((a, b) => a + b, 0);
+    arr.forEach((n, i) => {
+      let scoreOnScale = (n / sum) * 100;
+      scoreOnScale = Math.round(scoreOnScale * 10) / 10;
+      this.scores[i].score = scoreOnScale;
     });
   }
 

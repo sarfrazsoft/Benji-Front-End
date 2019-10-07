@@ -1,18 +1,16 @@
-<!-- <benji-assessment-bar
-  [questionSet]="questions"
-  [ratingLevels]="ratingLevels"
-></benji-assessment-bar> -->
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-heading">
     <h1>Multiple choice questions</h1>
   </div>
 
-  <!-- <div class="subsection-container">
-        <benji-stats></benji-stats>
-      </div> -->
+  <div class="card-container">
+    <div class="">
+      <benji-mcq-distribution-bars [mcqs]="mcqs"></benji-mcq-distribution-bars>
+    </div>
+  </div>
 
   <div class="subsection-container">
-    <div class="card-container" fxLayoutGap="40px" fxLayout="column">
+    <div fxLayoutGap="40px" fxLayout="column">
       <div *ngFor="let mcq of mcqs.mcqs">
         <benji-mcq-table
           [questionStatement]="mcq.question.question"
