@@ -7,7 +7,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 })
 export class McqTableComponent implements OnInit, OnChanges {
   @Input() questionStatement = '';
-  @Input() mcq = {};
+  @Input() mcq: any = {};
   @Input() participants = [];
 
   @Input() columnHeaderMap = {};
@@ -57,7 +57,7 @@ export class McqTableComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    console.log(this.mcq);
+    // console.log(this.mcq);
     // this.createColumnHeaderMap();
     // console.log(this.participants);
     this.createTableData();

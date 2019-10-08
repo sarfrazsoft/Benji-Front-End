@@ -1,0 +1,49 @@
+<div
+  class="response-percent-bars"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  *ngIf="mcq"
+>
+  <div class="content" fxLayout="column" fxLayoutGap="2.5%">
+    <div class="header" fxLayout="row" fxLayoutGap="25px">
+      <!-- <div class="question-index">
+        <span>
+          {{ questionIndex + 1 }}
+        </span>
+      </div> -->
+      <!-- <div class="question-info" fxLayout="column"> -->
+      <div class="question">
+        {{ questionIndex + 1 }}. {{ mcq.question.question }}
+      </div>
+      <!-- <div class="respondents-info">
+          {{ questionRespondents }} out of {{ lessonJoinedUsers }} people
+          answered this question (with multiple choice)
+        </div> -->
+      <!-- </div> -->
+    </div>
+    <div class="options-container" fxLayout="column" fxLayoutGap="1%">
+      <div *ngFor="let choice of choices; let i = index">
+        <div class="options" fxFlex="100%">
+          <div class="option">
+            <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+              <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
+                <div class="text">{{ choice.text }}</div>
+              </div>
+              <div class="percentage" fxLayoutAlign="center center">
+                {{ choice.noOfResponses }}
+                {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
+              </div>
+            </div>
+            <div id="progressbar">
+              <div
+                class="bg-primary-color-light"
+                [style.width.%]="choice.responsePercent"
+                [ngClass]="{ 'correct-choice': choice.is_correct }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

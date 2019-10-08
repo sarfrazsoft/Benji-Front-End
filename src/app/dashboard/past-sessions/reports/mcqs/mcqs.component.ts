@@ -8,13 +8,14 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 export class McqsComponent implements OnInit, OnChanges {
   questions = [question3, question4];
   ratingLevels = ratingLevels2;
-  @Input() mcqs = {};
+  @Input() mcqs: any = {};
   participants = [];
   constructor() {}
 
   ngOnInit() {}
 
   ngOnChanges() {
+    console.log(this.mcqs);
     if (this.mcqs.joined_users) {
       this.participants = this.mcqs.joined_users.map(a => {
         return { name: a.first_name + ' ' + a.last_name, id: a.id };

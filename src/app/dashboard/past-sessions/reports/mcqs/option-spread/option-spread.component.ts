@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'benji-mcq-distribution-bars',
-  templateUrl: './mcq-distribution-bars.component.html',
-  styleUrls: ['./mcq-distribution-bars.component.scss']
+  selector: 'benji-mcq-option-spread',
+  templateUrl: './option-spread.component.html',
+  styleUrls: ['./option-spread.component.scss']
 })
-export class McqDistributionBarsComponent implements OnInit {
+export class OptionSpreadComponent implements OnInit {
   @Input() mcqs = {};
   questions = [question3, question4];
   ratingLevels = ratingLevels2;

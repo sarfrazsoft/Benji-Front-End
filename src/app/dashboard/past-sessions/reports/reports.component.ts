@@ -31,7 +31,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.pastSessionsService.getReports('73103').subscribe(res => {
-      console.log(res);
+      console.log(res.mcqs[0]);
       this.mcqs = res;
       // res.assessments.forEach(fback => {
       //   let avg = 0;
@@ -48,60 +48,60 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.canvas = document.getElementById('myChart');
-    this.ctx = this.chartCanvas.nativeElement.getContext('2d');
-    this.myChart = new Chart(this.ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Pre-assessment', 'Post-assessment'],
-        datasets: [
-          {
-            label: '',
-            data: this.assessments,
-            borderWidth: 1
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        tooltips: {
-          enabled: false
-        },
-        scales: {
-          yAxes: [
-            {
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                fontColor: '#979797',
-                fontSize: 24,
-                stepSize: 1,
-                beginAtZero: true
-              }
-            }
-          ],
-          xAxes: [
-            {
-              barPercentage: 0.5,
-              gridLines: {
-                display: false
-              },
-              ticks: {
-                fontColor: '#979797',
-                fontSize: 24,
-                stepSize: 1,
-                beginAtZero: true
-              }
-            }
-          ]
-        }
-      }
-    });
+    // this.canvas = document.getElementById('myChart');
+    // this.ctx = this.chartCanvas.nativeElement.getContext('2d');
+    // this.myChart = new Chart(this.ctx, {
+    //   type: 'bar',
+    //   data: {
+    //     labels: ['Pre-assessment', 'Post-assessment'],
+    //     datasets: [
+    //       {
+    //         label: '',
+    //         data: this.assessments,
+    //         borderWidth: 1
+    //       }
+    //     ]
+    //   },
+    //   options: {
+    //     responsive: true,
+    //     maintainAspectRatio: false,
+    //     legend: {
+    //       display: false
+    //     },
+    //     tooltips: {
+    //       enabled: false
+    //     },
+    //     scales: {
+    //       yAxes: [
+    //         {
+    //           gridLines: {
+    //             display: false
+    //           },
+    //           ticks: {
+    //             fontColor: '#979797',
+    //             fontSize: 24,
+    //             stepSize: 1,
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       ],
+    //       xAxes: [
+    //         {
+    //           barPercentage: 0.5,
+    //           gridLines: {
+    //             display: false
+    //           },
+    //           ticks: {
+    //             fontColor: '#979797',
+    //             fontSize: 24,
+    //             stepSize: 1,
+    //             beginAtZero: true
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   }
+    // });
   }
 }
 
