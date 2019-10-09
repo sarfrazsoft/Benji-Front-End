@@ -1,8 +1,13 @@
-<div *ngFor="let question of questions">
-  <benji-assessment-bar
-    [question]="question"
-    [ratingLevels]="ratingLevels"
-    [rankingQuestion]="true"
-  >
-  </benji-assessment-bar>
+<div class="assessment" *ngFor="let assessment of data.assessments">
+  <div class="assessment-title">
+    {{ assessment.titlecomponent.title }}
+  </div>
+  <div *ngFor="let question of assessment.feedbackquestion_set">
+    <benji-assessment-bar
+      [question]="question"
+      [ratingLevels]="ratingLevels"
+      [rankingQuestion]="true"
+    >
+    </benji-assessment-bar>
+  </div>
 </div>

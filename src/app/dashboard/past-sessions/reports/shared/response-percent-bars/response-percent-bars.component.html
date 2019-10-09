@@ -6,20 +6,9 @@
 >
   <div class="content" fxLayout="column" fxLayoutGap="2.5%">
     <div class="header" fxLayout="row" fxLayoutGap="25px">
-      <!-- <div class="question-index">
-        <span>
-          {{ questionIndex + 1 }}
-        </span>
-      </div> -->
-      <!-- <div class="question-info" fxLayout="column"> -->
       <div class="question">
         {{ questionIndex + 1 }}. {{ mcq.question.question }}
       </div>
-      <!-- <div class="respondents-info">
-          {{ questionRespondents }} out of {{ lessonJoinedUsers }} people
-          answered this question (with multiple choice)
-        </div> -->
-      <!-- </div> -->
     </div>
     <div class="options-container" fxLayout="column" fxLayoutGap="1%">
       <div *ngFor="let choice of choices; let i = index">

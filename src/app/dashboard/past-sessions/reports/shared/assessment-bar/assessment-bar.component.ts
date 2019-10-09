@@ -33,6 +33,10 @@ export class AssessmentBarComponent implements OnInit {
     });
   }
 
+  ngOnChanges() {
+    console.log(this.question);
+  }
+
   calculateRating(): void {
     const arr = [];
     this.ratingLevels.forEach((r, i) => {

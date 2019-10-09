@@ -31,7 +31,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.pastSessionsService.getReports('73103').subscribe(res => {
-      console.log(res.mcqs[0]);
+      // console.log(res.mcqs[0]);
       this.mcqs = res;
       // res.assessments.forEach(fback => {
       //   let avg = 0;
