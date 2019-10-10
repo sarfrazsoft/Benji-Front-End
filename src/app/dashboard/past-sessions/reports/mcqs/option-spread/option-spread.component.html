@@ -2,7 +2,10 @@
   <div class="assessment-title">
     {{ assessment.titlecomponent.title }}
   </div>
-  <div *ngFor="let question of assessment.feedbackquestion_set">
+  <div
+    class="card-container"
+    *ngFor="let question of assessment.feedbackquestion_set"
+  >
     <benji-assessment-bar
       [question]="question"
       [ratingLevels]="ratingLevels"

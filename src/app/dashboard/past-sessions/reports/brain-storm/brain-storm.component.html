@@ -1,0 +1,16 @@
+<div class="admin-panel report-cards" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Brain storming</h1>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <div class="prompt">
+        {{ data.prompt }}
+      </div>
+      <div class="ideas-container">
+        <div class="ideas" *ngFor="let idea of data.ideas">{{ idea }}</div>
+      </div>
+    </div>
+  </div>
+</div>
