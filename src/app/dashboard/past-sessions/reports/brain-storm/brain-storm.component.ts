@@ -13,6 +13,7 @@ export class BrainStormComponent implements OnInit {
 }
 
 const brainstorm = {
+  joined_users: [{}, {}],
   prompt: 'Prompt Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   ideas: [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',

@@ -3,10 +3,14 @@
     <h1>Brain storming</h1>
   </div>
 
-  <div class="card-container">
+  <div class="card-container brain-storming-report">
     <div class="card">
       <div class="prompt">
         {{ data.prompt }}
+      </div>
+      <div class="ideas-count">
+        {{ data.ideas.length }} ideas submitted by
+        {{ data.joined_users?.length }}
       </div>
       <div class="ideas-container">
         <div class="ideas" *ngFor="let idea of data.ideas">{{ idea }}</div>

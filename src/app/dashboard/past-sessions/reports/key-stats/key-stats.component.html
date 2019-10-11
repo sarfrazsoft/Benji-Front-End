@@ -1,0 +1,20 @@
+<div class="admin-panel report-cards" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Key stats - Pitch Perfect {{ startDate }} @ {{ startTime }}</h1>
+  </div>
+
+  <div class="key-stats" fxLayout="row" fxLayoutGap="100px">
+    <div class="noOfParticipants">
+      <div class="label"># of participants</div>
+      <div class="value">{{ data?.joined_users?.length }}</div>
+    </div>
+    <div class="duration">
+      <div class="label">Duration</div>
+      <div class="value">{{ duration }} mins</div>
+    </div>
+    <div class="host-name">
+      <div class="label">Host</div>
+      <div class="value">{{ hostName }}</div>
+    </div>
+  </div>
+</div>
