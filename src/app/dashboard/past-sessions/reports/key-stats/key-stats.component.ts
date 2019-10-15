@@ -19,7 +19,6 @@ export class KeyStatsComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.data.end_time) {
-      // convert it into duration
       this.duration = moment.duration(
         moment(this.data.end_time).diff(this.data.start_time)
       );
@@ -30,7 +29,6 @@ export class KeyStatsComponent implements OnInit, OnChanges {
 
       this.hostName =
         this.data.host.first_name + ' ' + this.data.host.last_name;
-      console.log(moment(this.data.start_time), moment(this.data.end_time));
     }
   }
 }

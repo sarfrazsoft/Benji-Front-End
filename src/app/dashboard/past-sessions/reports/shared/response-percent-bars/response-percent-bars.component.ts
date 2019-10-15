@@ -19,7 +19,6 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    console.log(this.questionIndex);
     if (this.mcq) {
       const questionRespondents = this.mcq.mcqactivityuseranswer_set.length;
 
@@ -32,8 +31,6 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
           answer => answer.answer === choice.id
         ).length;
 
-        console.log(choice);
-
         return {
           text: choice.choice_text,
           noOfResponses: choiceRespondents,
@@ -43,8 +40,6 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
           )
         };
       });
-
-      console.log(this.choices);
     }
   }
 }
