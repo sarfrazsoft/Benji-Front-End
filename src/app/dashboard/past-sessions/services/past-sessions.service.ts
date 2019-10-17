@@ -8,6 +8,7 @@ import { ContextService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
 import { feedback } from './feedback';
 import { mcqsData } from './mcqs';
+import { pom } from './pom';
 import { assessmentsData } from './rankingquestions';
 
 @Injectable()
@@ -25,7 +26,8 @@ export class PastSessionsService {
       .pipe(
         map(res => {
           // this.data = mcqsData;
-          this.data = feedback;
+          // this.data = feedback;
+          this.data = pom;
           // this.data = assessmentsData;
           // this.data = {
           //   id: 18,

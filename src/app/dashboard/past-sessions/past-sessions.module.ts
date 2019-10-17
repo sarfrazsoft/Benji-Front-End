@@ -10,6 +10,7 @@ import {
   PastSessionsProviders
 } from './index';
 import { PastSessionsRoutes } from './past-sessions.routing';
+import { PitchOMaticComponent } from './reports/pitch-o-matic/pitch-o-matic.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { PastSessionsRoutes } from './past-sessions.routing';
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [PastSessionsComponents],
+  declarations: [PastSessionsComponents, PitchOMaticComponent],
   entryComponents: PastSessionsEntryComponents,
   providers: PastSessionsProviders
 })
