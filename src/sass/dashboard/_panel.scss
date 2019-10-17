@@ -8,6 +8,10 @@
     padding: 0px $dash-subsection-sides-padding;
     border-bottom: $header-border-bottom solid $header-border-bottom-color;
     margin-bottom: $margin-between-panels;
+    h1 {
+      font-size: 28px;
+      margin: 10px 0;
+    }
   }
   .subsection-container {
     padding: 0px $dash-subsection-sides-padding;

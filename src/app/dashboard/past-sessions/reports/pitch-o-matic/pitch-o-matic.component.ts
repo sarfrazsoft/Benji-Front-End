@@ -22,7 +22,7 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    if (this.data.activity_results) {
+    if (this.data && this.data.activity_results) {
       const pomData = this.data.activity_results[0];
       console.log(pomData);
       pomData.feedbackquestion_set.forEach(question => {

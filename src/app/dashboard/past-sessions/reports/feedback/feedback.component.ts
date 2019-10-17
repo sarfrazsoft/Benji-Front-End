@@ -22,7 +22,7 @@ export class FeedbackComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    if (this.data.activity_results) {
+    if (this.data && this.data.activity_results) {
       this.fback = this.data.activity_results[0].feedbackquestion_set;
     }
   }

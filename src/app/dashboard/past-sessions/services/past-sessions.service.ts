@@ -27,7 +27,7 @@ export class PastSessionsService {
         map(res => {
           // this.data = mcqsData;
           // this.data = feedback;
-          this.data = pom;
+          this.data = 'brrr';
           // this.data = assessmentsData;
           // this.data = {
           //   id: 18,

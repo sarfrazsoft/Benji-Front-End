@@ -18,7 +18,7 @@ export class KeyStatsComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    if (this.data.end_time) {
+    if (this.data && this.data.end_time) {
       this.duration = moment.duration(
         moment(this.data.end_time).diff(this.data.start_time)
       );

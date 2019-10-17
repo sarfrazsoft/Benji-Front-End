@@ -8,7 +8,10 @@ import {
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as Chart from 'chart.js';
 import { switchMap } from 'rxjs/operators';
+import { feedback } from '../services/feedback';
+import { mcqsData } from '../services/mcqs';
 import { PastSessionsService } from '../services/past-sessions.service';
+import { pom } from '../services/pom';
 
 @Component({
   selector: 'benji-reports',
@@ -22,6 +25,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   myChart: any;
   mcqs = {};
   assessments = [];
+
+  statsData: any;
+  fbData: any;
+  pom: any;
+
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
   constructor(
@@ -32,7 +40,12 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.pastSessionsService.getReports('73103').subscribe(res => {
       // console.log(res.mcqs[0]);
-      this.mcqs = res;
+      this.mcqs = mcqsData;
+      // this.statsData = res;
+      this.statsData = feedback;
+      this.fbData = feedback;
+      this.pom = pom;
+
       // res.assessments.forEach(fback => {
       //   let avg = 0;
       //   const noOfQuestions = fback.feedbackquestion_set.length;

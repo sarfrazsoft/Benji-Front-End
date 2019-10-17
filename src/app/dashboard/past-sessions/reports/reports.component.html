@@ -1,49 +1,27 @@
-<!-- <benji-assessment-bar></benji-assessment-bar> -->
-
-<!-- <div class="admin-panel" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Session report</h1>
-  </div> -->
-
-<!-- <div class="subsection-container">
-      <benji-stats></benji-stats>
-    </div> -->
-
-<!-- <div class="subsection-container">
-    <div class="card-container" fxLayoutGap="40px" fxLayout="column"> -->
-<!-- <div class="card">
-        <benji-build-a-pitch-report></benji-build-a-pitch-report>
-      </div> -->
-
-<!-- <div class="card">
-        <div class="chart-container">
-          <canvas #chartCanvas id="myChart" width="500" height="400"></canvas>
-        </div>
-      </div> -->
-
 <div>
-  <!-- <benji-key-stats [data]="mcqs"></benji-key-stats> -->
+  <benji-key-stats [data]="statsData"></benji-key-stats>
 </div>
 
 <div>
-  <!-- <benji-participants [data]="mcqs"></benji-participants> -->
+  <benji-participants [data]="statsData"></benji-participants>
 </div>
 
 <div>
-  <benji-pitch-o-matic [data]="mcqs"></benji-pitch-o-matic>
+  <benji-pitch-o-matic [data]="pom"></benji-pitch-o-matic>
 </div>
 
 <div>
-  <!-- <benji-feedback [data]="mcqs"></benji-feedback> -->
+  <benji-feedback [data]="fbData"></benji-feedback>
 </div>
 
 <div>
   <benji-brain-storm></benji-brain-storm>
 </div>
 
-<div class="card">
-  <!-- <benji-mcqs [data]="mcqs"></benji-mcqs> -->
+<div>
+  <benji-mcqs [data]="mcqs"></benji-mcqs>
 </div>
-<!-- </div>
-  </div>
-</div> -->
+
+<div>
+  <benji-build-a-pitch-report></benji-build-a-pitch-report>
+</div>
