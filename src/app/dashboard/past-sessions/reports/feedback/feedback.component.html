@@ -1,0 +1,12 @@
+<div class="admin-panel report-cards" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Feedback</h1>
+  </div>
+
+  <div
+    class="card-container brain-storming-report"
+    *ngFor="let question of fback"
+  >
+    <benji-question [question]="question"></benji-question>
+  </div>
+</div>

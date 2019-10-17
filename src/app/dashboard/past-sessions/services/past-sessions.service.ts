@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
+import { feedback } from './feedback';
 import { mcqsData } from './mcqs';
 import { assessmentsData } from './rankingquestions';
 
@@ -23,7 +24,8 @@ export class PastSessionsService {
       .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
       .pipe(
         map(res => {
-          this.data = mcqsData;
+          // this.data = mcqsData;
+          this.data = feedback;
           // this.data = assessmentsData;
           // this.data = {
           //   id: 18,

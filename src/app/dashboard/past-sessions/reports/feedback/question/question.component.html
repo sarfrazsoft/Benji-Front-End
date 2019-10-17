@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="prompt">
+    {{ question.question_text }}
+  </div>
+  <div class="">
+    <canvas #chartCanvas id="myChart" width="300" height="300"></canvas>
+  </div>
+  <div class="text-list">
+    <div class="prompt">
+      What made you say that?
+    </div>
+    <div class="text-list-item" *ngFor="let answer of textAnswers">
+      {{ answer }}
+    </div>
+  </div>
+</div>

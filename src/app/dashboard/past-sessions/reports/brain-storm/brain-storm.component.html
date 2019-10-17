@@ -12,8 +12,10 @@
         {{ data.ideas.length }} ideas submitted by
         {{ data.joined_users?.length }}
       </div>
-      <div class="ideas-container">
-        <div class="ideas" *ngFor="let idea of data.ideas">{{ idea }}</div>
+      <div class="text-list">
+        <div class="text-list-item" *ngFor="let idea of data.ideas">
+          {{ idea }}
+        </div>
       </div>
     </div>
   </div>

@@ -10,10 +10,6 @@ import {
   PastSessionsProviders
 } from './index';
 import { PastSessionsRoutes } from './past-sessions.routing';
-import { BrainStormComponent } from './reports/brain-storm/brain-storm.component';
-import { KeyStatsComponent } from './reports/key-stats/key-stats.component';
-import { ParticipantsComponent } from './reports/participants/participants.component';
-import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   imports: [
@@ -24,13 +20,7 @@ import { ReportsComponent } from './reports/reports.component';
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [
-    PastSessionsComponents,
-    ReportsComponent,
-    BrainStormComponent,
-    KeyStatsComponent,
-    ParticipantsComponent
-  ],
+  declarations: [PastSessionsComponents],
   entryComponents: PastSessionsEntryComponents,
   providers: PastSessionsProviders
 })

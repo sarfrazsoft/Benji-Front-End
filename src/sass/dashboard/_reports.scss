@@ -31,18 +31,26 @@
 
 // Brain storming activity report
 .brain-storming-report {
+  .ideas-count {
+    font-size: 24px;
+    color: #7a7676;
+  }
   .prompt {
     font-size: 28px;
     margin: 10px 0px;
     font-weight: 600;
   }
-  .ideas-count {
-    font-size: 24px;
-    color: #7a7676;
+}
+// used in showing brainstorm ideas and feedback answers
+.text-list {
+  .prompt {
+    font-size: 28px;
+    margin-top: 30px;
+    font-weight: 600;
   }
-  .ideas {
+  .text-list-item {
     font-size: 24px;
-    margin: 50px;
+    margin: 35px;
     color: #7a7676;
     padding-bottom: 10px;
     border-bottom: 1px solid #979797;
