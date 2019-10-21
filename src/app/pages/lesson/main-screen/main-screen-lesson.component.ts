@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ActivityTypes } from 'src/app/globals';
 import {
   BackendRestService,
   BackendSocketService,
@@ -15,6 +15,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 })
 export class MainScreenLessonComponent extends BaseLessonComponent
   implements OnInit {
+  at: typeof ActivityTypes = ActivityTypes;
   constructor(
     protected restService: BackendRestService,
     private contextService: ContextService,

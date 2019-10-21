@@ -38,7 +38,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.pastSessionsService.getReports('73103').subscribe(res => {
+    // 73929 pitch perfect
+    // 99521 active listening
+    this.pastSessionsService.getReports('8269').subscribe(res => {
       // console.log(res.mcqs[0]);
       this.mcqs = mcqsData;
       // this.statsData = res;

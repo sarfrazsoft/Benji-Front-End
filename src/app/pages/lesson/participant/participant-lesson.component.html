@@ -2,7 +2,7 @@
 
 <div *ngIf="isConnected() && serverMessage">
   <benji-ps-brainstorming-activity
-    *ngIf="getActivityType() === 'BrainstormActivity'"
+    *ngIf="getActivityType() === at.brainstorm"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -10,7 +10,7 @@
   </benji-ps-brainstorming-activity>
 
   <benji-ps-lobby
-    *ngIf="getActivityType() === 'LobbyActivity'"
+    *ngIf="getActivityType() === at.lobby"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -26,7 +26,7 @@
   </benji-ps-reorder-activity> -->
 
   <benji-ps-build-pitch-activity
-    *ngIf="getActivityType() === 'BuildAPitchActivity'"
+    *ngIf="getActivityType() === at.buildAPitch"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -34,7 +34,7 @@
   </benji-ps-build-pitch-activity>
 
   <benji-ps-generate-pitch-activity
-    *ngIf="getActivityType() === 'PitchoMaticActivity'"
+    *ngIf="getActivityType() === at.pitchoMatic"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -42,7 +42,7 @@
   </benji-ps-generate-pitch-activity>
 
   <benji-ps-title-activity
-    *ngIf="getActivityType() === 'TitleActivity'"
+    *ngIf="getActivityType() === at.title"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -50,14 +50,14 @@
   </benji-ps-title-activity>
 
   <benji-ps-pop-quiz
-    *ngIf="getActivityType() === 'MCQActivity'"
+    *ngIf="getActivityType() === at.mcq"
     [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
   </benji-ps-pop-quiz>
 
   <benji-ps-mcqresult-activity
-    *ngIf="getActivityType() === 'MCQResultsActivity'"
+    *ngIf="getActivityType() === at.mcqResults"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -65,7 +65,7 @@
   </benji-ps-mcqresult-activity>
 
   <benji-ps-teletrivia-activity
-    *ngIf="getActivityType() === 'TeleTriviaActivity'"
+    *ngIf="getActivityType() === at.teleTrivia"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -73,7 +73,7 @@
   </benji-ps-teletrivia-activity>
 
   <benji-ps-either-or-activity
-    *ngIf="getActivityType() === 'WhereDoYouStandActivity'"
+    *ngIf="getActivityType() === at.whereDoYouStand"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -81,7 +81,7 @@
   </benji-ps-either-or-activity>
 
   <benji-ps-pair-activity
-    *ngIf="getActivityType() === 'RoleplayPairActivity'"
+    *ngIf="getActivityType() === at.rolePlayPair"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -89,7 +89,7 @@
   </benji-ps-pair-activity>
 
   <benji-ps-pair-grouping-activity
-    *ngIf="getActivityType() === 'PairGroupingActivity'"
+    *ngIf="getActivityType() === at.pairGrouping"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -97,7 +97,7 @@
   </benji-ps-pair-grouping-activity>
 
   <benji-ps-discussion-activity
-    *ngIf="getActivityType() === 'DiscussionActivity'"
+    *ngIf="getActivityType() === at.discussion"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -105,7 +105,7 @@
   </benji-ps-discussion-activity>
 
   <benji-ps-hint-activity
-    *ngIf="getActivityType() === 'HintWordActivity'"
+    *ngIf="getActivityType() === at.hintWord"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -113,7 +113,7 @@
   </benji-ps-hint-activity>
 
   <benji-ps-feedback-activity
-    *ngIf="getActivityType() === 'FeedbackActivity'"
+    *ngIf="getActivityType() === at.feedback"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
@@ -121,7 +121,7 @@
   </benji-ps-feedback-activity>
 
   <benji-ps-activity-video
-    *ngIf="getActivityType() === 'VideoActivity'"
+    *ngIf="getActivityType() === at.video"
     (sendMessage)="sendSocketMessage($event)"
   >
   </benji-ps-activity-video>

@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+import { ActivityTypes } from 'src/app/globals';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
-
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -12,6 +11,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
   styleUrls: ['./participant-lesson.component.scss']
 })
 export class ParticipantLessonComponent extends BaseLessonComponent {
+  at: typeof ActivityTypes = ActivityTypes;
   constructor(
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
