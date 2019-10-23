@@ -13,17 +13,21 @@ import {
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.scss']
 })
-export class FeedbackComponent implements OnInit, OnChanges {
-  @Input() data: any;
+export class FeedbackComponent implements OnInit {
+  @Input() data: any = {};
 
   fback;
   constructor() {}
 
-  ngOnInit() {}
-
-  ngOnChanges() {
-    if (this.data && this.data.activity_results) {
-      this.fback = this.data.activity_results[0].feedbackquestion_set;
+  ngOnInit() {
+    if (this.data && this.data.feedback) {
+      this.fback = this.data.feedback.feedbackquestion_set;
     }
   }
+
+  // ngOnChanges() {
+  //   if (this.data && this.data.feedback) {
+  //     this.fback = this.data.feedback.feedbackquestion_set;
+  //   }
+  // }
 }

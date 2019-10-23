@@ -11,6 +11,7 @@ import { McqsComponent } from './reports/mcqs/mcqs.component';
 import { OptionDistributionBarsComponent } from './reports/mcqs/option-distribution-bars/option-distribution-bars.component';
 import { OptionSpreadComponent } from './reports/mcqs/option-spread/option-spread.component';
 import { ParticipantsComponent } from './reports/participants/participants.component';
+import { PitchOMaticComponent } from './reports/pitch-o-matic/pitch-o-matic.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AssessmentBarComponent } from './reports/shared/assessment-bar/assessment-bar.component';
 import { ResponsePercentBarsComponent } from './reports/shared/response-percent-bars/response-percent-bars.component';
@@ -27,14 +28,26 @@ export const PastSessionsComponents = [
   OptionSpreadComponent,
   OptionDistributionBarsComponent,
   McqTableComponent,
-  ReportsComponent,
   BrainStormComponent,
   KeyStatsComponent,
   ParticipantsComponent,
   FeedbackComponent,
-  QuestionComponent
+  QuestionComponent,
+  PitchOMaticComponent
 ];
 
-export const PastSessionsEntryComponents = [];
+export const PastSessionsEntryComponents = [
+  BAPReportComponent,
+  AssessmentBarComponent,
+  ResponsePercentBarsComponent,
+  McqsComponent,
+  OptionSpreadComponent,
+  OptionDistributionBarsComponent,
+  McqTableComponent,
+  BrainStormComponent,
+  FeedbackComponent,
+  QuestionComponent,
+  PitchOMaticComponent
+];
 
 export const PastSessionsProviders = [PastSessionsService];

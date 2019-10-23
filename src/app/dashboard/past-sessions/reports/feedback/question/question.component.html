@@ -5,7 +5,7 @@
   <div class="">
     <canvas #chartCanvas id="myChart" width="300" height="300"></canvas>
   </div>
-  <div class="text-list">
+  <div class="text-list" *ngIf="question.is_combo">
     <div class="prompt">
       What made you say that?
     </div>

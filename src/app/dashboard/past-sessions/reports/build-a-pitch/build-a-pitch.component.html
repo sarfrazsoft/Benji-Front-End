@@ -1,13 +1,12 @@
 <div class="admin-panel report-cards" fxLayout="column">
   <div class="dashboard-heading">
-    <h1>Key stats - Pitch Perfect {{ startDate }} @ {{ startTime }}</h1>
+    <h1>Build a pitch</h1>
   </div>
 
   <div class="bap-table-container">
     <table
       mat-table
       [dataSource]="bapTableData"
-      class="mat-elevation-z8"
       [style.width.px]="200 * displayedColumns.length"
     >
       <!-- Prompts Column -->

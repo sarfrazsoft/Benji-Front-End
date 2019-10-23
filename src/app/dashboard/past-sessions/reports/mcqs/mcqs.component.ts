@@ -13,7 +13,7 @@ export class McqsComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    console.log(this.data);
+    // console.log(this.data);
     if (this.data.joined_users) {
       this.participants = this.data.joined_users.map(a => {
         return { name: a.first_name + ' ' + a.last_name, id: a.id };
