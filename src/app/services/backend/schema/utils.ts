@@ -52,4 +52,5 @@ export interface TitleComponent {
   participant_instructions: string;
   screen_instructions: string;
   title: string;
+  title_image: string;
 }
