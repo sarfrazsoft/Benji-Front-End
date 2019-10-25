@@ -8,7 +8,7 @@ import * as moment from 'moment';
 })
 export class KeyStatsComponent implements OnInit, OnChanges {
   @Input() data: any = {};
-  startDate = 'Nov 30, 2019';
+  startDate = '';
   startTime = '';
   endDate = '';
   hostName = '';

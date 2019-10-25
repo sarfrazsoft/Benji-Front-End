@@ -7,7 +7,7 @@
   </div>
   <div class="text-list" *ngIf="question.is_combo">
     <div class="prompt">
-      What made you say that?
+      {{ question.combo_text }}
     </div>
     <div class="text-list-item" *ngFor="let answer of textAnswers">
       {{ answer }}
