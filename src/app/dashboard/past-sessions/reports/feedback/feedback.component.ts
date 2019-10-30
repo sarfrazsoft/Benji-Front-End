@@ -1,12 +1,8 @@
+import { Component, Input, OnInit } from '@angular/core';
 import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+  ActivityReport,
+  FeedbackQuestionSet
+} from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-feedback',
@@ -14,9 +10,9 @@ import {
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
-  @Input() data: any = {};
+  @Input() data: ActivityReport;
 
-  fback;
+  fback: Array<FeedbackQuestionSet>;
   constructor() {}
 
   ngOnInit() {
@@ -24,10 +20,4 @@ export class FeedbackComponent implements OnInit {
       this.fback = this.data.feedback.feedbackquestion_set;
     }
   }
-
-  // ngOnChanges() {
-  //   if (this.data && this.data.feedback) {
-  //     this.fback = this.data.feedback.feedbackquestion_set;
-  //   }
-  // }
 }

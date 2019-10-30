@@ -1,10 +1,12 @@
 .report-cards {
   padding: 10px 30px;
-  margin: 30px 40px;
+  // margin: 30px 340px;
+  margin: 15px auto;
   background: white;
   border-radius: 5px;
   -webkit-box-shadow: 0px 0px 6px 1px rgba(150, 150, 150, 0.41);
   box-shadow: 0px 0px 6px 1px rgba(150, 150, 150, 0.41);
+  // width: 55%;
 }
 
 // Styles for Key-stats
@@ -57,4 +59,10 @@ benji-participants {
   .selected-participant {
     background-color: #dfe5e7;
   }
+}
+
+.admin-panel .dashboard-heading {
+  // margin-bottom: 0px;
+
+  margin-bottom: 10px;
 }

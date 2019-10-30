@@ -1,7 +1,7 @@
 import { TitleComponent } from '../utils';
 import { Report } from './reports';
 
-export interface Feedback extends Report {
+export interface FeedbackReport extends Report {
   feedbackquestion_set: Array<FeedbackQuestionSet>;
   titlecomponent: TitleComponent;
 }

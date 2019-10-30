@@ -1,6 +1,7 @@
 import { User } from '../user';
+import { Report } from './reports';
 
-export interface MCQReport {
+export interface MCQReport extends Report {
   mcqactivityuseranswer_set: Array<MCQActivityUserAnswerSet>;
   question: Question;
 }

@@ -5,15 +5,18 @@ import { map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import { User } from 'src/app/services/backend/schema';
-import { feedback } from './feedback';
-import { mcqsData } from './mcqs';
-import { pom } from './pom';
-import { assessmentsData } from './rankingquestions';
+import {
+  ActivityReport,
+  BuildAPitchReport,
+  FeedbackReport,
+  MCQReport,
+  PitchOMaticReport,
+  SessionReport,
+  User
+} from 'src/app/services/backend/schema';
 
 @Injectable()
 export class PastSessionsService {
-  data: any;
   constructor(
     private http: HttpClient,
     private contextService: ContextService
@@ -24,44 +27,43 @@ export class PastSessionsService {
     return this.http
       .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
       .pipe(
-        map(res => {
-          this.data = activityResult3;
+        map((res: SessionReport) => {
+          // this.data = activityResult3;
+          res = activityResult3 as SessionReport;
+          const arr: Array<ActivityReport> = [];
 
-          const arr = [];
-
-          arr.push(this.data);
+          arr.push(res);
 
           // Iterate over each activity in order and
           // push them to the array
-          this.data.activity_results.forEach((act, i) => {
+          res.activity_results.forEach((act, i) => {
             if (act.activity_type === ActivityTypes.mcq) {
-              const mcqObj = { mcqs: [act] };
               arr.push({
-                ...this.data,
-                ...mcqObj,
+                ...res,
+                mcqs: [act] as Array<MCQReport>,
                 activity_type: ActivityTypes.mcq
               });
             } else if (act.activity_type === ActivityTypes.feedback) {
               arr.push({
-                ...this.data,
+                ...res,
                 activity_type: ActivityTypes.feedback,
-                feedback: act
+                feedback: act as FeedbackReport
               });
             } else if (act.activity_type === ActivityTypes.pitchoMatic) {
               arr.push({
-                ...this.data,
+                ...res,
                 activity_type: ActivityTypes.pitchoMatic,
-                pom: act
+                pom: act as PitchOMaticReport
               });
             } else if (act.activity_type === ActivityTypes.buildAPitch) {
               arr.push({
-                ...this.data,
+                ...res,
                 activity_type: ActivityTypes.buildAPitch,
-                bap: act
+                bap: act as BuildAPitchReport
               });
             } else if (act.activity_type === ActivityTypes.brainStorm) {
               arr.push({
-                ...this.data,
+                ...res,
                 activity_type: ActivityTypes.brainStorm,
                 brainstorm: act
               });

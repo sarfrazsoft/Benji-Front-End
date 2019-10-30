@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivityReport } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-build-a-pitch-report',
@@ -6,54 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./build-a-pitch.component.scss']
 })
 export class BuildAPitchComponent implements OnInit {
+  data: ActivityReport;
   constructor() {}
-  data: any;
 
-  displayedColumns: string[] = [
-    // 'prompt',
-    // 'person1',
-    // 'person2',
-    // 'person3',
-    // 'person4',
-    // 'person5'
-  ];
-  bapTableData = [
-    // {
-    //   prompt: 'My organization',
-    //   person1: 'Benji',
-    //   person2: 'Benji 2',
-    //   person3: 'Benx',
-    //   person4: 'PAN AM',
-    //   person5: 'PB'
-    // },
-    // {
-    //   prompt: 'Helps (audience)',
-    //   person1: 'Companies',
-    //   person2: 'Trainers',
-    //   person3: 'Learners',
-    //   person4: 'Car drivers',
-    //   person5: 'Oil drillers'
-    // },
-    // {
-    //   prompt: 'With (problem)',
-    //   person1: 'Scaling their workshops',
-    //   person2: 'scale their company',
-    //   person3: 'master soft skills',
-    //   person4: 'flying problems',
-    //   person5: 'getting the oil out'
-    // },
-    // {
-    //   prompt: 'Because (the why)',
-    //   person1: 'Face to face learning is a sham',
-    //   person2: 'limited resources',
-    //   person3: 'future bros',
-    //   person4: 'are you my dead head',
-    //   person5: 'its money'
-    // }
-  ];
+  displayedColumns: string[] = [];
+  bapTableData = [];
   ngOnInit() {
-    console.log(this.data);
-
     if (this.data) {
       const displayedColumns = ['prompt'];
       this.data.joined_users.forEach(user => {
@@ -81,8 +40,6 @@ export class BuildAPitchComponent implements OnInit {
       });
       this.bapTableData = bapTableData;
       this.displayedColumns = displayedColumns;
-      console.log(bapTableData);
-      console.log(displayedColumns);
     }
   }
 

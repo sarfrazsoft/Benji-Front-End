@@ -1,7 +1,9 @@
 import { ActivityTypes } from 'src/app/globals';
-import { PitchoMaticBlank, PitchoMaticGroupMemberPitch } from '../activities';
 import { User } from '../user';
-import { FeedbackQuestion, TitleComponent } from '../utils';
+import { BuildAPitchReport } from './build-a-pitch';
+import { FeedbackReport } from './feedback';
+import { MCQReport } from './MCQ';
+import { PitchOMaticReport } from './pitch-o-matic';
 
 export interface SessionReport {
   id: number;
@@ -10,7 +12,18 @@ export interface SessionReport {
   lessonrun_code: number;
   joined_users: Array<User>;
   host: User;
-  activity_results: Array<any>;
+  activity_results: Array<
+    BuildAPitchReport | FeedbackReport | MCQReport | PitchOMaticReport
+  >;
+}
+
+export interface ActivityReport extends SessionReport {
+  activity_type?: ActivityTypes;
+  mcqs?: Array<MCQReport>;
+  feedback?: FeedbackReport;
+  pom?: PitchOMaticReport;
+  bap?: BuildAPitchReport;
+  brainstorm?: any;
 }
 
 export interface Report {

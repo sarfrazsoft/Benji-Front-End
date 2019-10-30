@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { PastSessionsService } from 'src/app/dashboard/past-sessions/services/past-sessions.service';
 
@@ -7,7 +7,7 @@ import { PastSessionsService } from 'src/app/dashboard/past-sessions/services/pa
   templateUrl: './assessment-bar.component.html',
   styleUrls: ['./assessment-bar.component.scss']
 })
-export class AssessmentBarComponent implements OnInit {
+export class AssessmentBarComponent implements OnInit, OnChanges {
   @Input() question: any = {};
   @Input() ratingLevels = [];
   @Input() rankingQuestion = false;
@@ -34,7 +34,7 @@ export class AssessmentBarComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.question);
+    // console.log(this.question);
   }
 
   calculateRating(): void {

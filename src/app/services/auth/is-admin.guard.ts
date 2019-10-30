@@ -41,7 +41,10 @@ export class IsAdminGuard implements CanActivate {
     // }
     // this.router.navigate(['/dashboard']);
     // return false;
-    if (this.contextService.user.local_admin_permission) {
+    if (
+      this.contextService.user &&
+      this.contextService.user.local_admin_permission
+    ) {
       return true;
     }
     return false;

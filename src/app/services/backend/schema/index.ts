@@ -3,4 +3,4 @@ export * from './messages';
 export * from './utils';
 export * from './user';
 export * from './auth';
-export * from './reports/reports';
+export * from './reports';

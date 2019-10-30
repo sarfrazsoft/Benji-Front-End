@@ -17,7 +17,6 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question;
   canvas: any;
   ctx: CanvasRenderingContext2D;
-  // data: any;
   myChart: any;
   assessments = [0, 0, 0, 0, 0];
   textAnswers = [];
@@ -86,7 +85,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               },
               ticks: {
                 fontColor: '#000',
-                fontSize: 24,
+                fontSize: 14,
                 stepSize: 1,
                 beginAtZero: true
               }

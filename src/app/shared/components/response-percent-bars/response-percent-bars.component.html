@@ -12,7 +12,11 @@
     </div>
     <div class="options-container" fxLayout="column" fxLayoutGap="1%">
       <div *ngFor="let choice of choices; let i = index">
-        <div class="options" fxFlex="100%">
+        <div
+          class="options"
+          fxFlex="100%"
+          [ngClass]="{ 'correct-choice': choice.is_correct }"
+        >
           <div class="option">
             <div class="info" fxLayout="row" fxLayoutAlign="space-between">
               <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
@@ -27,7 +31,6 @@
               <div
                 class="bg-primary-color-light"
                 [style.width.%]="choice.responsePercent"
-                [ngClass]="{ 'correct-choice': choice.is_correct }"
               ></div>
             </div>
           </div>

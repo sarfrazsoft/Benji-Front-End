@@ -3,7 +3,7 @@ import { User } from '../user';
 import { FeedbackQuestion } from '../utils';
 import { Report } from './reports';
 
-export interface PitchOMatic extends Report {
+export interface PitchOMaticReport extends Report {
   feedbackquestion_set: Array<FeedbackQuestion>;
   instructions: string;
   pitchomaticblank_set: Array<PitchoMaticBlank>;

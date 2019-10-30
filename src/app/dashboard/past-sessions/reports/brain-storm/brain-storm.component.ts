@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivityReport } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-brain-storm',
