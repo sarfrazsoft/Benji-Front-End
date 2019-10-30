@@ -23,3 +23,12 @@ export enum QuestionType {
   rating_agreedisagree,
   text_only
 }
+
+export interface FeedbackGraphQuestion {
+  question_text: string;
+  assessments: Array<number>;
+  labels: Array<string>;
+  is_combo: boolean;
+  combo_text: string;
+  combo_answers: Array<string>;
+}

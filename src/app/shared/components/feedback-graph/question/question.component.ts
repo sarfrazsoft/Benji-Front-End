@@ -18,24 +18,24 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
-  assessments = [0, 0, 0, 0, 0];
-  textAnswers = [];
-  labels = [
-    'Strongly Disagree',
-    'Disagree',
-    'Neutral',
-    'Agree',
-    'Strongly Agree'
-  ];
+  // assessments = [0, 0, 0, 0, 0];
+  // textAnswers = [];
+  // labels = [
+  //   'Strongly Disagree',
+  //   'Disagree',
+  //   'Neutral',
+  //   'Agree',
+  //   'Strongly Agree'
+  // ];
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
   constructor() {}
 
   ngOnInit() {
-    console.log(this.question);
-    this.question.feedbackuseranswer_set.forEach(answer => {
-      this.assessments[answer.rating_answer - 1]++;
-      this.textAnswers.push(answer.text_answer);
-    });
+    // console.log(this.question);
+    // this.question.feedbackuseranswer_set.forEach(answer => {
+    //   this.assessments[answer.rating_answer - 1]++;
+    //   this.textAnswers.push(answer.text_answer);
+    // });
   }
 
   ngAfterViewInit() {
@@ -44,11 +44,11 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     this.myChart = new Chart(this.ctx, {
       type: 'bar',
       data: {
-        labels: this.labels,
+        labels: this.question.labels,
         datasets: [
           {
             label: '',
-            data: this.assessments,
+            data: this.question.assessments,
             borderWidth: 1,
             backgroundColor: '#0a4cef'
           }

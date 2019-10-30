@@ -9,7 +9,7 @@
     <div class="prompt">
       {{ question.combo_text }}
     </div>
-    <div class="text-list-item" *ngFor="let answer of textAnswers">
+    <div class="text-list-item" *ngFor="let answer of question.combo_answers">
       {{ answer }}
     </div>
   </div>
