@@ -7,6 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import * as Chart from 'chart.js';
+import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-question',
@@ -14,29 +15,14 @@ import * as Chart from 'chart.js';
   styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
-  @Input() question;
+  @Input() question: FeedbackGraphQuestion;
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
-  // assessments = [0, 0, 0, 0, 0];
-  // textAnswers = [];
-  // labels = [
-  //   'Strongly Disagree',
-  //   'Disagree',
-  //   'Neutral',
-  //   'Agree',
-  //   'Strongly Agree'
-  // ];
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
   constructor() {}
 
-  ngOnInit() {
-    // console.log(this.question);
-    // this.question.feedbackuseranswer_set.forEach(answer => {
-    //   this.assessments[answer.rating_answer - 1]++;
-    //   this.textAnswers.push(answer.text_answer);
-    // });
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.canvas = document.getElementById('myChart');

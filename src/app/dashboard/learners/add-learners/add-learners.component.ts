@@ -25,9 +25,9 @@ export class AddLearnersComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private learnerService: LearnerService,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
-    this.route.data.forEach((data: any) => {
+    this.activatedRoute.data.forEach((data: any) => {
       this.userId = data.dashData.user.id;
     });
 

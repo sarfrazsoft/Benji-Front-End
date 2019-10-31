@@ -22,7 +22,7 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.data && this.data.pom) {
       const pomData = this.data.pom;
-      // console.log(pomData);
+
       pomData.feedbackquestion_set.forEach(question => {
         let sum = 0;
         pomData.pitchomaticgroupmembers.forEach(member => {
@@ -32,7 +32,6 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
           if (rating) {
             sum = sum + rating.rating_answer;
           }
-          // console.log(rating.rating_answer);
         });
         const avg = sum / this.data.joined_users.length;
         this.tableData.push({
@@ -41,7 +40,6 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
           average: avg
         });
       });
-      // this.table.renderRows();
     }
   }
 

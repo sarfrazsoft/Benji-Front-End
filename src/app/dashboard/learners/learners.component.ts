@@ -16,8 +16,8 @@ import {
   styleUrls: ['./learners.component.scss']
 })
 export class LearnersComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private router: Router) {
-    this.route.data.forEach((data: any) => {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+    this.activatedRoute.data.forEach((data: any) => {
       console.log(data);
     });
   }

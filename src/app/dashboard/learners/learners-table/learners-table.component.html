@@ -1,4 +1,4 @@
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z1">
   <div
     class="example-loading-shade"
     *ngIf="isLoadingResults || isRateLimitReached"
@@ -65,8 +65,13 @@
       <tr
         mat-row
         *matRowDef="let row; columns: displayedColumns"
-        (click)="selection.toggle(row)"
+        (click)="showReport()"
       ></tr>
+      <!-- <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selection.toggle(row)"
+      ></tr> -->
     </table>
   </div>
 

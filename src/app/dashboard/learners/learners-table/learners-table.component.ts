@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
+import { Router } from '@angular/router';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/services/backend/schema';
@@ -28,7 +29,8 @@ export class LearnersTableComponent implements AfterViewInit {
 
   constructor(
     private http: HttpClient,
-    private learnerService: LearnerService
+    private learnerService: LearnerService,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -90,5 +92,9 @@ export class LearnersTableComponent implements AfterViewInit {
     return `${
       this.selection.isSelected(row) ? 'deselect' : 'select'
     } row ${row.position + 1}`;
+  }
+
+  showReport() {
+    this.router.navigate(['/dashboard/learners/report']);
   }
 }

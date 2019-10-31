@@ -48,32 +48,3 @@ export class FeedbackComponent implements OnInit {
     }
   }
 }
-
-const questionsDummyData = [
-  {
-    question_text: 'Im a sample questions',
-    assessments: [0, 0, 0, 2, 3],
-    labels: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree'
-    ],
-    is_combo: false
-  },
-  {
-    question_text: 'I am a real boy',
-    assessments: [0, 0, 5, 2, 3],
-    labels: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree'
-    ],
-    is_combo: true,
-    combo_text: 'Why whyyy whyyy',
-    combo_answers: ['3', '4', 'brrr', 'puppies']
-  }
-];
