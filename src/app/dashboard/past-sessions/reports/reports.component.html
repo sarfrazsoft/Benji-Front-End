@@ -1,17 +1,23 @@
-<div fxFlex="100%" fxLayoutAlign="center center">
-  <div fxLayout="column" fxFlex="950px">
-    <div>
-      <benji-key-stats [data]="statsData"></benji-key-stats>
-    </div>
+<div class="admin-panel" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Session Summary</h1>
+  </div>
 
-    <div>
-      <benji-participants [data]="statsData"></benji-participants>
-    </div>
+  <div fxFlex="100%" fxLayoutAlign="center center">
+    <div fxLayout="column" fxFlex="950px">
+      <div>
+        <benji-key-stats [data]="statsData"></benji-key-stats>
+      </div>
 
-    <ng-template #reportEntry></ng-template>
+      <div>
+        <benji-participants [data]="statsData"></benji-participants>
+      </div>
 
-    <div>
-      <benji-brain-storm></benji-brain-storm>
+      <ng-template #reportEntry></ng-template>
+
+      <div>
+        <benji-brain-storm></benji-brain-storm>
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
-<div class="example-container mat-elevation-z1">
+<div>
   <div
-    class="example-loading-shade"
+    class="table-loading-shade"
     *ngIf="isLoadingResults || isRateLimitReached"
   >
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div class="example-table-container">
+  <div class="dash-table-container">
     <table
       mat-table
       [dataSource]="data"
@@ -67,11 +67,6 @@
         *matRowDef="let row; columns: displayedColumns"
         (click)="showReport()"
       ></tr>
-      <!-- <tr
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="selection.toggle(row)"
-      ></tr> -->
     </table>
   </div>
 

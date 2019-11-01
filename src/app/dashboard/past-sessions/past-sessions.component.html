@@ -4,10 +4,10 @@
   </div>
 
   <div class="learners-info" fxLayout="column">
-    <div class="learner-table">
+    <div class="dashboard-table">
       <div class="example-container">
         <div
-          class="example-loading-shade"
+          class="table-loading-shade"
           *ngIf="isLoadingResults || isRateLimitReached"
         >
           <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <div class="example-table-container">
+        <div class="dash-table-container">
           <table
             mat-table
             [dataSource]="data"
