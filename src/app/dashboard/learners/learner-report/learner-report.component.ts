@@ -27,8 +27,8 @@ export class LearnerReportComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this.activatedRoute.data.forEach((data: any) => {
-      this.userId = data.dashData.user.id;
-      console.log(this.userId);
+      // this.userId = data.dashData.user.id;
+      // console.log(this.userId);
     });
   }
 
