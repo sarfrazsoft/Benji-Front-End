@@ -33,7 +33,9 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
             sum = sum + rating.rating_answer;
           }
         });
-        const avg = sum / this.data.joined_users.length;
+        let avg = sum / this.data.joined_users.length;
+        avg = Math.round(avg * 10) / 10;
+
         this.tableData.push({
           question: question.question_text,
           questionId: question.id,

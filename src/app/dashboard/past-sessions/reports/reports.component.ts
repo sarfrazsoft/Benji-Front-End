@@ -60,17 +60,17 @@ export class ReportsComponent implements OnInit, AfterContentInit {
             );
             component.instance.data = act;
           } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-            // const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-            //   PitchOMaticComponent
-            // );
-            // const component = this.entry.createComponent(pomComponentFactory);
-            // component.instance.data = act;
+            const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+              PitchOMaticComponent
+            );
+            const component = this.entry.createComponent(pomComponentFactory);
+            component.instance.data = act;
           } else if (act.activity_type === ActivityTypes.buildAPitch) {
-            // const bapComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-            //   BuildAPitchComponent
-            // );
-            // const component = this.entry.createComponent(bapComponentFactory);
-            // component.instance.data = act;
+            const bapComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+              BuildAPitchComponent
+            );
+            const component = this.entry.createComponent(bapComponentFactory);
+            component.instance.data = act;
           }
         });
       });

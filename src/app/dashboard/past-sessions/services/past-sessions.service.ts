@@ -272,8 +272,8 @@ const activityResult = {
         title: 'Please leave some feedback for us!',
         title_image: 'emoji://memo',
         screen_instructions:
-          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
-        participant_instructions: 'What did you think about today\'s lesson?'
+          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
+        participant_instructions: "What did you think about today's lesson?"
       },
       activity_type: 'FeedbackActivity'
     },
@@ -748,7 +748,7 @@ const activityResult = {
       id: 510,
       question: {
         id: 70,
-        question: 'What are the three C\'s of a good pitch?',
+        question: "What are the three C's of a good pitch?",
         mcqchoice_set: [
           {
             id: 269,
@@ -1778,7 +1778,7 @@ const activityResult2 = {
       id: 378,
       question: {
         id: 53,
-        question: 'What are the three C\'s of a good pitch?',
+        question: "What are the three C's of a good pitch?",
         mcqchoice_set: [
           {
             id: 201,
@@ -2529,8 +2529,8 @@ const activityResult2 = {
         title: 'Please leave some feedback for us!',
         title_image: 'emoji://memo',
         screen_instructions:
-          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
-        participant_instructions: 'What did you think about today\'s lesson?'
+          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
+        participant_instructions: "What did you think about today's lesson?"
       },
       activity_type: 'FeedbackActivity'
     }
@@ -3361,6 +3361,110 @@ const activityResult3 = {
         },
         {
           user: 8,
+          buildapitchentry_set: [
+            {
+              buildapitchblank: 11,
+              value: 'companyx'
+            },
+            {
+              buildapitchblank: 12,
+              value: 'aaaa'
+            },
+            {
+              buildapitchblank: 13,
+              value: 'no problem'
+            },
+            {
+              buildapitchblank: 14,
+              value: 'no solution'
+            },
+            {
+              buildapitchblank: 15,
+              value: 'i like food'
+            }
+          ],
+          votes: 0
+        },
+        {
+          user: 9,
+          buildapitchentry_set: [
+            {
+              buildapitchblank: 11,
+              value: 'companyx'
+            },
+            {
+              buildapitchblank: 12,
+              value: 'aaaa'
+            },
+            {
+              buildapitchblank: 13,
+              value: 'no problem'
+            },
+            {
+              buildapitchblank: 14,
+              value: 'no solution'
+            },
+            {
+              buildapitchblank: 15,
+              value: 'i like food'
+            }
+          ],
+          votes: 0
+        },
+        {
+          user: 10,
+          buildapitchentry_set: [
+            {
+              buildapitchblank: 11,
+              value: 'companyx'
+            },
+            {
+              buildapitchblank: 12,
+              value: 'aaaa'
+            },
+            {
+              buildapitchblank: 13,
+              value: 'no problem'
+            },
+            {
+              buildapitchblank: 14,
+              value: 'no solution'
+            },
+            {
+              buildapitchblank: 15,
+              value: 'i like food'
+            }
+          ],
+          votes: 0
+        },
+        {
+          user: 11,
+          buildapitchentry_set: [
+            {
+              buildapitchblank: 11,
+              value: 'companyx'
+            },
+            {
+              buildapitchblank: 12,
+              value: 'aaaa'
+            },
+            {
+              buildapitchblank: 13,
+              value: 'no problem'
+            },
+            {
+              buildapitchblank: 14,
+              value: 'no solution'
+            },
+            {
+              buildapitchblank: 15,
+              value: 'i like food'
+            }
+          ],
+          votes: 0
+        },
+        {
+          user: 12,
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
@@ -5164,7 +5268,8 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: 'The games and interactivity is much better than normal training.',
+              text_answer:
+                'The games and interactivity is much better than normal training.',
               feedbackquestion: 33
             },
             {
