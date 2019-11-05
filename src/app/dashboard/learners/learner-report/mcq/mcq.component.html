@@ -1,54 +1,30 @@
-<div class="admin-panel report-cards" fxLayout="column">
+<div class="admin-panel report-cards">
   <div class="dashboard-heading">
     <h1>Multiple choice question</h1>
   </div>
 
   <div class="card-container">
-    <div class="">
-      <div
-        class="response-percent-bars"
-        fxLayout="column"
-        fxLayoutAlign="center center"
-        *ngIf="mcq"
-      >
-        <div class="content" fxLayout="column" fxLayoutGap="10px">
-          <div class="header" fxLayout="row" fxLayoutGap="10px">
-            <div class="question">
-              {{ questionIndex + 1 }}. {{ mcq.question.question }}
-            </div>
-          </div>
-          <div class="options-container" fxLayout="column" fxLayoutGap="1%">
-            <div *ngFor="let choice of choices; let i = index">
-              <div
-                class="options"
-                fxFlex="100%"
-                [ngClass]="{
-                  correct: choice.isCorrect,
-                  incorrect: !choice.isCorrect,
-                  selected: choice.isUserSelected
-                }"
-              >
-                <div class="option">
-                  <div
-                    class="info"
-                    fxLayout="row"
-                    fxLayoutAlign="space-between"
-                  >
-                    <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
-                      <div class="text">{{ choice.text }}</div>
-                    </div>
-                    <!-- <div class="percentage" fxLayoutAlign="center center">
-                      {{ choice.noOfResponses }}
-                      {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
-                    </div> -->
-                  </div>
-                  <div id="progressbar">
-                    <!-- <div
-                      class="bg-primary-color-light"
-                      [style.width.%]="choice.responsePercent"
-                    ></div> -->
-                  </div>
+    <div class="learner-mcq-bars" fxLayoutAlign="center" *ngIf="mcq">
+      <div class="content" fxLayout="column" fxLayoutGap="10px">
+        <div class="header" fxLayout="row" fxLayoutGap="10px">
+          {{ questionIndex + 1 }}. {{ mcq.question.question }}
+        </div>
+        <div class="options-container" fxLayout="column" fxLayoutGap="1%">
+          <div *ngFor="let choice of choices; let i = index">
+            <div
+              class="options"
+              fxFlex="100%"
+              [ngClass]="{
+                correct: choice.isCorrect,
+                incorrect: !choice.isCorrect,
+                selected: choice.isUserSelected
+              }"
+            >
+              <div class="option">
+                <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+                  {{ choice.text }}
                 </div>
+                <div id="progressbar"></div>
               </div>
             </div>
           </div>

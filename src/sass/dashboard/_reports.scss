@@ -10,9 +10,6 @@
 
 // Styles for Key-stats
 .key-stats {
-  > div {
-    // margin-bottom: 30px;
-  }
   .label {
     font-size: 28px;
     color: #979797;
@@ -21,6 +18,10 @@
   .value {
     font-size: 32px;
   }
+}
+
+.participant {
+  margin-bottom: 10px;
 }
 
 // Brain storming activity report

@@ -15,13 +15,7 @@ import { PastSessionsService } from './services/past-sessions.service';
   styleUrls: ['./past-sessions.component.scss']
 })
 export class PastSessionsComponent implements AfterViewInit {
-  displayedColumns: string[] = [
-    'date',
-    'title',
-    'hosted_by',
-    'participants',
-    'report'
-  ];
+  displayedColumns: string[] = ['date', 'title', 'hosted_by', 'report'];
 
   data: any = [];
   selection = new SelectionModel<any>(true, []);
@@ -35,25 +29,22 @@ export class PastSessionsComponent implements AfterViewInit {
         id: 6,
         date: '7-7-2019',
         title: 'Active Listening',
-        hosted_by: 'Mahin baghi',
-        participants: 8,
-        report: 'linktoreport.com'
+        hostedBy: 'Mahin baghi',
+        lessonrunCode: 65367
       },
       {
         id: 7,
         date: '7-7-2019',
         title: 'Active Listening 2',
-        hosted_by: 'Mahin baghi',
-        participants: 18,
-        report: 'linktoreport.com'
+        hostedBy: 'Mahin baghi',
+        participants: 18
       },
       {
         id: 8,
         date: '7-7-2019',
         title: 'Active Listening',
-        hosted_by: 'Mahin baghi',
-        participants: 5,
-        report: 'linktoreport.com'
+        hostedBy: 'Mahin baghi',
+        participants: 5
       }
     ]
   };
@@ -81,7 +72,7 @@ export class PastSessionsComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.pastSessionsService.getLearners(
+          return this.pastSessionsService.getPastSessions(
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex
@@ -103,6 +94,7 @@ export class PastSessionsComponent implements AfterViewInit {
         })
       )
       .subscribe(data => {
+        console.log(data);
         this.data = this.dataa.results;
         return data;
       });

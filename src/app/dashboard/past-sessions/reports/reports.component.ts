@@ -38,7 +38,7 @@ export class ReportsComponent implements OnInit, AfterContentInit {
     // 73929 pitch perfect
     // 99521 active listening
     this.pastSessionsService
-      .getReports('73103')
+      .getReports('65367')
       .subscribe((res: Array<ActivityReport>) => {
         console.log(res);
         this.statsData = res[0];

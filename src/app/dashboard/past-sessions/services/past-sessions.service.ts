@@ -80,6 +80,16 @@ export class PastSessionsService {
     return this.http.get<User>(request);
   }
 
+  // /api/course_details/lesson_run/
+  getPastSessions(sort: string, order: string, page: number): Observable<any> {
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      })
+    );
+  }
+
   addLearners(emails: string) {
     const request = global.apiRoot + '/tenants/users/';
     return this.http.get<User>(request);
@@ -262,8 +272,8 @@ const activityResult = {
         title: 'Please leave some feedback for us!',
         title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
       activity_type: 'FeedbackActivity'
     },
@@ -738,7 +748,7 @@ const activityResult = {
       id: 510,
       question: {
         id: 70,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 269,
@@ -1768,7 +1778,7 @@ const activityResult2 = {
       id: 378,
       question: {
         id: 53,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 201,
@@ -2519,8 +2529,8 @@ const activityResult2 = {
         title: 'Please leave some feedback for us!',
         title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
       activity_type: 'FeedbackActivity'
     }
@@ -2551,8 +2561,8 @@ const activityResult3 = {
     {
       id: 6,
       username: 'khana',
-      first_name: 'khana',
-      last_name: '',
+      first_name: 'Mahin',
+      last_name: 'Khan',
       email: '',
       verified_email: false,
       job_title: null,
@@ -2582,6 +2592,66 @@ const activityResult3 = {
       id: 8,
       username: 'jim',
       first_name: 'Jim',
+      last_name: '',
+      email: '',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      organization: null,
+      orggroup: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 9,
+      username: 'matt',
+      first_name: 'Natasia',
+      last_name: '',
+      email: 'matt@mybenji.com',
+      verified_email: false,
+      job_title: 'CEO',
+      organization_name: 'Benji',
+      orggroup_name: 'Sales',
+      organization: 1,
+      orggroup: 1,
+      local_admin_permission: true,
+      participant_permission: true
+    },
+    {
+      id: 10,
+      username: 'khana',
+      first_name: 'Jhosh',
+      last_name: '',
+      email: '',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      organization: null,
+      orggroup: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 11,
+      username: 'patrick',
+      first_name: 'Patrick',
+      last_name: '',
+      email: '',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      organization: null,
+      orggroup: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 12,
+      username: 'jhon',
+      first_name: 'Jhon',
       last_name: '',
       email: '',
       verified_email: false,
@@ -2642,8 +2712,8 @@ const activityResult3 = {
                 local_admin_permission: true,
                 participant_permission: true
               },
-              rating_answer: 5,
-              text_answer: '5',
+              rating_answer: 1,
+              text_answer: '1',
               feedbackquestion: 23
             },
             {
@@ -2662,8 +2732,8 @@ const activityResult3 = {
                 local_admin_permission: false,
                 participant_permission: true
               },
-              rating_answer: 4,
-              text_answer: '4',
+              rating_answer: 3,
+              text_answer: '3',
               feedbackquestion: 23
             },
             {
@@ -2702,8 +2772,88 @@ const activityResult3 = {
                 local_admin_permission: false,
                 participant_permission: true
               },
-              rating_answer: 4,
-              text_answer: '4',
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 23
+            },
+            {
+              user: {
+                id: 9,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 2,
+              text_answer: '2',
+              feedbackquestion: 23
+            },
+            {
+              user: {
+                id: 10,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 2,
+              text_answer: '2',
+              feedbackquestion: 23
+            },
+            {
+              user: {
+                id: 11,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 23
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '3',
               feedbackquestion: 23
             }
           ],
@@ -2734,8 +2884,8 @@ const activityResult3 = {
                 local_admin_permission: true,
                 participant_permission: true
               },
-              rating_answer: 5,
-              text_answer: '5',
+              rating_answer: 3,
+              text_answer: '3',
               feedbackquestion: 24
             },
             {
@@ -2754,8 +2904,8 @@ const activityResult3 = {
                 local_admin_permission: false,
                 participant_permission: true
               },
-              rating_answer: 4,
-              text_answer: '4',
+              rating_answer: 2,
+              text_answer: '2',
               feedbackquestion: 24
             },
             {
@@ -2794,8 +2944,88 @@ const activityResult3 = {
                 local_admin_permission: false,
                 participant_permission: true
               },
-              rating_answer: 4,
-              text_answer: '4',
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 24
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 24
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 2,
+              text_answer: '2',
+              feedbackquestion: 24
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 2,
+              text_answer: '2',
+              feedbackquestion: 24
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 1,
+              text_answer: '1',
               feedbackquestion: 24
             }
           ],
@@ -2827,8 +3057,8 @@ const activityResult3 = {
                 local_admin_permission: true,
                 participant_permission: true
               },
-              rating_answer: 5,
-              text_answer: '5',
+              rating_answer: 3,
+              text_answer: '3',
               feedbackquestion: 25
             },
             {
@@ -2867,8 +3097,8 @@ const activityResult3 = {
                 local_admin_permission: false,
                 participant_permission: true
               },
-              rating_answer: 2,
-              text_answer: '2',
+              rating_answer: 1,
+              text_answer: '1',
               feedbackquestion: 25
             },
             {
@@ -2887,8 +3117,88 @@ const activityResult3 = {
                 local_admin_permission: false,
                 participant_permission: true
               },
-              rating_answer: 4,
-              text_answer: '4',
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 25
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 25
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '3',
+              feedbackquestion: 25
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 1,
+              text_answer: '1',
+              feedbackquestion: 25
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 1,
+              text_answer: '1',
               feedbackquestion: 25
             }
           ],
@@ -4248,6 +4558,86 @@ const activityResult3 = {
               rating_answer: 4,
               text_answer: '4',
               feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
             }
           ],
           average_rating: '4.50',
@@ -4340,6 +4730,86 @@ const activityResult3 = {
               rating_answer: 5,
               text_answer: '5',
               feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
             }
           ],
           average_rating: '4.75',
@@ -4354,6 +4824,86 @@ const activityResult3 = {
         {
           id: 31,
           feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
             {
               user: {
                 id: 2,
@@ -4481,7 +5031,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: '5',
+              text_answer: 'I learned a lot in this session.',
               feedbackquestion: 32
             },
             {
@@ -4501,7 +5051,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: '4',
+              text_answer: 'I found it interesting to improve my skills.',
               feedbackquestion: 32
             },
             {
@@ -4521,7 +5071,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: '4',
+              text_answer: 'I like it.',
               feedbackquestion: 32
             },
             {
@@ -4541,7 +5091,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: '5',
+              text_answer: 'This session definitely taught me a lot.',
               feedbackquestion: 32
             }
           ],
@@ -4574,7 +5124,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: '5',
+              text_answer: 'It was a lot of fun.',
               feedbackquestion: 33
             },
             {
@@ -4594,7 +5144,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: '5',
+              text_answer: 'I loved it. Cant wait to do it again.',
               feedbackquestion: 33
             },
             {
@@ -4614,7 +5164,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: '4',
+              text_answer: 'The games and interactivity is much better than normal training.',
               feedbackquestion: 33
             },
             {
@@ -4634,7 +5184,7 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: '4',
+              text_answer: 'Its easy to signup and start training in 2 mins.',
               feedbackquestion: 33
             }
           ],

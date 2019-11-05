@@ -15,7 +15,10 @@
         <div
           class="options"
           fxFlex="100%"
-          [ngClass]="{ 'correct-choice': choice.is_correct }"
+          [ngClass]="{
+            'correct-choice': choice.is_correct,
+            'correct-selected-choice': choice.responsePercent > 0 ? true : false
+          }"
         >
           <div class="option">
             <div class="info" fxLayout="row" fxLayoutAlign="space-between">
@@ -27,10 +30,18 @@
                 {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
               </div>
             </div>
-            <div id="progressbar">
+            <div
+              id="progressbar"
+              [ngClass]="{ 'correct-choice': choice.is_correct }"
+            >
               <div
                 class="bg-primary-color-light"
                 [style.width.%]="choice.responsePercent"
+                [ngClass]="{
+                  'correct-choice': choice.is_correct,
+                  'correct-selected-choice':
+                    choice.responsePercent > 0 ? true : false
+                }"
               ></div>
             </div>
           </div>

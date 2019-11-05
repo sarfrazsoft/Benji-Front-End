@@ -2,20 +2,18 @@
   <div class="dashboard-heading">
     <h1>Participtants</h1>
   </div>
-  <div fxLayout="row" fxLayoutGap="30px">
+  <div fxLayout="row wrap" fxLayoutGap="30px">
     <div
-      class="key-stats"
+      class="participant"
       *ngFor="let participant of participants; let index = i"
     >
-      <div class="participant">
-        <button
-          mat-raised-button
-          [ngClass]="{ 'selected-participant': isSelected(participant) }"
-          (click)="participantClicked(participant)"
-        >
-          {{ participant.first_name + ' ' + participant.last_name }}
-        </button>
-      </div>
+      <button
+        mat-raised-button
+        [ngClass]="{ 'selected-participant': isSelected(participant) }"
+        (click)="participantClicked(participant)"
+      >
+        {{ participant.first_name + ' ' + participant.last_name }}
+      </button>
     </div>
   </div>
 </div>
