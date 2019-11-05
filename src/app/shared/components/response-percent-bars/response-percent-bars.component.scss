@@ -2,14 +2,10 @@
   .content {
     width: 90%;
     background: white;
-    // margin: 20px 0px;
     margin-top: 10px;
     .header {
       text-align: left;
-      // font-size: 32px;
       font-size: 24px;
-      .question-index > span {
-      }
       .question {
         font-weight: 600;
         margin-bottom: 10px;
@@ -22,36 +18,23 @@
         position: relative;
         text-align: left;
         &.correct-choice {
-          background-color: rgba(51, 170, 51, 0.1);
+          background-color: rgb(217, 242, 189);
         }
         &.correct-choice.correct-selected-choice {
           background-color: rgba(51, 170, 51, 0);
           #progressbar {
-            // background: #bec8ca;
-            // border-radius: 8px;
-            // padding: 0px;
-            // position: absolute;
-            // width: 100%;
-            // height: 100%;
-            // top: 0;
-            // z-index: -1;
-            // opacity: 0.3;
             > div {
-              background-color: rgba(51, 170, 51, 1);
-              // height: 100%;
-              // border-radius: 4px;
+              background-color: #7ed321;
             }
           }
         }
         .info {
           padding: 8px 30px;
           .option-detail {
-            // font-size: 20px;
             font-size: 16px;
           }
           .percentage {
             min-width: 120px;
-            // font-size: 22px;
             font-size: 16px;
             font-weight: 600;
           }
@@ -67,7 +50,7 @@
           z-index: -1;
           opacity: 0.3;
           > div {
-            opacity: 0.8;
+            opacity: 1;
             height: 100%;
             border-radius: 4px;
           }
