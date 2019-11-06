@@ -2,10 +2,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { User } from 'src/app/services/backend/schema';
+import { ActivityReport, User } from 'src/app/services/backend/schema';
 import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 import { LearnerService } from '../services';
 
@@ -30,7 +30,8 @@ export class LearnersTableComponent implements AfterViewInit {
   constructor(
     private http: HttpClient,
     private learnerService: LearnerService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngAfterViewInit() {
@@ -95,6 +96,7 @@ export class LearnersTableComponent implements AfterViewInit {
   }
 
   showReport() {
-    this.router.navigate(['/dashboard/learners/report']);
+    this.router.navigate([3], { relativeTo: this.activatedRoute });
+    // this.router.navigate(['/dashboard/learners/18']);
   }
 }

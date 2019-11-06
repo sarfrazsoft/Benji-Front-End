@@ -1,20 +1,18 @@
 export * from './learners.component';
 export * from './add-learners/add-learners.component';
 export * from './learners-table/learners-table.component';
-export * from './learner-report/learner-report.component';
+export * from './learner/learner-report/learner-report.component';
 export * from './services';
 
 import { AddLearnersComponent } from './add-learners/add-learners.component';
-import { LearnerReportComponent } from './learner-report/learner-report.component';
-import { McqComponent as McqLearnerComponent } from './learner-report/mcq/mcq.component';
-import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './learner-report/pitch-o-matic/pitch-o-matic.component';
+import { LearnerComponents } from './learner';
+import { LearnerReportComponent } from './learner/learner-report/learner-report.component';
 import { LearnersTableComponent } from './learners-table/learners-table.component';
 import { LearnersComponent } from './learners.component';
 import { LearnerResolver, LearnerService } from './services';
 
 export const LearnersComponents = [
-  McqLearnerComponent,
-  LearnerPitchOMaticComponent,
+  ...LearnerComponents,
   AddLearnersComponent,
   LearnersComponent,
   LearnersTableComponent,

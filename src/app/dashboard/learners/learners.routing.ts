@@ -6,6 +6,7 @@ import {
   LearnerResolver,
   LearnersComponent
 } from './index';
+import { LearnerComponent } from './learner/learner.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,10 @@ const routes: Routes = [
       {
         path: 'report',
         component: LearnerReportComponent
+      },
+      {
+        path: ':id',
+        component: LearnerComponent
       }
     ]
   }

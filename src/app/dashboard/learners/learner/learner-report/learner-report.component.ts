@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LearnerService } from 'src/app/dashboard/learners/services';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import {
@@ -8,7 +9,6 @@ import {
   PitchoMaticBlank,
   PitchoMaticGroupMember
 } from 'src/app/services/backend/schema';
-import { LearnerService } from '../services';
 
 @Component({
   selector: 'benji-learner-report',
