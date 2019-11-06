@@ -11,8 +11,8 @@ import { LearnerService } from '../services';
 
 @Component({
   selector: 'benji-add-learners',
-  templateUrl: './add-learners.component.html',
-  styleUrls: ['./add-learners.component.scss']
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss']
 })
 export class AddLearnersComponent implements OnInit {
   form: FormGroup;

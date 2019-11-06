@@ -11,8 +11,8 @@ import { LearnerService } from '../services';
 
 @Component({
   selector: 'benji-learners-table',
-  templateUrl: './learners-table.component.html',
-  styleUrls: ['./learners-table.component.scss']
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
 export class LearnersTableComponent implements AfterViewInit {
   displayedColumns: string[] = ['select', 'firstName', 'lastName', 'job_title'];
