@@ -127,6 +127,15 @@ export class LearnerService {
         })
       );
   }
+
+  getPastSessions(sort: string, order: string, page: number): Observable<any> {
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
+      map(res => {
+        console.log(res);
+        return res;
+      })
+    );
+  }
 }
 
 const activityResult3 = {
