@@ -10,6 +10,7 @@ import {
   LearnersProviders
 } from './index';
 import { LearnersRoutes } from './learners.routing';
+import { SkillDetailComponent } from './learner/skill-evaluation/skill-detail/skill-detail.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { LearnersRoutes } from './learners.routing';
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [LearnersComponents],
+  declarations: [LearnersComponents, SkillDetailComponent],
   entryComponents: LearnersEntryComponents,
   providers: LearnersProviders
 })

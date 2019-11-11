@@ -24,8 +24,9 @@ const routes: Routes = [
       {
         path: 'learners',
         loadChildren:
-          'src/app/dashboard/learners/learners.module#LearnersModule',
-        canLoad: [IsAdminGuard]
+          'src/app/dashboard/learners/learners.module#LearnersModule'
+        // canLoad: [IsAdminGuard]
+        // figure out guards to reload easily
       },
       {
         path: 'pastsessions',

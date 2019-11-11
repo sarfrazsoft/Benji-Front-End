@@ -29,7 +29,6 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
-              "node_modules/videogular2/fonts/videogular.css",
               "src/sass/styles.scss"
             ],
             "scripts": [

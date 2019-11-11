@@ -1,0 +1,14 @@
+<div class="admin-panel report-cards" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Skills overview</h1>
+  </div>
+
+  <div fxLayout="row">
+    <div fxFlex="50%">
+      <benji-learner-donut [donutData]="donutData"></benji-learner-donut>
+    </div>
+    <div fxFlex="50%">
+      <benji-skill-line-chart></benji-skill-line-chart>
+    </div>
+  </div>
+</div>

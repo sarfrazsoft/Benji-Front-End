@@ -1,0 +1,25 @@
+<div class="admin-panel report-cards" fxLayout="column">
+  <div class="dashboard-heading">
+    <h1>Skills overview</h1>
+  </div>
+
+  <div fxLayout="row">
+    <div fxFlex="50%">
+      <benji-learner-donut [donutData]="donutData1"></benji-learner-donut>
+    </div>
+    <div fxFlex="50%">
+      <benji-learner-donut [donutData]="donutData2"></benji-learner-donut>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="33%">
+      <benji-learner-donut [donutData]="donutData3"></benji-learner-donut>
+    </div>
+    <div fxFlex="33%">
+      <benji-learner-donut [donutData]="donutData4"></benji-learner-donut>
+    </div>
+    <div fxFlex="33%">
+      <benji-learner-donut [donutData]="donutData5"></benji-learner-donut>
+    </div>
+  </div>
+</div>
