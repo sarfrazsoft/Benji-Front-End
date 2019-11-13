@@ -19,6 +19,7 @@
         text-align: left;
         &.correct-choice {
           background-color: rgb(217, 242, 189);
+          border-radius: 4px;
         }
         &.correct-choice.correct-selected-choice {
           background-color: rgba(51, 170, 51, 0);
