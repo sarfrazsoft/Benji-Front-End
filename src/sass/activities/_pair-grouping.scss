@@ -1,6 +1,7 @@
-benji-ms-pair-grouping-activity {
+benji-ms-pair-grouping-activity,
+benji-ms-triad-grouping-activity {
   .pair-activity {
-    .mainscreen-activity__column.pair-activity__pairs {
+    .pair-activity__pairs {
       padding: 0px 60px;
       position: relative;
       .ul-find-partner {
@@ -22,7 +23,7 @@ benji-ms-pair-grouping-activity {
           &.long-list {
             font-size: 2vh;
           }
-          .pair-activity__ready-icon {
+          .ready-icon {
             color: $success-color;
             margin-left: 15px;
             font-size: 3.5vh;

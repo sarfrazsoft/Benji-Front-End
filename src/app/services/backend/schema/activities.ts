@@ -89,6 +89,12 @@ export interface RoleplayPairUser {
   discussion_complete: boolean;
 }
 
+export interface TriadRoleplayPairUser {
+  user: User;
+  found: boolean;
+  id: number;
+}
+
 export interface RoleplayPair {
   primary_roleplayuser_set: RoleplayPairUser[];
   secondary_roleplayuser_set: RoleplayPairUser[];
@@ -101,8 +107,18 @@ export interface PairGroupingActivity {
   usergroup_set: UserGroupUserSet[];
 }
 
+export interface TriadGroupingActivity {
+  grouping_complete: boolean;
+  grouping_countdown_timer: Timer;
+  usergroup_set: TriadUserGroupUserSet[];
+}
+
 export interface UserGroupUserSet {
   usergroupuser_set: RoleplayPairUser[];
+}
+
+export interface TriadUserGroupUserSet {
+  usergroupuser_set: TriadRoleplayPairUser[];
 }
 
 export interface RoleplayPairActivity {

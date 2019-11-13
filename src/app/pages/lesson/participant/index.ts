@@ -15,6 +15,7 @@ import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { ReorderComponents } from './reorder-activity';
 import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
 import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
+import { ParticipantTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 
 import { ParticipantSharedComponents } from './shared';
@@ -40,5 +41,6 @@ export const ParticipantScreenComponents = [
   ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,
   ParticipantTitleActivityComponent,
+  ParticipantTriadGroupingActivityComponent,
   ParticipantVideoActivityComponent
 ];

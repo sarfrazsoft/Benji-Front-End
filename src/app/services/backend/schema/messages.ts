@@ -13,6 +13,7 @@ import {
   RoleplayPairActivity,
   TeleTriviaActivity,
   TitleActivity,
+  TriadGroupingActivity,
   VideoActivity,
   WhereDoYouStandActivity,
   WhereDoYouStandChoice
@@ -46,6 +47,7 @@ export interface UpdateMessage {
   discussionactivity?: DiscussionActivity;
   feedbackactivity?: FeedbackActivity;
   wheredoyoustandactivity?: WhereDoYouStandActivity;
+  triadgroupingactivity?: TriadGroupingActivity;
   your_identity?: User; // TODO: This is a hack and must go. Use the proper REST view (tenants/users/who_am_i) to get this.
 }
 

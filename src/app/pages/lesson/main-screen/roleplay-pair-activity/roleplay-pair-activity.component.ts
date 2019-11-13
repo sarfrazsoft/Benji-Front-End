@@ -5,12 +5,11 @@ import { RoleplayPair } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
-  selector: 'benji-ms-pair-activity',
-  templateUrl: './pair-activity.component.html',
-  styleUrls: ['./pair-activity.component.scss']
+  selector: 'benji-ms-roleplay-pair-activity',
+  templateUrl: './roleplay-pair-activity.component.html',
+  styleUrls: ['./roleplay-pair-activity.component.scss']
 })
 export class MainScreenPairActivityComponent extends BaseActivityComponent {
-
   getGroupText(userGroup: RoleplayPair) {
     return concat(
       userGroup.primary_roleplayuser_set,
