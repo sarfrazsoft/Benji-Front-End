@@ -4,19 +4,13 @@
   </div>
 
   <div fxFlex="100%" fxLayoutAlign="center center">
-    <div fxLayout="column" fxFlex="950px">
-      <div>
+    <div class="session-panels" fxLayout="row" fxLayoutGap="30px">
+      <div class="key-stats-container" fxLayout="column" fxFlex="300px">
         <benji-key-stats [data]="statsData"></benji-key-stats>
       </div>
-
-      <div>
-        <benji-participants [data]="statsData"></benji-participants>
-      </div>
-
-      <ng-template #reportEntry></ng-template>
-
-      <div>
-        <benji-brain-storm></benji-brain-storm>
+      <div class="right-panel" fxLayout="column" fxFlex="1050px">
+        <ng-template #reportEntry></ng-template>
+        <!-- <benji-brain-storm></benji-brain-storm> -->
       </div>
     </div>
   </div>

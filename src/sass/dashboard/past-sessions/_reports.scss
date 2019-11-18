@@ -1,0 +1,71 @@
+benji-reports {
+  .admin-panel {
+    padding-bottom: 0px;
+    .session-panels {
+      // 100vh - topbar height - heading padding
+      height: calc(100vh - 90px - 52px - 53px);
+      margin-top: 20px;
+      position: relative;
+      overflow: hidden;
+      .right-panel {
+        overflow: auto;
+        .admin-panel {
+          padding-bottom: 20px;
+          .dashboard-heading {
+            h1 {
+              font-size: 22px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.report-cards {
+  padding: 10px 30px;
+  margin-bottom: 12px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: $box-shadow;
+}
+.report-content {
+  padding: 10px 40px;
+}
+
+// Brain storming activity report
+.brain-storming-report,
+.feedback-report {
+  .ideas-count {
+    font-size: 24px;
+    color: #7a7676;
+  }
+  .prompt {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+}
+
+// used in showing brainstorm ideas and feedback answers
+.text-list {
+  // .prompt {
+  //   font-size: 28px;
+  //   margin-top: 30px;
+  //   font-weight: 600;
+  // }
+  .text-list-item {
+    font-size: 20px;
+    margin: 25px;
+    color: #7a7676;
+    padding-bottom: 3px;
+    border-bottom: 1px solid #979797;
+  }
+}
+
+.admin-panel .dashboard-heading {
+  // margin-bottom: 0px;
+
+  margin-bottom: 10px;
+}

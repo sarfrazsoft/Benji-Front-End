@@ -16,9 +16,6 @@ import { LayoutModule } from './layout/layout.module';
 // App Pages
 import { AppComponent } from './app.component';
 
-// Plugins
-// import { OnsenModule } from 'ngx-onsenui';
-
 @NgModule({
   declarations: [AppComponent, ...EntryComponents],
   imports: [

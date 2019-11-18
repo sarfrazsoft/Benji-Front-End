@@ -36,7 +36,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
             label: '',
             data: this.question.assessments,
             borderWidth: 1,
-            backgroundColor: '#0a4cef'
+            backgroundColor: '#cadafe'
           }
         ]
       },
@@ -47,7 +47,17 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           display: false
         },
         tooltips: {
-          enabled: false
+          displayColors: false,
+          callbacks: {
+            title: (tooltipItem, d) => {
+              return '';
+            },
+            label: (tooltipItem, d) => {
+              const res =
+                tooltipItem.value === '1' ? ' response' : ' responses';
+              return tooltipItem.value + res;
+            }
+          }
         },
         scales: {
           yAxes: [
@@ -57,7 +67,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               },
               ticks: {
                 fontColor: '#000',
-                fontSize: 24,
+                fontSize: 18,
                 stepSize: 2,
                 beginAtZero: true
               }

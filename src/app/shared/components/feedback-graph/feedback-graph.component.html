@@ -3,10 +3,7 @@
     <h1>Feedback</h1>
   </div>
 
-  <div
-    class="card-container brain-storming-report"
-    *ngFor="let question of fback"
-  >
+  <div class="feedback-report" *ngFor="let question of fback">
     <benji-question [question]="question"></benji-question>
   </div>
 </div>

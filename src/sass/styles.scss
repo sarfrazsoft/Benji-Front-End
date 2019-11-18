@@ -28,7 +28,8 @@
 @import './dashboard/account';
 @import './dashboard/table';
 @import './dashboard/utils';
-@import './dashboard/reports';
+@import './dashboard/past-sessions/reports';
+@import './dashboard/past-sessions/key-stats';
 @import './activities/bottom-button';
 @import './activities/mcq-result';
 @import './activities/single-column-activity';

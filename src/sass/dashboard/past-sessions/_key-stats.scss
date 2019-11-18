@@ -1,0 +1,41 @@
+.key-stats-container {
+  height: 100%;
+  benji-key-stats {
+    height: 100%;
+    .key-stats {
+      height: calc(100vh - 90px - 52px - 83px);
+      .dashboard-heading {
+        h1 {
+          font-size: 22px;
+        }
+      }
+      .label {
+        font-size: 18px;
+        color: #979797;
+        margin-bottom: 4px;
+      }
+      .value {
+        font-size: 20px;
+      }
+      .participants {
+        overflow: auto;
+        .dashboard-heading {
+          h1 {
+            color: rgb(22, 22, 22);
+          }
+        }
+        .participant-list {
+          .participant {
+            margin-bottom: 8px;
+          }
+          button.mat-raised-button {
+            font-size: 18px;
+          }
+          .selected-participant {
+            background-color: #dfe5e7;
+          }
+        }
+      }
+    }
+  }
+}

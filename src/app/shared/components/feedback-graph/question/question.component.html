@@ -1,9 +1,9 @@
-<div class="card">
+<div class="report-content">
   <div class="prompt">
     {{ question.question_text }}
   </div>
-  <div class="">
-    <canvas #chartCanvas id="myChart" width="200" height="300"></canvas>
+  <div>
+    <canvas #chartCanvas id="myChart" height="150"></canvas>
   </div>
   <div class="text-list" *ngIf="question.is_combo">
     <div class="prompt">

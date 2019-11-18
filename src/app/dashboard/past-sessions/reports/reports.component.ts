@@ -2,11 +2,13 @@ import {
   AfterContentInit,
   Component,
   ComponentFactoryResolver,
+  EventEmitter,
   OnInit,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ActivityTypes } from 'src/app/globals';
 import { ActivityReport } from 'src/app/services/backend/schema';
 import { PastSessionsService } from '../services/past-sessions.service';
@@ -23,6 +25,7 @@ import {
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit, AfterContentInit {
+  config: PerfectScrollbarConfigInterface = {};
   @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
 
   statsData: ActivityReport;
@@ -39,7 +42,7 @@ export class ReportsComponent implements OnInit, AfterContentInit {
     // 99521 active listening
     // 8269
     this.pastSessionsService
-      .getReports('67310')
+      .getReports('65367')
       .subscribe((res: Array<ActivityReport>) => {
         console.log(res);
         this.statsData = res[0];
