@@ -5226,6 +5226,26 @@ const activityResult3 = {
               rating_answer: 5,
               text_answer: 'This session definitely taught me a lot.',
               feedbackquestion: 32
+            },
+            {
+              user: {
+                id: 9,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: 'This session definitely taught me a lot.',
+              feedbackquestion: 32
             }
           ],
           average_rating: '4.50',

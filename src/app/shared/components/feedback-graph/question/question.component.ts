@@ -7,6 +7,7 @@ import {
   ViewChild
 } from '@angular/core';
 import * as Chart from 'chart.js';
+import { PastSessionsService } from 'src/app/dashboard';
 import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
 
 @Component({
@@ -16,15 +17,29 @@ import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
+  comboAnswers: Array<string> = [];
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
-  constructor() {}
+  constructor(private pastSessionService: PastSessionsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+      this.updateChart();
+    });
 
-  ngAfterViewInit() {
+    const assessments = [0, 0, 0, 0, 0];
+    this.comboAnswers = [];
+    this.question.assessments.forEach(answer => {
+      if (
+        this.pastSessionService.filteredInUsers.find(el => el === answer.userId)
+      ) {
+        assessments[answer.rating - 1]++;
+        this.comboAnswers.push(answer.text);
+      }
+    });
+
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
@@ -34,7 +49,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         datasets: [
           {
             label: '',
-            data: this.question.assessments,
+            data: assessments,
             borderWidth: 1,
             backgroundColor: '#cadafe'
           }
@@ -91,4 +106,25 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  updateChart() {
+    if (this.myChart) {
+      const assessments = [0, 0, 0, 0, 0];
+      this.comboAnswers = [];
+      this.question.assessments.forEach(answer => {
+        if (
+          this.pastSessionService.filteredInUsers.find(
+            el => el === answer.userId
+          )
+        ) {
+          assessments[answer.rating - 1]++;
+          this.comboAnswers.push(answer.text);
+        }
+      });
+      this.myChart.data.datasets[0].data = assessments;
+      this.myChart.update();
+    }
+  }
+
+  ngAfterViewInit() {}
 }

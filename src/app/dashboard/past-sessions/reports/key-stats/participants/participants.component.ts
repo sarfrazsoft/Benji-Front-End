@@ -31,6 +31,5 @@ export class ParticipantsComponent implements OnInit, OnChanges {
     } else {
       this.selected.push(participant.id);
     }
-    console.log(this.pastSessionService.filteredInUsers);
   }
 }

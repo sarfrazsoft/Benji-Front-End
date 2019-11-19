@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityReport } from 'src/app/services/backend/schema';
+import { PastSessionsService } from '../../services/past-sessions.service';
 
 @Component({
   selector: 'benji-build-a-pitch-report',
@@ -8,15 +9,26 @@ import { ActivityReport } from 'src/app/services/backend/schema';
 })
 export class BuildAPitchComponent implements OnInit {
   data: ActivityReport;
-  constructor() {}
+  constructor(private pastSessionService: PastSessionsService) {}
 
   displayedColumns: string[] = [];
   bapTableData = [];
   ngOnInit() {
+    this.updateBAPData();
+    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+      this.updateBAPData();
+    });
+  }
+
+  updateBAPData() {
     if (this.data) {
       const displayedColumns = ['prompt'];
       this.data.joined_users.forEach(user => {
-        displayedColumns.push(user.id + '');
+        if (
+          this.pastSessionService.filteredInUsers.find(el => el === user.id)
+        ) {
+          displayedColumns.push(user.id + '');
+        }
       });
       const bapTableData = [];
       const blanks = this.data.bap.buildapitchblank_set;
@@ -26,12 +38,18 @@ export class BuildAPitchComponent implements OnInit {
         const pSummary = this.data.bap.pitch_summaries;
         const obj = {};
         pSummary.forEach(userData => {
-          const blankValue = userData.buildapitchentry_set.find(
-            o => o.buildapitchblank === set.id
-          );
-          const user = userData.user;
+          if (
+            this.pastSessionService.filteredInUsers.find(
+              el => el === userData.user
+            )
+          ) {
+            const blankValue = userData.buildapitchentry_set.find(
+              o => o.buildapitchblank === set.id
+            );
+            const user = userData.user;
 
-          obj[user] = blankValue.value ? blankValue.value : '';
+            obj[user] = blankValue.value ? blankValue.value : '';
+          }
         });
         bapTableData.push({
           prompt: set.label + ' (' + set.temp_text + ') ',

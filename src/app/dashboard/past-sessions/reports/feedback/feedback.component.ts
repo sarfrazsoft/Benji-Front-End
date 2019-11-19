@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import {
   ActivityReport,
+  Assessment,
   FeedbackGraphQuestion,
   FeedbackQuestionSet,
   FeedbackUserAnswerSet
@@ -18,14 +20,12 @@ export class FeedbackComponent implements OnInit {
   fback: Array<FeedbackQuestionSet>;
   questions: Array<FeedbackGraphQuestion> = [];
 
-  constructor(private pastSessionService: PastSessionsService) {}
+  constructor(
+    private pastSessionService: PastSessionsService,
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
-      console.log(updatedUserFilter);
-      this.updateFeedbackData();
-    });
-
     if (this.data && this.data.feedback) {
       this.updateFeedbackData();
     }
@@ -36,18 +36,14 @@ export class FeedbackComponent implements OnInit {
     this.fback = this.data.feedback.feedbackquestion_set;
 
     this.fback.forEach((question: FeedbackQuestionSet) => {
-      const assessments = [0, 0, 0, 0, 0];
-      const textAnswers = [];
+      const assessments: Array<Assessment> = [];
       question.feedbackuseranswer_set.forEach(
         (answer: FeedbackUserAnswerSet) => {
-          if (
-            this.pastSessionService.filteredInUsers.find(
-              el => el === answer.user.id
-            )
-          ) {
-            assessments[answer.rating_answer - 1]++;
-            textAnswers.push(answer.text_answer);
-          }
+          assessments.push({
+            userId: answer.user.id,
+            rating: answer.rating_answer,
+            text: answer.text_answer
+          });
         }
       );
 
@@ -62,8 +58,7 @@ export class FeedbackComponent implements OnInit {
           'Strongly Agree'
         ],
         is_combo: question.is_combo,
-        combo_text: question.combo_text,
-        combo_answers: textAnswers
+        combo_text: question.combo_text
       });
     });
   }

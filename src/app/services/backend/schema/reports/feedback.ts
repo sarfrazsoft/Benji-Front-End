@@ -27,11 +27,16 @@ export enum QuestionType {
 
 export interface FeedbackGraphQuestion {
   question_text: string;
-  assessments: Array<number>;
+  assessments: Array<Assessment>;
   labels: Array<string>;
   is_combo: boolean;
   combo_text: string;
-  combo_answers: Array<string>;
+}
+
+export interface Assessment {
+  userId: number;
+  rating: number;
+  text: string;
 }
 
 export interface FeedbackUserAnswerSet {
