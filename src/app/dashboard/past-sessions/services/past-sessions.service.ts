@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivityTypes } from 'src/app/globals';
@@ -17,10 +17,34 @@ import {
 
 @Injectable()
 export class PastSessionsService {
+  filteredInUsers: Array<number> = [];
+  joinedUsers: Array<User>;
+  filteredInUsers$ = new BehaviorSubject<Array<number>>([]);
+
   constructor(
     private http: HttpClient,
     private contextService: ContextService
   ) {}
+
+  addToFilteredInList(id: number) {
+    if (this.filteredInUsers.includes(id)) {
+      const index = this.filteredInUsers.indexOf(id);
+      if (index !== -1) {
+        this.filteredInUsers.splice(index, 1);
+        this.filteredInUsers$.next(this.filteredInUsers);
+      }
+    } else {
+      this.filteredInUsers.unshift(id);
+      this.filteredInUsers$.next(this.filteredInUsers);
+    }
+    if (this.filteredInUsers.length > this.joinedUsers.length) {
+      this.filteredInUsers = this.filteredInUsers.slice(
+        0,
+        this.joinedUsers.length
+      );
+      this.filteredInUsers$.next(this.filteredInUsers);
+    }
+  }
 
   // api/course_details/lesson_run/{room_code}/summary/
   getReports(id: string): Observable<any> {
@@ -31,6 +55,11 @@ export class PastSessionsService {
           // this.data = activityResult3;
           res = activityResult3 as SessionReport;
           const arr: Array<ActivityReport> = [];
+
+          this.joinedUsers = res.joined_users;
+          res.joined_users.forEach(ju => {
+            this.filteredInUsers.push(ju.id);
+          });
 
           arr.push(res);
 
@@ -272,8 +301,8 @@ const activityResult = {
         title: 'Please leave some feedback for us!',
         title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
       activity_type: 'FeedbackActivity'
     },
@@ -748,7 +777,7 @@ const activityResult = {
       id: 510,
       question: {
         id: 70,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 269,
@@ -1778,7 +1807,7 @@ const activityResult2 = {
       id: 378,
       question: {
         id: 53,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 201,
@@ -2529,8 +2558,8 @@ const activityResult2 = {
         title: 'Please leave some feedback for us!',
         title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
       activity_type: 'FeedbackActivity'
     }

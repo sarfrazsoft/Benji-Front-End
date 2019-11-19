@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { PastSessionsService } from '../../../services/past-sessions.service';
 
 @Component({
   selector: 'benji-participants',
@@ -9,7 +10,7 @@ export class ParticipantsComponent implements OnInit, OnChanges {
   @Input() data: any = { joined_users: [] };
   selected = [];
   participants = [];
-  constructor() {}
+  constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {}
 
@@ -24,11 +25,12 @@ export class ParticipantsComponent implements OnInit, OnChanges {
   }
 
   participantClicked(participant) {
+    this.pastSessionService.addToFilteredInList(participant.id);
     if (this.isSelected(participant)) {
       this.selected = this.selected.filter(x => x !== participant.id);
     } else {
       this.selected.push(participant.id);
     }
-    console.log(this.selected);
+    console.log(this.pastSessionService.filteredInUsers);
   }
 }
