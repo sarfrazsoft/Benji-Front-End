@@ -34,12 +34,18 @@
         .participant-list {
           .participant {
             margin-bottom: 8px;
-          }
-          button.mat-raised-button {
-            font-size: 18px;
-          }
-          .selected-participant {
-            background-color: #dfe5e7;
+            .show-only {
+              cursor: pointer;
+              float: right;
+              font-size: 12px;
+              opacity: 0;
+              // transition: all ease 50ms;
+            }
+            &:hover {
+              .show-only {
+                opacity: 1;
+              }
+            }
           }
         }
       }

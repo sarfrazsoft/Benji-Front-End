@@ -31,4 +31,8 @@ export class ParticipantsComponent implements OnInit, OnChanges {
   participantClicked(event, participant) {
     this.pastSessionService.addToFilteredInList(participant.id);
   }
+
+  showOnly(participant) {
+    this.pastSessionService.removeAllBut(participant.id);
+  }
 }

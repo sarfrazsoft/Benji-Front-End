@@ -3,6 +3,7 @@
     <div
       class="participant"
       *ngFor="let participant of participants; let index = i"
+      fxLayoutAlign="space-between center"
     >
       <mat-checkbox
         disableRipple
@@ -11,6 +12,9 @@
       >
         {{ participant.first_name + ' ' + participant.last_name }}
       </mat-checkbox>
+      <span class="show-only primary-color" (click)="showOnly(participant)">
+        ONLY
+      </span>
     </div>
   </div>
 </div>

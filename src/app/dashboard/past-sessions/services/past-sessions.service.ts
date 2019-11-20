@@ -46,6 +46,11 @@ export class PastSessionsService {
     }
   }
 
+  removeAllBut(id: number) {
+    this.filteredInUsers = [id];
+    this.filteredInUsers$.next(this.filteredInUsers);
+  }
+
   // api/course_details/lesson_run/{room_code}/summary/
   getReports(id: string): Observable<any> {
     return this.http

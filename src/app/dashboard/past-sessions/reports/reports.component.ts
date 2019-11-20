@@ -44,7 +44,6 @@ export class ReportsComponent implements OnInit, AfterContentInit {
     this.pastSessionsService
       .getReports('65367')
       .subscribe((res: Array<ActivityReport>) => {
-        console.log(res);
         this.statsData = res[0];
 
         // Iterate over each item in array
