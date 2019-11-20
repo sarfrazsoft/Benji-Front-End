@@ -70,6 +70,6 @@ export class BuildAPitchComponent implements OnInit {
     const pSummary = this.data.bap.pitch_summaries.find(
       u => u.user + '' === id
     );
-    return pSummary.votes;
+    return pSummary ? pSummary.votes : '-';
   }
 }

@@ -12,7 +12,11 @@ export class ParticipantsComponent implements OnInit, OnChanges {
   participants = [];
   constructor(private pastSessionService: PastSessionsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pastSessionService.filteredInUsers$.subscribe(list => {
+      this.selected = list;
+    });
+  }
 
   isSelected(participant) {
     return this.selected.find(x => x === participant.id);
@@ -24,12 +28,7 @@ export class ParticipantsComponent implements OnInit, OnChanges {
     }
   }
 
-  participantClicked(participant) {
+  participantClicked(event, participant) {
     this.pastSessionService.addToFilteredInList(participant.id);
-    if (this.isSelected(participant)) {
-      this.selected = this.selected.filter(x => x !== participant.id);
-    } else {
-      this.selected.push(participant.id);
-    }
   }
 }

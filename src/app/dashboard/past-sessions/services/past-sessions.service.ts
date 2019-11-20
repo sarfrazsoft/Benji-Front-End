@@ -60,6 +60,7 @@ export class PastSessionsService {
           res.joined_users.forEach(ju => {
             this.filteredInUsers.push(ju.id);
           });
+          this.filteredInUsers$.next(this.filteredInUsers);
 
           arr.push(res);
 
@@ -2681,6 +2682,51 @@ const activityResult3 = {
       id: 12,
       username: 'jhon',
       first_name: 'Jhon',
+      last_name: '',
+      email: '',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      organization: null,
+      orggroup: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 13,
+      username: 'medeena',
+      first_name: 'Medeena',
+      last_name: '',
+      email: '',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      organization: null,
+      orggroup: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 14,
+      username: 'brrr',
+      first_name: '1975',
+      last_name: '',
+      email: '',
+      verified_email: false,
+      job_title: null,
+      organization_name: null,
+      orggroup_name: null,
+      organization: null,
+      orggroup: null,
+      local_admin_permission: false,
+      participant_permission: true
+    },
+    {
+      id: 15,
+      username: 'jhonwash',
+      first_name: 'John Wash',
       last_name: '',
       email: '',
       verified_email: false,

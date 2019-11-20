@@ -4,6 +4,10 @@
     height: 100%;
     .key-stats {
       height: calc(100vh - 90px - 52px - 83px);
+      padding: 10px 0px;
+      > div {
+        padding: 0px 30px;
+      }
       .dashboard-heading {
         h1 {
           font-size: 22px;
@@ -17,13 +21,16 @@
       .value {
         font-size: 20px;
       }
-      .participants {
-        overflow: auto;
+      .participants-heading {
         .dashboard-heading {
           h1 {
             color: rgb(22, 22, 22);
           }
         }
+      }
+      .participants {
+        overflow: auto;
+
         .participant-list {
           .participant {
             margin-bottom: 8px;

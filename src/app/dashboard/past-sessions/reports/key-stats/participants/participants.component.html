@@ -1,19 +1,16 @@
-<div class="" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Participtants</h1>
-  </div>
+<div fxLayout="column">
   <div class="participant-list" fxLayout="column" fxLayoutGap="10px">
     <div
       class="participant"
       *ngFor="let participant of participants; let index = i"
     >
-      <button
-        mat-raised-button
-        [ngClass]="{ 'selected-participant': isSelected(participant) }"
-        (click)="participantClicked(participant)"
+      <mat-checkbox
+        disableRipple
+        [checked]="isSelected(participant)"
+        (change)="participantClicked($event, participant)"
       >
         {{ participant.first_name + ' ' + participant.last_name }}
-      </button>
+      </mat-checkbox>
     </div>
   </div>
 </div>
