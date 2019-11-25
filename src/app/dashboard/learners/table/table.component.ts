@@ -15,7 +15,12 @@ import { LearnerService } from '../services';
   styleUrls: ['./table.component.scss']
 })
 export class LearnersTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['select', 'firstName', 'lastName', 'job_title'];
+  displayedColumns: string[] = [
+    'firstName',
+    'lastName',
+    'job_title',
+    'view_profile'
+  ];
 
   data: any = [];
   selection = new SelectionModel<any>(true, []);

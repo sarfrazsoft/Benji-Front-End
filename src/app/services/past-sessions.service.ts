@@ -120,7 +120,9 @@ export class PastSessionsService {
 
   // /api/course_details/lesson_run/
   getPastSessions(sort: string, order: string, page: number): Observable<any> {
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
+    // replaced for testing
+    // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
+    return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
       map(res => {
         console.log(res);
         return res;

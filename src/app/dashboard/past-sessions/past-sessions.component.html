@@ -68,9 +68,9 @@
 
             <!-- View Report Column -->
             <ng-container matColumnDef="report">
-              <th mat-header-cell *matHeaderCellDef>Reports</th>
+              <th mat-header-cell *matHeaderCellDef>Details</th>
               <td mat-cell *matCellDef="let row">
-                report
+                <a class="table-link"> view details </a>
               </td>
             </ng-container>
 
@@ -79,6 +79,7 @@
               mat-row
               *matRowDef="let row; columns: displayedColumns"
               (click)="showReports(row)"
+              class="link-row"
             ></tr>
           </table>
         </div>

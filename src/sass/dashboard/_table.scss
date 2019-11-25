@@ -1,11 +1,19 @@
-table.mat-table {
-  width: 100%;
-  overflow: auto;
-  max-height: 500px;
-}
 .dashboard-table {
+  table.mat-table {
+    width: 100%;
+    overflow: auto;
+    max-height: 500px;
+  }
   margin: 20px 0px;
   box-shadow: $box-shadow;
+  .table-link {
+    color: rgb(85, 26, 139);
+    cursor: pointer;
+  }
+
+  .link-row {
+    cursor: pointer;
+  }
 }
 
 .table-loading-shade {
