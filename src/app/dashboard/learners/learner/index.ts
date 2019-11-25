@@ -1,9 +1,10 @@
 export * from './learner.component';
 export * from './learner-report/learner-report.component';
 
-import { LearnerReportComponent } from './learner-report/learner-report.component';
-import { McqComponent as McqLearnerComponent } from './learner-report/mcq/mcq.component';
-import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './learner-report/pitch-o-matic/pitch-o-matic.component';
+import {
+  LearnerReportComponents,
+  LearnerReportEntryComponents
+} from './learner-report';
 import { LearnerComponent } from './learner.component';
 import { SessionsComponent } from './sessions/sessions.component';
 
@@ -13,10 +14,8 @@ import { SkillLineChartComponent } from './skill-evaluation/skill-line-chart/ski
 import { SkillOverviewComponent } from './skill-evaluation/skill-overview/skill-overview.component';
 
 export const LearnerComponents = [
-  McqLearnerComponent,
-  LearnerPitchOMaticComponent,
+  ...LearnerReportComponents,
   LearnerComponent,
-  LearnerReportComponent,
   SessionsComponent,
   DonutComponent,
   SkillEvaluationComponent,
@@ -24,6 +23,6 @@ export const LearnerComponents = [
   SkillLineChartComponent
 ];
 
-export const LearnersEntryComponents = [];
+export const LearnerEntryComponents = [...LearnerReportEntryComponents];
 
 export const LearnersProviders = [];

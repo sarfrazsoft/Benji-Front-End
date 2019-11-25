@@ -1,0 +1,15 @@
+<div class="individual-summary" fxLayout="column">
+  <div>
+    <span>
+      Individual summary
+    </span>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50%">Pitch prompt</div>
+    <div fxFlex="50%" [innerHTML]="pitchText"></div>
+  </div>
+  <div fxLayout="row">
+    <div fxFlex="50%">Pitch Notes</div>
+    <div fxFlex="50%">{{ pitchNotes }}</div>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ActivityTypes } from 'src/app/globals';
 import { ActivityReport } from 'src/app/services/backend/schema';
-import { PastSessionsService } from '../services/past-sessions.service';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import {
   BuildAPitchComponent,
   FeedbackComponent,

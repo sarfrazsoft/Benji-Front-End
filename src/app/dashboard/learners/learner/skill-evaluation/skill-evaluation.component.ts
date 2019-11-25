@@ -14,7 +14,7 @@ import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
   templateUrl: './skill-evaluation.component.html',
   styleUrls: ['./skill-evaluation.component.scss']
 })
-export class SkillEvaluationComponent implements OnInit, AfterViewInit {
+export class SkillEvaluationComponent implements OnInit {
   @Input() question: FeedbackGraphQuestion;
   canvas: any;
   ctx: CanvasRenderingContext2D;
@@ -23,41 +23,6 @@ export class SkillEvaluationComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit() {}
-
-  ngAfterViewInit() {
-    this.canvas = document.getElementById('myChart');
-    this.ctx = this.chartCanvas.nativeElement.getContext('2d');
-    this.myChart = new Chart(this.ctx, {
-      type: 'doughnut',
-      data: {
-        datasets: [
-          {
-            data: [10, 20, 30],
-            backgroundColor: [
-              colors.red,
-              colors.orange,
-              colors.yellow,
-              colors.green,
-              colors.blue
-            ]
-          }
-        ],
-
-        labels: ['Red', 'Yellow', 'Blue']
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: true
-        },
-        tooltips: {
-          enabled: true
-        },
-        scales: {}
-      }
-    });
-  }
 }
 
 const colors = {

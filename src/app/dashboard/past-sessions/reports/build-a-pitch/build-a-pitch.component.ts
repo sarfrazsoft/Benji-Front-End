@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityReport } from 'src/app/services/backend/schema';
-import { PastSessionsService } from '../../services/past-sessions.service';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-build-a-pitch-report',

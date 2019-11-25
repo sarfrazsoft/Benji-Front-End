@@ -9,6 +9,7 @@ import {
   PitchoMaticBlank,
   PitchoMaticGroupMember
 } from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-learner-pitch-o-matic',
@@ -17,15 +18,15 @@ import {
 })
 export class PitchOMaticComponent implements OnInit {
   // fback: any = feedback.feedback.feedbackquestion_set;
-  @Input() fback: any;
-  pitchText = '';
+  @Input() data: ActivityReport;
   userId = 2;
   arr: Array<FeedbackGraphQuestion> = [];
   dataExists = true;
   constructor(
     private learnerService: LearnerService,
     private contextService: ContextService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pastSessionService: PastSessionsService
   ) {
     // this.activatedRoute.data.forEach((data: any) => {
     //   this.userId = data.dashData.user.id;
@@ -36,129 +37,52 @@ export class PitchOMaticComponent implements OnInit {
 
   ngOnInit() {
     // this.userId = this.contextService.user;
-    this.pitchText = this.getUserPitchPrompt();
-    this.formatData();
-    this.learnerService.getReports('73103').subscribe((res: any) => {
-      console.log(res);
-      // this.res.pom = this.data;
-
-      // // Iterate over each item in array
-      // res.forEach((act: ActivityReport) => {
-      //   if (act.activity_type === ActivityTypes.mcq) {
-      //     const mcqComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      //       McqsComponent
-      //     );
-      //     const component = this.entry.createComponent(mcqComponentFactory);
-      //     component.instance.data = act;
-      //   } else if (act.activity_type === ActivityTypes.feedback) {
-      //     const feedbackComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      //       FeedbackComponent
-      //     );
-      //     const component = this.entry.createComponent(
-      //       feedbackComponentFactory
-      //     );
-      //     component.instance.data = act;
-      //   } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-      //     // const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      //     //   PitchOMaticComponent
-      //     // );
-      //     // const component = this.entry.createComponent(pomComponentFactory);
-      //     // component.instance.data = act;
-      //   } else if (act.activity_type === ActivityTypes.buildAPitch) {
-      //     // const bapComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      //     //   BuildAPitchComponent
-      //     // );
-      //     // const component = this.entry.createComponent(bapComponentFactory);
-      //     // component.instance.data = act;
-      //   }
-      // });
-    });
+    // this.pitchText = this.getUserPitchPrompt();
+    // this.pitchNotes = this.getUserPitchNotes();
+    // this.formatData();
+    // this.pastSessionService.getReports('65367').subscribe((res: any) => {
+    // console.log(res);
+    // });
+    // console.log(this.data, this.pitchText);
   }
 
-  getUserPitchPrompt() {
-    const blank_set: Array<PitchoMaticBlank> = pom.pitchomaticblank_set;
-    blank_set.sort((a, b) => a.order - b.order);
+  // formatData() {
+  //   const data = this.data.pom.feedbackquestion_set.forEach(question => {
+  //     const userData = this.data.pom.pitchomaticgroupmembers.filter(
+  //       gm => gm.user.id === this.userId
+  //     );
+  //     if (userData.length === 0) {
+  //       this.dataExists = false;
+  //       return;
+  //     }
+  //     const questionRatings = userData[0].pitchomaticfeedback_set.filter(
+  //       fb => fb.feedbackquestion === question.id
+  //     );
+  //     // how many users gave our guy agree disagree ratings
+  //     const assessments = [0, 0, 0, 2, 3];
+  //     const textAnswers = [];
 
-    const currentUserID = 2;
-    let currentMember: any;
+  //     questionRatings.forEach(answer => {
+  //       assessments[answer.rating_answer - 1]++;
+  //       textAnswers.push(answer.text_answer);
+  //     });
 
-    pom.pitchomaticgroupmembers.forEach(member => {
-      if (member.user.id === currentUserID) {
-        currentMember = member;
-      }
-    });
-
-    const pitch_set = [];
-
-    blank_set.forEach(blank => {
-      const choice = currentMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(
-        el => {
-          return el.pitchomaticblank === blank.id;
-        }
-      )[0].choice;
-
-      const value = blank.pitchomaticblankchoice_set.filter(el => {
-        return el.id === choice;
-      })[0].value;
-
-      pitch_set.push({
-        id: blank.id,
-        label: blank.label,
-        order: blank.order,
-        value: value
-      });
-    });
-
-    let pitchText = '';
-    const helpText = ['Pitch', 'to', 'using'];
-    pitch_set.forEach((v, i) => {
-      pitchText =
-        pitchText +
-        helpText[i] +
-        ' <em class="primary-color">' +
-        v.value +
-        '</em> ';
-    });
-    return pitchText;
-  }
-
-  formatData() {
-    const data = pom.feedbackquestion_set.forEach(question => {
-      const userData = pom.pitchomaticgroupmembers.filter(
-        gm => gm.user.id === this.userId
-      );
-      if (userData.length === 0) {
-        this.dataExists = false;
-        return;
-      }
-      const questionRatings = userData[0].pitchomaticfeedback_set.filter(
-        fb => fb.feedbackquestion === question.id
-      );
-      // how many users gave our guy agree disagree ratings
-      const assessments = [0, 0, 0, 2, 3];
-      const textAnswers = [];
-
-      questionRatings.forEach(answer => {
-        assessments[answer.rating_answer - 1]++;
-        textAnswers.push(answer.text_answer);
-      });
-
-      this.arr.push({
-        question_text: question.question_text,
-        assessments: assessments,
-        labels: [
-          'Strongly Disagree',
-          'Disagree',
-          'Neutral',
-          'Agree',
-          'Strongly Agree'
-        ],
-        is_combo: question.is_combo,
-        combo_text: question.combo_text,
-        combo_answers: textAnswers
-      });
-    });
-  }
+  //     this.arr.push({
+  //       question_text: question.question_text,
+  //       assessments: assessments,
+  //       labels: [
+  //         'Strongly Disagree',
+  //         'Disagree',
+  //         'Neutral',
+  //         'Agree',
+  //         'Strongly Agree'
+  //       ],
+  //       is_combo: question.is_combo,
+  //       combo_text: question.combo_text,
+  //       combo_answers: textAnswers
+  //     });
+  //   });
+  // }
 }
 
 const pom = {

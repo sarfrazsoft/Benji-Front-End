@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  OnInit,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LearnerService } from 'src/app/dashboard/learners/services';
 import { ActivityTypes } from 'src/app/globals';
@@ -9,6 +15,8 @@ import {
   PitchoMaticBlank,
   PitchoMaticGroupMember
 } from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
+import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './pitch-o-matic/pitch-o-matic.component';
 
 @Component({
   selector: 'benji-learner-report',
@@ -16,6 +24,7 @@ import {
   styleUrls: ['./learner-report.component.scss']
 })
 export class LearnerReportComponent implements OnInit {
+  @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
   fback: any = feedback.feedback.feedbackquestion_set;
   pitchText = '';
   userId = 2;
@@ -24,7 +33,9 @@ export class LearnerReportComponent implements OnInit {
   constructor(
     private learnerService: LearnerService,
     private contextService: ContextService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pastSessionsService: PastSessionsService,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) {
     this.activatedRoute.data.forEach((data: any) => {
       // this.userId = data.dashData.user.id;
@@ -36,40 +47,22 @@ export class LearnerReportComponent implements OnInit {
     // this.userId = this.contextService.user;
     // this.pitchText = this.getUserPitchPrompt();
     // this.formatData();
-    // this.learnerService.getReports('73103').subscribe((res: any) => {
-    //   console.log(res);
-    // this.res.pom = this.data;
-    // // Iterate over each item in array
-    // res.forEach((act: ActivityReport) => {
-    //   if (act.activity_type === ActivityTypes.mcq) {
-    //     const mcqComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-    //       McqsComponent
-    //     );
-    //     const component = this.entry.createComponent(mcqComponentFactory);
-    //     component.instance.data = act;
-    //   } else if (act.activity_type === ActivityTypes.feedback) {
-    //     const feedbackComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-    //       FeedbackComponent
-    //     );
-    //     const component = this.entry.createComponent(
-    //       feedbackComponentFactory
-    //     );
-    //     component.instance.data = act;
-    //   } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-    //     // const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-    //     //   PitchOMaticComponent
-    //     // );
-    //     // const component = this.entry.createComponent(pomComponentFactory);
-    //     // component.instance.data = act;
-    //   } else if (act.activity_type === ActivityTypes.buildAPitch) {
-    //     // const bapComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-    //     //   BuildAPitchComponent
-    //     // );
-    //     // const component = this.entry.createComponent(bapComponentFactory);
-    //     // component.instance.data = act;
-    //   }
-    // });
-    // });
+    this.pastSessionsService
+      .getReports('653')
+      .subscribe((res: Array<ActivityReport>) => {
+        // this.statsData = res[0];
+
+        // Iterate over each item in array
+        res.forEach((act: ActivityReport) => {
+          if (act.activity_type === ActivityTypes.pitchoMatic) {
+            const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+              LearnerPitchOMaticComponent
+            );
+            const component = this.entry.createComponent(pomComponentFactory);
+            component.instance.data = act;
+          }
+        });
+      });
   }
 
   // getUserPitchPrompt() {

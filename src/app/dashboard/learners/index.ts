@@ -5,7 +5,7 @@ export * from './learner/learner-report/learner-report.component';
 export * from './services';
 
 import { AddLearnersComponent } from './add/add.component';
-import { LearnerComponents } from './learner';
+import { LearnerComponents, LearnerEntryComponents } from './learner';
 import { LearnerReportComponent } from './learner/learner-report/learner-report.component';
 import { LearnersComponent } from './learners.component';
 import { LearnerResolver, LearnerService } from './services';
@@ -19,6 +19,6 @@ export const LearnersComponents = [
   LearnerReportComponent
 ];
 
-export const LearnersEntryComponents = [];
+export const LearnersEntryComponents = [...LearnerEntryComponents];
 
 export const LearnersProviders = [LearnerService, LearnerResolver];

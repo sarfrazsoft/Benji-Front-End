@@ -9,6 +9,7 @@ import { EmojiLookupService } from './emoji-lookup.service';
 import { LayoutService } from './layout.service';
 import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
+import { PastSessionsService } from './past-sessions.service';
 
 export { AuthGuard } from './auth/auth.guard';
 export {
@@ -31,5 +32,6 @@ export const ServicesProviders = [
   EmojiLookupService,
   EitherOrActivityService,
   LayoutService,
+  PastSessionsService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
 ];

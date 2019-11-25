@@ -11,6 +11,9 @@ import {
 } from './index';
 import { LearnersRoutes } from './learners.routing';
 import { SkillDetailComponent } from './learner/skill-evaluation/skill-detail/skill-detail.component';
+import { PitchDetailsComponent } from './learner/learner-report/pitch-o-matic/pitch-details/pitch-details.component';
+import { PitchEvaluationComponent } from './learner/learner-report/pitch-o-matic/pitch-evaluation/pitch-evaluation.component';
+import { PeerFeedbackComponent } from './learner/learner-report/pitch-o-matic/peer-feedback/peer-feedback.component';
 
 @NgModule({
   imports: [
@@ -21,7 +24,7 @@ import { SkillDetailComponent } from './learner/skill-evaluation/skill-detail/sk
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [LearnersComponents, SkillDetailComponent],
+  declarations: [LearnersComponents, SkillDetailComponent, PitchDetailsComponent, PitchEvaluationComponent, PeerFeedbackComponent],
   entryComponents: LearnersEntryComponents,
   providers: LearnersProviders
 })
