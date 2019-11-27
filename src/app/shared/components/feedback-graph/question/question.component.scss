@@ -1,0 +1,17 @@
+@import "variables";
+.bar-info {
+  margin: 20px 0px;
+  font-size: 22px;
+  .question-text {
+    text-align: left;
+    font-weight: 600;
+  }
+  .average {
+    padding: 10px;
+    background: $secondary-color-light;
+    border-radius: 10px;
+    font-weight: 600;
+    color: $secondary-color-dark;
+    opacity: 0.8;
+  }
+}

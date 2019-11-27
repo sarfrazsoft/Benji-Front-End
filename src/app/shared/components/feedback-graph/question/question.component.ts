@@ -5,23 +5,25 @@ import {
   Input,
   OnInit,
   ViewChild
-} from '@angular/core';
-import * as Chart from 'chart.js';
-import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
+} from "@angular/core";
+import * as Chart from "chart.js";
+import { FeedbackGraphQuestion } from "src/app/services/backend/schema";
+import { PastSessionsService } from "src/app/services/past-sessions.service";
 
 @Component({
-  selector: 'benji-question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+  selector: "benji-question",
+  templateUrl: "./question.component.html",
+  styleUrls: ["./question.component.scss"]
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
+  @Input() showAvg = false;
   comboAnswers: Array<string> = [];
+  averageRating = 0;
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
-  @ViewChild('chartCanvas') chartCanvas: ElementRef;
+  @ViewChild("chartCanvas") chartCanvas: ElementRef;
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
@@ -31,27 +33,31 @@ export class QuestionComponent implements OnInit, AfterViewInit {
 
     const assessments = [0, 0, 0, 0, 0];
     this.comboAnswers = [];
+    let ratingSum = 0;
     this.question.assessments.forEach(answer => {
       if (
         this.pastSessionService.filteredInUsers.find(el => el === answer.userId)
       ) {
+        ratingSum = ratingSum + answer.rating;
         assessments[answer.rating - 1]++;
         this.comboAnswers.push(answer.text);
       }
     });
+    this.averageRating = ratingSum / this.question.assessments.length;
+    this.averageRating = Math.round(this.averageRating * 10) / 10;
 
-    this.canvas = document.getElementById('myChart');
-    this.ctx = this.chartCanvas.nativeElement.getContext('2d');
+    this.canvas = document.getElementById("myChart");
+    this.ctx = this.chartCanvas.nativeElement.getContext("2d");
     this.myChart = new Chart(this.ctx, {
-      type: 'bar',
+      type: "bar",
       data: {
         labels: this.question.labels,
         datasets: [
           {
-            label: '',
+            label: "",
             data: assessments,
             borderWidth: 1,
-            backgroundColor: '#cadafe'
+            backgroundColor: "#cadafe"
           }
         ]
       },
@@ -65,11 +71,11 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           displayColors: false,
           callbacks: {
             title: (tooltipItem, d) => {
-              return '';
+              return "";
             },
             label: (tooltipItem, d) => {
               const res =
-                tooltipItem.value === '1' ? ' response' : ' responses';
+                tooltipItem.value === "1" ? " response" : " responses";
               return tooltipItem.value + res;
             }
           }
@@ -81,7 +87,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 display: true
               },
               ticks: {
-                fontColor: '#000',
+                fontColor: "#000",
                 fontSize: 18,
                 stepSize: 2,
                 beginAtZero: true
@@ -95,7 +101,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 display: false
               },
               ticks: {
-                fontColor: '#000',
+                fontColor: "#000",
                 fontSize: 14,
                 stepSize: 1,
                 beginAtZero: true

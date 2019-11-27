@@ -1,15 +1,16 @@
-<div class="individual-summary" fxLayout="column">
-  <div>
-    <span>
-      Individual summary
-    </span>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="50%">Pitch prompt</div>
-    <div fxFlex="50%" [innerHTML]="pitchText"></div>
-  </div>
-  <div fxLayout="row">
-    <div fxFlex="50%">Pitch Notes</div>
-    <div fxFlex="50%">{{ pitchNotes }}</div>
+<div class="feedback-report">
+  <div class="report-content">
+    <div class="prompt">
+      Pitch prompt
+    </div>
+    <div class="text-list">
+      <div class="text-list-item" [innerHTML]="pitchText"></div>
+    </div>
+    <div class="prompt">
+      Pitch notes
+    </div>
+    <div class="text-list">
+      <div class="text-list-item">{{ pitchNotes }}</div>
+    </div>
   </div>
 </div>

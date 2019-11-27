@@ -1,7 +1,18 @@
 <div class="report-content">
-  <div class="prompt">
-    {{ question.question_text }}
+  <div
+    class="bar-info"
+    *ngIf="showAvg"
+    fxLayout="row"
+    fxLayoutAlign="space-between"
+  >
+    <div class="question-text">
+      {{ question.question_text }}
+    </div>
+    <div class="average">Avg. {{ averageRating }}</div>
   </div>
+  <!-- <div class="prompt">
+    {{ question.question_text }}
+  </div> -->
   <div>
     <canvas #chartCanvas id="myChart" height="150"></canvas>
   </div>

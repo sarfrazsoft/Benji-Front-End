@@ -11,11 +11,6 @@ benji-reports {
         overflow: auto;
         .admin-panel {
           padding-bottom: 20px;
-          .dashboard-heading {
-            h1 {
-              font-size: 22px;
-            }
-          }
         }
       }
     }
@@ -28,6 +23,11 @@ benji-reports {
   background: white;
   border-radius: 5px;
   box-shadow: $box-shadow;
+  .dashboard-heading {
+    h1 {
+      font-size: 22px;
+    }
+  }
 }
 .report-content {
   padding: 10px 40px;

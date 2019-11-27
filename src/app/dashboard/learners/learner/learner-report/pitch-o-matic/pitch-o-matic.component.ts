@@ -17,7 +17,6 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
   styleUrls: ['./pitch-o-matic.component.scss']
 })
 export class PitchOMaticComponent implements OnInit {
-  // fback: any = feedback.feedback.feedbackquestion_set;
   @Input() data: ActivityReport;
   userId = 2;
   arr: Array<FeedbackGraphQuestion> = [];

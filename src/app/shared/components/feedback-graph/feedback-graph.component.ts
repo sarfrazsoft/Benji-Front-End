@@ -1,16 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 import {
   ActivityReport,
   FeedbackQuestionSet
-} from 'src/app/services/backend/schema';
+} from "src/app/services/backend/schema";
 
 @Component({
-  selector: 'benji-feedback-graph',
-  templateUrl: './feedback-graph.component.html',
-  styleUrls: ['./feedback-graph.component.scss']
+  selector: "benji-feedback-graph",
+  templateUrl: "./feedback-graph.component.html",
+  styleUrls: ["./feedback-graph.component.scss"]
 })
 export class FeedbackGraphComponent implements OnInit {
   @Input() fback: Array<FeedbackQuestionSet>;
+  @Input() showAvg = false;
 
   constructor() {}
 
