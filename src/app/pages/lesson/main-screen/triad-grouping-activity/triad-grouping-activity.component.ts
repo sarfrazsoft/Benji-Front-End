@@ -27,7 +27,10 @@ export class MainScreenTriadGroupingActivityComponent
     this.triadAct = this.activityState.triadgroupingactivity;
   }
 
-  getGroupText(userGroup): string {
+  getGroupText(userGroup: TriadUserGroupUserSet): string {
+    userGroup.usergroupuser_set.sort((a, b) =>
+      a.user.first_name.localeCompare(b.user.first_name)
+    );
     return userGroup.usergroupuser_set.map(u => u.user.first_name).join(' + ');
   }
 

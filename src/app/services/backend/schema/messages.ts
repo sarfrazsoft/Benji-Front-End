@@ -4,6 +4,7 @@ import {
   BuildAPitchActivity,
   DiscussionActivity,
   FeedbackActivity,
+  GenericRoleplayActivity,
   HintWordActivity,
   LobbyActivity,
   MCQActivity,
@@ -42,6 +43,7 @@ export interface UpdateMessage {
   videoactivity?: VideoActivity;
   teletriviaactivity?: TeleTriviaActivity;
   roleplaypairactivity?: RoleplayPairActivity;
+  genericroleplayactivity?: GenericRoleplayActivity;
   pairgroupingactivity?: PairGroupingActivity;
   hintwordactivity?: HintWordActivity;
   discussionactivity?: DiscussionActivity;
@@ -309,6 +311,21 @@ export class BrainstormVoteEvent extends ActivityEvent {
   }
 }
 
-// {'event_type': 'BrainstormSubmitEvent', 'idea': 'Random idea #27 from user 1'}
-// {'event_type': 'BrainstormRemoveSubmissionEvent', 'brainstormidea': 1 // ID of idea from the brainstorm_idea list}
-// {'event_type': 'BrainstormVoteEvent', 'brainstormidea': 1 // ID of idea from the brainstorm_idea list}
+export class GenericRoleplayUserDiscussedEvent extends ActivityEvent {
+  event_name = 'GenericRoleplayUserDiscussedEvent';
+  constructor() {
+    super();
+  }
+}
+
+export class GenericRoleplayUserFeedbackEvent extends ActivityEvent {
+  event_name = 'GenericRoleplayUserFeedbackEvent';
+  constructor(
+    genericroleplayuserfeedbackeventanswer_set: FeedbackSubmitEventAnswer[]
+  ) {
+    super();
+    this.extra_args = {
+      genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set
+    };
+  }
+}
