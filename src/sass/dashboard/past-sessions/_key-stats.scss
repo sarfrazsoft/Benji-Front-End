@@ -1,12 +1,13 @@
 .key-stats-container {
   height: 100%;
+  width: 230px;
   benji-key-stats {
     height: 100%;
     .key-stats {
       height: calc(100vh - 90px - 52px - 83px);
       padding: 10px 0px;
       > div {
-        padding: 0px 30px;
+        padding: 0px 15px;
       }
 
       .label {

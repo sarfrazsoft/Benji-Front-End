@@ -8,6 +8,8 @@ benji-reports {
       position: relative;
       overflow: hidden;
       .right-panel {
+        width: calc(100vw - 260px - 30px - 230px - 50px);
+        max-width: 1050px;
         overflow: auto;
         .admin-panel {
           padding-bottom: 20px;

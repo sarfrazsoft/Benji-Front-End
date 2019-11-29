@@ -1,14 +1,18 @@
 <div
   class="admin-panel report-cards key-stats"
   fxLayout="column"
-  fxLayoutGap="15px"
+  fxLayoutGap="8px"
 >
   <div>
     <div class="dashboard-heading">
-      <h1>Key stats - Pitch Perfect {{ startDate }}</h1>
+      <h1>Pitch Perfect</h1>
     </div>
 
-    <div fxLayout="column" fxLayoutGap="15px">
+    <div fxLayout="column" fxLayoutGap="8px">
+      <div>
+        <div class="label">Date</div>
+        <div class="value">{{ startDate }}</div>
+      </div>
       <div>
         <div class="label">Duration</div>
         <div class="value">{{ duration }} mins</div>
