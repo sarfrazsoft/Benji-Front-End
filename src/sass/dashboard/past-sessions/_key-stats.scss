@@ -18,6 +18,13 @@
       .value {
         font-size: 16px;
       }
+      .select-all {
+        span {
+          cursor: pointer;
+          float: right;
+          font-size: 12px;
+        }
+      }
       .participants {
         overflow: auto;
 
@@ -29,7 +36,6 @@
               float: right;
               font-size: 12px;
               opacity: 0;
-              // transition: all ease 50ms;
             }
             &:hover {
               .show-only {

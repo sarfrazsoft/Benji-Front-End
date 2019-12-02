@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import * as global from 'src/app/globals';
-import { ContextService } from './context.service';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
+import * as global from "src/app/globals";
+import { ContextService } from "./context.service";
 
 @Injectable()
 export class LayoutService {
