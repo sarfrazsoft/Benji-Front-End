@@ -7,7 +7,7 @@ import {
   ViewChild
 } from "@angular/core";
 import * as Chart from "chart.js";
-import { FeedbackGraphQuestion } from "src/app/services/backend/schema";
+import { FeedbackGraphQuestion, User } from "src/app/services/backend/schema";
 import { PastSessionsService } from "src/app/services/past-sessions.service";
 
 @Component({
@@ -18,6 +18,7 @@ import { PastSessionsService } from "src/app/services/past-sessions.service";
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
   @Input() showAvg = false;
+
   comboAnswers: Array<string> = [];
   averageRating = 0;
   canvas: any;
@@ -34,12 +35,18 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     const assessments = [0, 0, 0, 0, 0];
     this.comboAnswers = [];
     let ratingSum = 0;
+    const users = [[], [], [], [], []];
     this.question.assessments.forEach(answer => {
       if (
-        this.pastSessionService.filteredInUsers.find(el => el === answer.userId)
+        this.pastSessionService.filteredInUsers.find(
+          el => el === answer.user.id
+        )
       ) {
         ratingSum = ratingSum + answer.rating;
         assessments[answer.rating - 1]++;
+        users[answer.rating - 1].push(
+          answer.user.first_name + " " + answer.user.last_name
+        );
         this.comboAnswers.push(answer.text);
       }
     });
@@ -70,13 +77,16 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         tooltips: {
           displayColors: false,
           callbacks: {
-            title: (tooltipItem, d) => {
-              return "";
+            title: (tooltipItems, d) => {
+              let res =
+                tooltipItems[0].value === "1" ? " response" : " responses";
+              return tooltipItems[0].value + res;
             },
             label: (tooltipItem, d) => {
-              const res =
-                tooltipItem.value === "1" ? " response" : " responses";
-              return tooltipItem.value + res;
+              return "";
+            },
+            afterBody: (tooltipItems, d) => {
+              return users[tooltipItems[0].index];
             }
           }
         },
@@ -120,7 +130,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       this.question.assessments.forEach(answer => {
         if (
           this.pastSessionService.filteredInUsers.find(
-            el => el === answer.userId
+            el => el === answer.user.id
           )
         ) {
           assessments[answer.rating - 1]++;

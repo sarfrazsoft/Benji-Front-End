@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 import {
   ActivityReport,
   Assessment,
@@ -7,14 +7,15 @@ import {
   FeedbackQuestionSet,
   FeedbackUserAnswerSet,
   Pitchomaticgroupmember,
-  PitchoMaticGroupMember
-} from "src/app/services/backend/schema";
-import { PastSessionsService } from "src/app/services/past-sessions.service";
+  PitchoMaticGroupMember,
+  User
+} from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
-  selector: "benji-pitch-evaluation",
-  templateUrl: "./pitch-evaluation.component.html",
-  styleUrls: ["./pitch-evaluation.component.scss"]
+  selector: 'benji-pitch-evaluation',
+  templateUrl: './pitch-evaluation.component.html',
+  styleUrls: ['./pitch-evaluation.component.scss']
 })
 export class PitchEvaluationComponent implements OnInit {
   @Input() pomData: ActivityReport;
@@ -59,7 +60,7 @@ export class PitchEvaluationComponent implements OnInit {
       this.currentMember.pitchomaticfeedback_set.forEach(response => {
         if (response.feedbackquestion === question.id) {
           assessments.push({
-            userId: response.user,
+            user: { id: response.user } as User,
             rating: response.rating_answer,
             text: response.text_answer
           });
@@ -70,14 +71,14 @@ export class PitchEvaluationComponent implements OnInit {
         question_text: question.question_text,
         assessments: assessments,
         labels: [
-          "Strongly Disagree",
-          "Disagree",
-          "Neutral",
-          "Agree",
-          "Strongly Agree"
+          'Strongly Disagree',
+          'Disagree',
+          'Neutral',
+          'Agree',
+          'Strongly Agree'
         ],
         is_combo: question.is_combo,
-        combo_text: ""
+        combo_text: ''
       });
       console.log(this.questions);
     });

@@ -34,7 +34,7 @@ export interface FeedbackGraphQuestion {
 }
 
 export interface Assessment {
-  userId: number;
+  user: User;
   rating: number;
   text: string;
 }

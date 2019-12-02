@@ -40,7 +40,7 @@ export class FeedbackComponent implements OnInit {
       question.feedbackuseranswer_set.forEach(
         (answer: FeedbackUserAnswerSet) => {
           assessments.push({
-            userId: answer.user.id,
+            user: answer.user,
             rating: answer.rating_answer,
             text: answer.text_answer
           });
