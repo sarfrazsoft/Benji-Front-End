@@ -1,19 +1,6 @@
-<div class="admin-panel report-cards" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Multiple choice question</h1>
-  </div>
+<div class="report-cards" fxLayout="column">
+  <div class="card-header">Multiple choice question</div>
 
-  <div class="">
-    <div class="">
-      <benji-option-distribution-bars
-        [mcqs]="data"
-      ></benji-option-distribution-bars>
-    </div>
-  </div>
-
-  <div>
-    <div>
-      <!-- <benji-mcq-option-spread [data]="data"></benji-mcq-option-spread> -->
-    </div>
-  </div>
+  <benji-option-distribution-bars [mcqs]="data">
+  </benji-option-distribution-bars>
 </div>

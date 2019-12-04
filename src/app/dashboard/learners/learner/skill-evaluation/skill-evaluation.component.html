@@ -1,21 +1,14 @@
-<div fxFlex="100%" fxLayoutAlign="center">
-  <div fxLayout="column" fxFlex="950px">
-    <div>
-      <!-- <benji-key-stats [data]="statsData"></benji-key-stats> -->
-    </div>
+<div fxFlex="100%" fxLayout="column">
+  <div class="sub-header">
+    <span>Skills Profile</span>
+  </div>
+  <div class="skills-overview" fxLayout="row wrap">
+    <ng-template #reportEntry></ng-template>
 
-    <div>
-      <!-- <benji-participants [data]="statsData"></benji-participants> -->
-    </div>
+    <ng-template #reportEntry2></ng-template>
 
-    <!-- <ng-template #reportEntry></ng-template> -->
+    <ng-template #reportEntry3></ng-template>
 
-    <div>
-      <benji-skill-overview></benji-skill-overview>
-    </div>
-
-    <div>
-      <benji-skill-detail></benji-skill-detail>
-    </div>
+    <ng-template #reportEntry4></ng-template>
   </div>
 </div>

@@ -1,13 +1,18 @@
 import {
   AfterViewInit,
   Component,
+  ComponentFactoryResolver,
   ElementRef,
   Input,
   OnInit,
-  ViewChild
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import * as Chart from 'chart.js';
-import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
+import { ActivityTypes } from 'src/app/globals';
+import { ActivityReport, FeedbackGraphQuestion } from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
+import { SkillOverviewComponent } from './skill-overview/skill-overview.component';
 
 @Component({
   selector: 'benji-skill-evaluation',
@@ -20,9 +25,37 @@ export class SkillEvaluationComponent implements OnInit {
   ctx: CanvasRenderingContext2D;
   myChart: any;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
-  constructor() {}
 
-  ngOnInit() {}
+  @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
+  @ViewChild('reportEntry2', { read: ViewContainerRef }) entry2: ViewContainerRef;
+  @ViewChild('reportEntry3', { read: ViewContainerRef }) entry3: ViewContainerRef;
+  @ViewChild('reportEntry4', { read: ViewContainerRef }) entry4: ViewContainerRef;
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+    private pastSessionsService: PastSessionsService, ) { }
+
+  ngOnInit() {
+    this.pastSessionsService
+      .getReports('65367')
+      .subscribe((res: Array<ActivityReport>) => {
+        // this.statsData = res[0];
+        const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(
+          SkillOverviewComponent
+        );
+        const component = this.entry.createComponent(skillOverFactory);
+
+        const component2 = this.entry2.createComponent(skillOverFactory);
+        const component3 = this.entry3.createComponent(skillOverFactory);
+        const component4 = this.entry4.createComponent(skillOverFactory);
+
+        // Iterate over each item in array
+        // res.forEach((act: ActivityReport) => {
+        // if (act.activity_type === ActivityTypes.mcq) {
+        // <benji-skill - overview > </benji-skill-overview>;
+        // component.instance.data = act;
+        // }
+        // });
+      });
+  }
 }
 
 const colors = {

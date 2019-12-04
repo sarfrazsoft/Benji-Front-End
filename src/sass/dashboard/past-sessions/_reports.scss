@@ -1,20 +1,14 @@
 benji-reports {
-  .admin-panel {
-    padding-bottom: 0px;
-    .session-panels {
-      // 100vh - topbar height - heading padding etc
-      height: calc(100vh - 90px - 52px - 53px);
-      margin-top: 20px;
-      position: relative;
-      overflow: hidden;
-      .right-panel {
-        width: calc(100vw - 260px - 30px - 230px - 50px);
-        max-width: 1050px;
-        overflow: auto;
-        .admin-panel {
-          padding-bottom: 20px;
-        }
-      }
+  padding-bottom: 0px;
+  .session-panels {
+    height: calc(100vh - 90px - 122px - 65px);
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    .right-panel {
+      width: calc(100vw - 260px - 30px - 230px - 50px);
+      max-width: 1050px;
+      overflow: auto;
     }
   }
 }
@@ -25,12 +19,16 @@ benji-reports {
   background: white;
   border-radius: 5px;
   box-shadow: $box-shadow;
-  .dashboard-heading {
-    h1 {
-      font-size: 22px;
-    }
+  .card-header {
+    color: $primary-color-darkest;
+    margin-bottom: 10px;
+    font-size: 24px;
+    border-bottom: $header-border-bottom solid $header-border-bottom-color;
+    margin: 10px 0;
+    font-weight: 600;
   }
 }
+
 .report-content {
   padding: 10px 40px;
 }
@@ -52,11 +50,6 @@ benji-reports {
 
 // used in showing brainstorm ideas and feedback answers
 .text-list {
-  // .prompt {
-  //   font-size: 28px;
-  //   margin-top: 30px;
-  //   font-weight: 600;
-  // }
   .text-list-item {
     font-size: 20px;
     margin: 25px;
@@ -64,10 +57,4 @@ benji-reports {
     padding-bottom: 3px;
     border-bottom: 1px solid #979797;
   }
-}
-
-.admin-panel .dashboard-heading {
-  // margin-bottom: 0px;
-
-  margin-bottom: 10px;
 }

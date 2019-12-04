@@ -5,15 +5,15 @@ import {
   Input,
   OnInit,
   ViewChild
-} from "@angular/core";
-import * as Chart from "chart.js";
-import { FeedbackGraphQuestion, User } from "src/app/services/backend/schema";
-import { PastSessionsService } from "src/app/services/past-sessions.service";
+} from '@angular/core';
+import * as Chart from 'chart.js';
+import { FeedbackGraphQuestion, User } from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
-  selector: "benji-question",
-  templateUrl: "./question.component.html",
-  styleUrls: ["./question.component.scss"]
+  selector: 'benji-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
@@ -24,8 +24,8 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
-  @ViewChild("chartCanvas") chartCanvas: ElementRef;
-  constructor(private pastSessionService: PastSessionsService) {}
+  @ViewChild('chartCanvas') chartCanvas: ElementRef;
+  constructor(private pastSessionService: PastSessionsService) { }
 
   ngOnInit() {
     this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
@@ -45,7 +45,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         ratingSum = ratingSum + answer.rating;
         assessments[answer.rating - 1]++;
         users[answer.rating - 1].push(
-          answer.user.first_name + " " + answer.user.last_name
+          answer.user.first_name + ' ' + answer.user.last_name
         );
         this.comboAnswers.push(answer.text);
       }
@@ -53,18 +53,18 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     this.averageRating = ratingSum / this.question.assessments.length;
     this.averageRating = Math.round(this.averageRating * 10) / 10;
 
-    this.canvas = document.getElementById("myChart");
-    this.ctx = this.chartCanvas.nativeElement.getContext("2d");
+    this.canvas = document.getElementById('myChart');
+    this.ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
-      type: "bar",
+      type: 'bar',
       data: {
         labels: this.question.labels,
         datasets: [
           {
-            label: "",
+            label: '',
             data: assessments,
             borderWidth: 1,
-            backgroundColor: "#cadafe"
+            backgroundColor: '#cadafe'
           }
         ]
       },
@@ -78,12 +78,12 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           displayColors: false,
           callbacks: {
             title: (tooltipItems, d) => {
-              let res =
-                tooltipItems[0].value === "1" ? " response" : " responses";
+              const res =
+                tooltipItems[0].value === '1' ? ' response' : ' responses';
               return tooltipItems[0].value + res;
             },
             label: (tooltipItem, d) => {
-              return "";
+              return '';
             },
             afterBody: (tooltipItems, d) => {
               return users[tooltipItems[0].index];
@@ -97,7 +97,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 display: true
               },
               ticks: {
-                fontColor: "#000",
+                fontColor: '#000',
                 fontSize: 18,
                 stepSize: 2,
                 beginAtZero: true
@@ -111,7 +111,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 display: false
               },
               ticks: {
-                fontColor: "#000",
+                fontColor: '#000',
                 fontSize: 14,
                 stepSize: 1,
                 beginAtZero: true
@@ -142,5 +142,5 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 }

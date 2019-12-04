@@ -31,11 +31,12 @@ export class DonutComponent implements OnInit, AfterViewInit {
   ctx: any;
   myChart: any;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngAfterViewInit() {
+    console.log('br');
     const data = [this.donutData.data, 100 - this.donutData.data];
 
     this.canvas = document.getElementById('myChart');
@@ -56,11 +57,7 @@ export class DonutComponent implements OnInit, AfterViewInit {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: true,
-          position: 'bottom',
-          labels: {
-            fontSize: 18
-          }
+          display: false
         },
         tooltips: {
           enabled: false
@@ -91,7 +88,7 @@ const colors = {
 };
 
 Chart.pluginService.register({
-  beforeDraw: function(chart: any) {
+  beforeDraw: function (chart: any) {
     if (chart.config.options.elements.center) {
       // Get ctx from string
       const ctx = chart.chart.ctx;

@@ -6,12 +6,20 @@
     color: $primary-color-darkest;
     padding: 0px $dash-subsection-sides-padding;
     border-bottom: $header-border-bottom solid $header-border-bottom-color;
-    margin-bottom: $margin-between-panels;
+    margin-bottom: 40px;
     h1 {
-      font-size: 38px;
+      font-size: 54px;
       margin: 10px 0;
     }
   }
+
+  .sub-header {
+    font-size: 36px;
+    color: #6c6c6c;
+    margin-bottom: 40px;
+    font-weight: 600;
+  }
+
   .subsection-container {
     padding: 0px $dash-subsection-sides-padding;
   }

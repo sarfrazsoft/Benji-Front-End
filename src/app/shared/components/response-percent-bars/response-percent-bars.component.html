@@ -26,8 +26,11 @@
                 <div class="text">{{ choice.text }}</div>
               </div>
               <div class="percentage" fxLayoutAlign="center center">
-                {{ choice.noOfResponses }}
-                {{ choice.noOfResponses === 1 ? 'response' : 'responses' }}
+                <div class="number">
+                  {{ choice.noOfResponses }}
+                </div>
+                &nbsp;
+                {{ choice.noOfResponses === 1 ? "response" : "responses" }}
               </div>
             </div>
             <div

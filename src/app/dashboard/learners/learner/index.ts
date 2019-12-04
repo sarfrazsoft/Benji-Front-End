@@ -23,6 +23,6 @@ export const LearnerComponents = [
   SkillLineChartComponent
 ];
 
-export const LearnerEntryComponents = [...LearnerReportEntryComponents];
+export const LearnerEntryComponents = [...LearnerReportEntryComponents, SkillOverviewComponent];
 
 export const LearnersProviders = [];

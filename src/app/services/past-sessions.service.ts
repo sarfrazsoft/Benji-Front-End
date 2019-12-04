@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import * as global from "src/app/globals";
-import { ActivityTypes } from "src/app/globals";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import * as global from 'src/app/globals';
+import { ActivityTypes } from 'src/app/globals';
 import {
   ActivityReport,
   BuildAPitchReport,
@@ -12,8 +12,8 @@ import {
   PitchOMaticReport,
   SessionReport,
   User
-} from "src/app/services/backend/schema";
-import { ContextService } from "src/app/services/context.service";
+} from 'src/app/services/backend/schema';
+import { ContextService } from 'src/app/services/context.service';
 
 @Injectable()
 export class PastSessionsService {
@@ -65,7 +65,7 @@ export class PastSessionsService {
       this.http
         // .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
         // replace this so that error doesn't occur
-        .get(global.apiRoot + "/tenants/users/?page=" + 1)
+        .get(global.apiRoot + '/tenants/users/?page=' + 1)
         .pipe(
           map((res: SessionReport) => {
             res = activityResult3 as SessionReport;
@@ -122,7 +122,7 @@ export class PastSessionsService {
 
   getLearners(sort: string, order: string, page: number): Observable<User> {
     // django expects page index starting from 1
-    const request = global.apiRoot + "/tenants/users/?page=" + (page + 1);
+    const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);
     return this.http.get<User>(request);
   }
 
@@ -130,7 +130,7 @@ export class PastSessionsService {
   getPastSessions(sort: string, order: string, page: number): Observable<any> {
     // replaced for testing
     // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
-    return this.http.get(global.apiRoot + "/tenants/users/?page=" + 1).pipe(
+    return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
       map(res => {
         console.log(res);
         return res;
@@ -139,7 +139,7 @@ export class PastSessionsService {
   }
 
   addLearners(emails: string) {
-    const request = global.apiRoot + "/tenants/users/";
+    const request = global.apiRoot + '/tenants/users/';
     return this.http.get<User>(request);
   }
 
@@ -156,20 +156,20 @@ export class PastSessionsService {
 
 const activityResult = {
   id: 18,
-  start_time: "2019-09-13T16:12:39.557183-04:00",
-  end_time: "2019-09-13T16:29:30.493122-04:00",
+  start_time: '2019-09-13T16:12:39.557183-04:00',
+  end_time: '2019-09-13T16:29:30.493122-04:00',
   lessonrun_code: 21484,
   joined_users: [
     {
       id: 2,
-      username: "matt",
-      first_name: "Matt",
-      last_name: "Parson",
-      email: "matt@mybenji.com",
+      username: 'matt',
+      first_name: 'Matt',
+      last_name: 'Parson',
+      email: 'matt@mybenji.com',
       verified_email: false,
-      job_title: "CEO",
-      organization_name: "Benji",
-      orggroup_name: "Sales",
+      job_title: 'CEO',
+      organization_name: 'Benji',
+      orggroup_name: 'Sales',
       organization: 1,
       orggroup: 1,
       local_admin_permission: true,
@@ -177,10 +177,10 @@ const activityResult = {
     },
     {
       id: 8,
-      username: "khan",
-      first_name: "khan",
-      last_name: "",
-      email: "",
+      username: 'khan',
+      first_name: 'khan',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -193,14 +193,14 @@ const activityResult = {
   ],
   host: {
     id: 2,
-    username: "matt",
-    first_name: "Matt",
-    last_name: "Parson",
-    email: "matt@mybenji.com",
+    username: 'matt',
+    first_name: 'Matt',
+    last_name: 'Parson',
+    email: 'matt@mybenji.com',
     verified_email: false,
-    job_title: "CEO",
-    organization_name: "Benji",
-    orggroup_name: "Sales",
+    job_title: 'CEO',
+    organization_name: 'Benji',
+    orggroup_name: 'Sales',
     organization: 1,
     orggroup: 1,
     local_admin_permission: true,
@@ -216,30 +216,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 92
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -250,16 +250,16 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 92
             }
           ],
-          average_rating: "3.50",
-          question_type: "rating_agreedisagree",
+          average_rating: '3.50',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "What I learned in this session will improve my skills.",
+            'What I learned in this session will improve my skills.',
           is_combo: true,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 529,
           pitchomaticactivity: null
         },
@@ -269,30 +269,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 93
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -303,13 +303,13 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 93
             }
           ],
-          average_rating: "5.00",
-          question_type: "rating_agreedisagree",
-          question_text: "I found this session fun",
+          average_rating: '5.00',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I found this session fun',
           is_combo: true,
           combo_text: null,
           feedbackactivity: 529,
@@ -317,13 +317,13 @@ const activityResult = {
         }
       ],
       titlecomponent: {
-        title: "Please leave some feedback for us!",
-        title_image: "emoji://memo",
+        title: 'Please leave some feedback for us!',
+        title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 526,
@@ -334,30 +334,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 89
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -368,15 +368,15 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 89
             }
           ],
-          average_rating: "5.00",
-          question_type: "rating_agreedisagree",
-          question_text: "I can evaluate the quality of a pitch.",
+          average_rating: '5.00',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 526,
           pitchomaticactivity: null
         },
@@ -386,30 +386,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 90
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -420,14 +420,14 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 90
             }
           ],
-          average_rating: "5.00",
-          question_type: "rating_agreedisagree",
+          average_rating: '5.00',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "I can deliver a clear, concise, and compelling pitch.",
+            'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 526,
@@ -439,30 +439,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 91
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -473,13 +473,13 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 91
             }
           ],
-          average_rating: "5.00",
-          question_type: "rating_agreedisagree",
-          question_text: "I can adjust my pitch to fit different situations.",
+          average_rating: '5.00',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 526,
@@ -487,54 +487,54 @@ const activityResult = {
         }
       ],
       titlecomponent: {
-        title: "What about now?",
-        title_image: "emoji://memo",
-        screen_instructions: "Fill out the form on your phone",
+        title: 'What about now?',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
         participant_instructions:
-          "How do you feel about your pitching skills now?"
+          'How do you feel about your pitching skills now?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 514,
       question: {
         id: 74,
-        question: "A pitch must be able to answer...",
+        question: 'A pitch must be able to answer...',
         mcqchoice_set: [
           {
             id: 284,
             order: 4,
-            choice_text: "All of the above ",
+            choice_text: 'All of the above ',
             is_correct: true,
-            explanation: "Correct"
+            explanation: 'Correct'
           },
           {
             id: 283,
             order: 3,
-            choice_text: "What impact your solution has",
+            choice_text: 'What impact your solution has',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 282,
             order: 2,
-            choice_text: "How you solve that problem",
+            choice_text: 'How you solve that problem',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 281,
             order: 1,
-            choice_text: "What problem you help with",
+            choice_text: 'What problem you help with',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 280,
             order: 0,
-            choice_text: "Who you’re helping",
+            choice_text: 'Who you’re helping',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           }
         ]
       },
@@ -542,14 +542,14 @@ const activityResult = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -560,10 +560,10 @@ const activityResult = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -576,41 +576,41 @@ const activityResult = {
           answer: 283
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 513,
       question: {
         id: 73,
-        question: "An elevator pitch should last how long?",
+        question: 'An elevator pitch should last how long?',
         mcqchoice_set: [
           {
             id: 279,
             order: 3,
-            choice_text: "However long is necessary",
+            choice_text: 'However long is necessary',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 278,
             order: 2,
-            choice_text: "30-60 seconds",
+            choice_text: '30-60 seconds',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 277,
             order: 1,
-            choice_text: "20-30 seconds",
+            choice_text: '20-30 seconds',
             is_correct: true,
-            explanation: "Yup!"
+            explanation: 'Yup!'
           },
           {
             id: 276,
             order: 0,
-            choice_text: "10-15 seconds",
+            choice_text: '10-15 seconds',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           }
         ]
       },
@@ -618,14 +618,14 @@ const activityResult = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -636,10 +636,10 @@ const activityResult = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -652,27 +652,27 @@ const activityResult = {
           answer: 277
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 512,
       question: {
         id: 72,
-        question: "True or false: an elevator pitch is a sales pitch.",
+        question: 'True or false: an elevator pitch is a sales pitch.',
         mcqchoice_set: [
           {
             id: 275,
             order: 1,
-            choice_text: "False",
+            choice_text: 'False',
             is_correct: true,
-            explanation: "Correct"
+            explanation: 'Correct'
           },
           {
             id: 274,
             order: 0,
-            choice_text: "True",
+            choice_text: 'True',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           }
         ]
       },
@@ -680,14 +680,14 @@ const activityResult = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -698,10 +698,10 @@ const activityResult = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -714,41 +714,41 @@ const activityResult = {
           answer: 275
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 511,
       question: {
         id: 71,
-        question: "How can you make your pitch more memorable?",
+        question: 'How can you make your pitch more memorable?',
         mcqchoice_set: [
           {
             id: 273,
             order: 3,
-            choice_text: "All of the above",
+            choice_text: 'All of the above',
             is_correct: true,
-            explanation: "Correct!"
+            explanation: 'Correct!'
           },
           {
             id: 272,
             order: 2,
-            choice_text: "Make it short",
+            choice_text: 'Make it short',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 271,
             order: 1,
-            choice_text: "Make it surprising",
+            choice_text: 'Make it surprising',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 270,
             order: 0,
-            choice_text: "Make it relatable",
+            choice_text: 'Make it relatable',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           }
         ]
       },
@@ -756,14 +756,14 @@ const activityResult = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -774,10 +774,10 @@ const activityResult = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -790,34 +790,34 @@ const activityResult = {
           answer: 273
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 510,
       question: {
         id: 70,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 269,
             order: 2,
-            choice_text: "Compelling, charismatic, clear",
+            choice_text: 'Compelling, charismatic, clear',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 268,
             order: 1,
-            choice_text: "Clear, catchy, concise",
+            choice_text: 'Clear, catchy, concise',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 267,
             order: 0,
-            choice_text: "Clear, compelling, concise",
+            choice_text: 'Clear, compelling, concise',
             is_correct: true,
-            explanation: "Correct!"
+            explanation: 'Correct!'
           }
         ]
       },
@@ -825,14 +825,14 @@ const activityResult = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -843,10 +843,10 @@ const activityResult = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -859,19 +859,19 @@ const activityResult = {
           answer: 269
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       winning_user: {
         id: 2,
-        username: "matt",
-        first_name: "Matt",
-        last_name: "Parson",
-        email: "matt@mybenji.com",
+        username: 'matt',
+        first_name: 'Matt',
+        last_name: 'Parson',
+        email: 'matt@mybenji.com',
         verified_email: false,
-        job_title: "CEO",
-        organization_name: "Benji",
-        orggroup_name: "Sales",
+        job_title: 'CEO',
+        organization_name: 'Benji',
+        orggroup_name: 'Sales',
         organization: 1,
         orggroup: 1,
         local_admin_permission: true,
@@ -881,39 +881,39 @@ const activityResult = {
         {
           id: 26,
           order: 0,
-          label: " At",
-          temp_text: "company name",
-          help_text: " What company are you pitching?"
+          label: ' At',
+          temp_text: 'company name',
+          help_text: ' What company are you pitching?'
         },
         {
           id: 27,
           order: 1,
-          label: "we help",
-          temp_text: "the audience",
+          label: 'we help',
+          temp_text: 'the audience',
           help_text:
-            " Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)"
+            ' Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)'
         },
         {
           id: 28,
           order: 2,
-          label: "with",
-          temp_text: "the problem",
+          label: 'with',
+          temp_text: 'the problem',
           help_text:
-            "What needs, challenges and frustrations do your customers have?"
+            'What needs, challenges and frustrations do your customers have?'
         },
         {
           id: 29,
           order: 3,
-          label: "by",
-          temp_text: "the solution",
-          help_text: "How do you solve your target customer’s problem?"
+          label: 'by',
+          temp_text: 'the solution',
+          help_text: 'How do you solve your target customer’s problem?'
         },
         {
           id: 30,
           order: 4,
-          label: "because",
-          temp_text: "the why",
-          help_text: "Why is this problem worth solving?"
+          label: 'because',
+          temp_text: 'the why',
+          help_text: 'Why is this problem worth solving?'
         }
       ],
       pitch_summaries: [
@@ -922,23 +922,23 @@ const activityResult = {
           buildapitchentry_set: [
             {
               buildapitchblank: 26,
-              value: "a"
+              value: 'a'
             },
             {
               buildapitchblank: 27,
-              value: "b"
+              value: 'b'
             },
             {
               buildapitchblank: 28,
-              value: "c"
+              value: 'c'
             },
             {
               buildapitchblank: 29,
-              value: "d"
+              value: 'd'
             },
             {
               buildapitchblank: 30,
-              value: "e"
+              value: 'e'
             }
           ],
           votes: 2
@@ -948,29 +948,29 @@ const activityResult = {
           buildapitchentry_set: [
             {
               buildapitchblank: 26,
-              value: "f"
+              value: 'f'
             },
             {
               buildapitchblank: 27,
-              value: "g"
+              value: 'g'
             },
             {
               buildapitchblank: 28,
-              value: "h"
+              value: 'h'
             },
             {
               buildapitchblank: 29,
-              value: "i"
+              value: 'i'
             },
             {
               buildapitchblank: 30,
-              value: "j"
+              value: 'j'
             }
           ],
           votes: 0
         }
       ],
-      activity_type: "BuildAPitchActivity"
+      activity_type: 'BuildAPitchActivity'
     },
     {
       id: 506,
@@ -981,30 +981,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 83
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -1015,15 +1015,15 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 83
             }
           ],
-          average_rating: "3.00",
-          question_type: "rating_agreedisagree",
-          question_text: "I can evaluate the quality of a pitch.",
+          average_rating: '3.00',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 506,
           pitchomaticactivity: null
         },
@@ -1033,30 +1033,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 84
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -1067,14 +1067,14 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 84
             }
           ],
-          average_rating: "3.50",
-          question_type: "rating_agreedisagree",
+          average_rating: '3.50',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "I can deliver a clear, concise, and compelling pitch.",
+            'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 506,
@@ -1086,30 +1086,30 @@ const activityResult = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 85
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -1120,13 +1120,13 @@ const activityResult = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 85
             }
           ],
-          average_rating: "3.00",
-          question_type: "rating_agreedisagree",
-          question_text: "I can adjust my pitch to fit different situations.",
+          average_rating: '3.00',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 506,
@@ -1134,133 +1134,133 @@ const activityResult = {
         }
       ],
       titlecomponent: {
-        title: "Before we begin",
-        title_image: "emoji://memo",
-        screen_instructions: "Fill out the form on your phone",
+        title: 'Before we begin',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
         participant_instructions:
-          "How do you feel about your pitching skills now?"
+          'How do you feel about your pitching skills now?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 528,
       length: 43.724356,
-      activity_type: "LobbyActivity"
+      activity_type: 'LobbyActivity'
     },
     {
       id: 525,
       length: 9.964878,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
-      instructions: "Generate your pitches, brainstorm, pitch and then vote!",
+      instructions: 'Generate your pitches, brainstorm, pitch and then vote!',
       pitchomaticblank_set: [
         {
           id: 19,
           order: 0,
-          label: "You are pitching:",
+          label: 'You are pitching:',
           pitchomaticblankchoice_set: [
             {
               id: 138,
-              value: "Coca Cola"
+              value: 'Coca Cola'
             },
             {
               id: 139,
-              value: "SpaceX"
+              value: 'SpaceX'
             },
             {
               id: 140,
-              value: "Tesla"
+              value: 'Tesla'
             },
             {
               id: 141,
-              value: "Disney"
+              value: 'Disney'
             },
             {
               id: 142,
-              value: "Apple"
+              value: 'Apple'
             },
             {
               id: 143,
-              value: "McDonalds"
+              value: 'McDonalds'
             },
             {
               id: 144,
-              value: "Netflix"
+              value: 'Netflix'
             },
             {
               id: 145,
-              value: "WestJet"
+              value: 'WestJet'
             },
             {
               id: 146,
-              value: "IKEA"
+              value: 'IKEA'
             },
             {
               id: 147,
-              value: "Walmart"
+              value: 'Walmart'
             },
             {
               id: 148,
-              value: "Facebook"
+              value: 'Facebook'
             },
             {
               id: 149,
-              value: "NHL"
+              value: 'NHL'
             }
           ]
         },
         {
           id: 20,
           order: 1,
-          label: "You are pitching to:",
+          label: 'You are pitching to:',
           pitchomaticblankchoice_set: [
             {
               id: 150,
-              value: "a CTO"
+              value: 'a CTO'
             },
             {
               id: 151,
-              value: "a venture capitalist"
+              value: 'a venture capitalist'
             },
             {
               id: 152,
-              value: "a 5 year old"
+              value: 'a 5 year old'
             },
             {
               id: 153,
-              value: "an 86 year old grandmother"
+              value: 'an 86 year old grandmother'
             },
             {
               id: 154,
-              value: "a group of college students"
+              value: 'a group of college students'
             },
             {
               id: 155,
-              value: "academics at a conference"
+              value: 'academics at a conference'
             },
             {
               id: 156,
-              value: "an elevator full of random people"
+              value: 'an elevator full of random people'
             }
           ]
         },
         {
           id: 21,
           order: 2,
-          label: "And the technique you need to use is:",
+          label: 'And the technique you need to use is:',
           pitchomaticblankchoice_set: [
             {
               id: 157,
-              value: "a story"
+              value: 'a story'
             },
             {
               id: 158,
-              value: "a surprising fact"
+              value: 'a surprising fact'
             },
             {
               id: 159,
-              value: "an analogy"
+              value: 'an analogy'
             }
           ]
         }
@@ -1268,22 +1268,22 @@ const activityResult = {
       feedbackquestion_set: [
         {
           id: 86,
-          question_type: "rating_agreedisagree",
-          question_text: "The pitch was compelling",
+          question_type: 'rating_agreedisagree',
+          question_text: 'The pitch was compelling',
           is_combo: false,
           combo_text: null
         },
         {
           id: 87,
-          question_type: "rating_agreedisagree",
-          question_text: "The pitch answered all the essential questions",
+          question_type: 'rating_agreedisagree',
+          question_text: 'The pitch answered all the essential questions',
           is_combo: false,
           combo_text: null
         },
         {
           id: 88,
-          question_type: "rating_agreedisagree",
-          question_text: "Overall, the pitch was excellent",
+          question_type: 'rating_agreedisagree',
+          question_text: 'Overall, the pitch was excellent',
           is_combo: true,
           combo_text: null
         }
@@ -1292,20 +1292,20 @@ const activityResult = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
             participant_permission: true
           },
-          pitch_prep_text: "Matt wrote this pitch as a test",
+          pitch_prep_text: 'Matt wrote this pitch as a test',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -1327,29 +1327,29 @@ const activityResult = {
               user: 8,
               feedbackquestion: 86,
               rating_answer: 4,
-              text_answer: "4"
+              text_answer: '4'
             },
             {
               user: 8,
               feedbackquestion: 87,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 8,
               feedbackquestion: 88,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             }
           ]
         },
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -1359,7 +1359,7 @@ const activityResult = {
             local_admin_permission: false,
             participant_permission: true
           },
-          pitch_prep_text: "Mahin wrote these pitch notes",
+          pitch_prep_text: 'Mahin wrote these pitch notes',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -1381,109 +1381,109 @@ const activityResult = {
               user: 2,
               feedbackquestion: 86,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 87,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 88,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             }
           ]
         }
       ],
-      activity_type: "PitchoMaticActivity"
+      activity_type: 'PitchoMaticActivity'
     },
     {
       id: 523,
       length: 16.457316,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 522,
       length: 8.18005,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 521,
       length: 54.268166,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 520,
       length: 3.13295,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 519,
       length: 8.690269,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 518,
       length: 3.369051,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 517,
       length: 4.980677,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 516,
       length: 4.625612,
-      activity_type: "PairGroupingActivity"
+      activity_type: 'PairGroupingActivity'
     },
     {
       id: 515,
       length: 5.635346,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 509,
       length: 42.874684,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 507,
       length: 3.720349,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 505,
       length: 4.958442,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 527,
       length: null,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     }
   ]
 };
 
 const activityResult2 = {
   id: 13,
-  start_time: "2019-10-21T15:39:23.219970-04:00",
-  end_time: "2019-10-21T16:11:11.667263-04:00",
+  start_time: '2019-10-21T15:39:23.219970-04:00',
+  end_time: '2019-10-21T16:11:11.667263-04:00',
   lessonrun_code: 73929,
   joined_users: [
     {
       id: 2,
-      username: "matt",
-      first_name: "Matt",
-      last_name: "Parson",
-      email: "matt@mybenji.com",
+      username: 'matt',
+      first_name: 'Matt',
+      last_name: 'Parson',
+      email: 'matt@mybenji.com',
       verified_email: false,
-      job_title: "CEO",
-      organization_name: "Benji",
-      orggroup_name: "Sales",
+      job_title: 'CEO',
+      organization_name: 'Benji',
+      orggroup_name: 'Sales',
       organization: 1,
       orggroup: 1,
       local_admin_permission: true,
@@ -1491,10 +1491,10 @@ const activityResult2 = {
     },
     {
       id: 8,
-      username: "khan",
-      first_name: "khan",
-      last_name: "",
-      email: "",
+      username: 'khan',
+      first_name: 'khan',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -1507,14 +1507,14 @@ const activityResult2 = {
   ],
   host: {
     id: 2,
-    username: "matt",
-    first_name: "Matt",
-    last_name: "Parson",
-    email: "matt@mybenji.com",
+    username: 'matt',
+    first_name: 'Matt',
+    last_name: 'Parson',
+    email: 'matt@mybenji.com',
     verified_email: false,
-    job_title: "CEO",
-    organization_name: "Benji",
-    orggroup_name: "Sales",
+    job_title: 'CEO',
+    organization_name: 'Benji',
+    orggroup_name: 'Sales',
     organization: 1,
     orggroup: 1,
     local_admin_permission: true,
@@ -1524,12 +1524,12 @@ const activityResult2 = {
     {
       id: 396,
       length: 452.156838,
-      activity_type: "LobbyActivity"
+      activity_type: 'LobbyActivity'
     },
     {
       id: 373,
       length: 1300.15638,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 374,
@@ -1540,30 +1540,30 @@ const activityResult2 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 61
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -1574,15 +1574,15 @@ const activityResult2 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 61
             }
           ],
           average_rating: null,
-          question_type: "rating_agreedisagree",
-          question_text: "I can evaluate the quality of a pitch.",
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 374,
           pitchomaticactivity: null
         },
@@ -1592,30 +1592,30 @@ const activityResult2 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 62
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -1626,14 +1626,14 @@ const activityResult2 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 62
             }
           ],
           average_rating: null,
-          question_type: "rating_agreedisagree",
+          question_type: 'rating_agreedisagree',
           question_text:
-            "I can deliver a clear, concise, and compelling pitch.",
+            'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 374,
@@ -1645,30 +1645,30 @@ const activityResult2 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 63
             },
             {
               user: {
                 id: 8,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -1679,13 +1679,13 @@ const activityResult2 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 63
             }
           ],
           average_rating: null,
-          question_type: "rating_agreedisagree",
-          question_text: "I can adjust my pitch to fit different situations.",
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 374,
@@ -1693,30 +1693,30 @@ const activityResult2 = {
         }
       ],
       titlecomponent: {
-        title: "Before we begin",
-        title_image: "emoji://memo",
-        screen_instructions: "Fill out the form on your phone",
+        title: 'Before we begin',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
         participant_instructions:
-          "How do you feel about your pitching skills now?"
+          'How do you feel about your pitching skills now?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 375,
       length: 11.813128,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       winning_user: {
         id: 2,
-        username: "matt",
-        first_name: "Matt",
-        last_name: "Parson",
-        email: "matt@mybenji.com",
+        username: 'matt',
+        first_name: 'Matt',
+        last_name: 'Parson',
+        email: 'matt@mybenji.com',
         verified_email: false,
-        job_title: "CEO",
-        organization_name: "Benji",
-        orggroup_name: "Sales",
+        job_title: 'CEO',
+        organization_name: 'Benji',
+        orggroup_name: 'Sales',
         organization: 1,
         orggroup: 1,
         local_admin_permission: true,
@@ -1726,39 +1726,39 @@ const activityResult2 = {
         {
           id: 26,
           order: 0,
-          label: " At",
-          temp_text: "company name",
-          help_text: " What company are you pitching?"
+          label: ' At',
+          temp_text: 'company name',
+          help_text: ' What company are you pitching?'
         },
         {
           id: 27,
           order: 1,
-          label: "we help",
-          temp_text: "the audience",
+          label: 'we help',
+          temp_text: 'the audience',
           help_text:
-            " Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)"
+            ' Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)'
         },
         {
           id: 28,
           order: 2,
-          label: "with",
-          temp_text: "the problem",
+          label: 'with',
+          temp_text: 'the problem',
           help_text:
-            "What needs, challenges and frustrations do your customers have?"
+            'What needs, challenges and frustrations do your customers have?'
         },
         {
           id: 29,
           order: 3,
-          label: "by",
-          temp_text: "the solution",
-          help_text: "How do you solve your target customer’s problem?"
+          label: 'by',
+          temp_text: 'the solution',
+          help_text: 'How do you solve your target customer’s problem?'
         },
         {
           id: 30,
           order: 4,
-          label: "because",
-          temp_text: "the why",
-          help_text: "Why is this problem worth solving?"
+          label: 'because',
+          temp_text: 'the why',
+          help_text: 'Why is this problem worth solving?'
         }
       ],
       pitch_summaries: [
@@ -1767,23 +1767,23 @@ const activityResult2 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 26,
-              value: "a"
+              value: 'a'
             },
             {
               buildapitchblank: 27,
-              value: "b"
+              value: 'b'
             },
             {
               buildapitchblank: 28,
-              value: "c"
+              value: 'c'
             },
             {
               buildapitchblank: 29,
-              value: "d"
+              value: 'd'
             },
             {
               buildapitchblank: 30,
-              value: "e"
+              value: 'e'
             }
           ],
           votes: 2
@@ -1793,61 +1793,61 @@ const activityResult2 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 26,
-              value: "f"
+              value: 'f'
             },
             {
               buildapitchblank: 27,
-              value: "g"
+              value: 'g'
             },
             {
               buildapitchblank: 28,
-              value: "h"
+              value: 'h'
             },
             {
               buildapitchblank: 29,
-              value: "i"
+              value: 'i'
             },
             {
               buildapitchblank: 30,
-              value: "j"
+              value: 'j'
             }
           ],
           votes: 0
         }
       ],
-      activity_type: "BuildAPitchActivity"
+      activity_type: 'BuildAPitchActivity'
     },
     {
       id: 377,
       length: 1.989839,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 378,
       question: {
         id: 53,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 201,
             order: 0,
-            choice_text: "Clear, compelling, concise",
+            choice_text: 'Clear, compelling, concise',
             is_correct: true,
-            explanation: "Correct!"
+            explanation: 'Correct!'
           },
           {
             id: 202,
             order: 1,
-            choice_text: "Clear, catchy, concise",
+            choice_text: 'Clear, catchy, concise',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 203,
             order: 2,
-            choice_text: "Compelling, charismatic, clear",
+            choice_text: 'Compelling, charismatic, clear',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           }
         ]
       },
@@ -1855,14 +1855,14 @@ const activityResult2 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -1873,10 +1873,10 @@ const activityResult2 = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -1889,41 +1889,41 @@ const activityResult2 = {
           answer: 201
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 379,
       question: {
         id: 54,
-        question: "How can you make your pitch more memorable?",
+        question: 'How can you make your pitch more memorable?',
         mcqchoice_set: [
           {
             id: 204,
             order: 0,
-            choice_text: "Make it relatable",
+            choice_text: 'Make it relatable',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 205,
             order: 1,
-            choice_text: "Make it surprising",
+            choice_text: 'Make it surprising',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 206,
             order: 2,
-            choice_text: "Make it short",
+            choice_text: 'Make it short',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 207,
             order: 3,
-            choice_text: "All of the above",
+            choice_text: 'All of the above',
             is_correct: true,
-            explanation: "Correct!"
+            explanation: 'Correct!'
           }
         ]
       },
@@ -1931,14 +1931,14 @@ const activityResult2 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -1949,10 +1949,10 @@ const activityResult2 = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -1965,27 +1965,27 @@ const activityResult2 = {
           answer: 206
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 380,
       question: {
         id: 55,
-        question: "True or false: an elevator pitch is a sales pitch.",
+        question: 'True or false: an elevator pitch is a sales pitch.',
         mcqchoice_set: [
           {
             id: 208,
             order: 0,
-            choice_text: "True",
+            choice_text: 'True',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 209,
             order: 1,
-            choice_text: "False",
+            choice_text: 'False',
             is_correct: true,
-            explanation: "Correct"
+            explanation: 'Correct'
           }
         ]
       },
@@ -1993,14 +1993,14 @@ const activityResult2 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -2011,10 +2011,10 @@ const activityResult2 = {
         {
           user: {
             id: 8,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -2027,247 +2027,247 @@ const activityResult2 = {
           answer: 208
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 381,
       question: {
         id: 56,
-        question: "An elevator pitch should last how long?",
+        question: 'An elevator pitch should last how long?',
         mcqchoice_set: [
           {
             id: 210,
             order: 0,
-            choice_text: "10-15 seconds",
+            choice_text: '10-15 seconds',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 211,
             order: 1,
-            choice_text: "20-30 seconds",
+            choice_text: '20-30 seconds',
             is_correct: true,
-            explanation: "Yup!"
+            explanation: 'Yup!'
           },
           {
             id: 212,
             order: 2,
-            choice_text: "30-60 seconds",
+            choice_text: '30-60 seconds',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 213,
             order: 3,
-            choice_text: "However long is necessary",
+            choice_text: 'However long is necessary',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           }
         ]
       },
       mcqactivityuseranswer_set: [],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 382,
       question: {
         id: 57,
-        question: "A pitch must be able to answer...",
+        question: 'A pitch must be able to answer...',
         mcqchoice_set: [
           {
             id: 214,
             order: 0,
-            choice_text: "Who you’re helping",
+            choice_text: 'Who you’re helping',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 215,
             order: 1,
-            choice_text: "What problem you help with",
+            choice_text: 'What problem you help with',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 216,
             order: 2,
-            choice_text: "How you solve that problem",
+            choice_text: 'How you solve that problem',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 217,
             order: 3,
-            choice_text: "What impact your solution has",
+            choice_text: 'What impact your solution has',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 218,
             order: 4,
-            choice_text: "All of the above ",
+            choice_text: 'All of the above ',
             is_correct: true,
-            explanation: "Correct"
+            explanation: 'Correct'
           }
         ]
       },
       mcqactivityuseranswer_set: [],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 383,
       length: 2.19814,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 384,
       length: 6.768389,
-      activity_type: "PairGroupingActivity"
+      activity_type: 'PairGroupingActivity'
     },
     {
       id: 385,
       length: 2.002256,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 386,
       length: 3.18858,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 387,
       length: 2.356988,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 388,
       length: 6.456457,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 389,
       length: 4.09643,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 390,
       length: 7.67513,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 391,
       length: 2.288743,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
-      instructions: "Generate your pitches, brainstorm, pitch and then vote!",
+      instructions: 'Generate your pitches, brainstorm, pitch and then vote!',
       pitchomaticblank_set: [
         {
           id: 13,
           order: 0,
-          label: "You are pitching:",
+          label: 'You are pitching:',
           pitchomaticblankchoice_set: [
             {
               id: 89,
-              value: "Coca Cola"
+              value: 'Coca Cola'
             },
             {
               id: 90,
-              value: "SpaceX"
+              value: 'SpaceX'
             },
             {
               id: 91,
-              value: "Tesla"
+              value: 'Tesla'
             },
             {
               id: 92,
-              value: "Disney"
+              value: 'Disney'
             },
             {
               id: 93,
-              value: "Apple"
+              value: 'Apple'
             },
             {
               id: 94,
-              value: "McDonalds"
+              value: 'McDonalds'
             },
             {
               id: 95,
-              value: "Netflix"
+              value: 'Netflix'
             },
             {
               id: 96,
-              value: "WestJet"
+              value: 'WestJet'
             },
             {
               id: 97,
-              value: "IKEA"
+              value: 'IKEA'
             },
             {
               id: 98,
-              value: "Walmart"
+              value: 'Walmart'
             },
             {
               id: 99,
-              value: "Facebook"
+              value: 'Facebook'
             },
             {
               id: 100,
-              value: "NHL"
+              value: 'NHL'
             }
           ]
         },
         {
           id: 14,
           order: 1,
-          label: "You are pitching to:",
+          label: 'You are pitching to:',
           pitchomaticblankchoice_set: [
             {
               id: 101,
-              value: "a CTO"
+              value: 'a CTO'
             },
             {
               id: 102,
-              value: "a venture capitalist"
+              value: 'a venture capitalist'
             },
             {
               id: 103,
-              value: "a 5 year old"
+              value: 'a 5 year old'
             },
             {
               id: 104,
-              value: "an 86 year old grandmother"
+              value: 'an 86 year old grandmother'
             },
             {
               id: 105,
-              value: "a group of college students"
+              value: 'a group of college students'
             },
             {
               id: 106,
-              value: "academics at a conference"
+              value: 'academics at a conference'
             },
             {
               id: 107,
-              value: "an elevator full of random people"
+              value: 'an elevator full of random people'
             }
           ]
         },
         {
           id: 15,
           order: 2,
-          label: "And the technique you need to use is:",
+          label: 'And the technique you need to use is:',
           pitchomaticblankchoice_set: [
             {
               id: 108,
-              value: "a story"
+              value: 'a story'
             },
             {
               id: 109,
-              value: "a surprising fact"
+              value: 'a surprising fact'
             },
             {
               id: 110,
-              value: "an analogy"
+              value: 'an analogy'
             }
           ]
         }
@@ -2275,22 +2275,22 @@ const activityResult2 = {
       feedbackquestion_set: [
         {
           id: 64,
-          question_type: "rating_agreedisagree",
-          question_text: "The pitch was compelling",
+          question_type: 'rating_agreedisagree',
+          question_text: 'The pitch was compelling',
           is_combo: false,
           combo_text: null
         },
         {
           id: 65,
-          question_type: "rating_agreedisagree",
-          question_text: "The pitch answered all the essential questions",
+          question_type: 'rating_agreedisagree',
+          question_text: 'The pitch answered all the essential questions',
           is_combo: false,
           combo_text: null
         },
         {
           id: 66,
-          question_type: "rating_agreedisagree",
-          question_text: "Overall, the pitch was excellent",
+          question_type: 'rating_agreedisagree',
+          question_text: 'Overall, the pitch was excellent',
           is_combo: true,
           combo_text: null
         }
@@ -2299,14 +2299,14 @@ const activityResult2 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -2334,29 +2334,29 @@ const activityResult2 = {
               user: 8,
               feedbackquestion: 64,
               rating_answer: 4,
-              text_answer: "4"
+              text_answer: '4'
             },
             {
               user: 8,
               feedbackquestion: 65,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 8,
               feedbackquestion: 66,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             }
           ]
         },
         {
           user: {
             id: 7,
-            username: "khan",
-            first_name: "khan",
-            last_name: "",
-            email: "",
+            username: 'khan',
+            first_name: 'khan',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -2388,29 +2388,29 @@ const activityResult2 = {
               user: 2,
               feedbackquestion: 64,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 65,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 66,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             }
           ]
         }
       ],
-      activity_type: "PitchoMaticActivity"
+      activity_type: 'PitchoMaticActivity'
     },
     {
       id: 393,
       length: 8.633549,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 394,
@@ -2419,10 +2419,10 @@ const activityResult2 = {
           id: 67,
           feedbackuseranswer_set: [],
           average_rating: null,
-          question_type: "rating_agreedisagree",
-          question_text: "I can evaluate the quality of a pitch.",
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 394,
           pitchomaticactivity: null
         },
@@ -2430,9 +2430,9 @@ const activityResult2 = {
           id: 68,
           feedbackuseranswer_set: [],
           average_rating: null,
-          question_type: "rating_agreedisagree",
+          question_type: 'rating_agreedisagree',
           question_text:
-            "I can deliver a clear, concise, and compelling pitch.",
+            'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 394,
@@ -2442,8 +2442,8 @@ const activityResult2 = {
           id: 69,
           feedbackuseranswer_set: [],
           average_rating: null,
-          question_type: "rating_agreedisagree",
-          question_text: "I can adjust my pitch to fit different situations.",
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 394,
@@ -2451,18 +2451,18 @@ const activityResult2 = {
         }
       ],
       titlecomponent: {
-        title: "What about now?",
-        title_image: "emoji://memo",
-        screen_instructions: "Fill out the form on your phone",
+        title: 'What about now?',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
         participant_instructions:
-          "How do you feel about your pitching skills now?"
+          'How do you feel about your pitching skills now?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 395,
       length: 1.909211,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 397,
@@ -2473,30 +2473,30 @@ const activityResult2 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 70
             },
             {
               user: {
                 id: 7,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2507,16 +2507,16 @@ const activityResult2 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 70
             }
           ],
-          average_rating: "4.50",
-          question_type: "rating_agreedisagree",
+          average_rating: '4.50',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "What I learned in this session will improve my skills.",
+            'What I learned in this session will improve my skills.',
           is_combo: true,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 397,
           pitchomaticactivity: null
         },
@@ -2526,30 +2526,30 @@ const activityResult2 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 71
             },
             {
               user: {
                 id: 7,
-                username: "khan",
-                first_name: "khan",
-                last_name: "",
-                email: "",
+                username: 'khan',
+                first_name: 'khan',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2560,47 +2560,47 @@ const activityResult2 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 71
             }
           ],
-          average_rating: "5.00",
-          question_type: "rating_agreedisagree",
-          question_text: "I found this session fun",
+          average_rating: '5.00',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I found this session fun',
           is_combo: true,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 397,
           pitchomaticactivity: null
         }
       ],
       titlecomponent: {
-        title: "Please leave some feedback for us!",
-        title_image: "emoji://memo",
+        title: 'Please leave some feedback for us!',
+        title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     }
   ]
 };
 
 const activityResult3 = {
   id: 3,
-  start_time: "2019-10-24T09:22:22.302331-04:00",
-  end_time: "2019-10-24T09:48:46.968523-04:00",
+  start_time: '2019-10-24T09:22:22.302331-04:00',
+  end_time: '2019-10-24T09:48:46.968523-04:00',
   lessonrun_code: 8269,
   joined_users: [
     {
       id: 2,
-      username: "matt",
-      first_name: "Matt",
-      last_name: "Parson",
-      email: "matt@mybenji.com",
+      username: 'matt',
+      first_name: 'Matt',
+      last_name: 'Parson',
+      email: 'matt@mybenji.com',
       verified_email: false,
-      job_title: "CEO",
-      organization_name: "Benji",
-      orggroup_name: "Sales",
+      job_title: 'CEO',
+      organization_name: 'Benji',
+      orggroup_name: 'Sales',
       organization: 1,
       orggroup: 1,
       local_admin_permission: true,
@@ -2608,10 +2608,10 @@ const activityResult3 = {
     },
     {
       id: 6,
-      username: "khana",
-      first_name: "Mahin",
-      last_name: "Khan",
-      email: "",
+      username: 'khana',
+      first_name: 'Mahin',
+      last_name: 'Khan',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2623,10 +2623,10 @@ const activityResult3 = {
     },
     {
       id: 7,
-      username: "abdullah",
-      first_name: "Abdullah",
-      last_name: "",
-      email: "",
+      username: 'abdullah',
+      first_name: 'Abdullah',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2638,10 +2638,10 @@ const activityResult3 = {
     },
     {
       id: 8,
-      username: "jim",
-      first_name: "Jim",
-      last_name: "",
-      email: "",
+      username: 'jim',
+      first_name: 'Jim',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2653,14 +2653,14 @@ const activityResult3 = {
     },
     {
       id: 9,
-      username: "matt",
-      first_name: "Natasia",
-      last_name: "",
-      email: "matt@mybenji.com",
+      username: 'matt',
+      first_name: 'Natasia',
+      last_name: '',
+      email: 'matt@mybenji.com',
       verified_email: false,
-      job_title: "CEO",
-      organization_name: "Benji",
-      orggroup_name: "Sales",
+      job_title: 'CEO',
+      organization_name: 'Benji',
+      orggroup_name: 'Sales',
       organization: 1,
       orggroup: 1,
       local_admin_permission: true,
@@ -2668,10 +2668,10 @@ const activityResult3 = {
     },
     {
       id: 10,
-      username: "khana",
-      first_name: "Jhosh",
-      last_name: "",
-      email: "",
+      username: 'khana',
+      first_name: 'Jhosh',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2683,10 +2683,10 @@ const activityResult3 = {
     },
     {
       id: 11,
-      username: "patrick",
-      first_name: "Patrick",
-      last_name: "",
-      email: "",
+      username: 'patrick',
+      first_name: 'Patrick',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2698,10 +2698,10 @@ const activityResult3 = {
     },
     {
       id: 12,
-      username: "jhon",
-      first_name: "Jhon",
-      last_name: "",
-      email: "",
+      username: 'jhon',
+      first_name: 'Jhon',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2713,10 +2713,10 @@ const activityResult3 = {
     },
     {
       id: 13,
-      username: "medeena",
-      first_name: "Medeena",
-      last_name: "",
-      email: "",
+      username: 'medeena',
+      first_name: 'Medeena',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2728,10 +2728,10 @@ const activityResult3 = {
     },
     {
       id: 14,
-      username: "brrr",
-      first_name: "1975",
-      last_name: "",
-      email: "",
+      username: 'brrr',
+      first_name: '1975',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2743,10 +2743,10 @@ const activityResult3 = {
     },
     {
       id: 15,
-      username: "jhonwash",
-      first_name: "John Wash",
-      last_name: "",
-      email: "",
+      username: 'jhonwash',
+      first_name: 'John Wash',
+      last_name: '',
+      email: '',
       verified_email: false,
       job_title: null,
       organization_name: null,
@@ -2759,14 +2759,14 @@ const activityResult3 = {
   ],
   host: {
     id: 2,
-    username: "matt",
-    first_name: "Matt",
-    last_name: "Parson",
-    email: "matt@mybenji.com",
+    username: 'matt',
+    first_name: 'Matt',
+    last_name: 'Parson',
+    email: 'matt@mybenji.com',
     verified_email: false,
-    job_title: "CEO",
-    organization_name: "Benji",
-    orggroup_name: "Sales",
+    job_title: 'CEO',
+    organization_name: 'Benji',
+    orggroup_name: 'Sales',
     organization: 1,
     orggroup: 1,
     local_admin_permission: true,
@@ -2776,12 +2776,12 @@ const activityResult3 = {
     {
       id: 74,
       length: 82.198334,
-      activity_type: "LobbyActivity"
+      activity_type: 'LobbyActivity'
     },
     {
       id: 51,
       length: 3.558171,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 52,
@@ -2792,30 +2792,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 1,
-              text_answer: "1",
+              text_answer: '1',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2826,16 +2826,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2846,16 +2846,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2866,16 +2866,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 9,
-                username: "jim",
-                first_name: "Jaimison",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jaimison',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2886,16 +2886,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 10,
-                username: "jim",
-                first_name: "Timothy",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Timothy',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2906,16 +2906,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 11,
-                username: "jim",
-                first_name: "James",
-                last_name: "Charles",
-                email: "",
+                username: 'jim',
+                first_name: 'James',
+                last_name: 'Charles',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2926,16 +2926,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 23
             },
             {
               user: {
                 id: 12,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2946,15 +2946,15 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 23
             }
           ],
-          average_rating: "3.75",
-          question_type: "rating_agreedisagree",
-          question_text: "I can evaluate the quality of a pitch.",
+          average_rating: '3.75',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 52,
           pitchomaticactivity: null
         },
@@ -2964,30 +2964,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -2998,16 +2998,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3018,16 +3018,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3038,36 +3038,36 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 9,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 10,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3078,16 +3078,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 11,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3098,16 +3098,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 2,
-              text_answer: "2",
+              text_answer: '2',
               feedbackquestion: 24
             },
             {
               user: {
                 id: 12,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3118,14 +3118,14 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 1,
-              text_answer: "1",
+              text_answer: '1',
               feedbackquestion: 24
             }
           ],
-          average_rating: "3.75",
-          question_type: "rating_agreedisagree",
+          average_rating: '3.75',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "I can deliver a clear, concise, and compelling pitch.",
+            'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 52,
@@ -3137,30 +3137,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3171,16 +3171,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3191,16 +3191,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 1,
-              text_answer: "1",
+              text_answer: '1',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3211,36 +3211,36 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 9,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 10,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3251,16 +3251,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 3,
-              text_answer: "3",
+              text_answer: '3',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 11,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3271,16 +3271,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 1,
-              text_answer: "1",
+              text_answer: '1',
               feedbackquestion: 25
             },
             {
               user: {
                 id: 12,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -3291,13 +3291,13 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 1,
-              text_answer: "1",
+              text_answer: '1',
               feedbackquestion: 25
             }
           ],
-          average_rating: "3.75",
-          question_type: "rating_agreedisagree",
-          question_text: "I can adjust my pitch to fit different situations.",
+          average_rating: '3.75',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 52,
@@ -3305,30 +3305,30 @@ const activityResult3 = {
         }
       ],
       titlecomponent: {
-        title: "Before we begin",
-        title_image: "emoji://memo",
-        screen_instructions: "Fill out the form on your phone",
+        title: 'Before we begin',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
         participant_instructions:
-          "How do you feel about your pitching skills now?"
+          'How do you feel about your pitching skills now?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 53,
       length: 4.273128,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       winning_user: {
         id: 2,
-        username: "matt",
-        first_name: "Matt",
-        last_name: "Parson",
-        email: "matt@mybenji.com",
+        username: 'matt',
+        first_name: 'Matt',
+        last_name: 'Parson',
+        email: 'matt@mybenji.com',
         verified_email: false,
-        job_title: "CEO",
-        organization_name: "Benji",
-        orggroup_name: "Sales",
+        job_title: 'CEO',
+        organization_name: 'Benji',
+        orggroup_name: 'Sales',
         organization: 1,
         orggroup: 1,
         local_admin_permission: true,
@@ -3338,39 +3338,39 @@ const activityResult3 = {
         {
           id: 11,
           order: 0,
-          label: " At",
-          temp_text: "company name",
-          help_text: " What company are you pitching?"
+          label: ' At',
+          temp_text: 'company name',
+          help_text: ' What company are you pitching?'
         },
         {
           id: 12,
           order: 1,
-          label: "we help",
-          temp_text: "the audience",
+          label: 'we help',
+          temp_text: 'the audience',
           help_text:
-            " Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)"
+            ' Who do you help? Try and be as specific as possible (e.g. demographics, industry, size)'
         },
         {
           id: 13,
           order: 2,
-          label: "with",
-          temp_text: "the problem",
+          label: 'with',
+          temp_text: 'the problem',
           help_text:
-            "What needs, challenges and frustrations do your customers have?"
+            'What needs, challenges and frustrations do your customers have?'
         },
         {
           id: 14,
           order: 3,
-          label: "by",
-          temp_text: "the solution",
-          help_text: "How do you solve your target customer’s problem?"
+          label: 'by',
+          temp_text: 'the solution',
+          help_text: 'How do you solve your target customer’s problem?'
         },
         {
           id: 15,
           order: 4,
-          label: "because",
-          temp_text: "the why",
-          help_text: "Why is this problem worth solving?"
+          label: 'because',
+          temp_text: 'the why',
+          help_text: 'Why is this problem worth solving?'
         }
       ],
       pitch_summaries: [
@@ -3379,23 +3379,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "benji"
+              value: 'benji'
             },
             {
               buildapitchblank: 12,
-              value: "trainers"
+              value: 'trainers'
             },
             {
               buildapitchblank: 13,
-              value: "training"
+              value: 'training'
             },
             {
               buildapitchblank: 14,
-              value: "platform"
+              value: 'platform'
             },
             {
               buildapitchblank: 15,
-              value: "I like beer"
+              value: 'I like beer'
             }
           ],
           votes: 3
@@ -3405,23 +3405,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "khasol"
+              value: 'khasol'
             },
             {
               buildapitchblank: 12,
-              value: "web devs"
+              value: 'web devs'
             },
             {
               buildapitchblank: 13,
-              value: "dev web"
+              value: 'dev web'
             },
             {
               buildapitchblank: 14,
-              value: "programming"
+              value: 'programming'
             },
             {
               buildapitchblank: 15,
-              value: "I like money"
+              value: 'I like money'
             }
           ],
           votes: 0
@@ -3431,23 +3431,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "unknown company"
+              value: 'unknown company'
             },
             {
               buildapitchblank: 12,
-              value: "consult"
+              value: 'consult'
             },
             {
               buildapitchblank: 13,
-              value: "excel"
+              value: 'excel'
             },
             {
               buildapitchblank: 14,
-              value: "computers"
+              value: 'computers'
             },
             {
               buildapitchblank: 15,
-              value: "bacause I can"
+              value: 'bacause I can'
             }
           ],
           votes: 1
@@ -3457,23 +3457,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "companyx"
+              value: 'companyx'
             },
             {
               buildapitchblank: 12,
-              value: "aaaa"
+              value: 'aaaa'
             },
             {
               buildapitchblank: 13,
-              value: "no problem"
+              value: 'no problem'
             },
             {
               buildapitchblank: 14,
-              value: "no solution"
+              value: 'no solution'
             },
             {
               buildapitchblank: 15,
-              value: "i like food"
+              value: 'i like food'
             }
           ],
           votes: 0
@@ -3483,23 +3483,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "companyx"
+              value: 'companyx'
             },
             {
               buildapitchblank: 12,
-              value: "aaaa"
+              value: 'aaaa'
             },
             {
               buildapitchblank: 13,
-              value: "no problem"
+              value: 'no problem'
             },
             {
               buildapitchblank: 14,
-              value: "no solution"
+              value: 'no solution'
             },
             {
               buildapitchblank: 15,
-              value: "i like food"
+              value: 'i like food'
             }
           ],
           votes: 0
@@ -3509,23 +3509,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "companyx"
+              value: 'companyx'
             },
             {
               buildapitchblank: 12,
-              value: "aaaa"
+              value: 'aaaa'
             },
             {
               buildapitchblank: 13,
-              value: "no problem"
+              value: 'no problem'
             },
             {
               buildapitchblank: 14,
-              value: "no solution"
+              value: 'no solution'
             },
             {
               buildapitchblank: 15,
-              value: "i like food"
+              value: 'i like food'
             }
           ],
           votes: 0
@@ -3535,23 +3535,23 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "companyx"
+              value: 'companyx'
             },
             {
               buildapitchblank: 12,
-              value: "aaaa"
+              value: 'aaaa'
             },
             {
               buildapitchblank: 13,
-              value: "no problem"
+              value: 'no problem'
             },
             {
               buildapitchblank: 14,
-              value: "no solution"
+              value: 'no solution'
             },
             {
               buildapitchblank: 15,
-              value: "i like food"
+              value: 'i like food'
             }
           ],
           votes: 0
@@ -3561,61 +3561,61 @@ const activityResult3 = {
           buildapitchentry_set: [
             {
               buildapitchblank: 11,
-              value: "companyx"
+              value: 'companyx'
             },
             {
               buildapitchblank: 12,
-              value: "aaaa"
+              value: 'aaaa'
             },
             {
               buildapitchblank: 13,
-              value: "no problem"
+              value: 'no problem'
             },
             {
               buildapitchblank: 14,
-              value: "no solution"
+              value: 'no solution'
             },
             {
               buildapitchblank: 15,
-              value: "i like food"
+              value: 'i like food'
             }
           ],
           votes: 0
         }
       ],
-      activity_type: "BuildAPitchActivity"
+      activity_type: 'BuildAPitchActivity'
     },
     {
       id: 55,
       length: 69.582211,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 56,
       question: {
         id: 11,
-        question: "What are the three C's of a good pitch?",
+        question: 'What are the three C\'s of a good pitch?',
         mcqchoice_set: [
           {
             id: 37,
             order: 0,
-            choice_text: "Clear, compelling, concise",
+            choice_text: 'Clear, compelling, concise',
             is_correct: true,
-            explanation: "Correct!"
+            explanation: 'Correct!'
           },
           {
             id: 38,
             order: 1,
-            choice_text: "Clear, catchy, concise",
+            choice_text: 'Clear, catchy, concise',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 39,
             order: 2,
-            choice_text: "Compelling, charismatic, clear",
+            choice_text: 'Compelling, charismatic, clear',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           }
         ]
       },
@@ -3623,14 +3623,14 @@ const activityResult3 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -3641,10 +3641,10 @@ const activityResult3 = {
         {
           user: {
             id: 6,
-            username: "khana",
-            first_name: "khana",
-            last_name: "",
-            email: "",
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3659,10 +3659,10 @@ const activityResult3 = {
         {
           user: {
             id: 7,
-            username: "abdullah",
-            first_name: "Abdullah",
-            last_name: "",
-            email: "",
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3677,10 +3677,10 @@ const activityResult3 = {
         {
           user: {
             id: 8,
-            username: "jim",
-            first_name: "Jim",
-            last_name: "",
-            email: "",
+            username: 'jim',
+            first_name: 'Jim',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3693,41 +3693,41 @@ const activityResult3 = {
           answer: 37
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 57,
       question: {
         id: 12,
-        question: "How can you make your pitch more memorable?",
+        question: 'How can you make your pitch more memorable?',
         mcqchoice_set: [
           {
             id: 40,
             order: 0,
-            choice_text: "Make it relatable",
+            choice_text: 'Make it relatable',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 41,
             order: 1,
-            choice_text: "Make it surprising",
+            choice_text: 'Make it surprising',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 42,
             order: 2,
-            choice_text: "Make it short",
+            choice_text: 'Make it short',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 43,
             order: 3,
-            choice_text: "All of the above",
+            choice_text: 'All of the above',
             is_correct: true,
-            explanation: "Correct!"
+            explanation: 'Correct!'
           }
         ]
       },
@@ -3735,10 +3735,10 @@ const activityResult3 = {
         {
           user: {
             id: 7,
-            username: "abdullah",
-            first_name: "Abdullah",
-            last_name: "",
-            email: "",
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3753,10 +3753,10 @@ const activityResult3 = {
         {
           user: {
             id: 6,
-            username: "khana",
-            first_name: "khana",
-            last_name: "",
-            email: "",
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3771,14 +3771,14 @@ const activityResult3 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -3789,10 +3789,10 @@ const activityResult3 = {
         {
           user: {
             id: 8,
-            username: "jim",
-            first_name: "Jim",
-            last_name: "",
-            email: "",
+            username: 'jim',
+            first_name: 'Jim',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3805,27 +3805,27 @@ const activityResult3 = {
           answer: 43
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 58,
       question: {
         id: 13,
-        question: "True or false: an elevator pitch is a sales pitch.",
+        question: 'True or false: an elevator pitch is a sales pitch.',
         mcqchoice_set: [
           {
             id: 44,
             order: 0,
-            choice_text: "True",
+            choice_text: 'True',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 45,
             order: 1,
-            choice_text: "False",
+            choice_text: 'False',
             is_correct: true,
-            explanation: "Correct"
+            explanation: 'Correct'
           }
         ]
       },
@@ -3833,14 +3833,14 @@ const activityResult3 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -3851,10 +3851,10 @@ const activityResult3 = {
         {
           user: {
             id: 6,
-            username: "khana",
-            first_name: "khana",
-            last_name: "",
-            email: "",
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3869,10 +3869,10 @@ const activityResult3 = {
         {
           user: {
             id: 7,
-            username: "abdullah",
-            first_name: "Abdullah",
-            last_name: "",
-            email: "",
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3887,10 +3887,10 @@ const activityResult3 = {
         {
           user: {
             id: 8,
-            username: "jim",
-            first_name: "Jim",
-            last_name: "",
-            email: "",
+            username: 'jim',
+            first_name: 'Jim',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3903,41 +3903,41 @@ const activityResult3 = {
           answer: 45
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 59,
       question: {
         id: 14,
-        question: "An elevator pitch should last how long?",
+        question: 'An elevator pitch should last how long?',
         mcqchoice_set: [
           {
             id: 46,
             order: 0,
-            choice_text: "10-15 seconds",
+            choice_text: '10-15 seconds',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 47,
             order: 1,
-            choice_text: "20-30 seconds",
+            choice_text: '20-30 seconds',
             is_correct: true,
-            explanation: "Yup!"
+            explanation: 'Yup!'
           },
           {
             id: 48,
             order: 2,
-            choice_text: "30-60 seconds",
+            choice_text: '30-60 seconds',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 49,
             order: 3,
-            choice_text: "However long is necessary",
+            choice_text: 'However long is necessary',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           }
         ]
       },
@@ -3945,14 +3945,14 @@ const activityResult3 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -3963,10 +3963,10 @@ const activityResult3 = {
         {
           user: {
             id: 6,
-            username: "khana",
-            first_name: "khana",
-            last_name: "",
-            email: "",
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3981,10 +3981,10 @@ const activityResult3 = {
         {
           user: {
             id: 7,
-            username: "abdullah",
-            first_name: "Abdullah",
-            last_name: "",
-            email: "",
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -3999,10 +3999,10 @@ const activityResult3 = {
         {
           user: {
             id: 8,
-            username: "jim",
-            first_name: "Jim",
-            last_name: "",
-            email: "",
+            username: 'jim',
+            first_name: 'Jim',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4015,48 +4015,48 @@ const activityResult3 = {
           answer: 46
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 60,
       question: {
         id: 15,
-        question: "A pitch must be able to answer...",
+        question: 'A pitch must be able to answer...',
         mcqchoice_set: [
           {
             id: 50,
             order: 0,
-            choice_text: "Who you’re helping",
+            choice_text: 'Who you’re helping',
             is_correct: false,
-            explanation: "Incorrect"
+            explanation: 'Incorrect'
           },
           {
             id: 51,
             order: 1,
-            choice_text: "What problem you help with",
+            choice_text: 'What problem you help with',
             is_correct: false,
-            explanation: "Not quite!"
+            explanation: 'Not quite!'
           },
           {
             id: 52,
             order: 2,
-            choice_text: "How you solve that problem",
+            choice_text: 'How you solve that problem',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 53,
             order: 3,
-            choice_text: "What impact your solution has",
+            choice_text: 'What impact your solution has',
             is_correct: false,
-            explanation: "Nope!"
+            explanation: 'Nope!'
           },
           {
             id: 54,
             order: 4,
-            choice_text: "All of the above ",
+            choice_text: 'All of the above ',
             is_correct: true,
-            explanation: "Correct"
+            explanation: 'Correct'
           }
         ]
       },
@@ -4064,14 +4064,14 @@ const activityResult3 = {
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
@@ -4082,10 +4082,10 @@ const activityResult3 = {
         {
           user: {
             id: 6,
-            username: "khana",
-            first_name: "khana",
-            last_name: "",
-            email: "",
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4100,10 +4100,10 @@ const activityResult3 = {
         {
           user: {
             id: 7,
-            username: "abdullah",
-            first_name: "Abdullah",
-            last_name: "",
-            email: "",
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4118,10 +4118,10 @@ const activityResult3 = {
         {
           user: {
             id: 8,
-            username: "jim",
-            first_name: "Jim",
-            last_name: "",
-            email: "",
+            username: 'jim',
+            first_name: 'Jim',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4134,162 +4134,162 @@ const activityResult3 = {
           answer: 52
         }
       ],
-      activity_type: "MCQActivity"
+      activity_type: 'MCQActivity'
     },
     {
       id: 61,
       length: 5.608571,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 62,
       length: 4.456338,
-      activity_type: "PairGroupingActivity"
+      activity_type: 'PairGroupingActivity'
     },
     {
       id: 63,
       length: 1.925616,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 64,
       length: 3.026629,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 65,
       length: 2.15773,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 66,
       length: 2.30101,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 67,
       length: 2.025464,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 68,
       length: 2.75274,
-      activity_type: "DiscussionActivity"
+      activity_type: 'DiscussionActivity'
     },
     {
       id: 69,
       length: 2.222198,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
-      instructions: "Generate your pitches, brainstorm, pitch and then vote!",
+      instructions: 'Generate your pitches, brainstorm, pitch and then vote!',
       pitchomaticblank_set: [
         {
           id: 7,
           order: 0,
-          label: "You are pitching:",
+          label: 'You are pitching:',
           pitchomaticblankchoice_set: [
             {
               id: 45,
-              value: "Coca Cola"
+              value: 'Coca Cola'
             },
             {
               id: 46,
-              value: "SpaceX"
+              value: 'SpaceX'
             },
             {
               id: 47,
-              value: "Tesla"
+              value: 'Tesla'
             },
             {
               id: 48,
-              value: "Disney"
+              value: 'Disney'
             },
             {
               id: 49,
-              value: "Apple"
+              value: 'Apple'
             },
             {
               id: 50,
-              value: "McDonalds"
+              value: 'McDonalds'
             },
             {
               id: 51,
-              value: "Netflix"
+              value: 'Netflix'
             },
             {
               id: 52,
-              value: "WestJet"
+              value: 'WestJet'
             },
             {
               id: 53,
-              value: "IKEA"
+              value: 'IKEA'
             },
             {
               id: 54,
-              value: "Walmart"
+              value: 'Walmart'
             },
             {
               id: 55,
-              value: "Facebook"
+              value: 'Facebook'
             },
             {
               id: 56,
-              value: "NHL"
+              value: 'NHL'
             }
           ]
         },
         {
           id: 8,
           order: 1,
-          label: "You are pitching to:",
+          label: 'You are pitching to:',
           pitchomaticblankchoice_set: [
             {
               id: 57,
-              value: "a CTO"
+              value: 'a CTO'
             },
             {
               id: 58,
-              value: "a venture capitalist"
+              value: 'a venture capitalist'
             },
             {
               id: 59,
-              value: "a 5 year old"
+              value: 'a 5 year old'
             },
             {
               id: 60,
-              value: "an 86 year old grandmother"
+              value: 'an 86 year old grandmother'
             },
             {
               id: 61,
-              value: "a group of college students"
+              value: 'a group of college students'
             },
             {
               id: 62,
-              value: "academics at a conference"
+              value: 'academics at a conference'
             },
             {
               id: 63,
-              value: "an elevator full of random people"
+              value: 'an elevator full of random people'
             }
           ]
         },
         {
           id: 9,
           order: 2,
-          label: "And the technique you need to use is:",
+          label: 'And the technique you need to use is:',
           pitchomaticblankchoice_set: [
             {
               id: 64,
-              value: "a story"
+              value: 'a story'
             },
             {
               id: 65,
-              value: "a surprising fact"
+              value: 'a surprising fact'
             },
             {
               id: 66,
-              value: "an analogy"
+              value: 'an analogy'
             }
           ]
         }
@@ -4297,22 +4297,22 @@ const activityResult3 = {
       feedbackquestion_set: [
         {
           id: 26,
-          question_type: "rating_agreedisagree",
-          question_text: "The pitch was compelling",
+          question_type: 'rating_agreedisagree',
+          question_text: 'The pitch was compelling',
           is_combo: false,
           combo_text: null
         },
         {
           id: 27,
-          question_type: "rating_agreedisagree",
-          question_text: "The pitch answered all the essential questions",
+          question_type: 'rating_agreedisagree',
+          question_text: 'The pitch answered all the essential questions',
           is_combo: false,
           combo_text: null
         },
         {
           id: 28,
-          question_type: "rating_agreedisagree",
-          question_text: "Overall, the pitch was excellent",
+          question_type: 'rating_agreedisagree',
+          question_text: 'Overall, the pitch was excellent',
           is_combo: true,
           combo_text: null
         }
@@ -4321,10 +4321,10 @@ const activityResult3 = {
         {
           user: {
             id: 7,
-            username: "abdullah",
-            first_name: "Abdullah",
-            last_name: "",
-            email: "",
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4334,7 +4334,7 @@ const activityResult3 = {
             local_admin_permission: false,
             participant_permission: true
           },
-          pitch_prep_text: "how am I supposed to pitch disney. it's like a lee",
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a lee',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -4356,76 +4356,76 @@ const activityResult3 = {
               user: 2,
               feedbackquestion: 26,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 27,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 28,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 6,
               feedbackquestion: 26,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             },
             {
               user: 6,
               feedbackquestion: 27,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             },
             {
               user: 6,
               feedbackquestion: 28,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             },
             {
               user: 8,
               feedbackquestion: 26,
               rating_answer: 4,
-              text_answer: "4"
+              text_answer: '4'
             },
             {
               user: 8,
               feedbackquestion: 27,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 8,
               feedbackquestion: 28,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             }
           ]
         },
         {
           user: {
             id: 2,
-            username: "matt",
-            first_name: "Matt",
-            last_name: "Parson",
-            email: "matt@mybenji.com",
+            username: 'matt',
+            first_name: 'Matt',
+            last_name: 'Parson',
+            email: 'matt@mybenji.com',
             verified_email: false,
-            job_title: "CEO",
-            organization_name: "Benji",
-            orggroup_name: "Sales",
+            job_title: 'CEO',
+            organization_name: 'Benji',
+            orggroup_name: 'Sales',
             organization: 1,
             orggroup: 1,
             local_admin_permission: true,
             participant_permission: true
           },
           pitch_prep_text:
-            "my notes are my notes and nobody else should see them",
+            'my notes are my notes and nobody else should see them',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -4447,47 +4447,47 @@ const activityResult3 = {
               user: 7,
               feedbackquestion: 26,
               rating_answer: 1,
-              text_answer: "matt does not know how to write a pitch"
+              text_answer: 'matt does not know how to write a pitch'
             },
             {
               user: 7,
               feedbackquestion: 27,
               rating_answer: 1,
-              text_answer: "2"
+              text_answer: '2'
             },
             {
               user: 7,
               feedbackquestion: 28,
               rating_answer: 2,
-              text_answer: "1"
+              text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 26,
               rating_answer: 1,
-              text_answer: "1"
+              text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 27,
               rating_answer: 1,
-              text_answer: "1"
+              text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 28,
               rating_answer: 2,
-              text_answer: "1"
+              text_answer: '1'
             }
           ]
         },
         {
           user: {
             id: 8,
-            username: "jim",
-            first_name: "Jim",
-            last_name: "",
-            email: "",
+            username: 'jim',
+            first_name: 'Jim',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4497,7 +4497,7 @@ const activityResult3 = {
             local_admin_permission: false,
             participant_permission: true
           },
-          pitch_prep_text: "how am I supposed to pitch disney. it's like a lee",
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a lee',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -4519,65 +4519,65 @@ const activityResult3 = {
               user: 7,
               feedbackquestion: 26,
               rating_answer: 4,
-              text_answer: "4"
+              text_answer: '4'
             },
             {
               user: 7,
               feedbackquestion: 27,
               rating_answer: 4,
-              text_answer: "4"
+              text_answer: '4'
             },
             {
               user: 7,
               feedbackquestion: 28,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             },
             {
               user: 6,
               feedbackquestion: 26,
               rating_answer: 1,
-              text_answer: "1"
+              text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 27,
               rating_answer: 1,
-              text_answer: "1"
+              text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 28,
               rating_answer: 1,
-              text_answer: "1"
+              text_answer: '1'
             },
             {
               user: 2,
               feedbackquestion: 26,
               rating_answer: 2,
-              text_answer: "2"
+              text_answer: '2'
             },
             {
               user: 2,
               feedbackquestion: 27,
               rating_answer: 2,
-              text_answer: "2"
+              text_answer: '2'
             },
             {
               user: 2,
               feedbackquestion: 28,
               rating_answer: 2,
-              text_answer: "2"
+              text_answer: '2'
             }
           ]
         },
         {
           user: {
             id: 6,
-            username: "khana",
-            first_name: "khana",
-            last_name: "",
-            email: "",
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
             verified_email: false,
             job_title: null,
             organization_name: null,
@@ -4588,7 +4588,7 @@ const activityResult3 = {
             participant_permission: true
           },
           pitch_prep_text:
-            "how am I supposed to pitch disney. it's like a leech dd",
+            'how am I supposed to pitch disney. it\'s like a leech dd',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -4610,65 +4610,65 @@ const activityResult3 = {
               user: 2,
               feedbackquestion: 26,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 27,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 2,
               feedbackquestion: 28,
               rating_answer: 4,
-              text_answer: "4"
+              text_answer: '4'
             },
             {
               user: 7,
               feedbackquestion: 26,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 7,
               feedbackquestion: 27,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 7,
               feedbackquestion: 28,
               rating_answer: 5,
-              text_answer: "5"
+              text_answer: '5'
             },
             {
               user: 8,
               feedbackquestion: 26,
               rating_answer: 2,
-              text_answer: "2"
+              text_answer: '2'
             },
             {
               user: 8,
               feedbackquestion: 27,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             },
             {
               user: 8,
               feedbackquestion: 28,
               rating_answer: 3,
-              text_answer: "3"
+              text_answer: '3'
             }
           ]
         }
       ],
-      activity_type: "PitchoMaticActivity"
+      activity_type: 'PitchoMaticActivity'
     },
     {
       id: 71,
       length: 4.372423,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 72,
@@ -4679,30 +4679,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4713,16 +4713,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4733,16 +4733,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4753,36 +4753,36 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 9,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 10,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4793,16 +4793,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 11,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4813,16 +4813,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 29
             },
             {
               user: {
                 id: 12,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4833,15 +4833,15 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 29
             }
           ],
-          average_rating: "4.50",
-          question_type: "rating_agreedisagree",
-          question_text: "I can evaluate the quality of a pitch.",
+          average_rating: '4.50',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 72,
           pitchomaticactivity: null
         },
@@ -4851,30 +4851,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4885,16 +4885,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4905,16 +4905,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4925,36 +4925,36 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 9,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 10,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4965,16 +4965,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 11,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -4985,16 +4985,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 30
             },
             {
               user: {
                 id: 12,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5005,14 +5005,14 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 30
             }
           ],
-          average_rating: "4.75",
-          question_type: "rating_agreedisagree",
+          average_rating: '4.75',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "I can deliver a clear, concise, and compelling pitch.",
+            'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 72,
@@ -5024,30 +5024,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5058,16 +5058,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5078,16 +5078,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5098,36 +5098,36 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5138,16 +5138,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "4",
+              text_answer: '4',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5158,16 +5158,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 31
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5178,13 +5178,13 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "5",
+              text_answer: '5',
               feedbackquestion: 31
             }
           ],
-          average_rating: "4.75",
-          question_type: "rating_agreedisagree",
-          question_text: "I can adjust my pitch to fit different situations.",
+          average_rating: '4.75',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 72,
@@ -5192,18 +5192,18 @@ const activityResult3 = {
         }
       ],
       titlecomponent: {
-        title: "What about now?",
-        title_image: "emoji://memo",
-        screen_instructions: "Fill out the form on your phone",
+        title: 'What about now?',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
         participant_instructions:
-          "How do you feel about your pitching skills now?"
+          'How do you feel about your pitching skills now?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     },
     {
       id: 73,
       length: 35.13645,
-      activity_type: "VideoActivity"
+      activity_type: 'VideoActivity'
     },
     {
       id: 75,
@@ -5214,30 +5214,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "I learned a lot in this session.",
+              text_answer: 'I learned a lot in this session.',
               feedbackquestion: 32
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5248,16 +5248,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "I found it interesting to improve my skills.",
+              text_answer: 'I found it interesting to improve my skills.',
               feedbackquestion: 32
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5268,16 +5268,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "I like it.",
+              text_answer: 'I like it.',
               feedbackquestion: 32
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5288,16 +5288,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "This session definitely taught me a lot.",
+              text_answer: 'This session definitely taught me a lot.',
               feedbackquestion: 32
             },
             {
               user: {
                 id: 9,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5308,16 +5308,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "This session definitely taught me a lot.",
+              text_answer: 'This session definitely taught me a lot.',
               feedbackquestion: 32
             }
           ],
-          average_rating: "4.50",
-          question_type: "rating_agreedisagree",
+          average_rating: '4.50',
+          question_type: 'rating_agreedisagree',
           question_text:
-            "What I learned in this session will improve my skills.",
+            'What I learned in this session will improve my skills.',
           is_combo: true,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 75,
           pitchomaticactivity: null
         },
@@ -5327,30 +5327,30 @@ const activityResult3 = {
             {
               user: {
                 id: 2,
-                username: "matt",
-                first_name: "Matt",
-                last_name: "Parson",
-                email: "matt@mybenji.com",
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
                 verified_email: false,
-                job_title: "CEO",
-                organization_name: "Benji",
-                orggroup_name: "Sales",
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "It was a lot of fun.",
+              text_answer: 'It was a lot of fun.',
               feedbackquestion: 33
             },
             {
               user: {
                 id: 6,
-                username: "khana",
-                first_name: "khana",
-                last_name: "",
-                email: "",
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5361,16 +5361,16 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 5,
-              text_answer: "I loved it. Cant wait to do it again.",
+              text_answer: 'I loved it. Cant wait to do it again.',
               feedbackquestion: 33
             },
             {
               user: {
                 id: 7,
-                username: "abdullah",
-                first_name: "Abdullah",
-                last_name: "",
-                email: "",
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5382,16 +5382,16 @@ const activityResult3 = {
               },
               rating_answer: 4,
               text_answer:
-                "The games and interactivity is much better than normal training.",
+                'The games and interactivity is much better than normal training.',
               feedbackquestion: 33
             },
             {
               user: {
                 id: 8,
-                username: "jim",
-                first_name: "Jim",
-                last_name: "",
-                email: "",
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
                 verified_email: false,
                 job_title: null,
                 organization_name: null,
@@ -5402,27 +5402,27 @@ const activityResult3 = {
                 participant_permission: true
               },
               rating_answer: 4,
-              text_answer: "Its easy to signup and start training in 2 mins.",
+              text_answer: 'Its easy to signup and start training in 2 mins.',
               feedbackquestion: 33
             }
           ],
-          average_rating: "4.50",
-          question_type: "rating_agreedisagree",
-          question_text: "I found this session fun",
+          average_rating: '4.50',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I found this session fun',
           is_combo: true,
-          combo_text: "Why is that?",
+          combo_text: 'Why is that?',
           feedbackactivity: 75,
           pitchomaticactivity: null
         }
       ],
       titlecomponent: {
-        title: "Please leave some feedback for us!",
-        title_image: "emoji://memo",
+        title: 'Please leave some feedback for us!',
+        title_image: 'emoji://memo',
         screen_instructions:
-          "We'd really appreciate your feedback. Submit on your phone- it’ll only take a minute!",
-        participant_instructions: "What did you think about today's lesson?"
+          'We\'d really appreciate your feedback. Submit on your phone- it’ll only take a minute!',
+        participant_instructions: 'What did you think about today\'s lesson?'
       },
-      activity_type: "FeedbackActivity"
+      activity_type: 'FeedbackActivity'
     }
   ]
 };

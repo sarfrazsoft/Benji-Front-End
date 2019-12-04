@@ -37,7 +37,9 @@
           .percentage {
             min-width: 120px;
             font-size: 15px;
-            font-weight: 600;
+            .number {
+              font-weight: 600;
+            }
           }
         }
         #progressbar {

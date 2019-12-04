@@ -15,7 +15,6 @@ import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
   styleUrls: ['./skill-line-chart.component.scss']
 })
 export class SkillLineChartComponent implements OnInit, AfterViewInit {
-  @Input() question: FeedbackGraphQuestion;
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
@@ -33,11 +32,18 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
     'Pitch practice',
     'Pitch perfect'
   ];
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngAfterViewInit() {
+    this.createChart();
+
+  }
+
+  createChart() {
+    console.log('br');
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
@@ -79,12 +85,12 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
               },
               ticks: {
                 fontColor: '#000',
-                fontSize: 24,
+                fontSize: 14,
                 stepSize: 2,
                 beginAtZero: true,
                 min: 0,
                 max: 10,
-                callback: function(value, index, values) {
+                callback: function (value, index, values) {
                   return value ? value : '';
                 }
               }
@@ -100,7 +106,7 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
                 fontColor: '#000',
                 fontSize: 14,
                 beginAtZero: true,
-                callback: function(value, index, values) {
+                callback: function (value, index, values) {
                   const j = value % 10,
                     k = value % 100;
                   if (j === 1 && k !== 11) {
