@@ -3,3 +3,27 @@ app-root {
   height: 100%;
   width: 100%;
 }
+
+.small-screen-error {
+  display: none;
+  position: absolute;
+  font-size: 24px;
+  background: $off-white;
+  text-align: center;
+  height: 200px;
+  width: 100%;
+  top: 0px;
+  z-index: 1;
+  border: 1px solid $header-border-bottom-color;
+  box-shadow: $box-shadow;
+  @media #{$medium-and-down} {
+    display: block;
+  }
+  div {
+    color: $warning-color;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+  }
+}
