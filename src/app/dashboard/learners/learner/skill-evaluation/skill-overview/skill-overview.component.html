@@ -1,13 +1,15 @@
 <div class="report-cards" fxLayout="column">
   <div class="card-header">
-    Skills overview
+    {{ overviewData.title }}
   </div>
 
-  <div class="skill-charts" fxLayout="row">
-    <div fxFlex="45%">
-      <benji-learner-donut [donutData]="donutData"></benji-learner-donut>
+  <div fxLayout="row">
+    <div fxFlex="45%" class="donut-chart">
+      <benji-learner-donut
+        [donutData]="overviewData.donut"
+      ></benji-learner-donut>
     </div>
-    <div fxFlex="55%">
+    <div fxFlex="55%" class="line-chart">
       <benji-skill-line-chart></benji-skill-line-chart>
     </div>
   </div>

@@ -50,7 +50,6 @@ export class LearnerReportComponent implements OnInit {
     this.pastSessionsService
       .getReports('653')
       .subscribe((res: Array<ActivityReport>) => {
-        // this.statsData = res[0];
 
         // Iterate over each item in array
         res.forEach((act: ActivityReport) => {

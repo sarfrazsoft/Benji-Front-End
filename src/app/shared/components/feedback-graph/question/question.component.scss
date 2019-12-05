@@ -7,11 +7,12 @@
     font-weight: 600;
   }
   .average {
-    padding: 10px;
     background: $secondary-color-light;
     border-radius: 10px;
     font-weight: 600;
     color: $secondary-color-dark;
     opacity: 0.8;
+    padding: 8px;
+    font-size: 18px;
   }
 }

@@ -42,11 +42,16 @@ export class SkillEvaluationComponent implements OnInit {
           SkillOverviewComponent
         );
         const component = this.entry.createComponent(skillOverFactory);
+        component.instance.overviewData = overviewData;
 
         const component2 = this.entry2.createComponent(skillOverFactory);
-        const component3 = this.entry3.createComponent(skillOverFactory);
-        const component4 = this.entry4.createComponent(skillOverFactory);
+        component2.instance.overviewData = overviewData2;
 
+        const component3 = this.entry3.createComponent(skillOverFactory);
+        component3.instance.overviewData = overviewData3;
+
+        const component4 = this.entry4.createComponent(skillOverFactory);
+        component4.instance.overviewData = overviewData4;
         // Iterate over each item in array
         // res.forEach((act: ActivityReport) => {
         // if (act.activity_type === ActivityTypes.mcq) {
@@ -66,4 +71,40 @@ const colors = {
   blue: 'rgb(54, 162, 235)',
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)'
+};
+
+const overviewData = {
+  title: 'Pitching',
+  donut: {
+    title: 'Pitch Skill',
+    data: 70,
+    color: '#0a4cef'
+  }
+};
+
+const overviewData2 = {
+  title: 'Objection Handling',
+  donut: {
+    title: 'Pitch Skill',
+    data: 70,
+    color: '#0a4cef'
+  }
+};
+
+const overviewData3 = {
+  title: 'Building Rapport',
+  donut: {
+    title: 'Pitch Skill',
+    data: 70,
+    color: '#0a4cef'
+  }
+};
+
+const overviewData4 = {
+  title: 'Closing',
+  donut: {
+    title: 'Pitch Skill',
+    data: 70,
+    color: '#0a4cef'
+  }
 };

@@ -7,10 +7,10 @@ export interface PitchOMaticReport extends Report {
   feedbackquestion_set: Array<FeedbackQuestion>;
   instructions: string;
   pitchomaticblank_set: Array<PitchoMaticBlank>;
-  pitchomaticgroupmembers: Array<Pitchomaticgroupmember>;
+  pitchomaticgroupmembers: Array<PitchoMaticGroupMemberFeedback>;
 }
 
-export interface Pitchomaticgroupmember {
+export interface PitchoMaticGroupMemberFeedback {
   user: User;
   pitch_prep_text: string;
   pitch: PitchoMaticGroupMemberPitch;

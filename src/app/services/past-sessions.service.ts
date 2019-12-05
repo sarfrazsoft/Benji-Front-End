@@ -4476,7 +4476,7 @@ const activityResult3 = {
             {
               user: 6,
               feedbackquestion: 28,
-              rating_answer: 2,
+              rating_answer: 1,
               text_answer: '1'
             }
           ]

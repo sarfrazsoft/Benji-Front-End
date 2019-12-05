@@ -53,8 +53,11 @@
   .report-cards {
     margin-bottom: 20px;
     margin-right: 20px;
-    .skill-charts {
+    .donut-chart {
       margin: 20px 0px;
+    }
+    .line-chart {
+      margin-top: 20px;
     }
   }
 }

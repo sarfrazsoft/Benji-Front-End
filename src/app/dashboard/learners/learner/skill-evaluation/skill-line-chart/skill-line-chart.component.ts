@@ -7,7 +7,6 @@ import {
   ViewChild
 } from '@angular/core';
 import * as Chart from 'chart.js';
-import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-skill-line-chart',
@@ -15,45 +14,48 @@ import { FeedbackGraphQuestion } from 'src/app/services/backend/schema';
   styleUrls: ['./skill-line-chart.component.scss']
 })
 export class SkillLineChartComponent implements OnInit, AfterViewInit {
+  @Input() chartData = {
+    label: 'Sessions',
+    sessionInfo: [
+      { date: '2nd Jan, 2020', name: 'Pitch perfect', xlabel: '01/02', value: 3 },
+      { date: '14th Jan, 2020', name: 'Pitch practice', xlabel: '01/14', value: 5 },
+      { date: '12th Jan, 2020', name: 'Pitch practice', xlabel: '01/12', value: 7 },
+      { date: '22nd Jan, 2020', name: 'Pitch perfect', xlabel: '01/22', value: 6 }
+    ]
+  };
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
-  dates = [
-    '2nd Jan, 2020',
-    '4th Jan, 2020',
-    '12th Jan, 2020',
-    '22nd Jan, 2020'
-  ];
 
-  sessions = [
-    'Pitch perfect',
-    'Pitch practice',
-    'Pitch practice',
-    'Pitch perfect'
-  ];
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.createChart();
-
   }
 
   createChart() {
-    console.log('br');
+
+    const labels = [];
+    const values = [];
+
+    this.chartData.sessionInfo.forEach(s => {
+      labels.push(s.xlabel);
+      values.push(s.value);
+    });
+
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
       type: 'line',
       data: {
-        labels: ['1', '2', '3', '4'],
+        labels: labels,
         datasets: [
           {
-            label: 'Pitch Skill',
-            data: [3, 5, 7, 6],
+            label: this.chartData.label,
+            data: values,
             borderWidth: 5,
             backgroundColor: '#0a4cef',
             fill: false
@@ -64,16 +66,22 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: false
+          display: true,
+          position: 'bottom',
+          labels: {
+            boxWidth: 0,
+            fontSize: 14,
+            fontColor: '#000'
+          }
         },
         tooltips: {
           displayColors: false,
           callbacks: {
             title: (tooltipItem, d) => {
-              return this.sessions[tooltipItem[0].index];
+              return this.chartData.sessionInfo[tooltipItem[0].index].name;
             },
             label: (tooltipItem, d) => {
-              return this.dates[tooltipItem.index];
+              return this.chartData.sessionInfo[tooltipItem.index].date;
             }
           }
         },
@@ -106,20 +114,20 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
                 fontColor: '#000',
                 fontSize: 14,
                 beginAtZero: true,
-                callback: function (value, index, values) {
-                  const j = value % 10,
-                    k = value % 100;
-                  if (j === 1 && k !== 11) {
-                    return value + 'st session';
-                  }
-                  if (j === 2 && k !== 12) {
-                    return value + 'nd session';
-                  }
-                  if (j === 3 && k !== 13) {
-                    return value + 'rd session';
-                  }
-                  return value + 'th session';
-                }
+                // callback: function (value, index, values) {
+                //   const j = value % 10,
+                //     k = value % 100;
+                //   if (j === 1 && k !== 11) {
+                //     return value + 'st';
+                //   }
+                //   if (j === 2 && k !== 12) {
+                //     return value + 'nd';
+                //   }
+                //   if (j === 3 && k !== 13) {
+                //     return value + 'rd';
+                //   }
+                //   return value + 'th';
+                // }
               }
             }
           ]
