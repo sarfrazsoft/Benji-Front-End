@@ -120,6 +120,45 @@ export class PastSessionsService {
     );
   }
 
+  getAllReports(): Observable<any> {
+    return (
+      this.http
+        // .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
+        // replace this so that error doesn't occur
+        .get(global.apiRoot + '/tenants/users/?page=' + 1)
+        .pipe(
+          map((res: Array<SessionReport>) => {
+            const pastSessionsReports = [activityResult, activityResult2, activityResult3];
+
+            const arr = [];
+            pastSessionsReports.forEach(report => {
+
+              // Iterate over each activity in order and
+              // push them to the array
+              report.activity_results.forEach((act, i) => {
+                if (act.activity_type === ActivityTypes.feedback) {
+                  if (act.activity_title === 'PostAssessment') {
+                    arr.push({
+                      ...res,
+                      activity_type: ActivityTypes.feedback,
+                      feedback: act as FeedbackReport
+                    });
+                  }
+                } else if (act.activity_type === ActivityTypes.pitchoMatic) {
+                  arr.push({
+                    ...res,
+                    activity_type: ActivityTypes.pitchoMatic,
+                    pom: act as PitchOMaticReport
+                  });
+                }
+              });
+            });
+            return arr;
+          })
+        )
+    );
+  }
+
   getLearners(sort: string, order: string, page: number): Observable<User> {
     // django expects page index starting from 1
     const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);
@@ -1156,110 +1195,110 @@ const activityResult = {
       instructions: 'Generate your pitches, brainstorm, pitch and then vote!',
       pitchomaticblank_set: [
         {
-          id: 19,
+          id: 7,
           order: 0,
           label: 'You are pitching:',
           pitchomaticblankchoice_set: [
             {
-              id: 138,
+              id: 45,
               value: 'Coca Cola'
             },
             {
-              id: 139,
+              id: 46,
               value: 'SpaceX'
             },
             {
-              id: 140,
+              id: 47,
               value: 'Tesla'
             },
             {
-              id: 141,
+              id: 48,
               value: 'Disney'
             },
             {
-              id: 142,
+              id: 49,
               value: 'Apple'
             },
             {
-              id: 143,
+              id: 50,
               value: 'McDonalds'
             },
             {
-              id: 144,
+              id: 51,
               value: 'Netflix'
             },
             {
-              id: 145,
+              id: 52,
               value: 'WestJet'
             },
             {
-              id: 146,
+              id: 53,
               value: 'IKEA'
             },
             {
-              id: 147,
+              id: 54,
               value: 'Walmart'
             },
             {
-              id: 148,
+              id: 55,
               value: 'Facebook'
             },
             {
-              id: 149,
+              id: 56,
               value: 'NHL'
             }
           ]
         },
         {
-          id: 20,
+          id: 8,
           order: 1,
           label: 'You are pitching to:',
           pitchomaticblankchoice_set: [
             {
-              id: 150,
+              id: 57,
               value: 'a CTO'
             },
             {
-              id: 151,
+              id: 58,
               value: 'a venture capitalist'
             },
             {
-              id: 152,
+              id: 59,
               value: 'a 5 year old'
             },
             {
-              id: 153,
+              id: 60,
               value: 'an 86 year old grandmother'
             },
             {
-              id: 154,
+              id: 61,
               value: 'a group of college students'
             },
             {
-              id: 155,
+              id: 62,
               value: 'academics at a conference'
             },
             {
-              id: 156,
+              id: 63,
               value: 'an elevator full of random people'
             }
           ]
         },
         {
-          id: 21,
+          id: 9,
           order: 2,
           label: 'And the technique you need to use is:',
           pitchomaticblankchoice_set: [
             {
-              id: 157,
+              id: 64,
               value: 'a story'
             },
             {
-              id: 158,
+              id: 65,
               value: 'a surprising fact'
             },
             {
-              id: 159,
+              id: 66,
               value: 'an analogy'
             }
           ]
@@ -1267,21 +1306,21 @@ const activityResult = {
       ],
       feedbackquestion_set: [
         {
-          id: 86,
+          id: 26,
           question_type: 'rating_agreedisagree',
           question_text: 'The pitch was compelling',
           is_combo: false,
           combo_text: null
         },
         {
-          id: 87,
+          id: 27,
           question_type: 'rating_agreedisagree',
           question_text: 'The pitch answered all the essential questions',
           is_combo: false,
           combo_text: null
         },
         {
-          id: 88,
+          id: 28,
           question_type: 'rating_agreedisagree',
           question_text: 'Overall, the pitch was excellent',
           is_combo: true,
@@ -1289,6 +1328,96 @@ const activityResult = {
         }
       ],
       pitchomaticgroupmembers: [
+        {
+          user: {
+            id: 7,
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
+            verified_email: false,
+            job_title: null,
+            organization_name: null,
+            orggroup_name: null,
+            organization: null,
+            orggroup: null,
+            local_admin_permission: false,
+            participant_permission: true
+          },
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a lee',
+          pitch: {
+            pitchomaticgroupmemberpitchchoice_set: [
+              {
+                pitchomaticblank: 7,
+                choice: 55
+              },
+              {
+                pitchomaticblank: 8,
+                choice: 61
+              },
+              {
+                pitchomaticblank: 9,
+                choice: 65
+              }
+            ]
+          },
+          pitchomaticfeedback_set: [
+            {
+              user: 2,
+              feedbackquestion: 26,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 2,
+              feedbackquestion: 27,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 2,
+              feedbackquestion: 28,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 6,
+              feedbackquestion: 26,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 6,
+              feedbackquestion: 27,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 6,
+              feedbackquestion: 28,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 8,
+              feedbackquestion: 26,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 8,
+              feedbackquestion: 27,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 8,
+              feedbackquestion: 28,
+              rating_answer: 5,
+              text_answer: '5'
+            }
+          ]
+        },
         {
           user: {
             id: 2,
@@ -1305,49 +1434,68 @@ const activityResult = {
             local_admin_permission: true,
             participant_permission: true
           },
-          pitch_prep_text: 'Matt wrote this pitch as a test',
+          pitch_prep_text:
+            'my notes are my notes and nobody else should see them',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
-                pitchomaticblank: 19,
-                choice: 138
+                pitchomaticblank: 7,
+                choice: 55
               },
               {
-                pitchomaticblank: 20,
-                choice: 150
+                pitchomaticblank: 8,
+                choice: 59
               },
               {
-                pitchomaticblank: 21,
-                choice: 158
+                pitchomaticblank: 9,
+                choice: 65
               }
             ]
           },
           pitchomaticfeedback_set: [
             {
-              user: 8,
-              feedbackquestion: 86,
-              rating_answer: 4,
-              text_answer: '4'
+              user: 7,
+              feedbackquestion: 26,
+              rating_answer: 1,
+              text_answer: 'matt does not know how to write a pitch'
             },
             {
-              user: 8,
-              feedbackquestion: 87,
-              rating_answer: 5,
-              text_answer: '5'
+              user: 7,
+              feedbackquestion: 27,
+              rating_answer: 1,
+              text_answer: '2'
             },
             {
-              user: 8,
-              feedbackquestion: 88,
-              rating_answer: 5,
-              text_answer: '5'
+              user: 7,
+              feedbackquestion: 28,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 26,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 27,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 28,
+              rating_answer: 1,
+              text_answer: '1'
             }
           ]
         },
         {
           user: {
             id: 8,
-            username: 'khan',
-            first_name: 'khan',
+            username: 'jim',
+            first_name: 'Jim',
             last_name: '',
             email: '',
             verified_email: false,
@@ -1359,39 +1507,166 @@ const activityResult = {
             local_admin_permission: false,
             participant_permission: true
           },
-          pitch_prep_text: 'Mahin wrote these pitch notes',
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a lee',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
-                pitchomaticblank: 19,
-                choice: 145
+                pitchomaticblank: 7,
+                choice: 51
               },
               {
-                pitchomaticblank: 20,
-                choice: 150
+                pitchomaticblank: 8,
+                choice: 60
               },
               {
-                pitchomaticblank: 21,
-                choice: 157
+                pitchomaticblank: 9,
+                choice: 64
+              }
+            ]
+          },
+          pitchomaticfeedback_set: [
+            {
+              user: 7,
+              feedbackquestion: 26,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 7,
+              feedbackquestion: 27,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 7,
+              feedbackquestion: 28,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 6,
+              feedbackquestion: 26,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 27,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 28,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 2,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '2'
+            },
+            {
+              user: 2,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '2'
+            },
+            {
+              user: 2,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '2'
+            }
+          ]
+        },
+        {
+          user: {
+            id: 6,
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
+            verified_email: false,
+            job_title: null,
+            organization_name: null,
+            orggroup_name: null,
+            organization: null,
+            orggroup: null,
+            local_admin_permission: false,
+            participant_permission: true
+          },
+          pitch_prep_text:
+            'how am I supposed to pitch disney. it\'s like a leech dd',
+          pitch: {
+            pitchomaticgroupmemberpitchchoice_set: [
+              {
+                pitchomaticblank: 7,
+                choice: 48
+              },
+              {
+                pitchomaticblank: 8,
+                choice: 63
+              },
+              {
+                pitchomaticblank: 9,
+                choice: 66
               }
             ]
           },
           pitchomaticfeedback_set: [
             {
               user: 2,
-              feedbackquestion: 86,
+              feedbackquestion: 26,
               rating_answer: 5,
               text_answer: '5'
             },
             {
               user: 2,
-              feedbackquestion: 87,
+              feedbackquestion: 27,
               rating_answer: 5,
               text_answer: '5'
             },
             {
               user: 2,
-              feedbackquestion: 88,
+              feedbackquestion: 28,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 7,
+              feedbackquestion: 26,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 7,
+              feedbackquestion: 27,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 7,
+              feedbackquestion: 28,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 8,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '2'
+            },
+            {
+              user: 8,
+              feedbackquestion: 27,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 8,
+              feedbackquestion: 28,
               rating_answer: 3,
               text_answer: '3'
             }
@@ -1399,6 +1674,537 @@ const activityResult = {
         }
       ],
       activity_type: 'PitchoMaticActivity'
+    },
+    {
+      id: 72,
+      feedbackquestion_set: [
+        {
+          id: 29,
+          feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 1,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            }
+          ],
+          average_rating: '4.50',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can evaluate the quality of a pitch.',
+          is_combo: false,
+          combo_text: 'Why is that?',
+          feedbackactivity: 72,
+          pitchomaticactivity: null
+        },
+        {
+          id: 30,
+          feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 1,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            }
+          ],
+          average_rating: '4.75',
+          question_type: 'rating_agreedisagree',
+          question_text:
+            'I can deliver a clear, concise, and compelling pitch.',
+          is_combo: false,
+          combo_text: null,
+          feedbackactivity: 72,
+          pitchomaticactivity: null
+        },
+        {
+          id: 31,
+          feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 1,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            }
+          ],
+          average_rating: '4.75',
+          question_type: 'rating_agreedisagree',
+          question_text: 'I can adjust my pitch to fit different situations.',
+          is_combo: false,
+          combo_text: null,
+          feedbackactivity: 72,
+          pitchomaticactivity: null
+        }
+      ],
+      titlecomponent: {
+        title: 'What about now?',
+        title_image: 'emoji://memo',
+        screen_instructions: 'Fill out the form on your phone',
+        participant_instructions:
+          'How do you feel about your pitching skills now?'
+      },
+      activity_type: 'FeedbackActivity',
+      activity_title: 'PostAssessment'
     },
     {
       id: 523,
@@ -2163,110 +2969,110 @@ const activityResult2 = {
       instructions: 'Generate your pitches, brainstorm, pitch and then vote!',
       pitchomaticblank_set: [
         {
-          id: 13,
+          id: 7,
           order: 0,
           label: 'You are pitching:',
           pitchomaticblankchoice_set: [
             {
-              id: 89,
+              id: 45,
               value: 'Coca Cola'
             },
             {
-              id: 90,
+              id: 46,
               value: 'SpaceX'
             },
             {
-              id: 91,
+              id: 47,
               value: 'Tesla'
             },
             {
-              id: 92,
+              id: 48,
               value: 'Disney'
             },
             {
-              id: 93,
+              id: 49,
               value: 'Apple'
             },
             {
-              id: 94,
+              id: 50,
               value: 'McDonalds'
             },
             {
-              id: 95,
+              id: 51,
               value: 'Netflix'
             },
             {
-              id: 96,
+              id: 52,
               value: 'WestJet'
             },
             {
-              id: 97,
+              id: 53,
               value: 'IKEA'
             },
             {
-              id: 98,
+              id: 54,
               value: 'Walmart'
             },
             {
-              id: 99,
+              id: 55,
               value: 'Facebook'
             },
             {
-              id: 100,
+              id: 56,
               value: 'NHL'
             }
           ]
         },
         {
-          id: 14,
+          id: 8,
           order: 1,
           label: 'You are pitching to:',
           pitchomaticblankchoice_set: [
             {
-              id: 101,
+              id: 57,
               value: 'a CTO'
             },
             {
-              id: 102,
+              id: 58,
               value: 'a venture capitalist'
             },
             {
-              id: 103,
+              id: 59,
               value: 'a 5 year old'
             },
             {
-              id: 104,
+              id: 60,
               value: 'an 86 year old grandmother'
             },
             {
-              id: 105,
+              id: 61,
               value: 'a group of college students'
             },
             {
-              id: 106,
+              id: 62,
               value: 'academics at a conference'
             },
             {
-              id: 107,
+              id: 63,
               value: 'an elevator full of random people'
             }
           ]
         },
         {
-          id: 15,
+          id: 9,
           order: 2,
           label: 'And the technique you need to use is:',
           pitchomaticblankchoice_set: [
             {
-              id: 108,
+              id: 64,
               value: 'a story'
             },
             {
-              id: 109,
+              id: 65,
               value: 'a surprising fact'
             },
             {
-              id: 110,
+              id: 66,
               value: 'an analogy'
             }
           ]
@@ -2274,21 +3080,21 @@ const activityResult2 = {
       ],
       feedbackquestion_set: [
         {
-          id: 64,
+          id: 26,
           question_type: 'rating_agreedisagree',
           question_text: 'The pitch was compelling',
           is_combo: false,
           combo_text: null
         },
         {
-          id: 65,
+          id: 27,
           question_type: 'rating_agreedisagree',
           question_text: 'The pitch answered all the essential questions',
           is_combo: false,
           combo_text: null
         },
         {
-          id: 66,
+          id: 28,
           question_type: 'rating_agreedisagree',
           question_text: 'Overall, the pitch was excellent',
           is_combo: true,
@@ -2296,6 +3102,96 @@ const activityResult2 = {
         }
       ],
       pitchomaticgroupmembers: [
+        {
+          user: {
+            id: 7,
+            username: 'abdullah',
+            first_name: 'Abdullah',
+            last_name: '',
+            email: '',
+            verified_email: false,
+            job_title: null,
+            organization_name: null,
+            orggroup_name: null,
+            organization: null,
+            orggroup: null,
+            local_admin_permission: false,
+            participant_permission: true
+          },
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a lee',
+          pitch: {
+            pitchomaticgroupmemberpitchchoice_set: [
+              {
+                pitchomaticblank: 7,
+                choice: 55
+              },
+              {
+                pitchomaticblank: 8,
+                choice: 61
+              },
+              {
+                pitchomaticblank: 9,
+                choice: 65
+              }
+            ]
+          },
+          pitchomaticfeedback_set: [
+            {
+              user: 2,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '5'
+            },
+            {
+              user: 2,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '5'
+            },
+            {
+              user: 2,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '5'
+            },
+            {
+              user: 6,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '3'
+            },
+            {
+              user: 6,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '3'
+            },
+            {
+              user: 6,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '3'
+            },
+            {
+              user: 8,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '4'
+            },
+            {
+              user: 8,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '5'
+            },
+            {
+              user: 8,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '5'
+            }
+          ]
+        },
         {
           user: {
             id: 2,
@@ -2312,49 +3208,68 @@ const activityResult2 = {
             local_admin_permission: true,
             participant_permission: true
           },
-          pitch_prep_text: null,
+          pitch_prep_text:
+            'my notes are my notes and nobody else should see them',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
-                pitchomaticblank: 13,
-                choice: 90
+                pitchomaticblank: 7,
+                choice: 55
               },
               {
-                pitchomaticblank: 14,
-                choice: 105
+                pitchomaticblank: 8,
+                choice: 59
               },
               {
-                pitchomaticblank: 15,
-                choice: 110
+                pitchomaticblank: 9,
+                choice: 65
               }
             ]
           },
           pitchomaticfeedback_set: [
             {
-              user: 8,
-              feedbackquestion: 64,
-              rating_answer: 4,
-              text_answer: '4'
+              user: 7,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: 'matt does not know how to write a pitch'
             },
             {
-              user: 8,
-              feedbackquestion: 65,
-              rating_answer: 5,
-              text_answer: '5'
+              user: 7,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '2'
             },
             {
-              user: 8,
-              feedbackquestion: 66,
-              rating_answer: 5,
-              text_answer: '5'
+              user: 7,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '1'
             }
           ]
         },
         {
           user: {
-            id: 7,
-            username: 'khan',
-            first_name: 'khan',
+            id: 8,
+            username: 'jim',
+            first_name: 'Jim',
             last_name: '',
             email: '',
             verified_email: false,
@@ -2366,39 +3281,166 @@ const activityResult2 = {
             local_admin_permission: false,
             participant_permission: true
           },
-          pitch_prep_text: null,
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a lee',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
-                pitchomaticblank: 13,
-                choice: 96
+                pitchomaticblank: 7,
+                choice: 51
               },
               {
-                pitchomaticblank: 14,
-                choice: 105
+                pitchomaticblank: 8,
+                choice: 60
               },
               {
-                pitchomaticblank: 15,
-                choice: 109
+                pitchomaticblank: 9,
+                choice: 64
+              }
+            ]
+          },
+          pitchomaticfeedback_set: [
+            {
+              user: 7,
+              feedbackquestion: 26,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 7,
+              feedbackquestion: 27,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 7,
+              feedbackquestion: 28,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 6,
+              feedbackquestion: 26,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 27,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 6,
+              feedbackquestion: 28,
+              rating_answer: 1,
+              text_answer: '1'
+            },
+            {
+              user: 2,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '2'
+            },
+            {
+              user: 2,
+              feedbackquestion: 27,
+              rating_answer: 2,
+              text_answer: '2'
+            },
+            {
+              user: 2,
+              feedbackquestion: 28,
+              rating_answer: 2,
+              text_answer: '2'
+            }
+          ]
+        },
+        {
+          user: {
+            id: 6,
+            username: 'khana',
+            first_name: 'khana',
+            last_name: '',
+            email: '',
+            verified_email: false,
+            job_title: null,
+            organization_name: null,
+            orggroup_name: null,
+            organization: null,
+            orggroup: null,
+            local_admin_permission: false,
+            participant_permission: true
+          },
+          pitch_prep_text:
+            'how am I supposed to pitch disney. it\'s like a leech dd',
+          pitch: {
+            pitchomaticgroupmemberpitchchoice_set: [
+              {
+                pitchomaticblank: 7,
+                choice: 48
+              },
+              {
+                pitchomaticblank: 8,
+                choice: 63
+              },
+              {
+                pitchomaticblank: 9,
+                choice: 66
               }
             ]
           },
           pitchomaticfeedback_set: [
             {
               user: 2,
-              feedbackquestion: 64,
+              feedbackquestion: 26,
               rating_answer: 5,
               text_answer: '5'
             },
             {
               user: 2,
-              feedbackquestion: 65,
+              feedbackquestion: 27,
               rating_answer: 5,
               text_answer: '5'
             },
             {
               user: 2,
-              feedbackquestion: 66,
+              feedbackquestion: 28,
+              rating_answer: 4,
+              text_answer: '4'
+            },
+            {
+              user: 7,
+              feedbackquestion: 26,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 7,
+              feedbackquestion: 27,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 7,
+              feedbackquestion: 28,
+              rating_answer: 5,
+              text_answer: '5'
+            },
+            {
+              user: 8,
+              feedbackquestion: 26,
+              rating_answer: 2,
+              text_answer: '2'
+            },
+            {
+              user: 8,
+              feedbackquestion: 27,
+              rating_answer: 3,
+              text_answer: '3'
+            },
+            {
+              user: 8,
+              feedbackquestion: 28,
               rating_answer: 3,
               text_answer: '3'
             }
@@ -2413,40 +3455,523 @@ const activityResult2 = {
       activity_type: 'VideoActivity'
     },
     {
-      id: 394,
+      id: 72,
       feedbackquestion_set: [
         {
-          id: 67,
-          feedbackuseranswer_set: [],
-          average_rating: null,
+          id: 29,
+          feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 29
+            }
+          ],
+          average_rating: '4.50',
           question_type: 'rating_agreedisagree',
           question_text: 'I can evaluate the quality of a pitch.',
           is_combo: false,
           combo_text: 'Why is that?',
-          feedbackactivity: 394,
+          feedbackactivity: 72,
           pitchomaticactivity: null
         },
         {
-          id: 68,
-          feedbackuseranswer_set: [],
-          average_rating: null,
+          id: 30,
+          feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 9,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 10,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 11,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            },
+            {
+              user: {
+                id: 12,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 30
+            }
+          ],
+          average_rating: '4.75',
           question_type: 'rating_agreedisagree',
           question_text:
             'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
-          feedbackactivity: 394,
+          feedbackactivity: 72,
           pitchomaticactivity: null
         },
         {
-          id: 69,
-          feedbackuseranswer_set: [],
-          average_rating: null,
+          id: 31,
+          feedbackuseranswer_set: [
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 3,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 2,
+                username: 'matt',
+                first_name: 'Matt',
+                last_name: 'Parson',
+                email: 'matt@mybenji.com',
+                verified_email: false,
+                job_title: 'CEO',
+                organization_name: 'Benji',
+                orggroup_name: 'Sales',
+                organization: 1,
+                orggroup: 1,
+                local_admin_permission: true,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 6,
+                username: 'khana',
+                first_name: 'khana',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 4,
+              text_answer: '4',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 7,
+                username: 'abdullah',
+                first_name: 'Abdullah',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            },
+            {
+              user: {
+                id: 8,
+                username: 'jim',
+                first_name: 'Jim',
+                last_name: '',
+                email: '',
+                verified_email: false,
+                job_title: null,
+                organization_name: null,
+                orggroup_name: null,
+                organization: null,
+                orggroup: null,
+                local_admin_permission: false,
+                participant_permission: true
+              },
+              rating_answer: 5,
+              text_answer: '5',
+              feedbackquestion: 31
+            }
+          ],
+          average_rating: '4.75',
           question_type: 'rating_agreedisagree',
           question_text: 'I can adjust my pitch to fit different situations.',
           is_combo: false,
           combo_text: null,
-          feedbackactivity: 394,
+          feedbackactivity: 72,
           pitchomaticactivity: null
         }
       ],
@@ -2457,7 +3982,8 @@ const activityResult2 = {
         participant_instructions:
           'How do you feel about your pitching skills now?'
       },
-      activity_type: 'FeedbackActivity'
+      activity_type: 'FeedbackActivity',
+      activity_title: 'PostAssessment'
     },
     {
       id: 395,
@@ -5198,7 +6724,8 @@ const activityResult3 = {
         participant_instructions:
           'How do you feel about your pitching skills now?'
       },
-      activity_type: 'FeedbackActivity'
+      activity_type: 'FeedbackActivity',
+      activity_title: 'PostAssessment'
     },
     {
       id: 73,
