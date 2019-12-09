@@ -132,26 +132,27 @@ export class PastSessionsService {
 
             const arr = [];
             pastSessionsReports.forEach(report => {
-
+              const obj = { postAssessment: {}, pom: {} };
               // Iterate over each activity in order and
               // push them to the array
               report.activity_results.forEach((act, i) => {
                 if (act.activity_type === ActivityTypes.feedback) {
                   if (act.activity_title === 'PostAssessment') {
-                    arr.push({
+                    obj.postAssessment = {
                       ...res,
                       activity_type: ActivityTypes.feedback,
                       feedback: act as FeedbackReport
-                    });
+                    };
                   }
                 } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-                  arr.push({
+                  obj.pom = {
                     ...res,
                     activity_type: ActivityTypes.pitchoMatic,
                     pom: act as PitchOMaticReport
-                  });
+                  };
                 }
               });
+              arr.push(obj);
             });
             return arr;
           })
@@ -5972,37 +5973,37 @@ const activityResult3 = {
             {
               user: 7,
               feedbackquestion: 26,
-              rating_answer: 1,
+              rating_answer: 3,
               text_answer: 'matt does not know how to write a pitch'
             },
             {
               user: 7,
               feedbackquestion: 27,
-              rating_answer: 1,
+              rating_answer: 3,
               text_answer: '2'
             },
             {
               user: 7,
               feedbackquestion: 28,
-              rating_answer: 2,
+              rating_answer: 3,
               text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 26,
-              rating_answer: 1,
+              rating_answer: 3,
               text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 27,
-              rating_answer: 1,
+              rating_answer: 3,
               text_answer: '1'
             },
             {
               user: 6,
               feedbackquestion: 28,
-              rating_answer: 1,
+              rating_answer: 3,
               text_answer: '1'
             }
           ]

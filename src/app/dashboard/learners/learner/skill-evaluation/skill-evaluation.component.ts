@@ -35,9 +35,49 @@ export class SkillEvaluationComponent implements OnInit {
 
   ngOnInit() {
     this.pastSessionsService
-      .getReports('65367')
+      .getAllReports()
       .subscribe((res: Array<ActivityReport>) => {
         // this.statsData = res[0];
+        console.log(res);
+
+        // so for compelling pitch ONLY CHART Jon Snow was given by three different people:
+        // 4, 3, 5
+        // and he self assessed 3, 3, 3 star for compelling pitch
+        // ((4 * 0.22) + (3 * 0.22) + (5 * 0.22) + (3 * 0.11)  + (4 * 0.11) + (5* 0.11))
+        // compelling, essential questions, overall execellent
+        // 1st session pom feedback: [1,1,1]
+        // 2nd session pom feedback: [2,2,2]
+        // 3rd session pom feedback: [3,3,3]
+        // 4th session pom feedback: [4,4,4]
+
+        // 1st session self feedback: [1,1,1]
+        // 2nd session self feedback: [2,2,2]
+        // 3rd session self feedback: [3,3,3]
+        // 4th session self feedback: [4,4,4]
+
+
+        const compellingMultiplier = 0.22;
+        const selfMultiplier = 0.11;
+        // Compelling feedback across all four sessions
+        // [compellingSession1Score, compellingSession2Score, compellingSession3Score, CompellingSession4Score]
+        const compellingFeedback = [1, 2, 3, 4];
+        // Selffeedback on each session
+        const selfFeedback = [[1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]];
+
+
+        compellingFeedback.forEach((rating, i) => {
+          const weightedScore = rating * compellingMultiplier;
+          selfFeedback[i].forEach(selfrating => {
+            const selfweighted = selfrating * selfMultiplier;
+          });
+
+        });
+
+
+
+
+        // what data should look like
+        // [x, x+y, x+y+z]
         const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(
           SkillOverviewComponent
         );
