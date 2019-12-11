@@ -325,7 +325,8 @@ export class GenericRoleplayUserFeedbackEvent extends ActivityEvent {
   ) {
     super();
     this.extra_args = {
-      genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set
+      genericroleplayuserfeedbackeventanswer_set:
+        genericroleplayuserfeedbackeventanswer_set
     };
   }
 }

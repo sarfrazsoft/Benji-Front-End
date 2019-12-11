@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { User } from './user';
 import {
   BuildAPitchBlank,
   BuildAPitchEntry,
@@ -7,7 +7,7 @@ import {
   MCQQuestion,
   Timer,
   TitleComponent
-} from "./utils";
+} from './utils';
 
 export interface BaseActivity {
   activity_id: string;
@@ -332,6 +332,7 @@ export interface PitchoMaticGroupMemberPitchChoice {
 export interface GenericRoleplayActivity {
   activity_countdown_timer: Timer;
   activity_seconds: number;
+  feedback_buffer: number;
   activity_type: string;
   genericroleplayrole_set: Array<RoleplayRole>;
   genericroleplayuser_set: Array<RoleplayUser>;

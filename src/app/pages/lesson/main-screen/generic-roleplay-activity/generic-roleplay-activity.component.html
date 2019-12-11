@@ -1,6 +1,6 @@
 <!-- Show Role-Play screen to group with instruction on what to do -->
-<ng-container>
-  <div class="mainscreen-activity pair-activity">
+<div class="mainscreen-activity pair-activity">
+  <ng-container *ngIf="!giveFeedback">
     <div class="roleplay-instruction bg-off-white">
       <div class="title all-caps-title">
         <p class="secondary-color-dark pn-500">Role-play</p>
@@ -24,70 +24,65 @@
     </div>
     <div class="linear-timer-container">
       <benji-linear-timer
-        [timer]="activityState.genericroleplayactivity.activity_countdown_timer"
+        [timer]="rplayTimer"
         [endAudio]="'attention-seeker.mp3'"
         [timerOffset]="avgServerTimeOffset"
       ></benji-linear-timer>
     </div>
-  </div>
-</ng-container>
-
-<!-- Give feedback -->
-<div
-  class="share-feedback bg-white"
-  *ngIf="giveFeedback"
-  fxFlex="1 0 0"
-  fxLayout="row"
->
+  </ng-container>
   <div
-    class="activity-instructions bg-white"
-    fxFlex="60%"
-    fxLayoutAlign="start center"
+    *ngIf="giveFeedback"
+    class="share-feedback bg-white"
+    fxFlex="1 0 0"
+    fxLayout="row"
   >
-    <div fxLayoutGap="4vw">
-      <div fxFlex="25%">
-        <div class="ms-emoji-container smaller-emoji">
-          <app-b-twemoji emoji="️️️️️️️🎲"></app-b-twemoji>
-        </div>
-      </div>
-      <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-        <h3
-          class="secondary-color-dark pn-600 discuss-instruction pitch-text"
-          innerHTML="{{
-            'Thanks everyone, please fill out your feedback forms.'
-          }}"
-        ></h3>
-        <div
-          class="info-subsection primary-color-lighter pn-500"
-          fxLayout="row"
-          fxLayoutAlign="start start"
-        >
-          <img
-            class="main-screen-utility-icons"
-            src="/assets/img/check_icon.png"
-            alt="launch"
-          />
-          <div class="instruction">
-            0/0 forms submitted
+    <div
+      class="activity-instructions bg-white"
+      fxFlex="60%"
+      fxLayoutAlign="start center"
+    >
+      <div fxLayoutGap="4vw">
+        <div fxFlex="25%">
+          <div class="ms-emoji-container smaller-emoji">
+            <app-b-twemoji emoji="️️️️️️️🎲"></app-b-twemoji>
           </div>
-          <!-- <div class="instruction">
-            {{ getFbackSubmittedCount(0) }}/{{ getGroupUsersCount(0) - 1 }}
-            forms submitted
-          </div> -->
+        </div>
+        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+          <h3
+            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
+            innerHTML="{{
+              'Thanks everyone, please fill out your feedback forms.'
+            }}"
+          ></h3>
+          <div
+            class="info-subsection primary-color-lighter pn-500"
+            fxLayout="row"
+            fxLayoutAlign="start start"
+          >
+            <img
+              class="main-screen-utility-icons"
+              src="/assets/img/check_icon.png"
+              alt="launch"
+            />
+            <div class="instruction">
+              {{ getFbackSubmittedCount() }}/{{ getGroupUsersCount() }}
+              forms submitted
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div
-    class="bg-secondary-color-lightest"
-    fxFlex="40%"
-    fxLayoutAlign="center center"
-  >
-    <!-- <app-radial-timer
-      [timer]="activityState.pitchomaticactivity.feedback_timer"
-      endStateText="Done!"
-      [endAudio]="'attention-seeker.mp3'"
-      [timerOffset]="avgServerTimeOffset"
-    ></app-radial-timer> -->
+    <div
+      class="bg-secondary-color-lightest"
+      fxFlex="40%"
+      fxLayoutAlign="center center"
+    >
+      <app-radial-timer
+        [timer]="feedbackTimer"
+        endStateText="Done!"
+        [endAudio]="'attention-seeker.mp3'"
+        [timerOffset]="avgServerTimeOffset"
+      ></app-radial-timer>
+    </div>
   </div>
 </div>

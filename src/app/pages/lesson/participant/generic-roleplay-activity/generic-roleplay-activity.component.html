@@ -1,44 +1,80 @@
-<benji-ps-instruction-template *ngIf="!isObserver()">
-  <ng-container class="body-title">Role-play</ng-container>
-  <app-b-twemoji
-    class="body-emoji"
-    [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
-  ></app-b-twemoji>
-  <h1 class="body-heading pn-700 primary-color-darkest">
-    You’re the {{ getParticipantRole().name }}
-  </h1>
-  <ng-container class="body-text">
-    {{ getParticipantRole().instructions }}
-  </ng-container>
-  <ng-container class="content">
+<ng-container *ngIf="!isObserver()">
+  <ng-container *ngIf="!giveFeedback">
+    <benji-ps-instruction-template>
+      <ng-container class="body-title">Role-play</ng-container>
+      <app-b-twemoji
+        class="body-emoji"
+        [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
+      ></app-b-twemoji>
+      <h1 class="body-heading pn-700 primary-color-darkest">
+        You’re the {{ getParticipantRole().name }}
+      </h1>
+      <ng-container class="body-text">
+        {{ getParticipantRole().instructions }}
+      </ng-container>
+    </benji-ps-instruction-template>
+
     <benji-linear-timer
-      [timer]="activityState.genericroleplayactivity.activity_countdown_timer"
+      [timer]="rplayTimer"
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>
   </ng-container>
-</benji-ps-instruction-template>
+
+  <ng-container *ngIf="giveFeedback">
+    <benji-ps-instruction-template>
+      <ng-container class="body-title">Role-play</ng-container>
+      <app-b-twemoji
+        class="body-emoji"
+        [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
+      ></app-b-twemoji>
+      <h1 class="body-heading pn-700 primary-color-darkest">
+        Provide feedback
+      </h1>
+      <p class="body-text">
+        give feedback bro
+      </p>
+      <ng-container class="content">
+        <benji-question-form
+          *ngIf="getParticipantRole().feedbackquestions.length"
+          [question_set]="getParticipantRole().feedbackquestions"
+          (submitResponse)="submitAnswers($event)"
+        ></benji-question-form>
+      </ng-container>
+    </benji-ps-instruction-template>
+    <benji-linear-timer
+      [timer]="feedbackTimer"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+  </ng-container>
+</ng-container>
 
 <ng-container *ngIf="isObserver()">
-  <benji-question-layout *ngIf="!answersSubmitted">
-    <ng-container class="body-title">
-      Role-play
-    </ng-container>
-    <app-b-twemoji
-      class="body-emoji"
-      [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
-    ></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">
-      You’re the {{ getParticipantRole().name }}
-    </h1>
-    <p class="body-text">
-      {{ getParticipantRole().instructions }}
-    </p>
+  <ng-container *ngIf="!answersSubmitted">
+    <benji-question-layout>
+      <ng-container class="body-title">
+        Role-play
+      </ng-container>
+      <app-b-twemoji
+        class="body-emoji"
+        [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
+      ></app-b-twemoji>
+      <h1 class="body-heading pn-700 primary-color-darkest">
+        You’re the {{ getParticipantRole().name }}
+      </h1>
+      <p class="body-text">
+        {{ getParticipantRole().instructions }}
+      </p>
 
-    <benji-question-form
-      [question_set]="getParticipantRole().feedbackquestions"
-      (submitResponse)="submitAnswers($event)"
-    ></benji-question-form>
-  </benji-question-layout>
+      <benji-question-form
+        [question_set]="getParticipantRole().feedbackquestions"
+        (submitResponse)="submitAnswers($event)"
+      ></benji-question-form>
+    </benji-question-layout>
+    <benji-linear-timer
+      [timer]="feedbackTimer"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+  </ng-container>
 
   <benji-ps-instruction-template *ngIf="answersSubmitted">
     <ng-container class="body-title">Thank You</ng-container>
@@ -48,22 +84,3 @@
     </h1>
   </benji-ps-instruction-template>
 </ng-container>
-
-<!-- <benji-ps-instruction-template >
-  <ng-container class="body-title">Role-play</ng-container>
-  <app-b-twemoji
-    class="body-emoji"
-    [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
-  ></app-b-twemoji>
-  <h1 class="body-heading pn-700 primary-color-darkest">
-    You’re the {{ getParticipantRole().name }}
-  </h1>
-  <ng-container class="body-text">
-    {{ getParticipantRole().instructions }}
-  </ng-container>
-  <ng-container class="content">
-    <div *ngFor="let question of getParticipantRole().feedbackquestions">
-      {{ question.question_text }}
-    </div>
-  </ng-container>
-</benji-ps-instruction-template> -->
