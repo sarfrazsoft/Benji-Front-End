@@ -24,7 +24,7 @@ export class PastSessionsService {
   constructor(
     private http: HttpClient,
     private contextService: ContextService
-  ) { }
+  ) {}
 
   addToFilteredInList(id: number) {
     if (this.filteredInUsers.includes(id)) {
@@ -128,7 +128,11 @@ export class PastSessionsService {
         .get(global.apiRoot + '/tenants/users/?page=' + 1)
         .pipe(
           map((res: Array<SessionReport>) => {
-            const pastSessionsReports = [activityResult, activityResult2, activityResult3];
+            const pastSessionsReports = [
+              activityResult,
+              activityResult2,
+              activityResult3
+            ];
 
             const arr = [];
             pastSessionsReports.forEach(report => {
@@ -166,13 +170,9 @@ export class PastSessionsService {
     return this.http.get<User>(request);
   }
 
-  // /api/course_details/lesson_run/
   getPastSessions(sort: string, order: string, page: number): Observable<any> {
-    // replaced for testing
-    // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
-    return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
       map(res => {
-        console.log(res);
         return res;
       })
     );

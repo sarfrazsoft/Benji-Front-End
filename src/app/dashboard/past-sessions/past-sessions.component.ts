@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/services/backend/schema';
@@ -95,10 +96,28 @@ export class PastSessionsComponent implements AfterViewInit {
       )
       .subscribe(data => {
         console.log(data);
-        this.data = this.dataa.results;
+        const xData = [];
+        data.forEach(run => {
+          xData.push({
+            id: run.id,
+            date: moment(run.start_time).format('DD, MMMM YYYY'),
+            title: run.lesson.lesson_name,
+            hostedBy: run.host.first_name + ' ' + run.host.last_name,
+            participants: run.joined_users.length
+          });
+        });
+        this.data = xData;
         return data;
       });
   }
+
+  // {
+  //   id: 8,
+  //   date: '7-7-2019',
+  //   title: 'Active Listening',
+  //   hostedBy: 'Mahin baghi',
+  //   participants: 5
+  // }
 
   showReports(row) {
     console.log(row);

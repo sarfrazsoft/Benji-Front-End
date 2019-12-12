@@ -10,7 +10,10 @@ import {
 } from '@angular/core';
 import * as Chart from 'chart.js';
 import { ActivityTypes } from 'src/app/globals';
-import { ActivityReport, FeedbackGraphQuestion } from 'src/app/services/backend/schema';
+import {
+  ActivityReport,
+  FeedbackGraphQuestion
+} from 'src/app/services/backend/schema';
 import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import { SkillOverviewComponent } from './skill-overview/skill-overview.component';
 
@@ -27,11 +30,16 @@ export class SkillEvaluationComponent implements OnInit {
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
   @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
-  @ViewChild('reportEntry2', { read: ViewContainerRef }) entry2: ViewContainerRef;
-  @ViewChild('reportEntry3', { read: ViewContainerRef }) entry3: ViewContainerRef;
-  @ViewChild('reportEntry4', { read: ViewContainerRef }) entry4: ViewContainerRef;
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,
-    private pastSessionsService: PastSessionsService, ) { }
+  @ViewChild('reportEntry2', { read: ViewContainerRef })
+  entry2: ViewContainerRef;
+  @ViewChild('reportEntry3', { read: ViewContainerRef })
+  entry3: ViewContainerRef;
+  @ViewChild('reportEntry4', { read: ViewContainerRef })
+  entry4: ViewContainerRef;
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private pastSessionsService: PastSessionsService
+  ) {}
 
   ngOnInit() {
     this.pastSessionsService
@@ -40,9 +48,9 @@ export class SkillEvaluationComponent implements OnInit {
         // this.statsData = res[0];
         console.log(res);
 
-        // so for compelling pitch ONLY CHART Jon Snow was given by three different people:
-        // 4, 3, 5
-        // and he self assessed 3, 3, 3 star for compelling pitch
+        // pitching: 3 sessions 4 people in each session answering 3 questions
+        // [[4, 3, 5], [4, 4, 4], [3, 4, 5]]
+        // and he self assessed [3, 3, 3] star for compelling pitch
         // ((4 * 0.22) + (3 * 0.22) + (5 * 0.22) + (3 * 0.11)  + (4 * 0.11) + (5* 0.11))
         // compelling, essential questions, overall execellent
         // 1st session pom feedback: [1,1,1]
@@ -55,26 +63,25 @@ export class SkillEvaluationComponent implements OnInit {
         // 3rd session self feedback: [3,3,3]
         // 4th session self feedback: [4,4,4]
 
-
         const compellingMultiplier = 0.22;
         const selfMultiplier = 0.11;
         // Compelling feedback across all four sessions
         // [compellingSession1Score, compellingSession2Score, compellingSession3Score, CompellingSession4Score]
         const compellingFeedback = [1, 2, 3, 4];
         // Selffeedback on each session
-        const selfFeedback = [[1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4]];
-
+        const selfFeedback = [
+          [1, 2, 3, 4],
+          [1, 2, 3, 4],
+          [1, 2, 3, 4],
+          [1, 2, 3, 4]
+        ];
 
         compellingFeedback.forEach((rating, i) => {
           const weightedScore = rating * compellingMultiplier;
           selfFeedback[i].forEach(selfrating => {
             const selfweighted = selfrating * selfMultiplier;
           });
-
         });
-
-
-
 
         // what data should look like
         // [x, x+y, x+y+z]
