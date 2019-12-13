@@ -96,7 +96,7 @@ export class SessionsComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
         this.data = this.dataa.results;
         return data;
       });

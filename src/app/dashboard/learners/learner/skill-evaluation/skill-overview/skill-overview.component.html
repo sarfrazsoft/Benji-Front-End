@@ -10,7 +10,9 @@
       ></benji-learner-donut>
     </div>
     <div fxFlex="55%" class="line-chart">
-      <benji-skill-line-chart></benji-skill-line-chart>
+      <benji-skill-line-chart
+        [chartData]="overviewData.chart"
+      ></benji-skill-line-chart>
     </div>
   </div>
 </div>

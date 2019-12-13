@@ -45,46 +45,80 @@ export class SkillEvaluationComponent implements OnInit {
     this.pastSessionsService
       .getAllReports()
       .subscribe((res: Array<ActivityReport>) => {
-        // this.statsData = res[0];
         console.log(res);
 
-        // pitching: 3 sessions 4 people in each session answering 3 questions
-        // [[4, 3, 5], [4, 4, 4], [3, 4, 5]]
-        // and he self assessed [3, 3, 3] star for compelling pitch
-        // ((4 * 0.22) + (3 * 0.22) + (5 * 0.22) + (3 * 0.11)  + (4 * 0.11) + (5* 0.11))
-        // compelling, essential questions, overall execellent
-        // 1st session pom feedback: [1,1,1]
-        // 2nd session pom feedback: [2,2,2]
-        // 3rd session pom feedback: [3,3,3]
-        // 4th session pom feedback: [4,4,4]
+        // Pitching Skill
 
-        // 1st session self feedback: [1,1,1]
-        // 2nd session self feedback: [2,2,2]
-        // 3rd session self feedback: [3,3,3]
-        // 4th session self feedback: [4,4,4]
+        const peerfbackMultiplier = 0.22;
+        const selfFbackMultiplier = 0.11;
+        //  PeerFedbacks[
+        //    S1[
+        //      Q1[r1,r2,r3,r4],
+        //      Q2[r1,r2,r3,r4],
+        //      Q3[r1,r2,r3,r4]
+        //    ]
+        //    S2[
+        //     Q1[r1,r2,r3,r4],
+        //     Q2[r1,r2,r3,r4],
+        //     Q3[r1,r2,r3,r4]
+        //    ]
+        //  ]
 
-        const compellingMultiplier = 0.22;
-        const selfMultiplier = 0.11;
-        // Compelling feedback across all four sessions
-        // [compellingSession1Score, compellingSession2Score, compellingSession3Score, CompellingSession4Score]
-        const compellingFeedback = [1, 2, 3, 4];
-        // Selffeedback on each session
-        const selfFeedback = [
-          [1, 2, 3, 4],
-          [1, 2, 3, 4],
-          [1, 2, 3, 4],
-          [1, 2, 3, 4]
+        // Self Assessment
+        // SelfFeedbacks[
+        //   S1[Q1,Q2,Q3],
+        //   S2[Q1,Q2,Q3]
+        // ]
+        const peerFeedbacks = [
+          [
+            [3, 4, 2, 2],
+            [4, 2, 4, 2],
+            [1, 2, 2, 2]
+          ],
+          [
+            [1, 2, 4, 5],
+            [4, 5, 2, 1],
+            [5, 4, 5, 3]
+          ],
+          [
+            [4, 4, 4, 5],
+            [4, 5, 4, 1],
+            [5, 4, 5, 4]
+          ],
+          [
+            [5, 5, 4, 5],
+            [4, 5, 3, 5],
+            [5, 4, 5, 5]
+          ]
         ];
 
-        compellingFeedback.forEach((rating, i) => {
-          const weightedScore = rating * compellingMultiplier;
-          selfFeedback[i].forEach(selfrating => {
-            const selfweighted = selfrating * selfMultiplier;
+        const selfFeedbacks = [
+          [4, 5, 3],
+          [5, 5, 4],
+          [5, 3, 4],
+          [5, 4, 5]
+        ];
+
+        const dataPoints = [];
+        peerFeedbacks.forEach((session, sessionIndex) => {
+          let sumOfAvgs = 0;
+          session.forEach((questionResponses, i) => {
+            let sum = 0;
+            questionResponses.forEach(response => {
+              sum = sum + response * peerfbackMultiplier;
+            });
+            sumOfAvgs = sumOfAvgs + sum / questionResponses.length;
           });
+          let selfFbackSum = 0;
+          selfFeedbacks[sessionIndex].forEach(response => {
+            selfFbackSum = selfFbackSum + response * selfFbackMultiplier;
+          });
+
+          const dataPoint = sumOfAvgs + selfFbackSum;
+          overviewData.chart.sessionInfo[sessionIndex].value = dataPoint;
+          dataPoints.push(dataPoint);
         });
 
-        // what data should look like
-        // [x, x+y, x+y+z]
         const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(
           SkillOverviewComponent
         );
@@ -99,13 +133,6 @@ export class SkillEvaluationComponent implements OnInit {
 
         const component4 = this.entry4.createComponent(skillOverFactory);
         component4.instance.overviewData = overviewData4;
-        // Iterate over each item in array
-        // res.forEach((act: ActivityReport) => {
-        // if (act.activity_type === ActivityTypes.mcq) {
-        // <benji-skill - overview > </benji-skill-overview>;
-        // component.instance.data = act;
-        // }
-        // });
       });
   }
 }
@@ -126,6 +153,35 @@ const overviewData = {
     title: 'Pitch Skill',
     data: 70,
     color: '#0a4cef'
+  },
+  chart: {
+    label: 'Sessions',
+    sessionInfo: [
+      {
+        date: '2nd Jan, 2020',
+        name: 'Pitch perfect',
+        xlabel: '01/02',
+        value: 3
+      },
+      {
+        date: '14th Jan, 2020',
+        name: 'Pitch practice',
+        xlabel: '01/14',
+        value: 5
+      },
+      {
+        date: '12th Jan, 2020',
+        name: 'Pitch practice',
+        xlabel: '01/12',
+        value: 7
+      },
+      {
+        date: '22nd Jan, 2020',
+        name: 'Pitch perfect',
+        xlabel: '01/22',
+        value: 6
+      }
+    ]
   }
 };
 
