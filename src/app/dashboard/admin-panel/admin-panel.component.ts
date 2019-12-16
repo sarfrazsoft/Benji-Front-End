@@ -17,12 +17,12 @@ import { AdminService } from './services/admin.service';
 export class AdminPanelComponent implements OnInit {
   courses: Array<any> = [];
   constructor(
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
     private contextService: ContextService,
     private dialog: MatDialog
   ) {
-    this.route.data.forEach((data: any) => {
+    this.activatedRoute.data.forEach((data: any) => {
       this.courses = data.dashData.courses;
       // if (!data.dashData.user.job_title) {
       //   this.dialog

@@ -16,7 +16,7 @@ import { PaginatedResponse } from 'src/app/services/backend/schema/course_detail
 })
 export class SessionsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['date', 'title', 'hosted_by', 'report'];
-
+  userID = '';
   data: any = [];
   selection = new SelectionModel<any>(true, []);
 
@@ -63,7 +63,11 @@ export class SessionsComponent implements OnInit, AfterViewInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activatedRoute.data.forEach((data: any) => {
+      this.userID = data.dashData.user.id;
+    });
+  }
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
@@ -77,7 +81,8 @@ export class SessionsComponent implements OnInit, AfterViewInit {
           return this.learnerService.getPastSessions(
             this.sort.active,
             this.sort.direction,
-            this.paginator.pageIndex
+            this.paginator.pageIndex,
+            this.userID
           );
         }),
         map((data: any) => {
@@ -96,7 +101,7 @@ export class SessionsComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(data => {
-        // console.log(data);
+        console.log(data);
         this.data = this.dataa.results;
         return data;
       });

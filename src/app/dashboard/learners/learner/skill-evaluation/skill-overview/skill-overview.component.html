@@ -3,7 +3,7 @@
     {{ overviewData.title }}
   </div>
 
-  <div fxLayout="row">
+  <div fxLayout="row" *ngIf="overviewData.enoughData">
     <div fxFlex="45%" class="donut-chart">
       <benji-learner-donut
         [donutData]="overviewData.donut"
@@ -14,5 +14,8 @@
         [chartData]="overviewData.chart"
       ></benji-skill-line-chart>
     </div>
+  </div>
+  <div *ngIf="!overviewData.enoughData">
+    Hor data pao sajnu
   </div>
 </div>

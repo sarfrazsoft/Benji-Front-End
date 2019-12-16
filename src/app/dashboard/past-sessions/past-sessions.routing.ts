@@ -14,7 +14,7 @@ const routes: Routes = [
         component: PastSessionsComponent
       },
       {
-        path: ':id',
+        path: ':lessonrunCode',
         component: ReportsComponent
       }
     ]

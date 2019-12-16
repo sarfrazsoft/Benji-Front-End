@@ -21,34 +21,34 @@ export class PastSessionsComponent implements AfterViewInit {
   data: any = [];
   selection = new SelectionModel<any>(true, []);
 
-  dataa = {
-    count: 1,
-    next: null,
-    previous: null,
-    results: [
-      {
-        id: 6,
-        date: '7-7-2019',
-        title: 'Active Listening',
-        hostedBy: 'Mahin baghi',
-        lessonrunCode: 65367
-      },
-      {
-        id: 7,
-        date: '7-7-2019',
-        title: 'Active Listening 2',
-        hostedBy: 'Mahin baghi',
-        participants: 18
-      },
-      {
-        id: 8,
-        date: '7-7-2019',
-        title: 'Active Listening',
-        hostedBy: 'Mahin baghi',
-        participants: 5
-      }
-    ]
-  };
+  // dataa = {
+  //   count: 1,
+  //   next: null,
+  //   previous: null,
+  //   results: [
+  //     {
+  //       id: 6,
+  //       date: '7-7-2019',
+  //       title: 'Active Listening',
+  //       hostedBy: 'Mahin baghi',
+  //       lessonrunCode: 65367
+  //     },
+  //     {
+  //       id: 7,
+  //       date: '7-7-2019',
+  //       title: 'Active Listening 2',
+  //       hostedBy: 'Mahin baghi',
+  //       participants: 18
+  //     },
+  //     {
+  //       id: 8,
+  //       date: '7-7-2019',
+  //       title: 'Active Listening',
+  //       hostedBy: 'Mahin baghi',
+  //       participants: 5
+  //     }
+  //   ]
+  // };
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -96,38 +96,27 @@ export class PastSessionsComponent implements AfterViewInit {
       )
       .subscribe(data => {
         console.log(data);
-        const xData = [];
+        const tableData = [];
         data.forEach(run => {
-          xData.push({
+          tableData.push({
             id: run.id,
-            date: moment(run.start_time).format('DD, MMMM YYYY'),
+            date: moment(run.start_time).format('MMMM, DD YYYY'),
             title: run.lesson.lesson_name,
             hostedBy: run.host.first_name + ' ' + run.host.last_name,
-            participants: run.joined_users.length
+            // tslint:disable-next-line:whitespace
+            // participants: run.joined_users.length,
+            lessonrunCode: run.lessonrun_code
           });
         });
-        this.data = xData;
+        this.data = tableData;
         return data;
       });
   }
 
-  // {
-  //   id: 8,
-  //   date: '7-7-2019',
-  //   title: 'Active Listening',
-  //   hostedBy: 'Mahin baghi',
-  //   participants: 5
-  // }
-
   showReports(row) {
-    console.log(row);
-    // this.router.navigate(['reports'], {
-    //   queryParams: row.id,
-    //   relativeTo: this.activatedRoute
-    // });
-    // this.router.navigate(['/dashboard/pastsessions/1']);
-    this.router.navigate([row.id], { relativeTo: this.activatedRoute });
-    // this.router.navigate(['/reports']);
+    this.router.navigate([row.lessonrunCode], {
+      relativeTo: this.activatedRoute
+    });
   }
 
   // Selection code

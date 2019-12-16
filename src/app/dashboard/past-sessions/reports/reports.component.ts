@@ -24,7 +24,7 @@ import {
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.scss']
 })
-export class ReportsComponent implements OnInit, AfterContentInit {
+export class ReportsComponent implements OnInit {
   config: PerfectScrollbarConfigInterface = {};
   @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
 
@@ -32,17 +32,21 @@ export class ReportsComponent implements OnInit, AfterContentInit {
 
   constructor(
     private pastSessionsService: PastSessionsService,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      const lesssonrunCode = paramMap.get('lessonrunCode');
+      this.getSessionSummary(lesssonrunCode);
+    });
+  }
 
-  ngAfterContentInit() {
-    // 73929 pitch perfect
-    // 99521 active listening
-    // 8269
+  getSessionSummary(lessonrunCode: string) {
+    console.log(lessonrunCode);
     this.pastSessionsService
-      .getReports('65367')
+      .getReports(lessonrunCode)
       .subscribe((res: Array<ActivityReport>) => {
         this.statsData = res[0];
 

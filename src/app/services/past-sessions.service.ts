@@ -61,63 +61,70 @@ export class PastSessionsService {
 
   // api/course_details/lesson_run/{room_code}/summary/
   getReports(id: string): Observable<any> {
-    return (
-      this.http
-        // .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
-        // replace this so that error doesn't occur
-        .get(global.apiRoot + '/tenants/users/?page=' + 1)
-        .pipe(
-          map((res: SessionReport) => {
-            res = activityResult3 as SessionReport;
-            const arr: Array<ActivityReport> = [];
+    return this.http
+      .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
+      .pipe(
+        map((res: SessionReport) => {
+          console.log(res);
+          res = activityResult3 as SessionReport;
+          console.log(res);
+          const arr: Array<ActivityReport> = [];
 
-            this.joinedUsers = res.joined_users;
-            res.joined_users.forEach(ju => {
-              this.filteredInUsers.push(ju.id);
-            });
-            this.filteredInUsers$.next(this.filteredInUsers);
+          this.joinedUsers = res.joined_users;
+          res.joined_users.forEach(ju => {
+            this.filteredInUsers.push(ju.id);
+          });
+          this.filteredInUsers$.next(this.filteredInUsers);
 
-            arr.push(res);
+          arr.push(res);
 
-            // Iterate over each activity in order and
-            // push them to the array
-            res.activity_results.forEach((act, i) => {
-              if (act.activity_type === ActivityTypes.mcq) {
-                arr.push({
-                  ...res,
-                  mcqs: [act] as Array<MCQReport>,
-                  activity_type: ActivityTypes.mcq
-                });
-              } else if (act.activity_type === ActivityTypes.feedback) {
-                arr.push({
-                  ...res,
-                  activity_type: ActivityTypes.feedback,
-                  feedback: act as FeedbackReport
-                });
-              } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-                arr.push({
-                  ...res,
-                  activity_type: ActivityTypes.pitchoMatic,
-                  pom: act as PitchOMaticReport
-                });
-              } else if (act.activity_type === ActivityTypes.buildAPitch) {
-                arr.push({
-                  ...res,
-                  activity_type: ActivityTypes.buildAPitch,
-                  bap: act as BuildAPitchReport
-                });
-              } else if (act.activity_type === ActivityTypes.brainStorm) {
-                arr.push({
-                  ...res,
-                  activity_type: ActivityTypes.brainStorm,
-                  brainstorm: act
-                });
-              }
-            });
-            return arr;
-          })
-        )
-    );
+          // Iterate over each activity in order and
+          // push them to the array
+          res.activity_results.forEach((act, i) => {
+            // The new way of doing reports
+            // for (const key in act) {
+            //   if (act.hasOwnProperty(key)) {
+            //     console.log(key);
+            //     if (key !== 'base_activity') {
+            //       act = act[key];
+            //     }
+            //   }
+            // }
+            if (act.activity_type === ActivityTypes.mcq) {
+              arr.push({
+                ...res,
+                mcqs: [act] as Array<MCQReport>,
+                activity_type: ActivityTypes.mcq
+              });
+            } else if (act.activity_type === ActivityTypes.feedback) {
+              arr.push({
+                ...res,
+                activity_type: ActivityTypes.feedback,
+                feedback: act as FeedbackReport
+              });
+            } else if (act.activity_type === ActivityTypes.pitchoMatic) {
+              arr.push({
+                ...res,
+                activity_type: ActivityTypes.pitchoMatic,
+                pom: act as PitchOMaticReport
+              });
+            } else if (act.activity_type === ActivityTypes.buildAPitch) {
+              arr.push({
+                ...res,
+                activity_type: ActivityTypes.buildAPitch,
+                bap: act as BuildAPitchReport
+              });
+            } else if (act.activity_type === ActivityTypes.brainStorm) {
+              arr.push({
+                ...res,
+                activity_type: ActivityTypes.brainStorm,
+                brainstorm: act
+              });
+            }
+          });
+          return arr;
+        })
+      );
   }
 
   getAllReports(): Observable<any> {

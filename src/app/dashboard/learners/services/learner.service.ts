@@ -128,15 +128,23 @@ export class LearnerService {
       );
   }
 
-  getPastSessions(sort: string, order: string, page: number): Observable<any> {
+  getPastSessions(
+    sort: string,
+    order: string,
+    page: number,
+    userID
+  ): Observable<any> {
     // replace after testing
     // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
-    return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
-      map(res => {
-        console.log(res);
-        return res;
-      })
-    );
+    // return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
+    return this.http
+      .get(global.apiRoot + '/course_details/lesson_run/user/' + userID)
+      .pipe(
+        map(res => {
+          console.log(res);
+          return res;
+        })
+      );
   }
 }
 

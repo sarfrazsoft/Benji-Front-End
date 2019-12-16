@@ -129,10 +129,10 @@ export class SkillEvaluationComponent implements OnInit {
         component2.instance.overviewData = overviewData2;
 
         const component3 = this.entry3.createComponent(skillOverFactory);
-        component3.instance.overviewData = overviewData3;
+        component3.instance.overviewData = overviewData;
 
         const component4 = this.entry4.createComponent(skillOverFactory);
-        component4.instance.overviewData = overviewData4;
+        component4.instance.overviewData = overviewData;
       });
   }
 }
@@ -182,16 +182,46 @@ const overviewData = {
         value: 6
       }
     ]
-  }
+  },
+  enoughData: true
 };
-
 const overviewData2 = {
-  title: 'Objection Handling',
+  title: 'Pitching',
   donut: {
     title: 'Pitch Skill',
     data: 70,
     color: '#0a4cef'
-  }
+  },
+  chart: {
+    label: 'Sessions',
+    sessionInfo: [
+      {
+        date: '2nd Jan, 2020',
+        name: 'Pitch perfect',
+        xlabel: '01/02',
+        value: 3
+      },
+      {
+        date: '14th Jan, 2020',
+        name: 'Pitch practice',
+        xlabel: '01/14',
+        value: 5
+      },
+      {
+        date: '12th Jan, 2020',
+        name: 'Pitch practice',
+        xlabel: '01/12',
+        value: 7
+      },
+      {
+        date: '22nd Jan, 2020',
+        name: 'Pitch perfect',
+        xlabel: '01/22',
+        value: 6
+      }
+    ]
+  },
+  enoughData: false
 };
 
 const overviewData3 = {
