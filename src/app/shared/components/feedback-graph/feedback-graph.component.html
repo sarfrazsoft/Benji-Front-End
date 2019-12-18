@@ -4,6 +4,10 @@
   </div>
 
   <div class="feedback-report" *ngFor="let question of fback">
-    <benji-question [question]="question" [showAvg]="showAvg"></benji-question>
+    <benji-question
+      [question]="question"
+      [showAvg]="showAvg"
+      [userFilter]="userFilter"
+    ></benji-question>
   </div>
 </div>

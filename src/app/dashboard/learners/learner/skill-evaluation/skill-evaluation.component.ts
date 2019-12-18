@@ -223,21 +223,3 @@ const overviewData2 = {
   },
   enoughData: false
 };
-
-const overviewData3 = {
-  title: 'Building Rapport',
-  donut: {
-    title: 'Pitch Skill',
-    data: 70,
-    color: '#0a4cef'
-  }
-};
-
-const overviewData4 = {
-  title: 'Closing',
-  donut: {
-    title: 'Pitch Skill',
-    data: 70,
-    color: '#0a4cef'
-  }
-};

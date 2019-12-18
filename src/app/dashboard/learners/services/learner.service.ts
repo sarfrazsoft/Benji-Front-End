@@ -141,7 +141,7 @@ export class LearnerService {
       .get(global.apiRoot + '/course_details/lesson_run/user/' + userID)
       .pipe(
         map(res => {
-          console.log(res);
+          // console.log(res);
           return res;
         })
       );

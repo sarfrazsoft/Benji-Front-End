@@ -18,6 +18,7 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
   @Input() showAvg = false;
+  @Input() userFilter = false;
 
   comboAnswers: Array<string> = [];
   averageRating = 0;
@@ -25,7 +26,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   ctx: CanvasRenderingContext2D;
   myChart: any;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
-  constructor(private pastSessionService: PastSessionsService) { }
+  constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
     this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
@@ -40,7 +41,8 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       if (
         this.pastSessionService.filteredInUsers.find(
           el => el === answer.user.id
-        )
+        ) ||
+        !this.userFilter
       ) {
         ratingSum = ratingSum + answer.rating;
         assessments[answer.rating - 1]++;
@@ -131,7 +133,8 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         if (
           this.pastSessionService.filteredInUsers.find(
             el => el === answer.user.id
-          )
+          ) ||
+          !this.userFilter
         ) {
           assessments[answer.rating - 1]++;
           this.comboAnswers.push(answer.text);
@@ -142,5 +145,5 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {}
 }

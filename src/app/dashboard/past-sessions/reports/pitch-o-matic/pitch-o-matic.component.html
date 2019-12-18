@@ -1,28 +1,25 @@
-<div class="admin-panel report-cards" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Pitch o matic</h1>
-  </div>
+<div *ngIf="!isSingleUser()" class="admin-panel report-cards" fxLayout="column">
+  <div class="card-header">Pitch o matic</div>
 
   <div>
-    <div class="">
-      <table mat-table [dataSource]="tableData" class="">
-        <!-- Prompts Column -->
-        <ng-container matColumnDef="question">
-          <th mat-header-cell *matHeaderCellDef>Question</th>
-          <td mat-cell *matCellDef="let element">{{ element.question }}</td>
-        </ng-container>
+    <table mat-table [dataSource]="tableData" class="">
+      <!-- Prompts Column -->
+      <ng-container matColumnDef="question">
+        <th mat-header-cell *matHeaderCellDef>Question</th>
+        <td mat-cell *matCellDef="let element">{{ element.question }}</td>
+      </ng-container>
 
-        <!-- Persons Column -->
-        <ng-container matColumnDef="average">
-          <th mat-header-cell *matHeaderCellDef>Workshop average</th>
-          <td mat-cell *matCellDef="let element">
-            {{ element.average }}
-          </td>
-        </ng-container>
+      <!-- Persons Column -->
+      <ng-container matColumnDef="average">
+        <th mat-header-cell *matHeaderCellDef>Workshop average</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.average }}
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </div>
 </div>
+<ng-template #reportEntry></ng-template>

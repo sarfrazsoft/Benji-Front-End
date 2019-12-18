@@ -12,8 +12,9 @@ import {
 export class FeedbackGraphComponent implements OnInit {
   @Input() fback: Array<FeedbackQuestionSet>;
   @Input() showAvg = false;
+  @Input() userFilter = false;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     // if (this.data && this.data.feedback) {

@@ -46,7 +46,7 @@ export class FeedbackComponent implements OnInit {
           });
         }
       );
-
+      console.log(this.questions, question);
       this.questions.push({
         question_text: question.question_text,
         assessments: assessments,

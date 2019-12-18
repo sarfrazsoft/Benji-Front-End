@@ -48,9 +48,8 @@ export class LearnerReportComponent implements OnInit {
     // this.pitchText = this.getUserPitchPrompt();
     // this.formatData();
     this.pastSessionsService
-      .getReports('653')
+      .getReports('65367')
       .subscribe((res: Array<ActivityReport>) => {
-
         // Iterate over each item in array
         res.forEach((act: ActivityReport) => {
           if (act.activity_type === ActivityTypes.pitchoMatic) {

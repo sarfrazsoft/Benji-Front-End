@@ -3,11 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { LearnerService } from 'src/app/dashboard/learners/services';
 import { User } from 'src/app/services/backend/schema';
 import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-sessions',
@@ -16,38 +18,40 @@ import { PaginatedResponse } from 'src/app/services/backend/schema/course_detail
 })
 export class SessionsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['date', 'title', 'hosted_by', 'report'];
-  userID = '';
+  learnerID = '';
   data: any = [];
   selection = new SelectionModel<any>(true, []);
 
-  dataa = {
-    count: 1,
-    next: null,
-    previous: null,
-    results: [
-      {
-        id: 6,
-        date: '7-7-2019',
-        title: 'Active Listening',
-        hostedBy: 'Mahin baghi',
-        lessonrunCode: 65367
-      },
-      {
-        id: 7,
-        date: '7-7-2019',
-        title: 'Active Listening 2',
-        hostedBy: 'Mahin baghi',
-        participants: 18
-      },
-      {
-        id: 8,
-        date: '7-7-2019',
-        title: 'Active Listening',
-        hostedBy: 'Mahin baghi',
-        participants: 5
-      }
-    ]
-  };
+  // dataa = {
+  //   count: 1,
+  //   next: null,
+  //   previous: null,
+  //   results: [
+  //     {
+  //       id: 6,
+  //       date: '7-7-2019',
+  //       title: 'Active Listening',
+  //       hostedBy: 'Mahin baghi',
+  //       lessonrunCode: 65367
+  //     },
+  //     {
+  //       id: 7,
+  //       date: '7-7-2019',
+  //       title: 'Active Listening 2',
+  //       hostedBy: 'Mahin baghi',
+  //       participants: 18,
+  //       lessonrunCode: 65367
+  //     },
+  //     {
+  //       id: 8,
+  //       date: '7-7-2019',
+  //       title: 'Active Listening',
+  //       hostedBy: 'Mahin baghi',
+  //       participants: 5,
+  //       lessonrunCode: 65367
+  //     }
+  //   ]
+  // };
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -59,13 +63,14 @@ export class SessionsComponent implements OnInit, AfterViewInit {
   constructor(
     private http: HttpClient,
     private learnerService: LearnerService,
+    private pastSessionsService: PastSessionsService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.data.forEach((data: any) => {
-      this.userID = data.dashData.user.id;
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.learnerID = paramMap.get('learnerID');
     });
   }
 
@@ -82,7 +87,7 @@ export class SessionsComponent implements OnInit, AfterViewInit {
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex,
-            this.userID
+            this.learnerID
           );
         }),
         map((data: any) => {
@@ -101,21 +106,24 @@ export class SessionsComponent implements OnInit, AfterViewInit {
         })
       )
       .subscribe(data => {
-        console.log(data);
-        this.data = this.dataa.results;
+        const tableData = [];
+        data.forEach(run => {
+          tableData.push({
+            id: run.id,
+            date: moment(run.start_time).format('MMMM, DD YYYY'),
+            title: run.lesson.lesson_name,
+            hostedBy: run.host.first_name + ' ' + run.host.last_name,
+            lessonrunCode: run.lessonrun_code
+          });
+        });
+        this.data = tableData;
         return data;
       });
   }
 
   showReports(row) {
-    console.log(row);
-    // this.router.navigate(['reports'], {
-    //   queryParams: row.id,
-    //   relativeTo: this.activatedRoute
-    // });
-    // this.router.navigate(['/dashboard/pastsessions/1']);
-    this.router.navigate([row.id], { relativeTo: this.activatedRoute });
-    // this.router.navigate(['/reports']);
+    this.pastSessionsService.removeAllBut(Number(this.learnerID));
+    this.router.navigate(['/dashboard/pastsessions/' + row.lessonrunCode]);
   }
 
   // Selection code

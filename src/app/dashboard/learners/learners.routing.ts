@@ -31,7 +31,7 @@ const routes: Routes = [
         component: LearnerReportComponent
       },
       {
-        path: ':id',
+        path: ':learnerID',
         component: LearnerComponent
       },
       {

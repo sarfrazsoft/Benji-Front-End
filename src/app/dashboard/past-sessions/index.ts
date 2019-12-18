@@ -8,11 +8,17 @@ import { McqTableComponent } from './reports/mcqs/mcq-table/mcq-table.component'
 import { McqsComponent } from './reports/mcqs/mcqs.component';
 import { OptionDistributionBarsComponent } from './reports/mcqs/option-distribution-bars/option-distribution-bars.component';
 import { OptionSpreadComponent } from './reports/mcqs/option-spread/option-spread.component';
+import {
+  LearnerReportComponents,
+  LearnerReportEntryComponents
+} from './reports/pitch-o-matic/index';
 import { PitchOMaticComponent } from './reports/pitch-o-matic/pitch-o-matic.component';
 import { ReportsComponent } from './reports/reports.component';
+
 export { PastSessionsComponent, ReportsComponent };
 
 export const PastSessionsComponents = [
+  ...LearnerReportComponents,
   PastSessionsComponent,
   ReportsComponent,
   BAPReportComponent,
@@ -35,7 +41,8 @@ export const PastSessionsEntryComponents = [
   McqTableComponent,
   BrainStormComponent,
   FeedbackComponent,
-  PitchOMaticComponent
+  PitchOMaticComponent,
+  ...LearnerReportEntryComponents
 ];
 
 export const PastSessionsProviders = [];

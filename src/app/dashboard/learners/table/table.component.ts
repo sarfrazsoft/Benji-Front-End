@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Observable, of as observableOf } from 'rxjs';
@@ -14,7 +14,7 @@ import { LearnerService } from '../services';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class LearnersTableComponent implements AfterViewInit {
+export class LearnersTableComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = [
     'firstName',
     'lastName',
@@ -38,6 +38,8 @@ export class LearnersTableComponent implements AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
+
+  ngOnInit() {}
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.
@@ -100,8 +102,7 @@ export class LearnersTableComponent implements AfterViewInit {
     } row ${row.position + 1}`;
   }
 
-  showReport() {
-    this.router.navigate([3], { relativeTo: this.activatedRoute });
-    // this.router.navigate(['/dashboard/learners/18']);
+  showProfile(row) {
+    this.router.navigate([row.id], { relativeTo: this.activatedRoute });
   }
 }
