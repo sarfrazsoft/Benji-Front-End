@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ActivityReport } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-mcqs',
@@ -6,7 +7,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
   styleUrls: ['./mcqs.component.scss']
 })
 export class McqsComponent implements OnInit, OnChanges {
-  @Input() data: any = {};
+  @Input() data: ActivityReport;
   participants = [];
   constructor() {}
 

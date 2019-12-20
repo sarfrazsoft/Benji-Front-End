@@ -13,6 +13,7 @@ export class FeedbackGraphComponent implements OnInit {
   @Input() fback: Array<FeedbackQuestionSet>;
   @Input() showAvg = false;
   @Input() userFilter = false;
+  @Input() cardTitle = '';
 
   constructor() {}
 

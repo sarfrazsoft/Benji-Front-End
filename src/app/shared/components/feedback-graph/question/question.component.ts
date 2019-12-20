@@ -19,12 +19,14 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
   @Input() showAvg = false;
   @Input() userFilter = false;
+  @Input() cardTitle = '';
 
   comboAnswers: Array<string> = [];
   averageRating = 0;
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
+  users = [[], [], [], [], []];
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
   constructor(private pastSessionService: PastSessionsService) {}
 
@@ -36,7 +38,8 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     const assessments = [0, 0, 0, 0, 0];
     this.comboAnswers = [];
     let ratingSum = 0;
-    const users = [[], [], [], [], []];
+    let noOfRatings = 0;
+
     this.question.assessments.forEach(answer => {
       if (
         this.pastSessionService.filteredInUsers.find(
@@ -45,14 +48,15 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         !this.userFilter
       ) {
         ratingSum = ratingSum + answer.rating;
+        noOfRatings = noOfRatings + 1;
         assessments[answer.rating - 1]++;
-        users[answer.rating - 1].push(
+        this.users[answer.rating - 1].push(
           answer.user.first_name + ' ' + answer.user.last_name
         );
         this.comboAnswers.push(answer.text);
       }
     });
-    this.averageRating = ratingSum / this.question.assessments.length;
+    this.averageRating = ratingSum / noOfRatings;
     this.averageRating = Math.round(this.averageRating * 10) / 10;
 
     this.canvas = document.getElementById('myChart');
@@ -88,7 +92,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               return '';
             },
             afterBody: (tooltipItems, d) => {
-              return users[tooltipItems[0].index];
+              return this.users[tooltipItems[0].index];
             }
           }
         },
@@ -129,6 +133,9 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     if (this.myChart) {
       const assessments = [0, 0, 0, 0, 0];
       this.comboAnswers = [];
+      let ratingSum = 0;
+      let noOfRatings = 0;
+      this.users = [[], [], [], [], []];
       this.question.assessments.forEach(answer => {
         if (
           this.pastSessionService.filteredInUsers.find(
@@ -136,10 +143,17 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           ) ||
           !this.userFilter
         ) {
+          ratingSum = ratingSum + answer.rating;
+          noOfRatings = noOfRatings + 1;
           assessments[answer.rating - 1]++;
+          this.users[answer.rating - 1].push(
+            answer.user.first_name + ' ' + answer.user.last_name
+          );
           this.comboAnswers.push(answer.text);
         }
       });
+      this.averageRating = ratingSum / noOfRatings;
+      this.averageRating = Math.round(this.averageRating * 10) / 10;
       this.myChart.data.datasets[0].data = assessments;
       this.myChart.update();
     }

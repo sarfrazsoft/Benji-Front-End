@@ -19,6 +19,7 @@ export interface SessionReport {
 
 export interface ActivityReport extends SessionReport {
   activity_type?: ActivityTypes;
+  title?: string;
   mcqs?: Array<MCQReport>;
   feedback?: FeedbackReport;
   pom?: PitchOMaticReport;
