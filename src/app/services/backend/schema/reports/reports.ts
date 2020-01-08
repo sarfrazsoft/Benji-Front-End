@@ -25,6 +25,7 @@ export interface ActivityReport extends SessionReport {
   pom?: PitchOMaticReport;
   bap?: BuildAPitchReport;
   brainstorm?: any;
+  postAssessment?: FeedbackReport;
 }
 
 export interface Report {

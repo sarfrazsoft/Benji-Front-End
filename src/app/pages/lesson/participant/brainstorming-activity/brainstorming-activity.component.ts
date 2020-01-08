@@ -59,6 +59,8 @@ export class ParticipantBrainstormingActivityComponent
       this.bsAct.idea_rankings.forEach(idea => {
         this.ideas.push(idea);
       });
+
+      this.ideas.sort((a, b) => b.id - a.id);
     }
 
     // Show thank you for vote submission

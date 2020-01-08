@@ -65,7 +65,7 @@ export class DonutComponent implements OnInit, AfterViewInit {
         elements: {
           center: {
             text: this.donutData.data + '%',
-            color: '#FF6384', // Default is #000000
+            color: '#000', // Default is #000000
             fontStyle: 'Arial', // Default is Arial
             sidePadding: 20 // Defualt is 20 (as a percentage)
           }

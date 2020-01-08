@@ -1,0 +1,26 @@
+.empty-data {
+  .overlay {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 20px);
+    background-color: rgba(233, 235, 243, 0.9);
+    top: 0;
+    span {
+      color: #00178a;
+      opacity: 1;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 42px;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+  position: relative;
+}
+
+.overlay {
+  display: none;
+}

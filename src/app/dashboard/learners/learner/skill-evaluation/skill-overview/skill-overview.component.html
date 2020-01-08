@@ -1,21 +1,30 @@
-<div class="report-cards" fxLayout="column">
-  <div class="card-header">
-    {{ overviewData.title }}
-  </div>
+<div [ngClass]="{ 'empty-data': !overviewData.enoughData }">
+  <div class="report-cards" fxLayout="column">
+    <div class="card-header">
+      {{ overviewData.title }}
+    </div>
 
-  <div fxLayout="row" *ngIf="overviewData.enoughData">
-    <div fxFlex="45%" class="donut-chart">
-      <benji-learner-donut
-        [donutData]="overviewData.donut"
-      ></benji-learner-donut>
+    <div fxLayout="row">
+      <div fxFlex="45%" class="donut-chart">
+        <benji-learner-donut
+          [donutData]="overviewData.donut"
+        ></benji-learner-donut>
+      </div>
+      <div fxFlex="55%" class="line-chart">
+        <benji-skill-line-chart
+          [chartData]="overviewData.chart"
+        ></benji-skill-line-chart>
+      </div>
     </div>
-    <div fxFlex="55%" class="line-chart">
-      <benji-skill-line-chart
-        [chartData]="overviewData.chart"
-      ></benji-skill-line-chart>
-    </div>
+    <!-- <div class="emptyData" *ngIf="!overviewData.enoughData">
+      <div fxLayoutAlign="center center" fxFlex="column">
+        Not enough data for evaluation
+      </div>
+    </div> -->
   </div>
-  <div *ngIf="!overviewData.enoughData">
-    Hor data pao sajnu
+  <div class="overlay">
+    <span>
+      Complete session for report
+    </span>
   </div>
 </div>

@@ -7,9 +7,9 @@ import { BackendSocketService } from './backend/backend-socket.service';
 import { EitherOrActivityService } from './either-or-activity.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { LayoutService } from './layout.service';
+import { PastSessionsService } from './past-sessions.service';
 import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
-import { PastSessionsService } from './past-sessions.service';
 
 export { AuthGuard } from './auth/auth.guard';
 export {
