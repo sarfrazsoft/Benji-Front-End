@@ -2071,7 +2071,7 @@ export const activityResult3 = {
                 user: 7,
                 feedbackquestion: 26,
                 rating_answer: 1,
-                text_answer: 'matt does not know how to write a pitch'
+                text_answer: '1'
               },
               {
                 user: 7,
@@ -2083,7 +2083,7 @@ export const activityResult3 = {
                 user: 7,
                 feedbackquestion: 28,
                 rating_answer: 1,
-                text_answer: '1'
+                text_answer: 'matt does not know how to write a pitch'
               },
               {
                 user: 6,
@@ -2101,7 +2101,7 @@ export const activityResult3 = {
                 user: 6,
                 feedbackquestion: 28,
                 rating_answer: 2,
-                text_answer: '1'
+                text_answer: 'feedback given to matt from user 6'
               }
             ]
           },
@@ -2199,8 +2199,8 @@ export const activityResult3 = {
             user: {
               id: 6,
               username: 'khana',
-              first_name: 'khana',
-              last_name: '',
+              first_name: 'Mahin',
+              last_name: 'Khan',
               email: '',
               verified_email: false,
               job_title: null,
@@ -2245,7 +2245,7 @@ export const activityResult3 = {
                 user: 2,
                 feedbackquestion: 28,
                 rating_answer: 4,
-                text_answer: '4'
+                text_answer: 'mahin got this feedback from user 2 aka matt'
               },
               {
                 user: 7,
@@ -2263,7 +2263,7 @@ export const activityResult3 = {
                 user: 7,
                 feedbackquestion: 28,
                 rating_answer: 5,
-                text_answer: '5'
+                text_answer: 'mahin got this feedback from user 7 aka Abdullah'
               },
               {
                 user: 8,
@@ -2281,7 +2281,7 @@ export const activityResult3 = {
                 user: 8,
                 feedbackquestion: 28,
                 rating_answer: 3,
-                text_answer: '3'
+                text_answer: 'mahin got this feedback from user 8 aka Jim'
               }
             ]
           },
@@ -2335,7 +2335,7 @@ export const activityResult3 = {
                 user: 2,
                 feedbackquestion: 28,
                 rating_answer: 4,
-                text_answer: '4'
+                text_answer: 'Ej got this info from user 2 aka matt'
               },
               {
                 user: 7,
@@ -2353,7 +2353,7 @@ export const activityResult3 = {
                 user: 7,
                 feedbackquestion: 28,
                 rating_answer: 5,
-                text_answer: '5'
+                text_answer: 'Ej got this info from user 7 aka abdullah'
               },
               {
                 user: 8,
@@ -2371,7 +2371,7 @@ export const activityResult3 = {
                 user: 8,
                 feedbackquestion: 28,
                 rating_answer: 3,
-                text_answer: '3'
+                text_answer: 'Ej got this info from user 8 aka Jim'
               }
             ]
           }

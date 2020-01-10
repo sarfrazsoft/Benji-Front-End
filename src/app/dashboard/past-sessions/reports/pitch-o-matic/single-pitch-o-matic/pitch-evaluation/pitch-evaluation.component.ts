@@ -20,36 +20,42 @@ export class PitchEvaluationComponent implements OnInit {
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
-    this.updateFeedbackData();
+    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+      this.updateFeedbackData();
+    });
+    // this.updateFeedbackData();
   }
 
   updateFeedbackData() {
-    const currentUserID = this.pastSessionService.filteredInUsers[0];
-    let currentMember: PitchoMaticGroupMemberFeedback;
+    const currentUserIDs = this.pastSessionService.filteredInUsers;
+    const currentMembersFB: Array<PitchoMaticGroupMemberFeedback> = [];
     const otherMembers: Array<PitchoMaticGroupMemberFeedback> = [];
 
     this.pomData.pom.pitchomaticgroupmembers.forEach(m => {
-      if (m.user.id === currentUserID) {
-        currentMember = m;
-      } else {
-        otherMembers.push(m);
+      otherMembers.push(m);
+      if (currentUserIDs.find(id => id === m.user.id)) {
+        currentMembersFB.push(m);
       }
     });
 
     this.questions = [];
-    const fback = this.pomData.pom.feedbackquestion_set;
+    const fbackQuestions = this.pomData.pom.feedbackquestion_set;
 
-    fback.forEach((question: FeedbackQuestion) => {
+    fbackQuestions.forEach((question: FeedbackQuestion) => {
       const assessments: Array<Assessment> = [];
-      currentMember.pitchomaticfeedback_set.forEach(response => {
-        if (response.feedbackquestion === question.id) {
-          assessments.push({
-            user: otherMembers.filter(u => u.user.id === response.user)[0].user,
-            rating: response.rating_answer,
-            text: response.text_answer
-          });
-        }
+      currentMembersFB.forEach(currentMember => {
+        currentMember.pitchomaticfeedback_set.forEach(response => {
+          if (response.feedbackquestion === question.id) {
+            assessments.push({
+              user: otherMembers.filter(u => u.user.id === response.user)[0]
+                .user,
+              rating: response.rating_answer,
+              text: response.text_answer
+            });
+          }
+        });
       });
+      // console.log(assessments);
 
       this.questions.push({
         question_text: question.question_text,
