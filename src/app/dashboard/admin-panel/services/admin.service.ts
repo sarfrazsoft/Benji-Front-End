@@ -48,17 +48,6 @@ export class AdminService {
       );
   }
 
-  getWhiteLabelDetails(orgId): Observable<any> {
-    return this.http
-      .get(global.apiRoot + '/tenants/orgs/' + orgId + '/white_label_info')
-      .pipe(
-        map((res: any) => {
-          this.contextService.partnerInfo = res;
-          return res;
-        })
-      );
-  }
-
   getCourseDetails(courseID: string): Observable<Course> {
     return this.http
       .get(global.apiRoot + '/course_details/course/' + courseID + '/lessons/')

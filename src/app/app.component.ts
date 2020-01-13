@@ -26,7 +26,11 @@ export class AppComponent implements OnInit {
     });
     this.contextService.user$.subscribe(user => {
       if (user) {
-        this.restService.get_white_label_details(user.organization);
+        this.restService
+          .get_white_label_details(user.organization)
+          .subscribe(res => {
+            this.contextService.partnerInfo = res;
+          });
       }
     });
     this.contextService.partnerInfo$.subscribe(info => {
