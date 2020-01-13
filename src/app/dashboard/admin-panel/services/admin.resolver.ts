@@ -23,8 +23,6 @@ export class AdminResolver implements Resolve<any> {
         .get_white_label_details(user.organization)
         .toPromise();
 
-      console.log(whiteLabelInfo);
-
       return { user: user, courses: courses, whiteLabelInfo: whiteLabelInfo };
     } catch (err) {
       console.log(err);

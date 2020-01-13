@@ -1,5 +1,9 @@
 <div class="courses card-container" fxLayoutGap="40px" fxLayout="column">
-  <div class="card" *ngFor="let course of courses">
+  <div
+    class="card"
+    (click)="openDetails(course.id)"
+    *ngFor="let course of courses"
+  >
     <div
       class="sub-heading"
       fxLayout="row"
@@ -12,7 +16,7 @@
         class="launch-session"
         fxLayout="row"
         fxLayoutAlign="center center"
-        (click)="launchSession(course.id)"
+        (click)="launchSession($event, course.id)"
       >
         <span>Launch session</span>
         <img src="/assets/img/launch_singlearrow.png" alt="launch" />
