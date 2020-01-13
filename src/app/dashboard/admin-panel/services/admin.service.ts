@@ -48,7 +48,7 @@ export class AdminService {
       );
   }
 
-  getWhiteLabelDetails(orgId): Observable<Course[]> {
+  getWhiteLabelDetails(orgId): Observable<any> {
     return this.http
       .get(global.apiRoot + '/tenants/orgs/' + orgId + '/white_label_info')
       .pipe(

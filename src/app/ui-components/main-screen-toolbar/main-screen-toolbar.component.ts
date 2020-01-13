@@ -8,11 +8,18 @@ import { LayoutService } from '../../services/layout.service';
   templateUrl: './main-screen-toolbar.component.html',
   styleUrls: ['./main-screen-toolbar.component.scss']
 })
-export class MainScreenToolbarComponent {
+export class MainScreenToolbarComponent implements OnInit {
+  lightLogo = '';
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService
   ) {}
+
+  ngOnInit() {
+    this.contextService.partnerInfo$.subscribe(info => {
+      if (info) { this.lightLogo = info.parameters.lightLogo; }
+    });
+  }
 
   toggleFullscreen() {
     this.layoutService.toggleFullscreen();

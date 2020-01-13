@@ -29,7 +29,7 @@ export class MobileComponent implements OnInit {
 
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
-        this.logo = info.darkLogo;
+        this.logo = info.parameters.darkLogo;
       }
     });
   }

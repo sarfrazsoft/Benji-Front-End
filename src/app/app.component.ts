@@ -1,5 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { BackendRestService } from './services';
 import { ContextService } from './services/context.service';
 import { LayoutService } from './services/layout.service';
 
@@ -9,14 +11,24 @@ import { LayoutService } from './services/layout.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
   constructor(
     private layoutService: LayoutService,
     private contextService: ContextService,
+    private restService: BackendRestService,
+    private title: Title,
     @Inject(DOCUMENT) private _document: HTMLDocument
   ) {}
 
   ngOnInit() {
+    this.title.setTitle('Benji');
+    this.restService.get_own_identity().subscribe(res => {
+      this.contextService.user = res;
+    });
+    this.contextService.user$.subscribe(user => {
+      if (user) {
+        this.restService.get_white_label_details(user.organization);
+      }
+    });
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
         this._document
@@ -116,6 +128,9 @@ export class AppComponent implements OnInit {
         .low-response-dialog mat-dialog-container.mat-dialog-container .content button {
           background-color: ${info.parameters.primary_dark};
         }
+        .mat-progress-spinner circle, .mat-spinner circle {
+          stroke: ${info.parameters.primary};
+          }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

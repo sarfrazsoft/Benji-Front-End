@@ -18,11 +18,11 @@ export class MainScreenLessonComponent extends BaseLessonComponent
   at: typeof ActivityTypes = ActivityTypes;
   constructor(
     protected restService: BackendRestService,
-    private contextService: ContextService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
+    protected contextService: ContextService,
     protected ref: ChangeDetectorRef
   ) {
-    super(restService, route, socketService, 'screen', ref);
+    super(restService, route, socketService, 'screen', contextService, ref);
   }
 }

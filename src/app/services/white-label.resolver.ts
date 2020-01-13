@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import * as global from 'src/app/globals';
+import { BackendRestService } from './backend/backend-rest.service';
 import { ContextService } from './context.service';
 
 @Injectable()
@@ -9,7 +10,8 @@ export class WhiteLabelResolver implements Resolve<any> {
   constructor(
     private router: Router,
     private httpClient: HttpClient,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private restService: BackendRestService
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<any> {
@@ -33,9 +35,30 @@ export class WhiteLabelResolver implements Resolve<any> {
               }
             }
           );
+      } else if (route.url[0] && route.url[0].path === 'login') {
+        this.httpClient
+          .get(
+            global.apiRoot + '/tenants/orgs/' + 'benxx' + '/white_label_info'
+          )
+          .subscribe(
+            (res: any) => {
+              this.contextService.partnerInfo = res;
+            },
+            (err: HttpErrorResponse) => {
+              if (err.status === 404) {
+                console.log(err.status);
+                this.applyDefaultTheme();
+              }
+            }
+          );
       } else {
         // Apply default theme
-        this.applyDefaultTheme();
+        // this.applyDefaultTheme();
+        this.contextService.user$.subscribe(user => {
+          if (user) {
+            this.restService.get_white_label_details(user.organization);
+          }
+        });
       }
     } catch (err) {
       console.log(err);
@@ -43,14 +66,18 @@ export class WhiteLabelResolver implements Resolve<any> {
   }
 
   applyDefaultTheme() {
+    console.log('Default theme applied');
     this.contextService.partnerInfo = {
       name: 'Benji',
       welcome_text: 'Welcome to Benji',
       link: 'https://wwww.benji.com',
-      lightLogo: './assets/img/Benji_logo_white.png',
-      darkLogo: './assets/img/logo.png',
+      logo: '',
       favicon: './assets/img/favicon.ico',
       parameters: {
+        lightLogo: './assets/img/Benji_logo_white.png',
+        darkLogo: './assets/img/logo.png',
+        welcomeDescription:
+          'What\'s Benji? Learn more about the future of learning',
         primary_lighter: '#80a8ff',
         primary_light: '#4c83fc',
         primary: '#0a4cef',

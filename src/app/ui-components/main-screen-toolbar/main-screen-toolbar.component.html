@@ -1,11 +1,7 @@
 <div class="mainscreen-toolbar bg-primary-color">
   <div class="flexer--space-between">
     <div class="benji-logo-container">
-      <img
-        [src]="contextService.partnerInfo.lightLogo"
-        alt="Benji logo"
-        class="benji-logo"
-      />
+      <img [src]="lightLogo" alt="Benji logo" class="benji-logo" />
     </div>
     <div (click)="toggleFullscreen()" class="fullscreen-container">
       <mat-icon *ngIf="!isFullscreen()" class="icon-white">fullscreen</mat-icon>

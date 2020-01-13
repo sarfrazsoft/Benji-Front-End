@@ -13,6 +13,8 @@ export class EntryComponent implements OnInit {
   isMobile = false;
   welcomeText: string;
   link: string;
+  description: string;
+  name: string;
   logo;
 
   constructor(
@@ -31,8 +33,10 @@ export class EntryComponent implements OnInit {
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
         this.welcomeText = info.welcome_text;
+        this.name = info.name;
         this.link = info.link;
-        this.logo = info.darkLogo;
+        this.logo = info.parameters.darkLogo;
+        this.description = info.parameters.welcomeDescription;
       }
     });
   }

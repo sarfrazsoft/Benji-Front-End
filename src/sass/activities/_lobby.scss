@@ -8,11 +8,6 @@ benji-ps-lobby {
     mat-spinner {
       margin: 8vh auto;
     }
-    .mat-progress-spinner circle,
-    .mat-spinner circle {
-      stroke: $primary-color;
-      @include stroke(primary);
-    }
   }
 }
 

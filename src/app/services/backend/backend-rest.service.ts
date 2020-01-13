@@ -1,14 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as global from '../../globals';
-
 import { Observable } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import * as global from '../../globals';
+import { ContextService } from '../context.service';
 import { Course, LessonRun } from './schema/course_details';
 import { User } from './schema/user';
 
 @Injectable()
 export class BackendRestService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private contextService: ContextService
+  ) {}
 
   public userFirstName;
   public userId;
@@ -59,6 +63,22 @@ export class BackendRestService {
       global.apiRoot + '/tenants/users/who_am_i/'
     );
     return this.userIdentity;
+  }
+
+  get_white_label_details(orgId): void {
+    this.http
+      .get(global.apiRoot + '/tenants/orgs/' + orgId + '/white_label_info')
+      .subscribe(
+        (res: any) => {
+          this.contextService.partnerInfo = res;
+          return res;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.status === 404) {
+            console.log(err.status);
+          }
+        }
+      );
   }
 
   start_next_activity(sessionrunID) {

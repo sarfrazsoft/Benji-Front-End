@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import {
@@ -31,6 +32,7 @@ export class BaseLessonComponent implements OnInit {
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
     clientType: string,
+    protected contextService: ContextService,
     protected ref?: ChangeDetectorRef
   ) {
     this.roomCode = parseInt(this.route.snapshot.paramMap.get('roomCode'), 10);
@@ -64,6 +66,7 @@ export class BaseLessonComponent implements OnInit {
     ]).subscribe(([lessonRun, identity]) => {
       this.lessonRun = lessonRun;
       this.user = identity;
+      this.contextService.user = identity;
       this.socket = this.socketService.connectLessonSocket(
         this.clientType,
         this.lessonRun.lessonrun_code,

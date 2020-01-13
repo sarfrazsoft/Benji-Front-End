@@ -18,10 +18,9 @@ export class AdminResolver implements Resolve<any> {
 
       const courses = await this.adminService.getCourses().toPromise();
 
-      // const whiteLabelInfo = await this.adminService
-      //   .getWhiteLabelDetails(user.organization)
-      //   .toPromise();
-      const whiteLabelInfo = {};
+      const whiteLabelInfo = await this.adminService
+        .getWhiteLabelDetails(user.organization)
+        .toPromise();
 
       return { user: user, courses: courses, whiteLabelInfo: whiteLabelInfo };
     } catch (err) {

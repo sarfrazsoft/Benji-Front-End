@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
+import { ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
@@ -16,8 +17,16 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
-    protected ref: ChangeDetectorRef
+    protected ref: ChangeDetectorRef,
+    protected contextService: ContextService
   ) {
-    super(restService, route, socketService, 'participant', ref);
+    super(
+      restService,
+      route,
+      socketService,
+      'participant',
+      contextService,
+      ref
+    );
   }
 }

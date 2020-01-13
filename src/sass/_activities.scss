@@ -22,3 +22,8 @@
     }
   }
 }
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke-linecap: round;
+}
