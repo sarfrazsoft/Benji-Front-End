@@ -99,7 +99,7 @@
     </benji-ms-pair-grouping-activity>
 
     <benji-ms-triad-grouping-activity
-      *ngIf="getActivityType() === 'TriadGroupingActivity'"
+      *ngIf="getActivityType() === 'at.triadGrouping'"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
@@ -107,7 +107,7 @@
     </benji-ms-triad-grouping-activity>
 
     <benji-ms-roleplay-pair-activity
-      *ngIf="getActivityType() === 'RoleplayPairActivity'"
+      *ngIf="getActivityType() === 'at.rolePlayPair'"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
@@ -115,7 +115,7 @@
     </benji-ms-roleplay-pair-activity>
 
     <benji-ms-generic-roleplay-activity
-      *ngIf="getActivityType() === 'GenericRoleplayActivity'"
+      *ngIf="getActivityType() === 'at.genericRoleplay'"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"

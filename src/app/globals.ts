@@ -24,5 +24,7 @@ export enum ActivityTypes {
   rolePlayPair = 'RoleplayPairActivity',
   discussion = 'DiscussionActivity',
   feedback = 'FeedbackActivity',
-  hintWord = 'HintWordActivity'
+  hintWord = 'HintWordActivity',
+  genericRoleplay = 'GenericRoleplayActivity',
+  triadGrouping = 'TriadGroupingActivity'
 }
