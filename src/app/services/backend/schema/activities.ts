@@ -332,7 +332,8 @@ export interface PitchoMaticGroupMemberPitchChoice {
 export interface GenericRoleplayActivity {
   activity_countdown_timer: Timer;
   activity_seconds: number;
-  feedback_buffer: number;
+  feedback_countdown_timer: Timer;
+  feedback_seconds: number;
   activity_type: string;
   genericroleplayrole_set: Array<RoleplayRole>;
   genericroleplayuser_set: Array<RoleplayUser>;
@@ -352,6 +353,7 @@ export interface RoleplayUser {
   benjiuser_id: number;
   role: number;
   discussion_complete: boolean;
+  feedback_submitted: boolean;
 }
 
 export interface RoleplayGroups {

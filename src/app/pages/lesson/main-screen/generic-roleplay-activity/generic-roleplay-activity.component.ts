@@ -1,10 +1,5 @@
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import {
-  GenericRoleplayActivity,
-  RoleplayRole,
-  Timer
-} from 'src/app/services/backend/schema';
+import { RoleplayRole, Timer } from 'src/app/services/backend/schema';
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -15,77 +10,47 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenGenericRoleplayActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges {
   roles: Array<RoleplayRole>;
   giveFeedback = false;
   rplayTimer: Timer;
   feedbackTimer: Timer;
-  timerInterval;
 
   constructor(private emoji: EmojiLookupService) {
     super();
   }
 
-  ngOnChanges() {
-    this.roles = this.activityState.genericroleplayactivity.genericroleplayrole_set;
-    if (!this.giveFeedback) {
-      this.setupTimer();
-    }
-  }
-
   ngOnInit() {
-    this.timerInterval = setInterval(() => this.checkTimer(), 100);
+    // Don't reassign roles varialbe to prevent re-render of UI
+    const act = this.activityState.genericroleplayactivity;
+    this.roles = act.genericroleplayrole_set;
   }
 
-  ngOnDestroy() {
-    clearInterval(this.timerInterval);
-  }
+  ngOnChanges() {
+    const act = this.activityState.genericroleplayactivity;
+    this.rplayTimer = act.activity_countdown_timer;
 
-  setupTimer() {
-    const actTimer: Timer = this.activityState.genericroleplayactivity
-      .activity_countdown_timer;
-    const fbackBuffer = this.activityState.genericroleplayactivity
-      .feedback_buffer;
+    if (this.rplayTimer.status !== 'ended') {
+      this.giveFeedback = false;
+    }
 
-    this.rplayTimer = {
-      id: actTimer.id,
-      status: actTimer.status,
-      start_time: actTimer.start_time,
-      end_time: moment(actTimer.end_time)
-        .subtract(fbackBuffer, 'seconds')
-        .format(),
-      remaining_seconds: actTimer.remaining_seconds - fbackBuffer,
-      total_seconds: actTimer.total_seconds - fbackBuffer
-    };
-  }
-
-  checkTimer() {
-    const actTimer: Timer = this.activityState.genericroleplayactivity
-      .activity_countdown_timer;
-    const fbackBuffer = this.activityState.genericroleplayactivity
-      .feedback_buffer;
-
-    if (
-      moment(this.rplayTimer.end_time).isSameOrBefore(moment()) ||
-      actTimer.remaining_seconds - fbackBuffer <= 0
-    ) {
+    this.feedbackTimer = act.feedback_countdown_timer;
+    if (this.feedbackTimer && this.rplayTimer.status === 'ended') {
       this.giveFeedback = true;
-      this.feedbackTimer = {
-        id: actTimer.id,
-        status: actTimer.status,
-        start_time: moment().format(),
-        end_time: actTimer.end_time,
-        remaining_seconds: actTimer.remaining_seconds,
-        total_seconds: fbackBuffer
-      };
     }
   }
 
   getFbackSubmittedCount() {
-    return '0';
+    const users = this.activityState.genericroleplayactivity
+      .genericroleplayuser_set;
+    const count = users.filter(user => user.feedback_submitted).length;
+    return count;
   }
 
   getGroupUsersCount() {
-    return '0';
+    const roles = this.activityState.genericroleplayactivity
+      .genericroleplayrole_set;
+    const count = roles.filter(role => role.feedbackquestions.length).length;
+    return count;
   }
 }

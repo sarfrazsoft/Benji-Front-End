@@ -1,7 +1,5 @@
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import { Component, OnChanges } from '@angular/core';
 import {
-  FeedbackSubmitEvent,
   FeedbackSubmitEventAnswer,
   GenericRoleplayUserFeedbackEvent,
   RoleplayRole,
@@ -19,7 +17,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantGenericRoleplayActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnChanges {
   roleplayPhase = true;
   feedbackPhase = false;
   giveFeedback = false;
@@ -27,65 +25,38 @@ export class ParticipantGenericRoleplayActivityComponent
   feedbackTimer: Timer;
   timerInterval;
   currentUser: User;
-  answersSubmitted = false;
+  observerSubmitted = false;
 
   constructor(private emoji: EmojiLookupService) {
     super();
   }
 
-  ngOnInit() {
-    this.timerInterval = setInterval(() => this.checkTimer(), 100);
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.timerInterval);
-  }
-
   ngOnChanges() {
     this.currentUser = this.activityState.your_identity;
-    if (!this.giveFeedback) {
-      this.setupTimer();
+
+    const act = this.activityState.genericroleplayactivity;
+    this.rplayTimer = act.activity_countdown_timer;
+    if (this.rplayTimer.status !== 'ended') {
+      this.giveFeedback = false;
     }
-  }
 
-  setupTimer() {
-    const actTimer = this.activityState.genericroleplayactivity
-      .activity_countdown_timer;
-    const fbackBuffer = this.activityState.genericroleplayactivity
-      .feedback_buffer;
-
-    this.rplayTimer = {
-      id: actTimer.id,
-      status: actTimer.status,
-      start_time: actTimer.start_time,
-      end_time: moment(actTimer.end_time)
-        .subtract(fbackBuffer, 'seconds')
-        .format(),
-      remaining_seconds: actTimer.remaining_seconds - fbackBuffer,
-      total_seconds: actTimer.total_seconds - fbackBuffer
-    };
-  }
-
-  checkTimer() {
-    const actTimer: Timer = this.activityState.genericroleplayactivity
-      .activity_countdown_timer;
-    const fbackBuffer = this.activityState.genericroleplayactivity
-      .feedback_buffer;
-
-    if (
-      moment(this.rplayTimer.end_time).isSameOrBefore(moment()) ||
-      actTimer.remaining_seconds - fbackBuffer <= 0
-    ) {
+    this.feedbackTimer = act.feedback_countdown_timer;
+    if (this.feedbackTimer && this.rplayTimer.status === 'ended') {
       this.giveFeedback = true;
-      this.feedbackTimer = {
-        id: actTimer.id,
-        status: actTimer.status,
-        start_time: moment().format(),
-        end_time: actTimer.end_time,
-        remaining_seconds: actTimer.remaining_seconds,
-        total_seconds: fbackBuffer
-      };
     }
+  }
+
+  userFeedbackSubmitted(): boolean {
+    const userSet = this.activityState.genericroleplayactivity
+      .genericroleplayuser_set;
+
+    let submitted = false;
+    userSet.forEach((user: RoleplayUser) => {
+      if (user.benjiuser_id === this.currentUser.id) {
+        submitted = user.feedback_submitted;
+      }
+    });
+    return submitted;
   }
 
   getParticipantRole(): RoleplayRole {
@@ -93,49 +64,22 @@ export class ParticipantGenericRoleplayActivityComponent
       .genericroleplayuser_set;
     const roles = this.activityState.genericroleplayactivity
       .genericroleplayrole_set;
+
     let role: RoleplayRole;
     userSet.forEach((user: RoleplayUser) => {
       if (user.benjiuser_id === this.currentUser.id) {
         role = roles.filter(r => r.id === user.role)[0];
       }
     });
-    // role.feedbackquestions = [
-    //   {
-    //     id: 227,
-    //     question_type: 'rating_agreedisagree',
-    //     question_text: 'The pitch was concise',
-    //     is_combo: false,
-    //     combo_text: null
-    //   },
-    //   {
-    //     id: 228,
-    //     question_type: 'rating_agreedisagree',
-    //     question_text: 'The delivery was strong',
-    //     is_combo: false,
-    //     combo_text: null
-    //   },
-    //   {
-    //     id: 229,
-    //     question_type: 'rating_agreedisagree',
-    //     question_text: 'How would you rate the pitch overall?',
-    //     is_combo: false,
-    //     combo_text: null
-    //   },
-    //   {
-    //     id: 230,
-    //     question_type: 'text',
-    //     question_text: 'Do you have any other comments?',
-    //     is_combo: false,
-    //     combo_text: null
-    //   }
-    // ];
+
+    // Sort based on ID
+    // Should be based on sort property if available
+    role.feedbackquestions.sort((a, b) => a.id - b.id);
     return role;
   }
 
-  isObserver() {
+  isObserver(): boolean {
     const participantRole: RoleplayRole = this.getParticipantRole();
-    const userSet = this.activityState.genericroleplayactivity
-      .genericroleplayuser_set;
     if (participantRole.name === 'Observer') {
       return true;
     } else {
@@ -143,7 +87,7 @@ export class ParticipantGenericRoleplayActivityComponent
     }
   }
 
-  submitAnswers(val) {
+  submitAnswers(val): void {
     const answers: Array<FeedbackSubmitEventAnswer> = [];
     for (let i = 0; i < val.questions.length; i++) {
       if (val.questions[i].question_type === 'rating_agreedisagree') {
@@ -164,6 +108,6 @@ export class ParticipantGenericRoleplayActivityComponent
       }
     }
     this.sendMessage.emit(new GenericRoleplayUserFeedbackEvent(answers));
-    this.answersSubmitted = true;
+    this.observerSubmitted = true;
   }
 }

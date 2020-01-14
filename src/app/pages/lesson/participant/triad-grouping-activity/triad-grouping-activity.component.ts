@@ -41,6 +41,9 @@ export class ParticipantTriadGroupingActivityComponent
       concat(myGroup.usergroupuser_set, []),
       e => e.user.id !== this.activityState.your_identity.id
     );
+    myGroupWithoutMe.sort((a, b) =>
+      a.user.first_name.localeCompare(b.user.first_name)
+    );
     if (myGroupWithoutMe.length === 1) {
       this.partnerName = myGroupWithoutMe[0].user.first_name;
       return 'Your partner is ' + this.partnerName;

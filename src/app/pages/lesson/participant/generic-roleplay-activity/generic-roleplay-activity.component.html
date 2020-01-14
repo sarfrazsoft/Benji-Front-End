@@ -1,4 +1,6 @@
+<!-- Role player screens -->
 <ng-container *ngIf="!isObserver()">
+  <!-- Role play time -->
   <ng-container *ngIf="!giveFeedback">
     <benji-ps-instruction-template>
       <ng-container class="body-title">Role-play</ng-container>
@@ -21,35 +23,63 @@
   </ng-container>
 
   <ng-container *ngIf="giveFeedback">
-    <benji-ps-instruction-template>
-      <ng-container class="body-title">Role-play</ng-container>
-      <app-b-twemoji
-        class="body-emoji"
-        [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
-      ></app-b-twemoji>
-      <h1 class="body-heading pn-700 primary-color-darkest">
-        Provide feedback
-      </h1>
-      <p class="body-text">
-        give feedback bro
-      </p>
-      <ng-container class="content">
-        <benji-question-form
-          *ngIf="getParticipantRole().feedbackquestions.length"
-          [question_set]="getParticipantRole().feedbackquestions"
-          (submitResponse)="submitAnswers($event)"
-        ></benji-question-form>
-      </ng-container>
-    </benji-ps-instruction-template>
-    <benji-linear-timer
-      [timer]="feedbackTimer"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
+    <!-- Give feedback non-observer -->
+    <ng-container
+      *ngIf="
+        !userFeedbackSubmitted() &&
+        getParticipantRole().feedbackquestions.length
+      "
+    >
+      <benji-ps-instruction-template>
+        <ng-container class="body-title">Role-play</ng-container>
+        <app-b-twemoji
+          class="body-emoji"
+          [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
+        ></app-b-twemoji>
+        <h1 class="body-heading pn-700 primary-color-darkest">
+          Provide feedback
+        </h1>
+        <p class="body-text">
+          Give feedback about your partner
+        </p>
+        <ng-container class="content">
+          <benji-question-form
+            *ngIf="getParticipantRole().feedbackquestions.length"
+            [question_set]="getParticipantRole().feedbackquestions"
+            (submitResponse)="submitAnswers($event)"
+          ></benji-question-form>
+        </ng-container>
+      </benji-ps-instruction-template>
+      <benji-linear-timer
+        [timer]="feedbackTimer"
+        [timerOffset]="avgServerTimeOffset"
+      ></benji-linear-timer>
+    </ng-container>
+
+    <!-- Feedback submitted successfully non-observer  -->
+    <ng-container *ngIf="userFeedbackSubmitted()">
+      <benji-ps-instruction-template>
+        <ng-container class="body-title">Thank You</ng-container>
+        <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
+        <h1 class="body-heading pn-700 primary-color-darkest">
+          Thanks for submitting!
+        </h1>
+      </benji-ps-instruction-template>
+    </ng-container>
+
+    <!-- Take feedback non-observer -->
+    <ng-container *ngIf="!getParticipantRole().feedbackquestions.length">
+      <benji-ps-instruction-template>
+        <ng-container class="body-title">Thank You</ng-container>
+        <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
+      </benji-ps-instruction-template>
+    </ng-container>
   </ng-container>
 </ng-container>
 
+<!-- Observer screen -->
 <ng-container *ngIf="isObserver()">
-  <ng-container *ngIf="!answersSubmitted">
+  <ng-container *ngIf="!userFeedbackSubmitted()">
     <benji-question-layout>
       <ng-container class="body-title">
         Role-play
@@ -76,7 +106,7 @@
     ></benji-linear-timer>
   </ng-container>
 
-  <benji-ps-instruction-template *ngIf="answersSubmitted">
+  <benji-ps-instruction-template *ngIf="userFeedbackSubmitted()">
     <ng-container class="body-title">Thank You</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">
