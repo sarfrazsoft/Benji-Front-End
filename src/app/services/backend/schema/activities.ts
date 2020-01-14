@@ -89,6 +89,12 @@ export interface RoleplayPairUser {
   discussion_complete: boolean;
 }
 
+export interface TriadRoleplayPairUser {
+  user: User;
+  found: boolean;
+  id: number;
+}
+
 export interface RoleplayPair {
   primary_roleplayuser_set: RoleplayPairUser[];
   secondary_roleplayuser_set: RoleplayPairUser[];
@@ -101,8 +107,18 @@ export interface PairGroupingActivity {
   usergroup_set: UserGroupUserSet[];
 }
 
+export interface TriadGroupingActivity {
+  grouping_complete: boolean;
+  grouping_countdown_timer: Timer;
+  usergroup_set: TriadUserGroupUserSet[];
+}
+
 export interface UserGroupUserSet {
   usergroupuser_set: RoleplayPairUser[];
+}
+
+export interface TriadUserGroupUserSet {
+  usergroupuser_set: TriadRoleplayPairUser[];
 }
 
 export interface RoleplayPairActivity {
@@ -311,4 +327,42 @@ export interface PitchoMaticGroupMemberPitch {
 export interface PitchoMaticGroupMemberPitchChoice {
   pitchomaticblank: number; // is the PitchoMaticBlank.id. You will need to lookup
   choice: number; // is the PitchoMaticBlankChoice.id for that PitchoMaticBlank
+}
+
+export interface GenericRoleplayActivity {
+  activity_countdown_timer: Timer;
+  activity_seconds: number;
+  feedback_countdown_timer: Timer;
+  feedback_seconds: number;
+  activity_type: string;
+  genericroleplayrole_set: Array<RoleplayRole>;
+  genericroleplayuser_set: Array<RoleplayUser>;
+  groups: Array<RoleplayGroups>;
+}
+
+export interface RoleplayRole {
+  id: number;
+  name: string;
+  image_url: string;
+  instructions: string;
+  allow_multiple: boolean;
+  feedbackquestions: Array<FeedbackQuestion>;
+}
+
+export interface RoleplayUser {
+  benjiuser_id: number;
+  role: number;
+  discussion_complete: boolean;
+  feedback_submitted: boolean;
+}
+
+export interface RoleplayGroups {
+  id: number;
+  usergroupuser_set: Array<RoleplayUserSet>;
+}
+
+export interface RoleplayUserSet {
+  id: number;
+  found: boolean;
+  user: User;
 }

@@ -1,6 +1,7 @@
-benji-ms-pair-activity {
+benji-ms-roleplay-pair-activity,
+benji-ms-generic-roleplay-activity {
   .pair-activity {
-    .pair-activity__roleplay-instruction {
+    .roleplay-instruction {
       margin: 0px 60px;
     }
     .instruction-columns {
@@ -11,22 +12,22 @@ benji-ms-pair-activity {
       position: relative;
     }
 
-    .pair-activity__ready-icon {
+    .ready-icon {
       color: $success-color;
       margin-left: 15px;
       font-size: 45px;
     }
-    .pair-activity__emoji-container {
+    .emoji-container {
       width: 25vh;
     }
-    .pair-activity__title {
+    .title {
       text-align: center;
       border-bottom: 2px solid $secondary-color;
       p {
         padding: 25px 0;
       }
     }
-    .pair-activity__role {
+    .role {
       width: 50%;
       margin: 30px 0;
       padding: 3vh 5vw;
@@ -45,7 +46,7 @@ benji-ms-pair-activity {
         line-height: normal;
       }
     }
-    .pair-activity__role--2 {
+    .role--2 {
       border-left: 2px solid $secondary-color;
     }
     .ul-find-partner {
@@ -69,6 +70,12 @@ benji-ms-pair-activity {
         }
       }
     }
+  }
+}
+
+benji-ms-generic-roleplay-activity {
+  .role:not(:last-child) {
+    border-right: 1px solid $secondary-color;
   }
 }
 

@@ -88,6 +88,14 @@
   >
   </benji-ps-pair-activity>
 
+  <benji-ps-generic-roleplay-activity
+    *ngIf="getActivityType() === 'GenericRoleplayActivity'"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-generic-roleplay-activity>
+
   <benji-ps-pair-grouping-activity
     *ngIf="getActivityType() === at.pairGrouping"
     [activityState]="serverMessage"
@@ -95,6 +103,14 @@
     (sendMessage)="sendSocketMessage($event)"
   >
   </benji-ps-pair-grouping-activity>
+
+  <benji-ps-triad-grouping-activity
+    *ngIf="getActivityType() === 'TriadGroupingActivity'"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-triad-grouping-activity>
 
   <benji-ps-discussion-activity
     *ngIf="getActivityType() === at.discussion"

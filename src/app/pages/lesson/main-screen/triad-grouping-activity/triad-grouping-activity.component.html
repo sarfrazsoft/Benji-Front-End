@@ -1,11 +1,11 @@
-<ng-container *ngIf="!activityState.pairgroupingactivity.grouping_complete">
-  <div
-    class="mainscreen-activity mainscreen-activity--multi-column pair-activity"
-  >
+<!-- Show list of groups to find eachother  -->
+<ng-container *ngIf="!triadAct.grouping_complete">
+  <div class="mainscreen-activity pair-activity">
     <div
-      class="mainscreen-activity__column mainscreen-activity__column--50 bg-off-white mainscreen-activity__activity-detail left-text"
+      class="mainscreen-activity__activity-detail"
       fxLayoutAlign="center start"
       fxLayout="column"
+      fxFlex="50%"
     >
       <div class="ms-emoji-container">
         <app-b-twemoji emoji="👯"></app-b-twemoji>
@@ -19,33 +19,28 @@
         Hit the ‘We’re ready’ button when you’re set!
       </p>
     </div>
-    <div
-      class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
-    >
+    <div class="bg-secondary-color-lightest pair-activity__pairs" fxFlex="50%">
       <p class="ms-act__section-text secondary-color-dark">
         Find your partner
       </p>
       <ul class="ul-find-partner">
         <li
-          class="li-find-partner secondary-color-dark pn-600"
-          *ngFor="
-            let userGroup of activityState.pairgroupingactivity.usergroup_set
-          "
+          class="li-find-partner pn-600"
+          *ngFor="let userGroup of triadAct.usergroup_set"
           [ngClass]="{
+            'secondary-color-dark': !isGroupFound(userGroup),
             'primary-color-darkest': isGroupFound(userGroup),
-            'long-list':
-              activityState.pairgroupingactivity.usergroup_set.length > 15
+            'long-list': triadAct.usergroup_set.length > 15
           }"
         >
           {{ getGroupText(userGroup) }}
-          <mat-icon class="ready-icon" *ngIf="isGroupFound(userGroup)"
-            >check</mat-icon
-          >
+          <mat-icon class="ready-icon" *ngIf="isGroupFound(userGroup)">
+            check
+          </mat-icon>
         </li>
       </ul>
       <benji-linear-timer
-        [timer]="activityState.pairgroupingactivity.grouping_countdown_timer"
-        #pairTimer
+        [timer]="triadAct.grouping_countdown_timer"
         [endAudio]="'bell.wav'"
         [timerOffset]="avgServerTimeOffset"
       ></benji-linear-timer>

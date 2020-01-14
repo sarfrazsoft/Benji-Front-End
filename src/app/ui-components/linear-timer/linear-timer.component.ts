@@ -15,7 +15,7 @@ import { Timer } from '../../services/backend/schema';
   styleUrls: ['./linear-timer.component.scss']
 })
 export class LinearTimerComponent implements OnInit, OnDestroy {
-  constructor() {}
+  constructor() { }
   @Input() endAudio;
   @Input() timer: Timer;
   @Input() timerOffset: number;
@@ -38,7 +38,6 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
   update() {
     if (this.timer) {
       this.totalTime = this.timer.total_seconds * 1000;
-
       if (
         this.timer.status === 'paused' ||
         this.timer.status === 'cancelled' ||
@@ -52,6 +51,7 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
         } else {
           offset = 0;
         }
+
         this.remainingTime =
           moment(this.timer.end_time).valueOf() - moment().valueOf() - offset;
         if (this.remainingTime < 0) {

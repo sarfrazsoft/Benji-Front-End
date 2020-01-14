@@ -8,12 +8,6 @@ import { SharedModule } from './../shared/shared.module';
 import { EntryComponents, LayoutComponent, LayoutDeclarations } from './';
 import { LayoutRoutes } from './layout.routing';
 
-// import { VgBufferingModule } from 'videogular2/buffering';
-// import { VgControlsModule } from 'videogular2/controls';
-// import { VgCoreModule } from 'videogular2/core';
-// import { VgOverlayPlayModule } from 'videogular2/overlay-play';
-// import { VgStreamingModule } from 'videogular2/streaming';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -21,11 +15,6 @@ import { LayoutRoutes } from './layout.routing';
     FormsModule,
     ReactiveFormsModule,
     SharedModule
-    // VgCoreModule,
-    // VgControlsModule,
-    // VgOverlayPlayModule,
-    // VgBufferingModule,
-    // VgStreamingModule
   ],
   exports: [RouterModule, LayoutComponent],
   declarations: [...LayoutDeclarations],

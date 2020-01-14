@@ -25,6 +25,7 @@ export interface FeedbackQuestion {
   question_type: string;
   question_text: string;
   is_combo: boolean;
+  combo_text?: string;
 }
 
 //

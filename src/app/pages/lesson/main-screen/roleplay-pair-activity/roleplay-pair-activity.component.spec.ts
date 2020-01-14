@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainScreenPairActivityComponent } from './pair-activity.component';
+import { MainScreenPairActivityComponent } from './roleplay-pair-activity.component';
 
 describe('MainScreenPairActivityComponent', () => {
   let component: MainScreenPairActivityComponent;

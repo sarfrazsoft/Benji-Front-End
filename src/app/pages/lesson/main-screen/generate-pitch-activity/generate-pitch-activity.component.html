@@ -183,7 +183,7 @@
             <ul class="ul-find-partner">
               <!-- move *ngFor code to component file -->
               <li
-                class="pair-activity__pair li-find-partner secondary-color-dark pn-600"
+                class="li-find-partner secondary-color-dark pn-600"
                 *ngFor="let user of getGroupMembers(0)"
                 [ngClass]="{
                   'primary-color-darkest': user.is_grouped,
@@ -191,7 +191,7 @@
                 }"
               >
                 {{ user.user.first_name }}
-                <mat-icon class="pair-activity__ready-icon" *ngIf="user.found">
+                <mat-icon class="ready-icon" *ngIf="user.found">
                   check
                 </mat-icon>
               </li>
@@ -212,7 +212,7 @@
           <div fxFlex="70%">
             <ul class="ul-find-partner">
               <li
-                class="pair-activity__pair li-find-partner secondary-color-dark pn-600"
+                class="li-find-partner secondary-color-dark pn-600"
                 *ngFor="let user of getGroupMembers(1)"
                 [ngClass]="{
                   'primary-color-darkest': user.is_grouped,
@@ -220,7 +220,7 @@
                 }"
               >
                 {{ user.user.first_name }}
-                <mat-icon class="pair-activity__ready-icon" *ngIf="user.found">
+                <mat-icon class="ready-icon" *ngIf="user.found">
                   check
                 </mat-icon>
               </li>
