@@ -65,18 +65,9 @@ export class BackendRestService {
     return this.userIdentity;
   }
 
-  get_white_label_details(orgId) {
-    // return this.http
-    //   .get(global.apiRoot + '/tenants/orgs/' + orgId + '/white_label_info')
-    //   .subscribe(
-    //     (res: any) => {
-    //       this.contextService.partnerInfo = res;
-    //       return res;
-    //     }
-    //   );
-
+  get_white_label_details(org) {
     return this.http
-      .get(global.apiRoot + '/tenants/orgs/' + orgId + '/white_label_info')
+      .get(global.apiRoot + '/tenants/orgs/' + org + '/white_label_info/')
       .pipe(
         map((res: any) => {
           this.contextService.partnerInfo = res;

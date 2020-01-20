@@ -38,7 +38,7 @@ export class WhiteLabelResolver implements Resolve<any> {
       } else if (route.url[0] && route.url[0].path === 'login') {
         this.httpClient
           .get(
-            global.apiRoot + '/tenants/orgs/' + 'benxx' + '/white_label_info'
+            global.apiRoot + '/tenants/orgs/' + 'benxx' + '/white_label_info/'
           )
           .subscribe(
             (res: any) => {
@@ -56,7 +56,11 @@ export class WhiteLabelResolver implements Resolve<any> {
         // this.applyDefaultTheme();
         this.contextService.user$.subscribe(user => {
           if (user) {
-            this.restService.get_white_label_details(user.organization);
+            const orgId =
+              typeof user.organization === 'object'
+                ? user.organization.id
+                : user.organization;
+            this.restService.get_white_label_details(orgId);
           }
         });
       }
