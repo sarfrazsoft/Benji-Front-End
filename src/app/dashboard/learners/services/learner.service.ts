@@ -13,7 +13,8 @@ import {
   MCQReport,
   PitchOMaticReport,
   SessionReport,
-  User
+  User,
+  Users
 } from 'src/app/services/backend/schema';
 
 @Injectable()
@@ -53,7 +54,7 @@ export class LearnerService {
 
   getUserDetails(id) {
     const request = global.apiRoot + '/tenants/users/?id=' + id;
-    return this.http.get<User>(request);
+    return this.http.get<Users>(request);
   }
 
   getOrganization() {
@@ -138,7 +139,7 @@ export class LearnerService {
     // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
     // return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
     return this.http
-      .get(global.apiRoot + '/course_details/lesson_run/user/' + userID)
+      .get(global.apiRoot + '/course_details/lesson_run/user/' + userID + '/')
       .pipe(
         map(res => {
           // console.log(res);

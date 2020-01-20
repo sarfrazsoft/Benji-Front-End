@@ -17,7 +17,7 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
   styleUrls: ['./sessions.component.scss']
 })
 export class SessionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['date', 'title', 'hosted_by', 'report'];
+  displayedColumns: string[] = ['date', 'title', 'hostedBy', 'report'];
   learnerID = '';
   data: any = [];
   selection = new SelectionModel<any>(true, []);

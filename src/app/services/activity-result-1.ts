@@ -2912,7 +2912,7 @@ export const activityResult1 = {
             'How do you feel about your pitching skills now?'
         },
         activity_type: 'FeedbackActivity',
-        activity_title: 'PostAssessment'
+        title: 'How do you feel about pitching now?'
       }
     },
     {

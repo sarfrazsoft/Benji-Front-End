@@ -9,9 +9,14 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import { ActivityTypes } from 'src/app/globals';
 import {
   ActivityReport,
-  FeedbackGraphQuestion
+  FeedbackGraphQuestion,
+  FeedbackReport,
+  PitchOMaticReport,
+  SessionReport
 } from 'src/app/services/backend/schema';
 import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import { SkillOverviewComponent } from './skill-overview/skill-overview.component';
@@ -27,6 +32,73 @@ export class SkillEvaluationComponent implements OnInit {
   ctx: CanvasRenderingContext2D;
   myChart: any;
   learnerID = '';
+
+  pitchingOverview = {
+    title: 'Pitching',
+    donut: {
+      title: 'Pitch Skill',
+      data: 0,
+      color: '#00178a'
+    },
+    chart: {
+      label: 'Sessions',
+      sessionInfo: [
+        {
+          date: '2nd Jan, 2020',
+          name: '',
+          xlabel: '01/02',
+          value: 0
+        },
+        {
+          date: '14th Jan, 2020',
+          name: '',
+          xlabel: '01/14',
+          value: 0
+        },
+        {
+          date: '12th Jan, 2020',
+          name: '',
+          xlabel: '01/12',
+          value: 0
+        }
+      ]
+    },
+    enoughData: false
+  };
+
+  mcqOverview = {
+    title: 'MCQs',
+    donut: {
+      title: 'MCQs',
+      data: 85,
+      color: '#000'
+    },
+    chart: {
+      label: 'Sessions',
+      sessionInfo: [
+        {
+          date: '2nd Jan, 2020',
+          name: 'Pitch perfect',
+          xlabel: '01/02',
+          value: 5
+        },
+        {
+          date: '14th Jan, 2020',
+          name: 'Pitch practice',
+          xlabel: '01/14',
+          value: 7
+        },
+        {
+          date: '12th Jan, 2020',
+          name: 'Pitch practice',
+          xlabel: '01/12',
+          value: 9
+        }
+      ]
+    },
+    enoughData: false
+  };
+
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
   @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
@@ -43,166 +115,273 @@ export class SkillEvaluationComponent implements OnInit {
   ) {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.learnerID = paramMap.get('learnerID');
+      this.getLearnerData();
     });
   }
 
-  ngOnInit() {
+  getLearnerData() {
     this.pastSessionsService
-      .getAllReports()
-      .subscribe((res: Array<ActivityReport>) => {
-        console.log(res);
+      .getLearnerSessionSummaries(this.learnerID)
+      .subscribe((pastSessionsReports: Array<SessionReport>) => {
+        this.setupCharts(pastSessionsReports);
+      });
+  }
 
-        const selfFeedbacks = [];
-        const peerFeedbacks = [];
-        const mcqsScores = [];
+  ngOnInit() {}
 
-        res.forEach(result => {
-          // populate selfFeedbacks
-          selfFeedbacks.push([]);
-          result.postAssessment.feedbackquestion_set.forEach(question => {
-            question.feedbackuseranswer_set.forEach(answer => {
-              if (answer.user.id === parseInt(this.learnerID, 10)) {
-                selfFeedbacks[selfFeedbacks.length - 1].push(
-                  answer.rating_answer
-                );
-              }
-            });
-          });
+  // reports = PastSessionsReports
+  setupCharts(reports: Array<SessionReport>) {
+    reports = reports.sort((a, b) => a.id - b.id);
+    reports = reports.filter(a => a.lesson.lesson_id === 'active_listening_1');
+    reports = reports.slice(reports.length - 3);
 
-          // populate peerfeedbacks for pom
-          peerFeedbacks.push([]);
-          result.pom.feedbackquestion_set.forEach(question => {
-            const userFeedback = result.pom.pitchomaticgroupmembers.find(
-              member => member.user.id === parseInt(this.learnerID, 10)
-            );
+    const arr = [];
+    reports.forEach((report, sessionIndex) => {
+      console.log(report);
 
-            const ratings = [];
-            const questionFeedback = userFeedback.pitchomaticfeedback_set.forEach(
-              fb => {
-                if (fb.feedbackquestion === question.id) {
-                  ratings.push(fb.rating_answer);
-                }
-              }
-            );
+      this.setupChartsDates(report, sessionIndex);
 
-            peerFeedbacks[peerFeedbacks.length - 1].push(ratings);
-          });
+      const obj = { postAssessment: {}, pom: {}, mcqs: [] };
+      // Iterate over each activity in order and
+      // push them to the array
+      report.activity_results.forEach((act, i) => {
+        let title = '';
+        for (const key in act) {
+          if (act.hasOwnProperty(key)) {
+            if (key !== 'base_activity') {
+              title = act['base_activity'].description;
+              act = act[key];
+              act.title = title;
+            }
+          }
+        }
 
-          // formulate mcq scores
-          mcqsScores.push([]);
-          result.mcqs.forEach(mcq => {
-            const correctChoices = mcq.question.mcqchoice_set.filter(
-              choice => choice.is_correct
-            );
-            const userAnswer = mcq.mcqactivityuseranswer_set.find(
-              answer => answer.user.id === parseInt(this.learnerID, 10)
-            );
-            if (
-              userAnswer &&
-              correctChoices.find(choice => choice.id === userAnswer.answer)
-            ) {
-              mcqsScores[mcqsScores.length - 1].push(1);
-            } else {
-              mcqsScores[mcqsScores.length - 1].push(0);
+        if (act.activity_type === ActivityTypes.feedback) {
+          if (act.title === 'How do you feel about pitching now?') {
+            obj.postAssessment = act as FeedbackReport;
+          }
+        } else if (act.activity_type === ActivityTypes.pitchoMatic) {
+          obj.pom = act as PitchOMaticReport;
+        } else if (
+          act.activity_type === ActivityTypes.mcq &&
+          (act.title === 'weighted_mcq' ||
+            act.title === 'Pop Quiz Q1' ||
+            act.title === 'Pop Quiz Q2' ||
+            act.title === 'Pop Quiz Q3' ||
+            act.title === 'Pop Quiz Q4' ||
+            act.title === 'Pop Quiz Q5')
+        ) {
+          obj.mcqs.push(act);
+        }
+      });
+      arr.push(obj);
+    });
+
+    // console.log(res);
+
+    const selfFeedbacks = [];
+    const peerFeedbacks = [];
+    const mcqsScores = [];
+
+    arr.forEach(result => {
+      // It'll respond with not enough data if POM feedback or selffeedbacks
+      // are not available
+      this.populatePitchingScores(result, selfFeedbacks, peerFeedbacks);
+
+      // formulate mcq scores
+      this.populateMCQScores(result, mcqsScores);
+    });
+
+    // Pitching Skill
+    const peerfbackMultiplier = 0.22;
+    const selfFbackMultiplier = 0.11;
+    //  PeerFeedbacks[
+    //    S1[
+    //      Q1[r1,r2,r3,r4],
+    //      Q2[r1,r2,r3,r4],
+    //      Q3[r1,r2,r3,r4]
+    //    ]
+    //    S2[
+    //     Q1[r1,r2,r3,r4],
+    //     Q2[r1,r2,r3,r4],
+    //     Q3[r1,r2,r3,r4]
+    //    ]
+    //  ]
+
+    // Self Assessment
+    // SelfFeedbacks[
+    //   S1[Q1,Q2,Q3],
+    //   S2[Q1,Q2,Q3]
+    // ]
+    // peerFeedbacks = [
+    //   [
+    //     [3, 4, 2, 2],
+    //     [4, 2, 4, 2],
+    //     [1, 2, 2, 2]
+    //   ],
+    //   [
+    //     [1, 2, 4, 5],
+    //     [4, 5, 2, 1],
+    //     [5, 4, 5, 3]
+    //   ],
+    //   [
+    //     [4, 4, 1, 1],
+    //     [4, 5, 4, 1],
+    //     [1, 1, 1, 1]
+    //   ]
+    // ];
+
+    const dataPoints = [];
+    let pitchingAvg = 0;
+    peerFeedbacks.forEach((session, sessionIndex) => {
+      let sumOfAvgs = 0;
+      session.forEach((questionResponses, i) => {
+        let sum = 0;
+        questionResponses.forEach(response => {
+          sum = sum + response * peerfbackMultiplier;
+        });
+        sumOfAvgs = sumOfAvgs + sum / questionResponses.length;
+      });
+      let selfFbackSum = 0;
+      selfFeedbacks[sessionIndex].forEach(response => {
+        selfFbackSum = selfFbackSum + response * selfFbackMultiplier;
+      });
+
+      const dataPoint = sumOfAvgs + selfFbackSum;
+      this.pitchingOverview.chart.sessionInfo[sessionIndex].value = dataPoint;
+      dataPoints.push(dataPoint);
+      pitchingAvg = pitchingAvg + (dataPoint / 5) * 100;
+    });
+    pitchingAvg = pitchingAvg / 3;
+    this.pitchingOverview.donut.data = Math.round(pitchingAvg);
+
+    // Calculate mcq scores
+    this.calculateMCQScores(mcqsScores);
+
+    this.createWidgetComponents();
+  }
+
+  setupChartsDates(report: SessionReport, sessionIndex: number) {
+    this.pitchingOverview.chart.sessionInfo[sessionIndex].name =
+      report.lesson.lesson_name;
+    this.mcqOverview.chart.sessionInfo[sessionIndex].name =
+      report.lesson.lesson_name;
+
+    this.pitchingOverview.chart.sessionInfo[sessionIndex].date = moment(
+      report.start_time
+    ).format('MMMM, DD YYYY');
+    this.mcqOverview.chart.sessionInfo[sessionIndex].date = moment(
+      report.start_time
+    ).format('MMMM, DD YYYY');
+
+    this.pitchingOverview.chart.sessionInfo[sessionIndex].xlabel = moment(
+      report.start_time
+    ).format('MM/DD');
+    this.mcqOverview.chart.sessionInfo[sessionIndex].xlabel = moment(
+      report.start_time
+    ).format('MM/DD');
+  }
+
+  populatePitchingScores(result, selfFeedbacks, peerFeedbacks) {
+    // populate selfFeedbacks
+    selfFeedbacks.push([]);
+    this.populateSelfFeedbacks(result, selfFeedbacks);
+
+    // populate peerfeedbacks for pom
+    peerFeedbacks.push([]);
+    this.populatePeerFeedbacks(result, peerFeedbacks);
+  }
+
+  populateMCQScores(result, mcqsScores) {
+    mcqsScores.push([]);
+    result.mcqs.forEach(mcq => {
+      const correctChoices = mcq.question.mcqchoice_set.filter(
+        choice => choice.is_correct
+      );
+      const userAnswer = mcq.mcqactivityuseranswer_set.find(
+        answer => answer.user.id === parseInt(this.learnerID, 10)
+      );
+      if (
+        userAnswer &&
+        correctChoices.find(choice => choice.id === userAnswer.answer)
+      ) {
+        mcqsScores[mcqsScores.length - 1].push(1);
+      } else {
+        mcqsScores[mcqsScores.length - 1].push(0);
+      }
+    });
+  }
+
+  populateSelfFeedbacks(result, selfFeedbacks) {
+    if (result.postAssessment.feedbackquestion_set) {
+      this.pitchingOverview.enoughData = true;
+      result.postAssessment.feedbackquestion_set.forEach(question => {
+        question.feedbackuseranswer_set.forEach(answer => {
+          if (answer.user.id === parseInt(this.learnerID, 10)) {
+            selfFeedbacks[selfFeedbacks.length - 1].push(answer.rating_answer);
+          }
+        });
+      });
+    } else {
+      this.pitchingOverview.enoughData = false;
+    }
+  }
+
+  populatePeerFeedbacks(result, peerFeedbacks) {
+    if (result.pom.feedbackquestion_set) {
+      result.pom.feedbackquestion_set.forEach(question => {
+        const userFeedback = result.pom.pitchomaticgroupmembers.find(
+          member => member.user.id === parseInt(this.learnerID, 10)
+        );
+        const ratings = [];
+        if (userFeedback) {
+          userFeedback.pitchomaticfeedback_set.forEach(fb => {
+            if (fb.feedbackquestion === question.id) {
+              ratings.push(fb.rating_answer);
             }
           });
-        });
-
-        console.log(mcqsScores);
-
-        // MCQ
-
-        // Pitching Skill
-
-        const peerfbackMultiplier = 0.22;
-        const selfFbackMultiplier = 0.11;
-        //  PeerFeedbacks[
-        //    S1[
-        //      Q1[r1,r2,r3,r4],
-        //      Q2[r1,r2,r3,r4],
-        //      Q3[r1,r2,r3,r4]
-        //    ]
-        //    S2[
-        //     Q1[r1,r2,r3,r4],
-        //     Q2[r1,r2,r3,r4],
-        //     Q3[r1,r2,r3,r4]
-        //    ]
-        //  ]
-
-        // Self Assessment
-        // SelfFeedbacks[
-        //   S1[Q1,Q2,Q3],
-        //   S2[Q1,Q2,Q3]
-        // ]
-        // peerFeedbacks = [
-        //   [
-        //     [3, 4, 2, 2],
-        //     [4, 2, 4, 2],
-        //     [1, 2, 2, 2]
-        //   ],
-        //   [
-        //     [1, 2, 4, 5],
-        //     [4, 5, 2, 1],
-        //     [5, 4, 5, 3]
-        //   ],
-        //   [
-        //     [4, 4, 1, 1],
-        //     [4, 5, 4, 1],
-        //     [1, 1, 1, 1]
-        //   ]
-        // ];
-
-        const dataPoints = [];
-        peerFeedbacks.forEach((session, sessionIndex) => {
-          let sumOfAvgs = 0;
-          session.forEach((questionResponses, i) => {
-            let sum = 0;
-            questionResponses.forEach(response => {
-              sum = sum + response * peerfbackMultiplier;
-            });
-            sumOfAvgs = sumOfAvgs + sum / questionResponses.length;
-          });
-          let selfFbackSum = 0;
-          selfFeedbacks[sessionIndex].forEach(response => {
-            selfFbackSum = selfFbackSum + response * selfFbackMultiplier;
-          });
-
-          const dataPoint = sumOfAvgs + selfFbackSum;
-          overviewData.chart.sessionInfo[sessionIndex].value = dataPoint;
-          dataPoints.push(dataPoint);
-        });
-
-        // Calculate mcq scores
-        mcqsScores.forEach((sessionScore, sessionIndex) => {
-          const sum = sessionScore.reduce((a, b) => a + b, 0);
-          const avg = sum / sessionScore.length || 0;
-          overviewData3.chart.sessionInfo[sessionIndex].value = sum;
-          overviewData3.donut.data =
-            overviewData3.donut.data + sum / mcqsScores.length;
-          overviewData3.donut.data =
-            Math.round(overviewData3.donut.data * 10) / 10;
-        });
-        overviewData3.donut.data =
-          (overviewData3.donut.data / mcqsScores[0].length) * 100;
-
-        const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(
-          SkillOverviewComponent
-        );
-        const component = this.entry.createComponent(skillOverFactory);
-        component.instance.overviewData = overviewData;
-
-        const component2 = this.entry2.createComponent(skillOverFactory);
-        component2.instance.overviewData = overviewData2;
-
-        const component3 = this.entry3.createComponent(skillOverFactory);
-        component3.instance.overviewData = overviewData;
-
-        const component4 = this.entry4.createComponent(skillOverFactory);
-        component4.instance.overviewData = overviewData;
-
-        const component5 = this.entry4.createComponent(skillOverFactory);
-        component5.instance.overviewData = overviewData3;
+        }
+        peerFeedbacks[peerFeedbacks.length - 1].push(ratings);
       });
+    } else {
+      this.pitchingOverview.enoughData = false;
+    }
+  }
+
+  calculateMCQScores(mcqsScores) {
+    if (mcqsScores[0].length) {
+      this.mcqOverview.enoughData = true;
+      let mcqAvg = 0;
+      mcqsScores.forEach((sessionScore, sessionIndex) => {
+        const sum = sessionScore.reduce((a, b) => a + b, 0);
+        this.mcqOverview.chart.sessionInfo[sessionIndex].value = sum;
+        mcqAvg = mcqAvg + sum / mcqsScores.length;
+      });
+      mcqAvg = (mcqAvg / mcqsScores[0].length) * 100;
+      this.mcqOverview.donut.data = (mcqAvg * 10) / 10;
+    }
+  }
+
+  createWidgetComponents() {
+    // tslint:disable-next-line:max-line-length
+    const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(
+      SkillOverviewComponent
+    );
+
+    const component = this.entry.createComponent(skillOverFactory);
+    component.instance.overviewData = this.pitchingOverview;
+
+    // const component2 = this.entry2.createComponent(skillOverFactory);
+    // component2.instance.overviewData = overviewData2;
+
+    // const component3 = this.entry3.createComponent(skillOverFactory);
+    // component3.instance.overviewData = overviewData;
+
+    // const component4 = this.entry4.createComponent(skillOverFactory);
+    // component4.instance.overviewData = overviewData;
+
+    const component5 = this.entry4.createComponent(skillOverFactory);
+    component5.instance.overviewData = this.mcqOverview;
   }
 }
 
@@ -214,102 +393,4 @@ const colors = {
   blue: 'rgb(54, 162, 235)',
   purple: 'rgb(153, 102, 255)',
   grey: 'rgb(201, 203, 207)'
-};
-
-const overviewData = {
-  title: 'Pitching',
-  donut: {
-    title: 'Pitch Skill',
-    data: 20,
-    color: '#00178a'
-  },
-  chart: {
-    label: 'Sessions',
-    sessionInfo: [
-      {
-        date: '2nd Jan, 2020',
-        name: 'Pitch perfect',
-        xlabel: '01/02',
-        value: 0
-      },
-      {
-        date: '14th Jan, 2020',
-        name: 'Pitch practice',
-        xlabel: '01/14',
-        value: 0
-      },
-      {
-        date: '12th Jan, 2020',
-        name: 'Pitch practice',
-        xlabel: '01/12',
-        value: 0
-      }
-    ]
-  },
-  enoughData: true
-};
-const overviewData2 = {
-  title: 'Rapport',
-  donut: {
-    title: 'Pitch Skill',
-    data: 30,
-    color: '#fcfcfc'
-  },
-  chart: {
-    label: 'Sessions',
-    sessionInfo: [
-      {
-        date: '2nd Jan, 2020',
-        name: 'Pitch perfect',
-        xlabel: '01/02',
-        value: 0
-      },
-      {
-        date: '14th Jan, 2020',
-        name: 'Pitch practice',
-        xlabel: '01/14',
-        value: 0
-      },
-      {
-        date: '12th Jan, 2020',
-        name: 'Pitch practice',
-        xlabel: '01/12',
-        value: 0
-      }
-    ]
-  },
-  enoughData: true
-};
-
-const overviewData3 = {
-  title: 'MCQs',
-  donut: {
-    title: 'MCQs',
-    data: 0,
-    color: '#000'
-  },
-  chart: {
-    label: 'Sessions',
-    sessionInfo: [
-      {
-        date: '2nd Jan, 2020',
-        name: 'Pitch perfect',
-        xlabel: '01/02',
-        value: 0
-      },
-      {
-        date: '14th Jan, 2020',
-        name: 'Pitch practice',
-        xlabel: '01/14',
-        value: 0
-      },
-      {
-        date: '12th Jan, 2020',
-        name: 'Pitch practice',
-        xlabel: '01/12',
-        value: 0
-      }
-    ]
-  },
-  enoughData: true
 };

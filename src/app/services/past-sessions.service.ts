@@ -137,56 +137,19 @@ export class PastSessionsService {
       );
   }
 
-  getAllReports(): Observable<any> {
-    return (
-      this.http
-        // .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
-        // replace this so that error doesn't occur
-        .get(global.apiRoot + '/tenants/users/?page=' + 1)
-        .pipe(
-          map((res: Array<SessionReport>) => {
-            const pastSessionsReports: any = [
-              activityResult1,
-              activityResult2,
-              activityResult3
-            ];
-
-            const arr = [];
-            pastSessionsReports.forEach(report => {
-              const obj = { postAssessment: {}, pom: {}, mcqs: [] };
-              // Iterate over each activity in order and
-              // push them to the array
-              report.activity_results.forEach((act, i) => {
-                let title = '';
-                for (const key in act) {
-                  if (act.hasOwnProperty(key)) {
-                    if (key !== 'base_activity') {
-                      title = act['base_activity'].description;
-                      act = act[key];
-                      act.title = title;
-                    }
-                  }
-                }
-
-                if (act.activity_type === ActivityTypes.feedback) {
-                  if (act.activity_title === 'PostAssessment') {
-                    obj.postAssessment = act as FeedbackReport;
-                  }
-                } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-                  obj.pom = act as PitchOMaticReport;
-                } else if (
-                  act.activity_type === ActivityTypes.mcq &&
-                  act.title === 'weighted_mcq'
-                ) {
-                  obj.mcqs.push(act);
-                }
-              });
-              arr.push(obj);
-            });
-            return arr;
-          })
-        )
-    );
+  getLearnerSessionSummaries(learnerId: string): Observable<any> {
+    return this.http
+      .get(
+        global.apiRoot +
+          '/course_details/lesson_run/user_summary/' +
+          learnerId +
+          '/'
+      )
+      .pipe(
+        map((res: Array<SessionReport>) => {
+          return res;
+        })
+      );
   }
 
   getLearners(sort: string, order: string, page: number): Observable<User> {
@@ -208,5 +171,3 @@ export class PastSessionsService {
     return this.http.get<User>(request);
   }
 }
-
-// pitcho matic activity

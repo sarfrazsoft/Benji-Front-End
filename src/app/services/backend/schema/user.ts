@@ -13,3 +13,10 @@ export interface User {
   local_admin_permission: boolean;
   participant_permission: boolean;
 }
+
+export interface Users {
+  count: number;
+  next: any;
+  previous: any;
+  results: Array<User>;
+}
