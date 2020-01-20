@@ -30,6 +30,9 @@
   .form-container {
     background-color: #fff;
     padding: 20px;
+    .logo {
+      width: 230px;
+    }
     @media #{$small-and-down} {
       padding: 12px;
       .confirmation-container {

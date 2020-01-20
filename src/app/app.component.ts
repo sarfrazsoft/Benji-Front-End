@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Benji');
     this.restService.get_own_identity().subscribe(res => {
       this.contextService.user = res;
     });
@@ -38,6 +37,7 @@ export class AppComponent implements OnInit {
     });
     this.contextService.partnerInfo$.subscribe(info => {
       if (info) {
+        this.title.setTitle(info.parameters.tabTitle);
         this._document
           .getElementById('appFavicon')
           .setAttribute('href', info.favicon);
