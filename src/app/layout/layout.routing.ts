@@ -7,19 +7,37 @@ import {
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/landing/participant/login/participant-login.component';
-import { AuthGuard } from '../services';
+import { AuthGuard, WhiteLabelResolver } from '../services';
 import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'landing', component: LandingComponent },
+  {
+    path: 'landing',
+    component: LandingComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
+  },
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent
   },
-  { path: 'participant/login', component: ParticipantLoginComponent },
-  { path: 'participant/join', component: ParticipantJoinComponent },
+  {
+    path: 'participant/login',
+    component: ParticipantLoginComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
+  },
+  {
+    path: 'participant/join',
+    component: ParticipantJoinComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
+  },
   {
     path: 'participant/lesson/:roomCode',
     component: ParticipantLessonComponent

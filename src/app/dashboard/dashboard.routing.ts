@@ -4,6 +4,7 @@ import {
   AccountComponent,
   AdminPanelComponent,
   AdminResolver,
+  CourseComponent,
   LearnerResolver,
   LearnersComponent,
   PastSessionsComponent,
@@ -22,11 +23,13 @@ const routes: Routes = [
         component: AdminPanelComponent
       },
       {
+        path: 'course/:courseId',
+        component: CourseComponent
+      },
+      {
         path: 'learners',
         loadChildren:
           'src/app/dashboard/learners/learners.module#LearnersModule'
-        // canLoad: [IsAdminGuard]
-        // figure out guards to reload easily
       },
       {
         path: 'pastsessions',

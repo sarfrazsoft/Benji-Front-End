@@ -31,29 +31,24 @@ export class WhiteLabelResolver implements Resolve<any> {
             (err: HttpErrorResponse) => {
               if (err.status === 404) {
                 console.log(err.status);
-                this.applyDefaultTheme();
+                this.applyBenjiTheme();
               }
             }
           );
-      } else if (route.url[0] && route.url[0].path === 'login') {
-        this.httpClient
-          .get(
-            global.apiRoot + '/tenants/orgs/' + 'benxx' + '/white_label_info/'
-          )
-          .subscribe(
-            (res: any) => {
-              this.contextService.partnerInfo = res;
-            },
-            (err: HttpErrorResponse) => {
-              if (err.status === 404) {
-                console.log(err.status);
-                this.applyDefaultTheme();
-              }
-            }
-          );
+      }
+      // When giving a benji demo, users are not authorized and
+      // they usually start at one of these pages
+      else if (
+        route.url[0] &&
+        (route.url[0].path === 'login' ||
+          route.url[0].path === 'landing' ||
+          route.url[0].path === 'participant') &&
+        !this.contextService.user
+      ) {
+        //
+        console.log(route.url[0]);
+        this.applyBenjiTheme();
       } else {
-        // Apply default theme
-        // this.applyDefaultTheme();
         this.contextService.user$.subscribe(user => {
           if (user) {
             const orgId =
@@ -67,6 +62,22 @@ export class WhiteLabelResolver implements Resolve<any> {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  applyBenjiTheme() {
+    this.httpClient
+      .get(global.apiRoot + '/tenants/orgs/' + 'benji' + '/white_label_info/')
+      .subscribe(
+        (res: any) => {
+          this.contextService.partnerInfo = res;
+        },
+        (err: HttpErrorResponse) => {
+          if (err.status === 404) {
+            console.log(err.status);
+            this.applyDefaultTheme();
+          }
+        }
+      );
   }
 
   applyDefaultTheme() {

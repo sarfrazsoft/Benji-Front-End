@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackendRestService } from 'src/app/services';
 import { LaunchSessionDialogComponent } from 'src/app/shared';
-import { AdminService } from '../services';
+import { AdminService } from '../../admin-panel/services';
 
 @Component({
-  selector: 'benji-courses',
+  selector: 'benji-courses-list',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss']
 })
@@ -34,7 +34,10 @@ export class CoursesComponent implements OnInit {
     event.stopPropagation();
   }
 
-  openDetails(id) {
-    // this.router.navigate(['course', id], { relativeTo: this.activatedRoute });
+  openDetails(course) {
+    console.log(course);
+    this.router.navigate(['course', course.course_id], {
+      relativeTo: this.activatedRoute
+    });
   }
 }

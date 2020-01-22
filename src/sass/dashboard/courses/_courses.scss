@@ -1,4 +1,8 @@
-benji-courses {
+benji-courses-list,
+benji-course {
+  .courses > .card {
+    cursor: pointer;
+  }
   .launch-session {
     font-family: $pn-regular;
     color: $primary-color;
@@ -49,7 +53,6 @@ benji-courses {
     img {
       margin-left: 12px;
       height: 17px;
-      margin-bottom: -4px;
       transition: margin-left $animation-time linear;
       -webkit-transition: margin-left $animation-time linear;
       -ms-transition: margin-left $animation-time linear;

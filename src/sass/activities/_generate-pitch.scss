@@ -2,6 +2,7 @@ benji-ms-generate-pitch-activity {
   // Overrides for pitchomatic
   .mainscreen-activity {
     position: relative;
+    z-index: -1;
     .linear-timer-container {
       width: 100%;
       position: absolute;

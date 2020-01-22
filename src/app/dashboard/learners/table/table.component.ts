@@ -72,6 +72,8 @@ export class LearnersTableComponent implements AfterViewInit, OnInit {
         })
       )
       .subscribe(data => {
+        console.log(data);
+        console.log(this.data);
         this.data = data;
         return data;
       });

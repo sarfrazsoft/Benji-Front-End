@@ -1,7 +1,7 @@
 <div class="courses card-container" fxLayoutGap="40px" fxLayout="column">
   <div
     class="card"
-    (click)="openDetails(course.id)"
+    (click)="openDetails(course)"
     *ngFor="let course of courses"
   >
     <div
@@ -26,14 +26,14 @@
       <div class="description">
         {{ course.course_description }}
       </div>
-      <!-- <div class="view-details-link" fxLayoutAlign="start center">
+      <div class="view-details-link" fxLayoutAlign="start center">
         <div class="overview-button" fxLayoutAlign="start center">
           <span>
             Course overview
           </span>
           <img src="/assets/img/right_caret.png" alt="Right caret" />
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

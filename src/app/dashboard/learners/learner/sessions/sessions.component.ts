@@ -112,7 +112,9 @@ export class SessionsComponent implements OnInit, AfterViewInit {
             id: run.id,
             date: moment(run.start_time).format('MMMM, DD YYYY'),
             title: run.lesson.lesson_name,
-            hostedBy: run.host.first_name + ' ' + run.host.last_name,
+            hostedBy: run.host
+              ? run.host.first_name + ' ' + run.host.last_name
+              : '',
             lessonrunCode: run.lessonrun_code
           });
         });

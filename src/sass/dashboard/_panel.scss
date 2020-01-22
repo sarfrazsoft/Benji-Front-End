@@ -13,19 +13,22 @@
     }
   }
 
+  .subsection-container {
+    padding: 0px $dash-subsection-sides-padding;
+  }
+  .sub-heading {
+    h2 {
+      font-size: 40px;
+      color: $primary-color-darkest;
+    }
+    padding: 20px $dash-subsection-sides-padding;
+    border-bottom: $header-border-bottom solid $header-border-bottom-color;
+  }
+
   .sub-header {
     font-size: 36px;
     color: #6c6c6c;
     margin-bottom: 40px;
     font-weight: 600;
-  }
-
-  .subsection-container {
-    padding: 0px $dash-subsection-sides-padding;
-  }
-  .sub-heading {
-    color: $primary-color-darkest;
-    padding: 20px $dash-subsection-sides-padding;
-    border-bottom: $header-border-bottom solid $header-border-bottom-color;
   }
 }
