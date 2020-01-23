@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 .lesson-landing {
   height: 100vh;
@@ -11,6 +11,9 @@
     width: 100%;
   }
   .lesson-landing__content-container {
+    .logo {
+      max-width: 230px;
+    }
     width: 66.66%;
     position: relative;
     .lesson-landing__width-container {
@@ -52,7 +55,7 @@
   }
   .lesson-landing__lifestyle-photo {
     width: 33.333%;
-    background-image: url('../../../../assets/img/Desk_lightblue.jpg');
+    background-image: url("../../../../assets/img/Desk_lightblue.jpg");
     background-size: cover;
     background-position-x: 100%;
   }

@@ -45,8 +45,6 @@ export class WhiteLabelResolver implements Resolve<any> {
           route.url[0].path === 'participant') &&
         !this.contextService.user
       ) {
-        //
-        console.log(route.url[0]);
         this.applyBenjiTheme();
       } else {
         this.contextService.user$.subscribe(user => {
