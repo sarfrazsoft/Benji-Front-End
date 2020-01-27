@@ -131,14 +131,13 @@ export class SkillEvaluationComponent implements OnInit {
 
   // reports = PastSessionsReports
   setupCharts(reports: Array<SessionReport>) {
+    console.log(reports);
     reports = reports.sort((a, b) => a.id - b.id);
-    reports = reports.filter(a => a.lesson.lesson_id === 'active_listening_1');
+    reports = reports.filter(a => a.lesson.lesson_id === 'pitch_perfect_1');
     reports = reports.slice(reports.length - 3);
 
     const arr = [];
     reports.forEach((report, sessionIndex) => {
-      console.log(report);
-
       this.setupChartsDates(report, sessionIndex);
 
       const obj = { postAssessment: {}, pom: {}, mcqs: [] };
@@ -177,7 +176,7 @@ export class SkillEvaluationComponent implements OnInit {
       arr.push(obj);
     });
 
-    // console.log(res);
+    console.log(arr);
 
     const selfFeedbacks = [];
     const peerFeedbacks = [];
@@ -358,7 +357,7 @@ export class SkillEvaluationComponent implements OnInit {
         mcqAvg = mcqAvg + sum / mcqsScores.length;
       });
       mcqAvg = (mcqAvg / mcqsScores[0].length) * 100;
-      this.mcqOverview.donut.data = (mcqAvg * 10) / 10;
+      this.mcqOverview.donut.data = Math.round(mcqAvg);
     }
   }
 

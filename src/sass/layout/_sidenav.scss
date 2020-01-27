@@ -71,7 +71,6 @@ mat-sidenav-container.mat-sidenav-container {
       }
       .session-text {
         text-align: center;
-        color: $primary-color;
         margin-top: 20px;
         span {
           font-family: $pn-regular;
@@ -104,7 +103,6 @@ mat-sidenav-container.mat-sidenav-container {
         }
         .bullet-point {
           opacity: 0;
-          color: #76f5cb;
           transition: opacity 0.5s linear;
           -webkit-transition: opacity 0.5s linear;
           -ms-transition: opacity 0.5s linear;

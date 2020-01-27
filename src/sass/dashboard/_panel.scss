@@ -3,7 +3,6 @@
   padding: 20px 30px;
 
   .dashboard-heading {
-    color: $primary-color-darkest;
     padding: 0px $dash-subsection-sides-padding;
     border-bottom: $header-border-bottom solid $header-border-bottom-color;
     margin-bottom: 40px;
@@ -19,7 +18,6 @@
   .sub-heading {
     h2 {
       font-size: 40px;
-      color: $primary-color-darkest;
     }
     padding: 20px $dash-subsection-sides-padding;
     border-bottom: $header-border-bottom solid $header-border-bottom-color;

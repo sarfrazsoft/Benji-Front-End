@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-entry',
@@ -30,7 +31,7 @@ export class EntryComponent implements OnInit {
     }
     this.isMobile = this.deviceService.isMobile();
 
-    this.contextService.partnerInfo$.subscribe(info => {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.welcomeText = info.welcome_text;
         this.name = info.name;

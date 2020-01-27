@@ -5,6 +5,7 @@ import {
   BackendRestService,
   ContextService
 } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-landing',
@@ -24,10 +25,10 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contextService.partnerInfo$.subscribe(info => {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
-        this.lightLogo = this.contextService.partnerInfo.parameters.lightLogo;
-        this.partnerName = this.contextService.partnerInfo.parameters.partnerName;
+        this.lightLogo = info.parameters.lightLogo;
+        this.partnerName = info.parameters.partnerName;
       }
     });
   }

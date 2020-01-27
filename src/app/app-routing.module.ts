@@ -11,9 +11,6 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: 'src/app/layout/layout.module#LayoutModule'
-    // resolve: {
-    //   labelInfo: WhiteLabelResolver
-    // }
   },
   {
     path: 'login/:partner',

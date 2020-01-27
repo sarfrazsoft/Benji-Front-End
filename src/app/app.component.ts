@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { BackendRestService } from './services';
+import { PartnerInfo } from './services/backend/schema/whitelabel_info';
 import { ContextService } from './services/context.service';
 import { LayoutService } from './services/layout.service';
 
@@ -35,7 +36,7 @@ export class AppComponent implements OnInit {
         });
       }
     });
-    this.contextService.partnerInfo$.subscribe(info => {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.title.setTitle(info.parameters.tabTitle);
         this._document
@@ -115,9 +116,47 @@ export class AppComponent implements OnInit {
           border-bottom-color: ${info.parameters.primary};
         }
 
+        mat-toolbar.mat-toolbar {
+          border-bottom-color: ${info.parameters.primary}
+        }
+
         benji-ps-build-pitch-activity .b-flat-card__body .your-pitch em {
           color: ${info.parameters.primary};
           border-bottom-color: ${info.parameters.primary};
+        }
+
+        .launch-session:hover span {
+          border-bottom-color: ${info.parameters.primary};
+        }
+
+        .overview-button:hover span {
+          border-bottom-color: ${info.parameters.primary};
+        }
+
+        .nav-section .item .bullet-point {
+          color: ${info.parameters.primary_darkest};
+        }
+
+        .admin-panel .dashboard-heading {
+          color: ${info.parameters.primary_darkest};
+        }
+
+
+        .admin-panel .sub-heading h2 {
+          color: ${info.parameters.primary_darkest};
+        }
+
+        .dashboard-secondary-button.active {
+          border-color: ${info.parameters.primary};
+          color: ${info.parameters.primary};
+        }
+
+        .report-cards .card-header {
+          color: ${info.parameters.primary_darkest};
+        }
+
+        .dashboard-table .table-link {
+          color: ${info.parameters.primary};
         }
 
         .login-container-mob .login-signup-section {

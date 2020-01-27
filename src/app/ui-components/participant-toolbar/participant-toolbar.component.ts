@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-participant-toolbar',
@@ -11,7 +12,7 @@ export class ParticipantToolbarComponent implements OnInit {
   constructor(private contextService: ContextService) {}
 
   ngOnInit() {
-    this.contextService.partnerInfo$.subscribe(info => {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.logo = info.parameters.lightLogo;
       }

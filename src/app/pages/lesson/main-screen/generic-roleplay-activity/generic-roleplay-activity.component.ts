@@ -1,5 +1,7 @@
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { RoleplayRole, Timer } from 'src/app/services/backend/schema';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { ContextService } from 'src/app/services/context.service';
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -11,16 +13,25 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenGenericRoleplayActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
+  checkIcon: string;
   roles: Array<RoleplayRole>;
   giveFeedback = false;
   rplayTimer: Timer;
   feedbackTimer: Timer;
 
-  constructor(private emoji: EmojiLookupService) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private contextService: ContextService
+  ) {
     super();
   }
 
   ngOnInit() {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.checkIcon = info.parameters.checkIcon;
+      }
+    });
     // Don't reassign roles varialbe to prevent re-render of UI
     const act = this.activityState.genericroleplayactivity;
     this.roles = act.genericroleplayrole_set;

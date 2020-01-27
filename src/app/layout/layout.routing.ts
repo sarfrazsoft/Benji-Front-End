@@ -21,6 +21,13 @@ const routes: Routes = [
     }
   },
   {
+    path: 'landing/:partner',
+    component: LandingComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
+  },
+  {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent
   },

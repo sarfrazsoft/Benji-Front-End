@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { PartnerInfo } from './backend/schema/whitelabel_info';
 
 @Injectable()
 export class ContextService {
@@ -36,12 +37,12 @@ export class ContextService {
   /**
    * Current partner details
    */
-  partnerInfo$ = new BehaviorSubject<any>(null);
+  partnerInfo$ = new BehaviorSubject<PartnerInfo>(null);
 
-  set partnerInfo(partnerInfo: any) {
+  set partnerInfo(partnerInfo: PartnerInfo) {
     this.partnerInfo$.next(partnerInfo);
   }
-  get partnerInfo(): any {
+  get partnerInfo(): PartnerInfo {
     return this.partnerInfo$.getValue();
   }
 }

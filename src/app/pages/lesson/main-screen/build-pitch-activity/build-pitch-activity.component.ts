@@ -1,5 +1,7 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import { BuildAPitchSharingDoneEvent } from 'src/app/services/backend/schema';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -10,7 +12,9 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   statement: string;
-  constructor() {
+  infoIcon: string;
+  checkIcon: string;
+  constructor(private contextService: ContextService) {
     super();
   }
   createPitches = true;
@@ -19,6 +23,12 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   votesComplete = false;
 
   ngOnInit() {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.infoIcon = info.parameters.infoIcon;
+        this.checkIcon = info.parameters.checkIcon;
+      }
+    });
     const blanks: any = this.activityState.buildapitchactivity
       .buildapitchblank_set;
 

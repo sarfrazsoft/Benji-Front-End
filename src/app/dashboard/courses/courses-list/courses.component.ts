@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BackendRestService } from 'src/app/services';
+import { BackendRestService, ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { LaunchSessionDialogComponent } from 'src/app/shared';
 import { AdminService } from '../../admin-panel/services';
 
@@ -12,15 +13,27 @@ import { AdminService } from '../../admin-panel/services';
 })
 export class CoursesComponent implements OnInit {
   @Input() courses: Array<any> = [];
+  launchSessionLabel = '';
+  rightLaunchArrow = '';
+  rightCaret = '';
   constructor(
     private dialog: MatDialog,
     private adminService: AdminService,
     private restService: BackendRestService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private contextService: ContextService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.launchSessionLabel = info.parameters.launchSession;
+        this.rightCaret = info.parameters.rightCaret;
+        this.rightLaunchArrow = info.parameters.rightLaunchArrow;
+      }
+    });
+  }
 
   // duplicate code in Launch Session dialog
   launchSession(event, id): void {

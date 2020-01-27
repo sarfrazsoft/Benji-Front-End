@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import * as global from 'src/app/globals';
 import { BackendRestService } from './backend/backend-rest.service';
+import { PartnerInfo } from './backend/schema/whitelabel_info';
 import { ContextService } from './context.service';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class WhiteLabelResolver implements Resolve<any> {
               '/white_label_info'
           )
           .subscribe(
-            (res: any) => {
+            (res: PartnerInfo) => {
               this.contextService.partnerInfo = res;
             },
             (err: HttpErrorResponse) => {
@@ -96,7 +97,8 @@ export class WhiteLabelResolver implements Resolve<any> {
         primary: '#0a4cef',
         primary_dark: '#4c188f',
         primary_darker: '#3a126e',
-        primary_darkest: '#00178a'
+        primary_darkest: '#00178a',
+        tabTitle: 'Benji'
         // primary_lighter: '#f8b0ac',
         // primary_light: '#fa8b85',
         // primary: '#fd4b42',
@@ -104,6 +106,6 @@ export class WhiteLabelResolver implements Resolve<any> {
         // primary_darker: '#c91006',
         // primary_darkest: '#830700'
       }
-    };
+    } as PartnerInfo;
   }
 }

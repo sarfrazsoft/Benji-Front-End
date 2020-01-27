@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-mobile-entry',
@@ -27,7 +28,7 @@ export class MobileComponent implements OnInit {
       this.showLoginMob = false;
     }
 
-    this.contextService.partnerInfo$.subscribe(info => {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.logo = info.parameters.darkLogo;
       }

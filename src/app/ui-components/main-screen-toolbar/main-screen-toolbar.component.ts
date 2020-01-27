@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
@@ -16,8 +17,10 @@ export class MainScreenToolbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contextService.partnerInfo$.subscribe(info => {
-      if (info) { this.lightLogo = info.parameters.lightLogo; }
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.lightLogo = info.parameters.lightLogo;
+      }
     });
   }
 

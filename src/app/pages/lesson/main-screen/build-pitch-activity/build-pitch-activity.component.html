@@ -40,7 +40,7 @@
             fxLayout="row"
             fxLayoutAlign="start start"
           >
-            <img src="/assets/img/check_icon.png" alt="launch" />
+            <img [src]="checkIcon" alt="launch" />
             <div class="instruction">
               {{
                 activityState.buildapitchactivity.buildapitchpitch_set.length
@@ -92,11 +92,7 @@
             fxLayoutAlign="start start"
           >
             <div>
-              <img
-                class="main-screen-utility-icons"
-                src="/assets/img/info_icon.png"
-                alt="launch"
-              />
+              <img class="main-screen-utility-icons" [src]="infoIcon" />
             </div>
 
             <div class="instruction">
@@ -143,7 +139,7 @@
           >
             <img
               class="main-screen-utility-icons"
-              src="/assets/img/check_icon.png"
+              [src]="checkIcon"
               alt="launch"
             />
             <div class="instruction">

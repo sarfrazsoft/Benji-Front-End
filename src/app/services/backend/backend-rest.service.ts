@@ -6,6 +6,7 @@ import * as global from '../../globals';
 import { ContextService } from '../context.service';
 import { Course, LessonRun } from './schema/course_details';
 import { User } from './schema/user';
+import { PartnerInfo } from './schema/whitelabel_info';
 
 @Injectable()
 export class BackendRestService {
@@ -69,7 +70,7 @@ export class BackendRestService {
     return this.http
       .get(global.apiRoot + '/tenants/orgs/' + org + '/white_label_info/')
       .pipe(
-        map((res: any) => {
+        map((res: PartnerInfo) => {
           this.contextService.partnerInfo = res;
           return res;
         })

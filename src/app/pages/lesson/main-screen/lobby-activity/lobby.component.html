@@ -12,7 +12,8 @@
         class="indigo-launch-button bg-primary-color-dark pn-700"
         (click)="kickOffLesson()"
       >
-        Start session <mat-icon class="icon-white">arrow_forward</mat-icon>
+        {{ startSessionLabel }}
+        <mat-icon class="icon-white">arrow_forward</mat-icon>
       </button>
     </div>
   </div>
@@ -50,8 +51,8 @@
           </span>
           {{
             activityState.lesson_run.joined_users.length === 1
-              ? 'Learner joined'
-              : 'Learners joined'
+              ? "Learner joined"
+              : "Learners joined"
           }}
         </p>
         <ul>

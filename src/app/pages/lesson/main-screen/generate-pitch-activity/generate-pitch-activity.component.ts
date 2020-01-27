@@ -1,10 +1,11 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 
-import { EmojiLookupService } from 'src/app/services';
+import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
   PitchoMaticActivity,
   PitchoMaticBlank
 } from 'src/app/services/backend/schema';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -15,6 +16,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenGeneratePitchActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
+  infoIcon: string;
+  checkIcon: string;
   preparing = false;
   splitIntoGroups = false;
   timeToPitchLT8 = false;
@@ -24,11 +27,21 @@ export class MainScreenGeneratePitchActivityComponent
   shareFeedbackLT8 = false;
   shareFeedbackMT8 = false;
 
-  constructor(private emoji: EmojiLookupService) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private contextService: ContextService
+  ) {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.infoIcon = info.parameters.infoIcon;
+        this.checkIcon = info.parameters.checkIcon;
+      }
+    });
+  }
 
   ngOnChanges() {
     const state = this.activityState;

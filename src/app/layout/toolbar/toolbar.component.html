@@ -1,6 +1,6 @@
 <div fxLayoutAlign="space-between center" class="admin-toolbar">
   <div class="logo" routerLink="/dashboard">
-    <img src="/assets/img/logo.png" />
+    <img [src]="logo" alt="Benji Logo" />
   </div>
 
   <div class="right-controls">
@@ -12,8 +12,8 @@
           [size]="'big'"
         ></app-avatar>
       </span> -->
-      <span class="account-name pn-600">
-        {{ user.first_name + ' ' + user.last_name }}
+      <span class="account-name pn-600 primary-color">
+        {{ user.first_name + " " + user.last_name }}
       </span>
     </button>
     <mat-menu
@@ -23,7 +23,9 @@
       xPosition="before"
     >
       <div class="menu-section info" appClickStopPropagation>
-        <div class="name">{{ user.first_name + ' ' + user.last_name }}</div>
+        <div class="name primary-color">
+          {{ user.first_name + " " + user.last_name }}
+        </div>
         <div class="email pn-400">{{ user.email }}</div>
         <div class="team pn-400">{{ user.department }}</div>
       </div>

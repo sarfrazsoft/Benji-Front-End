@@ -1,5 +1,15 @@
 export const activityResult1 = {
   id: 3,
+  lesson: {
+    id: 4,
+    lesson_id: 'pitch_perfect_1',
+    lesson_name: 'Pitch Perfect',
+    lesson_length_minutes: 45,
+    lesson_description: 'Participants learn to deliver a persuasive pitch.',
+    course: 3,
+    next_lesson: null
+  },
+
   start_time: '2019-10-24T09:22:22.302331-04:00',
   end_time: '2019-10-24T09:48:46.968523-04:00',
   lessonrun_code: 8269,

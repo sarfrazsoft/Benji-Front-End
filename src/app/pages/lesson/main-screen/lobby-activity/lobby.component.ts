@@ -9,7 +9,9 @@ import {
 
 import { MatDialog } from '@angular/material';
 import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialogs';
+import { ContextService } from 'src/app/services';
 import { LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -20,10 +22,14 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenLobbyComponent extends BaseActivityComponent
   implements OnInit, OnDestroy {
+  startSessionLabel = '';
   dialogRef;
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
-  constructor(private dialog: MatDialog) {
+  constructor(
+    private dialog: MatDialog,
+    private contextService: ContextService
+  ) {
     super();
   }
 
@@ -40,6 +46,11 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
 
   ngOnInit() {
     this.sfxPlayer.nativeElement.play();
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.startSessionLabel = info.parameters.startSession;
+      }
+    });
   }
 
   ngOnDestroy() {

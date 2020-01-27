@@ -7,6 +7,7 @@ import {
 
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
 export interface SidenavSection {
@@ -21,6 +22,7 @@ export interface SidenavSection {
 export class SidenavComponent implements OnInit {
   sidenavSections: Array<SidenavSection> = [];
   courses;
+  launchArrow = '';
 
   adminSection = {
     section: 1,
@@ -97,6 +99,11 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit() {
     this.initNavigation();
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.launchArrow = info.parameters.joinArrow;
+      }
+    });
   }
 
   launchSession(): void {
