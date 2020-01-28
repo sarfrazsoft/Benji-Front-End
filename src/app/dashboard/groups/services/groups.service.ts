@@ -60,3 +60,45 @@ export class GroupsService {
   //   );
   // }
 }
+
+export const group = {
+  id: 1,
+  name: 'Group One',
+  shortName: 'group_one',
+  createdOn: '2020-01-10T17:06:29.572377-05:00',
+  createdBy: {
+    id: 1,
+    name: 'John Doe'
+  },
+  learners: [
+    {
+      id: 1,
+      name: 'user one'
+    }
+  ],
+  enrolledCourses: [
+    {
+      id: 1,
+      name: 'Course one'
+    },
+    {
+      id: 2,
+      name: 'course two'
+    }
+  ],
+  pastSessions: [
+    {
+      id: 65,
+      start_time: '2020-01-10T17:06:29.572377-05:00',
+      end_time: null,
+      lessonrun_code: 14439,
+      learners: 4,
+      host: {
+        id: 6,
+        username: 'www',
+        first_name: 'mww',
+        other: 'propertyName'
+      }
+    }
+  ]
+};

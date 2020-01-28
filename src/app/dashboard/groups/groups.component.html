@@ -3,23 +3,9 @@
     <h1>Groups</h1>
   </div>
 
-  <!-- <div class="brief-info">
-    <span class="primary-color-darkest">103</span>
-    <span class="secondary-color-dark"> learners across</span>
-    <span class="primary-color-darkest"> 5</span>
-    <span class="secondary-color-dark"> groups enrolled in</span>
-    <span class="primary-color-darkest"> Active Listening</span>
-  </div> -->
-
-  <div class="learners-info" fxLayout="column">
-    <div class="learners-controls" fxLayout="row">
-      <!-- <div class="settings" fxFlex fxLayoutGap="20px">
-        <button class="dashboard-secondary-button">
-          Edit learner settings
-        </button>
-        <button class="dashboard-secondary-button">Send email</button>
-      </div> -->
-      <!-- <div class="add">
+  <div fxLayout="column">
+    <div class="dashboard-controls" fxLayout="row">
+      <div class="add">
         <button
           class="dashboard-secondary-button active"
           fxLayoutAlign="center"
@@ -28,50 +14,10 @@
           <mat-icon>add</mat-icon>
           Add group
         </button>
-      </div> -->
+      </div>
     </div>
-    <div class="learner-table" fxLayout="row wrap">
-      <div *ngFor="let group of groups">
-        <mat-card fxFlex="column" class="group-card">
-          <div class="title">{{ group.name }}</div>
-          <div id="progressbar">
-            <div
-              class="bg-primary-color-light"
-              [style.width.%]="group.completedPercent"
-            ></div>
-          </div>
-          <div class="text">{{ group.members }} members</div>
-          <div class="text">
-            {{ group.completedPercent }}% completed session
-          </div>
-          <div class="view-details-link" fxLayoutAlign="start center">
-            <div
-              class="overview-button primary-color"
-              fxLayoutAlign="start center"
-            >
-              <span>
-                View details
-              </span>
-              <img src="/assets/img/right_caret.png" alt="Right caret" />
-            </div>
-          </div>
-        </mat-card>
-      </div>
-      <div class="add-group">
-        <mat-card
-          fxFlex="column"
-          class="group-card add-group-card"
-          fxLayoutAlign="center center"
-          fxLayout="column"
-        >
-          <div class="icon">
-            <mat-icon>add</mat-icon>
-          </div>
-          <div class="add-text">
-            Add group
-          </div>
-        </mat-card>
-      </div>
+    <div class="dashboard-table">
+      <benji-groups-table> </benji-groups-table>
     </div>
   </div>
 </div>

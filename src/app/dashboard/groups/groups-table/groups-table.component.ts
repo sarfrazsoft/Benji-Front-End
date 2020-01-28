@@ -2,6 +2,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/services/backend/schema';
@@ -14,7 +16,12 @@ import { GroupsService } from '../services';
   styleUrls: ['./groups-table.component.scss']
 })
 export class GroupsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['select', 'firstName', 'lastName', 'job_title'];
+  displayedColumns: string[] = [
+    'name',
+    'noOfLearners',
+    'createdOn',
+    'viewDetails'
+  ];
 
   data: any = [];
   selection = new SelectionModel<any>(true, []);
@@ -28,7 +35,9 @@ export class GroupsTableComponent implements AfterViewInit {
 
   constructor(
     private http: HttpClient,
-    private learnerService: GroupsService
+    private groupsService: GroupsService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -40,7 +49,7 @@ export class GroupsTableComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.learnerService.getLearners(
+          return this.groupsService.getLearners(
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex
@@ -62,9 +71,26 @@ export class GroupsTableComponent implements AfterViewInit {
         })
       )
       .subscribe(data => {
-        this.data = data;
+        this.data = groups;
+        // data.forEach(run => {
+        //   tableData.push({
+        //     id: run.id,
+        //     date: moment(run.start_time).format('MMMM, DD YYYY'),
+        //     title: run.lesson.lesson_name,
+        //     hostedBy: run.host
+        //       ? run.host.first_name + ' ' + run.host.last_name
+        //       : '',
+        //     // tslint:disable-next-line:whitespace
+        //     // participants: run.joined_users.length,
+        //     lessonrunCode: run.lessonrun_code
+        //   });
+        // });
         return data;
       });
+  }
+
+  formatDate(date) {
+    return moment(date).format('MMMM, DD YYYY');
   }
 
   // Selection code
@@ -91,4 +117,35 @@ export class GroupsTableComponent implements AfterViewInit {
       this.selection.isSelected(row) ? 'deselect' : 'select'
     } row ${row.position + 1}`;
   }
+
+  viewGroup(row) {
+    this.router.navigate([row.shortName], {
+      relativeTo: this.activatedRoute
+    });
+  }
 }
+
+export const groups = [
+  {
+    id: 1,
+    name: 'Group One',
+    shortName: 'group_one',
+    learners: 6,
+    createdOn: '2020-01-10T17:06:29.572377-05:00',
+    createdBy: {
+      id: 1,
+      name: 'John Doe'
+    }
+  },
+  {
+    id: 2,
+    name: 'Group Two',
+    shortName: 'group_two',
+    learners: 8,
+    createdOn: '2020-01-10T17:06:29.572377-05:00',
+    createdBy: {
+      id: 1,
+      name: 'John Doe'
+    }
+  }
+];

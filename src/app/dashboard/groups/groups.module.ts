@@ -20,7 +20,7 @@ import {
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [GroupsComponents],
+  declarations: [...GroupsComponents],
   entryComponents: GroupsEntryComponents,
   providers: GroupsProviders
 })

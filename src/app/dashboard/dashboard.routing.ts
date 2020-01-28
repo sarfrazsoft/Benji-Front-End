@@ -38,8 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'groups',
-        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule',
-        canLoad: [IsAdminGuard]
+        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule'
       },
       {
         path: 'account',

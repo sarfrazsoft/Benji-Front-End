@@ -95,7 +95,6 @@ export class PastSessionsComponent implements AfterViewInit {
         })
       )
       .subscribe(data => {
-        console.log(data);
         const tableData = [];
         data.forEach(run => {
           tableData.push({

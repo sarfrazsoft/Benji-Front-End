@@ -43,8 +43,27 @@ export class SidenavComponent implements OnInit {
     ]
   };
 
-  pastSessionSection = {
+  groupsSection = {
     section: 2,
+    items: [
+      {
+        navName: 'Groups',
+        navRoute: './groups',
+        permission: 'admin'
+      }
+      // {
+      //   navName: 'Groups',
+      //   navRoute: './groups'
+      // },
+      // {
+      //   navName: 'Past Sessions',
+      //   navRoute: './pastsessions'
+      // }
+    ]
+  };
+
+  pastSessionSection = {
+    section: 3,
     items: [
       // {
       //   navName: 'Learners',
@@ -63,7 +82,7 @@ export class SidenavComponent implements OnInit {
   };
 
   accountSection = {
-    section: 3,
+    section: 4,
     items: [
       {
         navName: 'Account',
@@ -81,7 +100,7 @@ export class SidenavComponent implements OnInit {
   };
 
   authSection = {
-    section: 4,
+    section: 5,
     items: [
       {
         navName: 'Logout',
@@ -133,6 +152,7 @@ export class SidenavComponent implements OnInit {
       if (user.local_admin_permission) {
         this.sidenavSections = [
           this.adminSection,
+          this.groupsSection,
           this.pastSessionSection,
           this.accountSection,
           this.authSection
