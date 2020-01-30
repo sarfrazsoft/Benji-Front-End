@@ -21,9 +21,6 @@ export class AccountComponent implements OnInit {
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
-  passwordMinLenErr = false;
-  emailErr = false;
-  emailErrMsg = '';
   accontInfo: User;
 
   constructor(
@@ -45,10 +42,6 @@ export class AccountComponent implements OnInit {
     this.form.patchValue(this.accontInfo);
   }
 
-  get email(): AbstractControl {
-    return this.form.get('email');
-  }
-
   get first_name(): AbstractControl {
     return this.form.get('first_name');
   }
@@ -59,15 +52,6 @@ export class AccountComponent implements OnInit {
 
   get job_title(): AbstractControl {
     return this.form.get('job_title');
-  }
-
-  get oldPassword(): AbstractControl {
-    return this.form.get('oldPassword');
-  }
-
-  emailChanged() {
-    this.emailErr = false;
-    this.emailErrMsg = '';
   }
 
   onSubmit(): void {
