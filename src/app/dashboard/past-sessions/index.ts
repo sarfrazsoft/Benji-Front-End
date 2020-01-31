@@ -14,12 +14,14 @@ import {
 } from './reports/pitch-o-matic/index';
 import { PitchOMaticComponent } from './reports/pitch-o-matic/pitch-o-matic.component';
 import { ReportsComponent } from './reports/reports.component';
+import { PastSessionsTableComponent } from './table/table.component';
 
 export { PastSessionsComponent, ReportsComponent };
 
 export const PastSessionsComponents = [
   ...LearnerReportComponents,
   PastSessionsComponent,
+  PastSessionsTableComponent,
   ReportsComponent,
   BAPReportComponent,
   McqsComponent,

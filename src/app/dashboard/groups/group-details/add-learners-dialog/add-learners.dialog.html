@@ -1,0 +1,33 @@
+<div class="add-learners-dialog" fxLayout="column">
+  <div fxLayoutAlign="end end">
+    <button class="close-button" matDialogClose>
+      <mat-icon class="icon-white">clear</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="add-learners">
+    <div fxLayout="column" fxLayoutGap="15px">
+      <h2 class="dialog-heading primary-color-darkest">
+        Select learners to add to the group
+      </h2>
+      <benji-group-learners-table
+        [showControls]="false"
+        [events]="eventsSubject.asObservable()"
+      ></benji-group-learners-table>
+      <div
+        class="controls-container"
+        fxLayoutAlign="end"
+        fxLayout="row"
+        fxLayoutGap="15px"
+      >
+        <div class="save">
+          <button
+            class="dashboard-button bg-primary-color dialog-controls"
+            (click)="addToGroup()"
+          >
+            Add to group
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>

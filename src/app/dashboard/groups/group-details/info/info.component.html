@@ -1,8 +1,7 @@
-<div class="admin-panel" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Add Group</h1>
+<div>
+  <div class="sub-header">
+    <span>Details</span>
   </div>
-
   <div class="dashboard-form">
     <form
       [formGroup]="form"
@@ -62,24 +61,13 @@
         </mat-error>
       </div>
 
-      <div class="field">
-        <div class="label">
-          Select learners you want to add to group
-        </div>
-
-        <benji-group-learners-table
-          [showControls]="false"
-          [events]="eventsSubject.asObservable()"
-        ></benji-group-learners-table>
-      </div>
-
       <div *ngIf="isSubmitted" class="success-message">
-        Saved
+        Information updated
       </div>
 
       <button
         type="submit"
-        class="dashboard-button bg-primary-color"
+        class="dashboard-button bg-primary-color benji-group-info-button"
         [ngClass]="{
           active: form.valid,
           inactive: !form.valid

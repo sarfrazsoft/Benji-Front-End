@@ -31,6 +31,14 @@ export class GroupsService {
     );
   }
 
+  getPastSessions(sort: string, order: string, page: number): Observable<any> {
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
+      map(res => {
+        return res;
+      })
+    );
+  }
+
   getLearners(sort: string, order: string, page: number): Observable<User> {
     // django expects page index starting from 1
     const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);

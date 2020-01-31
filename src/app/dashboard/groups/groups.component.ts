@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fromEvent, Observable } from 'rxjs';
+import { fromEvent, Observable, Subject } from 'rxjs';
 import {
   debounceTime,
   distinct,
@@ -16,6 +16,8 @@ import {
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit {
+  eventsSubject: Subject<void> = new Subject<void>();
+
   groups = [
     {
       name: 'Sales',
@@ -57,7 +59,14 @@ export class GroupsComponent implements OnInit {
     // const subscribe = example.subscribe(val => console.log(val));
   }
 
-  addLearners() {
-    this.router.navigate(['/dashboard/learners/add']);
+  addGroups() {
+    this.router.navigate(['/dashboard/groups/add']);
   }
+
+  removeGroups() {
+    this.eventsSubject.next();
+  }
+  // emitEventToChild() {
+  //   this.eventsSubject.next();
+  // }
 }

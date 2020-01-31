@@ -1,32 +1,32 @@
-import { RouterModule, Routes } from "@angular/router";
-import { AdminResolver } from "../admin-panel";
+import { RouterModule, Routes } from '@angular/router';
+import { AdminResolver } from '../admin-panel';
 import {
   AddGroupsComponent,
   GroupDetailsComponent,
   GroupsComponent,
   GroupsResolver
-} from "./index";
+} from './index';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     resolve: {
       dashData: AdminResolver
     },
     children: [
       {
-        path: "",
+        path: '',
         component: GroupsComponent,
         resolve: {
           groups: GroupsResolver
         }
       },
       {
-        path: "add",
+        path: 'add',
         component: AddGroupsComponent
       },
       {
-        path: ":id",
+        path: ':id',
         component: GroupDetailsComponent
       }
     ]

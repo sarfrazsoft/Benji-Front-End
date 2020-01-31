@@ -24,7 +24,7 @@ export class AccountComponent implements OnInit {
   accontInfo: User;
 
   constructor(
-    private builder: FormBuilder,
+    private formBuilder: FormBuilder,
     private accountService: AccountService,
     private route: ActivatedRoute,
     private router: Router,
@@ -32,7 +32,7 @@ export class AccountComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.form = this.builder.group({
+    this.form = this.formBuilder.group({
       first_name: new FormControl('', [Validators.required]),
       last_name: new FormControl('', [Validators.required]),
       job_title: ''

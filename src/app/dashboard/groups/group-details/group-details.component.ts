@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./group-details.component.scss']
 })
 export class GroupDetailsComponent implements OnInit {
+  group = groupx;
   groups = [
     {
       name: 'Sales',
@@ -38,3 +39,10 @@ export class GroupDetailsComponent implements OnInit {
 
   ngOnInit() {}
 }
+
+export const groupx = {
+  name: 'Group One',
+  description:
+    'Description for Group One Group' +
+    ' OneGroup OneGroup OneGroup OneGroup OneGroup One'
+};

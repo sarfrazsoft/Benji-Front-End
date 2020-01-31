@@ -11,8 +11,8 @@ export class StatsComponent implements OnInit {
 
   ngOnInit() {
     this.stats = [
-      { value: 105, label: 'total learners' },
-      { value: 13, label: 'groups' },
+      { value: 105, label: 'learners' },
+      { value: 13, label: 'training hours' },
       { value: 17, label: 'sessions completed' }
     ];
   }

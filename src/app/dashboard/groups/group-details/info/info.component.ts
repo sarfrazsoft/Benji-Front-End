@@ -7,21 +7,19 @@ import {
   Validators
 } from '@angular/forms';
 import { merge } from 'lodash';
-import { fromEvent, Observable, Subject } from 'rxjs';
-import { AccountService } from '../../account/services/account.service';
+import { User } from 'src/app/services/backend/schema';
+import { AccountService } from '../../../account/services';
 
 @Component({
-  selector: 'benji-add-groups',
-  templateUrl: './add-groups.component.html',
-  styleUrls: ['./add-groups.component.scss']
+  selector: 'benji-group-info',
+  templateUrl: './info.component.html',
+  styleUrls: ['./info.component.scss']
 })
-export class AddGroupsComponent implements OnInit {
-  eventsSubject: Subject<void> = new Subject<void>();
+export class InfoComponent implements OnInit {
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
   accontInfo = { id: 1 };
-
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService
@@ -31,6 +29,12 @@ export class AddGroupsComponent implements OnInit {
     this.form = this.formBuilder.group({
       group_name: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required])
+    });
+
+    // this.accontInfo = this.contextService.user;
+    this.form.patchValue({
+      group_name: 'brr group',
+      description: 'brr description'
     });
   }
 
@@ -49,7 +53,6 @@ export class AddGroupsComponent implements OnInit {
       merge(val, {
         id: this.accontInfo.id
       });
-      this.eventsSubject.next(val);
       this.accountService.saveUser(val).subscribe(
         res => {
           this.isSubmitted = true;
@@ -59,9 +62,5 @@ export class AddGroupsComponent implements OnInit {
         }
       );
     }
-  }
-
-  addToGroup() {
-    this.eventsSubject.next({});
   }
 }

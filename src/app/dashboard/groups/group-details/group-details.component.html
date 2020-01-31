@@ -1,11 +1,20 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-heading">
-    <h1>Group One</h1>
+    <h1>{{ group.name }}</h1>
   </div>
 
-  <benji-stats></benji-stats>
+  <div fxLayout="column" fxLayoutGap="40px">
+    <benji-group-info></benji-group-info>
 
-  <div class="learner-table" fxLayout="row wrap">
+    <benji-stats></benji-stats>
+
+    <benji-group-learners-table></benji-group-learners-table>
+
+    <benji-group-past-sessions-table></benji-group-past-sessions-table>
+  </div>
+</div>
+
+<!-- <div class="learner-table" fxLayout="row wrap">
     <div *ngFor="let group of groups">
       <mat-card fxFlex="column" class="group-card">
         <div class="title">{{ group.name }}</div>
@@ -45,5 +54,4 @@
         </div>
       </mat-card>
     </div>
-  </div>
-</div>
+  </div> -->

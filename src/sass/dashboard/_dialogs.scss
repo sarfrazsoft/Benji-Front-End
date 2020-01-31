@@ -33,6 +33,34 @@
         }
       }
     }
+
+    .confirmation-dialog {
+      .dashboard-button {
+        padding: 15px 25px;
+      }
+      .controls-container {
+        width: auto;
+      }
+    }
+  }
+}
+
+.add-learner-dialog {
+  mat-dialog-container.mat-dialog-container {
+    background-color: $secondary-color-lightest;
+    padding: 10px;
+    width: 70vw;
+    box-shadow: none;
+    .add-learners {
+      margin: 0px;
+      padding-bottom: 40px;
+      .dashboard-button {
+        padding: 15px 25px;
+      }
+      .controls-container {
+        width: 100%;
+      }
+    }
   }
 }
 .cdk-overlay-dark-backdrop {

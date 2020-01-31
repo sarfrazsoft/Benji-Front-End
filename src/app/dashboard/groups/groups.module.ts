@@ -10,6 +10,7 @@ import {
   GroupsEntryComponents,
   GroupsProviders
 } from './index';
+import { InfoComponent } from './group-details/info/info.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import {
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [...GroupsComponents],
+  declarations: [...GroupsComponents, InfoComponent],
   entryComponents: GroupsEntryComponents,
   providers: GroupsProviders
 })

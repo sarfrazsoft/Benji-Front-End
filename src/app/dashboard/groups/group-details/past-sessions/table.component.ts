@@ -6,26 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { User } from 'src/app/services/backend/schema';
-import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
-import { GroupsService } from '../services';
+import { GroupsService } from 'src/app/dashboard/groups/services/groups.service';
 
 @Component({
-  selector: 'benji-groups-table',
-  templateUrl: './groups-table.component.html',
-  styleUrls: ['./groups-table.component.scss']
+  selector: 'benji-group-past-sessions-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.scss']
 })
-export class GroupsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = [
-    'name',
-    'noOfLearners',
-    'createdOn',
-    'viewDetails'
-  ];
-
+export class PastSessionsTableComponent implements AfterViewInit {
+  displayedColumns: string[] = ['date', 'title', 'hosted_by', 'report'];
   data: any = [];
   selection = new SelectionModel<any>(true, []);
-
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
@@ -35,9 +26,9 @@ export class GroupsTableComponent implements AfterViewInit {
 
   constructor(
     private http: HttpClient,
-    private groupsService: GroupsService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private groupService: GroupsService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngAfterViewInit() {
@@ -49,7 +40,7 @@ export class GroupsTableComponent implements AfterViewInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.groupsService.getLearners(
+          return this.groupService.getPastSessions(
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex
@@ -71,26 +62,29 @@ export class GroupsTableComponent implements AfterViewInit {
         })
       )
       .subscribe(data => {
-        this.data = groups;
-        // data.forEach(run => {
-        //   tableData.push({
-        //     id: run.id,
-        //     date: moment(run.start_time).format('MMMM, DD YYYY'),
-        //     title: run.lesson.lesson_name,
-        //     hostedBy: run.host
-        //       ? run.host.first_name + ' ' + run.host.last_name
-        //       : '',
-        //     // tslint:disable-next-line:whitespace
-        //     // participants: run.joined_users.length,
-        //     lessonrunCode: run.lessonrun_code
-        //   });
-        // });
+        const tableData = [];
+        data.forEach(run => {
+          tableData.push({
+            id: run.id,
+            date: moment(run.start_time).format('MMMM, DD YYYY'),
+            title: run.lesson.lesson_name,
+            hostedBy: run.host
+              ? run.host.first_name + ' ' + run.host.last_name
+              : '',
+            // tslint:disable-next-line:whitespace
+            // participants: run.joined_users.length,
+            lessonrunCode: run.lessonrun_code
+          });
+        });
+        this.data = tableData;
         return data;
       });
   }
 
-  formatDate(date) {
-    return moment(date).format('MMMM, DD YYYY');
+  showReports(row) {
+    this.router.navigate([row.lessonrunCode], {
+      relativeTo: this.activatedRoute
+    });
   }
 
   // Selection code
@@ -117,35 +111,4 @@ export class GroupsTableComponent implements AfterViewInit {
       this.selection.isSelected(row) ? 'deselect' : 'select'
     } row ${row.position + 1}`;
   }
-
-  viewGroup(row) {
-    this.router.navigate([row.shortName], {
-      relativeTo: this.activatedRoute
-    });
-  }
 }
-
-export const groups = [
-  {
-    id: 1,
-    name: 'Group One',
-    shortName: 'group_one',
-    learners: 6,
-    createdOn: '2020-01-10T17:06:29.572377-05:00',
-    createdBy: {
-      id: 1,
-      name: 'John Doe'
-    }
-  },
-  {
-    id: 2,
-    name: 'Group Two',
-    shortName: 'group_two',
-    learners: 8,
-    createdOn: '2020-01-10T17:06:29.572377-05:00',
-    createdBy: {
-      id: 1,
-      name: 'John Doe'
-    }
-  }
-];
