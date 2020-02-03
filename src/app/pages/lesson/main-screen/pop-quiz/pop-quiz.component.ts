@@ -9,6 +9,14 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   radialTimer;
+  showLeaderboard = false;
+  leaderboard = [
+    { name: 'Senpai', score: 9 },
+    { name: 'Shikamaru', score: 7 },
+    { name: 'Kakashi hatake', score: 4 },
+    { name: 'Yamato tenzo', score: 2 },
+    { name: 'Kazekage Gara', score: 1 }
+  ];
   constructor() {
     super();
   }

@@ -98,7 +98,15 @@ export class WhiteLabelResolver implements Resolve<any> {
         primary_dark: '#4c188f',
         primary_darker: '#3a126e',
         primary_darkest: '#00178a',
-        tabTitle: 'Benji'
+        tabTitle: 'Benji',
+        partnerName: 'Benji',
+        startSession: 'start session',
+        launchSession: 'launch session',
+        joinArrow: './assets/img/joinlaunch.png',
+        rightCaret: './assets/img/right_caret.png',
+        rightLaunchArrow: './assets/img/right_caret.png',
+        infoIcon: './assets/img/right_caret.png',
+        checkIcon: './assets/img/check_icon.png'
         // primary_lighter: '#f8b0ac',
         // primary_light: '#fa8b85',
         // primary: '#fd4b42',

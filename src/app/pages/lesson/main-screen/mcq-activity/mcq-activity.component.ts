@@ -29,10 +29,10 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
         .next_activity_start_timer === null ||
         changes['activityState'].previousValue.base_activity
           .next_activity_start_timer === undefined) &&
-      (changes['activityState'].currentValue.base_activity
+      changes['activityState'].currentValue.base_activity
         .next_activity_start_timer !== null &&
-        changes['activityState'].currentValue.base_activity
-          .next_activity_start_timer !== undefined)
+      changes['activityState'].currentValue.base_activity
+        .next_activity_start_timer !== undefined
     ) {
       this.playSfx('revealAnswer');
     }

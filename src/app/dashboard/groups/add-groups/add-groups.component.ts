@@ -62,6 +62,6 @@ export class AddGroupsComponent implements OnInit {
   }
 
   addToGroup() {
-    this.eventsSubject.next({});
+    this.eventsSubject.next();
   }
 }

@@ -2,7 +2,7 @@
   class="single-column-activity"
   fxLayout="column"
   fxLayoutGap="2.5vh"
-  *ngIf="!showStatistics"
+  *ngIf="!showStatistics && !showLeaderBoard"
 >
   <div class="twemoji-container">
     <app-b-twemoji emoji="🏁"> </app-b-twemoji>
@@ -72,3 +72,28 @@
     <canvas id="myChart" width="500" height="400"></canvas>
   </div>
 </div>
+
+<!-- single column leader board -->
+
+<!-- <div
+  class="poll-result"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  *ngIf="showLeaderBoard"
+>
+  <div class="header" fxLayout="column" fxFlex="100%">
+    Leader board
+  </div>
+  <div class="content" fxLayout="column" fxLayoutGap="2.5%">
+    <div class="question">
+      Sample question goes here.
+    </div>
+    <div fxLayoutGap="5%" *ngFor="let user of leaderBoardUsers; let i = index">
+      {{ user.name }}: {{ user.score }}
+    </div>
+  </div>
+
+  <div class="chart-container" *ngIf="showChart">
+    <canvas id="myChart" width="500" height="400"></canvas>
+  </div>
+</div> -->
