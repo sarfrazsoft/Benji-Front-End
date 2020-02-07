@@ -8,6 +8,7 @@ import {
   ActivityReport,
   BuildAPitchReport,
   FeedbackReport,
+  GenericRoleplayReport,
   MCQReport,
   PitchOMaticReport,
   SessionReport,
@@ -134,7 +135,7 @@ export class PastSessionsService {
               arr.push({
                 ...res,
                 activity_type: ActivityTypes.genericRoleplay,
-                grplay: act,
+                grplay: act as GenericRoleplayReport,
                 title: act.title
               });
             }

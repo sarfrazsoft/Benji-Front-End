@@ -17,8 +17,6 @@ export class TextQuestionComponent implements OnInit {
     this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
       this.updateAnswers();
     });
-
-    // this.updateAnswers();
   }
 
   updateAnswers() {
