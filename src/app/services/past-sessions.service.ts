@@ -68,7 +68,7 @@ export class PastSessionsService {
       .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
       .pipe(
         map((res: any) => {
-          res = activityResult3;
+          // res = activityResult3;
           const arr: Array<ActivityReport> = [];
 
           this.joinedUsers = res.joined_users;
@@ -128,6 +128,13 @@ export class PastSessionsService {
                 ...res,
                 activity_type: ActivityTypes.brainStorm,
                 brainstorm: act,
+                title: act.title
+              });
+            } else if (act.activity_type === ActivityTypes.genericRoleplay) {
+              arr.push({
+                ...res,
+                activity_type: ActivityTypes.genericRoleplay,
+                grplay: act,
                 title: act.title
               });
             }

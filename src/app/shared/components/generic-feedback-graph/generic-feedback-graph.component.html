@@ -1,6 +1,10 @@
 <div fxLayout="column">
-  <div class="card-header" *ngIf="cardTitle">
+  <div class="card-header">
     {{ cardTitle }}
+  </div>
+
+  <div class="text-list" *ngIf="instructions">
+    <div class="text-list-item">{{ instructions }}</div>
   </div>
 
   <div class="feedback-report" *ngFor="let question of fback">

@@ -67,6 +67,7 @@ export class PitchEvaluationComponent implements OnInit {
           'Agree',
           'Strongly Agree'
         ],
+        question_type: question.question_type,
         is_combo: question.is_combo,
         combo_text: ''
       });

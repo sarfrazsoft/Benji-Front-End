@@ -3,6 +3,7 @@ import { Lesson } from '../course_details';
 import { User } from '../user';
 import { BuildAPitchReport } from './build-a-pitch';
 import { FeedbackReport } from './feedback';
+import { GenericRoleplayReport } from './generic-roleplay';
 import { MCQReport } from './MCQ';
 import { PitchOMaticReport } from './pitch-o-matic';
 
@@ -28,6 +29,7 @@ export interface ActivityReport extends SessionReport {
   bap?: BuildAPitchReport;
   brainstorm?: any;
   postAssessment?: FeedbackReport;
+  grplay?: GenericRoleplayReport;
 }
 
 export interface Report {

@@ -5,3 +5,4 @@ export * from './key-stats/key-stats.component';
 export * from './mcqs';
 export * from './key-stats/participants/participants.component';
 export * from './pitch-o-matic/pitch-o-matic.component';
+export * from './generic-roleplay/generic-roleplay.component';

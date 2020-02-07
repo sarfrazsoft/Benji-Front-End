@@ -14,7 +14,7 @@ export const activityResult3 = {
   lessonrun_code: 8269,
   joined_users: [
     {
-      id: 2,
+      id: 18,
       username: 'matt',
       first_name: 'Matt',
       last_name: 'Parson',
@@ -223,6 +223,330 @@ export const activityResult3 = {
         start_time: '2019-11-18T11:28:08.505233-05:00',
         end_time: '2019-11-18T11:28:12.736547-05:00',
         activity_type: 'VideoActivity'
+      }
+    },
+    {
+      base_activity: {
+        activity_id: 'rplay',
+        description: 'Simple Title2',
+        start_time: '2020-02-04T15:15:39.415981-05:00',
+        end_time: '2020-02-04T15:19:05.227914-05:00'
+      },
+      genericroleplayactivity: {
+        groups: [
+          {
+            id: 8,
+            usergroupuser_set: [
+              {
+                id: 18,
+                user: {
+                  id: 18,
+                  username: 'participant6atgmaildotcom',
+                  first_name: 'participant6',
+                  last_name: 'xx',
+                  email: 'participant6@gmail.com',
+                  verified_email: false,
+                  job_title: 'dd',
+                  organization_name: 'Benji',
+                  orggroup_name: 'Sales',
+                  organization: 1,
+                  orggroup: 1,
+                  local_admin_permission: false,
+                  participant_permission: true
+                },
+                found: false
+              },
+              {
+                id: 19,
+                user: {
+                  id: 12,
+                  username: 'participant1atgmaildotcom',
+                  first_name: 'participant1',
+                  last_name: 'xx',
+                  email: 'participant1@gmail.com',
+                  verified_email: false,
+                  job_title: 'dd',
+                  organization_name: 'Benji',
+                  orggroup_name: 'Sales',
+                  organization: 1,
+                  orggroup: 1,
+                  local_admin_permission: false,
+                  participant_permission: true
+                },
+                found: true
+              },
+              {
+                id: 20,
+                user: {
+                  id: 16,
+                  username: 'participant4atgmaildotcom',
+                  first_name: 'participant4',
+                  last_name: 'xx',
+                  email: 'participant4@gmail.com',
+                  verified_email: false,
+                  job_title: 'dd',
+                  organization_name: 'Benji',
+                  orggroup_name: 'Sales',
+                  organization: 1,
+                  orggroup: 1,
+                  local_admin_permission: false,
+                  participant_permission: true
+                },
+                found: false
+              }
+            ]
+          },
+          {
+            id: 9,
+            usergroupuser_set: [
+              {
+                id: 21,
+                user: {
+                  id: 13,
+                  username: 'participant2atgmaildotcom',
+                  first_name: 'participant2',
+                  last_name: 'xx',
+                  email: 'participant2@gmail.com',
+                  verified_email: false,
+                  job_title: 'rr',
+                  organization_name: 'Benji',
+                  orggroup_name: 'Sales',
+                  organization: 1,
+                  orggroup: 1,
+                  local_admin_permission: false,
+                  participant_permission: true
+                },
+                found: false
+              },
+              {
+                id: 22,
+                user: {
+                  id: 17,
+                  username: 'participant5atgmaildotcom',
+                  first_name: 'participant5',
+                  last_name: 'xx',
+                  email: 'participant5@gmail.com',
+                  verified_email: false,
+                  job_title: 'dd',
+                  organization_name: 'Benji',
+                  orggroup_name: 'Developers',
+                  organization: 1,
+                  orggroup: 2,
+                  local_admin_permission: false,
+                  participant_permission: true
+                },
+                found: false
+              },
+              {
+                id: 23,
+                user: {
+                  id: 14,
+                  username: 'participant3atgmaildotcom',
+                  first_name: 'particpant3',
+                  last_name: 'xx',
+                  email: 'participant3@gmail.com',
+                  verified_email: false,
+                  job_title: 'rr',
+                  organization_name: 'Benji',
+                  orggroup_name: 'Sales',
+                  organization: 1,
+                  orggroup: 1,
+                  local_admin_permission: false,
+                  participant_permission: true
+                },
+                found: false
+              }
+            ]
+          }
+        ],
+        genericroleplayrole_set: [
+          {
+            id: 27,
+            name: 'Observer',
+            image_url: 'emoji://observer',
+            instructions: 'Evaluate the salesman',
+            allow_multiple: true,
+            is_non_interactive: true,
+            feedbackquestions: [
+              {
+                id: 76,
+                question_type: 'rating_agreedisagree',
+                question_text: 'The pitch was concise',
+                is_combo: false,
+                combo_text: null
+              },
+              {
+                id: 77,
+                question_type: 'rating_agreedisagree',
+                question_text: 'The delivery was strong',
+                is_combo: false,
+                combo_text: null
+              },
+              {
+                id: 78,
+                question_type: 'rating_agreedisagree',
+                question_text: 'How would you rate the pitch overall?',
+                is_combo: false,
+                combo_text: null
+              },
+              {
+                id: 79,
+                question_type: 'text',
+                question_text: 'Do you have any other comments?',
+                is_combo: false,
+                combo_text: null
+              }
+            ]
+          },
+          {
+            id: 26,
+            name: 'Customer',
+            image_url: 'emoji://customer',
+            instructions: 'Object to buying the pen',
+            allow_multiple: false,
+            is_non_interactive: false,
+            feedbackquestions: []
+          },
+          {
+            id: 25,
+            name: 'Salesman',
+            image_url: 'emoji://sales',
+            instructions: 'Sell this pen',
+            allow_multiple: false,
+            is_non_interactive: false,
+            feedbackquestions: [
+              {
+                id: 74,
+                question_type: 'rating_agreedisagree',
+                question_text: 'The pitch was concise',
+                is_combo: false,
+                combo_text: null
+              },
+              {
+                id: 75,
+                question_type: 'rating_agreedisagree',
+                question_text: 'The delivery was strong',
+                is_combo: false,
+                combo_text: null
+              }
+            ]
+          }
+        ],
+        activity_seconds: 100,
+        feedback_seconds: 100,
+        genericroleplayuser_set: [
+          {
+            benjiuser_id: 18,
+            role: 25,
+            discussion_complete: false,
+            feedback_submitted: true
+          },
+          {
+            benjiuser_id: 12,
+            role: 26,
+            discussion_complete: false,
+            feedback_submitted: false
+          },
+          {
+            benjiuser_id: 16,
+            role: 27,
+            discussion_complete: false,
+            feedback_submitted: true
+          },
+          {
+            benjiuser_id: 13,
+            role: 25,
+            discussion_complete: false,
+            feedback_submitted: true
+          },
+          {
+            benjiuser_id: 17,
+            role: 26,
+            discussion_complete: false,
+            feedback_submitted: false
+          },
+          {
+            benjiuser_id: 14,
+            role: 27,
+            discussion_complete: false,
+            feedback_submitted: true
+          }
+        ],
+        feedback: [
+          {
+            benji_user: 18,
+            feedbackquestion: 75,
+            rating_answer: 5,
+            text_answer: null
+          },
+          {
+            benji_user: 18,
+            feedbackquestion: 79,
+            rating_answer: null,
+            text_answer: 'ss'
+          },
+          {
+            benji_user: 18,
+            feedbackquestion: 77,
+            rating_answer: 5,
+            text_answer: null
+          },
+          {
+            benji_user: 18,
+            feedbackquestion: 76,
+            rating_answer: 4,
+            text_answer: null
+          },
+          {
+            benji_user: 12,
+            feedbackquestion: 78,
+            rating_answer: 4,
+            text_answer: null
+          },
+          {
+            benji_user: 12,
+            feedbackquestion: 74,
+            rating_answer: 4,
+            text_answer: null
+          },
+          {
+            benji_user: 13,
+            feedbackquestion: 75,
+            rating_answer: 4,
+            text_answer: null
+          },
+          {
+            benji_user: 13,
+            feedbackquestion: 76,
+            rating_answer: 5,
+            text_answer: null
+          },
+          {
+            benji_user: 13,
+            feedbackquestion: 78,
+            rating_answer: 5,
+            text_answer: null
+          },
+          {
+            benji_user: 13,
+            feedbackquestion: 74,
+            rating_answer: 4,
+            text_answer: null
+          },
+          {
+            benji_user: 17,
+            feedbackquestion: 77,
+            rating_answer: 5,
+            text_answer: null
+          },
+          {
+            benji_user: 17,
+            feedbackquestion: 79,
+            rating_answer: null,
+            text_answer: 'ss'
+          }
+        ],
+        activity_type: 'GenericRoleplayActivity'
       }
     },
     {

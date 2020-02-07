@@ -15,6 +15,7 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import {
   BuildAPitchComponent,
   FeedbackComponent,
+  GenericRoleplayComponent,
   McqsComponent,
   PitchOMaticComponent
 } from './index';
@@ -77,6 +78,14 @@ export class ReportsComponent implements OnInit {
               BuildAPitchComponent
             );
             const component = this.entry.createComponent(bapComponentFactory);
+            component.instance.data = act;
+          } else if (act.activity_type === ActivityTypes.genericRoleplay) {
+            const grplayComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+              GenericRoleplayComponent
+            );
+            const component = this.entry.createComponent(
+              grplayComponentFactory
+            );
             component.instance.data = act;
           }
         });

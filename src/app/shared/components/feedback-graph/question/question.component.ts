@@ -56,8 +56,12 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         this.comboAnswers.push(answer.text);
       }
     });
-    this.averageRating = ratingSum / noOfRatings;
-    this.averageRating = Math.round(this.averageRating * 10) / 10;
+    if (noOfRatings) {
+      this.averageRating = ratingSum / noOfRatings;
+      this.averageRating = Math.round(this.averageRating * 10) / 10;
+    } else {
+      this.averageRating = 0;
+    }
 
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
@@ -152,8 +156,12 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           this.comboAnswers.push(answer.text);
         }
       });
-      this.averageRating = ratingSum / noOfRatings;
-      this.averageRating = Math.round(this.averageRating * 10) / 10;
+      if (noOfRatings) {
+        this.averageRating = ratingSum / noOfRatings;
+        this.averageRating = Math.round(this.averageRating * 10) / 10;
+      } else {
+        this.averageRating = 0;
+      }
       this.myChart.data.datasets[0].data = assessments;
       this.myChart.update();
     }

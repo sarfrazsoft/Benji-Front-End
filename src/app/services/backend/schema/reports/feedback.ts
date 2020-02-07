@@ -16,13 +16,13 @@ export interface FeedbackQuestionSet {
   is_combo: boolean;
   pitchomaticactivity?: any;
   question_text: string;
-  question_type: QuestionType;
+  question_type: string;
 }
 
 export enum QuestionType {
   rating_happysad,
   rating_agreedisagree,
-  text_only
+  text
 }
 
 export interface FeedbackGraphQuestion {
@@ -31,6 +31,7 @@ export interface FeedbackGraphQuestion {
   labels: Array<string>;
   is_combo: boolean;
   combo_text: string;
+  question_type: string;
 }
 
 export interface Assessment {

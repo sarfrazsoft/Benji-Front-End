@@ -6,7 +6,6 @@ import {
   FeedbackQuestion,
   PitchoMaticGroupMemberFeedback
 } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-pitch-evaluation',
@@ -17,7 +16,7 @@ export class PitchEvaluationComponent implements OnInit {
   @Input() pomData: ActivityReport;
   questions: Array<FeedbackGraphQuestion> = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.updateFeedbackData();
@@ -62,6 +61,7 @@ export class PitchEvaluationComponent implements OnInit {
           'Strongly Agree'
         ],
         is_combo: question.is_combo,
+        question_type: question.question_type,
         combo_text: ''
       });
     });

@@ -2,6 +2,7 @@ import { PastSessionsComponent } from './past-sessions.component';
 import { BrainStormComponent } from './reports/brain-storm/brain-storm.component';
 import { BuildAPitchComponent as BAPReportComponent } from './reports/build-a-pitch/build-a-pitch.component';
 import { FeedbackComponent } from './reports/feedback/feedback.component';
+import { GenericRoleplayComponent } from './reports/generic-roleplay/generic-roleplay.component';
 import { KeyStatsComponent } from './reports/key-stats/key-stats.component';
 import { ParticipantsComponent } from './reports/key-stats/participants/participants.component';
 import { McqTableComponent } from './reports/mcqs/mcq-table/mcq-table.component';
@@ -32,11 +33,13 @@ export const PastSessionsComponents = [
   KeyStatsComponent,
   ParticipantsComponent,
   FeedbackComponent,
-  PitchOMaticComponent
+  PitchOMaticComponent,
+  GenericRoleplayComponent
 ];
 
 export const PastSessionsEntryComponents = [
   BAPReportComponent,
+  GenericRoleplayComponent,
   McqsComponent,
   OptionSpreadComponent,
   OptionDistributionBarsComponent,

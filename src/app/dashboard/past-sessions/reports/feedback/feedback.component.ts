@@ -58,6 +58,7 @@ export class FeedbackComponent implements OnInit {
           'Strongly Agree'
         ],
         is_combo: question.is_combo,
+        question_type: question.question_type,
         combo_text: question.combo_text
       });
     });
