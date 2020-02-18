@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
+  data = courseDetails;
   videoURL =
     'https://player.vimeo.com/external/' +
     '298880631.hd.mp4?s=69e47bc8bbb2f9bfcbbc919fab096e326ede516a&profile_id=175';
@@ -57,6 +58,28 @@ const courseDetails = {
       title: 'Document on How to handle an objection',
       description: 'some description of document',
       link: 'path/to/download/pdf'
+    }
+  ],
+  mcqs: [
+    {
+      text: 'Select any option',
+      correctExplanation: 'You know thats the wrong answer',
+      choices: [
+        { text: 'option 1', isCorrect: true, id: 1 },
+        { text: 'option 1', isCorrect: false, id: 2 },
+        { text: 'option 1', isCorrect: false, id: 3 },
+        { text: 'option 1', isCorrect: false, id: 4 }
+      ]
+    },
+    {
+      text: 'Select any option',
+      correctExplanation: 'You know what to do',
+      choices: [
+        { text: 'option 1', isCorrect: true, id: 1 },
+        { text: 'option 1', isCorrect: false, id: 2 },
+        { text: 'option 1', isCorrect: false, id: 3 },
+        { text: 'option 1', isCorrect: false, id: 4 }
+      ]
     }
   ]
 };

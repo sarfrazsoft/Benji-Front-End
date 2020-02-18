@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 .flexer {
   display: flex;
@@ -103,7 +103,7 @@
       width: 66.6667%;
     }
     .mainscreen-activity__column--33 {
-      width: 33.3333%;
+      min-width: 33.3333%;
     }
     .mainscreen-activity__column--50 {
       width: 50%;

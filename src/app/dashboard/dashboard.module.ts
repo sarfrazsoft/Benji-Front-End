@@ -10,6 +10,8 @@ import {
   DashboardProviders
 } from './';
 import { DashboardRoutes } from './dashboard.routing';
+import { McqsComponent } from './courses/course/mcqs/mcqs.component';
+import { McqComponent } from './courses/course/mcqs/mcq/mcq.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,7 @@ import { DashboardRoutes } from './dashboard.routing';
     SharedModule
   ],
   exports: [RouterModule],
-  declarations: [...DashboardComponents],
+  declarations: [...DashboardComponents, McqsComponent, McqComponent],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders
 })

@@ -15,6 +15,7 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import {
   BuildAPitchComponent,
   FeedbackComponent,
+  FeedbackTagsComponent,
   GenericRoleplayComponent,
   McqsComponent,
   PitchOMaticComponent
@@ -54,39 +55,61 @@ export class ReportsComponent implements OnInit {
         // Iterate over each item in array
         res.forEach((act: ActivityReport) => {
           if (act.activity_type === ActivityTypes.mcq) {
-            const mcqComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+            const mcqCF = this.componentFactoryResolver.resolveComponentFactory(
               McqsComponent
             );
-            const component = this.entry.createComponent(mcqComponentFactory);
+            const component = this.entry.createComponent(mcqCF);
             component.instance.data = act;
+
+            // commented out tags feedback report
+            // const FTagsCF = this.componentFactoryResolver.resolveComponentFactory(
+            //   FeedbackTagsComponent
+            // );
+            // const component = this.entry.createComponent(FTagsCF);
+            // component.instance.data = [
+            //   {
+            //     question: 'how do evaluate the pitch',
+            //     tagScores: [
+            //       { name: 'Nice', score: 6 },
+            //       { name: 'Cool', score: 4 },
+            //       { name: 'Bad', score: 2 },
+            //       { name: 'The worse', score: 2 }
+            //     ]
+            //   },
+            //   {
+            //     question: 'how to chase a laser beam',
+            //     tagScores: [
+            //       { name: 'fast', score: 7 },
+            //       { name: 'Nyoom', score: 5 },
+            //       { name: 'slow', score: 2 },
+            //       { name: 'creeping', score: 4 }
+            //     ]
+            //   }
+            // ];
           } else if (act.activity_type === ActivityTypes.feedback) {
-            const feedbackComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+            const feedbackCF = this.componentFactoryResolver.resolveComponentFactory(
               FeedbackComponent
             );
-            const component = this.entry.createComponent(
-              feedbackComponentFactory
-            );
+            const component = this.entry.createComponent(feedbackCF);
             component.instance.data = act;
           } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-            const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+            const pomCF = this.componentFactoryResolver.resolveComponentFactory(
               PitchOMaticComponent
             );
-            const component = this.entry.createComponent(pomComponentFactory);
+            const component = this.entry.createComponent(pomCF);
             component.instance.data = act;
           } else if (act.activity_type === ActivityTypes.buildAPitch) {
-            const bapComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
+            const bapCF = this.componentFactoryResolver.resolveComponentFactory(
               BuildAPitchComponent
             );
-            const component = this.entry.createComponent(bapComponentFactory);
+            const component = this.entry.createComponent(bapCF);
             component.instance.data = act;
           } else if (act.activity_type === ActivityTypes.genericRoleplay) {
-            const grplayComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
-              GenericRoleplayComponent
-            );
-            const component = this.entry.createComponent(
-              grplayComponentFactory
-            );
-            component.instance.data = act;
+            // const grplayCF = this.componentFactoryResolver.resolveComponentFactory(
+            //   GenericRoleplayComponent
+            // );
+            // const component = this.entry.createComponent(grplayCF);
+            // component.instance.data = act;
           }
         });
       });

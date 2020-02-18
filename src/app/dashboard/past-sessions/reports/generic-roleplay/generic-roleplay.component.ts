@@ -1,15 +1,15 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 import {
   ActivityReport,
   FeedbackQuestion,
   User
-} from "src/app/services/backend/schema";
-import { PastSessionsService } from "src/app/services/past-sessions.service";
+} from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
-  selector: "benji-generic-roleplay",
-  templateUrl: "./generic-roleplay.component.html",
-  styleUrls: ["./generic-roleplay.component.scss"]
+  selector: 'benji-generic-roleplay',
+  templateUrl: './generic-roleplay.component.html',
+  styleUrls: ['./generic-roleplay.component.scss']
 })
 export class GenericRoleplayComponent implements OnInit {
   @Input() data: ActivityReport;
@@ -29,7 +29,7 @@ export class GenericRoleplayComponent implements OnInit {
 
   checkUsers() {
     const salesman = this.data.grplay.genericroleplayrole_set.find(
-      el => el.name === "Salesman"
+      el => el.name === 'Salesman'
     );
     let salesmanID;
     if (salesman) {
@@ -57,7 +57,7 @@ export class GenericRoleplayComponent implements OnInit {
   setupData() {
     // get the salesman role
     const salesman = this.data.grplay.genericroleplayrole_set.find(
-      el => el.name === "Salesman"
+      el => el.name === 'Salesman'
     );
     this.salesmanTask = salesman.instructions;
     let salesmanID;
@@ -107,11 +107,11 @@ export class GenericRoleplayComponent implements OnInit {
         question_text: question.question_text,
         assessments: assessments,
         labels: [
-          "Strongly Disagree",
-          "Disagree",
-          "Neutral",
-          "Agree",
-          "Strongly Agree"
+          'Strongly Disagree',
+          'Disagree',
+          'Neutral',
+          'Agree',
+          'Strongly Agree'
         ],
         is_combo: question.is_combo,
         combo_text: question.combo_text,
@@ -149,94 +149,94 @@ export class GenericRoleplayComponent implements OnInit {
 // Below is the feedback they got from other people in the first round
 export const salesmanFeedback = [
   {
-    question_text: "Were you convinced by the salesman?",
+    question_text: 'Were you convinced by the salesman?',
     assessments: [
       // this user got rating 4 for this question.
       // only include here if the user is selected in the selection
       {
         user: {
           id: 12,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
           participant_permission: true
         },
         rating: 5,
-        text: "salesman was amazing"
+        text: 'salesman was amazing'
       },
       {
         user: {
           id: 13,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
           participant_permission: true
         },
         rating: 5,
-        text: "I sure was convinced"
+        text: 'I sure was convinced'
       },
       {
         user: {
           id: 14,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
           participant_permission: true
         },
         rating: 5,
-        text: "I would buy from him"
+        text: 'I would buy from him'
       }
     ],
     labels: [
-      "Strongly Disagree",
-      "Disagree",
-      "Neutral",
-      "Agree",
-      "Strongly Agree"
+      'Strongly Disagree',
+      'Disagree',
+      'Neutral',
+      'Agree',
+      'Strongly Agree'
     ],
     is_combo: true,
-    combo_text: "What made you say that?"
+    combo_text: 'What made you say that?'
   },
   {
-    question_text: "Were your concerns addressed?",
+    question_text: 'Were your concerns addressed?',
     assessments: [
       // this user got rating 4 for this question.
       // only include here if the user is selected in the selection
       {
         user: {
           id: 16,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
@@ -247,14 +247,14 @@ export const salesmanFeedback = [
       {
         user: {
           id: 17,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
@@ -265,14 +265,14 @@ export const salesmanFeedback = [
       {
         user: {
           id: 18,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
@@ -282,31 +282,31 @@ export const salesmanFeedback = [
       }
     ],
     labels: [
-      "Strongly Disagree",
-      "Disagree",
-      "Neutral",
-      "Agree",
-      "Strongly Agree"
+      'Strongly Disagree',
+      'Disagree',
+      'Neutral',
+      'Agree',
+      'Strongly Agree'
     ],
     is_combo: true,
-    combo_text: "What made you say that?"
+    combo_text: 'What made you say that?'
   },
   {
-    question_text: "Was the salesman compassionate?",
+    question_text: 'Was the salesman compassionate?',
     assessments: [
       // this user got rating 4 for this question.
       // only include here if the user is selected in the selection
       {
         user: {
           id: 12,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
@@ -317,14 +317,14 @@ export const salesmanFeedback = [
       {
         user: {
           id: 13,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
@@ -335,14 +335,14 @@ export const salesmanFeedback = [
       {
         user: {
           id: 14,
-          username: "participant1atgmaildotcom",
-          first_name: "participant1",
-          last_name: "xx",
-          email: "participant1@gmail.com",
+          username: 'participant1atgmaildotcom',
+          first_name: 'participant1',
+          last_name: 'xx',
+          email: 'participant1@gmail.com',
           verified_email: false,
-          job_title: "dd",
-          organization_name: "Benji",
-          orggroup_name: "Sales",
+          job_title: 'dd',
+          organization_name: 'Benji',
+          orggroup_name: 'Sales',
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
@@ -352,13 +352,13 @@ export const salesmanFeedback = [
       }
     ],
     labels: [
-      "Strongly Disagree",
-      "Disagree",
-      "Neutral",
-      "Agree",
-      "Strongly Agree"
+      'Strongly Disagree',
+      'Disagree',
+      'Neutral',
+      'Agree',
+      'Strongly Agree'
     ],
     is_combo: true,
-    combo_text: "What made you say that?"
+    combo_text: 'What made you say that?'
   }
 ];

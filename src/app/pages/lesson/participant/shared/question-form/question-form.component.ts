@@ -17,7 +17,9 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
   @Output() submitResponse = new EventEmitter();
+  sliderValue = 0;
   form: FormGroup;
+  selectPills = selectPills;
   constructor(private builder: FormBuilder) {}
 
   ngOnInit() {
@@ -78,5 +80,44 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       const val = this.form.value;
       this.submitResponse.emit(val);
     }
+    console.log(this.selectPills);
+  }
+
+  selectPill(pill) {
+    const idx = selectPills.findIndex(x => x.id === pill.id);
+    this.selectPills[idx].selected = !this.selectPills[idx].selected;
+  }
+
+  sliderValueChange(sliderVal) {
+    this.sliderValue = sliderVal.value;
+  }
+
+  getSliderText() {
+    const sliderTexts = [
+      'one',
+      'I didnt like  what I went through',
+      'I m nuetral to coming here',
+      'I cant decide if i liked it',
+      'I like it but not sure',
+      'I somewhat like it',
+      'I like it',
+      'I like it for sho',
+      'I definitely like it ',
+      'I love it',
+      'I can\'t wait for the next one'
+    ];
+    return sliderTexts[
+      Math.floor((this.sliderValue / 100) * sliderTexts.length)
+    ];
   }
 }
+
+export const selectPills = [
+  { id: 1, name: 'Concise', selected: false },
+  { id: 2, name: 'Clear', selected: false },
+  { id: 3, name: 'very compelling', selected: false },
+  { id: 4, name: 'Moose', selected: false },
+  { id: 5, name: 'Thought provoking', selected: false },
+  { id: 6, name: 'Enigma Machine', selected: false },
+  { id: 7, name: 'Ten', selected: false }
+];

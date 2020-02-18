@@ -1,0 +1,27 @@
+<div class="launch-session-dialog" fxLayout="column">
+  <div fxLayoutAlign="end end">
+    <button class="close-button" matDialogClose>
+      <mat-icon class="icon-white">clear</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="select-session">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <h2 class="dialog-heading primary-color-darkest">That's right</h2>
+      <div class="dialog-instructions" [innerHTML]="explanationMessage"></div>
+      <div class="controls-container" fxLayout="column" fxLayoutGap="15px">
+        <div class="launch">
+          <button
+            class="dashboard-button bg-primary-color dialog-controls"
+            (click)="closeDialog()"
+            [ngClass]="{
+              active: selectedSession,
+              inactive: !selectedSession
+            }"
+          >
+            close
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>

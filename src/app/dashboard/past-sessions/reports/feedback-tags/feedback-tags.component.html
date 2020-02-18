@@ -1,0 +1,10 @@
+<div class="report-cards" fxLayout="column">
+  <div class="card-header">Multiple choice question</div>
+
+  <div *ngFor="let tagsQuestion of data; let i = index">
+    <benji-response-tags-percent-bars
+      [tagsQuestion]="tagsQuestion"
+      [questionIndex]="i"
+    ></benji-response-tags-percent-bars>
+  </div>
+</div>

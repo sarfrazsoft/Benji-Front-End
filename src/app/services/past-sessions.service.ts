@@ -148,21 +148,21 @@ export class PastSessionsService {
   getLearnerSessionSummaries(learnerId: string): Observable<any> {
     return this.http
       .get(
-        // global.apiRoot +
-        //   '/course_details/lesson_run/user_summary/' +
-        //   learnerId +
-        //   '/'
-        global.apiRoot + '/tenants/users/?page=' + 1
+        global.apiRoot +
+          '/course_details/lesson_run/user_summary/' +
+          learnerId +
+          '/'
+        // global.apiRoot + '/tenants/users/?page=' + 1
       )
       .pipe(
         map((res: Array<SessionReport>) => {
-          const pastSessionsReports: any = [
-            activityResult1,
-            activityResult2,
-            activityResult3
-          ];
-          return pastSessionsReports;
-          // return res;
+          // const pastSessionsReports: any = [
+          //   activityResult1,
+          //   activityResult2,
+          //   activityResult3
+          // ];
+          // return pastSessionsReports;
+          return res;
         })
       );
   }

@@ -163,12 +163,13 @@ export class SkillEvaluationComponent implements OnInit {
           obj.pom = act as PitchOMaticReport;
         } else if (
           act.activity_type === ActivityTypes.mcq &&
-          (act.title === 'weighted_mcq' ||
-            act.title === 'Pop Quiz Q1' ||
-            act.title === 'Pop Quiz Q2' ||
-            act.title === 'Pop Quiz Q3' ||
-            act.title === 'Pop Quiz Q4' ||
-            act.title === 'Pop Quiz Q5')
+          // (act.title === 'weighted_mcq' ||
+          //   act.title === 'Pop Quiz Q1' ||
+          //   act.title === 'Pop Quiz Q2' ||
+          //   act.title === 'Pop Quiz Q3' ||
+          //   act.title === 'Pop Quiz Q4' ||
+          //   act.title === 'Pop Quiz Q5')
+          act.title === 'weighted_mcq'
         ) {
           obj.mcqs.push(act);
         }
@@ -254,8 +255,9 @@ export class SkillEvaluationComponent implements OnInit {
     pitchingAvg = pitchingAvg / 3;
     this.pitchingOverview.donut.data = Math.round(pitchingAvg);
 
+    // commented out mcq widget
     // Calculate mcq scores
-    this.calculateMCQScores(mcqsScores);
+    // this.calculateMCQScores(mcqsScores);
 
     this.createWidgetComponents();
   }
@@ -379,8 +381,9 @@ export class SkillEvaluationComponent implements OnInit {
     // const component4 = this.entry4.createComponent(skillOverFactory);
     // component4.instance.overviewData = overviewData;
 
-    const component5 = this.entry4.createComponent(skillOverFactory);
-    component5.instance.overviewData = this.mcqOverview;
+    // commented out mcq widget
+    // const component5 = this.entry4.createComponent(skillOverFactory);
+    // component5.instance.overviewData = this.mcqOverview;
   }
 }
 

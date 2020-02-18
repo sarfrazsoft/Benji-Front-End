@@ -16,6 +16,7 @@ import {
   PastSessionsProviders
 } from './index';
 import { PastSessionsRoutes } from './past-sessions.routing';
+import { FeedbackTagsComponent } from './reports/feedback-tags/feedback-tags.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,7 @@ import { PastSessionsRoutes } from './past-sessions.routing';
     PerfectScrollbarModule
   ],
   exports: [RouterModule],
-  declarations: [PastSessionsComponents],
+  declarations: [PastSessionsComponents, FeedbackTagsComponent],
   entryComponents: PastSessionsEntryComponents,
   providers: [
     ...PastSessionsProviders,

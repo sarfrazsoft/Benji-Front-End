@@ -5,6 +5,7 @@ import { QuestionComponent } from './feedback-graph/question/question.component'
 import { TextQuestionComponent } from './feedback-graph/text-question/text-question.component';
 import { FeedbackGenericGraphComponent } from './generic-feedback-graph/generic-feedback-graph.component';
 import { ResponsePercentBarsComponent } from './response-percent-bars/response-percent-bars.component';
+import { ResponseTagsPercentBarsComponent } from './response-tags-percent-bars/response-tags-percent-bars.component';
 export { AvatarComponent };
 
 export const CmpComponents = [
@@ -14,12 +15,14 @@ export const CmpComponents = [
   FeedbackGraphComponent,
   ResponsePercentBarsComponent,
   TextQuestionComponent,
-  FeedbackGenericGraphComponent
+  FeedbackGenericGraphComponent,
+  ResponseTagsPercentBarsComponent
 ];
 
 export const CmpEntryComponents = [
   AssessmentBarComponent,
   FeedbackGraphComponent,
   ResponsePercentBarsComponent,
-  FeedbackGenericGraphComponent
+  FeedbackGenericGraphComponent,
+  ResponseTagsPercentBarsComponent
 ];

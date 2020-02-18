@@ -1,0 +1,50 @@
+<div class="mcq">
+  <div class="text">{{ mcq.text }}</div>
+  <div class="choices" fxLayoutGap="40px" fxLayout="row wrap">
+    <div
+      class="choice bg-primary-color"
+      *ngFor="let choice of mcq.choices"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxFlex="40%"
+      fxLayoutGap="20px"
+      (click)="select(choice)"
+      [ngClass]="{ selected: choice.id === selectedChoice }"
+    >
+      <div class="icon" fxLayoutAlign="center center">
+        <i class="material-icons">
+          panorama_fish_eye
+        </i>
+      </div>
+      <div>{{ choice.text }}</div>
+    </div>
+  </div>
+  <div class="buttons" fxLayout="row" fxLayoutGap="20px">
+    <div>
+      <button
+        mat-raised-button
+        class="submit-button"
+        [ngClass]="{
+          'bg-primary-color': selectedChoice,
+          'white-color': selectedChoice
+        }"
+        (click)="submit()"
+      >
+        Submit
+      </button>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        class="showFeedback"
+        (click)="showFeedback()"
+        [ngClass]="{
+          'bg-primary-color': submitted,
+          'white-color': submitted
+        }"
+      >
+        Show Feedback
+      </button>
+    </div>
+  </div>
+</div>

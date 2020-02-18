@@ -52,6 +52,31 @@ benji-question-form {
           opacity: 1;
         }
       }
+      .pills {
+        button {
+          border-radius: 5px;
+        }
+        span {
+          margin-top: 0px;
+        }
+        .active {
+          color: #fff;
+        }
+      }
+      .rating-slider {
+        .mat-slider-horizontal {
+          width: 100%;
+          .mat-slider-track-fill,
+          .mat-slider-thumb,
+          .mat-slider-thumb-label {
+            background-color: #0a4cef;
+          }
+        }
+        .text {
+          text-align: center;
+          margin-bottom: 25px;
+        }
+      }
     }
   }
   @media screen and (min-width: 415px) {

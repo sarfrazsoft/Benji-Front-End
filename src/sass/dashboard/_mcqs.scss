@@ -1,0 +1,50 @@
+.admin-panel {
+  .mcqs {
+    .mcq {
+      .text {
+        font-size: 26px;
+        margin-bottom: 10px;
+      }
+      .choices {
+        color: #fff;
+        .choice {
+          padding: 30px 15px;
+          margin-bottom: 30px;
+          height: 36px;
+          font-size: 24px;
+          border-radius: 3px;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+          &:hover {
+            background-color: darken($primary-color, 10);
+          }
+          .icon {
+            .material-icons {
+              font-size: 36px;
+            }
+          }
+          &.selected {
+            background-color: darken($primary-color, 10);
+          }
+        }
+      }
+      .buttons {
+        margin-bottom: 40px;
+        margin-top: 20px;
+
+        &.active {
+        }
+        .submit-button {
+          font-size: 28px;
+          padding: 10px 20px;
+          &.selected {
+          }
+        }
+        .showFeedback {
+          font-size: 28px;
+          padding: 10px 20px;
+        }
+      }
+    }
+  }
+}

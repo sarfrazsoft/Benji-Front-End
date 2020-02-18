@@ -13,7 +13,7 @@
             {{ question_set[i].question_text }}
           </h2>
 
-          <div
+          <!-- <div
             fxLayout="column"
             *ngIf="question_set[i].question_type === 'rating_agreedisagree'"
           >
@@ -115,6 +115,37 @@
               placeholder="Put 'em in here!"
               class="b-standard-textarea"
             ></textarea>
+          </div> -->
+
+          <!-- <div
+            class="pills"
+            fxLayout="row wrap"
+            fxLayoutAlign="start"
+            *ngIf="true"
+          >
+            <button
+              *ngFor="let pill of selectPills"
+              mat-stroked-button
+              [ngClass]="{
+                active: pill.selected,
+                'bg-primary-color': pill.selected
+              }"
+              (click)="pill.selected = !pill.selected"
+            >
+              {{ pill.name }}
+            </button>
+          </div> -->
+
+          <div class="rating-slider">
+            <div class="text">
+              {{ getSliderText() }}
+            </div>
+            <mat-slider
+              [max]="100"
+              [min]="0"
+              [thumbLabel]="true"
+              (input)="sliderValueChange($event)"
+            ></mat-slider>
           </div>
         </div>
       </div>

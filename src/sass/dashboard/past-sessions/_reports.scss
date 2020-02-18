@@ -84,4 +84,30 @@ benji-generic-feedback-graph {
       font-size: 18px;
     }
   }
+
+  .slider-rating {
+    min-height: 200px;
+    color: #7a7676;
+    .average-container {
+      border: 1px solid $secondary-color-light;
+      border-radius: 5px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      .average {
+        font-size: 54px;
+        height: 100%;
+      }
+      .no-of-scores {
+        font-size: 24;
+      }
+    }
+    .average-text {
+      font-size: 42px;
+      border: 1px solid $secondary-color-light;
+      border-radius: 5px;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-left: 0px;
+    }
+  }
 }

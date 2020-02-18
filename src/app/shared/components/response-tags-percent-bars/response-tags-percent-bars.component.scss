@@ -1,0 +1,64 @@
+.response-percent-bars {
+  .content {
+    width: 90%;
+    background: white;
+    margin-top: 30px;
+    .header {
+      text-align: left;
+      font-size: 18px;
+      .question {
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+    }
+    .options-container {
+      z-index: 2;
+
+      .options {
+        position: relative;
+        text-align: left;
+        &.correct-choice {
+          background-color: rgb(217, 242, 189);
+          border-radius: 4px;
+        }
+        &.correct-choice.correct-selected-choice {
+          background-color: rgba(51, 170, 51, 0);
+          #progressbar {
+            > div {
+              background-color: #7ed321;
+            }
+          }
+        }
+        .info {
+          padding: 6px 30px;
+          .option-detail {
+            font-size: 15px;
+          }
+          .percentage {
+            min-width: 120px;
+            font-size: 15px;
+            .number {
+              font-weight: 600;
+            }
+          }
+        }
+        #progressbar {
+          background: #bec8ca;
+          border-radius: 8px;
+          padding: 0px;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          z-index: -1;
+          opacity: 0.3;
+          > div {
+            opacity: 1;
+            height: 100%;
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+  }
+}
