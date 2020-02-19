@@ -48,7 +48,7 @@ export class BuildAPitchComponent implements OnInit {
             );
             const user = userData.user;
 
-            obj[user] = blankValue.value ? blankValue.value : '';
+            obj[user] = blankValue ? blankValue.value : '-';
           }
         });
         bapTableData.push({

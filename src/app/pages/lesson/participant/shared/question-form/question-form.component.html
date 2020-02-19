@@ -13,7 +13,7 @@
             {{ question_set[i].question_text }}
           </h2>
 
-          <!-- <div
+          <div
             fxLayout="column"
             *ngIf="question_set[i].question_type === 'rating_agreedisagree'"
           >
@@ -115,7 +115,7 @@
               placeholder="Put 'em in here!"
               class="b-standard-textarea"
             ></textarea>
-          </div> -->
+          </div>
 
           <!-- <div
             class="pills"
@@ -136,7 +136,7 @@
             </button>
           </div> -->
 
-          <div class="rating-slider">
+          <!-- <div class="rating-slider">
             <div class="text">
               {{ getSliderText() }}
             </div>
@@ -146,7 +146,7 @@
               [thumbLabel]="true"
               (input)="sliderValueChange($event)"
             ></mat-slider>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

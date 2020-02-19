@@ -37,30 +37,30 @@ export class SkillEvaluationComponent implements OnInit {
     title: 'Pitching',
     donut: {
       title: 'Pitch Skill',
-      data: 0,
+      data: 10,
       color: '#00178a'
     },
     chart: {
       label: 'Sessions',
       sessionInfo: [
-        {
-          date: '2nd Jan, 2020',
-          name: '',
-          xlabel: '01/02',
-          value: 0
-        },
-        {
-          date: '14th Jan, 2020',
-          name: '',
-          xlabel: '01/14',
-          value: 0
-        },
-        {
-          date: '12th Jan, 2020',
-          name: '',
-          xlabel: '01/12',
-          value: 0
-        }
+        // {
+        //   date: '2nd Jan, 2020',
+        //   name: '',
+        //   xlabel: '01/02',
+        //   value: 0
+        // },
+        // {
+        //   date: '14th Jan, 2020',
+        //   name: '',
+        //   xlabel: '01/14',
+        //   value: 0
+        // },
+        // {
+        //   date: '12th Jan, 2020',
+        //   name: '',
+        //   xlabel: '01/12',
+        //   value: 0
+        // }
       ]
     },
     enoughData: false
@@ -131,10 +131,14 @@ export class SkillEvaluationComponent implements OnInit {
 
   // reports = PastSessionsReports
   setupCharts(reports: Array<SessionReport>) {
+    // Verify if the particular report needs to be
+    // included in the pitching skill widget
+    reports = this.verifyData(reports);
     console.log(reports);
     reports = reports.sort((a, b) => a.id - b.id);
     reports = reports.filter(a => a.lesson.lesson_id === 'pitch_perfect_1');
-    reports = reports.slice(reports.length - 3);
+    // Calculating for last 3 sessions only
+    // reports = reports.slice(reports.length - 3);
 
     const arr = [];
     reports.forEach((report, sessionIndex) => {
@@ -263,6 +267,19 @@ export class SkillEvaluationComponent implements OnInit {
   }
 
   setupChartsDates(report: SessionReport, sessionIndex: number) {
+    this.pitchingOverview.chart.sessionInfo.push({
+      date: '',
+      name: '',
+      xlabel: '',
+      value: 0
+    });
+    this.mcqOverview.chart.sessionInfo.push({
+      date: '',
+      name: '',
+      xlabel: '',
+      value: 0
+    });
+
     this.pitchingOverview.chart.sessionInfo[sessionIndex].name =
       report.lesson.lesson_name;
     this.mcqOverview.chart.sessionInfo[sessionIndex].name =
@@ -336,6 +353,10 @@ export class SkillEvaluationComponent implements OnInit {
         );
         const ratings = [];
         if (userFeedback) {
+          if (userFeedback.pitchomaticfeedback_set) {
+            // this user didn't get any feedback in POM
+            // remove the data for this report
+          }
           userFeedback.pitchomaticfeedback_set.forEach(fb => {
             if (fb.feedbackquestion === question.id) {
               ratings.push(fb.rating_answer);
@@ -384,6 +405,59 @@ export class SkillEvaluationComponent implements OnInit {
     // commented out mcq widget
     // const component5 = this.entry4.createComponent(skillOverFactory);
     // component5.instance.overviewData = this.mcqOverview;
+  }
+
+  verifyData(reports) {
+    const verifiedReports = [];
+    reports.forEach(report => {
+      let verifiedReport = false;
+      report.activity_results.forEach((act, i) => {
+        let title = '';
+        for (const key in act) {
+          if (act.hasOwnProperty(key)) {
+            if (key !== 'base_activity') {
+              title = act['base_activity'].description;
+              act = act[key];
+              act.title = title;
+            }
+          }
+        }
+
+        if (act.activity_type === ActivityTypes.feedback) {
+          if (act.title === 'How do you feel about pitching now?') {
+            // obj.postAssessment = act as FeedbackReport;
+          }
+        } else if (act.activity_type === ActivityTypes.pitchoMatic) {
+          const userFeedback = act.pitchomaticgroupmembers.find(
+            member => member.user.id === parseInt(this.learnerID, 10)
+          );
+
+          act.feedbackquestion_set.forEach(question => {
+            if (userFeedback) {
+              if (userFeedback.pitchomaticfeedback_set.length) {
+                // this user has feedback in POM
+                verifiedReport = true;
+              }
+            }
+          });
+        } else if (
+          act.activity_type === ActivityTypes.mcq &&
+          // (act.title === 'weighted_mcq' ||
+          //   act.title === 'Pop Quiz Q1' ||
+          //   act.title === 'Pop Quiz Q2' ||
+          //   act.title === 'Pop Quiz Q3' ||
+          //   act.title === 'Pop Quiz Q4' ||
+          //   act.title === 'Pop Quiz Q5')
+          act.title === 'weighted_mcq'
+        ) {
+          // obj.mcqs.push(act);
+        }
+      });
+      if (verifiedReport) {
+        verifiedReports.push(report);
+      }
+    });
+    return verifiedReports;
   }
 }
 

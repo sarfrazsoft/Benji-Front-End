@@ -80,7 +80,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       const val = this.form.value;
       this.submitResponse.emit(val);
     }
-    console.log(this.selectPills);
+    // console.log(this.selectPills);
   }
 
   selectPill(pill) {

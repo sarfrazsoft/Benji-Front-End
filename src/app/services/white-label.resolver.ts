@@ -46,7 +46,8 @@ export class WhiteLabelResolver implements Resolve<any> {
           route.url[0].path === 'participant') &&
         !this.contextService.user
       ) {
-        this.applyBenjiTheme();
+        // this.applyBenjiTheme();
+        this.applyDefaultTheme();
       } else {
         this.contextService.user$.subscribe(user => {
           if (user) {
@@ -60,6 +61,8 @@ export class WhiteLabelResolver implements Resolve<any> {
       }
     } catch (err) {
       console.log(err);
+      console.log('yolo');
+      this.applyDefaultTheme();
     }
   }
 

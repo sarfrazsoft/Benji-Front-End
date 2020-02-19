@@ -64,8 +64,12 @@
                 fxLayoutAlign="center center"
                 fxLayoutGap="10px"
               >
-                <div *ngFor="let word of blank.value.split(' '); let i = index">
+                <!-- commented out the animation for pitch reveal -->
+                <!-- <div *ngFor="let word of blank.value.split(' '); let i = index">
                   <div class="{{ 'odoo_' + i + '_' + word }}"></div>
+                </div> -->
+                <div *ngFor="let word of blank.value.split(' '); let i = index">
+                  <div>{{ word }}</div>
                 </div>
               </div>
             </div>

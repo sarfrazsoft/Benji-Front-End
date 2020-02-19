@@ -10,7 +10,7 @@ import {
   PitchoMaticUserInGroupEvent,
   PitchoMaticUserReadyEvent
 } from 'src/app/services/backend/schema';
-import * as odoo from 'src/assets/js/odoo.js';
+// import * as odoo from 'src/assets/js/odoo.js';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -205,12 +205,14 @@ export class ParticipantGeneratePitchActivityComponent
     // pitch_done: false
     // pitch_prep_text: null
     // pitch_status: "waiting"
-    // user: {id: 8, username: "61511", first_name: "61511", last_name: "", email: "", …}
+    // user: {id: 8, username: "61511", first_name: "61
+    // 511", last_name: "", email: "", …}
     if (this.pitch_set.length === 0) {
       // [
       //   { id: 1, label: 'The company you are pitching is', value: 'IKEA' },
       //   { id: 2, label: 'You are pitching to:', value: 'a five year old child' },
-      //   { id: 3, label: 'And the technique you need to use is:', value: 'analogy' }
+      //   { id: 3, label: 'And the tec
+      // hnique you need to use is:', value: 'analogy' }
       // ];
 
       blank_set.forEach(blank => {
@@ -236,29 +238,29 @@ export class ParticipantGeneratePitchActivityComponent
 
   generatePitch() {
     if (!this.pitchCriteriaRevealed) {
-      const ua = window.navigator.userAgent;
-      const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
-      const webkit = !!ua.match(/WebKit/i);
-      const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+      // const ua = window.navigator.userAgent;
+      // const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+      // const webkit = !!ua.match(/WebKit/i);
+      // const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
 
-      this.pitch_set.forEach(blank => {
-        blank.value.split(' ').forEach((el, index) => {
-          if (iOS) {
-            const d1 = this.elementRef.nativeElement.querySelector(
-              '.odoo_' + index + '_' + el
-            );
+      // this.pitch_set.forEach(blank => {
+      // blank.value.split(' ').forEach((el, index) => {
+      //   if (true) {
+      //     const d1 = this.elementRef.nativeElement.querySelector(
+      //       '.odoo_' + index + '_' + el
+      //     );
 
-            d1.innerText = el;
-          } else {
-            odoo.default({
-              el: '.odoo_' + index + '_' + el,
-              from: '',
-              to: el,
-              animationDelay: 0
-            });
-          }
-        });
-      });
+      //     d1.innerText = el;
+      //   } else {
+      //     odoo.default({
+      //       el: '.odoo_' + index + '_' + el,
+      //       from: '',
+      //       to: el,
+      //       animationDelay: 0
+      //     });
+      //   }
+      // });
+      // });
       this.pitchCriteriaRevealed = true;
 
       setTimeout(() => {
