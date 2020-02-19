@@ -31,6 +31,7 @@ export class ParticipantGeneratePitchActivityComponent
 
   // variable to show generate pitch screen
   generatePitchSection = false;
+  generateButtonClicked = false;
 
   // variable to play animation only once
   pitchCriteriaRevealed = false;
@@ -237,6 +238,7 @@ export class ParticipantGeneratePitchActivityComponent
   }
 
   generatePitch() {
+    this.generateButtonClicked = true;
     if (!this.pitchCriteriaRevealed) {
       // const ua = window.navigator.userAgent;
       // const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);

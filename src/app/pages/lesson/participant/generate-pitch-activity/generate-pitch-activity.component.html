@@ -69,7 +69,7 @@
                   <div class="{{ 'odoo_' + i + '_' + word }}"></div>
                 </div> -->
                 <div *ngFor="let word of blank.value.split(' '); let i = index">
-                  <div>{{ word }}</div>
+                  <div *ngIf="generateButtonClicked">{{ word }}</div>
                 </div>
               </div>
             </div>
@@ -170,7 +170,7 @@
     <app-b-twemoji class="body-emoji" emoji="📣"> </app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">Peer feedback</h1>
     <ng-container class="body-text">
-      What are your thoughts on {{ getCurrentPitchingUser() }}’s pitch?
+      <p>What are your thoughts on {{ getCurrentPitchingUser() }}’s pitch?</p>
     </ng-container>
 
     <benji-question-form
