@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.isLoginClicked = true;
     if (this.form.valid) {
       const val = this.form.value;
-      this.authService.signIn(val.email, val.password).subscribe(
+      this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
         res => {
           if (res) {
             this.emailPasswordError = true;

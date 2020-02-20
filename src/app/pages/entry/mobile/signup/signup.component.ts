@@ -98,7 +98,12 @@ export class SignupComponent implements OnInit {
     if (this.form.valid) {
       const val = this.form.value;
       this.authService
-        .register(val.email, val.password, val.firstName, val.lastName)
+        .register(
+          val.email.toLowerCase(),
+          val.password,
+          val.firstName,
+          val.lastName
+        )
         .subscribe(
           res => {
             if (res.token) {
