@@ -13,7 +13,7 @@
       {{ question.combo_text }}
     </div> -->
     <div class="text-list-item" *ngFor="let answer of comboAnswers">
-      {{ answer }}
+      <div *ngIf="answer && answer.length">{{ answer }}jjj</div>
     </div>
   </div>
 </div>

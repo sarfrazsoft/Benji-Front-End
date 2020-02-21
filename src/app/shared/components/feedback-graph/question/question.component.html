@@ -13,13 +13,15 @@
   <div>
     <canvas #chartCanvas id="myChart" height="150"></canvas>
   </div>
-  <div class="text-list" *ngIf="question.is_combo">
+  <div class="text-list" *ngIf="question.is_combo && comboAnswersExist">
     <div class="prompt">
       {{ question.combo_text }}
     </div>
-    <div class="text-list-item" *ngFor="let answer of comboAnswers">
-      {{ answer }}
-    </div>
+    <ng-container *ngFor="let answer of comboAnswers">
+      <div class="text-list-item" *ngIf="answer && answer.length">
+        <div>{{ answer }}</div>
+      </div>
+    </ng-container>
   </div>
 </div>
 

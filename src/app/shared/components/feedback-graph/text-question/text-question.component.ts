@@ -11,6 +11,7 @@ export class TextQuestionComponent implements OnInit {
   @Input() question: FeedbackGraphQuestion;
   @Input() userFilter = false;
   comboAnswers: Array<string> = [];
+  comboAnswersExist = false;
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
@@ -29,6 +30,9 @@ export class TextQuestionComponent implements OnInit {
         ) ||
         !this.userFilter
       ) {
+        if (answer.text) {
+          this.comboAnswersExist = true;
+        }
         this.comboAnswers.push(answer.text);
       }
     });

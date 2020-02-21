@@ -22,6 +22,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() cardTitle = '';
 
   comboAnswers: Array<string> = [];
+  comboAnswersExist = false;
   averageRating = 0;
   canvas: any;
   ctx: CanvasRenderingContext2D;
@@ -53,6 +54,9 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         this.users[answer.rating - 1].push(
           answer.user.first_name + ' ' + answer.user.last_name
         );
+        if (answer.text) {
+          this.comboAnswersExist = true;
+        }
         this.comboAnswers.push(answer.text);
       }
     });
