@@ -1,19 +1,12 @@
-<div class="report-content">
+<div class="report-content" *ngIf="comboAnswersExist">
   <div class="bar-info" fxLayout="row" fxLayoutAlign="space-between">
     <div class="question-text">
       {{ question.question_text }}
     </div>
-    <!-- <div class="average">Avg. {{ averageRating }}</div> -->
   </div>
-  <!-- <div>
-    <canvas #chartCanvas id="myChart" height="150"></canvas>
-  </div> -->
   <div class="text-list">
-    <!-- <div class="prompt">
-      {{ question.combo_text }}
-    </div> -->
     <div class="text-list-item" *ngFor="let answer of comboAnswers">
-      <div *ngIf="answer && answer.length">{{ answer }}jjj</div>
+      <div *ngIf="answer && answer.length">{{ answer }}</div>
     </div>
   </div>
 </div>
