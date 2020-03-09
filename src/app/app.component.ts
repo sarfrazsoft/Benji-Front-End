@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
 import { PartnerInfo } from './services/backend/schema/whitelabel_info';
 import { ContextService } from './services/context.service';
@@ -21,9 +22,14 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.restService.get_own_identity().subscribe(res => {
-      this.contextService.user = res;
-    });
+    this.restService.get_own_identity().subscribe(
+      (res: any) => {
+        this.contextService.user = res;
+      },
+      (error: any) => {
+        this.contextService.partnerInfo = DefaultwhiteLabelInfo;
+      }
+    );
     this.contextService.user$.subscribe(user => {
       if (user) {
         const orgId =
@@ -31,9 +37,14 @@ export class AppComponent implements OnInit {
             ? user.organization.id
             : user.organization;
 
-        this.restService.get_white_label_details(orgId).subscribe(res => {
-          this.contextService.partnerInfo = res;
-        });
+        this.restService.get_white_label_details(orgId).subscribe(
+          (data: any) => {
+            this.contextService.partnerInfo = data;
+          },
+          error => {
+            this.contextService.partnerInfo = DefaultwhiteLabelInfo;
+          }
+        );
       }
     });
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {

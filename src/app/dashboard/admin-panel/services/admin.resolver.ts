@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-
 import { AuthService, BackendRestService } from 'src/app/services';
 import { AdminService } from './admin.service';
 
@@ -19,11 +18,7 @@ export class AdminResolver implements Resolve<any> {
 
       const courses = await this.adminService.getCourses().toPromise();
 
-      const whiteLabelInfo = await this.backendRestService
-        .get_white_label_details(user.organization)
-        .toPromise();
-
-      return { user: user, courses: courses, whiteLabelInfo: whiteLabelInfo };
+      return { user: user, courses: courses };
     } catch (err) {
       console.log(err);
     }

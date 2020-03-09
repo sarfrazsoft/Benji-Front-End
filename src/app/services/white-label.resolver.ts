@@ -23,7 +23,7 @@ export class WhiteLabelResolver implements Resolve<any> {
             global.apiRoot +
               '/tenants/orgs/' +
               route.paramMap.get('partner') +
-              '/white_label_info'
+              '/white_label_info/'
           )
           .subscribe(
             (res: PartnerInfo) => {
@@ -31,6 +31,7 @@ export class WhiteLabelResolver implements Resolve<any> {
             },
             (err: HttpErrorResponse) => {
               if (err.status === 404) {
+                // Could not find custom whitelabel info
                 console.log(err.status);
                 this.applyBenjiTheme();
               }
@@ -39,23 +40,43 @@ export class WhiteLabelResolver implements Resolve<any> {
       }
       // When giving a benji demo, users are not authorized and
       // they usually start at one of these pages
-      else if (
-        route.url[0] &&
-        (route.url[0].path === 'login' ||
-          route.url[0].path === 'landing' ||
-          route.url[0].path === 'participant') &&
-        !this.contextService.user
-      ) {
-        // this.applyBenjiTheme();
-        this.applyDefaultTheme();
-      } else {
+      // submit bu
+      // else if (
+      //   route.url[0] &&
+      //   (route.url[0].path === 'login' ||
+      //     route.url[0].path === 'landing' ||
+      //     route.url[0].path === 'participant') &&
+      //   !this.contextService.user
+      // ) {
+      //   // this.applyBenjiTheme();
+      //   // this.applyBenjiTheme();
+      //   // this.applyDefaultTheme();
+      // }
+      else {
+        console.log('I ll try to get user');
+        this.restService.get_own_identity().subscribe(
+          (res: any) => {
+            this.contextService.user = res;
+          },
+          (error: any) => {
+            this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
+          }
+        );
         this.contextService.user$.subscribe(user => {
           if (user) {
             const orgId =
               typeof user.organization === 'object'
                 ? user.organization.id
                 : user.organization;
-            this.restService.get_white_label_details(orgId);
+
+            this.restService.get_white_label_details(orgId).subscribe(
+              (data: any) => {
+                this.contextService.partnerInfo = data;
+              },
+              error => {
+                this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
+              }
+            );
           }
         });
       }
@@ -84,39 +105,6 @@ export class WhiteLabelResolver implements Resolve<any> {
 
   applyDefaultTheme() {
     console.log('Default theme applied');
-    this.contextService.partnerInfo = {
-      name: 'Benji',
-      welcome_text: 'Welcome to Benji',
-      link: 'https://wwww.benji.com',
-      logo: '',
-      favicon: './assets/img/favicon.ico',
-      parameters: {
-        lightLogo: './assets/img/Benji_logo_white.png',
-        darkLogo: './assets/img/logo.png',
-        welcomeDescription:
-          'What\'s Benji? Learn more about the future of learning',
-        primary_lighter: '#80a8ff',
-        primary_light: '#4c83fc',
-        primary: '#0a4cef',
-        primary_dark: '#4c188f',
-        primary_darker: '#3a126e',
-        primary_darkest: '#00178a',
-        tabTitle: 'Benji',
-        partnerName: 'Benji',
-        startSession: 'start session',
-        launchSession: 'launch session',
-        joinArrow: './assets/img/joinlaunch.png',
-        rightCaret: './assets/img/right_caret.png',
-        rightLaunchArrow: './assets/img/right_caret.png',
-        infoIcon: './assets/img/right_caret.png',
-        checkIcon: './assets/img/check_icon.png'
-        // primary_lighter: '#f8b0ac',
-        // primary_light: '#fa8b85',
-        // primary: '#fd4b42',
-        // primary_dark: '#fd261b',
-        // primary_darker: '#c91006',
-        // primary_darkest: '#830700'
-      }
-    } as PartnerInfo;
+    this.contextService.partnerInfo = global.DefaultwhiteLabelInfo as PartnerInfo;
   }
 }
