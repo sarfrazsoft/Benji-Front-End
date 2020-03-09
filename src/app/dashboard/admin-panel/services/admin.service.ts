@@ -48,11 +48,11 @@ export class AdminService {
       );
   }
 
-  getCourseDetails(courseID: string): Observable<Course> {
+  getCourseDetails(courseID: string): Observable<Array<Lesson>> {
     return this.http
       .get(global.apiRoot + '/course_details/course/' + courseID + '/lessons/')
       .pipe(
-        map((res: Course) => {
+        map((res: Array<Lesson>) => {
           return res;
         })
       );

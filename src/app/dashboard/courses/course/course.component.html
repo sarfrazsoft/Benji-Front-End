@@ -1,6 +1,6 @@
-<div class="admin-panel" fxLayout="column">
+<div class="admin-panel" fxLayout="column" *ngIf="courseDetails">
   <div class="dashboard-heading">
-    <h1>Active Listening</h1>
+    <h1>{{ courseDetails?.title }}</h1>
   </div>
 
   <div class="subsection-container">
@@ -15,9 +15,7 @@
             <span>Session Overview</span>
           </div>
           <div class="description">
-            Active Listening Fundamentals equips your people with the principles
-            and opportunity to practice active listening in a safe environment
-            with peers.
+            {{ courseDetails?.description }}
           </div>
         </div>
         <div class="course-detail">
@@ -26,12 +24,10 @@
           </div>
           <div fxLayoutGap="30px" fxLayout="row">
             <div class="description">
-              Active Listening Fundamentals equips your people with the
-              principles and opportunity to practice active listening in a safe
-              environment with peers.
+              {{ courseDetails?.facilitator.description }}
             </div>
             <div class="facilitator-img">
-              <img src="./assets/img/Desk_lightblue.jpg" alt="" />
+              <img [src]="courseDetails?.facilitator.img" alt="" />
             </div>
           </div>
         </div>
@@ -42,23 +38,21 @@
         <div class="sub-heading">
           <h2>Videos</h2>
         </div>
-        <div class="course-detail">
+        <div class="course-detail" *ngFor="let video of courseDetails.videos">
           <div class="sub-header">
-            <span>how to handle an objection</span>
+            <span>{{ video.title }}</span>
           </div>
           <div class="description">
-            Active Listening Fundamentals equips your people with the principles
-            and opportunity to practice active listening in a safe environment
-            with peers.
+            {{ video.description }}
           </div>
 
           <div class="video-container" fxLayoutAlign="center">
             <video #player controls>
-              <source [src]="videoURL" type="video/mp4" />
+              <source [src]="video.link" type="video/mp4" />
             </video>
           </div>
         </div>
-        <benji-mcqs class="mcqs" [mcqs]="data.mcqs"></benji-mcqs>
+        <!-- <benji-mcqs class="mcqs" [mcqs]="data.mcqs"></benji-mcqs> -->
       </div>
 
       <!-- Resources -->

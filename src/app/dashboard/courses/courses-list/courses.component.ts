@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackendRestService, ContextService } from 'src/app/services';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { LaunchSessionDialogComponent } from 'src/app/shared';
 import { AdminService } from '../../admin-panel/services';
@@ -37,10 +38,22 @@ export class CoursesComponent implements OnInit {
 
   // duplicate code in Launch Session dialog
   launchSession(event, id): void {
-    this.adminService.getCourseDetails(id).subscribe(res => {
+    this.adminService.getCourseDetails(id).subscribe((res: Array<Lesson>) => {
+      // if it's a single user lesson
       this.restService.start_lesson(res[0].id).subscribe(
-        lessonRun =>
-          this.router.navigate(['/screen/lesson/' + lessonRun.lessonrun_code]),
+        lessonRun => {
+          if (res[0].single_user_lesson) {
+            setTimeout(() => {
+              this.router.navigate([
+                '/user/lesson/' + lessonRun.lessonrun_code
+              ]);
+            }, 1500);
+          } else {
+            this.router.navigate([
+              '/screen/lesson/' + lessonRun.lessonrun_code
+            ]);
+          }
+        },
         err => console.log(err)
       );
     });
@@ -48,9 +61,8 @@ export class CoursesComponent implements OnInit {
   }
 
   openDetails(course) {
-    console.log(course);
-    // this.router.navigate(['course', course.course_id], {
-    //   relativeTo: this.activatedRoute
-    // });
+    this.router.navigate(['course', course.course_id], {
+      relativeTo: this.activatedRoute
+    });
   }
 }

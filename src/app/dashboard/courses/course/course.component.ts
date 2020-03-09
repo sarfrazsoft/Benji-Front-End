@@ -7,10 +7,10 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./course.component.scss']
 })
 export class CourseComponent implements OnInit {
-  data = courseDetails;
-  videoURL =
-    'https://player.vimeo.com/external/' +
-    '298880631.hd.mp4?s=69e47bc8bbb2f9bfcbbc919fab096e326ede516a&profile_id=175';
+  courseDetails;
+  // videoURL =
+  //   'https://player.vimeo.com/external/' +
+  //   '298880631.hd.mp4?s=69e47bc8bbb2f9bfcbbc919fab096e326ede516a&profile_id=175';
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
@@ -22,8 +22,8 @@ export class CourseComponent implements OnInit {
           c => c.course_id === cId
         )[0];
 
-        console.log(course);
-        // this.courses = data.dashData.courses;
+        this.courseDetails = course.course_details;
+        console.log(this.courseDetails);
       });
     });
   }
