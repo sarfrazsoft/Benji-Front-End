@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
@@ -9,7 +10,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 })
 export class ParticipantToolbarComponent implements OnInit {
   logo;
-  constructor(private contextService: ContextService) {}
+  constructor(private contextService: ContextService, private router: Router) {}
 
   ngOnInit() {
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -17,5 +18,9 @@ export class ParticipantToolbarComponent implements OnInit {
         this.logo = info.parameters.lightLogo;
       }
     });
+  }
+
+  disconnect() {
+    this.router.navigate(['/participant/join']);
   }
 }

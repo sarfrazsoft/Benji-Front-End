@@ -3,11 +3,11 @@
     <div class="benji-logo-container">
       <img [src]="logo" alt="Benji logo" class="benji-logo" />
     </div>
-    <button [matMenuTriggerFor]="appMenu">
+    <!-- <button [matMenuTriggerFor]="appMenu" fxLayoutAlign="center center">
       <mat-icon class="icon-white">menu</mat-icon>
-    </button>
+    </button> -->
   </div>
-  <mat-menu #appMenu="matMenu">
-    <button mat-menu-item>Disconnect</button>
-  </mat-menu>
+  <!-- <mat-menu #appMenu="matMenu">
+    <button (click)="disconnect()" mat-menu-item>Disconnect</button>
+  </mat-menu> -->
 </div>
