@@ -51,7 +51,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
     ) {
       this.showQuestion = true;
       this.showQuestionsAnswer = false;
-      this.answerSubmitted = false;
+      // this.answerSubmitted = false;
       if (!this.questionTimerStarted) {
         this.selectedChoice = {
           id: null,
