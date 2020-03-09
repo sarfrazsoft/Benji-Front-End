@@ -61,8 +61,10 @@ export class CoursesComponent implements OnInit {
   }
 
   openDetails(course) {
-    this.router.navigate(['course', course.course_id], {
-      relativeTo: this.activatedRoute
-    });
+    if (course.course_details) {
+      this.router.navigate(['course', course.course_id], {
+        relativeTo: this.activatedRoute
+      });
+    }
   }
 }
