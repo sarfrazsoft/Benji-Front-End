@@ -22,6 +22,7 @@ export class TextQuestionComponent implements OnInit {
 
   updateAnswers() {
     this.comboAnswers = [];
+    this.comboAnswersExist = false;
 
     this.question.assessments.forEach(answer => {
       if (

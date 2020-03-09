@@ -23,12 +23,14 @@ import {
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   MainScreenComponents,
-  ParticipantScreenComponents
+  ParticipantScreenComponents,
+  SingleUserScreenComponents
 } from '../index';
 
 export const LayoutDeclarations = [
   ...MainScreenComponents,
   ...ParticipantScreenComponents,
+  ...SingleUserScreenComponents,
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   AnimatedCheckmarkButtonComponent,

@@ -1,10 +1,11 @@
-<div class="b-flat-card center-text lobby-card">
-  <div class="b-flat-card__body">
-    <p>WELCOME TO</p>
-    <h3 class="pn-700 primary-color">{{ activityState.lesson.lesson_name }}</h3>
-    <div class="lobby-card__loader"><mat-spinner></mat-spinner></div>
-    <p class="instruction">
-      Hang tight, we’re waiting for the rest of your team to join.
-    </p>
-  </div>
-</div>
+<benji-multi-user-lobby
+  *ngIf="!singleUserActivity"
+  [lessonName]="activityState.lesson.lesson_name"
+  (startClicked)="kickOffLesson()"
+></benji-multi-user-lobby>
+
+<!-- <benji-single-user-lobby
+  *ngIf="singleUserActivity"
+  [lessonName]="activityState.lesson.lesson_name"
+  (startClicked)="kickOffLesson()"
+></benji-single-user-lobby> -->

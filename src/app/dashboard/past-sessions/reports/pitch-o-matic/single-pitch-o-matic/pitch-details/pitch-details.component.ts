@@ -41,7 +41,6 @@ export class PitchDetailsComponent implements OnInit {
       });
 
       const pitch_set = [];
-      console.log(crntMember);
 
       blank_set.forEach(blank => {
         const choice = crntMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(

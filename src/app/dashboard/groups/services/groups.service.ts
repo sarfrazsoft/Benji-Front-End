@@ -50,23 +50,10 @@ export class GroupsService {
     return this.http.post(request, emails);
   }
 
-  getUserDetails(id) {
-    const request = global.apiRoot + '/tenants/users/?id=' + id;
-    return this.http.get<User>(request);
-  }
-
   getOrganization() {
     const request = global.apiRoot + '/tenants/orgs/?page=' + 1;
     return this.http.get(request);
   }
-
-  // getCourses(): Observable<any> {
-  //   return this.http.get(global.apiRoot + '/course_details/course/').pipe(
-  //     map(res => {
-  //       return res;
-  //     })
-  //   );
-  // }
 }
 
 export const group = {

@@ -1,4 +1,8 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import {
+  MCQChoiceSet,
+  MCQSubmitAnswerEvent
+} from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -46,6 +50,13 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
         as.base_activity.next_activity_start_timer.status === 'paused')
     ) {
       this.radialTimer = as.base_activity.next_activity_start_timer;
+    }
+  }
+
+  // For single user activity
+  singleUserSubmitAnswer(option: MCQChoiceSet) {
+    if (this.activityState.lesson.single_user_lesson) {
+      this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
     }
   }
 }

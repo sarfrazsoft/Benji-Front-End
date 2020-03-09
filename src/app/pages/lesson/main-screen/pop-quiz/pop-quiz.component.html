@@ -34,6 +34,7 @@
                   activityState.base_activity.next_activity_start_timer
                     .status === 'running'
               }"
+              (click)="singleUserSubmitAnswer(option)"
             >
               <div fxFlex="4vw">{{ optionIdentifiers[i] }}.</div>
               <div>{{ option.choice_text }}</div>

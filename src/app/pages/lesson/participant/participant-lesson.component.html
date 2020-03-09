@@ -138,6 +138,7 @@
 
   <benji-ps-activity-video
     *ngIf="getActivityType() === at.video"
+    [activityState]="serverMessage"
     (sendMessage)="sendSocketMessage($event)"
   >
   </benji-ps-activity-video>

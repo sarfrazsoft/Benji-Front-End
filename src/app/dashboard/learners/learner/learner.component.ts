@@ -21,13 +21,8 @@ export class LearnerComponent implements OnInit {
   }
 
   getLearnerData(learnerID: string) {
-    this.learnerService.getUserDetails(learnerID).subscribe((res: Users) => {
-      const arr = res.results.filter(
-        (user: User) => user.id + '' === learnerID
-      );
-      if (arr.length) {
-        this.learner = arr[0];
-      }
+    this.learnerService.getUserDetails(learnerID).subscribe((res: User) => {
+      this.learner = res;
     });
   }
 

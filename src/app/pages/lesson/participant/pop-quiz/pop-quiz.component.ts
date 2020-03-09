@@ -14,6 +14,10 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   questionTimerStarted = false;
   showResults = false;
+  showQuestion = false;
+  showQuestionsAnswer = false;
+  answerSubmitted = false;
+
   selectedChoice: MCQChoice = {
     id: null,
     is_correct: null,
@@ -45,6 +49,9 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
       (as.mcqactivity.question_timer.status === 'running' ||
         as.mcqactivity.question_timer.status === 'paused')
     ) {
+      this.showQuestion = true;
+      this.showQuestionsAnswer = false;
+      this.answerSubmitted = false;
       if (!this.questionTimerStarted) {
         this.selectedChoice = {
           id: null,
@@ -60,14 +67,28 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
         as.base_activity.next_activity_start_timer.status === 'paused')
     ) {
       this.questionTimerStarted = false;
+      this.showQuestion = false;
+      this.showQuestionsAnswer = true;
+      this.answerSubmitted = false;
+      this.selectedChoice = {
+        id: null,
+        is_correct: null,
+        choice_text: null,
+        explanation: null
+      };
     } else if (as.mcqresultsactivity) {
       this.showResults = true;
     }
   }
 
+  selectOption(option: MCQChoice) {
+    this.selectedChoice = option;
+  }
+
   submitAnswer(option: MCQChoice) {
     this.selectedChoice = option;
     this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
+    this.answerSubmitted = true;
   }
 
   getCorrectAnswer() {

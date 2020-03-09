@@ -38,6 +38,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
 
     const assessments = [0, 0, 0, 0, 0];
     this.comboAnswers = [];
+    this.comboAnswersExist = false;
     let ratingSum = 0;
     let noOfRatings = 0;
 
@@ -66,6 +67,20 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     } else {
       this.averageRating = 0;
     }
+
+    // let max = assessments.reduce(
+    //   (prev, curr) => (prev > curr ? prev : curr),
+    //   0
+    // );
+    // if (max < 10) {
+    //   // round to ceil even number
+    //   max = max % 2 ? max + 1 : max;
+    // } else {
+    //   // round to ceil five number
+    //   max = Math.ceil(max / 10) * 10;
+    // }
+
+    // console.log(max);
 
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
@@ -113,8 +128,25 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               ticks: {
                 fontColor: '#000',
                 fontSize: 18,
-                stepSize: 2,
-                beginAtZero: true
+                beginAtZero: true,
+                // min: 0,
+                // max: max,
+                // stepSize: Math.ceil(max / 5),
+                callback: function(
+                  value: number,
+                  index: number,
+                  values: number[]
+                ) {
+                  // do not display the first value and last value
+                  // only display when it's a whole number
+                  // return index === values.length - 1
+                  //   ? ''
+                  //   : Math.floor(value) === value
+                  //   ? value
+                  //   : '';
+                  return Math.floor(value) === value ? value : '';
+                  // return value;
+                }
               }
             }
           ],

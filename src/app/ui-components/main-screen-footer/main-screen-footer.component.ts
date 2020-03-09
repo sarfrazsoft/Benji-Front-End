@@ -13,6 +13,7 @@ import { VideoStateService } from '../../services/video-state.service';
   styleUrls: ['./main-screen-footer.component.scss']
 })
 export class MainScreenFooterComponent implements OnInit {
+  @Input() showFastForward: boolean;
   @Input() showFooter: boolean;
   @Input() lessonName: string;
   @Input() roomCode: string;

@@ -6,7 +6,7 @@ import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedba
 import { ParticipantGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { ParticipantGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
 import { ParticipantHintActivityComponent } from './hint-activity/hint-activity.component';
-import { ParticipantLobbyComponent } from './lobby-activity/lobby.component';
+import { ParticipantLobbyComponents } from './lobby-activity';
 import { ParticipantMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
@@ -28,13 +28,13 @@ export const ParticipantScreenComponents = [
   ...ParticipantSharedComponents,
   ...BrainStormingComponents,
   ...ReorderComponents,
+  ...ParticipantLobbyComponents,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantGeneratePitchActivityComponent,
   ParticipantHintActivityComponent,
   ParticipantLessonComponent,
-  ParticipantLobbyComponent,
   ParticipantMcqActivityComponent,
   ParticipantMcqresultActivityComponent,
   ParticipantPairActivityComponent,

@@ -50,6 +50,10 @@ export class PastSessionsService {
     }
   }
 
+  resetFilter() {
+    this.filteredInUsers = [];
+  }
+
   removeAllBut(id: number) {
     this.filteredInUsers = [id];
     this.filteredInUsers$.next(this.filteredInUsers);
@@ -152,7 +156,6 @@ export class PastSessionsService {
           '/course_details/lesson_run/user_summary/' +
           learnerId +
           '/'
-        // global.apiRoot + '/tenants/users/?page=' + 1
       )
       .pipe(
         map((res: Array<SessionReport>) => {
@@ -174,11 +177,14 @@ export class PastSessionsService {
   }
 
   getPastSessions(sort: string, order: string, page: number): Observable<any> {
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
-      map(res => {
-        return res;
-      })
-    );
+    page = page + 1;
+    return this.http
+      .get(global.apiRoot + '/course_details/lesson_run/?page=' + page)
+      .pipe(
+        map(res => {
+          return res;
+        })
+      );
   }
 
   addLearners(emails: string) {

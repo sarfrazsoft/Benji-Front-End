@@ -53,8 +53,8 @@ export class LearnerService {
   }
 
   getUserDetails(id) {
-    const request = global.apiRoot + '/tenants/users/?id=' + id;
-    return this.http.get<Users>(request);
+    const request = global.apiRoot + '/tenants/users/' + id + '/';
+    return this.http.get<User>(request);
   }
 
   getOrganization() {

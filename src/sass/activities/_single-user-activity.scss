@@ -1,0 +1,11 @@
+benji-single-user-lesson {
+  .b-flat-card {
+    margin: 0px;
+    height: calc(100vh - 65px - 90px - 70px);
+    box-shadow: none;
+    .b-flat-card__title * {
+      font-size: 35px;
+      margin-top: 30px;
+    }
+  }
+}

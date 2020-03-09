@@ -6,6 +6,14 @@ benji-ms-pop-quiz {
   .quiz-answers {
     font-size: 5vh;
     font-weight: 500;
+    // > div:hover {
+    // background-color: darken(#fff, 10);
+    // transition: 0.3s;
+    // border-radius: 20px;
+    // }
+    div {
+      cursor: pointer;
+    }
   }
 }
 

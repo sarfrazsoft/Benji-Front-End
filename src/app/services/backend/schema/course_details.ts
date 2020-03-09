@@ -1,4 +1,4 @@
-import { User } from './user';
+import { User } from "./user";
 
 export interface PaginatedResponse<T> {
   count: number;
@@ -19,6 +19,7 @@ export interface Lesson {
   course: number;
   lesson_id: string;
   lesson_name: string;
+  single_user_lesson: boolean;
   lesson_length_minutes: number;
   lesson_description: string;
   next_lesson: number;

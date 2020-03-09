@@ -15,7 +15,7 @@ import { Timer } from '../../services/backend/schema';
   styleUrls: ['./linear-timer.component.scss']
 })
 export class LinearTimerComponent implements OnInit, OnDestroy {
-  constructor() { }
+  constructor() {}
   @Input() endAudio;
   @Input() timer: Timer;
   @Input() timerOffset: number;
@@ -73,4 +73,16 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
   progressBarWidth() {
     return (100 * (this.totalTime - this.remainingTime)) / this.totalTime;
   }
+
+  // get_min_sec() {
+  //   const secondsRemaining = Math.floor(this.remainingTime / 1000);
+  //   const min = Math.floor(secondsRemaining / 60);
+  //   const sec = secondsRemaining - 60 * min;
+
+  //   if (min < 0) {
+  //     return { min: 0, sec: 0 };
+  //   } else {
+  //     return { min: min, sec: sec };
+  //   }
+  // }
 }

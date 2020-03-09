@@ -134,7 +134,7 @@ export class SkillEvaluationComponent implements OnInit {
     // Verify if the particular report needs to be
     // included in the pitching skill widget
     reports = this.verifyData(reports);
-    console.log(reports);
+
     reports = reports.sort((a, b) => a.id - b.id);
     reports = reports.filter(a => a.lesson.lesson_id === 'pitch_perfect_1');
     // Calculating for last 3 sessions only
@@ -181,8 +181,6 @@ export class SkillEvaluationComponent implements OnInit {
       arr.push(obj);
     });
 
-    console.log(arr);
-
     const selfFeedbacks = [];
     const peerFeedbacks = [];
     const mcqsScores = [];
@@ -202,13 +200,13 @@ export class SkillEvaluationComponent implements OnInit {
     //  PeerFeedbacks[
     //    S1[
     //      Q1[r1,r2,r3,r4],
-    //      Q2[r1,r2,r3,r4],
+    //      Q2[r1,r2,r3,r4,r5],
     //      Q3[r1,r2,r3,r4]
     //    ]
     //    S2[
-    //     Q1[r1,r2,r3,r4],
+    //     Q1[r1,r2,r3,r4,r5],
     //     Q2[r1,r2,r3,r4],
-    //     Q3[r1,r2,r3,r4]
+    //     Q3[r1,r2,r3]
     //    ]
     //  ]
 
@@ -235,6 +233,12 @@ export class SkillEvaluationComponent implements OnInit {
     //   ]
     // ];
 
+    // selfFeedbacks = [
+    //   [3, 3, 1],
+    //   [3, 4, 5],
+    //   [5, 4, 3]
+    // ];
+
     const dataPoints = [];
     let pitchingAvg = 0;
     peerFeedbacks.forEach((session, sessionIndex) => {
@@ -256,7 +260,7 @@ export class SkillEvaluationComponent implements OnInit {
       dataPoints.push(dataPoint);
       pitchingAvg = pitchingAvg + (dataPoint / 5) * 100;
     });
-    pitchingAvg = pitchingAvg / 3;
+    pitchingAvg = pitchingAvg / peerFeedbacks.length;
     this.pitchingOverview.donut.data = Math.round(pitchingAvg);
 
     // commented out mcq widget
@@ -353,10 +357,6 @@ export class SkillEvaluationComponent implements OnInit {
         );
         const ratings = [];
         if (userFeedback) {
-          if (userFeedback.pitchomaticfeedback_set) {
-            // this user didn't get any feedback in POM
-            // remove the data for this report
-          }
           userFeedback.pitchomaticfeedback_set.forEach(fb => {
             if (fb.feedbackquestion === question.id) {
               ratings.push(fb.rating_answer);

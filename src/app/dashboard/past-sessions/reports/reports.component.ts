@@ -46,7 +46,6 @@ export class ReportsComponent implements OnInit {
   }
 
   getSessionSummary(lessonrunCode: string) {
-    console.log(lessonrunCode);
     this.pastSessionsService
       .getReports(lessonrunCode)
       .subscribe((res: Array<ActivityReport>) => {

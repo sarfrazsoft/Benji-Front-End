@@ -2,7 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import {
   MainScreenLessonComponent,
-  ParticipantLessonComponent
+  ParticipantLessonComponent,
+  SingleUserComponent
 } from 'src/app/pages';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent
+  },
+  {
+    path: 'user/lesson/:roomCode',
+    component: SingleUserComponent
   },
   {
     path: 'participant/login',

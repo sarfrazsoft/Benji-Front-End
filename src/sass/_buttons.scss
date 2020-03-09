@@ -64,7 +64,7 @@ button {
 
 .b-standard-button.animated {
   &:hover {
-    background: $primary-color;
+    background: darken(#fff, 10);
   }
 }
 

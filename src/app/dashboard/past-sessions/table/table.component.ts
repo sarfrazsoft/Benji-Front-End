@@ -28,7 +28,8 @@ export class PastSessionsTableComponent implements AfterViewInit {
     private http: HttpClient,
     private pastSessionsService: PastSessionsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pastSessionService: PastSessionsService
   ) {}
 
   ngAfterViewInit() {
@@ -82,6 +83,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
   }
 
   showReports(row) {
+    this.pastSessionService.resetFilter();
     this.router.navigate([row.lessonrunCode], {
       relativeTo: this.activatedRoute
     });

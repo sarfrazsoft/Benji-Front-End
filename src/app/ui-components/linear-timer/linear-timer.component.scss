@@ -10,3 +10,274 @@
 .bottom80px {
   bottom: 80px;
 }
+
+// .emphasis-backdrop {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   // background: rgba(0, 0, 0, 0.3);
+//   .emphasized-text {
+//     color: white;
+//     font-size: 35vh;
+//     font-weight: 700;
+//   }
+// }
+
+// $col-bg: black;
+// $col-sun: #ff5722;
+
+// html,
+// body {
+//   // height: 100%;
+// }
+
+// .emphasis-backdrop {
+//   background: rgba(0, 0, 0, 0.3);
+// }
+
+// // * {
+// // 	touch-action: none;
+// // }
+
+// .container {
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   overflow: hidden;
+// }
+
+// .countdown {
+//   display: block;
+//   width: 66vmin;
+//   height: 66vmin;
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+
+//   font-family: "Oswald", sans-serif;
+//   font-weight: 400;
+//   font-size: 25vmin;
+
+//   border-radius: 50%;
+//   overflow: hidden;
+//   cursor: pointer;
+
+//   transition: width, height, border-radius, font-size;
+//   transition-duration: 0.2s;
+
+//   &--ended {
+//     animation: buzz 0.5s;
+//   }
+
+//   &:active {
+//     transform: scale(1.02);
+//   }
+
+//   @keyframes buzz {
+//     0% {
+//       transform: rotate(0);
+//     }
+
+//     10%,
+//     30%,
+//     50%,
+//     70%,
+//     90% {
+//       transform: rotate(6deg);
+//     }
+
+//     20%,
+//     40%,
+//     60%,
+//     80% {
+//       transform: rotate(-6deg);
+//     }
+
+//     100% {
+//       transform: rotate(0);
+//     }
+//   }
+
+//   &--wide {
+//     width: 100%;
+//     height: 100%;
+
+//     font-size: 50vmin;
+
+//     border-radius: 0;
+//   }
+
+//   &__fill {
+//     display: block;
+//     width: 100%;
+//     height: 100%;
+//     position: absolute;
+//     left: 0;
+//     bottom: 0;
+
+//     background: $col-sun;
+//     opacity: 1;
+//   }
+
+//   &__digit {
+//     width: 100%;
+
+//     color: $col-sun;
+//     text-align: center;
+//     mix-blend-mode: difference;
+//     pointer-events: none;
+//     user-select: none;
+//   }
+
+//   &__buttons {
+//     position: absolute;
+//     right: 50px;
+//     top: 50%;
+//     height: 200px;
+//     margin-top: -100px;
+//     color: white;
+//     z-index: 1;
+//   }
+
+//   &__button {
+//     height: 50%;
+//   }
+// }
+
+// .full-button {
+//   position: absolute;
+//   right: 10px;
+//   bottom: 10px;
+//   padding: 1em 0.5em 0.5em 2em;
+
+//   font-family: "Oswald", sans-serif;
+//   text-transform: uppercase;
+//   color: white;
+
+//   cursor: pointer;
+// }
+
+// from activityflow.activities.grouping.models import TriadGroupingActivity
+// from activityflow.activities.discussion.models import GenericRoleplayActivity
+
+// # triad = TriadGroupingActivity.objects.create(activity_id='main_title',
+// #                                              description='Simple Title',
+// #                                              next_activity_delay_seconds=3,
+// #                                              grouping_seconds=90,
+// #                                              lessonrun=self.lessonrun)
+
+// # rplay = GenericRoleplayActivity.build(activity_id='rplay',
+// #                                       description='Simple Title2',
+// #                                       next_activity_delay_seconds=3,
+// #                                       activity_seconds=100,
+// #                                       feedback_seconds=100,
+// #                                       grouping_activity=triad,
+// #                                       roles=[{'name': 'Salesman',
+// #                                               'image_url': 'emoji://sales',
+// #                                               'instructions': 'Sell this pen',
+// #                                               'allow_multiple': False,
+// #                                               'feedbackquestions': [
+// #                                                   {'question_type': 'rating_agreedisagree',
+// #                                                    'question_text': 'The pitch was concise',
+// #                                                    'is_combo': False},
+// #                                                   {'question_type': 'rating_agreedisagree',
+// #                                                    'question_text': 'The delivery was strong',
+// #                                                    'is_combo': False}
+// #                                               ]},
+// #                                              {'name': 'Customer',
+// #                                               'image_url': 'emoji://customer',
+// #                                               'instructions': 'Object to buying the pen',
+// #                                               'allow_multiple': False},
+// #                                              {'name': 'Observer',
+// #                                               'image_url': 'emoji://observer',
+// #                                               'instructions': 'Evaluate the salesman',
+// #                                               'allow_multiple': True,
+// #                                               'is_non_interactive': True,
+// #                                               'feedbackquestions': [
+// #                                                   {'question_type': 'rating_agreedisagree',
+// #                                                    'question_text': 'The pitch was concise',
+// #                                                    'is_combo': False},
+// #                                                   {'question_type': 'rating_agreedisagree',
+// #                                                    'question_text': 'The delivery was strong',
+// #                                                    'is_combo': False},
+// #                                                   {'question_type': 'rating_agreedisagree',
+// #                                                    'question_text': 'How would you rate the pitch overall?',
+// #                                                    'is_combo': False},
+// #                                                   {'question_type': 'text',
+// #                                                    'question_text': 'Do you have any other comments?',
+// #                                                    'is_combo': False}
+// #                                               ]}],
+// #                                       lessonrun=self.lessonrun)
+
+// from lesson_builder.common import LessonPlan
+
+// from activityflow.activities.questions.models import FeedbackActivity
+
+// from activityflow.activities.discussion.models import GenericRoleplayActivity
+// from activityflow.activities.grouping.models import TriadGroupingActivity
+// from activityflow.components.common_attributes.models import TitleComponent
+// from activityflow.activities.lobby.models import LobbyActivity
+// from activityflow.activities.content.models import VideoActivity, TitleActivity
+// from activityflow.activities.questions.models import FeedbackActivity, MCQActivity, MCQResultsActivity
+// from activityflow.activities.consensus.models import HintWordActivity, WhereDoYouStandActivity, WhereDoYouStandChoice
+// from activityflow.activities.discussion.models import RoleplayRole
+
+// class ActiveListening(LessonPlan):
+//     def build_lesson(self):
+//         lesson_intro = VideoActivity.objects.create(activity_id='intro_video',
+//                                                     description='Introducing the session and first activity',
+//                                                     video_url='https://player.vimeo.com/external/298880631.hd.mp4?s=69e47bc8bbb2f9bfcbbc919fab096e326ede516a&profile_id=175',
+//                                                     lessonrun=self.lessonrun)
+
+//         triad = TriadGroupingActivity.objects.create(activity_id='main_title',
+//                                                      description='Simple Title',
+//                                                      next_activity_delay_seconds=3,
+//                                                      grouping_seconds=90,
+//                                                      lessonrun=self.lessonrun)
+
+//         rplay = GenericRoleplayActivity.build(activity_id='rplay',
+//                                               description='Simple Title2',
+//                                               next_activity_delay_seconds=3,
+//                                               activity_seconds=100,
+//                                               feedback_seconds=100,
+//                                               grouping_activity=triad,
+//                                               roles=[{'name': 'Salesman',
+//                                                       'image_url': 'emoji://sales',
+//                                                       'instructions': 'Sell this pen',
+//                                                       'allow_multiple': False,
+//                                                       'feedbackquestions': [
+//                                                           {'question_type': 'rating_agreedisagree',
+//                                                            'question_text': 'The pitch was concise',
+//                                                            'is_combo': False},
+//                                                           {'question_type': 'rating_agreedisagree',
+//                                                            'question_text': 'The delivery was strong',
+//                                                            'is_combo': False}
+//                                                       ]},
+//                                                      {'name': 'Customer',
+//                                                       'image_url': 'emoji://customer',
+//                                                       'instructions': 'Object to buying the pen',
+//                                                       'allow_multiple': False},
+//                                                      {'name': 'Observer',
+//                                                       'image_url': 'emoji://observer',
+//                                                       'instructions': 'Evaluate the salesman',
+//                                                       'allow_multiple': True,
+//                                                       'is_non_interactive': True,
+//                                                       'feedbackquestions': [
+//                                                           {'question_type': 'rating_agreedisagree',
+//                                                            'question_text': 'The pitch was concise',
+//                                                            'is_combo': False},
+//                                                           {'question_type': 'rating_agreedisagree',
+//                                                            'question_text': 'The delivery was strong',
+//                                                            'is_combo': False},
+//                                                           {'question_type': 'rating_agreedisagree',
+//                                                            'question_text': 'How would you rate the pitch overall?',
+//                                                            'is_combo': False},
+//                                                           {'question_type': 'text',
+//                                                            'question_text': 'Do you have any other comments?',
+//                                                            'is_combo': False}
+//                                                       ]}],
+//                                               lessonrun=self.lessonrun)

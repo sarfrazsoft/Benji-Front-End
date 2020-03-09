@@ -13,7 +13,7 @@
         : 'ms-lesson__activity-container'
     "
   >
-    <benji-ms-brainstorming-activity
+    <!-- <benji-ms-brainstorming-activity
       *ngIf="getActivityType() === at.brainStorm"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
@@ -35,17 +35,17 @@
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-build-pitch-activity>
+    </benji-ms-build-pitch-activity> -->
 
-    <benji-ms-lobby
+    <benji-su-lobby-activity
       *ngIf="getActivityType() === at.lobby"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-lobby>
+    </benji-su-lobby-activity>
 
-    <benji-ms-title-activity
+    <!-- <benji-ms-title-activity
       *ngIf="getActivityType() === at.title"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
@@ -58,7 +58,7 @@
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
-    ></benji-ms-pop-quiz>
+    ></benji-ms-pop-quiz> -->
 
     <benji-ms-mcqresult-activity
       *ngIf="getActivityType() === at.mcqResults"
@@ -66,7 +66,7 @@
       (sendMessage)="sendSocketMessage($event)"
     ></benji-ms-mcqresult-activity>
 
-    <benji-ms-teletrivia-activity
+    <!-- <benji-ms-teletrivia-activity
       *ngIf="getActivityType() === at.teleTrivia"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
@@ -80,7 +80,7 @@
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-either-or-activity>
+    </benji-ms-either-or-activity>  -->
 
     <benji-ms-activity-video
       *ngIf="getActivityType() === at.video"
@@ -90,7 +90,23 @@
     >
     </benji-ms-activity-video>
 
-    <benji-ms-pair-grouping-activity
+    <benji-ms-pop-quiz
+      *ngIf="getActivityType() === at.mcq"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    ></benji-ms-pop-quiz>
+
+    <benji-ps-feedback-activity
+      class="single-user-lesson"
+      *ngIf="getActivityType() === at.feedback"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ps-feedback-activity>
+
+    <!-- <benji-ms-pair-grouping-activity
       *ngIf="getActivityType() === at.pairGrouping"
       [activityState]="serverMessage"
       [avgServerTimeOffset]="avgServerTimeOffset"
@@ -144,7 +160,7 @@
       [avgServerTimeOffset]="avgServerTimeOffset"
       (sendMessage)="sendSocketMessage($event)"
     >
-    </benji-ms-hint-activity>
+    </benji-ms-hint-activity> -->
 
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
   </div>

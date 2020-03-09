@@ -4,22 +4,22 @@ import {
   Input,
   OnChanges,
   OnInit
-} from "@angular/core";
-import * as moment from "moment";
-import { PastSessionsService } from "src/app/services/past-sessions.service";
-import { ActivityReport } from "src/app/services/backend/schema";
+} from '@angular/core';
+import * as moment from 'moment';
+import { ActivityReport } from 'src/app/services/backend/schema';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
-  selector: "benji-key-stats",
-  templateUrl: "./key-stats.component.html",
-  styleUrls: ["./key-stats.component.scss"]
+  selector: 'benji-key-stats',
+  templateUrl: './key-stats.component.html',
+  styleUrls: ['./key-stats.component.scss']
 })
 export class KeyStatsComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
-  startDate = "";
-  startTime = "";
-  endDate = "";
-  hostName = "";
+  startDate = '';
+  startTime = '';
+  endDate = '';
+  hostName = '';
   duration;
   constructor(private pastSessionsService: PastSessionsService) {}
 
@@ -29,14 +29,20 @@ export class KeyStatsComponent implements OnInit, OnChanges {
     if (this.data && this.data.end_time) {
       this.duration = moment.duration(
         moment(this.data.end_time).diff(this.data.start_time)
-      );
-      this.startDate = moment(this.data.start_time).format("MMM D, YYYY");
-      this.startTime = moment(this.data.start_time).format("hh:mma");
+      ) as moment.Duration;
+      this.startDate = moment(this.data.start_time).format('MMM D, YYYY');
+      this.startTime = moment(this.data.start_time).format('hh:mma');
+
       this.duration =
-        this.duration.get("hours") + ":" + this.duration.get("minutes");
+        this.duration.hours() +
+        'h ' +
+        (this.duration.minutes() < 9
+          ? '0' + this.duration.minutes()
+          : this.duration.minutes()) +
+        'm';
 
       this.hostName =
-        this.data.host.first_name + " " + this.data.host.last_name;
+        this.data.host.first_name + ' ' + this.data.host.last_name;
     }
   }
 
