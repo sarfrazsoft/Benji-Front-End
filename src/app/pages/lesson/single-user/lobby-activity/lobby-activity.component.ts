@@ -11,8 +11,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class SingleUserLobbyActivityComponent extends BaseActivityComponent
   implements OnInit {
-  @Input() lessonName;
   @Output() startClicked = new EventEmitter();
+  lessonName = '';
   startSessionLabel = '';
 
   constructor(private contextService: ContextService) {
@@ -20,6 +20,7 @@ export class SingleUserLobbyActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    this.lessonName = this.activityState.lesson.lesson_name;
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.startSessionLabel = info.parameters.startSession;
