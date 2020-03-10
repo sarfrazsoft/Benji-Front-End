@@ -256,8 +256,9 @@ export class SkillEvaluationComponent implements OnInit {
       });
 
       const dataPoint = sumOfAvgs + selfFbackSum;
-      this.pitchingOverview.chart.sessionInfo[sessionIndex].value = dataPoint;
-      dataPoints.push(dataPoint);
+      this.pitchingOverview.chart.sessionInfo[sessionIndex].value =
+        dataPoint * 2;
+      dataPoints.push(dataPoint * 2);
       pitchingAvg = pitchingAvg + (dataPoint / 5) * 100;
     });
     pitchingAvg = pitchingAvg / peerFeedbacks.length;

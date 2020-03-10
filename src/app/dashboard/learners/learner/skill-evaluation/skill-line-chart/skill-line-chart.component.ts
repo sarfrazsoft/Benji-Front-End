@@ -17,10 +17,30 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
   @Input() chartData = {
     label: 'Sessions',
     sessionInfo: [
-      { date: '2nd Jan, 2020', name: 'Pitch perfect', xlabel: '01/02', value: 3 },
-      { date: '14th Jan, 2020', name: 'Pitch practice', xlabel: '01/14', value: 5 },
-      { date: '12th Jan, 2020', name: 'Pitch practice', xlabel: '01/12', value: 7 },
-      { date: '22nd Jan, 2020', name: 'Pitch perfect', xlabel: '01/22', value: 6 }
+      {
+        date: '2nd Jan, 2020',
+        name: 'Pitch perfect',
+        xlabel: '01/02',
+        value: 3
+      },
+      {
+        date: '14th Jan, 2020',
+        name: 'Pitch practice',
+        xlabel: '01/14',
+        value: 5
+      },
+      {
+        date: '12th Jan, 2020',
+        name: 'Pitch practice',
+        xlabel: '01/12',
+        value: 7
+      },
+      {
+        date: '22nd Jan, 2020',
+        name: 'Pitch perfect',
+        xlabel: '01/22',
+        value: 6
+      }
     ]
   };
   canvas: any;
@@ -28,16 +48,15 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
   myChart: any;
   @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.createChart();
   }
 
   createChart() {
-
     const labels = [];
     const values = [];
 
@@ -98,7 +117,7 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
                 beginAtZero: true,
                 min: 0,
                 max: 10,
-                callback: function (value, index, values) {
+                callback: function(value, index, values) {
                   return value ? value : '';
                 }
               }
@@ -113,21 +132,7 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
               ticks: {
                 fontColor: '#000',
                 fontSize: 14,
-                beginAtZero: true,
-                // callback: function (value, index, values) {
-                //   const j = value % 10,
-                //     k = value % 100;
-                //   if (j === 1 && k !== 11) {
-                //     return value + 'st';
-                //   }
-                //   if (j === 2 && k !== 12) {
-                //     return value + 'nd';
-                //   }
-                //   if (j === 3 && k !== 13) {
-                //     return value + 'rd';
-                //   }
-                //   return value + 'th';
-                // }
+                beginAtZero: true
               }
             }
           ]
