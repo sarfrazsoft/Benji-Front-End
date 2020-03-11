@@ -54,6 +54,12 @@ export class GroupsService {
     const request = global.apiRoot + '/tenants/orgs/?page=' + 1;
     return this.http.get(request);
   }
+
+  addGroup(organizaion: string, groupName: string) {
+    const x = { organization: organizaion, group_name: groupName };
+    const request = global.apiRoot + '/tenants/groups/';
+    return this.http.post(request, x);
+  }
 }
 
 export const group = {

@@ -8,7 +8,9 @@ import {
 } from '@angular/forms';
 import { merge } from 'lodash';
 import { fromEvent, Observable, Subject } from 'rxjs';
+import { ContextService } from 'src/app/services';
 import { AccountService } from '../../account/services/account.service';
+import { GroupsService } from '../services/groups.service';
 
 @Component({
   selector: 'benji-add-groups',
@@ -24,13 +26,15 @@ export class AddGroupsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private groupService: GroupsService,
+    private contextService: ContextService
   ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      group_name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+      group_name: new FormControl('', [Validators.required])
+      // description: new FormControl('', [Validators.required])
     });
   }
 
@@ -45,12 +49,10 @@ export class AddGroupsComponent implements OnInit {
   onSubmit(): void {
     this.isSignupClicked = true;
     if (this.form.valid) {
-      const val = this.form.value;
-      merge(val, {
-        id: this.accontInfo.id
-      });
-      this.eventsSubject.next(val);
-      this.accountService.saveUser(val).subscribe(
+      const group_name = this.form.value.group_name;
+      const org = this.contextService.user.organization;
+      // this.eventsSubject.next(val);
+      this.groupService.addGroup(org, group_name).subscribe(
         res => {
           this.isSubmitted = true;
         },
