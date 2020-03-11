@@ -41,18 +41,14 @@ export class WhiteLabelResolver implements Resolve<any> {
       // When giving a benji demo, users are not authorized and
       // they usually start at one of these pages
       // submit bu
-      // else if (
-      //   route.url[0] &&
-      //   (route.url[0].path === 'login' ||
-      //     route.url[0].path === 'landing' ||
-      //     route.url[0].path === 'participant') &&
-      //   !this.contextService.user
-      // ) {
-      //   // this.applyBenjiTheme();
-      //   // this.applyBenjiTheme();
-      //   // this.applyDefaultTheme();
-      // }
-      else {
+      else if (
+        route.url[0] &&
+        (route.url[0].path === 'login' ||
+          route.url[0].path === 'landing' ||
+          route.url[0].path === 'participant')
+      ) {
+        this.applyDefaultTheme();
+      } else {
         console.log('I ll try to get user');
         this.restService.get_own_identity().subscribe(
           (res: any) => {

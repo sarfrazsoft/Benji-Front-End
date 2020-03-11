@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       }
     );
     this.contextService.user$.subscribe(user => {
-      if (user) {
+      if (user && user.organization) {
         const orgId =
           typeof user.organization === 'object'
             ? user.organization.id
@@ -45,6 +45,9 @@ export class AppComponent implements OnInit {
             this.contextService.partnerInfo = DefaultwhiteLabelInfo;
           }
         );
+      } else {
+        // it's a guest user
+        this.contextService.partnerInfo = DefaultwhiteLabelInfo;
       }
     });
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {

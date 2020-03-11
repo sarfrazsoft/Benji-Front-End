@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EmojiLookupService {
-  constructor() { }
+  constructor() {}
 
   public getEmoji(string) {
     string = string.split('//')[1];
@@ -75,6 +75,8 @@ export class EmojiLookupService {
         return '🙅‍♂️';
       case 'sales':
         return '👩‍💼';
+      case 'videocamera':
+        return '📽️';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

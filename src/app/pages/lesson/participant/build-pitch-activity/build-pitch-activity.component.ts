@@ -103,11 +103,7 @@ export class ParticipantBuildPitchActivityComponent
       this.createPitch = false;
       this.showMyPitch = false;
       this.voteNow = true;
-    } else if (
-      this.act.voting_done &&
-      this.act.winning_user &&
-      this.thanksForVote
-    ) {
+    } else if (this.act.voting_done && this.act.winning_user) {
       this.showMyPitch = false;
       this.voteNow = false;
       this.thanksForVote = false;
