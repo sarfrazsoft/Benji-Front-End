@@ -29,8 +29,8 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns: string[] = [
     'select',
     'name',
-    'noOfLearners',
-    'createdOn',
+    // 'noOfLearners',
+    // 'createdOn',
     'viewDetails'
   ];
 
@@ -72,7 +72,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.groupsService.getLearners(
+          return this.groupsService.getGroups(
             this.sort.active,
             this.sort.direction,
             this.paginator.pageIndex
@@ -95,20 +95,12 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe(data => {
         this.data = groups;
-        // data.forEach(run => {
-        //   tableData.push({
-        //     id: run.id,
-        //     date: moment(run.start_time).format('MMMM, DD YYYY'),
-        //     title: run.lesson.lesson_name,
-        //     hostedBy: run.host
-        //       ? run.host.first_name + ' ' + run.host.last_name
-        //       : '',
-        //     // tslint:disable-next-line:whitespace
-        //     // participants: run.joined_users.length,
-        //     lessonrunCode: run.lessonrun_code
-        //   });
-        // });
-        return data;
+        this.data = [];
+        data.forEach(grps => {
+          this.data.push({
+            name: grps.group_name
+          });
+        });
       });
   }
 

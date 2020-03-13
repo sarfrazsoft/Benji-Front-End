@@ -89,7 +89,7 @@
   </div>
 
   <div class="b-flat-card__body" *ngIf="voteNow">
-    <h1 class="pn-700 primary-color-darkest">Vote on the best pitch</h1>
+    <h1 class="pn-700 primary-color-darkest">Vote on your favorite</h1>
     <p>Press the + icon next to each name to review the pitches.</p>
     <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
       <benji-vote-pitch
@@ -128,7 +128,7 @@
     </h1>
     <div class="activity-title-description-container">
       <p class="secondary-color-dark pn-500 instruction">
-        Take a look at the winning pitch.
+        Take a look at the winner.
       </p>
     </div>
   </div>
@@ -142,7 +142,7 @@
     </h1>
     <div class="activity-title-description-container">
       <p class="secondary-color-dark pn-500 instruction">
-        Your pitch was voted the best.
+        You got the most votes.
       </p>
     </div>
   </div>

@@ -45,6 +45,11 @@ export class GroupsService {
     return this.http.get<User>(request);
   }
 
+  getGroups(sort: string, order: string, page: number): Observable<any> {
+    const request = global.apiRoot + '/tenants/groups/?page=' + (page + 1);
+    return this.http.get<any>(request);
+  }
+
   addLearners(emails) {
     const request = global.apiRoot + '/tenants/org_invites/';
     return this.http.post(request, emails);
