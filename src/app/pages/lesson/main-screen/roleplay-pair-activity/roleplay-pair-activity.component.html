@@ -1,8 +1,6 @@
 <!-- Show list of groups to find eachother  -->
 <ng-container *ngIf="!activityState.roleplaypairactivity.grouping_complete">
-  <div
-    class="mainscreen-activity mainscreen-activity--multi-column pair-activity"
-  >
+  <div class="mainscreen-activity ms-act--multi-column pair-activity">
     <div
       class="mainscreen-activity__column--50 mainscreen-activity__activity-detail"
       fxLayoutAlign="center start"
@@ -55,9 +53,7 @@
 
 <!-- Show Role-Play screen to group with instruction on what to do -->
 <ng-container *ngIf="activityState.roleplaypairactivity.grouping_complete">
-  <div
-    class="mainscreen-activity mainscreen-activity--multi-column pair-activity"
-  >
+  <div class="mainscreen-activity ms-act--multi-column pair-activity">
     <div class="roleplay-instruction bg-off-white">
       <div class="title all-caps-title">
         <p class="secondary-color-dark pn-500">Role-play</p>

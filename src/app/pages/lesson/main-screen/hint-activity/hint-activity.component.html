@@ -1,5 +1,5 @@
 <div
-  class="mainscreen-activity mainscreen-activity--multi-column hint-activity"
+  class="mainscreen-activity ms-act--multi-column hint-activity"
   *ngIf="!activityState.hintwordactivity.voting_complete"
 >
   <div
@@ -25,8 +25,8 @@
             </span>
             {{
               activityState.hintwordactivity.words_and_votes.length === 1
-                ? 'Word submitted'
-                : 'Words submitted'
+                ? "Word submitted"
+                : "Words submitted"
             }}
           </ng-container>
           <ng-container
@@ -35,7 +35,7 @@
             <span class="primary-color-darkest">
               {{ countVotes() }}
             </span>
-            {{ countVotes() === 1 ? 'Vote submitted' : 'Votes submitted' }}
+            {{ countVotes() === 1 ? "Vote submitted" : "Votes submitted" }}
           </ng-container>
         </h3>
       </div>
@@ -80,7 +80,7 @@
 </div>
 
 <div
-  class="mainscreen-activity mainscreen-activity--multi-column hint-activity"
+  class="mainscreen-activity ms-act--multi-column hint-activity"
   *ngIf="activityState.hintwordactivity.voting_complete"
 >
   <div

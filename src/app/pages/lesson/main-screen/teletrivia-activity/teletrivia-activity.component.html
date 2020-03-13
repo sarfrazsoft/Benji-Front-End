@@ -1,6 +1,4 @@
-<section
-  class="mainscreen-activity teletrivia-activity mainscreen-activity--multi-column"
->
+<section class="mainscreen-activity teletrivia-activity ms-act--multi-column">
   <div
     class="mainscreen-activity__activity-detail center-text flexer flex-direction--column flexer--center mainscreen-activity__column mainscreen-activity__column--50 left-text"
   >
@@ -44,19 +42,25 @@
     *ngIf="activityState.teletriviaactivity.circle_complete"
   >
     <div class="teletrivia-activity__leaderboard">
-      <p class="teletrivia-activity__section-text secondary-color-dark">Leaderboard</p>
+      <p class="teletrivia-activity__section-text secondary-color-dark">
+        Leaderboard
+      </p>
       <ol class="teletrivia-activity__leaders-list">
         <li
           class="teletrivia-activity__leader pn-600"
           *ngFor="
-            let leader of (activityState.teletriviaactivity.leaderboard
-              | slice: 0:5);
+            let leader of activityState.teletriviaactivity.leaderboard
+              | slice: 0:5;
             let i = index
           "
         >
           <div class="flexer flexer--space-between align-center">
-            <span class="teletrivia-activity__leader-name primary-color-darkest">
-              <span class="teletrivia-activity__leader-rank primary-color-darkest">
+            <span
+              class="teletrivia-activity__leader-name primary-color-darkest"
+            >
+              <span
+                class="teletrivia-activity__leader-rank primary-color-darkest"
+              >
                 {{ i + 1 }}.
               </span>
               {{ leader.user.first_name }}
