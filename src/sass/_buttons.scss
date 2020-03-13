@@ -60,6 +60,12 @@ button {
   @media screen and (max-width: 320px) {
     width: 230px;
   }
+
+  &.main-screen-button {
+    width: auto;
+    height: 60px;
+    font-size: 26px;
+  }
 }
 
 .b-standard-button.animated {

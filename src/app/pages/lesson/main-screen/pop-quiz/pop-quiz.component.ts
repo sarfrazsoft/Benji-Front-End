@@ -14,6 +14,7 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   radialTimer;
   showLeaderboard = false;
+  revealAnswers = false;
   leaderboard = [
     { name: 'Senpai', score: 9 },
     { name: 'Shikamaru', score: 7 },
@@ -43,12 +44,14 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
       (as.mcqactivity.question_timer.status === 'running' ||
         as.mcqactivity.question_timer.status === 'paused')
     ) {
+      this.revealAnswers = false;
       this.radialTimer = as.mcqactivity.question_timer;
     } else if (
       as.base_activity.next_activity_start_timer &&
       (as.base_activity.next_activity_start_timer.status === 'running' ||
         as.base_activity.next_activity_start_timer.status === 'paused')
     ) {
+      this.revealAnswers = true;
       this.radialTimer = as.base_activity.next_activity_start_timer;
     }
   }

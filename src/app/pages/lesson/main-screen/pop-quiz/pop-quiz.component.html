@@ -16,11 +16,16 @@
         fxFlex="60%"
         fxLayoutAlign="start center"
       >
-        <div fxLayout="column" fxLayoutGap="2.8vh">
+        <div fxLayout="column" fxLayoutGap="2.8vh" style="width: 100%;">
           <div class="quiz-question primary-color-darkest">
             {{ activityState.mcqactivity.question.question }}
           </div>
-          <div class="quiz-answers" fxLayout="column" fxLayoutGap="2.8vh">
+          <div
+            class="quiz-answers"
+            fxLayout="column"
+            fxLayoutGap="2.8vh"
+            *ngIf="!activityState.lesson.single_user_lesson || revealAnswers"
+          >
             <div
               fxLayout="row"
               *ngFor="
@@ -28,17 +33,32 @@
                 let i = index
               "
               [ngClass]="{
-                'success-color':
-                  option.is_correct &&
-                  activityState.base_activity.next_activity_start_timer &&
-                  activityState.base_activity.next_activity_start_timer
-                    .status === 'running'
+                'success-color': option.is_correct && revealAnswers
               }"
-              (click)="singleUserSubmitAnswer(option)"
             >
               <div fxFlex="4vw">{{ optionIdentifiers[i] }}.</div>
               <div>{{ option.choice_text }}</div>
             </div>
+          </div>
+          <div
+            class="quiz-answers single-user"
+            fxLayout="column"
+            fxLayoutGap="0.8vh"
+            *ngIf="activityState.lesson.single_user_lesson && !revealAnswers"
+          >
+            <button
+              class="b-standard-button unselected main-screen-button"
+              fxLayout="row"
+              *ngFor="
+                let option of activityState.mcqactivity.question.mcqchoice_set;
+                let i = index
+              "
+              (click)="singleUserSubmitAnswer(option)"
+            >
+              <div fxFlex="4vw">{{ optionIdentifiers[i] }}.</div>
+              <div>{{ option.choice_text }}</div>
+            </button>
+            <!-- </div> -->
           </div>
         </div>
       </div>
