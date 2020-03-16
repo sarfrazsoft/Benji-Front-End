@@ -152,7 +152,7 @@ export class SidenavComponent implements OnInit {
       if (user.local_admin_permission) {
         this.sidenavSections = [
           this.adminSection,
-          this.groupsSection,
+          // this.groupsSection,
           this.pastSessionSection,
           this.accountSection,
           this.authSection
