@@ -22,34 +22,8 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.restService.get_own_identity().subscribe(
-      (res: any) => {
-        this.contextService.user = res;
-      },
-      (error: any) => {
-        this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-      }
-    );
-    this.contextService.user$.subscribe(user => {
-      if (user && user.organization) {
-        const orgId =
-          typeof user.organization === 'object'
-            ? user.organization.id
-            : user.organization;
+    this.checkWhitelabeling();
 
-        this.restService.get_white_label_details(orgId).subscribe(
-          (data: any) => {
-            this.contextService.partnerInfo = data;
-          },
-          error => {
-            this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-          }
-        );
-      } else {
-        // it's a guest user
-        this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-      }
-    });
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.title.setTitle(info.parameters.tabTitle);
@@ -200,6 +174,47 @@ export class AppComponent implements OnInit {
           document.head.appendChild(additionalCssStyle);
         }
         additionalCssStyle.innerText = cssCode;
+      }
+    });
+  }
+
+  checkWhitelabeling() {
+    // let whitelabelDetailsAvailable = false;
+
+    // Is there a user present?
+    this.restService.get_own_identity().subscribe(
+      (res: any) => {
+        this.contextService.user = res;
+      },
+      (error: any) => {
+        // console.log('no user available');
+        // this.contextService.partnerInfo = DefaultwhiteLabelInfo;
+      }
+    );
+
+    this.contextService.user$.subscribe(user => {
+      if (user && user.organization) {
+        const orgId =
+          typeof user.organization === 'object'
+            ? user.organization.id
+            : user.organization;
+
+        this.restService.get_white_label_details(orgId).subscribe(
+          (data: any) => {
+            // whitelabelDetailsAvailable = true;
+            this.contextService.partnerInfo = data;
+          },
+          error => {
+            this.contextService.partnerInfo = DefaultwhiteLabelInfo;
+          }
+        );
+      } else {
+        // it's a guest user
+        // if (user !== null) {
+        console.log('continue as guest user');
+        // whitelabelDetailsAvailable = false;
+        this.contextService.partnerInfo = DefaultwhiteLabelInfo;
+        // }
       }
     });
   }

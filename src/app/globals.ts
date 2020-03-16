@@ -48,13 +48,48 @@ export const DefaultwhiteLabelInfo = {
     primary_darkest: '#00178a',
     tabTitle: 'Benji',
     partnerName: 'Benji',
-    startSession: 'start session',
-    launchSession: 'launch session',
+    startSession: 'Start session',
+    launchSession: 'Launch session',
     joinArrow: './assets/img/joinlaunch.png',
     rightCaret: './assets/img/right_caret.png',
     rightLaunchArrow: './assets/img/launch_singlearrow.png',
     infoIcon: './assets/img/info_icon.png',
     checkIcon: './assets/img/check_icon.png'
+    // primary_lighter: '#f8b0ac',
+    // primary_light: '#fa8b85',
+    // primary: '#fd4b42',
+    // primary_dark: '#fd261b',
+    // primary_darker: '#c91006',
+    // primary_darkest: '#830700'
+  }
+};
+
+export const DefaultwhiteLabelInfo1 = {
+  name: 'Muraly Srinarayanathas',
+  welcome_text: 'The Maestro Mindset!',
+  link: 'https://muralys.com/',
+  logo: './assets/img/muraly_logo.png',
+  favicon: './assets/img/muraly_favicon.png',
+  parameters: {
+    lightLogo: './assets/img/muraly_logo_white.png',
+    darkLogo: './assets/img/muraly_logo.png',
+    welcomeDescription:
+      'What is The Maestro Mindset? Learn more about composing the symphony of your life',
+    primary_lighter: '#00778B',
+    primary_light: '#00778B',
+    primary: '#00778B',
+    primary_dark: '#004F71',
+    primary_darker: '#004F71',
+    primary_darkest: '#004F71',
+    tabTitle: 'Muraly Srinarayanathas | The Maestro Mindset',
+    partnerName: 'Benji',
+    startSession: 'Start Session',
+    launchSession: 'Launch Session',
+    joinArrow: './assets/img/joinlaunch_muralys.png',
+    rightCaret: './assets/img/right_caret_muralys.png',
+    rightLaunchArrow: './assets/img/info_icon_muralys.png',
+    infoIcon: './assets/img/info_icon.png',
+    checkIcon: './assets/img/check_icon_muralys.png'
     // primary_lighter: '#f8b0ac',
     // primary_light: '#fa8b85',
     // primary: '#fd4b42',
