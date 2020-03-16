@@ -69,12 +69,6 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
       this.showQuestion = false;
       this.showQuestionsAnswer = true;
       this.answerSubmitted = false;
-      this.selectedChoice = {
-        id: null,
-        is_correct: null,
-        choice_text: null,
-        explanation: null
-      };
     } else if (as.mcqresultsactivity) {
       this.showResults = true;
     }
@@ -82,6 +76,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
 
   selectOption(option: MCQChoice) {
     this.selectedChoice = option;
+    this.answerSubmitted = false;
   }
 
   submitAnswer(option: MCQChoice) {

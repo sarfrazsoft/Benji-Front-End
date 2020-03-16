@@ -14,14 +14,15 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   radialTimer;
   showLeaderboard = false;
+  leaderboard = [];
   revealAnswers = false;
-  leaderboard = [
-    { name: 'Senpai', score: 9 },
-    { name: 'Shikamaru', score: 7 },
-    { name: 'Kakashi hatake', score: 4 },
-    { name: 'Yamato tenzo', score: 2 },
-    { name: 'Kazekage Gara', score: 1 }
-  ];
+  // leaderboard = [
+  //   { name: 'Senpai', score: 9 },
+  //   { name: 'Shikamaru', score: 7 },
+  //   { name: 'Kakashi hatake', score: 4 },
+  //   { name: 'Yamato tenzo', score: 2 },
+  //   { name: 'Kazekage Gara', score: 1 }
+  // ];
   constructor() {
     super();
   }
@@ -53,6 +54,13 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
     ) {
       this.revealAnswers = true;
       this.radialTimer = as.base_activity.next_activity_start_timer;
+      if (as.mcqactivity.quiz_leaderboard) {
+        this.showLeaderboard = true;
+        this.leaderboard = as.mcqactivity.quiz_leaderboard;
+        this.leaderboard = this.leaderboard.sort((a, b) => {
+          return b.score - a.score;
+        });
+      }
     }
   }
 
@@ -60,6 +68,16 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   singleUserSubmitAnswer(option: MCQChoiceSet) {
     if (this.activityState.lesson.single_user_lesson) {
       this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
+    }
+  }
+
+  getUserName(id) {
+    const ju = this.activityState.lesson_run.joined_users;
+    const user = ju.find(u => u.id === id);
+    if (user) {
+      return user.first_name;
+    } else {
+      return 'user';
     }
   }
 }

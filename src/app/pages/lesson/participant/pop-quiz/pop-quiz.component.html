@@ -78,7 +78,10 @@
   </div>
 </div>
 
-<div class="b-baseline-action bg-primary-color-dark" *ngIf="selectedChoice.id">
+<div
+  class="b-baseline-action bg-primary-color-dark"
+  *ngIf="questionTimerStarted"
+>
   <benji-animated-checkmark-button
     loadingStateInnerHTML="Loading"
     innerHTML="Submit"
