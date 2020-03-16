@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   EndEvent,
+  FastForwardEvent,
   NextInternalEvent,
   PauseActivityEvent,
   ResumeActivityEvent
@@ -48,6 +49,8 @@ export class MainScreenFooterComponent implements OnInit {
       this.socketMessage.emit(new NextInternalEvent());
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());
+    } else if (eventType === 'fastForward') {
+      this.socketMessage.emit(new FastForwardEvent());
     }
     // }
   }

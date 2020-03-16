@@ -95,6 +95,10 @@ export class ResumeActivityEvent extends ActivityEvent {
   event_name = 'ResumeActivityEvent';
 }
 
+export class FastForwardEvent extends ActivityEvent {
+  event_name = 'FastForwardEvent';
+}
+
 export class LobbyStartButtonClickEvent extends ActivityEvent {
   event_name = 'LobbyStartButtonClickEvent';
 }
@@ -325,8 +329,7 @@ export class GenericRoleplayUserFeedbackEvent extends ActivityEvent {
   ) {
     super();
     this.extra_args = {
-      genericroleplayuserfeedbackeventanswer_set:
-        genericroleplayuserfeedbackeventanswer_set
+      genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set
     };
   }
 }

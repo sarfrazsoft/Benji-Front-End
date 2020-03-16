@@ -150,7 +150,7 @@
   </div>
   <benji-main-screen-footer
     *ngIf="isConnected() && serverMessage"
-    [showFastForward]="false"
+    [showFastForward]="getActivityType() === at.pitchoMatic"
     [showFooter]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"
