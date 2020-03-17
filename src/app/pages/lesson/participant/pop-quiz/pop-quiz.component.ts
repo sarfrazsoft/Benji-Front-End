@@ -75,14 +75,16 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   }
 
   selectOption(option: MCQChoice) {
-    this.selectedChoice = option;
-    this.answerSubmitted = false;
+    if (!this.answerSubmitted) {
+      this.selectedChoice = option;
+    }
   }
 
-  submitAnswer(option: MCQChoice) {
-    this.selectedChoice = option;
-    this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
-    this.answerSubmitted = true;
+  submitAnswer() {
+    if (this.selectedChoice.id) {
+      this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoice));
+      this.answerSubmitted = true;
+    }
   }
 
   getCorrectAnswer() {

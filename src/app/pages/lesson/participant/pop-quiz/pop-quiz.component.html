@@ -15,7 +15,8 @@
         "
         class="b-standard-button unselected"
         [ngClass]="{
-          selected: option.id === selectedChoice.id
+          selected: option.id === selectedChoice.id,
+          inactive: answerSubmitted
         }"
         (click)="selectOption(option)"
       >
@@ -87,6 +88,6 @@
     innerHTML="Submit"
     buttonStyle="white"
     [valid]="answerSubmitted"
-    (click)="submitAnswer(selectedChoice)"
+    (click)="submitAnswer()"
   ></benji-animated-checkmark-button>
 </div>
