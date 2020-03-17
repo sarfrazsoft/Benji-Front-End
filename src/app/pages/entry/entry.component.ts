@@ -28,6 +28,7 @@ export class EntryComponent implements OnInit {
   ngOnInit() {
     if (this.authService.isLoggedIn()) {
       // this.router.navigate(['/dashboard']);
+      this.authService.signOut();
     }
     this.isMobile = this.deviceService.isMobile();
 
