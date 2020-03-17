@@ -346,6 +346,7 @@ export interface RoleplayRole {
   name: string;
   image_url: string;
   instructions: string;
+  short_instruction: string;
   allow_multiple: boolean;
   feedbackquestions: Array<FeedbackQuestion>;
 }
