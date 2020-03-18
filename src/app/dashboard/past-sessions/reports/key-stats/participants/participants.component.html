@@ -7,12 +7,17 @@
     >
       <mat-checkbox
         disableRipple
+        [disabled]="!allowAllSelection"
         [checked]="isSelected(participant)"
         (change)="participantClicked($event, participant)"
       >
         {{ participant.first_name + " " + participant.last_name }}
       </mat-checkbox>
-      <span class="show-only primary-color" (click)="showOnly(participant)">
+      <span
+        *ngIf="allowAllSelection"
+        class="show-only primary-color"
+        (click)="showOnly(participant)"
+      >
         ONLY
       </span>
     </div>

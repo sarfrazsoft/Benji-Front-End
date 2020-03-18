@@ -99,6 +99,16 @@ export class SidenavComponent implements OnInit {
     ]
   };
 
+  profile = {
+    section: 5,
+    items: [
+      {
+        navName: 'Profile',
+        navRoute: ''
+      }
+    ]
+  };
+
   authSection = {
     section: 5,
     items: [
@@ -158,7 +168,13 @@ export class SidenavComponent implements OnInit {
           this.authSection
         ];
       } else {
-        this.sidenavSections = [this.accountSection, this.authSection];
+        this.profile.items[0].navRoute = 'learners/' + user.id;
+        this.sidenavSections = [
+          this.profile,
+          this.pastSessionSection,
+          this.accountSection,
+          this.authSection
+        ];
       }
     });
   }

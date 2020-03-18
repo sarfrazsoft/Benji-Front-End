@@ -104,6 +104,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           display: false
         },
         tooltips: {
+          caretSize: 0,
           displayColors: false,
           callbacks: {
             title: (tooltipItems, d) => {

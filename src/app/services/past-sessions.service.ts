@@ -24,12 +24,21 @@ export class PastSessionsService {
   filteredInUsers: Array<number> = [];
   joinedUsers: Array<User>;
   filteredInUsers$ = new BehaviorSubject<Array<number>>([]);
+  userIsAdmin = false;
 
   constructor(
     private http: HttpClient,
     private contextService: ContextService
-  ) {}
+  ) {
+    this.contextService.user$.subscribe(user => {
+      if (user.local_admin_permission) {
+        this.userIsAdmin = true;
+      }
+    });
+  }
 
+  // if user does not have admin permissions
+  // allow them to add themselves only
   addToFilteredInList(id: number) {
     if (this.filteredInUsers.includes(id)) {
       const index = this.filteredInUsers.indexOf(id);
@@ -60,11 +69,15 @@ export class PastSessionsService {
   }
 
   selectAll() {
-    this.filteredInUsers = [];
-    this.joinedUsers.forEach(ju => {
-      this.filteredInUsers.push(ju.id);
+    this.contextService.user$.subscribe(user => {
+      if (user && user.local_admin_permission) {
+        this.filteredInUsers = [];
+        this.joinedUsers.forEach(ju => {
+          this.filteredInUsers.push(ju.id);
+        });
+        this.filteredInUsers$.next(this.filteredInUsers);
+      }
     });
-    this.filteredInUsers$.next(this.filteredInUsers);
   }
 
   // api/course_details/lesson_run/{room_code}/summary/
@@ -79,10 +92,16 @@ export class PastSessionsService {
           this.joinedUsers = res.joined_users;
 
           if (this.filteredInUsers.length === 0) {
-            res.joined_users.forEach(ju => {
-              this.filteredInUsers.push(ju.id);
+            this.contextService.user$.subscribe(user => {
+              if (user && user.local_admin_permission) {
+                res.joined_users.forEach(ju => {
+                  this.filteredInUsers.push(ju.id);
+                });
+              } else {
+                this.filteredInUsers.push(user.id);
+              }
+              this.filteredInUsers$.next(this.filteredInUsers);
             });
-            this.filteredInUsers$.next(this.filteredInUsers);
           }
 
           arr.push(res);

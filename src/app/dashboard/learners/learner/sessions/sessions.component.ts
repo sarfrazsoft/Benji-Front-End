@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { LearnerService } from 'src/app/dashboard/learners/services';
+import { ContextService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
 import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 import { PastSessionsService } from 'src/app/services/past-sessions.service';
@@ -65,7 +66,8 @@ export class SessionsComponent implements OnInit, AfterViewInit {
     private learnerService: LearnerService,
     private pastSessionsService: PastSessionsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private contextService: ContextService
   ) {}
 
   ngOnInit() {

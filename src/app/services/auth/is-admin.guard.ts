@@ -28,19 +28,13 @@ export class IsAdminGuard implements CanActivate {
         if (user.local_admin_permission) {
           return true;
         }
+        this.router.navigate(['/dashboard']);
         return false;
       })
     );
   }
 
   canLoad(route: Route) {
-    // Get the user object from context
-    // const user = localStorage.getItem('benji_user');
-    // if (JSON.parse(user).local_admin_permission) {
-    //   return true;
-    // }
-    // this.router.navigate(['/dashboard']);
-    // return false;
     if (
       this.contextService.user &&
       this.contextService.user.local_admin_permission
@@ -48,18 +42,5 @@ export class IsAdminGuard implements CanActivate {
       return true;
     }
     return false;
-    // return this.contextService.user.pipe(
-    //   map((user: User) => {
-    //     console.log(user);
-    //     if (!user.local_admin_permission) {
-    //       return true;
-    //     }
-    //     return false;
-    //   }),
-    //   catchError(err => {
-    //     // this.router.navigate(['/login']);
-    //     return of(false);
-    //   })
-    // );
   }
 }
