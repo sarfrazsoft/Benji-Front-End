@@ -6,8 +6,8 @@ import {
   OnInit
 } from '@angular/core';
 import * as moment from 'moment';
+import { ContextService, PastSessionsService } from 'src/app/services';
 import { ActivityReport } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-key-stats',
@@ -16,14 +16,24 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
 })
 export class KeyStatsComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
+  userIsAdmin;
   startDate = '';
   startTime = '';
   endDate = '';
   hostName = '';
   duration;
-  constructor(private pastSessionsService: PastSessionsService) {}
+  constructor(
+    private pastSessionsService: PastSessionsService,
+    private contextService: ContextService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contextService.user$.subscribe(user => {
+      if (user.local_admin_permission) {
+        this.userIsAdmin = true;
+      }
+    });
+  }
 
   ngOnChanges() {
     if (this.data && this.data.end_time) {
