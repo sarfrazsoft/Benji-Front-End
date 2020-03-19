@@ -9,7 +9,7 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
 })
 export class ParticipantsComponent implements OnInit, OnChanges {
   @Input() data: any = { joined_users: [] };
-  allowAllSelection;
+  userIsAdmin;
   selected = [];
   participants = [];
   dialogRef;
@@ -24,7 +24,7 @@ export class ParticipantsComponent implements OnInit, OnChanges {
     });
     this.contextService.user$.subscribe(user => {
       if (user.local_admin_permission) {
-        this.allowAllSelection = true;
+        this.userIsAdmin = true;
       }
     });
   }
