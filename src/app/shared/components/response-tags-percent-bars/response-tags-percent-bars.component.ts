@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { ActivityReport, MCQReport } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
+import { PastSessionsService } from 'src/app/services';
 
 @Component({
   selector: 'benji-response-tags-percent-bars',

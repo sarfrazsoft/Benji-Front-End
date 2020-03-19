@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
+import { PastSessionsService } from 'src/app/services';
 
 @Component({
   selector: 'benji-assessment-bar',

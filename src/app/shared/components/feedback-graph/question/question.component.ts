@@ -7,8 +7,8 @@ import {
   ViewChild
 } from '@angular/core';
 import * as Chart from 'chart.js';
+import { PastSessionsService } from 'src/app/services';
 import { FeedbackGraphQuestion, User } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-question',

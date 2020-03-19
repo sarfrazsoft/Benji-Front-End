@@ -1,0 +1,19 @@
+// TODO: discuss with matt about having these properties at the 1440 breakpoint or something
+.key-stats-container benji-key-stats .key-stats {
+  /* height: calc(100vh - 90px - 52px - 83px); */
+  padding: 10px 0px;
+}
+
+.key-stats-container benji-key-stats .key-stats .participants {
+  /* overflow: auto; */
+}
+
+.key-stats-container benji-key-stats .key-stats {
+  /* height: calc(100vh - 90px - 52px - 83px); */
+  padding: 10px 0px;
+}
+
+.key-stats-container benji-key-stats {
+  /* height: 100%; */
+  overflow: auto;
+}

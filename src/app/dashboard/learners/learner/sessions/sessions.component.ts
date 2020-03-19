@@ -8,9 +8,9 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { LearnerService } from 'src/app/dashboard/learners/services';
 import { ContextService } from 'src/app/services';
+import { PastSessionsService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
 import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-sessions',

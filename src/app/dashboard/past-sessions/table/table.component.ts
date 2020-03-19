@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
+import { PastSessionsService } from 'src/app/services';
 
 @Component({
   selector: 'benji-past-sessions-table',

@@ -11,6 +11,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { ActivityTypes } from 'src/app/globals';
+import { PastSessionsService } from 'src/app/services';
 import {
   ActivityReport,
   FeedbackGraphQuestion,
@@ -18,7 +19,6 @@ import {
   PitchOMaticReport,
   SessionReport
 } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import { SkillOverviewComponent } from './skill-overview/skill-overview.component';
 
 @Component({

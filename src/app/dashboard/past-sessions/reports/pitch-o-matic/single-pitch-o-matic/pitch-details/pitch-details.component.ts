@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PastSessionsService } from 'src/app/services';
 import {
   ActivityReport,
   PitchoMaticBlank
 } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-pitch-details',

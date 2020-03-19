@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PastSessionsService } from 'src/app/services';
 import {
   ActivityReport,
   FeedbackQuestion,
   User
 } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-generic-roleplay',

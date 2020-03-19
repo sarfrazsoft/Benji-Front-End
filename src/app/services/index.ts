@@ -20,7 +20,8 @@ export {
   ContextService,
   EmojiLookupService,
   EitherOrActivityService,
-  VideoStateService
+  VideoStateService,
+  PastSessionsService
 };
 
 export const ServicesProviders = [

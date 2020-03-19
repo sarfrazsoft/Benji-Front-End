@@ -9,13 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 import { LearnerService } from 'src/app/dashboard/learners/services';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
+import { PastSessionsService } from 'src/app/services';
 import {
   ActivityReport,
   FeedbackGraphQuestion,
   PitchoMaticBlank,
   PitchoMaticGroupMember
 } from 'src/app/services/backend/schema';
-import { PastSessionsService } from 'src/app/services/past-sessions.service';
 import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './pitch-o-matic/pitch-o-matic.component';
 
 @Component({
