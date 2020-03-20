@@ -19,7 +19,6 @@ export class PastSessionsTableComponent implements AfterViewInit {
   selection = new SelectionModel<any>(true, []);
   resultsLength = 0;
   isLoadingResults = true;
-  isRateLimitReached = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -50,15 +49,12 @@ export class PastSessionsTableComponent implements AfterViewInit {
         map((data: any) => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.count;
 
           return data.results;
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
           return observableOf([]);
         })
       )

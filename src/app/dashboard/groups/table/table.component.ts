@@ -39,7 +39,6 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   resultsLength = 0;
   isLoadingResults = true;
-  isRateLimitReached = false;
   dialogRef;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -81,15 +80,12 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
         map((data: any) => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
-          this.isRateLimitReached = false;
           this.resultsLength = data.count;
 
           return data.results;
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
-          this.isRateLimitReached = true;
           return observableOf([]);
         })
       )

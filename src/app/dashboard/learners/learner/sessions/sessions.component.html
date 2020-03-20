@@ -2,14 +2,8 @@
   <span>Past Sessions</span>
 </div>
 <div class="dashboard-table">
-  <div
-    class="table-loading-shade"
-    *ngIf="isLoadingResults || isRateLimitReached"
-  >
+  <div class="table-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-      You might not have access to this page. Please contact your admin.
-    </div>
   </div>
 
   <div class="dash-table-container">
