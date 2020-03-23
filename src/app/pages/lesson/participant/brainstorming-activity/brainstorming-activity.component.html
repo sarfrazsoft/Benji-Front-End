@@ -10,8 +10,8 @@
       {{ bsAct.instructions }} <br />
       <!-- show submission limit  -->
       <ng-container *ngIf="bsAct.max_user_submissions < 5">
-        You can submit only{{ ' ' + bsAct.max_user_submissions + ' ' }}
-        {{ bsAct.max_user_submissions == 1 ? 'idea' : 'ideas' }}
+        You can submit up to{{ " " + bsAct.max_user_submissions + " " }}
+        {{ bsAct.max_user_submissions == 1 ? "idea" : "ideas" }}
       </ng-container>
     </ng-container>
     <ng-container class="content">
@@ -54,10 +54,10 @@
     </h1>
     <ng-container class="body-text">
       You can submit{{
-        ' ' + activityState.brainstormactivity.max_user_votes + ' '
+        " " + activityState.brainstormactivity.max_user_votes + " "
       }}
       {{
-        activityState.brainstormactivity.max_user_votes === 1 ? 'vote' : 'votes'
+        activityState.brainstormactivity.max_user_votes === 1 ? "vote" : "votes"
       }}
     </ng-container>
     <ng-container class="content">

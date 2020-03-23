@@ -16,14 +16,14 @@
         fxFlex="60%"
         fxLayoutAlign="start center"
       >
-        <div fxLayout="column" fxLayoutGap="2.8vh" style="width: 100%;">
+        <div fxLayout="column" fxLayoutGap="1.8vh" style="width: 100%;">
           <div class="quiz-question primary-color-darkest">
             {{ activityState.mcqactivity.question.question }}
           </div>
           <div
             class="quiz-answers"
             fxLayout="column"
-            fxLayoutGap="2.8vh"
+            fxLayoutGap="1.8vh"
             *ngIf="!activityState.lesson.single_user_lesson || revealAnswers"
           >
             <div

@@ -90,17 +90,17 @@ $large-screen: 1200px !default;
 $extra-large-screen: 1600px !default;
 $fourk-display: 2800px !default;
 
-$medium-and-up: 'only screen and (min-width : #{$small-screen-up})' !default;
-$large-and-up: 'only screen and (min-width : #{$medium-screen-up})' !default;
-$xlarge-and-up: 'only screen and (min-width : #{$large-screen-up})' !default;
-$xxlarge-and-down: 'only screen and (max-width : #{$extra-large-screen})' !default;
-$fourK-display-and-up: 'only screen and (min-width : #{$fourk-display})' !default;
-$small-and-down: 'only screen and (max-width : #{$small-screen})' !default;
-$medium-and-down: 'only screen and (max-width : #{$medium-screen})' !default;
-$large-and-down: 'only screen and (max-width : #{$large-screen})' !default;
-$medium-only: 'only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})' !default;
-$medium-and-large: 'only screen and (min-width : #{$small-screen-up}) and (max-width : #{$large-screen})' !default;
-$large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width : #{$large-screen})' !default;
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+$xlarge-and-up: "only screen and (min-width : #{$large-screen-up})" !default;
+$xxlarge-and-down: "only screen and (max-width : #{$extra-large-screen})" !default;
+$fourK-display-and-up: "only screen and (min-width : #{$fourk-display})" !default;
+$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+$large-and-down: "only screen and (max-width : #{$large-screen})" !default;
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+$medium-and-large: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$large-screen})" !default;
+$large-only: "only screen and (min-width : #{$medium-screen-up}) and (max-width : #{$large-screen})" !default;
 
 .bg-secondary-color-dark {
   background: $secondary-color-dark;
@@ -162,4 +162,12 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 
 .border-bottom {
   border-bottom: 1px solid $secondary-color;
+}
+
+.lesson-top-banner {
+  &.compact {
+    .border-bottom {
+      padding-bottom: 10px;
+    }
+  }
 }
