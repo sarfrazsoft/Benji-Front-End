@@ -26,6 +26,7 @@ export class BaseLessonComponent implements OnInit {
   serverMessage: UpdateMessage;
   serverOffsets: number[];
   avgServerTimeOffset: number;
+  facilitatorConnected = false;
 
   constructor(
     protected restService: BackendRestService,
@@ -74,9 +75,15 @@ export class BaseLessonComponent implements OnInit {
       );
       console.log('socket connected');
 
-      this.socket.subscribe((msg: ServerMessage) => {
-        this.handleServerMessage(msg);
-      });
+      this.socket.subscribe(
+        (msg: ServerMessage) => {
+          this.handleServerMessage(msg);
+        },
+        err => console.log(err),
+        () => {
+          console.log('complete');
+        }
+      );
     });
   }
 
@@ -84,8 +91,11 @@ export class BaseLessonComponent implements OnInit {
     return this.socket !== undefined;
   }
 
+  isFacilitatorConnected() {
+    return this.facilitatorConnected;
+  }
+
   handleServerMessage(msg: ServerMessage) {
-    // TODO show a loading spinner when notification_type = no_facilitator
     if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
       if (
         this.serverMessage &&
@@ -95,6 +105,7 @@ export class BaseLessonComponent implements OnInit {
         this.serverMessage = null;
         this.ref.detectChanges();
       }
+      this.facilitatorConnected = true;
       this.serverMessage = msg.updatemessage;
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       console.log(msg);
@@ -105,6 +116,13 @@ export class BaseLessonComponent implements OnInit {
       msg.servernotification !== undefined
     ) {
       console.log(msg);
+      if (msg.servernotification) {
+        const notify_type = msg.servernotification.notification_type;
+        if (notify_type === 'no_facilitator') {
+          console.log('facilitator not connected');
+          this.facilitatorConnected = false;
+        }
+      }
     }
     if (msg.messagetime !== null && msg.updatemessage !== undefined) {
       this.serverOffsets.push(msg.messagetime - Date.now());

@@ -1,4 +1,7 @@
-<div class="ms-preloader flexer align-center" *ngIf="!isConnected()">
+<div
+  class="ms-preloader flexer align-center"
+  *ngIf="!isConnected() || !isFacilitatorConnected()"
+>
   <mat-spinner></mat-spinner>
 </div>
 

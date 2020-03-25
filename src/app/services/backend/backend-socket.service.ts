@@ -20,9 +20,7 @@ export class BackendSocketService {
     if (clientType === 'screen') {
       uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/screen/0/`;
     } else if (clientType === 'participant') {
-      uri = `${
-        global.wsRoot
-      }/ws/activityflow/code/${roomCode}/participant/${userID}/`;
+      uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/participant/${userID}/`;
     }
     console.log('connecting to: ' + uri);
     return webSocket(uri);
