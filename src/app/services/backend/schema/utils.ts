@@ -10,6 +10,7 @@ export interface Timer {
 export interface MCQChoice {
   id: number;
   choice_text: string;
+  order: number;
   is_correct: boolean;
   explanation: string;
 }

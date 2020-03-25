@@ -26,7 +26,9 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     this.buildForm();
   }
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    this.question_set.sort((a, b) => a.id - b.id);
+  }
 
   buildForm() {
     this.form = this.builder.group({

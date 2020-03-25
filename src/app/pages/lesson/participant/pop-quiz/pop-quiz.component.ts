@@ -22,7 +22,8 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
     id: null,
     is_correct: null,
     choice_text: null,
-    explanation: null
+    explanation: null,
+    order: null
   };
   revealAnswer = false;
   @ViewChild('timer') timer;
@@ -56,7 +57,8 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
           id: null,
           is_correct: null,
           choice_text: null,
-          explanation: null
+          explanation: null,
+          order: null
         };
         this.questionTimerStarted = true;
       }

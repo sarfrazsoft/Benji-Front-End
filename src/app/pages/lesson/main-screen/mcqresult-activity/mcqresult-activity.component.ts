@@ -39,9 +39,12 @@ export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
         return {
           text: choice.choice_text,
           noOfResponses: answer_count,
-          responsePercent: Math.round((answer_count / totalResponse) * 100)
+          responsePercent: Math.round((answer_count / totalResponse) * 100),
+          order: choice.order
         };
       });
+
+      this.choices.sort((a, b) => a.order - b.order);
     }
     if (false) {
       this.showStatistics = false;
