@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { AuthService, BackendRestService } from 'src/app/services';
+import {
+  AuthService,
+  BackendRestService,
+  ContextService
+} from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-participant-login',
@@ -16,17 +20,25 @@ export class ParticipantLoginComponent implements OnInit {
   public isUserValid: boolean;
   public userId;
   public loginError;
+  private welcomeText = '';
 
   public username = new FormControl(null, [Validators.required]);
 
   constructor(
     private backend: BackendRestService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private contextService: ContextService
   ) {}
 
   ngOnInit() {
     this.auth.logout();
+
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.welcomeText = info.welcome_text;
+      }
+    });
   }
 
   formSubmit() {
