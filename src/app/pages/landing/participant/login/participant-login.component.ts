@@ -20,7 +20,7 @@ export class ParticipantLoginComponent implements OnInit {
   public isUserValid: boolean;
   public userId;
   public loginError;
-  private welcomeText = '';
+  public welcomeText = '';
 
   public username = new FormControl(null, [Validators.required]);
 
