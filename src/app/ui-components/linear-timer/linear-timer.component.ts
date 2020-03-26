@@ -18,73 +18,12 @@ import { Timer } from '../../services/backend/schema';
   styleUrls: ['./linear-timer.component.scss']
 })
 export class LinearTimerComponent implements OnInit, OnDestroy {
-  constructor(@Inject(DOCUMENT) document) {
-    // function Timerr(duration, element) {
-    //   const self = this;
-    //   this.duration = duration;
-    //   this.element = element;
-    //   this.running = false;
-    //   this.els = {
-    //     ticker: document.getElementById('ticker'),
-    //     seconds: document.getElementById('seconds')
-    //   };
-    //   console.log(document.getElementById('seconds'));
-    //   // const hammerHandler = new Hammer(this.element);
-    //   // hammerHandler.on('tap', function() {
-    //   //   if (self.running) {
-    //   //     self.reset();
-    //   //   } else {
-    //   //     self.start();
-    //   //   }
-    //   // });
-    // }
-    // Timerr.prototype.start = function() {
-    //   const self = this;
-    //   let start = null;
-    //   this.running = true;
-    //   let remainingSeconds = (this.els.seconds.textContent =
-    //     this.duration / 1000);
-    //   function draw(now) {
-    //     if (!start) {
-    //       start = now;
-    //     }
-    //     const diff = now - start;
-    //     const newSeconds = Math.ceil((self.duration - diff) / 1000);
-    //     if (diff <= self.duration) {
-    //       self.els.ticker.style.height =
-    //         100 - (diff / self.duration) * 100 + '%';
-    //       if (newSeconds !== remainingSeconds) {
-    //         self.els.seconds.textContent = newSeconds;
-    //         remainingSeconds = newSeconds;
-    //       }
-    //       self.frameReq = window.requestAnimationFrame(draw);
-    //     } else {
-    //       // self.running = false;
-    //       self.els.seconds.textContent = 0;
-    //       self.els.ticker.style.height = '0%';
-    //       self.element.classList.add('countdown--ended');
-    //     }
-    //   }
-    //   self.frameReq = window.requestAnimationFrame(draw);
-    // };
-    // Timerr.prototype.reset = function() {
-    //   this.running = false;
-    //   window.cancelAnimationFrame(this.frameReq);
-    //   this.els.seconds.textContent = this.duration / 1000;
-    //   this.els.ticker.style.height = null;
-    //   this.element.classList.remove('countdown--ended');
-    // };
-    // Timerr.prototype.setDuration = function(duration) {
-    //   this.duration = duration;
-    //   this.els.seconds.textContent = this.duration / 1000;
-    // };
-    // const timer = new Timerr(10000, document.getElementById('countdown'));
-    // timer.start();
-  }
+  constructor() {}
   @Input() endAudio;
   @Input() timer: Timer;
   @Input() timerOffset: number;
   @Input() classes: string;
+  @Input() attentionOverlay = false;
 
   totalTime: number;
   remainingTime: number;
@@ -122,15 +61,15 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
           moment(this.timer.end_time).valueOf() - moment().valueOf() - offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
-          this.showAttentionTimer = false;
         }
         if (this.remainingTime === 0 && this.endAudio && !this.audioStarted) {
           this.audioStarted = true;
+          this.showAttentionTimer = false;
           const audio = new Audio('../../../assets/audio/' + this.endAudio);
           audio.load();
           audio.play();
         }
-        if (this.remainingTime < 20000) {
+        if (this.remainingTime < 10000 && this.attentionOverlay) {
           this.showAttentionTimer = true;
         }
       }

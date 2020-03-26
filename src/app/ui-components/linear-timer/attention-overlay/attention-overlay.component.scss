@@ -1,0 +1,116 @@
+.emphasis-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .emphasized-text {
+    color: white;
+    font-size: 35vh;
+    font-weight: 700;
+  }
+}
+
+$col-bg: black;
+$col-sun: #ff5722;
+
+.emphasis-backdrop {
+  background: rgba(0, 0, 0, 1);
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.countdown {
+  display: block;
+  width: 66vmin;
+  height: 66vmin;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Oswald", sans-serif;
+  font-weight: 400;
+  font-size: 25vmin;
+
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: width, height, border-radius, font-size;
+  transition-duration: 0.2s;
+
+  &--ended {
+    animation: buzz 0.5s;
+  }
+
+  &:active {
+    transform: scale(1.02);
+  }
+
+  @keyframes buzz {
+    0% {
+      transform: rotate(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: rotate(6deg);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: rotate(-6deg);
+    }
+
+    100% {
+      transform: rotate(0);
+    }
+  }
+
+  &--wide {
+    width: 100%;
+    height: 100%;
+
+    font-size: 50vmin;
+
+    border-radius: 0;
+  }
+
+  &__fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+
+    background: $col-sun;
+    opacity: 1;
+  }
+
+  &__digit {
+    width: 100%;
+
+    color: $col-sun;
+    text-align: center;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  &__button {
+    height: 50%;
+  }
+}

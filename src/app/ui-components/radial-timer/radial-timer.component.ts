@@ -23,6 +23,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() endAudio;
   @Input() timer: Timer;
   @Input() timerOffset: number;
+  @Input() attentionOverlay = false;
 
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
@@ -31,6 +32,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
 
   timerInterval;
   audioStarted = false;
+  showAttentionTimer = false;
 
   constructor() {
     this.getScreenSize();
@@ -64,7 +66,8 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
         } else {
           offset = 0;
         }
-        this.remainingTime = Date.parse(this.timer.end_time) - Date.now() - offset;
+        this.remainingTime =
+          Date.parse(this.timer.end_time) - Date.now() - offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }
@@ -73,6 +76,9 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
           const audio = new Audio('../../../assets/audio/' + this.endAudio);
           audio.load();
           audio.play();
+        }
+        if (this.remainingTime < 10000 && this.attentionOverlay) {
+          this.showAttentionTimer = true;
         }
       }
     } else {

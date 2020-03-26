@@ -13,8 +13,8 @@
     class="timer-centered primary-color number-text pn-500"
     *ngIf="timer && timer.status == 'running'"
   >
-    {{ get_min_sec().min | number: '1.0-0' }}:{{
-      get_min_sec().sec | number: '2.0-0'
+    {{ get_min_sec().min | number: "1.0-0" }}:{{
+      get_min_sec().sec | number: "2.0-0"
     }}<span>Left</span>
   </div>
 
@@ -43,3 +43,7 @@
     {{ endStateText }}
   </div>
 </div>
+
+<benji-timer-attention-overlay
+  *ngIf="showAttentionTimer"
+></benji-timer-attention-overlay>
