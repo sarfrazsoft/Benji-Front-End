@@ -30,11 +30,17 @@ const routes: Routes = [
   },
   {
     path: 'screen/lesson/:roomCode',
-    component: MainScreenLessonComponent
+    component: MainScreenLessonComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
   },
   {
     path: 'user/lesson/:roomCode',
-    component: SingleUserComponent
+    component: SingleUserComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
   },
   {
     path: 'participant/login',
@@ -52,14 +58,20 @@ const routes: Routes = [
   },
   {
     path: 'participant/lesson/:roomCode',
-    component: ParticipantLessonComponent
+    component: ParticipantLessonComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
   },
   {
     path: 'dashboard',
     component: LayoutComponent,
     loadChildren: 'src/app/dashboard/dashboard.module#DashboardModule',
     canLoad: [AuthGuard],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    resolve: {
+      labelInfo: WhiteLabelResolver
+    }
   }
 ];
 

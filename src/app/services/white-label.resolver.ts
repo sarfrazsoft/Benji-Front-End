@@ -33,7 +33,6 @@ export class WhiteLabelResolver implements Resolve<any> {
               if (err.status === 404) {
                 // Could not find custom whitelabel info
                 console.log(err.status);
-                // this.applyBenjiTheme();
                 this.applyDefaultTheme();
               }
             }
@@ -42,24 +41,36 @@ export class WhiteLabelResolver implements Resolve<any> {
       // When giving a benji demo, users are not authorized and
       // they usually start at one of these pages
       // submit bu
-      // else if (
-      //   route.url[0] &&
-      //   (route.url[0].path === 'login' ||
-      //     route.url[0].path === 'landing' ||
-      //     route.url[0].path === 'participant')
-      // ) {
-      //   console.log('applying default theme at login page');
-      //   this.restService.get_own_identity().subscribe(
-      //     (res: any) => {
-      //       this.contextService.user = res;
-      //     },
-      //     (error: any) => {
-      //       this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
-      //     }
-      //   );
-      //   // this.applyDefaultTheme();
-      // }
-      else {
+      else if (
+        window.location.origin !== 'https://app.mybenji.com' &&
+        window.location.origin !== 'http://localhost:4200' &&
+        window.location.origin !== 'https://staging.mybenji.com'
+      ) {
+        console.log('applying some custom theme');
+        if (window.location.origin.includes('muralys')) {
+          console.log('get muraly theme');
+          this.httpClient
+            .get(
+              global.apiRoot +
+                '/tenants/orgs/' +
+                'muralys' +
+                '/white_label_info/'
+            )
+            .subscribe(
+              (res: any) => {
+                this.contextService.partnerInfo = res;
+              },
+              (err: HttpErrorResponse) => {
+                if (err.status === 404) {
+                  console.log(err.status);
+                  this.applyDefaultTheme();
+                }
+              }
+            );
+        }
+        // It doesn't matter which organization you are registered to
+        // if the location is this; it'll get location based whitelabeling details
+      } else {
         this.restService.get_own_identity().subscribe(
           (res: any) => {
             this.contextService.user = res;
