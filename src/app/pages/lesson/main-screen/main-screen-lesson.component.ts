@@ -25,4 +25,13 @@ export class MainScreenLessonComponent extends BaseLessonComponent
   ) {
     super(restService, route, socketService, 'screen', contextService, ref);
   }
+
+  fastForwardActivities = [
+    this.at.pitchoMatic,
+    this.at.buildAPitch,
+    this.at.rolePlayPair,
+    this.at.mcqResults,
+    this.at.discussion,
+    this.at.genericRoleplay
+  ];
 }
