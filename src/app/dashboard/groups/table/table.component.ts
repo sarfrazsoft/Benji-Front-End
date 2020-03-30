@@ -13,7 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { merge, Observable, of as observableOf, Subscription } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { User } from 'src/app/services/backend/schema';
+import { Group, User } from 'src/app/services/backend/schema';
 import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 import { ConfirmationDialogComponent } from 'src/app/shared';
 import { GroupsService } from '../services';
@@ -28,8 +28,8 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() events: Observable<void>;
   displayedColumns: string[] = [
     'select',
-    'name',
-    // 'noOfLearners',
+    'group_name',
+    'member_count',
     // 'createdOn',
     'viewDetails'
   ];
@@ -89,14 +89,8 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
           return observableOf([]);
         })
       )
-      .subscribe(data => {
-        this.data = groups;
-        this.data = [];
-        data.forEach(grps => {
-          this.data.push({
-            name: grps.group_name
-          });
-        });
+      .subscribe((data: Array<Group>) => {
+        this.data = data;
       });
   }
 
@@ -157,34 +151,9 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     } row ${row.position + 1}`;
   }
 
-  viewGroup(row) {
-    this.router.navigate([row.shortName], {
+  viewGroup(row: Group) {
+    this.router.navigate([row.group_name], {
       relativeTo: this.activatedRoute
     });
   }
 }
-
-export const groups = [
-  {
-    id: 1,
-    name: 'Group One',
-    shortName: 'group_one',
-    learners: 6,
-    createdOn: '2020-01-10T17:06:29.572377-05:00',
-    createdBy: {
-      id: 1,
-      name: 'John Doe'
-    }
-  },
-  {
-    id: 2,
-    name: 'Group Two',
-    shortName: 'group_two',
-    learners: 8,
-    createdOn: '2020-01-10T17:06:29.572377-05:00',
-    createdBy: {
-      id: 1,
-      name: 'John Doe'
-    }
-  }
-];

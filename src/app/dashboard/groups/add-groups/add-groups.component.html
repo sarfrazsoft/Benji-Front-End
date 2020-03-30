@@ -62,23 +62,13 @@
         </mat-error>
       </div> -->
 
-      <div class="field">
-        <div class="label">
-          Select learners you want to add to group
-        </div>
-
-        <benji-group-learners-table
-          [showControls]="false"
-          [events]="eventsSubject.asObservable()"
-        ></benji-group-learners-table>
-      </div>
-
       <div *ngIf="isSubmitted" class="success-message">
         Saved
       </div>
 
       <button
         type="submit"
+        *ngIf="!groupSaved"
         class="dashboard-button bg-primary-color"
         [ngClass]="{
           active: form.valid,
@@ -88,5 +78,19 @@
         Save
       </button>
     </form>
+  </div>
+
+  <div class="dashboard-form">
+    <div class="field" *ngIf="groupSaved">
+      <div class="label">
+        Now you can select learners you want to add to group
+      </div>
+
+      <benji-group-learners-table
+        [showControls]="false"
+        [events]="eventsSubject.asObservable()"
+        (selectionEvent)="addRemoveLearner($event)"
+      ></benji-group-learners-table>
+    </div>
   </div>
 </div>

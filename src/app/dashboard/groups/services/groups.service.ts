@@ -65,6 +65,17 @@ export class GroupsService {
     const request = global.apiRoot + '/tenants/groups/';
     return this.http.post(request, x);
   }
+
+  addLearnerToGroup(userId, groupId) {
+    const x = { orggroup: groupId };
+    const request = global.apiRoot + '/tenants/users/' + userId + '/set_group/';
+    return this.http.post(request, x);
+  }
+
+  removeLearnerFromGroup(id) {
+    const request = global.apiRoot + '/tenants/users/' + id + '/unset_group/';
+    return this.http.post(request, {});
+  }
 }
 
 export const group = {

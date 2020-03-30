@@ -4,13 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../../shared/shared.module';
+import { InfoComponent } from './group-details/info/info.component';
 import { GroupsRoutes } from './groups.routing';
 import {
   GroupsComponents,
   GroupsEntryComponents,
   GroupsProviders
 } from './index';
-import { InfoComponent } from './group-details/info/info.component';
 
 @NgModule({
   imports: [

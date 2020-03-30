@@ -1,11 +1,13 @@
-import { SelectionModel } from '@angular/cdk/collections';
+import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort } from '@angular/material';
@@ -28,6 +30,7 @@ export class LearnersTableComponent
   @Input() showControls = true;
   private eventsSubscription: Subscription;
   @Input() events: Observable<any>;
+  @Output() selectionEvent = new EventEmitter();
   displayedColumns: string[] = [
     'select',
     'firstName',
@@ -37,7 +40,7 @@ export class LearnersTableComponent
   ];
   dialogRef;
 
-  data: any = [];
+  data: Array<User> = [];
   selection = new SelectionModel<any>(true, []);
 
   resultsLength = 0;
@@ -67,9 +70,15 @@ export class LearnersTableComponent
         if (res) {
           console.log(res);
         }
+        console.log('yolo');
         this.addSelectedLearner();
       });
     }
+
+    this.selection.changed.subscribe((change: SelectionChange<User>) => {
+      console.log(change);
+      this.selectionEvent.emit(change);
+    });
   }
 
   addSelectedLearner() {
@@ -109,7 +118,7 @@ export class LearnersTableComponent
           return observableOf([]);
         })
       )
-      .subscribe(data => {
+      .subscribe((data: Array<User>) => {
         this.data = data;
         return data;
       });

@@ -110,6 +110,10 @@ $large-only: "only screen and (min-width : #{$medium-screen-up}) and (max-width 
   background: $warning-color;
 }
 
+.bg-success-color {
+  background: $success-color;
+}
+
 .bg-secondary-color-light {
   background: $secondary-color-light;
 }

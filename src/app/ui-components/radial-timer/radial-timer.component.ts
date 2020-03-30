@@ -7,7 +7,6 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { init } from 'protractor/built/launcher';
 import { Timer } from '../../services/backend/schema/utils';
 
 @Component({

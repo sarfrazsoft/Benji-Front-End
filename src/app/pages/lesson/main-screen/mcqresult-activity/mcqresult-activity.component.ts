@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, OnChanges } from '@angular/core';
 import * as Chart from 'chart.js';
-import { userInfo } from 'os';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
