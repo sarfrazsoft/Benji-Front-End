@@ -149,6 +149,13 @@
     >
     </benji-ms-hint-activity>
 
+    <benji-ms-external-grouping-activity
+      *ngIf="getActivityType() === at.externalGrouping"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-external-grouping-activity>
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
   </div>
   <benji-main-screen-footer

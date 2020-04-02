@@ -49,6 +49,7 @@
 @import "./activities/discussion-activity";
 @import "./activities/build-pitch-activity";
 @import "./activities/question-form";
+@import "./activities/external-grouping";
 @import "./activities/pop-quiz";
 @import "./activities/mcq-activity";
 @import "./activities/pair-grouping";
@@ -1474,3 +1475,8 @@ app-root > div {
 .overflow-hidden {
   overflow: hidden;
 }
+
+// .ps-external-grouping-controls {
+//   background: #dfe5e7;
+//   color: #6c6c6c;
+// }

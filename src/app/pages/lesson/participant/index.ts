@@ -2,6 +2,7 @@ import { BrainStormingComponents } from './brainstorming-activity';
 import { BuildPitchComponents } from './build-pitch-activity';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
+import { ParticipantExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
 import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 import { ParticipantGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { ParticipantGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
@@ -31,6 +32,7 @@ export const ParticipantScreenComponents = [
   ...ParticipantLobbyComponents,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
+  ParticipantExternalGroupingActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantGeneratePitchActivityComponent,
   ParticipantHintActivityComponent,

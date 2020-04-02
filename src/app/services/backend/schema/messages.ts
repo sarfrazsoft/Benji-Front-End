@@ -3,6 +3,7 @@ import {
   BrainstormActivity,
   BuildAPitchActivity,
   DiscussionActivity,
+  ExternalGroupingActivity,
   FeedbackActivity,
   GenericRoleplayActivity,
   HintWordActivity,
@@ -34,6 +35,7 @@ export interface UpdateMessage {
   base_activity: BaseActivity;
   brainstormactivity: BrainstormActivity;
   buildapitchactivity: BuildAPitchActivity;
+  externalgroupingactivity?: ExternalGroupingActivity;
   pitchomaticactivity: PitchoMaticActivity;
   activity_type: string;
   lobbyactivity?: LobbyActivity;
@@ -312,6 +314,15 @@ export class BrainstormVoteEvent extends ActivityEvent {
   constructor(id: number) {
     super();
     this.extra_args = { brainstormidea: id };
+  }
+}
+
+export class ExternalGroupingSubmitGroupEvent extends ActivityEvent {
+  event_name = 'ExternalGroupingSubmitGroupEvent';
+
+  constructor(group_num: number, userId?: number) {
+    super();
+    this.extra_args = { benjiuser_id: userId, group_num: group_num };
   }
 }
 

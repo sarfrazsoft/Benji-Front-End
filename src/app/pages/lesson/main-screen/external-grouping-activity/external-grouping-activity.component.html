@@ -1,0 +1,55 @@
+<div class="mainscreen-activity ms-act--multi-column pair-activity">
+  <div
+    class="activity-instructions bg-off-white left-text"
+    fxFlex="33%"
+    fxLayoutAlign="center start"
+    fxLayout="column"
+  >
+    <div class="ms-emoji-container">
+      <app-b-twemoji emoji="👯"></app-b-twemoji>
+    </div>
+    <h1 class="primary-color pn-700">Break out</h1>
+
+    <p class="secondary-color-dark pn-500">
+      Let us know what breakout room you've been placed in.
+    </p>
+  </div>
+  <div
+    fxFlex="66%"
+    class="mainscreen-activity__column bg-secondary-color-lightest pair-activity__pairs"
+  >
+    <p class="ms-act__section-text secondary-color-dark">
+      Find your partner
+    </p>
+    <ul class="ul-find-partner">
+      <li
+        class="li-find-partner secondary-color-dark pn-600"
+        *ngFor="let user of allUsers; let i = index"
+        [ngClass]="{
+          'long-list': allUsers.length > 15
+        }"
+        fxLayoutAlign="start center"
+      >
+        <span> {{ user.first_name + user.last_name }} - &nbsp; </span>
+        <ng-select
+          class="external-grouping-controls"
+          [items]="breakoutRooms"
+          bindLabel="name"
+          placeholder="Unassigned"
+          bindValue="id"
+          (change)="assignRoom($event, user.id)"
+          [(ngModel)]="usersBreakoutRooms[i]"
+          appendTo="body"
+          [searchable]="false"
+        >
+        </ng-select>
+      </li>
+    </ul>
+    <benji-linear-timer
+      [timer]="act.grouping_countdown_timer"
+      #pairTimer
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+  </div>
+</div>

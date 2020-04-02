@@ -108,6 +108,18 @@ export interface PairGroupingActivity {
   usergroup_set: UserGroupUserSet[];
 }
 
+export interface ExternalGroupingActivity {
+  grouping_complete: boolean;
+  grouping_countdown_timer: Timer;
+  usergroup_set: UserGroupSet[];
+}
+
+export interface UserGroupSet {
+  id: number;
+  group_num: number;
+  usergroupuser_set: Array<{ id: number; user: User; found: boolean }>;
+}
+
 export interface TriadGroupingActivity {
   grouping_complete: boolean;
   grouping_countdown_timer: Timer;
