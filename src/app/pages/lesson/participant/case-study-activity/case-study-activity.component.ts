@@ -8,6 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   implements OnInit {
+  pitchDraftNotes = '';
   constructor() {
     super();
   }
@@ -25,4 +26,6 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
       'consider these details when you are working out your case study';
     return caseStudyDetails;
   }
+
+  locallySaveDraft(event) {}
 }
