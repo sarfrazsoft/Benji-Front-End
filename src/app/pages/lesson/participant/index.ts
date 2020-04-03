@@ -1,5 +1,6 @@
 import { BrainStormingComponents } from './brainstorming-activity';
 import { BuildPitchComponents } from './build-pitch-activity';
+import { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { ParticipantExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
@@ -46,5 +47,6 @@ export const ParticipantScreenComponents = [
   ParticipantTitleActivityComponent,
   ParticipantTriadGroupingActivityComponent,
   ParticipantVideoActivityComponent,
-  ParticipantGenericRoleplayActivityComponent
+  ParticipantGenericRoleplayActivityComponent,
+  ParticipantCaseStudyActivityComponent
 ];

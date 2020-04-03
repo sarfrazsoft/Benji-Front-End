@@ -103,7 +103,8 @@ benji-ms-generate-pitch-activity {
   }
 }
 
-benji-ps-generate-pitch-activity {
+benji-ps-generate-pitch-activity,
+benji-ps-case-study-activity {
   .heightAuto {
     height: auto;
   }
@@ -162,6 +163,19 @@ benji-ps-generate-pitch-activity {
       color: $secondary-color-light;
       font-size: 16px;
       margin-bottom: 10px;
+    }
+  }
+}
+
+benji-ps-case-study-activity {
+  .content {
+    .your-prompt {
+      .your-pitch {
+        font-size: 22px;
+        line-height: inherit;
+        padding: 20px 0px;
+        text-align: left;
+      }
     }
   }
 }

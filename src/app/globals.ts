@@ -13,6 +13,7 @@ export enum ActivityTypes {
   brainStorm = 'BrainstormActivity',
   pitchoMatic = 'PitchoMaticActivity',
   buildAPitch = 'BuildAPitchActivity',
+  caseStudy = 'CaseStudyActivity',
   externalGrouping = 'ExternalGroupingActivity',
   lobby = 'LobbyActivity',
   title = 'TitleActivity',
