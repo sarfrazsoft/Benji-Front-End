@@ -5,10 +5,11 @@
       <div class="title all-caps-title">
         <p class="secondary-color-dark pn-500">Role-play</p>
       </div>
-      <div class="instruction-columns flexer">
+      <div class="instruction-columns flexer" *ngIf="roles.length === 3">
         <div class="role" *ngFor="let role of roles; let i = index">
           <div class="emoji-container">
             <app-b-twemoji
+              *ngIf="role.image_url"
               [emoji]="emoji.getEmoji(role.image_url)"
             ></app-b-twemoji>
           </div>
@@ -21,8 +22,33 @@
           </p>
         </div>
       </div>
+      <div class="instruction-columns flexer" *ngIf="roles.length === 2">
+        <div class="role" *ngFor="let role of roles; let i = index">
+          <div class="emoji-container">
+            <app-b-twemoji
+              *ngIf="role.image_url"
+              [emoji]="emoji.getEmoji(role.image_url)"
+            ></app-b-twemoji>
+          </div>
+          <h3 class="secondary-color-dark pn-500">Partner #{{ i + 1 }}</h3>
+          <p class="primary-color-darkest pn-600">
+            {{ role.name }}
+          </p>
+          <p class="secondary-color-dark pn-500">
+            {{ role.short_instructions ? role.short_instructions : "" }}
+          </p>
+        </div>
+        <div class="role">
+          <app-radial-timer
+            [timer]="rplayTimer"
+            endStateText="Done!"
+            [endAudio]="'attention-seeker.mp3'"
+            [timerOffset]="avgServerTimeOffset"
+          ></app-radial-timer>
+        </div>
+      </div>
     </div>
-    <div class="linear-timer-container">
+    <div class="linear-timer-container" *ngIf="roles.length === 3">
       <benji-linear-timer
         [timer]="rplayTimer"
         [endAudio]="'attention-seeker.mp3'"
