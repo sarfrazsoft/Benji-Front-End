@@ -71,10 +71,14 @@ export class EmojiLookupService {
         return '🤯';
       case 'observer':
         return '👨‍💻';
+      case 'observerbrownskin':
+        return '👨🏽‍💻';
       case 'customer':
         return '🙅‍♂️';
       case 'sales':
         return '👩‍💼';
+      case 'darkskinofficeworker':
+        return '👩🏾‍💼';
       case 'videocamera':
         return '📽️';
       default:
