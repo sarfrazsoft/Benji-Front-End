@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmojiLookupService {
   constructor() {}
@@ -81,6 +81,8 @@ export class EmojiLookupService {
         return '👩🏾‍💼';
       case 'videocamera':
         return '📽️';
+      case 'lightbulb':
+        return '💡';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

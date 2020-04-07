@@ -18,6 +18,7 @@ export class MainScreenGenericRoleplayActivityComponent
   giveFeedback = false;
   rplayTimer: Timer;
   feedbackTimer: Timer;
+  group = [];
 
   constructor(
     private emoji: EmojiLookupService,
@@ -35,6 +36,11 @@ export class MainScreenGenericRoleplayActivityComponent
     // Don't reassign roles varialbe to prevent re-render of UI
     const act = this.activityState.genericroleplayactivity;
     this.roles = act.genericroleplayrole_set;
+
+    // get size of groups; size of groups is the number
+    // of roles that should be displayed on screen
+    this.group = act.groups[0].usergroupuser_set;
+    console.log(this.group);
   }
 
   ngOnChanges() {
