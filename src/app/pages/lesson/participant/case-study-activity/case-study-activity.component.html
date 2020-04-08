@@ -30,6 +30,8 @@
           cdkAutosizeMinRows="7"
           [(ngModel)]="pitchDraftNotes"
           (ngModelChange)="locallySaveDraft($event)"
+          (keyup)="typingStoped()"
+          (keydown)="typingStarted()"
         ></textarea>
       </div>
     </div>
