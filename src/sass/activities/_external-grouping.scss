@@ -1,10 +1,11 @@
 .ng-select.external-grouping-controls .ng-select-container,
 .ng-select.ps-external-grouping-controls .ng-select-container {
   color: $secondary-color-dark;
-  background-color: $secondary-color-lighter;
+  // background-color: $secondary-color-lighter;
   border-radius: 6px;
   border: 0px;
-  min-height: 30px;
+  font-size: 3vh;
+  min-height: 2vh;
   &.ng-has-value {
     color: $primary-color;
   }

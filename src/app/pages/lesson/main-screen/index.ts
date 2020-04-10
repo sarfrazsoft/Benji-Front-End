@@ -1,5 +1,6 @@
 import { MainScreenBrainstormingActivityComponent } from './brainstorming-activity/brainstorming-activity.component';
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
+import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { MainScreenExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
@@ -24,6 +25,7 @@ export { MainScreenLessonComponent };
 export const MainScreenComponents = [
   MainScreenBuildPitchActivityComponent,
   MainScreenBrainstormingActivityComponent,
+  MainScreenCaseStudyActivityComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,
   MainScreenFeedbackActivityComponent,
@@ -41,5 +43,5 @@ export const MainScreenComponents = [
   MainScreenTriadGroupingActivityComponent,
   MainScreenGenericRoleplayActivityComponent,
   MainScreenExternalGroupingActivityComponent,
-  MainScreenVideoActivityComponent
+  MainScreenVideoActivityComponent,
 ];

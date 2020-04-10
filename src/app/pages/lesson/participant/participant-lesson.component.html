@@ -9,13 +9,13 @@
   >
   </benji-ps-brainstorming-activity>
 
-  <!-- <benji-ps-lobby
+  <benji-ps-lobby
     *ngIf="getActivityType() === at.lobby"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
   >
-  </benji-ps-lobby> -->
+  </benji-ps-lobby>
 
   <!-- <benji-ps-reorder-activity
     *ngIf="getActivityType() === 'LobbyActivity'"
@@ -151,7 +151,7 @@
   ></benji-ps-external-grouping-activity>
 
   <benji-ps-case-study-activity
-    *ngIf="getActivityType() === at.lobby"
+    *ngIf="getActivityType() === at.caseStudy"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"

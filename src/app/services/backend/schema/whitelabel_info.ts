@@ -23,5 +23,6 @@ export interface PartnerInfo {
     rightLaunchArrow?: string;
     infoIcon?: string;
     checkIcon?: string;
+    joinLobbyUrl?: string;
   };
 }

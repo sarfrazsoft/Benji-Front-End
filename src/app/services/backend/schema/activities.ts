@@ -6,7 +6,7 @@ import {
   FeedbackQuestion,
   MCQQuestion,
   Timer,
-  TitleComponent
+  TitleComponent,
 } from './utils';
 
 export interface BaseActivity {
@@ -380,3 +380,21 @@ export interface RoleplayUserSet {
   found: boolean;
   user: User;
 }
+
+export interface CaseStudyActivity {
+  activity_seconds: number;
+  activity_countdown_timer: Timer;
+  groups: Array<UserGroupSet>;
+  casestudyuser_set: Array<CaseStudyUserSet>;
+  casestudyquestion_set: Array<{ id: number; question_text: string }>;
+}
+
+export interface CaseStudyUserSet {
+  benjiuser_id: number;
+  usergroupuser: number;
+  role: CaseStudyRoles;
+  is_done: boolean;
+  casestudyanswer_set: any;
+}
+
+export type CaseStudyRoles = 'Note Taker' | 'Participant';

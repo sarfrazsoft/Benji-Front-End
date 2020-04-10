@@ -8,13 +8,18 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   implements OnInit {
+  act;
   pitchDraftNotes = '';
   typingTimer;
+  questions;
   constructor() {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.act = this.activityState.casestudyactivity;
+    this.questions = this.activityState.casestudyactivity.casestudyquestion_set;
+  }
 
   getCaseStudyDetails() {
     const caseStudyDetails =
@@ -29,10 +34,10 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   }
 
   // on keyup, start the countdown
-  typingStoped() {
+  typingStoped(event, questionId) {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
-      this.doneTyping();
+      this.doneTyping(event.target.value, questionId);
     }, 3000);
   }
 
@@ -41,8 +46,24 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
     clearTimeout(this.typingTimer);
   }
 
-  doneTyping() {
-    console.log(this.pitchDraftNotes);
+  doneTyping(answerText, questionId) {
+    console.log(questionId, answerText);
+    // CaseStudySaveFormEvent
+
+    // const buildapitchsubmissionentry_set = [];
+    // this.builtPitch_set.forEach(p => {
+    //   if (p.value) {
+    //     const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(
+    //       p,
+    //       p.value
+    //     );
+    //     buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
+    //   }
+    // });
+
+    // this.sendMessage.emit(
+    //   new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set)
+    // );
   }
 
   locallySaveDraft(event) {}
