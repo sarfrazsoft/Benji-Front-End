@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
 
 import { MatDialog } from '@angular/material';
@@ -18,11 +18,12 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   selector: 'benji-ms-lobby',
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenLobbyComponent extends BaseActivityComponent
   implements OnInit, OnDestroy {
   startSessionLabel = '';
+  joinLobbyUrl = '';
   dialogRef;
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
@@ -38,10 +39,10 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
       .open(LowAttendanceDialogComponent, {
         data: {},
         disableClose: true,
-        panelClass: 'low-response-dialog'
+        panelClass: 'low-response-dialog',
       })
       .afterClosed()
-      .subscribe(res => {});
+      .subscribe((res) => {});
   }
 
   ngOnInit() {
@@ -49,6 +50,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.startSessionLabel = info.parameters.startSession;
+        this.joinLobbyUrl = info.parameters.joinLobbyUrl;
       }
     });
   }
