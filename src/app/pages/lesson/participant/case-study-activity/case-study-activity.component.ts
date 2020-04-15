@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
+import {
+  CaseStudyActivity,
+  CaseStudySaveFormEvent,
+  CaseStudySubmitEventAnswer,
+  CaseStudyTeamDoneEvent,
+} from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -7,18 +13,79 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./case-study-activity.component.scss'],
 })
 export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
-  implements OnInit {
-  act;
+  implements OnInit, OnChanges {
+  act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
-  questions;
+  questions = [];
   constructor() {
     super();
   }
 
   ngOnInit() {
     this.act = this.activityState.casestudyactivity;
-    this.questions = this.activityState.casestudyactivity.casestudyquestion_set;
+    const questionsTemp = this.activityState.casestudyactivity
+      .casestudyquestion_set;
+    questionsTemp.forEach((q, i) => {
+      this.questions.push({ ...q, answer: '' });
+    });
+
+    // this.getUserRole();
+  }
+
+  ngOnChanges() {
+    this.act = this.activityState.casestudyactivity;
+
+    const myNoteTaker = this.getMyNoteTaker();
+    console.log(myNoteTaker);
+
+    for (let i = 0; i < this.questions.length; i++) {
+      this.questions[i].answer = myNoteTaker.casestudyanswer_set[i].answer;
+    }
+  }
+
+  getMyNoteTaker() {
+    const userId = this.activityState.your_identity.id;
+    const myGroupFellows = this.getPeopleFromMyGroup();
+    console.log(myGroupFellows);
+    for (let i = 0; i < this.act.casestudyuser_set.length; i++) {
+      const casestudyuser = this.act.casestudyuser_set[i];
+      if (
+        myGroupFellows.includes(casestudyuser.benjiuser_id) &&
+        casestudyuser.role === 'Note Taker'
+      ) {
+        return casestudyuser;
+      }
+    }
+  }
+
+  getPeopleFromMyGroup() {
+    const userId = this.activityState.your_identity.id;
+    for (let i = 0; i < this.act.groups.length; i++) {
+      const group = this.act.groups[i];
+      for (let j = 0; j < group.usergroupuser_set.length; j++) {
+        const user = group.usergroupuser_set[j].user;
+        if (user.id === userId) {
+          return group.usergroupuser_set.map((obj) => {
+            return obj.user.id;
+          });
+        }
+      }
+    }
+  }
+
+  isUserNoteTaker() {
+    const userId = this.activityState.your_identity.id;
+    for (let i = 0; i < this.act.casestudyuser_set.length; i++) {
+      const user = this.act.casestudyuser_set[i];
+      if (userId === user.benjiuser_id) {
+        if (user.role === 'Note Taker') {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
   }
 
   getCaseStudyDetails() {
@@ -37,7 +104,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   typingStoped(event, questionId) {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
-      this.doneTyping(event.target.value, questionId);
+      this.doneTyping();
     }, 3000);
   }
 
@@ -46,24 +113,24 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
     clearTimeout(this.typingTimer);
   }
 
-  doneTyping(answerText, questionId) {
-    console.log(questionId, answerText);
-    // CaseStudySaveFormEvent
+  doneTyping() {
+    const casestudysubmissionentry_set = [];
+    this.questions.forEach((q) => {
+      console.log(q.answer);
+      const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(
+        q.id,
+        q.answer
+      );
+      casestudysubmissionentry_set.push(caseStudySubmitEventEntry);
+    });
 
-    // const buildapitchsubmissionentry_set = [];
-    // this.builtPitch_set.forEach(p => {
-    //   if (p.value) {
-    //     const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(
-    //       p,
-    //       p.value
-    //     );
-    //     buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
-    //   }
-    // });
+    this.sendMessage.emit(
+      new CaseStudySaveFormEvent(casestudysubmissionentry_set)
+    );
+  }
 
-    // this.sendMessage.emit(
-    //   new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set)
-    // );
+  submitCaseStudyDone() {
+    this.sendMessage.emit(new CaseStudyTeamDoneEvent());
   }
 
   locallySaveDraft(event) {}

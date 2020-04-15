@@ -162,3 +162,13 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+
+.indigo-launch-button {
+  &.gather-button {
+    width: auto;
+    padding-left: 4vh;
+    padding-right: 4vh;
+    height: 8.5vh;
+    font-size: 4vh;
+  }
+}

@@ -362,7 +362,21 @@ export class CaseStudySubmitEventAnswer {
   answer: string;
 
   constructor(qId, text) {
-    this.answer = qId;
+    this.casestudyquestion = qId;
     this.answer = text;
+  }
+}
+
+export class CaseStudyTeamDoneEvent extends ActivityEvent {
+  event_name = 'CaseStudyTeamDoneEvent';
+  constructor() {
+    super();
+  }
+}
+
+export class GatherActivityContinueEvent extends ActivityEvent {
+  event_name = 'GatherActivityContinueEvent';
+  constructor() {
+    super();
   }
 }

@@ -156,4 +156,11 @@
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
   ></benji-ps-case-study-activity>
+
+  <benji-ps-gather-activity
+    *ngIf="getActivityType() === at.gather"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  ></benji-ps-gather-activity>
 </div>

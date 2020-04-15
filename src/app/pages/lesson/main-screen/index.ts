@@ -5,6 +5,7 @@ import { MainScreenDiscussionActivityComponent } from './discussion-activity/dis
 import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { MainScreenExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
 import { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
+import { MainScreenGatherActivityComponent } from './gather-activity/gather-activity.component';
 import { MainScreenGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { MainScreenGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
 import { MainScreenHintActivityComponent } from './hint-activity/hint-activity.component';
@@ -44,4 +45,5 @@ export const MainScreenComponents = [
   MainScreenGenericRoleplayActivityComponent,
   MainScreenExternalGroupingActivityComponent,
   MainScreenVideoActivityComponent,
+  MainScreenGatherActivityComponent,
 ];
