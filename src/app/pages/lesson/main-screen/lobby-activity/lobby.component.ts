@@ -46,7 +46,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
-    this.sfxPlayer.nativeElement.play();
+    // this.sfxPlayer.nativeElement.play();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.startSessionLabel = info.parameters.startSession;
@@ -56,7 +56,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
   }
 
   ngOnDestroy() {
-    this.sfxPlayer.nativeElement.pause();
+    // this.sfxPlayer.nativeElement.pause();
   }
 
   kickOffLesson() {
