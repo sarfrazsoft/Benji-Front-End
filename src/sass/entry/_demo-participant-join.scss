@@ -20,6 +20,15 @@
     .participant-start__action-container button.b-standard-button {
       width: 100%;
     }
+
+    .already-member {
+      margin-top: 30px;
+      a {
+        padding-top: 5px;
+        display: block;
+        font-weight: 600;
+      }
+    }
   }
 
   @media screen and (min-width: 992px) {

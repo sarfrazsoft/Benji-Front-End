@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   MainScreenLessonComponent,
   ParticipantLessonComponent,
-  SingleUserComponent
+  SingleUserComponent,
 } from 'src/app/pages';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
@@ -13,55 +13,55 @@ import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/participant/login', pathMatch: 'full' },
   {
     path: 'landing',
     component: LandingComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'landing/:partner',
     component: LandingComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'user/lesson/:roomCode',
     component: SingleUserComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'participant/login',
     component: ParticipantLoginComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'participant/join',
     component: ParticipantJoinComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'participant/lesson/:roomCode',
     component: ParticipantLessonComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'dashboard',
@@ -70,9 +70,9 @@ const routes: Routes = [
     canLoad: [AuthGuard],
     canActivate: [AuthGuard],
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
-  }
+      labelInfo: WhiteLabelResolver,
+    },
+  },
 ];
 
 export const LayoutRoutes = RouterModule.forChild(routes);
