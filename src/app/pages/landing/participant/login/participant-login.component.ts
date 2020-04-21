@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import {
   AuthService,
   BackendRestService,
-  ContextService
+  ContextService,
 } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
@@ -12,7 +13,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
   selector: 'benji-participant-login',
   templateUrl: './participant-login.component.html',
   styleUrls: [],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ParticipantLoginComponent implements OnInit {
   // username: string;
@@ -27,7 +28,7 @@ export class ParticipantLoginComponent implements OnInit {
   constructor(
     private backend: BackendRestService,
     private auth: AuthService,
-    private router: Router,
+    public router: Router,
     private contextService: ContextService
   ) {}
 

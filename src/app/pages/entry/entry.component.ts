@@ -7,7 +7,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 @Component({
   selector: 'benji-entry',
   templateUrl: './entry.component.html',
-  styleUrls: ['./entry.component.scss']
+  styleUrls: ['./entry.component.scss'],
 })
 export class EntryComponent implements OnInit {
   selectedTab = 0;
