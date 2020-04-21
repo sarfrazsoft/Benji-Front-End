@@ -177,6 +177,7 @@ export interface DiscussionGroupMember {
 }
 
 export interface DiscussionGroup {
+  notes: Array<{ answer: string; question: string }>;
   selected_for_sharing: boolean;
   sharing_countdown_timer: Timer;
   discussiongroupmember_set: DiscussionGroupMember[];

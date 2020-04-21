@@ -8,7 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-generic-roleplay-activity',
   templateUrl: './generic-roleplay-activity.component.html',
-  styleUrls: ['./generic-roleplay-activity.component.scss']
+  styleUrls: ['./generic-roleplay-activity.component.scss'],
 })
 export class MainScreenGenericRoleplayActivityComponent
   extends BaseActivityComponent
@@ -39,8 +39,8 @@ export class MainScreenGenericRoleplayActivityComponent
 
     // get size of groups; size of groups is the number
     // of roles that should be displayed on screen
-    this.group = act.groups[0].usergroupuser_set;
-    console.log(this.group);
+    // this.group = act.groups[0].usergroupuser_set;
+    // console.log(this.group);
   }
 
   ngOnChanges() {
@@ -60,14 +60,14 @@ export class MainScreenGenericRoleplayActivityComponent
   getFbackSubmittedCount() {
     const users = this.activityState.genericroleplayactivity
       .genericroleplayuser_set;
-    const count = users.filter(user => user.feedback_submitted).length;
+    const count = users.filter((user) => user.feedback_submitted).length;
     return count;
   }
 
   getGroupUsersCount() {
     const roles = this.activityState.genericroleplayactivity
       .genericroleplayrole_set;
-    const count = roles.filter(role => role.feedbackquestions.length).length;
+    const count = roles.filter((role) => role.feedbackquestions.length).length;
     return count;
   }
 }

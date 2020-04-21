@@ -10,7 +10,7 @@ import { LayoutService } from './services/layout.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   constructor(
@@ -168,6 +168,9 @@ export class AppComponent implements OnInit {
         .mat-progress-spinner circle, .mat-spinner circle {
           stroke: ${info.parameters.primary};
           }
+        .bg-footer-color {
+          background-color: ${info.parameters.footerBackgroundColor}
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

@@ -26,13 +26,13 @@
         class="li-find-partner secondary-color-dark pn-600"
         *ngFor="let userGroup of groups; let i = index"
         [ngClass]="{
-          'primary-color-darkest': isGroupFound(userGroup),
+          'primary-color-darkest': isGroupDone(userGroup),
           'long-list': groups.length > 15
         }"
         fxLayoutAlign="start center"
       >
         <span> {{ getGroupText(userGroup) }} </span>
-        <mat-icon class="ready-icon" *ngIf="isGroupFound(userGroup)"
+        <mat-icon class="ready-icon" *ngIf="isGroupDone(userGroup)"
           >check</mat-icon
         >
       </li>

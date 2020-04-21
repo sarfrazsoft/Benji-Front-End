@@ -17,30 +17,44 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
-  questions = [];
+  questions: Array<{ id: number; question_text: string; answer: string }> = [];
+  isDone = false;
+  localStorageItemName = 'caseStudyNotes';
   constructor() {
     super();
   }
 
   ngOnInit() {
     this.act = this.activityState.casestudyactivity;
-    const questionsTemp = this.activityState.casestudyactivity
-      .casestudyquestion_set;
-    questionsTemp.forEach((q, i) => {
-      this.questions.push({ ...q, answer: '' });
-    });
-
-    // this.getUserRole();
   }
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
-
+    const questionsTemp = this.act.casestudyquestion_set;
+    this.questions = [];
+    questionsTemp.forEach((q, i) => {
+      this.questions.push({ ...q, answer: '' });
+    });
     const myNoteTaker = this.getMyNoteTaker();
-    console.log(myNoteTaker);
 
-    for (let i = 0; i < this.questions.length; i++) {
-      this.questions[i].answer = myNoteTaker.casestudyanswer_set[i].answer;
+    this.isDone = myNoteTaker.is_done;
+
+    // Populate the answers if available
+    if (localStorage.getItem(this.localStorageItemName)) {
+      this.questions = JSON.parse(
+        localStorage.getItem(this.localStorageItemName)
+      );
+      // for (let i = 0; i < this.questions.length; i++) {
+      //   if (myNoteTaker.casestudyanswer_set[i]) {
+      //     this.questions[i].answer = myNoteTaker.casestudyanswer_set[i].answer;
+      //   }
+      // }
+    } else {
+      for (let i = 0; i < this.questions.length; i++) {
+        if (myNoteTaker.casestudyanswer_set[i]) {
+          this.questions[i].answer = myNoteTaker.casestudyanswer_set[i].answer;
+        }
+      }
     }
   }
 
@@ -102,6 +116,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
 
   // on keyup, start the countdown
   typingStoped(event, questionId) {
+    localStorage.setItem('caseStudyNotes', JSON.stringify(this.questions));
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
       this.doneTyping();
@@ -113,7 +128,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
     clearTimeout(this.typingTimer);
   }
 
-  doneTyping() {
+  doneTyping(submitCaseStudyDone?) {
     const casestudysubmissionentry_set = [];
     this.questions.forEach((q) => {
       console.log(q.answer);
@@ -127,10 +142,14 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
     this.sendMessage.emit(
       new CaseStudySaveFormEvent(casestudysubmissionentry_set)
     );
+    localStorage.removeItem(this.localStorageItemName);
+    if (submitCaseStudyDone) {
+      submitCaseStudyDone();
+    }
   }
 
   submitCaseStudyDone() {
-    this.sendMessage.emit(new CaseStudyTeamDoneEvent());
+    this.doneTyping(() => this.sendMessage.emit(new CaseStudyTeamDoneEvent()));
   }
 
   locallySaveDraft(event) {}

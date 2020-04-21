@@ -47,6 +47,31 @@
       Share with the group
     </h3>
     <ng-container class="content">
+      <div class="content" *ngFor="let question of questions">
+        <div class="your-prompt">
+          <div class="your-pitch-label left-text">your prompt:</div>
+          <div
+            class="your-pitch bg-off-white"
+            innerHTML="{{ question.question }}"
+          ></div>
+          <div class="your-notes">
+            <div class="your-pitch-label left-text">your notes:</div>
+            <div class="draft-pitch">
+              <textarea
+                [disabled]="true"
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="7"
+                [(ngModel)]="question.answer"
+                (ngModelChange)="locallySaveDraft($event)"
+                (keyup)="typingStoped($event, question.id)"
+                (keydown)="typingStarted()"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="b-flat-card__action">
         <button
           class="b-standard-button bg-primary-color"
@@ -55,15 +80,17 @@
           <ng-container> Done </ng-container>
         </button>
       </div>
-      <benji-linear-timer
-        [timer]="
-          activityState.discussionactivity.currently_sharing_group
-            .sharing_countdown_timer
-        "
-        [timerOffset]="avgServerTimeOffset"
-      ></benji-linear-timer>
     </ng-container>
   </benji-ps-instruction-template>
+  <div class="mc-card__timer">
+    <benji-linear-timer
+      [timer]="
+        activityState.discussionactivity.currently_sharing_group
+          .sharing_countdown_timer
+      "
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+  </div>
 </ng-container>
 
 <!-- Listening Card -->
