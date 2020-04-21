@@ -1,0 +1,23 @@
+<div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+  <div class="twemoji-container">
+    <app-b-twemoji emoji="👋"></app-b-twemoji>
+  </div>
+  <div class="activity-title-container">
+    <h1 class="primary-color pn-700">
+      Welcome Back
+    </h1>
+  </div>
+  <div class="activity-title-description-container">
+    <p class="secondary-color-dark pn-500">
+      Get ready to share your thoughts with the group
+    </p>
+  </div>
+  <div fxLayoutAlign="center center">
+    <button
+      class="indigo-launch-button gather-button bg-primary-color-dark pn-700"
+      (click)="gatherActivityContinueEvent()"
+    >
+      Ready to share
+    </button>
+  </div>
+</div>

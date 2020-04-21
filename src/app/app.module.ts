@@ -26,10 +26,10 @@ import { AppComponent } from './app.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    LayoutModule
+    LayoutModule,
   ],
   providers: [...ServicesProviders],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

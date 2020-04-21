@@ -24,5 +24,6 @@ export interface PartnerInfo {
     infoIcon?: string;
     checkIcon?: string;
     joinLobbyUrl?: string;
+    footerBackgroundColor?: string;
   };
 }

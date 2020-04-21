@@ -156,6 +156,23 @@
       (sendMessage)="sendSocketMessage($event)"
     >
     </benji-ms-external-grouping-activity>
+
+    <benji-ms-case-study-activity
+      *ngIf="getActivityType() === at.caseStudy"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-case-study-activity>
+
+    <benji-ms-gather-activity
+      *ngIf="getActivityType() === at.gather"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-gather-activity>
+
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
   </div>
   <benji-main-screen-footer

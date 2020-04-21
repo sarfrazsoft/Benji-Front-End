@@ -5,6 +5,7 @@ import { ParticipantDiscussionActivityComponent } from './discussion-activity/di
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { ParticipantExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
 import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
+import { ParticiapantGatherActivityComponent } from './gather-activity/gather-activity.component';
 import { ParticipantGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { ParticipantGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
 import { ParticipantHintActivityComponent } from './hint-activity/hint-activity.component';
@@ -31,6 +32,7 @@ export const ParticipantScreenComponents = [
   ...BrainStormingComponents,
   ...ReorderComponents,
   ...ParticipantLobbyComponents,
+  ParticiapantGatherActivityComponent,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantExternalGroupingActivityComponent,
@@ -48,5 +50,5 @@ export const ParticipantScreenComponents = [
   ParticipantTriadGroupingActivityComponent,
   ParticipantVideoActivityComponent,
   ParticipantGenericRoleplayActivityComponent,
-  ParticipantCaseStudyActivityComponent
+  ParticipantCaseStudyActivityComponent,
 ];

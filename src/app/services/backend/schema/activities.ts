@@ -6,7 +6,7 @@ import {
   FeedbackQuestion,
   MCQQuestion,
   Timer,
-  TitleComponent
+  TitleComponent,
 } from './utils';
 
 export interface BaseActivity {
@@ -177,6 +177,7 @@ export interface DiscussionGroupMember {
 }
 
 export interface DiscussionGroup {
+  notes: Array<{ answer: string; question: string }>;
   selected_for_sharing: boolean;
   sharing_countdown_timer: Timer;
   discussiongroupmember_set: DiscussionGroupMember[];
@@ -380,3 +381,21 @@ export interface RoleplayUserSet {
   found: boolean;
   user: User;
 }
+
+export interface CaseStudyActivity {
+  activity_seconds: number;
+  activity_countdown_timer: Timer;
+  groups: Array<UserGroupSet>;
+  casestudyuser_set: Array<CaseStudyUserSet>;
+  casestudyquestion_set: Array<{ id: number; question_text: string }>;
+}
+
+export interface CaseStudyUserSet {
+  benjiuser_id: number;
+  usergroupuser: number;
+  role: CaseStudyRoles;
+  is_done: boolean;
+  casestudyanswer_set: any;
+}
+
+export type CaseStudyRoles = 'Note Taker' | 'Participant';

@@ -8,6 +8,7 @@ import { ContextService } from './context.service';
 
 @Injectable()
 export class WhiteLabelResolver implements Resolve<any> {
+  requestSent = false;
   constructor(
     private router: Router,
     private httpClient: HttpClient,
@@ -80,25 +81,25 @@ export class WhiteLabelResolver implements Resolve<any> {
             this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
           }
         );
-        this.contextService.user$.subscribe(user => {
-          if (user && user.organization) {
+        this.contextService.user$.subscribe((user) => {
+          if (user && user.organization && !this.requestSent) {
             const orgId =
               typeof user.organization === 'object'
                 ? user.organization.id
                 : user.organization;
-
+            this.requestSent = true;
             this.restService.get_white_label_details(orgId).subscribe(
               (data: any) => {
                 this.contextService.partnerInfo = data;
               },
-              error => {
-                console.log('user not found');
+              (error) => {
+                console.log('users org white label details not found');
                 this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
               }
             );
           } else {
             if (user !== null) {
-              console.log('user not found');
+              console.log('user not null');
               // this.applyBenjiTheme();
               this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
             }

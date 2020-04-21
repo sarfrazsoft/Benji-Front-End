@@ -104,7 +104,8 @@ benji-ms-generate-pitch-activity {
 }
 
 benji-ps-generate-pitch-activity,
-benji-ps-case-study-activity {
+benji-ps-case-study-activity,
+benji-ps-discussion-activity {
   .heightAuto {
     height: auto;
   }
@@ -135,14 +136,15 @@ benji-ps-case-study-activity {
       .your-pitch {
         font-size: 26px;
         line-height: 1.5;
-        padding: 20px 0px;
+        padding: 20px 7px;
       }
     }
 
     .your-notes {
+      margin-top: 20px;
       textarea,
       .draft-pitch-finalized {
-        font-size: 20px;
+        font-size: 22px;
         width: 100%;
         margin-bottom: 30px;
         color: $secondary-color-dark;
@@ -167,13 +169,14 @@ benji-ps-case-study-activity {
   }
 }
 
-benji-ps-case-study-activity {
+benji-ps-case-study-activity,
+benji-ps-discussion-activity {
   .content {
     .your-prompt {
       .your-pitch {
         font-size: 22px;
         line-height: inherit;
-        padding: 20px 0px;
+        padding: 20px 7px;
         text-align: left;
       }
     }

@@ -11,6 +11,7 @@ export const wsRoot = socket_protocl + '://' + backend;
 
 export enum ActivityTypes {
   brainStorm = 'BrainstormActivity',
+  gather = 'GatherActivity',
   pitchoMatic = 'PitchoMaticActivity',
   buildAPitch = 'BuildAPitchActivity',
   caseStudy = 'CaseStudyActivity',
@@ -28,11 +29,43 @@ export enum ActivityTypes {
   feedback = 'FeedbackActivity',
   hintWord = 'HintWordActivity',
   genericRoleplay = 'GenericRoleplayActivity',
-  triadGrouping = 'TriadGroupingActivity'
+  triadGrouping = 'TriadGroupingActivity',
 }
 // export type MeasurementTimeframe = 'alltime' | 'year' | 'month' | 'week' | 'day';
 
 export const DefaultwhiteLabelInfo = {
+  // name: 'Refound',
+  // welcome_text: 'Welcome to the Accountability Dial!',
+  // link: 'http://Refound.com',
+  // logo: './assets/img/refound_logo.png',
+  // favicon: './assets/img/refound_favicon.png',
+  // parameters: {
+  //   lightLogo: './assets/img/refound_logo_white.png',
+  //   darkLogo: './assets/img/refound_logo.png',
+  //   welcomeDescription: 'Learn more about the Accountability Dial',
+  //   primary_lighter: '#2B2670',
+  //   primary_light: '#2B2670',
+  //   primary: '#2B2670',
+  //   primary_dark: '#2B2670',
+  //   primary_darker: '#2B2670',
+  //   primary_darkest: '#2B2670',
+  //   tabTitle: 'The Accountability Dial',
+  //   partnerName: 'Benji',
+  //   startSession: 'Start Session',
+  //   launchSession: 'Launch Session',
+  //   joinArrow: './assets/img/joinlaunch_muralys.png',
+  //   rightCaret: './assets/img/right_caret_muralys.png',
+  //   rightLaunchArrow: './assets/img/launch_singlearrow_muralys.png',
+  //   infoIcon: './assets/img/info_icon.png',
+  //   checkIcon: './assets/img/check_icon_muralys.png',
+  //   joinLobbyUrl: 'join.refound.com',
+  //   // primary_lighter: '#f8b0ac',
+  //   // primary_light: '#fa8b85',
+  //   // primary: '#fd4b42',
+  //   // primary_dark: '#fd261b',
+  //   // primary_darker: '#c91006',
+  //   // primary_darkest: '#830700'
+  // },
   name: 'Benji',
   welcome_text: 'Welcome to Benji',
   link: 'https://wwww.benji.com',
@@ -56,14 +89,16 @@ export const DefaultwhiteLabelInfo = {
     rightCaret: './assets/img/right_caret.png',
     rightLaunchArrow: './assets/img/launch_singlearrow.png',
     infoIcon: './assets/img/info_icon.png',
-    checkIcon: './assets/img/check_icon.png'
+    checkIcon: './assets/img/check_icon.png',
+    joinLobbyUrl: 'join.mybenji.com',
+    footerBackgroundColor: '#00178a',
     // primary_lighter: '#f8b0ac',
     // primary_light: '#fa8b85',
     // primary: '#fd4b42',
     // primary_dark: '#fd261b',
     // primary_darker: '#c91006',
     // primary_darkest: '#830700'
-  }
+  },
 };
 
 export const DefaultwhiteLabelInfo1 = {
@@ -71,7 +106,7 @@ export const DefaultwhiteLabelInfo1 = {
   welcome_text: 'The Maestro Mindset!',
   link: 'https://muralys.com/',
   logo: './assets/img/muraly_logo.png',
-  favicon: './assets/img/muraly_favicon.png',
+  favicon: './assets/img/refound_favicon.png',
   parameters: {
     lightLogo: './assets/img/muraly_logo_white.png',
     darkLogo: './assets/img/muraly_logo.png',
@@ -89,14 +124,16 @@ export const DefaultwhiteLabelInfo1 = {
     launchSession: 'Launch Session',
     joinArrow: './assets/img/joinlaunch_muralys.png',
     rightCaret: './assets/img/right_caret_muralys.png',
-    rightLaunchArrow: './assets/img/info_icon_muralys.png',
+    rightLaunchArrow: './assets/img/launch_singlearrow_muralys.png',
     infoIcon: './assets/img/info_icon.png',
-    checkIcon: './assets/img/check_icon_muralys.png'
+    checkIcon: './assets/img/check_icon_muralys.png',
+    joinLobbyUrl: 'join.muralys.com',
+    footerBackgroundColor: '#004F71',
     // primary_lighter: '#f8b0ac',
     // primary_light: '#fa8b85',
     // primary: '#fd4b42',
     // primary_dark: '#fd261b',
     // primary_darker: '#c91006',
     // primary_darkest: '#830700'
-  }
+  },
 };

@@ -2,6 +2,7 @@ import {
   BaseActivity,
   BrainstormActivity,
   BuildAPitchActivity,
+  CaseStudyActivity,
   DiscussionActivity,
   ExternalGroupingActivity,
   FeedbackActivity,
@@ -18,7 +19,7 @@ import {
   TriadGroupingActivity,
   VideoActivity,
   WhereDoYouStandActivity,
-  WhereDoYouStandChoice
+  WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
@@ -26,7 +27,7 @@ import {
   BuildAPitchBlank,
   FeedbackQuestion,
   MCQChoice,
-  MCQQuestion
+  MCQQuestion,
 } from './utils';
 
 export interface UpdateMessage {
@@ -35,6 +36,7 @@ export interface UpdateMessage {
   base_activity: BaseActivity;
   brainstormactivity: BrainstormActivity;
   buildapitchactivity: BuildAPitchActivity;
+  casestudyactivity: CaseStudyActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
   pitchomaticactivity: PitchoMaticActivity;
   activity_type: string;
@@ -221,7 +223,7 @@ export class FeedbackSubmitEvent extends ActivityEvent {
   constructor(feedbacksubmiteventanswer_set: FeedbackSubmitEventAnswer[]) {
     super();
     this.extra_args = {
-      feedbacksubmiteventanswer_set: feedbacksubmiteventanswer_set
+      feedbacksubmiteventanswer_set: feedbacksubmiteventanswer_set,
     };
   }
 }
@@ -244,7 +246,7 @@ export class BuildAPitchSubmitPitchEvent extends ActivityEvent {
   ) {
     super();
     this.extra_args = {
-      buildapitchsubmissionentry_set: buildapitchsubmissionentry_set
+      buildapitchsubmissionentry_set: buildapitchsubmissionentry_set,
     };
   }
 }
@@ -285,7 +287,7 @@ export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
   constructor(pitchfeedbacksubmiteventanswer_set: FeedbackSubmitEventAnswer[]) {
     super();
     this.extra_args = {
-      pitchfeedbacksubmiteventanswer_set: pitchfeedbacksubmiteventanswer_set
+      pitchfeedbacksubmiteventanswer_set: pitchfeedbacksubmiteventanswer_set,
     };
   }
 }
@@ -340,7 +342,41 @@ export class GenericRoleplayUserFeedbackEvent extends ActivityEvent {
   ) {
     super();
     this.extra_args = {
-      genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set
+      genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set,
     };
+  }
+}
+
+export class CaseStudySaveFormEvent extends ActivityEvent {
+  event_name = 'CaseStudySaveFormEvent';
+  constructor(caseStudySubmitEventAnswer_set: CaseStudySubmitEventAnswer[]) {
+    super();
+    this.extra_args = {
+      casestudyeventanswer_set: caseStudySubmitEventAnswer_set,
+    };
+  }
+}
+
+export class CaseStudySubmitEventAnswer {
+  casestudyquestion: number;
+  answer: string;
+
+  constructor(qId, text) {
+    this.casestudyquestion = qId;
+    this.answer = text;
+  }
+}
+
+export class CaseStudyTeamDoneEvent extends ActivityEvent {
+  event_name = 'CaseStudyTeamDoneEvent';
+  constructor() {
+    super();
+  }
+}
+
+export class GatherActivityContinueEvent extends ActivityEvent {
+  event_name = 'GatherActivityContinueEvent';
+  constructor() {
+    super();
   }
 }
