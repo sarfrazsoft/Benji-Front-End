@@ -1,70 +1,152 @@
 <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center">
-  <div
-    *ngIf="!state.standing_complete && !state.preference_complete"
-    class="single-column-activity"
-  >
-    <div
-      class="question-emojis"
-      fxLayout="row"
-      fxLayoutAlign="center center"
-      fxLayoutGap="3vw"
-    >
-      <div>
-        <div
-          class="twemoji-container"
-          *ngIf="isEmoji(state.left_choice.choice_img_url)"
-        >
-          <app-b-twemoji
-            [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-          ></app-b-twemoji>
-        </div>
-      </div>
-      <div>
-        <div
-          class="twemoji-container"
-          *ngIf="isEmoji(state.right_choice.choice_img_url)"
-        >
-          <app-b-twemoji
-            [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-          ></app-b-twemoji>
-        </div>
-      </div>
-    </div>
-    <div class="activity-question-title-container">
-      <h1 *ngIf="!state.prediction_complete" class="primary-color-darkest pn-700 question">
-        Question 1:
-      </h1>
-      <h1 *ngIf="state.prediction_complete" class="primary-color-darkest pn-700 question">
-        Question 2:
-      </h1>
-    </div>
-    <div class="activity-question-description-container">
-      <p
-        *ngIf="!state.prediction_complete"
-        class="secondary-color-dark pn-500"
-        [innerHTML]="state.prediction_text"
-      ></p>
+  <ng-container *ngIf="!state.standing_complete && !state.preference_complete">
+    <!-- prediction -->
 
-      <p
-        *ngIf="state.prediction_complete"
-        class="secondary-color-dark pn-500"
-        [innerHTML]="state.preference_text"
-      ></p>
-    </div>
-    <div class="forms-submitted primary-color-darkest pn-600">
-      <ng-container *ngIf="!state.prediction_complete">
-        {{ state.user_predictions.length }}/{{
-          activityState.lesson_run.joined_users.length
-        }}
+    <ng-container *ngIf="!state.prediction_complete">
+      <div class="single-column-activity">
+        <div
+          class="question-emojis"
+          fxLayout="row"
+          fxLayoutAlign="center center"
+          fxLayoutGap="3vw"
+        >
+          <div>
+            <div
+              class="twemoji-container"
+              *ngIf="isEmoji(state.left_choice.choice_img_url)"
+            >
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+              ></app-b-twemoji>
+            </div>
+          </div>
+          <div>
+            <div
+              class="twemoji-container"
+              *ngIf="isEmoji(state.right_choice.choice_img_url)"
+            >
+              <app-b-twemoji
+                [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+              ></app-b-twemoji>
+            </div>
+          </div>
+        </div>
+        <div class="activity-question-title-container">
+          <h1 class="primary-color-darkest pn-700 question">
+            Question 1:
+          </h1>
+        </div>
+        <div class="activity-question-description-container">
+          <p
+            class="secondary-color-dark pn-500"
+            [innerHTML]="state.prediction_text"
+          ></p>
+        </div>
+        <div class="forms-submitted primary-color-darkest pn-600">
+          {{ state.user_predictions.length }}/{{
+            activityState.lesson_run.joined_users.length
+          }}
+          answers submitted
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- preference -->
+    <ng-container *ngIf="state.prediction_complete">
+      <ng-container *ngIf="!isRemoteSession">
+        <div class="single-column-activity">
+          <div
+            class="question-emojis"
+            fxLayout="row"
+            fxLayoutAlign="center center"
+            fxLayoutGap="3vw"
+          >
+            <div>
+              <div
+                class="twemoji-container"
+                *ngIf="isEmoji(state.left_choice.choice_img_url)"
+              >
+                <app-b-twemoji
+                  [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
+                ></app-b-twemoji>
+              </div>
+            </div>
+            <div>
+              <div
+                class="twemoji-container"
+                *ngIf="isEmoji(state.right_choice.choice_img_url)"
+              >
+                <app-b-twemoji
+                  [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
+                ></app-b-twemoji>
+              </div>
+            </div>
+          </div>
+          <div class="activity-question-title-container">
+            <h1 class="primary-color-darkest pn-700 question">
+              Question 2:
+            </h1>
+          </div>
+          <div class="activity-question-description-container">
+            <p
+              class="secondary-color-dark pn-500"
+              [innerHTML]="state.preference_text"
+            ></p>
+          </div>
+          <div class="forms-submitted primary-color-darkest pn-600">
+            {{ state.user_preferences.length }}/{{
+              activityState.lesson_run.joined_users.length
+            }}
+            answers submitted
+          </div>
+        </div>
       </ng-container>
-      <ng-container *ngIf="state.prediction_complete">
-        {{ state.user_preferences.length }}/{{
-          activityState.lesson_run.joined_users.length
-        }}
+
+      <ng-container *ngIf="isRemoteSession">
+        <div
+          class="mainscreen-activity ms-act--multi-column pair-activity"
+          style="width: 100%;"
+        >
+          <div
+            class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
+          >
+            <p class="ms-act__section-text secondary-color-dark">
+              {{ state.left_choice.preference_text }}
+            </p>
+            <ul class="ul-find-partner">
+              <li
+                class="li-find-partner primary-color-darkest pn-600"
+                *ngFor="let user of leftChoiceUsers"
+                [ngClass]="{
+                  'long-list': leftChoiceUsers.length > 10
+                }"
+              >
+                {{ user.first_name }}
+              </li>
+            </ul>
+          </div>
+          <div
+            class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
+          >
+            <p class="ms-act__section-text secondary-color-dark">
+              {{ state.right_choice.preference_text }}
+            </p>
+            <ul class="ul-find-partner">
+              <li
+                class="li-find-partner primary-color-darkest pn-600"
+                *ngFor="let user of rightChoiceUsers"
+                [ngClass]="{
+                  'long-list': rightChoiceUsers.length > 10
+                }"
+              >
+                {{ user.first_name }}
+              </li>
+            </ul>
+          </div>
+        </div>
       </ng-container>
-      answers submitted
-    </div>
-  </div>
+    </ng-container>
+  </ng-container>
 
   <div
     *ngIf="

@@ -5,14 +5,15 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
 import {
   Timer,
+  User,
   WhereDoYouStandActivity,
-  WhereDoYouStandChoice
+  WhereDoYouStandChoice,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { LowResponseDialogComponent } from '../../shared/dialogs';
@@ -20,13 +21,16 @@ import { LowResponseDialogComponent } from '../../shared/dialogs';
 @Component({
   selector: 'benji-ms-either-or-activity',
   templateUrl: './either-or-activity.component.html',
-  styleUrls: ['./either-or-activity.component.scss']
+  styleUrls: ['./either-or-activity.component.scss'],
 })
 export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   state: WhereDoYouStandActivity;
   hideResultEmoji = false;
   dialogRef;
+  rightChoiceUsers: Array<User> = [];
+  leftChoiceUsers: Array<User> = [];
+  isRemoteSession = true;
   @ViewChild('timer') timer;
 
   @HostListener('window:resize', ['$event'])
@@ -61,14 +65,23 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
       .open(LowResponseDialogComponent, {
         data: { timer: timer },
         disableClose: true,
-        panelClass: 'low-response-dialog'
+        panelClass: 'low-response-dialog',
       })
       .afterClosed()
-      .subscribe(res => {});
+      .subscribe((res) => {});
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.state = this.activityState.wheredoyoustandactivity;
+    this.leftChoiceUsers = [];
+    this.rightChoiceUsers = [];
+    this.state.user_preferences.forEach((p) => {
+      if (p.wheredoyoustandchoice.id === this.state.left_choice.id) {
+        this.leftChoiceUsers.push(p.user);
+      } else {
+        this.rightChoiceUsers.push(p.user);
+      }
+    });
     if (
       this.state.prediction_extra_countdown_timer &&
       this.state.prediction_extra_countdown_timer.status !== 'ended' &&
@@ -126,7 +139,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
 
     const groupPrediction = Math.max.apply(
       Math,
-      this.state.choice_stats.map(function(o) {
+      this.state.choice_stats.map(function (o) {
         return o.num_predictions;
       })
     );
@@ -143,7 +156,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
 
     const groupPreference = Math.max.apply(
       Math,
-      this.state.choice_stats.map(function(o) {
+      this.state.choice_stats.map(function (o) {
         return o.num_preferences;
       })
     );
