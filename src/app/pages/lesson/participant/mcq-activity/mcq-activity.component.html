@@ -43,7 +43,7 @@
     <ng-container
       *ngIf="selectedAnswer !== undefined && selectedAnswer.is_correct"
     >
-      <div class="b-flat-card__twemoji">
+      <div class="twemoji">
         <app-b-twemoji emoji="🎉"></app-b-twemoji>
       </div>
       <h3 class="pn-700 primary-color-darkest">Correct!</h3>
@@ -52,7 +52,7 @@
     <ng-container
       *ngIf="selectedAnswer === undefined || !selectedAnswer.is_correct"
     >
-      <div class="b-flat-card__twemoji">
+      <div class="twemoji">
         <app-b-twemoji emoji="🙊"></app-b-twemoji>
         <h3 class="pn-700 primary-color-darkest">Oops!</h3>
       </div>
