@@ -35,7 +35,9 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
       (a, b) => a.id - b.id
     );
     const act = this.activityState.mcqactivity;
-    this.title = act.titlecomponent.title;
+    if (act.titlecomponent) {
+      this.title = act.titlecomponent.title;
+    }
   }
 
   ngOnChanges() {
