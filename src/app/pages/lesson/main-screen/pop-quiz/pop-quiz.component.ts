@@ -1,14 +1,14 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import {
   MCQChoiceSet,
-  MCQSubmitAnswerEvent
+  MCQSubmitAnswerEvent,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ms-pop-quiz',
   templateUrl: './pop-quiz.component.html',
-  styleUrls: ['./pop-quiz.component.scss']
+  styleUrls: ['./pop-quiz.component.scss'],
 })
 export class MainScreenPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
@@ -16,6 +16,7 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   showLeaderboard = false;
   leaderboard = [];
   revealAnswers = false;
+  title = 'Pop Quiz!';
   // leaderboard = [
   //   { name: 'Senpai', score: 9 },
   //   { name: 'Shikamaru', score: 7 },
@@ -33,6 +34,8 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
     this.activityState.mcqactivity.question.mcqchoice_set.sort(
       (a, b) => a.id - b.id
     );
+    const act = this.activityState.mcqactivity;
+    this.title = act.titlecomponent.title;
   }
 
   ngOnChanges() {
@@ -73,7 +76,7 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
 
   getUserName(id) {
     const ju = this.activityState.lesson_run.joined_users;
-    const user = ju.find(u => u.id === id);
+    const user = ju.find((u) => u.id === id);
     if (user) {
       return user.first_name;
     } else {

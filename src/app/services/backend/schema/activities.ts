@@ -37,6 +37,7 @@ export interface MCQActivity {
   question_timer: Timer;
   answered_users: User[];
   all_users_answered: boolean;
+  titlecomponent: TitleComponent;
   quiz_leaderboard: Array<{ id: number; score: number }>;
 }
 
