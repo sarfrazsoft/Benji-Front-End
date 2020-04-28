@@ -13,17 +13,20 @@
 
   .welcome-heading {
     color: #fff;
-    h1 {
-      font-family: $pn-regular;
-      font-size: 11vh;
-      line-height: normal;
-    }
-    span {
-      font-size: 3vh;
-      line-height: normal;
-      a {
-        color: #fff;
-        text-decoration: none;
+    div {
+      padding-right: 30px;
+      h1 {
+        font-family: $pn-regular;
+        font-size: 11vh;
+        line-height: normal;
+      }
+      span {
+        font-size: 3vh;
+        line-height: normal;
+        a {
+          color: #fff;
+          text-decoration: none;
+        }
       }
     }
   }
