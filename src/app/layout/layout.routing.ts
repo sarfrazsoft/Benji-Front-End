@@ -5,6 +5,7 @@ import {
   ParticipantLessonComponent,
   SingleUserComponent,
 } from 'src/app/pages';
+import { IcebreakerComponent } from '../pages/landing/icebreaker/icebreaker.component';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/landing/participant/login/participant-login.component';
@@ -17,6 +18,13 @@ const routes: Routes = [
   {
     path: 'landing',
     component: LandingComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver,
+    },
+  },
+  {
+    path: 'icebreaker',
+    component: IcebreakerComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },

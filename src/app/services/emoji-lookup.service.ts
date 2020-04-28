@@ -83,6 +83,28 @@ export class EmojiLookupService {
         return '📽️';
       case 'lightbulb':
         return '💡';
+      case 'cowboy':
+        return '🤠';
+      case 'billiards':
+        return '🎱';
+      case 'hearteyes':
+        return '😍';
+      case 'sunglasses':
+        return '😎';
+      case 'confusedface':
+        return '😕';
+      case 'brain':
+        return '🧠';
+      case 'nerdface':
+        return '🤓';
+      case 'pausebutton':
+        return '⏸️';
+      case 'fastreversebutton':
+        return '⏪';
+      case 'oldmandarkskin':
+        return '👴🏿';
+      case 'babylightskin':
+        return '👶🏻';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }

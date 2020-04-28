@@ -1,5 +1,6 @@
 export * from './layout.component';
 
+import { IcebreakerComponent } from '../pages/landing/icebreaker/icebreaker.component';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { LayoutComponent } from './layout.component';
 import { SidenavItemComponent } from './sidenav/sidenav-item/sidenav-item.component';
@@ -25,7 +26,7 @@ import {
   LowResponseDialogComponent,
   MainScreenComponents,
   ParticipantScreenComponents,
-  SingleUserScreenComponents
+  SingleUserScreenComponents,
 } from '../index';
 
 export const LayoutDeclarations = [
@@ -36,6 +37,7 @@ export const LayoutDeclarations = [
   LowResponseDialogComponent,
   AnimatedCheckmarkButtonComponent,
   BTwemojiComponent,
+  IcebreakerComponent,
   LandingComponent,
   LayoutComponent,
   LinearTimerComponent,
@@ -50,10 +52,10 @@ export const LayoutDeclarations = [
   RadialTimerComponent,
   ToolbarComponent,
   SidenavComponent,
-  SidenavItemComponent
+  SidenavItemComponent,
 ];
 
 export const EntryComponents = [
   LowAttendanceDialogComponent,
-  LowResponseDialogComponent
+  LowResponseDialogComponent,
 ];

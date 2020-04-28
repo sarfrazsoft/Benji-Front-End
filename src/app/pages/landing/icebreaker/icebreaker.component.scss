@@ -1,0 +1,62 @@
+@import "variables";
+
+.lesson-landing {
+  height: 100vh;
+  .lesson-landing__flexer,
+  .lesson-landing__content-container,
+  .lesson-landing__lifestyle-photo {
+    height: inherit;
+  }
+  .lesson-landing__flexer {
+    width: 100%;
+  }
+  .lesson-landing__content-container {
+    .logo {
+      max-width: 230px;
+    }
+    width: 66.66%;
+    position: relative;
+    .lesson-landing__width-container {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 35vw;
+      left: -12vw;
+      right: 0;
+      margin: auto;
+    }
+    img {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+    }
+    h1 {
+      font-size: 12vh;
+      color: #fff;
+      line-height: normal;
+    }
+    p {
+      font-size: 4vh;
+      color: #fff;
+      line-height: normal;
+    }
+    .lesson-launch-button {
+      button:first-child {
+        margin-bottom: 50px;
+      }
+      position: absolute;
+      right: -23%;
+      transform: translateY(-50%);
+      top: 50%;
+      @media #{$fourK-display-and-up} {
+        right: -600px;
+      }
+    }
+  }
+  .lesson-landing__lifestyle-photo {
+    width: 33.333%;
+    background-image: url("../../../../assets/img/Desk_lightblue.jpg");
+    background-size: cover;
+    background-position-x: 100%;
+  }
+}
