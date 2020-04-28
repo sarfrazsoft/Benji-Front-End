@@ -90,7 +90,7 @@ export const DefaultwhiteLabelInfo = {
     rightLaunchArrow: './assets/img/launch_singlearrow.png',
     infoIcon: './assets/img/info_icon.png',
     checkIcon: './assets/img/check_icon.png',
-    joinLobbyUrl: 'join.mybenji.com',
+    joinLobbyUrl: 'app.mybenji.com',
     footerBackgroundColor: '#00178a',
     // primary_lighter: '#f8b0ac',
     // primary_light: '#fa8b85',
