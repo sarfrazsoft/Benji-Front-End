@@ -4,14 +4,14 @@ import { ActivityTypes } from 'src/app/globals';
 import {
   BackendRestService,
   BackendSocketService,
-  ContextService
+  ContextService,
 } from 'src/app/services';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
   selector: 'benji-main-screen-lesson',
   templateUrl: './main-screen-lesson.component.html',
-  styleUrls: ['./main-screen-lesson.component.scss']
+  styleUrls: ['./main-screen-lesson.component.scss'],
 })
 export class MainScreenLessonComponent extends BaseLessonComponent
   implements OnInit {
@@ -33,6 +33,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     this.at.mcqResults,
     this.at.discussion,
     this.at.genericRoleplay,
-    this.at.externalGrouping
+    this.at.externalGrouping,
+    this.at.whereDoYouStand,
   ];
 }
