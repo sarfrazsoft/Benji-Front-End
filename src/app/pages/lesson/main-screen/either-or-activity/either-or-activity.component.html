@@ -118,7 +118,7 @@
                 class="li-find-partner primary-color-darkest pn-600"
                 *ngFor="let user of leftChoiceUsers"
                 [ngClass]="{
-                  'long-list': leftChoiceUsers.length > 10
+                  'long-list': leftChoiceUsers.length > 30
                 }"
               >
                 {{ user.first_name }}
@@ -136,7 +136,7 @@
                 class="li-find-partner primary-color-darkest pn-600"
                 *ngFor="let user of rightChoiceUsers"
                 [ngClass]="{
-                  'long-list': rightChoiceUsers.length > 10
+                  'long-list': rightChoiceUsers.length > 30
                 }"
               >
                 {{ user.first_name }}
