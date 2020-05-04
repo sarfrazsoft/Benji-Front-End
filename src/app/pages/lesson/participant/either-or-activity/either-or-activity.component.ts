@@ -2,22 +2,23 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 import {
   BackendRestService,
+  ContextService,
   EitherOrActivityService,
-  EmojiLookupService
+  EmojiLookupService,
 } from 'src/app/services';
 import {
   User,
   WhereDoYouStandActivity,
   WhereDoYouStandChoice,
   WhereDoYouStandSubmitPredictionEvent,
-  WhereDoYouStandSubmitPreferenceEvent
+  WhereDoYouStandSubmitPreferenceEvent,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-either-or-activity',
   templateUrl: './either-or-activity.component.html',
-  styleUrls: ['./either-or-activity.component.scss']
+  styleUrls: ['./either-or-activity.component.scss'],
 })
 export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
@@ -30,7 +31,8 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
   constructor(
     private emoji: EmojiLookupService,
     private restService: BackendRestService,
-    private eitherOrActivityService: EitherOrActivityService
+    private eitherOrActivityService: EitherOrActivityService,
+    private contextService: ContextService
   ) {
     super();
   }
@@ -58,6 +60,8 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
       !this.state.prediction_extra_time_complete
     ) {
       // Show prediction extra time modal
+      const timer = this.state.prediction_extra_countdown_timer;
+      this.contextService.activityTimer = timer;
     } else if (
       this.state.prediction_complete &&
       this.state.user_preferences.length === 0 &&
@@ -65,12 +69,15 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     ) {
       // Show user preferences screen
       this.resetChoices();
+      this.contextService.activityTimer = this.state.preference_countdown_timer;
     } else if (
       this.state.preference_extra_countdown_timer &&
       this.state.preference_extra_countdown_timer.status !== 'ended' &&
       !this.state.preference_extra_time_complete
     ) {
       // Show preferences extra countdown timer
+      const timer = this.state.preference_extra_countdown_timer;
+      this.contextService.activityTimer = timer;
     } else if (
       this.state.prediction_complete &&
       this.state.preference_complete &&
@@ -78,6 +85,13 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
     ) {
       // Show stand on side sceen
       this.resetChoices();
+      this.contextService.activityTimer = this.state.stand_on_side_countdown_timer;
+    } else if (
+      !this.state.standing_complete &&
+      !this.predictionComplete() &&
+      !this.preferenceComplete()
+    ) {
+      this.contextService.activityTimer = this.state.prediction_countdown_timer;
     }
   }
 
@@ -99,7 +113,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
 
   getUserPreferredChoice() {
     const pref = this.activityState.wheredoyoustandactivity.user_preferences.find(
-      p => {
+      (p) => {
         return p.user.id === this.user.id;
       }
     );
@@ -135,7 +149,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
 
   getUserPredictedChoice() {
     const predictions = this.state.user_predictions;
-    const userPrediction = predictions.find(p => p.user.id === this.user.id);
+    const userPrediction = predictions.find((p) => p.user.id === this.user.id);
     if (userPrediction) {
       return userPrediction.wheredoyoustandchoice;
     } else {
@@ -148,7 +162,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent
 
     const groupPreference = Math.max.apply(
       Math,
-      this.state.choice_stats.map(function(o) {
+      this.state.choice_stats.map(function (o) {
         return o.num_preferences;
       })
     );
