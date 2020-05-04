@@ -13,8 +13,11 @@
       <h1 class="pn-700 primary-color-darkest" *ngIf="!isUserNoteTaker()">
         You're the partner
       </h1>
-      <p class="instruction">
-        Fill out the form below and press submit when you're done.
+      <p class="instruction" *ngIf="isUserNoteTaker()">
+        {{ act.note_taker_instructions }}
+      </p>
+      <p class="instruction" *ngIf="!isUserNoteTaker()">
+        {{ act.participant_instructions }}
       </p>
     </ng-container>
     <ng-container *ngIf="isDone">

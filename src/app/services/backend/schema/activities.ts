@@ -389,6 +389,8 @@ export interface CaseStudyActivity {
   groups: Array<UserGroupSet>;
   casestudyuser_set: Array<CaseStudyUserSet>;
   casestudyquestion_set: Array<{ id: number; question_text: string }>;
+  note_taker_instructions: string;
+  participant_instructions: string;
 }
 
 export interface CaseStudyUserSet {
