@@ -1,0 +1,29 @@
+<!-- Parent of the following container must be set to position relative in order to achieve vertical and horizontal centering -->
+<div class="timer-container">
+  <div
+    class="white-color number-text pn-500"
+    *ngIf="timer && timer.status == 'running'"
+  >
+    {{ get_min_sec().min | number: "1.0-0" }}:{{
+      get_min_sec().sec | number: "2.0-0"
+    }}
+  </div>
+
+  <div
+    class="white-color number-text pn-500"
+    *ngIf="timer && timer.status == 'paused'"
+  >
+    Paused
+  </div>
+
+  <div
+    class="primary-color number-text pn-500"
+    *ngIf="timer && timer.status == 'ended'"
+  >
+    {{ endStateText }}
+  </div>
+</div>
+
+<benji-timer-attention-overlay
+  *ngIf="showAttentionTimer"
+></benji-timer-attention-overlay>

@@ -3,6 +3,11 @@
     <div class="benji-logo-container">
       <img [src]="logo" alt="Benji logo" class="benji-logo" />
     </div>
+    <benji-number-timer
+      [timer]="timer"
+      endStateText="Times Up!"
+      [endAudio]="'bell.wav'"
+    ></benji-number-timer>
     <!-- <button [matMenuTriggerFor]="appMenu" fxLayoutAlign="center center">
       <mat-icon class="icon-white">menu</mat-icon>
     </button> -->

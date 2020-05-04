@@ -35,5 +35,6 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     this.at.genericRoleplay,
     this.at.externalGrouping,
     this.at.whereDoYouStand,
+    this.at.brainStorm,
   ];
 }

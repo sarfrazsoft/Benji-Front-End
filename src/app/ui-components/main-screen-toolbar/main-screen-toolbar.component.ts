@@ -7,7 +7,7 @@ import { LayoutService } from '../../services/layout.service';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
-  styleUrls: ['./main-screen-toolbar.component.scss']
+  styleUrls: ['./main-screen-toolbar.component.scss'],
 })
 export class MainScreenToolbarComponent implements OnInit {
   lightLogo = '';

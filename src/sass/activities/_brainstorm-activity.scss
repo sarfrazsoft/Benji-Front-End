@@ -89,13 +89,16 @@ benji-ms-brainstorming-activity {
 }
 
 benji-ps-brainstorming-activity {
+  .b-flat-card {
+    height: calc(100vh - 65px - 130px);
+  }
   textarea {
     color: inherit;
     outline: none;
     max-height: 130px;
     min-height: 130px;
-    width: 60vw;
-    padding: 10px 10px;
+    width: 70vw;
+    padding: 10px 7px;
     border-radius: 8px;
     border: #dfe5e7 1px solid;
     &:focus {
@@ -111,14 +114,23 @@ benji-ps-brainstorming-activity {
     }
   }
 
-  .b-standard-button {
-    text-align: center;
-    .idea-text {
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 200px;
+  .vote-button-column {
+    .button-container {
+      position: relative;
+      .b-standard-button {
+        width: 232px;
+        text-align: center;
+        &.voting-button {
+          // margin-right: 20px;
+        }
+        .idea-text {
+          display: block;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 190px;
+        }
+      }
     }
   }
 

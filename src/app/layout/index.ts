@@ -18,6 +18,7 @@ import { AttentionOverlayComponent } from '../ui-components/linear-timer/attenti
 import { LinearTimerComponent } from '../ui-components/linear-timer/linear-timer.component';
 import { MainScreenFooterComponent } from '../ui-components/main-screen-footer/main-screen-footer.component';
 import { MainScreenToolbarComponent } from '../ui-components/main-screen-toolbar/main-screen-toolbar.component';
+import { NumberTimerComponent } from '../ui-components/number-timer/number-timer.component';
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
@@ -50,6 +51,7 @@ export const LayoutDeclarations = [
   ParticipantToolbarComponent,
   MainScreenLessonComponent,
   RadialTimerComponent,
+  NumberTimerComponent,
   ToolbarComponent,
   SidenavComponent,
   SidenavItemComponent,

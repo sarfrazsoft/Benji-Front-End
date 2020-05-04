@@ -19,7 +19,7 @@
     class="mainscreen-activity__column bg-secondary-color-lightest pair-activity__pairs"
   >
     <p class="ms-act__section-text secondary-color-dark">
-      Find your partner
+      Breakout Rooms
     </p>
     <ul class="ul-find-partner">
       <li
@@ -36,6 +36,7 @@
           [items]="breakoutRooms"
           bindLabel="name"
           placeholder="Unassigned"
+          [clearable]="false"
           bindValue="id"
           (change)="assignRoom($event, user.id)"
           [(ngModel)]="usersBreakoutRooms[i]"

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Timer } from './backend/schema';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
 @Injectable()
@@ -44,5 +45,17 @@ export class ContextService {
   }
   get partnerInfo(): PartnerInfo {
     return this.partnerInfo$.getValue();
+  }
+
+  /**
+   * Activity timer
+   */
+  activityTimer$ = new BehaviorSubject<Timer>(null);
+
+  set activityTimer(activityTimer: Timer) {
+    this.activityTimer$.next(activityTimer);
+  }
+  get activityTimer(): Timer {
+    return this.activityTimer$.getValue();
   }
 }

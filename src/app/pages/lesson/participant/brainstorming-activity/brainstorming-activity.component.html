@@ -7,11 +7,11 @@
       Submit your idea
     </h1>
     <ng-container class="body-text">
-      {{ bsAct.instructions }} <br />
+      {{ act.instructions }} <br />
       <!-- show submission limit  -->
-      <ng-container *ngIf="bsAct.max_user_submissions < 5">
-        You can submit up to{{ " " + bsAct.max_user_submissions + " " }}
-        {{ bsAct.max_user_submissions == 1 ? "idea" : "ideas" }}
+      <ng-container *ngIf="act.max_user_submissions < 5">
+        You can submit up to{{ " " + act.max_user_submissions + " " }}
+        {{ act.max_user_submissions == 1 ? "idea" : "ideas" }}
       </ng-container>
     </ng-container>
     <ng-container class="content">
@@ -49,16 +49,13 @@
 <ng-container *ngIf="showSubmitVote">
   <benji-ps-instruction-template>
     <ng-container class="body-title">Brainstorming</ng-container>
+    <app-b-twemoji class="body-emoji" emoji="🧠"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">
       Vote on your favorite idea
     </h1>
     <ng-container class="body-text">
-      You can submit{{
-        " " + activityState.brainstormactivity.max_user_votes + " "
-      }}
-      {{
-        activityState.brainstormactivity.max_user_votes === 1 ? "vote" : "votes"
-      }}
+      You can submit{{ " " + act.max_user_votes + " " }}
+      {{ act.max_user_votes === 1 ? "vote" : "votes" }}
     </ng-container>
     <ng-container class="content">
       <!-- <p>Press the + icon next to each name to review the pitches.</p> -->
@@ -85,12 +82,6 @@
       (click)="submitIdeaVote()"
     ></benji-animated-checkmark-button>
   </div>
-
-  <benji-linear-timer
-    [classes]="showVoteSubmitButton ? 'bottom80px' : ''"
-    [timer]="activityState.brainstormactivity.voting_countdown_timer"
-    [timerOffset]="avgServerTimeOffset"
-  ></benji-linear-timer>
 </ng-container>
 
 <!-- Thank you for voting -->
@@ -115,8 +106,8 @@
     </ng-container>
   </benji-ps-instruction-template>
 
-  <benji-linear-timer
+  <!-- <benji-linear-timer
     [timer]="activityState.base_activity.next_activity_start_timer"
     [timerOffset]="avgServerTimeOffset"
-  ></benji-linear-timer>
+  ></benji-linear-timer> -->
 </ng-container>
