@@ -30,30 +30,42 @@
     </ng-container>
   </div>
 
-  <div class="content" *ngFor="let question of questions">
+  <div class="content">
     <div class="your-prompt">
-      <div *ngIf="question.question_text" class="your-pitch-label left-text">
-        your prompt:
+      <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
+        Details:
       </div>
       <div
         class="your-pitch bg-off-white"
-        *ngIf="question.question_text"
-        innerHTML="{{ question.question_text }}"
+        *ngIf="act.case_study_details"
+        innerHTML="{{ act.case_study_details }}"
       ></div>
-      <div class="your-notes">
-        <div class="your-pitch-label left-text">your notes:</div>
-        <div class="draft-pitch">
-          <textarea
-            [disabled]="!isUserNoteTaker() || isDone"
-            matInput
-            cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
-            cdkAutosizeMinRows="7"
-            [(ngModel)]="question.answer"
-            (ngModelChange)="locallySaveDraft($event)"
-            (keyup)="typingStoped($event, question.id)"
-            (keydown)="typingStarted()"
-          ></textarea>
+    </div>
+    <div *ngFor="let question of questions">
+      <div class="your-prompt">
+        <div *ngIf="question.question_text" class="your-pitch-label left-text">
+          your prompt:
+        </div>
+        <div
+          class="your-pitch bg-off-white"
+          *ngIf="question.question_text"
+          innerHTML="{{ question.question_text }}"
+        ></div>
+        <div class="your-notes">
+          <div class="your-pitch-label left-text">your notes:</div>
+          <div class="draft-pitch">
+            <textarea
+              [disabled]="!isUserNoteTaker() || isDone"
+              matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="7"
+              [(ngModel)]="question.answer"
+              (ngModelChange)="locallySaveDraft($event)"
+              (keyup)="typingStoped($event, question.id)"
+              (keydown)="typingStarted()"
+            ></textarea>
+          </div>
         </div>
       </div>
     </div>
