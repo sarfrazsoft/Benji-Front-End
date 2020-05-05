@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import {
   DiscussionActivity,
   DiscussionSharerDoneEvent,
@@ -16,6 +17,13 @@ export class ParticipantDiscussionActivityComponent
   implements OnInit, OnChanges {
   act: DiscussionActivity;
   questions = [];
+
+  discussionStage = false;
+  shareWithGroup = false;
+  listeningGroup = false;
+  constructor(private contextService: ContextService) {
+    super();
+  }
   ngOnInit() {}
 
   ngOnChanges() {
@@ -24,6 +32,23 @@ export class ParticipantDiscussionActivityComponent
       if (this.act.currently_sharing_group.notes) {
         this.questions = this.act.currently_sharing_group.notes;
       }
+    }
+
+    if (!this.act.discussion_complete) {
+      this.discussionStage = true;
+      this.shareWithGroup = false;
+      this.listeningGroup = false;
+      this.contextService.activityTimer = this.act.discussion_countdown_timer;
+    } else if (this.act.discussion_complete && this.participantIsSharing()) {
+      this.shareWithGroup = true;
+      this.discussionStage = false;
+      this.listeningGroup = false;
+      const timer = this.act.currently_sharing_group.sharing_countdown_timer;
+      this.contextService.activityTimer = timer;
+    } else if (this.act.discussion_complete && !this.participantIsSharing()) {
+      this.shareWithGroup = false;
+      this.discussionStage = false;
+      this.listeningGroup = true;
     }
   }
 

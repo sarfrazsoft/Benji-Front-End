@@ -1,5 +1,5 @@
 <!-- Discussion Volunteer Card -->
-<ng-container *ngIf="!activityState.discussionactivity.discussion_complete">
+<ng-container *ngIf="discussionStage">
   <benji-ps-instruction-template>
     <ng-container class="body-title">Discuss</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🤔"></app-b-twemoji>
@@ -23,23 +23,12 @@
           We want to share
         </button>
       </div>
-      <benji-linear-timer
-        [timer]="
-          this.activityState.discussionactivity.discussion_countdown_timer
-        "
-        [timerOffset]="avgServerTimeOffset"
-      ></benji-linear-timer>
     </ng-container>
   </benji-ps-instruction-template>
 </ng-container>
 
 <!-- Share With Group Card -->
-<ng-container
-  *ngIf="
-    activityState.discussionactivity.discussion_complete &&
-    participantIsSharing()
-  "
->
+<ng-container *ngIf="shareWithGroup">
   <benji-ps-instruction-template>
     <ng-container class="body-title">Share</ng-container>
     <app-b-twemoji class="body-emoji" emoji="📣"></app-b-twemoji>
@@ -82,24 +71,10 @@
       </div>
     </ng-container>
   </benji-ps-instruction-template>
-  <div class="mc-card__timer">
-    <benji-linear-timer
-      [timer]="
-        activityState.discussionactivity.currently_sharing_group
-          .sharing_countdown_timer
-      "
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
-  </div>
 </ng-container>
 
 <!-- Listening Card -->
-<ng-container
-  *ngIf="
-    activityState.discussionactivity.discussion_complete &&
-    !participantIsSharing()
-  "
->
+<ng-container *ngIf="listeningGroup">
   <benji-ps-instruction-template>
     <ng-container class="body-title">Share</ng-container>
     <app-b-twemoji class="body-emoji" emoji="👂"></app-b-twemoji>
