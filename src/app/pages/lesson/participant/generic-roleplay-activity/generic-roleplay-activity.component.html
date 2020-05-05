@@ -15,11 +15,6 @@
         {{ getParticipantRole().instructions }}
       </ng-container>
     </benji-ps-instruction-template>
-
-    <benji-linear-timer
-      [timer]="rplayTimer"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
   </ng-container>
 
   <ng-container *ngIf="giveFeedback">
@@ -50,10 +45,6 @@
           ></benji-question-form>
         </ng-container>
       </benji-ps-instruction-template>
-      <benji-linear-timer
-        [timer]="feedbackTimer"
-        [timerOffset]="avgServerTimeOffset"
-      ></benji-linear-timer>
     </ng-container>
 
     <!-- Feedback submitted successfully non-observer  -->
@@ -100,10 +91,6 @@
         (submitResponse)="submitAnswers($event)"
       ></benji-question-form>
     </benji-question-layout>
-    <benji-linear-timer
-      [timer]="feedbackTimer"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
   </ng-container>
 
   <benji-ps-instruction-template *ngIf="userFeedbackSubmitted()">

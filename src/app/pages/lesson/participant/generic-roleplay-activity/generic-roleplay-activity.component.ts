@@ -1,11 +1,12 @@
 import { Component, OnChanges } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import {
   FeedbackSubmitEventAnswer,
   GenericRoleplayUserFeedbackEvent,
   RoleplayRole,
   RoleplayUser,
   Timer,
-  User
+  User,
 } from 'src/app/services/backend/schema';
 import { EmojiLookupService } from 'src/app/services/emoji-lookup.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -13,7 +14,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-generic-roleplay-activity',
   templateUrl: './generic-roleplay-activity.component.html',
-  styleUrls: ['./generic-roleplay-activity.component.scss']
+  styleUrls: ['./generic-roleplay-activity.component.scss'],
 })
 export class ParticipantGenericRoleplayActivityComponent
   extends BaseActivityComponent
@@ -27,7 +28,10 @@ export class ParticipantGenericRoleplayActivityComponent
   currentUser: User;
   observerSubmitted = false;
 
-  constructor(private emoji: EmojiLookupService) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private contextService: ContextService
+  ) {
     super();
   }
 
@@ -35,14 +39,18 @@ export class ParticipantGenericRoleplayActivityComponent
     this.currentUser = this.activityState.your_identity;
 
     const act = this.activityState.genericroleplayactivity;
+    this.contextService.activityTimer = act.activity_countdown_timer;
     this.rplayTimer = act.activity_countdown_timer;
+
     if (this.rplayTimer.status !== 'ended') {
       this.giveFeedback = false;
+      this.contextService.activityTimer = act.activity_countdown_timer;
     }
 
     this.feedbackTimer = act.feedback_countdown_timer;
     if (this.feedbackTimer && this.rplayTimer.status === 'ended') {
       this.giveFeedback = true;
+      this.contextService.activityTimer = act.feedback_countdown_timer;
     }
   }
 
@@ -68,7 +76,7 @@ export class ParticipantGenericRoleplayActivityComponent
     let role: RoleplayRole;
     userSet.forEach((user: RoleplayUser) => {
       if (user.benjiuser_id === this.currentUser.id) {
-        role = roles.filter(r => r.id === user.role)[0];
+        role = roles.filter((r) => r.id === user.role)[0];
       }
     });
 
