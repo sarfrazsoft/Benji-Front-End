@@ -1,9 +1,11 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
   CaseStudySaveFormEvent,
   CaseStudySubmitEventAnswer,
   CaseStudyTeamDoneEvent,
+  Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -20,7 +22,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
-  constructor() {
+  constructor(private contextService: ContextService) {
     super();
   }
 
@@ -30,6 +32,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
+    this.contextService.activityTimer = this.act.activity_countdown_timer;
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
     questionsTemp.forEach((q, i) => {
@@ -38,6 +41,11 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
     const myNoteTaker = this.getMyNoteTaker();
 
     this.isDone = myNoteTaker.is_done;
+    if (!myNoteTaker.is_done) {
+      this.contextService.activityTimer = this.act.activity_countdown_timer;
+    } else {
+      this.contextService.activityTimer = { status: 'cancelled' } as Timer;
+    }
 
     // Populate the answers if available
     if (localStorage.getItem(this.localStorageItemName)) {
