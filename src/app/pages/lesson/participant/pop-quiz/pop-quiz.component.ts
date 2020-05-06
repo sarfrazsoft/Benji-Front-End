@@ -1,14 +1,16 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import {
   MCQChoice,
-  MCQSubmitAnswerEvent
+  MCQSubmitAnswerEvent,
+  Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-pop-quiz',
   templateUrl: './pop-quiz.component.html',
-  styleUrls: ['./pop-quiz.component.scss']
+  styleUrls: ['./pop-quiz.component.scss'],
 })
 export class ParticipantPopQuizComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
@@ -23,12 +25,12 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
     is_correct: null,
     choice_text: null,
     explanation: null,
-    order: null
+    order: null,
   };
   revealAnswer = false;
   @ViewChild('timer') timer;
 
-  constructor() {
+  constructor(private contextService: ContextService) {
     super();
   }
 
@@ -38,6 +40,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
     this.activityState.mcqactivity.question.mcqchoice_set.sort(
       (a, b) => a.id - b.id
     );
+    this.contextService.activityTimer = { status: 'cancelled' } as Timer;
   }
 
   ngOnChanges() {
@@ -58,7 +61,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
           is_correct: null,
           choice_text: null,
           explanation: null,
-          order: null
+          order: null,
         };
         this.questionTimerStarted = true;
       }
@@ -91,7 +94,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
 
   getCorrectAnswer() {
     return this.activityState.mcqactivity.question.mcqchoice_set.find(
-      q => q.is_correct
+      (q) => q.is_correct
     );
   }
 }

@@ -384,6 +384,7 @@ export interface RoleplayUserSet {
 }
 
 export interface CaseStudyActivity {
+  activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;
   groups: Array<UserGroupSet>;
@@ -391,6 +392,8 @@ export interface CaseStudyActivity {
   casestudyquestion_set: Array<{ id: number; question_text: string }>;
   note_taker_instructions: string;
   participant_instructions: string;
+  mainscreen_instructions: string;
+  case_study_details: string;
 }
 
 export interface CaseStudyUserSet {

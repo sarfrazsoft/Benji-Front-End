@@ -7,7 +7,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-build-pitch-activity',
   templateUrl: './build-pitch-activity.component.html',
-  styleUrls: ['./build-pitch-activity.component.scss']
+  styleUrls: ['./build-pitch-activity.component.scss'],
 })
 export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
@@ -35,7 +35,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
     blanks.sort((a, b) => a.order - b.order);
 
     this.statement = '';
-    blanks.forEach(b => {
+    blanks.forEach((b) => {
       this.statement =
         this.statement +
         b.label +
@@ -47,7 +47,12 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
 
   ngOnChanges() {
     const act = this.activityState.buildapitchactivity;
-    if (act.building_done && !act.sharing_done) {
+    if (!act.building_done && !act.sharing_done && !act.voting_done) {
+      this.createPitches = true;
+      this.sharePitches = false;
+      this.voteNow = false;
+      this.votesComplete = false;
+    } else if (act.building_done && !act.sharing_done) {
       this.createPitches = false;
       this.sharePitches = true;
       this.voteNow = false;
@@ -74,12 +79,12 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
 
     const v = Math.max.apply(
       Math,
-      votes.map(function(o) {
+      votes.map(function (o) {
         return o.num_votes;
       })
     );
 
-    const obj = votes.find(function(o) {
+    const obj = votes.find(function (o) {
       return o.num_votes === v;
     });
 
@@ -89,7 +94,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   getPitchText(userId) {
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      e => e.user === userId
+      (e) => e.user === userId
     );
 
     let statement = '';
@@ -97,7 +102,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
     blanks.sort((a, b) => a.order - b.order);
     blanks.forEach((b, i) => {
       const currentBlanksValue = buildAPitchEntrySet.filter(
-        v => v.buildapitchblank === b.id
+        (v) => v.buildapitchblank === b.id
       );
 
       let value = '';

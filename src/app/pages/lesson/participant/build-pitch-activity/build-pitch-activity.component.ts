@@ -4,13 +4,15 @@ import {
   Component,
   OnChanges,
   OnInit,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import {
   BuildAPitchActivity,
   BuildAPitchSubmitEventEntry,
   BuildAPitchSubmitPitchEvent,
-  BuildAPitchSubmitVoteEvent
+  BuildAPitchSubmitVoteEvent,
+  Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -18,7 +20,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   selector: 'benji-ps-build-pitch-activity',
   templateUrl: './build-pitch-activity.component.html',
   styleUrls: ['./build-pitch-activity.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class ParticipantBuildPitchActivityComponent
   extends BaseActivityComponent
@@ -39,7 +41,10 @@ export class ParticipantBuildPitchActivityComponent
 
   selectedUser = null;
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private contextService: ContextService
+  ) {
     super();
     this.builtPitch_set = [];
   }
@@ -53,7 +58,7 @@ export class ParticipantBuildPitchActivityComponent
 
     this.act.buildapitchblank_set
       .sort((a, b) => a.order - b.order)
-      .forEach(v => {
+      .forEach((v) => {
         this.builtPitch_set.push({ ...v, ...{ value: null } });
       });
   }
@@ -63,16 +68,17 @@ export class ParticipantBuildPitchActivityComponent
     this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort(
       (a, b) => a.order - b.order
     );
+    this.setTimer(this.act);
     if (
       this.act.build_countdown_timer.status === 'running' &&
       this.act.buildapitchpitch_set.filter(
-        e => e.user === this.activityState.your_identity.id
+        (e) => e.user === this.activityState.your_identity.id
       ).length === 0
     ) {
       this.createPitch = true;
     } else if (
       (this.act.buildapitchpitch_set.filter(
-        e => e.user === this.activityState.your_identity.id
+        (e) => e.user === this.activityState.your_identity.id
       ).length > 0 ||
         this.act.build_countdown_timer.status === 'ended') &&
       !this.showMyPitch &&
@@ -115,9 +121,22 @@ export class ParticipantBuildPitchActivityComponent
     }
   }
 
+  setTimer(act: BuildAPitchActivity) {
+    if (!act.building_done && !act.sharing_done && !act.voting_done) {
+      this.contextService.activityTimer = act.build_countdown_timer;
+    } else if (act.building_done && !act.sharing_done) {
+      this.contextService.activityTimer = { status: 'cancelled' } as Timer;
+    } else if (act.sharing_done && !act.voting_done) {
+      this.contextService.activityTimer = act.vote_countdown_timer;
+    } else if (act.sharing_done && act.voting_done && act.winning_user) {
+      const timer = this.activityState.base_activity.next_activity_start_timer;
+      this.contextService.activityTimer = timer;
+    }
+  }
+
   fillExpandedUserArray() {
     // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
-    this.activityState.buildapitchactivity.buildapitchpitch_set.forEach(v => {
+    this.activityState.buildapitchactivity.buildapitchpitch_set.forEach((v) => {
       this.expandedUserArray['' + v.user] = false;
     });
   }
@@ -140,7 +159,7 @@ export class ParticipantBuildPitchActivityComponent
       return;
     }
     const buildapitchsubmissionentry_set = [];
-    this.builtPitch_set.forEach(p => {
+    this.builtPitch_set.forEach((p) => {
       if (p.value) {
         const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(
           p,
@@ -175,7 +194,7 @@ export class ParticipantBuildPitchActivityComponent
   userPitchExists(userId) {
     // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     return this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      e => e.user === userId
+      (e) => e.user === userId
     ).length;
   }
 
@@ -183,14 +202,14 @@ export class ParticipantBuildPitchActivityComponent
     this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      e => e.user === userId
+      (e) => e.user === userId
     );
 
     let statement = '';
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
     blanks.forEach((b, i) => {
       const currentBlanksValue = buildAPitchEntrySet.filter(
-        v => v.buildapitchblank === b.id
+        (v) => v.buildapitchblank === b.id
       );
 
       let value = '';
@@ -209,7 +228,7 @@ export class ParticipantBuildPitchActivityComponent
     this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      e => e.user === userId
+      (e) => e.user === userId
     );
 
     // let statement = '';
@@ -217,7 +236,7 @@ export class ParticipantBuildPitchActivityComponent
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
     blanks.forEach((b, i) => {
       const currentBlanksValue = buildAPitchEntrySet.filter(
-        v => v.buildapitchblank === b.id
+        (v) => v.buildapitchblank === b.id
       );
 
       if (currentBlanksValue.length === 0) {
@@ -229,7 +248,7 @@ export class ParticipantBuildPitchActivityComponent
 
   getUserName(userId) {
     return this.activityState.lesson_run.joined_users.filter(
-      u => u.id === userId
+      (u) => u.id === userId
     )[0].first_name;
   }
 
