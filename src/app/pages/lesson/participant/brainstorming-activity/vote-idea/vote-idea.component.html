@@ -12,20 +12,22 @@
         {{ ideaText }}
       </span>
     </button>
-    <img
-      class="participant-utility-icons"
-      src="/assets/img/add_icon.png"
-      alt="expand"
-      *ngIf="!expanded"
-      (click)="expand(ideaId)"
-    />
-    <img
-      class="participant-utility-icons"
-      src="/assets/img/close_icon.png"
-      alt="launch"
-      *ngIf="expanded"
-      (click)="collapse(ideaId)"
-    />
+    <button mat-icon-button>
+      <img
+        class="participant-utility-icons"
+        src="/assets/img/add_icon.png"
+        alt="expand"
+        *ngIf="!expanded"
+        (click)="expand(ideaId)"
+      />
+      <img
+        class="participant-utility-icons"
+        src="/assets/img/close_icon.png"
+        alt="launch"
+        *ngIf="expanded"
+        (click)="collapse(ideaId)"
+      />
+    </button>
   </div>
   <div
     *ngIf="expanded"

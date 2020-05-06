@@ -116,13 +116,9 @@ benji-ps-brainstorming-activity {
 
   .vote-button-column {
     .button-container {
-      position: relative;
       .b-standard-button {
         width: 232px;
         text-align: center;
-        &.voting-button {
-          // margin-right: 20px;
-        }
         .idea-text {
           display: block;
           white-space: nowrap;
