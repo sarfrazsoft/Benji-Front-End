@@ -13,7 +13,9 @@
     class="white-color number-text pn-500"
     *ngIf="timer && timer.status == 'paused'"
   >
-    Paused
+    {{ get_min_sec().min | number: "1.0-0" }}:{{
+      get_min_sec().sec | number: "2.0-0"
+    }}
   </div>
 
   <div
