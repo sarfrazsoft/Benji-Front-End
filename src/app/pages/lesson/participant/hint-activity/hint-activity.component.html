@@ -1,10 +1,5 @@
 <!-- Hint word input -->
-<ng-container
-  *ngIf="
-    !activityState.hintwordactivity.submission_complete &&
-    !activityState.hintwordactivity.voting_complete
-  "
->
+<ng-container *ngIf="!act.submission_complete && !act.voting_complete">
   <div class="b-flat-card center-text hintword-card">
     <div class="b-flat-card__title"><h2 class="pn-400">Hint Word</h2></div>
     <div class="b-flat-card__body">
@@ -47,12 +42,7 @@
     </div>
   </div>
 </ng-container>
-<ng-container
-  *ngIf="
-    activityState.hintwordactivity.submission_complete &&
-    !activityState.hintwordactivity.voting_complete
-  "
->
+<ng-container *ngIf="act.submission_complete && !act.voting_complete">
   <div
     class="b-flat-card center-text hintword-card"
     [ngClass]="{ 'hintword-card--confirm-state': selectedWord }"
@@ -92,12 +82,7 @@
     ></benji-animated-checkmark-button>
   </div>
 </ng-container>
-<ng-container
-  *ngIf="
-    activityState.hintwordactivity.submission_complete &&
-    activityState.hintwordactivity.voting_complete
-  "
->
+<ng-container *ngIf="act.submission_complete && act.voting_complete">
   <div class="b-flat-card center-text hintword-card">
     <div class="b-flat-card__title"><h2 class="pn-400">Hint Word</h2></div>
     <div class="b-flat-card__body">

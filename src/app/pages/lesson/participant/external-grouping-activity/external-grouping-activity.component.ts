@@ -2,14 +2,15 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import {
   ExternalGroupingActivity,
   ExternalGroupingSubmitGroupEvent,
-  User
+  User,
 } from 'src/app/services/backend/schema';
+import { ContextService } from 'src/app/services/context.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-external-grouping-activity',
   templateUrl: './external-grouping-activity.component.html',
-  styleUrls: ['./external-grouping-activity.component.scss']
+  styleUrls: ['./external-grouping-activity.component.scss'],
 })
 export class ParticipantExternalGroupingActivityComponent
   extends BaseActivityComponent
@@ -24,7 +25,7 @@ export class ParticipantExternalGroupingActivityComponent
   selectRoomModel = null;
 
   roomConfirmed = false;
-  constructor() {
+  constructor(private contextService: ContextService) {
     super();
   }
 
@@ -35,6 +36,7 @@ export class ParticipantExternalGroupingActivityComponent
     this.allUsers = this.activityState.lesson_run.joined_users;
     this.user = this.activityState.your_identity;
     this.userRoomNumber = this.getUserRoomNumber();
+    this.contextService.activityTimer = this.act.grouping_countdown_timer;
     // this.selectRoomModel = this.getUserRoomNumber();
     // check if the user is already grouped
     this.breakoutRooms = [];

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnChanges, OnInit } from '@angular/core';
-import { EmojiLookupService } from 'src/app/services';
+import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
   FeedbackSubmitEventAnswer,
   PitchoMaticActivity,
@@ -8,7 +8,7 @@ import {
   PitchoMaticSubmitFeedbackEvent,
   PitchoMaticUserGeneratedEvent,
   PitchoMaticUserInGroupEvent,
-  PitchoMaticUserReadyEvent
+  PitchoMaticUserReadyEvent,
 } from 'src/app/services/backend/schema';
 // import * as odoo from 'src/assets/js/odoo.js';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -16,7 +16,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-generate-pitch-activity',
   templateUrl: './generate-pitch-activity.component.html',
-  styleUrls: ['./generate-pitch-activity.component.scss']
+  styleUrls: ['./generate-pitch-activity.component.scss'],
 })
 export class ParticipantGeneratePitchActivityComponent
   extends BaseActivityComponent
@@ -62,7 +62,8 @@ export class ParticipantGeneratePitchActivityComponent
 
   constructor(
     private emoji: EmojiLookupService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private contextService: ContextService
   ) {
     super();
   }
@@ -74,8 +75,8 @@ export class ParticipantGeneratePitchActivityComponent
 
     const currentUserID = state.your_identity.id;
     let currentMember: PitchoMaticGroupMember;
-    state.pitchomaticactivity.pitchomaticgroup_set.forEach(group => {
-      group.pitchomaticgroupmember_set.forEach(member => {
+    state.pitchomaticactivity.pitchomaticgroup_set.forEach((group) => {
+      group.pitchomaticgroupmember_set.forEach((member) => {
         if (member.user.id === currentUserID) {
           currentMember = member;
         }
@@ -92,6 +93,8 @@ export class ParticipantGeneratePitchActivityComponent
       this.checkUserActivity();
       this.splitIntoGroups = false;
       this.getCurrentUserPitchSet();
+      this.contextService.activityTimer =
+        state.pitchomaticactivity.prepare_timer;
       if (!currentMember.has_generated) {
         this.generatePitchSection = true;
       } else if (currentMember.has_generated && !currentMember.has_prepared) {
@@ -111,6 +114,7 @@ export class ParticipantGeneratePitchActivityComponent
       }
       this.draftPitchSection = false;
       this.generatePitchSection = false;
+      this.contextService.activityTimer = state.pitchomaticactivity.pitch_timer;
       if (this.isCurrentUserPitching()) {
         this.getCurrentUserPitchSet();
         this.sharePitchSection = true;
@@ -124,6 +128,8 @@ export class ParticipantGeneratePitchActivityComponent
       this.draftPitchSection = false;
       this.generatePitchSection = false;
       this.sharePitchSection = false;
+      this.contextService.activityTimer =
+        state.pitchomaticactivity.feedback_timer;
       if (this.isCurrentUserPitching()) {
         this.gettingFeedbackSection = true;
       } else {
@@ -139,6 +145,8 @@ export class ParticipantGeneratePitchActivityComponent
       this.sharePitchSection = false;
       this.thanksForFeedback = false;
       this.giveOthersFeedbackSection = false;
+      this.contextService.activityTimer =
+        state.pitchomaticactivity.discuss_timer;
       if (this.isCurrentUserPitching()) {
         this.shareFeedbackSection = false;
         this.gettingFeedbackSection = true;
@@ -186,8 +194,8 @@ export class ParticipantGeneratePitchActivityComponent
 
     const currentUserID = this.activityState.your_identity.id;
     let currentMember: PitchoMaticGroupMember;
-    act.pitchomaticgroup_set.forEach(group => {
-      group.pitchomaticgroupmember_set.forEach(member => {
+    act.pitchomaticgroup_set.forEach((group) => {
+      group.pitchomaticgroupmember_set.forEach((member) => {
         if (member.user.id === currentUserID) {
           currentMember = member;
         }
@@ -216,14 +224,14 @@ export class ParticipantGeneratePitchActivityComponent
       // hnique you need to use is:', value: 'analogy' }
       // ];
 
-      blank_set.forEach(blank => {
+      blank_set.forEach((blank) => {
         const choice = currentMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(
-          el => {
+          (el) => {
             return el.pitchomaticblank === blank.id;
           }
         )[0].choice;
 
-        const value = blank.pitchomaticblankchoice_set.filter(el => {
+        const value = blank.pitchomaticblankchoice_set.filter((el) => {
           return el.id === choice;
         })[0].value;
 
@@ -231,7 +239,7 @@ export class ParticipantGeneratePitchActivityComponent
           id: blank.id,
           label: blank.label,
           order: blank.order,
-          value: value
+          value: value,
         });
       });
     }
@@ -320,7 +328,7 @@ export class ParticipantGeneratePitchActivityComponent
     const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
     const pitchingMember = act.pitchomaticgroup_set[
       groupIndex
-    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
+    ].pitchomaticgroupmember_set.filter((member) => member.is_pitching)[0];
 
     return pitchingMember.user.id === this.activityState.your_identity.id;
   }
@@ -356,7 +364,7 @@ export class ParticipantGeneratePitchActivityComponent
   getCurrentUserGroup(): string {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
     const pitchingMember = act.pitchomaticgroup_set[0].pitchomaticgroupmember_set.filter(
-      member => member.user.id === this.activityState.your_identity.id
+      (member) => member.user.id === this.activityState.your_identity.id
     )[0];
     if (pitchingMember) {
       return '1';
@@ -385,7 +393,7 @@ export class ParticipantGeneratePitchActivityComponent
     const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
     const pitchingMember = act.pitchomaticgroup_set[
       groupIndex
-    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
+    ].pitchomaticgroupmember_set.filter((member) => member.is_pitching)[0];
     const name = pitchingMember.user.first_name;
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
@@ -396,8 +404,8 @@ export class ParticipantGeneratePitchActivityComponent
     blank_set.sort((a, b) => a.order - b.order);
     const currentUserID = this.activityState.your_identity.id;
     let currentMember: PitchoMaticGroupMember;
-    act.pitchomaticgroup_set.forEach(group => {
-      group.pitchomaticgroupmember_set.forEach(member => {
+    act.pitchomaticgroup_set.forEach((group) => {
+      group.pitchomaticgroupmember_set.forEach((member) => {
         if (member.user.id === currentUserID) {
           currentMember = member;
         }

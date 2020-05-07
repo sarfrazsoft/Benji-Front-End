@@ -38,12 +38,6 @@
     <ng-container class="body-text">
       {{ getParticipantRole().instructions }}
     </ng-container>
-    <ng-container class="content">
-      <benji-linear-timer
-        [timer]="activityState.roleplaypairactivity.activity_countdown_timer"
-        [timerOffset]="avgServerTimeOffset"
-      ></benji-linear-timer>
-    </ng-container>
   </benji-ps-instruction-template>
 
   <div class="time-ending" *ngIf="timer">

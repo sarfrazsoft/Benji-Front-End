@@ -1,29 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { concat, remove } from 'lodash';
-import { EmojiLookupService } from 'src/app/services';
+import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
   GroupingUserFoundEvent,
   RoleplayPairUser,
-  UserGroupUserSet
+  UserGroupUserSet,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-pair-grouping-activity',
   templateUrl: './pair-grouping-activity.component.html',
-  styleUrls: ['./pair-grouping-activity.component.scss']
+  styleUrls: ['./pair-grouping-activity.component.scss'],
 })
-export class ParticipantPairGroupingActivityComponent extends BaseActivityComponent {
+export class ParticipantPairGroupingActivityComponent
+  extends BaseActivityComponent
+  implements OnInit, OnChanges {
   partnerName: string;
-  constructor(private emoji: EmojiLookupService) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private contextService: ContextService
+  ) {
     super();
+  }
+
+  ngOnInit() {}
+
+  ngOnChanges() {
+    const timer = this.activityState.pairgroupingactivity
+      .grouping_countdown_timer;
+    this.contextService.activityTimer = timer;
   }
 
   myGroup(): UserGroupUserSet {
     return this.activityState.pairgroupingactivity.usergroup_set.find(
-      ug =>
+      (ug) =>
         ug.usergroupuser_set
-          .map(u => u.user.id)
+          .map((u) => u.user.id)
           .indexOf(this.activityState.your_identity.id) > -1
     );
   }
@@ -32,7 +45,7 @@ export class ParticipantPairGroupingActivityComponent extends BaseActivityCompon
     const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
       concat(myGroup.usergroupuser_set, []),
-      e => e.user.id !== this.activityState.your_identity.id
+      (e) => e.user.id !== this.activityState.your_identity.id
     );
     if (myGroupWithoutMe.length === 1) {
       this.partnerName = myGroupWithoutMe[0].user.first_name;
@@ -55,7 +68,7 @@ export class ParticipantPairGroupingActivityComponent extends BaseActivityCompon
     const myGroup: UserGroupUserSet = this.myGroup();
 
     return myGroup.usergroupuser_set.find(
-      g => g.user.id === this.activityState.your_identity.id
+      (g) => g.user.id === this.activityState.your_identity.id
     );
   }
 

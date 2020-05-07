@@ -3,14 +3,14 @@ import {
   state,
   style,
   transition,
-  trigger
+  trigger,
   // ...
 } from '@angular/animations';
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { zoomInAnimation } from 'angular-animations';
 import { concat, remove } from 'lodash';
-import { EmojiLookupService } from 'src/app/services';
+import { ContextService, EmojiLookupService } from 'src/app/services';
 import { RoleplayPairUserFoundEvent } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -18,10 +18,10 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   selector: 'benji-ps-pair-activity',
   templateUrl: './pair-activity.component.html',
   styleUrls: ['./pair-activity.component.scss'],
-  animations: [zoomInAnimation()]
+  animations: [zoomInAnimation()],
 })
 export class ParticipantPairActivityComponent extends BaseActivityComponent
-  implements OnInit, OnDestroy {
+  implements OnInit, OnDestroy, OnChanges {
   partnerName: string;
 
   timerInterval;
@@ -29,13 +29,26 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
   animationState = false;
   animationWithState = false;
 
-  constructor(private emoji: EmojiLookupService, private dialog: MatDialog) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private dialog: MatDialog,
+    private contextService: ContextService
+  ) {
     super();
   }
 
   ngOnInit() {
     // this.timer = 1;
     // this.timerInterval = setInterval(() => this.showAttentionDialog(), 1000);
+  }
+  ngOnChanges() {
+    const act = this.activityState.roleplaypairactivity;
+    if (!act.grouping_complete) {
+      const timer = act.grouping_countdown_timer;
+      this.contextService.activityTimer = timer;
+    } else if (act.grouping_complete) {
+      this.contextService.activityTimer = act.activity_countdown_timer;
+    }
   }
 
   showAttentionDialog() {
@@ -57,9 +70,9 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
 
   myGroup() {
     return this.activityState.roleplaypairactivity.roleplaypair_set.find(
-      ug =>
+      (ug) =>
         concat(ug.primary_roleplayuser_set, ug.secondary_roleplayuser_set)
-          .map(u => u.user.id)
+          .map((u) => u.user.id)
           .indexOf(this.activityState.your_identity.id) > -1
     );
   }
@@ -71,7 +84,7 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
         myGroup.primary_roleplayuser_set,
         myGroup.secondary_roleplayuser_set
       ),
-      e => e.user.id !== this.activityState.your_identity.id
+      (e) => e.user.id !== this.activityState.your_identity.id
     );
     if (myGroupWithoutMe.length === 1) {
       this.partnerName = myGroupWithoutMe[0].user.first_name;
@@ -95,13 +108,13 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
     return concat(
       myGroup.primary_roleplayuser_set,
       myGroup.secondary_roleplayuser_set
-    ).find(g => g.user.id === this.activityState.your_identity.id);
+    ).find((g) => g.user.id === this.activityState.your_identity.id);
   }
 
   participantIsPrimary() {
     return (
       this.myGroup().primary_roleplayuser_set.find(
-        g => g.user.id === this.activityState.your_identity.id
+        (g) => g.user.id === this.activityState.your_identity.id
       ) !== undefined
     );
   }

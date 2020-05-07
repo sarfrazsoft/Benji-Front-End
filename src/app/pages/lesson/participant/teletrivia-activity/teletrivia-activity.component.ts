@@ -4,27 +4,33 @@ import {
   OnDestroy,
   Renderer2,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
+import { ContextService } from 'src/app/services';
 import {
   TeleTriviaMessageReturnedEvent,
   TeleTriviaSharingDoneEvent,
   TeleTriviaStartGameEvent,
   TeleTriviaSubmitAnswerEvent,
-  TeleTriviaUserInCircleEvent
+  TeleTriviaUserInCircleEvent,
+  Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-teletrivia-activity',
   templateUrl: './teletrivia-activity.component.html',
-  styleUrls: ['./teletrivia-activity.component.scss']
+  styleUrls: ['./teletrivia-activity.component.scss'],
 })
 export class ParticipantTeletriviaActivityComponent
   extends BaseActivityComponent
   implements OnChanges, OnDestroy {
-  constructor(private renderer: Renderer2, public dialog: MatDialog) {
+  constructor(
+    private renderer: Renderer2,
+    public dialog: MatDialog,
+    private contextService: ContextService
+  ) {
     super();
   }
   currentQuestionIndex = 0;
@@ -55,6 +61,7 @@ export class ParticipantTeletriviaActivityComponent
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.contextService.activityTimer = { status: 'cancelled' } as Timer;
     if (
       this.participantIsInitiator() &&
       !this.activityState.teletriviaactivity.game_started &&
@@ -83,7 +90,7 @@ export class ParticipantTeletriviaActivityComponent
   participantInCircle() {
     return (
       this.activityState.teletriviaactivity.users_in_circle.find(
-        e => e.id === this.activityState.your_identity.id
+        (e) => e.id === this.activityState.your_identity.id
       ) !== undefined
     );
   }
@@ -134,7 +141,7 @@ export class ParticipantTeletriviaActivityComponent
   public triggerDialogue(templateRef) {
     this.dialog.open(templateRef, {
       width: '305px',
-      panelClass: 'dialog--primary-color-dark'
+      panelClass: 'dialog--primary-color-dark',
     });
   }
 }

@@ -1,36 +1,43 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { concat, remove } from 'lodash';
-import { EmojiLookupService } from 'src/app/services';
+import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
   GroupingUserFoundEvent,
   RoleplayPairUser,
   TriadRoleplayPairUser,
   TriadUserGroupUserSet,
-  UserGroupUserSet
+  UserGroupUserSet,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-triad-grouping-activity',
   templateUrl: './triad-grouping-activity.component.html',
-  styleUrls: ['./triad-grouping-activity.component.scss']
+  styleUrls: ['./triad-grouping-activity.component.scss'],
 })
 export class ParticipantTriadGroupingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   partnerName: string;
-  constructor(private emoji: EmojiLookupService) {
+  constructor(
+    private emoji: EmojiLookupService,
+    private contextService: ContextService
+  ) {
     super();
   }
 
   ngOnInit() {}
-  ngOnChanges() {}
+  ngOnChanges() {
+    const timer = this.activityState.triadgroupingactivity
+      .grouping_countdown_timer;
+    this.contextService.activityTimer = timer;
+  }
 
   myGroup(): TriadUserGroupUserSet {
     return this.activityState.triadgroupingactivity.usergroup_set.find(
-      ug =>
+      (ug) =>
         ug.usergroupuser_set
-          .map(u => u.user.id)
+          .map((u) => u.user.id)
           .indexOf(this.activityState.your_identity.id) > -1
     );
   }
@@ -39,7 +46,7 @@ export class ParticipantTriadGroupingActivityComponent
     const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
       concat(myGroup.usergroupuser_set, []),
-      e => e.user.id !== this.activityState.your_identity.id
+      (e) => e.user.id !== this.activityState.your_identity.id
     );
     myGroupWithoutMe.sort((a, b) =>
       a.user.first_name.localeCompare(b.user.first_name)
@@ -65,7 +72,7 @@ export class ParticipantTriadGroupingActivityComponent
     const myGroup: TriadUserGroupUserSet = this.myGroup();
 
     return myGroup.usergroupuser_set.find(
-      g => g.user.id === this.activityState.your_identity.id
+      (g) => g.user.id === this.activityState.your_identity.id
     );
   }
 
