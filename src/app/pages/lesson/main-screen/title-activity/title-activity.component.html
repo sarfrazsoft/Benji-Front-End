@@ -14,7 +14,13 @@
     </h1>
   </div>
   <div class="activity-title-description-container">
-    <p class="secondary-color-dark pn-500">
+    <p
+      class="secondary-color-dark pn-500"
+      [ngStyle]="{
+        'font-size':
+          activityState.titleactivity.title_text.length > 100 ? '3vw' : '4vw'
+      }"
+    >
       {{ activityState.titleactivity.title_text }}
     </p>
   </div>
