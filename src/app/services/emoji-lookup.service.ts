@@ -105,6 +105,14 @@ export class EmojiLookupService {
         return '👴🏿';
       case 'babylightskin':
         return '👶🏻';
+      case 'chartincreasing':
+        return '📈';
+      case 'leftspeechbubble':
+        return '🗨️';
+      case 'hourglassnotdone':
+        return '⏳';
+      case 'questionmark':
+        return '❓';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
     }
