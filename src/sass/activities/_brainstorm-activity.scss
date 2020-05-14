@@ -2,6 +2,7 @@ benji-ms-brainstorming-activity {
   .submitted-ideas {
     padding: 0 3vw;
     height: 100%;
+    overflow-y: auto;
     ul {
       display: flex;
       flex-wrap: wrap;
@@ -39,6 +40,7 @@ benji-ms-brainstorming-activity {
   .top-ideas {
     padding: 0 3vw;
     height: 100%;
+    overflow-y: auto;
     ul {
       display: flex;
       flex-wrap: wrap;
@@ -89,9 +91,9 @@ benji-ms-brainstorming-activity {
 }
 
 benji-ps-brainstorming-activity {
-  .b-flat-card {
-    height: calc(100vh - 65px - 130px);
-  }
+  // .b-flat-card {
+  //   height: calc(100vh - 65px - 130px);
+  // }
   textarea {
     color: inherit;
     outline: none;

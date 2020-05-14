@@ -5,7 +5,7 @@ import {
   EventEmitter,
   OnInit,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -18,13 +18,13 @@ import {
   FeedbackTagsComponent,
   GenericRoleplayComponent,
   McqsComponent,
-  PitchOMaticComponent
+  PitchOMaticComponent,
 } from './index';
 
 @Component({
   selector: 'benji-reports',
   templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.scss']
+  styleUrls: ['./reports.component.scss'],
 })
 export class ReportsComponent implements OnInit {
   config: PerfectScrollbarConfigInterface = {};
@@ -39,7 +39,7 @@ export class ReportsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
       const lesssonrunCode = paramMap.get('lessonrunCode');
       this.getSessionSummary(lesssonrunCode);
     });

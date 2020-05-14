@@ -3,11 +3,31 @@
     <div class="border-bottom" fxLayout="row" fxLayoutGap="3vw">
       <h1 class="pn-500">
         <span class="primary-color pn-700">
-          Brainstorming
+          <ng-container
+            *ngIf="
+              activityState.brainstormactivity.voting_countdown_timer &&
+              !activityState.brainstormactivity.voting_complete
+            "
+          >
+            Vote
+          </ng-container>
+          <ng-container
+            *ngIf="!activityState.brainstormactivity.submission_complete"
+          >
+            Brainstorming
+          </ng-container>
         </span>
       </h1>
       <div fxLayoutAlign="end center">
-        <h2 class="pn-500 discuss-instruction">
+        <h2
+          class="pn-500 discuss-instruction"
+          [ngStyle]="{
+            'font-size':
+              activityState.brainstormactivity.instructions.length > 80
+                ? '2vw'
+                : '2.8vw'
+          }"
+        >
           {{ activityState.brainstormactivity.instructions }}
         </h2>
       </div>
@@ -54,7 +74,12 @@
         <div class="primary-color idea-index">
           <span> {{ i + 1 }}. </span>
         </div>
-        <div class="idea-text">
+        <div
+          class="idea-text"
+          [ngStyle]="{
+            'font-size': idea.idea.length > 150 ? '3.6vh' : '5vh'
+          }"
+        >
           {{ idea.idea }}
         </div>
       </li>

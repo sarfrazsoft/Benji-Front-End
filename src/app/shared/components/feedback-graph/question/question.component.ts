@@ -4,7 +4,7 @@ import {
   ElementRef,
   Input,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import * as Chart from 'chart.js';
 import { PastSessionsService } from 'src/app/services';
@@ -13,7 +13,7 @@ import { FeedbackGraphQuestion, User } from 'src/app/services/backend/schema';
 @Component({
   selector: 'benji-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss']
+  styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
@@ -32,7 +32,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
-    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+    this.pastSessionService.filteredInUsers$.subscribe((updatedUserFilter) => {
       this.updateChart();
     });
 
@@ -42,10 +42,10 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     let ratingSum = 0;
     let noOfRatings = 0;
 
-    this.question.assessments.forEach(answer => {
+    this.question.assessments.forEach((answer) => {
       if (
         this.pastSessionService.filteredInUsers.find(
-          el => el === answer.user.id
+          (el) => el === answer.user.id
         ) ||
         !this.userFilter
       ) {
@@ -156,15 +156,15 @@ export class QuestionComponent implements OnInit, AfterViewInit {
             label: '',
             data: assessments,
             borderWidth: 1,
-            backgroundColor: '#cadafe'
-          }
-        ]
+            backgroundColor: '#cadafe',
+          },
+        ],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
         legend: {
-          display: false
+          display: false,
         },
         tooltips: {
           caretSize: 0,
@@ -194,14 +194,14 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               //   'yolo',
               //   'more yolo'
               // ];
-            }
-          }
+            },
+          },
         },
         scales: {
           yAxes: [
             {
               gridLines: {
-                display: true
+                display: true,
               },
               ticks: {
                 fontColor: '#000',
@@ -210,7 +210,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 // min: 0,
                 // max: max,
                 // stepSize: Math.ceil(max / 5),
-                callback: function(
+                callback: function (
                   value: number,
                   index: number,
                   values: number[]
@@ -224,26 +224,26 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                   //   : '';
                   return Math.floor(value) === value ? value : '';
                   // return value;
-                }
-              }
-            }
+                },
+              },
+            },
           ],
           xAxes: [
             {
               barPercentage: 0.5,
               gridLines: {
-                display: false
+                display: false,
               },
               ticks: {
                 fontColor: '#000',
                 fontSize: 14,
                 stepSize: 1,
-                beginAtZero: true
-              }
-            }
-          ]
-        }
-      }
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
     });
   }
 
@@ -254,10 +254,10 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       let ratingSum = 0;
       let noOfRatings = 0;
       this.users = [[], [], [], [], []];
-      this.question.assessments.forEach(answer => {
+      this.question.assessments.forEach((answer) => {
         if (
           this.pastSessionService.filteredInUsers.find(
-            el => el === answer.user.id
+            (el) => el === answer.user.id
           ) ||
           !this.userFilter
         ) {
