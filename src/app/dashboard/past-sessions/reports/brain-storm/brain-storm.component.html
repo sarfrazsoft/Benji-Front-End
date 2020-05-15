@@ -1,20 +1,29 @@
-<div class="admin-panel report-cards" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Brain storming</h1>
-  </div>
+<div class="report-cards" fxLayout="column">
+  <div class="card-header">Brainstorming</div>
 
   <div class="brain-storming-report">
     <div class="report-content">
       <div class="prompt">
-        {{ data.prompt }}
+        {{ brainstorm.instructions }}
       </div>
       <div class="ideas-count">
-        {{ data.ideas.length }} ideas submitted by
-        {{ data.joined_users?.length }}
+        {{ brainstorm.idea_rankings.length }} statements submitted by
+        {{ data.joined_users?.length }} participants
       </div>
       <div class="text-list">
-        <div class="text-list-item" *ngFor="let idea of data.ideas">
-          {{ idea }}
+        <div
+          class="text-list-item"
+          *ngFor="let idea of brainstorm.idea_rankings"
+        >
+          {{ idea.idea }}
+          <div class="details">
+            {{
+              idea.submitted_by_user.first_name +
+                " " +
+                idea.submitted_by_user.last_name
+            }}, {{ " " + idea.num_votes }}
+            {{ idea.num_votes === 1 ? " vote" : " votes" }}
+          </div>
         </div>
       </div>
     </div>

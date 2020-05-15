@@ -9,10 +9,11 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { ActivityTypes } from 'src/app/globals';
+import { ActivityTypes as Acts } from 'src/app/globals';
 import { PastSessionsService } from 'src/app/services';
 import { ActivityReport } from 'src/app/services/backend/schema';
 import {
+  BrainStormComponent,
   BuildAPitchComponent,
   FeedbackComponent,
   FeedbackTagsComponent,
@@ -34,7 +35,7 @@ export class ReportsComponent implements OnInit {
 
   constructor(
     private pastSessionsService: PastSessionsService,
-    private componentFactoryResolver: ComponentFactoryResolver,
+    private cfr: ComponentFactoryResolver,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -53,15 +54,13 @@ export class ReportsComponent implements OnInit {
 
         // Iterate over each item in array
         res.forEach((act: ActivityReport) => {
-          if (act.activity_type === ActivityTypes.mcq) {
-            const mcqCF = this.componentFactoryResolver.resolveComponentFactory(
-              McqsComponent
-            );
+          if (act.activity_type === Acts.mcq) {
+            const mcqCF = this.cfr.resolveComponentFactory(McqsComponent);
             const component = this.entry.createComponent(mcqCF);
             component.instance.data = act;
 
             // commented out tags feedback report
-            // const FTagsCF = this.componentFactoryResolver.resolveComponentFactory(
+            // const FTagsCF = this.cfr.resolveComponentFactory(
             //   FeedbackTagsComponent
             // );
             // const component = this.entry.createComponent(FTagsCF);
@@ -85,30 +84,26 @@ export class ReportsComponent implements OnInit {
             //     ]
             //   }
             // ];
-          } else if (act.activity_type === ActivityTypes.feedback) {
-            const feedbackCF = this.componentFactoryResolver.resolveComponentFactory(
-              FeedbackComponent
-            );
-            const component = this.entry.createComponent(feedbackCF);
+          } else if (act.activity_type === Acts.feedback) {
+            const f = this.cfr.resolveComponentFactory(FeedbackComponent);
+            const component = this.entry.createComponent(f);
             component.instance.data = act;
-          } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-            const pomCF = this.componentFactoryResolver.resolveComponentFactory(
-              PitchOMaticComponent
-            );
-            const component = this.entry.createComponent(pomCF);
+          } else if (act.activity_type === Acts.pitchoMatic) {
+            const p = this.cfr.resolveComponentFactory(PitchOMaticComponent);
+            const component = this.entry.createComponent(p);
             component.instance.data = act;
-          } else if (act.activity_type === ActivityTypes.buildAPitch) {
-            const bapCF = this.componentFactoryResolver.resolveComponentFactory(
-              BuildAPitchComponent
-            );
-            const component = this.entry.createComponent(bapCF);
+          } else if (act.activity_type === Acts.buildAPitch) {
+            const b = this.cfr.resolveComponentFactory(BuildAPitchComponent);
+            const component = this.entry.createComponent(b);
             component.instance.data = act;
-          } else if (act.activity_type === ActivityTypes.genericRoleplay) {
-            // const grplayCF = this.componentFactoryResolver.resolveComponentFactory(
-            //   GenericRoleplayComponent
-            // );
-            // const component = this.entry.createComponent(grplayCF);
+          } else if (act.activity_type === Acts.genericRoleplay) {
+            // const g = this.cfr.resolveComponentFactory(GenericRoleplayComponent);
+            // const component = this.entry.createComponent(g);
             // component.instance.data = act;
+          } else if (act.activity_type === Acts.brainStorm) {
+            const b = this.cfr.resolveComponentFactory(BrainStormComponent);
+            const component = this.entry.createComponent(b);
+            component.instance.data = act;
           }
         });
       });

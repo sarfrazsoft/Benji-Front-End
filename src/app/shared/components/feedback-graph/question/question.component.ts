@@ -205,7 +205,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               },
               ticks: {
                 fontColor: '#000',
-                fontSize: 18,
+                fontSize: 16,
                 beginAtZero: true,
                 // min: 0,
                 // max: max,
@@ -236,7 +236,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
               },
               ticks: {
                 fontColor: '#000',
-                fontSize: 14,
+                fontSize: 16,
                 stepSize: 1,
                 beginAtZero: true,
               },

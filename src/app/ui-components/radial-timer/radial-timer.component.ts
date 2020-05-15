@@ -5,14 +5,14 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Timer } from '../../services/backend/schema/utils';
 
 @Component({
   selector: 'app-radial-timer',
   templateUrl: './radial-timer.component.html',
-  styleUrls: []
+  styleUrls: [],
 })
 export class RadialTimerComponent implements OnInit, OnDestroy {
   timerDiameter = 1;
@@ -65,8 +65,11 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
         } else {
           offset = 0;
         }
+        // console.log(this.timer.end_time, this.timer.end_time.replace(/ /, 'T'));
         this.remainingTime =
-          Date.parse(this.timer.end_time) - Date.now() - offset;
+          Date.parse(this.timer.end_time.replace(/ /, 'T')) -
+          Date.now() -
+          offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }

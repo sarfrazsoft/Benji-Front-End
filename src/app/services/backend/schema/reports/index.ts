@@ -5,3 +5,4 @@ export * from './feedback';
 export * from './pitch-o-matic';
 export * from './generic-roleplay';
 export * from './groups';
+export * from './brainstorm';

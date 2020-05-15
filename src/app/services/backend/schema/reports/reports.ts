@@ -1,6 +1,7 @@
 import { ActivityTypes } from 'src/app/globals';
 import { Lesson } from '../course_details';
 import { User } from '../user';
+import { BrainstormReport } from './brainstorm';
 import { BuildAPitchReport } from './build-a-pitch';
 import { FeedbackReport } from './feedback';
 import { GenericRoleplayReport } from './generic-roleplay';
@@ -16,7 +17,11 @@ export interface SessionReport {
   joined_users: Array<User>;
   host: User;
   activity_results: Array<
-    BuildAPitchReport | FeedbackReport | MCQReport | PitchOMaticReport
+    | BuildAPitchReport
+    | FeedbackReport
+    | MCQReport
+    | PitchOMaticReport
+    | BrainstormReport
   >;
 }
 
@@ -27,7 +32,7 @@ export interface ActivityReport extends SessionReport {
   feedback?: FeedbackReport;
   pom?: PitchOMaticReport;
   bap?: BuildAPitchReport;
-  brainstorm?: any;
+  brainstorm?: BrainstormReport;
   postAssessment?: FeedbackReport;
   grplay?: GenericRoleplayReport;
 }
