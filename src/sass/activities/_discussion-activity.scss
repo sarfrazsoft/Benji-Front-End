@@ -36,9 +36,6 @@ $instruction-font-size: 3.8vw;
   .discuss-names {
     font-size: 80px;
     line-height: normal;
-    @media #{$fourK-display-and-up} {
-      font-size: 150px;
-    }
   }
 }
 

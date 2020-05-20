@@ -12,6 +12,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import { PastSessionsService } from 'src/app/services';
 import { ActivityReport } from 'src/app/services/backend/schema';
+import { CaseStudyComponent } from './case-study/case-study.component';
 import {
   BrainStormComponent,
   BuildAPitchComponent,
@@ -51,7 +52,6 @@ export class ReportsComponent implements OnInit {
       .getReports(lessonrunCode)
       .subscribe((res: Array<ActivityReport>) => {
         this.statsData = res[0];
-
         // Iterate over each item in array
         res.forEach((act: ActivityReport) => {
           if (act.activity_type === Acts.mcq) {
@@ -103,6 +103,10 @@ export class ReportsComponent implements OnInit {
           } else if (act.activity_type === Acts.brainStorm) {
             const b = this.cfr.resolveComponentFactory(BrainStormComponent);
             const component = this.entry.createComponent(b);
+            component.instance.data = act;
+          } else if (act.activity_type === Acts.caseStudy) {
+            const c = this.cfr.resolveComponentFactory(CaseStudyComponent);
+            const component = this.entry.createComponent(c);
             component.instance.data = act;
           }
         });

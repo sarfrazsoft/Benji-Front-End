@@ -52,15 +52,14 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
       this.questions = JSON.parse(
         localStorage.getItem(this.localStorageItemName)
       );
-      // for (let i = 0; i < this.questions.length; i++) {
-      //   if (myNoteTaker.casestudyanswer_set[i]) {
-      //     this.questions[i].answer = myNoteTaker.casestudyanswer_set[i].answer;
-      //   }
-      // }
     } else {
       for (let i = 0; i < this.questions.length; i++) {
-        if (myNoteTaker.casestudyanswer_set[i]) {
-          this.questions[i].answer = myNoteTaker.casestudyanswer_set[i].answer;
+        const questionID = this.questions[i].id;
+        for (let j = 0; j < myNoteTaker.casestudyanswer_set.length; j++) {
+          const noteTakersAns = myNoteTaker.casestudyanswer_set[j];
+          if (noteTakersAns.casestudyquestion === questionID) {
+            this.questions[i].answer = noteTakersAns.answer;
+          }
         }
       }
     }

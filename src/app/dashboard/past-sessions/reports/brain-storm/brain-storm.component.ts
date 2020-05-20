@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { NgOnChangesFeature } from '@angular/core/src/render3';
+import { clone } from 'lodash';
 import { ActivityReport } from 'src/app/services/backend/schema';
-import { BrainstormReport } from 'src/app/services/backend/schema/reports/brainstorm';
+import { PastSessionsService } from 'src/app/services/past-sessions.service';
 
 @Component({
   selector: 'benji-brain-storm',
@@ -11,12 +11,25 @@ import { BrainstormReport } from 'src/app/services/backend/schema/reports/brains
 export class BrainStormComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
   brainstorm: ActivityReport['brainstorm'];
-  constructor() {}
+  fIUs = [];
+  constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
-    this.brainstorm = this.data.brainstorm;
+    this.update();
+    this.pastSessionService.filteredInUsers$.subscribe((updatedUserFilter) => {
+      this.update();
+    });
   }
   ngOnChanges() {
-    this.brainstorm = this.data.brainstorm;
+    this.update();
+  }
+
+  update() {
+    this.fIUs = this.pastSessionService.filteredInUsers;
+    this.brainstorm = clone(this.data.brainstorm);
+
+    this.brainstorm.idea_rankings = this.brainstorm.idea_rankings.filter((i) =>
+      this.fIUs.includes(i.submitted_by_user.id)
+    );
   }
 }

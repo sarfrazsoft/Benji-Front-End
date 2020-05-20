@@ -1,6 +1,7 @@
 import { PastSessionsComponent } from './past-sessions.component';
 import { BrainStormComponent } from './reports/brain-storm/brain-storm.component';
 import { BuildAPitchComponent as BAPReportComponent } from './reports/build-a-pitch/build-a-pitch.component';
+import { CaseStudyComponent } from './reports/case-study/case-study.component';
 import { FeedbackTagsComponent } from './reports/feedback-tags/feedback-tags.component';
 import { FeedbackComponent } from './reports/feedback/feedback.component';
 import { GenericRoleplayComponent } from './reports/generic-roleplay/generic-roleplay.component';
@@ -12,7 +13,7 @@ import { OptionDistributionBarsComponent } from './reports/mcqs/option-distribut
 import { OptionSpreadComponent } from './reports/mcqs/option-spread/option-spread.component';
 import {
   LearnerReportComponents,
-  LearnerReportEntryComponents
+  LearnerReportEntryComponents,
 } from './reports/pitch-o-matic/index';
 import { PitchOMaticComponent } from './reports/pitch-o-matic/pitch-o-matic.component';
 import { ReportsComponent } from './reports/reports.component';
@@ -31,12 +32,13 @@ export const PastSessionsComponents = [
   OptionDistributionBarsComponent,
   McqTableComponent,
   BrainStormComponent,
+  CaseStudyComponent,
   KeyStatsComponent,
   ParticipantsComponent,
   FeedbackComponent,
   PitchOMaticComponent,
   GenericRoleplayComponent,
-  FeedbackTagsComponent
+  FeedbackTagsComponent,
 ];
 
 export const PastSessionsEntryComponents = [
@@ -47,10 +49,11 @@ export const PastSessionsEntryComponents = [
   OptionDistributionBarsComponent,
   McqTableComponent,
   BrainStormComponent,
+  CaseStudyComponent,
   FeedbackComponent,
   PitchOMaticComponent,
   FeedbackTagsComponent,
-  ...LearnerReportEntryComponents
+  ...LearnerReportEntryComponents,
 ];
 
 export const PastSessionsProviders = [];

@@ -47,13 +47,18 @@
         (mouseleave)="idea.showClose = false"
         cdkDrag
       >
-        <mat-icon
-          [style.opacity]="idea.showClose ? 1 : 0"
-          (click)="deleteIdea(idea.id)"
-          >clear</mat-icon
-        >
+        <div class="idea">
+          <mat-icon
+            [style.opacity]="idea.showClose ? 1 : 0"
+            (click)="deleteIdea(idea.id)"
+            >clear</mat-icon
+          >
 
-        {{ idea.idea }}
+          {{ idea.idea }}
+          <div class="votes primary-color">
+            {{ idea.num_votes }}
+          </div>
+        </div>
       </li>
     </ul>
   </div>

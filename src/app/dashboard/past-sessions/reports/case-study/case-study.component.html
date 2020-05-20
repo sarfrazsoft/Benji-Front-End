@@ -1,0 +1,31 @@
+<div class="report-cards" fxLayout="column">
+  <div class="card-header">Case Study</div>
+
+  <div class="case-study-report">
+    <div class="report-content">
+      <div class="prompt">
+        Prompt
+      </div>
+      <div class="text-list">
+        <div class="text-list-item">
+          {{ casestudy.case_study_details }}
+        </div>
+      </div>
+
+      <ng-container *ngFor="let question of questions">
+        <div class="prompt case-study-question">
+          {{ question.question_text }}
+        </div>
+        <div class="text-list" *ngFor="let group of groups; let i = index">
+          <div class="text-list-item">
+            {{ getGroupAnswer(group, question.id) }}
+            <div class="details">
+              <span class="pn-600">Group {{ i + 1 }}: </span>
+              {{ group.participants }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

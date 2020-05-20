@@ -3,6 +3,7 @@ import { Lesson } from '../course_details';
 import { User } from '../user';
 import { BrainstormReport } from './brainstorm';
 import { BuildAPitchReport } from './build-a-pitch';
+import { CaseStudyReport } from './case-study';
 import { FeedbackReport } from './feedback';
 import { GenericRoleplayReport } from './generic-roleplay';
 import { MCQReport } from './MCQ';
@@ -22,6 +23,7 @@ export interface SessionReport {
     | MCQReport
     | PitchOMaticReport
     | BrainstormReport
+    | CaseStudyReport
   >;
 }
 
@@ -35,6 +37,7 @@ export interface ActivityReport extends SessionReport {
   brainstorm?: BrainstormReport;
   postAssessment?: FeedbackReport;
   grplay?: GenericRoleplayReport;
+  casestudy?: CaseStudyReport;
 }
 
 export interface Report {

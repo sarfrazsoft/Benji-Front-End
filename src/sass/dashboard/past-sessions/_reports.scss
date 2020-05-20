@@ -45,7 +45,8 @@ benji-reports {
 
 // Brain storming activity report
 .brain-storming-report,
-.feedback-report {
+.feedback-report,
+.case-study-report {
   .ideas-count {
     font-size: $report-subheading;
     color: #4a4a4a;
@@ -55,6 +56,9 @@ benji-reports {
     font-weight: 600;
     margin-top: 10px;
     margin-bottom: 15px;
+    &.case-study-question {
+      margin-top: 30px;
+    }
   }
 }
 

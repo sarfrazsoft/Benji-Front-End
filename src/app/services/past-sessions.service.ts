@@ -3,16 +3,17 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
-import { ActivityTypes } from 'src/app/globals';
+import { ActivityTypes as Acts } from 'src/app/globals';
 import {
   ActivityReport,
   BuildAPitchReport,
+  CaseStudyReport,
   FeedbackReport,
   GenericRoleplayReport,
   MCQReport,
   PitchOMaticReport,
   SessionReport,
-  User
+  User,
 } from 'src/app/services/backend/schema';
 import { ContextService } from 'src/app/services/context.service';
 import { activityResult1 } from './activity-result-1';
@@ -30,7 +31,7 @@ export class PastSessionsService {
     private http: HttpClient,
     private contextService: ContextService
   ) {
-    this.contextService.user$.subscribe(user => {
+    this.contextService.user$.subscribe((user) => {
       if (user.local_admin_permission) {
         this.userIsAdmin = true;
       }
@@ -69,10 +70,10 @@ export class PastSessionsService {
   }
 
   selectAll() {
-    this.contextService.user$.subscribe(user => {
+    this.contextService.user$.subscribe((user) => {
       if (user && user.local_admin_permission) {
         this.filteredInUsers = [];
-        this.joinedUsers.forEach(ju => {
+        this.joinedUsers.forEach((ju) => {
           this.filteredInUsers.push(ju.id);
         });
         this.filteredInUsers$.next(this.filteredInUsers);
@@ -92,9 +93,9 @@ export class PastSessionsService {
           this.joinedUsers = res.joined_users;
 
           if (this.filteredInUsers.length === 0) {
-            this.contextService.user$.subscribe(user => {
+            this.contextService.user$.subscribe((user) => {
               if (user && user.local_admin_permission) {
-                res.joined_users.forEach(ju => {
+                res.joined_users.forEach((ju) => {
                   this.filteredInUsers.push(ju.id);
                 });
               } else {
@@ -119,47 +120,54 @@ export class PastSessionsService {
                 }
               }
             }
-            if (act.activity_type === ActivityTypes.mcq) {
+            if (act.activity_type === Acts.mcq) {
               arr.push({
                 ...res,
                 mcqs: [act] as Array<MCQReport>,
-                activity_type: ActivityTypes.mcq,
-                title: act.title
+                activity_type: Acts.mcq,
+                title: act.title,
               });
-            } else if (act.activity_type === ActivityTypes.feedback) {
+            } else if (act.activity_type === Acts.feedback) {
               arr.push({
                 ...res,
-                activity_type: ActivityTypes.feedback,
+                activity_type: Acts.feedback,
                 feedback: act as FeedbackReport,
-                title: act.title
+                title: act.title,
               });
-            } else if (act.activity_type === ActivityTypes.pitchoMatic) {
+            } else if (act.activity_type === Acts.pitchoMatic) {
               arr.push({
                 ...res,
-                activity_type: ActivityTypes.pitchoMatic,
+                activity_type: Acts.pitchoMatic,
                 pom: act as PitchOMaticReport,
-                title: act.title
+                title: act.title,
               });
-            } else if (act.activity_type === ActivityTypes.buildAPitch) {
+            } else if (act.activity_type === Acts.buildAPitch) {
               arr.push({
                 ...res,
-                activity_type: ActivityTypes.buildAPitch,
+                activity_type: Acts.buildAPitch,
                 bap: act as BuildAPitchReport,
-                title: act.title
+                title: act.title,
               });
-            } else if (act.activity_type === ActivityTypes.brainStorm) {
+            } else if (act.activity_type === Acts.brainStorm) {
               arr.push({
                 ...res,
-                activity_type: ActivityTypes.brainStorm,
+                activity_type: Acts.brainStorm,
                 brainstorm: act,
-                title: act.title
+                title: act.title,
               });
-            } else if (act.activity_type === ActivityTypes.genericRoleplay) {
+            } else if (act.activity_type === Acts.genericRoleplay) {
               arr.push({
                 ...res,
-                activity_type: ActivityTypes.genericRoleplay,
+                activity_type: Acts.genericRoleplay,
                 grplay: act as GenericRoleplayReport,
-                title: act.title
+                title: act.title,
+              });
+            } else if (act.activity_type === Acts.caseStudy) {
+              arr.push({
+                ...res,
+                activity_type: Acts.caseStudy,
+                casestudy: act as CaseStudyReport,
+                title: act.title,
               });
             }
           });
@@ -200,7 +208,7 @@ export class PastSessionsService {
     return this.http
       .get(global.apiRoot + '/course_details/lesson_run/?page=' + page)
       .pipe(
-        map(res => {
+        map((res) => {
           return res;
         })
       );
