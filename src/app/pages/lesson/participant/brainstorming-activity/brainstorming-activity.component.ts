@@ -20,6 +20,7 @@ export class ParticipantBrainstormingActivityComponent
   selectedIdeas = [];
   ideas = [];
   showVoteSubmitButton = false;
+  noOfIdeasSubmitted = 0;
 
   // Screens
   showSubmitIdeas = true;
@@ -49,12 +50,15 @@ export class ParticipantBrainstormingActivityComponent
       this.contextService.activityTimer = this.act.submission_countdown_timer;
     }
     // Show thank you for idea submission
-    const userVote = this.act.user_submission_counts.find(
+    const submissionCount = this.act.user_submission_counts.find(
       (v) => v.id === userID
     );
-    if (userVote && userVote.count >= this.act.max_user_submissions) {
-      this.showSubmitIdeas = false;
-      this.showThankyouForSubmission = true;
+    if (submissionCount) {
+      this.noOfIdeasSubmitted = submissionCount.count;
+      if (submissionCount.count >= this.act.max_user_submissions) {
+        this.showSubmitIdeas = false;
+        this.showThankyouForSubmission = true;
+      }
     }
 
     // Show Vote for ideas screen

@@ -9,9 +9,19 @@
     <ng-container class="body-text">
       {{ act.instructions }} <br />
       <!-- show submission limit  -->
-      <ng-container *ngIf="act.max_user_submissions < 5">
-        You can submit up to{{ " " + act.max_user_submissions + " " }}
-        {{ act.max_user_submissions == 1 ? "idea" : "ideas" }}
+      <ng-container *ngIf="act.max_user_submissions < 10">
+        <ng-container *ngIf="noOfIdeasSubmitted === 0">
+          You can submit {{ " " + act.max_user_submissions + " " }}
+          {{ act.max_user_submissions == 1 ? "idea" : "ideas" }}
+        </ng-container>
+
+        <ng-container *ngIf="noOfIdeasSubmitted > 0">
+          You have {{ act.max_user_submissions - noOfIdeasSubmitted }}
+          {{ noOfIdeasSubmitted == 1 ? "submission" : "submissions" }} left
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="act.max_user_submissions >= 10">
+        You can submit multiple ideas
       </ng-container>
     </ng-container>
     <ng-container class="content">
