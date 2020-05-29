@@ -1,0 +1,41 @@
+.door-container {
+  padding: 2vh 0px;
+  width: 100%;
+  border-right: 1px solid $secondary-color;
+  .door-label {
+    font-size: 3.4vw;
+  }
+}
+
+.result-stats {
+  .result-details {
+    padding: 5vh 0vh 5vh 5vh;
+    width: 100%;
+    border-right: 1px solid $secondary-color;
+    &.stayed {
+      border-right: none;
+      padding: 5vh 5vh 5vh 0vh;
+    }
+    .heading {
+      font-size: 3vw;
+      padding-bottom: 30px;
+      text-align: center;
+      width: 100%;
+      font-weight: 700;
+      border-bottom: 1px solid $secondary-color;
+    }
+    .stat {
+      font-size: 2.5vw;
+      font-weight: 600;
+    }
+  }
+  .results-buttons {
+    width: 30vw;
+    .indigo-launch-button-sub {
+      width: 20vw;
+      height: 7.5vh;
+      font-size: 1.5vw;
+      border-radius: 12vh;
+    }
+  }
+}

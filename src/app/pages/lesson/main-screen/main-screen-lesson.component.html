@@ -48,6 +48,14 @@
     >
     </benji-ms-lobby>
 
+    <benji-ms-monty-hall
+      *ngIf="getActivityType() === at.montyHall"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-monty-hall>
+
     <benji-ms-title-activity
       *ngIf="getActivityType() === at.title"
       [activityState]="serverMessage"

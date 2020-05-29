@@ -36,5 +36,6 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     this.at.externalGrouping,
     this.at.whereDoYouStand,
     this.at.brainStorm,
+    this.at.montyHall,
   ];
 }

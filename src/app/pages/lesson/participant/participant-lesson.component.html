@@ -17,6 +17,14 @@
   >
   </benji-ps-lobby>
 
+  <benji-ps-monty-hall-activity
+    *ngIf="getActivityType() === at.montyHall"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-monty-hall-activity>
+
   <!-- <benji-ps-reorder-activity
     *ngIf="getActivityType() === 'LobbyActivity'"
     [activityState]="serverMessage"

@@ -20,6 +20,7 @@ export enum ActivityTypes {
   title = 'TitleActivity',
   mcq = 'MCQActivity',
   mcqResults = 'MCQResultsActivity',
+  montyHall = 'MontyHallActivity',
   teleTrivia = 'TeleTriviaActivity',
   whereDoYouStand = 'WhereDoYouStandActivity',
   video = 'VideoActivity',

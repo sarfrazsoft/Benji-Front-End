@@ -11,6 +11,7 @@ import {
   LobbyActivity,
   MCQActivity,
   MCQResultsActivity,
+  MontyHallActivity,
   PairGroupingActivity,
   PitchoMaticActivity,
   RoleplayPairActivity,
@@ -44,6 +45,7 @@ export interface UpdateMessage {
   titleactivity?: TitleActivity;
   mcqactivity?: MCQActivity;
   mcqresultsactivity?: MCQResultsActivity;
+  montyhallactivity?: MontyHallActivity;
   videoactivity?: VideoActivity;
   teletriviaactivity?: TeleTriviaActivity;
   roleplaypairactivity?: RoleplayPairActivity;
@@ -378,5 +380,31 @@ export class GatherActivityContinueEvent extends ActivityEvent {
   event_name = 'GatherActivityContinueEvent';
   constructor() {
     super();
+  }
+}
+
+export class MontyHallSelectDoorEvent extends ActivityEvent {
+  event_name = 'MontyHallSelectDoorEvent';
+
+  constructor(door_choice: number) {
+    super();
+    this.extra_args = { door_choice: door_choice };
+  }
+}
+
+export class MontyHallRepeatEvent extends ActivityEvent {
+  event_name = 'MontyHallRepeatEvent';
+  constructor() {
+    super();
+  }
+}
+
+export class LobbySetNicknameEvent extends ActivityEvent {
+  nickname: string;
+  user_id: number;
+
+  constructor(nickname, user_id?) {
+    super();
+    this.extra_args = { nickname: nickname, user_id: user_id };
   }
 }

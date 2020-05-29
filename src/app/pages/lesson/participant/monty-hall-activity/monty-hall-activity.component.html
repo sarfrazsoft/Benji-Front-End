@@ -1,0 +1,103 @@
+<div class="b-flat-card center-text mc-card">
+  <!-- pick a door -->
+  <ng-container *ngIf="initialChoiceScreen">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Monty Hall Problem</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <div class="twemoji">
+        <app-b-twemoji emoji="🚪"></app-b-twemoji>
+      </div>
+      <h1 class="pn-700 primary-color-darkest">
+        Pick a door
+      </h1>
+    </div>
+    <div class="b-flat-card__action">
+      <button
+        *ngFor="let door of doors; let i = index"
+        class="b-standard-button unselected"
+        [ngClass]="{
+          selected: door.id === selectedDoor.id,
+          inactive: choiceSubmitted
+        }"
+        (click)="selectDoor(door)"
+      >
+        {{ door.id }}
+      </button>
+    </div>
+  </ng-container>
+
+  <!-- switch or stay on to a door -->
+  <ng-container *ngIf="changeChoiceScreen">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Monty Hall Problem</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <div class="twemoji">
+        <app-b-twemoji emoji="🐐"></app-b-twemoji>
+      </div>
+      <h1 class="pn-700 primary-color-darkest">
+        Pick again?
+      </h1>
+      <p>
+        There was a goat behind door {{ revealedDoor() }}. Do you want to pick
+        again?
+      </p>
+    </div>
+    <div class="b-flat-card__action">
+      <button
+        class="b-standard-button unselected"
+        [ngClass]="{
+          selected: getUserInitialPickedDoor() === selectedDoor.id,
+          inactive: choiceSubmitted
+        }"
+        (click)="selectDoor({ id: getUserInitialPickedDoor() })"
+      >
+        Stay with door {{ getUserInitialPickedDoor() }}
+      </button>
+      <button
+        class="b-standard-button unselected"
+        [ngClass]="{
+          selected: getUsersOtherAvailableChoice() === selectedDoor.id,
+          inactive: choiceSubmitted
+        }"
+        (click)="selectDoor({ id: getUsersOtherAvailableChoice() })"
+      >
+        Switch to door {{ getUsersOtherAvailableChoice() }}
+      </button>
+    </div>
+  </ng-container>
+
+  <!-- reveal -->
+  <ng-container *ngIf="revealScreen">
+    <div class="b-flat-card__title">
+      <h2 class="pn-400">Monty Hall Problem</h2>
+    </div>
+    <div class="b-flat-card__body">
+      <div *ngIf="userWon" class="twemoji">
+        <app-b-twemoji emoji="🚗"></app-b-twemoji>
+      </div>
+      <div *ngIf="!userWon" class="twemoji">
+        <app-b-twemoji emoji="🐐"></app-b-twemoji>
+      </div>
+      <h1 *ngIf="userWon" class="pn-700 primary-color-darkest">
+        Winner winner, chicken dinner.
+      </h1>
+      <h1 *ngIf="!userWon" class="pn-700 primary-color-darkest">
+        Better luck next time.
+      </h1>
+    </div>
+  </ng-container>
+</div>
+<div
+  class="b-baseline-action bg-primary-color-dark"
+  *ngIf="showDoorSubmitButton"
+>
+  <benji-animated-checkmark-button
+    loadingStateInnerHTML="Loading"
+    innerHTML="Submit"
+    buttonStyle="white"
+    [valid]="userVoted"
+    (click)="submitDoor()"
+  ></benji-animated-checkmark-button>
+</div>

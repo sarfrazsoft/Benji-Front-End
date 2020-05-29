@@ -58,6 +58,7 @@
 // mainscreen full height container
 .ms-fullheight-container {
   .mainscreen-activity {
+    position: relative;
     height: 100%;
     video {
       height: 100%;

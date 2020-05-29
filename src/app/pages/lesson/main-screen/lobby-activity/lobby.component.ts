@@ -6,11 +6,13 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-
 import { MatDialog } from '@angular/material';
 import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialogs';
 import { ContextService } from 'src/app/services';
-import { LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
+import {
+  LobbySetNicknameEvent,
+  LobbyStartButtonClickEvent,
+} from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -65,5 +67,11 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
     } else {
       this.sendMessage.emit(new LobbyStartButtonClickEvent());
     }
+  }
+
+  setNicknameEvent() {
+    this.sendMessage.emit(
+      new LobbySetNicknameEvent({ nickname: 'ironman', user_id: 4 })
+    );
   }
 }

@@ -12,6 +12,7 @@ import { ParticipantHintActivityComponent } from './hint-activity/hint-activity.
 import { ParticipantLobbyComponents } from './lobby-activity';
 import { ParticipantMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
+import { ParticipantMontyHallActivityComponent } from './monty-hall-activity/monty-hall-activity.component';
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
 import { ParticipantPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
@@ -36,6 +37,7 @@ export const ParticipantScreenComponents = [
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantExternalGroupingActivityComponent,
+  ParticipantMontyHallActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantGeneratePitchActivityComponent,
   ParticipantHintActivityComponent,

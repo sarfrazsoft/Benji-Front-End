@@ -405,3 +405,51 @@ export interface CaseStudyUserSet {
 }
 
 export type CaseStudyRoles = 'Note Taker' | 'Participant';
+
+export interface MontyHallActivity {
+  activity_id: string;
+  activity_type: string;
+  auto_next: boolean;
+  change_choice_seconds: number;
+  change_choice_timer: Timer;
+  current_round: number;
+  current_round_details: Array<CurrentRoundDetails>;
+  description: string;
+  end_time: any;
+  id: number;
+  initial_choice_seconds: number;
+  initial_choice_timer: Timer;
+  is_paused: boolean;
+  next_activity: any;
+  next_activity_delay_seconds: number;
+  next_activity_start_timer: Timer;
+  polymorphic_ctype: number;
+  results: Array<MontyHallResult>;
+  results_seconds: number;
+  results_timer: Timer;
+  reveal_timer: Timer;
+  start_time: string;
+  status:
+    | 'not_started'
+    | 'initial_choice'
+    | 'change_choice'
+    | 'reveal'
+    | 'results';
+}
+export interface CurrentRoundDetails {
+  changed_choice: any;
+  correct_door: number;
+  door_choice: any;
+  door_reveal: any;
+  id: number;
+  round_number: number;
+  user: number;
+}
+
+export interface MontyHallResult {
+  round_number: number;
+  winners_who_changed_choice: number;
+  winners_who_didnt_change: number;
+  losers_who_changed_choice: number;
+  losers_who_didnt_change: number;
+}
