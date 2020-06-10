@@ -30,6 +30,8 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   revealAnswer = false;
   @ViewChild('timer') timer;
 
+  localStorageItemName = 'mcqSelectedChoice';
+
   constructor(private contextService: ContextService) {
     super();
   }
@@ -41,6 +43,12 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
       (a, b) => a.id - b.id
     );
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
+
+    if (localStorage.getItem(this.localStorageItemName)) {
+      this.selectedChoice = JSON.parse(
+        localStorage.getItem(this.localStorageItemName)
+      );
+    }
   }
 
   ngOnChanges() {
@@ -56,6 +64,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
       this.showQuestion = true;
       this.showQuestionsAnswer = false;
       if (!this.questionTimerStarted) {
+        localStorage.removeItem(this.localStorageItemName);
         this.selectedChoice = {
           id: null,
           is_correct: null,
@@ -82,6 +91,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   selectOption(option: MCQChoice) {
     if (!this.answerSubmitted) {
       this.selectedChoice = option;
+      localStorage.setItem(this.localStorageItemName, JSON.stringify(option));
     }
   }
 

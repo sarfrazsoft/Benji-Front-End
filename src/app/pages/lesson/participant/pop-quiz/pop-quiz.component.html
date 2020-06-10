@@ -65,18 +65,10 @@
     <div *ngIf="!selectedChoice.is_correct" class="b-flat-card__action-detail">
       <p>The correct answer is {{ getCorrectAnswer().choice_text }}</p>
     </div>
+    <div class="b-flat-card__action-detail" style="margin-top: 30px;">
+      <p>{{ selectedChoice.explanation }}</p>
+    </div>
   </ng-container>
-
-  <div class="mc-card__timer">
-    <benji-linear-timer
-      [timer]="activityState.mcqactivity.question_timer"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
-    <benji-linear-timer
-      [timer]="activityState.base_activity.next_activity_start_timer"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
-  </div>
 </div>
 
 <div

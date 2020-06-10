@@ -20,5 +20,10 @@ benji-ms-pop-quiz {
 benji-ps-pop-quiz {
   .b-flat-card__action {
     margin-bottom: 5vh;
+    .b-standard-button {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
