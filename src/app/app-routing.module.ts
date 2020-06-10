@@ -3,42 +3,43 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   AcceptInviteComponent,
   ActivateAccountComponent,
-  EntryComponent
+  EntryComponent,
 } from 'src/app/pages';
 import { WhiteLabelResolver } from './services';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: 'src/app/layout/layout.module#LayoutModule'
+    loadChildren: 'src/app/layout/layout.module#LayoutModule',
   },
   {
     path: 'login/:partner',
     component: EntryComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'login',
     component: EntryComponent,
     resolve: {
-      labelInfo: WhiteLabelResolver
-    }
+      labelInfo: WhiteLabelResolver,
+    },
   },
   {
     path: 'activate/:confirmationCode',
-    component: ActivateAccountComponent
+    component: ActivateAccountComponent,
   },
   {
     path: 'accept_invite/:inviteId/:inviteToken',
-    component: AcceptInviteComponent
-  }
+    component: AcceptInviteComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  declarations: []
+  declarations: [],
 })
 export class AppRoutingModule {}
+// http://localhost:4200/dashboard/pastsessions/60481
