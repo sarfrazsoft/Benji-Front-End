@@ -1,7 +1,7 @@
 import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appClickStopPropagation]'
+  selector: '[benji-click-stop-propagation]',
 })
 export class ClickStopPropagationDirective {
   @HostListener('click', ['$event'])
