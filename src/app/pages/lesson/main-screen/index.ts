@@ -1,4 +1,4 @@
-import { MainScreenBrainstormingActivityComponent } from './brainstorming-activity/brainstorming-activity.component';
+import { BrainStormComponents } from './brainstorming-activity';
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
@@ -26,7 +26,7 @@ export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
   MainScreenBuildPitchActivityComponent,
-  MainScreenBrainstormingActivityComponent,
+  ...BrainStormComponents,
   MainScreenCaseStudyActivityComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,

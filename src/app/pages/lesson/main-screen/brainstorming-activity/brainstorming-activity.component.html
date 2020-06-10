@@ -139,3 +139,218 @@
     </div>
   </div>
 </div> -->
+
+<!-- New brain storm code  -->
+<!-- <div fxLayout="column" class="mainscreen-activity brainstorming-ms">
+  <div class="lesson-top-banner compact">
+    <div class="border-bottom" fxLayout="row" fxLayoutGap="3vw">
+      <h1 class="pn-500">
+        <span class="primary-color pn-700">
+          <ng-container *ngIf="voteScreen">
+            Vote
+          </ng-container>
+          <ng-container *ngIf="submissionScreen">
+            Brainstorming
+          </ng-container>
+          <ng-container *ngIf="VnSComplete">
+            Winners
+          </ng-container>
+        </span>
+      </h1>
+      <div fxLayoutAlign="end center">
+        <h2
+          class="pn-500 discuss-instruction"
+          [ngStyle]="{
+            'font-size': instructions.length > 80 ? '2vw' : '2.8vw'
+          }"
+        >
+          {{ instructions }}
+        </h2>
+      </div>
+    </div>
+  </div>
+  <div
+    class="submitted-ideas"
+    *ngIf="submissionScreen || voteScreen"
+    fxLayout="row"
+    fxLayoutGap="30px"
+    cdkDropListGroup
+  > -->
+<!-- <ng-container *ngFor="let column of columns; let i = index">
+      <div
+        class="column"
+        cdkDropList
+        [cdkDropListData]="column.list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="header" (click)="columnHeaderClicked(column)">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            *ngIf="!column.editing"
+          >
+            <div fxFlex>
+              {{ column.name }}
+            </div>
+            <button
+              [matMenuTriggerFor]="menu"
+              benji-click-stop-propagation
+              disableRipple
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="deleteCol(i)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+              <button mat-menu-item (click)="columnHeaderClicked(column)">
+                <mat-icon>create</mat-icon>
+                <span>Rename</span>
+              </button>
+            </mat-menu>
+          </div>
+          <ng-container *ngIf="column.editing">
+            <input
+              #colName
+              type="text"
+              (blur)="onColumnNameBlur(column)"
+              [(ngModel)]="column.name"
+            />
+          </ng-container>
+        </div>
+        <div class="ideas">
+          <div class="idea" *ngFor="let item of column.list" cdkDrag>
+            {{ item }}
+          </div>
+        </div>
+      </div>
+    </ng-container> -->
+<!-- <div class="column">
+      <div class="header">
+        <div class="add-column" (click)="addColumn()">
+          + Add column
+        </div>
+      </div>
+    </div> -->
+<!-- <ul>
+      <li
+        *ngFor="let idea of ideas"
+        (mouseenter)="idea.showClose = true"
+        (mouseleave)="idea.showClose = false"
+        cdkDrag
+      >
+        <div class="idea">
+          <mat-icon
+            [style.opacity]="idea.showClose ? 1 : 0"
+            (click)="deleteIdea(idea.id)"
+            >clear</mat-icon
+          >
+
+          {{ idea.idea }}
+          <div class="votes primary-color">
+            {{ idea.num_votes }}
+          </div>
+        </div>
+      </li>
+    </ul> -->
+
+<!-- <div
+      class="column"
+      cdkDropList
+      [cdkDropListData]="todo"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="header">one</div>
+      <div class="ideas">
+        <div class="idea" *ngFor="let item of todo" cdkDrag>{{ item }}</div>
+      </div>
+    </div> -->
+<!-- <div
+      class="column"
+      cdkDropList
+      [cdkDropListData]="done"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="header">New Activities</div>
+      <div class="ideas">
+        <div class="idea" *ngFor="let item of done" cdkDrag>{{ item }}</div>
+      </div>
+    </div> -->
+<!-- <div
+      class="column"
+      cdkDropList
+      [cdkDropListData]="done"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      four
+    </div>
+    <div class="column">five</div> -->
+<!-- </div>
+  <div class="top-ideas" *ngIf="VnSComplete">
+    <ul fxLayout="row" fxLayoutAlign="center space-around">
+      <li *ngFor="let idea of ideas | slice: 0:3; let i = index">
+        <mat-icon
+          [style.opacity]="idea.showClose ? 1 : 0"
+          (click)="deleteIdea(idea.id)"
+          >clear</mat-icon
+        >
+        <div class="primary-color idea-index">
+          <span> {{ i + 1 }}. </span>
+        </div>
+        <div
+          class="idea-text"
+          [ngStyle]="{
+            'font-size': idea.idea.length > 150 ? '3.6vh' : '5vh'
+          }"
+        >
+          {{ idea.idea }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="linear-timer-container">
+    <benji-linear-timer
+      *ngIf="submissionScreen"
+      [timer]="timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+    <benji-linear-timer
+      *ngIf="voteScreen"
+      [timer]="timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+
+    <benji-linear-timer
+      *ngIf="VnSComplete"
+      [timer]="timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+  </div>
+</div> -->
+
+<!-- <div
+  class="lists-container"
+  cdkDropListGroup
+  fxLayoutAlign="space-evenly start"
+>
+  <div class="list-container" *ngFor="let category of categories">
+    <h2>{{ category.name }}</h2>
+
+    <div
+      cdkDropList
+      [cdkDropListData]="category.list"
+      class="list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="draggable-box" *ngFor="let item of category.list" cdkDrag>
+        {{ item }}
+      </div>
+    </div>
+  </div>
+</div> -->

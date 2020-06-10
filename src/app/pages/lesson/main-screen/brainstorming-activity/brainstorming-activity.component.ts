@@ -1,34 +1,89 @@
 import {
   CdkDragDrop,
   moveItemInArray,
-  transferArrayItem
+  transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { BrainstormRemoveSubmissionEvent } from 'src/app/services/backend/schema';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import {
+  BrainstormRemoveSubmissionEvent,
+  Timer,
+} from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ms-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
-  styleUrls: ['./brainstorming-activity.component.scss']
+  styleUrls: ['./brainstorming-activity.component.scss'],
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
+  @ViewChild('colName') colNameElement: ElementRef;
   constructor() {
     super();
   }
+  instructions = '';
+  timer: Timer;
+
+  submissionScreen = false;
+  voteScreen = false;
+  VnSComplete = false;
   ideas = [];
 
+  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+
+  columns = [
+    {
+      name: 'Category One',
+      list: ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'],
+      editing: false,
+    },
+    {
+      name: 'Category Two',
+      list: [
+        'Get up',
+        'Brush teeth',
+        'Take a shower',
+        'Check e-mail',
+        'Walk dog',
+      ],
+      editing: false,
+    },
+  ];
+
+  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
   ngOnInit() {}
 
   ngOnChanges() {
-    const bsAct = this.activityState.brainstormactivity;
+    const act = this.activityState.brainstormactivity;
     this.ideas = [];
-    bsAct.idea_rankings.forEach(idea => {
+    act.idea_rankings.forEach((idea) => {
       this.ideas.push({ ...idea, showClose: false });
     });
     this.ideas.sort((a, b) => b.num_votes - a.num_votes);
+
+    this.instructions = act.instructions;
+
+    if (!act.submission_complete) {
+      this.submissionScreen = true;
+      this.voteScreen = false;
+      this.VnSComplete = false;
+      this.timer = act.submission_countdown_timer;
+    } else if (act.voting_countdown_timer && !act.voting_complete) {
+      this.voteScreen = true;
+      this.submissionScreen = false;
+      this.VnSComplete = false;
+      this.timer = act.voting_countdown_timer;
+    } else if (act.submission_complete && act.voting_complete) {
+      this.VnSComplete = true;
+      this.timer = this.activityState.base_activity.next_activity_start_timer;
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -50,6 +105,25 @@ export class MainScreenBrainstormingActivityComponent
 
   deleteIdea(id) {
     this.sendMessage.emit(new BrainstormRemoveSubmissionEvent(id));
+  }
+
+  columnHeaderClicked(column) {
+    column.editing = true;
+    setTimeout(() => {
+      this.colNameElement.nativeElement.focus();
+    }, 0);
+  }
+
+  deleteCol(index) {
+    this.columns.splice(index, 1);
+  }
+
+  onColumnNameBlur(column) {
+    column.editing = false;
+  }
+
+  addColumn() {
+    this.columns.push({ name: '', list: [], editing: true });
   }
 }
 
