@@ -31,6 +31,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     this.at.buildAPitch,
     this.at.rolePlayPair,
     this.at.mcqResults,
+    this.at.mcq,
     this.at.discussion,
     this.at.genericRoleplay,
     this.at.externalGrouping,
