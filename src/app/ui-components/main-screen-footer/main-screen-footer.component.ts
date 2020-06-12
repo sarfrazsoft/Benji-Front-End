@@ -1,26 +1,46 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { User } from 'src/app/services/backend/schema';
+import { ConfirmationDialogComponent } from 'src/app/shared';
+import {
+  BootUserEvent,
   EndEvent,
   FastForwardEvent,
   NextInternalEvent,
   PauseActivityEvent,
-  ResumeActivityEvent
+  ResumeActivityEvent,
+  ServerMessage,
+  UpdateMessage,
 } from '../../services/backend/schema/messages';
 import { VideoStateService } from '../../services/video-state.service';
 
 @Component({
   selector: 'benji-main-screen-footer',
   templateUrl: './main-screen-footer.component.html',
-  styleUrls: ['./main-screen-footer.component.scss']
+  styleUrls: ['./main-screen-footer.component.scss'],
 })
-export class MainScreenFooterComponent implements OnInit {
+export class MainScreenFooterComponent implements OnInit, OnChanges {
+  @Input() activityState: UpdateMessage;
   @Input() showFastForward: boolean;
   @Input() showFooter: boolean;
   @Input() lessonName: string;
   @Input() roomCode: string;
   @Input() isPaused: boolean;
 
-  constructor(private videoStateService: VideoStateService) {}
+  participants: Array<User> = [];
+  dialogRef;
+
+  constructor(
+    private videoStateService: VideoStateService,
+    private dialog: MatDialog
+  ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
 
@@ -30,6 +50,10 @@ export class MainScreenFooterComponent implements OnInit {
     // } else if (!this.isPaused) {
     //   this.videoStateService.videoState = 'resume';
     // }
+  }
+
+  ngOnChanges() {
+    this.participants = this.activityState.lesson_run.joined_users;
   }
 
   controlClicked(eventType) {
@@ -53,5 +77,30 @@ export class MainScreenFooterComponent implements OnInit {
       this.socketMessage.emit(new FastForwardEvent());
     }
     // }
+  }
+
+  deleteUser(p: User) {
+    const msg =
+      'Are you sure you want to delete ' +
+      p.first_name +
+      ' ' +
+      p.last_name +
+      '?';
+    this.dialogRef = this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: msg,
+        },
+        disableClose: true,
+        panelClass: 'dashboard-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          console.log('delete', p.first_name);
+          this.socketMessage.emit(new BootUserEvent(p.id));
+          // this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoice));
+        }
+      });
   }
 }

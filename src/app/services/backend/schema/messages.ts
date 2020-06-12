@@ -105,6 +105,14 @@ export class FastForwardEvent extends ActivityEvent {
   event_name = 'FastForwardEvent';
 }
 
+export class BootUserEvent extends ActivityEvent {
+  event_name = 'BootUserEvent';
+  constructor(user_id) {
+    super();
+    this.extra_args = { user_id: user_id };
+  }
+}
+
 export class LobbyStartButtonClickEvent extends ActivityEvent {
   event_name = 'LobbyStartButtonClickEvent';
 }

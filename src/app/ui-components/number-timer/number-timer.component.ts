@@ -66,7 +66,10 @@ export class NumberTimerComponent implements OnInit, OnDestroy {
           offset = 0;
         }
         this.remainingTime =
-          Date.parse(this.timer.end_time) - Date.now() - offset;
+          Date.parse(this.timer.end_time.replace(/ /, 'T')) -
+          Date.now() -
+          offset;
+
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }

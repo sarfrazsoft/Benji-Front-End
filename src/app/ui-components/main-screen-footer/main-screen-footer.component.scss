@@ -2,12 +2,16 @@
   color: #fff;
   min-height: 55px;
   padding: 0px 1vw;
-  .mainscreen-footer__session-info p {
-    text-transform: uppercase;
-    font-size: 22px;
-    line-height: normal;
-    letter-spacing: 1.2px;
-    margin-bottom: 0;
+  .session-info {
+    .participantDropdown {
+    }
+    p {
+      text-transform: uppercase;
+      font-size: 22px;
+      line-height: normal;
+      letter-spacing: 1.2px;
+      margin-bottom: 0;
+    }
   }
   .mainscreen-footer__controls {
     display: flex;
@@ -24,5 +28,14 @@
         height: auto;
       }
     }
+  }
+}
+
+// styles for participant dropdown
+.delete-participant {
+  padding: 10px 5px;
+  min-width: 256px;
+  .mat-icon {
+    cursor: pointer;
   }
 }

@@ -21,7 +21,26 @@
       </button>
     </ng-container>
   </div>
-  <div class="mainscreen-footer__session-info">
-    <p>{{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
+  <div class="session-info" fxLayout="row" fxLayoutGap="100px">
+    <div class="participantDropdown">
+      <button mat-icon-button [matMenuTriggerFor]="participantMenu">
+        <mat-icon>supervisor_account</mat-icon>
+        <sup>{{ participants.length }}</sup>
+      </button>
+      <mat-menu #participantMenu="matMenu">
+        <div
+          class="delete-participant"
+          fxLayoutAlign="center"
+          fxLayoutGap="10px"
+          *ngFor="let p of participants"
+        >
+          <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
+          <span fxFlex="90%">{{ p.first_name + " " + p.last_name }}</span>
+        </div>
+      </mat-menu>
+    </div>
+    <div fxLayoutAlign="center center">
+      <p>{{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
+    </div>
   </div>
 </div>
