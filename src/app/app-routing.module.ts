@@ -42,4 +42,3 @@ const routes: Routes = [
   declarations: [],
 })
 export class AppRoutingModule {}
-// http://localhost:4200/dashboard/pastsessions/60481

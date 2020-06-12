@@ -1,7 +1,12 @@
 <ng-container>
   <mat-toolbar> <benji-topbar fxFlex></benji-topbar> </mat-toolbar>
   <mat-sidenav-container fxFlexFill>
-    <mat-sidenav opened="true" mode="side" disableClose="true">
+    <mat-sidenav
+      *ngIf="!isEmailedReport"
+      opened="true"
+      mode="side"
+      disableClose="true"
+    >
       <benji-menu></benji-menu>
     </mat-sidenav>
     <div fxLayout="column">

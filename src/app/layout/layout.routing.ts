@@ -75,7 +75,8 @@ const routes: Routes = [
     path: 'dashboard',
     component: LayoutComponent,
     loadChildren: 'src/app/dashboard/dashboard.module#DashboardModule',
-    canLoad: [AuthGuard],
+    // canLoad not used because parameters were not available in it
+    // canLoad: [AuthGuard],
     canActivate: [AuthGuard],
     resolve: {
       labelInfo: WhiteLabelResolver,
