@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 import * as global from '../../globals';
 import { UserInvitation } from '../backend/schema';
+import { LayoutService } from '../layout.service';
 
 export interface LoginResponse {
   user: any;
@@ -20,7 +21,8 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private layoutService: LayoutService
   ) {
     // Set user roles. They should  be set on login based on info from backend.
     // admin
@@ -33,9 +35,9 @@ export class AuthService {
     return this.http
       .post(global.apiRoot + '/jwt-auth/', {
         username: username,
-        password: password
+        password: password,
       })
-      .pipe(tap(result => this.setSession(result)));
+      .pipe(tap((result) => this.setSession(result)));
   }
 
   register(
@@ -57,7 +59,7 @@ export class AuthService {
         last_name: lastName,
         email: email,
         invitation: this.userInvitation ? this.userInvitation.id : null,
-        invitation_token: this.invitationToken ? this.invitationToken : null
+        invitation_token: this.invitationToken ? this.invitationToken : null,
       };
     } else {
       obj = {
@@ -68,25 +70,25 @@ export class AuthService {
         password2: password,
         first_name: firstName,
         last_name: lastName,
-        email: email
+        email: email,
       };
     }
     return this.http
       .post(global.apiRoot + '/rest-auth/registration/', obj)
       .pipe(
         map((res: Response) => res),
-        catchError(err => of(err.error))
+        catchError((err) => of(err.error))
       );
   }
 
   checkConfirmationCode(code: string) {
     return this.http
       .post(global.apiRoot + '/rest-auth/registration/verify-email/', {
-        key: code
+        key: code,
       })
       .pipe(
         map((res: Response) => res),
-        catchError(err => of(err.error))
+        catchError((err) => of(err.error))
       );
   }
 
@@ -97,15 +99,17 @@ export class AuthService {
         username: email.replace('@', 'at').replace('.', 'dot'),
         // username: email.split('@')[0],
         email: email,
-        password: password
+        password: password,
       })
       .pipe(
         map((res: LoginResponse) => {
+          console.log(JSON.stringify(res));
           this.setSession(res);
           this.contextService.user = res.user;
+          this.layoutService.isEmailedReport = false;
           localStorage.setItem('benji_user', JSON.stringify(res.user));
         }),
-        catchError(err => of(err.error))
+        catchError((err) => of(err.error))
       );
   }
 
