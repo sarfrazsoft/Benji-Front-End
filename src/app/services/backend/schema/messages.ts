@@ -302,6 +302,10 @@ export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
   }
 }
 
+export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
+  event_name = 'BrainstormToggleCategoryModeEvent';
+}
+
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
@@ -326,6 +330,15 @@ export class BrainstormVoteEvent extends ActivityEvent {
   constructor(id: number) {
     super();
     this.extra_args = { brainstormidea: id };
+  }
+}
+
+export class BrainstormSetCategoryEvent extends ActivityEvent {
+  event_name = 'BrainstormSetCategoryEvent';
+
+  constructor(id: number, category: string) {
+    super();
+    this.extra_args = { brainstormidea: id, category: category };
   }
 }
 

@@ -10,8 +10,11 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { uniqBy } from 'lodash';
 import {
   BrainstormRemoveSubmissionEvent,
+  BrainstormSetCategoryEvent,
+  BrainstormToggleCategoryModeEvent,
   Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -34,30 +37,34 @@ export class MainScreenBrainstormingActivityComponent
   submissionScreen = false;
   voteScreen = false;
   VnSComplete = false;
+  categorizeFlag = false;
+  colDeleted = 0;
   ideas = [];
 
-  todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
+  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
 
-  columns = [
-    {
-      name: 'Category One',
-      list: ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'],
-      editing: false,
-    },
-    {
-      name: 'Category Two',
-      list: [
-        'Get up',
-        'Brush teeth',
-        'Take a shower',
-        'Check e-mail',
-        'Walk dog',
-      ],
-      editing: false,
-    },
-  ];
+  // columns = [
+  //   {
+  //     name: 'Uncategorized',
+  //     list: ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'],
+  //     editing: false,
+  //   },
+  //   {
+  //     name: 'Category Two',
+  //     list: [
+  //       'Get up',
+  //       'Brush teeth',
+  //       'Take a shower',
+  //       'Check e-mail',
+  //       'Walk dog',
+  //     ],
+  //     editing: false,
+  //   },
+  // ];
 
-  done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
+  columns = [];
+
+  // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
   ngOnInit() {}
 
   ngOnChanges() {
@@ -69,6 +76,11 @@ export class MainScreenBrainstormingActivityComponent
     this.ideas.sort((a, b) => b.num_votes - a.num_votes);
 
     this.instructions = act.instructions;
+
+    this.categorizeFlag = act.categorize_flag;
+    if (this.categorizeFlag) {
+      this.populateCategories();
+    }
 
     if (!act.submission_complete) {
       this.submissionScreen = true;
@@ -100,7 +112,59 @@ export class MainScreenBrainstormingActivityComponent
         event.previousIndex,
         event.currentIndex
       );
+      this.sendCategorizeEvent(event);
     }
+  }
+
+  populateCategories() {
+    const act = this.activityState.brainstormactivity;
+    let categories = [];
+    act.idea_rankings.forEach((idea) => {
+      categories.push(idea.category.toLowerCase());
+    });
+    categories = uniqBy(categories, (e) => e);
+
+    // populate the columns
+    if (this.colDeleted > 0) {
+      this.columns = [];
+      this.colDeleted--;
+    }
+    categories.forEach((v) => {
+      const categoryIdeas = [];
+      act.idea_rankings.forEach((idea) => {
+        if (idea.category.toLowerCase() === v.toLowerCase()) {
+          categoryIdeas.push(idea);
+        }
+      });
+
+      if (this.columns.length < categories.length) {
+        this.columns.push({ name: v, editing: false, list: categoryIdeas });
+      } else {
+        for (let i = 0; i < this.columns.length; i++) {
+          const c = this.columns[i];
+          if (c.name.toLowerCase() === v.toLowerCase()) {
+            this.columns[i].list = categoryIdeas;
+            this.columns[i].name = v.toLowerCase();
+            this.columns[i].editing = false;
+          }
+        }
+      }
+    });
+  }
+
+  sendCategorizeEvent(event) {
+    console.log(event);
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(
+      event.container.element.nativeElement.innerHTML,
+      'text/html'
+    );
+    const colName = htmlDoc.getElementsByClassName('column-name')[0].innerHTML;
+
+    const id = event.container.data[event.currentIndex].id;
+    this.sendMessage.emit(
+      new BrainstormSetCategoryEvent(id, colName.toLowerCase())
+    );
   }
 
   deleteIdea(id) {
@@ -115,6 +179,10 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   deleteCol(index) {
+    this.columns[index].list.forEach((idea) => {
+      this.sendMessage.emit(new BrainstormRemoveSubmissionEvent(idea.id));
+      this.colDeleted++;
+    });
     this.columns.splice(index, 1);
   }
 

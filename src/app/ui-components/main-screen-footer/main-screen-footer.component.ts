@@ -11,6 +11,7 @@ import { User } from 'src/app/services/backend/schema';
 import { ConfirmationDialogComponent } from 'src/app/shared';
 import {
   BootUserEvent,
+  BrainstormToggleCategoryModeEvent,
   EndEvent,
   FastForwardEvent,
   NextInternalEvent,
@@ -99,8 +100,11 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
         if (res) {
           console.log('delete', p.first_name);
           this.socketMessage.emit(new BootUserEvent(p.id));
-          // this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoice));
         }
       });
+  }
+
+  toggleCategorization() {
+    this.socketMessage.emit(new BrainstormToggleCategoryModeEvent());
   }
 }

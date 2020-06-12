@@ -254,6 +254,7 @@ export interface BrainstormActivity {
   instructions: string;
   max_user_submissions: number;
   max_user_votes: number;
+  categorize_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
   submission_seconds: number;
@@ -269,6 +270,7 @@ export interface IdeaRanking {
   submitted_by_user: User;
   idea: string;
   num_votes: number;
+  category: string;
 }
 
 export interface BuildAPitchActivity {

@@ -39,6 +39,13 @@
         </div>
       </mat-menu>
     </div>
+    <div
+      *ngIf="activityState.activity_type === 'BrainstormActivity'"
+      fxLayoutAlign="center center"
+      (click)="toggleCategorization()"
+    >
+      <img class="img-icon" src="/assets/img/coloumns.png" alt="" />
+    </div>
     <div fxLayoutAlign="center center">
       <p>{{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
     </div>
