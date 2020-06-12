@@ -138,6 +138,17 @@ benji-ps-discussion-activity {
         line-height: 1.5;
         padding: 20px 7px;
       }
+      // case study styles
+      .case-details {
+        font-size: 22px;
+        line-height: 1.5;
+        padding: 20px 7px;
+      }
+      .question {
+        text-align: left;
+        font-size: 26px;
+        padding: 20px 7px;
+      }
     }
 
     .your-notes {
@@ -169,7 +180,6 @@ benji-ps-discussion-activity {
   }
 }
 
-benji-ps-case-study-activity,
 benji-ps-discussion-activity {
   .content {
     .your-prompt {

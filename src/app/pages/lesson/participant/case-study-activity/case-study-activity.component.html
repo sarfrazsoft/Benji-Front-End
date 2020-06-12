@@ -36,18 +36,15 @@
         Details:
       </div>
       <div
-        class="your-pitch bg-off-white"
+        class="case-details bg-off-white"
         *ngIf="act.case_study_details"
         innerHTML="{{ act.case_study_details }}"
       ></div>
     </div>
     <div *ngFor="let question of questions">
       <div class="your-prompt">
-        <div *ngIf="question.question_text" class="your-pitch-label left-text">
-          your prompt:
-        </div>
         <div
-          class="your-pitch bg-off-white"
+          class="question"
           *ngIf="question.question_text"
           innerHTML="{{ question.question_text }}"
         ></div>
