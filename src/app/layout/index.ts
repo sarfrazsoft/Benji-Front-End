@@ -27,6 +27,7 @@ import {
   LowResponseDialogComponent,
   MainScreenComponents,
   ParticipantScreenComponents,
+  PeakBackDialogComponent,
   SingleUserScreenComponents,
 } from '../index';
 
@@ -36,6 +37,7 @@ export const LayoutDeclarations = [
   ...SingleUserScreenComponents,
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
+  PeakBackDialogComponent,
   AnimatedCheckmarkButtonComponent,
   BTwemojiComponent,
   IcebreakerComponent,
@@ -60,4 +62,5 @@ export const LayoutDeclarations = [
 export const EntryComponents = [
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
+  PeakBackDialogComponent,
 ];

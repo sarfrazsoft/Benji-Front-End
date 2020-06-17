@@ -7,6 +7,12 @@
 >
   <div class="mainscreen-footer__controls">
     <ng-container>
+      <button (click)="controlClicked('previous')">
+        <mat-icon class="icon-white">skip_previous</mat-icon>
+      </button>
+      <button (click)="controlClicked('reset')">
+        <mat-icon class="icon-white">fast_rewind</mat-icon>
+      </button>
       <button (click)="controlClicked('pause')" *ngIf="!isPaused">
         <mat-icon class="icon-white">pause</mat-icon>
       </button>
@@ -19,6 +25,37 @@
       <button (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
       </button>
+      <button
+        [matMenuTriggerFor]="clickHoverMenu"
+        #clickHoverMenuTrigger="matMenuTrigger"
+        (click)="getActivities()"
+      >
+        <mat-icon class="icon-white">history</mat-icon>
+      </button>
+      <mat-menu #clickHoverMenu="matMenu" yPosition="above">
+        <ng-template matMenuContent>
+          <div
+            class="redo-act-item"
+            fxLayoutAlign="start center"
+            fxLayoutGap="10px"
+            *ngFor="let p of pastActivities"
+            (click)="redoAct(p)"
+          >
+            <span>
+              {{
+                p.activity_type.replace("Activity", "") + ": " + p.description
+              }}
+            </span>
+          </div>
+          <div
+            *ngIf="pastActivities.length === 0"
+            class="redo-act-item-loader"
+            fxLayoutAlign="start center"
+          >
+            <mat-spinner></mat-spinner>
+          </div>
+        </ng-template>
+      </mat-menu>
     </ng-container>
   </div>
   <div class="session-info" fxLayout="row" fxLayoutGap="100px">

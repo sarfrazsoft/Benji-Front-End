@@ -19,11 +19,27 @@
         <h2
           class="pn-500 discuss-instruction"
           [ngStyle]="{
-            'font-size': instructions.length > 80 ? '2vw' : '2.8vw'
+            'font-size': instructions.length > 65 ? '2vw' : '2.8vw'
           }"
         >
           {{ instructions }}
         </h2>
+      </div>
+      <div
+        class="primary-color-darkest"
+        style="font-size: 2vw;"
+        fxLayoutAlign="end center"
+        *ngIf="submissionScreen"
+      >
+        {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} submitted
+      </div>
+      <div
+        class="primary-color-darkest"
+        style="font-size: 2vw;"
+        fxLayoutAlign="end center"
+        *ngIf="voteScreen"
+      >
+        {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} voted
       </div>
     </div>
   </div>
@@ -84,8 +100,19 @@
               class="brainstorm-idea"
               *ngFor="let item of column.list"
               cdkDrag
+              (mouseenter)="item.showClose = true"
+              (mouseleave)="item.showClose = false"
             >
+              <mat-icon
+                [style.opacity]="item.showClose ? 1 : 0"
+                (click)="deleteIdea(item.id)"
+              >
+                clear
+              </mat-icon>
               {{ item.idea }}
+              <div class="votes primary-color">
+                {{ item.num_votes }}
+              </div>
             </div>
           </div>
         </div>
@@ -149,7 +176,7 @@
       </li>
     </ul>
   </div>
-  <div class="linear-timer-container">
+  <div class="linear-timer-container" *ngIf="!peakBackState">
     <benji-linear-timer
       *ngIf="submissionScreen"
       [timer]="timer"

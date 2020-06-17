@@ -3,12 +3,23 @@
     <div class="benji-logo-container">
       <img [src]="lightLogo" alt="Benji logo" class="benji-logo" />
     </div>
-    <div (click)="toggleFullscreen()" class="fullscreen-container">
-      <mat-icon *ngIf="!isFullscreen()" class="icon-white">fullscreen</mat-icon>
-      <mat-icon *ngIf="isFullscreen()" class="icon-white"
-        >fullscreen_exit</mat-icon
-      >
-      <span> Fullscreen </span>
+    <div fxLayout="row" fxLayoutGap="50px">
+      <div class="ms-toolbar-timer" *ngIf="showTimer">
+        <benji-number-timer
+          [timer]="timer"
+          endStateText="Times Up!"
+          [endAudio]="'bell.wav'"
+        ></benji-number-timer>
+      </div>
+      <div (click)="toggleFullscreen()" class="fullscreen-container">
+        <mat-icon *ngIf="!isFullscreen()" class="icon-white"
+          >fullscreen</mat-icon
+        >
+        <mat-icon *ngIf="isFullscreen()" class="icon-white"
+          >fullscreen_exit</mat-icon
+        >
+        <span> Fullscreen </span>
+      </div>
     </div>
   </div>
 </div>

@@ -6,12 +6,16 @@ import {
 import {
   Component,
   ElementRef,
+  Input,
   OnChanges,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { uniqBy } from 'lodash';
+import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
+import { ContextService } from 'src/app/services';
 import {
+  BrainstormActivity,
   BrainstormRemoveSubmissionEvent,
   BrainstormSetCategoryEvent,
   BrainstormToggleCategoryModeEvent,
@@ -28,7 +32,8 @@ export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   @ViewChild('colName') colNameElement: ElementRef;
-  constructor() {
+  @Input() peakBackState = false;
+  constructor(private contextService: ContextService) {
     super();
   }
   instructions = '';
@@ -39,6 +44,9 @@ export class MainScreenBrainstormingActivityComponent
   VnSComplete = false;
   categorizeFlag = false;
   colDeleted = 0;
+  joinedUsers = [];
+  ideaSubmittedUsersCount = 0;
+  voteSubmittedUsersCount = 0;
   ideas = [];
 
   // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
@@ -69,6 +77,7 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnChanges() {
     const act = this.activityState.brainstormactivity;
+    this.joinedUsers = this.activityState.lesson_run.joined_users;
     this.ideas = [];
     act.idea_rankings.forEach((idea) => {
       this.ideas.push({ ...idea, showClose: false });
@@ -82,19 +91,33 @@ export class MainScreenBrainstormingActivityComponent
       this.populateCategories();
     }
 
-    if (!act.submission_complete) {
-      this.submissionScreen = true;
-      this.voteScreen = false;
-      this.VnSComplete = false;
-      this.timer = act.submission_countdown_timer;
-    } else if (act.voting_countdown_timer && !act.voting_complete) {
+    if (this.peakBackState) {
       this.voteScreen = true;
       this.submissionScreen = false;
       this.VnSComplete = false;
-      this.timer = act.voting_countdown_timer;
-    } else if (act.submission_complete && act.voting_complete) {
-      this.VnSComplete = true;
-      this.timer = this.activityState.base_activity.next_activity_start_timer;
+      this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+    } else {
+      if (!act.submission_complete) {
+        this.submissionScreen = true;
+        this.voteScreen = false;
+        this.VnSComplete = false;
+        this.timer = act.submission_countdown_timer;
+        this.contextService.activityTimer = act.submission_countdown_timer;
+        this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
+      } else if (act.voting_countdown_timer && !act.voting_complete) {
+        this.voteScreen = true;
+        this.submissionScreen = false;
+        this.VnSComplete = false;
+        this.timer = act.voting_countdown_timer;
+        this.contextService.activityTimer = act.voting_countdown_timer;
+        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+      } else if (act.submission_complete && act.voting_complete) {
+        this.submissionScreen = false;
+        this.voteScreen = false;
+        this.VnSComplete = true;
+        this.timer = this.activityState.base_activity.next_activity_start_timer;
+        this.contextService.activityTimer = this.timer;
+      }
     }
   }
 
@@ -133,7 +156,7 @@ export class MainScreenBrainstormingActivityComponent
       const categoryIdeas = [];
       act.idea_rankings.forEach((idea) => {
         if (idea.category.toLowerCase() === v.toLowerCase()) {
-          categoryIdeas.push(idea);
+          categoryIdeas.push({ ...idea, showClose: false });
         }
       });
 
@@ -150,6 +173,14 @@ export class MainScreenBrainstormingActivityComponent
         }
       }
     });
+  }
+
+  getIdeaSubmittedUsersCount(act: BrainstormActivity) {
+    return act.user_submission_counts.length;
+  }
+
+  getVoteSubmittedUsersCount(act: BrainstormActivity) {
+    return act.user_vote_counts.length;
   }
 
   sendCategorizeEvent(event) {

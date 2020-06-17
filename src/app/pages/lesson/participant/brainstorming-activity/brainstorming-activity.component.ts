@@ -59,6 +59,8 @@ export class ParticipantBrainstormingActivityComponent
         this.showSubmitIdeas = false;
         this.showThankyouForSubmission = true;
       }
+    } else {
+      this.noOfIdeasSubmitted = 0;
     }
 
     // Show Vote for ideas screen

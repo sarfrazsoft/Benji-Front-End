@@ -105,6 +105,14 @@ export class FastForwardEvent extends ActivityEvent {
   event_name = 'FastForwardEvent';
 }
 
+export class ResetEvent extends ActivityEvent {
+  event_name = 'ResetEvent';
+}
+
+export class PreviousEvent extends ActivityEvent {
+  event_name = 'PreviousEvent';
+}
+
 export class BootUserEvent extends ActivityEvent {
   event_name = 'BootUserEvent';
   constructor(user_id) {

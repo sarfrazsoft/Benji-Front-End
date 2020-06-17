@@ -1,0 +1,12 @@
+<!-- <benji-main-screen-lesson> -->
+<div class="ms-fullheight-container">
+  <div class="ms-lesson__activity-container">
+    <benji-ms-brainstorming-activity
+      *ngIf="getActivityType() === at.brainStorm"
+      [activityState]="serverMessage"
+      [peakBackState]="true"
+    >
+    </benji-ms-brainstorming-activity>
+  </div>
+</div>
+<!-- </benji-main-screen-lesson> -->

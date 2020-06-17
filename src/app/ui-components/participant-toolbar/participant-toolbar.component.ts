@@ -23,7 +23,6 @@ export class ParticipantToolbarComponent implements OnInit {
 
     this.contextService.activityTimer$.subscribe((timer: Timer) => {
       if (timer) {
-        console.log(timer);
         this.timer = timer;
       }
     });

@@ -6,7 +6,9 @@
 </div>
 
 <div class="ms-fullheight-container">
-  <benji-main-screen-toolbar></benji-main-screen-toolbar>
+  <benji-main-screen-toolbar
+    [activityState]="serverMessage"
+  ></benji-main-screen-toolbar>
 
   <div
     *ngIf="isConnected() && serverMessage"

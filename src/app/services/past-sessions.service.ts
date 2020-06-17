@@ -218,4 +218,20 @@ export class PastSessionsService {
     const request = global.apiRoot + '/tenants/users/';
     return this.http.get<User>(request);
   }
+
+  // /api/course_details/lesson_run/{lessonrun_code}/activities/
+  getLessonsActivities(lessonRunCode) {
+    return this.http
+      .get(
+        global.apiRoot +
+          '/course_details/lesson_run/' +
+          lessonRunCode +
+          '/activities/'
+      )
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
 }
