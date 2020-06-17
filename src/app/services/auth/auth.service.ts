@@ -52,7 +52,7 @@ export class AuthService {
       obj = {
         // TODO get rid of username when backend gets rid of it
         // Is there a character limit on the username?
-        username: email.replace('@', 'at').replace('.', 'dot'),
+        username: email.replace(/@/g, 'at').replace(/\./g, 'dot'),
         password1: password,
         password2: password,
         first_name: firstName,
@@ -65,7 +65,7 @@ export class AuthService {
       obj = {
         // TODO get rid of username when backend gets rid of it
         // Is there a character limit on the username?
-        username: email.replace('@', 'at').replace('.', 'dot'),
+        username: email.replace(/@/g, 'at').replace(/\./g, 'dot'),
         password1: password,
         password2: password,
         first_name: firstName,
