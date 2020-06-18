@@ -8,10 +8,12 @@ import {
   ElementRef,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { uniqBy } from 'lodash';
+import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
 import { ContextService } from 'src/app/services';
 import {
@@ -30,9 +32,13 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges, OnDestroy {
   @ViewChild('colName') colNameElement: ElementRef;
   @Input() peakBackState = false;
+  @Input() activityStage: Observable<string>;
+  peakBackStage = null;
+  private eventsSubscription: Subscription;
+
   constructor(private contextService: ContextService) {
     super();
   }
@@ -73,7 +79,60 @@ export class MainScreenBrainstormingActivityComponent
   columns = [];
 
   // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.peakBackState) {
+      this.eventsSubscription = this.activityStage.subscribe((state) =>
+        this.changeStage(state)
+      );
+    }
+  }
+  ngOnDestroy() {
+    if (this.peakBackState) {
+      this.eventsSubscription.unsubscribe();
+    }
+  }
+  changeStage(state) {
+    this.peakBackStage = state;
+    const act = this.activityState.brainstormactivity;
+    if (state === 'next') {
+    } else {
+      // state === 'previous'
+    }
+
+    if (this.submissionScreen) {
+      if (state === 'next') {
+        this.voteScreen = true;
+        this.submissionScreen = false;
+        this.VnSComplete = false;
+        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+      } else {
+        // state === 'previous'
+        // do nothing
+      }
+    } else if (this.voteScreen) {
+      if (state === 'next') {
+        this.submissionScreen = false;
+        this.voteScreen = false;
+        this.VnSComplete = true;
+      } else {
+        // state === 'previous'
+        this.submissionScreen = true;
+        this.voteScreen = false;
+        this.VnSComplete = false;
+        this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
+      }
+    } else if (this.VnSComplete) {
+      if (state === 'next') {
+        // do nothing
+      } else {
+        // state === 'previous'
+        this.voteScreen = true;
+        this.submissionScreen = false;
+        this.VnSComplete = false;
+        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+      }
+    }
+  }
 
   ngOnChanges() {
     const act = this.activityState.brainstormactivity;
@@ -91,12 +150,12 @@ export class MainScreenBrainstormingActivityComponent
       this.populateCategories();
     }
 
-    if (this.peakBackState) {
+    if (this.peakBackState && this.peakBackStage === null) {
       this.voteScreen = true;
       this.submissionScreen = false;
       this.VnSComplete = false;
       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-    } else {
+    } else if (!this.peakBackState) {
       if (!act.submission_complete) {
         this.submissionScreen = true;
         this.voteScreen = false;

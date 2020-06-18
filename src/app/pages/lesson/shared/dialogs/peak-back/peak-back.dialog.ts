@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Subject } from 'rxjs';
 import { ActivityTypes } from 'src/app/globals';
 
 @Component({
@@ -10,7 +11,7 @@ export class PeakBackDialogComponent {
   roomCode;
   serverMessage;
   at: typeof ActivityTypes = ActivityTypes;
-  instructions = 'private dialogRef: MatDialogRef<PeakBackDialogComponent>';
+  public activityStage: Subject<string> = new Subject<string>();
 
   constructor(
     private dialogRef: MatDialogRef<PeakBackDialogComponent>,
@@ -24,5 +25,9 @@ export class PeakBackDialogComponent {
     } else {
       return null;
     }
+  }
+
+  changeState(state: string) {
+    this.activityStage.next(state);
   }
 }

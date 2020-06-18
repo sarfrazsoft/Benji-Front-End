@@ -1,12 +1,17 @@
-<!-- <benji-main-screen-lesson> -->
 <div class="ms-fullheight-container">
   <div class="ms-lesson__activity-container">
     <benji-ms-brainstorming-activity
       *ngIf="getActivityType() === at.brainStorm"
       [activityState]="serverMessage"
       [peakBackState]="true"
+      [activityStage]="activityStage.asObservable()"
     >
     </benji-ms-brainstorming-activity>
   </div>
+  <div class="left carousel-control" (click)="changeState('previous')">
+    <mat-icon>chevron_left</mat-icon>
+  </div>
+  <div class="right carousel-control" (click)="changeState('next')">
+    <mat-icon>chevron_right</mat-icon>
+  </div>
 </div>
-<!-- </benji-main-screen-lesson> -->
