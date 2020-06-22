@@ -55,30 +55,7 @@ export class MainScreenBrainstormingActivityComponent
   voteSubmittedUsersCount = 0;
   ideas = [];
 
-  // todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
-
-  // columns = [
-  //   {
-  //     name: 'Uncategorized',
-  //     list: ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'],
-  //     editing: false,
-  //   },
-  //   {
-  //     name: 'Category Two',
-  //     list: [
-  //       'Get up',
-  //       'Brush teeth',
-  //       'Take a shower',
-  //       'Check e-mail',
-  //       'Walk dog',
-  //     ],
-  //     editing: false,
-  //   },
-  // ];
-
   columns = [];
-
-  // done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
   ngOnInit() {
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) =>
