@@ -25,66 +25,84 @@
       <button (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
       </button>
-      <button
-        [matMenuTriggerFor]="clickHoverMenu"
-        #clickHoverMenuTrigger="matMenuTrigger"
-        (click)="getActivities()"
-      >
-        <mat-icon class="icon-white">history</mat-icon>
-      </button>
-      <mat-menu #clickHoverMenu="matMenu" yPosition="above">
-        <ng-template matMenuContent>
-          <div
-            class="redo-act-item"
-            fxLayoutAlign="start center"
-            fxLayoutGap="10px"
-            *ngFor="let p of pastActivities"
-            (click)="redoAct(p)"
-          >
-            <span>
-              {{
-                p.activity_type.replace("Activity", "") + ": " + p.description
-              }}
-            </span>
-          </div>
-          <div
-            *ngIf="pastActivities.length === 0"
-            class="redo-act-item-loader"
-            fxLayoutAlign="start center"
-          >
-            <mat-spinner></mat-spinner>
-          </div>
-        </ng-template>
-      </mat-menu>
     </ng-container>
   </div>
-  <div class="session-info" fxLayout="row" fxLayoutGap="100px">
-    <div class="participantDropdown">
-      <button mat-icon-button [matMenuTriggerFor]="participantMenu">
-        <mat-icon>supervisor_account</mat-icon>
-        <sup>{{ participants.length }}</sup>
-      </button>
-      <mat-menu #participantMenu="matMenu">
-        <div
-          class="delete-participant"
-          fxLayoutAlign="center"
-          fxLayoutGap="10px"
-          *ngFor="let p of participants"
-        >
-          <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
-          <span fxFlex="90%">{{ p.first_name + " " + p.last_name }}</span>
+  <div fxLayout="row">
+    <div class="mainscreen-footer__controls">
+      <ng-container>
+        <div>
+          <button
+            [matMenuTriggerFor]="clickHoverMenu"
+            #clickHoverMenuTrigger="matMenuTrigger"
+            (click)="getActivities()"
+          >
+            <mat-icon class="icon-white">history</mat-icon>
+          </button>
+          <mat-menu #clickHoverMenu="matMenu" yPosition="above">
+            <ng-template matMenuContent>
+              <div
+                class="redo-act-item"
+                fxLayoutAlign="start center"
+                fxLayoutGap="10px"
+                *ngFor="let p of pastActivities"
+                (click)="redoAct(p)"
+              >
+                <span>
+                  {{
+                    p.activity_type.replace("Activity", "") +
+                      ": " +
+                      p.description
+                  }}
+                </span>
+              </div>
+              <div
+                *ngIf="pastActivities.length === 0 && !noActivitiesToShow"
+                class="redo-act-item-loader"
+                fxLayoutAlign="start center"
+              >
+                <mat-spinner></mat-spinner>
+              </div>
+              <div
+                *ngIf="noActivitiesToShow"
+                class="redo-act-item-loader"
+                fxLayoutAlign="start center"
+              >
+                no activities to peakback to
+              </div>
+            </ng-template>
+          </mat-menu>
         </div>
-      </mat-menu>
+        <div class="participantDropdown">
+          <button [matMenuTriggerFor]="participantMenu">
+            <mat-icon class="icon-white">supervisor_account</mat-icon>
+            <sup class="white-color">{{ participants.length }}</sup>
+          </button>
+          <mat-menu #participantMenu="matMenu">
+            <div
+              class="delete-participant"
+              fxLayoutAlign="center"
+              fxLayoutGap="10px"
+              *ngFor="let p of participants"
+            >
+              <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
+              <span fxFlex="90%">{{ p.first_name + " " + p.last_name }}</span>
+            </div>
+          </mat-menu>
+        </div>
+        <div
+          class="brainstrom-categories"
+          *ngIf="activityState.activity_type === 'BrainstormActivity'"
+          fxLayoutAlign="center center"
+          (click)="toggleCategorization()"
+        >
+          <img class="img-icon" src="/assets/img/coloumns.png" alt="" />
+        </div>
+      </ng-container>
     </div>
-    <div
-      *ngIf="activityState.activity_type === 'BrainstormActivity'"
-      fxLayoutAlign="center center"
-      (click)="toggleCategorization()"
-    >
-      <img class="img-icon" src="/assets/img/coloumns.png" alt="" />
-    </div>
-    <div fxLayoutAlign="center center">
-      <p>{{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
+    <div class="session-info" fxLayout="row" fxLayoutGap="10px">
+      <div fxLayoutAlign="center center">
+        <p>| {{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
+      </div>
     </div>
   </div>
 </div>

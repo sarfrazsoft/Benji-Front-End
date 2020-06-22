@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatMenuTrigger } from '@angular/material';
 import { clone } from 'lodash';
+import { ActivityTypes } from 'src/app/globals';
 import { PastSessionsService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
 import { ConfirmationDialogComponent } from 'src/app/shared';
@@ -43,7 +44,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   participants: Array<User> = [];
   pastActivities: Array<any> = [];
+  noActivitiesToShow = false;
   dialogRef;
+  at: typeof ActivityTypes = ActivityTypes;
 
   constructor(
     private videoStateService: VideoStateService,
@@ -129,12 +132,21 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   getActivities() {
     const code = this.activityState.lesson_run.lessonrun_code;
     this.pastActivities = [];
+    this.noActivitiesToShow = false;
     this.pastSessionsService
       .getLessonsActivities(code)
       .subscribe((res: any) => {
         res = res.filter((x) => x.facilitation_status === 'ended');
-        res = res.filter((x) => x.activity_type === 'BrainstormActivity');
+        res = res.filter(
+          (x) =>
+            x.activity_type === this.at.brainStorm ||
+            x.activity_type === this.at.mcq ||
+            x.activity_type === this.at.mcqResults
+        );
         this.pastActivities = res;
+        if (this.pastActivities.length === 0) {
+          this.noActivitiesToShow = true;
+        }
       });
     // /api/course_details/lesson_run/{lessonrun_code}/activities/
   }
