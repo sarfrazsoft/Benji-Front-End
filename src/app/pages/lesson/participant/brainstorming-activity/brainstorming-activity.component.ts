@@ -47,6 +47,8 @@ export class ParticipantBrainstormingActivityComponent
       this.showSubmitIdeas = true;
       this.showThankyouForSubmission = false;
       this.showSubmitVote = false;
+      this.showVoteResults = false;
+      this.showThankyouForVoting = false;
       this.contextService.activityTimer = this.act.submission_countdown_timer;
     }
     // Show thank you for idea submission
@@ -68,6 +70,8 @@ export class ParticipantBrainstormingActivityComponent
       this.showSubmitIdeas = false;
       this.showThankyouForSubmission = false;
       this.showSubmitVote = true;
+      this.showVoteResults = false;
+      this.showThankyouForVoting = false;
       this.ideas = [];
       this.act.idea_rankings.forEach((idea) => {
         this.ideas.push(idea);
@@ -84,6 +88,7 @@ export class ParticipantBrainstormingActivityComponent
       this.showThankyouForSubmission = false;
       this.showSubmitVote = false;
       this.showThankyouForVoting = true;
+      this.showVoteResults = false;
     }
 
     // Show the winning ideas screen
