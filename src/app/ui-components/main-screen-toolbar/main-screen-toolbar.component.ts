@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
@@ -14,6 +15,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   timer: Timer;
   @Input() activityState: UpdateMessage;
   showTimer = false;
+  at: typeof ActivityTypes = ActivityTypes;
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService
@@ -29,7 +31,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.activityState) {
-      if (this.activityState.activity_type === 'BrainstormActivity') {
+      if (
+        this.activityState.activity_type === this.at.brainStorm ||
+        this.activityState.activity_type === this.at.title
+      ) {
         this.showTimer = true;
         this.contextService.activityTimer$.subscribe((timer: Timer) => {
           if (timer) {
