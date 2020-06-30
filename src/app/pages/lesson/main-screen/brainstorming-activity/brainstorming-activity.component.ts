@@ -18,8 +18,12 @@ import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
 import { ContextService } from 'src/app/services';
 import {
   BrainstormActivity,
+  BrainstormCreateCategoryEvent,
+  BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
+  BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
+  BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
   Timer,
 } from 'src/app/services/backend/schema';
@@ -44,6 +48,7 @@ export class MainScreenBrainstormingActivityComponent
   }
   instructions = '';
   timer: Timer;
+  act: BrainstormActivity;
 
   submissionScreen = false;
   voteScreen = false;
@@ -57,6 +62,7 @@ export class MainScreenBrainstormingActivityComponent
 
   columns = [];
   ngOnInit() {
+    this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) =>
         this.changeStage(state)
@@ -113,11 +119,21 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnChanges() {
     const act = this.activityState.brainstormactivity;
+    this.act = this.activityState.brainstormactivity;
     this.joinedUsers = this.activityState.lesson_run.joined_users;
     this.ideas = [];
-    act.idea_rankings.forEach((idea) => {
-      this.ideas.push({ ...idea, showClose: false });
+    act.brainstormcategory_set.forEach((category) => {
+      if (!category.removed) {
+        category.brainstormidea_set.forEach((idea) => {
+          if (!idea.removed) {
+            this.ideas.push({ ...idea, showClose: false });
+          }
+        });
+      }
     });
+    // act.idea_rankings.forEach((idea) => {
+    //   this.ideas.push({ ...idea, showClose: false });
+    // });
     this.ideas.sort((a, b) => b.num_votes - a.num_votes);
 
     this.instructions = act.instructions;
@@ -177,38 +193,74 @@ export class MainScreenBrainstormingActivityComponent
 
   populateCategories() {
     const act = this.activityState.brainstormactivity;
-    let categories = [];
-    act.idea_rankings.forEach((idea) => {
-      categories.push(idea.category.toLowerCase());
-    });
-    categories = uniqBy(categories, (e) => e);
-
-    // populate the columns
-    if (this.colDeleted > 0) {
-      this.columns = [];
-      this.colDeleted--;
-    }
-    categories.forEach((v) => {
-      const categoryIdeas = [];
-      act.idea_rankings.forEach((idea) => {
-        if (idea.category.toLowerCase() === v.toLowerCase()) {
-          categoryIdeas.push({ ...idea, showClose: false });
-        }
+    act.brainstormcategory_set.forEach((category) => {
+      category.brainstormidea_set.forEach((idea) => {
+        idea = { ...idea, showClose: false, editing: false, addingIdea: false };
       });
-
-      if (this.columns.length < categories.length) {
-        this.columns.push({ name: v, editing: false, list: categoryIdeas });
-      } else {
-        for (let i = 0; i < this.columns.length; i++) {
-          const c = this.columns[i];
-          if (c.name.toLowerCase() === v.toLowerCase()) {
-            this.columns[i].list = categoryIdeas;
-            this.columns[i].name = v.toLowerCase();
-            this.columns[i].editing = false;
-          }
-        }
-      }
     });
+    console.log(act);
+
+    // this.columns.push({
+    //   displayName: v,
+    //   name: v,
+    //   editing: false,
+    //   list: categoryIdeas,
+    //   addingIdea: false,
+    // });
+    // let categories = [];
+    // act.brainstormcategory_set.forEach(category => {
+    //   categories.push(category.category_name);
+    // });
+    // act.idea_rankings.forEach((idea) => {
+    //   categories.push(idea.category.toLowerCase());
+    // });
+    // categories = uniqBy(categories, (e) => e);
+    // this.columns = [];
+    // if (categories.length) {
+    //   categories.forEach((v) => {
+    //     const categoryIdeas = [];
+    // make an array of same category ideas
+    // act.idea_rankings.forEach((idea) => {
+    //   if (idea.category.toLowerCase() === v.toLowerCase()) {
+    //     categoryIdeas.push({ ...idea, showClose: false });
+    //   }
+    // });
+    // if (this.columns.length < categories.length) {
+    // if that category doesn't exist push it in the columns array
+    // if (v === 'uncategorized') {
+    //   this.columns.push({
+    //     displayName: 'Category 1',
+    //     name: v,
+    //     editing: false,
+    //     list: categoryIdeas,
+    //     addingIdea: false,
+    //   });
+    // } else {
+    //   this.columns.push({
+    //     displayName: v,
+    //     name: v,
+    //     editing: false,
+    //     list: categoryIdeas,
+    //     addingIdea: false,
+    //   });
+    // }
+    // } else {
+    // if the column for each category is already there
+    // replace the ideas array in this category column
+    // for (let i = 0; i < this.columns.length; i++) {
+    //   const c = this.columns[i];
+    //   if (c.name.toLowerCase() === v.toLowerCase()) {
+    //     this.columns[i].list = categoryIdeas;
+    //     this.columns[i].name = v.toLowerCase();
+    //     this.columns[i].editing = false;
+    //   }
+    // }
+    // }
+    //   });
+    // } else {
+    // if there are no categories
+    // add the uncategorized
+    // }
   }
 
   getIdeaSubmittedUsersCount(act: BrainstormActivity) {
@@ -220,18 +272,16 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   sendCategorizeEvent(event) {
-    console.log(event);
-    const parser = new DOMParser();
-    const htmlDoc = parser.parseFromString(
-      event.container.element.nativeElement.innerHTML,
-      'text/html'
-    );
-    const colName = htmlDoc.getElementsByClassName('column-name')[0].innerHTML;
-
     const id = event.container.data[event.currentIndex].id;
-    this.sendMessage.emit(
-      new BrainstormSetCategoryEvent(id, colName.toLowerCase())
-    );
+    let categoryId;
+    this.act.brainstormcategory_set.forEach((cat) => {
+      cat.brainstormidea_set.forEach((idea) => {
+        if (idea.id === id) {
+          categoryId = cat.id;
+        }
+      });
+    });
+    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryId));
   }
 
   deleteIdea(id) {
@@ -245,20 +295,42 @@ export class MainScreenBrainstormingActivityComponent
     }, 0);
   }
 
-  deleteCol(index) {
-    this.columns[index].list.forEach((idea) => {
-      this.sendMessage.emit(new BrainstormRemoveSubmissionEvent(idea.id));
-      this.colDeleted++;
-    });
-    this.columns.splice(index, 1);
+  addIdea(column) {
+    column.addingIdea = true;
+  }
+
+  deleteCol(categoryId) {
+    this.sendMessage.emit(new BrainstormRemoveCategoryEvent(categoryId, true));
   }
 
   onColumnNameBlur(column) {
+    this.sendMessage.emit(
+      new BrainstormRenameCategoryEvent(column.id, column.category_name)
+    );
     column.editing = false;
   }
 
-  addColumn() {
-    this.columns.push({ name: '', list: [], editing: true });
+  saveNewIdea(column, text) {
+    column.addingIdea = false;
+    this.sendMessage.emit(new BrainstormSubmitEvent(text, column.id));
+  }
+
+  addColumn(newCategoryNumber) {
+    this.sendMessage.emit(
+      new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber)
+    );
+
+    // if (this.columns.length === 0) {
+    //   this.columns.push({
+    //     displayName: 'Category 1',
+    //     name: 'uncategorized',
+    //     list: [],
+    //     editing: true,
+    //     addingIdea: false,
+    //   });
+    // } else {
+    //   this.columns.push({ displayName: '', name: '', list: [], editing: true });
+    // }
   }
 }
 

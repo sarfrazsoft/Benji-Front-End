@@ -26,6 +26,19 @@
     </ng-container>
     <ng-container class="content">
       <div class="draft-idea">
+        <div class="dropdown-controls-container" *ngIf="showCategoriesDropdown">
+          <ng-select
+            class="ps-brainstorm-dropdown-controls"
+            [items]="categories"
+            bindLabel="category_name"
+            placeholder="Categories..."
+            (change)="selectCategory($event)"
+            [(ngModel)]="selectedCategory"
+            appendTo="body"
+            [searchable]="false"
+          >
+          </ng-select>
+        </div>
         <textarea
           class="b-standard-textarea"
           [(ngModel)]="userIdeaText"

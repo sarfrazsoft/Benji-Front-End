@@ -1,8 +1,7 @@
-import { IdeaRanking } from '../activities';
 import { Report } from './reports';
 
 export interface BrainstormReport extends Report {
-  idea_rankings: Array<IdeaRanking>;
+  idea_rankings: Array<any>;
   instructions: string;
   max_user_submissions: number;
   max_user_votes: number;

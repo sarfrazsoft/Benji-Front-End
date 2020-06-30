@@ -250,7 +250,7 @@ export interface WhereDoYouStandActivity {
 }
 
 export interface BrainstormActivity {
-  idea_rankings: Array<IdeaRanking>;
+  brainstormcategory_set: Array<Category>;
   instructions: string;
   max_user_submissions: number;
   max_user_votes: number;
@@ -265,12 +265,22 @@ export interface BrainstormActivity {
   voting_seconds: number;
 }
 
-export interface IdeaRanking {
+export interface Category {
   id: number;
-  submitted_by_user: User;
-  idea: string;
+  brainstormidea_set: Array<Idea>;
+  category_name: string;
+  removed: boolean;
+}
+
+export interface Idea {
+  id: number;
   num_votes: number;
-  category: string;
+  idea: string;
+  removed: boolean;
+  submitted_by_user: number;
+  showClose?: boolean;
+  editing?: boolean;
+  addingIdea?: boolean;
 }
 
 export interface BuildAPitchActivity {

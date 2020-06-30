@@ -317,9 +317,9 @@ export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string) {
+  constructor(text: string, category: number) {
     super();
-    this.extra_args = { idea: text };
+    this.extra_args = { idea: text, category: category };
   }
 }
 
@@ -329,6 +329,33 @@ export class BrainstormRemoveSubmissionEvent extends ActivityEvent {
   constructor(id: number) {
     super();
     this.extra_args = { brainstormidea: id };
+  }
+}
+
+export class BrainstormRenameCategoryEvent extends ActivityEvent {
+  event_name = 'BrainstormRenameCategoryEvent';
+
+  constructor(category: number, name: string) {
+    super();
+    this.extra_args = { category: category, category_name: name };
+  }
+}
+
+export class BrainstormCreateCategoryEvent extends ActivityEvent {
+  event_name = 'BrainstormCreateCategoryEvent';
+
+  constructor(category: string) {
+    super();
+    this.extra_args = { category_name: category };
+  }
+}
+
+export class BrainstormRemoveCategoryEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveCategoryEvent';
+
+  constructor(catId: number, deleteIdeas: boolean) {
+    super();
+    this.extra_args = { category: catId, delete_ideas: deleteIdeas };
   }
 }
 

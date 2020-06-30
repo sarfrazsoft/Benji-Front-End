@@ -3,6 +3,7 @@ import {
   BrainstormActivity,
   BrainstormSubmitEvent,
   BrainstormVoteEvent,
+  Category,
 } from 'src/app/services/backend/schema';
 import { ContextService } from 'src/app/services/context.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -22,6 +23,9 @@ export class ParticipantBrainstormingActivityComponent
   showVoteSubmitButton = false;
   noOfIdeasSubmitted = 0;
 
+  showCategoriesDropdown = false;
+  categories = [];
+  selectedCategory: Category;
   // Screens
   showSubmitIdeas = true;
   showThankyouForSubmission = false;
@@ -35,14 +39,23 @@ export class ParticipantBrainstormingActivityComponent
 
   ngOnInit() {
     this.act = this.activityState.brainstormactivity;
+    this.selectedCategory = this.act.brainstormcategory_set[0];
+    this.categories = this.act.brainstormcategory_set;
   }
 
   ngOnChanges() {
     this.act = this.activityState.brainstormactivity;
     const userID = this.getUserId();
 
-    // The activity starts by showing Submit idea screen
+    // show dropdown if categorize_flag is set
+    if (this.act.categorize_flag) {
+      this.showCategoriesDropdown = true;
+      this.categories = this.act.brainstormcategory_set;
+    } else {
+      this.showCategoriesDropdown = false;
+    }
 
+    // The activity starts by showing Submit idea screen
     if (!this.act.submission_complete && this.act.submission_countdown_timer) {
       this.showSubmitIdeas = true;
       this.showThankyouForSubmission = false;
@@ -73,8 +86,14 @@ export class ParticipantBrainstormingActivityComponent
       this.showVoteResults = false;
       this.showThankyouForVoting = false;
       this.ideas = [];
-      this.act.idea_rankings.forEach((idea) => {
-        this.ideas.push(idea);
+      this.act.brainstormcategory_set.forEach((category) => {
+        if (!category.removed) {
+          category.brainstormidea_set.forEach((idea) => {
+            if (!idea.removed) {
+              this.ideas.push(idea);
+            }
+          });
+        }
       });
 
       this.ideas.sort((a, b) => b.id - a.id);
@@ -129,7 +148,9 @@ export class ParticipantBrainstormingActivityComponent
   }
 
   submitIdea(): void {
-    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText));
+    this.sendMessage.emit(
+      new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id)
+    );
     this.userIdeaText = '';
   }
 
