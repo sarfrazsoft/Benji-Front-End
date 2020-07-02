@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import {
@@ -21,9 +22,18 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
     protected contextService: ContextService,
-    protected ref: ChangeDetectorRef
+    protected ref: ChangeDetectorRef,
+    protected _snackBar: MatSnackBar
   ) {
-    super(restService, route, socketService, 'screen', contextService, ref);
+    super(
+      restService,
+      route,
+      socketService,
+      'screen',
+      contextService,
+      ref,
+      _snackBar
+    );
   }
 
   fastForwardActivities = [

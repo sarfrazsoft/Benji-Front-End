@@ -140,6 +140,10 @@ $large-only: "only screen and (min-width : #{$medium-screen-up}) and (max-width 
   color: #fff;
 }
 
+.simple-snack-bar .mat-simple-snackbar {
+  justify-content: center;
+}
+
 .secondary-color-dark {
   color: $secondary-color-dark;
 }

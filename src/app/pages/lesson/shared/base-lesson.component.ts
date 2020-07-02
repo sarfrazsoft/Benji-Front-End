@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { ContextService } from 'src/app/services';
@@ -8,12 +9,12 @@ import {
   ActivityEvent,
   ServerMessage,
   UpdateMessage,
-  User
+  User,
 } from 'src/app/services/backend/schema';
 import {
   Course,
   Lesson,
-  LessonRun
+  LessonRun,
 } from 'src/app/services/backend/schema/course_details';
 
 export class BaseLessonComponent implements OnInit {
@@ -34,7 +35,8 @@ export class BaseLessonComponent implements OnInit {
     protected socketService: BackendSocketService,
     clientType: string,
     protected contextService: ContextService,
-    protected ref?: ChangeDetectorRef
+    protected ref?: ChangeDetectorRef,
+    protected _snackBar?: MatSnackBar
   ) {
     this.roomCode = parseInt(this.route.snapshot.paramMap.get('roomCode'), 10);
     this.clientType = clientType;
@@ -63,7 +65,7 @@ export class BaseLessonComponent implements OnInit {
   initSocket() {
     forkJoin([
       this.restService.get_lessonrun(this.roomCode),
-      this.restService.get_own_identity()
+      this.restService.get_own_identity(),
     ]).subscribe(([lessonRun, identity]) => {
       this.lessonRun = lessonRun;
       this.user = identity;
@@ -79,7 +81,7 @@ export class BaseLessonComponent implements OnInit {
         (msg: ServerMessage) => {
           this.handleServerMessage(msg);
         },
-        err => console.log(err),
+        (err) => console.log(err),
         () => {
           console.log('complete');
         }
@@ -93,6 +95,13 @@ export class BaseLessonComponent implements OnInit {
 
   isFacilitatorConnected() {
     return this.facilitatorConnected;
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 200000,
+      panelClass: ['bg-warning-color', 'white-color', 'simple-snack-bar'],
+    });
   }
 
   handleServerMessage(msg: ServerMessage) {
@@ -109,6 +118,12 @@ export class BaseLessonComponent implements OnInit {
       this.serverMessage = msg.updatemessage;
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       console.log(msg);
+      const obj = msg.clienterror.error_detail;
+      if (obj[Object.keys(obj)[0]]) {
+        if (obj[Object.keys(obj)[0]][0]) {
+          this.openSnackBar(obj[Object.keys(obj)[0]][0], '');
+        }
+      }
     } else if (msg.servererror !== null && msg.servererror !== undefined) {
       console.log(msg);
     } else if (
@@ -130,7 +145,7 @@ export class BaseLessonComponent implements OnInit {
         this.serverOffsets.shift();
       }
       this.avgServerTimeOffset =
-        this.serverOffsets.reduce(function(a, b) {
+        this.serverOffsets.reduce(function (a, b) {
           return a + b;
         }) / this.serverOffsets.length;
     }

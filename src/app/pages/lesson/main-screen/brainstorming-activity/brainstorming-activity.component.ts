@@ -198,69 +198,6 @@ export class MainScreenBrainstormingActivityComponent
         idea = { ...idea, showClose: false, editing: false, addingIdea: false };
       });
     });
-    console.log(act);
-
-    // this.columns.push({
-    //   displayName: v,
-    //   name: v,
-    //   editing: false,
-    //   list: categoryIdeas,
-    //   addingIdea: false,
-    // });
-    // let categories = [];
-    // act.brainstormcategory_set.forEach(category => {
-    //   categories.push(category.category_name);
-    // });
-    // act.idea_rankings.forEach((idea) => {
-    //   categories.push(idea.category.toLowerCase());
-    // });
-    // categories = uniqBy(categories, (e) => e);
-    // this.columns = [];
-    // if (categories.length) {
-    //   categories.forEach((v) => {
-    //     const categoryIdeas = [];
-    // make an array of same category ideas
-    // act.idea_rankings.forEach((idea) => {
-    //   if (idea.category.toLowerCase() === v.toLowerCase()) {
-    //     categoryIdeas.push({ ...idea, showClose: false });
-    //   }
-    // });
-    // if (this.columns.length < categories.length) {
-    // if that category doesn't exist push it in the columns array
-    // if (v === 'uncategorized') {
-    //   this.columns.push({
-    //     displayName: 'Category 1',
-    //     name: v,
-    //     editing: false,
-    //     list: categoryIdeas,
-    //     addingIdea: false,
-    //   });
-    // } else {
-    //   this.columns.push({
-    //     displayName: v,
-    //     name: v,
-    //     editing: false,
-    //     list: categoryIdeas,
-    //     addingIdea: false,
-    //   });
-    // }
-    // } else {
-    // if the column for each category is already there
-    // replace the ideas array in this category column
-    // for (let i = 0; i < this.columns.length; i++) {
-    //   const c = this.columns[i];
-    //   if (c.name.toLowerCase() === v.toLowerCase()) {
-    //     this.columns[i].list = categoryIdeas;
-    //     this.columns[i].name = v.toLowerCase();
-    //     this.columns[i].editing = false;
-    //   }
-    // }
-    // }
-    //   });
-    // } else {
-    // if there are no categories
-    // add the uncategorized
-    // }
   }
 
   getIdeaSubmittedUsersCount(act: BrainstormActivity) {
@@ -319,18 +256,6 @@ export class MainScreenBrainstormingActivityComponent
     this.sendMessage.emit(
       new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber)
     );
-
-    // if (this.columns.length === 0) {
-    //   this.columns.push({
-    //     displayName: 'Category 1',
-    //     name: 'uncategorized',
-    //     list: [],
-    //     editing: true,
-    //     addingIdea: false,
-    //   });
-    // } else {
-    //   this.columns.push({ displayName: '', name: '', list: [], editing: true });
-    // }
   }
 }
 
