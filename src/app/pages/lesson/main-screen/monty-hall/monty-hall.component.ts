@@ -30,10 +30,10 @@ export class MainScreenMontyHallComponent extends BaseActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.montyhallactivity;
-    console.log(this.act);
     if (this.act.status === 'initial_choice') {
       this.timer = this.act.initial_choice_timer;
       this.showDoorsScreen = true;
+      this.showChangeChoice = false;
       this.showResultScreen = false;
       this.showRevealScreen = false;
     } else if (this.act.status === 'change_choice') {
@@ -62,7 +62,7 @@ export class MainScreenMontyHallComponent extends BaseActivityComponent
 
   getInitialChoiceSelectedUsers() {
     const details = clone(this.act.current_round_details);
-    const users = details.filter((u) => u.door_choice);
+    const users = details.filter((u) => u.door_choice != null);
     return users.length;
   }
 

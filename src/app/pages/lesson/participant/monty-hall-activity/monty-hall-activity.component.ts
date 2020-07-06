@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import {
   MontyHallActivity,
   MontyHallSelectDoorEvent,
@@ -23,7 +24,7 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
   initialChoiceScreen = false;
   changeChoiceScreen = false;
   revealScreen = false;
-  constructor() {
+  constructor(private contextService: ContextService) {
     super();
   }
 
@@ -32,6 +33,7 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
   ngOnChanges() {
     this.act = this.activityState.montyhallactivity;
     if (this.act.status === 'initial_choice') {
+      this.contextService.activityTimer = this.act.initial_choice_timer;
       this.initialChoiceScreen = true;
       this.changeChoiceScreen = false;
       this.revealScreen = false;
@@ -44,6 +46,7 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
       }
       this.userWon = false;
     } else if (this.act.status === 'change_choice') {
+      this.contextService.activityTimer = this.act.change_choice_timer;
       this.choiceSubmitted = false;
       if (this.hasUserPickedAgain()) {
         this.choiceSubmitted = true;
@@ -54,6 +57,7 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
       this.revealScreen = false;
       this.userWon = false;
     } else if (this.act.status === 'reveal') {
+      this.contextService.activityTimer = this.act.reveal_timer;
       this.revealScreen = true;
       this.initialChoiceScreen = false;
       this.changeChoiceScreen = false;
@@ -61,6 +65,7 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
         this.userWon = true;
       }
     } else if (this.act.status === 'results') {
+      this.contextService.activityTimer = this.act.results_timer;
       this.revealScreen = true;
       this.initialChoiceScreen = false;
       this.changeChoiceScreen = false;
