@@ -34,7 +34,7 @@ import {
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
-  MatTooltipModule
+  MatTooltipModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -77,7 +77,7 @@ const SHARED_MODULES = [
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  NgSelectModule
+  NgSelectModule,
 ];
 
 @NgModule({
@@ -85,10 +85,10 @@ const SHARED_MODULES = [
     CommonModule,
     RouterModule,
     ...SHARED_MODULES,
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
   ],
   declarations: Components,
   entryComponents: [...EntryComponents],
-  exports: [...Components, ...SHARED_MODULES]
+  exports: [...Components, ...SHARED_MODULES],
 })
 export class SharedModule {}
