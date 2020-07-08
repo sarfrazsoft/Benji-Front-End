@@ -103,6 +103,22 @@ export class WhiteLabelResolver implements Resolve<any> {
                 }
               }
             );
+        } else if (window.location.origin.includes('rgax')) {
+          this.httpClient
+            .get(
+              global.apiRoot + '/tenants/orgs/' + 'rgax' + '/white_label_info/'
+            )
+            .subscribe(
+              (res: any) => {
+                this.contextService.partnerInfo = res;
+              },
+              (err: HttpErrorResponse) => {
+                if (err.status === 404) {
+                  console.log(err.status);
+                  this.applyDefaultTheme();
+                }
+              }
+            );
         }
         // It doesn't matter which organization you are registered to
         // if the location is this; it'll get location based whitelabeling details
