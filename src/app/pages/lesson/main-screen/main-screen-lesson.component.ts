@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import {
+  AuthService,
   BackendRestService,
   BackendSocketService,
   ContextService,
@@ -19,18 +20,20 @@ export class MainScreenLessonComponent extends BaseLessonComponent
   at: typeof ActivityTypes = ActivityTypes;
   constructor(
     protected restService: BackendRestService,
-    protected route: ActivatedRoute,
+    protected activatedRoute: ActivatedRoute,
     protected socketService: BackendSocketService,
     protected contextService: ContextService,
+    protected authService: AuthService,
     protected ref: ChangeDetectorRef,
     protected _snackBar: MatSnackBar
   ) {
     super(
       restService,
-      route,
+      activatedRoute,
       socketService,
       'screen',
       contextService,
+      authService,
       ref,
       _snackBar
     );

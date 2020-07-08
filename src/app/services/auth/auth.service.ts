@@ -18,6 +18,7 @@ export interface LoginResponse {
 export class AuthService {
   userInvitation: UserInvitation;
   invitationToken: number;
+  redirectURL = '';
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -166,5 +167,15 @@ export class AuthService {
       token +
       '/';
     return this.http.get<UserInvitation>(request);
+  }
+
+  loginUser() {
+    if (this.isLoggedIn()) {
+    } else {
+      // navigate to login screen with the current url as the parameter
+      this.redirectURL = window.location.href;
+      console.log(window.location.href);
+      this.router.navigate(['/login']);
+    }
   }
 }

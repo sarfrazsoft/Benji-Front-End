@@ -193,6 +193,7 @@
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"
     [isPaused]="serverMessage.base_activity.is_paused"
+    [disableControls]="disableControls"
     (socketMessage)="sendSocketMessage($event)"
   ></benji-main-screen-footer>
 </div>

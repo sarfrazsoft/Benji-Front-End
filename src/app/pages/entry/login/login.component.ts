@@ -4,7 +4,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services';
 @Component({
   selector: 'benji-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.form = this.builder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: ''
+      password: '',
     });
 
     if (this.authService.userInvitation) {
@@ -58,16 +58,20 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       const val = this.form.value;
       this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
-        res => {
+        (res) => {
           if (res) {
             this.emailPasswordError = true;
           } else {
-            this.deviceService.isMobile()
-              ? this.router.navigate(['/participant/join'])
-              : this.router.navigate(['/dashboard']);
+            if (this.authService.redirectURL.length) {
+              window.location.href = this.authService.redirectURL;
+            } else {
+              this.deviceService.isMobile()
+                ? this.router.navigate(['/participant/join'])
+                : this.router.navigate(['/dashboard']);
+            }
           }
         },
-        err => {
+        (err) => {
           console.log(err);
         }
       );

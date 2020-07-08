@@ -41,12 +41,15 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() lessonName: string;
   @Input() roomCode: string;
   @Input() isPaused: boolean;
+  @Input() disableControls: boolean;
 
   participants: Array<User> = [];
   pastActivities: Array<any> = [];
   noActivitiesToShow = false;
   dialogRef;
   at: typeof ActivityTypes = ActivityTypes;
+  actType = '';
+  fastForwarding = false;
 
   constructor(
     private videoStateService: VideoStateService,
@@ -59,12 +62,20 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
+    // if (this.actType !== this.activityState.activity_type) {
+    this.fastForwarding = false;
+    // }
+    // this.actType = this.activityState.activity_type;
+
     this.participants = this.activityState.lesson_run.joined_users;
   }
 
   controlClicked(eventType) {
     // if (this.videoStateService.videoState) {
     // this.videoStateService.videoState = eventType;
+    if (this.disableControls) {
+      return false;
+    }
     if (eventType === 'pause') {
       this.socketMessage.emit(new PauseActivityEvent());
     } else if (eventType === 'next') {
@@ -80,6 +91,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());
     } else if (eventType === 'fastForward') {
+      this.fastForwarding = true;
       this.socketMessage.emit(new FastForwardEvent());
     } else if (eventType === 'previous') {
       this.socketMessage.emit(new PreviousEvent());
@@ -115,10 +127,16 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   toggleCategorization() {
     this.socketMessage.emit(new BrainstormToggleCategoryModeEvent());
   }
-  redoAct(act): void {
+
+  redoAct(act) {
     const state = clone(this.activityState);
-    state.activity_type = 'BrainstormActivity';
-    state.brainstormactivity = act;
+    if (act.activity_type === this.at.mcq) {
+      state.activity_type = this.at.mcq;
+      state.mcqactivity = act;
+    } else if (act.activity_type === this.at.brainStorm) {
+      state.activity_type = 'BrainstormActivity';
+      state.brainstormactivity = act;
+    }
     this.dialogRef = this.dialog
       .open(PeakBackDialogComponent, {
         data: { serverMessage: state },
@@ -138,10 +156,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       .subscribe((res: any) => {
         res = res.filter((x) => x.facilitation_status === 'ended');
         res = res.filter(
-          (x) =>
-            x.activity_type === this.at.brainStorm ||
-            x.activity_type === this.at.mcq ||
-            x.activity_type === this.at.mcqResults
+          (x) => x.activity_type === this.at.brainStorm
+          // x.activity_type === this.at.mcq ||
+          // x.activity_type === this.at.mcqResults
         );
         this.pastActivities = res;
         if (this.pastActivities.length === 0) {

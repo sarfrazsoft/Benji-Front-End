@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
-import { ContextService } from 'src/app/services';
+import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
@@ -9,7 +9,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 @Component({
   selector: 'benji-participant-lesson',
   templateUrl: './participant-lesson.component.html',
-  styleUrls: ['./participant-lesson.component.scss']
+  styleUrls: ['./participant-lesson.component.scss'],
 })
 export class ParticipantLessonComponent extends BaseLessonComponent {
   at: typeof ActivityTypes = ActivityTypes;
@@ -18,6 +18,7 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
     protected ref: ChangeDetectorRef,
+    protected authService: AuthService,
     protected contextService: ContextService
   ) {
     super(
@@ -26,6 +27,7 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
       socketService,
       'participant',
       contextService,
+      authService,
       ref
     );
   }

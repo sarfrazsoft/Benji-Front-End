@@ -19,16 +19,18 @@
       <button (click)="controlClicked('resume')" *ngIf="isPaused">
         <mat-icon class="icon-white">play_arrow</mat-icon>
       </button>
-      <button *ngIf="showFastForward" (click)="controlClicked('fastForward')">
-        <mat-icon class="icon-white">fast_forward</mat-icon>
-      </button>
+      <ng-container *ngIf="!fastForwarding">
+        <button *ngIf="showFastForward" (click)="controlClicked('fastForward')">
+          <mat-icon class="icon-white">fast_forward</mat-icon>
+        </button>
+      </ng-container>
       <button (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
       </button>
     </ng-container>
   </div>
   <div fxLayout="row">
-    <div class="mainscreen-footer__controls">
+    <div class="mainscreen-footer__controls" *ngIf="!disableControls">
       <ng-container>
         <div>
           <button
@@ -101,7 +103,10 @@
     </div>
     <div class="session-info" fxLayout="row" fxLayoutGap="10px">
       <div fxLayoutAlign="center center">
-        <p>| {{ lessonName }} | ROOM CODE: {{ roomCode }}</p>
+        <p>
+          {{ disableControls ? "" : "|" }} {{ lessonName }} | ROOM CODE:
+          {{ roomCode }}
+        </p>
       </div>
     </div>
   </div>

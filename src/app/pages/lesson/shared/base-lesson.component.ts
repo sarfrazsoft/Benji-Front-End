@@ -2,7 +2,7 @@ import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { ContextService } from 'src/app/services';
+import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import {
@@ -22,6 +22,7 @@ export class BaseLessonComponent implements OnInit {
   lessonRun: LessonRun;
   user: User;
   clientType: string;
+  disableControls: boolean;
 
   socket;
   serverMessage: UpdateMessage;
@@ -35,6 +36,7 @@ export class BaseLessonComponent implements OnInit {
     protected socketService: BackendSocketService,
     clientType: string,
     protected contextService: ContextService,
+    protected authService: AuthService,
     protected ref?: ChangeDetectorRef,
     protected _snackBar?: MatSnackBar
   ) {
@@ -58,6 +60,18 @@ export class BaseLessonComponent implements OnInit {
             this.initSocket();
           }, 500);
         }
+      }
+    });
+
+    this.route.queryParams.subscribe((params) => {
+      if (params['share'] === 'participant') {
+        // disable controls
+        this.disableControls = true;
+      } else if (params['share'] === 'facilitator') {
+        // take to login screen
+        this.authService.loginUser();
+        console.log('bawaji');
+        this.disableControls = false;
       }
     });
   }
@@ -99,7 +113,7 @@ export class BaseLessonComponent implements OnInit {
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
-      duration: 200000,
+      duration: 5000,
       panelClass: ['bg-warning-color', 'white-color', 'simple-snack-bar'],
     });
   }

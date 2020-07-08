@@ -1,4 +1,5 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import {
   MCQChoiceSet,
   MCQSubmitAnswerEvent,
@@ -11,19 +12,17 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./pop-quiz.component.scss'],
 })
 export class MainScreenPopQuizComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges, OnDestroy {
   radialTimer;
   showLeaderboard = false;
   leaderboard = [];
   revealAnswers = false;
   title = 'Pop Quiz!';
-  // leaderboard = [
-  //   { name: 'Senpai', score: 9 },
-  //   { name: 'Shikamaru', score: 7 },
-  //   { name: 'Kakashi hatake', score: 4 },
-  //   { name: 'Yamato tenzo', score: 2 },
-  //   { name: 'Kazekage Gara', score: 1 }
-  // ];
+
+  @Input() peakBackState = false;
+  @Input() activityStage: Observable<string>;
+  peakBackStage = null;
+  private eventsSubscription: Subscription;
   constructor() {
     super();
   }
@@ -31,6 +30,11 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   ngOnInit() {
+    if (this.peakBackState) {
+      this.eventsSubscription = this.activityStage.subscribe((state) =>
+        this.changeStage(state)
+      );
+    }
     this.activityState.mcqactivity.question.mcqchoice_set.sort(
       (a, b) => a.id - b.id
     );
@@ -42,29 +46,43 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
 
   ngOnChanges() {
     const as = this.activityState;
+    const qTimer = as.mcqactivity.question_timer;
+    const nt = as.base_activity.next_activity_start_timer;
+
     this.activityState.mcqactivity.question.mcqchoice_set.sort(
       (a, b) => a.id - b.id
     );
-    if (
-      as.mcqactivity.question_timer &&
-      (as.mcqactivity.question_timer.status === 'running' ||
-        as.mcqactivity.question_timer.status === 'paused')
-    ) {
-      this.revealAnswers = false;
-      this.radialTimer = as.mcqactivity.question_timer;
-    } else if (
-      as.base_activity.next_activity_start_timer &&
-      (as.base_activity.next_activity_start_timer.status === 'running' ||
-        as.base_activity.next_activity_start_timer.status === 'paused')
-    ) {
+
+    if (this.peakBackState && this.peakBackStage === null) {
+      // this.voteScreen = true;
+      // this.submissionScreen = false;
+      // this.VnSComplete = false;
+      // this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
       this.revealAnswers = true;
-      this.radialTimer = as.base_activity.next_activity_start_timer;
       if (as.mcqactivity.quiz_leaderboard) {
         this.showLeaderboard = true;
         this.leaderboard = as.mcqactivity.quiz_leaderboard;
         this.leaderboard = this.leaderboard.sort((a, b) => {
           return b.score - a.score;
         });
+      }
+    } else if (!this.peakBackState) {
+      if (
+        qTimer &&
+        (qTimer.status === 'running' || qTimer.status === 'paused')
+      ) {
+        this.revealAnswers = false;
+        this.radialTimer = qTimer;
+      } else if (nt && (nt.status === 'running' || nt.status === 'paused')) {
+        this.revealAnswers = true;
+        this.radialTimer = nt;
+        if (as.mcqactivity.quiz_leaderboard) {
+          this.showLeaderboard = true;
+          this.leaderboard = as.mcqactivity.quiz_leaderboard;
+          this.leaderboard = this.leaderboard.sort((a, b) => {
+            return b.score - a.score;
+          });
+        }
       }
     }
   }
@@ -84,5 +102,53 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
     } else {
       return 'user';
     }
+  }
+
+  ngOnDestroy() {
+    if (this.peakBackState) {
+      this.eventsSubscription.unsubscribe();
+    }
+  }
+  changeStage(state) {
+    this.peakBackStage = state;
+    const act = this.activityState.brainstormactivity;
+    if (state === 'next') {
+    } else {
+      // state === 'previous'
+    }
+
+    // if (this.submissionScreen) {
+    //   if (state === 'next') {
+    //     this.voteScreen = true;
+    //     this.submissionScreen = false;
+    //     this.VnSComplete = false;
+    //     this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+    //   } else {
+    //     // state === 'previous'
+    //     // do nothing
+    //   }
+    // } else if (this.voteScreen) {
+    //   if (state === 'next') {
+    //     this.submissionScreen = false;
+    //     this.voteScreen = false;
+    //     this.VnSComplete = true;
+    //   } else {
+    //     // state === 'previous'
+    //     this.submissionScreen = true;
+    //     this.voteScreen = false;
+    //     this.VnSComplete = false;
+    //     this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
+    //   }
+    // } else if (this.VnSComplete) {
+    //   if (state === 'next') {
+    //     // do nothing
+    //   } else {
+    //     // state === 'previous'
+    //     this.voteScreen = true;
+    //     this.submissionScreen = false;
+    //     this.VnSComplete = false;
+    //     this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+    //   }
+    // }
   }
 }

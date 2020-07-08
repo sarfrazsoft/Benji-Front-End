@@ -11,6 +11,65 @@
           [endAudio]="'bell.wav'"
         ></benji-number-timer>
       </div>
+      <div class="right-controls">
+        <div class="user-controls" [matMenuTriggerFor]="menu">
+          <span class="account-name pn-600 white-color">
+            Share
+          </span>
+        </div>
+        <mat-menu
+          #menu="matMenu"
+          class="share-ms-links"
+          [overlapTrigger]="false"
+          xPosition="before"
+        >
+          <div class="menu-section info" benji-click-stop-propagation>
+            <div class="link-container">
+              <div fxLayout="row" fxLayoutAlign="space-between">
+                <div>
+                  Facilitator link
+                </div>
+                <div
+                  class="primary-color copy-button"
+                  (click)="copyMessage(shareFacilitatorLink)"
+                >
+                  copy
+                </div>
+              </div>
+              <div
+                class="share-link bg-secondary-color-lighter"
+                fxLayoutAlign="start center"
+              >
+                <span>
+                  {{ shareFacilitatorLink }}
+                </span>
+              </div>
+            </div>
+            <div class="link-container">
+              <div fxLayout="row" fxLayoutAlign="space-between">
+                <div>
+                  Participant link
+                </div>
+                <div
+                  class="primary-color copy-button"
+                  (click)="copyMessage(shareParticipantLink)"
+                >
+                  copy
+                </div>
+              </div>
+              <div
+                class="share-link bg-secondary-color-lighter"
+                fxLayoutAlign="start center"
+              >
+                <span>
+                  {{ shareParticipantLink }}
+                </span>
+              </div>
+            </div>
+            <div class="team pn-400"></div>
+          </div>
+        </mat-menu>
+      </div>
       <div (click)="toggleFullscreen()" class="fullscreen-container">
         <mat-icon *ngIf="!isFullscreen()" class="icon-white"
           >fullscreen</mat-icon

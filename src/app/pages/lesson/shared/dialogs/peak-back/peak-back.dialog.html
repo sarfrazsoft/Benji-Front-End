@@ -7,6 +7,19 @@
       [activityStage]="activityStage.asObservable()"
     >
     </benji-ms-brainstorming-activity>
+
+    <benji-ms-pop-quiz
+      *ngIf="getActivityType() === at.mcq"
+      [activityState]="serverMessage"
+      [peakBackState]="true"
+      [activityStage]="activityStage.asObservable()"
+    ></benji-ms-pop-quiz>
+
+    <!-- <benji-ms-mcqresult-activity
+    *ngIf="getActivityType() === at.mcqResults"
+    [activityState]="serverMessage"
+    [activityStage]="activityStage.asObservable()"
+  ></benji-ms-mcqresult-activity> -->
   </div>
   <div class="left carousel-control" (click)="changeState('previous')">
     <mat-icon>chevron_left</mat-icon>
