@@ -35,6 +35,7 @@
     padding: 20px;
     .logo {
       max-width: 230px;
+      max-height: inherit;
     }
     @media #{$small-and-down} {
       padding: 12px;
