@@ -191,12 +191,30 @@ benji-ms-brainstorming-activity {
   box-sizing: border-box;
   cursor: pointer;
   position: relative;
+  .image {
+    text-align: center;
+    img {
+      // width: 100%;
+      max-height: 300px;
+      max-width: 310px;
+    }
+  }
 }
 
 benji-ps-brainstorming-activity {
-  // .b-flat-card {
-  //   height: calc(100vh - 65px - 130px);
-  // }
+  .dropdown-controls-container {
+    .ps-brainstorm-dropdown-controls {
+      color: $secondary-color-dark;
+      border-radius: 6px;
+      font-size: 2.9vh;
+      &.ng-has-value {
+        color: $primary-color;
+      }
+      .ng-select .ng-select-container {
+      }
+    }
+  }
+
   textarea {
     color: inherit;
     outline: none;
@@ -220,6 +238,29 @@ benji-ps-brainstorming-activity {
     }
   }
 
+  input[type="file"] {
+    display: none;
+  }
+
+  .image-upload-button {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    min-height: 36px;
+    align-items: center;
+    label {
+      width: 100%;
+      .details {
+        width: 100%;
+      }
+      .image-name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 160px;
+      }
+    }
+  }
+
   .vote-button-column {
     .button-container {
       .b-standard-button {
@@ -238,20 +279,5 @@ benji-ps-brainstorming-activity {
 
   .b-standard-button--white:hover {
     background: #e6e5e5 !important;
-  }
-}
-
-.dropdown-controls-container {
-  margin-bottom: 20px;
-  .ps-brainstorm-dropdown-controls {
-    color: $secondary-color-dark;
-    border-radius: 6px;
-    font-size: 2.9vh;
-    height: 4.2vh;
-    &.ng-has-value {
-      color: $primary-color;
-    }
-    .ng-select .ng-select-container {
-    }
   }
 }

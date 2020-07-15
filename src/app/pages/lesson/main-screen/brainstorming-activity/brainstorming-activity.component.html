@@ -115,7 +115,9 @@
                 ></textarea>
               </div>
 
-              <ng-container *ngFor="let item of column.brainstormidea_set">
+              <ng-container
+                *ngFor="let item of column.brainstormidea_set; let i = index"
+              >
                 <div
                   *ngIf="!item.removed"
                   class="brainstorm-idea"
@@ -129,8 +131,15 @@
                   >
                     clear
                   </mat-icon>
+                  <div
+                    class="image"
+                    *ngIf="item.idea_image"
+                    (click)="viewImage(hostname + item.idea_image.img)"
+                  >
+                    <img [src]="hostname + item.idea_image.img" alt="" />
+                  </div>
                   {{ item.idea }}
-                  <div class="votes primary-color">
+                  <div class="votes primary-color" *ngIf="voteScreen">
                     {{ item.num_votes }}
                   </div>
                 </div>

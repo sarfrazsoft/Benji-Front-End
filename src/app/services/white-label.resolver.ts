@@ -47,7 +47,6 @@ export class WhiteLabelResolver implements Resolve<any> {
         window.location.origin !== 'http://localhost:4200' &&
         window.location.origin !== 'https://staging.mybenji.com'
       ) {
-        console.log('applying some custom theme');
         if (window.location.origin.includes('muralys')) {
           console.log('get muraly theme');
           this.httpClient
@@ -150,7 +149,6 @@ export class WhiteLabelResolver implements Resolve<any> {
             );
           } else {
             if (user !== null) {
-              console.log('user not null');
               // this.applyBenjiTheme();
               this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
             }
@@ -185,3 +183,5 @@ export class WhiteLabelResolver implements Resolve<any> {
     this.contextService.partnerInfo = global.DefaultwhiteLabelInfo as PartnerInfo;
   }
 }
+// 68195
+// 27582

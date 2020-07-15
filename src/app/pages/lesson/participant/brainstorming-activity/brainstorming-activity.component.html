@@ -25,7 +25,7 @@
       </ng-container>
     </ng-container>
     <ng-container class="content">
-      <div class="draft-idea">
+      <div class="draft-idea" fxLayout="column" fxLayoutGap="10px">
         <div class="dropdown-controls-container" *ngIf="showCategoriesDropdown">
           <ng-select
             class="ps-brainstorm-dropdown-controls"
@@ -39,10 +39,44 @@
           >
           </ng-select>
         </div>
-        <textarea
-          class="b-standard-textarea"
-          [(ngModel)]="userIdeaText"
-        ></textarea>
+        <div>
+          <textarea
+            class="b-standard-textarea"
+            [(ngModel)]="userIdeaText"
+          ></textarea>
+        </div>
+
+        <div class="image-upload-button" fxLayoutAlign="center center">
+          <label fxLayout="row" fxLayoutAlign="center center">
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelect($event)"
+            />
+            <div class="details" fxLayoutAlign="space-evenly center">
+              <div *ngIf="!imagesList">
+                Add to your submission
+              </div>
+              <div class="image-name" *ngIf="imagesList">
+                {{ imagesList[0].name }}
+              </div>
+              <mat-icon
+                *ngIf="!imagesList"
+                aria-hidden="false"
+                aria-label="photo camera"
+              >
+                photo_camera
+              </mat-icon>
+              <mat-icon
+                *ngIf="imagesList"
+                (click)="imagesList = null; $event.preventDefault()"
+                benji-click-stop-propagation
+              >
+                close
+              </mat-icon>
+            </div>
+          </label>
+        </div>
       </div>
       <button
         class="b-standard-button bg-primary-color"
@@ -53,10 +87,6 @@
       </button>
     </ng-container>
   </benji-ps-instruction-template>
-  <!-- <benji-linear-timer
-    [timer]="activityState.brainstormactivity.submission_countdown_timer"
-    [timerOffset]="avgServerTimeOffset"
-  ></benji-linear-timer> -->
 </ng-container>
 
 <!-- Thank you for submitting Idea -->

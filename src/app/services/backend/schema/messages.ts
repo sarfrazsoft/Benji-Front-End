@@ -317,9 +317,17 @@ export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number) {
+  constructor(text: string, category: number, idea_image?: number) {
     super();
-    this.extra_args = { idea: text, category: category };
+    if (idea_image) {
+      this.extra_args = {
+        idea: text,
+        category: category,
+        idea_image: idea_image,
+      };
+    } else {
+      this.extra_args = { idea: text, category: category };
+    }
   }
 }
 

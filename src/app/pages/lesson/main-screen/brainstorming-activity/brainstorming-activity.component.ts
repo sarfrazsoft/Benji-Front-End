@@ -2,7 +2,7 @@ import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
-} from '@angular/cdk/drag-drop';
+} from "@angular/cdk/drag-drop";
 import {
   Component,
   ElementRef,
@@ -11,11 +11,11 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-} from '@angular/core';
-import { uniqBy } from 'lodash';
-import { Observable, Subscription } from 'rxjs';
-import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
-import { ContextService } from 'src/app/services';
+} from "@angular/core";
+import { uniqBy } from "lodash";
+import { Observable, Subscription } from "rxjs";
+import { BrainStormComponent } from "src/app/dashboard/past-sessions/reports";
+import { ContextService } from "src/app/services";
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
@@ -25,28 +25,35 @@ import {
   BrainstormSetCategoryEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
+  Idea,
   Timer,
-} from 'src/app/services/backend/schema';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
+} from "src/app/services/backend/schema";
+import { BaseActivityComponent } from "../../shared/base-activity.component";
+
+import { MatDialog } from "@angular/material";
+import { ImageViewDialogComponent } from "src/app/pages";
 
 @Component({
-  selector: 'benji-ms-brainstorming-activity',
-  templateUrl: './brainstorming-activity.component.html',
-  styleUrls: ['./brainstorming-activity.component.scss'],
+  selector: "benji-ms-brainstorming-activity",
+  templateUrl: "./brainstorming-activity.component.html",
+  styleUrls: ["./brainstorming-activity.component.scss"],
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
-  @ViewChild('colName') colNameElement: ElementRef;
+  @ViewChild("colName") colNameElement: ElementRef;
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
   private eventsSubscription: Subscription;
 
-  constructor(private contextService: ContextService) {
+  constructor(
+    private contextService: ContextService,
+    private dialog: MatDialog
+  ) {
     super();
   }
-  instructions = '';
+  instructions = "";
   timer: Timer;
   act: BrainstormActivity;
 
@@ -59,8 +66,16 @@ export class MainScreenBrainstormingActivityComponent
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
   ideas = [];
+  hostname = window.location.protocol + "//" + window.location.hostname;
+  dialogRef;
 
   columns = [];
+
+  imagesURLs = [
+    "localhost/media/Capture_LGXPk9s.JPG",
+    "localhost/media/Capture_LGXPk9s.JPG",
+    "../../../../../assets//img/Desk_lightblue2.jpg",
+  ];
   ngOnInit() {
     this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
@@ -77,13 +92,13 @@ export class MainScreenBrainstormingActivityComponent
   changeStage(state) {
     this.peakBackStage = state;
     const act = this.activityState.brainstormactivity;
-    if (state === 'next') {
+    if (state === "next") {
     } else {
       // state === 'previous'
     }
 
     if (this.submissionScreen) {
-      if (state === 'next') {
+      if (state === "next") {
         this.voteScreen = true;
         this.submissionScreen = false;
         this.VnSComplete = false;
@@ -93,7 +108,7 @@ export class MainScreenBrainstormingActivityComponent
         // do nothing
       }
     } else if (this.voteScreen) {
-      if (state === 'next') {
+      if (state === "next") {
         this.submissionScreen = false;
         this.voteScreen = false;
         this.VnSComplete = true;
@@ -105,7 +120,7 @@ export class MainScreenBrainstormingActivityComponent
         this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
       }
     } else if (this.VnSComplete) {
-      if (state === 'next') {
+      if (state === "next") {
         // do nothing
       } else {
         // state === 'previous'
@@ -124,7 +139,7 @@ export class MainScreenBrainstormingActivityComponent
     this.ideas = [];
     act.brainstormcategory_set.forEach((category) => {
       if (!category.removed) {
-        category.brainstormidea_set.forEach((idea) => {
+        category.brainstormidea_set.forEach((idea: Idea) => {
           if (!idea.removed) {
             this.ideas.push({ ...idea, showClose: false });
           }
@@ -254,8 +269,19 @@ export class MainScreenBrainstormingActivityComponent
 
   addColumn(newCategoryNumber) {
     this.sendMessage.emit(
-      new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber)
+      new BrainstormCreateCategoryEvent("Category " + newCategoryNumber)
     );
+  }
+
+  viewImage(imageUrl: string) {
+    this.dialogRef = this.dialog
+      .open(ImageViewDialogComponent, {
+        data: { imageUrl: imageUrl },
+        disableClose: false,
+        panelClass: "image-view-dialog",
+      })
+      .afterClosed()
+      .subscribe((res) => {});
   }
 }
 
