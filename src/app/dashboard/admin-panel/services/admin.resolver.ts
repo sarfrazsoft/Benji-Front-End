@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import { AuthService, BackendRestService } from 'src/app/services';
+import {
+  AuthService,
+  BackendRestService,
+  ContextService,
+} from 'src/app/services';
 import { AdminService } from './admin.service';
 
 @Injectable()
@@ -9,12 +13,18 @@ export class AdminResolver implements Resolve<any> {
     private router: Router,
     private authService: AuthService,
     private adminService: AdminService,
-    private backendRestService: BackendRestService
+    private backendRestService: BackendRestService,
+    private contextService: ContextService
   ) {}
 
   async resolve(route: ActivatedRouteSnapshot): Promise<any> {
     try {
-      const user = await this.adminService.getUser().toPromise();
+      let user;
+      if (!this.contextService.user) {
+        user = await this.adminService.getUser().toPromise();
+      } else {
+        user = this.contextService.user;
+      }
 
       const courses = await this.adminService.getCourses().toPromise();
 
