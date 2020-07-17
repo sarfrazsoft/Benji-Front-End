@@ -70,7 +70,6 @@ export class BaseLessonComponent implements OnInit {
       } else if (params['share'] === 'facilitator') {
         // take to login screen
         this.authService.loginUser();
-        console.log('bawaji');
         this.disableControls = false;
       }
     });

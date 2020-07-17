@@ -15,10 +15,16 @@ import { PaginatedResponse } from 'src/app/services/backend/schema/course_detail
 @Component({
   selector: 'benji-sessions',
   templateUrl: './sessions.component.html',
-  styleUrls: ['./sessions.component.scss']
+  styleUrls: ['./sessions.component.scss'],
 })
 export class SessionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['date', 'title', 'hostedBy', 'report'];
+  displayedColumns: string[] = [
+    'date',
+    'title',
+    'noOfParticipants',
+    'hostedBy',
+    'report',
+  ];
   learnerID = '';
   data: any = [];
   selection = new SelectionModel<any>(true, []);
@@ -70,7 +76,7 @@ export class SessionsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.learnerID = paramMap.get('learnerID');
     });
   }
@@ -103,17 +109,18 @@ export class SessionsComponent implements OnInit, AfterViewInit {
           return observableOf([]);
         })
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         const tableData = [];
-        data.forEach(run => {
+        data.forEach((run) => {
           tableData.push({
             id: run.id,
             date: moment(run.start_time).format('MMMM, DD YYYY'),
             title: run.lesson.lesson_name,
+            noOfParticipants: run.joined_users.length,
             hostedBy: run.host
               ? run.host.first_name + ' ' + run.host.last_name
               : '',
-            lessonrunCode: run.lessonrun_code
+            lessonrunCode: run.lessonrun_code,
           });
         });
         this.data = tableData;
@@ -138,7 +145,7 @@ export class SessionsComponent implements OnInit, AfterViewInit {
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.data.forEach(row => this.selection.select(row));
+      : this.data.forEach((row) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -146,8 +153,8 @@ export class SessionsComponent implements OnInit, AfterViewInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${
-      this.selection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.position + 1
+    }`;
   }
 }

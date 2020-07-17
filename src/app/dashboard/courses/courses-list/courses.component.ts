@@ -10,7 +10,7 @@ import { AdminService } from '../../admin-panel/services';
 @Component({
   selector: 'benji-courses-list',
   templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss']
+  styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
   @Input() courses: Array<any> = [];
@@ -41,20 +41,20 @@ export class CoursesComponent implements OnInit {
     this.adminService.getCourseDetails(id).subscribe((res: Array<Lesson>) => {
       // if it's a single user lesson
       this.restService.start_lesson(res[0].id).subscribe(
-        lessonRun => {
+        (lessonRun) => {
           if (res[0].single_user_lesson) {
             setTimeout(() => {
               this.router.navigate([
-                '/user/lesson/' + lessonRun.lessonrun_code
+                '/user/lesson/' + lessonRun.lessonrun_code,
               ]);
             }, 1500);
           } else {
             this.router.navigate([
-              '/screen/lesson/' + lessonRun.lessonrun_code
+              '/screen/lesson/' + lessonRun.lessonrun_code,
             ]);
           }
         },
-        err => console.log(err)
+        (err) => console.log(err)
       );
     });
     event.stopPropagation();
@@ -63,7 +63,7 @@ export class CoursesComponent implements OnInit {
   openDetails(course) {
     if (course.course_details) {
       this.router.navigate(['course', course.course_id], {
-        relativeTo: this.activatedRoute
+        relativeTo: this.activatedRoute,
       });
     }
   }

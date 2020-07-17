@@ -11,10 +11,16 @@ import { PastSessionsService } from 'src/app/services';
 @Component({
   selector: 'benji-past-sessions-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class PastSessionsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['date', 'title', 'hosted_by', 'report'];
+  displayedColumns: string[] = [
+    'date',
+    'title',
+    'hosted_by',
+    'noOfParticipants',
+    'report',
+  ];
   data: any = [];
   selection = new SelectionModel<any>(true, []);
   resultsLength = 0;
@@ -58,9 +64,9 @@ export class PastSessionsTableComponent implements AfterViewInit {
           return observableOf([]);
         })
       )
-      .subscribe(data => {
+      .subscribe((data) => {
         const tableData = [];
-        data.forEach(run => {
+        data.forEach((run) => {
           tableData.push({
             id: run.id,
             date: moment(run.start_time).format('MMMM, DD YYYY'),
@@ -68,9 +74,8 @@ export class PastSessionsTableComponent implements AfterViewInit {
             hostedBy: run.host
               ? run.host.first_name + ' ' + run.host.last_name
               : '',
-            // tslint:disable-next-line:whitespace
-            // participants: run.joined_users.length,
-            lessonrunCode: run.lessonrun_code
+            noOfParticipants: run.joined_users.length,
+            lessonrunCode: run.lessonrun_code,
           });
         });
         this.data = tableData;
@@ -81,7 +86,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
   showReports(row) {
     this.pastSessionService.resetFilter();
     this.router.navigate([row.lessonrunCode], {
-      relativeTo: this.activatedRoute
+      relativeTo: this.activatedRoute,
     });
   }
 
@@ -97,7 +102,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
   masterToggle() {
     this.isAllSelected()
       ? this.selection.clear()
-      : this.data.forEach(row => this.selection.select(row));
+      : this.data.forEach((row) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -105,8 +110,8 @@ export class PastSessionsTableComponent implements AfterViewInit {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${
-      this.selection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.position + 1
+    }`;
   }
 }
