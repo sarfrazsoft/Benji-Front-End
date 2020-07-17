@@ -8,48 +8,48 @@ import {
   LearnerResolver,
   LearnersComponent,
   PastSessionsComponent,
-  ResetPasswordComponent
+  ResetPasswordComponent,
 } from './index';
 
 const routes: Routes = [
   {
     path: '',
     resolve: {
-      dashData: AdminResolver
+      dashData: AdminResolver,
     },
     children: [
       {
         path: '',
-        component: AdminPanelComponent
+        component: AdminPanelComponent,
       },
       {
         path: 'course/:courseId',
-        component: CourseComponent
+        component: CourseComponent,
       },
       {
         path: 'learners',
         loadChildren:
-          'src/app/dashboard/learners/learners.module#LearnersModule'
+          'src/app/dashboard/learners/learners.module#LearnersModule',
       },
       {
         path: 'pastsessions',
         loadChildren:
-          'src/app/dashboard/past-sessions/past-sessions.module#PastSessionsModule'
+          'src/app/dashboard/past-sessions/past-sessions.module#PastSessionsModule',
       },
       {
         path: 'groups',
-        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule'
+        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule',
       },
       {
         path: 'account',
-        component: AccountComponent
+        component: AccountComponent,
       },
       {
         path: 'account/password',
-        component: ResetPasswordComponent
-      }
-    ]
-  }
+        component: ResetPasswordComponent,
+      },
+    ],
+  },
 ];
 
 export const DashboardRoutes = RouterModule.forChild(routes);
