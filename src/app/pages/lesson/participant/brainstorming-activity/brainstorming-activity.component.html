@@ -51,6 +51,7 @@
             <input
               type="file"
               accept="image/*"
+              onclick="this.value = null"
               (change)="onFileSelect($event)"
             />
             <div class="details" fxLayoutAlign="space-evenly center">
@@ -58,7 +59,7 @@
                 Add to your submission
               </div>
               <div class="image-name" *ngIf="imagesList">
-                {{ imagesList[0].name }}
+                Selected
               </div>
               <mat-icon
                 *ngIf="!imagesList"

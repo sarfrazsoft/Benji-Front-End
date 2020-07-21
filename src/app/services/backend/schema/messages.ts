@@ -314,6 +314,14 @@ export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
   event_name = 'BrainstormToggleCategoryModeEvent';
 }
 
+export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmissionCompleteInternalEvent';
+}
+
+export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
+  event_name = 'BrainstormVotingCompleteInternalEvent';
+}
+
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 

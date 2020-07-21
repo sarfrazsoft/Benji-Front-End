@@ -16,7 +16,9 @@ import { ConfirmationDialogComponent } from 'src/app/shared';
 import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs';
 import {
   BootUserEvent,
+  BrainstormSubmissionCompleteInternalEvent,
   BrainstormToggleCategoryModeEvent,
+  BrainstormVotingCompleteInternalEvent,
   EndEvent,
   FastForwardEvent,
   NextInternalEvent,
@@ -91,8 +93,19 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());
     } else if (eventType === 'fastForward') {
+      if (this.activityState.activity_type === this.at.brainStorm) {
+        const act = this.activityState.brainstormactivity;
+        if (!act.submission_complete) {
+          this.socketMessage.emit(
+            new BrainstormSubmissionCompleteInternalEvent()
+          );
+        } else {
+          this.socketMessage.emit(new BrainstormVotingCompleteInternalEvent());
+        }
+      } else {
+        this.socketMessage.emit(new FastForwardEvent());
+      }
       this.fastForwarding = true;
-      this.socketMessage.emit(new FastForwardEvent());
     } else if (eventType === 'previous') {
       this.socketMessage.emit(new PreviousEvent());
     } else if (eventType === 'reset') {

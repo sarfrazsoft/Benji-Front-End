@@ -132,7 +132,7 @@
                     clear
                   </mat-icon>
                   <div
-                    class="image"
+                    class="brainstorm-image"
                     *ngIf="item.idea_image"
                     (click)="viewImage(hostname + item.idea_image.img)"
                   >
@@ -177,7 +177,13 @@
             >
               clear
             </mat-icon>
-
+            <div
+              class="brainstorm-image"
+              *ngIf="idea.idea_image"
+              (click)="viewImage(hostname + idea.idea_image.img)"
+            >
+              <img [src]="hostname + idea.idea_image.img" alt="" />
+            </div>
             {{ idea.idea }}
             <div class="votes primary-color">
               {{ idea.num_votes }}

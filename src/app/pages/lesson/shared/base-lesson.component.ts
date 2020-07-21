@@ -49,19 +49,21 @@ export class BaseLessonComponent implements OnInit {
   ngOnInit() {
     this.initSocket();
 
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        // stop running expensive task
-        this.socket = undefined;
-      } else {
-        // page has focus, begin running task
-        if (!this.isConnected()) {
-          setTimeout(() => {
-            this.initSocket();
-          }, 500);
-        }
-      }
-    });
+    // commenting out the code so that connection doesnt break when
+    // pictures are submitted
+    // document.addEventListener('visibilitychange', () => {
+    //   if (document.hidden) {
+    //     // stop running expensive task
+    //     this.socket = undefined;
+    //   } else {
+    //     // page has focus, begin running task
+    //     if (!this.isConnected()) {
+    //       setTimeout(() => {
+    //         this.initSocket();
+    //       }, 500);
+    //     }
+    //   }
+    // });
 
     this.route.queryParams.subscribe((params) => {
       if (params['share'] === 'participant') {
