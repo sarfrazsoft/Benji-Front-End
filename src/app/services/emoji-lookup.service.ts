@@ -115,6 +115,7 @@ export class EmojiLookupService {
         return '❓';
       default:
         console.log('Emoji Service: The emoji string is not assigned!');
+        return '';
     }
   }
 }

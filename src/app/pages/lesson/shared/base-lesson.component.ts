@@ -38,7 +38,7 @@ export class BaseLessonComponent implements OnInit {
     protected contextService: ContextService,
     protected authService: AuthService,
     protected ref?: ChangeDetectorRef,
-    protected _snackBar?: MatSnackBar
+    protected matSnackBar?: MatSnackBar
   ) {
     this.roomCode = parseInt(this.route.snapshot.paramMap.get('roomCode'), 10);
     this.clientType = clientType;
@@ -113,7 +113,7 @@ export class BaseLessonComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
+    this.matSnackBar.open(message, action, {
       duration: 5000,
       panelClass: ['bg-warning-color', 'white-color', 'simple-snack-bar'],
     });
