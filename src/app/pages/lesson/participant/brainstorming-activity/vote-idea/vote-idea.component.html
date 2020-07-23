@@ -12,7 +12,10 @@
         {{ ideaText }}
       </span>
     </button>
-    <button mat-icon-button>
+    <button
+      mat-icon-button
+      [ngStyle]="{ opacity: ideaText.length > 24 ? '1' : '0' }"
+    >
       <img
         class="participant-utility-icons"
         src="/assets/img/down_arrow_circle.png"
