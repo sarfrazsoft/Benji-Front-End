@@ -185,7 +185,7 @@
               <img [src]="hostname + idea.idea_image.img" alt="" />
             </div>
             {{ idea.idea }}
-            <div class="votes primary-color">
+            <div class="votes primary-color" *ngIf="voteScreen">
               {{ idea.num_votes }}
             </div>
           </div>
