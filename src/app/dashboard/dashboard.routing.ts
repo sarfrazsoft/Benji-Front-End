@@ -45,6 +45,10 @@ const routes: Routes = [
         component: AccountComponent,
       },
       {
+        path: 'editor',
+        loadChildren: 'src/app/dashboard/editor/editor.module#EditorModule',
+      },
+      {
         path: 'account/password',
         component: ResetPasswordComponent,
       },

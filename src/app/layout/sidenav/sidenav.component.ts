@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import {
-  JoinSessionDialogComponent,
-  LaunchSessionDialogComponent
-} from '../../shared';
-
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import {
+  JoinSessionDialogComponent,
+  LaunchSessionDialogComponent,
+} from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
 export interface SidenavSection {
@@ -17,7 +16,7 @@ export interface SidenavSection {
 
 @Component({
   selector: 'benji-menu',
-  templateUrl: './sidenav.component.html'
+  templateUrl: './sidenav.component.html',
 })
 export class SidenavComponent implements OnInit {
   sidenavSections: Array<SidenavSection> = [];
@@ -30,8 +29,8 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Learners',
         navRoute: './learners',
-        permission: 'admin'
-      }
+        permission: 'admin',
+      },
       // {
       //   navName: 'Groups',
       //   navRoute: './groups'
@@ -40,7 +39,7 @@ export class SidenavComponent implements OnInit {
       //   navName: 'Past Sessions',
       //   navRoute: './pastsessions'
       // }
-    ]
+    ],
   };
 
   groupsSection = {
@@ -49,8 +48,8 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Groups',
         navRoute: './groups',
-        permission: 'admin'
-      }
+        permission: 'admin',
+      },
       // {
       //   navName: 'Groups',
       //   navRoute: './groups'
@@ -59,7 +58,7 @@ export class SidenavComponent implements OnInit {
       //   navName: 'Past Sessions',
       //   navRoute: './pastsessions'
       // }
-    ]
+    ],
   };
 
   pastSessionSection = {
@@ -76,9 +75,9 @@ export class SidenavComponent implements OnInit {
       // },
       {
         navName: 'Past Sessions',
-        navRoute: './pastsessions'
-      }
-    ]
+        navRoute: './pastsessions',
+      },
+    ],
   };
 
   accountSection = {
@@ -86,8 +85,8 @@ export class SidenavComponent implements OnInit {
     items: [
       {
         navName: 'Account',
-        navRoute: 'account'
-      }
+        navRoute: 'account',
+      },
       // {
       //   navName: 'Settings',
       //   navRoute: 'settings'
@@ -96,7 +95,7 @@ export class SidenavComponent implements OnInit {
       //   navName: 'Help',
       //   navRoute: 'help'
       // }
-    ]
+    ],
   };
 
   profile = {
@@ -104,9 +103,9 @@ export class SidenavComponent implements OnInit {
     items: [
       {
         navName: 'Profile',
-        navRoute: ''
-      }
-    ]
+        navRoute: '',
+      },
+    ],
   };
 
   authSection = {
@@ -114,9 +113,20 @@ export class SidenavComponent implements OnInit {
     items: [
       {
         navName: 'Logout',
-        navRoute: 'logout'
-      }
-    ]
+        navRoute: 'logout',
+      },
+    ],
+  };
+
+  editor = {
+    section: 6,
+    items: [
+      {
+        navName: 'Editor',
+        navRoute: 'editor',
+        hideSidebar: true,
+      },
+    ],
   };
 
   constructor(
@@ -138,19 +148,19 @@ export class SidenavComponent implements OnInit {
   launchSession(): void {
     this.dialog
       .open(LaunchSessionDialogComponent, {
-        panelClass: 'dashboard-dialog'
+        panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe(user => {});
+      .subscribe((user) => {});
   }
 
   joinSession(): void {
     this.dialog
       .open(JoinSessionDialogComponent, {
-        panelClass: 'dashboard-dialog'
+        panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe(user => {});
+      .subscribe((user) => {});
   }
 
   logout() {
@@ -158,21 +168,22 @@ export class SidenavComponent implements OnInit {
   }
 
   initNavigation() {
-    this.contextService.user$.subscribe(user => {
+    this.contextService.user$.subscribe((user) => {
       if (user.local_admin_permission) {
         this.sidenavSections = [
           this.adminSection,
           // this.groupsSection,
           this.pastSessionSection,
           this.accountSection,
-          this.authSection
+          this.authSection,
+          this.editor,
         ];
       } else {
         this.profile.items[0].navRoute = 'learners/' + user.id;
         this.sidenavSections = [
           this.profile,
           this.accountSection,
-          this.authSection
+          this.authSection,
         ];
       }
     });

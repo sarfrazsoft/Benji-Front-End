@@ -107,7 +107,7 @@ export class AuthService {
           console.log(JSON.stringify(res));
           this.setSession(res);
           this.contextService.user = res.user;
-          this.layoutService.isEmailedReport = false;
+          this.layoutService.hideSidebar = false;
           localStorage.setItem('benji_user', JSON.stringify(res.user));
         }),
         catchError((err) => of(err.error))

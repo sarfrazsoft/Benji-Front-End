@@ -3,7 +3,7 @@
     <img [src]="logo" alt="Benji Logo" />
   </div>
 
-  <div *ngIf="!isEmailedReport" class="right-controls">
+  <div *ngIf="!hideSidebar" class="right-controls">
     <button mat-button class="user-controls" [matMenuTriggerFor]="menu">
       <!-- <span class="acc-icon">
         <app-avatar

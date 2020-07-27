@@ -4,11 +4,12 @@ import { AuthService } from 'src/app/services';
 export interface SidenavItem {
   navName: string;
   navRoute?: string;
+  hideSidebar?: boolean;
 }
 
 @Component({
   selector: 'benji-sidenav-item',
-  templateUrl: './sidenav-item.component.html'
+  templateUrl: './sidenav-item.component.html',
 })
 export class SidenavItemComponent {
   @Input() sidenavItem: SidenavItem;

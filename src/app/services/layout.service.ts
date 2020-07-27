@@ -9,15 +9,15 @@ import { ContextService } from './context.service';
 export class LayoutService {
   isFullscreen = false;
   /**
-   * isEmailedReport
+   * hideSidebar
    */
-  isEmailedReport$ = new BehaviorSubject<any>(null);
+  hideSidebar$ = new BehaviorSubject<any>(null);
 
-  set isEmailedReport(i: boolean) {
-    this.isEmailedReport$.next(i);
+  set hideSidebar(i: boolean) {
+    this.hideSidebar$.next(i);
   }
-  get isEmailedReport(): boolean {
-    return this.isEmailedReport$.getValue();
+  get hideSidebar(): boolean {
+    return this.hideSidebar$.getValue();
   }
   constructor(
     private http: HttpClient,

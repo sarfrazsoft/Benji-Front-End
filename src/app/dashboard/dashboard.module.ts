@@ -7,11 +7,11 @@ import { SharedModule } from '../shared/shared.module';
 import {
   DashboardComponents,
   DashboardEntryComponents,
-  DashboardProviders
+  DashboardProviders,
 } from './';
-import { DashboardRoutes } from './dashboard.routing';
-import { McqsComponent } from './courses/course/mcqs/mcqs.component';
 import { McqComponent } from './courses/course/mcqs/mcq/mcq.component';
+import { McqsComponent } from './courses/course/mcqs/mcqs.component';
+import { DashboardRoutes } from './dashboard.routing';
 
 @NgModule({
   imports: [
@@ -19,12 +19,12 @@ import { McqComponent } from './courses/course/mcqs/mcq/mcq.component';
     DashboardRoutes,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [RouterModule],
   declarations: [...DashboardComponents, McqsComponent, McqComponent],
   entryComponents: DashboardEntryComponents,
-  providers: DashboardProviders
+  providers: DashboardProviders,
 })
 export class DashboardModule {}
 

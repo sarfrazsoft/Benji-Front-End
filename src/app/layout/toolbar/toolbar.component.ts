@@ -11,14 +11,14 @@ import { LayoutService } from 'src/app/services/layout.service';
 export class ToolbarComponent implements OnInit {
   user: any = {};
   logo = '';
-  isEmailedReport = false;
+  hideSidebar = false;
   constructor(
     private authService: AuthService,
     private contextService: ContextService,
     private layoutService: LayoutService
   ) {
-    layoutService.isEmailedReport$.subscribe((v) => {
-      this.isEmailedReport = v;
+    layoutService.hideSidebar$.subscribe((v) => {
+      this.hideSidebar = v;
     });
   }
 

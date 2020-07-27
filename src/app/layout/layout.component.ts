@@ -7,11 +7,11 @@ import { LayoutService } from '../services/layout.service';
   templateUrl: './layout.component.html',
 })
 export class LayoutComponent {
-  isEmailedReport = false;
+  hideSidebar = false;
   constructor(private router: Router, private layoutService: LayoutService) {
     // this.router.navigate(['/login']);
-    layoutService.isEmailedReport$.subscribe((v) => {
-      this.isEmailedReport = v;
+    layoutService.hideSidebar$.subscribe((v) => {
+      this.hideSidebar = v;
     });
   }
 }
