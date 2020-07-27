@@ -1,7 +1,6 @@
 @import "variables";
 
 mat-toolbar.mat-toolbar {
-  height: $toolbar-height;
   background-color: #fff;
   border-bottom: 2px solid;
   padding-left: 32px;
@@ -26,7 +25,6 @@ mat-toolbar.mat-toolbar {
 .right-controls {
   .mat-button {
     font-weight: 400;
-    height: $toolbar-height;
   }
   .acc-icon {
     display: inline-block;
