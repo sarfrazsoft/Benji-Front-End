@@ -124,7 +124,6 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Editor',
         navRoute: 'editor',
-        hideSidebar: true,
       },
     ],
   };
