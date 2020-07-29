@@ -5,7 +5,7 @@ import { MCQFeedbackDialogComponent } from 'src/app/shared/dialogs';
 @Component({
   selector: 'benji-mcq',
   templateUrl: './mcq.component.html',
-  styleUrls: ['./mcq.component.scss']
+  styleUrls: ['./mcq.component.scss'],
 })
 export class McqComponent implements OnInit {
   @Input() mcq;
@@ -29,11 +29,11 @@ export class McqComponent implements OnInit {
         .open(MCQFeedbackDialogComponent, {
           panelClass: 'dashboard-dialog',
           data: {
-            explanationMessage: this.mcq.correctExplanation
-          }
+            explanationMessage: this.mcq.correctExplanation,
+          },
         })
         .afterClosed()
-        .subscribe(user => {});
+        .subscribe((user) => {});
     }
   }
 
