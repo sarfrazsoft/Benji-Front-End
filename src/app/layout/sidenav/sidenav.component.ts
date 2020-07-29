@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';

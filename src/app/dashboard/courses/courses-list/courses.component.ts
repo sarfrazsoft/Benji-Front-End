@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';

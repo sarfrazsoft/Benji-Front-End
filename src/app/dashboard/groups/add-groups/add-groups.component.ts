@@ -7,7 +7,7 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { merge } from 'lodash';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { ContextService } from 'src/app/services';

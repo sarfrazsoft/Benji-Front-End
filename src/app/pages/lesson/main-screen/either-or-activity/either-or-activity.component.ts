@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
 import {
   Timer,

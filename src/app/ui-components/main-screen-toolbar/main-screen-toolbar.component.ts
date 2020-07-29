@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';

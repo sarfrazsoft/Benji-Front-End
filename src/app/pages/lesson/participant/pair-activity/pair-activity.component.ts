@@ -7,7 +7,7 @@ import {
   // ...
 } from '@angular/animations';
 import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { zoomInAnimation } from 'angular-animations';
 import { concat, remove } from 'lodash';
 import { ContextService, EmojiLookupService } from 'src/app/services';

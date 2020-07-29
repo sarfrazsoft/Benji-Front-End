@@ -6,7 +6,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ContextService } from 'src/app/services';
 import {
   TeleTriviaMessageReturnedEvent,

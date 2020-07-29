@@ -7,7 +7,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog, MatMenuTrigger } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatMenuTrigger } from '@angular/material/menu';
 import { clone } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
 import { PastSessionsService } from 'src/app/services';

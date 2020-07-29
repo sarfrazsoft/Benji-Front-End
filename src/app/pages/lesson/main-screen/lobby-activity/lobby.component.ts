@@ -6,7 +6,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialogs';
 import { ContextService } from 'src/app/services';
 import {

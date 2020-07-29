@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { MatTable } from '@angular/material';
+import { MatTable } from '@angular/material/table';
 import { PastSessionsService } from 'src/app/services';
 import { ActivityReport } from 'src/app/services/backend/schema';
 import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './single-pitch-o-matic/pitch-o-matic.component';
