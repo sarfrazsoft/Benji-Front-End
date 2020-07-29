@@ -10,6 +10,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { LayoutService } from 'src/app/services/layout.service';
+import { EditorService } from './services';
 
 @Component({
   selector: 'benji-editor',
@@ -20,7 +21,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private editorService: EditorService
   ) {
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
@@ -37,7 +39,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     // const subscribe = example.subscribe(val => console.log(val));
   }
 
-  addLearners() {
+  addSlide() {
+    // this.editorService.
     this.router.navigate(['/dashboard/learners/add']);
   }
   ngOnDestroy() {

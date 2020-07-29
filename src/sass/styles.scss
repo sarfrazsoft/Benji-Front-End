@@ -1,72 +1,73 @@
 /* ng select */
-@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~@ng-select/ng-select/themes/default.theme.css';
 
 /*
  Benji Sass Partial Imports
 */
-@import "./settings/normalize";
-@import "./layout-utils";
-@import "./typography";
-@import "./variables";
-@import "./buttons";
-@import "./inputs";
-@import "./activities";
-@import "./cards";
-@import "./dashboard/variables";
-@import "./layout/toolbar";
-@import "./layout/layout";
-@import "./layout/sidenav";
-@import "./dashboard/activate";
-@import "./dashboard/inputs";
-@import "./dashboard/learner-report";
-@import "./dashboard/panel";
-@import "./dashboard/stats";
-@import "./dashboard/courses/courses";
-@import "./dashboard/courses/course";
-@import "./dashboard/dialogs";
-@import "./dashboard/learners";
-@import "./dashboard/mcqs";
-@import "./dashboard/add-learners";
-@import "./dashboard/account";
-@import "./dashboard/table";
-@import "./dashboard/utils";
-@import "./dashboard/past-sessions/reports";
-@import "./dashboard/past-sessions/key-stats";
-@import "./activities/bottom-button";
-@import "./activities/monty-hall";
-@import "./activities/mcq-result";
-@import "./activities/single-column-activity";
-@import "./activities/top-banner-two-column";
-@import "./activities/dialogs";
-@import "./activities/hint-word";
-@import "./activities/timers";
-@import "./activities/icons";
-@import "./activities/roleplay-pair-activity";
-@import "./activities/single-user-activity";
-@import "./activities/lobby";
-@import "./activities/teletrivia-activity";
-@import "./activities/either-or";
-@import "./activities/main-screen-lesson";
-@import "./activities/discussion-activity";
-@import "./activities/build-pitch-activity";
-@import "./activities/question-form";
-@import "./activities/external-grouping";
-@import "./activities/pop-quiz";
-@import "./activities/mcq-activity";
-@import "./activities/pair-grouping";
-@import "./activities/generate-pitch";
-@import "./activities/generic-roleplay";
-@import "./activities/brainstorm-activity";
-@import "./activities/share-ms-links";
-@import "./entry/demo-participant-join";
-@import "./entry/entry";
-@import "./entry/entry-mob";
-@import "./utils/rating-questions";
+@import './settings/normalize';
+@import './layout-utils';
+@import './typography';
+@import './variables';
+@import './buttons';
+@import './inputs';
+@import './activities';
+@import './cards';
+@import './dashboard/variables';
+@import './layout/toolbar';
+@import './layout/layout';
+@import './layout/sidenav';
+@import './dashboard/activate';
+@import './dashboard/inputs';
+@import './dashboard/learner-report';
+@import './dashboard/panel';
+@import './dashboard/stats';
+@import './dashboard/courses/courses';
+@import './dashboard/courses/course';
+@import './dashboard/dialogs';
+@import './dashboard/learners';
+@import './dashboard/mcqs';
+@import './dashboard/add-learners';
+@import './dashboard/account';
+@import './dashboard/table';
+@import './dashboard/utils';
+@import './dashboard/editor/editor-topbar';
+@import './dashboard/past-sessions/reports';
+@import './dashboard/past-sessions/key-stats';
+@import './activities/bottom-button';
+@import './activities/monty-hall';
+@import './activities/mcq-result';
+@import './activities/single-column-activity';
+@import './activities/top-banner-two-column';
+@import './activities/dialogs';
+@import './activities/hint-word';
+@import './activities/timers';
+@import './activities/icons';
+@import './activities/roleplay-pair-activity';
+@import './activities/single-user-activity';
+@import './activities/lobby';
+@import './activities/teletrivia-activity';
+@import './activities/either-or';
+@import './activities/main-screen-lesson';
+@import './activities/discussion-activity';
+@import './activities/build-pitch-activity';
+@import './activities/question-form';
+@import './activities/external-grouping';
+@import './activities/pop-quiz';
+@import './activities/mcq-activity';
+@import './activities/pair-grouping';
+@import './activities/generate-pitch';
+@import './activities/generic-roleplay';
+@import './activities/brainstorm-activity';
+@import './activities/share-ms-links';
+@import './entry/demo-participant-join';
+@import './entry/entry';
+@import './entry/entry-mob';
+@import './utils/rating-questions';
 
 /*
   Material Deisgn Theme
 */
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .dialog--primary-color-dark mat-dialog-container {
   background: $primary-color-dark;
@@ -84,7 +85,7 @@
   margin: 0 auto;
 }
 
-.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode="indeterminate"]
+.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode='indeterminate']
   circle {
   animation-duration: 6s;
 }
