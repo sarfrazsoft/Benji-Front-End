@@ -70,6 +70,6 @@
     "rxjs-tslint": "^0.1.6",
     "ts-node": "~5.0.1",
     "tslint": "^5.12.1",
-    "webpack": "^4.28.4"
+    "webpack": "^4.29.6"
   }
 }
