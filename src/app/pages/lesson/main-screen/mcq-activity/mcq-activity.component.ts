@@ -18,7 +18,7 @@ export class MainScreenMcqActivityComponent extends BaseActivityComponent
   implements OnChanges {
   pauseSeconds;
 
-  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
+  @ViewChild('sfxPlayer', { static: false }) sfxPlayer: ElementRef;
   sfxFile: string;
 
   ngOnChanges(changes: SimpleChanges) {

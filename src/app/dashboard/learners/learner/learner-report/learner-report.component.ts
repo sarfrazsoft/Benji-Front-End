@@ -24,7 +24,7 @@ import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './pitch-o-m
   styleUrls: ['./learner-report.component.scss']
 })
 export class LearnerReportComponent implements OnInit {
-  @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
+  @ViewChild('reportEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   fback: any = feedback.feedback.feedbackquestion_set;
   pitchText = '';
   userId = 2;

@@ -30,7 +30,7 @@ import {
 })
 export class ReportsComponent implements OnInit {
   config: PerfectScrollbarConfigInterface = {};
-  @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
+  @ViewChild('reportEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   statsData: ActivityReport;
 

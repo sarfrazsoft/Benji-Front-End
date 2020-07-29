@@ -31,7 +31,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   rightChoiceUsers: Array<User> = [];
   leftChoiceUsers: Array<User> = [];
   isRemoteSession = true;
-  @ViewChild('timer') timer;
+  @ViewChild('timer', { static: false }) timer;
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {

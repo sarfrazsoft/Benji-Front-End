@@ -37,7 +37,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
-  @ViewChild('colName') colNameElement: ElementRef;
+  @ViewChild('colName', { static: false }) colNameElement: ElementRef;
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;

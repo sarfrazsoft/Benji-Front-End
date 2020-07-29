@@ -18,7 +18,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenVideoActivityComponent extends BaseActivityComponent
   implements OnInit, OnDestroy {
-  @ViewChild('player') player: ElementRef;
+  @ViewChild('player', { static: true }) player: ElementRef;
   private videoPlaying = true;
   public _videoURL;
   private videoStateSubscription;

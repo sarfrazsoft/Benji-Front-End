@@ -42,11 +42,11 @@ export class ParticipantTeletriviaActivityComponent
 
   initiatorModalVisible = false;
 
-  @ViewChild('questionTimer') questionTimer;
-  @ViewChild('revealTimer') revealTimer;
+  @ViewChild('questionTimer', { static: false }) questionTimer;
+  @ViewChild('revealTimer', { static: false }) revealTimer;
 
-  @ViewChild('kickofftemplate') initiatorModal;
-  @ViewChild('endTemplate') endModal;
+  @ViewChild('kickofftemplate', { static: true }) initiatorModal;
+  @ViewChild('endTemplate', { static: true }) endModal;
 
   ngOnDestroy() {
     this.dialog.closeAll();

@@ -27,7 +27,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
   startSessionLabel = '';
   joinLobbyUrl = '';
   dialogRef;
-  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
+  @ViewChild('sfxPlayer', { static: false }) sfxPlayer: ElementRef;
 
   constructor(
     private dialog: MatDialog,

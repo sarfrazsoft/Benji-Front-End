@@ -15,7 +15,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenHintActivityComponent extends BaseActivityComponent
   implements OnChanges {
-  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
+  @ViewChild('sfxPlayer', { static: true }) sfxPlayer: ElementRef;
   sfxFile;
 
   ngOnChanges(changes: SimpleChanges) {

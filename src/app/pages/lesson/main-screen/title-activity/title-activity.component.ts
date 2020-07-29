@@ -17,7 +17,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenTitleActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges {
   isEndSession = false;
-  @ViewChild('titleTimer') titleTimer;
+  @ViewChild('titleTimer', { static: false }) titleTimer;
 
   constructor(
     private emoji: EmojiLookupService,

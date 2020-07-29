@@ -28,7 +28,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   ctx: CanvasRenderingContext2D;
   myChart: any;
   users = [[], [], [], [], []];
-  @ViewChild('chartCanvas') chartCanvas: ElementRef;
+  @ViewChild('chartCanvas', { static: true }) chartCanvas: ElementRef;
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {

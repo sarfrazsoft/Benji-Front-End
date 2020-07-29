@@ -8,7 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./discussion-activity.component.scss']
 })
 export class MainScreenDiscussionActivityComponent extends BaseActivityComponent {
-  @ViewChild('shareTimer') shareTimer;
+  @ViewChild('shareTimer', { static: false }) shareTimer;
 
   presenterGroupToText(presenterGroup: DiscussionGroup) {
     if (presenterGroup === undefined || presenterGroup == null) {

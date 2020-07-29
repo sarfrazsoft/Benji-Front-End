@@ -30,7 +30,7 @@ export class DonutComponent implements OnInit, AfterViewInit {
   canvas: any;
   ctx: any;
   myChart: any;
-  @ViewChild('chartCanvas') chartCanvas: ElementRef;
+  @ViewChild('chartCanvas', { static: true }) chartCanvas: ElementRef;
   constructor() {}
 
   ngOnInit() {}

@@ -46,7 +46,7 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
   canvas: any;
   ctx: CanvasRenderingContext2D;
   myChart: any;
-  @ViewChild('chartCanvas') chartCanvas: ElementRef;
+  @ViewChild('chartCanvas', { static: true }) chartCanvas: ElementRef;
 
   constructor() {}
 

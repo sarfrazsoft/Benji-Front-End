@@ -99,14 +99,14 @@ export class SkillEvaluationComponent implements OnInit {
     enoughData: false
   };
 
-  @ViewChild('chartCanvas') chartCanvas: ElementRef;
+  @ViewChild('chartCanvas', { static: false }) chartCanvas: ElementRef;
 
-  @ViewChild('reportEntry', { read: ViewContainerRef }) entry: ViewContainerRef;
-  @ViewChild('reportEntry2', { read: ViewContainerRef })
+  @ViewChild('reportEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
+  @ViewChild('reportEntry2', { read: ViewContainerRef, static: true })
   entry2: ViewContainerRef;
-  @ViewChild('reportEntry3', { read: ViewContainerRef })
+  @ViewChild('reportEntry3', { read: ViewContainerRef, static: true })
   entry3: ViewContainerRef;
-  @ViewChild('reportEntry4', { read: ViewContainerRef })
+  @ViewChild('reportEntry4', { read: ViewContainerRef, static: true })
   entry4: ViewContainerRef;
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
