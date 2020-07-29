@@ -5,14 +5,14 @@ import { ContextService } from 'src/app/services';
 import {
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
-  LaunchSessionDialogComponent
+  LaunchSessionDialogComponent,
 } from '../../shared';
 import { AdminService } from './services/admin.service';
 
 @Component({
   selector: 'benji-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.scss']
+  styleUrls: ['./admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit {
   courses: Array<any> = [];
