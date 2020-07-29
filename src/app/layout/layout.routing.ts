@@ -74,7 +74,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: LayoutComponent,
-    loadChildren: 'src/app/dashboard/dashboard.module#DashboardModule',
+    loadChildren: () => import('src/app/dashboard/dashboard.module').then(m => m.DashboardModule),
     // canLoad not used because parameters were not available in it
     // canLoad: [AuthGuard],
     canActivate: [AuthGuard],

@@ -29,16 +29,16 @@ const routes: Routes = [
       {
         path: 'learners',
         loadChildren:
-          'src/app/dashboard/learners/learners.module#LearnersModule',
+          () => import('src/app/dashboard/learners/learners.module').then(m => m.LearnersModule),
       },
       {
         path: 'pastsessions',
         loadChildren:
-          'src/app/dashboard/past-sessions/past-sessions.module#PastSessionsModule',
+          () => import('src/app/dashboard/past-sessions/past-sessions.module').then(m => m.PastSessionsModule),
       },
       {
         path: 'groups',
-        loadChildren: 'src/app/dashboard/groups/groups.module#GroupsModule',
+        loadChildren: () => import('src/app/dashboard/groups/groups.module').then(m => m.GroupsModule),
       },
       {
         path: 'account',
@@ -46,7 +46,7 @@ const routes: Routes = [
       },
       {
         path: 'editor',
-        loadChildren: 'src/app/dashboard/editor/editor.module#EditorModule',
+        loadChildren: () => import('src/app/dashboard/editor/editor.module').then(m => m.EditorModule),
       },
       {
         path: 'account/password',

@@ -10,7 +10,7 @@ import { WhiteLabelResolver } from './services';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: 'src/app/layout/layout.module#LayoutModule',
+    loadChildren: () => import('src/app/layout/layout.module').then(m => m.LayoutModule),
   },
   {
     path: 'login/:partner',
