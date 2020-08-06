@@ -30,7 +30,11 @@
 @import './dashboard/account';
 @import './dashboard/table';
 @import './dashboard/utils';
+@import './dashboard/editor/editor';
 @import './dashboard/editor/editor-topbar';
+@import './dashboard/editor/overview-panel';
+@import './dashboard/editor/preview-panel';
+@import './dashboard/editor/activity-selector-panel';
 @import './dashboard/past-sessions/reports';
 @import './dashboard/past-sessions/key-stats';
 @import './activities/bottom-button';

@@ -10,6 +10,10 @@ import {
   EditorProviders,
 } from './index';
 
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { effects, reducers } from './store';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -17,6 +21,8 @@ import {
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    StoreModule.forFeature('editor', reducers),
+    EffectsModule.forFeature(effects),
   ],
   exports: [RouterModule],
   declarations: [EditorComponents],

@@ -13,4 +13,10 @@ export class EditorService {
     private http: HttpClient,
     private contextService: ContextService
   ) {}
+
+  getActivites(): Observable<any[]> {
+    return this.http
+      .get<any[]>(global.apiRoot + '/course_details/course/?page=1')
+      .pipe(catchError((error: any) => Observable.throw(error.json())));
+  }
 }

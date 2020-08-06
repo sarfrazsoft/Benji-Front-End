@@ -7,13 +7,13 @@
 }
 
 mat-sidenav-container.mat-sidenav-container {
-  height: -webkit-calc(100vh - 90px) !important;
-  height: -moz-calc(100vh - 90px) !important;
-  height: calc(100vh - 90px) !important;
+  height: -webkit-calc(100vh - 65px) !important;
+  height: -moz-calc(100vh - 65px) !important;
+  height: calc(100vh - 65px) !important;
 
-  min-height: -webkit-calc(100vh - 90px) !important;
-  min-height: -moz-calc(100vh - 90px) !important;
-  min-height: calc(100vh - 90px) !important;
+  min-height: -webkit-calc(100vh - 65px) !important;
+  min-height: -moz-calc(100vh - 65px) !important;
+  min-height: calc(100vh - 65px) !important;
 
   .mat-sidenav-content {
     background-color: $off-white;

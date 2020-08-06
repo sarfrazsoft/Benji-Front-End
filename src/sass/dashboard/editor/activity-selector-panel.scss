@@ -1,0 +1,45 @@
+benji-activity-selector-panel {
+  .panel {
+    background-color: white;
+    padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
+    .mat-tab-label {
+      min-width: 100px;
+      font-size: 22px;
+      font-weight: 600;
+      padding: 0 14px;
+      &.mat-tab-label-active {
+        opacity: 1;
+      }
+    }
+
+    .activities-container {
+      .type-header {
+        font-size: 16px;
+        font-weight: 600;
+        padding: 15px 0px 10px;
+      }
+      .activity-type {
+        cursor: pointer;
+        padding: 5px;
+        border: 1px solid $secondary-color-light;
+        border-radius: 3px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        -webkit-transition: border 200ms ease-out;
+        -moz-transition: border 200ms ease-out;
+        -o-transition: border 200ms ease-out;
+        transition: border 200ms ease-out;
+        img {
+          height: 30px;
+          width: 30px;
+          margin-bottom: 5px;
+        }
+        .name {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

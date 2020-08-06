@@ -1,3 +1,30 @@
-<p>
-  activity-selector-panel works!
-</p>
+<div class="panel">
+  <div class="activities">
+    <div class="form-tabs">
+      <mat-tab-group
+        [(selectedIndex)]="selectedTab"
+        dynamicHeight
+        [disableRipple]="true"
+      >
+        <mat-tab label="Type">
+          <ng-template mat-tab-label>
+            <span class="tab-label primary-color-darkest">Type</span>
+          </ng-template>
+          <benji-activity-types></benji-activity-types>
+        </mat-tab>
+        <mat-tab label="Content">
+          <ng-template mat-tab-label class="cotent-label">
+            <span class="tab-label primary-color-darkest">Content</span>
+          </ng-template>
+          content
+        </mat-tab>
+        <mat-tab label="Customize">
+          <ng-template mat-tab-label class="cutomize-label">
+            <span class="tab-label primary-color-darkest">Customize</span>
+          </ng-template>
+          customize
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

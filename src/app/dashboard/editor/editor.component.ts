@@ -12,17 +12,25 @@ import {
 import { LayoutService } from 'src/app/services/layout.service';
 import { EditorService } from './services';
 
+import { Store } from '@ngrx/store';
+import { Activity } from './models';
+import * as fromStore from './store';
+
 @Component({
   selector: 'benji-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit, OnDestroy {
+  activities$: Observable<Activity[]>;
+  showCancelAddSlide = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private layoutService: LayoutService,
-    private editorService: EditorService
+    private editorService: EditorService,
+    private store: Store<fromStore.EditorState>
   ) {
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
@@ -31,6 +39,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.activities$ = this.store.select(fromStore.getAllActivities);
     // // create observable that emits click events
     // const source = fromEvent(window, 'scroll');
     // // map to string with given event timestamp
@@ -41,7 +50,14 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   addSlide() {
     // this.editorService.
-    this.router.navigate(['/dashboard/learners/add']);
+    // this.router.navigate(['/dashboard/learners/add']);
+    this.store.dispatch(new fromStore.LoadActivites());
+    this.showCancelAddSlide = true;
+  }
+
+  cancelAddSlide() {
+    this.showCancelAddSlide = false;
+    this.store.dispatch(new fromStore.RemovePlaceholderActivity());
   }
   ngOnDestroy() {
     this.layoutService.hideSidebar = false;

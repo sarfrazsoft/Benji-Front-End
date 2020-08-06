@@ -1,3 +1,16 @@
-<p>
-  overview-panel works!
-</p>
+<div class="panel" fxLayout="column">
+  <div class="activity-list">
+    <div
+      class="activity-container"
+      fxLayout="row"
+      *ngFor="let act of activities$ | async; let i = index"
+    >
+      <div class="index">{{ i }}</div>
+      <div class="activity">
+        <div>
+          {{ act.name }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

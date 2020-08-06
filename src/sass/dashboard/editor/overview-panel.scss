@@ -1,0 +1,29 @@
+benji-overview-panel {
+  .panel {
+    background-color: white;
+    height: 100%;
+    // min-width: 250px;
+    overflow-y: auto;
+    .activity-list {
+      margin: 10px;
+      .activity-container {
+        margin: 5px;
+        .index {
+          font-size: 22px;
+          font-weight: 600;
+          color: #858484;
+          min-width: 20px;
+          padding-top: 8px;
+          width: 50px;
+        }
+        .activity {
+          width: 100%;
+          height: 100px;
+          border: 1px solid $secondary-color-light;
+          background-color: white;
+          padding: 8px 16px;
+        }
+      }
+    }
+  }
+}

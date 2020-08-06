@@ -1,0 +1,22 @@
+benji-editor {
+  .editor-container {
+    height: -webkit-calc(100vh - 65px) !important;
+    height: -moz-calc(100vh - 65px) !important;
+    height: calc(100vh - 65px) !important;
+
+    min-height: -webkit-calc(100vh - 65px) !important;
+    min-height: -moz-calc(100vh - 65px) !important;
+    min-height: calc(100vh - 65px) !important;
+
+    position: absolute;
+    width: 100%;
+    .editor-panels {
+      height: 100%;
+    }
+    .mat-tab-label {
+      min-width: 100px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+  }
+}

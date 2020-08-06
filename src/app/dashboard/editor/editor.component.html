@@ -5,22 +5,32 @@
         class="dashboard-secondary-button active"
         fxLayoutAlign="center center"
         (click)="addSlide()"
+        *ngIf="!showCancelAddSlide"
       >
         <mat-icon>add</mat-icon>
         Add slide
+      </button>
+      <button
+        class="dashboard-secondary-button active"
+        fxLayoutAlign="center center"
+        (click)="cancelAddSlide()"
+        *ngIf="showCancelAddSlide"
+      >
+        <mat-icon>close</mat-icon>
+        Cancel
       </button>
     </div>
     <div></div>
   </div>
 
-  <div>
-    <div class="overview-panel">
-      <benji-overview-panel></benji-overview-panel>
+  <div class="editor-panels" fxLayout="row">
+    <div class="overview-panel" fxFlex="250px">
+      <benji-overview-panel [activities$]="activities$"></benji-overview-panel>
     </div>
-    <div class="preview-panel">
+    <div class="preview-panel" fxFlex="100%">
       <benji-preview-panel></benji-preview-panel>
     </div>
-    <div class="activity-selector-panel">
+    <div class="activity-selector-panel" fxFlex="450px">
       <benji-activity-selector-panel></benji-activity-selector-panel>
     </div>
   </div>
