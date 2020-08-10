@@ -1,3 +1,12 @@
 <div class="panel">
-  <div class="activity-container">Activity Preview Panel</div>
+  <div
+    class="activity-container"
+    *ngFor="let category of possibleActivities$ | async"
+  >
+    <div *ngFor="let activity of category.activities">
+      <div *ngIf="activity.mouseOvered">
+        {{ activity.displayName }}
+      </div>
+    </div>
+  </div>
 </div>

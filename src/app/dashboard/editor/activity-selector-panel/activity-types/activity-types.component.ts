@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
-const DIRECTIONS = ['row', 'row-reverse', 'column', 'column-reverse'];
+import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import * as fromStore from '../../store';
 
 @Component({
   selector: 'benji-activity-types',
@@ -8,47 +9,26 @@ const DIRECTIONS = ['row', 'row-reverse', 'column', 'column-reverse'];
   styleUrls: ['./activity-types.component.scss'],
 })
 export class ActivityTypesComponent implements OnInit {
-  activityTypes = [
-    {
-      id: 1,
-      type: 'Popular question types',
-      mouseOvered: false,
-      activities: [
-        { displayName: 'Multiple Choice', id: 1 },
-        { displayName: 'Scales', id: 2 },
-        { displayName: 'Q&A', id: 3 },
-        { displayName: 'Ranking', id: 4 },
-        { displayName: 'Type Answer', id: 5 },
-      ],
-    },
-    {
-      id: 2,
-      type: 'Quiz Competition',
-      mouseOvered: false,
-      activities: [
-        { displayName: 'Multiple Choice', id: 6 },
-        { displayName: 'Scales', id: 7 },
-      ],
-    },
-    {
-      id: 3,
-      type: 'Content Sliders',
-      mouseOvered: false,
-      activities: [
-        { displayName: 'Heading', id: 8 },
-        { displayName: 'Paragraph', id: 9 },
-        { displayName: 'Image slide', id: 10 },
-        { displayName: 'Big', id: 11 },
-      ],
-    },
-  ];
-  constructor() {}
+  possibleActivities$: Observable<any[]>;
+  constructor(private store: Store<fromStore.EditorState>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.possibleActivities$ = this.store.select(
+      fromStore.getAllPossibleActivities
+    );
 
-  mouseOver(activityId: number) {
+    // this.possibleActivities$.subscribe((x) => console.log(x));
+  }
+
+  mouseOver(categoryId, activity: any) {
     // dispatch event to store
     // activity.mouseOvered = true
+    if (!activity.mouseOvered) {
+      const activityId = activity.id;
+      this.store.dispatch(
+        new fromStore.ActivityHovered({ categoryId, activityId })
+      );
+    }
   }
 
   mouseOut(activityId: number) {

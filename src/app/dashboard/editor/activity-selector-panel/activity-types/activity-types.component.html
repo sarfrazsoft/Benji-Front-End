@@ -1,6 +1,6 @@
 <div class="activities-container">
   <div fxLayout="column">
-    <div *ngFor="let category of activityTypes">
+    <div *ngFor="let category of possibleActivities$ | async">
       <div class="type-header">
         <span>{{ category.type }}</span>
       </div>
@@ -10,8 +10,8 @@
             <div
               class="activity-type"
               [class.border-color-primary]="activity.mouseOvered"
-              (mouseover)="mouseOver(activity.id)"
-              (mouseout)="mouseOut(activity.id)"
+              (mouseover)="mouseOver(category.id, activity)"
+              (mouseout)="mouseOut(category.id, activity)"
               fxLayout="column"
               fxLayoutAlign="center center"
             >

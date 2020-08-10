@@ -47,7 +47,7 @@ export const REMOVE_PLACEHOLDER_ACTIVITY =
 
 export class AddPlaceholderActivity implements Action {
   readonly type = ADD_PLACEHOLDER_ACTIVITY;
-  constructor(public payload: Activity) {}
+  constructor() {}
 }
 
 export class RemovePlaceholderActivity implements Action {
@@ -60,7 +60,7 @@ export const ACTIVITY_HOVERED = '[Sessions] Activity hovered';
 
 export class ActivityHovered implements Action {
   readonly type = ACTIVITY_HOVERED;
-  constructor(public payload: number) {}
+  constructor(public payload: { categoryId: number; activityId: number }) {}
 }
 
 // export action types
@@ -72,4 +72,5 @@ export type ActivitiesAction =
   | CreateActivityFail
   | CreateActivitySuccess
   | AddPlaceholderActivity
-  | RemovePlaceholderActivity;
+  | RemovePlaceholderActivity
+  | ActivityHovered;

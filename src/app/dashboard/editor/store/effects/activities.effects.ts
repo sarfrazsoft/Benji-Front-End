@@ -21,7 +21,6 @@ export class ActivitiesEffects {
     switchMap(() => {
       return this.editorService.getActivites().pipe(
         map((activities) => {
-          console.log('bawa ji');
           const placeholder = [
             {
               name: '',

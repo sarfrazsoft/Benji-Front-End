@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'benji-activity-selector-panel',

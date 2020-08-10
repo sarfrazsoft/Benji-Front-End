@@ -40,6 +40,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activities$ = this.store.select(fromStore.getAllActivities);
+
     // // create observable that emits click events
     // const source = fromEvent(window, 'scroll');
     // // map to string with given event timestamp
@@ -51,7 +52,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   addSlide() {
     // this.editorService.
     // this.router.navigate(['/dashboard/learners/add']);
-    this.store.dispatch(new fromStore.LoadActivites());
+    this.store.dispatch(new fromStore.AddPlaceholderActivity());
     this.showCancelAddSlide = true;
   }
 
