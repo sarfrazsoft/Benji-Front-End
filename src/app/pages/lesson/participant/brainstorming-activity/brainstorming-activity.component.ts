@@ -1,4 +1,8 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import * as global from 'src/app/globals';
 import {
   BrainstormActivity,
   BrainstormSubmitEvent,
@@ -33,7 +37,13 @@ export class ParticipantBrainstormingActivityComponent
   showThankyouForVoting = false;
   showVoteResults = false;
 
-  constructor(private contextService: ContextService) {
+  imagesList: FileList;
+
+  constructor(
+    private contextService: ContextService,
+    private formBuilder: FormBuilder,
+    private httpClient: HttpClient
+  ) {
     super();
   }
 
@@ -148,10 +158,25 @@ export class ParticipantBrainstormingActivityComponent
   }
 
   submitIdea(): void {
+    if (this.imagesList) {
+      this.submitWithImg();
+    } else {
+      this.submitWithoutImg();
+    }
+  }
+
+  submitWithoutImg() {
+    if (this.userIdeaText.length === 0) {
+      return;
+    }
     this.sendMessage.emit(
       new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id)
     );
     this.userIdeaText = '';
+  }
+
+  submitWithImg() {
+    this.submitImageNIdea();
   }
 
   getUserId(): number {
@@ -163,4 +188,116 @@ export class ParticipantBrainstormingActivityComponent
       this.sendMessage.emit(new BrainstormVoteEvent(idea));
     });
   }
+
+  onFileSelect(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length === 0) {
+      this.imagesList = null;
+    } else {
+      this.imagesList = fileList;
+    }
+  }
+
+  submitImageNIdea() {
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url =
+      global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+    const fileList: FileList = this.imagesList;
+    if (fileList.length > 0) {
+      const file: File = fileList[0];
+      this.resizeImage({
+        file: file,
+        maxSize: 500,
+      })
+        .then((resizedImage: Blob) => {
+          const formData: FormData = new FormData();
+          formData.append('img', resizedImage, file.name);
+          const headers = new HttpHeaders();
+          headers.set('Content-Type', null);
+          headers.set('Accept', 'multipart/form-data');
+          const params = new HttpParams();
+          this.httpClient
+            .post(url, formData, { params, headers })
+            .map((res: any) => {
+              this.imagesList = null;
+              this.sendMessage.emit(
+                new BrainstormSubmitEvent(
+                  this.userIdeaText,
+                  this.selectedCategory.id,
+                  res.id
+                )
+              );
+              this.userIdeaText = '';
+            })
+            .subscribe(
+              (data) => {},
+              (error) => console.log(error)
+            );
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    }
+  }
+
+  resizeImage = (settings: IResizeImageOptions) => {
+    const file = settings.file;
+    const maxSize = settings.maxSize;
+    const reader = new FileReader();
+    const image = new Image();
+    const canvas = document.createElement('canvas');
+    const dataURItoBlob = (dataURI: string) => {
+      const bytes =
+        dataURI.split(',')[0].indexOf('base64') >= 0
+          ? atob(dataURI.split(',')[1])
+          : unescape(dataURI.split(',')[1]);
+      const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+      const max = bytes.length;
+      const ia = new Uint8Array(max);
+      for (let i = 0; i < max; i++) {
+        ia[i] = bytes.charCodeAt(i);
+      }
+      return new Blob([ia], { type: mime });
+    };
+    const resize = () => {
+      let width = image.width;
+      let height = image.height;
+
+      if (width > height) {
+        if (width > maxSize) {
+          height *= maxSize / width;
+          width = maxSize;
+        }
+      } else {
+        if (height > maxSize) {
+          width *= maxSize / height;
+          height = maxSize;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+      const dataUrl = canvas.toDataURL('image/jpeg');
+      return dataURItoBlob(dataUrl);
+    };
+
+    return new Promise((ok, no) => {
+      if (!file.type.match(/image.*/)) {
+        no(new Error('Not an image'));
+        return;
+      }
+
+      reader.onload = (readerEvent: any) => {
+        image.onload = () => ok(resize());
+        image.src = readerEvent.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+}
+
+export interface IResizeImageOptions {
+  maxSize: number;
+  file: File;
 }

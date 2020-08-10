@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'benji-vote-idea',
   templateUrl: './vote-idea.component.html',
-  styleUrls: ['./vote-idea.component.scss']
+  styleUrls: ['./vote-idea.component.scss'],
 })
 export class VoteIdeaComponent implements OnInit {
   @Input() ideaId = null;

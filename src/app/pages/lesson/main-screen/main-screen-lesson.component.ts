@@ -25,7 +25,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     protected contextService: ContextService,
     protected authService: AuthService,
     protected ref: ChangeDetectorRef,
-    protected _snackBar: MatSnackBar
+    protected matSnackBar: MatSnackBar
   ) {
     super(
       restService,
@@ -35,7 +35,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent
       contextService,
       authService,
       ref,
-      _snackBar
+      matSnackBar
     );
   }
 

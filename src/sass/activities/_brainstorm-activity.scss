@@ -7,6 +7,7 @@ benji-ms-brainstorming-activity {
       position: absolute;
       right: 10px;
       top: 10px;
+      background: white;
       cursor: pointer;
       transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
     }
@@ -94,9 +95,7 @@ benji-ms-brainstorming-activity {
           list-style: none;
           font-size: 1.8vw;
           padding: 15px;
-          padding-right: 30px;
           overflow: auto;
-
           margin: 10px 10px;
           border: 1px solid $secondary-color-lighter;
           border-radius: 5px;
@@ -106,6 +105,7 @@ benji-ms-brainstorming-activity {
           }
           mat-icon {
             position: absolute;
+            background: white;
             right: 10px;
             top: 10px;
             cursor: pointer;
@@ -131,7 +131,6 @@ benji-ms-brainstorming-activity {
         list-style: none;
         font-size: 1.2vw;
         padding: 10px;
-        padding-right: 30px;
         overflow: hidden;
         width: 25%;
         margin: 10px 10px;
@@ -143,6 +142,7 @@ benji-ms-brainstorming-activity {
         }
         mat-icon {
           position: absolute;
+          background: white;
           right: 10px;
           top: 10px;
           cursor: pointer;
@@ -179,7 +179,7 @@ benji-ms-brainstorming-activity {
 }
 
 .brainstorm-idea {
-  padding: 10px 20px 10px 20px;
+  padding: 10px 15px 10px 15px;
   min-height: 75px;
   background-color: white;
   border: 1px solid #979797;
@@ -192,11 +192,33 @@ benji-ms-brainstorming-activity {
   cursor: pointer;
   position: relative;
 }
+.brainstorm-image {
+  text-align: center;
+  margin: -15px;
+  margin-bottom: 5px;
+  img {
+    max-height: 300px;
+    max-width: 100%;
+  }
+}
 
 benji-ps-brainstorming-activity {
-  // .b-flat-card {
-  //   height: calc(100vh - 65px - 130px);
-  // }
+  .b-flat-card__body {
+    margin-bottom: 100px;
+  }
+  .dropdown-controls-container {
+    .ps-brainstorm-dropdown-controls {
+      color: $secondary-color-dark;
+      border-radius: 6px;
+      font-size: 2.9vh;
+      &.ng-has-value {
+        color: $primary-color;
+      }
+      .ng-select .ng-select-container {
+      }
+    }
+  }
+
   textarea {
     color: inherit;
     outline: none;
@@ -220,6 +242,29 @@ benji-ps-brainstorming-activity {
     }
   }
 
+  input[type="file"] {
+    display: none;
+  }
+
+  .image-upload-button {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    min-height: 36px;
+    align-items: center;
+    label {
+      width: 100%;
+      .details {
+        width: 100%;
+      }
+      .image-name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 160px;
+      }
+    }
+  }
+
   .vote-button-column {
     .button-container {
       .b-standard-button {
@@ -238,20 +283,5 @@ benji-ps-brainstorming-activity {
 
   .b-standard-button--white:hover {
     background: #e6e5e5 !important;
-  }
-}
-
-.dropdown-controls-container {
-  margin-bottom: 20px;
-  .ps-brainstorm-dropdown-controls {
-    color: $secondary-color-dark;
-    border-radius: 6px;
-    font-size: 2.9vh;
-    height: 4.2vh;
-    &.ng-has-value {
-      color: $primary-color;
-    }
-    .ng-select .ng-select-container {
-    }
   }
 }

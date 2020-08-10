@@ -94,6 +94,14 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
     }
   }
 
+  getChoiceSubmittedUsers() {
+    return this.activityState.mcqactivity.answered_users.length;
+  }
+
+  getTotalUsers() {
+    return this.activityState.lesson_run.joined_users.length;
+  }
+
   getUserName(id) {
     const ju = this.activityState.lesson_run.joined_users;
     const user = ju.find((u) => u.id === id);

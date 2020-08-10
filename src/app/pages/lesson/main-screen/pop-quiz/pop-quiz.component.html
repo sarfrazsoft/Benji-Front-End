@@ -8,7 +8,12 @@
           </span>
         </h1>
       </div>
-      <div fxFlex="65%" fxLayoutAlign="center center"></div>
+      <div fxFlex="65%" fxLayoutAlign="end center">
+        <h2 *ngIf="!showChangeChoice" class="pn-500 discuss-instruction">
+          {{ getChoiceSubmittedUsers() }}/{{ getTotalUsers() }}
+          submitted
+        </h2>
+      </div>
     </div>
     <div class="" fxFlex="1 0 0" fxLayout="row">
       <div

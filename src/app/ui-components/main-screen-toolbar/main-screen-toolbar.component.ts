@@ -23,7 +23,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
-    protected snackBar: MatSnackBar
+    protected matSnackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -92,7 +92,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
+    this.matSnackBar.open(message, action, {
       duration: 5000,
       panelClass: ['bg-success-color', 'white-color', 'simple-snack-bar'],
     });

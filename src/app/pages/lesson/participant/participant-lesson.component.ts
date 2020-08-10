@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, ContextService } from 'src/app/services';
@@ -19,7 +20,8 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     protected socketService: BackendSocketService,
     protected ref: ChangeDetectorRef,
     protected authService: AuthService,
-    protected contextService: ContextService
+    protected contextService: ContextService,
+    protected matSnackBar: MatSnackBar
   ) {
     super(
       restService,
@@ -28,7 +30,8 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
       'participant',
       contextService,
       authService,
-      ref
+      ref,
+      matSnackBar
     );
   }
 }
