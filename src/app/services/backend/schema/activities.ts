@@ -278,9 +278,15 @@ export interface Idea {
   idea: string;
   removed: boolean;
   submitted_by_user: number;
+  idea_image: Image;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
+}
+
+export interface Image {
+  img: string;
+  id: number;
 }
 
 export interface BuildAPitchActivity {

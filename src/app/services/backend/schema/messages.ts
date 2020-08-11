@@ -314,12 +314,28 @@ export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
   event_name = 'BrainstormToggleCategoryModeEvent';
 }
 
+export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmissionCompleteInternalEvent';
+}
+
+export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
+  event_name = 'BrainstormVotingCompleteInternalEvent';
+}
+
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number) {
+  constructor(text: string, category: number, idea_image?: number) {
     super();
-    this.extra_args = { idea: text, category: category };
+    if (idea_image) {
+      this.extra_args = {
+        idea: text,
+        category: category,
+        idea_image: idea_image,
+      };
+    } else {
+      this.extra_args = { idea: text, category: category };
+    }
   }
 }
 

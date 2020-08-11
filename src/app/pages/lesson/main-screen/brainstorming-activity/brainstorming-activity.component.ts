@@ -25,9 +25,13 @@ import {
   BrainstormSetCategoryEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
+  Idea,
   Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+
+import { MatDialog } from '@angular/material';
+import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 
 @Component({
   selector: 'benji-ms-brainstorming-activity',
@@ -43,7 +47,10 @@ export class MainScreenBrainstormingActivityComponent
   peakBackStage = null;
   private eventsSubscription: Subscription;
 
-  constructor(private contextService: ContextService) {
+  constructor(
+    private contextService: ContextService,
+    private dialog: MatDialog
+  ) {
     super();
   }
   instructions = '';
@@ -59,8 +66,16 @@ export class MainScreenBrainstormingActivityComponent
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
   ideas = [];
+  hostname = window.location.protocol + '//' + window.location.hostname;
+  dialogRef;
 
   columns = [];
+
+  imagesURLs = [
+    'localhost/media/Capture_LGXPk9s.JPG',
+    'localhost/media/Capture_LGXPk9s.JPG',
+    '../../../../../assets//img/Desk_lightblue2.jpg',
+  ];
   ngOnInit() {
     this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
@@ -124,7 +139,7 @@ export class MainScreenBrainstormingActivityComponent
     this.ideas = [];
     act.brainstormcategory_set.forEach((category) => {
       if (!category.removed) {
-        category.brainstormidea_set.forEach((idea) => {
+        category.brainstormidea_set.forEach((idea: Idea) => {
           if (!idea.removed) {
             this.ideas.push({ ...idea, showClose: false });
           }
@@ -256,6 +271,17 @@ export class MainScreenBrainstormingActivityComponent
     this.sendMessage.emit(
       new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber)
     );
+  }
+
+  viewImage(imageUrl: string) {
+    this.dialogRef = this.dialog
+      .open(ImageViewDialogComponent, {
+        data: { imageUrl: imageUrl },
+        disableClose: false,
+        panelClass: 'image-view-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {});
   }
 }
 

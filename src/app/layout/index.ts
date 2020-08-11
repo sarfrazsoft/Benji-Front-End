@@ -23,6 +23,7 @@ import { ParticipantToolbarComponent } from '../ui-components/participant-toolba
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
 import {
+  ImageViewDialogComponent,
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   MainScreenComponents,
@@ -38,6 +39,7 @@ export const LayoutDeclarations = [
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   PeakBackDialogComponent,
+  ImageViewDialogComponent,
   AnimatedCheckmarkButtonComponent,
   BTwemojiComponent,
   IcebreakerComponent,
@@ -63,4 +65,5 @@ export const EntryComponents = [
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   PeakBackDialogComponent,
+  ImageViewDialogComponent,
 ];
