@@ -8,6 +8,7 @@ import {
   BrainstormSubmitEvent,
   BrainstormVoteEvent,
   Category,
+  Idea,
 } from 'src/app/services/backend/schema';
 import { ContextService } from 'src/app/services/context.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -67,6 +68,7 @@ export class ParticipantBrainstormingActivityComponent
 
     // The activity starts by showing Submit idea screen
     if (!this.act.submission_complete && this.act.submission_countdown_timer) {
+      localStorage.setItem('resetConnection', 'false');
       this.showSubmitIdeas = true;
       this.showThankyouForSubmission = false;
       this.showSubmitVote = false;
@@ -75,12 +77,11 @@ export class ParticipantBrainstormingActivityComponent
       this.contextService.activityTimer = this.act.submission_countdown_timer;
     }
     // Show thank you for idea submission
-    const submissionCount = this.act.user_submission_counts.find(
-      (v) => v.id === userID
-    );
-    if (submissionCount) {
-      this.noOfIdeasSubmitted = submissionCount.count;
-      if (submissionCount.count >= this.act.max_user_submissions) {
+
+    const submissionCount = this.getUserIdeas(userID);
+    if (submissionCount.length) {
+      this.noOfIdeasSubmitted = submissionCount.length;
+      if (submissionCount.length >= this.act.max_user_submissions) {
         this.showSubmitIdeas = false;
         this.showThankyouForSubmission = true;
       }
@@ -90,6 +91,7 @@ export class ParticipantBrainstormingActivityComponent
 
     // Show Vote for ideas screen
     if (this.act.submission_complete && this.act.voting_countdown_timer) {
+      localStorage.removeItem('resetConnection');
       this.showSubmitIdeas = false;
       this.showThankyouForSubmission = false;
       this.showSubmitVote = true;
@@ -294,6 +296,22 @@ export class ParticipantBrainstormingActivityComponent
       };
       reader.readAsDataURL(file);
     });
+  }
+
+  getUserIdeas(userID: number): Array<Idea> {
+    const arr: Array<Idea> = [];
+    this.act.brainstormcategory_set.forEach((category) => {
+      if (!category.removed) {
+        category.brainstormidea_set.forEach((idea) => {
+          if (!idea.removed) {
+            if (idea.submitted_by_user === userID) {
+              arr.push(idea);
+            }
+          }
+        });
+      }
+    });
+    return arr;
   }
 }
 

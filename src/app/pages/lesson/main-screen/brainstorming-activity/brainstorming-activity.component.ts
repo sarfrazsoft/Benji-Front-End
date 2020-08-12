@@ -117,7 +117,7 @@ export class MainScreenBrainstormingActivityComponent
         this.submissionScreen = true;
         this.voteScreen = false;
         this.VnSComplete = false;
-        this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
+        this.ideaSubmittedUsersCount = this.getUsersIdeas(act).length;
       }
     } else if (this.VnSComplete) {
       if (state === 'next') {
@@ -170,7 +170,7 @@ export class MainScreenBrainstormingActivityComponent
         this.VnSComplete = false;
         this.timer = act.submission_countdown_timer;
         this.contextService.activityTimer = act.submission_countdown_timer;
-        this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
+        this.ideaSubmittedUsersCount = this.getUsersIdeas(act).length;
       } else if (act.voting_countdown_timer && !act.voting_complete) {
         this.voteScreen = true;
         this.submissionScreen = false;
@@ -215,8 +215,18 @@ export class MainScreenBrainstormingActivityComponent
     });
   }
 
-  getIdeaSubmittedUsersCount(act: BrainstormActivity) {
-    return act.user_submission_counts.length;
+  getUsersIdeas(act: BrainstormActivity): Array<Idea> {
+    const arr: Array<Idea> = [];
+    act.brainstormcategory_set.forEach((category) => {
+      if (!category.removed) {
+        category.brainstormidea_set.forEach((idea) => {
+          if (!idea.removed) {
+            arr.push(idea);
+          }
+        });
+      }
+    });
+    return arr;
   }
 
   getVoteSubmittedUsersCount(act: BrainstormActivity) {
