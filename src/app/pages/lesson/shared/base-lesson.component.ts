@@ -38,7 +38,7 @@ export class BaseLessonComponent implements OnInit {
     protected contextService: ContextService,
     protected authService: AuthService,
     protected ref?: ChangeDetectorRef,
-    protected matSnackBar?: MatSnackBar
+    protected _snackBar?: MatSnackBar
   ) {
     this.roomCode = parseInt(this.route.snapshot.paramMap.get('roomCode'), 10);
     this.clientType = clientType;
@@ -49,21 +49,25 @@ export class BaseLessonComponent implements OnInit {
   ngOnInit() {
     this.initSocket();
 
-    // commenting out the code so that connection doesnt break when
-    // pictures are submitted
-    // document.addEventListener('visibilitychange', () => {
-    //   if (document.hidden) {
-    //     // stop running expensive task
-    //     this.socket = undefined;
-    //   } else {
-    //     // page has focus, begin running task
-    //     if (!this.isConnected()) {
-    //       setTimeout(() => {
-    //         this.initSocket();
-    //       }, 500);
-    //     }
-    //   }
-    // });
+    document.addEventListener('visibilitychange', () => {
+      const resetConnection = localStorage.getItem('resetConnection');
+      if (resetConnection === 'false') {
+        // don't reset connection participant is
+        // about to pick up brainstorm image
+      } else {
+        if (document.hidden) {
+          // stop running expensive task
+          this.socket = undefined;
+        } else {
+          // page has focus, begin running task
+          if (!this.isConnected()) {
+            setTimeout(() => {
+              this.initSocket();
+            }, 500);
+          }
+        }
+      }
+    });
 
     this.route.queryParams.subscribe((params) => {
       if (params['share'] === 'participant') {
@@ -113,7 +117,7 @@ export class BaseLessonComponent implements OnInit {
   }
 
   openSnackBar(message: string, action: string) {
-    this.matSnackBar.open(message, action, {
+    this._snackBar.open(message, action, {
       duration: 5000,
       panelClass: ['bg-warning-color', 'white-color', 'simple-snack-bar'],
     });
