@@ -1,22 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="submitFeedback()">
   <div class="questionForm">
-    <div
-      class="b-flat-card__action feedback-card__questions"
-      formArrayName="questions"
-    >
-      <div
-        class="feedback-card__question-box"
-        *ngFor="let question of questions.controls; let i = index"
-      >
+    <div class="b-flat-card__action feedback-card__questions" formArrayName="questions">
+      <div class="feedback-card__question-box" *ngFor="let question of questions.controls; let i = index">
         <div [formGroupName]="i">
           <h2 class="secondary-color-dark pn-500">
             {{ question_set[i].question_text }}
           </h2>
 
-          <div
-            fxLayout="column"
-            *ngIf="question_set[i].question_type === 'rating_agreedisagree'"
-          >
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'rating_agreedisagree'">
             <div class="feedback-rating">
               <div class="linked-radio-btns">
                 <ol class="nodes">
@@ -28,10 +19,7 @@
                       formControlName="rating_answer"
                       [value]="1"
                     />
-                    <label
-                      class="linked-radio-btns__label"
-                      for="{{ 'r1' + question_set[i].id }}"
-                    >
+                    <label class="linked-radio-btns__label" for="{{ 'r1' + question_set[i].id }}">
                       <span class="indicator">Strongly disagree</span>
                     </label>
                   </li>
@@ -43,10 +31,7 @@
                       formControlName="rating_answer"
                       [value]="2"
                     />
-                    <label
-                      class="linked-radio-btns__label"
-                      for="{{ 'r2' + question_set[i].id }}"
-                    >
+                    <label class="linked-radio-btns__label" for="{{ 'r2' + question_set[i].id }}">
                       <span class="indicator"></span>
                     </label>
                   </li>
@@ -58,10 +43,7 @@
                       formControlName="rating_answer"
                       [value]="3"
                     />
-                    <label
-                      class="linked-radio-btns__label"
-                      for="{{ 'r3' + question_set[i].id }}"
-                    >
+                    <label class="linked-radio-btns__label" for="{{ 'r3' + question_set[i].id }}">
                       <span class="indicator">Neutral</span>
                     </label>
                   </li>
@@ -73,10 +55,7 @@
                       formControlName="rating_answer"
                       [value]="4"
                     />
-                    <label
-                      class="linked-radio-btns__label"
-                      for="{{ 'r4' + question_set[i].id }}"
-                    >
+                    <label class="linked-radio-btns__label" for="{{ 'r4' + question_set[i].id }}">
                       <span class="indicator"></span>
                     </label>
                   </li>
@@ -88,10 +67,7 @@
                       formControlName="rating_answer"
                       [value]="5"
                     />
-                    <label
-                      class="linked-radio-btns__label"
-                      for="{{ 'r5' + question_set[i].id }}"
-                    >
+                    <label class="linked-radio-btns__label" for="{{ 'r5' + question_set[i].id }}">
                       <span class="indicator">Strongly agree</span>
                     </label>
                   </li>
@@ -106,10 +82,7 @@
             ></textarea>
           </div>
 
-          <div
-            fxLayout="column"
-            *ngIf="question_set[i].question_type === 'text'"
-          >
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'text_only'">
             <textarea
               formControlName="text_answer"
               placeholder="Your comments!"
@@ -150,11 +123,7 @@
         </div>
       </div>
     </div>
-    <button
-      class="b-standard-button bg-primary-color"
-      [ngClass]="{ inactive: !form.valid }"
-      type="submit"
-    >
+    <button class="b-standard-button bg-primary-color" [ngClass]="{ inactive: !form.valid }" type="submit">
       Submit
     </button>
   </div>
