@@ -1,17 +1,5 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { uniqBy } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
@@ -38,8 +26,7 @@ import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/im
   templateUrl: './brainstorming-activity.component.html',
   styleUrls: ['./brainstorming-activity.component.scss'],
 })
-export class MainScreenBrainstormingActivityComponent
-  extends BaseActivityComponent
+export class MainScreenBrainstormingActivityComponent extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @ViewChild('colName', { static: false }) colNameElement: ElementRef;
   @Input() peakBackState = false;
@@ -47,10 +34,7 @@ export class MainScreenBrainstormingActivityComponent
   peakBackStage = null;
   private eventsSubscription: Subscription;
 
-  constructor(
-    private contextService: ContextService,
-    private dialog: MatDialog
-  ) {
+  constructor(private contextService: ContextService, private dialog: MatDialog) {
     super();
   }
   instructions = '';
@@ -79,9 +63,7 @@ export class MainScreenBrainstormingActivityComponent
   ngOnInit() {
     this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
-      this.eventsSubscription = this.activityStage.subscribe((state) =>
-        this.changeStage(state)
-      );
+      this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
   }
   ngOnDestroy() {
@@ -190,11 +172,7 @@ export class MainScreenBrainstormingActivityComponent
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(
         event.previousContainer.data,
@@ -216,7 +194,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   getUsersIdeas(act: BrainstormActivity): Array<Idea> {
-    const arr: Array<Idea> = [];
+    let arr: Array<Idea> = [];
     act.brainstormcategory_set.forEach((category) => {
       if (!category.removed) {
         category.brainstormidea_set.forEach((idea) => {
@@ -226,6 +204,7 @@ export class MainScreenBrainstormingActivityComponent
         });
       }
     });
+    arr = arr.filter((v, i, s) => i === s.findIndex((t) => t.submitted_by_user === v.submitted_by_user));
     return arr;
   }
 
@@ -266,9 +245,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   onColumnNameBlur(column) {
-    this.sendMessage.emit(
-      new BrainstormRenameCategoryEvent(column.id, column.category_name)
-    );
+    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, column.category_name));
     column.editing = false;
   }
 
@@ -278,9 +255,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   addColumn(newCategoryNumber) {
-    this.sendMessage.emit(
-      new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber)
-    );
+    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber));
   }
 
   viewImage(imageUrl: string) {
