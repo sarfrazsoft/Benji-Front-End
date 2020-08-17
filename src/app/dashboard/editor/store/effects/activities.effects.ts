@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -10,27 +9,48 @@ import { SAMPLE_ACTIVITIES } from '../../models';
 
 @Injectable()
 export class ActivitiesEffects {
-  constructor(
-    private actions$: Actions,
-    private editorService: EditorService
-  ) {}
+  constructor(private actions$: Actions, private editorService: EditorService) {}
 
   @Effect()
-  loadActivities$ = this.actions$.pipe(
-    ofType(ActivityActions.LOAD_ACTIVITIES),
+  loadAllPossibleActivities$ = this.actions$.pipe(
+    ofType(ActivityActions.LOAD_ALL_POSSIBLE_ACTIVITIES),
     switchMap(() => {
       return this.editorService.getActivites().pipe(
         map((activities) => {
-          const placeholder = [
-            {
-              name: '',
-              id: 999999999,
-              activity_type: 'new type',
-            },
-          ];
-          return new ActivityActions.LoadActivitesSuccess(placeholder);
+          return new ActivityActions.LoadAllPossibleSuccess(activities);
         }),
-        catchError((error) => of(new ActivityActions.LoadActivitesFail(error)))
+        catchError((error) => of(new ActivityActions.LoadAllPossibleFail(error)))
+      );
+    })
+  );
+
+  @Effect()
+  loadLessonActivities$ = this.actions$.pipe(
+    ofType(ActivityActions.LOAD_LESSON_ACTIVITIES),
+    map((action: ActivityActions.LoadLessonActivites) => action.payload),
+    switchMap((lessonId: any) => {
+      console.log(lessonId);
+      return this.editorService.getActivites().pipe(
+        map((activities) => {
+          return new ActivityActions.LoadLessonActivitiesSuccess(activities);
+        }),
+        catchError((error) => of(new ActivityActions.LoadAllPossibleFail(error)))
+      );
+    })
+  );
+
+  @Effect()
+  saveLesson$ = this.actions$.pipe(
+    ofType(ActivityActions.SAVE_LESSON),
+    map((action: ActivityActions.SaveLesson) => action.payload),
+    switchMap((lesson: any) => {
+      console.log('lesson saved');
+      console.log(lesson);
+      return this.editorService.saveLesson(lesson).pipe(
+        map((activities) => {
+          return new ActivityActions.SaveLessonSuccess(activities);
+        }),
+        catchError((error) => of(new ActivityActions.LoadAllPossibleFail(error)))
       );
     })
   );

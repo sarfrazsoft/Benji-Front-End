@@ -3,13 +3,20 @@
     <div
       class="activity-container"
       fxLayout="row"
-      *ngFor="let act of activities$ | async; let i = index"
+      *ngFor="let act of lessonActivities$ | async; let i = index"
+      (click)="select(act.id)"
+      [ngClass]="{
+        active: act.selected
+      }"
     >
-      <div class="index">{{ i }}</div>
+      <div class="index">{{ i + 1 }}</div>
       <div class="activity">
         <div>
-          {{ act.name }}
+          {{ act.activity?.displayName }}
         </div>
+        <mat-icon (click)="deleteActivity(act.id)" style="cursor: pointer;">
+          clear
+        </mat-icon>
       </div>
     </div>
   </div>

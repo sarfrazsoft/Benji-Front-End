@@ -9,30 +9,30 @@ import * as fromStore from '../../store';
   styleUrls: ['./activity-types.component.scss'],
 })
 export class ActivityTypesComponent implements OnInit {
-  possibleActivities$: Observable<any[]>;
+  activities$: Observable<any[]>;
   constructor(private store: Store<fromStore.EditorState>) {}
 
   ngOnInit() {
-    this.possibleActivities$ = this.store.select(
-      fromStore.getAllPossibleActivities
-    );
+    this.activities$ = this.store.select(fromStore.getAllPossibleActivities);
 
-    // this.possibleActivities$.subscribe((x) => console.log(x));
+    this.store.dispatch(new fromStore.LoadAllPossibleActivites());
+  }
+
+  selectActivity(activityId) {
+    this.store.dispatch(new fromStore.SelectActivityType(activityId));
   }
 
   mouseOver(categoryId, activity: any) {
-    // dispatch event to store
-    // activity.mouseOvered = true
     if (!activity.mouseOvered) {
       const activityId = activity.id;
-      this.store.dispatch(
-        new fromStore.ActivityHovered({ categoryId, activityId })
-      );
+      this.store.dispatch(new fromStore.ActivityHovered({ categoryId, activityId }));
     }
   }
 
-  mouseOut(activityId: number) {
-    // dispatch event to store
-    // activity.mouseOvered = false
+  mouseOut(categoryId, activity: any) {
+    if (activity.mouseOvered) {
+      const activityId = activity.id;
+      this.store.dispatch(new fromStore.ActivityHoverEnd({ categoryId, activityId }));
+    }
   }
 }

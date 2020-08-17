@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  host: '127.0.0.1',
+  host: '192.168.2.3:81',
   web_protocol: 'http',
-  socket_protocl: 'ws'
+  socket_protocl: 'ws',
 };

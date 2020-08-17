@@ -10,8 +10,20 @@ import * as fromStore from '../store';
   styleUrls: ['./overview-panel.component.scss'],
 })
 export class OverviewPanelComponent implements OnInit {
-  @Input() activities$: Observable<Activity[]>;
+  lessonActivities$: Observable<Activity[]>;
   constructor(private store: Store<fromStore.EditorState>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
+
+    this.lessonActivities$.subscribe((x) => console.log(x));
+  }
+
+  select(activityId) {
+    this.store.dispatch(new fromStore.SelectLessonActivity(activityId));
+  }
+
+  deleteActivity(activityId) {
+    this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
+  }
 }

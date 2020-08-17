@@ -32,6 +32,7 @@ export enum ActivityTypes {
   genericRoleplay = 'GenericRoleplayActivity',
   triadGrouping = 'TriadGroupingActivity',
 }
+
 // export type MeasurementTimeframe = 'alltime' | 'year' | 'month' | 'week' | 'day';
 
 export const DefaultwhiteLabelInfo = {
@@ -111,8 +112,7 @@ export const DefaultwhiteLabelInfo1 = {
   parameters: {
     lightLogo: './assets/img/muraly_logo_white.png',
     darkLogo: './assets/img/muraly_logo.png',
-    welcomeDescription:
-      'What is The Maestro Mindset? Learn more about composing the symphony of your life',
+    welcomeDescription: 'What is The Maestro Mindset? Learn more about composing the symphony of your life',
     primary_lighter: '#00778B',
     primary_light: '#00778B',
     primary: '#00778B',

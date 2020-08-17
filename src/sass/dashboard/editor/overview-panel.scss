@@ -8,6 +8,9 @@ benji-overview-panel {
       margin: 10px;
       .activity-container {
         margin: 5px;
+        &.active {
+          background-color: yellowgreen;
+        }
         .index {
           font-size: 22px;
           font-weight: 600;

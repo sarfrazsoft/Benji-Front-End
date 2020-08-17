@@ -1,5 +1,35 @@
 <div class="activities-container">
   <div fxLayout="column">
+    <div>
+      <div class="type-header">
+        <span>Sample Category</span>
+      </div>
+      <div fxFlexFill>
+        <div fxFlexFill fxLayout="row wrap">
+          <div *ngFor="let activity of activities$ | async" fxFlex="33">
+            <div
+              class="activity-type"
+              [class.border-color-primary]="activity.mouseOvered"
+              (click)="selectActivity(activity.id)"
+              fxLayout="column"
+              fxLayoutAlign="center center"
+            >
+              <div class="image">
+                <img src="/assets/img/victory.svg" />
+              </div>
+              <div class="name">
+                {{ activity.displayName }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="activities-container">
+  <div fxLayout="column">
     <div *ngFor="let category of possibleActivities$ | async">
       <div class="type-header">
         <span>{{ category.type }}</span>
@@ -27,4 +57,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

@@ -8,48 +8,30 @@ export const getActivitiesState = createSelector(
   (state: fromActivities.EditorState) => state.activities
 );
 
-export const getActivitiesEntities = createSelector(
-  getActivitiesState,
-  fromPizzas.getActivitiesEntities
-);
+export const getPossibleActivities = createSelector(getActivitiesState, fromPizzas.getPossibleActivities);
 
-export const getPossibleActivitiesEntities = createSelector(
-  getActivitiesState,
-  fromPizzas.getPossibleActivitiesEntities
-);
+export const getAllPossibleActivities = createSelector(getPossibleActivities, (entities) => {
+  return Object.keys(entities).map((id) => entities[id]);
+});
 
-export const getAllActivities = createSelector(
-  getActivitiesEntities,
-  (entities) => {
-    return Object.keys(entities).map((id) => entities[parseInt(id, 10)]);
-  }
-);
+export const getLessonActivities = createSelector(getActivitiesState, fromPizzas.getLessonActivities);
 
-export const getAllPossibleActivities = createSelector(
-  getPossibleActivitiesEntities,
-  (categories) => {
-    return Object.keys(categories).map((id) => {
-      const category = categories[parseInt(id, 10)];
-      const newacts = Object.keys(category.activities).map((activityId) => {
-        return category.activities[parseInt(activityId, 10)];
-      });
-      return {
-        ...category,
-        activities: newacts,
-      };
+export const getAllLessonActivities = createSelector(getLessonActivities, (entities) => {
+  return Object.keys(entities).map((id) => entities[parseInt(id, 10)]);
+});
 
-      // return category;
-      // return categories[parseInt(id, 10)];
+export const getSelectedLessonActivity = createSelector(getActivitiesState, (state) => {
+  return state.lessonActivities[state.selectedLessonActivity];
+});
+
+export const getSelectedLessonActivityFields = createSelector(getSelectedLessonActivity, (activity) => {
+  if (activity && activity.activity) {
+    return Object.keys(activity.activity.fields).map((id) => {
+      return { ...activity.activity.fields[id], id };
     });
   }
-);
+});
 
-export const getActivitiesLoaded = createSelector(
-  getActivitiesState,
-  fromPizzas.getActivitiesLoaded
-);
+export const getActivitiesLoaded = createSelector(getActivitiesState, fromPizzas.getActivitiesLoaded);
 
-export const getActivitiesLoading = createSelector(
-  getActivitiesState,
-  fromPizzas.getActivitiesLoading
-);
+export const getActivitiesLoading = createSelector(getActivitiesState, fromPizzas.getActivitiesLoading);

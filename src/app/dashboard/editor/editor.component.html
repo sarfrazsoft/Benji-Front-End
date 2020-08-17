@@ -19,13 +19,17 @@
         <mat-icon>close</mat-icon>
         Cancel
       </button>
+      <button class="dashboard-secondary-button active" fxLayoutAlign="center center" (click)="saveLesson()">
+        <mat-icon>close</mat-icon>
+        Save
+      </button>
     </div>
     <div></div>
   </div>
 
   <div class="editor-panels" fxLayout="row">
     <div class="overview-panel" fxFlex="250px">
-      <benji-overview-panel [activities$]="activities$"></benji-overview-panel>
+      <benji-overview-panel></benji-overview-panel>
     </div>
     <div class="preview-panel" fxFlex="100%">
       <benji-preview-panel></benji-preview-panel>

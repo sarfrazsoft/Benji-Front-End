@@ -9,14 +9,17 @@ import { User } from 'src/app/services/backend/schema';
 
 @Injectable()
 export class EditorService {
-  constructor(
-    private http: HttpClient,
-    private contextService: ContextService
-  ) {}
+  constructor(private http: HttpClient, private contextService: ContextService) {}
 
   getActivites(): Observable<any[]> {
     return this.http
-      .get<any[]>(global.apiRoot + '/course_details/course/?page=1')
+      .get<any[]>(global.apiRoot + '/activityflow/schema/full/')
+      .pipe(catchError((error: any) => Observable.throw(error.json())));
+  }
+
+  saveLesson(lesson): Observable<any[]> {
+    return this.http
+      .post<any[]>(global.apiRoot + '/activityflow/schema/to_yaml/', lesson)
       .pipe(catchError((error: any) => Observable.throw(error.json())));
   }
 }

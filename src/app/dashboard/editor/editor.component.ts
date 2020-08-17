@@ -1,14 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { fromEvent, Observable } from 'rxjs';
-import {
-  debounceTime,
-  distinct,
-  filter,
-  flatMap,
-  map,
-  tap,
-} from 'rxjs/operators';
+import { debounceTime, distinct, filter, flatMap, map, tap } from 'rxjs/operators';
 import { LayoutService } from 'src/app/services/layout.service';
 import { EditorService } from './services';
 
@@ -36,11 +29,16 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.activatedRoute.data.forEach((data: any) => {
       console.log(data);
     });
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      const lessonId = paramMap.get('lessonId');
+      this.loadLessonActivities('lessonId');
+      if (lessonId) {
+      }
+    });
   }
 
   ngOnInit() {
-    this.activities$ = this.store.select(fromStore.getAllActivities);
-
+    // this.activities$ = this.store.select(fromStore.getAllActivities);
     // // create observable that emits click events
     // const source = fromEvent(window, 'scroll');
     // // map to string with given event timestamp
@@ -52,15 +50,37 @@ export class EditorComponent implements OnInit, OnDestroy {
   addSlide() {
     // this.editorService.
     // this.router.navigate(['/dashboard/learners/add']);
-    this.store.dispatch(new fromStore.AddPlaceholderActivity());
-    this.showCancelAddSlide = true;
+    this.store.dispatch(new fromStore.AddEmptyLessonActivity());
+    // this.showCancelAddSlide = true;
   }
 
   cancelAddSlide() {
-    this.showCancelAddSlide = false;
-    this.store.dispatch(new fromStore.RemovePlaceholderActivity());
+    // this.showCancelAddSlide = false;
+    // this.store.dispatch(new fromStore.RemovePlaceholderActivity());
   }
   ngOnDestroy() {
     this.layoutService.hideSidebar = false;
+  }
+
+  loadLessonActivities(lessonId) {
+    this.store.dispatch(new fromStore.LoadLessonActivites(lessonId));
+  }
+
+  saveLesson() {
+    const lesson = [
+      {
+        activity_type: 'LobbyActivity',
+        activity_id: 'lobby1',
+        description: 'hello world',
+      },
+      {
+        activity_type: 'TitleActivity',
+        activity_id: 'title1',
+        main_title: 'Hello World',
+        hide_timer: true,
+        title_text: 'some title text',
+      },
+    ];
+    this.store.dispatch(new fromStore.SaveLesson(lesson));
   }
 }

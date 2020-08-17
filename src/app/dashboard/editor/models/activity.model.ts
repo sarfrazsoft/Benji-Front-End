@@ -10,3 +10,7 @@ export const SAMPLE_ACTIVITIES2 = [
   { name: 'brainstrom activity', id: 2, activity_type: 'activity type 2' },
   { name: 'title activity', id: 3, activity_type: 'activity type 2' },
 ];
+
+export enum FieldTypes {
+  string = 'str',
+}

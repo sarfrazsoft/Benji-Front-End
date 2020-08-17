@@ -9,12 +9,12 @@ import * as fromStore from '../store';
   styleUrls: ['./preview-panel.component.scss'],
 })
 export class PreviewPanelComponent implements OnInit {
-  possibleActivities$: Observable<any[]>;
+  lessonActivities$: Observable<any[]>;
   constructor(private store: Store<fromStore.EditorState>) {}
 
   ngOnInit() {
-    this.possibleActivities$ = this.store.select(
-      fromStore.getAllPossibleActivities
-    );
+    // this.possibleActivities$ = this.store.select(
+    //   fromStore.getAllPossibleActivities
+    // );
   }
 }

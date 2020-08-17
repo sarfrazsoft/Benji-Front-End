@@ -1,11 +1,7 @@
 <div class="panel">
   <div class="activities">
     <div class="form-tabs">
-      <mat-tab-group
-        [(selectedIndex)]="selectedTab"
-        dynamicHeight
-        [disableRipple]="true"
-      >
+      <mat-tab-group [(selectedIndex)]="selectedTab" dynamicHeight [disableRipple]="true">
         <mat-tab label="Type">
           <ng-template mat-tab-label>
             <span class="tab-label primary-color-darkest">Type</span>
@@ -16,7 +12,7 @@
           <ng-template mat-tab-label class="cotent-label">
             <span class="tab-label primary-color-darkest">Content</span>
           </ng-template>
-          content
+          <benji-activity-content></benji-activity-content>
         </mat-tab>
         <mat-tab label="Customize">
           <ng-template mat-tab-label class="cutomize-label">
