@@ -12,7 +12,9 @@
       <div class="text-list">
         <ng-container *ngFor="let category of brainstorm.brainstormcategory_set">
           <ng-container *ngIf="!category.removed">
-            {{ category.category_name }}
+            <div class="category-name">
+              {{ category.category_name }}
+            </div>
             <ng-container *ngFor="let idea of category.brainstormidea_set">
               <ng-container *ngIf="isUserIncluded(idea.submitted_by_user)">
                 <div class="text-list-item" *ngIf="!idea.remove">
