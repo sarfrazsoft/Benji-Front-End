@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   host: 'localhost',
   web_protocol: 'http',
-  socket_protocl: 'ws'
+  socket_protocl: 'ws',
 };
 
 /*
