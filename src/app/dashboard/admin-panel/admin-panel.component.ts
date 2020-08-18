@@ -15,7 +15,7 @@ import { AdminService } from './services/admin.service';
   styleUrls: ['./admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit {
-  courses: Array<any> = [];
+  lessons: Array<any> = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
@@ -23,7 +23,7 @@ export class AdminPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.activatedRoute.data.forEach((data: any) => {
-      this.courses = data.dashData.courses;
+      this.lessons = data.dashData.lessons;
       // if (!data.dashData.user.job_title) {
       //   this.dialog
       //     .open(JobInfoDialogComponent, {

@@ -26,13 +26,13 @@ export class ContextService {
   /**
    * Courses
    */
-  courses$ = new BehaviorSubject<any>(null);
+  lessons$ = new BehaviorSubject<any>(null);
 
-  set courses(courses: any) {
-    this.courses$.next(courses);
+  set lessons(lessons: any) {
+    this.lessons$.next(lessons);
   }
-  get courses(): any {
-    return this.courses$.getValue();
+  get lessons(): any {
+    return this.lessons$.getValue();
   }
 
   /**

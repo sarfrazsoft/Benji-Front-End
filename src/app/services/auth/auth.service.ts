@@ -41,12 +41,7 @@ export class AuthService {
       .pipe(tap((result) => this.setSession(result)));
   }
 
-  register(
-    email: string,
-    password: string,
-    firstName: string,
-    lastName: string
-  ) {
+  register(email: string, password: string, firstName: string, lastName: string) {
     this.logout();
     let obj;
     if (this.userInvitation) {
@@ -74,12 +69,10 @@ export class AuthService {
         email: email,
       };
     }
-    return this.http
-      .post(global.apiRoot + '/rest-auth/registration/', obj)
-      .pipe(
-        map((res: Response) => res),
-        catchError((err) => of(err.error))
-      );
+    return this.http.post(global.apiRoot + '/rest-auth/registration/', obj).pipe(
+      map((res: Response) => res),
+      catchError((err) => of(err.error))
+    );
   }
 
   checkConfirmationCode(code: string) {
@@ -104,7 +97,6 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
-          console.log(JSON.stringify(res));
           this.setSession(res);
           this.contextService.user = res.user;
           this.layoutService.hideSidebar = false;
@@ -142,9 +134,7 @@ export class AuthService {
   public isLoggedIn() {
     const token = this.getToken();
     if (token) {
-      return (
-        this.decodeToken(token).exp > Math.round(new Date().getTime() / 1000)
-      );
+      return this.decodeToken(token).exp > Math.round(new Date().getTime() / 1000);
     } else {
       return false;
     }
@@ -159,13 +149,7 @@ export class AuthService {
   }
 
   getInivitationDetails(inviteId: string, token: string) {
-    const request =
-      global.apiRoot +
-      '/tenants/org_invites/view_invite/' +
-      inviteId +
-      '/' +
-      token +
-      '/';
+    const request = global.apiRoot + '/tenants/org_invites/view_invite/' + inviteId + '/' + token + '/';
     return this.http.get<UserInvitation>(request);
   }
 

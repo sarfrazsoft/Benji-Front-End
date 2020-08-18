@@ -172,7 +172,7 @@ export class SidenavComponent implements OnInit {
           this.pastSessionSection,
           this.accountSection,
           this.authSection,
-          this.editor,
+          // this.editor,
         ];
       } else {
         this.profile.items[0].navRoute = 'learners/' + user.id;

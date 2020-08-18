@@ -1,6 +1,6 @@
-<div class="admin-panel" fxLayout="column" *ngIf="courseDetails">
+<div class="admin-panel" fxLayout="column" *ngIf="lessonDetails">
   <div class="dashboard-heading">
-    <h1>{{ courseDetails?.title }}</h1>
+    <h1>{{ lessonDetails?.title }}</h1>
   </div>
 
   <div class="subsection-container">
@@ -15,7 +15,7 @@
             <span>Session Overview</span>
           </div>
           <div class="description">
-            {{ courseDetails?.description }}
+            {{ lessonDetails?.description }}
           </div>
         </div>
         <div class="course-detail">
@@ -24,21 +24,21 @@
           </div>
           <div fxLayoutGap="30px" fxLayout="row">
             <div class="description">
-              {{ courseDetails?.facilitator.description }}
+              {{ lessonDetails?.facilitator.description }}
             </div>
             <div class="facilitator-img">
-              <img [src]="courseDetails?.facilitator.img" alt="" />
+              <img [src]="lessonDetails?.facilitator.img" alt="" />
             </div>
           </div>
         </div>
       </div>
 
       <!-- Videos -->
-      <div class="card" *ngIf="courseDetails.videos.length">
+      <div class="card" *ngIf="lessonDetails.videos.length">
         <div class="sub-heading">
           <h2>Videos</h2>
         </div>
-        <div class="course-detail" *ngFor="let video of courseDetails.videos">
+        <div class="course-detail" *ngFor="let video of lessonDetails.videos">
           <div class="sub-header">
             <span>{{ video.title }}</span>
           </div>
@@ -56,13 +56,13 @@
       </div>
 
       <!-- Resources -->
-      <div class="card" *ngIf="courseDetails.resources.length">
+      <div class="card" *ngIf="lessonDetails.resources.length">
         <div class="sub-heading">
           <h2>Resources</h2>
         </div>
         <div class="course-detail">
           <ul>
-            <li *ngFor="let resource of courseDetails.resources">
+            <li *ngFor="let resource of lessonDetails.resources">
               <a [href]="resource.link" download>{{ resource.title }}</a>
             </li>
           </ul>

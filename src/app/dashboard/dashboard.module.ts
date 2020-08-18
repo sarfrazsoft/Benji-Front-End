@@ -4,25 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
-import {
-  DashboardComponents,
-  DashboardEntryComponents,
-  DashboardProviders,
-} from './';
-import { McqComponent } from './courses/course/mcqs/mcq/mcq.component';
-import { McqsComponent } from './courses/course/mcqs/mcqs.component';
+import { DashboardComponents, DashboardEntryComponents, DashboardProviders } from './';
 import { DashboardRoutes } from './dashboard.routing';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DashboardRoutes,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, DashboardRoutes, FormsModule, ReactiveFormsModule, SharedModule],
   exports: [RouterModule],
-  declarations: [...DashboardComponents, McqsComponent, McqComponent],
+  declarations: [...DashboardComponents],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders,
 })

@@ -8,14 +8,13 @@
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
       <h2 class="dialog-heading primary-color-darkest">Launch a session</h2>
       <div class="dialog-instructions">
-        Select a session to launch. Everyone in the room needs to be able to see
-        this screen to participate.
+        Select a session to launch. Everyone in the room needs to be able to see this screen to participate.
       </div>
       <div class="controls-container" fxLayout="column" fxLayoutGap="15px">
         <ng-select
           class="dialog-controls"
-          [items]="courses"
-          bindLabel="course_name"
+          [items]="lessons"
+          bindLabel="lesson_name"
           placeholder="Select session"
           [(ngModel)]="selectedSession"
           appendTo="body"

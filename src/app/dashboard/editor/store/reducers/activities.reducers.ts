@@ -132,7 +132,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     case fromActivities.REMOVE_LESSON_ACTIVITY: {
       const index = action.payload;
       const y = index + '';
-      const { [index]: removed, ...lessonActivities } = state.lessonActivities;
+      const { [index]: removed, ...lessonActivities }: any = state.lessonActivities;
 
       return {
         ...state,

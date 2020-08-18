@@ -130,15 +130,6 @@
 //     return this.http.get<User>(request);
 //   }
 
-//   // getCourses(): Observable<any> {
-//   //   return this.http.get(global.apiRoot + '/course_details/course/').pipe(
-//   //     map(res => {
-//   //       return res;
-//   //     })
-//   //   );
-//   // }
-// }
-
 // // pitcho matic activity
 
 // const activityResult = {

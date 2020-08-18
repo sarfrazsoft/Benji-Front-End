@@ -18,8 +18,6 @@ export class LearnerResolver implements Resolve<any> {
       // return metricsData;
 
       const users = await this.learnerService.getUsers().toPromise();
-
-      // const courses = await this.adminService.getCourses().toPromise();
       return { users: users };
     } catch (err) {
       console.log(err);

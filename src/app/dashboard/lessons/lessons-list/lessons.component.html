@@ -1,0 +1,21 @@
+<div class="courses card-container" fxLayoutGap="40px" fxLayout="column">
+  <div class="card" (click)="openDetails(lesson)" *ngFor="let lesson of lessons">
+    <div class="sub-heading" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+      <h2>{{ lesson.lesson_name }}</h2>
+      <div
+        class="launch-session primary-color"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+        (click)="launchSession($event, lesson)"
+      >
+        <span>{{ launchSessionLabel }}</span>
+        <img [src]="rightLaunchArrow" alt="launch" />
+      </div>
+    </div>
+    <div class="course-detail">
+      <div class="description">
+        {{ lesson.lesson_description }}
+      </div>
+    </div>
+  </div>
+</div>

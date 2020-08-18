@@ -6,25 +6,18 @@ import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
-import {
-  Course,
-  Lesson,
-  PaginatedResponse
-} from 'src/app/services/backend/schema/course_details';
+import { Course, Lesson, PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 
 @Injectable()
 export class AdminService {
-  constructor(
-    private http: HttpClient,
-    private contextService: ContextService
-  ) {}
+  constructor(private http: HttpClient, private contextService: ContextService) {}
 
   getAdminPanelMetrics(): Observable<any> {
     return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
       map((res: Response) => {
         return { learners: 106, groups: 14, sessions: 18 };
       }),
-      catchError(err => of(err.error))
+      catchError((err) => of(err.error))
     );
   }
 
@@ -37,24 +30,12 @@ export class AdminService {
     );
   }
 
-  getCourses(): Observable<Course[]> {
-    return this.http
-      .get(global.apiRoot + '/course_details/course/?page=1')
-      .pipe(
-        map((res: PaginatedResponse<Course>) => {
-          this.contextService.courses = res.results;
-          return res.results;
-        })
-      );
-  }
-
-  getCourseDetails(courseID: string): Observable<Array<Lesson>> {
-    return this.http
-      .get(global.apiRoot + '/course_details/course/' + courseID + '/lessons/')
-      .pipe(
-        map((res: Array<Lesson>) => {
-          return res;
-        })
-      );
+  getLessons(): Observable<Course[]> {
+    return this.http.get(global.apiRoot + '/course_details/lesson/').pipe(
+      map((res: PaginatedResponse<Course>) => {
+        this.contextService.lessons = res.results;
+        return res.results;
+      })
+    );
   }
 }

@@ -10,10 +10,10 @@ import { BackendRestService, ContextService } from 'src/app/services';
 
 @Component({
   selector: 'benji-launch-session-dialog',
-  templateUrl: 'launch-session.dialog.html'
+  templateUrl: 'launch-session.dialog.html',
 })
 export class LaunchSessionDialogComponent implements OnInit {
-  courses = [{ id: 1, name: 'Active Listening' }];
+  lessons = [];
   constructor(
     private dialogRef: MatDialogRef<LaunchSessionDialogComponent>,
     private contextService: ContextService,
@@ -23,7 +23,7 @@ export class LaunchSessionDialogComponent implements OnInit {
     private http: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.courses = this.contextService.courses;
+    this.lessons = this.contextService.lessons;
   }
   selectedSession;
 
@@ -33,26 +33,21 @@ export class LaunchSessionDialogComponent implements OnInit {
 
   // duplicate code in courses.componnt.ts
   public launchSession(): void {
-    this.getCourseDetails(this.selectedSession.id).subscribe(res => {
-      this.restService.start_lesson(res[0].id).subscribe(
-        lessonRun => {
-          this.dialogRef.close({});
-          this.router.navigate([]).then(result => {
+    this.restService.start_lesson(this.selectedSession.id).subscribe(
+      (lessonRun) => {
+        this.dialogRef.close({});
+
+        if (this.selectedSession.single_user_lesson) {
+          setTimeout(() => {
+            this.router.navigate(['/user/lesson/' + lessonRun.lessonrun_code]);
+          }, 1500);
+        } else {
+          this.router.navigate([]).then((result) => {
             window.open('/screen/lesson/' + lessonRun.lessonrun_code, '_blank');
           });
-        },
-        err => console.log(err)
-      );
-    });
-  }
-
-  getCourseDetails(courseID: string): Observable<any> {
-    return this.http
-      .get(global.apiRoot + '/course_details/course/' + courseID + '/lessons/')
-      .pipe(
-        map(res => {
-          return res;
-        })
-      );
+        }
+      },
+      (err) => console.log(err)
+    );
   }
 }

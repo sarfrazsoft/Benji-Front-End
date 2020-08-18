@@ -20,10 +20,7 @@ import {
 
 @Injectable()
 export class LearnerService {
-  constructor(
-    private http: HttpClient,
-    private contextService: ContextService
-  ) {}
+  constructor(private http: HttpClient, private contextService: ContextService) {}
 
   // getAdminPanelMetrics(): Observable<any> {
   //   return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
@@ -63,90 +60,73 @@ export class LearnerService {
     return this.http.get(request);
   }
 
-  // getCourses(): Observable<any> {
-  //   return this.http.get(global.apiRoot + '/course_details/course/').pipe(
-  //     map(res => {
-  //       return res;
-  //     })
-  //   );
-  // }
-
   // api/course_details/lesson_run/{room_code}/summary/
   getReports(id: string): Observable<any> {
-    return this.http
-      .get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary')
-      .pipe(
-        map((res: SessionReport) => {
-          // this.data = activityResult3;
-          res = activityResult3 as SessionReport;
-          const arr: Array<ActivityReport> = [];
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary').pipe(
+      map((res: SessionReport) => {
+        // this.data = activityResult3;
+        res = activityResult3 as SessionReport;
+        const arr: Array<ActivityReport> = [];
 
-          arr.push(res);
+        arr.push(res);
 
-          let pomActivity;
+        let pomActivity;
 
-          // Iterate over each activity in order and
-          // push them to the array
-          res.activity_results.forEach((act, i) => {
-            if (act.activity_type === ActivityTypes.mcq) {
-              arr.push({
-                ...res,
-                mcqs: [act] as Array<MCQReport>,
-                activity_type: ActivityTypes.mcq,
-              });
-            } else if (act.activity_type === ActivityTypes.feedback) {
-              arr.push({
-                ...res,
-                activity_type: ActivityTypes.feedback,
-                feedback: act as FeedbackReport,
-              });
-            } else if (act.activity_type === ActivityTypes.pitchoMatic) {
-              arr.push({
-                ...res,
-                activity_type: ActivityTypes.pitchoMatic,
-                pom: act as PitchOMaticReport,
-              });
-              pomActivity = {
-                ...res,
-                activity_type: ActivityTypes.pitchoMatic,
-                pom: act as PitchOMaticReport,
-              };
-            } else if (act.activity_type === ActivityTypes.buildAPitch) {
-              arr.push({
-                ...res,
-                activity_type: ActivityTypes.buildAPitch,
-                bap: act as BuildAPitchReport,
-              });
-            } else if (act.activity_type === ActivityTypes.brainStorm) {
-              arr.push({
-                ...res,
-                activity_type: ActivityTypes.brainStorm,
-                brainstorm: act as BrainstormReport,
-              });
-            }
-          });
-          return pomActivity;
-        })
-      );
+        // Iterate over each activity in order and
+        // push them to the array
+        res.activity_results.forEach((act, i) => {
+          if (act.activity_type === ActivityTypes.mcq) {
+            arr.push({
+              ...res,
+              mcqs: [act] as Array<MCQReport>,
+              activity_type: ActivityTypes.mcq,
+            });
+          } else if (act.activity_type === ActivityTypes.feedback) {
+            arr.push({
+              ...res,
+              activity_type: ActivityTypes.feedback,
+              feedback: act as FeedbackReport,
+            });
+          } else if (act.activity_type === ActivityTypes.pitchoMatic) {
+            arr.push({
+              ...res,
+              activity_type: ActivityTypes.pitchoMatic,
+              pom: act as PitchOMaticReport,
+            });
+            pomActivity = {
+              ...res,
+              activity_type: ActivityTypes.pitchoMatic,
+              pom: act as PitchOMaticReport,
+            };
+          } else if (act.activity_type === ActivityTypes.buildAPitch) {
+            arr.push({
+              ...res,
+              activity_type: ActivityTypes.buildAPitch,
+              bap: act as BuildAPitchReport,
+            });
+          } else if (act.activity_type === ActivityTypes.brainStorm) {
+            arr.push({
+              ...res,
+              activity_type: ActivityTypes.brainStorm,
+              brainstorm: act as BrainstormReport,
+            });
+          }
+        });
+        return pomActivity;
+      })
+    );
   }
 
-  getPastSessions(
-    sort: string,
-    order: string,
-    page: number,
-    userID
-  ): Observable<any> {
+  getPastSessions(sort: string, order: string, page: number, userID): Observable<any> {
     // replace after testing
     // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
     // return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
-    return this.http
-      .get(global.apiRoot + '/course_details/lesson_run/user/' + userID + '/')
-      .pipe(
-        map((res) => {
-          // console.log(res);
-          return res;
-        })
-      );
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/user/' + userID + '/').pipe(
+      map((res) => {
+        // console.log(res);
+        return res;
+      })
+    );
   }
 }
 
@@ -424,8 +404,7 @@ const activityResult3 = {
           ],
           average_rating: '3.75',
           question_type: 'rating_agreedisagree',
-          question_text:
-            'I can deliver a clear, concise, and compelling pitch.',
+          question_text: 'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 52,
@@ -528,8 +507,7 @@ const activityResult3 = {
         title: 'Before we begin',
         title_image: 'emoji://memo',
         screen_instructions: 'Fill out the form on your phone',
-        participant_instructions:
-          'How do you feel about your pitching skills now?',
+        participant_instructions: 'How do you feel about your pitching skills now?',
       },
       activity_type: 'FeedbackActivity',
     },
@@ -575,8 +553,7 @@ const activityResult3 = {
           order: 2,
           label: 'with',
           temp_text: 'the problem',
-          help_text:
-            'What needs, challenges and frustrations do your customers have?',
+          help_text: 'What needs, challenges and frustrations do your customers have?',
         },
         {
           id: 14,
@@ -1540,8 +1517,7 @@ const activityResult3 = {
             local_admin_permission: true,
             participant_permission: true,
           },
-          pitch_prep_text:
-            'my notes are my notes and nobody else should see them',
+          pitch_prep_text: 'my notes are my notes and nobody else should see them',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -1703,8 +1679,7 @@ const activityResult3 = {
             local_admin_permission: false,
             participant_permission: true,
           },
-          pitch_prep_text:
-            'how am I supposed to pitch disney. it\'s like a leech dd',
+          pitch_prep_text: 'how am I supposed to pitch disney. it\'s like a leech dd',
           pitch: {
             pitchomaticgroupmemberpitchchoice_set: [
               {
@@ -1967,8 +1942,7 @@ const activityResult3 = {
           ],
           average_rating: '4.75',
           question_type: 'rating_agreedisagree',
-          question_text:
-            'I can deliver a clear, concise, and compelling pitch.',
+          question_text: 'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 72,
@@ -2071,8 +2045,7 @@ const activityResult3 = {
         title: 'What about now?',
         title_image: 'emoji://memo',
         screen_instructions: 'Fill out the form on your phone',
-        participant_instructions:
-          'How do you feel about your pitching skills now?',
+        participant_instructions: 'How do you feel about your pitching skills now?',
       },
       activity_type: 'FeedbackActivity',
     },
@@ -2170,8 +2143,7 @@ const activityResult3 = {
           ],
           average_rating: '4.50',
           question_type: 'rating_agreedisagree',
-          question_text:
-            'What I learned in this session will improve my skills.',
+          question_text: 'What I learned in this session will improve my skills.',
           is_combo: true,
           combo_text: 'Why is that?',
           feedbackactivity: 75,

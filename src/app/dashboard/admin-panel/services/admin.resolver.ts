@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
-import {
-  AuthService,
-  BackendRestService,
-  ContextService,
-} from 'src/app/services';
+import { AuthService, BackendRestService, ContextService } from 'src/app/services';
 import { AdminService } from './admin.service';
 
 @Injectable()
@@ -26,9 +22,9 @@ export class AdminResolver implements Resolve<any> {
         user = this.contextService.user;
       }
 
-      const courses = await this.adminService.getCourses().toPromise();
+      const lessons = await this.adminService.getLessons().toPromise();
 
-      return { user: user, courses: courses };
+      return { user: user, lessons: lessons };
     } catch (err) {
       console.log(err);
     }

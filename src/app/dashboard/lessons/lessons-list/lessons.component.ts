@@ -8,12 +8,12 @@ import { LaunchSessionDialogComponent } from 'src/app/shared';
 import { AdminService } from '../../admin-panel/services';
 
 @Component({
-  selector: 'benji-courses-list',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss'],
+  selector: 'benji-lessons-list',
+  templateUrl: './lessons.component.html',
+  styleUrls: ['./lessons.component.scss'],
 })
-export class CoursesComponent implements OnInit {
-  @Input() courses: Array<any> = [];
+export class LessonsComponent implements OnInit {
+  @Input() lessons: Array<any> = [];
   launchSessionLabel = '';
   rightLaunchArrow = '';
   rightCaret = '';
@@ -37,31 +37,25 @@ export class CoursesComponent implements OnInit {
   }
 
   // duplicate code in Launch Session dialog
-  launchSession(event, id): void {
-    this.adminService.getCourseDetails(id).subscribe((res: Array<Lesson>) => {
-      // if it's a single user lesson
-      this.restService.start_lesson(res[0].id).subscribe(
-        (lessonRun) => {
-          if (res[0].single_user_lesson) {
-            setTimeout(() => {
-              this.router.navigate([
-                '/user/lesson/' + lessonRun.lessonrun_code,
-              ]);
-            }, 1500);
-          } else {
-            this.router.navigate([
-              '/screen/lesson/' + lessonRun.lessonrun_code,
-            ]);
-          }
-        },
-        (err) => console.log(err)
-      );
-    });
+  launchSession(event, lesson): void {
+    // if it's a single user lesson
+    this.restService.start_lesson(lesson.id).subscribe(
+      (lessonRun) => {
+        if (lesson.single_user_lesson) {
+          setTimeout(() => {
+            this.router.navigate(['/user/lesson/' + lessonRun.lessonrun_code]);
+          }, 1500);
+        } else {
+          this.router.navigate(['/screen/lesson/' + lessonRun.lessonrun_code]);
+        }
+      },
+      (err) => console.log(err)
+    );
     event.stopPropagation();
   }
 
   openDetails(course) {
-    if (course.course_details) {
+    if (course.lesson_details) {
       this.router.navigate(['course', course.course_id], {
         relativeTo: this.activatedRoute,
       });
