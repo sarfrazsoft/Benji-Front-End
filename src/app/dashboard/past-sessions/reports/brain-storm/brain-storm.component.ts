@@ -11,6 +11,7 @@ import { PastSessionsService } from 'src/app/services/past-sessions.service';
 export class BrainStormComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
   brainstorm: ActivityReport['brainstorm'];
+  ideas = [];
   fIUs = [];
   constructor(private pastSessionService: PastSessionsService) {}
 
@@ -27,9 +28,30 @@ export class BrainStormComponent implements OnInit, OnChanges {
   update() {
     this.fIUs = this.pastSessionService.filteredInUsers;
     this.brainstorm = clone(this.data.brainstorm);
+    this.getUsersIdeas(this.brainstorm);
+  }
 
-    this.brainstorm.idea_rankings = this.brainstorm.idea_rankings.filter((i) =>
-      this.fIUs.includes(i.submitted_by_user.id)
-    );
+  isUserIncluded(userId) {
+    return this.fIUs.includes(userId);
+  }
+
+  getPersonName(id: number) {
+    const user = this.data.joined_users.find((u) => u.id === id);
+    return user.first_name + ' ' + user.last_name;
+  }
+
+  getUsersIdeas(act) {
+    const arr = [];
+    act.brainstormcategory_set.forEach((category) => {
+      if (!category.removed) {
+        category.brainstormidea_set.forEach((idea) => {
+          if (!idea.removed) {
+            arr.push(idea);
+          }
+        });
+      }
+    });
+    this.ideas = arr;
+    return arr;
   }
 }
