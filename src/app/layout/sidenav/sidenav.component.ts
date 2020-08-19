@@ -3,10 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-import {
-  JoinSessionDialogComponent,
-  LaunchSessionDialogComponent,
-} from '../../shared';
+import { JoinSessionDialogComponent, LaunchSessionDialogComponent } from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 
 export interface SidenavSection {
@@ -175,15 +172,11 @@ export class SidenavComponent implements OnInit {
           this.pastSessionSection,
           this.accountSection,
           this.authSection,
-          this.editor,
+          // this.editor,
         ];
       } else {
         this.profile.items[0].navRoute = 'learners/' + user.id;
-        this.sidenavSections = [
-          this.profile,
-          this.accountSection,
-          this.authSection,
-        ];
+        this.sidenavSections = [this.profile, this.accountSection, this.authSection];
       }
     });
   }

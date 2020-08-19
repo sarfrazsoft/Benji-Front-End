@@ -7,24 +7,28 @@
         {{ brainstorm.instructions }}
       </div>
       <div class="ideas-count">
-        {{ brainstorm.idea_rankings.length }} statements submitted by
-        {{ fIUs?.length }} participants
+        {{ ideas.length }} statements submitted by {{ fIUs?.length }} participants
       </div>
       <div class="text-list">
-        <div
-          class="text-list-item"
-          *ngFor="let idea of brainstorm.idea_rankings"
-        >
-          {{ idea.idea }}
-          <div class="details">
-            {{
-              idea.submitted_by_user.first_name +
-                " " +
-                idea.submitted_by_user.last_name
-            }}, {{ " " + idea.num_votes }}
-            {{ idea.num_votes === 1 ? " vote" : " votes" }}
-          </div>
-        </div>
+        <ng-container *ngFor="let category of brainstorm.brainstormcategory_set">
+          <ng-container *ngIf="!category.removed">
+            <div class="category-name">
+              {{ category.category_name }}
+            </div>
+            <ng-container *ngFor="let idea of category.brainstormidea_set">
+              <ng-container *ngIf="isUserIncluded(idea.submitted_by_user)">
+                <div class="text-list-item" *ngIf="!idea.remove">
+                  {{ idea.idea }}
+                  <div class="details">
+                    {{ getPersonName(idea.submitted_by_user) }},
+                    {{ ' ' + idea.num_votes }}
+                    {{ idea.num_votes === 1 ? ' vote' : ' votes' }}
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </div>

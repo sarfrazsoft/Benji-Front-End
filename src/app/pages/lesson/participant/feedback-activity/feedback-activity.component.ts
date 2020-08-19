@@ -1,24 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FeedbackSubmitEvent,
-  FeedbackSubmitEventAnswer
-} from 'src/app/services/backend/schema';
+import { FeedbackSubmitEvent, FeedbackSubmitEventAnswer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-feedback-activity',
   templateUrl: './feedback-activity.component.html',
-  styleUrls: ['./feedback-activity.component.scss']
+  styleUrls: ['./feedback-activity.component.scss'],
 })
-export class ParticipantFeedbackActivityComponent extends BaseActivityComponent
-  implements OnInit {
+export class ParticipantFeedbackActivityComponent extends BaseActivityComponent implements OnInit {
   answersSubmitted: boolean;
 
   constructor() {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.answersSubmitted = false;
+    const uId = this.getUserId();
+    // this.activityState.feedbackactivity.answered_users.includes()
+  }
+
+  getUserId(): number {
+    return this.activityState.your_identity.id;
+  }
 
   submitAnswers(val) {
     const answers: Array<FeedbackSubmitEventAnswer> = [];
