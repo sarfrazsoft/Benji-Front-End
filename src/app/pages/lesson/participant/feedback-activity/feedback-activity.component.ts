@@ -17,7 +17,10 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
   ngOnInit() {
     this.answersSubmitted = false;
     const uId = this.getUserId();
-    // this.activityState.feedbackactivity.answered_users.includes()
+    const x = this.activityState.feedbackactivity.answered_users.filter((u) => u.id === uId).length;
+    if (x) {
+      this.answersSubmitted = true;
+    }
   }
 
   getUserId(): number {
