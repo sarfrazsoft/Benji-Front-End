@@ -27,7 +27,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   ) {
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
-      console.log(data);
+      // console.log(data);
     });
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       const lessonId = paramMap.get('lessonId');

@@ -33,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
@@ -77,12 +78,7 @@ const SHARED_MODULES = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    ...SHARED_MODULES,
-    DeviceDetectorModule.forRoot(),
-  ],
+  imports: [CommonModule, RouterModule, ...SHARED_MODULES, DeviceDetectorModule.forRoot()],
   declarations: Components,
   entryComponents: [...EntryComponents],
   exports: [...Components, ...SHARED_MODULES],

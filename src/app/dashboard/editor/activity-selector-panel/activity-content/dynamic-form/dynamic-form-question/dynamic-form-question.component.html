@@ -1,0 +1,31 @@
+<div [formGroup]="form">
+  <label [attr.for]="question.key">{{ question.label }}</label>
+
+  <div [ngSwitch]="question.controlType">
+    <input
+      *ngSwitchCase="'textbox'"
+      [formControlName]="question.key"
+      [id]="question.key"
+      [type]="question.type"
+      [attr.readonly]="question.readonly"
+    />
+
+    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+      <option *ngFor="let opt of question.options" [value]="opt.key">{{ opt.value }}</option>
+    </select>
+
+    <input
+      *ngSwitchCase="'time'"
+      [formControlName]="question.key"
+      [id]="question.key"
+      [type]="question.type"
+    />
+
+    <div *ngSwitchCase="'emoji'">
+      <input [formControlName]="question.key" [id]="question.key" [type]="question.type" />
+      <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart>
+    </div>
+  </div>
+
+  <div class="errorMessage" *ngIf="!isValid" (click)="logErrors()">{{ question.label }} is required</div>
+</div>

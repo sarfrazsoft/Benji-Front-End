@@ -3,7 +3,7 @@ export * from './editor.component';
 export * from './preview-panel/preview-panel.component';
 export * from './activity-selector-panel/activity-selector-panel.component';
 
-import { ActivitySelectorComponents } from './activity-selector-panel';
+import { ActivitySelectorComponents, ActivitySelectorProviders } from './activity-selector-panel';
 import { EditorComponent } from './editor.component';
 import { OverviewPanelComponent } from './overview-panel/overview-panel.component';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
@@ -18,4 +18,4 @@ export const EditorComponents = [
 
 export const EditorEntryComponents = [];
 
-export const EditorProviders = [EditorService];
+export const EditorProviders = [EditorService, ...ActivitySelectorProviders];

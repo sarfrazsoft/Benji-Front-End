@@ -16,7 +16,7 @@ export class OverviewPanelComponent implements OnInit {
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
 
-    this.lessonActivities$.subscribe((x) => console.log(x));
+    // this.lessonActivities$.subscribe((x) => console.log(x));
   }
 
   select(activityId) {

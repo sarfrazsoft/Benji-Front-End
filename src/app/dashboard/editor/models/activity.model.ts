@@ -13,4 +13,7 @@ export const SAMPLE_ACTIVITIES2 = [
 
 export enum FieldTypes {
   string = 'str',
+  number = 'int',
+  boolean = 'bool',
+  emoji = 'emoji',
 }

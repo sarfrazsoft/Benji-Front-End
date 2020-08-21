@@ -34,7 +34,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     }
     case fromActivities.LOAD_ALL_POSSIBLE_ACTIVITIES_SUCCESS: {
       const activities = action.payload;
-      console.log(activities);
       let i = 0;
       const arr = [];
       for (const key in activities) {
@@ -45,7 +44,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
             fields: actProperties.fields,
             id: key,
             displayName: key,
-            thumbnail: 'some url',
+            thumbnail: actProperties.thumbnail,
           };
           arr.push(x);
           i++;
@@ -63,7 +62,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           ...state.possibleActivities,
         }
       );
-      console.log(flattendObjects);
 
       return {
         ...state,

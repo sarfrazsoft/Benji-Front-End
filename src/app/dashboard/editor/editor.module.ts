@@ -4,12 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { EditorRoutes } from './editor.routing';
-import {
-  EditorComponents,
-  EditorEntryComponents,
-  EditorProviders,
-} from './index';
+import { EditorComponents, EditorEntryComponents, EditorProviders } from './index';
 
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { effects, reducers } from './store';
@@ -21,6 +18,7 @@ import { effects, reducers } from './store';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    PickerModule,
     StoreModule.forFeature('editor', reducers),
     EffectsModule.forFeature(effects),
   ],
