@@ -1,14 +1,9 @@
-<div
-  class="ms-preloader flexer align-center"
-  *ngIf="!isConnected() || !isFacilitatorConnected()"
->
+<div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
   <mat-spinner></mat-spinner>
 </div>
 
 <div class="ms-fullheight-container">
-  <benji-main-screen-toolbar
-    [activityState]="serverMessage"
-  ></benji-main-screen-toolbar>
+  <benji-main-screen-toolbar [activityState]="serverMessage"></benji-main-screen-toolbar>
 
   <div
     *ngIf="isConnected() && serverMessage"
@@ -25,6 +20,14 @@
       (sendMessage)="sendSocketMessage($event)"
     >
     </benji-ms-brainstorming-activity>
+
+    <benji-ms-image-activity
+      *ngIf="getActivityType() === at.image"
+      [activityState]="serverMessage"
+      [avgServerTimeOffset]="avgServerTimeOffset"
+      (sendMessage)="sendSocketMessage($event)"
+    >
+    </benji-ms-image-activity>
 
     <benji-ms-generate-pitch-activity
       *ngIf="getActivityType() === at.pitchoMatic"

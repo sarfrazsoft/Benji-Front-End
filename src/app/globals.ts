@@ -10,6 +10,7 @@ export const apiRoot = web_protocol + '://' + backend + '/api';
 export const wsRoot = socket_protocl + '://' + backend;
 
 export enum ActivityTypes {
+  image = 'ImageActivity',
   brainStorm = 'BrainstormActivity',
   gather = 'GatherActivity',
   pitchoMatic = 'PitchoMaticActivity',

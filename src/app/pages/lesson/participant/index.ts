@@ -9,6 +9,7 @@ import { ParticiapantGatherActivityComponent } from './gather-activity/gather-ac
 import { ParticipantGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { ParticipantGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
 import { ParticipantHintActivityComponent } from './hint-activity/hint-activity.component';
+import { ParticipantImageActivityComponent } from './image-activity/image-activity.component';
 import { ParticipantLobbyComponents } from './lobby-activity';
 import { ParticipantMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 import { ParticipantMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
@@ -34,6 +35,7 @@ export const ParticipantScreenComponents = [
   ...ReorderComponents,
   ...ParticipantLobbyComponents,
   ParticiapantGatherActivityComponent,
+  ParticipantImageActivityComponent,
   ParticipantDiscussionActivityComponent,
   ParticipantEitherOrActivityComponent,
   ParticipantExternalGroupingActivityComponent,

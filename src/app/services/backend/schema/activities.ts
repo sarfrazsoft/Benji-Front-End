@@ -19,6 +19,23 @@ export interface BaseActivity {
   is_paused: boolean;
 }
 
+export interface ParentActivity {
+  activity_id: string;
+  activity_type: string;
+  auto_next: boolean;
+  description: string;
+  end_time: any;
+  facilitation_status: 'not-started' | 'running' | 'ended';
+  id: number;
+  is_paused: boolean;
+  next_activity: any;
+  next_activity_delay_seconds: number;
+  next_activity_start_timer: Timer;
+  polymorphic_ctype: number;
+  run_number: number;
+  start_time: string;
+}
+
 export interface LobbyActivity {
   lobby_text: string;
 }
@@ -29,6 +46,11 @@ export interface TitleActivity {
   title_emoji: string; // To be deprecated. Do not use. Instead, parse emoji://xxxx from title_image
   title_image: string;
   hide_timer: boolean;
+}
+export interface ImageActivity extends ParentActivity {
+  image: string;
+  hide_timer: boolean;
+  image_url: { id: number; img: string };
 }
 
 export interface MCQActivity {
@@ -424,35 +446,19 @@ export interface CaseStudyUserSet {
 
 export type CaseStudyRoles = 'Note Taker' | 'Participant';
 
-export interface MontyHallActivity {
-  activity_id: string;
-  activity_type: string;
-  auto_next: boolean;
+export interface MontyHallActivity extends ParentActivity {
   change_choice_seconds: number;
   change_choice_timer: Timer;
   current_round: number;
   current_round_details: Array<CurrentRoundDetails>;
   description: string;
-  end_time: any;
-  id: number;
   initial_choice_seconds: number;
   initial_choice_timer: Timer;
-  is_paused: boolean;
-  next_activity: any;
-  next_activity_delay_seconds: number;
-  next_activity_start_timer: Timer;
-  polymorphic_ctype: number;
   results: Array<MontyHallResult>;
   results_seconds: number;
   results_timer: Timer;
   reveal_timer: Timer;
-  start_time: string;
-  status:
-    | 'not_started'
-    | 'initial_choice'
-    | 'change_choice'
-    | 'reveal'
-    | 'results';
+  status: 'not_started' | 'initial_choice' | 'change_choice' | 'reveal' | 'results';
 }
 export interface CurrentRoundDetails {
   changed_choice: any;

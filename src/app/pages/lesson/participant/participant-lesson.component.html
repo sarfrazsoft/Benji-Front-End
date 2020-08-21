@@ -9,6 +9,14 @@
   >
   </benji-ps-brainstorming-activity>
 
+  <benji-ps-image-activity
+    *ngIf="getActivityType() === at.image"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-image-activity>
+
   <benji-ps-lobby
     *ngIf="getActivityType() === at.lobby"
     [activityState]="serverMessage"

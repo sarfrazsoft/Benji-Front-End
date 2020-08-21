@@ -1,0 +1,13 @@
+<div class="mainscreen-activity">
+  <div class="image-container" *ngIf="act.image_url">
+    <img [src]="hostname + act.image_url.img" />
+  </div>
+  <div class="linear-timer-container" *ngIf="!peakBackState">
+    <benji-linear-timer
+      *ngIf="timer"
+      [timer]="timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-linear-timer>
+  </div>
+</div>

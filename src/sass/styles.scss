@@ -38,6 +38,7 @@
 @import './dashboard/past-sessions/reports';
 @import './dashboard/past-sessions/key-stats';
 @import './activities/bottom-button';
+@import './activities/image-activity';
 @import './activities/monty-hall';
 @import './activities/mcq-result';
 @import './activities/single-column-activity';
@@ -89,8 +90,7 @@
   margin: 0 auto;
 }
 
-.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode='indeterminate']
-  circle {
+.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode='indeterminate'] circle {
   animation-duration: 6s;
 }
 

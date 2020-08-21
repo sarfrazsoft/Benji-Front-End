@@ -8,6 +8,7 @@ import {
   FeedbackActivity,
   GenericRoleplayActivity,
   HintWordActivity,
+  ImageActivity,
   LobbyActivity,
   MCQActivity,
   MCQResultsActivity,
@@ -24,18 +25,14 @@ import {
 } from './activities';
 import { Lesson, LessonRun } from './course_details';
 import { User } from './user';
-import {
-  BuildAPitchBlank,
-  FeedbackQuestion,
-  MCQChoice,
-  MCQQuestion,
-} from './utils';
+import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
 export interface UpdateMessage {
   lesson: Lesson; // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson_run: LessonRun;
   base_activity: BaseActivity;
   brainstormactivity: BrainstormActivity;
+  imageactivity: ImageActivity;
   buildapitchactivity: BuildAPitchActivity;
   casestudyactivity: CaseStudyActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
@@ -259,9 +256,7 @@ export class BuildAPitchSubmitEventEntry {
 export class BuildAPitchSubmitPitchEvent extends ActivityEvent {
   event_name = 'BuildAPitchSubmitPitchEvent';
 
-  constructor(
-    buildapitchsubmissionentry_set: Array<BuildAPitchSubmitEventEntry>
-  ) {
+  constructor(buildapitchsubmissionentry_set: Array<BuildAPitchSubmitEventEntry>) {
     super();
     this.extra_args = {
       buildapitchsubmissionentry_set: buildapitchsubmissionentry_set,
@@ -411,9 +406,7 @@ export class GenericRoleplayUserDiscussedEvent extends ActivityEvent {
 
 export class GenericRoleplayUserFeedbackEvent extends ActivityEvent {
   event_name = 'GenericRoleplayUserFeedbackEvent';
-  constructor(
-    genericroleplayuserfeedbackeventanswer_set: FeedbackSubmitEventAnswer[]
-  ) {
+  constructor(genericroleplayuserfeedbackeventanswer_set: FeedbackSubmitEventAnswer[]) {
     super();
     this.extra_args = {
       genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set,
