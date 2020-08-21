@@ -2,7 +2,7 @@
   <div class="image-container" *ngIf="act.image_url">
     <img [src]="hostname + act.image_url.img" />
   </div>
-  <div class="linear-timer-container" *ngIf="!peakBackState">
+  <div class="linear-timer-container" *ngIf="!act.hide_timer">
     <benji-linear-timer
       *ngIf="timer"
       [timer]="timer"

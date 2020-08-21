@@ -11,8 +11,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenImageActivityComponent extends BaseActivityComponent implements OnInit {
   act: ImageActivity;
   timer: Timer;
-  // hostname = window.location.protocol + '//' + window.location.hostname;
-  hostname = window.location.protocol + '//' + environment.host;
+  hostname = window.location.protocol + '//' + window.location.hostname;
+  // hostname = window.location.protocol + '//' + environment.host;
   constructor() {
     super();
   }
