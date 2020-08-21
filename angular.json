@@ -30,12 +30,10 @@
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
+              "node_modules/@ctrl/ngx-emoji-mart/picker.css",
               "src/sass/styles.scss"
             ],
-            "scripts": [
-              "node_modules/dashjs/dist/dash.all.min.js",
-              "node_modules/hls.js/dist/hls.min.js"
-            ]
+            "scripts": ["node_modules/dashjs/dist/dash.all.min.js", "node_modules/hls.js/dist/hls.min.js"]
           },
           "configurations": {
             "production": {
