@@ -66,21 +66,21 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromStore.LoadLessonActivites(lessonId));
   }
 
-  saveLesson() {
-    const lesson = [
-      {
-        activity_type: 'LobbyActivity',
-        activity_id: 'lobby1',
-        description: 'hello world',
-      },
-      {
-        activity_type: 'TitleActivity',
-        activity_id: 'title1',
-        main_title: 'Hello World',
-        hide_timer: true,
-        title_text: 'some title text',
-      },
-    ];
-    this.store.dispatch(new fromStore.SaveLesson(lesson));
-  }
+  // saveLesson() {
+  //   const lesson = [
+  //     {
+  //       activity_type: 'LobbyActivity',
+  //       activity_id: 'lobby1',
+  //       description: 'hello world',
+  //     },
+  //     {
+  //       activity_type: 'TitleActivity',
+  //       activity_id: 'title1',
+  //       main_title: 'Hello World',
+  //       hide_timer: true,
+  //       title_text: 'some title text',
+  //     },
+  //   ];
+  //   this.store.dispatch(new fromStore.SaveLesson(lesson));
+  // }
 }

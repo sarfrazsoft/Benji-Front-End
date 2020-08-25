@@ -49,9 +49,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
 
     // Populate the answers if available
     if (localStorage.getItem(this.localStorageItemName)) {
-      this.questions = JSON.parse(
-        localStorage.getItem(this.localStorageItemName)
-      );
+      this.questions = JSON.parse(localStorage.getItem(this.localStorageItemName));
     } else {
       for (let i = 0; i < this.questions.length; i++) {
         const questionID = this.questions[i].id;
@@ -68,13 +66,9 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   getMyNoteTaker() {
     const userId = this.activityState.your_identity.id;
     const myGroupFellows = this.getPeopleFromMyGroup();
-    console.log(myGroupFellows);
     for (let i = 0; i < this.act.casestudyuser_set.length; i++) {
       const casestudyuser = this.act.casestudyuser_set[i];
-      if (
-        myGroupFellows.includes(casestudyuser.benjiuser_id) &&
-        casestudyuser.role === 'Note Taker'
-      ) {
+      if (myGroupFellows.includes(casestudyuser.benjiuser_id) && casestudyuser.role === 'Note Taker') {
         return casestudyuser;
       }
     }
@@ -138,17 +132,11 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   doneTyping(submitCaseStudyDone?) {
     const casestudysubmissionentry_set = [];
     this.questions.forEach((q) => {
-      console.log(q.answer);
-      const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(
-        q.id,
-        q.answer
-      );
+      const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(q.id, q.answer);
       casestudysubmissionentry_set.push(caseStudySubmitEventEntry);
     });
 
-    this.sendMessage.emit(
-      new CaseStudySaveFormEvent(casestudysubmissionentry_set)
-    );
+    this.sendMessage.emit(new CaseStudySaveFormEvent(casestudysubmissionentry_set));
     localStorage.removeItem(this.localStorageItemName);
     if (submitCaseStudyDone) {
       submitCaseStudyDone();

@@ -63,7 +63,7 @@ export class ActivityContentComponent implements OnInit {
     //   },
     //   { ...act, activity_type: act.activity_id },
     // ];
-    // this.store.dispatch(new fromStore.SaveLesson(lesson));
+    this.store.dispatch(new fromStore.AddActivityContent($event));
   }
 
   getQuestions(fields, activity) {
@@ -77,7 +77,7 @@ export class ActivityContentComponent implements OnInit {
       } else if (field.type === FieldTypes.boolean) {
         questions1.push(this.getBooleanField(field));
       } else if (field.type === FieldTypes.emoji) {
-        questions1.push(this.getEmojiField(field));
+        // questions1.push(this.getEmojiField(field));
       }
     });
     const dropdown = new DropdownQuestion({
@@ -92,22 +92,6 @@ export class ActivityContentComponent implements OnInit {
       order: 3,
     });
 
-    const tb = new TextboxQuestion({
-      key: 'firstName',
-      label: 'First name',
-      value: 'Bombasto',
-      required: true,
-      order: 1,
-    });
-
-    const tb_1 = new TextboxQuestion({
-      key: 'emailAddress',
-      label: 'Email',
-      type: 'email',
-      order: 2,
-    });
-    const questions: QuestionBase<string>[] = [dropdown, tb];
-
     return of(questions1.sort((a, b) => a.order - b.order));
   }
 
@@ -116,7 +100,7 @@ export class ActivityContentComponent implements OnInit {
       return new TextboxQuestion({
         key: 'activity_id',
         label: 'Activity ID',
-        value: activity.activity.displayName,
+        value: activity.activity.displayName + '_' + activity.id,
         readonly: true,
         required: false,
         order: 1,
@@ -129,6 +113,8 @@ export class ActivityContentComponent implements OnInit {
         required: false,
         order: 2,
       });
+    } else if (field.id === 'title_emoji') {
+      return this.getEmojiField(field);
     } else {
       return new TextboxQuestion({
         key: field.id,

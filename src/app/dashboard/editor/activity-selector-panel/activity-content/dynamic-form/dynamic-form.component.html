@@ -1,5 +1,5 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form [formGroup]="form" (keyup)="typingStoped($event)" (keydown)="typingStarted()">
     <div *ngFor="let question of questions" class="form-row">
       <benji-dynamic-form-question [question]="question" [form]="form"></benji-dynamic-form-question>
     </div>

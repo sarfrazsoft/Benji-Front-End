@@ -15,6 +15,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() questions: QuestionBase<string>[] = [];
   form: FormGroup;
   payLoad = '';
+  typingTimer;
   @Output() submitActivityValues = new EventEmitter();
 
   constructor(private qcs: QuestionControlService, private store: Store<fromStore.EditorState>) {}
@@ -23,7 +24,7 @@ export class DynamicFormComponent implements OnInit {
     this.form = this.qcs.toFormGroup(this.questions);
   }
 
-  onSubmit() {
+  submit() {
     // we are going to update this activity to Overview panel
     // we'll need to know which activity is it corresponding to the overview panel activities.
 
@@ -31,4 +32,20 @@ export class DynamicFormComponent implements OnInit {
     const act = this.form.getRawValue();
     this.submitActivityValues.emit(act);
   }
+
+  // on keyup, start the countdown
+  typingStoped(event) {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.submit();
+    }, 1500);
+  }
+
+  // on keydown, clear the countdown
+  typingStarted() {
+    clearTimeout(this.typingTimer);
+  }
+  // doneTyping(submitCaseStudyDone?) {
+  //     submitCaseStudyDone();
+  // }
 }

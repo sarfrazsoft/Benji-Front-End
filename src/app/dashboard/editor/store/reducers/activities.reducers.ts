@@ -112,6 +112,25 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       break;
     }
 
+    case fromActivities.ADD_ACTIVITY_CONTENT: {
+      const content = action.payload;
+      let lessonActivity = {};
+      if (state.selectedLessonActivity) {
+        const x = state.selectedLessonActivity;
+        lessonActivity = {
+          ...state.lessonActivities[x],
+          content,
+        };
+      }
+      return {
+        ...state,
+        lessonActivities: {
+          ...state.lessonActivities,
+          [state.selectedLessonActivity]: lessonActivity,
+        },
+      };
+    }
+
     case fromActivities.ADD_EMPTY_LESSON_ACTIVITY: {
       const newIndex = new Date().getTime();
       const noOfActivities = Object.keys(state.lessonActivities).length;

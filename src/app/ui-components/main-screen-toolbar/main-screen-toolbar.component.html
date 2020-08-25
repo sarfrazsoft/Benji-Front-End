@@ -17,29 +17,18 @@
             Share
           </span>
         </div>
-        <mat-menu
-          #menu="matMenu"
-          class="share-ms-links"
-          [overlapTrigger]="false"
-          xPosition="before"
-        >
+        <mat-menu #menu="matMenu" class="share-ms-links" [overlapTrigger]="false" xPosition="before">
           <div class="menu-section info" benji-click-stop-propagation>
             <div class="link-container">
               <div fxLayout="row" fxLayoutAlign="space-between">
                 <div>
                   Facilitator link
                 </div>
-                <div
-                  class="primary-color copy-button"
-                  (click)="copyMessage(shareFacilitatorLink)"
-                >
+                <div class="primary-color copy-button" (click)="copyMessage(shareFacilitatorLink)">
                   copy
                 </div>
               </div>
-              <div
-                class="share-link bg-secondary-color-lighter"
-                fxLayoutAlign="start center"
-              >
+              <div class="share-link bg-secondary-color-lighter" fxLayoutAlign="start center">
                 <span>
                   {{ shareFacilitatorLink }}
                 </span>
@@ -50,17 +39,11 @@
                 <div>
                   Participant link
                 </div>
-                <div
-                  class="primary-color copy-button"
-                  (click)="copyMessage(shareParticipantLink)"
-                >
+                <div class="primary-color copy-button" (click)="copyMessage(shareParticipantLink)">
                   copy
                 </div>
               </div>
-              <div
-                class="share-link bg-secondary-color-lighter"
-                fxLayoutAlign="start center"
-              >
+              <div class="share-link bg-secondary-color-lighter" fxLayoutAlign="start center">
                 <span>
                   {{ shareParticipantLink }}
                 </span>
@@ -71,12 +54,8 @@
         </mat-menu>
       </div>
       <div (click)="toggleFullscreen()" class="fullscreen-container">
-        <mat-icon *ngIf="!isFullscreen()" class="icon-white"
-          >fullscreen</mat-icon
-        >
-        <mat-icon *ngIf="isFullscreen()" class="icon-white"
-          >fullscreen_exit</mat-icon
-        >
+        <mat-icon *ngIf="!isFullscreen()" class="icon-white">fullscreen</mat-icon>
+        <mat-icon *ngIf="isFullscreen()" class="icon-white">fullscreen_exit</mat-icon>
         <span> Fullscreen </span>
       </div>
     </div>

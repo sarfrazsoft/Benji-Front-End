@@ -4,6 +4,7 @@ import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { UtilsService } from 'src/app/services/utils.service';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
-    protected matSnackBar: MatSnackBar
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit() {
@@ -38,27 +39,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   copyMessage(val: string) {
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    this.openSnackBar('copied to clipboard', '');
+    this.utilsService.copyToClipboard(val);
   }
 
   ngOnChanges() {
     const as = this.activityState;
     if (as) {
-      if (
-        as.activity_type === this.at.brainStorm ||
-        as.activity_type === this.at.title
-      ) {
+      if (as.activity_type === this.at.brainStorm || as.activity_type === this.at.title) {
         if (as.activity_type === this.at.title) {
           if (as.titleactivity.hide_timer) {
             this.showTimer = false;
@@ -89,12 +76,5 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   isFullscreen() {
     return this.layoutService.isFullscreen;
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.matSnackBar.open(message, action, {
-      duration: 5000,
-      panelClass: ['bg-success-color', 'white-color', 'simple-snack-bar'],
-    });
   }
 }

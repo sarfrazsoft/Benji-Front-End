@@ -65,6 +65,14 @@ export class SelectActivityType implements Action {
   constructor(public payload: number) {}
 }
 
+// Content added to selected activity under 'Content' tab in activity selector panel
+export const ADD_ACTIVITY_CONTENT = '[Selector Panel] Content added to activity under Content tab';
+
+export class AddActivityContent implements Action {
+  readonly type = ADD_ACTIVITY_CONTENT;
+  constructor(public payload: any) {}
+}
+
 // Save lesson
 export const SAVE_LESSON = '[Editor] Save lesson';
 export const SAVE_LESSON_SUCCESS = '[Editor] Save lesson success';
@@ -107,4 +115,5 @@ export type ActivitiesAction =
   | SelectLessonActivity
   | ActivityHovered
   | ActivityHoverEnd
-  | SelectActivityType;
+  | SelectActivityType
+  | AddActivityContent;
