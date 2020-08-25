@@ -4,8 +4,4 @@ import { InfiniteScrollerDirective } from './infinite-scroller/infinite-scroller
 
 export { ClickStopPropagationDirective, InfiniteScrollerDirective };
 
-export const Directives = [
-  ClickStopPropagationDirective,
-  HasPermissionDirective,
-  InfiniteScrollerDirective
-];
+export const Directives = [ClickStopPropagationDirective, HasPermissionDirective, InfiniteScrollerDirective];

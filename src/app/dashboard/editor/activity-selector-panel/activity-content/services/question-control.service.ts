@@ -10,8 +10,8 @@ export class QuestionControlService {
 
     questions.forEach((question) => {
       group[question.key] = question.required
-        ? new FormControl(question.value || '', Validators.required)
-        : new FormControl(question.value || '');
+        ? new FormControl(question.value, Validators.required)
+        : new FormControl(question.value);
     });
     return new FormGroup(group);
   }
@@ -62,6 +62,7 @@ export class TextboxQuestion extends QuestionBase<string> {
 
 export class EmojiQuestion extends QuestionBase<string> {
   controlType = 'emoji';
+  type = 'hidden';
 }
 
 export class TimeQuestion extends QuestionBase<number> {
@@ -70,4 +71,9 @@ export class TimeQuestion extends QuestionBase<number> {
 
 export class DropdownQuestion extends QuestionBase<string> {
   controlType = 'dropdown';
+}
+
+export class CheckboxQuestion extends QuestionBase<boolean> {
+  controlType = 'checkbox';
+  type = 'checkbox';
 }

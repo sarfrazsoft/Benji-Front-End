@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { clone } from 'lodash';
@@ -97,11 +89,11 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       if (this.activityState.activity_type === this.at.brainStorm) {
         const act = this.activityState.brainstormactivity;
         if (!act.submission_complete) {
-          this.socketMessage.emit(
-            new BrainstormSubmissionCompleteInternalEvent()
-          );
-        } else {
+          this.socketMessage.emit(new BrainstormSubmissionCompleteInternalEvent());
+        } else if (!act.voting_complete) {
           this.socketMessage.emit(new BrainstormVotingCompleteInternalEvent());
+        } else {
+          this.socketMessage.emit(new FastForwardEvent());
         }
       } else {
         this.socketMessage.emit(new FastForwardEvent());
@@ -116,12 +108,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   deleteUser(p: User) {
-    const msg =
-      'Are you sure you want to delete ' +
-      p.first_name +
-      ' ' +
-      p.last_name +
-      '?';
+    const msg = 'Are you sure you want to delete ' + p.first_name + ' ' + p.last_name + '?';
     this.dialogRef = this.dialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -165,20 +152,18 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     const code = this.activityState.lesson_run.lessonrun_code;
     this.pastActivities = [];
     this.noActivitiesToShow = false;
-    this.pastSessionsService
-      .getLessonsActivities(code)
-      .subscribe((res: any) => {
-        res = res.filter((x) => x.facilitation_status === 'ended');
-        res = res.filter(
-          (x) => x.activity_type === this.at.brainStorm
-          // x.activity_type === this.at.mcq ||
-          // x.activity_type === this.at.mcqResults
-        );
-        this.pastActivities = res;
-        if (this.pastActivities.length === 0) {
-          this.noActivitiesToShow = true;
-        }
-      });
+    this.pastSessionsService.getLessonsActivities(code).subscribe((res: any) => {
+      res = res.filter((x) => x.facilitation_status === 'ended');
+      res = res.filter(
+        (x) => x.activity_type === this.at.brainStorm
+        // x.activity_type === this.at.mcq ||
+        // x.activity_type === this.at.mcqResults
+      );
+      this.pastActivities = res;
+      if (this.pastActivities.length === 0) {
+        this.noActivitiesToShow = true;
+      }
+    });
     // /api/course_details/lesson_run/{lessonrun_code}/activities/
   }
 }
@@ -216,8 +201,7 @@ export const acts = [
       {
         id: 3045,
         question_type: 'rating_agreedisagree',
-        question_text:
-          'I know how to apply behaviour science principles to my work.',
+        question_text: 'I know how to apply behaviour science principles to my work.',
         is_combo: true,
         combo_text: 'Why did you provide your answer above?',
       },
@@ -233,8 +217,7 @@ export const acts = [
     titlecomponent: {
       title_image: 'emoji://memo',
       title: 'Pre-assessment.',
-      screen_instructions:
-        'Let’s check-in on your understanding of the INSURE ME model before we begin.',
+      screen_instructions: 'Let’s check-in on your understanding of the INSURE ME model before we begin.',
       participant_instructions:
         'Let’s check-in on your understanding of the INSURE ME model before we begin.',
     },
@@ -347,12 +330,10 @@ export const acts = [
     auto_next: true,
     run_number: 0,
     activity_seconds: 200,
-    note_taker_instructions:
-      'Fill out the form below and press the submit button',
+    note_taker_instructions: 'Fill out the form below and press the submit button',
     participant_instructions: 'Work with the note-taker to complete your form',
     activity_title: 'Case Study',
-    mainscreen_instructions:
-      'Work with your group to fill out the worksheet. Click submit when done.',
+    mainscreen_instructions: 'Work with your group to fill out the worksheet. Click submit when done.',
     case_study_details:
       'After reviewing the application form, discuss with your group and have the note-take jot down your ideas in the below forms.',
     polymorphic_ctype: 153,
@@ -437,12 +418,10 @@ export const acts = [
     auto_next: true,
     run_number: 0,
     activity_seconds: 200,
-    note_taker_instructions:
-      'Fill out the form below and press the submit button',
+    note_taker_instructions: 'Fill out the form below and press the submit button',
     participant_instructions: 'Work with the note-taker to complete your form',
     activity_title: 'Case Study',
-    mainscreen_instructions:
-      'Work with your group to fill out the worksheet. Click submit when done.',
+    mainscreen_instructions: 'Work with your group to fill out the worksheet. Click submit when done.',
     case_study_details: 'Provide all the details you want them to have.',
     polymorphic_ctype: 153,
     next_activity: null,
@@ -494,8 +473,7 @@ export const acts = [
         {
           id: 2753,
           order: 2,
-          choice_text:
-            'The group reminded they were bankers cheated half as much',
+          choice_text: 'The group reminded they were bankers cheated half as much',
           is_correct: false,
           explanation: 'not correct',
         },
@@ -647,8 +625,7 @@ export const acts = [
     facilitation_status: 'not_started',
     question: {
       id: 683,
-      question:
-        'What percentage of people fail to declare the extent of their tobacco usage?',
+      question: 'What percentage of people fail to declare the extent of their tobacco usage?',
       mcqchoice_set: [
         {
           id: 2751,
@@ -811,8 +788,7 @@ export const acts = [
       {
         id: 3047,
         question_type: 'rating_agreedisagree',
-        question_text:
-          'I know how to apply behaviour science principles to my work.',
+        question_text: 'I know how to apply behaviour science principles to my work.',
         is_combo: true,
         combo_text: 'Why did you provide your answer above?',
       },
@@ -828,8 +804,7 @@ export const acts = [
     titlecomponent: {
       title_image: 'emoji://memo',
       title: 'Post-assessment',
-      screen_instructions:
-        'Let’s check-in now on your understanding of the INSURE ME model before we begin.',
+      screen_instructions: 'Let’s check-in now on your understanding of the INSURE ME model before we begin.',
       participant_instructions:
         'Let’s check-in now on your understanding of the INSURE ME model before we begin.',
     },

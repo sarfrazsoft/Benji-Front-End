@@ -7,6 +7,7 @@ import { EditorRoutes } from './editor.routing';
 import { EditorComponents, EditorEntryComponents, EditorProviders } from './index';
 
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { effects, reducers } from './store';
@@ -19,6 +20,7 @@ import { effects, reducers } from './store';
     ReactiveFormsModule,
     SharedModule,
     PickerModule,
+    EmojiModule,
     StoreModule.forFeature('editor', reducers),
     EffectsModule.forFeature(effects),
   ],

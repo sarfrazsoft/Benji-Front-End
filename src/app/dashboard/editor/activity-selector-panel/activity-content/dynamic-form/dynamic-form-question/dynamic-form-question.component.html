@@ -21,9 +21,30 @@
       [type]="question.type"
     />
 
+    <mat-checkbox
+      *ngSwitchCase="'checkbox'"
+      [formControlName]="question.key"
+      [id]="question.key"
+      [checked]="question.value"
+      >{{ question.key }}</mat-checkbox
+    >
+
     <div *ngSwitchCase="'emoji'">
       <input [formControlName]="question.key" [id]="question.key" [type]="question.type" />
-      <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart>
+      <ngx-emoji [emoji]="selectedEmoji" size="16"></ngx-emoji>
+      <button *ngIf="showemoji" (click)="showemoji = !showemoji">Close <mat-icon> clear</mat-icon></button>
+
+      <button *ngIf="!showemoji" (click)="showemoji = !showemoji">Select emoji</button>
+      <div sytle="position:relative">
+        <emoji-mart
+          *ngIf="showemoji"
+          (emojiClick)="addEmoji($event, question.key)"
+          title="Pick your emoji…"
+          set="twitter"
+          emoji="point_up"
+          [style]="{ position: 'absolute' }"
+        ></emoji-mart>
+      </div>
     </div>
   </div>
 

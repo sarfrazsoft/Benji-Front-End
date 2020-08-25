@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
 import {
+  CheckboxQuestion,
   DropdownQuestion,
   EmojiQuestion,
   QuestionBase,
@@ -52,21 +53,31 @@ export class ActivityContentComponent implements OnInit {
     );
   }
 
+  saveValues($event) {
+    console.log($event);
+    // const lesson = [
+    //   {
+    //     activity_type: 'LobbyActivity',
+    //     activity_id: 'lobby1',
+    //     description: 'hello world',
+    //   },
+    //   { ...act, activity_type: act.activity_id },
+    // ];
+    // this.store.dispatch(new fromStore.SaveLesson(lesson));
+  }
+
   getQuestions(fields, activity) {
     const questions1: QuestionBase<string>[] = [];
     console.log(fields, activity);
     fields.forEach((field) => {
       if (field.type === FieldTypes.string) {
-        const f = this.getStringField(field, activity);
-        questions1.push(f);
+        questions1.push(this.getStringField(field, activity));
       } else if (field.type === FieldTypes.number) {
-        const f = this.getNumberField(field);
-        questions1.push(f);
+        questions1.push(this.getNumberField(field));
       } else if (field.type === FieldTypes.boolean) {
-        const f = this.getBooleanField(field);
+        questions1.push(this.getBooleanField(field));
       } else if (field.type === FieldTypes.emoji) {
-        const f = this.getEmojiField(field);
-        questions1.push(f);
+        questions1.push(this.getEmojiField(field));
       }
     });
     const dropdown = new DropdownQuestion({
@@ -141,13 +152,23 @@ export class ActivityContentComponent implements OnInit {
   }
 
   getBooleanField(field): any {
-    return new TextboxQuestion({
-      key: field.id,
-      label: field.id,
-      value: '',
-      required: field.required,
-      order: 3,
-    });
+    if (field.id === 'auto_next') {
+      return new CheckboxQuestion({
+        key: field.id,
+        label: field.id,
+        value: true,
+        required: field.required,
+        order: 3,
+      });
+    } else if (field.id === 'hide_timer') {
+      return new CheckboxQuestion({
+        key: field.id,
+        label: field.id,
+        value: false,
+        required: field.required,
+        order: 3,
+      });
+    }
   }
 
   getEmojiField(field): any {
