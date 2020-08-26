@@ -13,6 +13,9 @@ export interface ActivityState {
   lessonActivities: { [id: number]: any };
   // id of the selected lesson activity
   selectedLessonActivity: number;
+
+  // exclude these activities from all possible activities
+  excludedActivities: Array<any>;
   loaded: boolean;
   loading: boolean;
 }
@@ -22,6 +25,26 @@ export const initialState = {
   selectedPossibleActivity: null,
   lessonActivities: {},
   selectedLessonActivity: null,
+  excludedActivities: [
+    'GatherActivity',
+    'HintWordActivity',
+    'WhereDoYouStandActivity',
+    'BrainstormActivity',
+    'GenericRoleplayActivity',
+    'RoleplayPairActivity',
+    'DiscussionActivity',
+    'CaseStudyActivity',
+    'GroupingActivity',
+    'PairGroupingActivity',
+    'TriadGroupingActivity',
+    'ExternalGroupingActivity',
+    'BuildAPitchActivity',
+    'PitchoMaticActivity',
+    'MCQActivity',
+    'MCQResultsActivity',
+    'FeedbackActivity',
+    'MontyHallActivity',
+  ],
   loaded: false,
   loading: false,
 };
@@ -34,20 +57,19 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     }
     case fromActivities.LOAD_ALL_POSSIBLE_ACTIVITIES_SUCCESS: {
       const activities = action.payload;
-      let i = 0;
       const arr = [];
       for (const key in activities) {
         if (activities.hasOwnProperty(key)) {
-          const actProperties = activities[key];
-
-          const x = {
-            fields: actProperties.fields,
-            id: key,
-            displayName: key,
-            thumbnail: actProperties.thumbnail,
-          };
-          arr.push(x);
-          i++;
+          if (!state.excludedActivities.includes(key)) {
+            const actProperties = activities[key];
+            const x = {
+              fields: actProperties.fields,
+              id: key,
+              displayName: key,
+              thumbnail: actProperties.thumbnail,
+            };
+            arr.push(x);
+          }
         }
       }
 
@@ -132,17 +154,31 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     }
 
     case fromActivities.ADD_EMPTY_LESSON_ACTIVITY: {
+      // Creating the new lesson activity and adding to exiting
       const newIndex = new Date().getTime();
       const noOfActivities = Object.keys(state.lessonActivities).length;
-
-      const lessonActivities = {
+      let lessonActivities = {
         ...state.lessonActivities,
         [newIndex]: { id: newIndex, empty: true, selected: false, order: noOfActivities + 1 },
       };
 
+      // Selecting the new lesson activity and unselect the previous selected activity
+      lessonActivities = {
+        ...state.lessonActivities,
+        [newIndex]: { ...state.lessonActivities[newIndex], selected: true },
+      };
+      const previousSelectedId = state.selectedLessonActivity;
+      if (previousSelectedId && previousSelectedId !== newIndex) {
+        lessonActivities = {
+          ...lessonActivities,
+          [previousSelectedId]: { ...lessonActivities[previousSelectedId], selected: false },
+        };
+      }
+
       return {
         ...state,
         lessonActivities,
+        selectedLessonActivity: newIndex,
       };
     }
 
