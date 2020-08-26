@@ -17,7 +17,8 @@ export const getAllPossibleActivities = createSelector(getPossibleActivities, (e
 export const getLessonActivities = createSelector(getActivitiesState, fromPizzas.getLessonActivities);
 
 export const getAllLessonActivities = createSelector(getLessonActivities, (entities) => {
-  return Object.keys(entities).map((id) => entities[parseInt(id, 10)]);
+  const acts = Object.keys(entities).map((id) => entities[parseInt(id, 10)]);
+  return acts.sort((a, b) => a.order - b.order);
 });
 
 export const getSelectedLessonActivity = createSelector(getActivitiesState, (state) => {

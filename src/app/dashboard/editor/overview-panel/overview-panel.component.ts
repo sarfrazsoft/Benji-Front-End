@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -25,5 +26,10 @@ export class OverviewPanelComponent implements OnInit {
 
   deleteActivity(activityId) {
     this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    this.store.dispatch(new fromStore.ReorderLessonActivities(event.container.data));
   }
 }

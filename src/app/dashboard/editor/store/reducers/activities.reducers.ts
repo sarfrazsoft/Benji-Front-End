@@ -137,7 +137,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
       const lessonActivities = {
         ...state.lessonActivities,
-        [newIndex]: { id: newIndex, empty: true, selected: false },
+        [newIndex]: { id: newIndex, empty: true, selected: false, order: noOfActivities + 1 },
       };
 
       return {
@@ -154,6 +154,33 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       return {
         ...state,
         lessonActivities,
+      };
+    }
+
+    case fromActivities.REORDER_LESSON_ACTIVITIES: {
+      const newOrderActs = action.payload;
+      const orderedActs = [];
+      for (let i = 0; i < newOrderActs.length; i++) {
+        orderedActs.push({ ...newOrderActs[i], order: i + 1 });
+      }
+
+      const flattendObjects = orderedActs.reduce(
+        (entities: { [id: number]: Activity }, activity: Activity) => {
+          return {
+            ...entities,
+            [activity.id]: activity,
+          };
+        },
+        {
+          ...state.lessonActivities,
+        }
+      );
+
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        lessonActivities: flattendObjects,
       };
     }
 
@@ -270,3 +297,47 @@ export const getSelectedLessonActivity = (state: ActivityState) => state.selecte
 //     },
 //   };
 // }
+
+// const array = action.payload.arr;
+// const from = clamp(action.payload.previousIndex, array.length - 1);
+// const to = clamp(action.payload.currentIndex, array.length - 1);
+
+// if (from === to) {
+//   return;
+// }
+
+// const target = array[from];
+// const delta = to < from ? -1 : 1;
+
+// for (let i = from; i !== to; i += delta) {
+//   array[i] = array[i + delta];
+// }
+
+// array[to] = target;
+
+// console.log(array);
+
+// const orderedActs = [];
+// for (let i = 0; i < orderedActs.length; i++) {
+//   orderedActs.push({ order: i + 1, ...array[i] });
+//   console.log({ order: i + 1, ...array[i] });
+// }
+
+// const flattendObjects = orderedActs.reduce(
+//   (entities: { [id: number]: Activity }, activity: Activity) => {
+//     return {
+//       ...entities,
+//       [activity.id]: activity,
+//     };
+//   },
+//   {
+//     ...state.lessonActivities,
+//   }
+// );
+
+// return {
+//   ...state,
+//   loading: false,
+//   loaded: true,
+//   lessonActivities: flattendObjects,
+// };

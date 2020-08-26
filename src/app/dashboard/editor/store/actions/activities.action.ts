@@ -40,8 +40,9 @@ export class LoadLessonActivitiesSuccess implements Action {
 
 // Add empty activity to lesson activities
 export const ADD_EMPTY_LESSON_ACTIVITY = '[Overview panel] Add empty lesson Activity';
-export const REMOVE_LESSON_ACTIVITY = '[Overview panel] Delete lesson Activity';
-export const SELECT_LESSON_ACTIVITY = '[Overview panel] Select lesson Activity';
+export const REMOVE_LESSON_ACTIVITY = '[Overview panel] Delete lesson activity';
+export const SELECT_LESSON_ACTIVITY = '[Overview panel] Select lesson activity';
+export const REORDER_LESSON_ACTIVITIES = '[Overview panel] Re-order lesson activities after sorting';
 
 export class AddEmptyLessonActivity implements Action {
   readonly type = ADD_EMPTY_LESSON_ACTIVITY;
@@ -55,6 +56,11 @@ export class RemoveLessonActivity implements Action {
 export class SelectLessonActivity implements Action {
   readonly type = SELECT_LESSON_ACTIVITY;
   constructor(public payload: number) {}
+}
+
+export class ReorderLessonActivities implements Action {
+  readonly type = REORDER_LESSON_ACTIVITIES;
+  constructor(public payload: any) {}
 }
 
 // Activity selected under 'Type' tab in activity selector panel
@@ -113,6 +119,7 @@ export type ActivitiesAction =
   | AddEmptyLessonActivity
   | RemoveLessonActivity
   | SelectLessonActivity
+  | ReorderLessonActivities
   | ActivityHovered
   | ActivityHoverEnd
   | SelectActivityType

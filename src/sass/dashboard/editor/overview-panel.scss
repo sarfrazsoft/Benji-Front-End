@@ -8,6 +8,7 @@ benji-overview-panel {
       margin: 10px;
       .activity-container {
         margin: 5px;
+        display: flex;
         &.active {
           background-color: yellowgreen;
         }

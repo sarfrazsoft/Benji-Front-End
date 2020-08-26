@@ -1,5 +1,10 @@
 <div class="panel" fxLayout="column">
-  <div class="activity-list">
+  <div
+    class="activity-list"
+    cdkDropList
+    [cdkDropListData]="lessonActivities$ | async"
+    (cdkDropListDropped)="drop($event)"
+  >
     <div
       class="activity-container"
       fxLayout="row"
@@ -8,6 +13,8 @@
       [ngClass]="{
         active: act.selected
       }"
+      cdkDrag
+      cdkDragBoundary=".activity-list"
     >
       <div class="index">{{ i + 1 }}</div>
       <div class="activity">
