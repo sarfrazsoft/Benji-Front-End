@@ -26,7 +26,8 @@ import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/im
   templateUrl: './brainstorming-activity.component.html',
   styleUrls: ['./brainstorming-activity.component.scss'],
 })
-export class MainScreenBrainstormingActivityComponent extends BaseActivityComponent
+export class MainScreenBrainstormingActivityComponent
+  extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @ViewChild('colName', { static: false }) colNameElement: ElementRef;
   @Input() peakBackState = false;
@@ -117,6 +118,7 @@ export class MainScreenBrainstormingActivityComponent extends BaseActivityCompon
   ngOnChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = this.activityState.brainstormactivity;
+    this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
     this.joinedUsers = this.activityState.lesson_run.joined_users;
     this.ideas = [];
     act.brainstormcategory_set.forEach((category) => {
