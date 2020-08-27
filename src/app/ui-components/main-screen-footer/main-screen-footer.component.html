@@ -24,7 +24,7 @@
           <mat-icon class="icon-white">fast_forward</mat-icon>
         </button>
       </ng-container>
-      <button (click)="controlClicked('next')">
+      <button *ngIf="showSkip" (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
       </button>
     </ng-container>
@@ -50,11 +50,7 @@
                 (click)="redoAct(p)"
               >
                 <span>
-                  {{
-                    p.activity_type.replace("Activity", "") +
-                      ": " +
-                      p.description
-                  }}
+                  {{ p.activity_type.replace('Activity', '') + ': ' + p.description }}
                 </span>
               </div>
               <div
@@ -64,11 +60,7 @@
               >
                 <mat-spinner></mat-spinner>
               </div>
-              <div
-                *ngIf="noActivitiesToShow"
-                class="redo-act-item-loader"
-                fxLayoutAlign="start center"
-              >
+              <div *ngIf="noActivitiesToShow" class="redo-act-item-loader" fxLayoutAlign="start center">
                 no activities to peakback to
               </div>
             </ng-template>
@@ -87,7 +79,7 @@
               *ngFor="let p of participants"
             >
               <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
-              <span fxFlex="90%">{{ p.first_name + " " + p.last_name }}</span>
+              <span fxFlex="90%">{{ p.first_name + ' ' + p.last_name }}</span>
             </div>
           </mat-menu>
         </div>
@@ -104,7 +96,7 @@
     <div class="session-info" fxLayout="row" fxLayoutGap="10px">
       <div fxLayoutAlign="center center">
         <p>
-          {{ disableControls ? "" : "|" }} {{ lessonName }} | ROOM CODE:
+          {{ disableControls ? '' : '|' }} {{ lessonName }} | ROOM CODE:
           {{ roomCode }}
         </p>
       </div>

@@ -2,12 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
-import {
-  AuthService,
-  BackendRestService,
-  BackendSocketService,
-  ContextService,
-} from 'src/app/services';
+import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -15,8 +10,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
   templateUrl: './main-screen-lesson.component.html',
   styleUrls: ['./main-screen-lesson.component.scss'],
 })
-export class MainScreenLessonComponent extends BaseLessonComponent
-  implements OnInit {
+export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   at: typeof ActivityTypes = ActivityTypes;
   constructor(
     protected restService: BackendRestService,
@@ -52,4 +46,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent
     this.at.brainStorm,
     this.at.montyHall,
   ];
+
+  isLastActivity() {
+    return !this.serverMessage.base_activity.next_activity;
+  }
 }

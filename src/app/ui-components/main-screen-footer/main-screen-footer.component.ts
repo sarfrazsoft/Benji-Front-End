@@ -32,6 +32,7 @@ import { VideoStateService } from '../../services/video-state.service';
 export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() showFastForward: boolean;
+  @Input() showSkip: boolean;
   @Input() showFooter: boolean;
   @Input() lessonName: string;
   @Input() roomCode: string;
