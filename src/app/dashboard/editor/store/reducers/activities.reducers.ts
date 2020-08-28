@@ -26,6 +26,7 @@ export const initialState = {
   lessonActivities: {},
   selectedLessonActivity: null,
   excludedActivities: [
+    'LobbyActivity',
     'GatherActivity',
     'HintWordActivity',
     'WhereDoYouStandActivity',
@@ -159,14 +160,10 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       const noOfActivities = Object.keys(state.lessonActivities).length;
       let lessonActivities = {
         ...state.lessonActivities,
-        [newIndex]: { id: newIndex, empty: true, selected: false, order: noOfActivities + 1 },
+        [newIndex]: { id: newIndex, empty: true, selected: true, order: noOfActivities + 1 },
       };
 
       // Selecting the new lesson activity and unselect the previous selected activity
-      lessonActivities = {
-        ...state.lessonActivities,
-        [newIndex]: { ...state.lessonActivities[newIndex], selected: true },
-      };
       const previousSelectedId = state.selectedLessonActivity;
       if (previousSelectedId && previousSelectedId !== newIndex) {
         lessonActivities = {

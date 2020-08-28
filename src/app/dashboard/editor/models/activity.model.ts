@@ -16,4 +16,5 @@ export enum FieldTypes {
   number = 'int',
   boolean = 'bool',
   emoji = 'emoji',
+  url = 'url',
 }

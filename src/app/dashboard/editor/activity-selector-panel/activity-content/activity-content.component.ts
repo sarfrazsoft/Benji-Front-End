@@ -36,16 +36,9 @@ export class ActivityContentComponent implements OnInit {
 
     this.fields$ = this.store.select(fromStore.getSelectedLessonActivityFields);
 
-    // this.activity$.subscribe((x) => console.log(x));
-
-    this.fields$.subscribe((x) => {
-      if (x) {
-      }
-    });
-
     combineLatest(this.activity$, this.fields$, (activity, fields) => ({ activity, fields })).subscribe(
       (pair) => {
-        if (pair.fields && pair.activity) {
+        if (pair.fields && pair.activity.activity) {
           this.questions$ = this.getQuestions(pair.fields, pair.activity);
           this.showQuestions = true;
         }
@@ -70,7 +63,7 @@ export class ActivityContentComponent implements OnInit {
     const questions1: QuestionBase<string>[] = [];
     console.log(fields, activity);
     fields.forEach((field) => {
-      if (field.type === FieldTypes.string) {
+      if (field.type === FieldTypes.string || field.type === FieldTypes.url) {
         questions1.push(this.getStringField(field, activity));
       } else if (field.type === FieldTypes.number) {
         questions1.push(this.getNumberField(field));
@@ -100,7 +93,7 @@ export class ActivityContentComponent implements OnInit {
       return new TextboxQuestion({
         key: 'activity_id',
         label: 'Activity ID',
-        value: activity.activity.displayName + '_' + activity.id,
+        value: activity.activity.id + '_' + activity.id,
         readonly: true,
         required: false,
         order: 1,
@@ -109,7 +102,7 @@ export class ActivityContentComponent implements OnInit {
       return new TextboxQuestion({
         key: 'description',
         label: 'Description',
-        value: '',
+        value: activity.content ? activity.content['description'] : '',
         required: false,
         order: 2,
       });
@@ -119,7 +112,7 @@ export class ActivityContentComponent implements OnInit {
       return new TextboxQuestion({
         key: field.id,
         label: field.id,
-        value: '',
+        value: activity.content ? activity.content[field.id] : '',
         required: field.required,
         order: 3,
       });

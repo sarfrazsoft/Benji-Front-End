@@ -10,6 +10,7 @@ import {
 } from './utils';
 
 export interface BaseActivity {
+  next_activity: number;
   activity_id: string;
   description: string;
   start_time: string;

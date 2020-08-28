@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { QuestionBase, QuestionControlService } from '../services/question-control.service';
 
@@ -11,7 +11,7 @@ import * as fromStore from '../../../store';
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.scss'],
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnChanges {
   @Input() questions: QuestionBase<string>[] = [];
   form: FormGroup;
   payLoad = '';
@@ -20,7 +20,9 @@ export class DynamicFormComponent implements OnInit {
 
   constructor(private qcs: QuestionControlService, private store: Store<fromStore.EditorState>) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnChanges() {
     this.form = this.qcs.toFormGroup(this.questions);
   }
 

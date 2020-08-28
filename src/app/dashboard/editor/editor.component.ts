@@ -31,8 +31,10 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       const lessonId = paramMap.get('lessonId');
-      this.loadLessonActivities('lessonId');
       if (lessonId) {
+        this.loadLessonActivities('lessonId');
+      } else {
+        this.startNewLesson();
       }
     });
   }
@@ -64,6 +66,11 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   loadLessonActivities(lessonId) {
     this.store.dispatch(new fromStore.LoadLessonActivites(lessonId));
+  }
+
+  startNewLesson() {
+    this.store.dispatch(new fromStore.AddEmptyLessonActivity());
+    // this.store.dispatch(new fromStore.AddLobbyActivity())
   }
 
   // saveLesson() {
