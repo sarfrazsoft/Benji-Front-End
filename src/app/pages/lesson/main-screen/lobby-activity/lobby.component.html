@@ -8,21 +8,14 @@
       </h1>
     </div>
     <div fxFlex="40%" fxLayoutAlign="end center">
-      <button
-        class="indigo-launch-button bg-primary-color-dark pn-700"
-        (click)="kickOffLesson()"
-      >
+      <button class="indigo-launch-button bg-primary-color-dark pn-700" (click)="kickOffLesson()">
         {{ startSessionLabel }}
         <mat-icon class="icon-white">arrow_forward</mat-icon>
       </button>
     </div>
   </div>
   <div fxFlex="1 0 0" fxLayout="row">
-    <div
-      class="bg-secondary-color-lightest"
-      fxFlex="50%"
-      fxLayoutAlign="center center"
-    >
+    <div class="bg-secondary-color-lightest" fxFlex="50%" fxLayoutAlign="center center">
       <div>
         <div class="activity-instructions">
           <p class="all-caps-title">Room Code</p>
@@ -40,30 +33,22 @@
       </div>
     </div>
     <div class="bg-white" fxFlex="50%">
-      <div
-        class="mainscreen-activity__column mainscreen-activity__column--25 joined-users"
-      >
+      <div class="mainscreen-activity__column mainscreen-activity__column--25 joined-users">
         <p class="all-caps-title">
-          <span
-            class="lobby-activity__participant-number primary-color-darkest"
-          >
-            {{ activityState.lesson_run.joined_users.length }}
+          <span class="lobby-activity__participant-number primary-color-darkest">
+            {{ activityState.lesson_run.participant_set.length }}
           </span>
-          {{
-            activityState.lesson_run.joined_users.length === 1
-              ? "Learner joined"
-              : "Learners joined"
-          }}
+          {{ activityState.lesson_run.participant_set.length === 1 ? 'Learner joined' : 'Learners joined' }}
         </p>
         <ul>
           <li
-            *ngFor="let participant of activityState.lesson_run.joined_users"
+            *ngFor="let participant of activityState.lesson_run.participant_set"
             class="primary-color-darkest"
             [ngClass]="{
-              'long-list': activityState.lesson_run.joined_users.length > 20
+              'long-list': activityState.lesson_run.participant_set.length > 20
             }"
           >
-            {{ participant.first_name }}
+            {{ participant.display_name }}
           </li>
         </ul>
       </div>

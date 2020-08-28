@@ -11,11 +11,7 @@ export class BackendSocketService {
   private sessionrunID;
   public socketData;
 
-  connectLessonSocket(
-    clientType,
-    roomCode,
-    userID?
-  ): Observable<ServerMessage> {
+  connectLessonSocket(clientType, roomCode, userID?): Observable<ServerMessage> {
     let uri = null;
     if (clientType === 'screen') {
       uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/screen/0/`;
@@ -30,9 +26,7 @@ export class BackendSocketService {
     if (this.sessionrunID === sessionrunID && this.subject) {
       return this.subject;
     } else {
-      this.subject = webSocket(
-        global.wsRoot + '/socketService/session/' + sessionrunID + '/'
-      );
+      this.subject = webSocket(global.wsRoot + '/socketService/session/' + sessionrunID + '/');
       this.sessionrunID = sessionrunID;
       return this.subject;
     }
@@ -50,12 +44,7 @@ export class BackendSocketService {
     this.subject = webSocket(`${global.wsRoot}${url}`);
   }
 
-  public getLessonSocket(
-    client,
-    lessonId?,
-    roomCode?,
-    id?
-  ): Observable<ServerMessage> {
+  public getLessonSocket(client, lessonId?, roomCode?, id?): Observable<ServerMessage> {
     if (client === 'screen' && !this.subject) {
       this.subject = webSocket(
         // `${global.wsRoot}/socketService/activityflow/id/${lessonId}/${client}/0/`
@@ -64,9 +53,7 @@ export class BackendSocketService {
       console.log('returning screen client observable');
       return this.subject;
     } else if (client === 'participant' && !this.subject) {
-      this.subject = webSocket(
-        `${global.wsRoot}/ws/activityflow/code/${roomCode}/${client}/${id}/`
-      );
+      this.subject = webSocket(`${global.wsRoot}/ws/activityflow/code/${roomCode}/${client}/${id}/`);
       return this.subject;
     } else if (client !== 'participant' && client !== 'screen') {
       this.handleSocketError(

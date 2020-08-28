@@ -31,12 +31,12 @@ export interface UpdateMessage {
   lesson: Lesson; // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson_run: LessonRun;
   base_activity: BaseActivity;
-  brainstormactivity: BrainstormActivity;
-  imageactivity: ImageActivity;
-  buildapitchactivity: BuildAPitchActivity;
-  casestudyactivity: CaseStudyActivity;
+  brainstormactivity?: BrainstormActivity;
+  imageactivity?: ImageActivity;
+  buildapitchactivity?: BuildAPitchActivity;
+  casestudyactivity?: CaseStudyActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
-  pitchomaticactivity: PitchoMaticActivity;
+  pitchomaticactivity?: PitchoMaticActivity;
   activity_type: string;
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
@@ -82,6 +82,18 @@ export interface ServerMessage {
   servernotification?: ServerNotification;
 }
 
+// export class Ddatemessage implements UpdateMessage {
+//   updateMessage;
+//   activity_type;
+//   base_activity;
+//   lesson_run;
+//   lesson;
+
+//   getActivity() {
+//     return this.updateMessage[this.activity_type.toLowerCase]
+//   }
+// }
+
 export class ActivityEvent {
   event_name = 'Event';
   extra_args = {};
@@ -110,11 +122,11 @@ export class PreviousEvent extends ActivityEvent {
   event_name = 'PreviousEvent';
 }
 
-export class BootUserEvent extends ActivityEvent {
-  event_name = 'BootUserEvent';
-  constructor(user_id) {
+export class BootParticipantEvent extends ActivityEvent {
+  event_name = 'BootParticipantEvent';
+  constructor(participant_code) {
     super();
-    this.extra_args = { user_id: user_id };
+    this.extra_args = { participant_code };
   }
 }
 

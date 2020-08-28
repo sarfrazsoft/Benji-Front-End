@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
+import { Ddatemessage } from 'src/app/services/backend/schema';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -48,6 +49,12 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
   ];
 
   isLastActivity() {
-    return !this.serverMessage.base_activity.next_activity;
+    const activity_type = this.serverMessage.activity_type.toLowerCase();
+    return !this.serverMessage[activity_type].next_activity;
+  }
+
+  isPaused() {
+    const activity_type = this.serverMessage.activity_type.toLowerCase();
+    return this.serverMessage[activity_type].is_paused;
   }
 }

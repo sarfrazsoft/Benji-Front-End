@@ -5,17 +5,8 @@ import { forkJoin } from 'rxjs';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
-import {
-  ActivityEvent,
-  ServerMessage,
-  UpdateMessage,
-  User,
-} from 'src/app/services/backend/schema';
-import {
-  Course,
-  Lesson,
-  LessonRun,
-} from 'src/app/services/backend/schema/course_details';
+import { ActivityEvent, ServerMessage, UpdateMessage, User } from 'src/app/services/backend/schema';
+import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 
 export class BaseLessonComponent implements OnInit {
   roomCode: number;
@@ -82,17 +73,16 @@ export class BaseLessonComponent implements OnInit {
   }
 
   initSocket() {
-    forkJoin([
-      this.restService.get_lessonrun(this.roomCode),
-      this.restService.get_own_identity(),
-    ]).subscribe(([lessonRun, identity]) => {
+    let details: Participant;
+    if (localStorage.getItem('participant')) {
+      details = JSON.parse(localStorage.getItem('participant'));
+    }
+    forkJoin([this.restService.get_lessonrun(this.roomCode)]).subscribe(([lessonRun]) => {
       this.lessonRun = lessonRun;
-      this.user = identity;
-      this.contextService.user = identity;
       this.socket = this.socketService.connectLessonSocket(
         this.clientType,
         this.lessonRun.lessonrun_code,
-        this.user.id
+        details ? details.participant_code : null
       );
       console.log('socket connected');
 
@@ -125,13 +115,15 @@ export class BaseLessonComponent implements OnInit {
 
   handleServerMessage(msg: ServerMessage) {
     if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
-      if (
-        this.serverMessage &&
-        this.serverMessage.base_activity.activity_id !==
-          msg.updatemessage.base_activity.activity_id
-      ) {
-        this.serverMessage = null;
-        this.ref.detectChanges();
+      if (this.serverMessage) {
+        const sMActivity_type = this.serverMessage.activity_type.toLowerCase();
+        const uMActivity_type = msg.updatemessage.activity_type.toLowerCase();
+        if (
+          this.serverMessage[sMActivity_type].activity_id !== msg.updatemessage[uMActivity_type].activity_id
+        ) {
+          this.serverMessage = null;
+          this.ref.detectChanges();
+        }
       }
       this.facilitatorConnected = true;
       this.serverMessage = msg.updatemessage;
@@ -145,10 +137,7 @@ export class BaseLessonComponent implements OnInit {
       }
     } else if (msg.servererror !== null && msg.servererror !== undefined) {
       console.log(msg);
-    } else if (
-      msg.servernotification !== null &&
-      msg.servernotification !== undefined
-    ) {
+    } else if (msg.servernotification !== null && msg.servernotification !== undefined) {
       console.log(msg);
       if (msg.servernotification) {
         const notify_type = msg.servernotification.notification_type;

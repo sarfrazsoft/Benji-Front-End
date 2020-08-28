@@ -5,10 +5,11 @@ import { clone } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
 import { PastSessionsService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
+import { Participant } from 'src/app/services/backend/schema/course_details';
 import { ConfirmationDialogComponent } from 'src/app/shared';
 import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs';
 import {
-  BootUserEvent,
+  BootParticipantEvent,
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormToggleCategoryModeEvent,
   BrainstormVotingCompleteInternalEvent,
@@ -39,7 +40,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() isPaused: boolean;
   @Input() disableControls: boolean;
 
-  participants: Array<User> = [];
+  participants: Array<Participant> = [];
   pastActivities: Array<any> = [];
   noActivitiesToShow = false;
   dialogRef;
@@ -63,7 +64,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     // }
     // this.actType = this.activityState.activity_type;
 
-    this.participants = this.activityState.lesson_run.joined_users;
+    this.participants = this.activityState.lesson_run.participant_set;
   }
 
   controlClicked(eventType) {
@@ -108,8 +109,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     // }
   }
 
-  deleteUser(p: User) {
-    const msg = 'Are you sure you want to delete ' + p.first_name + ' ' + p.last_name + '?';
+  deleteUser(p: Participant) {
+    const msg = 'Are you sure you want to delete ' + p.display_name + '?';
     this.dialogRef = this.dialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -121,7 +122,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.socketMessage.emit(new BootUserEvent(p.id));
+          this.socketMessage.emit(new BootParticipantEvent(p.participant_code));
         }
       });
   }

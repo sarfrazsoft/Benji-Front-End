@@ -2,11 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import {
-  AuthService,
-  BackendRestService,
-  ContextService,
-} from 'src/app/services';
+import { AuthService, BackendRestService, ContextService } from 'src/app/services';
+import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
@@ -24,6 +21,7 @@ export class ParticipantLoginComponent implements OnInit {
   public welcomeText = '';
 
   public username = new FormControl(null, [Validators.required]);
+  lessonRunDetails: LessonRunDetails;
 
   constructor(
     private backend: BackendRestService,
@@ -40,6 +38,10 @@ export class ParticipantLoginComponent implements OnInit {
         this.welcomeText = info.welcome_text;
       }
     });
+
+    if (localStorage.getItem('lessonRunDetails')) {
+      this.lessonRunDetails = JSON.parse(localStorage.getItem('lessonRunDetails'));
+    }
   }
 
   formSubmit() {
@@ -65,16 +67,16 @@ export class ParticipantLoginComponent implements OnInit {
       return false;
     }
 
-    this.backend.create_user(this.username.value).subscribe((res: any) => {
-      this.loginError = false;
-      if (res.participant_permission) {
-        this.auth.login(res.username, 'test').subscribe(() => {
-          this.isUserValid = true;
-          this.router.navigate([`/participant/join`]);
-        });
-      } else {
-        this.loginError = true;
-      }
-    });
+    this.backend
+      .createUser(this.username.value, this.lessonRunDetails.lessonrun_code)
+      .subscribe((res: Participant) => {
+        this.loginError = false;
+        if (res.lessonrun_code) {
+          localStorage.setItem('participant', JSON.stringify(res));
+          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+        } else {
+          this.loginError = true;
+        }
+      });
   }
 }

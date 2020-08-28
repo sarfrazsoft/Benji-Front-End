@@ -79,7 +79,7 @@
               *ngFor="let p of participants"
             >
               <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
-              <span fxFlex="90%">{{ p.first_name + ' ' + p.last_name }}</span>
+              <span fxFlex="90%">{{ p.display_name }}</span>
             </div>
           </mat-menu>
         </div>

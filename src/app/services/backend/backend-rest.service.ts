@@ -10,111 +10,75 @@ import { PartnerInfo } from './schema/whitelabel_info';
 
 @Injectable()
 export class BackendRestService {
-  constructor(
-    private http: HttpClient,
-    private contextService: ContextService
-  ) {}
+  constructor(private http: HttpClient, private contextService: ContextService) {}
 
   public userFirstName;
   public userId;
   public userIdentity: Observable<User>;
+  public userEnteredroomCode;
 
   get_runnable_sessions(courserun_num: number) {
-    return this.http.get(
-      global.apiRoot +
-        '/mvp/active/course/' +
-        courserun_num +
-        '/runnable_sessions/'
-    );
+    return this.http.get(global.apiRoot + '/mvp/active/course/' + courserun_num + '/runnable_sessions/');
   }
 
   // DEMO ONLY
-  create_user(username: string) {
-    return this.http.post(global.apiRoot + '/tenants/users/auto_create/', {
-      username: username
+  createUser(username: string, enteredRoomCode: number) {
+    return this.http.post(global.apiRoot + '/course_details/participant/', {
+      lessonrun_code: enteredRoomCode,
+      display_name: username,
     });
   }
 
   start_lesson(lessonID: number): Observable<LessonRun> {
-    return this.http.get<LessonRun>(
-      global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/'
-    );
+    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/');
   }
 
   get_lessonrun(roomCode: number): Observable<LessonRun> {
-    return this.http.get<LessonRun>(
-      global.apiRoot + '/course_details/lesson_run/' + roomCode + '/'
-    );
+    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson_run/' + roomCode + '/');
   }
 
   get_sessionrun_attendance(sessionrunID) {
-    return this.http.get(
-      global.apiRoot + '/mvp/active/session/' + sessionrunID + '/whos_here/'
-    );
+    return this.http.get(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/whos_here/');
   }
 
   join_session(joinCode: string) {
     return this.http.post(global.apiRoot + '/mvp/active/session/code_join/', {
-      code: joinCode
+      code: joinCode,
     });
   }
 
   get_own_identity(): Observable<User> {
-    this.userIdentity = this.http.get<User>(
-      global.apiRoot + '/tenants/users/who_am_i/'
-    );
+    this.userIdentity = this.http.get<User>(global.apiRoot + '/tenants/users/who_am_i/');
     return this.userIdentity;
   }
 
   get_white_label_details(org) {
-    return this.http.get(
-      global.apiRoot + '/tenants/orgs/' + org + '/white_label_info/'
-    );
+    return this.http.get(global.apiRoot + '/tenants/orgs/' + org + '/white_label_info/');
   }
 
   start_next_activity(sessionrunID) {
-    return this.http.post(
-      global.apiRoot +
-        '/mvp/active/session/' +
-        sessionrunID +
-        '/start_activity/',
-      { activity: 'next' }
-    );
+    return this.http.post(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/start_activity/', {
+      activity: 'next',
+    });
   }
 
   get_all_activities(sessionrunID) {
-    return this.http.get(
-      global.apiRoot +
-        '/mvp/active/session/' +
-        sessionrunID +
-        '/all_activities/'
-    );
+    return this.http.get(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/all_activities/');
   }
 
   get_activity_status(sessionrunID) {
-    return this.http.get(
-      global.apiRoot +
-        '/mvp/active/session/' +
-        sessionrunID +
-        '/current_activity/'
-    );
+    return this.http.get(global.apiRoot + '/mvp/active/session/' + sessionrunID + '/current_activity/');
   }
 
   join_activity(activityID) {
-    return this.http.post(
-      global.apiRoot + '/mvp/active/activity/' + activityID + '/join_activity/',
-      {}
-    );
+    return this.http.post(global.apiRoot + '/mvp/active/activity/' + activityID + '/join_activity/', {});
   }
 
   set_activity_user_parameter(activityRunID, paramName, paramValue) {
-    return this.http.post(
-      global.apiRoot +
-        '/mvp/active/activity/' +
-        activityRunID +
-        '/set_parameter/',
-      { param_name: paramName, param_value: paramValue }
-    );
+    return this.http.post(global.apiRoot + '/mvp/active/activity/' + activityRunID + '/set_parameter/', {
+      param_name: paramName,
+      param_value: paramValue,
+    });
   }
 
   /**
@@ -122,25 +86,25 @@ export class BackendRestService {
    * @param lessonNumber: string
    */
   public startLesson(lessonNumber, courserun) {
-    return this.http.post(
-      `${global.apiRoot}/course_details/course_run/${courserun}/start_lesson/ `,
-      { lesson: lessonNumber }
-    );
+    return this.http.post(`${global.apiRoot}/course_details/course_run/${courserun}/start_lesson/ `, {
+      lesson: lessonNumber,
+    });
   }
 
   public getLessonLink(roomCode) {
-    return this.http.post(
-      `${global.apiRoot}/course_details/lesson/get_lessonrun_link/`,
-      {
-        lessonrun_code: roomCode
-      }
-    );
+    return this.http.post(`${global.apiRoot}/course_details/lesson/get_lessonrun_link/`, {
+      lessonrun_code: roomCode,
+    });
+  }
+
+  public validateRoomCode(roomCode) {
+    return this.http.get(`${global.apiRoot}/course_details/lesson_run/${roomCode}/`);
   }
 
   public createCourserun() {
     return this.http.post(`${global.apiRoot}/course_details/course_run/`, {
       course: 1,
-      courserunuser_set: []
+      courserunuser_set: [],
     });
   }
 }

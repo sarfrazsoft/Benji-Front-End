@@ -5,15 +5,11 @@
       <div class="twemoji-container">
         <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
       </div>
-      <h1 class="pn-700 primary-color">Hey {{ userName | titlecase }}!</h1>
+      <!-- <h1 class="pn-700 primary-color">Hey {{ userName | titlecase }}!</h1> -->
+      <h1 class="pn-700 primary-color">Hey!</h1>
       <p>Look to the main screen to find your room code.</p>
       <div class="participant-start__action-container">
-        <p
-          class="warning-color"
-          *ngIf="
-            (roomCode.invalid && roomCode.touched) || isRoomCodeValid === false
-          "
-        >
+        <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
           Invalid Room Code
         </p>
         <div class="participant-start__input-container">
@@ -33,6 +29,12 @@
           [valid]="isRoomCodeValid"
           (clicked)="validateRoomCode()"
         ></benji-animated-checkmark-button>
+        <div class="already-member">
+          Already a member?
+          <div>
+            <a class="b-link guest-link" (click)="router.navigate(['/login'])"> Log in </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

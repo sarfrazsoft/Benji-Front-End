@@ -119,7 +119,7 @@ export class MainScreenBrainstormingActivityComponent
     const act = this.activityState.brainstormactivity;
     this.act = this.activityState.brainstormactivity;
     this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
-    this.joinedUsers = this.activityState.lesson_run.joined_users;
+    this.joinedUsers = this.activityState.lesson_run.participant_set;
     this.ideas = [];
     act.brainstormcategory_set.forEach((category) => {
       if (!category.removed) {

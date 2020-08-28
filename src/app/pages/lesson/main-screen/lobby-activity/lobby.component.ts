@@ -1,18 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialogs';
 import { ContextService } from 'src/app/services';
-import {
-  LobbySetNicknameEvent,
-  LobbyStartButtonClickEvent,
-} from 'src/app/services/backend/schema';
+import { LobbySetNicknameEvent, LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -22,17 +12,13 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./lobby.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MainScreenLobbyComponent extends BaseActivityComponent
-  implements OnInit, OnDestroy {
+export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   startSessionLabel = '';
   joinLobbyUrl = '';
   dialogRef;
   @ViewChild('sfxPlayer', { static: false }) sfxPlayer: ElementRef;
 
-  constructor(
-    private dialog: MatDialog,
-    private contextService: ContextService
-  ) {
+  constructor(private dialog: MatDialog, private contextService: ContextService) {
     super();
   }
 
@@ -62,7 +48,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
   }
 
   kickOffLesson() {
-    if (this.activityState.lesson_run.joined_users.length < 2) {
+    if (this.activityState.lesson_run.participant_set.length < 2) {
       this.openLowAttendanceDialog();
     } else {
       this.sendMessage.emit(new LobbyStartButtonClickEvent());
@@ -70,8 +56,6 @@ export class MainScreenLobbyComponent extends BaseActivityComponent
   }
 
   setNicknameEvent() {
-    this.sendMessage.emit(
-      new LobbySetNicknameEvent({ nickname: 'ironman', user_id: 4 })
-    );
+    this.sendMessage.emit(new LobbySetNicknameEvent({ nickname: 'ironman', user_id: 4 }));
   }
 }

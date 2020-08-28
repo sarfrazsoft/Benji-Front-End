@@ -31,4 +31,25 @@ export interface LessonRun {
   end_time: string;
   lessonrun_code: number;
   joined_users: User[];
+  participant_set: Array<Participant>;
+}
+
+export interface LessonRunDetails {
+  end_time: string;
+  host: any;
+  id: number;
+  lesson: any;
+  lessonrun_code: number;
+  participant_set: Array<any>;
+  start_time: string;
+}
+
+export interface Participant {
+  display_name: string;
+  email: string;
+  lessonrun_code: number;
+  user: any;
+  is_active: boolean;
+  socket_link: string;
+  participant_code: number;
 }

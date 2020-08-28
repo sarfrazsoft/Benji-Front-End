@@ -1,10 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import {
-  MainScreenLessonComponent,
-  ParticipantLessonComponent,
-  SingleUserComponent,
-} from 'src/app/pages';
+import { MainScreenLessonComponent, ParticipantLessonComponent, SingleUserComponent } from 'src/app/pages';
 import { IcebreakerComponent } from '../pages/landing/icebreaker/icebreaker.component';
 import { LandingComponent } from '../pages/landing/main-screen/landing.component';
 import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
@@ -14,7 +10,7 @@ import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
-  { path: '', redirectTo: '/participant/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/participant/join', pathMatch: 'full' },
   {
     path: 'landing',
     component: LandingComponent,
@@ -74,7 +70,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: LayoutComponent,
-    loadChildren: () => import('src/app/dashboard/dashboard.module').then(m => m.DashboardModule),
+    loadChildren: () => import('src/app/dashboard/dashboard.module').then((m) => m.DashboardModule),
     // canLoad not used because parameters were not available in it
     // canLoad: [AuthGuard],
     canActivate: [AuthGuard],

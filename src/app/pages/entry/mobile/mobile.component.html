@@ -1,20 +1,11 @@
-<div
-  class="login-container-mob bg-off-white"
-  fxLayout="column"
-  fxLayoutAlign="center"
-  fxLayoutGap="10px"
->
+<div class="login-container-mob bg-off-white" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px">
   <div class="header center-text" fxLayout="column" fxLayoutAlign="center">
     <div><img class="logo" [src]="logo" /></div>
     <div>Extraordinary team learning</div>
   </div>
 
   <div class="login-signup-section" fxLayoutAlign="center">
-    <div
-      class="section-buttons pn-600"
-      fxLayout="row"
-      fxLayoutAlign="space-between"
-    >
+    <div class="section-buttons pn-600" fxLayout="row" fxLayoutAlign="space-between">
       <div
         [ngClass]="{
           active: showLoginMob,
@@ -47,14 +38,8 @@
       <!-- <span class="b-link" (click)="showSignup()"> Sign up</span> -->
       <!-- <span> Sign up</span> -->
     </div>
-    <div
-      *ngIf="isDemoSite"
-      class="new-to-benji primary-color-darkest"
-      fxLayoutAlign="center"
-    >
-      <a class="b-link" (click)="router.navigate(['/participant/login'])">
-        Continue as guest
-      </a>
+    <div *ngIf="isDemoSite" class="new-to-benji primary-color-darkest" fxLayoutAlign="center">
+      <a class="b-link" (click)="router.navigate(['/participant/join'])"> Continue as guest </a>
     </div>
     <!-- <div class="forgot-password" fxLayoutAlign="center">
       <a class="b-link" href="">Forgot your password?</a>

@@ -1,14 +1,8 @@
 <div class="form-container" fxLayout="column">
   <div class="instruction">
-    Sign in to your account to join or start a session and to view your
-    dashboard.
+    Sign in to your account to join or start a session and to view your dashboard.
   </div>
-  <form
-    [formGroup]="form"
-    (ngSubmit)="onSubmit()"
-    fxLayout="column"
-    fxLayoutGap="20px"
-  >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
     <div class="email-control">
       <input
         id="email"
@@ -21,17 +15,11 @@
         autocomplete="email"
       />
       <mat-error
-        *ngIf="
-          email.invalid && (email.dirty || email.touched) && isLoginClicked
-        "
+        *ngIf="email.invalid && (email.dirty || email.touched) && isLoginClicked"
         class="alert alert-danger"
       >
-        <div *ngIf="email.errors.required">
-          Email is required.
-        </div>
-        <div *ngIf="email.errors.email">
-          It should be a valid email.
-        </div>
+        <div *ngIf="email.errors.required">Email is required.</div>
+        <div *ngIf="email.errors.email">It should be a valid email.</div>
       </mat-error>
     </div>
     <div class="password-control">
@@ -43,9 +31,7 @@
         autocomplete="current-password"
         placeholder="Password"
       />
-      <mat-error *ngIf="emailPasswordError">
-        Email or Password incorrect.</mat-error
-      >
+      <mat-error *ngIf="emailPasswordError"> Email or Password incorrect.</mat-error>
     </div>
 
     <button
@@ -72,12 +58,7 @@
       <!-- <span> Sign up</span> -->
     </div>
     <div *ngIf="isDemoSite" class="new-to-benji" fxLayoutAlign="center">
-      <a
-        class="b-link guest-link"
-        (click)="router.navigate(['/participant/login'])"
-      >
-        Continue as guest
-      </a>
+      <a class="b-link guest-link" (click)="router.navigate(['/participant/join'])"> Continue as guest </a>
     </div>
     <!-- <div class="new-to-benji" fxLayoutAlign="center">
       <span>New to Benji?</span>&nbsp;
