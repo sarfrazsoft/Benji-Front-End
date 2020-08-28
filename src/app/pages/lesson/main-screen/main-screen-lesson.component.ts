@@ -3,7 +3,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
-import { Ddatemessage } from 'src/app/services/backend/schema';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({

@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { BackendRestService, BackendSocketService } from 'src/app/services';
-import { LessonRunDetails } from 'src/app/services/backend/backend-rest.service';
+import { LessonRunDetails } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-participant-join',

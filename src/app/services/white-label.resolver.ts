@@ -20,12 +20,7 @@ export class WhiteLabelResolver implements Resolve<any> {
     try {
       if (route.paramMap.get('partner')) {
         this.httpClient
-          .get(
-            global.apiRoot +
-              '/tenants/orgs/' +
-              route.paramMap.get('partner') +
-              '/white_label_info/'
-          )
+          .get(global.apiRoot + '/tenants/orgs/' + route.paramMap.get('partner') + '/white_label_info/')
           .subscribe(
             (res: PartnerInfo) => {
               this.contextService.partnerInfo = res;
@@ -49,32 +44,20 @@ export class WhiteLabelResolver implements Resolve<any> {
       ) {
         if (window.location.origin.includes('muralys')) {
           console.log('get muraly theme');
-          this.httpClient
-            .get(
-              global.apiRoot +
-                '/tenants/orgs/' +
-                'muralys' +
-                '/white_label_info/'
-            )
-            .subscribe(
-              (res: any) => {
-                this.contextService.partnerInfo = res;
-              },
-              (err: HttpErrorResponse) => {
-                if (err.status === 404) {
-                  console.log(err.status);
-                  this.applyDefaultTheme();
-                }
+          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'muralys' + '/white_label_info/').subscribe(
+            (res: any) => {
+              this.contextService.partnerInfo = res;
+            },
+            (err: HttpErrorResponse) => {
+              if (err.status === 404) {
+                console.log(err.status);
+                this.applyDefaultTheme();
               }
-            );
+            }
+          );
         } else if (window.location.origin.includes('whetstone')) {
           this.httpClient
-            .get(
-              global.apiRoot +
-                '/tenants/orgs/' +
-                'whetstone' +
-                '/white_label_info/'
-            )
+            .get(global.apiRoot + '/tenants/orgs/' + 'whetstone' + '/white_label_info/')
             .subscribe(
               (res: any) => {
                 this.contextService.partnerInfo = res;
@@ -87,37 +70,41 @@ export class WhiteLabelResolver implements Resolve<any> {
               }
             );
         } else if (window.location.origin.includes('ccl')) {
-          this.httpClient
-            .get(
-              global.apiRoot + '/tenants/orgs/' + 'ccl' + '/white_label_info/'
-            )
-            .subscribe(
-              (res: any) => {
-                this.contextService.partnerInfo = res;
-              },
-              (err: HttpErrorResponse) => {
-                if (err.status === 404) {
-                  console.log(err.status);
-                  this.applyDefaultTheme();
-                }
+          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'ccl' + '/white_label_info/').subscribe(
+            (res: any) => {
+              this.contextService.partnerInfo = res;
+            },
+            (err: HttpErrorResponse) => {
+              if (err.status === 404) {
+                console.log(err.status);
+                this.applyDefaultTheme();
               }
-            );
+            }
+          );
         } else if (window.location.origin.includes('rgax')) {
-          this.httpClient
-            .get(
-              global.apiRoot + '/tenants/orgs/' + 'rgax' + '/white_label_info/'
-            )
-            .subscribe(
-              (res: any) => {
-                this.contextService.partnerInfo = res;
-              },
-              (err: HttpErrorResponse) => {
-                if (err.status === 404) {
-                  console.log(err.status);
-                  this.applyDefaultTheme();
-                }
+          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'rgax' + '/white_label_info/').subscribe(
+            (res: any) => {
+              this.contextService.partnerInfo = res;
+            },
+            (err: HttpErrorResponse) => {
+              if (err.status === 404) {
+                console.log(err.status);
+                this.applyDefaultTheme();
               }
-            );
+            }
+          );
+        } else if (window.location.origin.includes('rga')) {
+          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'rga' + '/white_label_info/').subscribe(
+            (res: any) => {
+              this.contextService.partnerInfo = res;
+            },
+            (err: HttpErrorResponse) => {
+              if (err.status === 404) {
+                console.log(err.status);
+                this.applyDefaultTheme();
+              }
+            }
+          );
         }
         // It doesn't matter which organization you are registered to
         // if the location is this; it'll get location based whitelabeling details
@@ -133,10 +120,7 @@ export class WhiteLabelResolver implements Resolve<any> {
         );
         this.contextService.user$.subscribe((user) => {
           if (user && user.organization && !this.requestSent) {
-            const orgId =
-              typeof user.organization === 'object'
-                ? user.organization.id
-                : user.organization;
+            const orgId = typeof user.organization === 'object' ? user.organization.id : user.organization;
             this.requestSent = true;
             this.restService.get_white_label_details(orgId).subscribe(
               (data: any) => {
@@ -163,19 +147,17 @@ export class WhiteLabelResolver implements Resolve<any> {
   }
 
   applyBenjiTheme() {
-    this.httpClient
-      .get(global.apiRoot + '/tenants/orgs/' + 'benji' + '/white_label_info/')
-      .subscribe(
-        (res: any) => {
-          this.contextService.partnerInfo = res;
-        },
-        (err: HttpErrorResponse) => {
-          if (err.status === 404) {
-            console.log(err.status);
-            this.applyDefaultTheme();
-          }
+    this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'benji' + '/white_label_info/').subscribe(
+      (res: any) => {
+        this.contextService.partnerInfo = res;
+      },
+      (err: HttpErrorResponse) => {
+        if (err.status === 404) {
+          console.log(err.status);
+          this.applyDefaultTheme();
         }
-      );
+      }
+    );
   }
 
   applyDefaultTheme() {
