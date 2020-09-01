@@ -7,13 +7,14 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './gather-activity.component.html',
   styleUrls: ['./gather-activity.component.scss'],
 })
-export class MainScreenGatherActivityComponent extends BaseActivityComponent
-  implements OnInit {
+export class MainScreenGatherActivityComponent extends BaseActivityComponent implements OnInit {
   constructor() {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   gatherActivityContinueEvent() {
     this.sendMessage.emit(new GatherActivityContinueEvent());

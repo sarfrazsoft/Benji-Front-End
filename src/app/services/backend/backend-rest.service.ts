@@ -91,12 +91,6 @@ export class BackendRestService {
     });
   }
 
-  public getLessonLink(roomCode) {
-    return this.http.post(`${global.apiRoot}/course_details/lesson/get_lessonrun_link/`, {
-      lessonrun_code: roomCode,
-    });
-  }
-
   public validateRoomCode(roomCode) {
     return this.http.get(`${global.apiRoot}/course_details/lesson_run/${roomCode}/`);
   }

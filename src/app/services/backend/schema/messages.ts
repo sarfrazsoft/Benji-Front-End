@@ -28,15 +28,16 @@ import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
 export interface UpdateMessage {
-  lesson: Lesson; // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
+  // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
+  lesson: Lesson;
   lesson_run: LessonRun;
-  base_activity: BaseActivity;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;
   casestudyactivity?: CaseStudyActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
   pitchomaticactivity?: PitchoMaticActivity;
+  // activity type should be specifi rather than a string
   activity_type: string;
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
@@ -53,7 +54,6 @@ export interface UpdateMessage {
   feedbackactivity?: FeedbackActivity;
   wheredoyoustandactivity?: WhereDoYouStandActivity;
   triadgroupingactivity?: TriadGroupingActivity;
-  your_identity?: User; // TODO: This is a hack and must go. Use the proper REST view (tenants/users/who_am_i) to get this.
 }
 
 export interface ClientError {
@@ -167,8 +167,8 @@ export class TeleTriviaSharingDoneEvent extends ActivityEvent {
   event_name = 'TeleTriviaSharingDoneEvent';
 }
 
-export class GroupingUserFoundEvent extends ActivityEvent {
-  event_name = 'GroupingUserFoundEvent';
+export class GroupingParticipantReadyEvent extends ActivityEvent {
+  event_name = 'GroupingParticipantReadyEvent';
 }
 
 export class RoleplayPairUserFoundEvent extends ActivityEvent {
@@ -289,16 +289,16 @@ export class BuildAPitchSubmitVoteEvent extends ActivityEvent {
   }
 }
 
-export class PitchoMaticUserGeneratedEvent extends ActivityEvent {
-  event_name = 'PitchoMaticUserGeneratedEvent';
+export class PitchoMaticParticipantGeneratedEvent extends ActivityEvent {
+  event_name = 'PitchoMaticParticipantGeneratedEvent';
 }
 
-export class PitchoMaticUserInGroupEvent extends ActivityEvent {
-  event_name = 'PitchoMaticUserInGroupEvent';
+export class PitchoMaticParticipantInGroupEvent extends ActivityEvent {
+  event_name = 'PitchoMaticParticipantInGroupEvent';
 }
 
-export class PitchoMaticUserReadyEvent extends ActivityEvent {
-  event_name = 'PitchoMaticUserReadyEvent';
+export class PitchoMaticParticipantReadyEvent extends ActivityEvent {
+  event_name = 'PitchoMaticParticipantReadyEvent';
 
   constructor(pitch_prep_text?: string) {
     super();
@@ -405,23 +405,23 @@ export class ExternalGroupingSubmitGroupEvent extends ActivityEvent {
 
   constructor(group_num: number, userId?: number) {
     super();
-    this.extra_args = { benjiuser_id: userId, group_num: group_num };
+    this.extra_args = { participant_code: userId, group_num: group_num };
   }
 }
 
-export class GenericRoleplayUserDiscussedEvent extends ActivityEvent {
-  event_name = 'GenericRoleplayUserDiscussedEvent';
+export class GenericRoleplayParticipantDiscussedEvent extends ActivityEvent {
+  event_name = 'GenericRoleplayParticipantDiscussedEvent';
   constructor() {
     super();
   }
 }
 
-export class GenericRoleplayUserFeedbackEvent extends ActivityEvent {
-  event_name = 'GenericRoleplayUserFeedbackEvent';
-  constructor(genericroleplayuserfeedbackeventanswer_set: FeedbackSubmitEventAnswer[]) {
+export class GenericRoleplayParticipantFeedbackEvent extends ActivityEvent {
+  event_name = 'GenericRoleplayParticipantFeedbackEvent';
+  constructor(genericroleplayparticipantfeedbackeventanswer_set: FeedbackSubmitEventAnswer[]) {
     super();
     this.extra_args = {
-      genericroleplayuserfeedbackeventanswer_set: genericroleplayuserfeedbackeventanswer_set,
+      genericroleplayparticipantfeedbackeventanswer_set: genericroleplayparticipantfeedbackeventanswer_set,
     };
   }
 }

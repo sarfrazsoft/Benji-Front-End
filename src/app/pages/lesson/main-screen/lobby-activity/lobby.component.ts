@@ -34,6 +34,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   }
 
   ngOnInit() {
+    super.ngOnInit();
     // this.sfxPlayer.nativeElement.play();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {

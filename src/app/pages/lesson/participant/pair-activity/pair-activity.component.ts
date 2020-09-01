@@ -20,7 +20,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./pair-activity.component.scss'],
   animations: [zoomInAnimation()],
 })
-export class ParticipantPairActivityComponent extends BaseActivityComponent
+export class ParticipantPairActivityComponent
+  extends BaseActivityComponent
   implements OnInit, OnDestroy, OnChanges {
   partnerName: string;
 
@@ -38,6 +39,7 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     // this.timer = 1;
     // this.timerInterval = setInterval(() => this.showAttentionDialog(), 1000);
   }
@@ -73,27 +75,21 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
       (ug) =>
         concat(ug.primary_roleplayuser_set, ug.secondary_roleplayuser_set)
           .map((u) => u.user.id)
-          .indexOf(this.activityState.your_identity.id) > -1
+          .indexOf(this.myParticipantCode) > -1
     );
   }
 
   partnerText() {
     const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
-      concat(
-        myGroup.primary_roleplayuser_set,
-        myGroup.secondary_roleplayuser_set
-      ),
-      (e) => e.user.id !== this.activityState.your_identity.id
+      concat(myGroup.primary_roleplayuser_set, myGroup.secondary_roleplayuser_set),
+      (e) => e.user.id !== this.myParticipantCode
     );
     if (myGroupWithoutMe.length === 1) {
       this.partnerName = myGroupWithoutMe[0].user.first_name;
       return 'Your partner is ' + this.partnerName;
     } else {
-      this.partnerName =
-        myGroupWithoutMe[0].user.first_name +
-        ' and ' +
-        myGroupWithoutMe[1].user.first_name;
+      this.partnerName = myGroupWithoutMe[0].user.first_name + ' and ' + myGroupWithoutMe[1].user.first_name;
       return (
         'Your partners are ' +
         myGroupWithoutMe[0].user.first_name +
@@ -105,17 +101,14 @@ export class ParticipantPairActivityComponent extends BaseActivityComponent
 
   myRoleplayUser() {
     const myGroup = this.myGroup();
-    return concat(
-      myGroup.primary_roleplayuser_set,
-      myGroup.secondary_roleplayuser_set
-    ).find((g) => g.user.id === this.activityState.your_identity.id);
+    return concat(myGroup.primary_roleplayuser_set, myGroup.secondary_roleplayuser_set).find(
+      (g) => g.user.id === this.myParticipantCode
+    );
   }
 
   participantIsPrimary() {
     return (
-      this.myGroup().primary_roleplayuser_set.find(
-        (g) => g.user.id === this.activityState.your_identity.id
-      ) !== undefined
+      this.myGroup().primary_roleplayuser_set.find((g) => g.user.id === this.myParticipantCode) !== undefined
     );
   }
 

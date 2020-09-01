@@ -10,6 +10,7 @@ import {
   Category,
   Idea,
 } from 'src/app/services/backend/schema';
+import { Participant } from 'src/app/services/backend/schema/course_details';
 import { ContextService } from 'src/app/services/context.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -49,6 +50,7 @@ export class ParticipantBrainstormingActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
     this.selectedCategory = this.act.brainstormcategory_set[0];
     this.categories = this.act.brainstormcategory_set;
@@ -56,7 +58,7 @@ export class ParticipantBrainstormingActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.brainstormactivity;
-    const userID = this.getUserId();
+    const userID = this.getParticipantCode();
 
     // show dropdown if categorize_flag is set
     if (this.act.categorize_flag) {
@@ -81,7 +83,7 @@ export class ParticipantBrainstormingActivityComponent
     const submissionCount = this.getUserIdeas(userID);
     if (submissionCount.length) {
       this.noOfIdeasSubmitted = submissionCount.length;
-      if (submissionCount.length >= this.act.max_user_submissions) {
+      if (submissionCount.length >= this.act.max_participant_submissions) {
         this.showSubmitIdeas = false;
         this.showThankyouForSubmission = true;
       }
@@ -113,8 +115,8 @@ export class ParticipantBrainstormingActivityComponent
     }
 
     // Show thank you for vote submission
-    const userVotes = this.act.user_vote_counts.find((v) => v.id === userID);
-    if (userVotes && userVotes.count >= this.act.max_user_votes) {
+    const userVotes = this.act.participant_vote_counts.find((v) => v.participant_code === userID);
+    if (userVotes && userVotes.count >= this.act.max_participant_votes) {
       this.showSubmitIdeas = false;
       this.showThankyouForSubmission = false;
       this.showSubmitVote = false;
@@ -129,7 +131,7 @@ export class ParticipantBrainstormingActivityComponent
       this.showSubmitVote = false;
       this.showThankyouForVoting = false;
       this.showVoteResults = true;
-      const timer = this.activityState.base_activity.next_activity_start_timer;
+      const timer = this.getNextActStartTimer();
       this.contextService.activityTimer = timer;
     }
   }
@@ -143,13 +145,10 @@ export class ParticipantBrainstormingActivityComponent
     } else {
       this.selectedIdeas.unshift($event);
     }
-    if (
-      this.selectedIdeas.length >
-      this.activityState.brainstormactivity.max_user_votes
-    ) {
+    if (this.selectedIdeas.length > this.activityState.brainstormactivity.max_participant_votes) {
       this.selectedIdeas = this.selectedIdeas.slice(
         0,
-        this.activityState.brainstormactivity.max_user_votes
+        this.activityState.brainstormactivity.max_participant_votes
       );
     }
     if (this.selectedIdeas.length) {
@@ -171,18 +170,12 @@ export class ParticipantBrainstormingActivityComponent
     if (this.userIdeaText.length === 0) {
       return;
     }
-    this.sendMessage.emit(
-      new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id)
-    );
+    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id));
     this.userIdeaText = '';
   }
 
   submitWithImg() {
     this.submitImageNIdea();
-  }
-
-  getUserId(): number {
-    return this.activityState.your_identity.id;
   }
 
   submitIdeaVote(): void {
@@ -202,8 +195,7 @@ export class ParticipantBrainstormingActivityComponent
 
   submitImageNIdea() {
     const code = this.activityState.lesson_run.lessonrun_code;
-    const url =
-      global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
     const fileList: FileList = this.imagesList;
     if (fileList.length > 0) {
       const file: File = fileList[0];
@@ -223,11 +215,7 @@ export class ParticipantBrainstormingActivityComponent
             .map((res: any) => {
               this.imagesList = null;
               this.sendMessage.emit(
-                new BrainstormSubmitEvent(
-                  this.userIdeaText,
-                  this.selectedCategory.id,
-                  res.id
-                )
+                new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
               );
               this.userIdeaText = '';
             })
@@ -304,7 +292,7 @@ export class ParticipantBrainstormingActivityComponent
       if (!category.removed) {
         category.brainstormidea_set.forEach((idea) => {
           if (!idea.removed) {
-            if (idea.submitted_by_user === userID) {
+            if (idea.submitting_participant && idea.submitting_participant.participant_code === userID) {
               arr.push(idea);
             }
           }

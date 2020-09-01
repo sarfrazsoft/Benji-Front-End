@@ -2,9 +2,9 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { concat, remove } from 'lodash';
 import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
-  GroupingUserFoundEvent,
-  RoleplayPairUser,
-  UserGroupUserSet,
+  Group,
+  GroupingParticipantReadyEvent,
+  ParticipantGroupStatus,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -17,66 +17,64 @@ export class ParticipantPairGroupingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   partnerName: string;
-  constructor(
-    private emoji: EmojiLookupService,
-    private contextService: ContextService
-  ) {
+  constructor(private emoji: EmojiLookupService, private contextService: ContextService) {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
-    const timer = this.activityState.pairgroupingactivity
-      .grouping_countdown_timer;
+    const timer = this.activityState.pairgroupingactivity.grouping_countdown_timer;
     this.contextService.activityTimer = timer;
   }
 
-  myGroup(): UserGroupUserSet {
-    return this.activityState.pairgroupingactivity.usergroup_set.find(
+  myGroup(): Group {
+    return this.activityState.pairgroupingactivity.group_set.find(
       (ug) =>
-        ug.usergroupuser_set
-          .map((u) => u.user.id)
-          .indexOf(this.activityState.your_identity.id) > -1
+        ug.participantgroupstatus_set
+          .map((u) => u.participant.participant_code)
+          .indexOf(this.myParticipantCode) > -1
     );
   }
 
   partnerText(): string {
     const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
-      concat(myGroup.usergroupuser_set, []),
-      (e) => e.user.id !== this.activityState.your_identity.id
+      concat(myGroup.participantgroupstatus_set, []),
+      (e) => e.participant.participant_code !== this.myParticipantCode
     );
     if (myGroupWithoutMe.length === 1) {
-      this.partnerName = myGroupWithoutMe[0].user.first_name;
+      this.partnerName = this.getParticipantName(myGroupWithoutMe[0].participant.participant_code);
       return 'Your partner is ' + this.partnerName;
     } else {
       this.partnerName =
-        myGroupWithoutMe[0].user.first_name +
+        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
         ' and ' +
-        myGroupWithoutMe[1].user.first_name;
+        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code);
       return (
         'Your partners are ' +
-        myGroupWithoutMe[0].user.first_name +
+        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
         ' and ' +
-        myGroupWithoutMe[1].user.first_name
+        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code)
       );
     }
   }
 
-  myRoleplayUser(): RoleplayPairUser {
-    const myGroup: UserGroupUserSet = this.myGroup();
+  myRoleplayUser(): ParticipantGroupStatus {
+    const myGroup: Group = this.myGroup();
 
-    return myGroup.usergroupuser_set.find(
-      (g) => g.user.id === this.activityState.your_identity.id
+    return myGroup.participantgroupstatus_set.find(
+      (g) => g.participant.participant_code === this.myParticipantCode
     );
   }
 
   participantIsReady(): boolean {
-    return this.myRoleplayUser().found;
+    return this.myRoleplayUser().ready;
   }
 
   sendReadyState(): void {
-    this.sendMessage.emit(new GroupingUserFoundEvent());
+    this.sendMessage.emit(new GroupingParticipantReadyEvent());
   }
 }

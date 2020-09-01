@@ -1,9 +1,6 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
-import {
-  LobbyStartButtonClickEvent,
-  Timer,
-} from 'src/app/services/backend/schema';
+import { LobbyStartButtonClickEvent, Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -11,11 +8,13 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.scss'],
 })
-export class ParticipantLobbyComponent extends BaseActivityComponent
-  implements OnChanges {
+export class ParticipantLobbyComponent extends BaseActivityComponent implements OnInit, OnChanges {
   singleUserActivity;
   constructor(private contextService: ContextService) {
     super();
+  }
+  ngOnInit() {
+    super.ngOnInit();
   }
   ngOnChanges() {
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;

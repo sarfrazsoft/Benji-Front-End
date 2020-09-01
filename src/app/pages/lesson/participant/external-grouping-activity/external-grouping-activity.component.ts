@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import {
   ExternalGroupingActivity,
   ExternalGroupingSubmitGroupEvent,
+  Group,
   User,
 } from 'src/app/services/backend/schema';
 import { ContextService } from 'src/app/services/context.service';
@@ -20,7 +21,7 @@ export class ParticipantExternalGroupingActivityComponent
   breakoutRooms = [];
   selectedChoice = { id: null, name: null };
   choiceSubmitted = false;
-  user: User;
+  participantCode: number;
   userRoomNumber;
   selectRoomModel = null;
 
@@ -29,12 +30,14 @@ export class ParticipantExternalGroupingActivityComponent
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     this.act = this.activityState.externalgroupingactivity;
-    this.allUsers = this.activityState.lesson_run.joined_users;
-    this.user = this.activityState.your_identity;
+    this.allUsers = this.activityState.lesson_run.participant_set;
+    this.participantCode = this.getParticipantCode();
     this.userRoomNumber = this.getUserRoomNumber();
     this.contextService.activityTimer = this.act.grouping_countdown_timer;
     // this.selectRoomModel = this.getUserRoomNumber();
@@ -54,9 +57,7 @@ export class ParticipantExternalGroupingActivityComponent
 
   submitChoice() {
     this.choiceSubmitted = true;
-    this.sendMessage.emit(
-      new ExternalGroupingSubmitGroupEvent(this.selectedChoice.id)
-    );
+    this.sendMessage.emit(new ExternalGroupingSubmitGroupEvent(this.selectedChoice.id));
   }
 
   askForRoomNumberStage() {
@@ -65,13 +66,13 @@ export class ParticipantExternalGroupingActivityComponent
   }
 
   getUserRoomNumber() {
-    for (let i = 0; i < this.act.usergroup_set.length; i++) {
-      const groupset = this.act.usergroup_set[i];
-      for (let j = 0; j < groupset.usergroupuser_set.length; j++) {
+    for (let i = 0; i < this.act.group_set.length; i++) {
+      const groupset: Group = this.act.group_set[i];
+      for (let j = 0; j < groupset.participantgroupstatus_set.length; j++) {
         // loop through each user in thr group comparing his id to userId
         // if it matches return the breakoutroomid
-        const user = groupset.usergroupuser_set[j].user;
-        if (user.id === this.user.id) {
+        const user = groupset.participantgroupstatus_set[j].participant;
+        if (user.participant_code === this.participantCode) {
           return groupset.group_num;
         }
       }

@@ -1,12 +1,6 @@
 <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
-  <div
-    class="twemoji-container"
-    *ngIf="isEmoji(activityState.titleactivity.title_image)"
-  >
-    <app-b-twemoji
-      [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"
-    >
-    </app-b-twemoji>
+  <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_image)">
+    <app-b-twemoji [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"> </app-b-twemoji>
   </div>
   <div class="activity-title-container">
     <h1 class="primary-color pn-700">
@@ -17,8 +11,7 @@
     <p
       class="secondary-color-dark pn-500"
       [ngStyle]="{
-        'font-size':
-          activityState.titleactivity.title_text.length > 100 ? '3vw' : '4vw'
+        'font-size': activityState.titleactivity.title_text.length > 100 ? '3vw' : '4vw'
       }"
     >
       {{ activityState.titleactivity.title_text }}
@@ -27,17 +20,12 @@
   <div class="linear-timer-container">
     <benji-linear-timer
       *ngIf="!activityState.titleactivity.hide_timer"
-      [timer]="activityState.base_activity.next_activity_start_timer"
+      [timer]="getNextActStartTimer()"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>
   </div>
-  <div
-    *ngIf="isEndSession"
-    class="exitSession pn-500"
-    (click)="backToStart()"
-    fxLayoutAlign="center center"
-  >
+  <div *ngIf="isEndSession" class="exitSession pn-500" (click)="backToStart()" fxLayoutAlign="center center">
     Exit session
     <button class="launch-session" fxLayoutAlign="center center">
       <img src="/assets/img/launch_singlearrow_blue.png" alt="launch" />

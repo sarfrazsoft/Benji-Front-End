@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnChanges,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContextService, EmojiLookupService } from 'src/app/services';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -14,8 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './title-activity.component.html',
   styleUrls: ['./title-activity.component.scss'],
 })
-export class MainScreenTitleActivityComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
+export class MainScreenTitleActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   isEndSession = false;
   @ViewChild('titleTimer', { static: false }) titleTimer;
 
@@ -28,16 +21,16 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     const act = this.activityState;
-    if (act.base_activity.activity_id === 'end_session_activity') {
+    if (this.isLastActivity()) {
       this.isEndSession = true;
     }
   }
 
   ngOnChanges() {
     const act = this.activityState;
-    this.contextService.activityTimer =
-      act.base_activity.next_activity_start_timer;
+    this.contextService.activityTimer = this.getNextActStartTimer();
   }
 
   public backToStart() {

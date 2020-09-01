@@ -20,14 +20,12 @@ export class MainScreenGenericRoleplayActivityComponent
   feedbackTimer: Timer;
   group = [];
 
-  constructor(
-    private emoji: EmojiLookupService,
-    private contextService: ContextService
-  ) {
+  constructor(private emoji: EmojiLookupService, private contextService: ContextService) {
     super();
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.checkIcon = info.parameters.checkIcon;
@@ -58,15 +56,13 @@ export class MainScreenGenericRoleplayActivityComponent
   }
 
   getFbackSubmittedCount() {
-    const users = this.activityState.genericroleplayactivity
-      .genericroleplayuser_set;
+    const users = this.activityState.genericroleplayactivity.genericroleplayparticipant_set;
     const count = users.filter((user) => user.feedback_submitted).length;
     return count;
   }
 
   getGroupUsersCount() {
-    const roles = this.activityState.genericroleplayactivity
-      .genericroleplayrole_set;
+    const roles = this.activityState.genericroleplayactivity.genericroleplayrole_set;
     const count = roles.filter((role) => role.feedbackquestions.length).length;
     return count;
   }

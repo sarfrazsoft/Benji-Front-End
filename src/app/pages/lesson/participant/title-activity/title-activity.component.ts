@@ -8,23 +8,21 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './title-activity.component.html',
   styleUrls: ['./title-activity.component.scss'],
 })
-export class ParticipantTitleActivityComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
-  constructor(
-    public emoji: EmojiLookupService,
-    private contextService: ContextService
-  ) {
+export class ParticipantTitleActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
+  constructor(public emoji: EmojiLookupService, private contextService: ContextService) {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     const act = this.activityState;
     if (act.titleactivity.hide_timer) {
       this.contextService.activityTimer = { status: 'cancelled' } as Timer;
     } else {
-      const timer = this.activityState.base_activity.next_activity_start_timer;
+      const timer = this.getNextActStartTimer();
       this.contextService.activityTimer = timer;
     }
   }

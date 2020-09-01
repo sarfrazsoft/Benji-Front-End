@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { concat } from 'lodash';
 import { EmojiLookupService } from 'src/app/services';
 import { RoleplayPair } from 'src/app/services/backend/schema';
@@ -7,15 +7,15 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-roleplay-pair-activity',
   templateUrl: './roleplay-pair-activity.component.html',
-  styleUrls: ['./roleplay-pair-activity.component.scss']
+  styleUrls: ['./roleplay-pair-activity.component.scss'],
 })
-export class MainScreenPairActivityComponent extends BaseActivityComponent {
+export class MainScreenPairActivityComponent extends BaseActivityComponent implements OnInit {
+  ngOnInit() {
+    super.ngOnInit();
+  }
   getGroupText(userGroup: RoleplayPair) {
-    return concat(
-      userGroup.primary_roleplayuser_set,
-      userGroup.secondary_roleplayuser_set
-    )
-      .map(u => u.user.first_name)
+    return concat(userGroup.primary_roleplayuser_set, userGroup.secondary_roleplayuser_set)
+      .map((u) => u.user.first_name)
       .join(' + ');
   }
 
@@ -26,8 +26,7 @@ export class MainScreenPairActivityComponent extends BaseActivityComponent {
   isReversed() {
     return (
       this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
-      this.activityState.roleplaypairactivity.reverse_group_activity !==
-        undefined
+      this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
     );
   }
 }

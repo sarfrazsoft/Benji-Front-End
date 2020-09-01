@@ -13,8 +13,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './monty-hall.component.html',
   styleUrls: ['./monty-hall.component.scss'],
 })
-export class MainScreenMontyHallComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
+export class MainScreenMontyHallComponent extends BaseActivityComponent implements OnInit, OnChanges {
   act: MontyHallActivity;
   timer: Timer;
   c_d;
@@ -26,7 +25,9 @@ export class MainScreenMontyHallComponent extends BaseActivityComponent
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     this.act = this.activityState.montyhallactivity;

@@ -4,10 +4,13 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-feedback-activity',
   templateUrl: './feedback-activity.component.html',
-  styleUrls: ['./feedback-activity.component.scss']
+  styleUrls: ['./feedback-activity.component.scss'],
 })
-export class MainScreenFeedbackActivityComponent extends BaseActivityComponent {
+export class MainScreenFeedbackActivityComponent extends BaseActivityComponent implements OnInit {
   constructor() {
     super();
+  }
+  ngOnInit() {
+    super.ngOnInit();
   }
 }

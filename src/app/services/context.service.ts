@@ -5,6 +5,7 @@ import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Timer } from './backend/schema';
+import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
 @Injectable()
@@ -57,5 +58,16 @@ export class ContextService {
   }
   get activityTimer(): Timer {
     return this.activityTimer$.getValue();
+  }
+
+  /**
+   * Activity timer
+   */
+  p: Participant;
+  public set participant(v: Participant) {
+    this.p = v;
+  }
+  public get particiapnt(): Participant {
+    return this.p;
   }
 }

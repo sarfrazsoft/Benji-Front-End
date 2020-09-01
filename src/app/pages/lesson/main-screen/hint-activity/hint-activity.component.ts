@@ -1,31 +1,24 @@
-import {
-  Component,
-  ElementRef,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ms-hint-activity',
   templateUrl: './hint-activity.component.html',
-  styleUrls: ['./hint-activity.component.scss']
+  styleUrls: ['./hint-activity.component.scss'],
 })
-export class MainScreenHintActivityComponent extends BaseActivityComponent
-  implements OnChanges {
+export class MainScreenHintActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   @ViewChild('sfxPlayer', { static: true }) sfxPlayer: ElementRef;
   sfxFile;
 
+  ngOnInit() {
+    super.ngOnInit();
+  }
   ngOnChanges(changes: SimpleChanges) {
     if (
       changes['activityState'] &&
       changes['activityState'].previousValue &&
-      changes['activityState'].previousValue.hintwordactivity.words_and_votes
-        .length <
-        changes['activityState'].currentValue.hintwordactivity.words_and_votes
-          .length
+      changes['activityState'].previousValue.hintwordactivity.words_and_votes.length <
+        changes['activityState'].currentValue.hintwordactivity.words_and_votes.length
     ) {
       this.playSfx('voteSubmitted');
     }
@@ -33,8 +26,7 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
     if (
       changes['activityState'] &&
       changes['activityState'].previousValue &&
-      changes['activityState'].previousValue.hintwordactivity
-        .voting_complete !==
+      changes['activityState'].previousValue.hintwordactivity.voting_complete !==
         changes['activityState'].currentValue.hintwordactivity.voting_complete
     ) {
       this.playSfx('revealWinner');
@@ -53,7 +45,7 @@ export class MainScreenHintActivityComponent extends BaseActivityComponent
 
   countVotes() {
     return this.activityState.hintwordactivity.words_and_votes
-      .map(w => w.votes)
+      .map((w) => w.votes)
       .reduce((partial_sum, a) => partial_sum + a);
   }
 }

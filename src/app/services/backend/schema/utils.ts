@@ -1,3 +1,5 @@
+import { ParticipantCode } from './activities';
+
 export interface Timer {
   id: number;
   status: string;
@@ -46,8 +48,9 @@ export interface BuildAPitchEntry {
 }
 
 export interface BuildAPitchPitch {
-  user: number;
+  participant: ParticipantCode;
   buildapitchentry_set: Array<BuildAPitchEntry>;
+  votes: number;
 }
 
 export interface TitleComponent {

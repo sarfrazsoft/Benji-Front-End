@@ -1,10 +1,6 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ContextService } from 'src/app/services';
-import {
-  MCQChoice,
-  MCQSubmitAnswerEvent,
-  Timer,
-} from 'src/app/services/backend/schema';
+import { MCQChoice, MCQSubmitAnswerEvent, Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -12,8 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './pop-quiz.component.html',
   styleUrls: ['./pop-quiz.component.scss'],
 })
-export class ParticipantPopQuizComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
+export class ParticipantPopQuizComponent extends BaseActivityComponent implements OnInit, OnChanges {
   questionTimerStarted = false;
   showResults = false;
   showQuestion = false;
@@ -39,23 +34,18 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   ngOnInit() {
-    this.activityState.mcqactivity.question.mcqchoice_set.sort(
-      (a, b) => a.id - b.id
-    );
+    super.ngOnInit();
+    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
     if (localStorage.getItem(this.localStorageItemName)) {
-      this.selectedChoice = JSON.parse(
-        localStorage.getItem(this.localStorageItemName)
-      );
+      this.selectedChoice = JSON.parse(localStorage.getItem(this.localStorageItemName));
     }
   }
 
   ngOnChanges() {
     const as = this.activityState;
-    this.activityState.mcqactivity.question.mcqchoice_set.sort(
-      (a, b) => a.id - b.id
-    );
+    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     if (
       as.mcqactivity.question_timer &&
       (as.mcqactivity.question_timer.status === 'running' ||
@@ -75,9 +65,8 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
         this.questionTimerStarted = true;
       }
     } else if (
-      as.base_activity.next_activity_start_timer &&
-      (as.base_activity.next_activity_start_timer.status === 'running' ||
-        as.base_activity.next_activity_start_timer.status === 'paused')
+      this.getNextActStartTimer() &&
+      (this.getNextActStartTimer().status === 'running' || this.getNextActStartTimer().status === 'paused')
     ) {
       this.questionTimerStarted = false;
       this.showQuestion = false;
@@ -103,8 +92,6 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent
   }
 
   getCorrectAnswer() {
-    return this.activityState.mcqactivity.question.mcqchoice_set.find(
-      (q) => q.is_correct
-    );
+    return this.activityState.mcqactivity.question.mcqchoice_set.find((q) => q.is_correct);
   }
 }

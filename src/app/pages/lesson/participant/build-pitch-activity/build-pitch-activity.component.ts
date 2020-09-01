@@ -1,11 +1,5 @@
 import { useAnimation } from '@angular/animations';
-import {
-  ChangeDetectorRef,
-  Component,
-  OnChanges,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   BuildAPitchActivity,
@@ -39,17 +33,15 @@ export class ParticipantBuildPitchActivityComponent
   yourPitchWon = false;
   expandedUserArray = {};
 
-  selectedUser = null;
+  selectedUser: number = null;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private contextService: ContextService
-  ) {
+  constructor(private cdr: ChangeDetectorRef, private contextService: ContextService) {
     super();
     this.builtPitch_set = [];
   }
 
   ngOnInit() {
+    super.ngOnInit();
     // how about we make the list of objects that
     // we are submitting to BE and each node can have an NgModel
     this.builtPitch_set = [];
@@ -65,25 +57,23 @@ export class ParticipantBuildPitchActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.buildapitchactivity;
-    this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort(
-      (a, b) => a.order - b.order
-    );
+    this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     this.setTimer(this.act);
     if (
-      this.act.build_countdown_timer.status === 'running' &&
-      this.act.buildapitchpitch_set.filter(
-        (e) => e.user === this.activityState.your_identity.id
-      ).length === 0
+      (this.act.build_countdown_timer.status === 'running' ||
+        this.act.build_countdown_timer.status === 'paused') &&
+      this.act.buildapitchpitch_set.filter((e) => e.participant.participant_code === this.myParticipantCode)
+        .length === 0
     ) {
       this.createPitch = true;
     } else if (
-      (this.act.buildapitchpitch_set.filter(
-        (e) => e.user === this.activityState.your_identity.id
-      ).length > 0 ||
-        this.act.build_countdown_timer.status === 'ended') &&
+      (this.act.buildapitchpitch_set.filter((e) => e.participant.participant_code === this.myParticipantCode)
+        .length > 0 ||
+        this.act.build_countdown_timer.status === 'ended' ||
+        this.act.build_countdown_timer.status === 'cancelled') &&
       !this.showMyPitch &&
       !this.voteNow &&
-      !this.act.winning_user &&
+      !this.act.winning_participant &&
       !this.act.voting_done &&
       !this.thanksForVote
     ) {
@@ -98,7 +88,8 @@ export class ParticipantBuildPitchActivityComponent
       this.act.sharing_done &&
       !this.act.voting_done &&
       !this.thanksForVote &&
-      this.act.vote_countdown_timer.status === 'running'
+      (this.act.vote_countdown_timer.status === 'running' ||
+        this.act.vote_countdown_timer.status === 'paused')
     ) {
       if (
         Object.entries(this.expandedUserArray).length === 0 &&
@@ -109,11 +100,11 @@ export class ParticipantBuildPitchActivityComponent
       this.createPitch = false;
       this.showMyPitch = false;
       this.voteNow = true;
-    } else if (this.act.voting_done && this.act.winning_user) {
+    } else if (this.act.voting_done && this.act.winning_participant) {
       this.showMyPitch = false;
       this.voteNow = false;
       this.thanksForVote = false;
-      if (this.act.winning_user.id === this.activityState.your_identity.id) {
+      if (this.act.winning_participant.participant_code === this.myParticipantCode) {
         this.yourPitchWon = true;
       } else {
         this.lookAtWinningPitch = true;
@@ -128,8 +119,8 @@ export class ParticipantBuildPitchActivityComponent
       this.contextService.activityTimer = { status: 'cancelled' } as Timer;
     } else if (act.sharing_done && !act.voting_done) {
       this.contextService.activityTimer = act.vote_countdown_timer;
-    } else if (act.sharing_done && act.voting_done && act.winning_user) {
-      const timer = this.activityState.base_activity.next_activity_start_timer;
+    } else if (act.sharing_done && act.voting_done && act.winning_participant) {
+      const timer = this.getNextActStartTimer();
       this.contextService.activityTimer = timer;
     }
   }
@@ -137,7 +128,7 @@ export class ParticipantBuildPitchActivityComponent
   fillExpandedUserArray() {
     // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     this.activityState.buildapitchactivity.buildapitchpitch_set.forEach((v) => {
-      this.expandedUserArray['' + v.user] = false;
+      this.expandedUserArray['' + v.participant.participant_code] = false;
     });
   }
 
@@ -145,10 +136,7 @@ export class ParticipantBuildPitchActivityComponent
     this.pitchValid = true;
     for (let i = 0; i < this.builtPitch_set.length; i++) {
       const element = this.builtPitch_set[i];
-      if (
-        this.builtPitch_set[i].value === null ||
-        this.builtPitch_set[i].value === ''
-      ) {
+      if (this.builtPitch_set[i].value === null || this.builtPitch_set[i].value === '') {
         this.pitchValid = false;
       }
     }
@@ -161,17 +149,12 @@ export class ParticipantBuildPitchActivityComponent
     const buildapitchsubmissionentry_set = [];
     this.builtPitch_set.forEach((p) => {
       if (p.value) {
-        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(
-          p,
-          p.value
-        );
+        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p, p.value);
         buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
       }
     });
 
-    this.sendMessage.emit(
-      new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set)
-    );
+    this.sendMessage.emit(new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set));
     this.pitchSubmitted = true;
   }
 
@@ -188,13 +171,16 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   yourPitchText() {
-    return this.getPitchText(this.activityState.your_identity.id);
+    return this.getPitchText(this.myParticipantCode);
   }
 
   userPitchExists(userId) {
-    // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
+    // console.log(this.myParticipantCode);
+    // console.log(userId);
+    // // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
+    // console.log(this.activityState.buildapitchactivity.buildapitchpitch_set);
     return this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      (e) => e.user === userId
+      (e) => e.participant.participant_code === userId
     ).length;
   }
 
@@ -202,15 +188,13 @@ export class ParticipantBuildPitchActivityComponent
     this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      (e) => e.user === userId
+      (e) => e.participant.participant_code === userId
     );
 
     let statement = '';
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
     blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter(
-        (v) => v.buildapitchblank === b.id
-      );
+      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
 
       let value = '';
       if (currentBlanksValue.length === 1) {
@@ -228,16 +212,14 @@ export class ParticipantBuildPitchActivityComponent
     this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      (e) => e.user === userId
+      (e) => e.participant.participant_code === userId
     );
 
     // let statement = '';
     let blankPitch = false;
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
     blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter(
-        (v) => v.buildapitchblank === b.id
-      );
+      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
 
       if (currentBlanksValue.length === 0) {
         blankPitch = true;
@@ -247,9 +229,7 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   getUserName(userId) {
-    return this.activityState.lesson_run.joined_users.filter(
-      (u) => u.id === userId
-    )[0].first_name;
+    return this.getParticipantName(userId);
   }
 
   submitVote(user) {

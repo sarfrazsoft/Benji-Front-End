@@ -1,11 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  OnDestroy,
-  Renderer2,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContextService } from 'src/app/services';
 import {
@@ -25,12 +18,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantTeletriviaActivityComponent
   extends BaseActivityComponent
-  implements OnChanges, OnDestroy {
-  constructor(
-    private renderer: Renderer2,
-    public dialog: MatDialog,
-    private contextService: ContextService
-  ) {
+  implements OnInit, OnChanges, OnDestroy {
+  constructor(private renderer: Renderer2, public dialog: MatDialog, private contextService: ContextService) {
     super();
   }
   currentQuestionIndex = 0;
@@ -48,6 +37,9 @@ export class ParticipantTeletriviaActivityComponent
   @ViewChild('kickofftemplate', { static: true }) initiatorModal;
   @ViewChild('endTemplate', { static: true }) endModal;
 
+  ngOnInit() {
+    super.ngOnInit();
+  }
   ngOnDestroy() {
     this.dialog.closeAll();
   }
@@ -89,17 +81,13 @@ export class ParticipantTeletriviaActivityComponent
 
   participantInCircle() {
     return (
-      this.activityState.teletriviaactivity.users_in_circle.find(
-        (e) => e.id === this.activityState.your_identity.id
-      ) !== undefined
+      this.activityState.teletriviaactivity.users_in_circle.find((e) => e.id === this.myParticipantCode) !==
+      undefined
     );
   }
 
   participantIsInitiator() {
-    return (
-      this.activityState.teletriviaactivity.first_user_in_chain.id ===
-      this.activityState.your_identity.id
-    );
+    return this.activityState.teletriviaactivity.first_user_in_chain.id === this.myParticipantCode;
   }
 
   sendReadyState() {
@@ -116,16 +104,13 @@ export class ParticipantTeletriviaActivityComponent
 
   questionTimeUpCallback() {
     this.revealAnswer = true;
-    this.answerExplanation =
-      'On no! You ran out of time! This was the correct answer.';
+    this.answerExplanation = 'On no! You ran out of time! This was the correct answer.';
   }
 
   submitAnswer(choice) {
     this.questionTimer.stopTimer(false);
 
-    const question = this.activityState.teletriviaactivity.questions[
-      this.currentQuestionIndex
-    ];
+    const question = this.activityState.teletriviaactivity.questions[this.currentQuestionIndex];
     this.sendMessage.emit(new TeleTriviaSubmitAnswerEvent(question, choice));
     this.selectedAnswerIndex = choice.id;
     this.revealAnswer = true;

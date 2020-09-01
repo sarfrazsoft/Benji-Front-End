@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { VideoStateService } from 'src/app/services';
 import { EndEvent, PauseActivityEvent } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -14,10 +7,9 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   selector: 'benji-ms-activity-video',
   templateUrl: './video-activity.component.html',
   styleUrls: [],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
-export class MainScreenVideoActivityComponent extends BaseActivityComponent
-  implements OnInit, OnDestroy {
+export class MainScreenVideoActivityComponent extends BaseActivityComponent implements OnInit, OnDestroy {
   @ViewChild('player', { static: true }) player: ElementRef;
   private videoPlaying = true;
   public _videoURL;
@@ -28,6 +20,7 @@ export class MainScreenVideoActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this._videoURL = this.activityState.videoactivity.video_url;
     this.player.nativeElement.load();
     this.player.nativeElement.play();

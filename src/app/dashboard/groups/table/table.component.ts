@@ -1,13 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { HttpClient } from '@angular/common/http';
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,7 +16,7 @@ import { GroupsService } from '../services';
 @Component({
   selector: 'benji-groups-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   private eventsSubscription: Subscription;
@@ -33,7 +26,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     'group_name',
     'member_count',
     // 'createdOn',
-    'viewDetails'
+    'viewDetails',
   ];
 
   data: any = [];
@@ -55,9 +48,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.eventsSubscription = this.events.subscribe(() =>
-      this.deleteSelectedGroups()
-    );
+    this.eventsSubscription = this.events.subscribe(() => this.deleteSelectedGroups());
   }
 
   ngOnDestroy() {
@@ -101,22 +92,17 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     if (selectedGroups.length > 0) {
       const a = selectedGroups.length === 1 ? 'this' : 'these';
       const b = selectedGroups.length === 1 ? '' : 's';
-      const msg =
-        'Are you sure you want to delete ' +
-        selectedGroups.length +
-        ' group' +
-        b +
-        '?';
+      const msg = 'Are you sure you want to delete ' + selectedGroups.length + ' group' + b + '?';
       this.dialogRef = this.dialog
         .open(ConfirmationDialogComponent, {
           data: {
-            confirmationMessage: msg
+            confirmationMessage: msg,
           },
           disableClose: true,
-          panelClass: 'dashboard-dialog'
+          panelClass: 'dashboard-dialog',
         })
         .afterClosed()
-        .subscribe(res => {
+        .subscribe((res) => {
           if (res) {
             console.log(selectedGroups);
           }
@@ -138,9 +124,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.data.forEach((row) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -148,14 +132,12 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${
-      this.selection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   viewGroup(row: Group) {
-    this.router.navigate([row.group_name], {
-      relativeTo: this.activatedRoute
-    });
+    // this.router.navigate([row.group_name], {
+    //   relativeTo: this.activatedRoute
+    // });
   }
 }

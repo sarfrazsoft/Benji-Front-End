@@ -10,17 +10,10 @@
     </div>
     <h1 class="primary-color pn-700">Break out</h1>
 
-    <p class="secondary-color-dark pn-500">
-      Let us know what breakout room you've been placed in.
-    </p>
+    <p class="secondary-color-dark pn-500">Let us know what breakout room you've been placed in.</p>
   </div>
-  <div
-    fxFlex="66%"
-    class="mainscreen-activity__column bg-secondary-color-lightest pair-activity__pairs"
-  >
-    <p class="ms-act__section-text secondary-color-dark">
-      Breakout Rooms
-    </p>
+  <div fxFlex="66%" class="mainscreen-activity__column bg-secondary-color-lightest pair-activity__pairs">
+    <p class="ms-act__section-text secondary-color-dark">Breakout Rooms</p>
     <ul class="ul-find-partner">
       <li
         class="li-find-partner secondary-color-dark pn-600"
@@ -30,7 +23,7 @@
         }"
         fxLayoutAlign="start center"
       >
-        <span> {{ user.first_name + " " + user.last_name }} - &nbsp; </span>
+        <span> {{ getUserName(user) }} - &nbsp; </span>
         <ng-select
           class="external-grouping-controls"
           [items]="breakoutRooms"
@@ -38,7 +31,7 @@
           placeholder="Unassigned"
           [clearable]="false"
           bindValue="id"
-          (change)="assignRoom($event, user.id)"
+          (change)="assignRoom($event, user)"
           [(ngModel)]="usersBreakoutRooms[i]"
           appendTo="body"
           [searchable]="false"

@@ -1,10 +1,8 @@
-<div fxLayout="column" class="mainscreen-activity" style="position: relative;">
+<div fxLayout="column" class="mainscreen-activity" style="position: relative">
   <div class="lesson-top-banner" fxLayout="row">
     <div fxFlex="40%">
       <h1 class="pn-500">
-        <span class="primary-color pn-700">
-          Fill-in-the-blank
-        </span>
+        <span class="primary-color pn-700"> Fill-in-the-blank </span>
       </h1>
     </div>
     <div fxFlex="60%" fxLayoutAlign="center center">
@@ -13,17 +11,8 @@
       </h2>
     </div>
   </div>
-  <div
-    class="create-pitches"
-    *ngIf="createPitches"
-    fxFlex="1 0 0"
-    fxLayout="row"
-  >
-    <div
-      class="activity-instructions bg-white"
-      fxFlex="60%"
-      fxLayoutAlign="start center"
-    >
+  <div class="create-pitches" *ngIf="createPitches" fxFlex="1 0 0" fxLayout="row">
+    <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
       <div fxLayoutGap="4vw">
         <div fxFlex="25%">
           <div class="ms-emoji-container smaller-emoji">
@@ -45,19 +34,16 @@
           >
             <img [src]="checkIcon" alt="launch" />
             <div class="instruction">
-              {{
-                activityState.buildapitchactivity.buildapitchpitch_set.length
-              }}/{{ activityState.lesson_run.joined_users.length }} submitted
+              {{ activityState.buildapitchactivity.buildapitchpitch_set.length }}/{{
+                activityState.lesson_run.participant_set.length
+              }}
+              submitted
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="bg-secondary-color-lightest"
-      fxFlex="40%"
-      fxLayoutAlign="center center"
-    >
+    <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
       <app-radial-timer
         [timer]="activityState.buildapitchactivity.build_countdown_timer"
         endStateText="Done!"
@@ -68,11 +54,7 @@
   </div>
 
   <div class="start-pitches" *ngIf="sharePitches" fxFlex="1 0 0" fxLayout="row">
-    <div
-      class="activity-instructions bg-white"
-      fxFlex="100%"
-      fxLayoutAlign="start center"
-    >
+    <div class="activity-instructions bg-white" fxFlex="100%" fxLayoutAlign="start center">
       <div fxLayoutGap="4vw">
         <div fxFlex="15%">
           <div class="ms-emoji-container smaller-emoji">
@@ -81,13 +63,8 @@
         </div>
         <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
           <h2 class="secondary-color-dark pn-600 discuss-instruction">
-            <em class="capitalize">
-              {{
-                activityState.buildapitchactivity.share_start_user.first_name
-              }},
-            </em>
-            you’re kicking off the sharing. Everyone present your statements in
-            a clockwise direction.
+            <em class="capitalize"> {{ shareStartUser }}, </em>
+            you’re kicking off the sharing. Everyone present your statements in a clockwise direction.
           </h2>
           <div
             class="info-subsection primary-color-lighter pn-500"
@@ -99,14 +76,10 @@
             </div>
 
             <div class="instruction">
-              Once everyone has shared, press the ‘Done’ button on this device
-              to finish the activity.
+              Once everyone has shared, press the ‘Done’ button on this device to finish the activity.
             </div>
             <div>
-              <button
-                class="indigo-launch-button bg-primary-color-dark pn-700"
-                (click)="nextActivity()"
-              >
+              <button class="indigo-launch-button bg-primary-color-dark pn-700" (click)="nextActivity()">
                 Done
                 <mat-icon class="icon-white">arrow_forward</mat-icon>
               </button>
@@ -118,11 +91,7 @@
   </div>
 
   <div class="vote-for-pitches" *ngIf="voteNow" fxFlex="1 0 0" fxLayout="row">
-    <div
-      class="activity-instructions bg-white"
-      fxFlex="60%"
-      fxLayoutAlign="start center"
-    >
+    <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
       <div fxLayoutGap="4vw">
         <div fxFlex="25%">
           <div class="ms-emoji-container smaller-emoji">
@@ -130,24 +99,16 @@
           </div>
         </div>
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-          <h2
-            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
-          >
-            Vote on your favorite!
-          </h2>
+          <h2 class="secondary-color-dark pn-600 discuss-instruction pitch-text">Vote on your favorite!</h2>
           <div
             class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
-            <img
-              class="main-screen-utility-icons"
-              [src]="checkIcon"
-              alt="launch"
-            />
+            <img class="main-screen-utility-icons" [src]="checkIcon" alt="launch" />
             <div class="instruction">
               {{ activityState.buildapitchactivity.votes.length }}/{{
-                activityState.lesson_run.joined_users.length
+                activityState.lesson_run.participant_set.length
               }}
               votes submitted
             </div>
@@ -155,11 +116,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="bg-secondary-color-lightest"
-      fxFlex="40%"
-      fxLayoutAlign="center center"
-    >
+    <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
       <app-radial-timer
         [timer]="activityState.buildapitchactivity.vote_countdown_timer"
         endStateText="Done!"
@@ -169,17 +126,8 @@
     </div>
   </div>
 
-  <div
-    class="votes-complete"
-    *ngIf="votesComplete"
-    fxFlex="1 0 0"
-    fxLayout="row"
-  >
-    <div
-      class="activity-instructions bg-white"
-      fxFlex="100%"
-      fxLayoutAlign="start center"
-    >
+  <div class="votes-complete" *ngIf="votesComplete" fxFlex="1 0 0" fxLayout="row">
+    <div class="activity-instructions bg-white" fxFlex="100%" fxLayoutAlign="start center">
       <div fxLayoutGap="4vw" fxFlex="100%">
         <div fxFlex="15%">
           <div class="ms-emoji-container smaller-emoji">
@@ -190,13 +138,11 @@
           <h2 class="secondary-color-dark pn-600 discuss-instruction">
             Aaaand the winner is
             <em class="capitalize">
-              {{ activityState.buildapitchactivity.winning_user.first_name }}
+              {{ winningUser }}
             </em>
           </h2>
           <div class="winning-pitch" fxLayout="row" fxLayoutAlign="start start">
-            <div class="qoutation-marks">
-              “
-            </div>
+            <div class="qoutation-marks">“</div>
 
             <h2
               class="secondary-color-dark pn-600 discuss-instruction pitch-text"
@@ -209,7 +155,7 @@
   </div>
   <div class="" *ngIf="votesComplete">
     <benji-linear-timer
-      [timer]="activityState.base_activity.next_activity_start_timer"
+      [timer]="getNextActStartTimer()"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>

@@ -9,18 +9,14 @@
       <app-b-twemoji emoji="🏁"> </app-b-twemoji>
     </div>
     <div class="activity-title-container">
-      <h1 class="primary-color pn-700">
-        Pop quiz complete!
-      </h1>
+      <h1 class="primary-color pn-700">Pop quiz complete!</h1>
     </div>
     <div class="activity-title-description-container">
-      <p class="secondary-color-dark pn-500">
-        How did you do? Check your phone for your score
-      </p>
+      <p class="secondary-color-dark pn-500">How did you do? Check your phone for your score</p>
     </div>
     <div class="linear-timer-container">
       <benji-linear-timer
-        [timer]="activityState.base_activity.next_activity_start_timer"
+        [timer]="getNextActStartTimer()"
         [endAudio]="'bell.wav'"
         [timerOffset]="avgServerTimeOffset"
       ></benji-linear-timer>
@@ -28,39 +24,20 @@
   </div>
   <div *ngIf="singleUserLesson">
     <div class="twemoji-container">
-      <app-b-twemoji
-        class="body-emoji"
-        *ngIf="getPercentageScore() > 75"
-        emoji="🏆"
-      ></app-b-twemoji>
-      <app-b-twemoji
-        class="body-emoji"
-        *ngIf="getPercentageScore() <= 75"
-        emoji="🏁"
-      ></app-b-twemoji>
+      <app-b-twemoji class="body-emoji" *ngIf="getPercentageScore() > 75" emoji="🏆"></app-b-twemoji>
+      <app-b-twemoji class="body-emoji" *ngIf="getPercentageScore() <= 75" emoji="🏁"></app-b-twemoji>
     </div>
     <div class="activity-title-container">
-      <h1 class="primary-color pn-700">
-        Pop quiz complete!
-      </h1>
+      <h1 class="primary-color pn-700">Pop quiz complete!</h1>
     </div>
     <div class="activity-title-description-container">
-      <p class="secondary-color-dark pn-500">
-        {{ getUserScore() }}/{{ getTotalQuestions() }} correct!
-      </p>
+      <p class="secondary-color-dark pn-500">{{ getUserScore() }}/{{ getTotalQuestions() }} correct!</p>
     </div>
   </div>
 </div>
 
-<div
-  class="poll-result"
-  fxLayout="column"
-  fxLayoutAlign="center center"
-  *ngIf="showStatistics"
->
-  <div class="header" fxLayout="column" fxFlex="100%">
-    Results
-  </div>
+<div class="poll-result" fxLayout="column" fxLayoutAlign="center center" *ngIf="showStatistics">
+  <div class="header" fxLayout="column" fxFlex="100%">Results</div>
   <div class="content" fxLayout="column" fxLayoutGap="1.5%">
     <div class="question">
       {{ question }}
@@ -68,26 +45,17 @@
     <div fxLayoutGap="5%" *ngFor="let choice of choices; let i = index">
       <div class="options" fxFlex="100%">
         <div class="option">
-          <div
-            class="info white-color"
-            fxLayout="row"
-            fxLayoutAlign="space-between"
-          >
+          <div class="info white-color" fxLayout="row" fxLayoutAlign="space-between">
             <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
               <!-- <div class="identifier">{{ optionIdentifiers[i] }}.</div> -->
               <div class="text">{{ choice.text }}</div>
             </div>
             <div class="percentage" fxLayoutAlign="center center">
-              {{ choice.noOfResponses }}/{{
-                activityState.lesson_run.joined_users.length
-              }}
+              {{ choice.noOfResponses }}/{{ activityState.lesson_run.participant_set.length }}
             </div>
           </div>
           <div id="progressbar">
-            <div
-              class="bg-primary-color-light"
-              [style.width.%]="choice.responsePercent"
-            ></div>
+            <div class="bg-primary-color-light" [style.width.%]="choice.responsePercent"></div>
           </div>
         </div>
       </div>

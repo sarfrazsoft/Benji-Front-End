@@ -1,54 +1,24 @@
 // TODO remove activity if not used
-import {
-  Component,
-  ElementRef,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ms-mcq-activity',
   templateUrl: './mcq-activity.component.html',
-  styleUrls: ['./mcq-activity.component.scss']
+  styleUrls: ['./mcq-activity.component.scss'],
 })
-export class MainScreenMcqActivityComponent extends BaseActivityComponent
-  implements OnChanges {
+export class MainScreenMcqActivityComponent extends BaseActivityComponent implements OnChanges {
   pauseSeconds;
 
   @ViewChild('sfxPlayer', { static: false }) sfxPlayer: ElementRef;
   sfxFile: string;
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes['activityState'] &&
-      changes['activityState'].previousValue &&
-      (changes['activityState'].previousValue.base_activity
-        .next_activity_start_timer === null ||
-        changes['activityState'].previousValue.base_activity
-          .next_activity_start_timer === undefined) &&
-      changes['activityState'].currentValue.base_activity
-        .next_activity_start_timer !== null &&
-      changes['activityState'].currentValue.base_activity
-        .next_activity_start_timer !== undefined
-    ) {
-      this.playSfx('revealAnswer');
-    }
-  }
+  ngOnChanges(changes: SimpleChanges) {}
 
-  reveal() {
-    return (
-      this.activityState.base_activity.next_activity_start_timer !== null &&
-      this.activityState.base_activity.next_activity_start_timer !== undefined
-    );
-  }
+  reveal() {}
 
   correctChoice() {
-    return this.activityState.mcqactivity.question.mcqchoice_set.find(
-      choice => choice.is_correct
-    );
+    return this.activityState.mcqactivity.question.mcqchoice_set.find((choice) => choice.is_correct);
   }
 
   private playSfx(sfxType: string) {

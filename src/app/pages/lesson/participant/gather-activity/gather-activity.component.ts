@@ -6,11 +6,12 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './gather-activity.component.html',
   styleUrls: ['./gather-activity.component.scss'],
 })
-export class ParticiapantGatherActivityComponent extends BaseActivityComponent
-  implements OnInit {
+export class ParticiapantGatherActivityComponent extends BaseActivityComponent implements OnInit {
   constructor() {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 }

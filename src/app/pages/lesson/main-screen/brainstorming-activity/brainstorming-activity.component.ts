@@ -62,6 +62,7 @@ export class MainScreenBrainstormingActivityComponent
     '../../../../../assets//img/Desk_lightblue2.jpg',
   ];
   ngOnInit() {
+    super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
@@ -100,7 +101,7 @@ export class MainScreenBrainstormingActivityComponent
         this.submissionScreen = true;
         this.voteScreen = false;
         this.VnSComplete = false;
-        this.ideaSubmittedUsersCount = this.getUsersIdeas(act).length;
+        this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
       }
     } else if (this.VnSComplete) {
       if (state === 'next') {
@@ -154,7 +155,7 @@ export class MainScreenBrainstormingActivityComponent
         this.VnSComplete = false;
         this.timer = act.submission_countdown_timer;
         this.contextService.activityTimer = act.submission_countdown_timer;
-        this.ideaSubmittedUsersCount = this.getUsersIdeas(act).length;
+        this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
       } else if (act.voting_countdown_timer && !act.voting_complete) {
         this.voteScreen = true;
         this.submissionScreen = false;
@@ -166,7 +167,7 @@ export class MainScreenBrainstormingActivityComponent
         this.submissionScreen = false;
         this.voteScreen = false;
         this.VnSComplete = true;
-        this.timer = this.activityState.base_activity.next_activity_start_timer;
+        this.timer = this.getNextActStartTimer();
         this.contextService.activityTimer = this.timer;
       }
     }
@@ -206,12 +207,14 @@ export class MainScreenBrainstormingActivityComponent
         });
       }
     });
-    arr = arr.filter((v, i, s) => i === s.findIndex((t) => t.submitted_by_user === v.submitted_by_user));
+    arr = arr.filter(
+      (v, i, s) => i === s.findIndex((t) => t.submitting_participant === v.submitting_participant)
+    );
     return arr;
   }
 
   getVoteSubmittedUsersCount(act: BrainstormActivity) {
-    return act.user_vote_counts.length;
+    return act.participant_vote_counts.length;
   }
 
   sendCategorizeEvent(event) {

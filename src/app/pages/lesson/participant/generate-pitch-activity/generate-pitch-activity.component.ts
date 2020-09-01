@@ -5,10 +5,10 @@ import {
   PitchoMaticActivity,
   PitchoMaticBlank,
   PitchoMaticGroupMember,
+  PitchoMaticParticipantGeneratedEvent,
+  PitchoMaticParticipantInGroupEvent,
+  PitchoMaticParticipantReadyEvent,
   PitchoMaticSubmitFeedbackEvent,
-  PitchoMaticUserGeneratedEvent,
-  PitchoMaticUserInGroupEvent,
-  PitchoMaticUserReadyEvent,
 } from 'src/app/services/backend/schema';
 // import * as odoo from 'src/assets/js/odoo.js';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -68,16 +68,18 @@ export class ParticipantGeneratePitchActivityComponent
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     const state = this.activityState;
 
-    const currentUserID = state.your_identity.id;
+    const currentUserID = this.myParticipantCode;
     let currentMember: PitchoMaticGroupMember;
     state.pitchomaticactivity.pitchomaticgroup_set.forEach((group) => {
       group.pitchomaticgroupmember_set.forEach((member) => {
-        if (member.user.id === currentUserID) {
+        if (member.participant.participant_code === currentUserID) {
           currentMember = member;
         }
       });
@@ -93,8 +95,7 @@ export class ParticipantGeneratePitchActivityComponent
       this.checkUserActivity();
       this.splitIntoGroups = false;
       this.getCurrentUserPitchSet();
-      this.contextService.activityTimer =
-        state.pitchomaticactivity.prepare_timer;
+      this.contextService.activityTimer = state.pitchomaticactivity.prepare_timer;
       if (!currentMember.has_generated) {
         this.generatePitchSection = true;
       } else if (currentMember.has_generated && !currentMember.has_prepared) {
@@ -128,8 +129,7 @@ export class ParticipantGeneratePitchActivityComponent
       this.draftPitchSection = false;
       this.generatePitchSection = false;
       this.sharePitchSection = false;
-      this.contextService.activityTimer =
-        state.pitchomaticactivity.feedback_timer;
+      this.contextService.activityTimer = state.pitchomaticactivity.feedback_timer;
       if (this.isCurrentUserPitching()) {
         this.gettingFeedbackSection = true;
       } else {
@@ -145,8 +145,7 @@ export class ParticipantGeneratePitchActivityComponent
       this.sharePitchSection = false;
       this.thanksForFeedback = false;
       this.giveOthersFeedbackSection = false;
-      this.contextService.activityTimer =
-        state.pitchomaticactivity.discuss_timer;
+      this.contextService.activityTimer = state.pitchomaticactivity.discuss_timer;
       if (this.isCurrentUserPitching()) {
         this.shareFeedbackSection = false;
         this.gettingFeedbackSection = true;
@@ -192,11 +191,11 @@ export class ParticipantGeneratePitchActivityComponent
     //    1: {id: 77, value: "jedi mind-trick"}
     //    2: {id: 78, value: "analogy"}
 
-    const currentUserID = this.activityState.your_identity.id;
+    const currentUserID = this.myParticipantCode;
     let currentMember: PitchoMaticGroupMember;
     act.pitchomaticgroup_set.forEach((group) => {
       group.pitchomaticgroupmember_set.forEach((member) => {
-        if (member.user.id === currentUserID) {
+        if (member.participant.participant_code === currentUserID) {
           currentMember = member;
         }
       });
@@ -225,11 +224,9 @@ export class ParticipantGeneratePitchActivityComponent
       // ];
 
       blank_set.forEach((blank) => {
-        const choice = currentMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(
-          (el) => {
-            return el.pitchomaticblank === blank.id;
-          }
-        )[0].choice;
+        const choice = currentMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter((el) => {
+          return el.pitchomaticblank === blank.id;
+        })[0].choice;
 
         const value = blank.pitchomaticblankchoice_set.filter((el) => {
           return el.id === choice;
@@ -277,7 +274,7 @@ export class ParticipantGeneratePitchActivityComponent
         this.generatePitchSection = false;
         this.draftPitchSection = true;
 
-        this.sendMessage.emit(new PitchoMaticUserGeneratedEvent());
+        this.sendMessage.emit(new PitchoMaticParticipantGeneratedEvent());
       }, 10000);
     }
   }
@@ -291,7 +288,7 @@ export class ParticipantGeneratePitchActivityComponent
         this.pitchCriteriaRevealed = true;
         this.generatePitchSection = false;
         this.draftPitchSection = true;
-        this.sendMessage.emit(new PitchoMaticUserGeneratedEvent());
+        this.sendMessage.emit(new PitchoMaticParticipantGeneratedEvent());
       }
     }, 30000);
   }
@@ -303,12 +300,7 @@ export class ParticipantGeneratePitchActivityComponent
     let pitchText = '';
     const helpText = ['Pitch', 'to', 'using'];
     this.pitch_set.forEach((v, i) => {
-      pitchText =
-        pitchText +
-        helpText[i] +
-        ' <em class="primary-color">' +
-        v.value +
-        '</em> ';
+      pitchText = pitchText + helpText[i] + ' <em class="primary-color">' + v.value + '</em> ';
     });
     return pitchText;
   }
@@ -318,7 +310,7 @@ export class ParticipantGeneratePitchActivityComponent
   }
 
   savePitchNotes() {
-    this.sendMessage.emit(new PitchoMaticUserReadyEvent(this.pitchDraftNotes));
+    this.sendMessage.emit(new PitchoMaticParticipantReadyEvent(this.pitchDraftNotes));
     this.pitchNotesSaved = true;
     localStorage.removeItem('pitchDraftNotes');
   }
@@ -326,11 +318,11 @@ export class ParticipantGeneratePitchActivityComponent
   isCurrentUserPitching() {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
     const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
-    const pitchingMember = act.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set.filter((member) => member.is_pitching)[0];
+    const pitchingMember = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.filter(
+      (member) => member.is_pitching
+    )[0];
 
-    return pitchingMember.user.id === this.activityState.your_identity.id;
+    return pitchingMember.participant.participant_code === this.myParticipantCode;
   }
 
   submitAnswers(val) {
@@ -364,7 +356,7 @@ export class ParticipantGeneratePitchActivityComponent
   getCurrentUserGroup(): string {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
     const pitchingMember = act.pitchomaticgroup_set[0].pitchomaticgroupmember_set.filter(
-      (member) => member.user.id === this.activityState.your_identity.id
+      (member) => member.participant.participant_code === this.myParticipantCode
     )[0];
     if (pitchingMember) {
       return '1';
@@ -375,7 +367,7 @@ export class ParticipantGeneratePitchActivityComponent
 
   userInGroupEvent() {
     if (!this.userInGroup) {
-      this.sendMessage.emit(new PitchoMaticUserInGroupEvent());
+      this.sendMessage.emit(new PitchoMaticParticipantInGroupEvent());
       this.userInGroup = true;
     }
   }
@@ -391,10 +383,10 @@ export class ParticipantGeneratePitchActivityComponent
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
 
     const groupIndex = parseInt(this.getCurrentUserGroup(), 10) - 1;
-    const pitchingMember = act.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set.filter((member) => member.is_pitching)[0];
-    const name = pitchingMember.user.first_name;
+    const pitchingMember = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.filter(
+      (member) => member.is_pitching
+    )[0];
+    const name = this.getParticipantName(pitchingMember.participant.participant_code);
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
@@ -402,11 +394,11 @@ export class ParticipantGeneratePitchActivityComponent
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
     const blank_set: Array<PitchoMaticBlank> = act.pitchomaticblank_set;
     blank_set.sort((a, b) => a.order - b.order);
-    const currentUserID = this.activityState.your_identity.id;
+    const currentUserID = this.myParticipantCode;
     let currentMember: PitchoMaticGroupMember;
     act.pitchomaticgroup_set.forEach((group) => {
       group.pitchomaticgroupmember_set.forEach((member) => {
-        if (member.user.id === currentUserID) {
+        if (member.participant.participant_code === currentUserID) {
           currentMember = member;
         }
       });

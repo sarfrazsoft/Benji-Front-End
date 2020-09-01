@@ -14,7 +14,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './case-study-activity.component.html',
   styleUrls: ['./case-study-activity.component.scss'],
 })
-export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
+export class ParticipantCaseStudyActivityComponent
+  extends BaseActivityComponent
   implements OnInit, OnChanges {
   act: CaseStudyActivity;
   pitchDraftNotes = '';
@@ -27,6 +28,7 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
   }
 
@@ -40,7 +42,9 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
     });
     const myNoteTaker = this.getMyNoteTaker();
 
+    // if (myNoteTaker) {
     this.isDone = myNoteTaker.is_done;
+
     if (!myNoteTaker.is_done) {
       this.contextService.activityTimer = this.act.activity_countdown_timer;
     } else {
@@ -60,40 +64,42 @@ export class ParticipantCaseStudyActivityComponent extends BaseActivityComponent
           }
         }
       }
+      // }
     }
   }
 
   getMyNoteTaker() {
-    const userId = this.activityState.your_identity.id;
+    const userId = this.myParticipantCode;
     const myGroupFellows = this.getPeopleFromMyGroup();
-    for (let i = 0; i < this.act.casestudyuser_set.length; i++) {
-      const casestudyuser = this.act.casestudyuser_set[i];
-      if (myGroupFellows.includes(casestudyuser.benjiuser_id) && casestudyuser.role === 'Note Taker') {
+    for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
+      const casestudyuser = this.act.casestudyparticipant_set[i];
+      if (
+        myGroupFellows.includes(casestudyuser.participant.participant_code) &&
+        casestudyuser.role === 'Note Taker'
+      ) {
         return casestudyuser;
       }
     }
   }
 
   getPeopleFromMyGroup() {
-    const userId = this.activityState.your_identity.id;
+    const userId = this.myParticipantCode;
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
-      for (let j = 0; j < group.usergroupuser_set.length; j++) {
-        const user = group.usergroupuser_set[j].user;
-        if (user.id === userId) {
-          return group.usergroupuser_set.map((obj) => {
-            return obj.user.id;
-          });
-        }
+      for (let j = 0; j < group.participantgroupstatus_set.length; j++) {
+        const participantCode = group.participantgroupstatus_set[j].participant.participant_code;
+        return group.participantgroupstatus_set.map((obj) => {
+          return obj.participant.participant_code;
+        });
       }
     }
   }
 
   isUserNoteTaker() {
-    const userId = this.activityState.your_identity.id;
-    for (let i = 0; i < this.act.casestudyuser_set.length; i++) {
-      const user = this.act.casestudyuser_set[i];
-      if (userId === user.benjiuser_id) {
+    const userId = this.myParticipantCode;
+    for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
+      const user = this.act.casestudyparticipant_set[i];
+      if (userId === user.participant.participant_code) {
         if (user.role === 'Note Taker') {
           return true;
         } else {

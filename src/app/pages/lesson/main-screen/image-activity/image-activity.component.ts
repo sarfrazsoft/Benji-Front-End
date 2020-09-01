@@ -18,7 +18,8 @@ export class MainScreenImageActivityComponent extends BaseActivityComponent impl
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.act = this.activityState.imageactivity;
-    this.timer = this.act.next_activity_start_timer;
+    this.timer = this.getNextActStartTimer();
   }
 }

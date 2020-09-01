@@ -1,6 +1,7 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
+  CurrentRoundDetails,
   MontyHallActivity,
   MontyHallSelectDoorEvent,
 } from 'src/app/services/backend/schema';
@@ -11,7 +12,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './monty-hall-activity.component.html',
   styleUrls: ['./monty-hall-activity.component.scss'],
 })
-export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
+export class ParticipantMontyHallActivityComponent
+  extends BaseActivityComponent
   implements OnInit, OnChanges {
   act: MontyHallActivity;
   doors = [{ id: 1 }, { id: 2 }, { id: 3 }];
@@ -28,7 +30,9 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     this.act = this.activityState.montyhallactivity;
@@ -76,17 +80,17 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
   }
 
   hasUserMadeChoice() {
-    const userid = this.activityState.your_identity.id;
-    const userChoice = this.act.current_round_details.filter(
-      (u) => u.user === userid
+    const userid = this.myParticipantCode;
+    const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
+      (u) => u.participant.participant_code === userid
     );
     return userChoice[0].door_choice;
   }
 
   hasUserPickedAgain() {
-    const userid = this.activityState.your_identity.id;
-    const userChoice = this.act.current_round_details.filter(
-      (u) => u.user === userid
+    const userid = this.myParticipantCode;
+    const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
+      (u) => u.participant.participant_code === userid
     );
     if (userChoice[0].changed_choice === null) {
       return false;
@@ -96,9 +100,9 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
   }
 
   getUserInitialPickedDoor() {
-    const userid = this.activityState.your_identity.id;
-    const userChoice = this.act.current_round_details.filter(
-      (u) => u.user === userid
+    const userid = this.myParticipantCode;
+    const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
+      (u) => u.participant.participant_code === userid
     );
     if (userChoice.length) {
       return userChoice[0].door_choice;
@@ -106,9 +110,9 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
   }
 
   revealedDoor() {
-    const userid = this.activityState.your_identity.id;
-    const userChoice = this.act.current_round_details.filter(
-      (u) => u.user === userid
+    const userid = this.myParticipantCode;
+    const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
+      (u) => u.participant.participant_code === userid
     );
     return userChoice[0].door_reveal;
   }
@@ -144,9 +148,9 @@ export class ParticipantMontyHallActivityComponent extends BaseActivityComponent
   }
 
   isUserWinner() {
-    const userid = this.activityState.your_identity.id;
-    const userChoice = this.act.current_round_details.filter(
-      (u) => u.user === userid
+    const userid = this.myParticipantCode;
+    const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
+      (u) => u.participant.participant_code === userid
     );
     return userChoice[0].door_choice === userChoice[0].correct_door;
   }

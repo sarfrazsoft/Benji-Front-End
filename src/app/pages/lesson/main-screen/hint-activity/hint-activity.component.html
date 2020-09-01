@@ -2,9 +2,7 @@
   class="mainscreen-activity ms-act--multi-column hint-activity"
   *ngIf="!activityState.hintwordactivity.voting_complete"
 >
-  <div
-    class="mainscreen-activity__column mainscreen-activity__column--66 bg-off-white"
-  >
+  <div class="mainscreen-activity__column mainscreen-activity__column--66 bg-off-white">
     <div class="hint-activity__instruction-container flexer--center">
       <div class="ms-emoji-container">
         <app-b-twemoji emoji="🛎️"></app-b-twemoji>
@@ -17,25 +15,21 @@
     <div class="hint-activity__options-container" #listParent>
       <div class="hint-activity__section-title">
         <h3 class="pn-500">
-          <ng-container
-            *ngIf="!activityState.hintwordactivity.submission_complete"
-          >
+          <ng-container *ngIf="!activityState.hintwordactivity.submission_complete">
             <span class="primary-color-darkest">
               {{ activityState.hintwordactivity.words_and_votes.length }}
             </span>
             {{
               activityState.hintwordactivity.words_and_votes.length === 1
-                ? "Word submitted"
-                : "Words submitted"
+                ? 'Word submitted'
+                : 'Words submitted'
             }}
           </ng-container>
-          <ng-container
-            *ngIf="activityState.hintwordactivity.submission_complete"
-          >
+          <ng-container *ngIf="activityState.hintwordactivity.submission_complete">
             <span class="primary-color-darkest">
               {{ countVotes() }}
             </span>
-            {{ countVotes() === 1 ? "Vote submitted" : "Votes submitted" }}
+            {{ countVotes() === 1 ? 'Vote submitted' : 'Votes submitted' }}
           </ng-container>
         </h3>
       </div>
@@ -46,8 +40,7 @@
             [ngStyle]="{ 'font-size.px': voteFontSize }"
             *ngFor="let word of activityState.hintwordactivity.words_and_votes"
             [ngClass]="{
-              'long-list':
-                activityState.hintwordactivity.words_and_votes.length > 15
+              'long-list': activityState.hintwordactivity.words_and_votes.length > 15
             }"
           >
             {{ word.word }}
@@ -108,19 +101,16 @@
     </p>
 
     <p>
-      If you’re chatting with anyone in this group and you see that they’re
-      drifting off or distracted, just say “Hey…
+      If you’re chatting with anyone in this group and you see that they’re drifting off or distracted, just
+      say “Hey…
       {{ activityState.hintwordactivity.voted_word_text | titlecase }}.”
     </p>
 
-    <p>
-      It’s not a big deal, just a little reminder that we can listen a little
-      better.
-    </p>
+    <p>It’s not a big deal, just a little reminder that we can listen a little better.</p>
   </div>
   <div class="hint-activity__linear-timer-container">
     <benji-linear-timer
-      [timer]="activityState.base_activity.next_activity_start_timer"
+      [timer]="getNextActStartTimer()"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>

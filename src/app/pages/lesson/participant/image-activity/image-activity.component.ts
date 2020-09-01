@@ -11,5 +11,7 @@ export class ParticipantImageActivityComponent extends BaseActivityComponent imp
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 }

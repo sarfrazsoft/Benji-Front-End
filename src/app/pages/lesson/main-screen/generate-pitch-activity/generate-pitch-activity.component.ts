@@ -3,7 +3,8 @@ import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
   PitchoMaticActivity,
-  PitchoMaticBlank
+  PitchoMaticBlank,
+  PitchoMaticGroupMember,
 } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -11,7 +12,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-generate-pitch-activity',
   templateUrl: './generate-pitch-activity.component.html',
-  styleUrls: ['./generate-pitch-activity.component.scss']
+  styleUrls: ['./generate-pitch-activity.component.scss'],
 })
 export class MainScreenGeneratePitchActivityComponent
   extends BaseActivityComponent
@@ -27,14 +28,12 @@ export class MainScreenGeneratePitchActivityComponent
   shareFeedbackLT8 = false;
   shareFeedbackMT8 = false;
 
-  constructor(
-    private emoji: EmojiLookupService,
-    private contextService: ContextService
-  ) {
+  constructor(private emoji: EmojiLookupService, private contextService: ContextService) {
     super();
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.infoIcon = info.parameters.infoIcon;
@@ -106,18 +105,16 @@ export class MainScreenGeneratePitchActivityComponent
     blank_set.sort((a, b) => a.order - b.order);
 
     let pitchInfo = '';
-    const pitchingMember = act.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
+    const pitchingMember = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.filter(
+      (member) => member.is_pitching
+    )[0];
 
-    blank_set.forEach(blank => {
-      const choice = pitchingMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter(
-        el => {
-          return el.pitchomaticblank === blank.id;
-        }
-      )[0].choice;
+    blank_set.forEach((blank) => {
+      const choice = pitchingMember.pitch.pitchomaticgroupmemberpitchchoice_set.filter((el) => {
+        return el.pitchomaticblank === blank.id;
+      })[0].choice;
 
-      const value = blank.pitchomaticblankchoice_set.filter(el => {
+      const value = blank.pitchomaticblankchoice_set.filter((el) => {
         return el.id === choice;
       })[0].value;
 
@@ -125,69 +122,63 @@ export class MainScreenGeneratePitchActivityComponent
         id: blank.id,
         label: blank.label,
         order: blank.order,
-        value: value
+        value: value,
       });
     });
 
     let pitchText = '';
     const helpText = ['is pitching', 'to', 'using'];
     pitch_set.forEach((v, i) => {
-      pitchText =
-        pitchText +
-        helpText[i] +
-        ' <em class="primary-color">' +
-        v.value +
-        '</em> ';
+      pitchText = pitchText + helpText[i] + ' <em class="primary-color">' + v.value + '</em> ';
     });
 
     pitchInfo =
       '<em class="primary-color">' +
-      pitchingMember.user.first_name.charAt(0).toUpperCase() +
-      pitchingMember.user.first_name.slice(1) +
+      this.getParticipantName(pitchingMember.participant.participant_code).charAt(0).toUpperCase() +
+      this.getParticipantName(pitchingMember.participant.participant_code).slice(1) +
       '</em> ' +
       pitchText;
     return pitchInfo;
   }
 
-  getCurrentPitchingUser(groupIndex) {
+  getCurrentPitchingUser(groupIndex: number) {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
 
-    const pitchingMember = act.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
-    const name = pitchingMember.user.first_name;
+    const pitchingMember = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.filter(
+      (member) => member.is_pitching
+    )[0];
+    const name = this.getParticipantName(pitchingMember.participant.participant_code);
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
   getGroupEmoji(groupIndex) {
-    return this.activityState.pitchomaticactivity.pitchomaticgroup_set[
-      groupIndex
-    ].group_emoji;
+    return this.activityState.pitchomaticactivity.pitchomaticgroup_set[groupIndex].group_emoji;
   }
 
   getGroupMembers(groupIndex) {
-    return this.activityState.pitchomaticactivity.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set;
+    return this.activityState.pitchomaticactivity.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set;
+  }
+
+  getUserName(u: PitchoMaticGroupMember) {
+    this.getParticipantName(u.participant.participant_code);
   }
 
   getDiscussionStarterUser(groupIndex) {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
 
-    const pitchingMemberIndex = act.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set.findIndex(member => member.is_pitching);
+    const pitchingMemberIndex = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.findIndex(
+      (member) => member.is_pitching
+    );
 
-    const groupSet =
-      act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set;
+    const groupSet = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set;
 
     let randomPerson = '';
     let name = '';
     if (pitchingMemberIndex === 0) {
       // first person in the group is pitching
-      name = groupSet[groupSet.length - 1].user.first_name;
+      name = this.getParticipantName(groupSet[groupSet.length - 1].participant.participant_code);
     } else {
-      name = groupSet[pitchingMemberIndex - 1].user.first_name;
+      name = this.getParticipantName(groupSet[pitchingMemberIndex - 1].participant.participant_code);
     }
     randomPerson = name.charAt(0).toUpperCase() + name.slice(1);
     return randomPerson;
@@ -195,15 +186,14 @@ export class MainScreenGeneratePitchActivityComponent
 
   getFbackSubmittedCount(groupIndex) {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
-    const pitchingMember = act.pitchomaticgroup_set[
-      groupIndex
-    ].pitchomaticgroupmember_set.filter(member => member.is_pitching)[0];
+    const pitchingMember = act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.filter(
+      (member) => member.is_pitching
+    )[0];
     return pitchingMember.feedback_count;
   }
 
   getGroupUsersCount(groupIndex) {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
-    return act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set
-      .length;
+    return act.pitchomaticgroup_set[groupIndex].pitchomaticgroupmember_set.length;
   }
 }

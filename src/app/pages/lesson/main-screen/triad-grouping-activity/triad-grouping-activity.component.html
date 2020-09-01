@@ -12,31 +12,23 @@
       </div>
       <h1 class="primary-color pn-700">Pair up</h1>
 
-      <p class="secondary-color-dark pn-500">
-        Find your partner and sit with them for the next activity.
-      </p>
-      <p class="secondary-color-dark pn-500">
-        Hit the ‘We’re ready’ button when you’re set!
-      </p>
+      <p class="secondary-color-dark pn-500">Find your partner and sit with them for the next activity.</p>
+      <p class="secondary-color-dark pn-500">Hit the ‘We’re ready’ button when you’re set!</p>
     </div>
     <div class="bg-secondary-color-lightest pair-activity__pairs" fxFlex="50%">
-      <p class="ms-act__section-text secondary-color-dark">
-        Find your partner
-      </p>
+      <p class="ms-act__section-text secondary-color-dark">Find your partner</p>
       <ul class="ul-find-partner">
         <li
           class="li-find-partner pn-600"
-          *ngFor="let userGroup of triadAct.usergroup_set"
+          *ngFor="let userGroup of triadAct.group_set"
           [ngClass]="{
             'secondary-color-dark': !isGroupFound(userGroup),
             'primary-color-darkest': isGroupFound(userGroup),
-            'long-list': triadAct.usergroup_set.length > 15
+            'long-list': triadAct.group_set.length > 15
           }"
         >
           {{ getGroupText(userGroup) }}
-          <mat-icon class="ready-icon" *ngIf="isGroupFound(userGroup)">
-            check
-          </mat-icon>
+          <mat-icon class="ready-icon" *ngIf="isGroupFound(userGroup)"> check </mat-icon>
         </li>
       </ul>
       <benji-linear-timer

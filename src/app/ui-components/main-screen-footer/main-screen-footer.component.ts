@@ -215,7 +215,7 @@ export const acts = [
         combo_text: 'Why did you provide your answer above?',
       },
     ],
-    answered_users: [],
+    answered_participants: [],
     titlecomponent: {
       title_image: 'emoji://memo',
       title: 'Pre-assessment.',
@@ -489,7 +489,7 @@ export const acts = [
       ],
     },
     question_timer: null,
-    answered_users: [],
+    answered_participants: [],
     quiz_leaderboard: [
       {
         id: 8,
@@ -660,7 +660,7 @@ export const acts = [
       ],
     },
     question_timer: null,
-    answered_users: [],
+    answered_participants: [],
     quiz_leaderboard: [
       {
         id: 8,
@@ -759,7 +759,7 @@ export const acts = [
       ],
     },
     question_timer: null,
-    answered_users: [],
+    answered_participants: [],
     quiz_leaderboard: null,
     titlecomponent: {
       title_image: 'emoji://thumbsup',
@@ -802,7 +802,7 @@ export const acts = [
         combo_text: 'Why did you provide your answer above?',
       },
     ],
-    answered_users: [],
+    answered_participants: [],
     titlecomponent: {
       title_image: 'emoji://memo',
       title: 'Post-assessment',

@@ -1,9 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import {
-  MCQChoiceSet,
-  MCQSubmitAnswerEvent,
-} from 'src/app/services/backend/schema';
+import { LeaderBoard, MCQChoiceSet, MCQSubmitAnswerEvent } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -11,11 +8,12 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './pop-quiz.component.html',
   styleUrls: ['./pop-quiz.component.scss'],
 })
-export class MainScreenPopQuizComponent extends BaseActivityComponent
+export class MainScreenPopQuizComponent
+  extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   radialTimer;
   showLeaderboard = false;
-  leaderboard = [];
+  leaderboard: Array<LeaderBoard> = [];
   revealAnswers = false;
   title = 'Pop Quiz!';
 
@@ -30,14 +28,11 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   ngOnInit() {
+    super.ngOnInit();
     if (this.peakBackState) {
-      this.eventsSubscription = this.activityStage.subscribe((state) =>
-        this.changeStage(state)
-      );
+      this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
-    this.activityState.mcqactivity.question.mcqchoice_set.sort(
-      (a, b) => a.id - b.id
-    );
+    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     const act = this.activityState.mcqactivity;
     if (act.titlecomponent) {
       this.title = act.titlecomponent.title;
@@ -47,11 +42,9 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   ngOnChanges() {
     const as = this.activityState;
     const qTimer = as.mcqactivity.question_timer;
-    const nt = as.base_activity.next_activity_start_timer;
+    const nt = this.getNextActStartTimer();
 
-    this.activityState.mcqactivity.question.mcqchoice_set.sort(
-      (a, b) => a.id - b.id
-    );
+    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
 
     if (this.peakBackState && this.peakBackStage === null) {
       // this.voteScreen = true;
@@ -67,10 +60,7 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
         });
       }
     } else if (!this.peakBackState) {
-      if (
-        qTimer &&
-        (qTimer.status === 'running' || qTimer.status === 'paused')
-      ) {
+      if (qTimer && (qTimer.status === 'running' || qTimer.status === 'paused')) {
         this.revealAnswers = false;
         this.radialTimer = qTimer;
       } else if (nt && (nt.status === 'running' || nt.status === 'paused')) {
@@ -95,21 +85,11 @@ export class MainScreenPopQuizComponent extends BaseActivityComponent
   }
 
   getChoiceSubmittedUsers() {
-    return this.activityState.mcqactivity.answered_users.length;
+    return this.activityState.mcqactivity.answered_participants.length;
   }
 
   getTotalUsers() {
-    return this.activityState.lesson_run.joined_users.length;
-  }
-
-  getUserName(id) {
-    const ju = this.activityState.lesson_run.joined_users;
-    const user = ju.find((u) => u.id === id);
-    if (user) {
-      return user.first_name;
-    } else {
-      return 'user';
-    }
+    return this.activityState.lesson_run.participant_set.length;
   }
 
   ngOnDestroy() {

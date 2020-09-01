@@ -9,11 +9,14 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './build-pitch-activity.component.html',
   styleUrls: ['./build-pitch-activity.component.scss'],
 })
-export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
+export class MainScreenBuildPitchActivityComponent
+  extends BaseActivityComponent
   implements OnInit, OnChanges {
   statement: string;
   infoIcon: string;
   checkIcon: string;
+  shareStartUser: string;
+  winningUser: string;
   constructor(private contextService: ContextService) {
     super();
   }
@@ -23,25 +26,20 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
   votesComplete = false;
 
   ngOnInit() {
+    super.ngOnInit();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.infoIcon = info.parameters.infoIcon;
         this.checkIcon = info.parameters.checkIcon;
       }
     });
-    const blanks: any = this.activityState.buildapitchactivity
-      .buildapitchblank_set;
+    const blanks: any = this.activityState.buildapitchactivity.buildapitchblank_set;
 
     blanks.sort((a, b) => a.order - b.order);
 
     this.statement = '';
     blanks.forEach((b) => {
-      this.statement =
-        this.statement +
-        b.label +
-        ' <em class="primary-color">(' +
-        b.temp_text +
-        ')</em> ';
+      this.statement = this.statement + b.label + ' <em class="primary-color">(' + b.temp_text + ')</em> ';
     });
   }
 
@@ -53,6 +51,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
       this.voteNow = false;
       this.votesComplete = false;
     } else if (act.building_done && !act.sharing_done) {
+      this.shareStartUser = this.getParticipantName(act.share_start_participant.participant_code);
       this.createPitches = false;
       this.sharePitches = true;
       this.voteNow = false;
@@ -62,11 +61,12 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
       this.sharePitches = false;
       this.voteNow = true;
       this.votesComplete = false;
-    } else if (act.sharing_done && act.voting_done && act.winning_user) {
+    } else if (act.sharing_done && act.voting_done && act.winning_participant) {
       this.createPitches = false;
       this.sharePitches = false;
       this.voteNow = false;
       this.votesComplete = true;
+      this.winningUser = this.getParticipantName(act.winning_participant.participant_code);
     }
   }
 
@@ -74,7 +74,7 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
     this.sendMessage.emit(new BuildAPitchSharingDoneEvent());
   }
 
-  getWinningPitch() {
+  getWinningPitch(): string {
     const votes = this.activityState.buildapitchactivity.votes;
 
     const v = Math.max.apply(
@@ -91,26 +91,21 @@ export class MainScreenBuildPitchActivityComponent extends BaseActivityComponent
     return this.getPitchText(obj.id);
   }
 
-  getPitchText(userId) {
+  getPitchText(userId): string {
     const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
     const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      (e) => e.user === userId
+      (e) => e.participant.participant_code === userId
     );
 
     let statement = '';
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
     blanks.sort((a, b) => a.order - b.order);
     blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter(
-        (v) => v.buildapitchblank === b.id
-      );
+      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
 
       let value = '';
       if (currentBlanksValue.length === 1) {
-        value =
-          ' <em class="primary-color">' +
-          currentBlanksValue[0].value +
-          '</em> ';
+        value = ' <em class="primary-color">' + currentBlanksValue[0].value + '</em> ';
       } else {
         value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
       }

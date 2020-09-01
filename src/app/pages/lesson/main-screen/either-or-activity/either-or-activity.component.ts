@@ -9,12 +9,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
-import {
-  Timer,
-  User,
-  WhereDoYouStandActivity,
-  WhereDoYouStandChoice,
-} from 'src/app/services/backend/schema';
+import { Timer, User, WhereDoYouStandActivity, WhereDoYouStandChoice } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { LowResponseDialogComponent } from '../../shared/dialogs';
 
@@ -23,13 +18,12 @@ import { LowResponseDialogComponent } from '../../shared/dialogs';
   templateUrl: './either-or-activity.component.html',
   styleUrls: ['./either-or-activity.component.scss'],
 })
-export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
+export class MainScreenEitherOrActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   state: WhereDoYouStandActivity;
   hideResultEmoji = false;
   dialogRef;
-  rightChoiceUsers: Array<User> = [];
-  leftChoiceUsers: Array<User> = [];
+  rightChoiceUsers: Array<number> = [];
+  leftChoiceUsers: Array<number> = [];
   isRemoteSession = true;
   @ViewChild('timer', { static: false }) timer;
 
@@ -51,6 +45,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.state = this.activityState.wheredoyoustandactivity;
 
     if (window.innerWidth < 1400) {
@@ -75,11 +70,11 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
     this.state = this.activityState.wheredoyoustandactivity;
     this.leftChoiceUsers = [];
     this.rightChoiceUsers = [];
-    this.state.user_preferences.forEach((p) => {
+    this.state.preferences.forEach((p) => {
       if (p.wheredoyoustandchoice.id === this.state.left_choice.id) {
-        this.leftChoiceUsers.push(p.user);
+        this.leftChoiceUsers.push(p.participant.participant_code);
       } else {
-        this.rightChoiceUsers.push(p.user);
+        this.rightChoiceUsers.push(p.participant.participant_code);
       }
     });
     if (
@@ -92,7 +87,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
       }
     } else if (
       this.state.prediction_complete &&
-      this.state.user_preferences.length === 0 &&
+      this.state.preferences.length === 0 &&
       this.state.preference_extra_countdown_timer === null
     ) {
       if (this.dialog) {
@@ -120,21 +115,15 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
   }
 
   getGroupPreferredChoice(): WhereDoYouStandChoice {
-    return this.eitherOrActivityService.getGroupChoice(
-      this.state,
-      'num_preferences'
-    );
+    return this.eitherOrActivityService.getGroupChoice(this.state, 'num_preferences');
   }
 
   getGroupPredictionChoice(): WhereDoYouStandChoice {
-    return this.eitherOrActivityService.getGroupChoice(
-      this.state,
-      'num_predictions'
-    );
+    return this.eitherOrActivityService.getGroupChoice(this.state, 'num_predictions');
   }
 
   getGroupPercentagePrediction() {
-    const numberOfUsers = this.activityState.lesson_run.joined_users.length;
+    const numberOfUsers = this.activityState.lesson_run.participant_set.length;
     let numberOfUsersWhoPredicted;
 
     const groupPrediction = Math.max.apply(
@@ -145,14 +134,13 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
     );
 
     numberOfUsersWhoPredicted =
-      this.state.choice_stats[0].num_predictions +
-      this.state.choice_stats[1].num_predictions;
+      this.state.choice_stats[0].num_predictions + this.state.choice_stats[1].num_predictions;
 
     return Math.trunc((groupPrediction / numberOfUsers) * 100);
   }
 
   getGroupPercentagePreference() {
-    const numberOfUsers = this.activityState.lesson_run.joined_users.length;
+    const numberOfUsers = this.activityState.lesson_run.participant_set.length;
 
     const groupPreference = Math.max.apply(
       Math,
@@ -170,9 +158,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent
     }
     const preferredChoice = this.getGroupPreferredChoice();
     const predictedChoice = this.getGroupPredictionChoice();
-    return preferredChoice.id === predictedChoice.id
-      ? 'Correct!'
-      : 'Incorrect!';
+    return preferredChoice.id === predictedChoice.id ? 'Correct!' : 'Incorrect!';
   }
 
   isGroupPredictionEvaluationTie(): boolean {

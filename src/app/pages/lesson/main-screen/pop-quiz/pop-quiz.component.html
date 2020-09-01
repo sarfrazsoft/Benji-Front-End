@@ -16,12 +16,8 @@
       </div>
     </div>
     <div class="" fxFlex="1 0 0" fxLayout="row">
-      <div
-        class="activity-instructions bg-white"
-        fxFlex="60%"
-        fxLayoutAlign="start center"
-      >
-        <div fxLayout="column" fxLayoutGap="1.8vh" style="width: 100%;">
+      <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
+        <div fxLayout="column" fxLayoutGap="1.8vh" style="width: 100%">
           <div class="quiz-question primary-color-darkest">
             {{ activityState.mcqactivity.question.question }}
           </div>
@@ -33,10 +29,7 @@
           >
             <div
               fxLayout="row"
-              *ngFor="
-                let option of activityState.mcqactivity.question.mcqchoice_set;
-                let i = index
-              "
+              *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
               [ngClass]="{
                 'success-color': option.is_correct && revealAnswers
               }"
@@ -54,10 +47,7 @@
             <button
               class="b-standard-button unselected main-screen-button"
               fxLayout="row"
-              *ngFor="
-                let option of activityState.mcqactivity.question.mcqchoice_set;
-                let i = index
-              "
+              *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
               (click)="singleUserSubmitAnswer(option)"
             >
               <div fxFlex="4vw">{{ optionIdentifiers[i] }}.</div>
@@ -89,20 +79,13 @@
       >
         <div class="">
           <div class="leaderboard">
-            <p class="header secondary-color-dark">
-              Leaderboard
-            </p>
+            <p class="header secondary-color-dark">Leaderboard</p>
             <ol>
-              <li
-                class="leader pn-600"
-                *ngFor="let leader of leaderboard | slice: 0:5; let i = index"
-              >
+              <li class="leader pn-600" *ngFor="let leader of leaderboard | slice: 0:5; let i = index">
                 <div fxLayoutAlign="space-between">
                   <span class="primary-color-darkest">
-                    <span class="leader-rank primary-color-darkest">
-                      {{ i + 1 }}.
-                    </span>
-                    {{ getUserName(leader.id) }}
+                    <span class="leader-rank primary-color-darkest"> {{ i + 1 }}. </span>
+                    {{ getParticipantName(leader.participant_code) }}
                   </span>
                   <span class="leader-score">{{ leader.score }}</span>
                 </div>

@@ -1,4 +1,4 @@
-import { Component, OnChanges, ViewEncapsulation } from '@angular/core';
+import { Component, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import { Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -9,13 +9,15 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./video-activity.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class ParticipantVideoActivityComponent extends BaseActivityComponent
-  implements OnChanges {
+export class ParticipantVideoActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   singleUserActivity;
   constructor(private contextService: ContextService) {
     super();
   }
 
+  ngOnInit() {
+    super.ngOnInit();
+  }
   ngOnChanges() {
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
     this.singleUserActivity = this.activityState.lesson.single_user_lesson;

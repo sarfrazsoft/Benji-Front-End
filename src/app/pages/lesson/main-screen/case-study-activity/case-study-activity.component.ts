@@ -1,8 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import {
-  CaseStudyActivity,
-  UserGroupSet,
-} from 'src/app/services/backend/schema';
+import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -10,40 +7,40 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './case-study-activity.component.html',
   styleUrls: ['./case-study-activity.component.scss'],
 })
-export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent
-  implements OnInit, OnChanges {
-  groups: Array<UserGroupSet>;
+export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
+  groups: Array<Group>;
   act: CaseStudyActivity;
   constructor() {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.groups = this.act.groups;
   }
 
-  getGroupText(userGroup: UserGroupSet): string {
-    return userGroup.usergroupuser_set
-      .map((u) => u.user.first_name)
+  getGroupText(userGroup: Group): string {
+    return userGroup.participantgroupstatus_set
+      .map((u) => this.getParticipantName(u.participant.participant_code))
       .join(' + ');
   }
 
-  isGroupDone(userGroup: UserGroupSet) {
-    const userId = userGroup.usergroupuser_set[0].user.id;
+  isGroupDone(userGroup: Group) {
+    const userId = userGroup.participantgroupstatus_set[0].participant.participant_code;
     const myNoteTaker = this.getMyNoteTaker(userId);
-    console.log(myNoteTaker.is_done);
     return myNoteTaker.is_done;
   }
 
-  getMyNoteTaker(userId) {
+  getMyNoteTaker(userId: number): CaseStudyParticipantSet {
     const myGroupFellows = this.getPeopleFromMyGroup(userId);
-    for (let i = 0; i < this.act.casestudyuser_set.length; i++) {
-      const casestudyuser = this.act.casestudyuser_set[i];
+    for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
+      const casestudyuser = this.act.casestudyparticipant_set[i];
       if (
-        myGroupFellows.includes(casestudyuser.benjiuser_id) &&
+        myGroupFellows.includes(casestudyuser.participant.participant_code) &&
         casestudyuser.role === 'Note Taker'
       ) {
         return casestudyuser;
@@ -51,14 +48,14 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent
     }
   }
 
-  getPeopleFromMyGroup(userId) {
+  getPeopleFromMyGroup(userId): Array<number> {
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
-      for (let j = 0; j < group.usergroupuser_set.length; j++) {
-        const user = group.usergroupuser_set[j].user;
-        if (user.id === userId) {
-          return group.usergroupuser_set.map((obj) => {
-            return obj.user.id;
+      for (let j = 0; j < group.participantgroupstatus_set.length; j++) {
+        const participantCode = group.participantgroupstatus_set[j].participant.participant_code;
+        if (participantCode === userId) {
+          return group.participantgroupstatus_set.map((obj) => {
+            return obj.participant.participant_code;
           });
         }
       }

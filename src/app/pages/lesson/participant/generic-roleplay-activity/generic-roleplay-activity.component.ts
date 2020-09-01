@@ -1,8 +1,8 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   FeedbackSubmitEventAnswer,
-  GenericRoleplayUserFeedbackEvent,
+  GenericRoleplayParticipantFeedbackEvent,
   RoleplayRole,
   RoleplayUser,
   Timer,
@@ -18,25 +18,26 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantGenericRoleplayActivityComponent
   extends BaseActivityComponent
-  implements OnChanges {
+  implements OnInit, OnChanges {
   roleplayPhase = true;
   feedbackPhase = false;
   giveFeedback = false;
   rplayTimer: Timer;
   feedbackTimer: Timer;
   timerInterval;
-  currentUser: User;
+  currentUser: number;
   observerSubmitted = false;
 
-  constructor(
-    private emoji: EmojiLookupService,
-    private contextService: ContextService
-  ) {
+  constructor(private emoji: EmojiLookupService, private contextService: ContextService) {
     super();
   }
 
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
   ngOnChanges() {
-    this.currentUser = this.activityState.your_identity;
+    this.currentUser = this.myParticipantCode;
 
     const act = this.activityState.genericroleplayactivity;
     this.contextService.activityTimer = act.activity_countdown_timer;
@@ -55,12 +56,11 @@ export class ParticipantGenericRoleplayActivityComponent
   }
 
   userFeedbackSubmitted(): boolean {
-    const userSet = this.activityState.genericroleplayactivity
-      .genericroleplayuser_set;
+    const userSet = this.activityState.genericroleplayactivity.genericroleplayparticipant_set;
 
     let submitted = false;
     userSet.forEach((user: RoleplayUser) => {
-      if (user.benjiuser_id === this.currentUser.id) {
+      if (user.participant.participant_code === this.currentUser) {
         submitted = user.feedback_submitted;
       }
     });
@@ -68,14 +68,13 @@ export class ParticipantGenericRoleplayActivityComponent
   }
 
   getParticipantRole(): RoleplayRole {
-    const userSet = this.activityState.genericroleplayactivity
-      .genericroleplayuser_set;
-    const roles = this.activityState.genericroleplayactivity
-      .genericroleplayrole_set;
+    const userSet = this.activityState.genericroleplayactivity.genericroleplayparticipant_set;
+    const roles = this.activityState.genericroleplayactivity.genericroleplayrole_set;
 
     let role: RoleplayRole;
     userSet.forEach((user: RoleplayUser) => {
-      if (user.benjiuser_id === this.currentUser.id) {
+      if (user.participant.participant_code === this.currentUser) {
+        console.log(roles.filter((r) => r.id === user.role)[0]);
         role = roles.filter((r) => r.id === user.role)[0];
       }
     });
@@ -115,7 +114,7 @@ export class ParticipantGenericRoleplayActivityComponent
         answers.push(ans);
       }
     }
-    this.sendMessage.emit(new GenericRoleplayUserFeedbackEvent(answers));
+    this.sendMessage.emit(new GenericRoleplayParticipantFeedbackEvent(answers));
     this.observerSubmitted = true;
   }
 }

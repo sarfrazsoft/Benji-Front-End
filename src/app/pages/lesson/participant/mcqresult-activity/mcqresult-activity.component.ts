@@ -8,7 +8,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './mcqresult-activity.component.html',
   styleUrls: ['./mcqresult-activity.component.scss'],
 })
-export class ParticipantMcqresultActivityComponent extends BaseActivityComponent
+export class ParticipantMcqresultActivityComponent
+  extends BaseActivityComponent
   implements OnInit, OnChanges {
   showStatistics = false;
   constructor(private contextService: ContextService) {
@@ -16,6 +17,7 @@ export class ParticipantMcqresultActivityComponent extends BaseActivityComponent
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
   }
   ngOnChanges() {
@@ -26,11 +28,9 @@ export class ParticipantMcqresultActivityComponent extends BaseActivityComponent
     }
   }
   getUserScore() {
-    const scoreCard = this.activityState.mcqresultsactivity.results_summary.find(
-      (r) => {
-        return r.id === this.activityState.your_identity.id;
-      }
-    );
+    const scoreCard = this.activityState.mcqresultsactivity.results_summary.find((r) => {
+      return r.participant_code === this.getParticipantCode();
+    });
 
     return scoreCard.score;
   }

@@ -2,20 +2,21 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import {
   ExternalGroupingActivity,
   ExternalGroupingSubmitGroupEvent,
-  User
+  User,
 } from 'src/app/services/backend/schema';
+import { Participant } from 'src/app/services/backend/schema/course_details';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ms-external-grouping-activity',
   templateUrl: './external-grouping-activity.component.html',
-  styleUrls: ['./external-grouping-activity.component.scss']
+  styleUrls: ['./external-grouping-activity.component.scss'],
 })
 export class MainScreenExternalGroupingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   act: ExternalGroupingActivity;
-  allUsers: Array<User>;
+  allUsers: Array<Participant>;
   breakoutRooms = [];
   // usersBreakoutRooms
   // length will be equal to joined users length
@@ -26,33 +27,38 @@ export class MainScreenExternalGroupingActivityComponent
   }
 
   ngOnInit() {
-    this.allUsers = this.activityState.lesson_run.joined_users;
+    super.ngOnInit();
+    this.allUsers = this.activityState.lesson_run.participant_set;
     for (let i = 0, j = 1; i < this.allUsers.length; i = i + 2, j++) {
       this.breakoutRooms.push({ id: j, name: 'Room #' + j });
     }
   }
 
   ngOnChanges() {
-    this.allUsers = this.activityState.lesson_run.joined_users;
+    this.allUsers = this.activityState.lesson_run.participant_set;
     this.act = this.activityState.externalgroupingactivity;
 
     this.usersBreakoutRooms = [];
     for (let i = 0; i < this.allUsers.length; i = i + 1) {
       const user = this.allUsers[i];
-      const roomId = this.getUserBreakoutRoom(user.id);
+      const roomId = this.getUserBreakoutRoom(user.participant_code);
       this.usersBreakoutRooms.push(roomId);
     }
   }
 
-  getUserBreakoutRoom(userId) {
+  getUserName(user: Participant) {
+    return user.display_name;
+  }
+
+  getUserBreakoutRoom(userId: number) {
     // loop through all the rooms and user for each room
-    for (let i = 0; i < this.act.usergroup_set.length; i++) {
-      const groupset = this.act.usergroup_set[i];
-      for (let j = 0; j < groupset.usergroupuser_set.length; j++) {
+    for (let i = 0; i < this.act.group_set.length; i++) {
+      const groupset = this.act.group_set[i];
+      for (let j = 0; j < groupset.participantgroupstatus_set.length; j++) {
         // loop through each user in thr group comparing his id to userId
         // if it matches return the breakoutroomid
-        const user = groupset.usergroupuser_set[j].user;
-        if (user.id === userId) {
+        const participantCode = groupset.participantgroupstatus_set[j].participant.participant_code;
+        if (participantCode === userId) {
           return groupset.group_num;
         }
       }
@@ -61,9 +67,7 @@ export class MainScreenExternalGroupingActivityComponent
     return null;
   }
 
-  assignRoom(room, userId) {
-    this.sendMessage.emit(
-      new ExternalGroupingSubmitGroupEvent(room.id, userId)
-    );
+  assignRoom(room, user: Participant) {
+    this.sendMessage.emit(new ExternalGroupingSubmitGroupEvent(room.id, user.participant_code));
   }
 }

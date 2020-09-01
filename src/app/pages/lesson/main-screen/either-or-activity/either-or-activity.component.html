@@ -4,48 +4,26 @@
 
     <ng-container *ngIf="!state.prediction_complete">
       <div class="single-column-activity">
-        <div
-          class="question-emojis"
-          fxLayout="row"
-          fxLayoutAlign="center center"
-          fxLayoutGap="3vw"
-        >
+        <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
           <div>
-            <div
-              class="twemoji-container"
-              *ngIf="isEmoji(state.left_choice.choice_img_url)"
-            >
-              <app-b-twemoji
-                [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-              ></app-b-twemoji>
+            <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+              <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
             </div>
           </div>
           <div>
-            <div
-              class="twemoji-container"
-              *ngIf="isEmoji(state.right_choice.choice_img_url)"
-            >
-              <app-b-twemoji
-                [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-              ></app-b-twemoji>
+            <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+              <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
             </div>
           </div>
         </div>
         <div class="activity-question-title-container">
-          <h1 class="primary-color-darkest pn-700 question">
-            Question 1:
-          </h1>
+          <h1 class="primary-color-darkest pn-700 question">Question 1:</h1>
         </div>
         <div class="activity-question-description-container">
-          <p
-            class="secondary-color-dark pn-500"
-            [innerHTML]="state.prediction_text"
-          ></p>
+          <p class="secondary-color-dark pn-500" [innerHTML]="state.prediction_text"></p>
         </div>
         <div class="forms-submitted primary-color-darkest pn-600">
-          {{ state.user_predictions.length }}/{{
-            activityState.lesson_run.joined_users.length
-          }}
+          {{ state.predictions.length }}/{{ activityState.lesson_run.participant_set.length }}
           answers submitted
         </div>
       </div>
@@ -55,58 +33,33 @@
     <ng-container *ngIf="state.prediction_complete">
       <ng-container *ngIf="!isRemoteSession">
         <div class="single-column-activity">
-          <div
-            class="question-emojis"
-            fxLayout="row"
-            fxLayoutAlign="center center"
-            fxLayoutGap="3vw"
-          >
+          <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
             <div>
-              <div
-                class="twemoji-container"
-                *ngIf="isEmoji(state.left_choice.choice_img_url)"
-              >
-                <app-b-twemoji
-                  [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-                ></app-b-twemoji>
+              <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+                <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
               </div>
             </div>
             <div>
-              <div
-                class="twemoji-container"
-                *ngIf="isEmoji(state.right_choice.choice_img_url)"
-              >
-                <app-b-twemoji
-                  [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-                ></app-b-twemoji>
+              <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+                <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
               </div>
             </div>
           </div>
           <div class="activity-question-title-container">
-            <h1 class="primary-color-darkest pn-700 question">
-              Question 2:
-            </h1>
+            <h1 class="primary-color-darkest pn-700 question">Question 2:</h1>
           </div>
           <div class="activity-question-description-container">
-            <p
-              class="secondary-color-dark pn-500"
-              [innerHTML]="state.preference_text"
-            ></p>
+            <p class="secondary-color-dark pn-500" [innerHTML]="state.preference_text"></p>
           </div>
           <div class="forms-submitted primary-color-darkest pn-600">
-            {{ state.user_preferences.length }}/{{
-              activityState.lesson_run.joined_users.length
-            }}
+            {{ state.preferences.length }}/{{ activityState.lesson_run.participant_set.length }}
             answers submitted
           </div>
         </div>
       </ng-container>
 
       <ng-container *ngIf="isRemoteSession">
-        <div
-          class="mainscreen-activity ms-act--multi-column pair-activity"
-          style="width: 100%;"
-        >
+        <div class="mainscreen-activity ms-act--multi-column pair-activity" style="width: 100%">
           <div
             class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
           >
@@ -121,7 +74,7 @@
                   'long-list': leftChoiceUsers.length > 30
                 }"
               >
-                {{ user.first_name }}
+                {{ getParticipantName(user) }}
               </li>
             </ul>
           </div>
@@ -139,7 +92,7 @@
                   'long-list': rightChoiceUsers.length > 30
                 }"
               >
-                {{ user.first_name }}
+                {{ getParticipantName(user) }}
               </li>
             </ul>
           </div>
@@ -149,46 +102,25 @@
   </ng-container>
 
   <div
-    *ngIf="
-      !state.standing_complete &&
-      state.preference_complete &&
-      state.prediction_complete
-    "
+    *ngIf="!state.standing_complete && state.preference_complete && state.prediction_complete"
     class="single-column-activity"
   >
     <div fxLayoutAlign="center center">
-      <div
-        class="move-your-side"
-        fxLayout="row"
-        fxLayoutAlign="stretch center"
-        fxLayoutGap="2.5vw"
-      >
+      <div class="move-your-side" fxLayout="row" fxLayoutAlign="stretch center" fxLayoutGap="2.5vw">
         <div>
           <div class="twemoji-container">
             <app-b-twemoji emoji="⬅️"></app-b-twemoji>
           </div>
         </div>
         <div>
-          <div
-            class="twemoji-container"
-            *ngIf="isEmoji(state.left_choice.choice_img_url)"
-          >
-            <app-b-twemoji
-              [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-            ></app-b-twemoji>
+          <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+            <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
           </div>
         </div>
-        <h1 fxFlex class="primary-color-darkest pn-700 question">
-          Stand on your side
-        </h1>
+        <h1 fxFlex class="primary-color-darkest pn-700 question">Stand on your side</h1>
         <div>
-          <div
-            class="twemoji-container"
-            *ngIf="isEmoji(state.right_choice.choice_img_url)"
-          >
-            <app-b-twemoji
-              [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-            ></app-b-twemoji>
+          <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+            <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
           </div>
         </div>
         <div>
@@ -203,54 +135,36 @@
   <div
     class="result"
     fxLayout="row"
-    *ngIf="
-      state.standing_complete &&
-      state.preference_complete &&
-      state.prediction_complete
-    "
+    *ngIf="state.standing_complete && state.preference_complete && state.prediction_complete"
   >
     <div fxLayout="column" fxFlex>
       <div>
-        <h1 class="primary-color-darkest pn-700 question">
-          Prediction:
-        </h1>
+        <h1 class="primary-color-darkest pn-700 question">Prediction:</h1>
       </div>
       <div class="mb-auto">
         <h1 class="secondary-color-dark pn-500 question">
-          <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that
-          there would be more
-          <em
-            ><span
-              [innerHTML]="getGroupPredictionChoice().collective_name"
-            ></span
-          ></em>
+          <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that there would be more
+          <em><span [innerHTML]="getGroupPredictionChoice().collective_name"></span></em>
           in this group
         </h1>
       </div>
       <div
         class="twemoji-container"
-        *ngIf="
-          isEmoji(getGroupPredictionChoice().choice_img_url) && !hideResultEmoji
-        "
+        *ngIf="isEmoji(getGroupPredictionChoice().choice_img_url) && !hideResultEmoji"
       >
-        <app-b-twemoji
-          [emoji]="emoji.getEmoji(getGroupPredictionChoice().choice_img_url)"
-        ></app-b-twemoji>
+        <app-b-twemoji [emoji]="emoji.getEmoji(getGroupPredictionChoice().choice_img_url)"></app-b-twemoji>
       </div>
     </div>
     <div fxLayout="column" fxFlex>
       <div>
-        <h1 class="primary-color-darkest pn-700 question">
-          Reality:
-        </h1>
+        <h1 class="primary-color-darkest pn-700 question">Reality:</h1>
       </div>
       <div>
         <h1
           class="pn-500 question"
           [ngClass]="{
             'success-color':
-              getGroupPredictionEvaluation() === 'Correct!' ||
-              getGroupPredictionEvaluation() === 'Tie!',
+              getGroupPredictionEvaluation() === 'Correct!' || getGroupPredictionEvaluation() === 'Tie!',
             'warning-color': getGroupPredictionEvaluation() === 'Incorrect!'
           }"
         >
@@ -258,56 +172,33 @@
         </h1>
       </div>
       <div class="mb-auto">
-        <h1
-          *ngIf="!isGroupPredictionEvaluationTie()"
-          class="secondary-color-dark pn-500 question"
-        >
+        <h1 *ngIf="!isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
           <em>{{ getGroupPercentagePreference() }}%</em> of you are
           <em>
-            <span
-              [innerHTML]="getGroupPreferredChoice().collective_name"
-            ></span>
+            <span [innerHTML]="getGroupPreferredChoice().collective_name"></span>
           </em>
         </h1>
-        <h1
-          *ngIf="isGroupPredictionEvaluationTie()"
-          class="secondary-color-dark pn-500 question"
-        >
+        <h1 *ngIf="isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
           You're an even 50/50 split!
         </h1>
       </div>
       <div>
         <div
           class="twemoji-container"
-          *ngIf="
-            !isGroupPredictionEvaluationTie() &&
-            isEmoji(getGroupPreferredChoice().choice_img_url)
-          "
+          *ngIf="!isGroupPredictionEvaluationTie() && isEmoji(getGroupPreferredChoice().choice_img_url)"
         >
-          <app-b-twemoji
-            [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"
-          ></app-b-twemoji>
+          <app-b-twemoji [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"></app-b-twemoji>
         </div>
         <div *ngIf="isGroupPredictionEvaluationTie()">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3vw">
             <div>
-              <div
-                class="twemoji-container"
-                *ngIf="isEmoji(state.left_choice.choice_img_url)"
-              >
-                <app-b-twemoji
-                  [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"
-                ></app-b-twemoji>
+              <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+                <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
               </div>
             </div>
             <div>
-              <div
-                class="twemoji-container"
-                *ngIf="isEmoji(state.right_choice.choice_img_url)"
-              >
-                <app-b-twemoji
-                  [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"
-                ></app-b-twemoji>
+              <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+                <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
               </div>
             </div>
           </div>
@@ -333,7 +224,7 @@
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>
     <benji-linear-timer
-      [timer]="activityState.base_activity.next_activity_start_timer"
+      [timer]="getNextActStartTimer()"
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>

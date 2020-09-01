@@ -1,4 +1,4 @@
-import { Component, OnChanges } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 
 import { ContextService } from 'src/app/services';
@@ -15,14 +15,17 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './hint-activity.component.html',
   styleUrls: ['./hint-activity.component.scss'],
 })
-export class ParticipantHintActivityComponent extends BaseActivityComponent
-  implements OnChanges {
+export class ParticipantHintActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   act;
   hintWord = new FormControl(null, Validators.required);
   selectedWord: HintWordsAndVotes;
 
   constructor(private contextService: ContextService) {
     super();
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
   }
 
   ngOnChanges() {
@@ -34,23 +37,23 @@ export class ParticipantHintActivityComponent extends BaseActivityComponent
       const timer = this.act.voting_countdown_timer;
       this.contextService.activityTimer = timer;
     } else if (this.act.submission_complete && this.act.voting_complete) {
-      const timer = this.activityState.base_activity.next_activity_start_timer;
+      const timer = this.getNextActStartTimer();
       this.contextService.activityTimer = timer;
     }
   }
 
   participantHasSubmitted() {
     return (
-      this.activityState.hintwordactivity.submitted_users.find(
-        (u) => u.id === this.activityState.your_identity.id
+      this.activityState.hintwordactivity.submitted_participants.find(
+        (u) => u.participant_code === this.myParticipantCode
       ) !== undefined
     );
   }
 
   participantHasVoted() {
     return (
-      this.activityState.hintwordactivity.voted_users.find(
-        (u) => u.id === this.activityState.your_identity.id
+      this.activityState.hintwordactivity.voted_participants.find(
+        (u) => u.participant_code === this.myParticipantCode
       ) !== undefined
     );
   }

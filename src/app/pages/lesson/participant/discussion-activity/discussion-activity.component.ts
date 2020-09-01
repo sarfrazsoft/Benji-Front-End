@@ -24,7 +24,9 @@ export class ParticipantDiscussionActivityComponent
   constructor(private contextService: ContextService) {
     super();
   }
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     this.act = this.activityState.discussionactivity;
@@ -57,9 +59,7 @@ export class ParticipantDiscussionActivityComponent
       this.activityState.discussionactivity.discussiongroup_set.find(
         (g) =>
           g.discussiongroupmember_set.find(
-            (m) =>
-              m.has_volunteered &&
-              m.user.id === this.activityState.your_identity.id
+            (m) => m.has_volunteered && m.participant.participant_code === this.myParticipantCode
           ) !== undefined
       ) !== undefined
     );
@@ -68,7 +68,7 @@ export class ParticipantDiscussionActivityComponent
   participantIsSharing() {
     return (
       this.activityState.discussionactivity.currently_sharing_group.discussiongroupmember_set.find(
-        (m) => m.user.id === this.activityState.your_identity.id
+        (m) => m.participant.participant_code === this.myParticipantCode
       ) !== undefined
     );
   }

@@ -16,11 +16,11 @@
               {{ category.category_name }}
             </div>
             <ng-container *ngFor="let idea of category.brainstormidea_set">
-              <ng-container *ngIf="isUserIncluded(idea.submitted_by_user)">
+              <ng-container *ngIf="isUserIncluded(idea.submitting_participant.participant_code)">
                 <div class="text-list-item" *ngIf="!idea.remove">
                   {{ idea.idea }}
                   <div class="details">
-                    {{ getPersonName(idea.submitted_by_user) }},
+                    {{ getPersonName(idea.submitting_participant.participant_code) }},
                     {{ ' ' + idea.num_votes }}
                     {{ idea.num_votes === 1 ? ' vote' : ' votes' }}
                   </div>

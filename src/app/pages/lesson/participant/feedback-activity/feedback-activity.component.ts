@@ -15,16 +15,19 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.answersSubmitted = false;
     const uId = this.getUserId();
-    const x = this.activityState.feedbackactivity.answered_users.filter((u) => u.id === uId).length;
+    const x = this.activityState.feedbackactivity.answered_participants.filter(
+      (u) => u.participant_code === uId
+    ).length;
     if (x) {
       this.answersSubmitted = true;
     }
   }
 
   getUserId(): number {
-    return this.activityState.your_identity.id;
+    return this.myParticipantCode;
   }
 
   submitAnswers(val) {

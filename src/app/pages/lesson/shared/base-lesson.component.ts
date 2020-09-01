@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
-import { ActivityEvent, ServerMessage, UpdateMessage, User } from 'src/app/services/backend/schema';
+import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 
 export class BaseLessonComponent implements OnInit {
@@ -79,6 +79,7 @@ export class BaseLessonComponent implements OnInit {
     }
     forkJoin([this.restService.get_lessonrun(this.roomCode)]).subscribe(([lessonRun]) => {
       this.lessonRun = lessonRun;
+      console.log(details);
       this.socket = this.socketService.connectLessonSocket(
         this.clientType,
         this.lessonRun.lessonrun_code,

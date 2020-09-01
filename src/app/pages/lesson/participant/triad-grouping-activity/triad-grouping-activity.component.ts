@@ -2,11 +2,9 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { concat, remove } from 'lodash';
 import { ContextService, EmojiLookupService } from 'src/app/services';
 import {
-  GroupingUserFoundEvent,
-  RoleplayPairUser,
-  TriadRoleplayPairUser,
-  TriadUserGroupUserSet,
-  UserGroupUserSet,
+  Group,
+  GroupingParticipantReadyEvent,
+  ParticipantGroupStatus,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -18,69 +16,69 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantTriadGroupingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
+  participantCode: number;
   partnerName: string;
-  constructor(
-    private emoji: EmojiLookupService,
-    private contextService: ContextService
-  ) {
+  constructor(private emoji: EmojiLookupService, private contextService: ContextService) {
     super();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    super.ngOnInit();
+    this.participantCode = this.getParticipantCode();
+  }
   ngOnChanges() {
-    const timer = this.activityState.triadgroupingactivity
-      .grouping_countdown_timer;
+    const timer = this.activityState.triadgroupingactivity.grouping_countdown_timer;
     this.contextService.activityTimer = timer;
   }
 
-  myGroup(): TriadUserGroupUserSet {
-    return this.activityState.triadgroupingactivity.usergroup_set.find(
+  myGroup(): Group {
+    return this.activityState.triadgroupingactivity.group_set.find(
       (ug) =>
-        ug.usergroupuser_set
-          .map((u) => u.user.id)
-          .indexOf(this.activityState.your_identity.id) > -1
+        ug.participantgroupstatus_set
+          .map((u) => u.participant.participant_code)
+          .indexOf(this.participantCode) > -1
     );
   }
 
   partnerText(): string {
-    const myGroup = this.myGroup();
+    const myGroup: Group = this.myGroup();
     const myGroupWithoutMe = remove(
-      concat(myGroup.usergroupuser_set, []),
-      (e) => e.user.id !== this.activityState.your_identity.id
+      concat(myGroup.participantgroupstatus_set, []),
+      (e) => e.participant.participant_code !== this.participantCode
     );
-    myGroupWithoutMe.sort((a, b) =>
-      a.user.first_name.localeCompare(b.user.first_name)
-    );
+
+    myGroupWithoutMe.sort((a, b) => a.participant.participant_code - b.participant.participant_code);
+
     if (myGroupWithoutMe.length === 1) {
-      this.partnerName = myGroupWithoutMe[0].user.first_name;
+      this.partnerName = this.getParticipantName(myGroupWithoutMe[0].participant.participant_code);
       return 'Your partner is ' + this.partnerName;
     } else {
       this.partnerName =
-        myGroupWithoutMe[0].user.first_name +
+        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
         ' and ' +
-        myGroupWithoutMe[1].user.first_name;
+        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code);
       return (
         'Your partners are ' +
-        myGroupWithoutMe[0].user.first_name +
+        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
         ' and ' +
-        myGroupWithoutMe[1].user.first_name
+        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code)
       );
     }
   }
 
-  myRoleplayUser(): TriadRoleplayPairUser {
-    const myGroup: TriadUserGroupUserSet = this.myGroup();
+  myRoleplayUser(): ParticipantGroupStatus {
+    const myGroup: Group = this.myGroup();
 
-    return myGroup.usergroupuser_set.find(
-      (g) => g.user.id === this.activityState.your_identity.id
+    return myGroup.participantgroupstatus_set.find(
+      (g) => g.participant.participant_code === this.getParticipantCode()
     );
   }
 
   participantIsReady(): boolean {
-    return this.myRoleplayUser().found;
+    return this.myRoleplayUser().ready;
   }
 
   sendReadyState(): void {
-    this.sendMessage.emit(new GroupingUserFoundEvent());
+    this.sendMessage.emit(new GroupingParticipantReadyEvent());
   }
 }

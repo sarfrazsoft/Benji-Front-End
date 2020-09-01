@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnChanges } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -7,8 +7,9 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   templateUrl: './mcqresult-activity.component.html',
   styleUrls: ['./mcqresult-activity.component.scss'],
 })
-export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
-  implements AfterViewInit, OnChanges {
+export class MainScreenMcqresultActivityComponent
+  extends BaseActivityComponent
+  implements AfterViewInit, OnChanges, OnInit {
   showStatistics = false;
   showLeaderBoard = false;
   singleUserLesson = false;
@@ -17,6 +18,10 @@ export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
   question = '';
   optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
   leaderBoardUsers = [];
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
 
   ngOnChanges() {
     const act = this.activityState.mcqresultsactivity;
@@ -32,12 +37,9 @@ export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
 
         this.choices = act.question_list[0].mcqchoice_set.map((choice, i) => {
           if (act.choices_summary.length) {
-            const answer_count = act.choices_summary.find(
-              (c) => c.id === choice.id
-            ).answer_count;
+            const answer_count = act.choices_summary.find((c) => c.id === choice.id).answer_count;
 
-            const totalResponse = this.activityState.lesson_run.joined_users
-              .length;
+            const totalResponse = this.activityState.lesson_run.participant_set.length;
 
             return {
               text: choice.choice_text,
@@ -56,14 +58,12 @@ export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
       this.showChart = false;
       this.showLeaderBoard = true;
 
-      this.leaderBoardUsers = this.activityState.lesson_run.joined_users.map(
-        (u) => {
-          const score = act.results_summary.filter((a) => a.id === u.id)
-            ? act.results_summary.filter((a) => a.id === u.id)[0].score
-            : 0;
-          return { name: u.first_name + ' ' + u.last_name, score: score };
-        }
-      );
+      this.leaderBoardUsers = this.activityState.lesson_run.participant_set.map((u) => {
+        const score = act.results_summary.filter((a) => a.participant_code === u.participant_code)
+          ? act.results_summary.filter((a) => a.participant_code === u.participant_code)[0].score
+          : 0;
+        return { name: this.getParticipantName(u.participant_code), score: score };
+      });
 
       this.leaderBoardUsers = this.leaderBoardUsers.sort((a, b) => {
         return b.score - a.score;
@@ -139,11 +139,9 @@ export class MainScreenMcqresultActivityComponent extends BaseActivityComponent
   }
 
   getUserScore() {
-    const scoreCard = this.activityState.mcqresultsactivity.results_summary.find(
-      (r) => {
-        return r.id === this.activityState.your_identity.id;
-      }
-    );
+    const scoreCard = this.activityState.mcqresultsactivity.results_summary.find((r) => {
+      return r.participant_code === this.getParticipantCode();
+    });
 
     return scoreCard.score;
   }

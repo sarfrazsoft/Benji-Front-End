@@ -30,7 +30,6 @@ export interface LessonRun {
   start_time: string;
   end_time: string;
   lessonrun_code: number;
-  joined_users: User[];
   participant_set: Array<Participant>;
 }
 
