@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // host: '192.168.2.3:81',
-  host: 'localhost',
+  host: '192.168.2.3:81',
+  // host: 'localhost',
   web_protocol: 'http',
   socket_protocl: 'ws',
 };
