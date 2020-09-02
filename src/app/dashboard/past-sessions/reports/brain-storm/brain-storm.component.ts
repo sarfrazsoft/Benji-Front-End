@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { clone } from 'lodash';
 import { ActivityReport } from 'src/app/services/backend/schema';
 import { PastSessionsService } from 'src/app/services/past-sessions.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'benji-brain-storm',
@@ -13,6 +14,7 @@ export class BrainStormComponent implements OnInit, OnChanges {
   brainstorm: ActivityReport['brainstorm'];
   ideas = [];
   fIUs = [];
+  hostname = window.location.protocol + '//' + environment.host;
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
