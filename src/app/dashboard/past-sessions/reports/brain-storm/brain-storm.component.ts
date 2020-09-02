@@ -14,7 +14,6 @@ export class BrainStormComponent implements OnInit, OnChanges {
   brainstorm: ActivityReport['brainstorm'];
   ideas = [];
   fIUs = [];
-  // hostname = window.location.protocol + '//' + window.location.hostname;
   hostname = window.location.protocol + '//' + environment.host;
   constructor(private pastSessionService: PastSessionsService) {}
 
