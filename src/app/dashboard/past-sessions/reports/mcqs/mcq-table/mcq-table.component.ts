@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { MCQActivityParticipantAnswerSet } from 'src/app/services/backend/schema/reports/MCQ';
 
 @Component({
   selector: 'benji-mcq-table',
   templateUrl: './mcq-table.component.html',
-  styleUrls: ['./mcq-table.component.scss']
+  styleUrls: ['./mcq-table.component.scss'],
 })
 export class McqTableComponent implements OnInit, OnChanges {
   @Input() questionStatement = '';
@@ -12,13 +13,7 @@ export class McqTableComponent implements OnInit, OnChanges {
 
   @Input() columnHeaderMap = {};
 
-  displayedColumns: string[] = [
-    'prompt',
-    'option1',
-    'option2',
-    'option3',
-    'option4'
-  ];
+  displayedColumns: string[] = ['prompt', 'option1', 'option2', 'option3', 'option4'];
   bapTableData = [
     // {
     //   prompt: 'Matthew Parson',
@@ -68,11 +63,10 @@ export class McqTableComponent implements OnInit, OnChanges {
     this.participants.forEach((p, i) => {
       this.bapTableData.push({ prompt: p.name });
       this.mcq.question.mcqchoice_set.forEach((choice, j) => {
-        const answer = this.mcq.mcqactivityuseranswer_set.find(
-          ans => ans.user.id === p.id
+        const answer = this.mcq.mcqactivityparticipantanswer_set.find(
+          (ans: MCQActivityParticipantAnswerSet) => ans.participant.participant_code === p.id
         );
-        this.bapTableData[i]['option' + (j + 1)] =
-          answer.answer === choice.id ? 'x' : '-';
+        this.bapTableData[i]['option' + (j + 1)] = answer.answer === choice.id ? 'x' : '-';
         // did this pID ID select this choice id
       });
     });

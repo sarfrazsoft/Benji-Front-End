@@ -1,5 +1,5 @@
 import { ActivityTypes } from 'src/app/globals';
-import { Lesson } from '../course_details';
+import { Lesson, Participant } from '../course_details';
 import { User } from '../user';
 import { BrainstormReport } from './brainstorm';
 import { BuildAPitchReport } from './build-a-pitch';
@@ -15,15 +15,10 @@ export interface SessionReport {
   lesson: Lesson;
   end_time: string;
   lessonrun_code: number;
-  joined_users: Array<User>;
+  participant_set: Array<Participant>;
   host: User;
   activity_results: Array<
-    | BuildAPitchReport
-    | FeedbackReport
-    | MCQReport
-    | PitchOMaticReport
-    | BrainstormReport
-    | CaseStudyReport
+    BuildAPitchReport | FeedbackReport | MCQReport | PitchOMaticReport | BrainstormReport | CaseStudyReport
   >;
 }
 

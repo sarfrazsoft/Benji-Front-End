@@ -285,7 +285,7 @@ export class BuildAPitchSubmitVoteEvent extends ActivityEvent {
 
   constructor(choice: number) {
     super();
-    this.extra_args = { voted_user: choice };
+    this.extra_args = { voted_participant: choice };
   }
 }
 
@@ -418,10 +418,10 @@ export class GenericRoleplayParticipantDiscussedEvent extends ActivityEvent {
 
 export class GenericRoleplayParticipantFeedbackEvent extends ActivityEvent {
   event_name = 'GenericRoleplayParticipantFeedbackEvent';
-  constructor(genericroleplayparticipantfeedbackeventanswer_set: FeedbackSubmitEventAnswer[]) {
+  constructor(genericroleplayparticipantfeedbackanswer_set: FeedbackSubmitEventAnswer[]) {
     super();
     this.extra_args = {
-      genericroleplayparticipantfeedbackeventanswer_set: genericroleplayparticipantfeedbackeventanswer_set,
+      genericroleplayparticipantfeedbackanswer_set: genericroleplayparticipantfeedbackanswer_set,
     };
   }
 }

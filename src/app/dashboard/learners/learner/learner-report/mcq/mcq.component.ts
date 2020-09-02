@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 @Component({
   selector: 'benji-learner-mcq',
   templateUrl: './mcq.component.html',
-  styleUrls: ['./mcq.component.scss']
+  styleUrls: ['./mcq.component.scss'],
 })
 export class McqComponent implements OnInit, OnChanges {
   @Input() mcq: any = mcq;
@@ -21,20 +21,16 @@ export class McqComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.mcq) {
       // Iterate over each choice
-      this.mcq.question.mcqchoice_set = this.mcq.question.mcqchoice_set.sort(
-        (a, b) => a.order - b.order
-      );
+      this.mcq.question.mcqchoice_set = this.mcq.question.mcqchoice_set.sort((a, b) => a.order - b.order);
       this.choices = this.mcq.question.mcqchoice_set.map((choice, i) => {
         // All users who responded with this choice
-        const choiceRespondents = this.mcq.mcqactivityuseranswer_set.filter(
-          answer => answer.answer === choice.id
+        const choiceRespondents = this.mcq.mcqactivityparticipantanswer_set.filter(
+          (answer) => answer.answer === choice.id
         );
 
         let isUserSelected = false;
         // Is the user in the respondents who responded with this choice
-        const userChoiceRespondent = choiceRespondents.filter(
-          answer => answer.user.id === this.userId
-        );
+        const userChoiceRespondent = choiceRespondents.filter((answer) => answer.user.id === this.userId);
 
         if (userChoiceRespondent.length === 1) {
           isUserSelected = true;
@@ -42,7 +38,7 @@ export class McqComponent implements OnInit, OnChanges {
         return {
           text: choice.choice_text,
           isUserSelected: isUserSelected,
-          isCorrect: choice.is_correct
+          isCorrect: choice.is_correct,
         };
       });
     }
@@ -62,39 +58,39 @@ const mcq = {
         order: 4,
         choice_text: 'All of the above ',
         is_correct: true,
-        explanation: 'Correct'
+        explanation: 'Correct',
       },
       {
         id: 283,
         order: 3,
         choice_text: 'What impact your solution has',
         is_correct: false,
-        explanation: 'Nope!'
+        explanation: 'Nope!',
       },
       {
         id: 282,
         order: 2,
         choice_text: 'How you solve that problem',
         is_correct: false,
-        explanation: 'Nope!'
+        explanation: 'Nope!',
       },
       {
         id: 281,
         order: 1,
         choice_text: 'What problem you help with',
         is_correct: false,
-        explanation: 'Not quite!'
+        explanation: 'Not quite!',
       },
       {
         id: 280,
         order: 0,
         choice_text: 'Who you’re helping',
         is_correct: false,
-        explanation: 'Incorrect'
-      }
-    ]
+        explanation: 'Incorrect',
+      },
+    ],
   },
-  mcqactivityuseranswer_set: [
+  mcqactivityparticipantanswer_set: [
     {
       user: {
         id: 2,
@@ -109,9 +105,9 @@ const mcq = {
         organization: 1,
         orggroup: 1,
         local_admin_permission: true,
-        participant_permission: true
+        participant_permission: true,
       },
-      answer: 284
+      answer: 284,
     },
     {
       user: {
@@ -127,10 +123,10 @@ const mcq = {
         organization: null,
         orggroup: null,
         local_admin_permission: false,
-        participant_permission: true
+        participant_permission: true,
       },
-      answer: 283
-    }
+      answer: 283,
+    },
   ],
-  activity_type: 'MCQActivity'
+  activity_type: 'MCQActivity',
 };

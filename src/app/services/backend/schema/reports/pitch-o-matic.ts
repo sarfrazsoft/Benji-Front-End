@@ -1,4 +1,4 @@
-import { PitchoMaticBlank, PitchoMaticGroupMemberPitch } from '../activities';
+import { ParticipantCode, PitchoMaticBlank, PitchoMaticGroupMemberPitch } from '../activities';
 import { User } from '../user';
 import { FeedbackQuestion } from '../utils';
 import { Report } from './reports';
@@ -11,14 +11,14 @@ export interface PitchOMaticReport extends Report {
 }
 
 export interface PitchoMaticGroupMemberFeedback {
-  user: User;
+  participant: ParticipantCode;
   pitch_prep_text: string;
   pitch: PitchoMaticGroupMemberPitch;
   pitchomaticfeedback_set: PitchomaticfeedbackSet[];
 }
 
 export interface PitchomaticfeedbackSet {
-  user: number;
+  participant: ParticipantCode;
   feedbackquestion: number;
   rating_answer: number;
   text_answer: string;

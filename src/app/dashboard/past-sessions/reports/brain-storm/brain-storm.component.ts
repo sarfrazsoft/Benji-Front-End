@@ -36,8 +36,8 @@ export class BrainStormComponent implements OnInit, OnChanges {
   }
 
   getPersonName(id: number) {
-    const user = this.data.joined_users.find((u) => u.id === id);
-    return user.first_name + ' ' + user.last_name;
+    const user = this.data.participant_set.find((u) => u.participant_code === id);
+    return user.display_name;
   }
 
   getUsersIdeas(act) {

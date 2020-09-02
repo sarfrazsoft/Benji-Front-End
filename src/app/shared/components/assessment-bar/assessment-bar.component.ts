@@ -1,11 +1,12 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 import { PastSessionsService } from 'src/app/services';
+import { FeedbackParticipantAnswerSet } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-assessment-bar',
   templateUrl: './assessment-bar.component.html',
-  styleUrls: ['./assessment-bar.component.scss']
+  styleUrls: ['./assessment-bar.component.scss'],
 })
 export class AssessmentBarComponent implements OnInit, OnChanges {
   @Input() question: any = {};
@@ -19,14 +20,14 @@ export class AssessmentBarComponent implements OnInit, OnChanges {
     'bg-primary-color-light',
     'bg-primary-color',
     'bg-primary-color-dark',
-    'bg-secondary-color-dark'
+    'bg-secondary-color-dark',
   ];
   legend = [];
 
   constructor(private pastSessionsService: PastSessionsService) {}
 
   ngOnInit() {
-    this.pastSessionsService.getReports('73103').subscribe(res => {
+    this.pastSessionsService.getReports('73103').subscribe((res) => {
       // this.questionSet = res.feedbackquestion_set;
       this.calculateRating();
       this.createLegend();
@@ -44,10 +45,8 @@ export class AssessmentBarComponent implements OnInit, OnChanges {
       arr.push(0);
     });
 
-    this.question.feedbackuseranswer_set.forEach(ans => {
-      const idx = this.ratingLevels.findIndex(
-        val => ans.rating_answer === val.rating
-      );
+    this.question.feedbackparticipantanswer_set.forEach((ans: FeedbackParticipantAnswerSet) => {
+      const idx = this.ratingLevels.findIndex((val) => ans.rating_answer === val.rating);
       arr[idx] = arr[idx] + 1;
     });
 

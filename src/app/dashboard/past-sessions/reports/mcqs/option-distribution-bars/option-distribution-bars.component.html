@@ -1,8 +1,8 @@
 <div *ngFor="let mcq of mcqs.mcqs; let i = index">
   <benji-response-percent-bars
     [mcq]="mcq"
-    [lessonJoinedUsers]="mcqs.joined_users.length"
-    [questionRespondents]="mcq.mcqactivityuseranswer_set.length"
+    [lessonJoinedUsers]="mcqs.participant_set.length"
+    [questionRespondents]="mcq.mcqactivityparticipantanswer_set.length"
     [questionIndex]="i"
   ></benji-response-percent-bars>
 </div>

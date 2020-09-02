@@ -11,7 +11,7 @@ export interface FeedbackQuestionSet {
   average_rating: string;
   combo_text: string;
   feedbackactivity: number;
-  feedbackuseranswer_set: Array<FeedbackUserAnswerSet>;
+  feedbackparticipantanswer_set: Array<FeedbackParticipantAnswerSet>;
   id: number;
   is_combo: boolean;
   pitchomaticactivity?: any;
@@ -22,7 +22,7 @@ export interface FeedbackQuestionSet {
 export enum QuestionType {
   rating_happysad,
   rating_agreedisagree,
-  text
+  text,
 }
 
 export interface FeedbackGraphQuestion {
@@ -35,13 +35,13 @@ export interface FeedbackGraphQuestion {
 }
 
 export interface Assessment {
-  user: User;
+  participant_code: number;
   rating: number;
   text: string;
 }
 
-export interface FeedbackUserAnswerSet {
-  user: User;
+export interface FeedbackParticipantAnswerSet {
+  participant: { participant_code: number };
   rating_answer: number;
   text_answer: string;
   feedbackquestion: number;

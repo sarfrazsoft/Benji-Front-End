@@ -11,15 +11,9 @@
         [checked]="isSelected(participant)"
         (change)="participantClicked($event, participant)"
       >
-        {{ participant.first_name + " " + participant.last_name }}
+        {{ participant.display_name }}
       </mat-checkbox>
-      <span
-        *ngIf="userIsAdmin"
-        class="show-only primary-color"
-        (click)="showOnly(participant)"
-      >
-        ONLY
-      </span>
+      <span *ngIf="userIsAdmin" class="show-only primary-color" (click)="showOnly(participant)"> ONLY </span>
     </div>
   </div>
 </div>

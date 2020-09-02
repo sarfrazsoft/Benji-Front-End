@@ -9,7 +9,7 @@ export const assessmentsData = {
       feedbackquestion_set: [
         {
           id: 89,
-          feedbackuseranswer_set: [
+          feedbackparticipantanswer_set: [
             {
               user: {
                 id: 2,
@@ -24,11 +24,11 @@ export const assessmentsData = {
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 89
+              feedbackquestion: 89,
             },
             {
               user: {
@@ -44,12 +44,12 @@ export const assessmentsData = {
                 organization: null,
                 orggroup: null,
                 local_admin_permission: false,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 89
-            }
+              feedbackquestion: 89,
+            },
           ],
           average_rating: '5.00',
           question_type: 'rating_agreedisagree',
@@ -57,11 +57,11 @@ export const assessmentsData = {
           is_combo: false,
           combo_text: 'Why is that?',
           feedbackactivity: 526,
-          pitchomaticactivity: null
+          pitchomaticactivity: null,
         },
         {
           id: 90,
-          feedbackuseranswer_set: [
+          feedbackparticipantanswer_set: [
             {
               user: {
                 id: 2,
@@ -76,11 +76,11 @@ export const assessmentsData = {
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 90
+              feedbackquestion: 90,
             },
             {
               user: {
@@ -96,25 +96,24 @@ export const assessmentsData = {
                 organization: null,
                 orggroup: null,
                 local_admin_permission: false,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 90
-            }
+              feedbackquestion: 90,
+            },
           ],
           average_rating: '5.00',
           question_type: 'rating_agreedisagree',
-          question_text:
-            'I can deliver a clear, concise, and compelling pitch.',
+          question_text: 'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 526,
-          pitchomaticactivity: null
+          pitchomaticactivity: null,
         },
         {
           id: 91,
-          feedbackuseranswer_set: [
+          feedbackparticipantanswer_set: [
             {
               user: {
                 id: 2,
@@ -129,11 +128,11 @@ export const assessmentsData = {
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 91
+              feedbackquestion: 91,
             },
             {
               user: {
@@ -149,12 +148,12 @@ export const assessmentsData = {
                 organization: null,
                 orggroup: null,
                 local_admin_permission: false,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 91
-            }
+              feedbackquestion: 91,
+            },
           ],
           average_rating: '5.00',
           question_type: 'rating_agreedisagree',
@@ -162,24 +161,23 @@ export const assessmentsData = {
           is_combo: false,
           combo_text: null,
           feedbackactivity: 526,
-          pitchomaticactivity: null
-        }
+          pitchomaticactivity: null,
+        },
       ],
       titlecomponent: {
         title: 'What about now?',
         title_image: 'emoji://memo',
         screen_instructions: 'Fill out the form on your phone',
-        participant_instructions:
-          'How do you feel about your pitching skills now?'
+        participant_instructions: 'How do you feel about your pitching skills now?',
       },
-      activity_type: 'FeedbackActivity'
+      activity_type: 'FeedbackActivity',
     },
     {
       id: 506,
       feedbackquestion_set: [
         {
           id: 83,
-          feedbackuseranswer_set: [
+          feedbackparticipantanswer_set: [
             {
               user: {
                 id: 2,
@@ -194,11 +192,11 @@ export const assessmentsData = {
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 2,
               text_answer: '2',
-              feedbackquestion: 83
+              feedbackquestion: 83,
             },
             {
               user: {
@@ -214,12 +212,12 @@ export const assessmentsData = {
                 organization: null,
                 orggroup: null,
                 local_admin_permission: false,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 4,
               text_answer: '4',
-              feedbackquestion: 83
-            }
+              feedbackquestion: 83,
+            },
           ],
           average_rating: '3.00',
           question_type: 'rating_agreedisagree',
@@ -227,11 +225,11 @@ export const assessmentsData = {
           is_combo: false,
           combo_text: 'Why is that?',
           feedbackactivity: 506,
-          pitchomaticactivity: null
+          pitchomaticactivity: null,
         },
         {
           id: 84,
-          feedbackuseranswer_set: [
+          feedbackparticipantanswer_set: [
             {
               user: {
                 id: 2,
@@ -246,11 +244,11 @@ export const assessmentsData = {
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 2,
               text_answer: '2',
-              feedbackquestion: 84
+              feedbackquestion: 84,
             },
             {
               user: {
@@ -266,25 +264,24 @@ export const assessmentsData = {
                 organization: null,
                 orggroup: null,
                 local_admin_permission: false,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 5,
               text_answer: '5',
-              feedbackquestion: 84
-            }
+              feedbackquestion: 84,
+            },
           ],
           average_rating: '3.50',
           question_type: 'rating_agreedisagree',
-          question_text:
-            'I can deliver a clear, concise, and compelling pitch.',
+          question_text: 'I can deliver a clear, concise, and compelling pitch.',
           is_combo: false,
           combo_text: null,
           feedbackactivity: 506,
-          pitchomaticactivity: null
+          pitchomaticactivity: null,
         },
         {
           id: 85,
-          feedbackuseranswer_set: [
+          feedbackparticipantanswer_set: [
             {
               user: {
                 id: 2,
@@ -299,11 +296,11 @@ export const assessmentsData = {
                 organization: 1,
                 orggroup: 1,
                 local_admin_permission: true,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 2,
               text_answer: '2',
-              feedbackquestion: 85
+              feedbackquestion: 85,
             },
             {
               user: {
@@ -319,12 +316,12 @@ export const assessmentsData = {
                 organization: null,
                 orggroup: null,
                 local_admin_permission: false,
-                participant_permission: true
+                participant_permission: true,
               },
               rating_answer: 4,
               text_answer: '4',
-              feedbackquestion: 85
-            }
+              feedbackquestion: 85,
+            },
           ],
           average_rating: '3.00',
           question_type: 'rating_agreedisagree',
@@ -332,17 +329,16 @@ export const assessmentsData = {
           is_combo: false,
           combo_text: null,
           feedbackactivity: 506,
-          pitchomaticactivity: null
-        }
+          pitchomaticactivity: null,
+        },
       ],
       titlecomponent: {
         title: 'Before we begin',
         title_image: 'emoji://memo',
         screen_instructions: 'Fill out the form on your phone',
-        participant_instructions:
-          'How do you feel about your pitching skills now?'
+        participant_instructions: 'How do you feel about your pitching skills now?',
       },
-      activity_type: 'FeedbackActivity'
-    }
-  ]
+      activity_type: 'FeedbackActivity',
+    },
+  ],
 };

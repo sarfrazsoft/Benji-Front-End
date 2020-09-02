@@ -6,7 +6,7 @@ import {
   OnChanges,
   OnInit,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { PastSessionsService } from 'src/app/services';
@@ -16,7 +16,7 @@ import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './single-pi
 @Component({
   selector: 'benji-pitch-o-matic',
   templateUrl: './pitch-o-matic.component.html',
-  styleUrls: ['./pitch-o-matic.component.scss']
+  styleUrls: ['./pitch-o-matic.component.scss'],
 })
 export class PitchOMaticComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
@@ -37,7 +37,7 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+    this.pastSessionService.filteredInUsers$.subscribe((updatedUserFilter) => {
       if (this.singleUserPOMcomponent) {
         this.singleUserPOMcomponent.destroy();
       }
@@ -63,9 +63,7 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
     const pomComponentFactory = this.componentFactoryResolver.resolveComponentFactory(
       LearnerPitchOMaticComponent
     );
-    this.singleUserPOMcomponent = this.entry.createComponent(
-      pomComponentFactory
-    );
+    this.singleUserPOMcomponent = this.entry.createComponent(pomComponentFactory);
     this.singleUserPOMcomponent.instance.data = this.data;
   }
 
@@ -77,23 +75,21 @@ export class PitchOMaticComponent implements OnInit, OnChanges {
       const pomData = this.data.pom;
       this.tableData = [];
 
-      pomData.feedbackquestion_set.forEach(question => {
+      pomData.feedbackquestion_set.forEach((question) => {
         let sum = 0;
-        pomData.pitchomaticgroupmembers.forEach(member => {
-          const rating = member.pitchomaticfeedback_set.find(
-            fb => fb.feedbackquestion === question.id
-          );
+        pomData.pitchomaticgroupmembers.forEach((member) => {
+          const rating = member.pitchomaticfeedback_set.find((fb) => fb.feedbackquestion === question.id);
           if (rating) {
             sum = sum + rating.rating_answer;
           }
         });
-        let avg = sum / this.data.joined_users.length;
+        let avg = sum / this.data.participant_set.length;
         avg = Math.round(avg * 10) / 10;
 
         this.tableData.push({
           question: question.question_text,
           questionId: question.id,
-          average: avg
+          average: avg,
         });
       });
     }

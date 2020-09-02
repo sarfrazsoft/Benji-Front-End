@@ -1,10 +1,10 @@
-import { User } from '../user';
+import { ParticipantCode } from '../activities';
 import { Report } from './reports';
 
 export interface BuildAPitchReport extends Report {
   buildapitchblank_set: Array<BuildAPitchBlankSet>;
   pitch_summaries: Array<PitchSummary>;
-  winning_user: User;
+  winning_participant: ParticipantCode;
 }
 
 export interface BuildAPitchBlankSet {
@@ -16,7 +16,7 @@ export interface BuildAPitchBlankSet {
 }
 
 export interface PitchSummary {
-  user: number;
+  participant: ParticipantCode;
   buildapitchentry_set: Array<BuildAPitchEntrySet>;
   votes: number;
 }

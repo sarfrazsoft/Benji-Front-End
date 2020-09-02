@@ -4,7 +4,7 @@ import { ActivityReport } from 'src/app/services/backend/schema';
 @Component({
   selector: 'benji-mcqs',
   templateUrl: './mcqs.component.html',
-  styleUrls: ['./mcqs.component.scss']
+  styleUrls: ['./mcqs.component.scss'],
 })
 export class McqsComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
@@ -15,9 +15,9 @@ export class McqsComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // console.log(this.data);
-    if (this.data.joined_users) {
-      this.participants = this.data.joined_users.map(a => {
-        return { name: a.first_name + ' ' + a.last_name, id: a.id };
+    if (this.data.participant_set) {
+      this.participants = this.data.participant_set.map((a) => {
+        return { name: a.display_name, id: a.participant_code };
       });
     }
   }

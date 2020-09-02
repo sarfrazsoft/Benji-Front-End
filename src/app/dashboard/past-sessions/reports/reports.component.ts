@@ -95,9 +95,9 @@ export class ReportsComponent implements OnInit {
           const component = this.entry.createComponent(b);
           component.instance.data = act;
         } else if (act.activity_type === Acts.genericRoleplay) {
-          // const g = this.cfr.resolveComponentFactory(GenericRoleplayComponent);
-          // const component = this.entry.createComponent(g);
-          // component.instance.data = act;
+          const g = this.cfr.resolveComponentFactory(GenericRoleplayComponent);
+          const component = this.entry.createComponent(g);
+          component.instance.data = act;
         } else if (act.activity_type === Acts.brainStorm) {
           const b = this.cfr.resolveComponentFactory(BrainStormComponent);
           const component = this.entry.createComponent(b);

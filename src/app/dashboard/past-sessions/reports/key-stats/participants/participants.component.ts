@@ -1,49 +1,49 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { part } from 'core-js/fn/function';
 import { ContextService } from 'src/app/services';
 import { PastSessionsService } from 'src/app/services';
+import { ParticipantCode } from 'src/app/services/backend/schema';
+import { Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-participants',
   templateUrl: './participants.component.html',
-  styleUrls: ['./participants.component.scss']
+  styleUrls: ['./participants.component.scss'],
 })
 export class ParticipantsComponent implements OnInit, OnChanges {
-  @Input() data: any = { joined_users: [] };
+  @Input() data: { participant_set: Array<Participant> } = { participant_set: [] };
   userIsAdmin;
   selected = [];
   participants = [];
   dialogRef;
-  constructor(
-    private pastSessionService: PastSessionsService,
-    private contextService: ContextService
-  ) {}
+  constructor(private pastSessionService: PastSessionsService, private contextService: ContextService) {}
 
   ngOnInit() {
-    this.pastSessionService.filteredInUsers$.subscribe(list => {
+    this.pastSessionService.filteredInUsers$.subscribe((list) => {
       this.selected = list;
     });
-    this.contextService.user$.subscribe(user => {
+    this.contextService.user$.subscribe((user) => {
       if (user.local_admin_permission) {
         this.userIsAdmin = true;
       }
     });
   }
 
-  isSelected(participant) {
-    return this.selected.find(x => x === participant.id);
+  isSelected(participant: Participant) {
+    return this.selected.find((x) => x === participant.participant_code);
   }
 
   ngOnChanges() {
     if (this.data) {
-      this.participants = this.data.joined_users;
+      this.participants = this.data.participant_set;
     }
   }
 
-  participantClicked(event, participant) {
-    this.pastSessionService.addToFilteredInList(participant.id);
+  participantClicked(event, participant: Participant) {
+    this.pastSessionService.addToFilteredInList(participant.participant_code);
   }
 
-  showOnly(participant) {
-    this.pastSessionService.removeAllBut(participant.id);
+  showOnly(participant: Participant) {
+    this.pastSessionService.removeAllBut(participant.participant_code);
   }
 }

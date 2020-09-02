@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as Chart from 'chart.js';
 import { PastSessionsService } from 'src/app/services';
 import { FeedbackGraphQuestion, User } from 'src/app/services/backend/schema';
@@ -44,16 +37,14 @@ export class QuestionComponent implements OnInit, AfterViewInit {
 
     this.question.assessments.forEach((answer) => {
       if (
-        this.pastSessionService.filteredInUsers.find(
-          (el) => el === answer.user.id
-        ) ||
+        this.pastSessionService.filteredInUsers.find((el) => el === answer.participant_code) ||
         !this.userFilter
       ) {
         ratingSum = ratingSum + answer.rating;
         noOfRatings = noOfRatings + 1;
         assessments[answer.rating - 1]++;
         this.users[answer.rating - 1].push(
-          answer.user.first_name + ' ' + answer.user.last_name
+          this.pastSessionService.getParticipantName(answer.participant_code)
         );
         if (answer.text) {
           this.comboAnswersExist = true;
@@ -171,8 +162,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           displayColors: false,
           callbacks: {
             title: (tooltipItems, d) => {
-              const res =
-                tooltipItems[0].value === '1' ? ' response' : ' responses';
+              const res = tooltipItems[0].value === '1' ? ' response' : ' responses';
               return tooltipItems[0].value + res;
             },
             label: (tooltipItem, d) => {
@@ -210,11 +200,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 // min: 0,
                 // max: max,
                 // stepSize: Math.ceil(max / 5),
-                callback: function (
-                  value: number,
-                  index: number,
-                  values: number[]
-                ) {
+                callback: function (value: number, index: number, values: number[]) {
                   // do not display the first value and last value
                   // only display when it's a whole number
                   // return index === values.length - 1
@@ -256,16 +242,14 @@ export class QuestionComponent implements OnInit, AfterViewInit {
       this.users = [[], [], [], [], []];
       this.question.assessments.forEach((answer) => {
         if (
-          this.pastSessionService.filteredInUsers.find(
-            (el) => el === answer.user.id
-          ) ||
+          this.pastSessionService.filteredInUsers.find((el) => el === answer.participant_code) ||
           !this.userFilter
         ) {
           ratingSum = ratingSum + answer.rating;
           noOfRatings = noOfRatings + 1;
           assessments[answer.rating - 1]++;
           this.users[answer.rating - 1].push(
-            answer.user.first_name + ' ' + answer.user.last_name
+            this.pastSessionService.getParticipantName(answer.participant_code)
           );
           this.comboAnswers.push(answer.text);
         }

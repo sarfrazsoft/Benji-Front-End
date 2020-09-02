@@ -2,7 +2,7 @@ import { User } from '../user';
 import { Report } from './reports';
 
 export interface MCQReport extends Report {
-  mcqactivityuseranswer_set: Array<MCQActivityUserAnswerSet>;
+  mcqactivityparticipantanswer_set: Array<MCQActivityParticipantAnswerSet>;
   question: Question;
 }
 
@@ -20,7 +20,7 @@ export interface MCQChoiceSet {
   explanation: string;
 }
 
-export interface MCQActivityUserAnswerSet {
-  user: User;
+export interface MCQActivityParticipantAnswerSet {
+  participant: { participant_code: number };
   answer: number;
 }

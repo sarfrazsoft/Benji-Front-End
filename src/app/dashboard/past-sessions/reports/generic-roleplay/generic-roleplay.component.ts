@@ -3,24 +3,26 @@ import { PastSessionsService } from 'src/app/services';
 import {
   ActivityReport,
   FeedbackQuestion,
-  User
+  GenericRoleplayFeedback,
+  User,
 } from 'src/app/services/backend/schema';
+import { Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-generic-roleplay',
   templateUrl: './generic-roleplay.component.html',
-  styleUrls: ['./generic-roleplay.component.scss']
+  styleUrls: ['./generic-roleplay.component.scss'],
 })
 export class GenericRoleplayComponent implements OnInit {
   @Input() data: ActivityReport;
   salesmanTask: string;
   questions = [];
   showUserReport = false;
-  salesmenUsers: Array<User>;
+  salesmenUsers: Array<Participant>;
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
-    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+    this.pastSessionService.filteredInUsers$.subscribe((updatedUserFilter) => {
       this.checkUsers();
     });
 
@@ -28,27 +30,23 @@ export class GenericRoleplayComponent implements OnInit {
   }
 
   checkUsers() {
-    const salesman = this.data.grplay.genericroleplayrole_set.find(
-      el => el.name === 'Salesman'
-    );
+    const salesman = this.data.grplay.genericroleplayrole_set.find((el) => el.name === 'Salesperson');
     let salesmanID;
     if (salesman) {
       salesmanID = salesman.id;
     }
 
     // iterate over all the users and get the users who had salesman role
-    const salesmen = this.data.grplay.genericroleplayuser_set.filter(
-      el => el.role === salesmanID
-    );
+    const salesmen = this.data.grplay.genericroleplayparticipant_set.filter((el) => el.role === salesmanID);
 
     // salesmen have been found
-    this.salesmenUsers = this.data.joined_users.filter(el => {
-      return salesmen.find(role => el.id === role.benjiuser_id);
+    this.salesmenUsers = this.data.participant_set.filter((el: Participant) => {
+      return salesmen.find((role) => el.participant_code === role.participant.participant_code);
     });
     const finU = this.pastSessionService.filteredInUsers;
     this.showUserReport = false;
-    this.salesmenUsers.forEach(s => {
-      if (finU.find(el => el === s.id)) {
+    this.salesmenUsers.forEach((s) => {
+      if (finU.find((el) => el === s.participant_code)) {
         this.showUserReport = true;
       }
     });
@@ -56,9 +54,7 @@ export class GenericRoleplayComponent implements OnInit {
 
   setupData() {
     // get the salesman role
-    const salesman = this.data.grplay.genericroleplayrole_set.find(
-      el => el.name === 'Salesman'
-    );
+    const salesman = this.data.grplay.genericroleplayrole_set.find((el) => el.name === 'Salesperson');
     this.salesmanTask = salesman.instructions;
     let salesmanID;
     if (salesman) {
@@ -66,39 +62,35 @@ export class GenericRoleplayComponent implements OnInit {
     }
 
     // iterate over all the users and get the users who had salesman role
-    const salesmen = this.data.grplay.genericroleplayuser_set.filter(
-      el => el.role === salesmanID
-    );
+    const salesmen = this.data.grplay.genericroleplayparticipant_set.filter((el) => el.role === salesmanID);
 
     // salesmen have been found
-    this.salesmenUsers = this.data.joined_users.filter(el => {
-      return salesmen.find(role => el.id === role.benjiuser_id);
+    this.salesmenUsers = this.data.participant_set.filter((el) => {
+      return salesmen.find((role) => el.participant_code === role.participant.participant_code);
     });
 
     const questionList: Array<FeedbackQuestion> = [];
     this.questions = [];
-    this.data.grplay.genericroleplayrole_set.forEach(role => {
+    this.data.grplay.genericroleplayrole_set.forEach((role) => {
       questionList.push(...role.feedbackquestions);
     });
 
     const feedbackList = this.data.grplay.feedback;
-    questionList.forEach(question => {
+    questionList.forEach((question) => {
       const assessments = [];
-      const responsesForQuestion = feedbackList.filter(
-        fb => fb.feedbackquestion === question.id
-      );
+      const responsesForQuestion = feedbackList.filter((fb) => fb.feedbackquestion === question.id);
 
-      responsesForQuestion.forEach(res => {
-        const userGroup = this.getUserGroup(res.benji_user);
-        userGroup.usergroupuser_set.forEach(user => {
+      responsesForQuestion.forEach((res: GenericRoleplayFeedback) => {
+        const userGroup = this.getUserGroup(res.genericroleplayparticipant.participant.participant_code);
+        userGroup.participantgroupstatus_set.forEach((user) => {
           const fbReceiever = this.salesmenUsers.find(
-            u => user.user.id === u.id
+            (u) => user.participant.participant_code === u.participant_code
           );
           if (fbReceiever) {
             assessments.push({
-              user: fbReceiever,
+              participant_code: fbReceiever.participant_code,
               rating: res.rating_answer,
-              text: res.text_answer
+              text: res.text_answer,
             });
           }
         });
@@ -106,25 +98,19 @@ export class GenericRoleplayComponent implements OnInit {
       this.questions.push({
         question_text: question.question_text,
         assessments: assessments,
-        labels: [
-          'Strongly Disagree',
-          'Disagree',
-          'Neutral',
-          'Agree',
-          'Strongly Agree'
-        ],
+        labels: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
         is_combo: question.is_combo,
         combo_text: question.combo_text,
-        question_type: question.question_type
+        question_type: question.question_type,
       });
     });
   }
 
-  getUserGroup(userId: number) {
+  getUserGroup(participantCode: number) {
     let groups = this.data.grplay.groups;
-    groups = groups.filter(group => {
-      return group.usergroupuser_set.find(groupSet => {
-        return groupSet.user.id === userId;
+    groups = groups.filter((group) => {
+      return group.participantgroupstatus_set.find((groupSet) => {
+        return groupSet.participant.participant_code === participantCode;
       });
     });
 
@@ -167,10 +153,10 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
         rating: 5,
-        text: 'salesman was amazing'
+        text: 'salesman was amazing',
       },
       {
         user: {
@@ -186,10 +172,10 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
         rating: 5,
-        text: 'I sure was convinced'
+        text: 'I sure was convinced',
       },
       {
         user: {
@@ -205,21 +191,15 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
         rating: 5,
-        text: 'I would buy from him'
-      }
+        text: 'I would buy from him',
+      },
     ],
-    labels: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree'
-    ],
+    labels: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
     is_combo: true,
-    combo_text: 'What made you say that?'
+    combo_text: 'What made you say that?',
   },
   {
     question_text: 'Were your concerns addressed?',
@@ -240,9 +220,9 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
-        rating: 4
+        rating: 4,
       },
       {
         user: {
@@ -258,9 +238,9 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
-        rating: 5
+        rating: 5,
       },
       {
         user: {
@@ -276,20 +256,14 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
-        rating: 4
-      }
+        rating: 4,
+      },
     ],
-    labels: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree'
-    ],
+    labels: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
     is_combo: true,
-    combo_text: 'What made you say that?'
+    combo_text: 'What made you say that?',
   },
   {
     question_text: 'Was the salesman compassionate?',
@@ -310,9 +284,9 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
-        rating: 4
+        rating: 4,
       },
       {
         user: {
@@ -328,9 +302,9 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
-        rating: 5
+        rating: 5,
       },
       {
         user: {
@@ -346,19 +320,13 @@ export const salesmanFeedback = [
           organization: 1,
           orggroup: 1,
           local_admin_permission: false,
-          participant_permission: true
+          participant_permission: true,
         },
-        rating: 4
-      }
+        rating: 4,
+      },
     ],
-    labels: [
-      'Strongly Disagree',
-      'Disagree',
-      'Neutral',
-      'Agree',
-      'Strongly Agree'
-    ],
+    labels: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
     is_combo: true,
-    combo_text: 'What made you say that?'
-  }
+    combo_text: 'What made you say that?',
+  },
 ];

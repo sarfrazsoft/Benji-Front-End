@@ -6,7 +6,7 @@ import {
   Input,
   OnInit,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
@@ -15,16 +15,17 @@ import { PastSessionsService } from 'src/app/services';
 import {
   ActivityReport,
   FeedbackGraphQuestion,
+  FeedbackParticipantAnswerSet,
   FeedbackReport,
   PitchOMaticReport,
-  SessionReport
+  SessionReport,
 } from 'src/app/services/backend/schema';
 import { SkillOverviewComponent } from './skill-overview/skill-overview.component';
 
 @Component({
   selector: 'benji-skill-evaluation',
   templateUrl: './skill-evaluation.component.html',
-  styleUrls: ['./skill-evaluation.component.scss']
+  styleUrls: ['./skill-evaluation.component.scss'],
 })
 export class SkillEvaluationComponent implements OnInit {
   @Input() question: FeedbackGraphQuestion;
@@ -38,7 +39,7 @@ export class SkillEvaluationComponent implements OnInit {
     donut: {
       title: 'Pitch Skill',
       data: 10,
-      color: '#00178a'
+      color: '#00178a',
     },
     chart: {
       label: 'Sessions',
@@ -61,9 +62,9 @@ export class SkillEvaluationComponent implements OnInit {
         //   xlabel: '01/12',
         //   value: 0
         // }
-      ]
+      ],
     },
-    enoughData: false
+    enoughData: false,
   };
 
   mcqOverview = {
@@ -71,7 +72,7 @@ export class SkillEvaluationComponent implements OnInit {
     donut: {
       title: 'MCQs',
       data: 85,
-      color: '#000'
+      color: '#000',
     },
     chart: {
       label: 'Sessions',
@@ -80,23 +81,23 @@ export class SkillEvaluationComponent implements OnInit {
           date: '2nd Jan, 2020',
           name: 'Pitch perfect',
           xlabel: '01/02',
-          value: 5
+          value: 5,
         },
         {
           date: '14th Jan, 2020',
           name: 'Pitch practice',
           xlabel: '01/14',
-          value: 7
+          value: 7,
         },
         {
           date: '12th Jan, 2020',
           name: 'Pitch practice',
           xlabel: '01/12',
-          value: 9
-        }
-      ]
+          value: 9,
+        },
+      ],
     },
-    enoughData: false
+    enoughData: false,
   };
 
   @ViewChild('chartCanvas', { static: false }) chartCanvas: ElementRef;
@@ -113,7 +114,7 @@ export class SkillEvaluationComponent implements OnInit {
     private pastSessionsService: PastSessionsService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.learnerID = paramMap.get('learnerID');
       this.getLearnerData();
     });
@@ -136,7 +137,7 @@ export class SkillEvaluationComponent implements OnInit {
     reports = this.verifyData(reports);
 
     reports = reports.sort((a, b) => a.id - b.id);
-    reports = reports.filter(a => a.lesson.lesson_id === 'pitch_perfect_1');
+    reports = reports.filter((a) => a.lesson.lesson_id === 'pitch_perfect_1');
     // Calculating for last 3 sessions only
     // reports = reports.slice(reports.length - 3);
 
@@ -185,7 +186,7 @@ export class SkillEvaluationComponent implements OnInit {
     const peerFeedbacks = [];
     const mcqsScores = [];
 
-    arr.forEach(result => {
+    arr.forEach((result) => {
       // It'll respond with not enough data if POM feedback or selffeedbacks
       // are not available
       this.populatePitchingScores(result, selfFeedbacks, peerFeedbacks);
@@ -245,19 +246,18 @@ export class SkillEvaluationComponent implements OnInit {
       let sumOfAvgs = 0;
       session.forEach((questionResponses, i) => {
         let sum = 0;
-        questionResponses.forEach(response => {
+        questionResponses.forEach((response) => {
           sum = sum + response * peerfbackMultiplier;
         });
         sumOfAvgs = sumOfAvgs + sum / questionResponses.length;
       });
       let selfFbackSum = 0;
-      selfFeedbacks[sessionIndex].forEach(response => {
+      selfFeedbacks[sessionIndex].forEach((response) => {
         selfFbackSum = selfFbackSum + response * selfFbackMultiplier;
       });
 
       const dataPoint = sumOfAvgs + selfFbackSum;
-      this.pitchingOverview.chart.sessionInfo[sessionIndex].value =
-        dataPoint * 2;
+      this.pitchingOverview.chart.sessionInfo[sessionIndex].value = dataPoint * 2;
       dataPoints.push(dataPoint * 2);
       pitchingAvg = pitchingAvg + (dataPoint / 5) * 100;
     });
@@ -276,33 +276,25 @@ export class SkillEvaluationComponent implements OnInit {
       date: '',
       name: '',
       xlabel: '',
-      value: 0
+      value: 0,
     });
     this.mcqOverview.chart.sessionInfo.push({
       date: '',
       name: '',
       xlabel: '',
-      value: 0
+      value: 0,
     });
 
-    this.pitchingOverview.chart.sessionInfo[sessionIndex].name =
-      report.lesson.lesson_name;
-    this.mcqOverview.chart.sessionInfo[sessionIndex].name =
-      report.lesson.lesson_name;
+    this.pitchingOverview.chart.sessionInfo[sessionIndex].name = report.lesson.lesson_name;
+    this.mcqOverview.chart.sessionInfo[sessionIndex].name = report.lesson.lesson_name;
 
-    this.pitchingOverview.chart.sessionInfo[sessionIndex].date = moment(
-      report.start_time
-    ).format('MMMM, DD YYYY');
-    this.mcqOverview.chart.sessionInfo[sessionIndex].date = moment(
-      report.start_time
-    ).format('MMMM, DD YYYY');
+    this.pitchingOverview.chart.sessionInfo[sessionIndex].date = moment(report.start_time).format(
+      'MMMM, DD YYYY'
+    );
+    this.mcqOverview.chart.sessionInfo[sessionIndex].date = moment(report.start_time).format('MMMM, DD YYYY');
 
-    this.pitchingOverview.chart.sessionInfo[sessionIndex].xlabel = moment(
-      report.start_time
-    ).format('MM/DD');
-    this.mcqOverview.chart.sessionInfo[sessionIndex].xlabel = moment(
-      report.start_time
-    ).format('MM/DD');
+    this.pitchingOverview.chart.sessionInfo[sessionIndex].xlabel = moment(report.start_time).format('MM/DD');
+    this.mcqOverview.chart.sessionInfo[sessionIndex].xlabel = moment(report.start_time).format('MM/DD');
   }
 
   populatePitchingScores(result, selfFeedbacks, peerFeedbacks) {
@@ -317,17 +309,12 @@ export class SkillEvaluationComponent implements OnInit {
 
   populateMCQScores(result, mcqsScores) {
     mcqsScores.push([]);
-    result.mcqs.forEach(mcq => {
-      const correctChoices = mcq.question.mcqchoice_set.filter(
-        choice => choice.is_correct
+    result.mcqs.forEach((mcq) => {
+      const correctChoices = mcq.question.mcqchoice_set.filter((choice) => choice.is_correct);
+      const userAnswer = mcq.mcqactivityparticipantanswer_set.find(
+        (answer) => answer.user.id === parseInt(this.learnerID, 10)
       );
-      const userAnswer = mcq.mcqactivityuseranswer_set.find(
-        answer => answer.user.id === parseInt(this.learnerID, 10)
-      );
-      if (
-        userAnswer &&
-        correctChoices.find(choice => choice.id === userAnswer.answer)
-      ) {
+      if (userAnswer && correctChoices.find((choice) => choice.id === userAnswer.answer)) {
         mcqsScores[mcqsScores.length - 1].push(1);
       } else {
         mcqsScores[mcqsScores.length - 1].push(0);
@@ -338,9 +325,9 @@ export class SkillEvaluationComponent implements OnInit {
   populateSelfFeedbacks(result, selfFeedbacks) {
     if (result.postAssessment.feedbackquestion_set) {
       this.pitchingOverview.enoughData = true;
-      result.postAssessment.feedbackquestion_set.forEach(question => {
-        question.feedbackuseranswer_set.forEach(answer => {
-          if (answer.user.id === parseInt(this.learnerID, 10)) {
+      result.postAssessment.feedbackquestion_set.forEach((question) => {
+        question.feedbackparticipantanswer_set.forEach((answer: FeedbackParticipantAnswerSet) => {
+          if (answer.participant.participant_code === parseInt(this.learnerID, 10)) {
             selfFeedbacks[selfFeedbacks.length - 1].push(answer.rating_answer);
           }
         });
@@ -352,13 +339,13 @@ export class SkillEvaluationComponent implements OnInit {
 
   populatePeerFeedbacks(result, peerFeedbacks) {
     if (result.pom.feedbackquestion_set) {
-      result.pom.feedbackquestion_set.forEach(question => {
+      result.pom.feedbackquestion_set.forEach((question) => {
         const userFeedback = result.pom.pitchomaticgroupmembers.find(
-          member => member.user.id === parseInt(this.learnerID, 10)
+          (member) => member.user.id === parseInt(this.learnerID, 10)
         );
         const ratings = [];
         if (userFeedback) {
-          userFeedback.pitchomaticfeedback_set.forEach(fb => {
+          userFeedback.pitchomaticfeedback_set.forEach((fb) => {
             if (fb.feedbackquestion === question.id) {
               ratings.push(fb.rating_answer);
             }
@@ -387,22 +374,15 @@ export class SkillEvaluationComponent implements OnInit {
 
   createWidgetComponents() {
     // tslint:disable-next-line:max-line-length
-    const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(
-      SkillOverviewComponent
-    );
-
-    const component = this.entry.createComponent(skillOverFactory);
-    component.instance.overviewData = this.pitchingOverview;
-
+    // const skillOverFactory = this.componentFactoryResolver.resolveComponentFactory(SkillOverviewComponent);
+    // const component = this.entry.createComponent(skillOverFactory);
+    // component.instance.overviewData = this.pitchingOverview;
     // const component2 = this.entry2.createComponent(skillOverFactory);
     // component2.instance.overviewData = overviewData2;
-
     // const component3 = this.entry3.createComponent(skillOverFactory);
     // component3.instance.overviewData = overviewData;
-
     // const component4 = this.entry4.createComponent(skillOverFactory);
     // component4.instance.overviewData = overviewData;
-
     // commented out mcq widget
     // const component5 = this.entry4.createComponent(skillOverFactory);
     // component5.instance.overviewData = this.mcqOverview;
@@ -410,7 +390,7 @@ export class SkillEvaluationComponent implements OnInit {
 
   verifyData(reports) {
     const verifiedReports = [];
-    reports.forEach(report => {
+    reports.forEach((report) => {
       let verifiedReport = false;
       report.activity_results.forEach((act, i) => {
         let title = '';
@@ -430,10 +410,10 @@ export class SkillEvaluationComponent implements OnInit {
           }
         } else if (act.activity_type === ActivityTypes.pitchoMatic) {
           const userFeedback = act.pitchomaticgroupmembers.find(
-            member => member.user.id === parseInt(this.learnerID, 10)
+            (member) => member.user.id === parseInt(this.learnerID, 10)
           );
 
-          act.feedbackquestion_set.forEach(question => {
+          act.feedbackquestion_set.forEach((question) => {
             if (userFeedback) {
               if (userFeedback.pitchomaticfeedback_set.length) {
                 // this user has feedback in POM
@@ -469,5 +449,5 @@ const colors = {
   green: 'rgb(75, 192, 192)',
   blue: 'rgb(54, 162, 235)',
   purple: 'rgb(153, 102, 255)',
-  grey: 'rgb(201, 203, 207)'
+  grey: 'rgb(201, 203, 207)',
 };

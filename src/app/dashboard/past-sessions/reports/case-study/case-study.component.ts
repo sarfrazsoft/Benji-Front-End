@@ -47,22 +47,22 @@ export class CaseStudyComponent implements OnInit, OnChanges {
       const filteredInUsers = this.pastSessionService.filteredInUsers;
       // all the people in group should be in filteredInUsers
       let allPeoplePresent = true;
-      for (let u = 0; u < group.usergroupuser_set.length; u++) {
-        const user = group.usergroupuser_set[u];
-        if (filteredInUsers.find((fiu) => fiu === user.user.id)) {
+      for (let u = 0; u < group.participantgroupstatus_set.length; u++) {
+        const user = group.participantgroupstatus_set[u];
+        if (filteredInUsers.find((fiu) => fiu === user.participant.participant_code)) {
           // user present
         } else {
           allPeoplePresent = false;
         }
       }
       if (allPeoplePresent) {
-        const usersNnotes = group.usergroupuser_set.map((u) => {
-          const caseStudyUser = this.data.casestudy.casestudyuser_set.find(
-            (x) => u.id === x.usergroupuser
+        const usersNnotes = group.participantgroupstatus_set.map((u) => {
+          const caseStudyUser = this.data.casestudy.casestudyparticipant_set.find(
+            (x) => u.participant.participant_code === x.participant.participant_code
           );
 
           return {
-            user: u.user.first_name,
+            user: this.pastSessionService.getParticipantName(u.participant.participant_code),
             answers: caseStudyUser.casestudyanswer_set,
           };
         });
@@ -87,7 +87,6 @@ export class CaseStudyComponent implements OnInit, OnChanges {
       } else {
       }
     }
-    console.log(this.groups);
   }
 
   getGroupAnswer(group, qid) {

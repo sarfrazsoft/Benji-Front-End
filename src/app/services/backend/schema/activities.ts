@@ -1,3 +1,4 @@
+import { Participant } from './course_details';
 import { User } from './user';
 import {
   BuildAPitchBlank,
@@ -58,24 +59,29 @@ export interface MCQActivity {
   question: MCQQuestion;
   question_seconds: number;
   question_timer: Timer;
-  answered_users: User[];
-  all_users_answered: boolean;
+  answered_participants: Array<ParticipantCode>;
+  all_participant_answered: boolean;
   titlecomponent: TitleComponent;
-  quiz_leaderboard: Array<{ id: number; score: number }>;
+  quiz_leaderboard: Array<LeaderBoard>;
+}
+
+export interface LeaderBoard {
+  participant_code: number;
+  score: number;
 }
 
 export interface MCQResultsActivity {
   choices_summary: Array<{ id: number; answer_count: number }>;
   poll_mode: boolean;
   question_list: MCQQuestion[];
-  results_summary: UserScore[];
+  results_summary: Array<LeaderBoard>;
   total: number;
 }
 
-export interface UserScore {
-  id: number;
-  score: number;
-}
+// export interface UserScore {
+//   id: number;
+//   score: number;
+// }
 
 export interface VideoActivity {
   video_url: string;
@@ -114,11 +120,11 @@ export interface RoleplayPairUser {
   discussion_complete: boolean;
 }
 
-export interface TriadRoleplayPairUser {
-  user: User;
-  found: boolean;
-  id: number;
-}
+// export interface TriadRoleplayPairUser {
+//   user: User;
+//   found: boolean;
+//   id: number;
+// }
 
 export interface RoleplayPair {
   primary_roleplayuser_set: RoleplayPairUser[];
@@ -126,37 +132,47 @@ export interface RoleplayPair {
   group_found: boolean;
 }
 
-export interface PairGroupingActivity {
+export interface GroupingActivity {
   grouping_complete: boolean;
   grouping_countdown_timer: Timer;
-  usergroup_set: UserGroupUserSet[];
+  group_set: Array<Group>;
 }
 
-export interface ExternalGroupingActivity {
-  grouping_complete: boolean;
-  grouping_countdown_timer: Timer;
-  usergroup_set: UserGroupSet[];
-}
+export type PairGroupingActivity = GroupingActivity;
+export type ExternalGroupingActivity = GroupingActivity;
+export type TriadGroupingActivity = GroupingActivity;
 
-export interface UserGroupSet {
-  id: number;
-  group_num: number;
-  usergroupuser_set: Array<{ id: number; user: User; found: boolean }>;
-}
+// export interface PairGroupingActivity {
+//   grouping_complete: boolean;
+//   grouping_countdown_timer: Timer;
+//   group_set: Array<Group>;
+// }
 
-export interface TriadGroupingActivity {
-  grouping_complete: boolean;
-  grouping_countdown_timer: Timer;
-  usergroup_set: TriadUserGroupUserSet[];
-}
+// export interface ExternalGroupingActivity {
+//   grouping_complete: boolean;
+//   grouping_countdown_timer: Timer;
+//   usergroup_set: Array<Group>;
+// }
 
-export interface UserGroupUserSet {
-  usergroupuser_set: RoleplayPairUser[];
-}
+// export interface TriadGroupingActivity {
+//   grouping_complete: boolean;
+//   grouping_countdown_timer: Timer;
+//   group_set: Array<Group>;
+// }
 
-export interface TriadUserGroupUserSet {
-  usergroupuser_set: TriadRoleplayPairUser[];
-}
+// export interface UserGroupSet {
+//   id: number;
+//   group_num: number;
+//   usergroupuser_set: Array<{ id: number; user: User; found: boolean }>;
+// }
+
+// export interface UserGroupUserSet {
+//   usergroupuser_set: RoleplayPairUser[];
+// }
+
+// export interface TriadUserGroupUserSet {
+//   usergroupuser_set: TriadRoleplayPairUser[];
+// }
 
 export interface RoleplayPairActivity {
   roleplay_question: string;
@@ -191,13 +207,13 @@ export interface HintWordActivity {
   voting_complete: boolean;
   words_and_votes: HintWordsAndVotes[];
   voted_word_text: string;
-  submitted_users: User[];
-  voted_users: User[];
+  submitted_participants: Array<ParticipantCode>;
+  voted_participants: Array<ParticipantCode>;
 }
 
 export interface DiscussionGroupMember {
   has_volunteered: boolean;
-  user: User;
+  participant: ParticipantCode;
 }
 
 export interface DiscussionGroup {
@@ -223,7 +239,7 @@ export interface DiscussionActivity {
 export interface FeedbackActivity {
   id: number;
   feedbackquestion_set: FeedbackQuestion[];
-  answered_users: User[];
+  answered_participants: Array<ParticipantCode>;
   titlecomponent: TitleComponent;
 }
 
@@ -243,8 +259,8 @@ export interface WhereDoYouStandChoiceStats {
   num_preferences: number;
 }
 
-export interface WhereDoYouStandUserAnswers {
-  user: User;
+export interface WhereDoYouStandAnswer {
+  participant: ParticipantCode;
   wheredoyoustandchoice: WhereDoYouStandChoice;
 }
 
@@ -267,25 +283,28 @@ export interface WhereDoYouStandActivity {
   prediction_complete: boolean;
   preference_complete: boolean;
   standing_complete: boolean;
-  user_predictions: WhereDoYouStandUserAnswers[];
-  user_preferences: WhereDoYouStandUserAnswers[];
+  predictions: Array<WhereDoYouStandAnswer>;
+  preferences: Array<WhereDoYouStandAnswer>;
   choice_stats: WhereDoYouStandChoiceStats[];
 }
 
 export interface BrainstormActivity {
   brainstormcategory_set: Array<Category>;
   instructions: string;
-  max_user_submissions: number;
-  max_user_votes: number;
+  max_participant_submissions: number;
+  max_participant_votes: number;
   categorize_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
   submission_seconds: number;
-  user_submission_counts: Array<{ id: number; count: number }>;
-  user_vote_counts: any[];
+  participant_submission_counts: Array<{ participant_code: number; count: number }>;
+  participant_vote_counts: Array<{ participant_code: number; count: number }>;
   voting_complete: boolean;
   voting_countdown_timer: Timer;
   voting_seconds: number;
+  submitted_participants: Array<{ participant_code: number }>;
+  all_participants_submitted: boolean;
+  all_participants_voted: boolean;
 }
 
 export interface Category {
@@ -300,11 +319,15 @@ export interface Idea {
   num_votes: number;
   idea: string;
   removed: boolean;
-  submitted_by_user: number;
+  submitting_participant: ParticipantCode;
   idea_image: Image;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
+}
+
+export interface ParticipantCode {
+  participant_code: number;
 }
 
 export interface Image {
@@ -318,12 +341,12 @@ export interface BuildAPitchActivity {
   buildapitchpitch_set: Array<BuildAPitchPitch>;
   building_done: boolean;
   instructions: string;
-  share_start_user: User;
+  share_start_participant: ParticipantCode;
   sharing_done: boolean;
   vote_countdown_timer: Timer;
   votes: Array<{ id: number; num_votes: number }>;
   voting_done: boolean;
-  winning_user: User;
+  winning_participant: ParticipantCode;
 }
 
 export interface PitchoMaticActivity {
@@ -357,7 +380,7 @@ export interface PitchoMaticGroup {
 }
 
 export interface PitchoMaticGroupMember {
-  user: User;
+  participant: ParticipantCode;
   is_grouped: boolean;
   has_generated: boolean;
   has_prepared: boolean;
@@ -392,8 +415,8 @@ export interface GenericRoleplayActivity {
   feedback_seconds: number;
   activity_type: string;
   genericroleplayrole_set: Array<RoleplayRole>;
-  genericroleplayuser_set: Array<RoleplayUser>;
-  groups: Array<RoleplayGroups>;
+  genericroleplayparticipant_set: Array<RoleplayUser>;
+  groups: Array<Group>;
 }
 
 export interface RoleplayRole {
@@ -407,29 +430,30 @@ export interface RoleplayRole {
 }
 
 export interface RoleplayUser {
-  benjiuser_id: number;
+  participant: ParticipantCode;
   role: number;
   discussion_complete: boolean;
   feedback_submitted: boolean;
 }
 
-export interface RoleplayGroups {
+export interface Group {
   id: number;
-  usergroupuser_set: Array<RoleplayUserSet>;
+  group_num: number;
+  participantgroupstatus_set: Array<ParticipantGroupStatus>;
 }
 
-export interface RoleplayUserSet {
+export interface ParticipantGroupStatus {
   id: number;
-  found: boolean;
-  user: User;
+  ready: boolean;
+  participant: ParticipantCode;
 }
 
 export interface CaseStudyActivity {
   activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;
-  groups: Array<UserGroupSet>;
-  casestudyuser_set: Array<CaseStudyUserSet>;
+  groups: Array<Group>;
+  casestudyparticipant_set: Array<CaseStudyParticipantSet>;
   casestudyquestion_set: Array<{ id: number; question_text: string }>;
   note_taker_instructions: string;
   participant_instructions: string;
@@ -437,15 +461,15 @@ export interface CaseStudyActivity {
   case_study_details: string;
 }
 
-export interface CaseStudyUserSet {
-  benjiuser_id: number;
-  usergroupuser: number;
-  role: CaseStudyRoles;
+export interface CaseStudyParticipantSet {
+  participant: ParticipantCode;
+  participantgroupstatus: ParticipantGroupStatus;
+  role: CaseStudyRole;
   is_done: boolean;
   casestudyanswer_set: any;
 }
 
-export type CaseStudyRoles = 'Note Taker' | 'Participant';
+export type CaseStudyRole = 'Note Taker' | 'Participant';
 
 export interface MontyHallActivity extends ParentActivity {
   change_choice_seconds: number;
@@ -468,7 +492,7 @@ export interface CurrentRoundDetails {
   door_reveal: any;
   id: number;
   round_number: number;
-  user: number;
+  participant: ParticipantCode;
 }
 
 export interface MontyHallResult {

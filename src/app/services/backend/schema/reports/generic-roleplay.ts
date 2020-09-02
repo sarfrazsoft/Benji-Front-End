@@ -1,33 +1,21 @@
-import { User } from '../user';
+import { Group, ParticipantCode } from '../activities';
 import { FeedbackQuestion } from '../utils';
-import { FeedbackUserAnswerSet } from './feedback';
 import { Report } from './reports';
 
 export interface GenericRoleplayReport extends Report {
-  groups: Array<GenericRoleplayGroup>;
+  groups: Array<Group>;
   genericroleplayrole_set: Array<GenericRoleplayRole>;
   activity_seconds: number;
   feedback_seconds: number;
-  genericroleplayuser_set: Array<AssignedRole>;
+  genericroleplayparticipant_set: Array<AssignedRole>;
   feedback: Array<GenericRoleplayFeedback>;
 }
 
 export interface GenericRoleplayFeedback {
-  benji_user: number;
+  genericroleplayparticipant: AssignedRole;
   rating_answer: number;
   text_answer: string;
   feedbackquestion: number;
-}
-
-export interface GenericRoleplayGroup {
-  id: number;
-  usergroupuser_set: Array<UserGroup>;
-}
-
-export interface UserGroup {
-  id: number;
-  user: User;
-  found: boolean;
 }
 
 export interface GenericRoleplayRole {
@@ -41,7 +29,7 @@ export interface GenericRoleplayRole {
 }
 
 export interface AssignedRole {
-  benjiuser_id: number;
+  participant: ParticipantCode;
   role: number;
   discussion_complete: boolean;
   feedback_submitted: boolean;

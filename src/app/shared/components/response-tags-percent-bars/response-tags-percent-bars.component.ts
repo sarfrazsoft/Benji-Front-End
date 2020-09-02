@@ -4,7 +4,7 @@ import { PastSessionsService } from 'src/app/services';
 @Component({
   selector: 'benji-response-tags-percent-bars',
   templateUrl: './response-tags-percent-bars.component.html',
-  styleUrls: ['./response-tags-percent-bars.component.scss']
+  styleUrls: ['./response-tags-percent-bars.component.scss'],
 })
 export class ResponseTagsPercentBarsComponent implements OnInit, OnChanges {
   @Input() tagsQuestion: any;
@@ -19,7 +19,7 @@ export class ResponseTagsPercentBarsComponent implements OnInit, OnChanges {
   constructor(private pastSessionService: PastSessionsService) {}
 
   ngOnInit() {
-    this.pastSessionService.filteredInUsers$.subscribe(updatedUserFilter => {
+    this.pastSessionService.filteredInUsers$.subscribe((updatedUserFilter) => {
       this.updateBars();
     });
   }
@@ -30,9 +30,9 @@ export class ResponseTagsPercentBarsComponent implements OnInit, OnChanges {
 
   updateBars() {
     if (this.tagsQuestion) {
-      // let questionRespondents = this.mcq.mcqactivityuseranswer_set;
+      // let questionRespondents = this.mcq.mcqactivityparticipantanswer_set;
       let totalResponses = 0;
-      this.tagsQuestion.tagScores.forEach(tag => {
+      this.tagsQuestion.tagScores.forEach((tag) => {
         totalResponses = tag.score;
       });
       // Iterate over each choice
@@ -42,7 +42,7 @@ export class ResponseTagsPercentBarsComponent implements OnInit, OnChanges {
       // let choiceRespondents;
       const tagScores = this.tagsQuestion.tagScores;
       this.choices = tagScores.map((choice, i) => {
-        // choiceRespondents = this.mcq.mcqactivityuseranswer_set.filter(
+        // choiceRespondents = this.mcq.mcqactivityparticipantanswer_set.filter(
         //   answer => answer.answer === choice.id
         // );
         // questionRespondents = questionRespondents.filter(respondent => {
@@ -55,7 +55,7 @@ export class ResponseTagsPercentBarsComponent implements OnInit, OnChanges {
         return {
           text: choice.name,
           noOfResponses: choice.score,
-          percent: percent
+          percent: percent,
         };
       });
     }

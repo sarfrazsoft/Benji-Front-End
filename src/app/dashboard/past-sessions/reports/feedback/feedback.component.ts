@@ -5,14 +5,14 @@ import {
   ActivityReport,
   Assessment,
   FeedbackGraphQuestion,
+  FeedbackParticipantAnswerSet,
   FeedbackQuestionSet,
-  FeedbackUserAnswerSet
 } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-feedback',
   templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.scss']
+  styleUrls: ['./feedback.component.scss'],
 })
 export class FeedbackComponent implements OnInit {
   @Input() data: ActivityReport;
@@ -20,10 +20,7 @@ export class FeedbackComponent implements OnInit {
   fback: Array<FeedbackQuestionSet>;
   questions: Array<FeedbackGraphQuestion> = [];
 
-  constructor(
-    private pastSessionService: PastSessionsService,
-    private ref: ChangeDetectorRef
-  ) {}
+  constructor(private pastSessionService: PastSessionsService, private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (this.data && this.data.feedback) {
@@ -37,29 +34,21 @@ export class FeedbackComponent implements OnInit {
 
     this.fback.forEach((question: FeedbackQuestionSet) => {
       const assessments: Array<Assessment> = [];
-      question.feedbackuseranswer_set.forEach(
-        (answer: FeedbackUserAnswerSet) => {
-          assessments.push({
-            user: answer.user,
-            rating: answer.rating_answer,
-            text: answer.text_answer
-          });
-        }
-      );
+      question.feedbackparticipantanswer_set.forEach((answer: FeedbackParticipantAnswerSet) => {
+        assessments.push({
+          participant_code: answer.participant.participant_code,
+          rating: answer.rating_answer,
+          text: answer.text_answer,
+        });
+      });
 
       this.questions.push({
         question_text: question.question_text,
         assessments: assessments,
-        labels: [
-          'Strongly Disagree',
-          'Disagree',
-          'Neutral',
-          'Agree',
-          'Strongly Agree'
-        ],
+        labels: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
         is_combo: question.is_combo,
         question_type: question.question_type,
-        combo_text: question.combo_text
+        combo_text: question.combo_text,
       });
     });
   }
