@@ -19,6 +19,13 @@
               <ng-container *ngIf="isUserIncluded(idea.submitting_participant.participant_code)">
                 <div class="text-list-item" *ngIf="!idea.remove">
                   {{ idea.idea }}
+                  <div *ngIf="idea.idea_image && idea.idea_image.img">
+                    <img
+                      [src]="hostname + idea.idea_image.img"
+                      alt=""
+                      style="height: 300px; margin-top: 20px"
+                    />
+                  </div>
                   <div class="details">
                     {{ getPersonName(idea.submitting_participant.participant_code) }},
                     {{ ' ' + idea.num_votes }}
