@@ -10,6 +10,7 @@ import {
   PastSessionsComponent,
   ResetPasswordComponent,
 } from './index';
+import { WorkspaceComponent } from './workspace/workspace.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: '',
         component: AdminPanelComponent,
+      },
+      {
+        path: 'workspace',
+        component: WorkspaceComponent,
       },
       {
         path: 'lesson/:lessonId',

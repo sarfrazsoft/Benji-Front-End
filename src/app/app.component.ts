@@ -27,9 +27,7 @@ export class AppComponent implements OnInit {
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.title.setTitle(info.parameters.tabTitle);
-        this._document
-          .getElementById('appFavicon')
-          .setAttribute('href', info.favicon);
+        this._document.getElementById('appFavicon').setAttribute('href', info.favicon);
 
         const cssCode = `
         * {
