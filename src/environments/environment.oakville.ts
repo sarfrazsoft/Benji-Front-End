@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'localhost',
+  host: '192.168.2.3:81',
   web_protocol: 'http',
   socket_protocl: 'ws',
 };
