@@ -18,7 +18,7 @@ export class ParticipantJoinComponent implements OnInit {
   public roomCode = new FormControl(null, [Validators.required, Validators.min(4)]);
 
   constructor(
-    private router: Router,
+    public router: Router,
     private backend: BackendRestService,
     private socket: BackendSocketService,
     private authService: AuthService
