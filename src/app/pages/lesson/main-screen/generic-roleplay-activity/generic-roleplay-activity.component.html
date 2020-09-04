@@ -8,34 +8,28 @@
       <div class="instruction-columns flexer" *ngIf="roles.length === 3">
         <div class="role" *ngFor="let role of roles; let i = index">
           <div class="emoji-container">
-            <app-b-twemoji
-              *ngIf="role.image_url"
-              [emoji]="emoji.getEmoji(role.image_url)"
-            ></app-b-twemoji>
+            <app-b-twemoji *ngIf="role.image_url" [text]="role.image_url"></app-b-twemoji>
           </div>
           <h3 class="secondary-color-dark pn-500">Partner #{{ i + 1 }}</h3>
           <p class="primary-color-darkest pn-600">
             {{ role.name }}
           </p>
           <p class="secondary-color-dark pn-500">
-            {{ role.short_instructions ? role.short_instructions : "" }}
+            {{ role.short_instructions ? role.short_instructions : '' }}
           </p>
         </div>
       </div>
       <div class="instruction-columns flexer" *ngIf="roles.length === 2">
         <div class="role" *ngFor="let role of roles; let i = index">
           <div class="emoji-container">
-            <app-b-twemoji
-              *ngIf="role.image_url"
-              [emoji]="emoji.getEmoji(role.image_url)"
-            ></app-b-twemoji>
+            <app-b-twemoji *ngIf="role.image_url" [text]="role.image_url"></app-b-twemoji>
           </div>
           <h3 class="secondary-color-dark pn-500">Partner #{{ i + 1 }}</h3>
           <p class="primary-color-darkest pn-600">
             {{ role.name }}
           </p>
           <p class="secondary-color-dark pn-500">
-            {{ role.short_instructions ? role.short_instructions : "" }}
+            {{ role.short_instructions ? role.short_instructions : '' }}
           </p>
         </div>
         <div class="role">
@@ -58,17 +52,8 @@
   </ng-container>
 
   <!-- Feedback on the Salesperson -->
-  <div
-    *ngIf="giveFeedback"
-    class="share-feedback bg-white"
-    fxFlex="1 0 0"
-    fxLayout="row"
-  >
-    <div
-      class="activity-instructions bg-white"
-      fxFlex="60%"
-      fxLayoutAlign="start center"
-    >
+  <div *ngIf="giveFeedback" class="share-feedback bg-white" fxFlex="1 0 0" fxLayout="row">
+    <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
       <div fxLayoutGap="4vw">
         <div fxFlex="25%">
           <div class="ms-emoji-container smaller-emoji">
@@ -78,20 +63,14 @@
         <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
           <h3
             class="secondary-color-dark pn-600 discuss-instruction pitch-text"
-            innerHTML="{{
-              'Thanks everyone, please fill out your feedback forms.'
-            }}"
+            innerHTML="{{ 'Thanks everyone, please fill out your feedback forms.' }}"
           ></h3>
           <div
             class="info-subsection primary-color-lighter pn-500"
             fxLayout="row"
             fxLayoutAlign="start start"
           >
-            <img
-              class="main-screen-utility-icons"
-              [src]="checkIcon"
-              alt="launch"
-            />
+            <img class="main-screen-utility-icons" [src]="checkIcon" alt="launch" />
             <div class="instruction">
               {{ getFbackSubmittedCount() }}/{{ getGroupUsersCount() }}
               forms submitted
@@ -100,11 +79,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="bg-secondary-color-lightest"
-      fxFlex="40%"
-      fxLayoutAlign="center center"
-    >
+    <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
       <app-radial-timer
         [timer]="feedbackTimer"
         endStateText="Done!"

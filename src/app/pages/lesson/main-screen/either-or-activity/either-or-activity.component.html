@@ -7,12 +7,12 @@
         <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
           <div>
             <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
-              <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
+              <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
             </div>
           </div>
           <div>
             <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
-              <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
+              <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
             </div>
           </div>
         </div>
@@ -36,12 +36,12 @@
           <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
             <div>
               <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
-                <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
+                <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
               </div>
             </div>
             <div>
               <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
-                <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
+                <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
               </div>
             </div>
           </div>
@@ -114,13 +114,13 @@
         </div>
         <div>
           <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
-            <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
+            <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
           </div>
         </div>
         <h1 fxFlex class="primary-color-darkest pn-700 question">Stand on your side</h1>
         <div>
           <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
-            <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
+            <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
           </div>
         </div>
         <div>
@@ -152,7 +152,7 @@
         class="twemoji-container"
         *ngIf="isEmoji(getGroupPredictionChoice().choice_img_url) && !hideResultEmoji"
       >
-        <app-b-twemoji [emoji]="emoji.getEmoji(getGroupPredictionChoice().choice_img_url)"></app-b-twemoji>
+        <app-b-twemoji [text]="getGroupPredictionChoice().choice_img_url"></app-b-twemoji>
       </div>
     </div>
     <div fxLayout="column" fxFlex>
@@ -187,18 +187,18 @@
           class="twemoji-container"
           *ngIf="!isGroupPredictionEvaluationTie() && isEmoji(getGroupPreferredChoice().choice_img_url)"
         >
-          <app-b-twemoji [emoji]="emoji.getEmoji(getGroupPreferredChoice().choice_img_url)"></app-b-twemoji>
+          <app-b-twemoji [text]="getGroupPreferredChoice().choice_img_url"></app-b-twemoji>
         </div>
         <div *ngIf="isGroupPredictionEvaluationTie()">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3vw">
             <div>
               <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
-                <app-b-twemoji [emoji]="emoji.getEmoji(state.left_choice.choice_img_url)"></app-b-twemoji>
+                <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
               </div>
             </div>
             <div>
               <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
-                <app-b-twemoji [emoji]="emoji.getEmoji(state.right_choice.choice_img_url)"></app-b-twemoji>
+                <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
               </div>
             </div>
           </div>

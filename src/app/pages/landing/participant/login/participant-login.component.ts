@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { AuthService, BackendRestService, ContextService } from 'src/app/services';
+import { AuthService, BackendRestService, ContextService, EmojiLookupService } from 'src/app/services';
 import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
@@ -23,11 +23,13 @@ export class ParticipantLoginComponent implements OnInit {
   public username = new FormControl(null, [Validators.required]);
   lessonRunDetails: LessonRunDetails;
 
+  emoji2;
   constructor(
     private backend: BackendRestService,
     private auth: AuthService,
     public router: Router,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private emoji: EmojiLookupService
   ) {}
 
   ngOnInit() {
@@ -80,3 +82,7 @@ export class ParticipantLoginComponent implements OnInit {
       });
   }
 }
+declare var twemoji: {
+  convert: { fromCodePoint(str: string): string };
+  parse(str: string, options?: { folder: string; ext: string }): string;
+};

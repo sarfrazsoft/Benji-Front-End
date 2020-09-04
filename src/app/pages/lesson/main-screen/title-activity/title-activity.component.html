@@ -1,6 +1,6 @@
 <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
   <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_image)">
-    <app-b-twemoji [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"> </app-b-twemoji>
+    <app-b-twemoji [text]="activityState.titleactivity.title_image"> </app-b-twemoji>
   </div>
   <div class="activity-title-container">
     <h1 class="primary-color pn-700">

@@ -47,7 +47,7 @@ export class ActivityContentComponent implements OnInit {
   }
 
   saveValues($event) {
-    console.log($event);
+    // console.log($event);
     // const lesson = [
     //   {
     //     activity_type: 'LobbyActivity',
@@ -61,7 +61,7 @@ export class ActivityContentComponent implements OnInit {
 
   getQuestions(fields, activity) {
     const questions1: QuestionBase<string>[] = [];
-    console.log(fields, activity);
+    // console.log(fields, activity);
     fields.forEach((field) => {
       if (field.type === FieldTypes.string || field.type === FieldTypes.url) {
         questions1.push(this.getStringField(field, activity));

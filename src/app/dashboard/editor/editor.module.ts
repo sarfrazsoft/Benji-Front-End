@@ -19,8 +19,6 @@ import { effects, reducers } from './store';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    PickerModule,
-    EmojiModule,
     StoreModule.forFeature('editor', reducers),
     EffectsModule.forFeature(effects),
   ],
