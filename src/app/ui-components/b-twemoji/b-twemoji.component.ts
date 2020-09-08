@@ -46,10 +46,9 @@ interface TwemojiOptions {
   styleUrls: ['./b-twemoji.component.scss'],
 })
 export class BTwemojiComponent implements OnInit {
-  // emoji will have three types of input
+  // emoji will have 2 types of input
   // 1- emoji
-  // 2- unicode
-  // 3- text (legacy-lessons)
+  // 2- text
   // example usage is:
   // <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
   // <app-b-twemoji [text]="'emoji://speech'"></app-b-twemoji>
