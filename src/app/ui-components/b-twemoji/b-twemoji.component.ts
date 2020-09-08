@@ -51,10 +51,8 @@ export class BTwemojiComponent implements OnInit {
   // 2- unicode
   // 3- text (legacy-lessons)
   // example usage is:
-  // <app-b-twemoji class="body-emoji" [emojiUnicode]="'1F44B'"></app-b-twemoji>
   // <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
   // <app-b-twemoji [text]="'emoji://speech'"></app-b-twemoji>
-  @Input() emojiUnicode;
   @Input() emoji;
   @Input() text;
   constructor(
@@ -64,14 +62,10 @@ export class BTwemojiComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.emojiUnicode) {
-    } else if (this.emoji) {
+    if (this.emoji) {
       this.setupEmoji(this.emoji);
     } else if (this.text) {
       // if text is a legacy emoji
-      console.log(/^[a-b]/.test(this.text));
-      console.log(this.text);
-      // const e = this.text.split('//')[1];
       if (this.text.includes('//')) {
         const x = this.emojiLookupService.getEmoji(this.text);
         this.setupEmoji(x);
@@ -94,7 +88,6 @@ export class BTwemojiComponent implements OnInit {
   }
 
   setupEmoji(e) {
-    console.log(e);
     const hostDiv = this.renderer.createElement('div');
     const text = this.renderer.createText(e);
     this.renderer.appendChild(hostDiv, text);
