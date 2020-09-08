@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import { merge, Observable, of as observableOf } from 'rxjs';
+import {BehaviorSubject, merge, Observable, of as observableOf} from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { PastSessionsService } from 'src/app/services';
 
@@ -20,6 +20,19 @@ export class PastSessionsTableComponent implements AfterViewInit {
   selection = new SelectionModel<any>(true, []);
   resultsLength = 0;
   isLoadingResults = true;
+  initialSessionFilter = "all";
+
+  sessionFilter$ = new BehaviorSubject<any>(null);
+
+  set sessionFilter(lessons: any) {
+    this.sessionFilter$.next(lessons);
+  }
+  get sessionFilter(): any {
+    return this.sessionFilter$.getValue();
+  }
+  sessionFilterChange($event) {
+    this.sessionFilter = $event.value;
+  }
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -36,7 +49,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
-    merge(this.sort.sortChange, this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page, this.sessionFilter$)
       .pipe(
         startWith({}),
         switchMap(() => {
@@ -44,7 +57,8 @@ export class PastSessionsTableComponent implements AfterViewInit {
           return this.pastSessionsService.getPastSessions(
             this.sort.active,
             this.sort.direction,
-            this.paginator.pageIndex
+            this.paginator.pageIndex,
+            this.sessionFilter
           );
         }),
         map((data: any) => {
@@ -69,6 +83,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
             hostedBy: run.host ? run.host.first_name + ' ' + run.host.last_name : '',
             noOfParticipants: run.participant_set.length,
             lessonrunCode: run.lessonrun_code,
+            is_accessible: run.is_accessible,
           });
         });
         this.data = tableData;

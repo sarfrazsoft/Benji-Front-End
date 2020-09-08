@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services';
 export interface SidenavItem {
   navName: string;
   navRoute?: string;
+  disabled?: boolean;
 }
 
 @Component({
