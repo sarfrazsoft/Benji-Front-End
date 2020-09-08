@@ -52,6 +52,8 @@ export class BTwemojiComponent implements OnInit {
   // example usage is:
   // <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
   // <app-b-twemoji [text]="'emoji://speech'"></app-b-twemoji>
+  // <app-b-twemoji [text]="'emoji://1F468-200D-1F469-200D-1F466'"></app-b-twemoji>
+  // <app-b-twemoji [text]="'emoji://1F468'"></app-b-twemoji>
   @Input() emoji;
   @Input() text;
   constructor(
@@ -65,21 +67,23 @@ export class BTwemojiComponent implements OnInit {
       this.setupEmoji(this.emoji);
     } else if (this.text) {
       // if text is a legacy emoji
-      if (this.text.includes('//')) {
+      const emojiText = this.text.split('//')[1];
+      console.log(emojiText);
+      if (/^[a-b]/.test(emojiText)) {
         const x = this.emojiLookupService.getEmoji(this.text);
         this.setupEmoji(x);
       } else {
         // the text is a unicode for example
         // '1F468-200D-1F469-200D-1F466' or '1F468'
-        if (this.text.includes('-')) {
-          const arr = this.text.split('-');
-          let ee = '';
+        if (emojiText.includes('-')) {
+          const arr = emojiText.split('-');
+          let e = '';
           arr.forEach((code) => {
-            ee = ee + twemoji.convert.fromCodePoint(code);
+            e = e + twemoji.convert.fromCodePoint(code);
           });
-          this.setupEmoji(ee);
+          this.setupEmoji(e);
         } else {
-          const x = twemoji.convert.fromCodePoint(this.text);
+          const x = twemoji.convert.fromCodePoint(emojiText);
           this.setupEmoji(x);
         }
       }
