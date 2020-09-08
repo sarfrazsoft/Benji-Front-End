@@ -43,7 +43,9 @@ export class WhiteLabelResolver implements Resolve<any> {
         window.location.origin !== 'https://staging.mybenji.com'
       ) {
         if (window.location.origin.includes('muralys')) {
-          console.log('get muraly theme');
+          // because muralys is the only organzation with a url that looks like
+          // https://sessions.muralys.com/participant/login
+          console.log('get muralys theme');
           this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'muralys' + '/white_label_info/').subscribe(
             (res: any) => {
               this.contextService.partnerInfo = res;
@@ -55,46 +57,13 @@ export class WhiteLabelResolver implements Resolve<any> {
               }
             }
           );
-        } else if (window.location.origin.includes('whetstone')) {
-          this.httpClient
-            .get(global.apiRoot + '/tenants/orgs/' + 'whetstone' + '/white_label_info/')
-            .subscribe(
-              (res: any) => {
-                this.contextService.partnerInfo = res;
-              },
-              (err: HttpErrorResponse) => {
-                if (err.status === 404) {
-                  console.log(err.status);
-                  this.applyDefaultTheme();
-                }
-              }
-            );
-        } else if (window.location.origin.includes('ccl')) {
-          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'ccl' + '/white_label_info/').subscribe(
-            (res: any) => {
-              this.contextService.partnerInfo = res;
-            },
-            (err: HttpErrorResponse) => {
-              if (err.status === 404) {
-                console.log(err.status);
-                this.applyDefaultTheme();
-              }
-            }
-          );
-        } else if (window.location.origin.includes('rgax')) {
-          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'rgax' + '/white_label_info/').subscribe(
-            (res: any) => {
-              this.contextService.partnerInfo = res;
-            },
-            (err: HttpErrorResponse) => {
-              if (err.status === 404) {
-                console.log(err.status);
-                this.applyDefaultTheme();
-              }
-            }
-          );
-        } else if (window.location.origin.includes('rga')) {
-          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'rga' + '/white_label_info/').subscribe(
+        } else {
+          // all other organizations are
+          // ccl.mybenji.com, whetstone.mybenji.com
+          const parts = location.hostname.split('.');
+          const subdomain = parts.shift();
+          console.log(`get ${subdomain} theme`);
+          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + subdomain + '/white_label_info/').subscribe(
             (res: any) => {
               this.contextService.partnerInfo = res;
             },
@@ -106,8 +75,6 @@ export class WhiteLabelResolver implements Resolve<any> {
             }
           );
         }
-        // It doesn't matter which organization you are registered to
-        // if the location is this; it'll get location based whitelabeling details
       } else {
         this.restService.get_own_identity().subscribe(
           (res: any) => {
@@ -141,7 +108,6 @@ export class WhiteLabelResolver implements Resolve<any> {
       }
     } catch (err) {
       console.log(err);
-      console.log('yolo');
       this.applyDefaultTheme();
     }
   }
@@ -165,5 +131,3 @@ export class WhiteLabelResolver implements Resolve<any> {
     this.contextService.partnerInfo = global.DefaultwhiteLabelInfo as PartnerInfo;
   }
 }
-// 68195
-// 27582
