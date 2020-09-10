@@ -30,7 +30,7 @@ export class BackendRestService {
   }
 
   start_lesson(lessonID: number): Observable<LessonRun> {
-    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/');
+    return this.http.post<LessonRun>(global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/', {});
   }
 
   get_lessonrun(roomCode: number): Observable<LessonRun> {
@@ -81,15 +81,6 @@ export class BackendRestService {
     });
   }
 
-  /**
-   * Creates a new lesson instance
-   * @param lessonNumber: string
-   */
-  public startLesson(lessonNumber, courserun) {
-    return this.http.post(`${global.apiRoot}/course_details/course_run/${courserun}/start_lesson/ `, {
-      lesson: lessonNumber,
-    });
-  }
 
   public validateRoomCode(roomCode) {
     return this.http.get(`${global.apiRoot}/course_details/lesson_run/${roomCode}/`);
