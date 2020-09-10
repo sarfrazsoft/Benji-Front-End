@@ -56,6 +56,10 @@ export class EditorComponent implements OnInit, OnDestroy {
     // this.showCancelAddSlide = true;
   }
 
+  saveLesson() {
+    // this.store.dispatch(new fromStore.SaveLesson());
+  }
+
   cancelAddSlide() {
     // this.showCancelAddSlide = false;
     // this.store.dispatch(new fromStore.RemovePlaceholderActivity());

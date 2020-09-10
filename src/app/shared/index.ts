@@ -6,6 +6,7 @@ import { CmpComponents, CmpEntryComponents } from './components';
 import { Dialogs } from './dialogs';
 import { Directives } from './directives';
 
-export const Components = [...CmpComponents, ...Directives, ...Dialogs];
+import { BTwemojiComponent } from '../ui-components/b-twemoji/b-twemoji.component';
+export const Components = [...CmpComponents, ...Directives, ...Dialogs, BTwemojiComponent];
 
 export const EntryComponents = [...Dialogs, ...CmpEntryComponents];

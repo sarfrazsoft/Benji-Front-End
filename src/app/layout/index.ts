@@ -41,7 +41,6 @@ export const LayoutDeclarations = [
   PeakBackDialogComponent,
   ImageViewDialogComponent,
   AnimatedCheckmarkButtonComponent,
-  BTwemojiComponent,
   IcebreakerComponent,
   LandingComponent,
   LayoutComponent,

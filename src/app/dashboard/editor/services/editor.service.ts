@@ -18,8 +18,6 @@ export class EditorService {
   }
 
   saveLesson(lesson): Observable<any[]> {
-    return this.http
-      .post<any[]>(global.apiRoot + '/activityflow/schema/to_yaml/', lesson)
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+    return this.http.post<any[]>(global.apiRoot + '/activityflow/schema/to_yaml/', lesson);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
@@ -25,6 +25,7 @@ import { of } from 'rxjs';
 export class ActivityContentComponent implements OnInit {
   activity$: Observable<any>;
   fields$: Observable<any>;
+  content$: Observable<any>;
   fieldTypes = FieldTypes;
   questions$: Observable<QuestionBase<any>[]>;
   showQuestions = false;
@@ -36,18 +37,50 @@ export class ActivityContentComponent implements OnInit {
 
     this.fields$ = this.store.select(fromStore.getSelectedLessonActivityFields);
 
-    combineLatest(this.activity$, this.fields$, (activity, fields) => ({ activity, fields })).subscribe(
-      (pair) => {
-        if (pair.fields && pair.activity.activity) {
+    this.content$ = this.store.select(fromStore.getSelectedLessonActivityContent);
+
+    // this.fields$.subscribe((fields) => {
+    //   console.log(fields);
+    //   if (fields) {
+    //     // this.questions$ = this.getQuestions(fields);
+    //     // this.showQuestions = true;
+    //   }
+    // });
+
+    // this.activity$.subscribe((fields) => {
+    //   console.log(fields);
+    //   if (fields) {
+    //     // this.questions$ = this.getQuestions(fields);
+    //     // this.showQuestions = true;
+    //   }
+    // });
+    combineLatest(this.activity$, this.fields$, this.content$, (activity, fields, content) => ({
+      activity,
+      fields,
+      content,
+    })).subscribe((pair) => {
+      // console.log(pair);
+      if (pair.fields && pair.activity.activity) {
+        if (pair.content) {
+          this.questions$ = this.getQuestions(pair.fields, pair.activity, pair.content);
+        } else {
           this.questions$ = this.getQuestions(pair.fields, pair.activity);
-          this.showQuestions = true;
         }
+        this.showQuestions = true;
       }
-    );
+    });
+    // combineLatest(this.activity$, this.fields$, (activity, fields) => ({ activity, fields })).subscribe(
+    //   (pair) => {
+    //     if (pair.fields && pair.activity.activity) {
+    //       this.questions$ = this.getQuestions(pair.fields, pair.activity);
+    //       this.showQuestions = true;
+    //     }
+    //   }
+    // );
   }
 
   saveValues($event) {
-    // console.log($event);
+    console.log($event);
     // const lesson = [
     //   {
     //     activity_type: 'LobbyActivity',
@@ -59,12 +92,12 @@ export class ActivityContentComponent implements OnInit {
     this.store.dispatch(new fromStore.AddActivityContent($event));
   }
 
-  getQuestions(fields, activity) {
+  getQuestions(fields, activity, content?) {
     const questions1: QuestionBase<string>[] = [];
     // console.log(fields, activity);
     fields.forEach((field) => {
       if (field.type === FieldTypes.string || field.type === FieldTypes.url) {
-        questions1.push(this.getStringField(field, activity));
+        questions1.push(this.getStringField(field, activity, content));
       } else if (field.type === FieldTypes.number) {
         questions1.push(this.getNumberField(field));
       } else if (field.type === FieldTypes.boolean) {
@@ -88,7 +121,7 @@ export class ActivityContentComponent implements OnInit {
     return of(questions1.sort((a, b) => a.order - b.order));
   }
 
-  getStringField(field, activity): any {
+  getStringField(field, activity, content?): any {
     if (field.id === 'activity_id') {
       return new TextboxQuestion({
         key: 'activity_id',
@@ -102,17 +135,17 @@ export class ActivityContentComponent implements OnInit {
       return new TextboxQuestion({
         key: 'description',
         label: 'Description',
-        value: activity.content ? activity.content['description'] : '',
+        value: content ? content['description'] : '',
         required: false,
         order: 2,
       });
     } else if (field.id === 'title_emoji') {
-      return this.getEmojiField(field);
+      return this.getEmojiField(field, activity, content);
     } else {
       return new TextboxQuestion({
         key: field.id,
         label: field.id,
-        value: activity.content ? activity.content[field.id] : '',
+        value: content ? content[field.id] : '',
         required: field.required,
         order: 3,
       });
@@ -150,11 +183,11 @@ export class ActivityContentComponent implements OnInit {
     }
   }
 
-  getEmojiField(field): any {
+  getEmojiField(field, activity, content?): any {
     return new EmojiQuestion({
       key: field.id,
       label: field.id,
-      value: '',
+      value: content ? content[field.id] : '',
       required: field.required,
       order: 3,
     });

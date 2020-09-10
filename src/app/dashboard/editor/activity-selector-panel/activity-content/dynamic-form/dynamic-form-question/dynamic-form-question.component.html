@@ -31,18 +31,20 @@
 
     <div *ngSwitchCase="'emoji'">
       <input [formControlName]="question.key" [id]="question.key" [type]="question.type" />
-      <ngx-emoji [emoji]="selectedEmoji" size="16"></ngx-emoji>
+      <!-- <ngx-emoji [emoji]="selectedEmoji" size="16"></ngx-emoji> -->
+      <div class="twemoji-container">
+        <app-b-twemoji class="body-emoji" [text]="getSelectedEmoji()"></app-b-twemoji>
+      </div>
       <button *ngIf="showemoji" (click)="showemoji = !showemoji">Close <mat-icon> clear</mat-icon></button>
-
       <button *ngIf="!showemoji" (click)="showemoji = !showemoji">Select emoji</button>
-      <div sytle="position:relative">
+      <div sytle="position:relative" (keyup)="stop($event)" (keydown)="stop($event)">
         <emoji-mart
           *ngIf="showemoji"
           (emojiClick)="addEmoji($event, question.key)"
           title="Pick your emoji…"
           set="twitter"
           emoji="point_up"
-          [style]="{ position: 'absolute' }"
+          [style]="{ float: 'right' }"
         ></emoji-mart>
       </div>
     </div>

@@ -11,8 +11,12 @@ export interface ActivityState {
 
   // holds the activities created in the lesson
   lessonActivities: { [id: number]: any };
+  // holds the activities' content
+  lessonActivitiesContent: { [id: number]: any };
   // id of the selected lesson activity
   selectedLessonActivity: number;
+  // id of the selected lesson activity
+  selectedLessonActivityContent: {};
 
   // exclude these activities from all possible activities
   excludedActivities: Array<any>;
@@ -24,7 +28,9 @@ export const initialState = {
   possibleActivities: {},
   selectedPossibleActivity: null,
   lessonActivities: {},
+  lessonActivitiesContent: {},
   selectedLessonActivity: null,
+  selectedLessonActivityContent: null,
   excludedActivities: [
     'LobbyActivity',
     'GatherActivity',
@@ -41,10 +47,11 @@ export const initialState = {
     'ExternalGroupingActivity',
     'BuildAPitchActivity',
     'PitchoMaticActivity',
-    'MCQActivity',
     'MCQResultsActivity',
     'FeedbackActivity',
     'MontyHallActivity',
+    'SingleGroupingActivity',
+    'ImageActivity',
   ],
   loaded: false,
   loading: false,
@@ -137,25 +144,25 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.ADD_ACTIVITY_CONTENT: {
       const content = action.payload;
-      let lessonActivity = {};
-      if (state.selectedLessonActivity) {
-        const x = state.selectedLessonActivity;
-        lessonActivity = {
-          ...state.lessonActivities[x],
-          content,
-        };
-      }
+      // let lessonActivity = {};
+      // if (state.selectedLessonActivity) {
+      //   const x = state.selectedLessonActivity;
+      //   lessonActivity = {
+      //     ...state.lessonActivities[x],
+      //     content,
+      //   };
+      // }
       return {
         ...state,
-        lessonActivities: {
-          ...state.lessonActivities,
-          [state.selectedLessonActivity]: lessonActivity,
+        lessonActivitiesContent: {
+          ...state.lessonActivitiesContent,
+          [state.selectedLessonActivity]: content,
         },
       };
     }
 
     case fromActivities.ADD_EMPTY_LESSON_ACTIVITY: {
-      // Creating the new lesson activity and adding to exiting
+      // Creating the new lesson activity and adding to existing
       const newIndex = new Date().getTime();
       const noOfActivities = Object.keys(state.lessonActivities).length;
       let lessonActivities = {
@@ -235,7 +242,14 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
         ...state,
         lessonActivities,
         selectedLessonActivity: id,
+        selectedLessonActivityContent: state.lessonActivitiesContent[id],
       };
+    }
+
+    case fromActivities.SAVE_LESSON_FAILURE: {
+      const error = action.payload;
+      console.log(error);
+      return { ...state };
     }
   }
 
@@ -247,6 +261,7 @@ export const getActivitiesLoaded = (state: ActivityState) => state.loaded;
 export const getPossibleActivities = (state: ActivityState) => state.possibleActivities;
 export const getLessonActivities = (state: ActivityState) => state.lessonActivities;
 export const getSelectedLessonActivity = (state: ActivityState) => state.selectedLessonActivity;
+export const getSelectedLessonActivityContent = (state: ActivityState) => state.selectedLessonActivityContent;
 
 // case fromActivities.ADD_PLACEHOLDER_ACTIVITY: {
 //   const placeholder = [

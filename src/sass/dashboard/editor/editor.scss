@@ -12,6 +12,7 @@ benji-editor {
     width: 100%;
     .editor-panels {
       height: 100%;
+      overflow: hidden;
     }
     .mat-tab-label {
       min-width: 100px;

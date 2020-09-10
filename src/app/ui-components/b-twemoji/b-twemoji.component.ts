@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, Renderer2 } from '@angular/core';
 import { EmojiLookupService } from 'src/app/services';
 
 // declare var twemoji: any;
@@ -45,7 +45,7 @@ interface TwemojiOptions {
   templateUrl: './b-twemoji.component.html',
   styleUrls: ['./b-twemoji.component.scss'],
 })
-export class BTwemojiComponent implements OnInit {
+export class BTwemojiComponent implements OnInit, OnChanges {
   // emoji will have 2 types of input
   // 1- emoji
   // 2- text
@@ -56,6 +56,7 @@ export class BTwemojiComponent implements OnInit {
   // <app-b-twemoji [text]="'emoji://1F468'"></app-b-twemoji>
   @Input() emoji;
   @Input() text;
+  hostDiv;
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
@@ -63,12 +64,19 @@ export class BTwemojiComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.updateEmoji();
+  }
+
+  ngOnChanges() {
+    this.updateEmoji();
+  }
+
+  updateEmoji() {
     if (this.emoji) {
       this.setupEmoji(this.emoji);
     } else if (this.text) {
       // if text is a legacy emoji
       const emojiText = this.text.split('//')[1];
-      console.log(emojiText);
       if (/^[a-b]/.test(emojiText)) {
         const x = this.emojiLookupService.getEmoji(this.text);
         this.setupEmoji(x);
@@ -91,10 +99,15 @@ export class BTwemojiComponent implements OnInit {
   }
 
   setupEmoji(e) {
-    const hostDiv = this.renderer.createElement('div');
+    if (!this.hostDiv) {
+      this.hostDiv = this.renderer.createElement('div');
+    } else {
+      this.renderer.removeChild(this.el.nativeElement, this.hostDiv);
+      this.hostDiv = this.renderer.createElement('div');
+    }
     const text = this.renderer.createText(e);
-    this.renderer.appendChild(hostDiv, text);
-    this.renderer.appendChild(this.el.nativeElement, hostDiv);
+    this.renderer.appendChild(this.hostDiv, text);
+    this.renderer.appendChild(this.el.nativeElement, this.hostDiv);
     twemoji.parse(this.el.nativeElement, {
       ext: '.svg',
       folder: 'svg',

@@ -3,23 +3,22 @@
     <div *ngIf="verified && !verifying" class="content">
       <div fxLayout="column">
         <div class="twemoji-container">
-          <app-b-twemoji2 emoji="🎂"></app-b-twemoji2>
+          <app-b-twemoji emoji="🎂"></app-b-twemoji>
         </div>
         <p>
           Your Benji Account has been successfully created!
-          <a [routerLink]="['/login']">Login to your account</a> using your
-          email and password.
+          <a [routerLink]="['/login']">Login to your account</a> using your email and password.
         </p>
       </div>
     </div>
     <div *ngIf="!verified && !verifying" class="content">
       <div fxLayout="column">
         <div class="twemoji-container">
-          <app-b-twemoji2 emoji="🙊"></app-b-twemoji2>
+          <app-b-twemoji emoji="🙊"></app-b-twemoji>
         </div>
         <p>
-          Oops, something went wrong with your registration. Either your
-          activation link expired or we encountered another error.
+          Oops, something went wrong with your registration. Either your activation link expired or we
+          encountered another error.
           <a [routerLink]="['/login']">Try again.</a>
         </p>
       </div>

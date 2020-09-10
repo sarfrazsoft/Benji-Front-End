@@ -11,7 +11,7 @@ import { QuestionBase } from '../../services/question-control.service';
 export class DynamicFormQuestionComponent implements OnInit {
   @Input() question: QuestionBase<string>;
   @Input() form: FormGroup;
-  selectedEmoji = null;
+  // selectedEmoji = null;
   showemoji;
   get isValid() {
     return this.form.controls[this.question.key].valid;
@@ -20,13 +20,21 @@ export class DynamicFormQuestionComponent implements OnInit {
 
   ngOnInit() {}
   logErrors() {
-    console.log(this.form.controls[this.question.key]);
+    // console.log(this.form.controls[this.question.key]);
+  }
+
+  getSelectedEmoji() {
+    return this.form.controls[this.question.key].value;
   }
 
   addEmoji($event, formInputName) {
-    console.log($event);
-    this.form.controls[formInputName].setValue('emoji://' + $event.emoji.shortName);
-    this.selectedEmoji = $event.emoji.shortName;
+    // console.log($event);
+    this.form.controls[formInputName].setValue('emoji://' + $event.emoji.unified);
+    // this.selectedEmoji = 'emoji://' + $event.emoji.unified;
     this.showemoji = false;
+  }
+
+  stop(event) {
+    event.stopPropagation();
   }
 }

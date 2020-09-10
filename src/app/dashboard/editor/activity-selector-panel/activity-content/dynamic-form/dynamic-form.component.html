@@ -1,6 +1,5 @@
-<div>
-  <!-- <form [formGroup]="form" (keyup)="typingStoped($event)" (keydown)="typingStarted()"> -->
-  <form [formGroup]="form">
+<div class="activity-content">
+  <form [formGroup]="form" (keyup)="typingStoped($event)" (keydown)="typingStarted()">
     <div *ngFor="let question of questions" class="form-row">
       <benji-dynamic-form-question [question]="question" [form]="form"></benji-dynamic-form-question>
     </div>

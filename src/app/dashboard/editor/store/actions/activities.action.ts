@@ -82,14 +82,20 @@ export class AddActivityContent implements Action {
 // Save lesson
 export const SAVE_LESSON = '[Editor] Save lesson';
 export const SAVE_LESSON_SUCCESS = '[Editor] Save lesson success';
+export const SAVE_LESSON_FAILURE = '[Editor] Save lesson failure';
 
 export class SaveLesson implements Action {
   readonly type = SAVE_LESSON;
-  constructor(public payload: any) {}
+  constructor() {}
 }
 
 export class SaveLessonSuccess implements Action {
   readonly type = SAVE_LESSON_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class SaveLessonFailure implements Action {
+  readonly type = SAVE_LESSON_FAILURE;
   constructor(public payload: any) {}
 }
 
@@ -119,6 +125,9 @@ export type ActivitiesAction =
   | AddEmptyLessonActivity
   | RemoveLessonActivity
   | SelectLessonActivity
+  | SaveLesson
+  | SaveLessonSuccess
+  | SaveLessonFailure
   | ReorderLessonActivities
   | ActivityHovered
   | ActivityHoverEnd

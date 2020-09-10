@@ -10,6 +10,11 @@ export const getActivitiesState = createSelector(
 
 export const getPossibleActivities = createSelector(getActivitiesState, fromPizzas.getPossibleActivities);
 
+export const getSelectedLessonActivityContent = createSelector(
+  getActivitiesState,
+  fromPizzas.getSelectedLessonActivityContent
+);
+
 export const getAllPossibleActivities = createSelector(getPossibleActivities, (entities) => {
   return Object.keys(entities).map((id) => entities[id]);
 });
