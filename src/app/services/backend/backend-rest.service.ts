@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import * as global from '../../globals';
 import { ContextService } from '../context.service';
 import { Course, LessonRun } from './schema/course_details';
+import { Lesson, PaginatedResponse} from './schema/course_details';
 import { User } from './schema/user';
 import { PartnerInfo } from './schema/whitelabel_info';
 
@@ -91,5 +92,11 @@ export class BackendRestService {
       course: 1,
       courserunuser_set: [],
     });
+  }
+
+
+  get_lessons(page: number): Observable<PaginatedResponse<Lesson>> {
+    const url = `${global.apiRoot}/course_details/lesson/?page=${page + 1}`;
+    return this.http.get<PaginatedResponse<Lesson>>(url);
   }
 }

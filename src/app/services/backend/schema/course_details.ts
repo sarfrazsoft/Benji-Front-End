@@ -14,15 +14,24 @@ export interface Course {
   course_id: number;
 }
 
-export interface Lesson {
+export class Lesson {
   id: number;
-  course: number;
   lesson_id: string;
   lesson_name: string;
   single_user_lesson: boolean;
   lesson_length_minutes: number;
   lesson_description: string;
-  next_lesson: number;
+  lesson_plan?: string;
+  lesson_details?: any;
+  standardize: boolean;
+  owner: number;
+  team: number;
+  team_permission: string;
+  public_permission: string;
+  creation_time: string;
+  last_edited: string;
+  is_shared: boolean;
+  effective_permission: string; // 'admin', 'host', 'duplicate' 'edit', or null
 }
 
 export interface LessonRun {
