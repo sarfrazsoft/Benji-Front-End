@@ -1,3 +1,4 @@
+import { MaterialDesignFrameworkModule } from '@ajsf/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -78,6 +79,7 @@ const SHARED_MODULES = [
   MatToolbarModule,
   MatTooltipModule,
   NgSelectModule,
+  MaterialDesignFrameworkModule,
 ];
 
 @NgModule({
