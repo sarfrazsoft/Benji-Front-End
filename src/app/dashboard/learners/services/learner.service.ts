@@ -121,7 +121,7 @@ export class LearnerService {
     // replace after testing
     // return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
     // return this.http.get(global.apiRoot + '/tenants/users/?page=' + 1).pipe(
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/user/' + userID + '/').pipe(
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/?participant_user=' + userID).pipe(
       map((res) => {
         // console.log(res);
         return res;

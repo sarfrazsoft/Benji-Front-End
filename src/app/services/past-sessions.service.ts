@@ -197,9 +197,15 @@ export class PastSessionsService {
     return this.http.get<User>(request);
   }
 
-  getPastSessions(sort: string, order: string, page: number): Observable<any> {
+  getPastSessions(sort: string, order: string, page: number, filter: string): Observable<any> {
     page = page + 1;
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/?page=' + page).pipe(
+    let filterParams = '';
+    if (filter === 'hosted') {
+        filterParams = '&hosted=True';
+    } else if (filter === 'participated') {
+        filterParams = '&participated=True';
+    }
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/?completed=True&page=' + page + filterParams).pipe(
       map((res) => {
         return res;
       })

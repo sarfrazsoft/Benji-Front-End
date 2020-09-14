@@ -4,7 +4,7 @@
   class="item"
   [routerLink]="[sidenavItem.navRoute]"
   [routerLinkActiveOptions]="{ exact: true }"
-  routerLinkActive="active"
+  [routerLinkActive]="sidenavItem.disabled ? 'inactive' : 'active'"
   (click)="itemClicked(sidenavItem.navName)"
 >
   <div class="bullet-point">&bull;</div>

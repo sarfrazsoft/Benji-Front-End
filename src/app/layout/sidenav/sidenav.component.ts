@@ -24,9 +24,10 @@ export class SidenavComponent implements OnInit {
     section: 1,
     items: [
       {
-        navName: 'Learners',
+        navName: 'Teams',
         navRoute: './learners',
         permission: 'admin',
+        disabled: true,
       },
       // {
       //   navName: 'Groups',
@@ -165,20 +166,21 @@ export class SidenavComponent implements OnInit {
 
   initNavigation() {
     this.contextService.user$.subscribe((user) => {
-      if (user.local_admin_permission) {
-        this.sidenavSections = [
-          this.adminSection,
-          // this.groupsSection,
-          this.pastSessionSection,
-          this.accountSection,
-          this.authSection,
-          // this.editor,
-          //
-        ];
+      this.sidenavSections = [
+        this.adminSection,
+        // this.groupsSection,
+        this.pastSessionSection,
+        this.accountSection,
+        this.authSection,
+        // this.editor,
+        //
+      ];
+      /*if (user.local_admin_permission) {
+
       } else {
         this.profile.items[0].navRoute = 'learners/' + user.id;
         this.sidenavSections = [this.profile, this.accountSection, this.authSection];
-      }
+      }*/
     });
   }
 }

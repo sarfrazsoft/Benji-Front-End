@@ -1,1 +1,32 @@
-<p>workspace works!</p>
+<div id="loading" *ngIf="lessonsUpdating">
+    LOADING
+</div>
+<div id="results" *ngIf="!lessonsUpdating">
+    <div id="resultItems" *ngFor="let lesson of lessonResponse.results">
+        <div class="lessonItem">
+            <div class="title">{{ lesson.lesson_name }}</div>
+            <div class="description">{{ lesson.lesson_description }}</div>
+            <div class="lesson-launch-button">
+                <button
+                        type="submit"
+                        class="dashboard-button bg-primary-color"
+                >
+                    Launch
+                </button>
+            </div>
+            <div class="lesson-edit-button">
+                <button
+                        type="submit"
+                        class="dashboard-button bg-primary-color"
+                        [ngClass]="lesson.effective_permission == 'host' ? 'inactive' : 'active'"
+                >
+                    Edit
+                </button>
+            </div>
+            <div class="lesson-share-message" *ngIf="lesson.is_shared">
+                This lesson has been shared with you.
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -61,30 +61,6 @@
         </mat-error>
       </div>
 
-      <div class="field">
-        <div class="label">
-          Job title
-        </div>
-        <input
-          id="job_title"
-          class="dash-input"
-          type="text"
-          formControlName="job_title"
-          placeholder="Job title"
-        />
-        <mat-error
-          *ngIf="
-            job_title.invalid &&
-            (job_title.dirty || job_title.touched) &&
-            isSignupClicked
-          "
-          class="alert alert-danger"
-        >
-          <div *ngIf="job_title.errors.required">
-            Job title is required.
-          </div>
-        </mat-error>
-      </div>
 
       <div class="link primary-color">
         <span (click)="passwordPage()">Reset password</span>
