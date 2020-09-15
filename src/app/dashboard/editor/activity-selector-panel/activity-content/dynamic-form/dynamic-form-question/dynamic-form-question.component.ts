@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from '../../services/question-control.service';
+import { QuestionBase, QuestionSet } from '../../services/question-control.service';
 
 @Component({
   selector: 'benji-dynamic-form-question',
@@ -18,7 +18,9 @@ export class DynamicFormQuestionComponent implements OnInit {
   }
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // console.log(this.question);
+  }
   logErrors() {
     // console.log(this.form.controls[this.question.key]);
   }

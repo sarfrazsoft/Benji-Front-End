@@ -17,4 +17,6 @@ export enum FieldTypes {
   boolean = 'bool',
   emoji = 'emoji',
   url = 'url',
+  object = 'obj',
+  list = 'list',
 }

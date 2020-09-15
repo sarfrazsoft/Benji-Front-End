@@ -1,3 +1,18 @@
+<!-- <ng-container *ngTemplateOutlet="formItemTemplate; context:{ $implicit: 0, group: form }"></ng-container>
+
+
+<ng-template #formItemTemplate let-i let-group="group" >
+  <fieldset *ngIf="i < pathSegments.length - 1" class="form-group">
+    <legend>{{ pathSegments[i] }}</legend>
+    <ng-container *ngTemplateOutlet="formItemTemplate; context:{ $implicit: i + 1, group: group.get(pathSegments[i]) }"></ng-container>
+  </fieldset>
+
+  <div *ngIf="i + 1 === pathSegments.length" class="form-control" [formGroup]="group">
+    <label>{{pathSegments[pathSegments.length - 1]}}</label>
+    <input [formControlName]="pathSegments[pathSegments.length - 1]"/>
+  </div>
+</ng-template> -->
+
 <div [formGroup]="form">
   <label [attr.for]="question.key">{{ question.label }}</label>
 
@@ -30,23 +45,7 @@
     >
 
     <div *ngSwitchCase="'emoji'">
-      <input [formControlName]="question.key" [id]="question.key" [type]="question.type" />
-      <!-- <ngx-emoji [emoji]="selectedEmoji" size="16"></ngx-emoji> -->
-      <div class="twemoji-container">
-        <app-b-twemoji class="body-emoji" [text]="getSelectedEmoji()"></app-b-twemoji>
-      </div>
-      <button *ngIf="showemoji" (click)="showemoji = !showemoji">Close <mat-icon> clear</mat-icon></button>
-      <button *ngIf="!showemoji" (click)="showemoji = !showemoji">Select emoji</button>
-      <div sytle="position:relative" (keyup)="stop($event)" (keydown)="stop($event)">
-        <emoji-mart
-          *ngIf="showemoji"
-          (emojiClick)="addEmoji($event, question.key)"
-          title="Pick your emoji…"
-          set="twitter"
-          emoji="point_up"
-          [style]="{ float: 'right' }"
-        ></emoji-mart>
-      </div>
+      <benji-emoji-selector></benji-emoji-selector>
     </div>
   </div>
 

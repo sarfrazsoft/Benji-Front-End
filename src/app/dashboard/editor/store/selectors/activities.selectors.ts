@@ -32,9 +32,10 @@ export const getSelectedLessonActivity = createSelector(getActivitiesState, (sta
 
 export const getSelectedLessonActivityFields = createSelector(getSelectedLessonActivity, (activity) => {
   if (activity && activity.activity) {
-    return Object.keys(activity.activity.fields).map((id) => {
-      return { ...activity.activity.fields[id], id };
-    });
+    return activity.activity.fields;
+    // return Object.keys(activity.activity.fields).map((id) => {
+    //   return { ...activity.activity.fields[id], id };
+    // });
   }
 });
 

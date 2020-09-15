@@ -64,19 +64,47 @@ export class ActivitiesEffects {
       //   },
       //   { ...act, activity_type: act.activity_id },
       // ];
-      const lessonActs = [];
-      contentArray.forEach((val) => {
-        lessonActs.push({
-          ...val,
-          activity_type: val.activity_id.split('_')[0],
-        });
-      });
+      // const lessonActs = [];
+      // contentArray.forEach((val) => {
+      //   lessonActs.push({
+      //     ...val,
+      //     activity_type: val.activity_id.split('_')[0],
+      //   });
+      // });
+      const lessonActs = [
+        {
+          activity_type: 'LobbyActivity',
+          activity_id: 'lobby1',
+          description: 'hello world',
+        },
+        {
+          activity_type: 'TitleActivity',
+          activity_id: 'title1',
+          main_title: 'Hello World',
+        },
+      ];
       console.log(lessonActs);
       return this.editorService.saveLesson(lessonActs).pipe(
         map((activities) => {
+          console.log(activities);
           return new ActivityActions.SaveLessonSuccess(activities);
         }),
         catchError((error) => of(new ActivityActions.SaveLessonFailure(error)))
+      );
+    })
+  );
+
+  @Effect()
+  saveLessonSuccess$ = this.actions$.pipe(
+    ofType(ActivityActions.SAVE_LESSON_SUCCESS),
+    map((action: ActivityActions.SaveLessonSuccess) => action.payload),
+    switchMap((yaml: any) => {
+      console.log(yaml);
+      return this.editorService.saveYAML(yaml).pipe(
+        map((activities) => {
+          return new ActivityActions.LoadLessonActivitiesSuccess(activities);
+        }),
+        catchError((error) => of(new ActivityActions.LoadAllPossibleFail(error)))
       );
     })
   );

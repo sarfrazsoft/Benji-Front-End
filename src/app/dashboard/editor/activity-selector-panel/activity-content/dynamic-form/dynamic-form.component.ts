@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { QuestionBase, QuestionControlService } from '../services/question-control.service';
+import { QuestionBase, QuestionControlService, QuestionSet } from '../services/question-control.service';
 
 import { Store } from '@ngrx/store';
 import { Activity } from '../../../models/';
@@ -12,7 +12,7 @@ import * as fromStore from '../../../store';
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
-  @Input() questions: QuestionBase<string>[] = [];
+  @Input() questions: Array<QuestionSet> = [];
   form: FormGroup;
   payLoad = '';
   typingTimer;
@@ -26,6 +26,13 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     this.form = this.qcs.toFormGroup(this.questions);
   }
 
+  getFormGroup(question: QuestionSet) {
+    // console.log(this.form.controls[question.key], question);
+    if (question.key) {
+      return this.form.controls[question.key];
+    }
+  }
+
   submit() {
     // we are going to update this activity to Overview panel
     // we'll need to know which activity is it corresponding to the overview panel activities.
@@ -34,6 +41,8 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     const act = this.form.getRawValue();
     this.submitActivityValues.emit(act);
   }
+
+  getQuestionPath(question) {}
 
   // on keyup, start the countdown
   typingStoped(event) {

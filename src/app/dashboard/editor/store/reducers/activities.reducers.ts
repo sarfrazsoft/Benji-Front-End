@@ -71,7 +71,9 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           if (!state.excludedActivities.includes(key)) {
             const actProperties = activities[key];
             const x = {
-              fields: actProperties.fields,
+              schema: {
+                ...actProperties,
+              },
               id: key,
               displayName: key,
               thumbnail: actProperties.thumbnail,
@@ -249,6 +251,12 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     case fromActivities.SAVE_LESSON_FAILURE: {
       const error = action.payload;
       console.log(error);
+      return { ...state };
+    }
+
+    case fromActivities.SAVE_LESSON_SUCCESS: {
+      const response = action.payload;
+      console.log(response);
       return { ...state };
     }
   }

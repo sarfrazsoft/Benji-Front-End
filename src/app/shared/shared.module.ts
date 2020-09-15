@@ -38,6 +38,7 @@ import { RouterModule } from '@angular/router';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormlyModule } from '@ngx-formly/core';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
@@ -82,6 +83,7 @@ const SHARED_MODULES = [
   NgSelectModule,
   MaterialDesignFrameworkModule,
   MatButtonToggleModule,
+  FormlyModule,
 ];
 
 @NgModule({

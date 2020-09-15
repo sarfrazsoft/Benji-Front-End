@@ -13,12 +13,10 @@ const routes: Routes = [
       {
         path: '',
         component: EditorComponent,
-        canActivate: [IsAdminGuard],
       },
       {
         path: ':lessonId',
         component: EditorComponent,
-        canActivate: [IsAdminGuard],
       },
     ],
   },

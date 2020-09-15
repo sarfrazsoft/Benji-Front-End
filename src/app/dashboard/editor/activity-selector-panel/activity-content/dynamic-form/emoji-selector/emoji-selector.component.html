@@ -1,0 +1,17 @@
+<div>
+  <div class="twemoji-container">
+    <app-b-twemoji class="body-emoji" [text]="getSelectedEmoji()"></app-b-twemoji>
+  </div>
+  <button *ngIf="showemoji" (click)="showemoji = !showemoji">Close <mat-icon> clear</mat-icon></button>
+  <button *ngIf="!showemoji" (click)="showemoji = !showemoji">Select emoji</button>
+  <div sytle="position:relative" (keyup)="stop($event)" (keydown)="stop($event)">
+    <emoji-mart
+      *ngIf="showemoji"
+      (emojiClick)="addEmoji($event)"
+      title="Pick your emoji…"
+      set="twitter"
+      emoji="point_up"
+      [style]="{ float: 'right' }"
+    ></emoji-mart>
+  </div>
+</div>

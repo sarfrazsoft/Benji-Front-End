@@ -6,9 +6,25 @@
     </ng-container>
   </div>
 </ng-container> -->
-<ng-container *ngIf="showQuestions">
+
+<!-- <ng-container *ngIf="showQuestions">
   <benji-dynamic-form
     (submitActivityValues)="saveValues($event)"
     [questions]="questions$ | async"
   ></benji-dynamic-form>
-</ng-container>
+</ng-container> -->
+
+<!-- <json-schema-form
+  loadExternalAssets="true"
+  [form]="myjsonSchema"
+  framework="bootstrap-4"
+  [debug]="true"
+  (onSubmit)="yourOnSubmitFn($event)"
+  (formLayout)="showFormLayoutFn($event)"
+>
+</json-schema-form> -->
+
+<form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>

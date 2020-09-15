@@ -11,13 +11,16 @@ import { User } from 'src/app/services/backend/schema';
 export class EditorService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
+  // activity_flow/schema
   getActivites(): Observable<any[]> {
-    return this.http
-      .get<any[]>(global.apiRoot + '/activityflow/schema/full/')
-      .pipe(catchError((error: any) => Observable.throw(error.json())));
+    return this.http.get<any[]>(global.apiRoot + '/activityflow/schema/');
   }
 
   saveLesson(lesson): Observable<any[]> {
     return this.http.post<any[]>(global.apiRoot + '/activityflow/schema/to_yaml/', lesson);
+  }
+
+  saveYAML(yaml): Observable<any[]> {
+    return this.http.post<any[]>(global.apiRoot + '/course_detals/lesson/', yaml);
   }
 }
