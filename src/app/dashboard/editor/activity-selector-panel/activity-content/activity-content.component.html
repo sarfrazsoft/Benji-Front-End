@@ -1,28 +1,3 @@
-<!-- <ng-container>
-  <div *ngFor="let field of fields$ | async">
-    <ng-container [ngSwitch]="field.type">
-      <div *ngSwitchCase="fieldTypes.string">display string</div>
-      <div *ngSwitchDefault>{{ field.type }}</div>
-    </ng-container>
-  </div>
-</ng-container> -->
-
-<!-- <ng-container *ngIf="showQuestions">
-  <benji-dynamic-form
-    (submitActivityValues)="saveValues($event)"
-    [questions]="questions$ | async"
-  ></benji-dynamic-form>
-</ng-container> -->
-
-<!-- <json-schema-form
-  loadExternalAssets="true"
-  [form]="myjsonSchema"
-  framework="bootstrap-4"
-  [debug]="true"
-  (onSubmit)="yourOnSubmitFn($event)"
-  (formLayout)="showFormLayoutFn($event)"
->
-</json-schema-form> -->
 <div class="activity-content">
   <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
     <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>

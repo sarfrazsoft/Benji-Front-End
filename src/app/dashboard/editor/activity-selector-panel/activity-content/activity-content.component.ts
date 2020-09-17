@@ -1,4 +1,3 @@
-import { WidgetLibraryService } from '@ajsf/core';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -7,23 +6,10 @@ import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
-import { EmojiSelectorComponent } from './dynamic-form/emoji-selector/emoji-selector.component';
-import {
-  CheckboxQuestion,
-  DropdownQuestion,
-  EmojiQuestion,
-  QuestionBase,
-  QuestionControlService,
-  QuestionSet,
-  TextboxQuestion,
-  TimeQuestion,
-} from './services/question-control.service';
+import { QuestionSet } from './services/question-control.service';
 
-import { DIR_DOCUMENT } from '@angular/cdk/bidi';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
-import * as Ajv from 'ajv';
 import { cloneDeep, mapValues, reverse, sortBy } from 'lodash';
-import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -32,14 +18,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./activity-content.component.scss'],
 })
 export class ActivityContentComponent implements OnInit {
-  constructor(
-    private store: Store<fromStore.EditorState>,
-    private qcs: QuestionControlService,
-    widgetLibraryService: WidgetLibraryService,
-    private formlyJsonschema: FormlyJsonschema
-  ) {
-    widgetLibraryService.registerWidget('emoji', EmojiSelectorComponent);
-  }
+  constructor(private store: Store<fromStore.EditorState>, private formlyJsonschema: FormlyJsonschema) {}
   activity$: Observable<any>;
   fields$: Observable<any>;
   content$: Observable<any>;
@@ -77,12 +56,11 @@ export class ActivityContentComponent implements OnInit {
                 mappedField.type = 'emoji';
                 mappedField.wrappers = ['form-field'];
                 mappedField.templateOptions.label = 'Emoji';
-                console.log(mappedField);
               }
               if (mapSource.title === 'Activity ID') {
                 mappedField.templateOptions.readonly = true;
-                console.log(mappedField);
               }
+              console.log(mappedField);
               return mappedField;
             },
           });
