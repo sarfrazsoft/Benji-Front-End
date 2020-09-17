@@ -23,8 +23,9 @@
   (formLayout)="showFormLayoutFn($event)"
 >
 </json-schema-form> -->
-
-<form [formGroup]="form" (ngSubmit)="onSubmit(model)">
-  <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
+<div class="activity-content">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>

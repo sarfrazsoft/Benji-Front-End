@@ -20,8 +20,9 @@ import {
 } from './services/question-control.service';
 
 import { DIR_DOCUMENT } from '@angular/cdk/bidi';
-import { FormlyFieldConfig } from '@ngx-formly/core';
-import { mapValues } from 'lodash';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import * as Ajv from 'ajv';
+import { cloneDeep, mapValues, reverse, sortBy } from 'lodash';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -38,20 +39,6 @@ export class ActivityContentComponent implements OnInit {
     private formlyJsonschema: FormlyJsonschema
   ) {
     widgetLibraryService.registerWidget('emoji', EmojiSelectorComponent);
-    this.myjsonSchema = {
-      schema: {
-        type: 'object',
-        properties: {
-          title_image: { type: 'string' },
-          last_name: { type: 'string' },
-        },
-        required: ['last_name'],
-      },
-      // layout: [
-      //   { key: 'title_image', type: 'emoji' },
-      //   { key: 'last_name', type: 'text' },
-      // ],
-    };
   }
   activity$: Observable<any>;
   fields$: Observable<any>;
@@ -60,18 +47,13 @@ export class ActivityContentComponent implements OnInit {
   questions$: Observable<Array<QuestionSet>>;
   showQuestions = false;
 
-  myjsonSchema: any = {};
-
   form = new FormGroup({});
-  model = { email: 'email@gmail.com' };
+  model: any;
+  options: FormlyFormOptions;
   fields: FormlyFieldConfig[];
 
   ngOnInit() {
-    // create layout will ruturn an array
-    this.myjsonSchema['layout'] = this.createFormLayout(this.myjsonSchema.schema);
     this.activity$ = this.store.select(fromStore.getSelectedLessonActivity);
-
-    // this.fields$ = this.store.select(fromStore.getSelectedLessonActivityFields);
 
     this.content$ = this.store.select(fromStore.getSelectedLessonActivityContent);
 
@@ -84,15 +66,36 @@ export class ActivityContentComponent implements OnInit {
       )
       .subscribe((pair) => {
         if (pair.activity.activity) {
-          console.log(pair.activity.activity.schema);
-          const x = { schema: pair.activity.activity };
-          this.fields = [this.formlyJsonschema.toFieldConfig(formlyData.schema as any)];
-          this.myjsonSchema = {
-            schema: { properties: pair.activity.activity.schema.properties },
-            layout: MCQLayout,
-            data: MCQData,
-          };
-          console.log(this.myjsonSchema);
+          const act = pair.activity;
+          const schema = cloneDeep(act.activity.schema);
+          // internal_type = EmojiURLField indicates that the field is for emoji
+          // map to intercept schema and make changes to fields
+          // make activity_id readonly
+          const fields = this.formlyJsonschema.toFieldConfig(schema as any, {
+            map: (mappedField: FormlyFieldConfig, mapSource: any) => {
+              if (mapSource.internal_type === 'EmojiURLField') {
+                mappedField.type = 'emoji';
+                mappedField.wrappers = ['form-field'];
+                mappedField.templateOptions.label = 'Emoji';
+                console.log(mappedField);
+              }
+              if (mapSource.title === 'Activity ID') {
+                mappedField.templateOptions.readonly = true;
+                console.log(mappedField);
+              }
+              return mappedField;
+            },
+          });
+          console.log(fields);
+          const reversedOrder = cloneDeep(OrderArray);
+          reverse(reversedOrder);
+          fields.fieldGroup = fields.fieldGroup.sort((a, b) => {
+            return reversedOrder.indexOf(b.key as string) - reversedOrder.indexOf(a.key as string);
+          });
+
+          fields.fieldGroup = fields.fieldGroup;
+          this.fields = [fields];
+          this.model = { activity_id: act.activity.displayName + '_' + act.id };
           this.showQuestions = true;
         }
       });
@@ -100,46 +103,12 @@ export class ActivityContentComponent implements OnInit {
 
   saveValues($event) {
     console.log($event);
-    this.store.dispatch(new fromStore.AddActivityContent($event));
-  }
-
-  saveValues2() {
-    const dd = {};
-    this.store.dispatch(new fromStore.AddActivityContent(dd));
-  }
-
-  createFormLayout(schema) {
-    // this.r(schema);
-  }
-
-  r(obj) {
-    if (obj) {
-      for (const key in obj) {
-        if (typeof obj[key] === 'object') {
-          // console.log(key);
-          if (key !== 'required') {
-            this.r(obj[key]);
-          }
-        } else if (typeof obj[key] !== 'function') {
-          // document.writeln(obj[key] + '<br/>');
-          // console.log(key);
-          // console.log(obj[key]);
-        }
-      }
-    }
-
-    return;
-  }
-
-  yourOnSubmitFn($event) {
-    console.log($event);
-  }
-
-  showFormLayoutFn($event) {
-    // console.log($event);
   }
 
   onSubmit() {
+    if (this.form.valid) {
+      this.store.dispatch(new fromStore.AddActivityContent(this.model));
+    }
     console.log(this.model);
   }
 }
@@ -184,7 +153,7 @@ export const MCQData = {
   question: { mcqchoice_set: [{ choice_text: 'cell', explanation: '702-123-4567' }] },
 };
 
-export const formlyData = {
+export const FormlyData = {
   schema: {
     title: 'A registration form',
     description: 'A simple form example.',
@@ -226,6 +195,95 @@ export const formlyData = {
     bio: 'Roundhouse kicking asses since 1940',
     password: 'noneed',
   },
+};
+
+export const TitleActivity = {
+  schema: {
+    title: 'Titleactivity',
+    required: ['activity_id', 'main_title'],
+    type: 'object',
+    properties: {
+      title_image: {
+        title: 'Title image',
+        type: 'string',
+        minLength: 1,
+        'x-nullable': true,
+        intetnal_type: 'EmojiUrlField',
+      },
+      activity_id: {
+        title: 'Activity ID',
+        description: 'A unique name for this actihe same activity id.',
+        type: 'string',
+        maxLength: 60,
+        minLength: 1,
+      },
+      description: {
+        title: 'Description',
+        description: 'A short description of the activity.',
+        type: 'string',
+        minLength: 1,
+        'x-nullable': true,
+      },
+      next_activity_delay_seconds: {
+        title: 'Next activity delay seconds',
+        description: 'How many seconds to wait afteyou set auto_next to true.',
+        type: 'integer',
+        maximum: 1800,
+        minimum: 0,
+      },
+      auto_next: {
+        title: 'Auto next',
+        description: 'Whether the oceed to the next activi their screen.',
+        type: 'boolean',
+      },
+      main_title: { title: 'Main title', type: 'string', minLength: 1 },
+      title_text: { title: 'Title text', type: 'string', minLength: 1, 'x-nullable': true },
+      title_emoji: { title: 'Title emoji', type: 'string', maxLength: 20, minLength: 1, 'x-nullable': true },
+      hide_timer: { title: 'Hide timer', type: 'boolean' },
+    },
+  },
+};
+
+export const OrderArray = ['activity_id', 'description', 'auto_next'];
+
+export const Nested = {
+  schema: {
+    title: 'A list of tasks',
+    type: 'object',
+    required: ['title'],
+    properties: {
+      title: {
+        type: 'string',
+        title: 'Task list title',
+      },
+      tasks: {
+        type: 'array',
+        title: 'Tasks',
+        items: {
+          type: 'object',
+          required: ['title'],
+          properties: {
+            title: {
+              type: 'string',
+              title: 'Title',
+              description: 'A sample title',
+            },
+            details: {
+              type: 'string',
+              title: 'Task details',
+              description: 'Enter the task details',
+            },
+            done: {
+              type: 'boolean',
+              title: 'Done?',
+              default: false,
+            },
+          },
+        },
+      },
+    },
+  },
+  model: {},
 };
 
 // propertiesToArray(obj) {

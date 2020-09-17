@@ -11,6 +11,12 @@ import {
 import { EditorComponent } from './editor.component';
 import { OverviewPanelComponent } from './overview-panel/overview-panel.component';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
+import {
+  ArrayTypeComponent,
+  MultiSchemaTypeComponent,
+  NullTypeComponent,
+  ObjectTypeComponent,
+} from './services';
 import { EditorService } from './services/editor.service';
 
 export const EditorComponents = [
@@ -18,6 +24,10 @@ export const EditorComponents = [
   EditorComponent,
   OverviewPanelComponent,
   PreviewPanelComponent,
+  ArrayTypeComponent,
+  ObjectTypeComponent,
+  MultiSchemaTypeComponent,
+  NullTypeComponent,
 ];
 
 export const EditorEntryComponents = [...ActivitySelectorEntryComponents];

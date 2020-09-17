@@ -36,7 +36,6 @@ export const initialState = {
     'GatherActivity',
     'HintWordActivity',
     'WhereDoYouStandActivity',
-    'BrainstormActivity',
     'GenericRoleplayActivity',
     'RoleplayPairActivity',
     'DiscussionActivity',

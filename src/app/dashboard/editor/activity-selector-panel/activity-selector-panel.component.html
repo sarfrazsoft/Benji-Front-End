@@ -2,23 +2,23 @@
   <div class="activities">
     <div class="form-tabs">
       <mat-tab-group [(selectedIndex)]="selectedTab" dynamicHeight [disableRipple]="true">
-        <mat-tab label="Type">
+        <mat-tab label="Activity">
           <ng-template mat-tab-label>
-            <span class="tab-label primary-color-darkest">Type</span>
+            <span class="tab-label primary-color-darkest">Activity</span>
           </ng-template>
           <benji-activity-types></benji-activity-types>
         </mat-tab>
-        <mat-tab label="Content">
+        <mat-tab label="Build">
           <ng-template mat-tab-label class="cotent-label">
-            <span class="tab-label primary-color-darkest">Content</span>
+            <span class="tab-label primary-color-darkest">Build</span>
           </ng-template>
           <benji-activity-content></benji-activity-content>
         </mat-tab>
-        <mat-tab label="Customize">
+        <mat-tab label="Help">
           <ng-template mat-tab-label class="cutomize-label">
-            <span class="tab-label primary-color-darkest">Customize</span>
+            <span class="tab-label primary-color-darkest">Help</span>
           </ng-template>
-          customize
+          help
         </mat-tab>
       </mat-tab-group>
     </div>

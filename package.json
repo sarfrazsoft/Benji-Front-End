@@ -11,7 +11,6 @@
   },
   "private": true,
   "dependencies": {
-    "@ajsf/material": "^0.1.4",
     "@angular/animations": "^8.2.14",
     "@angular/cdk": "^8.2.3",
     "@angular/common": "^8.2.14",
@@ -30,6 +29,8 @@
     "@ngrx/router-store": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
+    "@ngx-formly/bootstrap": "^5.0.0",
+    "@ngx-formly/core": "^5.0.0",
     "@ngx-formly/schematics": "^5.10.1",
     "@types/lodash": "^4.14.119",
     "angular-animations": "0.0.10",
@@ -54,9 +55,7 @@
     "rxjs-compat": "^6.3.3",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3",
-    "zone.js": "~0.9.1",
-    "@ngx-formly/core": "^5.0.0",
-    "@ngx-formly/bootstrap": "^5.0.0"
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.29",

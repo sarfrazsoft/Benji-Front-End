@@ -1,17 +1,27 @@
-<div>
-  <div class="twemoji-container">
-    <app-b-twemoji class="body-emoji" [text]="getSelectedEmoji()"></app-b-twemoji>
+<div class="emoji-selector-container">
+  <input [formControl]="formControl" [formlyAttributes]="field" type="hidden" />
+
+  <div fxLayout="row">
+    <div>
+      <button *ngIf="showemoji" (click)="showemoji = !showemoji" type="button" class="btn btn-light">
+        Close
+      </button>
+      <button *ngIf="!showemoji" (click)="showemoji = !showemoji" type="button" class="btn btn-light">
+        Select emoji
+      </button>
+    </div>
+    <div class="twemoji-container">
+      <app-b-twemoji class="body-emoji" [text]="getSelectedEmoji()"></app-b-twemoji>
+    </div>
   </div>
-  <button *ngIf="showemoji" (click)="showemoji = !showemoji">Close <mat-icon> clear</mat-icon></button>
-  <button *ngIf="!showemoji" (click)="showemoji = !showemoji">Select emoji</button>
-  <div sytle="position:relative" (keyup)="stop($event)" (keydown)="stop($event)">
+
+  <div>
     <emoji-mart
       *ngIf="showemoji"
       (emojiClick)="addEmoji($event)"
       title="Pick your emoji…"
       set="twitter"
       emoji="point_up"
-      [style]="{ float: 'right' }"
     ></emoji-mart>
   </div>
 </div>

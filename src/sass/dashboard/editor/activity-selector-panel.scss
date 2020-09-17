@@ -53,11 +53,12 @@ benji-activity-selector-panel {
 
             .activity-content {
               .twemoji-container {
-                width: 100px;
-                margin: 0;
+                width: 50px;
+                margin-left: 50px;
+                margin-bottom: 0px;
               }
               emoji-mart .emoji-mart {
-                z-index: 10;
+                z-index: 100;
               }
             }
           }
