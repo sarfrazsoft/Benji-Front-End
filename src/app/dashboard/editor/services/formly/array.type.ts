@@ -15,12 +15,14 @@ import { FieldArrayType } from '@ngx-formly/core';
       <div *ngFor="let field of field.fieldGroup; let i = index" class="row">
         <formly-field class="col-10" [field]="field"></formly-field>
         <div class="col-2 text-right">
-          <button class="btn btn-danger" type="button" (click)="remove(i)">-</button>
+          <button class="" (click)="remove(i)"><mat-icon>close</mat-icon></button>
         </div>
       </div>
 
-      <div class="d-flex flex-row-reverse">
-        <button class="btn btn-primary" type="button" (click)="add()">+</button>
+      <div class="d-flex">
+        <button class="editor-content-button add-answer" type="button" (click)="add()">
+          Add {{ to.label }}
+        </button>
       </div>
     </div>
   `,

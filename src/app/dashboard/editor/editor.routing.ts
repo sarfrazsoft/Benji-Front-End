@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
-import { IsAdminGuard } from 'src/app/services/auth/is-admin.guard';
 import { AdminResolver } from '../admin-panel';
 import { EditorComponent } from './index';
+import { EditorResolver } from './services/editor.resolver';
 
 const routes: Routes = [
   {
@@ -13,6 +13,9 @@ const routes: Routes = [
       {
         path: '',
         component: EditorComponent,
+        resolve: {
+          editorData: EditorResolver,
+        },
       },
       {
         path: ':lessonId',

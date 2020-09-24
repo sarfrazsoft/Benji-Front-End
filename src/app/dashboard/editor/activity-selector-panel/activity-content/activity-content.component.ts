@@ -20,33 +20,42 @@ import { map } from 'rxjs/operators';
 export class ActivityContentComponent implements OnInit {
   constructor(private store: Store<fromStore.EditorState>, private formlyJsonschema: FormlyJsonschema) {}
   activity$: Observable<any>;
-  fields$: Observable<any>;
   content$: Observable<any>;
+  possibleActivities$: Observable<any>;
   fieldTypes = FieldTypes;
   questions$: Observable<Array<QuestionSet>>;
   showQuestions = false;
+  typingTimer;
 
   form = new FormGroup({});
   model: any;
   options: FormlyFormOptions;
   fields: FormlyFieldConfig[];
 
+  showSelectActivityMsg = false;
+
   ngOnInit() {
     this.activity$ = this.store.select(fromStore.getSelectedLessonActivity);
+    this.possibleActivities$ = this.store.select(fromStore.getAllPossibleActivities);
 
     this.content$ = this.store.select(fromStore.getSelectedLessonActivityContent);
 
-    combineLatest([this.activity$, this.content$])
+    combineLatest([this.activity$, this.possibleActivities$, this.content$])
       .pipe(
-        map(([a$, c$]) => ({
+        map(([a$, b$, c$]) => ({
           activity: a$,
+          possibleActivities: b$,
           content: c$,
         }))
       )
       .subscribe((pair) => {
-        if (pair.activity.activity) {
-          const act = pair.activity;
-          const schema = cloneDeep(act.activity.schema);
+        this.showSelectActivityMsg = false;
+        if (pair.activity && !pair.activity.empty && pair.possibleActivities.length) {
+          const act = cloneDeep(pair.activity);
+          const act_type = cloneDeep(pair.activity.activity_type);
+          const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
+          const schema = cloneDeep(s);
+          console.log(pair);
           // internal_type = EmojiURLField indicates that the field is for emoji
           // map to intercept schema and make changes to fields
           // make activity_id readonly
@@ -58,23 +67,39 @@ export class ActivityContentComponent implements OnInit {
                 mappedField.templateOptions.label = 'Emoji';
               }
               if (mapSource.title === 'Activity ID') {
+                mappedField.hide = true;
                 mappedField.templateOptions.readonly = true;
               }
-              console.log(mappedField);
+              // for MCQ activity
+              if (act.activity_type === 'MCQActivity') {
+                if (mapSource.internal_type === 'MCQChoiceSerializer') {
+                  console.log('bawaj i');
+                  mappedField.type = 'mcqChoice';
+                }
+              }
               return mappedField;
             },
           });
-          console.log(fields);
+          // console.log(fields);
           const reversedOrder = cloneDeep(OrderArray);
+          const content = cloneDeep(pair.content);
           reverse(reversedOrder);
           fields.fieldGroup = fields.fieldGroup.sort((a, b) => {
             return reversedOrder.indexOf(b.key as string) - reversedOrder.indexOf(a.key as string);
           });
 
-          fields.fieldGroup = fields.fieldGroup;
           this.fields = [fields];
-          this.model = { activity_id: act.activity.displayName + '_' + act.id };
+          this.model = {
+            activity_type: act.activity_type,
+            activity_id: act.id.toString(),
+            ...content,
+            // question: {
+            //   mcqchoice_set: [{ choice_text: 'hello', explanation: 'koi na' }],
+            // },
+          };
           this.showQuestions = true;
+        } else if (pair.activity && pair.activity.empty) {
+          this.showSelectActivityMsg = true;
         }
       });
   }
@@ -84,10 +109,22 @@ export class ActivityContentComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.store.dispatch(new fromStore.AddActivityContent(this.model));
-    }
+    const b = cloneDeep(this.model);
+    this.store.dispatch(new fromStore.AddActivityContent(b));
     console.log(this.model);
+  }
+
+  // on keyup, start the countdown
+  typingStoped(event) {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.onSubmit();
+    }, 1500);
+  }
+
+  // on keydown, clear the countdown
+  typingStarted() {
+    clearTimeout(this.typingTimer);
   }
 }
 

@@ -172,3 +172,42 @@ button {
     font-size: 4vh;
   }
 }
+
+// Emoji selector button
+.editor-content-button {
+  background-color: $sky;
+  color: $black;
+  height: 40px;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 4px;
+  &.emoji-selector {
+    width: 160px;
+    cursor: pointer;
+    .icon {
+      height: 24px;
+      width: 24px;
+      margin-right: 8px;
+    }
+  }
+  &.add-answer {
+    width: 100%;
+  }
+}
+
+.add-answer-button {
+  background-color: $sky;
+  color: $black;
+
+  height: 40px;
+  font-weight: 500;
+
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  .icon {
+    height: 24px;
+    width: 24px;
+    margin-right: 8px;
+  }
+}

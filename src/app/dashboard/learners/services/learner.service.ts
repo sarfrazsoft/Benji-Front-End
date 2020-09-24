@@ -22,15 +22,6 @@ import {
 export class LearnerService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
-  // getAdminPanelMetrics(): Observable<any> {
-  //   return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
-  //     map((res: Response) => {
-  //       return { learners: 106, groups: 14, sessions: 18 };
-  //     }),
-  //     catchError(err => of(err.error))
-  //   );
-  // }
-
   getUsers(): Observable<any> {
     return this.http.get(global.apiRoot + '/tenants/users/').pipe(
       map((res) => {

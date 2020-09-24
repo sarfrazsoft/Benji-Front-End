@@ -10,7 +10,11 @@ export class EmojiSelectorComponent extends FieldType implements OnInit {
   showemoji;
   selectedEmoji;
 
-  public ngOnInit() {}
+  public ngOnInit() {
+    if (this.formControl.value) {
+      this.selectedEmoji = this.formControl.value;
+    }
+  }
 
   getSelectedEmoji() {
     return this.selectedEmoji;

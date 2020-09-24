@@ -1,12 +1,7 @@
-<!-- <div class="panel">
-  <div
-    class="activity-container"
-    *ngFor="let category of possibleActivities$ | async"
-  >
-    <div *ngFor="let activity of category.activities">
-      <div *ngIf="activity.mouseOvered">
-        {{ activity.displayName }}
-      </div>
+<div class="panel">
+  <div class="activity-container">
+    <div class="facilitator-img" *ngIf="showImage">
+      <img [src]="imgSrc" alt="" />
     </div>
   </div>
-</div> -->
+</div>

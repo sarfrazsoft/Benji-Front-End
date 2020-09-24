@@ -15,23 +15,25 @@ export interface Course {
 }
 
 export class Lesson {
-  id: number;
-  lesson_id: string;
+  id?: number;
+  lesson_id?: string;
   lesson_name: string;
-  single_user_lesson: boolean;
-  lesson_length_minutes: number;
-  lesson_description: string;
+  single_user_lesson?: boolean;
+  lesson_length_minutes?: number;
+  lesson_description?: string;
   lesson_plan?: string;
+  lesson_plan_json?: Array<any>;
   lesson_details?: any;
-  standardize: boolean;
-  owner: number;
-  team: number;
-  team_permission: string;
-  public_permission: string;
-  creation_time: string;
-  last_edited: string;
-  is_shared: boolean;
-  effective_permission: string; // 'admin', 'host', 'duplicate' 'edit', or null
+  standardize?: boolean;
+  owner?: number;
+  team?: number;
+  editor_lesson_plan?: any;
+  team_permission?: string;
+  public_permission?: string;
+  creation_time?: string;
+  last_edited?: string;
+  is_shared?: boolean;
+  effective_permission?: string; // 'admin', 'host', 'duplicate' 'edit', or null
 }
 
 export interface LessonRun {

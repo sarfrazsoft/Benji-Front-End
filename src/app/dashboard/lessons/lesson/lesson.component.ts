@@ -13,9 +13,10 @@ export class LessonComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       const lId = paramMap.get('lessonId');
+      const id = parseInt(lId, 10);
 
-      this.activatedRoute.data.forEach((data: any) => {
-        const lesson = data.dashData.lessons.filter((c) => c.lesson_id === lId)[0];
+      this.activatedRoute.data.forEach((data) => {
+        const lesson = data.dashData.lessons.filter((c) => c.id === id)[0];
 
         this.lessonDetails = lesson.lesson_details;
       });

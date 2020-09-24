@@ -3,6 +3,6 @@ import { FieldType } from '@ngx-formly/core';
 
 @Component({
   selector: 'formly-null-type',
-  template: '',
+  template: 'brr',
 })
 export class NullTypeComponent extends FieldType {}

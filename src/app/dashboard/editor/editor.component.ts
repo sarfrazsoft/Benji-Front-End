@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fromEvent, Observable } from 'rxjs';
+import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinct, filter, flatMap, map, tap } from 'rxjs/operators';
 import { LayoutService } from 'src/app/services/layout.service';
 import { EditorService } from './services';
@@ -16,6 +16,17 @@ import * as fromStore from './store';
 })
 export class EditorComponent implements OnInit, OnDestroy {
   activities$: Observable<Activity[]>;
+  lessonActivities$: Observable<Activity[]>;
+  getActivitiesLoaded$: Observable<any>;
+
+  lessonName$: Observable<any>;
+  lessonName: string;
+  showEditableLessonName = false;
+  @ViewChild('name', { static: false }) searchElement: ElementRef;
+
+  lessonError$: Observable<any>;
+  error = '';
+
   showCancelAddSlide = false;
 
   constructor(
@@ -27,26 +38,50 @@ export class EditorComponent implements OnInit, OnDestroy {
   ) {
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
-      // console.log(data);
+      if (data && data.editorData && data.editorData.lesson) {
+        this.router.navigate([data.editorData.lesson.id], {
+          relativeTo: this.activatedRoute,
+        });
+      }
     });
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       const lessonId = paramMap.get('lessonId');
       if (lessonId) {
-        this.loadLessonActivities('lessonId');
+        this.loadLessonActivities(lessonId);
       } else {
-        this.startNewLesson();
+        // this.startNewLesson();
       }
     });
   }
 
   ngOnInit() {
-    // this.activities$ = this.store.select(fromStore.getAllActivities);
-    // // create observable that emits click events
-    // const source = fromEvent(window, 'scroll');
-    // // map to string with given event timestamp
-    // const example = source.pipe(map(event => `Event time: ${event.timeStamp}`));
-    // // output (example): 'Event time: 7276.390000000001'
-    // const subscribe = example.subscribe(val => console.log(val));
+    this.lessonName$ = this.store.select(fromStore.getLessonName);
+
+    this.lessonName$.subscribe((name) => (this.lessonName = name));
+
+    this.lessonError$ = this.store.select(fromStore.getErrorInLeson);
+
+    this.lessonError$.subscribe((e) => {
+      if (e === true) {
+        this.error = 'Invalid lesson';
+      } else {
+        this.error = '';
+      }
+    });
+  }
+
+  lessonNameClicked(name) {
+    this.showEditableLessonName = true;
+    setTimeout(() => {
+      // this will make the execution after the above boolean has changed
+      // this.searchElement.nativeElement.focus();
+      this.searchElement.nativeElement.focus();
+    }, 3);
+  }
+
+  updateName(inputField) {
+    this.store.dispatch(new fromStore.UpdateLessonName(inputField.value));
+    this.showEditableLessonName = false;
   }
 
   addSlide() {
@@ -70,10 +105,26 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   loadLessonActivities(lessonId) {
     this.store.dispatch(new fromStore.LoadLessonActivites(lessonId));
+
+    this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
+    this.getActivitiesLoaded$ = this.store.select(fromStore.getActivitiesLoaded);
+
+    combineLatest([this.lessonActivities$, this.getActivitiesLoaded$])
+      .pipe(
+        map(([a$, c$]) => ({
+          activities: a$,
+          loaded: c$,
+        }))
+      )
+      .subscribe((pair) => {
+        if (pair.activities.length === 0 && pair.loaded) {
+          this.store.dispatch(new fromStore.AddEmptyLessonActivity());
+        }
+      });
   }
 
   startNewLesson() {
-    this.store.dispatch(new fromStore.AddEmptyLessonActivity());
+    // this.store.dispatch(new fromStore.SaveEmptyLesson());
     // this.store.dispatch(new fromStore.AddLobbyActivity())
   }
 

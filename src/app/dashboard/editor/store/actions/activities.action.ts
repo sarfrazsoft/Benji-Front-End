@@ -79,10 +79,38 @@ export class AddActivityContent implements Action {
   constructor(public payload: any) {}
 }
 
+// Save Lesson Name
+export const UPDATE_LESSON_NAME = '[Editor] Change lesson name';
+export const UPDATE_LESSON_NAME_SUCCESS = '[Editor] Change lesson name success';
+export const UPDATE_LESSON_NAME_FAILURE = '[Editor] Change lesson name failure';
+
+export class UpdateLessonName implements Action {
+  readonly type = UPDATE_LESSON_NAME;
+  constructor(public payload: any) {}
+}
+
+export class UpdateLessonNameSuccess implements Action {
+  readonly type = UPDATE_LESSON_NAME_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class UpdateLessonNameFailure implements Action {
+  readonly type = UPDATE_LESSON_NAME_FAILURE;
+  constructor(public payload: any) {}
+}
+
 // Save lesson
+export const SAVE_EMPTY_LESSON = '[Editor] Create initial empty lesson';
 export const SAVE_LESSON = '[Editor] Save lesson';
 export const SAVE_LESSON_SUCCESS = '[Editor] Save lesson success';
 export const SAVE_LESSON_FAILURE = '[Editor] Save lesson failure';
+export const CREATE_LESSON_YAML = '[Editor] Create yaml from json of activities';
+export const CREATE_LESSON_YAML_SUCCESS = '[Editor] Create yaml from json of activities';
+export const CREATE_LESSON_YAML_FAILURE = '[Editor] Create yaml from json of activities';
+
+export class SaveEmptyLesson implements Action {
+  readonly type = SAVE_EMPTY_LESSON;
+}
 
 export class SaveLesson implements Action {
   readonly type = SAVE_LESSON;
@@ -96,6 +124,21 @@ export class SaveLessonSuccess implements Action {
 
 export class SaveLessonFailure implements Action {
   readonly type = SAVE_LESSON_FAILURE;
+  constructor(public payload: any) {}
+}
+
+export class CreateLessonYaml implements Action {
+  readonly type = CREATE_LESSON_YAML;
+  constructor(public payload: any) {}
+}
+
+export class CreateLessonYamlSuccess implements Action {
+  readonly type = CREATE_LESSON_YAML_SUCCESS;
+  constructor(public payload: any) {}
+}
+
+export class CreateLessonYamlFailure implements Action {
+  readonly type = CREATE_LESSON_YAML_FAILURE;
   constructor(public payload: any) {}
 }
 
@@ -125,6 +168,13 @@ export type ActivitiesAction =
   | AddEmptyLessonActivity
   | RemoveLessonActivity
   | SelectLessonActivity
+  | CreateLessonYaml
+  | CreateLessonYamlSuccess
+  | CreateLessonYamlFailure
+  | UpdateLessonName
+  | UpdateLessonNameSuccess
+  | UpdateLessonNameFailure
+  | SaveEmptyLesson
   | SaveLesson
   | SaveLessonSuccess
   | SaveLessonFailure

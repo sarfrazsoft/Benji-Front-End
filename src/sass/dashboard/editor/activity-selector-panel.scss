@@ -52,8 +52,66 @@ benji-activity-selector-panel {
             }
 
             .activity-content {
+              .mcq-choice-form {
+                .form-group {
+                  margin-bottom: 5px;
+                }
+                .custom-control-input:checked ~ .custom-control-label::before {
+                  background-color: #61e111;
+                }
+
+                .custom-checkbox {
+                  width: 40px;
+                  height: 40px;
+                  margin-left: 10px;
+                  input {
+                    // transform: scale(2);
+                    height: 40px;
+                    width: 40px;
+                  }
+                  .custom-control-label::after,
+                  .custom-control-label::before {
+                    top: 0;
+                    width: 40px;
+                    height: 40px;
+                    border: 1px solid $secondary-color-light;
+                    // &:focus {
+                    // border-color: $primary-color;
+                    box-shadow: none;
+                    // }
+                  }
+                }
+                // display: block;
+                // input[type='checkbox'] {
+                //   -ms-transform: scale(2); /* IE */
+                //   -moz-transform: scale(2); /* FF */
+                //   -webkit-transform: scale(2); /* Safari and Chrome */
+                //   -o-transform: scale(2); /* Opera */
+                //   transform: scale(2);
+                // }
+                // input[type='checkbox']::before,
+                // input[type='checkbox']::after {
+                //   top: 0.8rem;
+                //   width: 1.25rem;
+                //   height: 1.25rem;
+                // }
+              }
+              .question-icon {
+                height: 18px;
+                width: 18px;
+                margin-bottom: 0.5rem;
+                margin-left: 16px;
+              }
+
+              .form-control {
+                border-radius: 4px;
+                &:focus {
+                  border-color: $primary-color;
+                  box-shadow: none;
+                }
+              }
               .twemoji-container {
-                width: 50px;
+                width: 40px;
                 margin-left: 50px;
                 margin-bottom: 0px;
               }

@@ -6,21 +6,29 @@ import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
 
 @Injectable()
 export class EditorService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
-  // activity_flow/schema
+  saveEmptyLesson(lesson: Lesson): Observable<any[]> {
+    return this.http.post<any[]>(global.apiRoot + '/course_details/lesson/', lesson);
+  }
+
   getActivites(): Observable<any[]> {
     return this.http.get<any[]>(global.apiRoot + '/activityflow/schema/');
   }
 
-  saveLesson(lesson): Observable<any[]> {
+  getLessonActivities(lesson: number) {
+    return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}`);
+  }
+
+  createYaml(lesson): Observable<any[]> {
     return this.http.post<any[]>(global.apiRoot + '/activityflow/schema/to_yaml/', lesson);
   }
 
-  saveYAML(yaml): Observable<any[]> {
-    return this.http.post<any[]>(global.apiRoot + '/course_detals/lesson/', yaml);
+  updateLesson(lesson: Lesson, id): Observable<any[]> {
+    return this.http.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
   }
 }

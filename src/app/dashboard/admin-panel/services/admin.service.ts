@@ -12,17 +12,8 @@ import { Course, Lesson, PaginatedResponse } from 'src/app/services/backend/sche
 export class AdminService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
-  getAdminPanelMetrics(): Observable<any> {
-    return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
-      map((res: Response) => {
-        return { learners: 106, groups: 14, sessions: 18 };
-      }),
-      catchError((err) => of(err.error))
-    );
-  }
-
   getUser(): Observable<User> {
-    return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
+    return this.http.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
       map((res: User) => {
         this.contextService.user = res;
         return res;

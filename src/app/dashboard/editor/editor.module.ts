@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../../shared/shared.module';
 import { EditorRoutes } from './editor.routing';
 import { EditorComponents, EditorEntryComponents, EditorProviders } from './index';
@@ -17,10 +18,13 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { EmojiSelectorComponent } from './activity-selector-panel/activity-content/dynamic-form/emoji-selector/emoji-selector.component';
 import {
   ArrayTypeComponent,
+  MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
   ObjectTypeComponent,
 } from './services';
+import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
+import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
 }
@@ -68,6 +72,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgbTooltipModule,
     StoreModule.forFeature('editor', reducers),
     EffectsModule.forFeature(effects),
     FormlyModule.forRoot({
@@ -88,7 +93,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
         { name: 'const', message: constValidationMessage },
       ],
       types: [
-        { name: 'string', extends: 'input' },
+        { name: 'string', extends: 'input', wrappers: ['benji-field-wrapper'] },
         {
           name: 'number',
           extends: 'input',
@@ -97,6 +102,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
               type: 'number',
             },
           },
+          wrappers: ['benji-field-wrapper'],
         },
         {
           name: 'integer',
@@ -106,14 +112,20 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
               type: 'number',
             },
           },
+          wrappers: ['benji-field-wrapper'],
         },
-        { name: 'boolean', extends: 'checkbox' },
-        { name: 'enum', extends: 'select' },
-        { name: 'null', component: NullTypeComponent, wrappers: ['form-field'] },
+        { name: 'boolean', extends: 'checkbox', wrappers: ['benji-checkbox-wrapper'] },
+        { name: 'enum', extends: 'select', wrappers: ['benji-field-wrapper'] },
+        { name: 'null', component: NullTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'array', component: ArrayTypeComponent },
         { name: 'object', component: ObjectTypeComponent },
-        { name: 'multischema', component: MultiSchemaTypeComponent },
-        { name: 'emoji', component: EmojiSelectorComponent },
+        { name: 'multischema', component: MultiSchemaTypeComponent, wrappers: ['benji-field-wrapper'] },
+        { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
+        { name: 'mcqChoice', component: MCQChoiceTypeComponent },
+      ],
+      wrappers: [
+        { name: 'benji-field-wrapper', component: FieldWrapperComponent },
+        { name: 'benji-checkbox-wrapper', component: CheckboxWrapperComponent },
       ],
     }),
     FormlyBootstrapModule,

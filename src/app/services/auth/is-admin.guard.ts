@@ -42,17 +42,14 @@ export class IsAdminGuard implements CanActivate {
   }
 
   canLoad(route: Route) {
-    if (
-      this.contextService.user &&
-      this.contextService.user.local_admin_permission
-    ) {
+    if (this.contextService.user && this.contextService.user.local_admin_permission) {
       return true;
     }
     return false;
   }
 
   getUser(): Observable<User> {
-    return this.httpClient.get(global.apiRoot + '/rest-auth/user/').pipe(
+    return this.httpClient.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
       map((res: User) => {
         this.contextService.user = res;
         return res;

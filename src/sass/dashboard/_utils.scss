@@ -8,6 +8,16 @@
   }
 }
 
+.editor-link {
+  font-family: $pn-regular;
+  color: $primary-color;
+  font-size: 14px;
+  span {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
 .success-message {
   font-size: 24px;
   color: $primary-color;

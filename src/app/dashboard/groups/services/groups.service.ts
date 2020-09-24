@@ -9,23 +9,11 @@ import { User } from 'src/app/services/backend/schema';
 
 @Injectable()
 export class GroupsService {
-  constructor(
-    private http: HttpClient,
-    private contextService: ContextService
-  ) {}
-
-  // getAdminPanelMetrics(): Observable<any> {
-  //   return this.http.get(global.apiRoot + '/rest-auth/user/').pipe(
-  //     map((res: Response) => {
-  //       return { learners: 106, groups: 14, sessions: 18 };
-  //     }),
-  //     catchError(err => of(err.error))
-  //   );
-  // }
+  constructor(private http: HttpClient, private contextService: ContextService) {}
 
   getUsers(): Observable<any> {
     return this.http.get(global.apiRoot + '/tenants/users/').pipe(
-      map(res => {
+      map((res) => {
         return res;
       })
     );
@@ -33,7 +21,7 @@ export class GroupsService {
 
   getPastSessions(sort: string, order: string, page: number): Observable<any> {
     return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
-      map(res => {
+      map((res) => {
         return res;
       })
     );
@@ -85,23 +73,23 @@ export const group = {
   createdOn: '2020-01-10T17:06:29.572377-05:00',
   createdBy: {
     id: 1,
-    name: 'John Doe'
+    name: 'John Doe',
   },
   learners: [
     {
       id: 1,
-      name: 'user one'
-    }
+      name: 'user one',
+    },
   ],
   enrolledCourses: [
     {
       id: 1,
-      name: 'Course one'
+      name: 'Course one',
     },
     {
       id: 2,
-      name: 'course two'
-    }
+      name: 'course two',
+    },
   ],
   pastSessions: [
     {
@@ -114,8 +102,8 @@ export const group = {
         id: 6,
         username: 'www',
         first_name: 'mww',
-        other: 'propertyName'
-      }
-    }
-  ]
+        other: 'propertyName',
+      },
+    },
+  ],
 };

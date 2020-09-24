@@ -34,7 +34,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.http
-      .post(global.apiRoot + '/jwt-auth/', {
+      .post(global.apiRoot + '/rest-auth/login/', {
         username: username,
         password: password,
       })

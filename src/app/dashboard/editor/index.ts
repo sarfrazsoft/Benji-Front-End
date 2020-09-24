@@ -13,11 +13,15 @@ import { OverviewPanelComponent } from './overview-panel/overview-panel.componen
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
+  MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
   ObjectTypeComponent,
 } from './services';
+import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
+import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
+import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
 
 export const EditorComponents = [
   ...ActivitySelectorComponents,
@@ -28,8 +32,11 @@ export const EditorComponents = [
   ObjectTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
+  FieldWrapperComponent,
+  CheckboxWrapperComponent,
+  MCQChoiceTypeComponent,
 ];
 
 export const EditorEntryComponents = [...ActivitySelectorEntryComponents];
 
-export const EditorProviders = [EditorService, ...ActivitySelectorProviders];
+export const EditorProviders = [EditorService, EditorResolver, ...ActivitySelectorProviders];

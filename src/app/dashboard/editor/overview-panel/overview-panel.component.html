@@ -19,11 +19,9 @@
       <div class="index">{{ i + 1 }}</div>
       <div class="activity">
         <div>
-          {{ act.activity?.displayName }}
+          {{ act.displayName }}
         </div>
-        <mat-icon (click)="deleteActivity(act.id)" style="cursor: pointer;">
-          clear
-        </mat-icon>
+        <mat-icon (click)="deleteActivity(act.id)" style="cursor: pointer"> clear </mat-icon>
       </div>
     </div>
   </div>

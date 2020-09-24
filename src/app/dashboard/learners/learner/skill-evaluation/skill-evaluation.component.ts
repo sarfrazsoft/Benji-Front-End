@@ -137,7 +137,7 @@ export class SkillEvaluationComponent implements OnInit {
     reports = this.verifyData(reports);
 
     reports = reports.sort((a, b) => a.id - b.id);
-    reports = reports.filter((a) => a.lesson.lesson_id === 'pitch_perfect_1');
+    // reports = reports.filter((a) => a.lesson.id === 'pitch_perfect_1');
     // Calculating for last 3 sessions only
     // reports = reports.slice(reports.length - 3);
 

@@ -1,3 +1,5 @@
+import { OverviewLessonActivity } from 'src/app/services/backend/schema';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { SAMPLE_ACTIVITIES } from '../../models';
 import { Activity } from '../../models/activity.model';
 import * as fromActivities from '../actions/activities.action';
@@ -10,7 +12,7 @@ export interface ActivityState {
   selectedPossibleActivity: number;
 
   // holds the activities created in the lesson
-  lessonActivities: { [id: number]: any };
+  lessonActivities: { [id: number]: OverviewLessonActivity };
   // holds the activities' content
   lessonActivitiesContent: { [id: number]: any };
   // id of the selected lesson activity
@@ -20,11 +22,23 @@ export interface ActivityState {
 
   // exclude these activities from all possible activities
   excludedActivities: Array<any>;
-  loaded: boolean;
-  loading: boolean;
+
+  loadedPossibleActivities: boolean;
+  loadingPossibleActivities: boolean;
+  loadedLessonActivities: boolean;
+  loadingLessonActivities: boolean;
+
+  lessonId: number;
+  lessonName: string;
+  lessonDescription: string;
+  errorInLesson: boolean;
 }
 
 export const initialState = {
+  lessonId: null,
+  lessonName: null,
+  lessonDescription: null,
+  errorInLesson: false,
   possibleActivities: {},
   selectedPossibleActivity: null,
   lessonActivities: {},
@@ -52,15 +66,17 @@ export const initialState = {
     'SingleGroupingActivity',
     'ImageActivity',
   ],
-  loaded: false,
-  loading: false,
+  loadedPossibleActivities: false,
+  loadingPossibleActivities: false,
+  loadedLessonActivities: false,
+  loadingLessonActivities: false,
 };
 
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
   switch (action.type) {
     // reducers to load all possible activities
     case fromActivities.LOAD_ALL_POSSIBLE_ACTIVITIES: {
-      return { ...state, loading: true };
+      return { ...state, loadingPossibleActivities: true };
     }
     case fromActivities.LOAD_ALL_POSSIBLE_ACTIVITIES_SUCCESS: {
       const activities = action.payload;
@@ -75,6 +91,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
               },
               id: key,
               displayName: key,
+              activity_type: key,
               thumbnail: actProperties.thumbnail,
             };
             arr.push(x);
@@ -96,30 +113,71 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
       return {
         ...state,
-        loading: false,
-        loaded: true,
+        loadingPossibleActivities: false,
+        loadedPossibleActivities: true,
         possibleActivities: flattendObjects,
       };
     }
     case fromActivities.LOAD_ALL_POSSIBLE_ACTIVITIES_FAIL: {
-      return { ...state, loading: false, loaded: false };
+      return { ...state, loadingPossibleActivities: false, loadedPossibleActivities: false };
     }
 
     // reducers to load lesson's activities
     case fromActivities.LOAD_LESSON_ACTIVITIES: {
-      return { ...state, loading: true };
+      return { ...state, loadingLessonActivities: true };
     }
     case fromActivities.LOAD_LESSON_ACTIVITIES_SUCCESS: {
-      const activities = action.payload;
+      const lesson: Lesson = action.payload;
+
+      const lessonActivities: { [id: number]: OverviewLessonActivity } = {};
+      let selectedLessonActivity = null;
+      let selectedLessonActivityContent = null;
+
+      let acts = lesson.lesson_plan_json;
+      if (!lesson.lesson_plan_json && lesson.editor_lesson_plan) {
+        acts = lesson.editor_lesson_plan;
+      }
+      if (acts) {
+        acts.forEach((val, i) => {
+          let selected = false;
+          if (i === 0) {
+            selected = true;
+            selectedLessonActivity = val.activity_id;
+            selectedLessonActivityContent = val;
+          }
+          const la: OverviewLessonActivity = {
+            id: parseInt(val.activity_id, 10),
+            selected: selected,
+            empty: false,
+            order: i + 1,
+            activity_type: val.activity_type,
+            displayName: val.activity_type,
+          };
+          lessonActivities[val.activity_id] = la;
+        });
+      }
+
+      const lessonActivitiesContent = {};
+      if (lesson.lesson_plan_json) {
+        lesson.lesson_plan_json.forEach((val) => {
+          lessonActivitiesContent[val.activity_id] = val;
+        });
+      }
       return {
         ...state,
-        loading: false,
-        loaded: true,
-        lessonActivities: {},
+        lessonName: lesson.lesson_name,
+        lessonId: lesson.id,
+        lessonDescription: lesson.lesson_description,
+        loadingLessonActivities: false,
+        loadedLessonActivities: true,
+        lessonActivities: lessonActivities,
+        lessonActivitiesContent: lessonActivitiesContent,
+        selectedLessonActivityContent: selectedLessonActivityContent,
+        selectedLessonActivity: selectedLessonActivity,
       };
     }
     case fromActivities.LOAD_LESSON_ACTIVITIES_FAIL: {
-      return { ...state, loading: false, loaded: false };
+      return { ...state, loadingLessonActivities: false, loadedLessonActivities: false };
     }
 
     case fromActivities.SELECT_ACTIVITY_TYPE: {
@@ -128,16 +186,28 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       let lessonActivity = {};
       if (state.selectedLessonActivity) {
         const x = state.selectedLessonActivity;
-        lessonActivity = {
+
+        const la: OverviewLessonActivity = {
           ...state.lessonActivities[x],
-          activity,
+          empty: false,
+          activity_type: activity.id,
+          displayName: activity.activity_type,
         };
+        lessonActivity = la;
+      }
+
+      if (state.selectedLessonActivityContent) {
       }
       return {
         ...state,
         lessonActivities: {
           ...state.lessonActivities,
           [state.selectedLessonActivity]: lessonActivity,
+        },
+        selectedLessonActivityContent: {},
+        lessonActivitiesContent: {
+          ...state.lessonActivitiesContent,
+          [state.selectedLessonActivity]: {},
         },
       };
       break;
@@ -168,7 +238,14 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       const noOfActivities = Object.keys(state.lessonActivities).length;
       let lessonActivities = {
         ...state.lessonActivities,
-        [newIndex]: { id: newIndex, empty: true, selected: true, order: noOfActivities + 1 },
+        [newIndex]: {
+          id: newIndex,
+          empty: true,
+          selected: true,
+          order: noOfActivities + 1,
+          activity_type: null,
+          displayName: null,
+        },
       };
 
       // Selecting the new lesson activity and unselect the previous selected activity
@@ -179,7 +256,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           [previousSelectedId]: { ...lessonActivities[previousSelectedId], selected: false },
         };
       }
-
+      console.log(lessonActivities);
       return {
         ...state,
         lessonActivities,
@@ -219,8 +296,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
       return {
         ...state,
-        loading: false,
-        loaded: true,
         lessonActivities: flattendObjects,
       };
     }
@@ -247,15 +322,29 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       };
     }
 
-    case fromActivities.SAVE_LESSON_FAILURE: {
+    case fromActivities.UPDATE_LESSON_NAME_SUCCESS: {
+      const lesson: Lesson = action.payload;
+      return { ...state, lessonName: lesson.lesson_name };
+    }
+
+    case fromActivities.UPDATE_LESSON_NAME_FAILURE: {
       const error = action.payload;
       console.log(error);
       return { ...state };
     }
 
     case fromActivities.SAVE_LESSON_SUCCESS: {
-      const response = action.payload;
-      console.log(response);
+      const lesson: Lesson = action.payload;
+      let lessonError = false;
+      if (!lesson.lesson_plan && !lesson.lesson_plan_json && lesson.editor_lesson_plan) {
+        lessonError = true;
+      }
+      console.log(lesson);
+      return { ...state, errorInLesson: lessonError };
+    }
+    case fromActivities.SAVE_LESSON_FAILURE: {
+      const error = action.payload;
+      console.log(error);
       return { ...state };
     }
   }
@@ -263,8 +352,10 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
   return state;
 }
 
-export const getActivitiesLoading = (state: ActivityState) => state.loading;
-export const getActivitiesLoaded = (state: ActivityState) => state.loaded;
+export const getLessonName = (state: ActivityState) => state.lessonName;
+export const getErrorInLesson = (state: ActivityState) => state.errorInLesson;
+export const getActivitiesLoading = (state: ActivityState) => state.loadingLessonActivities;
+export const getActivitiesLoaded = (state: ActivityState) => state.loadedLessonActivities;
 export const getPossibleActivities = (state: ActivityState) => state.possibleActivities;
 export const getLessonActivities = (state: ActivityState) => state.lessonActivities;
 export const getSelectedLessonActivity = (state: ActivityState) => state.selectedLessonActivity;

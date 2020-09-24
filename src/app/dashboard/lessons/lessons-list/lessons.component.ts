@@ -54,12 +54,20 @@ export class LessonsComponent implements OnInit {
     event.stopPropagation();
   }
 
-  openDetails(lesson) {
-    console.log(lesson);
+  openDetails(lesson: Lesson) {
     if (lesson.lesson_details) {
-      this.router.navigate(['lesson', lesson.lesson_id], {
+      this.router.navigate(['lesson', lesson.id], {
         relativeTo: this.activatedRoute,
       });
     }
+  }
+
+  edit($event, lesson: Lesson) {
+    if (lesson.id) {
+      this.router.navigate(['editor', lesson.id], {
+        relativeTo: this.activatedRoute,
+      });
+    }
+    $event.stopPropagation();
   }
 }

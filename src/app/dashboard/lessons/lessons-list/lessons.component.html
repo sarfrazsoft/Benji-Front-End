@@ -6,6 +6,14 @@
         class="launch-session primary-color"
         fxLayout="row"
         fxLayoutAlign="center center"
+        (click)="edit($event, lesson)"
+      >
+        <span>Edit</span>
+      </div>
+      <div
+        class="launch-session primary-color"
+        fxLayout="row"
+        fxLayoutAlign="center center"
         (click)="launchSession($event, lesson)"
       >
         <span>{{ launchSessionLabel }}</span>

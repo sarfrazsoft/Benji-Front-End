@@ -6,8 +6,18 @@
       <button *ngIf="showemoji" (click)="showemoji = !showemoji" type="button" class="btn btn-light">
         Close
       </button>
-      <button *ngIf="!showemoji" (click)="showemoji = !showemoji" type="button" class="btn btn-light">
-        Select emoji
+      <button
+        *ngIf="!showemoji"
+        (click)="showemoji = !showemoji"
+        type="button"
+        class="editor-content-button emoji-selector"
+      >
+        <div fxLayoutAlign="center center" fxLayout="row">
+          <div class="icon">
+            <img src="/assets/img/smiley_face.svg" />
+          </div>
+          <div>+ Add Icon</div>
+        </div>
       </button>
     </div>
     <div class="twemoji-container">

@@ -1,6 +1,6 @@
 <div class="editor-container" fxLayout="column">
-  <div class="topbar" fxLayout="row">
-    <div>
+  <div class="topbar" fxLayout="row" fxLayoutAlign="start center">
+    <div fxLayout="row" fxLayoutAlign="start center">
       <button
         class="dashboard-secondary-button active"
         fxLayoutAlign="center center"
@@ -19,12 +19,18 @@
         <mat-icon>close</mat-icon>
         Cancel
       </button>
-      <!-- <button class="dashboard-secondary-button active" fxLayoutAlign="center center" (click)="saveLesson()">
-        <mat-icon>add</mat-icon>
-        Save
-      </button> -->
+      <div class="lesson-name-container">
+        <div class="name" *ngIf="!showEditableLessonName" (click)="lessonNameClicked(name)">
+          {{ lessonName$ | async }}
+        </div>
+        <div *ngIf="showEditableLessonName">
+          <input #name type="text" (blur)="updateName(name)" [value]="lessonName" />
+        </div>
+      </div>
     </div>
-    <div></div>
+    <div class="error">
+      {{ error }}
+    </div>
   </div>
 
   <div class="editor-panels" fxLayout="row">

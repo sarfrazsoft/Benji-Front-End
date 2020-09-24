@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import * as fromActivities from '../reducers';
-import * as fromPizzas from '../reducers/activities.reducers';
+import * as fromReducers from '../reducers/activities.reducers';
 
 // activities state
 export const getActivitiesState = createSelector(
@@ -8,21 +8,21 @@ export const getActivitiesState = createSelector(
   (state: fromActivities.EditorState) => state.activities
 );
 
-export const getPossibleActivities = createSelector(getActivitiesState, fromPizzas.getPossibleActivities);
+export const getPossibleActivities = createSelector(getActivitiesState, fromReducers.getPossibleActivities);
 
 export const getSelectedLessonActivityContent = createSelector(
   getActivitiesState,
-  fromPizzas.getSelectedLessonActivityContent
+  fromReducers.getSelectedLessonActivityContent
 );
 
 export const getAllPossibleActivities = createSelector(getPossibleActivities, (entities) => {
   return Object.keys(entities).map((id) => entities[id]);
 });
 
-export const getLessonActivities = createSelector(getActivitiesState, fromPizzas.getLessonActivities);
+export const getLessonActivities = createSelector(getActivitiesState, fromReducers.getLessonActivities);
 
 export const getAllLessonActivities = createSelector(getLessonActivities, (entities) => {
-  const acts = Object.keys(entities).map((id) => entities[parseInt(id, 10)]);
+  const acts = Object.keys(entities).map((id) => entities[id]);
   return acts.sort((a, b) => a.order - b.order);
 });
 
@@ -30,15 +30,10 @@ export const getSelectedLessonActivity = createSelector(getActivitiesState, (sta
   return state.lessonActivities[state.selectedLessonActivity];
 });
 
-export const getSelectedLessonActivityFields = createSelector(getSelectedLessonActivity, (activity) => {
-  if (activity && activity.activity) {
-    return activity.activity.fields;
-    // return Object.keys(activity.activity.fields).map((id) => {
-    //   return { ...activity.activity.fields[id], id };
-    // });
-  }
-});
+export const getLessonName = createSelector(getActivitiesState, fromReducers.getLessonName);
 
-export const getActivitiesLoaded = createSelector(getActivitiesState, fromPizzas.getActivitiesLoaded);
+export const getErrorInLeson = createSelector(getActivitiesState, fromReducers.getErrorInLesson);
 
-export const getActivitiesLoading = createSelector(getActivitiesState, fromPizzas.getActivitiesLoading);
+export const getActivitiesLoaded = createSelector(getActivitiesState, fromReducers.getActivitiesLoaded);
+
+export const getActivitiesLoading = createSelector(getActivitiesState, fromReducers.getActivitiesLoading);
