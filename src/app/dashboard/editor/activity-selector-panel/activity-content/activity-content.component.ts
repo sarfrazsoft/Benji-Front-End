@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { debounceTime } from 'rxjs/operators';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
 import { QuestionSet } from './services/question-control.service';
@@ -62,9 +63,13 @@ export class ActivityContentComponent implements OnInit {
           const fields = this.formlyJsonschema.toFieldConfig(schema as any, {
             map: (mappedField: FormlyFieldConfig, mapSource: any) => {
               if (mapSource.internal_type === 'EmojiURLField') {
-                mappedField.type = 'emoji';
-                mappedField.wrappers = ['form-field'];
-                mappedField.templateOptions.label = 'Emoji';
+                if (AllowEmojiDic[act.activity_type]) {
+                  mappedField.type = 'emoji';
+                  mappedField.wrappers = ['form-field'];
+                  mappedField.templateOptions.label = 'Emoji';
+                } else {
+                  mappedField.hide = true;
+                }
               }
               if (mapSource.title === 'Activity ID') {
                 mappedField.hide = true;
@@ -73,9 +78,19 @@ export class ActivityContentComponent implements OnInit {
               // for MCQ activity
               if (act.activity_type === 'MCQActivity') {
                 if (mapSource.internal_type === 'MCQChoiceSerializer') {
-                  console.log('bawaj i');
                   mappedField.type = 'mcqChoice';
                 }
+              }
+              // if activity is nullable then send it to special component
+              // over there it will have a special checkbox.
+              // allow that textbox to be anything right now
+
+              if (mapSource['x-nullable']) {
+                mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                // mappedField['originalType'] = mappedField.type;
+                // mappedField.type = 'checkboxReveal';
+                // mappedField.hide = true;
+                // mappedField.hide = false;
               }
               return mappedField;
             },
@@ -102,6 +117,12 @@ export class ActivityContentComponent implements OnInit {
           this.showSelectActivityMsg = true;
         }
       });
+
+    this.form.valueChanges.pipe(debounceTime(2000)).subscribe((val) => {
+      const b = cloneDeep(this.model);
+      this.store.dispatch(new fromStore.AddActivityContent(b));
+      console.log(this.model);
+    });
   }
 
   saveValues($event) {
@@ -109,9 +130,9 @@ export class ActivityContentComponent implements OnInit {
   }
 
   onSubmit() {
-    const b = cloneDeep(this.model);
-    this.store.dispatch(new fromStore.AddActivityContent(b));
-    console.log(this.model);
+    // const b = cloneDeep(this.model);
+    // this.store.dispatch(new fromStore.AddActivityContent(b));
+    // console.log(this.model);
   }
 
   // on keyup, start the countdown
@@ -299,6 +320,10 @@ export const Nested = {
     },
   },
   model: {},
+};
+
+export const AllowEmojiDic = {
+  TitleActivity: true,
 };
 
 // propertiesToArray(obj) {

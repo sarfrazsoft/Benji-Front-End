@@ -13,6 +13,7 @@ import { OverviewPanelComponent } from './overview-panel/overview-panel.componen
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
+  CheckboxRevealTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -21,6 +22,7 @@ import {
 import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
 import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
+import { FieldRevealWrapperComponent } from './services/formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
 import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
 
 export const EditorComponents = [
@@ -30,8 +32,10 @@ export const EditorComponents = [
   PreviewPanelComponent,
   ArrayTypeComponent,
   ObjectTypeComponent,
+  CheckboxRevealTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
+  FieldRevealWrapperComponent,
   FieldWrapperComponent,
   CheckboxWrapperComponent,
   MCQChoiceTypeComponent,

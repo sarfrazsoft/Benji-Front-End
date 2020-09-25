@@ -1,0 +1,31 @@
+<div class="form-group" [class.has-error]="showError">
+  <div class="custom-control custom-checkbox">
+    <input
+      #checkbox
+      type="checkbox"
+      class="custom-control-input"
+      id="{{ field.key }}"
+      (change)="revealField(checkbox.checked)"
+    />
+    <label class="custom-control-label" for="{{ field.key }}">Add {{ to.label }}</label>
+  </div>
+  <div *ngIf="showField" class="field-label" fxLayoutAlign="start center">
+    <label *ngIf="to.label && to.hideLabel !== true" [attr.for]="id">
+      {{ to.label }}
+      <span *ngIf="to.required && to.hideRequiredMarker !== true">*</span>
+    </label>
+    <div
+      class="question-icon"
+      *ngIf="to.description"
+      placement="right"
+      ngbTooltip="{{ to.description }}"
+      container="'editor-container'"
+    >
+      <img src="/assets/img/question_icon.svg" />
+    </div>
+  </div>
+  <ng-template *ngIf="showField" #fieldComponent></ng-template>
+  <div *ngIf="showError" class="invalid-feedback" [style.display]="'block'">
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </div>
+</div>
