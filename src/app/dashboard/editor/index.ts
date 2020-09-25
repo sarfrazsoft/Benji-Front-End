@@ -13,7 +13,6 @@ import { OverviewPanelComponent } from './overview-panel/overview-panel.componen
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
-  CheckboxRevealTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -32,7 +31,6 @@ export const EditorComponents = [
   PreviewPanelComponent,
   ArrayTypeComponent,
   ObjectTypeComponent,
-  CheckboxRevealTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
   FieldRevealWrapperComponent,

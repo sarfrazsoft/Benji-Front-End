@@ -18,7 +18,6 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { EmojiSelectorComponent } from './activity-selector-panel/activity-content/dynamic-form/emoji-selector/emoji-selector.component';
 import {
   ArrayTypeComponent,
-  CheckboxRevealTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -124,7 +123,6 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
         { name: 'multischema', component: MultiSchemaTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'mcqChoice', component: MCQChoiceTypeComponent },
-        { name: 'checkboxReveal', component: CheckboxRevealTypeComponent },
       ],
       wrappers: [
         { name: 'benji-field-wrapper', component: FieldWrapperComponent },

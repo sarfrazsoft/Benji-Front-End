@@ -88,7 +88,6 @@ export class ActivityContentComponent implements OnInit {
               if (mapSource['x-nullable']) {
                 mappedField.wrappers = ['benji-reveal-field-wrapper'];
                 // mappedField['originalType'] = mappedField.type;
-                // mappedField.type = 'checkboxReveal';
                 // mappedField.hide = true;
                 // mappedField.hide = false;
               }
