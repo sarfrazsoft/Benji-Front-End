@@ -10,6 +10,7 @@ import {
 } from './activity-selector-panel';
 import { EditorComponent } from './editor.component';
 import { OverviewPanelComponent } from './overview-panel/overview-panel.component';
+import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/overview-thumbnail.component';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
@@ -26,6 +27,7 @@ import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/
 
 export const EditorComponents = [
   ...ActivitySelectorComponents,
+  OverviewThumbnailComponent,
   EditorComponent,
   OverviewPanelComponent,
   PreviewPanelComponent,

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import * as fromStore from '../store';
 
 @Component({
@@ -15,6 +16,7 @@ export class PreviewPanelComponent implements OnInit {
   fields$: Observable<any>;
   content$: Observable<any>;
   possibleActivities$: Observable<any>;
+  hostname = window.location.protocol + '//' + environment.host;
 
   imgSrc = '';
   showImage = false;
@@ -36,7 +38,9 @@ export class PreviewPanelComponent implements OnInit {
       )
       .subscribe((pair) => {
         if (pair.activity && !pair.activity.empty && pair.possibleActivities.length) {
-          // console.log(pair);
+          const act_type = pair.activity.activity_type;
+          const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
+          this.imgSrc = this.hostname + s.preview_image;
           this.showImage = true;
         } else if (pair.activity && pair.activity.empty) {
           this.showImage = false;

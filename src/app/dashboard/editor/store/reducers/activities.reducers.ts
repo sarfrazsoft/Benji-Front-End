@@ -267,12 +267,18 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     case fromActivities.REMOVE_LESSON_ACTIVITY: {
       const index = action.payload;
       const y = index + '';
-      const { [index]: removed, ...lessonActivities }: any = state.lessonActivities;
-
-      return {
-        ...state,
-        lessonActivities,
-      };
+      const noOfActivities = Object.keys(state.lessonActivities).length;
+      if (noOfActivities > 1) {
+        const { [index]: removed, ...lessonActivities }: any = state.lessonActivities;
+        return {
+          ...state,
+          lessonActivities,
+        };
+      } else {
+        return {
+          ...state,
+        };
+      }
     }
 
     case fromActivities.REORDER_LESSON_ACTIVITIES: {

@@ -2,11 +2,11 @@
   <div fxLayout="column">
     <div>
       <div class="type-header">
-        <span>Sample Category</span>
+        <span></span>
       </div>
       <div fxFlexFill>
         <div fxFlexFill fxLayout="row wrap">
-          <div *ngFor="let activity of activities$ | async" fxFlex="33">
+          <div *ngFor="let activity of activities$ | async" fxFlex="50" fxLayoutAlign="center space-around">
             <div
               class="activity-type"
               [class.border-color-primary]="activity.mouseOvered"
@@ -15,7 +15,7 @@
               fxLayoutAlign="center center"
             >
               <div class="image">
-                <img src="/assets/img/victory.svg" />
+                <img [src]="getThumbnailSrc(activity)" />
               </div>
               <div class="name">
                 {{ activity.displayName }}

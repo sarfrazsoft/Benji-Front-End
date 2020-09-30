@@ -30,6 +30,11 @@ export const getSelectedLessonActivity = createSelector(getActivitiesState, (sta
   return state.lessonActivities[state.selectedLessonActivity];
 });
 
+export const getActivityThumbnail = (id) =>
+  createSelector(getPossibleActivities, (entities) => {
+    return entities[id].thumbnail;
+  });
+
 export const getLessonName = createSelector(getActivitiesState, fromReducers.getLessonName);
 
 export const getErrorInLeson = createSelector(getActivitiesState, fromReducers.getErrorInLesson);

@@ -3,23 +3,25 @@
     <input
       #checkbox
       type="checkbox"
+      [checked]="showField"
       class="custom-control-input"
       id="{{ field.key }}"
       (change)="revealField(checkbox.checked)"
     />
-    <label class="custom-control-label" for="{{ field.key }}">Add {{ to.label }}</label>
+    <label class="custom-control-label" for="{{ field.key }}">{{ to['labelForCheckbox'] }}</label>
   </div>
   <div *ngIf="showField" class="field-label" fxLayoutAlign="start center">
     <label *ngIf="to.label && to.hideLabel !== true" [attr.for]="id">
       {{ to.label }}
       <span *ngIf="to.required && to.hideRequiredMarker !== true">*</span>
     </label>
+    <p *ngIf="to['helpText']" class="text-muted">{{ to['helpText'] }}</p>
     <div
       class="question-icon"
       *ngIf="to.description"
-      placement="right"
-      ngbTooltip="{{ to.description }}"
-      container="'editor-container'"
+      placement="top"
+      tooltip="{{ to.description }}"
+      show-delay="100"
     >
       <img src="/assets/img/question_icon.svg" />
     </div>

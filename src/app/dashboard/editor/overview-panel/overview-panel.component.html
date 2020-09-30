@@ -17,10 +17,15 @@
       cdkDragBoundary=".activity-list"
     >
       <div class="index">{{ i + 1 }}</div>
-      <div class="activity">
-        <div>
-          {{ act.displayName }}
-        </div>
+      <div
+        class="activity"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        [ngClass]="{
+          active: act.selected
+        }"
+      >
+        <benji-overview-thumbnail [act]="act"></benji-overview-thumbnail>
         <mat-icon (click)="deleteActivity(act.id)" style="cursor: pointer"> clear </mat-icon>
       </div>
     </div>

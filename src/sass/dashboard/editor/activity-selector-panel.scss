@@ -4,11 +4,19 @@ benji-activity-selector-panel {
     padding: 20px;
     height: 100%;
     box-sizing: border-box;
+    label {
+      font-size: 18px;
+      color: $black;
+      font-weight: 600;
+    }
     .activities {
       height: 100%;
       overflow: auto;
       .form-tabs {
         height: 100%;
+        .mat-tab-header {
+          margin-bottom: 30px;
+        }
         .mat-tab-group {
           // height: 100%;
           .mat-tab-label {
@@ -25,33 +33,43 @@ benji-activity-selector-panel {
 
             .activities-container {
               .type-header {
-                font-size: 16px;
-                font-weight: 600;
-                padding: 15px 0px 10px;
+                // font-size: 16px;
+                // font-weight: 600;
+                // padding: 15px 0px 10px;
               }
               .activity-type {
+                height: 88px;
                 cursor: pointer;
                 padding: 5px;
                 border: 1px solid $secondary-color-light;
                 border-radius: 3px;
-                margin-right: 10px;
-                margin-bottom: 10px;
+                // margin-right: 20px;
+                margin-bottom: 24px;
+                width: 150px;
                 -webkit-transition: border 200ms ease-out;
                 -moz-transition: border 200ms ease-out;
                 -o-transition: border 200ms ease-out;
                 transition: border 200ms ease-out;
                 img {
-                  height: 30px;
-                  width: 30px;
-                  margin-bottom: 5px;
+                  height: 45px;
+                  width: 45px;
+                  margin-bottom: 3px;
                 }
                 .name {
-                  font-size: 12px;
+                  color: $secondary-color-dark;
+                  font-size: 16px;
                 }
               }
             }
 
             .activity-content {
+              .custom-checkbox .custom-control-label {
+                font-weight: 500;
+              }
+              p.text-muted {
+                margin-top: 8px;
+                margin-bottom: 0px;
+              }
               .mcq-choice-form {
                 .form-group {
                   margin-bottom: 5px;
@@ -96,6 +114,9 @@ benji-activity-selector-panel {
                 //   height: 1.25rem;
                 // }
               }
+              textarea.form-control {
+                height: 80px;
+              }
               .question-icon {
                 height: 18px;
                 width: 18px;
@@ -121,6 +142,36 @@ benji-activity-selector-panel {
             }
           }
         }
+      }
+    }
+
+    .activity-help {
+      color: $black;
+      .help-header,
+      .help-subheader {
+        margin-bottom: 8px;
+      }
+      .help-header {
+      }
+      .help-subheader {
+        label {
+          font-weight: 500;
+        }
+      }
+      .text {
+        margin-bottom: 24px;
+        line-height: 24px;
+        p {
+          margin-bottom: 24px;
+          &:last-child {
+            margin-bottom: 0px;
+          }
+        }
+      }
+      img {
+        width: 279px;
+        height: 160px;
+        margin-bottom: 24px;
       }
     }
   }

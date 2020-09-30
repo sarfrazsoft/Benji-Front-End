@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { TooltipModule } from 'ng2-tooltip-directive';
 import { SharedModule } from '../../shared/shared.module';
 import { EditorRoutes } from './editor.routing';
 import { EditorComponents, EditorEntryComponents, EditorProviders } from './index';
@@ -16,6 +16,7 @@ import { effects, reducers } from './store';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { EmojiSelectorComponent } from './activity-selector-panel/activity-content/dynamic-form/emoji-selector/emoji-selector.component';
+import { ActivityHelpComponent } from './activity-selector-panel/activity-help/activity-help.component';
 import {
   ArrayTypeComponent,
   MCQChoiceTypeComponent,
@@ -26,6 +27,7 @@ import {
 import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
 import { FieldRevealWrapperComponent } from './services/formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
 import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
+
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
 }
@@ -73,7 +75,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    NgbTooltipModule,
+    TooltipModule,
     StoreModule.forFeature('editor', reducers),
     EffectsModule.forFeature(effects),
     FormlyModule.forRoot({
@@ -133,7 +135,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     FormlyBootstrapModule,
   ],
   exports: [RouterModule],
-  declarations: [EditorComponents],
+  declarations: [EditorComponents, ActivityHelpComponent],
   entryComponents: EditorEntryComponents,
   providers: EditorProviders,
 })

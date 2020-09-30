@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
 import { Activity } from '../models';
 import * as fromStore from '../store';
 
@@ -12,10 +13,15 @@ import * as fromStore from '../store';
 })
 export class OverviewPanelComponent implements OnInit {
   lessonActivities$: Observable<Activity[]>;
+  lessonActivitiesLength;
+
   constructor(private store: Store<fromStore.EditorState>) {}
 
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
+    this.lessonActivities$.subscribe((arr) => {
+      this.lessonActivitiesLength = arr.length;
+    });
   }
 
   select(activityId) {
@@ -23,7 +29,9 @@ export class OverviewPanelComponent implements OnInit {
   }
 
   deleteActivity(activityId) {
-    this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
+    if (this.lessonActivitiesLength > 1) {
+      this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
+    }
   }
 
   drop(event: CdkDragDrop<string[]>) {

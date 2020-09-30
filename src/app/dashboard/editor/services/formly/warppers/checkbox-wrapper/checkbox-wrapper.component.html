@@ -7,7 +7,13 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="start center">
     <ng-template #fieldComponent></ng-template>
-    <div class="question-icon" *ngIf="to.description" placement="right" ngbTooltip="{{ to.description }}">
+    <div
+      class="question-icon"
+      *ngIf="to.description"
+      placement="top"
+      tooltip="{{ to.description }}"
+      show-delay="100"
+    >
       <img src="/assets/img/question_icon.svg" />
     </div>
   </div>
