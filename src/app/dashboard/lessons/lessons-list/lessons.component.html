@@ -1,5 +1,5 @@
 <div class="courses" fxLayoutGap="40px" fxLayout="row wrap">
-  <div class="course-tile" (click)="openDetails(lesson)" *ngFor="let lesson of lessons">
+  <div class="course-tile" (click)="openDetails(lesson)" *ngFor="let lesson of lessons" fxLayout="column">
     <div class="title" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
       <h2>{{ lesson.lesson_name }}</h2>
       <div>
@@ -18,16 +18,8 @@
           </button>
         </mat-menu>
       </div>
-      <!-- <div
-        class="launch-session primary-color"
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        (click)="edit($event, lesson)"
-      >
-        <span>Edit</span>
-      </div> -->
     </div>
-    <div class="course-detail">
+    <div class="course-detail" fxFlex="1 1 auto">
       <div class="description">
         {{ lesson.lesson_description }}
       </div>
