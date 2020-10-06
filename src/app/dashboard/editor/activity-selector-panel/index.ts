@@ -11,8 +11,10 @@ import { QuestionControlService } from './activity-content/services/question-con
 import { ActivityHelpComponent } from './activity-help/activity-help.component';
 import { ActivitySelectorPanelComponent } from './activity-selector-panel.component';
 import { ActivityTypesComponent } from './activity-types/activity-types.component';
+import { ActivityComponent as ActivitySelectorActivity } from './activity-types/activity/activity.component';
 
 export const ActivitySelectorComponents = [
+  ActivitySelectorActivity,
   EmojiSelectorComponent,
   DynamicFormComponent,
   ActivityTypesComponent,

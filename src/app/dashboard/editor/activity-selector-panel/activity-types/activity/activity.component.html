@@ -1,0 +1,16 @@
+<div
+  class="activity-type"
+  [class.selected]="selectedPossibleActivity === activity.id"
+  (mouseover)="hover = true"
+  (mouseout)="hover = false"
+  (click)="selectActivity(activity.id)"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <div class="image">
+    <img [src]="getThumbnailSrc(activity)" />
+  </div>
+  <div class="name">
+    {{ activity.displayName }}
+  </div>
+</div>

@@ -38,4 +38,7 @@ export class OverviewPanelComponent implements OnInit {
     moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     this.store.dispatch(new fromStore.ReorderLessonActivities(event.container.data));
   }
+  addSlide() {
+    this.store.dispatch(new fromStore.AddEmptyLessonActivity());
+  }
 }

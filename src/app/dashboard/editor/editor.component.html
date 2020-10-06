@@ -1,24 +1,6 @@
 <div class="editor-container" fxLayout="column">
   <div class="topbar" fxLayout="row" fxLayoutAlign="start center">
     <div fxLayout="row" fxLayoutAlign="start center">
-      <button
-        class="dashboard-secondary-button active"
-        fxLayoutAlign="center center"
-        (click)="addSlide()"
-        *ngIf="!showCancelAddSlide"
-      >
-        <mat-icon>add</mat-icon>
-        Add slide
-      </button>
-      <button
-        class="dashboard-secondary-button active"
-        fxLayoutAlign="center center"
-        (click)="cancelAddSlide()"
-        *ngIf="showCancelAddSlide"
-      >
-        <mat-icon>close</mat-icon>
-        Cancel
-      </button>
       <div class="lesson-name-container">
         <div class="name" *ngIf="!showEditableLessonName" (click)="lessonNameClicked(name)">
           {{ lessonName$ | async }}
@@ -30,6 +12,10 @@
     </div>
     <div class="error">
       {{ error }}
+    </div>
+    <div class="save-status">
+      <div *ngIf="savingLesson">Saving</div>
+      <div *ngIf="lessonSaved">Saved</div>
     </div>
   </div>
 

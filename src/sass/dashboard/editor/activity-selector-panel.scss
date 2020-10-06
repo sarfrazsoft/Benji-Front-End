@@ -59,6 +59,12 @@ benji-activity-selector-panel {
                   color: $secondary-color-dark;
                   font-size: 16px;
                 }
+                &:hover {
+                  border: 1px solid $primary-color;
+                }
+                &.selected {
+                  border: 2px solid $primary-color;
+                }
               }
             }
 
@@ -76,6 +82,7 @@ benji-activity-selector-panel {
                 }
                 .custom-control-input:checked ~ .custom-control-label::before {
                   background-color: #61e111;
+                  border-color: transparent;
                 }
 
                 .custom-checkbox {
@@ -87,12 +94,15 @@ benji-activity-selector-panel {
                     height: 40px;
                     width: 40px;
                   }
+                  .custom-control-input:checked {
+                    border-color: transparent;
+                  }
                   .custom-control-label::after,
                   .custom-control-label::before {
                     top: 0;
                     width: 40px;
-                    height: 40px;
-                    border: 1px solid $secondary-color-light;
+                    height: 38px;
+                    // border: 1px solid $secondary-color-light;
                     // &:focus {
                     // border-color: $primary-color;
                     box-shadow: none;

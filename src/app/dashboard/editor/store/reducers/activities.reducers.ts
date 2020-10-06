@@ -9,7 +9,7 @@ export interface ActivityState {
   // added to the course
   possibleActivities: { [id: string]: any };
   // id of the selected possible activity
-  selectedPossibleActivity: number;
+  selectedPossibleActivity: string;
 
   // holds the activities created in the lesson
   lessonActivities: { [id: number]: OverviewLessonActivity };
@@ -27,6 +27,8 @@ export interface ActivityState {
   loadingPossibleActivities: boolean;
   loadedLessonActivities: boolean;
   loadingLessonActivities: boolean;
+  savingLesson: boolean;
+  lessonSaved: boolean;
 
   lessonId: number;
   lessonName: string;
@@ -53,7 +55,6 @@ export const initialState = {
     'GenericRoleplayActivity',
     'RoleplayPairActivity',
     'DiscussionActivity',
-    'CaseStudyActivity',
     'GroupingActivity',
     'PairGroupingActivity',
     'TriadGroupingActivity',
@@ -70,6 +71,8 @@ export const initialState = {
   loadingPossibleActivities: false,
   loadedLessonActivities: false,
   loadingLessonActivities: false,
+  savingLesson: false,
+  lessonSaved: false,
 };
 
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
@@ -130,20 +133,28 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       const lesson: Lesson = action.payload;
 
       const lessonActivities: { [id: number]: OverviewLessonActivity } = {};
+      const lessonActivitiesContent = {};
       let selectedLessonActivity = null;
       let selectedLessonActivityContent = null;
+      let selectedPossibleActivity = null;
 
       let acts = lesson.lesson_plan_json;
       if (!lesson.lesson_plan_json && lesson.editor_lesson_plan) {
         acts = lesson.editor_lesson_plan;
       }
       if (acts) {
+        acts = acts.filter(
+          (val) =>
+            val.activity_type !== 'ExternalGroupingActivity' && val.activity_type !== 'SingleGroupingActivity'
+        );
         acts.forEach((val, i) => {
+          // console.log(val);
           let selected = false;
           if (i === 0) {
             selected = true;
             selectedLessonActivity = val.activity_id;
             selectedLessonActivityContent = val;
+            selectedPossibleActivity = val.activity_type;
           }
           const la: OverviewLessonActivity = {
             id: parseInt(val.activity_id, 10),
@@ -155,14 +166,12 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           };
           lessonActivities[val.activity_id] = la;
         });
-      }
 
-      const lessonActivitiesContent = {};
-      if (lesson.lesson_plan_json) {
-        lesson.lesson_plan_json.forEach((val) => {
+        acts.forEach((val) => {
           lessonActivitiesContent[val.activity_id] = val;
         });
       }
+
       return {
         ...state,
         lessonName: lesson.lesson_name,
@@ -172,6 +181,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
         loadedLessonActivities: true,
         lessonActivities: lessonActivities,
         lessonActivitiesContent: lessonActivitiesContent,
+        selectedPossibleActivity: selectedPossibleActivity,
         selectedLessonActivityContent: selectedLessonActivityContent,
         selectedLessonActivity: selectedLessonActivity,
       };
@@ -181,8 +191,8 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
     }
 
     case fromActivities.SELECT_ACTIVITY_TYPE: {
-      const activityId = action.payload;
-      const activity = state.possibleActivities[activityId];
+      const activity_type = action.payload;
+      const activity = state.possibleActivities[activity_type];
       let lessonActivity = {};
       if (state.selectedLessonActivity) {
         const x = state.selectedLessonActivity;
@@ -200,6 +210,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       }
       return {
         ...state,
+        selectedPossibleActivity: activity_type + '',
         lessonActivities: {
           ...state.lessonActivities,
           [state.selectedLessonActivity]: lessonActivity,
@@ -229,6 +240,8 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           ...state.lessonActivitiesContent,
           [state.selectedLessonActivity]: content,
         },
+        savingLesson: true,
+        lessonSaved: false,
       };
     }
 
@@ -256,22 +269,31 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           [previousSelectedId]: { ...lessonActivities[previousSelectedId], selected: false },
         };
       }
-      console.log(lessonActivities);
+      // console.log(lessonActivities);
       return {
         ...state,
         lessonActivities,
         selectedLessonActivity: newIndex,
+        selectedPossibleActivity: null,
       };
     }
 
     case fromActivities.REMOVE_LESSON_ACTIVITY: {
       const index = action.payload;
+      let selectedLessonActivity = state.selectedLessonActivity;
+      let selectedLessonActivityContent = state.selectedLessonActivityContent;
+      if (index === state.selectedLessonActivity) {
+        selectedLessonActivity = null;
+        selectedLessonActivityContent = null;
+      }
       const y = index + '';
       const noOfActivities = Object.keys(state.lessonActivities).length;
       if (noOfActivities > 1) {
         const { [index]: removed, ...lessonActivities }: any = state.lessonActivities;
         return {
           ...state,
+          selectedLessonActivity,
+          selectedLessonActivityContent,
           lessonActivities,
         };
       } else {
@@ -323,6 +345,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       return {
         ...state,
         lessonActivities,
+        selectedPossibleActivity: state.lessonActivities[id].activity_type,
         selectedLessonActivity: id,
         selectedLessonActivityContent: state.lessonActivitiesContent[id],
       };
@@ -345,8 +368,8 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       if (!lesson.lesson_plan && !lesson.lesson_plan_json && lesson.editor_lesson_plan) {
         lessonError = true;
       }
-      console.log(lesson);
-      return { ...state, errorInLesson: lessonError };
+      // console.log(lesson);
+      return { ...state, errorInLesson: lessonError, lessonSaved: true, savingLesson: false };
     }
     case fromActivities.SAVE_LESSON_FAILURE: {
       const error = action.payload;
@@ -362,7 +385,10 @@ export const getLessonName = (state: ActivityState) => state.lessonName;
 export const getErrorInLesson = (state: ActivityState) => state.errorInLesson;
 export const getActivitiesLoading = (state: ActivityState) => state.loadingLessonActivities;
 export const getActivitiesLoaded = (state: ActivityState) => state.loadedLessonActivities;
+export const getSavingLesson = (state: ActivityState) => state.savingLesson;
+export const getLessonSaved = (state: ActivityState) => state.lessonSaved;
 export const getPossibleActivities = (state: ActivityState) => state.possibleActivities;
+export const getSelectedPossibleActivity = (state: ActivityState) => state.selectedPossibleActivity;
 export const getLessonActivities = (state: ActivityState) => state.lessonActivities;
 export const getSelectedLessonActivity = (state: ActivityState) => state.selectedLessonActivity;
 export const getSelectedLessonActivityContent = (state: ActivityState) => state.selectedLessonActivityContent;

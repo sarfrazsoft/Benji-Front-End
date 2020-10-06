@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 mat-toolbar.mat-toolbar {
   background-color: #fff;
@@ -34,38 +34,41 @@ mat-toolbar.mat-toolbar {
     margin-left: 15px;
   }
 }
-.mat-menu-content {
-  padding: 0px 24px !important;
-  .menu-section {
-    margin: 15px 0px;
-    font-size: 20px;
-  }
-  .info {
-    div {
-      margin-bottom: 10px;
+.user-controls {
+  .mat-menu-content {
+    padding: 0px 24px !important;
+
+    .menu-section {
+      margin: 15px 0px;
+      font-size: 20px;
     }
-    .name {
-      font-family: $pn-regular;
-      font-weight: 500;
-      color: $primary-color-darkest;
+    .info {
+      div {
+        margin-bottom: 10px;
+      }
+      .name {
+        font-family: $pn-regular;
+        font-weight: 500;
+        color: $primary-color-darkest;
+      }
+      .email,
+      .team {
+        color: #aeb7b9;
+      }
     }
-    .email,
-    .team {
-      color: #aeb7b9;
+    hr {
+      margin: 0px -4px;
+      color: $secondary-color;
     }
-  }
-  hr {
-    margin: 0px -4px;
-    color: $secondary-color;
-  }
-  .options,
-  .logout {
-    color: $secondary-color-dark;
-    > div {
-      margin-bottom: 5px;
-      cursor: pointer;
-      &:hover {
-        color: #353535;
+    .options,
+    .logout {
+      color: $secondary-color-dark;
+      > div {
+        margin-bottom: 5px;
+        cursor: pointer;
+        &:hover {
+          color: #353535;
+        }
       }
     }
   }

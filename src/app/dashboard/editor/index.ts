@@ -8,6 +8,7 @@ import {
   ActivitySelectorEntryComponents,
   ActivitySelectorProviders,
 } from './activity-selector-panel';
+
 import { EditorComponent } from './editor.component';
 import { OverviewPanelComponent } from './overview-panel/overview-panel.component';
 import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/overview-thumbnail.component';

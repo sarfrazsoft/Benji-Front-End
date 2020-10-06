@@ -1,6 +1,7 @@
 import { Injectable, ɵsetCurrentInjector } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
+import { cloneDeep } from 'lodash';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -86,26 +87,54 @@ export class ActivitiesEffects {
     withLatestFrom(this.store.select(fromActivities.getEditorState)),
     switchMap(([lesson, wholeState]) => {
       const contentObjs = wholeState.activities.lessonActivitiesContent;
-      const contentArray = Object.keys(contentObjs).map((id) => contentObjs[id]);
-      // console.log(contentArray);
-      // const lesson = [
-      //   {
-      //     activity_type: 'LobbyActivity',
-      //     activity_id: 'lobby1',
-      //     description: 'hello world',
-      //   },
-      //   { ...act, activity_type: act.activity_id },
-      // ];
-      const lessonActs = [];
-      contentArray.forEach((val) => {
-        lessonActs.push({
-          ...val,
-        });
+      const lessonActivities = wholeState.activities.lessonActivities;
+      const order = Object.keys(lessonActivities).sort(function (a, b) {
+        return lessonActivities[a].order - lessonActivities[b].order;
       });
+
+      const contentArray = [];
+      order.forEach((val) => {
+        if (contentObjs[val]) {
+          contentArray.push(contentObjs[val]);
+        }
+      });
+      const newContentArray = cloneDeep(contentArray);
+      for (let i = 0; i < newContentArray.length; i++) {
+        if (newContentArray[i].activity_type === 'CaseStudyActivity') {
+          const caseStudyAct = newContentArray[i];
+          // first time being saved
+          if (caseStudyAct.grouping_activity_id === true) {
+            const newIndex = new Date().getTime();
+            const groupingActivity = {
+              activity_id: '' + newIndex,
+              activity_type: 'ExternalGroupingActivity',
+              description: 'x',
+              next_activity_delay_seconds: 0,
+              grouping_seconds: 10000,
+            };
+            newContentArray.splice(i - 1, 0, groupingActivity);
+            caseStudyAct.grouping_activity_id = newIndex + '';
+          } else if (caseStudyAct.grouping_activity_id === false) {
+            const newIndex = new Date().getTime();
+            const groupingActivity = {
+              activity_id: '' + newIndex,
+              activity_type: 'SingleGroupingActivity',
+              description: 'x',
+              next_activity_delay_seconds: 0,
+              grouping_seconds: 0,
+            };
+            newContentArray.splice(i - 1, 0, groupingActivity);
+            caseStudyAct.grouping_activity_id = newIndex + '';
+          } else {
+            // grouping_activity_id is already set and we don't need to change it
+          }
+        }
+      }
 
       const lesson_json: Lesson = {
         lesson_name: wholeState.activities.lessonName,
-        editor_lesson_plan: contentArray,
+        // editor_lesson_plan: [],
+        editor_lesson_plan: newContentArray,
       };
       // const lessonActs = [
       //   {

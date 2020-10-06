@@ -19,11 +19,13 @@ export class OverviewThumbnailComponent implements OnInit {
   }
 
   getThumbnailSrc(activity) {
-    this.store.select(fromStore.getActivityThumbnail(activity.activity_type)).subscribe((res) => {
-      this.imgSrc = this.hostname + res;
-      // console.log(this.imgSrc);
-      return this.imgSrc;
-    });
-    // return this.hostname + activity.thumbnail;
+    if (activity.activity_type) {
+      this.store.select(fromStore.getActivityThumbnail(activity.activity_type)).subscribe((res) => {
+        this.imgSrc = this.hostname + res;
+        return this.imgSrc;
+      });
+    } else {
+      this.imgSrc = '/assets/img/blank_activity.svg';
+    }
   }
 }

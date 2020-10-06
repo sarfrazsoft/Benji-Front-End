@@ -1,28 +1,45 @@
-<div class="courses card-container" fxLayoutGap="40px" fxLayout="column">
-  <div class="card" (click)="openDetails(lesson)" *ngFor="let lesson of lessons">
-    <div class="sub-heading" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+<div class="courses" fxLayoutGap="40px" fxLayout="row wrap">
+  <div class="course-tile" (click)="openDetails(lesson)" *ngFor="let lesson of lessons">
+    <div class="title" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
       <h2>{{ lesson.lesson_name }}</h2>
-      <div
+      <div>
+        <button
+          [matMenuTriggerFor]="menu"
+          benji-click-stop-propagation
+          disableRipple
+          aria-label="Example icon-button with a menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="edit($event, lesson)">
+            <mat-icon>create</mat-icon>
+            <span>Edit</span>
+          </button>
+        </mat-menu>
+      </div>
+      <!-- <div
         class="launch-session primary-color"
         fxLayout="row"
         fxLayoutAlign="center center"
         (click)="edit($event, lesson)"
       >
         <span>Edit</span>
-      </div>
-      <div
-        class="launch-session primary-color"
-        fxLayout="row"
-        fxLayoutAlign="center center"
-        (click)="launchSession($event, lesson)"
-      >
-        <span>{{ launchSessionLabel }}</span>
-        <img [src]="rightLaunchArrow" alt="launch" />
-      </div>
+      </div> -->
     </div>
     <div class="course-detail">
       <div class="description">
         {{ lesson.lesson_description }}
+      </div>
+    </div>
+    <div
+      class="launch-session primary-color"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      (click)="launchSession($event, lesson)"
+    >
+      <div class="button">
+        <span>Launch</span>
       </div>
     </div>
   </div>

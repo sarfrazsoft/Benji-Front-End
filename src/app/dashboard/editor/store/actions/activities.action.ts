@@ -68,7 +68,7 @@ export const SELECT_ACTIVITY_TYPE = '[Selector Panel] Activity selected under Ty
 
 export class SelectActivityType implements Action {
   readonly type = SELECT_ACTIVITY_TYPE;
-  constructor(public payload: number) {}
+  constructor(public payload: string) {}
 }
 
 // Content added to selected activity under 'Content' tab in activity selector panel

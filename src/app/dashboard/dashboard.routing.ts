@@ -18,6 +18,7 @@ const routes: Routes = [
     resolve: {
       dashData: AdminResolver,
     },
+    runGuardsAndResolvers: 'always',
     children: [
       {
         path: '',

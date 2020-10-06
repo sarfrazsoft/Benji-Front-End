@@ -1,40 +1,63 @@
 benji-lessons-list,
 benji-lesson {
-  .courses > .card {
-    cursor: pointer;
-  }
-  .launch-session {
-    font-family: $pn-regular;
-    font-size: 20px;
-    cursor: pointer;
-    span {
-      transition: all $animation-time linear;
-      border-bottom: 1px solid #fff;
+  .courses {
+    .course-tile {
+      background-color: #fff;
+      padding: 10px 40px;
+      box-shadow: $box-shadow;
+      cursor: pointer;
+      width: 200px;
+      height: 250px;
+      margin-bottom: 30px;
+      padding: 10px 20px;
+      .title {
+        border-bottom: 1px solid $secondary-color;
+        h2 {
+          font-size: 18px;
+          font-weight: 700;
+          color: $primary-color-darkest;
+        }
+        button {
+          background: transparent;
+        }
+      }
     }
-    img {
-      margin-left: 8px;
-      height: 17px;
-      padding-right: 0px;
 
-      transition: all $animation-time linear;
-      -webkit-transition: all $animation-time linear;
-      -ms-transition: all $animation-time linear;
-    }
-    &:hover {
-      img {
-        margin-right: -10px;
-        margin-left: 18px;
-      }
+    .launch-session {
+      font-family: $pn-regular;
+      font-size: 20px;
+      cursor: pointer;
       span {
-        // border-bottom-color: $primary-color;
+        transition: all $animation-time linear;
+        border-bottom: 1px solid #fff;
+      }
+      img {
+        margin-left: 8px;
+        height: 17px;
+        padding-right: 0px;
+
+        transition: all $animation-time linear;
+        -webkit-transition: all $animation-time linear;
+        -ms-transition: all $animation-time linear;
+      }
+      &:hover {
+        img {
+          margin-right: -10px;
+          margin-left: 18px;
+        }
+        span {
+          // border-bottom-color: $primary-color;
+        }
+      }
+      .button {
+        padding: 4px 8px;
+        border: 1px solid $primary-color;
+        border-radius: 4px;
       }
     }
-  }
-  .course-detail {
-    padding: 12px $dash-subsection-sides-padding;
-    font-size: 20px;
-    .description {
-      padding: 20px 0px;
+    .course-detail {
+      padding: 12px $dash-subsection-sides-padding;
+      font-size: 16px;
     }
   }
 }

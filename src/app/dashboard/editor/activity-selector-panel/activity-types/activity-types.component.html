@@ -7,20 +7,7 @@
       <div fxFlexFill>
         <div fxFlexFill fxLayout="row wrap">
           <div *ngFor="let activity of activities$ | async" fxFlex="50" fxLayoutAlign="center space-around">
-            <div
-              class="activity-type"
-              [class.border-color-primary]="activity.mouseOvered"
-              (click)="selectActivity(activity.id)"
-              fxLayout="column"
-              fxLayoutAlign="center center"
-            >
-              <div class="image">
-                <img [src]="getThumbnailSrc(activity)" />
-              </div>
-              <div class="name">
-                {{ activity.displayName }}
-              </div>
-            </div>
+            <benji-selector-activity [activity]="activity"></benji-selector-activity>
           </div>
         </div>
       </div>

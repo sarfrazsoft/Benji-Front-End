@@ -1,18 +1,17 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
+import { cloneDeep, mapValues, reverse, sortBy } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { ActivityTypes } from 'src/app/globals';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
 import { QuestionSet } from './services/question-control.service';
-
-import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
-import { cloneDeep, mapValues, reverse, sortBy } from 'lodash';
-import { map } from 'rxjs/operators';
-import { ActivityTypes } from 'src/app/globals';
 
 @Component({
   selector: 'benji-activity-content',
@@ -58,10 +57,19 @@ export class ActivityContentComponent implements OnInit {
           const act_type = cloneDeep(pair.activity.activity_type);
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           const schema = cloneDeep(s);
-          // console.log(pair);
-          // internal_type = EmojiURLField indicates that the field is for emoji
-          // map to intercept schema and make changes to fields
-          // make activity_id readonly
+          const content = cloneDeep(pair.content);
+
+          if (act.activity_type === this.at.caseStudy) {
+            if (content) {
+              if (content.grouping_activity_type === 'ExternalGroupingActivity') {
+                content.grouping_activity_id = true;
+              } else if (content.grouping_activity_type === 'SingleGroupingActivity') {
+                content.grouping_activity_id = false;
+              } else if (!content.grouping_activity_type) {
+                content.grouping_activity_id = true;
+              }
+            }
+          }
           const fields = this.formlyJsonschema.toFieldConfig(schema as any, {
             map: (mappedField: FormlyFieldConfig, mapSource: any) => {
               if (mapSource.internal_type === 'EmojiURLField') {
@@ -71,6 +79,7 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.label = 'Emoji';
                 } else {
                   mappedField.hide = true;
+                  mappedField.defaultValue = 'emoji://1F642';
                 }
               }
               if (mapSource.field_name === 'activity_id') {
@@ -197,6 +206,52 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
                 }
+              } else if (act.activity_type === this.at.caseStudy) {
+                if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'participant_instructions') {
+                  mappedField.type = 'textarea';
+                } else if (mapSource.field_name === 'case_study_details') {
+                  mappedField.templateOptions.label = 'Worksheet details';
+                  mappedField.type = 'textarea';
+                } else if (mapSource.field_name === 'casestudyquestion_set') {
+                  mappedField.templateOptions.label = 'Work Areas';
+                  // mappedField.type = 'caseStudyQuestions';
+                  // mappedField.wrappers = ['benji-field-wrapper'];
+                  mappedField.templateOptions['helpText'] =
+                    'Work areas are where your participants can collaboratively answer questions.';
+                } else if (mapSource.internal_type === 'CaseStudyQuestionSerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'question_text') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'activity_title') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'grouping_activity_id') {
+                  // TODO check if it comes with a model value and process
+                  if (content && content.grouping_activity_id) {
+                  }
+                  mappedField.type = 'boolean';
+                  mappedField.templateOptions.label = 'Add External grouping';
+                  mappedField.defaultValue = true;
+                  mappedField.templateOptions['hideRequiredMarker'] = true;
+                  delete mappedField.templateOptions.required;
+                  delete mappedField.templateOptions.maxLength;
+                  delete mappedField.templateOptions.minLength;
+                } else if (mapSource.field_name === 'mainscreen_instructions') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'activity_seconds') {
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = 'Duration for timer';
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
+                  mappedField.defaultValue = 10000;
+                }
+                // else if (mapSource.field_name === 'grouping_activity_type') {
+                //   // mappedField.hide = true;
+                // }
               }
               // if activity is nullable then send it to special component
               // over there it will have a special checkbox.
@@ -209,7 +264,7 @@ export class ActivityContentComponent implements OnInit {
             },
           });
           const reversedOrder = cloneDeep(OrderForActivities[act.activity_type]);
-          const content = cloneDeep(pair.content);
+
           reverse(reversedOrder);
           fields.fieldGroup = fields.fieldGroup.sort((a, b) => {
             return reversedOrder.indexOf(b.key as string) - reversedOrder.indexOf(a.key as string);
@@ -246,6 +301,30 @@ export class ActivityContentComponent implements OnInit {
           b.quiz_label = 'leader_board';
         } else {
           delete b.quiz_label;
+        }
+      } else if (b.activity_type === this.at.caseStudy) {
+        if (b.grouping_activity_id) {
+          b['grouping_activity_type'] = 'ExternalGroupingActivity';
+          // add ExternalGroupingActivity in the reducer
+          // activity_type: ExternalGroupingActivity
+          // description: A way to group people into groups.
+          // next_activity_delay_seconds: 0
+          // grouping_seconds: 300
+          //
+          // TODO
+          // before saving the reducer will be called for add content
+          // over there you'll have to add the said activities not here
+          //
+          // TODO
+          // when you encounter these activities in the loadlessonactivities reducers
+          // don't add them, just ignore them
+        } else {
+          b['grouping_activity_type'] = 'SingleGroupingActivity';
+          // add SingleGroupingActivity in the reducer
+          // activity_type: SingleGroupingActivity
+          //           description: 'Dummy Description'
+          //           grouping_seconds: 0
+          //           next_activity_delay_seconds: 0
         }
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
@@ -298,4 +377,10 @@ export const OrderForActivities = {
   ],
   MCQActivity: ['titlecomponent', 'title', 'question', 'mcqchoice_set', 'question_seconds', 'quiz_label'],
   VideoActivity: ['video_url', 'auto_next', 'next_activity_delay_seconds'],
+  CaseStudyActivity: [
+    'participant_instructions',
+    'note_taker_instructions',
+    'case_study_details',
+    'casestudyquestion_set',
+  ],
 };

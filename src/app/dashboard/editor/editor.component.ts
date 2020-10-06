@@ -27,6 +27,12 @@ export class EditorComponent implements OnInit, OnDestroy {
   lessonError$: Observable<any>;
   error = '';
 
+  lessonSaving$: Observable<any>;
+  savingLesson = false;
+
+  lessonSaved$: Observable<any>;
+  lessonSaved = false;
+
   showCancelAddSlide = false;
 
   constructor(
@@ -68,6 +74,24 @@ export class EditorComponent implements OnInit, OnDestroy {
         this.error = '';
       }
     });
+
+    this.lessonSaving$ = this.store.select(fromStore.getSavingLesson);
+    this.lessonSaving$.subscribe((e) => {
+      if (e) {
+        this.savingLesson = true;
+      } else {
+        this.savingLesson = false;
+      }
+    });
+
+    this.lessonSaved$ = this.store.select(fromStore.getLessonSaved);
+    this.lessonSaved$.subscribe((e) => {
+      if (e) {
+        this.lessonSaved = true;
+      } else {
+        this.lessonSaved = false;
+      }
+    });
   }
 
   lessonNameClicked(name) {
@@ -82,13 +106,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   updateName(inputField) {
     this.store.dispatch(new fromStore.UpdateLessonName(inputField.value));
     this.showEditableLessonName = false;
-  }
-
-  addSlide() {
-    // this.editorService.
-    // this.router.navigate(['/dashboard/learners/add']);
-    this.store.dispatch(new fromStore.AddEmptyLessonActivity());
-    // this.showCancelAddSlide = true;
   }
 
   saveLesson() {

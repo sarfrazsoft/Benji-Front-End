@@ -8,13 +8,14 @@
           </ng-template>
           <benji-activity-types></benji-activity-types>
         </mat-tab>
-        <mat-tab label="Build">
+        <!-- <mat-tab [disabled]="lessonActivity && lessonActivity.empty" label="Build"> -->
+        <mat-tab *ngIf="lessonActivity && !lessonActivity.empty" label="Build">
           <ng-template mat-tab-label class="cotent-label">
             <span class="tab-label primary-color-darkest">Build</span>
           </ng-template>
           <benji-activity-content></benji-activity-content>
         </mat-tab>
-        <mat-tab label="Help">
+        <mat-tab *ngIf="lessonActivity && !lessonActivity.empty" label="Help">
           <ng-template mat-tab-label class="cutomize-label">
             <span class="tab-label primary-color-darkest">Help</span>
           </ng-template>
