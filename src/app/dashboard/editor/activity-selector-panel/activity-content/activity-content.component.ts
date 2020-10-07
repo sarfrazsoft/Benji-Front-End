@@ -170,8 +170,16 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === 'brainstormcategory_set') {
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Categories';
-                  mappedField.templateOptions.label = 'Categories';
+                  mappedField.templateOptions['helpText'] =
+                    'Predefine categories for the brainstorm. ' +
+                    'You can always add categories during a session.';
+                  mappedField.templateOptions.label = '';
                   mappedField.templateOptions['hideLabel'] = true;
+                } else if (mapSource.field_name === 'category_name') {
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['hideLabel'] = true;
+                } else if (mapSource.internal_type === 'BrainstormCategorySerializer') {
+                  mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'removed') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'voting_seconds') {
