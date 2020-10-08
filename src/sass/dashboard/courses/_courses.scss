@@ -3,28 +3,31 @@ benji-lesson {
   .courses {
     .course-tile {
       background-color: #fff;
-      box-shadow: $box-shadow;
+      // box-shadow: $box-shadow;
+      border: 1px solid $secondary-color-light;
       cursor: pointer;
-      width: 250px;
-      height: 200px;
+      width: 260px;
+      height: 278px;
       margin-bottom: 30px;
-      padding: 10px 20px;
+      padding: 24px 20px;
       .title {
         border-bottom: 1px solid $secondary-color;
+        padding-bottom: 20px;
         h2 {
           font-size: 18px;
           font-weight: 700;
-          color: $primary-color-darkest;
+          color: $black;
         }
         button {
           background: transparent;
+          color: $secondary-color-light;
         }
       }
     }
 
     .launch-session {
       font-family: $pn-regular;
-      font-size: 20px;
+      font-size: 13.8px;
       cursor: pointer;
       span {
         transition: all $animation-time linear;

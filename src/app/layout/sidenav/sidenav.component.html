@@ -1,5 +1,5 @@
 <div class="nav-container">
-  <div
+  <!-- <div
     class="session-controls"
     fxLayout="row"
     fxLayoutAlign="space-around space-around"
@@ -46,12 +46,11 @@
         <span>a session</span>
       </div>
     </div>
+  </div> -->
+  <div class="logo" routerLink="/dashboard">
+    <img [src]="logo" alt="Benji Logo" />
   </div>
   <div class="nav-section" *ngFor="let section of sidenavSections">
-    <hr />
-    <benji-sidenav-item
-      *ngFor="let item of section.items"
-      [sidenavItem]="item"
-    ></benji-sidenav-item>
+    <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
   </div>
 </div>

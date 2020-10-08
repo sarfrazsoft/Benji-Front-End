@@ -1,8 +1,4 @@
 <div fxLayoutAlign="space-between center" class="admin-toolbar">
-  <div class="logo" routerLink="/dashboard">
-    <img [src]="logo" alt="Benji Logo" />
-  </div>
-
   <div *ngIf="!hideSidebar" class="right-controls">
     <button mat-button class="user-controls" [matMenuTriggerFor]="menu">
       <!-- <span class="acc-icon">
@@ -13,18 +9,13 @@
         ></app-avatar>
       </span> -->
       <span class="account-name pn-600 primary-color">
-        {{ user.first_name + " " + user.last_name }}
+        {{ user.first_name + ' ' + user.last_name }}
       </span>
     </button>
-    <mat-menu
-      #menu="matMenu"
-      class="user-controls"
-      [overlapTrigger]="false"
-      xPosition="before"
-    >
+    <mat-menu #menu="matMenu" class="user-controls" [overlapTrigger]="false" xPosition="before">
       <div class="menu-section info" benji-click-stop-propagation>
         <div class="name primary-color">
-          {{ user.first_name + " " + user.last_name }}
+          {{ user.first_name + ' ' + user.last_name }}
         </div>
         <div class="email pn-400">{{ user.email }}</div>
         <div class="team pn-400">{{ user.department }}</div>

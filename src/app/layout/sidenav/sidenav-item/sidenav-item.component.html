@@ -1,12 +1,15 @@
 <div
   fxFlex
   fxLayout="row"
+  fxLayoutAlign="start center"
   class="item"
   [routerLink]="[sidenavItem.navRoute]"
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLinkActive]="sidenavItem.disabled ? 'inactive' : 'active'"
   (click)="itemClicked(sidenavItem.navName)"
 >
-  <div class="bullet-point">&bull;</div>
+  <div class="item-icon">
+    <img [src]="sidenavItem.icon" alt="" />
+  </div>
   <div class="item-name">{{ sidenavItem.navName }}</div>
 </div>

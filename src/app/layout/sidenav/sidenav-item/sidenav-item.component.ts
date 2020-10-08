@@ -5,6 +5,7 @@ export interface SidenavItem {
   navName: string;
   navRoute?: string;
   disabled?: boolean;
+  icon?: string;
 }
 
 @Component({

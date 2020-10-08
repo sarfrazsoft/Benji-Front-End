@@ -1,12 +1,7 @@
 <ng-container>
-  <mat-toolbar> <benji-topbar fxFlex></benji-topbar> </mat-toolbar>
+  <!-- <mat-toolbar> <benji-topbar fxFlex></benji-topbar> </mat-toolbar> -->
   <mat-sidenav-container fxFlexFill>
-    <mat-sidenav
-      *ngIf="!hideSidebar"
-      opened="true"
-      mode="side"
-      disableClose="true"
-    >
+    <mat-sidenav class="bg-sky" *ngIf="!hideSidebar" opened="true" mode="side" disableClose="true">
       <benji-menu></benji-menu>
     </mat-sidenav>
     <div fxLayout="column">
@@ -18,7 +13,5 @@
 </ng-container>
 
 <div class="small-screen-error">
-  <div fxLayoutAlign="center">
-    Your browser is too small. Please resize your window to see the dashboard.
-  </div>
+  <div fxLayoutAlign="center">Your browser is too small. Please resize your window to see the dashboard.</div>
 </div>

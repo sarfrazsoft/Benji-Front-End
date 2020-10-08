@@ -7,82 +7,30 @@
 }
 
 mat-sidenav-container.mat-sidenav-container {
-  height: -webkit-calc(100vh - 65px) !important;
-  height: -moz-calc(100vh - 65px) !important;
-  height: calc(100vh - 65px) !important;
+  height: -webkit-calc(100vh) !important;
+  height: -moz-calc(100vh) !important;
+  height: calc(100vh) !important;
 
-  min-height: -webkit-calc(100vh - 65px) !important;
-  min-height: -moz-calc(100vh - 65px) !important;
-  min-height: calc(100vh - 65px) !important;
+  min-height: -webkit-calc(100vh) !important;
+  min-height: -moz-calc(100vh) !important;
+  min-height: calc(100vh) !important;
 
   .mat-sidenav-content {
-    background-color: $off-white;
+    background-color: $white;
   }
 
   .nav-container {
     width: 240px;
-    padding: 20px 10px;
+    padding: 32px 30px;
     font-family: $pn-regular;
-
-    .session-controls {
-      padding: 5px 0px;
-      > div {
-        padding: 10px 0px;
-        cursor: pointer;
-        &.join-session {
-          border-right: 1px solid $secondary-color;
-        }
-        .rotate-180 {
-          @include transform(rotate(180deg));
-        }
-
-        .rotate-270 {
-          @include transform(rotate(270deg));
-        }
-
-        .rotate-90 {
-          @include transform(rotate(90deg));
-        }
-        &:hover {
-          .rotate-180 {
-            transition: all $animation-time linear;
-            @include transform(rotate(180deg) translate3d(-5px, -5px, 0px));
-          }
-
-          .rotate-270 {
-            transition: all $animation-time linear;
-            @include transform(rotate(270deg) translate3d(-5px, -5px, 0px));
-          }
-
-          .rotate-90 {
-            transition: all $animation-time linear;
-            @include transform(rotate(90deg) translate3d(-5px, -5px, 0px));
-          }
-
-          .rotate-0 {
-            transition: all $animation-time linear;
-            @include transform(translate3d(-5px, -5px, 0px));
-          }
-        }
-      }
+    .logo {
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      margin-bottom: 50px;
       img {
-        margin: 6px;
-        height: 25px;
-      }
-      .session-text {
-        text-align: center;
-        margin-top: 20px;
-        span {
-          font-family: $pn-regular;
-          font-size: 28px;
-          letter-spacing: 0.65px;
-          font-weight: 600;
-        }
-        span:last-of-type {
-          margin-top: 5px;
-          font-size: 16px;
-          font-weight: 500;
-        }
+        height: 52px;
+        max-width: 152px;
       }
     }
 
@@ -91,14 +39,14 @@ mat-sidenav-container.mat-sidenav-container {
 
       .item {
         cursor: pointer;
-        font-size: 28px;
-        margin: 20px 0px;
+        font-size: 18px;
+        padding: 15px 0px;
         transition: margin-left 0.1s linear;
         -webkit-transition: margin-left 0.1s linear;
         -ms-transition: margin-left 0.1s linear;
         outline: none;
+        border-bottom: 1px solid $secondary-color;
         .item-name {
-          margin-left: 5px;
           color: #4a4a4a;
         }
         .bullet-point {
@@ -107,12 +55,12 @@ mat-sidenav-container.mat-sidenav-container {
           -webkit-transition: opacity 0.5s linear;
           -ms-transition: opacity 0.5s linear;
         }
-        &:hover,
-        &.active {
-          margin-left: 10px;
-          font-family: $pn-regular;
-          .bullet-point {
-            opacity: 1;
+        // whitelabed styles applied on active states
+        .item-icon {
+          margin-right: 16px;
+          img {
+            height: 25px;
+            width: 25px;
           }
         }
       }

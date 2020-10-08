@@ -145,7 +145,6 @@ button {
   background-color: transparent;
   padding: 0px 8px;
   height: 42px;
-  border: 1px solid $secondary-color-light;
   color: $secondary-color-light;
   border-radius: 5px;
   font-size: 20px;
@@ -153,6 +152,9 @@ button {
     border: 1px solid $primary-color;
     color: $primary-color;
     background-color: $off-white;
+  }
+  &.new-session {
+    padding: 0 24px;
   }
 }
 
@@ -192,6 +194,7 @@ button {
   }
   &.add-answer {
     width: 100%;
+    outline: none;
   }
 }
 

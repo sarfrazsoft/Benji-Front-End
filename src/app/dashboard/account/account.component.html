@@ -1,18 +1,13 @@
 <div class="admin-panel" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Account</h1>
+  <div class="dashboard-header">
+    <div class="dashboard-heading">
+      <h1>Account</h1>
+    </div>
   </div>
   <div class="dashboard-form">
-    <form
-      [formGroup]="form"
-      (ngSubmit)="onSubmit()"
-      fxLayout="column"
-      fxLayoutGap="20px"
-    >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
       <div class="field">
-        <div class="label">
-          First name
-        </div>
+        <div class="label">First name</div>
         <input
           id="first_name"
           class="dash-input"
@@ -22,23 +17,15 @@
           placeholder="First name"
         />
         <mat-error
-          *ngIf="
-            first_name.invalid &&
-            (first_name.dirty || first_name.touched) &&
-            isSignupClicked
-          "
+          *ngIf="first_name.invalid && (first_name.dirty || first_name.touched) && isSignupClicked"
           class="alert alert-danger"
         >
-          <div *ngIf="first_name.errors.required">
-            First name is required.
-          </div>
+          <div *ngIf="first_name.errors.required">First name is required.</div>
         </mat-error>
       </div>
 
       <div class="field">
-        <div class="label">
-          Last name
-        </div>
+        <div class="label">Last name</div>
         <input
           id="last_name"
           class="dash-input"
@@ -48,27 +35,18 @@
           placeholder="Last name"
         />
         <mat-error
-          *ngIf="
-            last_name.invalid &&
-            (last_name.dirty || last_name.touched) &&
-            isSignupClicked
-          "
+          *ngIf="last_name.invalid && (last_name.dirty || last_name.touched) && isSignupClicked"
           class="alert alert-danger"
         >
-          <div *ngIf="last_name.errors.required">
-            Last name is required.
-          </div>
+          <div *ngIf="last_name.errors.required">Last name is required.</div>
         </mat-error>
       </div>
-
 
       <div class="link primary-color">
         <span (click)="passwordPage()">Reset password</span>
       </div>
 
-      <div *ngIf="isSubmitted" class="success-message">
-        Information updated
-      </div>
+      <div *ngIf="isSubmitted" class="success-message">Information updated</div>
 
       <button
         type="submit"

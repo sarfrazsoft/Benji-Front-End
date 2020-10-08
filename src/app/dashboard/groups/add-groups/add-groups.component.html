@@ -1,19 +1,14 @@
 <div class="admin-panel" fxLayout="column">
-  <div class="dashboard-heading">
-    <h1>Add Group</h1>
+  <div class="dashboard-header">
+    <div class="dashboard-heading">
+      <h1>Add Group</h1>
+    </div>
   </div>
 
   <div class="dashboard-form">
-    <form
-      [formGroup]="form"
-      (ngSubmit)="onSubmit()"
-      fxLayout="column"
-      fxLayoutGap="20px"
-    >
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
       <div class="field">
-        <div class="label">
-          Group Name
-        </div>
+        <div class="label">Group Name</div>
         <input
           id="group_name"
           class="dash-input"
@@ -23,16 +18,10 @@
           placeholder="Group name"
         />
         <mat-error
-          *ngIf="
-            group_name.invalid &&
-            (group_name.dirty || group_name.touched) &&
-            isSignupClicked
-          "
+          *ngIf="group_name.invalid && (group_name.dirty || group_name.touched) && isSignupClicked"
           class="alert alert-danger"
         >
-          <div *ngIf="group_name.errors.required">
-            Group name is required.
-          </div>
+          <div *ngIf="group_name.errors.required">Group name is required.</div>
         </mat-error>
       </div>
 
@@ -62,9 +51,7 @@
         </mat-error>
       </div> -->
 
-      <div *ngIf="isSubmitted" class="success-message">
-        Saved
-      </div>
+      <div *ngIf="isSubmitted" class="success-message">Saved</div>
 
       <button
         type="submit"
@@ -82,9 +69,7 @@
 
   <div class="dashboard-form">
     <div class="field" *ngIf="groupSaved">
-      <div class="label">
-        Now you can select learners you want to add to group
-      </div>
+      <div class="label">Now you can select learners you want to add to group</div>
 
       <benji-group-learners-table
         [showControls]="false"

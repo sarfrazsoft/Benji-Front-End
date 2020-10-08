@@ -122,17 +122,12 @@ export class AppComponent implements OnInit {
           border-bottom-color: ${info.parameters.primary};
         }
 
-        .nav-section .item .bullet-point {
-          color: ${info.parameters.primary_darkest};
+        .item.active .item-name {
+          color: ${info.parameters.primary} !important;
         }
 
-        .admin-panel .dashboard-heading {
-          color: ${info.parameters.primary_darkest};
-        }
-
-
-        .admin-panel .sub-heading h2 {
-          color: ${info.parameters.primary_darkest};
+        .item.active {
+          border-bottom: 3px solid ${info.parameters.primary} !important;
         }
 
         .dashboard-secondary-button.active {

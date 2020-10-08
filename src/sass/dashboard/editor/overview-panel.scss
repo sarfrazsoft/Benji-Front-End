@@ -10,7 +10,7 @@ benji-overview-panel {
     // min-width: 250px;
     overflow-y: auto;
     .activity-list {
-      margin: 10px;
+      margin: 16px;
       .activity-container {
         margin-bottom: 16px;
         display: flex;
@@ -23,7 +23,7 @@ benji-overview-panel {
         }
         .activity {
           position: relative;
-          width: 120px;
+          width: 113px;
           height: 80px;
           border: 1px solid $secondary-color-light;
           border-radius: 5px;

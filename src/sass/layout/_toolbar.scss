@@ -4,16 +4,6 @@ mat-toolbar.mat-toolbar {
   background-color: #fff;
   border-bottom: 2px solid;
   padding-left: 32px;
-
-  .logo {
-    cursor: pointer;
-    outline: none;
-    display: flex;
-    img {
-      height: 50px;
-      max-width: 230px;
-    }
-  }
 }
 .avatar-size-big {
   img {

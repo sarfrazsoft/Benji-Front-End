@@ -10,7 +10,7 @@ import { LayoutService } from 'src/app/services/layout.service';
 })
 export class ToolbarComponent implements OnInit {
   user: any = {};
-  logo = '';
+
   hideSidebar = false;
   constructor(
     private authService: AuthService,
@@ -26,12 +26,6 @@ export class ToolbarComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       if (user) {
         this.user = user;
-      }
-    });
-
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
-      if (info) {
-        this.logo = info.parameters.darkLogo;
       }
     });
   }

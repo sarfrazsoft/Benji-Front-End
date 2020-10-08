@@ -19,6 +19,27 @@ export class SidenavComponent implements OnInit {
   sidenavSections: Array<SidenavSection> = [];
   courses;
   launchArrow = '';
+  logo = '';
+
+  dashboard = {
+    section: 1,
+    items: [
+      {
+        navName: 'My Sessions',
+        navRoute: './',
+        permission: '',
+        icon: '../../../../assets/img/mySessions.png',
+      },
+      // {
+      //   navName: 'Groups',
+      //   navRoute: './groups'
+      // },
+      // {
+      //   navName: 'Past Sessions',
+      //   navRoute: './pastsessions'
+      // }
+    ],
+  };
 
   adminSection = {
     section: 1,
@@ -28,6 +49,7 @@ export class SidenavComponent implements OnInit {
         navRoute: './learners',
         permission: 'admin',
         disabled: true,
+        icon: null,
       },
       // {
       //   navName: 'Groups',
@@ -72,8 +94,9 @@ export class SidenavComponent implements OnInit {
       //   navRoute: './groups'
       // },
       {
-        navName: 'Past Sessions',
+        navName: 'Reports',
         navRoute: './pastsessions',
+        icon: '../../../../assets/img/reportsIcon.png',
       },
     ],
   };
@@ -84,6 +107,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Account',
         navRoute: 'account',
+        icon: '../../../../assets/img/accountIcon.png',
       },
       // {
       //   navName: 'Settings',
@@ -112,6 +136,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Logout',
         navRoute: 'logout',
+        icon: '../../../../assets/img/logoutIcon.png',
       },
     ],
   };
@@ -122,6 +147,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Editor',
         navRoute: 'editor',
+        icon: '../../../../assets/img/editorIcon.png',
       },
     ],
   };
@@ -138,6 +164,12 @@ export class SidenavComponent implements OnInit {
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.launchArrow = info.parameters.joinArrow;
+      }
+    });
+
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.logo = info.parameters.darkLogo;
       }
     });
   }
@@ -167,7 +199,8 @@ export class SidenavComponent implements OnInit {
   initNavigation() {
     this.contextService.user$.subscribe((user) => {
       this.sidenavSections = [
-        this.adminSection,
+        this.dashboard,
+        // this.adminSection,
         // this.groupsSection,
         this.editor,
         this.pastSessionSection,
