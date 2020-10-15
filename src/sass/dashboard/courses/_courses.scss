@@ -27,37 +27,14 @@ benji-lesson {
     }
 
     .launch-session {
-      font-family: $pn-regular;
-      font-size: 13.8px;
+      font-size: 16px;
       cursor: pointer;
-      span {
-        transition: all $animation-time linear;
-        border-bottom: 1px solid #fff;
-      }
-      img {
-        margin-left: 8px;
-        height: 17px;
-        padding-right: 0px;
-
-        transition: all $animation-time linear;
-        -webkit-transition: all $animation-time linear;
-        -ms-transition: all $animation-time linear;
-      }
-      &:hover {
-        img {
-          margin-right: -10px;
-          margin-left: 18px;
-        }
-        span {
-          // border-bottom-color: $primary-color;
-        }
-      }
       .button {
-        padding: 4px 8px;
-        border: 1px solid $primary-color;
+        padding: 8px 16px;
         border-radius: 4px;
       }
     }
+
     .course-detail {
       padding: 12px $dash-subsection-sides-padding;
       font-size: 16px;

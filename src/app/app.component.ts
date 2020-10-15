@@ -145,6 +145,15 @@ export class AppComponent implements OnInit {
           background-color: white;
         }
 
+        .launch-session .button {
+          border: 1px solid ${info.parameters.primary};
+        }
+
+        .launch-session .button:hover {
+          background: ${info.parameters.primary};
+          color: white;
+        }
+
         .report-cards .card-header {
           color: ${info.parameters.primary_darkest};
         }
