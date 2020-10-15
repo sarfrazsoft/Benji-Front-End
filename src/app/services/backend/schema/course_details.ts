@@ -14,6 +14,8 @@ export interface Course {
   course_id: number;
 }
 
+export type EffectivePermission = 'admin' | 'host' | 'duplicate' | 'edit' | null;
+
 export class Lesson {
   id?: number;
   lesson_id?: string;
@@ -33,7 +35,7 @@ export class Lesson {
   creation_time?: string;
   last_edited?: string;
   is_shared?: boolean;
-  effective_permission?: string; // 'admin', 'host', 'duplicate' 'edit', or null
+  effective_permission?: EffectivePermission;
 }
 
 export interface LessonRun {

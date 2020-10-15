@@ -24,7 +24,6 @@ export class AdminPanelComponent implements OnInit {
   ) {
     this.activatedRoute.data.forEach((data: any) => {
       this.lessons = data.dashData.lessons;
-      console.log('brr');
       // if (!data.dashData.user.job_title) {
       //   this.dialog
       //     .open(JobInfoDialogComponent, {

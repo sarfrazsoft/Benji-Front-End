@@ -21,32 +21,4 @@ benji-editor {
       font-weight: 600;
     }
   }
-
-  .lesson-name-container {
-    margin-left: 30px;
-    .name {
-      border-radius: 2px;
-      text-align: left;
-      padding: 3px 3px;
-      font-size: 18px;
-      width: 206px;
-      border: 1px solid transparent;
-      &:hover {
-        border: 1px solid $secondary-color-lighter;
-      }
-    }
-    input {
-      border: 1px solid $secondary-color-lighter;
-      border-radius: 2px;
-      text-align: left;
-      padding: 3px 3px;
-      font-size: 18px;
-      &:focus {
-        outline: 1px solid;
-        border-color: #80bdff;
-        outline: 0;
-        box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
-      }
-    }
-  }
 }

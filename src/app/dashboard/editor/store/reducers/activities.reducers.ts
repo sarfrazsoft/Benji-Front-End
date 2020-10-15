@@ -62,7 +62,7 @@ export const initialState = {
     'BuildAPitchActivity',
     'PitchoMaticActivity',
     'MCQResultsActivity',
-    'FeedbackActivity',
+    // 'FeedbackActivity',
     'MontyHallActivity',
     'SingleGroupingActivity',
     'ImageActivity',
@@ -285,7 +285,28 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       if (index === state.selectedLessonActivity) {
         selectedLessonActivity = null;
         selectedLessonActivityContent = null;
+        // select the last activity in the lesson
+        const removedActivity = state.lessonActivities[index];
+        const orderArray = [];
+        Object.keys(state.lessonActivities).forEach((key) => {
+          if (removedActivity.order !== state.lessonActivities[key].order) {
+            orderArray.push(state.lessonActivities[key].order);
+          }
+        });
+        orderArray.sort((a, b) => a - b);
+
+        const nextSelectedActivityOrder = orderArray[orderArray.length - 1];
+        let nextSelectedActivity = null;
+        Object.keys(state.lessonActivities).forEach((key) => {
+          if (state.lessonActivities[key].order === nextSelectedActivityOrder) {
+            nextSelectedActivity = state.lessonActivities[key];
+          }
+        });
+        selectedLessonActivity = nextSelectedActivity.id;
+        selectedLessonActivityContent = state.lessonActivitiesContent[nextSelectedActivity.id];
+        console.log(nextSelectedActivityOrder);
       }
+
       const y = index + '';
       const noOfActivities = Object.keys(state.lessonActivities).length;
       if (noOfActivities > 1) {
@@ -294,7 +315,10 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           ...state,
           selectedLessonActivity,
           selectedLessonActivityContent,
-          lessonActivities,
+          lessonActivities: {
+            ...lessonActivities,
+            [selectedLessonActivity]: { selected: true, ...lessonActivities[selectedLessonActivity] },
+          },
         };
       } else {
         return {

@@ -130,9 +130,19 @@ export class AppComponent implements OnInit {
           border-bottom: 3px solid ${info.parameters.primary} !important;
         }
 
+        .dashboard-secondary-button {
+          border: 2px solid ${info.parameters.primary};
+        }
+
         .dashboard-secondary-button.active {
           border-color: ${info.parameters.primary};
           color: ${info.parameters.primary};
+        }
+
+        .dashboard-secondary-button:hover {
+          border: 2px solid ${info.parameters.primary};
+          color: ${info.parameters.primary};
+          background-color: white;
         }
 
         .report-cards .card-header {

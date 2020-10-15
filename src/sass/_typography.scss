@@ -1,13 +1,13 @@
 /*FONTS*/
 
 /*Varaibles: Font weights*/
-$pn-regular: 'proxima-nova', 'Open-Sans', sans-serif;
+$pn-regular: 'Inter', 'Open-Sans', sans-serif;
 
 @import '~@angular/material/theming';
 
 // Define a custom typography config that overrides the font-family
 $custom-typography: mat-typography-config(
-  $font-family: $pn-regular
+  $font-family: $pn-regular,
 );
 
 @include angular-material-typography($custom-typography);
@@ -41,8 +41,8 @@ $benji-blue: (
     A100: #504c4a,
     A200: #ffffff,
     A400: #ffffff,
-    A700: #ffffff
-  )
+    A700: #ffffff,
+  ),
 );
 
 $primary: mat-palette($benji-blue);

@@ -19,10 +19,12 @@ import { EmojiSelectorComponent } from './activity-selector-panel/activity-conte
 import { ActivityHelpComponent } from './activity-selector-panel/activity-help/activity-help.component';
 import {
   ArrayTypeComponent,
+  FeedbackQuestionTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
   ObjectTypeComponent,
+  QuestionTypeSelectComponent,
 } from './services';
 import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
 import { FieldRevealWrapperComponent } from './services/formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
@@ -125,6 +127,8 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
         { name: 'multischema', component: MultiSchemaTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'mcqChoice', component: MCQChoiceTypeComponent },
+        { name: 'feedbackQuestion', component: FeedbackQuestionTypeComponent },
+        { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },
       ],
       wrappers: [
         { name: 'benji-field-wrapper', component: FieldWrapperComponent },

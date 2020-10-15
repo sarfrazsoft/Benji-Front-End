@@ -4,3 +4,6 @@ export * from './formly/multischema.type';
 export * from './formly/null.type';
 export * from './formly/object.type';
 export * from './formly/components/mcq-choice/mcq-choice.type';
+export * from './formly/components/feedback-question/feedback-question.type';
+export * from './formly/components/question-type-select/question-type-select.type';
+export * from './formly/pipes/select-options/select-options.pipe';

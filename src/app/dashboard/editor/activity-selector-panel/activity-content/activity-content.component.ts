@@ -34,8 +34,6 @@ export class ActivityContentComponent implements OnInit {
   options: FormlyFormOptions;
   fields: FormlyFieldConfig[];
 
-  showSelectActivityMsg = false;
-
   ngOnInit() {
     this.activity$ = this.store.select(fromStore.getSelectedLessonActivity);
     this.possibleActivities$ = this.store.select(fromStore.getAllPossibleActivities);
@@ -51,8 +49,7 @@ export class ActivityContentComponent implements OnInit {
         }))
       )
       .subscribe((pair) => {
-        this.showSelectActivityMsg = false;
-        if (pair.activity && !pair.activity.empty && pair.possibleActivities.length) {
+        if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act = cloneDeep(pair.activity);
           const act_type = cloneDeep(pair.activity.activity_type);
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
@@ -260,6 +257,38 @@ export class ActivityContentComponent implements OnInit {
                 // else if (mapSource.field_name === 'grouping_activity_type') {
                 //   // mappedField.hide = true;
                 // }
+              } else if (act.activity_type === this.at.feedback) {
+                if (mapSource.internal_type === 'FeedbackActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'titlecomponent') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'participant_instructions') {
+                  mappedField.hide = true;
+                  mappedField.templateOptions.required = false;
+                } else if (mapSource.field_name === 'screen_instructions') {
+                  mappedField.templateOptions.label = 'Instructions';
+                } else if (mapSource.internal_type === 'FeedbackQuestionSerializer') {
+                  mappedField.templateOptions.label = '';
+                  mappedField.type = 'feedbackQuestion';
+                } else if (mapSource.field_name === 'combo_text') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'is_combo') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
+                } else if (mapSource.field_name === 'question_text') {
+                } else if (mapSource.field_name === 'question_type') {
+                  mappedField.templateOptions.required = false;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.defaultValue = 10000;
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['hideLabel'] = true;
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
+                  mappedField.templateOptions['helpText'] =
+                    'How long does the feedback submission stage last?';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.templateOptions.label = 'Auto Forward';
+                }
               }
               // if activity is nullable then send it to special component
               // over there it will have a special checkbox.
@@ -285,12 +314,10 @@ export class ActivityContentComponent implements OnInit {
             ...content,
           };
           this.showQuestions = true;
-        } else if (pair.activity && pair.activity.empty) {
-          this.showSelectActivityMsg = true;
         }
       });
 
-    this.form.valueChanges.pipe(debounceTime(2000)).subscribe((val) => {
+    this.form.valueChanges.pipe(debounceTime(1000)).subscribe((val) => {
       const b = cloneDeep(this.model);
       // processing before submitting to BE
       if (b.activity_type === this.at.title) {
@@ -334,6 +361,8 @@ export class ActivityContentComponent implements OnInit {
           //           grouping_seconds: 0
           //           next_activity_delay_seconds: 0
         }
+      } else if (b.activity_type === this.at.feedback) {
+        b.titlecomponent.participant_instructions = b.titlecomponent.screen_instructions;
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
       // console.log(this.model);
@@ -369,6 +398,7 @@ export const AllowEmojiDic = {
   MCQActivity: false,
   VideoActivity: false,
   BrainstormActivity: false,
+  FeedbackActivity: false,
 };
 
 export const OrderForActivities = {
@@ -390,5 +420,13 @@ export const OrderForActivities = {
     'note_taker_instructions',
     'case_study_details',
     'casestudyquestion_set',
+  ],
+  FeedbackActivity: [
+    'titlecomponent',
+    'main_title',
+    'title_text',
+    'feedbackquestion_set',
+    'next_activity_delay_seconds',
+    'auto_next',
   ],
 };

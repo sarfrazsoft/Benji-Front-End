@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, fromEvent, Observable } from 'rxjs';
 import { debounceTime, distinct, filter, flatMap, map, tap } from 'rxjs/operators';
 import { LayoutService } from 'src/app/services/layout.service';
 import { EditorService } from './services';
 
+import { LocationStrategy } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Activity } from './models';
 import * as fromStore from './store';
@@ -35,13 +37,24 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   showCancelAddSlide = false;
 
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    console.log('Back button pressed');
+    // event.stopPropagation();
+    // event.preventDefault();
+    // this.preventBackButton();
+    this.router.navigate(['/dashboard']);
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private layoutService: LayoutService,
     private editorService: EditorService,
-    private store: Store<fromStore.EditorState>
+    private store: Store<fromStore.EditorState>,
+    private locationStrategy: LocationStrategy
   ) {
+    this.preventBackButton();
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
       if (data && data.editorData && data.editorData.lesson) {
@@ -60,6 +73,12 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
   }
 
+  preventBackButton() {
+    history.pushState(null, null, location.href);
+    this.locationStrategy.onPopState(() => {
+      history.pushState(null, null, location.href);
+    });
+  }
   ngOnInit() {
     this.lessonName$ = this.store.select(fromStore.getLessonName);
 

@@ -37,7 +37,7 @@ export class PreviewPanelComponent implements OnInit {
         }))
       )
       .subscribe((pair) => {
-        if (pair.activity && !pair.activity.empty && pair.possibleActivities.length) {
+        if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           this.imgSrc = this.hostname + s.preview_image;

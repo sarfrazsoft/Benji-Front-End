@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-import { LaunchSessionDialogComponent } from 'src/app/shared';
+import { UtilsService } from 'src/app/services/utils.service';
 import { AdminService } from '../../admin-panel/services';
 
 @Component({
@@ -23,7 +23,8 @@ export class LessonsComponent implements OnInit {
     private restService: BackendRestService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit() {
@@ -64,9 +65,31 @@ export class LessonsComponent implements OnInit {
 
   edit($event, lesson: Lesson) {
     if (lesson.id) {
-      this.router.navigate(['editor', lesson.id], {
-        relativeTo: this.activatedRoute,
-      });
+      if (lesson.effective_permission === 'admin' || lesson.effective_permission === 'edit') {
+        this.router.navigate(['editor', lesson.id], {
+          relativeTo: this.activatedRoute,
+        });
+      } else {
+        this.utilsService.showWarning(`You don't have sufficient permission to perform this action.`);
+      }
+    }
+    $event.stopPropagation();
+  }
+
+  delete($event, lesson: Lesson) {
+    if (lesson.id) {
+      if (lesson.effective_permission === 'admin') {
+        this.adminService.deleteLesson(lesson.id).subscribe((res) => {
+          if (res.success) {
+            this.adminService.getLessons().subscribe((lessons) => {
+              this.lessons = lessons;
+            });
+            this.utilsService.openSnackBar(`Lesson successfully deleted.`, `close`);
+          }
+        });
+      } else {
+        this.utilsService.showWarning(`You don't have sufficient permission to perform this action.`);
+      }
     }
     $event.stopPropagation();
   }

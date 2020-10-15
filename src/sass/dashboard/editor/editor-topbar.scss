@@ -1,7 +1,53 @@
 .editor-container {
   .topbar {
     background-color: white;
-    padding: 8px 16px;
+    padding: 8px 8px;
     border-bottom: 1px solid $secondary-color;
+    .back-button-container {
+      .back-button {
+        transition: all 0.1s linear;
+        background-color: transparent;
+        border-radius: 4px;
+        width: 135px;
+        padding: 8px;
+        font-size: 18px;
+        font-weight: 500;
+        color: $black;
+        &:hover {
+          background-color: $sky;
+        }
+      }
+    }
+    .button-separator {
+      color: $secondary-color-light;
+      margin-left: 3px;
+    }
+    .lesson-name-container {
+      margin-left: 10px;
+      .name {
+        border-radius: 2px;
+        text-align: left;
+        padding: 3px 3px;
+        font-size: 18px;
+        width: 206px;
+        border: 1px solid transparent;
+        &:hover {
+          border: 1px solid $secondary-color-lighter;
+        }
+      }
+      input {
+        border: 1px solid $secondary-color-lighter;
+        border-radius: 2px;
+        text-align: left;
+        padding: 3px 3px;
+        font-size: 18px;
+        &:focus {
+          outline: 1px solid;
+          border-color: #80bdff;
+          outline: 0;
+          box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
+        }
+      }
+    }
   }
 }

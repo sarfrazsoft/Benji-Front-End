@@ -21,8 +21,6 @@ export class AdminResolver implements Resolve<any> {
       } else {
         user = this.contextService.user;
       }
-
-      console.log('new lessong were get');
       const lessons = await this.adminService.getLessons().toPromise();
 
       return { user: user, lessons: lessons };

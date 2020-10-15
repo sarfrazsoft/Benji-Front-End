@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 import { from } from 'rxjs';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -28,5 +29,19 @@ export class AdminService {
         return res.results;
       })
     );
+  }
+
+  deleteLesson(lessonId: number): Observable<any> {
+    return this.http
+      .delete(global.apiRoot + `/course_details/lesson/${lessonId}/`, { observe: 'response' })
+      .pipe(
+        map((res) => {
+          if (res.status === 204) {
+            return { success: true };
+          } else {
+            return { success: false };
+          }
+        })
+      );
   }
 }

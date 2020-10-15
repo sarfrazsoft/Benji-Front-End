@@ -125,6 +125,12 @@ benji-activity-selector-panel {
                 //   height: 1.25rem;
                 // }
               }
+              .question-type-select {
+                .mat-select {
+                  width: 80px;
+                  margin-left: 10px;
+                }
+              }
               textarea.form-control {
                 height: 80px;
               }

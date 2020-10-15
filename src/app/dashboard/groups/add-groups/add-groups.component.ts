@@ -1,12 +1,6 @@
 import { SelectionChange } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { merge } from 'lodash';
 import { fromEvent, Observable, Subject } from 'rxjs';
@@ -18,7 +12,7 @@ import { GroupsService } from '../services/groups.service';
 @Component({
   selector: 'benji-add-groups',
   templateUrl: './add-groups.component.html',
-  styleUrls: ['./add-groups.component.scss']
+  styleUrls: ['./add-groups.component.scss'],
 })
 export class AddGroupsComponent implements OnInit {
   eventsSubject: Subject<void> = new Subject<void>();
@@ -39,7 +33,7 @@ export class AddGroupsComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      group_name: new FormControl('', [Validators.required])
+      group_name: new FormControl('', [Validators.required]),
       // description: new FormControl('', [Validators.required])
     });
   }
@@ -64,7 +58,7 @@ export class AddGroupsComponent implements OnInit {
           this.groupSaved = true;
           this.groupId = res.id;
         },
-        err => {
+        (err) => {
           console.log(err);
         }
       );
@@ -78,25 +72,19 @@ export class AddGroupsComponent implements OnInit {
 
   addRemoveLearner($event: SelectionChange<User>) {
     if ($event.added.length) {
-      this.groupService
-        .addLearnerToGroup($event.added[0].id, this.groupId)
-        .subscribe(res => {
-          this.matSnackBar.open('Learner added', 'close', {
-            duration: 1000,
-            panelClass: ['bg-success-color', 'white-color']
-          });
-          console.log(res);
+      this.groupService.addLearnerToGroup($event.added[0].id, this.groupId).subscribe((res) => {
+        this.matSnackBar.open('Learner added', 'close', {
+          duration: 1000,
+          panelClass: ['bg-success-color', 'white-color'],
         });
+      });
     } else if ($event.removed.length) {
-      this.groupService
-        .removeLearnerFromGroup($event.removed[0].id)
-        .subscribe(res => {
-          console.log(res);
-          this.matSnackBar.open('Learner removed', 'close', {
-            duration: 1000,
-            panelClass: ['bg-warning-color', 'white-color']
-          });
+      this.groupService.removeLearnerFromGroup($event.removed[0].id).subscribe((res) => {
+        this.matSnackBar.open('Learner removed', 'close', {
+          duration: 1000,
+          panelClass: ['bg-warning-color', 'white-color'],
         });
+      });
     }
   }
 }

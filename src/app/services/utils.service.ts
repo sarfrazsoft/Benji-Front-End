@@ -25,4 +25,11 @@ export class UtilsService {
       panelClass: ['bg-success-color', 'white-color', 'simple-snack-bar'],
     });
   }
+
+  showWarning(message: string) {
+    this.matSnackBar.open(`${message}`, 'close', {
+      duration: 5000,
+      panelClass: ['bg-warning-color', 'white-color'],
+    });
+  }
 }

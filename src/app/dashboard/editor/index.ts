@@ -15,10 +15,13 @@ import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
+  FeedbackQuestionTypeComponent,
+  FormlySelectOptionsPipe,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
   ObjectTypeComponent,
+  QuestionTypeSelectComponent,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
@@ -40,6 +43,9 @@ export const EditorComponents = [
   FieldWrapperComponent,
   CheckboxWrapperComponent,
   MCQChoiceTypeComponent,
+  FeedbackQuestionTypeComponent,
+  QuestionTypeSelectComponent,
+  FormlySelectOptionsPipe,
 ];
 
 export const EditorEntryComponents = [...ActivitySelectorEntryComponents];
