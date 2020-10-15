@@ -62,7 +62,6 @@ export const initialState = {
     'BuildAPitchActivity',
     'PitchoMaticActivity',
     'MCQResultsActivity',
-    // 'FeedbackActivity',
     'MontyHallActivity',
     'SingleGroupingActivity',
     'ImageActivity',
@@ -73,6 +72,15 @@ export const initialState = {
   loadingLessonActivities: false,
   savingLesson: false,
   lessonSaved: false,
+};
+
+export const ActivityDisplayNames = {
+  BrainstormActivity: 'Brainstorm',
+  TitleActivity: 'Slides',
+  VideoActivity: 'Video',
+  CaseStudyActivity: 'Worksheets',
+  MCQActivity: 'Quiz',
+  FeedbackActivity: 'Survey',
 };
 
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
@@ -93,7 +101,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
                 ...actProperties,
               },
               id: key,
-              displayName: key,
+              displayName: ActivityDisplayNames[key],
               activity_type: key,
               thumbnail: actProperties.thumbnail,
             };
@@ -162,7 +170,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
             empty: false,
             order: i + 1,
             activity_type: val.activity_type,
-            displayName: val.activity_type,
+            displayName: ActivityDisplayNames[val.activity_type],
           };
           lessonActivities[val.activity_id] = la;
         });
@@ -201,7 +209,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           ...state.lessonActivities[x],
           empty: false,
           activity_type: activity.id,
-          displayName: activity.activity_type,
+          displayName: ActivityDisplayNames[activity.activity_type],
         };
         lessonActivity = la;
       }
