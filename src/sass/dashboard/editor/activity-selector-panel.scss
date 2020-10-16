@@ -20,10 +20,11 @@ benji-activity-selector-panel {
         .mat-tab-group {
           // height: 100%;
           .mat-tab-label {
-            min-width: 100px;
+            min-width: 120px;
             font-size: 22px;
             font-weight: 600;
             padding: 0 14px;
+            color: $secondary-color;
             &.mat-tab-label-active {
               opacity: 1;
             }

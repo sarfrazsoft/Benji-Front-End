@@ -99,16 +99,22 @@ export class EditorComponent implements OnInit, OnDestroy {
       if (e) {
         this.savingLesson = true;
       } else {
-        this.savingLesson = false;
+        setTimeout(() => {
+          this.savingLesson = false;
+        }, 1000);
       }
     });
 
     this.lessonSaved$ = this.store.select(fromStore.getLessonSaved);
     this.lessonSaved$.subscribe((e) => {
       if (e) {
-        this.lessonSaved = true;
+        setTimeout(() => {
+          this.lessonSaved = true;
+        }, 1000);
       } else {
+        // setTimeout(() => {
         this.lessonSaved = false;
+        // }, 2000);
       }
     });
   }

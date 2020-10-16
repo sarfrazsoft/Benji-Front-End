@@ -53,10 +53,6 @@ export class AppComponent implements OnInit {
           background: ${info.parameters.primary_lighter};
         }
 
-        .mat-ink-bar {
-          background: ${info.parameters.primary_darkest} !important;
-        }
-
         .primary-color {
           color: ${info.parameters.primary} !important;
         }
@@ -126,6 +122,10 @@ export class AppComponent implements OnInit {
           color: ${info.parameters.primary} !important;
         }
 
+        .item:hover {
+          border-bottom: 1px solid ${info.parameters.primary} !important;
+        }
+
         .item.active {
           border-bottom: 3px solid ${info.parameters.primary} !important;
         }
@@ -188,6 +188,10 @@ export class AppComponent implements OnInit {
 
         .border-color-primary {
           border-color: ${info.parameters.primary} !important;
+        }
+
+        .mat-tab-label-active {
+          color: ${info.parameters.primary} !important;
         }
         `;
 

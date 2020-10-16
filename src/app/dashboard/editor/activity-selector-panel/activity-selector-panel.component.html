@@ -4,20 +4,20 @@
       <mat-tab-group [(selectedIndex)]="selectedTab" dynamicHeight [disableRipple]="true">
         <mat-tab label="Activity">
           <ng-template mat-tab-label>
-            <span class="tab-label primary-color-darkest">Activity</span>
+            <span class="tab-label">Activity</span>
           </ng-template>
           <benji-activity-types></benji-activity-types>
         </mat-tab>
         <!-- <mat-tab [disabled]="lessonActivity && lessonActivity.empty" label="Build"> -->
         <mat-tab *ngIf="lessonActivity && !lessonActivity.empty" label="Build">
           <ng-template mat-tab-label class="cotent-label">
-            <span class="tab-label primary-color-darkest">Build</span>
+            <span class="tab-label">Build</span>
           </ng-template>
           <benji-activity-content></benji-activity-content>
         </mat-tab>
         <mat-tab *ngIf="lessonActivity && !lessonActivity.empty" label="Help">
           <ng-template mat-tab-label class="cutomize-label">
-            <span class="tab-label primary-color-darkest">Help</span>
+            <span class="tab-label">Help</span>
           </ng-template>
           <benji-activity-help></benji-activity-help>
         </mat-tab>

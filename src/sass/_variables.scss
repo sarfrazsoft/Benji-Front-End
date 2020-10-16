@@ -148,6 +148,10 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
   color: #fff;
 }
 
+.secondary-color {
+  color: $secondary-color;
+}
+
 .secondary-color-dark {
   color: $secondary-color-dark;
 }

@@ -1,32 +1,51 @@
 <div class="editor-container" fxLayout="column">
-  <div class="topbar" fxLayout="row" fxLayoutAlign="start center">
-    <div class="back-button-container">
-      <button class="back-button " fxLayoutAlign="space-between center" routerLink="/dashboard">
-        <img src="../../../assets/img/benjiShortLogoSVG.svg" alt="">
-        <div>
-          Dashboard
+  <div class="topbar" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div class="back-button-container" fxLayout="row" fxLayoutAlign="start center">
+        <div class="short-logo-container">
+          <img src="../../../assets/img/benjiShortLogoSVG.svg" alt="">
         </div>
-      </button>
-    </div>
-    <div class="button-separator">
-      /
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center start">
-      <div class="lesson-name-container">
-        <div class="name" *ngIf="!showEditableLessonName" (click)="lessonNameClicked(name)">
-          {{ lessonName$ | async }}
-        </div>
-        <div *ngIf="showEditableLessonName">
-          <input #name type="text" (blur)="updateName(name)" [value]="lessonName" />
+        <button class="back-button " fxLayoutAlign="space-between center" routerLink="/dashboard">
+          <div>
+            Dashboard
+          </div>
+        </button>
+      </div>
+      <div class="button-separator">
+        /
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center start">
+        <div class="lesson-name-container">
+          <div class="name" *ngIf="!showEditableLessonName" (click)="lessonNameClicked(name)">
+            {{ lessonName$ | async }}
+          </div>
+          <div *ngIf="showEditableLessonName">
+            <input #name type="text" (blur)="updateName(name)" [value]="lessonName" />
+          </div>
         </div>
       </div>
     </div>
-    <div class="error">
-      {{ error }}
-    </div>
-    <div class="save-status">
-      <div *ngIf="savingLesson">Saving</div>
-      <div *ngIf="lessonSaved">Saved</div>
+      
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <div class="error">
+        {{ error }}
+      </div>
+      <div class="save-status secondary-color" >
+        <div class="info" *ngIf="savingLesson" fxLayout="row" fxLayoutAlign="start center">
+          <div>
+            <img src="../../../assets/img/saving.gif" alt="">
+          </div>
+          <div>
+            Saving
+          </div>
+        </div>
+        <div class="info" *ngIf="lessonSaved" fxLayout="row" fxLayoutAlign="start center">
+          <img src="../../../assets/img/saved.png" alt="">
+          <div>
+            Saved
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 

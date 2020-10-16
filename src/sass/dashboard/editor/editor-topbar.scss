@@ -1,14 +1,20 @@
 .editor-container {
   .topbar {
     background-color: white;
-    padding: 8px 8px;
+    padding: 8px 16px;
     border-bottom: 1px solid $secondary-color;
     .back-button-container {
+      .short-logo-container {
+        margin-right: 16px;
+        img {
+          height: 24px;
+          width: 22px;
+        }
+      }
       .back-button {
         transition: all 0.1s linear;
         background-color: transparent;
         border-radius: 4px;
-        width: 135px;
         padding: 8px;
         font-size: 18px;
         font-weight: 500;
@@ -46,6 +52,16 @@
           border-color: #80bdff;
           outline: 0;
           box-shadow: 0 0 0 0.05rem rgba(0, 123, 255, 0.25);
+        }
+      }
+    }
+
+    .save-status {
+      .info {
+        img {
+          height: 24px;
+          width: 24px;
+          margin-right: 8px;
         }
       }
     }
