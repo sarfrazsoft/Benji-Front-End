@@ -12,9 +12,9 @@ import { FieldArrayType } from '@ngx-formly/core';
         <formly-validation-message [field]="field"></formly-validation-message>
       </div>
 
-      <div *ngFor="let field of field.fieldGroup; let i = index" class="row">
-        <formly-field class="col-10" [field]="field"></formly-field>
-        <div class="col-2 text-right">
+      <div *ngFor="let field of field.fieldGroup; let i = index" class="" fxLayout="row">
+        <formly-field class="" [field]="field" fxFlex="100"></formly-field>
+        <div class="remove-button text-right">
           <button class="" (click)="remove(i)"><mat-icon>close</mat-icon></button>
         </div>
       </div>

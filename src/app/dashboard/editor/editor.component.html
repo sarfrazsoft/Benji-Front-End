@@ -26,25 +26,28 @@
       </div>
     </div>
       
-    <div fxLayout="row" fxLayoutAlign="start center">
-      <div class="error">
-        {{ error }}
-      </div>
-      <div class="save-status secondary-color" >
-        <div class="info" *ngIf="savingLesson" fxLayout="row" fxLayoutAlign="start center">
-          <div>
-            <img src="../../../assets/img/saving.gif" alt="">
-          </div>
-          <div>
-            Saving
-          </div>
+    <div class="save-status secondary-color" >
+      <div class="info" *ngIf="savingLesson" fxLayout="row" fxLayoutAlign="start center">
+        <div>
+          <img src="../../../assets/img/saving.gif" alt="">
         </div>
-        <div class="info" *ngIf="lessonSaved" fxLayout="row" fxLayoutAlign="start center">
+        <div>
+          Saving
+        </div>
+      </div>
+      <div class="info" *ngIf="lessonSaved" fxLayout="row" fxLayoutAlign="start center">
+        <ng-container *ngIf="!error">
           <img src="../../../assets/img/saved.png" alt="">
           <div>
             Saved
           </div>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="error">
+          <img src="../../../assets/img/incompleteSession.png" alt="">
+          <div>
+            Session Incomplete
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

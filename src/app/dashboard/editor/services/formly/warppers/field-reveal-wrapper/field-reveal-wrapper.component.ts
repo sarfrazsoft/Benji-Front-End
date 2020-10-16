@@ -18,15 +18,28 @@ export class FieldRevealWrapperComponent extends FieldWrapper implements OnInit 
     } else {
       this.showField = true;
     }
+
+    // if model is an array for example a list of categories
+    if (Array.isArray(this.field.model)) {
+      this.field.model.length ? (this.showField = true) : (this.showField = false);
+    }
   }
 
-  revealField(value: boolean) {
-    this.showField = value;
-    if (value) {
+  revealField(reveal: boolean) {
+    this.showField = reveal;
+    if (reveal) {
     } else {
-      if (this.field.defaultValue !== undefined) {
-        this.field.formControl.setValue(this.field.defaultValue);
+      if (Array.isArray(this.field.model)) {
+        this.field.formControl.reset();
+      } else {
+        if (this.field.defaultValue !== undefined) {
+          this.field.formControl.setValue(this.field.defaultValue);
+        }
       }
+      // if the model is an array for example a list of categories
+      // if (Array.isArray(this.field.model)) {
+      //   this.field.formControl.setValue([]);
+      // }
     }
   }
 }

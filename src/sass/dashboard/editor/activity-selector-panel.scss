@@ -4,11 +4,7 @@ benji-activity-selector-panel {
     padding: 20px;
     height: 100%;
     box-sizing: border-box;
-    label {
-      font-size: 18px;
-      color: $black;
-      font-weight: 600;
-    }
+
     .activities {
       height: 100%;
       overflow: auto;
@@ -47,10 +43,10 @@ benji-activity-selector-panel {
                 // margin-right: 20px;
                 margin-bottom: 24px;
                 width: 150px;
-                -webkit-transition: border 200ms ease-out;
-                -moz-transition: border 200ms ease-out;
-                -o-transition: border 200ms ease-out;
-                transition: border 200ms ease-out;
+                -webkit-transition: border 100ms ease-out;
+                -moz-transition: border 100ms ease-out;
+                -o-transition: border 100ms ease-out;
+                transition: border 100ms ease-out;
                 img {
                   height: 45px;
                   width: 45px;
@@ -60,11 +56,9 @@ benji-activity-selector-panel {
                   color: $secondary-color-dark;
                   font-size: 16px;
                 }
-                &:hover {
-                  border: 1px solid $primary-color;
-                }
+                &:hover,
                 &.selected {
-                  border: 2px solid $primary-color;
+                  // applied from app.component.tss
                 }
               }
             }
@@ -72,64 +66,67 @@ benji-activity-selector-panel {
             .activity-content {
               margin: 3px;
               .custom-checkbox .custom-control-label {
+                font-weight: 400;
+              }
+              label,
+              legend {
+                font-size: 18px;
+                color: $black;
                 font-weight: 500;
               }
               p.text-muted {
                 margin-top: 8px;
-                margin-bottom: 0px;
+                margin-bottom: 8px;
+                line-height: 20px;
+                letter-spacing: 0.5px;
               }
-              .mcq-choice-form {
-                .form-group {
-                  margin-bottom: 5px;
+              formly-array-type {
+                .remove-button {
+                  margin-left: 8px;
+                  button {
+                    background-color: transparent;
+                    margin-top: 6px;
+                    color: #ced4da;
+                  }
                 }
-                .custom-control-input:checked ~ .custom-control-label::before {
-                  background-color: #61e111;
+              }
+              // .mcq-choice-form {
+              .form-group {
+                margin-bottom: 5px;
+              }
+              .custom-control-input:checked ~ .custom-control-label::before {
+                background-color: #36f7c0;
+                border-color: transparent;
+              }
+
+              .custom-checkbox {
+                width: 40px;
+                height: 40px;
+                margin-left: 10px;
+                input {
+                  height: 40px;
+                  width: 40px;
+                }
+                .custom-control-input:checked {
                   border-color: transparent;
                 }
-
-                .custom-checkbox {
+                .custom-control-label::after,
+                .custom-control-label::before {
+                  top: 0;
                   width: 40px;
-                  height: 40px;
-                  margin-left: 10px;
-                  input {
-                    // transform: scale(2);
-                    height: 40px;
-                    width: 40px;
-                  }
-                  .custom-control-input:checked {
-                    border-color: transparent;
-                  }
-                  .custom-control-label::after,
-                  .custom-control-label::before {
-                    top: 0;
-                    width: 40px;
-                    height: 38px;
-                    // border: 1px solid $secondary-color-light;
-                    // &:focus {
-                    // border-color: $primary-color;
-                    box-shadow: none;
-                    // }
-                  }
+                  height: 38px;
+                  border: 1px solid #ced4da;
+                  border-radius: 3px;
+                  box-shadow: none;
                 }
-                // display: block;
-                // input[type='checkbox'] {
-                //   -ms-transform: scale(2); /* IE */
-                //   -moz-transform: scale(2); /* FF */
-                //   -webkit-transform: scale(2); /* Safari and Chrome */
-                //   -o-transform: scale(2); /* Opera */
-                //   transform: scale(2);
-                // }
-                // input[type='checkbox']::before,
-                // input[type='checkbox']::after {
-                //   top: 0.8rem;
-                //   width: 1.25rem;
-                //   height: 1.25rem;
-                // }
               }
+              // }
               .question-type-select {
                 .mat-select {
                   width: 80px;
-                  margin-left: 10px;
+                  margin-left: 8px;
+                  padding-left: 2px;
+                  padding-right: 2px;
                 }
               }
               textarea.form-control {
@@ -159,6 +156,9 @@ benji-activity-selector-panel {
               }
             }
           }
+        }
+        .mat-ink-bar {
+          height: 3px;
         }
       }
     }

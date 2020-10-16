@@ -193,6 +193,11 @@ export class AppComponent implements OnInit {
         .mat-tab-label-active {
           color: ${info.parameters.primary} !important;
         }
+
+        .activity-type.selected,
+        .activity-type:hover {
+          border: 2px solid ${info.parameters.primary} !important;
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

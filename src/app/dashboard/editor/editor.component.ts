@@ -27,7 +27,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   @ViewChild('name', { static: false }) searchElement: ElementRef;
 
   lessonError$: Observable<any>;
-  error = '';
+  error = null;
 
   lessonSaving$: Observable<any>;
   savingLesson = false;
@@ -90,7 +90,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       if (e === true) {
         this.error = 'Invalid lesson';
       } else {
-        this.error = '';
+        this.error = null;
       }
     });
 
@@ -101,7 +101,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       } else {
         setTimeout(() => {
           this.savingLesson = false;
-        }, 1000);
+        }, 500);
       }
     });
 
@@ -110,11 +110,9 @@ export class EditorComponent implements OnInit, OnDestroy {
       if (e) {
         setTimeout(() => {
           this.lessonSaved = true;
-        }, 1000);
+        }, 500);
       } else {
-        // setTimeout(() => {
         this.lessonSaved = false;
-        // }, 2000);
       }
     });
   }

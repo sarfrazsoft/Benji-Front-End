@@ -140,10 +140,12 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.placeholder = 'Paragraph text';
                 } else if (mapSource.field_name === 'title_image') {
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
-                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
-                  mappedField.templateOptions.label = 'Duration for timer';
-                  mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
                   mappedField.defaultValue = 10000;
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['hideLabel'] = true;
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
+                  mappedField.templateOptions['helpText'] = 'How long does the slide last?';
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'auto_next') {
@@ -317,7 +319,7 @@ export class ActivityContentComponent implements OnInit {
         }
       });
 
-    this.form.valueChanges.pipe(debounceTime(1000)).subscribe((val) => {
+    this.form.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
       const b = cloneDeep(this.model);
       // processing before submitting to BE
       if (b.activity_type === this.at.title) {
@@ -363,6 +365,10 @@ export class ActivityContentComponent implements OnInit {
         }
       } else if (b.activity_type === this.at.feedback) {
         b.titlecomponent.participant_instructions = b.titlecomponent.screen_instructions;
+      } else if (b.activity_type === this.at.brainStorm) {
+        b.brainstormcategory_set = b.brainstormcategory_set.filter(
+          (obj) => obj && obj.category_name && obj.category_name.length !== 0
+        );
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
       // console.log(this.model);
