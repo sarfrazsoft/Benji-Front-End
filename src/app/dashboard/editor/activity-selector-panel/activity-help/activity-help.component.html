@@ -1,19 +1,22 @@
 <div class="activity-help">
-  <div class="help-header">
-    <label>Overview</label>
-  </div>
-  <div class="text">
-    <p>
-      Our multiple choice activity works just as you’d expect. Ask your participants a question and they have
-      to pick the correct answer. You select which questions are right.
-    </p>
-    <p>
-      If you pick multiple correct answers then they have to pick all that are correct. Here’s a video walking
-      you through this!
-    </p>
-  </div>
-  <img src="/assets/img/helpimg.png" alt="" />
-  <div class="help-subheader">
-    <label>Tips</label>
-  </div>
+  <ng-container *ngFor="let item of activityHelp">
+    <ng-container *ngIf="item.type === 'header'">
+      <div class="help-header">
+        <label>{{ item.content }}</label>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="item.type === 'paragraph'">
+      <div class="text">
+        <p>
+          {{ item.content }}
+        </p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="item.type === 'image'">
+      <img [src]="item.content" alt="" />
+    </ng-container>
+
+  </ng-container>
 </div>

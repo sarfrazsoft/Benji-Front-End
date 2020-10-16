@@ -90,37 +90,37 @@ benji-activity-selector-panel {
                   }
                 }
               }
-              // .mcq-choice-form {
-              .form-group {
-                margin-bottom: 5px;
-              }
-              .custom-control-input:checked ~ .custom-control-label::before {
-                background-color: #36f7c0;
-                border-color: transparent;
-              }
-
-              .custom-checkbox {
-                width: 40px;
-                height: 40px;
-                margin-left: 10px;
-                input {
-                  height: 40px;
-                  width: 40px;
+              .mcq-choice-form {
+                .form-group {
+                  margin-bottom: 5px;
                 }
-                .custom-control-input:checked {
+                .custom-control-input:checked ~ .custom-control-label::before {
+                  background-color: #36f7c0;
                   border-color: transparent;
                 }
-                .custom-control-label::after,
-                .custom-control-label::before {
-                  top: 0;
+
+                .custom-checkbox {
                   width: 40px;
-                  height: 38px;
-                  border: 1px solid #ced4da;
-                  border-radius: 3px;
-                  box-shadow: none;
+                  height: 40px;
+                  margin-left: 10px;
+                  input {
+                    height: 40px;
+                    width: 40px;
+                  }
+                  .custom-control-input:checked {
+                    border-color: transparent;
+                  }
+                  .custom-control-label::after,
+                  .custom-control-label::before {
+                    top: 0;
+                    width: 40px;
+                    height: 38px;
+                    border: 1px solid #ced4da;
+                    border-radius: 3px;
+                    box-shadow: none;
+                  }
                 }
               }
-              // }
               .question-type-select {
                 .mat-select {
                   width: 80px;
@@ -169,8 +169,7 @@ benji-activity-selector-panel {
       .help-subheader {
         margin-bottom: 8px;
       }
-      .help-header {
-      }
+      .help-header,
       .help-subheader {
         label {
           font-weight: 500;
