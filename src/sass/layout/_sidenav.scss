@@ -16,7 +16,7 @@ mat-sidenav-container.mat-sidenav-container {
   min-height: calc(100vh) !important;
 
   .mat-sidenav-content {
-    background-color: $white;
+    background-color: $sky;
   }
 
   .nav-container {
@@ -40,6 +40,7 @@ mat-sidenav-container.mat-sidenav-container {
       .item {
         cursor: pointer;
         font-size: 18px;
+        font-weight: 500;
         padding: 15px 0px;
         transition: margin-left 0.1s linear;
         -webkit-transition: margin-left 0.1s linear;

@@ -127,7 +127,7 @@ export class AppComponent implements OnInit {
         }
 
         .item.active {
-          border-bottom: 3px solid ${info.parameters.primary} !important;
+          border-bottom: 2px solid ${info.parameters.primary} !important;
         }
 
         .dashboard-secondary-button {
@@ -156,6 +156,7 @@ export class AppComponent implements OnInit {
 
         .report-cards .card-header {
           color: ${info.parameters.primary_darkest};
+          color: black;
         }
 
         .dashboard-table .table-link {
@@ -195,7 +196,8 @@ export class AppComponent implements OnInit {
         }
 
         .activity-type.selected,
-        .activity-type:hover {
+        .activity-type:hover,
+        benji-overview-panel .panel .activity-list .activity-container .activity.active {
           border: 2px solid ${info.parameters.primary} !important;
         }
         `;

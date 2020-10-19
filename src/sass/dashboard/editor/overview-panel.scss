@@ -39,7 +39,7 @@ benji-overview-panel {
             color: $secondary-color-dark;
           }
           &.active {
-            border-color: $primary-color;
+            // primary color border applied from white-labeling
           }
           mat-icon {
             font-size: 16px;

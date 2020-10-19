@@ -1,12 +1,12 @@
-$report-heading: 28px;
-$report-subheading: 20px;
+$report-heading: 24px;
+$report-subheading: 18px;
 $report-detail: 18px;
 $report-subdetail: 16px;
 
 benji-reports {
   padding-bottom: 0px;
   .session-panels {
-    height: calc(100vh - 90px - 122px - 65px);
+    height: calc(100vh - 90px - 122px);
     margin-top: 5px;
     position: relative;
     overflow: hidden;

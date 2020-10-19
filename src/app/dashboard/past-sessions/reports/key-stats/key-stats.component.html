@@ -2,7 +2,7 @@
   <div>
     <div class="card-header">{{ lessonName }}</div>
 
-    <div fxLayout="column" fxLayoutGap="8px">
+    <div fxLayout="column" fxLayoutGap="16px">
       <div>
         <div class="label">Date</div>
         <div class="value">{{ startDate }}</div>
@@ -32,6 +32,6 @@
     <span (click)="selectAll()">Select all</span>
   </div>
   <div class="participants">
-    <benji-participants [data]="data"></benji-participants>
+    <benji-participants [data]="data" [userIsAdmin]="userIsAdmin"></benji-participants>
   </div>
 </div>
