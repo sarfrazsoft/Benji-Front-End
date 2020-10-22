@@ -5,8 +5,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import * as global from '../../globals';
 import { ContextService } from '../context.service';
 import { Course, LessonRun } from './schema/course_details';
-import { Lesson, PaginatedResponse} from './schema/course_details';
-import { User } from './schema/user';
+import { Lesson, PaginatedResponse } from './schema/course_details';
+import { TeamUser, User } from './schema/user';
 import { PartnerInfo } from './schema/whitelabel_info';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class BackendRestService {
 
   public userFirstName;
   public userId;
-  public userIdentity: Observable<User>;
+  public userIdentity: Observable<TeamUser>;
   public userEnteredroomCode;
 
   get_runnable_sessions(courserun_num: number) {
@@ -31,7 +31,10 @@ export class BackendRestService {
   }
 
   start_lesson(lessonID: number): Observable<LessonRun> {
-    return this.http.post<LessonRun>(global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/', {});
+    return this.http.post<LessonRun>(
+      global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/',
+      {}
+    );
   }
 
   get_lessonrun(roomCode: number): Observable<LessonRun> {
@@ -48,8 +51,8 @@ export class BackendRestService {
     });
   }
 
-  get_own_identity(): Observable<User> {
-    this.userIdentity = this.http.get<User>(global.apiRoot + '/tenants/users/who_am_i/');
+  get_own_identity(): Observable<TeamUser> {
+    this.userIdentity = this.http.get<TeamUser>(global.apiRoot + '/tenants/users/who_am_i/');
     return this.userIdentity;
   }
 
@@ -82,7 +85,6 @@ export class BackendRestService {
     });
   }
 
-
   public validateRoomCode(roomCode) {
     return this.http.get(`${global.apiRoot}/course_details/lesson_run/${roomCode}/`);
   }
@@ -93,7 +95,6 @@ export class BackendRestService {
       courserunuser_set: [],
     });
   }
-
 
   get_lessons(page: number): Observable<PaginatedResponse<Lesson>> {
     const url = `${global.apiRoot}/course_details/lesson/?page=${page + 1}`;

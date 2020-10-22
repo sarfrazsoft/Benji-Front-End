@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, fromEvent, Observable } from 'rxjs';
-import { debounceTime, distinct, filter, flatMap, map, tap } from 'rxjs/operators';
+import { combineLatest, fromEvent, Observable, Subject } from 'rxjs';
+import { debounceTime, distinct, filter, flatMap, map, takeUntil, tap } from 'rxjs/operators';
 import { LayoutService } from 'src/app/services/layout.service';
 import { EditorService } from './services';
 
@@ -20,6 +20,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   activities$: Observable<Activity[]>;
   lessonActivities$: Observable<Activity[]>;
   getActivitiesLoaded$: Observable<any>;
+  private ngUnsubscribe = new Subject();
 
   lessonName$: Observable<any>;
   lessonName: string;
@@ -141,6 +142,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.layoutService.hideSidebar = false;
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   loadLessonActivities(lessonId) {
@@ -154,7 +157,8 @@ export class EditorComponent implements OnInit, OnDestroy {
         map(([a$, c$]) => ({
           activities: a$,
           loaded: c$,
-        }))
+        })),
+        takeUntil(this.ngUnsubscribe)
       )
       .subscribe((pair) => {
         if (pair.activities.length === 0 && pair.loaded) {
@@ -163,26 +167,5 @@ export class EditorComponent implements OnInit, OnDestroy {
       });
   }
 
-  startNewLesson() {
-    // this.store.dispatch(new fromStore.SaveEmptyLesson());
-    // this.store.dispatch(new fromStore.AddLobbyActivity())
-  }
-
-  // saveLesson() {
-  //   const lesson = [
-  //     {
-  //       activity_type: 'LobbyActivity',
-  //       activity_id: 'lobby1',
-  //       description: 'hello world',
-  //     },
-  //     {
-  //       activity_type: 'TitleActivity',
-  //       activity_id: 'title1',
-  //       main_title: 'Hello World',
-  //       hide_timer: true,
-  //       title_text: 'some title text',
-  //     },
-  //   ];
-  //   this.store.dispatch(new fromStore.SaveLesson(lesson));
-  // }
+  startNewLesson() {}
 }

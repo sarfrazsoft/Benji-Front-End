@@ -12,7 +12,7 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
 })
 export class ParticipantsComponent implements OnInit, OnChanges {
   @Input() data: { participant_set: Array<Participant> } = { participant_set: [] };
-  userIsAdmin;
+  @Input() userIsAdmin = false;
   selected = [];
   participants = [];
   dialogRef;
@@ -21,11 +21,6 @@ export class ParticipantsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.pastSessionService.filteredInUsers$.subscribe((list) => {
       this.selected = list;
-    });
-    this.contextService.user$.subscribe((user) => {
-      if (user.local_admin_permission) {
-        this.userIsAdmin = true;
-      }
     });
   }
 

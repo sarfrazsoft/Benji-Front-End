@@ -76,7 +76,8 @@ export class PastSessionsService {
 
   selectAll() {
     this.contextService.user$.subscribe((user) => {
-      if (user && user.local_admin_permission) {
+      // TODO check if user is admin instead of true
+      if (user && true) {
         this.filteredInUsers = [];
         this.joinedUsers.forEach((ju) => {
           this.filteredInUsers.push(ju.participant_code);
@@ -201,15 +202,17 @@ export class PastSessionsService {
     page = page + 1;
     let filterParams = '';
     if (filter === 'hosted') {
-        filterParams = '&hosted=True';
+      filterParams = '&hosted=True';
     } else if (filter === 'participated') {
-        filterParams = '&participated=True';
+      filterParams = '&participated=True';
     }
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/?completed=True&page=' + page + filterParams).pipe(
-      map((res) => {
-        return res;
-      })
-    );
+    return this.http
+      .get(global.apiRoot + '/course_details/lesson_run/?completed=True&page=' + page + filterParams)
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
   }
 
   addLearners(emails: string) {

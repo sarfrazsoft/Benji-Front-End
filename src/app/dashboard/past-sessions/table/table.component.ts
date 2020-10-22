@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
-import {BehaviorSubject, merge, Observable, of as observableOf} from 'rxjs';
+import { BehaviorSubject, merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { PastSessionsService } from 'src/app/services';
 
@@ -15,27 +15,12 @@ import { PastSessionsService } from 'src/app/services';
   styleUrls: ['./table.component.scss'],
 })
 export class PastSessionsTableComponent implements AfterViewInit {
-  displayedColumns: string[] = ['date', 'title', 'hosted_by', 'noOfParticipants', 'report'];
-  data: any = [];
-  selection = new SelectionModel<any>(true, []);
-  resultsLength = 0;
-  isLoadingResults = true;
-  initialSessionFilter = "all";
-
-  sessionFilter$ = new BehaviorSubject<any>(null);
-
   set sessionFilter(lessons: any) {
     this.sessionFilter$.next(lessons);
   }
   get sessionFilter(): any {
     return this.sessionFilter$.getValue();
   }
-  sessionFilterChange($event) {
-    this.sessionFilter = $event.value;
-  }
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private http: HttpClient,
@@ -44,6 +29,20 @@ export class PastSessionsTableComponent implements AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private pastSessionService: PastSessionsService
   ) {}
+  displayedColumns: string[] = ['date', 'title', 'hosted_by', 'noOfParticipants', 'report'];
+  data: any = [];
+  selection = new SelectionModel<any>(true, []);
+  resultsLength = 0;
+  isLoadingResults = true;
+  initialSessionFilter = 'all';
+
+  sessionFilter$ = new BehaviorSubject<any>(null);
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  sessionFilterChange($event) {
+    this.sessionFilter = $event.value;
+  }
 
   ngAfterViewInit() {
     // If the user changes the sort order, reset back to the first page.

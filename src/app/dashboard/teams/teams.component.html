@@ -1,0 +1,27 @@
+<div class="admin-panel" fxLayout="column">
+  <div class="dashboard-header">
+    <div class="dashboard-heading">
+      <h1>Teams</h1>
+    </div>
+  </div>
+
+  <div fxLayout="column">
+    <div class="dashboard-controls" fxLayout="row" fxLayoutGap="15px">
+      <div class="add">
+        <button class="dashboard-secondary-button bg-primary-color white-color new-session"  (click)="addTeam()">
+          <!-- <mat-icon>add</mat-icon> -->
+          Add team
+        </button>
+      </div>
+      <div class="delete">
+        <button class="dashboard-secondary-button delete bg-white primary-color" (click)="removeGroups()">
+          <!-- <mat-icon>delete_sweep</mat-icon> -->
+          delete team
+        </button>
+      </div>
+    </div>
+    <div class="dashboard-table">
+      <benji-teams-table [events]="eventsSubject.asObservable()" [user]="user"> </benji-teams-table>
+    </div>
+  </div>
+</div>

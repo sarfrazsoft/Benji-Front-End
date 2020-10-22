@@ -19,7 +19,7 @@ export class AddGroupsComponent implements OnInit {
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
-  groupSaved = false;
+  groupSaved = true;
   accontInfo = { id: 1 };
   groupId;
 
@@ -33,13 +33,13 @@ export class AddGroupsComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      group_name: new FormControl('', [Validators.required]),
+      team_name: new FormControl('', [Validators.required]),
       // description: new FormControl('', [Validators.required])
     });
   }
 
-  get group_name(): AbstractControl {
-    return this.form.get('group_name');
+  get team_name(): AbstractControl {
+    return this.form.get('team_name');
   }
 
   get description(): AbstractControl {

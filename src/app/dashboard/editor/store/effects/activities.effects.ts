@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { of } from 'rxjs/observable/of';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { ActivityTypes } from 'src/app/globals';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { EditorService } from '../../services/editor.service';
 import * as ActivityActions from '../actions/activities.action';
@@ -12,6 +13,7 @@ import * as fromActivities from '../reducers';
 
 @Injectable()
 export class ActivitiesEffects {
+  at: typeof ActivityTypes = ActivityTypes;
   constructor(
     private actions$: Actions,
     private editorService: EditorService,
@@ -100,7 +102,7 @@ export class ActivitiesEffects {
       });
       const newContentArray = cloneDeep(contentArray);
       for (let i = 0; i < newContentArray.length; i++) {
-        if (newContentArray[i].activity_type === 'CaseStudyActivity') {
+        if (newContentArray[i].activity_type === this.at.caseStudy) {
           const caseStudyAct = newContentArray[i];
           // first time being saved
           if (caseStudyAct.grouping_activity_id === true) {
@@ -126,7 +128,29 @@ export class ActivitiesEffects {
             newContentArray.splice(i - 1, 0, groupingActivity);
             caseStudyAct.grouping_activity_id = newIndex + '';
           } else {
-            // grouping_activity_id is already set and we don't need to change it
+            // grouping_activity_id is already set to some string and we don't need to change it
+          }
+        } else if (newContentArray[i].activity_type === this.at.mcq) {
+          const mcqAct = newContentArray[i];
+
+          if (newContentArray[i + 1] && newContentArray[i + 1].activity_type === this.at.mcqResults) {
+            // this mcqAct already has a mcq results activity we don't need to add
+          } else {
+            if (mcqAct.show_distribution) {
+              // add mcqresultactivity
+              const newIndex = new Date().getTime();
+              const mcqresultactivity = {
+                activity_id: '' + newIndex,
+                activity_type: 'MCQResultsActivity',
+                description: 'Here are your results',
+                next_activity_delay_seconds: 10000,
+                poll_mode: true,
+                summary_questions: [{ question_id: mcqAct.activity_id }],
+              };
+              newContentArray.splice(i + 1, 0, mcqresultactivity);
+            } else {
+              // this mcqAct doesn't need a mcqresults activity
+            }
           }
         }
       }

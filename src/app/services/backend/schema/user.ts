@@ -14,6 +14,27 @@ export interface User {
   participant_permission: boolean;
 }
 
+export interface TeamUser {
+  effective_permissions?: Array<any>;
+  email: string;
+  first_name: string;
+  id: number;
+  last_name: string;
+  licenses?: Array<any>;
+  teammembership_set?: Array<{ membership_type: string; team: Team }>;
+  username: string;
+  verified_email?: boolean;
+}
+
+export interface Team {
+  id: number;
+  name: string;
+  permissions: Array<any>;
+  teammembership_set: Array<{ benjiuser: TeamUser; id: number; membershit_type: string }>;
+  emailed_invites: Array<any>;
+  invited_users: Array<any>;
+}
+
 export interface Users {
   count: number;
   next: any;

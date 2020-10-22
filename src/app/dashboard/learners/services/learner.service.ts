@@ -23,7 +23,7 @@ export class LearnerService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
   getUsers(): Observable<any> {
-    return this.http.get(global.apiRoot + '/tenants/users/').pipe(
+    return this.http.get(global.apiRoot + '/tenants/team/1/members').pipe(
       map((res) => {
         return res;
       })

@@ -6,16 +6,16 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import { User } from 'src/app/services/backend/schema';
+import { TeamUser, User } from 'src/app/services/backend/schema';
 import { Course, Lesson, PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 
 @Injectable()
 export class AdminService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
-  getUser(): Observable<User> {
+  getUser(): Observable<TeamUser> {
     return this.http.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
-      map((res: User) => {
+      map((res: TeamUser) => {
         this.contextService.user = res;
         return res;
       })

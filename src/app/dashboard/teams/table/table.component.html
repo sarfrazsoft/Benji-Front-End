@@ -1,4 +1,13 @@
 <div>
+  <div>
+    <mat-button-toggle-group name="session_filter" aria-label="Session Filter" [(ngModel)]="initialSessionFilter" (change)="sessionFilterChange($event)">
+      <mat-button-toggle value="all">All</mat-button-toggle>
+      <ng-container *ngFor="let team of teams">
+        <mat-button-toggle value="{{team.id}}">{{ team.name }}</mat-button-toggle>
+      </ng-container>
+      <!-- <mat-button-toggle value="participated">Participated</mat-button-toggle> -->
+    </mat-button-toggle-group>
+  </div>
   <div class="dash-table-container">
     <table
       mat-table
@@ -31,32 +40,32 @@
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="group_name">
+      <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let row">{{ row.group_name }}</td>
+        <td mat-cell *matCellDef="let row">{{ row.name }}</td>
       </ng-container>
 
       <!-- Last Name Column -->
-      <ng-container matColumnDef="member_count">
-        <th mat-header-cell *matHeaderCellDef>No. of learners</th>
-        <td mat-cell *matCellDef="let row">{{ row.member_count }}</td>
+      <ng-container matColumnDef="teams">
+        <th mat-header-cell *matHeaderCellDef>Teams</th>
+        <td mat-cell *matCellDef="let row">{{ row.teams.join(", ") }}</td>
       </ng-container>
 
       <!-- Job Title Column -->
-      <ng-container matColumnDef="createdOn">
+      <!-- <ng-container matColumnDef="createdOn">
         <th mat-header-cell *matHeaderCellDef>Created On</th>
         <td mat-cell *matCellDef="let row">
           {{ formatDate(row.createdOn) }}
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- View Report Column -->
-      <ng-container matColumnDef="viewDetails">
+      <!-- <ng-container matColumnDef="viewDetails">
         <th mat-header-cell *matHeaderCellDef>Details</th>
         <td mat-cell *matCellDef="let row">
           <a class="table-link"> view details </a>
         </td>
-      </ng-container>
+      </ng-container> -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr

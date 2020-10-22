@@ -1,27 +1,27 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header">
     <div class="dashboard-heading">
-      <h1>Add Group</h1>
+      <h1>Add Team</h1>
     </div>
   </div>
 
   <div class="dashboard-form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
       <div class="field">
-        <div class="label">Group Name</div>
+        <div class="label">Team Name</div>
         <input
-          id="group_name"
+          id="team_name"
           class="dash-input"
           required
           type="text"
-          formControlName="group_name"
-          placeholder="Group name"
+          formControlName="team_name"
+          placeholder="Team name"
         />
         <mat-error
-          *ngIf="group_name.invalid && (group_name.dirty || group_name.touched) && isSignupClicked"
+          *ngIf="team_name.invalid && (team_name.dirty || team_name.touched) && isSignupClicked"
           class="alert alert-danger"
         >
-          <div *ngIf="group_name.errors.required">Group name is required.</div>
+          <div *ngIf="team_name.errors.required">Team name is required.</div>
         </mat-error>
       </div>
 
@@ -56,7 +56,8 @@
       <button
         type="submit"
         *ngIf="!groupSaved"
-        class="dashboard-button bg-primary-color"
+        class="dashboard-secondary-button bg-primary-color white-color new-session"
+        style="width: 140px;"
         [ngClass]="{
           active: form.valid,
           inactive: !form.valid

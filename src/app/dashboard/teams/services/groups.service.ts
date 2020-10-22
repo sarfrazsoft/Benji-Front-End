@@ -33,8 +33,8 @@ export class GroupsService {
     return this.http.get<User>(request);
   }
 
-  getGroups(sort: string, order: string, page: number): Observable<any> {
-    const request = global.apiRoot + '/tenants/groups/?page=' + (page + 1);
+  getTeams(sort: string, order: string, page: number): Observable<any> {
+    const request = global.apiRoot + '/tenants/team/';
     return this.http.get<any>(request);
   }
 
@@ -61,8 +61,8 @@ export class GroupsService {
   }
 
   removeLearnerFromGroup(id) {
-    const request = global.apiRoot + '/tenants/users/' + id + '/unset_group/';
-    return this.http.post(request, {});
+    const request = global.apiRoot + '/tenants/team_member/' + id + '/';
+    return this.http.delete(request, {});
   }
 }
 

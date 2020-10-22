@@ -21,7 +21,8 @@ export class KeyStatsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.contextService.user$.subscribe((user) => {
-      if (user.local_admin_permission) {
+      // TODO check if user is admin
+      if (true) {
         this.userIsAdmin = true;
       }
     });

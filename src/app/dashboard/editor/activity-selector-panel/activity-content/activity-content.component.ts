@@ -56,6 +56,8 @@ export class ActivityContentComponent implements OnInit {
           const schema = cloneDeep(s);
           const content = cloneDeep(pair.content);
 
+          // Case study activiy
+          // set grouping_activity_id to show if External or Internal grouping activity
           if (act.activity_type === this.at.caseStudy) {
             if (content) {
               if (content.grouping_activity_type === 'ExternalGroupingActivity') {
@@ -67,6 +69,21 @@ export class ActivityContentComponent implements OnInit {
               }
             }
           }
+
+          // MCQActivity
+          // Add a field for 'Show distribution of results' feature in mcqActivity
+          if (act.activity_type === this.at.mcq) {
+            schema.properties['show_distribution'] = {
+              description: 'Show distribution of results after this stage',
+              field_name: 'show_distribution',
+              internal_type: 'CharField',
+              required: false,
+              title: 'Show distribution of results',
+              type: 'boolean',
+              default: false,
+            };
+          }
+
           const fields = this.formlyJsonschema.toFieldConfig(schema as any, {
             map: (mappedField: FormlyFieldConfig, mapSource: any) => {
               if (mapSource.internal_type === 'EmojiURLField') {
@@ -125,7 +142,9 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['helpText'] = 'Auto-forward after how many seconds?';
                   mappedField.templateOptions['labelForCheckbox'] = 'Auto forward after results';
-                  mappedField.defaultValue = 10000;
+                  mappedField.defaultValue = 10;
+                } else if (mapSource.field_name === 'show_distribution') {
+                  mappedField.templateOptions.label = 'Show distribution of results';
                 }
                 // console.log(mappedField);
               } else if (act.activity_type === this.at.title) {
@@ -332,8 +351,11 @@ export class ActivityContentComponent implements OnInit {
         }
       } else if (b.activity_type === this.at.mcq) {
         if (!b.auto_next) {
-          b.next_activity_delay_seconds = 10;
+          b.next_activity_delay_seconds = 10000;
         }
+        // if (b.show_distribution && !b.quiz_label) {
+        //   b.next_activity_delay_seconds = 0;
+        // }
         if (b.quiz_label) {
           b.quiz_label = 'leader_board';
         } else {

@@ -135,7 +135,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     // reducers to load lesson's activities
     case fromActivities.LOAD_LESSON_ACTIVITIES: {
-      return { ...state, loadingLessonActivities: true };
+      return { ...state, loadingLessonActivities: true, loadedLessonActivities: false };
     }
     case fromActivities.LOAD_LESSON_ACTIVITIES_SUCCESS: {
       const lesson: Lesson = action.payload;

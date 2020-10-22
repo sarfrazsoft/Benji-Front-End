@@ -66,8 +66,8 @@ export class SidenavComponent implements OnInit {
     section: 2,
     items: [
       {
-        navName: 'Groups',
-        navRoute: './groups',
+        navName: 'Teams',
+        navRoute: './teams',
         permission: 'admin',
       },
       // {
@@ -201,7 +201,7 @@ export class SidenavComponent implements OnInit {
       this.sidenavSections = [
         this.dashboard,
         // this.adminSection,
-        // this.groupsSection,
+        this.groupsSection,
         // this.editor,
         this.pastSessionSection,
         this.accountSection,

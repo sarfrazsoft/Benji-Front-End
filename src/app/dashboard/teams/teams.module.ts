@@ -5,28 +5,18 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../../shared/shared.module';
 import { InfoComponent } from './group-details/info/info.component';
-import { GroupsRoutes } from './groups.routing';
-import {
-  GroupsComponents,
-  GroupsEntryComponents,
-  GroupsProviders
-} from './index';
+import { GroupsEntryComponents, GroupsProviders, TeamsComponents } from './index';
+import { TeamsRoutes } from './teams.routing';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    GroupsRoutes,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule
-  ],
+  imports: [CommonModule, TeamsRoutes, FormsModule, ReactiveFormsModule, SharedModule],
   exports: [RouterModule],
-  declarations: [...GroupsComponents, InfoComponent],
+  declarations: [...TeamsComponents, InfoComponent],
   entryComponents: GroupsEntryComponents,
-  providers: GroupsProviders
+  providers: GroupsProviders,
 })
-export class GroupsModule {}
+export class TeamsModule {}
 
 export function GroupsEntrypoint() {
-  return GroupsModule;
+  return TeamsModule;
 }

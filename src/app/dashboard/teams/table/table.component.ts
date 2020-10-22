@@ -5,31 +5,44 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
+import { uniqBy } from 'lodash';
 import * as moment from 'moment';
-import { merge, Observable, of as observableOf, Subscription } from 'rxjs';
+import { BehaviorSubject, merge, Observable, of as observableOf, Subscription } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { Group, User } from 'src/app/services/backend/schema';
+import { Group, Team, TeamUser, User } from 'src/app/services/backend/schema';
 import { PaginatedResponse } from 'src/app/services/backend/schema/course_details';
 import { ConfirmationDialogComponent } from 'src/app/shared';
 import { GroupsService } from '../services';
 
 @Component({
-  selector: 'benji-groups-table',
+  selector: 'benji-teams-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
 export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
   private eventsSubscription: Subscription;
   @Input() events: Observable<void>;
+  @Input() user: TeamUser;
+  initialSessionFilter = 'all';
+  sessionFilter$ = new BehaviorSubject<any>(null);
+
+  set sessionFilter(lessons: any) {
+    this.sessionFilter$.next(lessons);
+  }
+  get sessionFilter(): any {
+    return this.sessionFilter$.getValue();
+  }
+
   displayedColumns: string[] = [
     'select',
-    'group_name',
-    'member_count',
+    'name',
+    'teams',
     // 'createdOn',
-    'viewDetails',
+    // 'viewDetails',
   ];
 
-  data: any = [];
+  teams: Array<Team> = [];
+  data: Array<TeamUserTable> = [];
   selection = new SelectionModel<any>(true, []);
 
   resultsLength = 0;
@@ -47,8 +60,32 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     private router: Router
   ) {}
 
+  sessionFilterChange($event) {
+    this.sessionFilter = $event.value;
+  }
+
   ngOnInit() {
     this.eventsSubscription = this.events.subscribe(() => this.deleteSelectedGroups());
+
+    this.sessionFilter$.subscribe((val) => {
+      let data: Array<TeamUserTable> = [];
+      this.teams.forEach((team) => {
+        if (team.id + '' === val || val === 'all') {
+          team.teammembership_set.forEach((teamuser) => {
+            const bu = teamuser.benjiuser;
+
+            const fdata = data.filter((t) => t.id === bu.id);
+            if (fdata.length) {
+              fdata[0].teams.push(team.name);
+            } else {
+              data.push({ name: bu.first_name + ' ' + bu.last_name, id: bu.id, teams: [team.name] });
+            }
+          });
+        }
+      });
+      data = uniqBy(data, 'id');
+      this.data = data;
+    });
   }
 
   ngOnDestroy() {
@@ -64,11 +101,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.groupsService.getGroups(
-            this.sort.active,
-            this.sort.direction,
-            this.paginator.pageIndex
-          );
+          return this.groupsService.getTeams(this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map((data: any) => {
           // Flip flag to show that loading has finished.
@@ -82,7 +115,23 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
           return observableOf([]);
         })
       )
-      .subscribe((data: Array<Group>) => {
+      .subscribe((teams: Array<Team>) => {
+        console.log(teams);
+        this.teams = teams;
+        let data: Array<TeamUserTable> = [];
+        teams.forEach((team) => {
+          team.teammembership_set.forEach((teamuser) => {
+            const bu = teamuser.benjiuser;
+
+            const fdata = data.filter((t) => t.id === bu.id);
+            if (fdata.length) {
+              fdata[0].teams.push(team.name);
+            } else {
+              data.push({ name: bu.first_name + ' ' + bu.last_name, id: bu.id, teams: [team.name] });
+            }
+          });
+        });
+        data = uniqBy(data, 'id');
         this.data = data;
       });
   }
@@ -140,4 +189,10 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     //   relativeTo: this.activatedRoute
     // });
   }
+}
+
+export interface TeamUserTable {
+  name: string;
+  id: number;
+  teams: Array<string>;
 }

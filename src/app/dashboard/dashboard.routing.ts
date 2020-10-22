@@ -43,8 +43,8 @@ const routes: Routes = [
           import('src/app/dashboard/past-sessions/past-sessions.module').then((m) => m.PastSessionsModule),
       },
       {
-        path: 'groups',
-        loadChildren: () => import('src/app/dashboard/groups/groups.module').then((m) => m.GroupsModule),
+        path: 'teams',
+        loadChildren: () => import('src/app/dashboard/teams/teams.module').then((m) => m.TeamsModule),
       },
       {
         path: 'account',

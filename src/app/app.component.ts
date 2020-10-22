@@ -145,6 +145,11 @@ export class AppComponent implements OnInit {
           background-color: white;
         }
 
+        .dashboard-secondary-button.delete:hover {
+          background-color: ${info.parameters.primary};
+          color: white !important;
+        }
+
         .launch-session .button {
           border: 1px solid ${info.parameters.primary};
         }

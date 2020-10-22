@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { GroupsService } from 'src/app/dashboard/groups/services/groups.service';
+import { GroupsService } from 'src/app/dashboard/teams/services/groups.service';
 
 @Component({
   selector: 'benji-group-past-sessions-table',

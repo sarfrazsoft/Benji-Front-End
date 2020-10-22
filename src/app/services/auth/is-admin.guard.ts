@@ -13,7 +13,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map } from 'rxjs/operators';
 import { AdminService } from 'src/app/dashboard';
 import * as global from 'src/app/globals';
-import { User } from '../backend/schema';
+import { TeamUser, User } from '../backend/schema';
 import { ContextService } from '../context.service';
 
 @Injectable({
@@ -37,7 +37,7 @@ export class IsAdminGuard implements CanActivate {
         }
       }
     } else {
-      return this.getUser().map((u) => u.local_admin_permission);
+      return this.getUser().map((u) => true);
     }
   }
 
@@ -48,9 +48,9 @@ export class IsAdminGuard implements CanActivate {
     return false;
   }
 
-  getUser(): Observable<User> {
+  getUser(): Observable<TeamUser> {
     return this.httpClient.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
-      map((res: User) => {
+      map((res: TeamUser) => {
         this.contextService.user = res;
         return res;
       })
