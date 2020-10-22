@@ -44,11 +44,9 @@ export class TeamsComponent implements OnInit {
     },
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router, private dialog: MatDialog) {
-    this.route.data.forEach((data: any) => {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private dialog: MatDialog) {
+    this.activatedRoute.data.forEach((data: any) => {
       this.user = data.dashData.user as TeamUser;
-      // console.log(data);
-      // this.getLearnersFromAllTeams(user);
     });
   }
 
@@ -69,7 +67,7 @@ export class TeamsComponent implements OnInit {
     this.dialogRef = this.dialog
       .open(AddLearnersDialogComponent, {
         data: {
-          confirmationMessage: 'hurr',
+          userId: this.user.id,
         },
         disableClose: true,
         panelClass: ['dashboard-dialog', 'add-learner-dialog'],

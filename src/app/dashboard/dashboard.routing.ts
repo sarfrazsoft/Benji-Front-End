@@ -33,7 +33,7 @@ const routes: Routes = [
         component: LessonComponent,
       },
       {
-        path: 'learners',
+        path: 'participants',
         loadChildren: () =>
           import('src/app/dashboard/learners/learners.module').then((m) => m.LearnersModule),
       },

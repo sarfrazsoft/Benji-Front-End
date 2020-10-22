@@ -30,14 +30,24 @@ export class LearnerService {
     );
   }
 
-  getLearners(sort: string, order: string, page: number): Observable<User> {
-    // django expects page index starting from 1
-    const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);
-    return this.http.get<User>(request);
+  // getLearners(sort: string, order: string, page: number): Observable<User> {
+  //   // django expects page index starting from 1
+  //   const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);
+  //   return this.http.get<User>(request);
+  // }
+
+  getLearners(sort: string, order: string, page: number): Observable<any> {
+    const request = global.apiRoot + '/tenants/team/';
+    return this.http.get<any>(request);
+  }
+
+  addLearner(data) {
+    const request = global.apiRoot + '/tenants/email_invite/';
+    return this.http.post(request, data);
   }
 
   addLearners(emails) {
-    const request = global.apiRoot + '/tenants/org_invites/';
+    const request = global.apiRoot + '/tenants/email_invite/';
     return this.http.post(request, emails);
   }
 

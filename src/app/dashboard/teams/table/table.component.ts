@@ -37,7 +37,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     'select',
     'name',
     'teams',
-    // 'createdOn',
+    'view_profile',
     // 'viewDetails',
   ];
 
@@ -188,6 +188,10 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.router.navigate([row.group_name], {
     //   relativeTo: this.activatedRoute
     // });
+  }
+
+  showProfile(row) {
+    this.router.navigate([row.id], { relativeTo: this.activatedRoute });
   }
 }
 

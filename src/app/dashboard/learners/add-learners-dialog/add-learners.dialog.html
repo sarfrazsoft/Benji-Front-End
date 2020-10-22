@@ -6,7 +6,7 @@
   </div>
   <mat-dialog-content class="add-learners">
     <div fxLayout="column" fxLayoutGap="15px">
-      <h2 class="dialog-heading primary-color-darkest">
+      <h2 class="dialog-heading">
         Add participants
       </h2>
       
@@ -44,15 +44,16 @@
           <button
             type="submit"
             class="dashboard-secondary-button bg-primary-color white-color padding0-24"
-            [ngClass]="{
-              active: form.valid,
-              inactive: !form.valid
-            }"
-          >
-            Add learners
+            style="width: 220px;"
+            >
+            Add participants
           </button>
         </form>
       </div>
+                        <!-- [ngClass]="{
+                          active: form.valid,
+                          inactive: !form.valid
+                        }" -->
       
         <!-- <button
           (click)="importCSV()"

@@ -66,9 +66,9 @@ export class SidenavComponent implements OnInit {
     section: 2,
     items: [
       {
-        navName: 'Teams',
-        navRoute: './teams',
-        permission: 'admin',
+        navName: 'Participants',
+        navRoute: './participants',
+        icon: '../../../../assets/img/participantIcon.png',
       },
       // {
       //   navName: 'Groups',

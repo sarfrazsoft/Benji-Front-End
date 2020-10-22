@@ -1,12 +1,12 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header">
     <div class="dashboard-heading">
-      <h1 *ngIf="!learner">Learner Overview</h1>
+      <h1 *ngIf="!learner">Participant Overview</h1>
       <h1 *ngIf="learner">{{ learner.first_name + ' ' + learner.last_name }} Overview</h1>
     </div>
   </div>
 
-  <benji-skill-evaluation></benji-skill-evaluation>
+  <!-- <benji-skill-evaluation></benji-skill-evaluation> -->
 
   <benji-sessions></benji-sessions>
 </div>

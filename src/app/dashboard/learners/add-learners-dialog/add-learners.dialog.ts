@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { GroupsService } from '../../services';
+import { LearnerService } from '../services/learner.service';
 
 @Component({
   selector: 'benji-add-learners-dialog',
@@ -20,7 +20,7 @@ export class AddLearnersDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<AddLearnersDialogComponent>,
     private builder: FormBuilder,
-    private groupServices: GroupsService,
+    private learnerService: LearnerService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.userId = data.userId;
@@ -45,22 +45,38 @@ export class AddLearnersDialogComponent implements OnInit {
   onSubmit(): void {
     if (this.form.valid) {
       const emails = this.form.value.emails.split(',');
-      const json = [];
-      emails.forEach((email) => {
-        json.push({
-          email: email.trim(),
+      if (emails.length === 1) {
+        const data = {
+          email: emails[0].trim(),
           inviter: this.userId,
+        };
+        this.learnerService.addLearner(data).subscribe(
+          (res) => {
+            this.form.reset();
+            this.invitationsSent = true;
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      } else {
+        const json = [];
+        emails.forEach((email) => {
+          json.push({
+            email: email.trim(),
+            inviter: this.userId,
+          });
         });
-      });
-      this.groupServices.addLearners(json).subscribe(
-        (res) => {
-          this.form.reset();
-          this.invitationsSent = true;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        this.learnerService.addLearners(json).subscribe(
+          (res) => {
+            this.form.reset();
+            this.invitationsSent = true;
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      }
     }
   }
 }

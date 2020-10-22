@@ -1,7 +1,7 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header">
     <div class="dashboard-heading">
-      <h1>Learners</h1>
+      <h1>Participants</h1>
     </div>
   </div>
 
@@ -14,7 +14,7 @@
   </div> -->
 
   <div fxLayout="column">
-    <div class="dashboard-controls" fxLayout="row">
+    <div class="dashboard-controls" fxLayout="row" fxLayoutGap="16px">
       <!-- <div class="settings" fxFlex fxLayoutGap="20px">
         <button class="dashboard-secondary-button">
           Edit learner settings
@@ -23,17 +23,23 @@
       </div> -->
       <div class="add">
         <button
-          class="dashboard-secondary-button active"
+          class="dashboard-secondary-button bg-primary-color white-color padding0-24"
           fxLayoutAlign="center center"
           (click)="addLearners()"
         >
-          <mat-icon>add</mat-icon>
-          Add learner
+          <!-- <mat-icon>add</mat-icon> -->
+          Add participants
+        </button>
+      </div>
+      <div class="delete">
+        <button class="dashboard-secondary-button delete bg-white primary-color padding0-24" (click)="removeParticipants()">
+          <!-- <mat-icon>delete_sweep</mat-icon> -->
+          Delete
         </button>
       </div>
     </div>
     <div class="dashboard-table">
-      <benji-learners-table></benji-learners-table>
+      <benji-learners-table [events]="eventsSubject.asObservable()"></benji-learners-table>
     </div>
   </div>
 </div>
