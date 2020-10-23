@@ -2,11 +2,9 @@
   <ng-container class="body-title">
     {{ activityState.titleactivity.main_title }}
   </ng-container>
-  <app-b-twemoji
-    class="body-emoji"
-    [emoji]="emoji.getEmoji(activityState.titleactivity.title_image)"
-  >
-  </app-b-twemoji>
+  <div class="body-emoji" *ngIf="isEmoji(activityState.titleactivity.title_image)">
+    <app-b-twemoji [text]="activityState.titleactivity.title_image"> </app-b-twemoji>
+  </div>
   <h1 class="body-heading pn-700 primary-color-darkest">
     {{ activityState.titleactivity.main_title }}
   </h1>
