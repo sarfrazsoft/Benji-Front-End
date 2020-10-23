@@ -111,8 +111,7 @@ export class LearnersTableComponent implements AfterViewInit, OnInit {
           return observableOf([]);
         })
       )
-      .subscribe((teams) => {
-        // console.log(teams);
+      .subscribe((teams: Array<Team>) => {
         this.teams = teams;
         let data: Array<TeamUserTable> = [];
         teams.forEach((team) => {
