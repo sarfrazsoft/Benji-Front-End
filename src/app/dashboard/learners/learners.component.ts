@@ -35,7 +35,7 @@ export class LearnersComponent implements OnInit {
     // const subscribe = example.subscribe(val => console.log(val));
   }
 
-  removeGroups() {
+  removeParticipants() {
     this.eventsSubject.next();
   }
   addLearners() {
