@@ -30,7 +30,8 @@ export class PastSessionsService {
 
   constructor(private http: HttpClient, private contextService: ContextService) {
     this.contextService.user$.subscribe((user) => {
-      if (user.local_admin_permission) {
+      if (true) {
+        // if (user.local_admin_permission) {
         this.userIsAdmin = true;
       }
     });
@@ -98,7 +99,8 @@ export class PastSessionsService {
 
         if (this.filteredInUsers.length === 0) {
           this.contextService.user$.subscribe((user) => {
-            if (user && user.local_admin_permission) {
+            // TODO check if user is admin
+            if (user && true) {
               res.participant_set.forEach((ju: Participant) => {
                 this.filteredInUsers.push(ju.participant_code);
               });

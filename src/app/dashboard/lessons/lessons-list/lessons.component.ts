@@ -5,6 +5,7 @@ import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ConfirmationDialogComponent } from 'src/app/shared';
 import { AdminService } from '../../admin-panel/services';
 
 @Component({
@@ -17,6 +18,8 @@ export class LessonsComponent implements OnInit {
   launchSessionLabel = '';
   rightLaunchArrow = '';
   rightCaret = '';
+  dialogRef;
+
   constructor(
     private dialog: MatDialog,
     private adminService: AdminService,
@@ -79,14 +82,28 @@ export class LessonsComponent implements OnInit {
   delete($event, lesson: Lesson) {
     if (lesson.id) {
       if (lesson.effective_permission === 'admin') {
-        this.adminService.deleteLesson(lesson.id).subscribe((res) => {
-          if (res.success) {
-            this.adminService.getLessons().subscribe((lessons) => {
-              this.lessons = lessons;
-            });
-            this.utilsService.openSnackBar(`Lesson successfully deleted.`, `close`);
-          }
-        });
+        const msg = 'Are you sure you want to delete ' + lesson.lesson_name + '?';
+        this.dialogRef = this.dialog
+          .open(ConfirmationDialogComponent, {
+            data: {
+              confirmationMessage: msg,
+            },
+            disableClose: true,
+            panelClass: 'dashboard-dialog',
+          })
+          .afterClosed()
+          .subscribe((res) => {
+            if (res) {
+              this.adminService.deleteLesson(lesson.id).subscribe((delRes) => {
+                if (delRes.success) {
+                  this.adminService.getLessons().subscribe((lessons) => {
+                    this.lessons = lessons;
+                  });
+                  this.utilsService.openSnackBar(`Lesson successfully deleted.`, `close`);
+                }
+              });
+            }
+          });
       } else {
         this.utilsService.showWarning(`You don't have sufficient permission to perform this action.`);
       }

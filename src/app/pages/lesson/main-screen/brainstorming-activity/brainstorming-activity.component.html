@@ -219,7 +219,7 @@
       </li>
     </ul>
   </div>
-  <div class="linear-timer-container" *ngIf="!peakBackState">
+  <div class="linear-timer-container" *ngIf="!peakBackState && !act.hide_timer">
     <benji-linear-timer
       *ngIf="submissionScreen"
       [timer]="timer"

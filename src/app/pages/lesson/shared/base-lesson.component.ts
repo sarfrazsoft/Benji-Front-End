@@ -79,13 +79,11 @@ export class BaseLessonComponent implements OnInit {
     }
     forkJoin([this.restService.get_lessonrun(this.roomCode)]).subscribe(([lessonRun]) => {
       this.lessonRun = lessonRun;
-      console.log(details);
       this.socket = this.socketService.connectLessonSocket(
         this.clientType,
         this.lessonRun.lessonrun_code,
         details ? details.participant_code : null
       );
-      console.log('socket connected');
 
       this.socket.subscribe(
         (msg: ServerMessage) => {

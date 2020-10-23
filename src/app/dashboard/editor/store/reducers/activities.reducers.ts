@@ -153,7 +153,9 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       if (acts) {
         acts = acts.filter(
           (val) =>
-            val.activity_type !== 'ExternalGroupingActivity' && val.activity_type !== 'SingleGroupingActivity'
+            val.activity_type !== 'ExternalGroupingActivity' &&
+            val.activity_type !== 'SingleGroupingActivity' &&
+            val.activity_type !== 'MCQResultsActivity'
         );
         acts.forEach((val, i) => {
           // console.log(val);
