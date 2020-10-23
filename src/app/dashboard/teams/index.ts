@@ -11,7 +11,7 @@ import { LearnersTableComponent as GroupsLearnersTableComponent } from './group-
 import { PastSessionsTableComponent } from './group-details/past-sessions/table.component';
 import { SingleStatComponent } from './group-details/stats/single-stat/single-stat.component';
 import { StatsComponent } from './group-details/stats/stats.component';
-import { GroupsResolver, GroupsService } from './services';
+import { GroupsService } from './services';
 import { GroupsTableComponent } from './table/table.component';
 import { TeamsComponent } from './teams.component';
 
@@ -29,4 +29,4 @@ export const TeamsComponents = [
 
 export const GroupsEntryComponents = [AddLearnersDialogComponent];
 
-export const GroupsProviders = [GroupsService, GroupsResolver];
+export const GroupsProviders = [GroupsService];

@@ -22,20 +22,6 @@ import {
 export class LearnerService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get(global.apiRoot + '/tenants/team/1/members').pipe(
-      map((res) => {
-        return res;
-      })
-    );
-  }
-
-  // getLearners(sort: string, order: string, page: number): Observable<User> {
-  //   // django expects page index starting from 1
-  //   const request = global.apiRoot + '/tenants/users/?page=' + (page + 1);
-  //   return this.http.get<User>(request);
-  // }
-
   getLearners(sort: string, order: string, page: number): Observable<any> {
     const request = global.apiRoot + '/tenants/team/';
     return this.http.get<any>(request);

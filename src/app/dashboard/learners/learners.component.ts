@@ -18,10 +18,6 @@ export class LearnersComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private dialog: MatDialog) {
     this.activatedRoute.data.forEach((data: any) => {
-      console.log(data);
-    });
-
-    this.activatedRoute.data.forEach((data: any) => {
       this.user = data.dashData.user as TeamUser;
     });
   }

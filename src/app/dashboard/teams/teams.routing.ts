@@ -1,6 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { AdminResolver } from '../admin-panel';
-import { AddGroupsComponent, GroupDetailsComponent, GroupsResolver, TeamsComponent } from './index';
+import { AddGroupsComponent, GroupDetailsComponent, TeamsComponent } from './index';
 
 const routes: Routes = [
   {
@@ -12,9 +12,6 @@ const routes: Routes = [
       {
         path: '',
         component: TeamsComponent,
-        resolve: {
-          groups: GroupsResolver,
-        },
       },
       {
         path: 'add',

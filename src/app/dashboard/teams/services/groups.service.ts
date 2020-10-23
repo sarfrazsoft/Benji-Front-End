@@ -11,14 +11,6 @@ import { User } from 'src/app/services/backend/schema';
 export class GroupsService {
   constructor(private http: HttpClient, private contextService: ContextService) {}
 
-  getUsers(): Observable<any> {
-    return this.http.get(global.apiRoot + '/tenants/users/').pipe(
-      map((res) => {
-        return res;
-      })
-    );
-  }
-
   getPastSessions(sort: string, order: string, page: number): Observable<any> {
     return this.http.get(global.apiRoot + '/course_details/lesson_run/').pipe(
       map((res) => {

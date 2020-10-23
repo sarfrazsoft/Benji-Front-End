@@ -103,7 +103,6 @@ export class LearnersTableComponent implements AfterViewInit, OnInit {
         map((data: any) => {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
-          this.resultsLength = data.count;
 
           return data.results;
         }),
@@ -129,6 +128,7 @@ export class LearnersTableComponent implements AfterViewInit, OnInit {
           });
         });
         data = uniqBy(data, 'id');
+        this.resultsLength = data.length;
         this.data = data;
       });
   }
