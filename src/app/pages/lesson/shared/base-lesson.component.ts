@@ -14,6 +14,7 @@ export class BaseLessonComponent implements OnInit {
   user: User;
   clientType: string;
   disableControls: boolean;
+  participantDetails: Participant;
 
   socket;
   serverMessage: UpdateMessage;
@@ -73,28 +74,54 @@ export class BaseLessonComponent implements OnInit {
   }
 
   initSocket() {
-    let details: Participant;
     if (localStorage.getItem('participant')) {
-      details = JSON.parse(localStorage.getItem('participant'));
+      this.participantDetails = JSON.parse(localStorage.getItem('participant'));
     }
-    forkJoin([this.restService.get_lessonrun(this.roomCode)]).subscribe(([lessonRun]) => {
-      this.lessonRun = lessonRun;
-      this.socket = this.socketService.connectLessonSocket(
-        this.clientType,
-        this.lessonRun.lessonrun_code,
-        details ? details.participant_code : null
-      );
 
-      this.socket.subscribe(
-        (msg: ServerMessage) => {
-          this.handleServerMessage(msg);
-        },
-        (err) => console.log(err),
-        () => {
-          console.log('complete');
+    this.restService.get_lessonrun(this.roomCode).subscribe((lessonRun) => {
+      this.lessonRun = lessonRun;
+      if (lessonRun.lesson.single_user_lesson) {
+        if (localStorage.getItem('single_user_participant')) {
+          // single user participant info is already stored
+          // single user info is removed when user navigates back to dashboard
+          this.participantDetails = JSON.parse(localStorage.getItem('single_user_participant'));
+          this.connectAndSubscribe();
+        } else {
+          // create a single user and store it in local storage so that we don't
+          // sign in again and again
+          this.restService
+            .createUser(lessonRun.host.first_name, lessonRun.lessonrun_code)
+            .subscribe((participant: Participant) => {
+              if (participant) {
+                this.participantDetails = participant;
+                // store the participant info one time it is aquired
+                localStorage.setItem('single_user_participant', JSON.stringify(participant));
+                this.connectAndSubscribe();
+              }
+            });
         }
-      );
+      } else {
+        this.connectAndSubscribe();
+      }
     });
+  }
+
+  connectAndSubscribe() {
+    this.socket = this.socketService.connectLessonSocket(
+      this.clientType,
+      this.lessonRun.lessonrun_code,
+      this.participantDetails ? this.participantDetails.participant_code : null
+    );
+
+    this.socket.subscribe(
+      (msg: ServerMessage) => {
+        this.handleServerMessage(msg);
+      },
+      (err) => console.log(err),
+      () => {
+        console.log('complete');
+      }
+    );
   }
 
   isConnected() {
@@ -129,9 +156,13 @@ export class BaseLessonComponent implements OnInit {
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       console.log(msg);
       const obj = msg.clienterror.error_detail;
-      if (obj[Object.keys(obj)[0]]) {
-        if (obj[Object.keys(obj)[0]][0]) {
-          this.openSnackBar(obj[Object.keys(obj)[0]][0], '');
+      if (typeof obj === 'string') {
+        this.openSnackBar(obj, '');
+      } else {
+        if (obj[Object.keys(obj)[0]]) {
+          if (obj[Object.keys(obj)[0]][0]) {
+            this.openSnackBar(obj[Object.keys(obj)[0]][0], '');
+          }
         }
       }
     } else if (msg.servererror !== null && msg.servererror !== undefined) {

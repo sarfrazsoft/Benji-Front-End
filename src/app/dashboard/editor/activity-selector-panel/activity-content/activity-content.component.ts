@@ -310,6 +310,45 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.templateOptions.label = 'Auto Forward';
                 }
+              } else if (act.activity_type === this.at.genericRoleplay) {
+                if (mapSource.internal_type === 'GenericRoleplayActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'genericroleplayrole_set') {
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['addLabel'] = 'Add role';
+                } else if (mapSource.internal_type === 'GenericRolePlayRoleSerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'name') {
+                  mappedField.templateOptions.label = 'Role Title';
+                } else if (mapSource.field_name === 'instructions') {
+                  mappedField.templateOptions.label = 'Role Instructions';
+                } else if (mapSource.field_name === 'short_instructions') {
+                  mappedField.hide = true;
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'image_url') {
+                  mappedField.templateOptions.label = 'Role Icon';
+                } else if (mapSource.field_name === 'allow_multiple') {
+                  mappedField.templateOptions.label = 'Allow duplicates';
+                  mappedField.defaultValue = true;
+                } else if (mapSource.field_name === 'is_non_interactive') {
+                  mappedField.templateOptions.label = 'Is this role an observer';
+                  mappedField.defaultValue = true;
+                } else if (mapSource.field_name === 'feedbackquestions') {
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['addLabel'] = 'Add question';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                }
               }
               // if activity is nullable then send it to special component
               // over there it will have a special checkbox.
@@ -391,6 +430,8 @@ export class ActivityContentComponent implements OnInit {
         b.brainstormcategory_set = b.brainstormcategory_set.filter(
           (obj) => obj && obj.category_name && obj.category_name.length !== 0
         );
+      } else if (b.activity_type === this.at.genericRoleplay) {
+        b.instructions = b.short_instructions;
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
       // console.log(this.model);
@@ -427,6 +468,7 @@ export const AllowEmojiDic = {
   VideoActivity: false,
   BrainstormActivity: false,
   FeedbackActivity: false,
+  GenericRoleplayActivity: true,
 };
 
 export const OrderForActivities = {
@@ -457,4 +499,5 @@ export const OrderForActivities = {
     'next_activity_delay_seconds',
     'auto_next',
   ],
+  GenericRoleplayActivity: ['genericroleplayrole_set', 'instructions', 'name'],
 };

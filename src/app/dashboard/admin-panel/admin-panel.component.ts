@@ -41,5 +41,7 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    localStorage.removeItem('single_user_participant');
+  }
 }

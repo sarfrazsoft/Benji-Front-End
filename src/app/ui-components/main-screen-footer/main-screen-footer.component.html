@@ -85,7 +85,7 @@
         </div>
         <div
           class="brainstrom-categories"
-          *ngIf="activityState.activity_type === 'BrainstormActivity'"
+          *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
           fxLayoutAlign="center center"
           (click)="toggleCategorization()"
         >

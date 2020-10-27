@@ -170,7 +170,7 @@
     [showFooter]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"
-    [isPaused]="serverMessage.base_activity.is_paused"
+    [isPaused]="isPaused()"
     (socketMessage)="sendSocketMessage($event)"
   ></benji-main-screen-footer>
 </div>

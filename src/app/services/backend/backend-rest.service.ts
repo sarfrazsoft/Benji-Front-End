@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as global from '../../globals';
 import { ContextService } from '../context.service';
-import { Course, LessonRun } from './schema/course_details';
+import { Course, LessonRun, LessonRunDetails } from './schema/course_details';
 import { Lesson, PaginatedResponse } from './schema/course_details';
 import { TeamUser, User } from './schema/user';
 import { PartnerInfo } from './schema/whitelabel_info';
@@ -37,8 +37,8 @@ export class BackendRestService {
     );
   }
 
-  get_lessonrun(roomCode: number): Observable<LessonRun> {
-    return this.http.get<LessonRun>(global.apiRoot + '/course_details/lesson_run/' + roomCode + '/');
+  get_lessonrun(roomCode: number): Observable<LessonRunDetails> {
+    return this.http.get<LessonRunDetails>(global.apiRoot + '/course_details/lesson_run/' + roomCode + '/');
   }
 
   get_sessionrun_attendance(sessionrunID) {

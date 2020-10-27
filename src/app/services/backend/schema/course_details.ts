@@ -1,4 +1,4 @@
-import { User } from './user';
+import { TeamUser, User } from './user';
 
 export interface PaginatedResponse<T> {
   count: number;
@@ -48,11 +48,12 @@ export interface LessonRun {
 
 export interface LessonRunDetails {
   end_time: string;
-  host: any;
+  host: TeamUser;
   id: number;
-  lesson: any;
+  lesson: Lesson;
   lessonrun_code: number;
   participant_set: Array<any>;
+  screen_socet: string;
   start_time: string;
 }
 

@@ -117,6 +117,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('single_user_participant');
   }
 
   getToken() {

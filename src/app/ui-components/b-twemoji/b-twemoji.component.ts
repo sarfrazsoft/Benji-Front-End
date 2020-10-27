@@ -77,7 +77,7 @@ export class BTwemojiComponent implements OnInit, OnChanges {
     } else if (this.text) {
       // if text is a legacy emoji
       const emojiText = this.text.split('//')[1];
-      if (/^[a-b]/.test(emojiText)) {
+      if (/^[a-zA-Z]+$/.test(emojiText)) {
         const x = this.emojiLookupService.getEmoji(this.text);
         this.setupEmoji(x);
       } else {

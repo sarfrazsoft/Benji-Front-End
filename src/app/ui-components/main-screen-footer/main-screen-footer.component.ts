@@ -64,7 +64,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     // }
     // this.actType = this.activityState.activity_type;
 
-    this.participants = this.activityState.lesson_run.participant_set;
+    if (this.activityState) {
+      this.participants = this.activityState.lesson_run.participant_set;
+    }
   }
 
   controlClicked(eventType) {

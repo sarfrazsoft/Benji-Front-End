@@ -75,20 +75,9 @@ export class MainScreenBuildPitchActivityComponent
   }
 
   getWinningPitch(): string {
-    const votes = this.activityState.buildapitchactivity.votes;
+    const acts = this.activityState.buildapitchactivity;
 
-    const v = Math.max.apply(
-      Math,
-      votes.map(function (o) {
-        return o.num_votes;
-      })
-    );
-
-    const obj = votes.find(function (o) {
-      return o.num_votes === v;
-    });
-
-    return this.getPitchText(obj.id);
+    return this.getPitchText(acts.winning_participant.participant_code);
   }
 
   getPitchText(userId): string {

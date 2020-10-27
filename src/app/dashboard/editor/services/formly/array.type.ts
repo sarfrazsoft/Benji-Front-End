@@ -21,7 +21,10 @@ import { FieldArrayType } from '@ngx-formly/core';
 
       <div class="d-flex">
         <button class="editor-content-button add-answer" type="button" (click)="add()">
-          Add {{ to.label }}
+          <ng-container *ngIf="to.addLabel">
+            {{ to.addLabel }}
+          </ng-container>
+          <ng-container *ngIf="!to.addLabel"> Add {{ to.label }} </ng-container>
         </button>
       </div>
     </div>

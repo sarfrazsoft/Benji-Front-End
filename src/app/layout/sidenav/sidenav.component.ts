@@ -201,7 +201,7 @@ export class SidenavComponent implements OnInit {
       this.sidenavSections = [
         this.dashboard,
         // this.adminSection,
-        this.groupsSection,
+        // this.groupsSection,
         // this.editor,
         this.pastSessionSection,
         this.accountSection,

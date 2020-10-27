@@ -81,6 +81,7 @@ export const ActivityDisplayNames = {
   CaseStudyActivity: 'Worksheets',
   MCQActivity: 'Quiz',
   FeedbackActivity: 'Survey',
+  GenericRoleplayActivity: 'Roleplay',
 };
 
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
