@@ -102,10 +102,13 @@ export class ActivitiesEffects {
       });
       const newContentArray = cloneDeep(contentArray);
       for (let i = 0; i < newContentArray.length; i++) {
-        if (newContentArray[i].activity_type === this.at.caseStudy) {
-          const caseStudyAct = newContentArray[i];
+        if (
+          newContentArray[i].activity_type === this.at.caseStudy ||
+          newContentArray[i].activity_type === this.at.genericRoleplay
+        ) {
+          const subjectAct = newContentArray[i];
           // first time being saved
-          if (caseStudyAct.grouping_activity_id === true) {
+          if (subjectAct.grouping_activity_id === true) {
             const newIndex = new Date().getTime();
             const groupingActivity = {
               activity_id: '' + newIndex,
@@ -115,8 +118,8 @@ export class ActivitiesEffects {
               grouping_seconds: 10000,
             };
             newContentArray.splice(i - 1, 0, groupingActivity);
-            caseStudyAct.grouping_activity_id = newIndex + '';
-          } else if (caseStudyAct.grouping_activity_id === false) {
+            subjectAct.grouping_activity_id = newIndex + '';
+          } else if (subjectAct.grouping_activity_id === false) {
             const newIndex = new Date().getTime();
             const groupingActivity = {
               activity_id: '' + newIndex,
@@ -126,7 +129,7 @@ export class ActivitiesEffects {
               grouping_seconds: 0,
             };
             newContentArray.splice(i - 1, 0, groupingActivity);
-            caseStudyAct.grouping_activity_id = newIndex + '';
+            subjectAct.grouping_activity_id = newIndex + '';
           } else {
             // grouping_activity_id is already set to some string and we don't need to change it
           }
@@ -172,7 +175,7 @@ export class ActivitiesEffects {
       //     main_title: 'Hello World',
       //   },
       // ];
-      // console.log(lessonActs);
+      // console.log(lesson_json);
       return this.editorService.updateLesson(lesson_json, wholeState.activities.lessonId).pipe(
         map((res: any) => {
           return new ActivityActions.SaveLessonSuccess(res);

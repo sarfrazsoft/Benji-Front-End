@@ -1,3 +1,4 @@
+import { cloneDeep, orderBy } from 'lodash';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { SAMPLE_ACTIVITIES } from '../../models';
@@ -52,7 +53,6 @@ export const initialState = {
     'GatherActivity',
     'HintWordActivity',
     'WhereDoYouStandActivity',
-    'GenericRoleplayActivity',
     'RoleplayPairActivity',
     'DiscussionActivity',
     'GroupingActivity',
@@ -237,14 +237,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.ADD_ACTIVITY_CONTENT: {
       const content = action.payload;
-      // let lessonActivity = {};
-      // if (state.selectedLessonActivity) {
-      //   const x = state.selectedLessonActivity;
-      //   lessonActivity = {
-      //     ...state.lessonActivities[x],
-      //     content,
-      //   };
-      // }
       return {
         ...state,
         lessonActivitiesContent: {
@@ -280,7 +272,68 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           [previousSelectedId]: { ...lessonActivities[previousSelectedId], selected: false },
         };
       }
-      // console.log(lessonActivities);
+      return {
+        ...state,
+        lessonActivities,
+        selectedLessonActivity: newIndex,
+        selectedPossibleActivity: null,
+      };
+    }
+
+    case fromActivities.ADD_EMPTY_LESSON_ACTIVITY_AT_INDEX: {
+      // Creating the new lesson activity and adding to existing
+      // lesson activities at the specified index
+      const order = action.payload;
+      const newIndex = new Date().getTime();
+
+      // make an array out of the lesson activities
+      // insert our new activity at the secified index
+      // flatten the object again
+      const arrayLessonActivities2 = [];
+      Object.keys(state.lessonActivities).forEach((key) => {
+        arrayLessonActivities2.push(state.lessonActivities[key]);
+      });
+      let arrayLessonActivities = cloneDeep(arrayLessonActivities2);
+      arrayLessonActivities = orderBy(arrayLessonActivities, ['order'], ['asc']);
+      // console.log(cloneDeep(arrayLessonActivities));
+      arrayLessonActivities.forEach((element) => {
+        if (element.order >= order) {
+          element.order = order + 1;
+        }
+      });
+      arrayLessonActivities.splice(order, 0, {
+        id: newIndex,
+        empty: true,
+        selected: false,
+        order: order,
+        activity_type: null,
+        displayName: null,
+      });
+      arrayLessonActivities.forEach((val, index) => {
+        arrayLessonActivities[index] = { ...val, order: index + 1 };
+      });
+      console.log(arrayLessonActivities);
+
+      let lessonActivities = arrayLessonActivities.reduce(
+        (entities: { [id: number]: Activity }, activity: Activity) => {
+          return {
+            ...entities,
+            [activity.id]: activity,
+          };
+        },
+        {
+          ...state.lessonActivities,
+        }
+      );
+
+      // Selecting the new lesson activity and unselect the previous selected activity
+      const previousSelectedId = state.selectedLessonActivity;
+      if (previousSelectedId && previousSelectedId !== newIndex) {
+        lessonActivities = {
+          ...lessonActivities,
+          [previousSelectedId]: { ...lessonActivities[previousSelectedId], selected: false },
+        };
+      }
       return {
         ...state,
         lessonActivities,
@@ -318,17 +371,51 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
         console.log(nextSelectedActivityOrder);
       }
 
-      const y = index + '';
+      // add order to activities
+      // const arrayLessonActivities2 = [];
+      // Object.keys(state.lessonActivities).forEach((key) => {
+      //   arrayLessonActivities2.push(state.lessonActivities[key]);
+      // });
+      // const arrayLessonActivities = cloneDeep(arrayLessonActivities2);
       const noOfActivities = Object.keys(state.lessonActivities).length;
+      // arrayLessonActivities.forEach((val, i) => {
+      //   arrayLessonActivities[index] = { ...val, order: i + 1 };
+      // });
+      // const lessonActivities2 = arrayLessonActivities.reduce(
+      //   (entities: { [id: number]: Activity }, activity: Activity) => {
+      //     return {
+      //       ...entities,
+      //       [activity.id]: activity,
+      //     };
+      //   },
+      //   {
+      //     ...state.lessonActivities,
+      //   }
+      // );
       if (noOfActivities > 1) {
         const { [index]: removed, ...lessonActivities }: any = state.lessonActivities;
+        // fix the order of the activities
+        const arrayLessonActivities2 = [];
+        Object.keys(lessonActivities).forEach((key) => {
+          arrayLessonActivities2.push(lessonActivities[key]);
+        });
+        const arrayLessonActivities = cloneDeep(arrayLessonActivities2);
+        arrayLessonActivities.forEach((val, i) => {
+          arrayLessonActivities[i] = { ...val, order: i + 1 };
+        });
+
+        const la = {};
+        arrayLessonActivities.forEach((val) => {
+          la[val.id] = val;
+        });
+
         return {
           ...state,
           selectedLessonActivity,
           selectedLessonActivityContent,
           lessonActivities: {
-            ...lessonActivities,
-            [selectedLessonActivity]: { selected: true, ...lessonActivities[selectedLessonActivity] },
+            ...la,
+            [selectedLessonActivity]: { selected: true, ...la[selectedLessonActivity] },
           },
         };
       } else {
@@ -386,6 +473,14 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       };
     }
 
+    case fromActivities.COPY_LESSON_ACTIVITY: {
+      const activity: OverviewLessonActivity = action.payload;
+
+      return {
+        ...state,
+      };
+    }
+
     case fromActivities.UPDATE_LESSON_NAME_SUCCESS: {
       const lesson: Lesson = action.payload;
       return { ...state, lessonName: lesson.lesson_name };
@@ -403,7 +498,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       if (!lesson.lesson_plan && !lesson.lesson_plan_json && lesson.editor_lesson_plan) {
         lessonError = true;
       }
-      // console.log(lesson);
       return { ...state, errorInLesson: lessonError, lessonSaved: true, savingLesson: false };
     }
     case fromActivities.SAVE_LESSON_FAILURE: {

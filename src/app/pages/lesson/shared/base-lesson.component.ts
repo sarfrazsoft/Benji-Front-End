@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
@@ -157,7 +156,7 @@ export class BaseLessonComponent implements OnInit {
       console.log(msg);
       const obj = msg.clienterror.error_detail;
       if (typeof obj === 'string') {
-        this.openSnackBar(obj, '');
+        // this.openSnackBar(obj, '');
       } else {
         if (obj[Object.keys(obj)[0]]) {
           if (obj[Object.keys(obj)[0]][0]) {

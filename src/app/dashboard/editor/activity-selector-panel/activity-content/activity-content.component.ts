@@ -58,7 +58,7 @@ export class ActivityContentComponent implements OnInit {
 
           // Case study activiy
           // set grouping_activity_id to show if External or Internal grouping activity
-          if (act.activity_type === this.at.caseStudy) {
+          if (act.activity_type === this.at.caseStudy || act.activity_type === this.at.genericRoleplay) {
             if (content) {
               if (content.grouping_activity_type === 'ExternalGroupingActivity') {
                 content.grouping_activity_id = true;
@@ -336,8 +336,17 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === 'feedbackquestions') {
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['addLabel'] = 'Add question';
-                } else if (mapSource.field_name === '') {
+                } else if (mapSource.internal_type === 'FeedbackQuestionSerializer') {
                   mappedField.templateOptions.label = '';
+                  mappedField.type = 'feedbackQuestion';
+                } else if (mapSource.field_name === 'grouping_activity_id') {
+                  mappedField.type = 'boolean';
+                  mappedField.templateOptions.label = 'Add External grouping';
+                  mappedField.defaultValue = true;
+                  mappedField.templateOptions['hideRequiredMarker'] = true;
+                  delete mappedField.templateOptions.required;
+                  delete mappedField.templateOptions.maxLength;
+                  delete mappedField.templateOptions.minLength;
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === '') {
@@ -402,27 +411,11 @@ export class ActivityContentComponent implements OnInit {
         }
       } else if (b.activity_type === this.at.caseStudy) {
         if (b.grouping_activity_id) {
+          // add ExternalGroupingActivity in the effects
           b['grouping_activity_type'] = 'ExternalGroupingActivity';
-          // add ExternalGroupingActivity in the reducer
-          // activity_type: ExternalGroupingActivity
-          // description: A way to group people into groups.
-          // next_activity_delay_seconds: 0
-          // grouping_seconds: 300
-          //
-          // TODO
-          // before saving the reducer will be called for add content
-          // over there you'll have to add the said activities not here
-          //
-          // TODO
-          // when you encounter these activities in the loadlessonactivities reducers
-          // don't add them, just ignore them
         } else {
+          // add SingleGroupingActivity in the effects
           b['grouping_activity_type'] = 'SingleGroupingActivity';
-          // add SingleGroupingActivity in the reducer
-          // activity_type: SingleGroupingActivity
-          //           description: 'Dummy Description'
-          //           grouping_seconds: 0
-          //           next_activity_delay_seconds: 0
         }
       } else if (b.activity_type === this.at.feedback) {
         b.titlecomponent.participant_instructions = b.titlecomponent.screen_instructions;
@@ -432,9 +425,17 @@ export class ActivityContentComponent implements OnInit {
         );
       } else if (b.activity_type === this.at.genericRoleplay) {
         b.instructions = b.short_instructions;
+        if (b.grouping_activity_id) {
+          // add ExternalGroupingActivity in the effects
+          b['grouping_activity_type'] = 'ExternalGroupingActivity';
+        } else {
+          // add SingleGroupingActivity in the effects
+          b['grouping_activity_type'] = 'SingleGroupingActivity';
+        }
       }
+
+      // console.log(b);
       this.store.dispatch(new fromStore.AddActivityContent(b));
-      // console.log(this.model);
     });
   }
 
@@ -499,5 +500,5 @@ export const OrderForActivities = {
     'next_activity_delay_seconds',
     'auto_next',
   ],
-  GenericRoleplayActivity: ['genericroleplayrole_set', 'instructions', 'name'],
+  GenericRoleplayActivity: ['genericroleplayrole_set', 'name', 'image_url', 'instructions'],
 };

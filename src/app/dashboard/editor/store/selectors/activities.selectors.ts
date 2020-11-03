@@ -15,6 +15,11 @@ export const getSelectedLessonActivityContent = createSelector(
   fromReducers.getSelectedLessonActivityContent
 );
 
+export const getLessonActivityContent = (id) =>
+  createSelector(getActivitiesState, (entities) => {
+    return entities.lessonActivitiesContent[id];
+  });
+
 export const getAllPossibleActivities = createSelector(getPossibleActivities, (entities) => {
   return Object.keys(entities).map((id) => entities[id]);
 });

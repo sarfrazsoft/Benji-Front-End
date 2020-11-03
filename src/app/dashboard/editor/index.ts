@@ -22,6 +22,7 @@ import {
   NullTypeComponent,
   ObjectTypeComponent,
   QuestionTypeSelectComponent,
+  SafePipe,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
@@ -31,6 +32,7 @@ import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/
 
 export const EditorComponents = [
   ...ActivitySelectorComponents,
+  SafePipe,
   OverviewThumbnailComponent,
   EditorComponent,
   OverviewPanelComponent,

@@ -18,5 +18,15 @@
       <img [src]="item.content" alt="" />
     </ng-container>
 
+    <ng-container *ngIf="item.type === 'video'">
+      <!-- <div class="video-container" fxLayoutAlign="center">
+        <video #player controls style="width: 350px;">
+          <source [src]="item.content | safe" type="video/mp4" />
+        </video>
+      </div> -->
+      <iframe [src]="item.content | safe" width="350" height="200" frameborder="0" allow="autoplay; fullscreen" allowfullscreen>
+      </iframe>
+    </ng-container>
+
   </ng-container>
 </div>

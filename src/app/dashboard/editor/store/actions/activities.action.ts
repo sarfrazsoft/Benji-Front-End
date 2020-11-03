@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import { Activity } from '../../models';
 
 // Load all possible activities
@@ -40,12 +41,20 @@ export class LoadLessonActivitiesSuccess implements Action {
 
 // Add empty activity to lesson activities
 export const ADD_EMPTY_LESSON_ACTIVITY = '[Overview panel] Add empty lesson Activity';
+export const ADD_EMPTY_LESSON_ACTIVITY_AT_INDEX =
+  '[Overview panel] Add empty lesson Activity at specific index';
 export const REMOVE_LESSON_ACTIVITY = '[Overview panel] Delete lesson activity';
 export const SELECT_LESSON_ACTIVITY = '[Overview panel] Select lesson activity';
 export const REORDER_LESSON_ACTIVITIES = '[Overview panel] Re-order lesson activities after sorting';
+export const COPY_LESSON_ACTIVITY = '[Overview panel] Copy lesson activity and add the copy below it';
 
 export class AddEmptyLessonActivity implements Action {
   readonly type = ADD_EMPTY_LESSON_ACTIVITY;
+}
+
+export class AddEmptyLessonActivityAtIndex implements Action {
+  readonly type = ADD_EMPTY_LESSON_ACTIVITY_AT_INDEX;
+  constructor(public payload: number) {}
 }
 
 export class RemoveLessonActivity implements Action {
@@ -61,6 +70,11 @@ export class SelectLessonActivity implements Action {
 export class ReorderLessonActivities implements Action {
   readonly type = REORDER_LESSON_ACTIVITIES;
   constructor(public payload: any) {}
+}
+
+export class CopyLessonActivity implements Action {
+  readonly type = COPY_LESSON_ACTIVITY;
+  constructor(public payload: OverviewLessonActivity) {}
 }
 
 // Activity selected under 'Type' tab in activity selector panel
@@ -166,8 +180,10 @@ export type ActivitiesAction =
   | LoadLessonActivitiesSuccess
   | LoadLesssonActivitiesFail
   | AddEmptyLessonActivity
+  | AddEmptyLessonActivityAtIndex
   | RemoveLessonActivity
   | SelectLessonActivity
+  | CopyLessonActivity
   | CreateLessonYaml
   | CreateLessonYamlSuccess
   | CreateLessonYamlFailure

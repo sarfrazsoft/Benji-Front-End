@@ -24,7 +24,19 @@
       cdkDrag
       cdkDragBoundary=".activity-list"
     >
-      <div class="index">{{ i + 1 }}</div>
+      <div class="activity-controls" fxLayout="column" fxLayoutAlign="space-between space-between">
+        <div style="text-align: center;">
+          {{ i + 1 }}
+        </div>
+        <div class="copy-delete-icons" fxLayout="column" fxLayoutGap="8px" style="cursor: pointer">
+          <div (click)="copySlide($event, act)">
+            <img src="../../../../assets/img/copy_slide_icon.svg" alt="">
+          </div>
+          <div (click)="deleteActivity(act.id)">
+            <img src="../../../../assets/img/delete_slide_icon.svg" alt="">
+          </div>
+        </div>
+      </div>
       <div
         class="activity"
         fxLayout="column"
@@ -34,7 +46,6 @@
         }"
       >
         <benji-overview-thumbnail [act]="act"></benji-overview-thumbnail>
-        <mat-icon (click)="deleteActivity(act.id)" style="cursor: pointer"> clear </mat-icon>
       </div>
     </div>
   </div>

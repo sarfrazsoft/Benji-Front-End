@@ -4,7 +4,7 @@ import { FeedbackQuestionSet } from 'src/app/services/backend/schema';
 @Component({
   selector: 'benji-generic-feedback-graph',
   templateUrl: './generic-feedback-graph.component.html',
-  styleUrls: ['./generic-feedback-graph.component.scss']
+  styleUrls: ['./generic-feedback-graph.component.scss'],
 })
 export class FeedbackGenericGraphComponent implements OnInit {
   @Input() fback: Array<FeedbackQuestionSet>;
@@ -13,7 +13,9 @@ export class FeedbackGenericGraphComponent implements OnInit {
   @Input() userFilter = false;
   @Input() cardTitle = '';
 
-  constructor() {}
+  constructor() {
+    // console.log(this.fback);
+  }
 
   ngOnInit() {}
 }
