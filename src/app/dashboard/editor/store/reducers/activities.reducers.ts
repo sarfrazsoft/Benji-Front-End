@@ -59,7 +59,6 @@ export const initialState = {
     'PairGroupingActivity',
     'TriadGroupingActivity',
     'ExternalGroupingActivity',
-    'BuildAPitchActivity',
     'PitchoMaticActivity',
     'MCQResultsActivity',
     'MontyHallActivity',
@@ -371,27 +370,8 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
         console.log(nextSelectedActivityOrder);
       }
 
-      // add order to activities
-      // const arrayLessonActivities2 = [];
-      // Object.keys(state.lessonActivities).forEach((key) => {
-      //   arrayLessonActivities2.push(state.lessonActivities[key]);
-      // });
-      // const arrayLessonActivities = cloneDeep(arrayLessonActivities2);
       const noOfActivities = Object.keys(state.lessonActivities).length;
-      // arrayLessonActivities.forEach((val, i) => {
-      //   arrayLessonActivities[index] = { ...val, order: i + 1 };
-      // });
-      // const lessonActivities2 = arrayLessonActivities.reduce(
-      //   (entities: { [id: number]: Activity }, activity: Activity) => {
-      //     return {
-      //       ...entities,
-      //       [activity.id]: activity,
-      //     };
-      //   },
-      //   {
-      //     ...state.lessonActivities,
-      //   }
-      // );
+
       if (noOfActivities > 1) {
         const { [index]: removed, ...lessonActivities }: any = state.lessonActivities;
         // fix the order of the activities
@@ -521,130 +501,3 @@ export const getSelectedPossibleActivity = (state: ActivityState) => state.selec
 export const getLessonActivities = (state: ActivityState) => state.lessonActivities;
 export const getSelectedLessonActivity = (state: ActivityState) => state.selectedLessonActivity;
 export const getSelectedLessonActivityContent = (state: ActivityState) => state.selectedLessonActivityContent;
-
-// case fromActivities.ADD_PLACEHOLDER_ACTIVITY: {
-//   const placeholder = [
-//     {
-//       name: '',
-//       id: 999999999,
-//       activity_type: 'new type',
-//     },
-//   ];
-//   const flattendObjects = placeholder.reduce(
-//     (entities: { [id: number]: Activity }, activity: Activity) => {
-//       return {
-//         ...entities,
-//         [activity.id]: activity,
-//       };
-//     },
-//     {
-//       ...state.entities,
-//     }
-//   );
-
-//   return {
-//     ...state,
-//     loading: false,
-//     loaded: true,
-//     entities: flattendObjects,
-//   };
-//   return { ...state };
-// }
-
-// case fromActivities.REMOVE_PLACEHOLDER_ACTIVITY: {
-//   const entities = {};
-//   return {
-//     ...state,
-//     entities,
-//   };
-// }
-
-// case fromActivities.ACTIVITY_HOVERED: {
-//   const activityId = action.payload.activityId;
-//   const categoryId = action.payload.categoryId;
-//   const newActivity = Object.assign(
-//     {},
-//     state.possibleActivities[categoryId].activities[activityId]
-//   );
-//   newActivity.mouseOvered = true;
-//   return {
-//     ...state,
-//     possibleActivities: {
-//       ...state.possibleActivities,
-//       [categoryId]: {
-//         ...state.possibleActivities[categoryId],
-//         activities: {
-//           ...state.possibleActivities[categoryId].activities,
-//           [activityId]: newActivity,
-//         },
-//       },
-//     },
-//   };
-// }
-
-// case fromActivities.ACTIVITY_HOVER_END: {
-//   const activityId = action.payload.activityId;
-//   const categoryId = action.payload.categoryId;
-//   const newActivity = Object.assign(
-//     {},
-//     state.possibleActivities[categoryId].activities[activityId]
-//   );
-//   newActivity.mouseOvered = false;
-//   return {
-//     ...state,
-//     possibleActivities: {
-//       ...state.possibleActivities,
-//       [categoryId]: {
-//         ...state.possibleActivities[categoryId],
-//         activities: {
-//           ...state.possibleActivities[categoryId].activities,
-//           [activityId]: newActivity,
-//         },
-//       },
-//     },
-//   };
-// }
-
-// const array = action.payload.arr;
-// const from = clamp(action.payload.previousIndex, array.length - 1);
-// const to = clamp(action.payload.currentIndex, array.length - 1);
-
-// if (from === to) {
-//   return;
-// }
-
-// const target = array[from];
-// const delta = to < from ? -1 : 1;
-
-// for (let i = from; i !== to; i += delta) {
-//   array[i] = array[i + delta];
-// }
-
-// array[to] = target;
-
-// console.log(array);
-
-// const orderedActs = [];
-// for (let i = 0; i < orderedActs.length; i++) {
-//   orderedActs.push({ order: i + 1, ...array[i] });
-//   console.log({ order: i + 1, ...array[i] });
-// }
-
-// const flattendObjects = orderedActs.reduce(
-//   (entities: { [id: number]: Activity }, activity: Activity) => {
-//     return {
-//       ...entities,
-//       [activity.id]: activity,
-//     };
-//   },
-//   {
-//     ...state.lessonActivities,
-//   }
-// );
-
-// return {
-//   ...state,
-//   loading: false,
-//   loaded: true,
-//   lessonActivities: flattendObjects,
-// };

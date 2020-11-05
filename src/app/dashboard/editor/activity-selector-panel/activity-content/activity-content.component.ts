@@ -358,14 +358,53 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 }
+              } else if (act.activity_type === this.at.buildAPitch) {
+                if (mapSource.internal_type === 'BuildAPitchActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'instructions') {
+                  mappedField.type = 'textarea';
+                  mappedField.templateOptions.label = 'Instructions';
+                  mappedField.templateOptions.placeholder = 'Fill in the sheet to complete your statement';
+                  mappedField.templateOptions['helpText'] = 'Instructions to be shown to people.';
+                } else if (mapSource.field_name === 'buildapitchblank_set') {
+                  mappedField.templateOptions.label = 'Build your madlib';
+                  mappedField.templateOptions['addLabel'] = 'Add new block';
+                } else if (mapSource.field_name === 'question_seconds') {
+                  mappedField.templateOptions.label = 'Time to complete Madlib';
+                } else if (mapSource.field_name === 'vote_seconds') {
+                  mappedField.defaultValue = 0;
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['hideLabel'] = true;
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add Voting Stage';
+                  mappedField.templateOptions['helpText'] = 'How long does the voting stage last?';
+                } else if (mapSource.field_name === 'build_seconds') {
+                  mappedField.templateOptions.label = 'Time to complete Madlib';
+                } else if (mapSource.field_name === 'sharing_done') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'voting_done') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'building_done') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.defaultValue = 0;
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['hideLabel'] = true;
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add Winner Stage';
+                  mappedField.templateOptions['helpText'] = 'How long should the winner be displayed?';
+                } else if (mapSource.field_name === 'buildapitchblank_set') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.internal_type === 'BuildAPitchBlankSerializer') {
+                  mappedField.type = 'bapBlank';
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'help_text') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === '') {
+                }
               }
-              // if activity is nullable then send it to special component
-              // over there it will have a special checkbox.
-              // allow that textbox to be anything right now
-
-              // if (mapSource['x-nullable']) {
-              // mappedField.wrappers = ['benji-reveal-field-wrapper'];
-              // }
               return mappedField;
             },
           });
@@ -431,6 +470,12 @@ export class ActivityContentComponent implements OnInit {
         } else {
           // add SingleGroupingActivity in the effects
           b['grouping_activity_type'] = 'SingleGroupingActivity';
+        }
+      } else if (b.activity_type === this.at.buildAPitch) {
+        if (b.buildapitchblank_set.length) {
+          b.buildapitchblank_set.forEach((v, i) => {
+            v['order'] = i + 1;
+          });
         }
       }
 
@@ -501,4 +546,5 @@ export const OrderForActivities = {
     'auto_next',
   ],
   GenericRoleplayActivity: ['genericroleplayrole_set', 'name', 'image_url', 'instructions'],
+  BuildAPitchActivity: ['instructions', 'buildapitchblank_set', 'build_seconds', 'vote_seconds'],
 };

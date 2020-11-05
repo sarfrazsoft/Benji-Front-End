@@ -19,6 +19,7 @@ import { EmojiSelectorComponent } from './activity-selector-panel/activity-conte
 import { ActivityHelpComponent } from './activity-selector-panel/activity-help/activity-help.component';
 import {
   ArrayTypeComponent,
+  BAPBlankTypeComponent,
   FeedbackQuestionTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
@@ -127,6 +128,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
         { name: 'multischema', component: MultiSchemaTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'mcqChoice', component: MCQChoiceTypeComponent },
+        { name: 'bapBlank', component: BAPBlankTypeComponent },
         { name: 'feedbackQuestion', component: FeedbackQuestionTypeComponent },
         { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },
       ],

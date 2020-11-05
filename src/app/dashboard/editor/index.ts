@@ -15,6 +15,7 @@ import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
+  BAPBlankTypeComponent,
   FeedbackQuestionTypeComponent,
   FormlySelectOptionsPipe,
   MCQChoiceTypeComponent,
@@ -48,6 +49,7 @@ export const EditorComponents = [
   FeedbackQuestionTypeComponent,
   QuestionTypeSelectComponent,
   FormlySelectOptionsPipe,
+  BAPBlankTypeComponent,
 ];
 
 export const EditorEntryComponents = [...ActivitySelectorEntryComponents];
