@@ -18,10 +18,7 @@ export class ActivityHelpComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(fromStore.getSelectedLessonActivity).subscribe((val: OverviewLessonActivity) => {
-      console.log(val);
-      console.log(ActivityHelp);
       this.activityHelp = ActivityHelp[val.activity_type];
-      console.log(this.activityHelp);
     });
   }
 }

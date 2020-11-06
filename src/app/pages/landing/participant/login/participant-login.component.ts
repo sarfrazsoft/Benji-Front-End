@@ -70,7 +70,7 @@ export class ParticipantLoginComponent implements OnInit {
     }
 
     this.backend
-      .createUser(this.username.value, this.lessonRunDetails.lessonrun_code)
+      .createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code)
       .subscribe((res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {

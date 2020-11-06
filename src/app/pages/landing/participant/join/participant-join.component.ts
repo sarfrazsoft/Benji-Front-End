@@ -46,12 +46,14 @@ export class ParticipantJoinComponent implements OnInit {
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
         if (this.authService.isLoggedIn()) {
-          this.backend.createUser(this.userName, lessonrun_code).subscribe((participant: Participant) => {
-            if (res.lessonrun_code) {
-              localStorage.setItem('participant', JSON.stringify(participant));
-              this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
-            }
-          });
+          this.backend
+            .createParticipant(this.userName, lessonrun_code)
+            .subscribe((participant: Participant) => {
+              if (res.lessonrun_code) {
+                localStorage.setItem('participant', JSON.stringify(participant));
+                this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+              }
+            });
         } else {
           this.router.navigate([`/participant/login`]);
         }

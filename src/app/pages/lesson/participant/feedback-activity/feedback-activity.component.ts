@@ -41,7 +41,7 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
         );
         answers.push(ans);
       }
-      if (val.questions[i].question_type === 'text') {
+      if (val.questions[i].question_type === 'text_only') {
         const ans = new FeedbackSubmitEventAnswer(
           val.questions[i].q,
           val.questions[i].rating_answer,

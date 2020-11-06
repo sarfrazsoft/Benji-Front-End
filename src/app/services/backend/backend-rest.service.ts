@@ -23,7 +23,7 @@ export class BackendRestService {
   }
 
   // DEMO ONLY
-  createUser(username: string, enteredRoomCode: number) {
+  createParticipant(username: string, enteredRoomCode: number) {
     return this.http.post(global.apiRoot + '/course_details/participant/', {
       lessonrun_code: enteredRoomCode,
       display_name: username,

@@ -90,7 +90,7 @@ export class BaseLessonComponent implements OnInit {
           // create a single user and store it in local storage so that we don't
           // sign in again and again
           this.restService
-            .createUser(lessonRun.host.first_name, lessonRun.lessonrun_code)
+            .createParticipant(lessonRun.host.first_name, lessonRun.lessonrun_code)
             .subscribe((participant: Participant) => {
               if (participant) {
                 this.participantDetails = participant;

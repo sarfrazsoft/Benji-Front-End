@@ -43,6 +43,7 @@ export class ReportsComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       const lesssonrunCode = paramMap.get('lessonrunCode');
+      this.pastSessionsService.resetFilter();
       this.getSessionSummary(lesssonrunCode);
     });
   }
