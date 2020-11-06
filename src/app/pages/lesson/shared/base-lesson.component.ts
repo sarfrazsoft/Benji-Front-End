@@ -35,6 +35,7 @@ export class BaseLessonComponent implements OnInit {
     this.clientType = clientType;
     this.avgServerTimeOffset = 0;
     this.serverOffsets = [];
+    this.authService.closeIntercom();
   }
 
   ngOnInit() {

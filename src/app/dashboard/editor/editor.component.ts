@@ -8,6 +8,7 @@ import { EditorService } from './services';
 
 import { LocationStrategy } from '@angular/common';
 import { Store } from '@ngrx/store';
+import { AuthService } from 'src/app/services';
 import { Activity } from './models';
 import * as fromStore from './store';
 
@@ -48,6 +49,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private layoutService: LayoutService,
@@ -81,6 +83,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit() {
+    this.authService.startIntercom();
     this.lessonName$ = this.store.select(fromStore.getLessonName);
 
     this.lessonName$.subscribe((name) => (this.lessonName = name));

@@ -19,10 +19,7 @@ export class LayoutService {
   get hideSidebar(): boolean {
     return this.hideSidebar$.getValue();
   }
-  constructor(
-    private http: HttpClient,
-    private contextService: ContextService
-  ) {}
+  constructor(private http: HttpClient, private contextService: ContextService) {}
 
   toggleFullscreen() {
     if (this.isFullscreen) {

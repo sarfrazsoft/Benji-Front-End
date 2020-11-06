@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { ContextService } from 'src/app/services';
+import { Intercom } from 'ng-intercom';
+import { AuthService, ContextService } from 'src/app/services';
+import { TeamUser, User } from 'src/app/services/backend/schema';
 import {
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
@@ -17,9 +19,11 @@ import { AdminService } from './services/admin.service';
 export class AdminPanelComponent implements OnInit {
   lessons: Array<any> = [];
   constructor(
+    public intercom: Intercom,
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
     private contextService: ContextService,
+    private authService: AuthService,
     private dialog: MatDialog
   ) {
     this.activatedRoute.data.forEach((data: any) => {
@@ -43,5 +47,7 @@ export class AdminPanelComponent implements OnInit {
 
   ngOnInit() {
     localStorage.removeItem('single_user_participant');
+
+    this.authService.startIntercom();
   }
 }

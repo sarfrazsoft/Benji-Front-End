@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IntercomModule } from 'ng-intercom';
 import { AppRoutingModule } from './app-routing.module';
 
 import { EntryComponents } from 'src/app/pages';
@@ -38,6 +39,11 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
     LayoutModule,
     StoreModule.forRoot({}, { metaReducers }),
     EffectsModule.forRoot([]),
+    IntercomModule.forRoot({
+      appId: 'bddh2r9q', // from your Intercom config
+      // will automatically run `update` on router event changes. Default: `false`
+      updateOnRouterChange: true,
+    }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [...ServicesProviders],

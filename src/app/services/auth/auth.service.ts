@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as jwt_decode from 'jwt-decode';
+import { Intercom } from 'ng-intercom';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 import * as global from '../../globals';
-import { UserInvitation } from '../backend/schema';
+import { TeamUser, UserInvitation } from '../backend/schema';
 import { LayoutService } from '../layout.service';
 
 export interface LoginResponse {
@@ -20,6 +21,7 @@ export class AuthService {
   invitationToken: number;
   redirectURL = '';
   constructor(
+    public intercom: Intercom,
     private http: HttpClient,
     private router: Router,
     private contextService: ContextService,
@@ -118,6 +120,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('single_user_participant');
+    this.closeIntercom();
   }
 
   getToken() {
@@ -162,5 +165,20 @@ export class AuthService {
       console.log(window.location.href);
       this.router.navigate(['/login']);
     }
+  }
+
+  startIntercom() {
+    const user: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
+    this.intercom.boot({
+      name: user.first_name + ' ' + user.last_name,
+      email: user.email,
+      widget: {
+        activator: '#intercom',
+      },
+    });
+  }
+
+  closeIntercom() {
+    this.intercom.shutdown();
   }
 }
