@@ -305,6 +305,7 @@ export interface BrainstormActivity {
   submitted_participants: Array<{ participant_code: number }>;
   all_participants_submitted: boolean;
   all_participants_voted: boolean;
+  hide_timer: boolean;
 }
 
 export interface Category {
@@ -347,6 +348,7 @@ export interface BuildAPitchActivity {
   votes: Array<{ id: number; num_votes: number }>;
   voting_done: boolean;
   winning_participant: ParticipantCode;
+  title: string;
 }
 
 export interface PitchoMaticActivity {

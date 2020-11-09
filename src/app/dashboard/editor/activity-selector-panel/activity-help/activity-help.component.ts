@@ -18,7 +18,9 @@ export class ActivityHelpComponent implements OnInit {
 
   ngOnInit() {
     this.store.select(fromStore.getSelectedLessonActivity).subscribe((val: OverviewLessonActivity) => {
-      this.activityHelp = ActivityHelp[val.activity_type];
+      if (val) {
+        this.activityHelp = ActivityHelp[val.activity_type];
+      }
     });
   }
 }
@@ -94,6 +96,58 @@ export const ActivityHelp = {
       type: 'paragraph',
       content: `Design your brainstorms around a simple prompt.
       Once you've decided on the prompt, you can now tailor the brainstorm exactly to your needs.`,
+    },
+    {
+      type: 'paragraph',
+      content: `How many times do you want participants to submit ideas.
+      Will participant's be voting on submitted ideas? If so, how many times?
+      How long will participants have to vote? If you'd like,
+      we have a "winner" screen which will show you the top 3 vote-getting ideas. `,
+    },
+    {
+      type: 'paragraph',
+      content: `Design your brainstorms around a simple prompt.
+      Once you've decided on the prompt, you can now tailor the brainstorm exactly to your needs.`,
+    },
+    {
+      type: 'video',
+      content: `https://player.vimeo.com/video/475232517`,
+    },
+  ],
+  [ActivityTypes.whereDoYouStand]: [
+    {
+      type: 'header',
+      content: 'Overview',
+    },
+    {
+      type: 'paragraph',
+      content: `Where do you stand help`,
+    },
+    {
+      type: 'paragraph',
+      content: `How many times do you want participants to submit ideas.
+      Will participant's be voting on submitted ideas? If so, how many times?
+      How long will participants have to vote? If you'd like,
+      we have a "winner" screen which will show you the top 3 vote-getting ideas. `,
+    },
+    {
+      type: 'paragraph',
+      content: `Design your brainstorms around a simple prompt.
+      Once you've decided on the prompt, you can now tailor the brainstorm exactly to your needs.`,
+    },
+    {
+      type: 'video',
+      content: `https://player.vimeo.com/video/475232517`,
+    },
+  ],
+  [ActivityTypes.buildAPitch]: [
+    {
+      type: 'header',
+      content: 'Overview',
+    },
+    {
+      type: 'paragraph',
+      content: `build a pitch help`,
     },
     {
       type: 'paragraph',

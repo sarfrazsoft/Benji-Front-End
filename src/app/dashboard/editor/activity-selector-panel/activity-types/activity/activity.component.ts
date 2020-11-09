@@ -25,7 +25,9 @@ export class ActivityComponent implements OnInit, OnDestroy {
     });
   }
   getThumbnailSrc(activity) {
-    return this.hostname + activity.thumbnail;
+    if (activity.thumbnail) {
+      return this.hostname + activity.thumbnail;
+    }
   }
 
   selectActivity(activityId) {

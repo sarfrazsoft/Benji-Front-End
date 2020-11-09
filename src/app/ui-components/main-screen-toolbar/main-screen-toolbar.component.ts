@@ -53,7 +53,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
             this.initializeTimer();
           }
         } else if (as.activity_type === this.at.brainStorm) {
-          this.initializeTimer();
+          if (as.brainstormactivity.hide_timer) {
+            this.showTimer = false;
+          } else {
+            this.initializeTimer();
+          }
         }
       } else {
         this.showTimer = false;

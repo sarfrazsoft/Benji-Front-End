@@ -225,6 +225,8 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions['helpText'] = 'How long does the submission stage last?';
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.templateOptions.label = 'Auto forward';
+                } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.defaultValue = true;
                 }
               } else if (act.activity_type === this.at.video) {
                 if (mapSource.internal_type === 'VideoActivitySerializer') {
@@ -274,10 +276,10 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.label = 'Duration for timer';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
                   mappedField.defaultValue = 10000;
+                } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.defaultValue = true;
+                  mappedField.hide = true;
                 }
-                // else if (mapSource.field_name === 'grouping_activity_type') {
-                //   // mappedField.hide = true;
-                // }
               } else if (act.activity_type === this.at.feedback) {
                 if (mapSource.internal_type === 'FeedbackActivitySerializer') {
                   mappedField.templateOptions.label = '';
@@ -347,8 +349,8 @@ export class ActivityContentComponent implements OnInit {
                   delete mappedField.templateOptions.required;
                   delete mappedField.templateOptions.maxLength;
                   delete mappedField.templateOptions.minLength;
-                } else if (mapSource.field_name === '') {
-                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.defaultValue = true;
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === '') {
@@ -402,7 +404,44 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'help_text') {
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
+                }
+              } else if (act.activity_type === this.at.whereDoYouStand) {
+                if (mapSource.internal_type === 'WhereDoYouStandActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'question_title') {
+                  mappedField.templateOptions.label = 'Title';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
+                } else if (mapSource.field_name === 'left_choice') {
+                  mappedField.templateOptions.label = 'Choice 1';
+                } else if (mapSource.field_name === 'right_choice') {
+                  mappedField.templateOptions.label = 'Choice 2';
+                } else if (mapSource.field_name === 'choice_name') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'collective_name') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'prediction_text') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'preference_text') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'stand_on_side_seconds') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'prediction_seconds') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.templateOptions.label = 'Time to answer questions';
+                } else if (mapSource.field_name === 'preference_seconds') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === '') {
+                } else if (mapSource.field_name === '') {
+                } else if (mapSource.field_name === '') {
+                } else if (mapSource.field_name === '') {
+                } else if (mapSource.field_name === '') {
+                } else {
                 }
               }
               return mappedField;
@@ -456,6 +495,9 @@ export class ActivityContentComponent implements OnInit {
           // add SingleGroupingActivity in the effects
           b['grouping_activity_type'] = 'SingleGroupingActivity';
         }
+        if (b.activity_seconds === 10000) {
+          b.hide_timer = true;
+        }
       } else if (b.activity_type === this.at.feedback) {
         b.titlecomponent.participant_instructions = b.titlecomponent.screen_instructions;
       } else if (b.activity_type === this.at.brainStorm) {
@@ -474,8 +516,24 @@ export class ActivityContentComponent implements OnInit {
       } else if (b.activity_type === this.at.buildAPitch) {
         if (b.buildapitchblank_set.length) {
           b.buildapitchblank_set.forEach((v, i) => {
-            v['order'] = i + 1;
+            if (v) {
+              v['order'] = i + 1;
+            }
           });
+        }
+      } else if (b.activity_type === this.at.whereDoYouStand) {
+        if (b.next_activity_delay_seconds) {
+          b.prediction_seconds = b.next_activity_delay_seconds;
+          b.preference_seconds = b.next_activity_delay_seconds;
+          b.stand_on_side_seconds = b.next_activity_delay_seconds;
+        }
+        if (b.left_choice.preference_text) {
+          b.left_choice.choice_name = b.left_choice.preference_text.replace(/\s/g, '');
+          b.left_choice.collective_name = b.left_choice.preference_text;
+        }
+        if (b.right_choice.preference_text) {
+          b.right_choice.choice_name = b.right_choice.preference_text.replace(/\s/g, '');
+          b.right_choice.collective_name = b.right_choice.preference_text;
         }
       }
 
@@ -546,5 +604,12 @@ export const OrderForActivities = {
     'auto_next',
   ],
   GenericRoleplayActivity: ['genericroleplayrole_set', 'name', 'image_url', 'instructions'],
-  BuildAPitchActivity: ['instructions', 'buildapitchblank_set', 'build_seconds', 'vote_seconds'],
+  BuildAPitchActivity: ['title', 'instructions', 'buildapitchblank_set', 'build_seconds', 'vote_seconds'],
+  WhereDoYouStandActivity: [
+    'question_title',
+    'left_choice',
+    'right_choice',
+    'choice_img_url',
+    'prediction_seconds',
+  ],
 };

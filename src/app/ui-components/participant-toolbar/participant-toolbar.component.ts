@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import { Timer } from 'src/app/services/backend/schema';
+import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
@@ -9,9 +10,12 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
   templateUrl: './participant-toolbar.component.html',
   styleUrls: ['./participant-toolbar.component.scss'],
 })
-export class ParticipantToolbarComponent implements OnInit {
+export class ParticipantToolbarComponent implements OnInit, OnChanges {
   logo;
   timer: Timer;
+  @Input() activityState: UpdateMessage;
+  at: typeof ActivityTypes = ActivityTypes;
+  showTimer = false;
   constructor(private contextService: ContextService, private router: Router) {}
 
   ngOnInit() {
@@ -30,5 +34,28 @@ export class ParticipantToolbarComponent implements OnInit {
 
   disconnect() {
     this.router.navigate(['/participant/join']);
+  }
+
+  ngOnChanges() {
+    const as = this.activityState;
+    if (as) {
+      if (as.activity_type === this.at.brainStorm || as.activity_type === this.at.title) {
+        if (as.activity_type === this.at.title) {
+          if (as.titleactivity.hide_timer) {
+            this.showTimer = false;
+          } else {
+            this.showTimer = true;
+          }
+        } else if (as.activity_type === this.at.brainStorm) {
+          if (as.brainstormactivity.hide_timer) {
+            this.showTimer = false;
+          } else {
+            this.showTimer = true;
+          }
+        }
+      } else {
+        this.showTimer = false;
+      }
+    }
   }
 }
