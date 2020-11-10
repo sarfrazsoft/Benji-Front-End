@@ -196,6 +196,7 @@ export class ParticipantBrainstormingActivityComponent
   submitImageNIdea() {
     const code = this.activityState.lesson_run.lessonrun_code;
     const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+    const participant_code = this.getParticipantCode().toString();
     const fileList: FileList = this.imagesList;
     if (fileList.length > 0) {
       const file: File = fileList[0];
@@ -206,6 +207,7 @@ export class ParticipantBrainstormingActivityComponent
         .then((resizedImage: Blob) => {
           const formData: FormData = new FormData();
           formData.append('img', resizedImage, file.name);
+          formData.append('participant_code', participant_code);
           const headers = new HttpHeaders();
           headers.set('Content-Type', null);
           headers.set('Accept', 'multipart/form-data');
@@ -284,7 +286,7 @@ export class ParticipantBrainstormingActivityComponent
       };
       reader.readAsDataURL(file);
     });
-  }
+  };
 
   getUserIdeas(userID: number): Array<Idea> {
     const arr: Array<Idea> = [];
