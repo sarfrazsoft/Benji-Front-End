@@ -8,7 +8,6 @@ import { ContextService } from './context.service';
 
 @Injectable()
 export class WhiteLabelResolver implements Resolve<any> {
-  requestSent = false;
   constructor(
     private router: Router,
     private httpClient: HttpClient,
@@ -86,8 +85,7 @@ export class WhiteLabelResolver implements Resolve<any> {
           }
         );
         this.contextService.user$.subscribe((user) => {
-          if (user && user.preferred_host_theme_label && !this.requestSent) {
-            this.requestSent = true;
+          if (user && user.preferred_host_theme_label) {
             this.restService.get_white_label_details(user.preferred_host_theme_label).subscribe(
               (data: any) => {
                 this.contextService.partnerInfo = data;
@@ -99,7 +97,6 @@ export class WhiteLabelResolver implements Resolve<any> {
             );
           } else {
             if (user !== null) {
-              // this.applyBenjiTheme();
               this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
             }
           }
@@ -112,6 +109,7 @@ export class WhiteLabelResolver implements Resolve<any> {
   }
 
   applyBenjiTheme() {
+    console.log('applying benji theme');
     this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'benji' + '/white_label_info/').subscribe(
       (res: any) => {
         this.contextService.partnerInfo = res;
