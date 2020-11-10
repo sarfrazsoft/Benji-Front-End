@@ -86,10 +86,9 @@ export class WhiteLabelResolver implements Resolve<any> {
           }
         );
         this.contextService.user$.subscribe((user) => {
-          if (user && user.organization && !this.requestSent) {
-            const orgId = typeof user.organization === 'object' ? user.organization.id : user.organization;
+          if (user && user.preferred_host_theme_label && !this.requestSent) {
             this.requestSent = true;
-            this.restService.get_white_label_details(orgId).subscribe(
+            this.restService.get_white_label_details(user.preferred_host_theme_label).subscribe(
               (data: any) => {
                 this.contextService.partnerInfo = data;
               },

@@ -56,8 +56,8 @@ export class BackendRestService {
     return this.userIdentity;
   }
 
-  get_white_label_details(org) {
-    return this.http.get(global.apiRoot + '/tenants/orgs/' + org + '/white_label_info/');
+  get_white_label_details(themeLabel: string) {
+    return this.http.get(global.apiRoot + '/whitelabel/theme/' + themeLabel + '/');
   }
 
   start_next_activity(sessionrunID) {
