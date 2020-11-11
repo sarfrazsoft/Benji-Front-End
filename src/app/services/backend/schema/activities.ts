@@ -42,10 +42,9 @@ export interface LobbyActivity {
   lobby_text: string;
 }
 
-export interface TitleActivity {
+export interface TitleActivity extends ParentActivity {
   main_title: string;
   title_text: string;
-  title_emoji: string; // To be deprecated. Do not use. Instead, parse emoji://xxxx from title_image
   title_image: string;
   hide_timer: boolean;
 }

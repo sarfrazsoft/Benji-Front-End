@@ -21,7 +21,9 @@ export abstract class BaseActivityComponent implements OnInit {
   }
 
   public isEmoji(url: string) {
-    return url.includes('emoji://');
+    if (url) {
+      return url.includes('emoji://');
+    }
   }
 
   public getParticipantCode(): number {

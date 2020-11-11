@@ -23,6 +23,7 @@ import { MainScreenTitleActivityComponent } from './title-activity/title-activit
 import { MainScreenTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { MainScreenVideoActivityComponent } from './video-activity/video-activity.component';
 
+export { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
 export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
@@ -43,7 +44,7 @@ export const MainScreenComponents = [
   MainScreenPairGroupingActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTeletriviaActivityComponent,
-  MainScreenTitleActivityComponent,
+  // MainScreenTitleActivityComponent,
   MainScreenTriadGroupingActivityComponent,
   MainScreenGenericRoleplayActivityComponent,
   MainScreenExternalGroupingActivityComponent,

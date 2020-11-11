@@ -242,6 +242,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           ...state.lessonActivitiesContent,
           [state.selectedLessonActivity]: content,
         },
+        selectedLessonActivityContent: content,
         savingLesson: true,
         lessonSaved: false,
       };

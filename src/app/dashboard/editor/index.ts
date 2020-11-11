@@ -12,6 +12,7 @@ import {
 import { EditorComponent } from './editor.component';
 import { OverviewPanelComponent } from './overview-panel/overview-panel.component';
 import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/overview-thumbnail.component';
+import { ActivityComponent as PreviewPanelActivityComponent } from './preview-panel/activity/activity.component';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
   ArrayTypeComponent,
@@ -38,6 +39,7 @@ export const EditorComponents = [
   EditorComponent,
   OverviewPanelComponent,
   PreviewPanelComponent,
+  PreviewPanelActivityComponent,
   ArrayTypeComponent,
   ObjectTypeComponent,
   MultiSchemaTypeComponent,

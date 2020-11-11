@@ -8,10 +8,8 @@
 
   .activity-title-container {
     h1 {
-      font-family: $pn-regular;
       line-height: normal;
       font-size: 5.5vw;
-      // h1 and p tags should not have margin of their own
       margin: 0;
     }
     h1.question {
@@ -21,10 +19,32 @@
   .activity-title-description-container {
     padding: 0vw 10vw;
     p {
-      font-family: $pn-regular;
       font-size: 4vw;
       margin: 0 auto;
       line-height: normal;
+      &.smaller-font-class {
+        font-size: 3vw;
+      }
+    }
+  }
+}
+.preview-panel {
+  .single-column-activity {
+    .twemoji-container {
+      width: 125px;
+    }
+    .activity-title-container {
+      h1 {
+        font-size: 30px;
+      }
+    }
+    .activity-title-description-container {
+      p {
+        font-size: 25px;
+        &.smaller-font-class {
+          font-size: 22px;
+        }
+      }
     }
   }
 }

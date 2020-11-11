@@ -1,8 +1,15 @@
 <div class="panel">
   <div class="activity-container">
-    <div class="facilitator-img" *ngIf="showImage">
-      <img [src]="imgSrc" alt="" />
-    </div>
-    <div class="empty-preview" *ngIf="!showImage"></div>
+    <ng-container *ngIf="previewTemplate">      
+      <benji-preview-activity [data]="activityData"></benji-preview-activity>
+    </ng-container>
+    <ng-container *ngIf="!previewTemplate">
+      <div class="facilitator-img" *ngIf="showImage">
+        <img [src]="imgSrc" alt="" />
+      </div>
+      <div class="empty-preview" *ngIf="!showImage"></div>
+    </ng-container>
+
+
   </div>
 </div>

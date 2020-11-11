@@ -23,6 +23,7 @@ export class ActivityContentComponent implements OnInit {
   at: typeof ActivityTypes = ActivityTypes;
   activity$: Observable<any>;
   content$: Observable<any>;
+  selectedLessonActivityContent;
   possibleActivities$: Observable<any>;
   fieldTypes = FieldTypes;
   questions$: Observable<Array<QuestionSet>>;
@@ -40,12 +41,13 @@ export class ActivityContentComponent implements OnInit {
 
     this.content$ = this.store.select(fromStore.getSelectedLessonActivityContent);
 
-    combineLatest([this.activity$, this.possibleActivities$, this.content$])
+    this.content$.subscribe((val) => (this.selectedLessonActivityContent = val));
+
+    combineLatest([this.activity$, this.possibleActivities$])
       .pipe(
-        map(([a$, b$, c$]) => ({
+        map(([a$, b$]) => ({
           activity: a$,
           possibleActivities: b$,
-          content: c$,
         }))
       )
       .subscribe((pair) => {
@@ -54,7 +56,7 @@ export class ActivityContentComponent implements OnInit {
           const act_type = cloneDeep(pair.activity.activity_type);
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           const schema = cloneDeep(s);
-          const content = cloneDeep(pair.content);
+          const content = cloneDeep(this.selectedLessonActivityContent);
 
           // Case study activiy
           // set grouping_activity_id to show if External or Internal grouping activity
@@ -153,6 +155,7 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'main_title') {
                   mappedField.templateOptions.label = 'Header';
+                  mappedField.templateOptions.placeholder = 'Header text';
                 } else if (mapSource.field_name === 'title_text') {
                   mappedField.type = 'textarea';
                   mappedField.templateOptions.label = 'Subheader';

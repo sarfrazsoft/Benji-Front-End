@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
+import { ActivityTypes as Acts } from 'src/app/globals';
 import { environment } from 'src/environments/environment';
 import * as fromStore from '../store';
 
@@ -12,14 +13,18 @@ import * as fromStore from '../store';
   styleUrls: ['./preview-panel.component.scss'],
 })
 export class PreviewPanelComponent implements OnInit {
+  previewTemplate = false;
   activity$: Observable<any>;
   fields$: Observable<any>;
   content$: Observable<any>;
   possibleActivities$: Observable<any>;
-  hostname = window.location.protocol + '//' + environment.host;
 
+  activityData;
+
+  hostname = window.location.protocol + '//' + environment.host;
   imgSrc = '';
   showImage = false;
+
   constructor(private store: Store<fromStore.EditorState>) {}
 
   ngOnInit() {
@@ -39,6 +44,13 @@ export class PreviewPanelComponent implements OnInit {
       .subscribe((pair) => {
         if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
+          if (act_type === Acts.title) {
+            this.previewTemplate = true;
+            this.activityData = { activity_type: act_type, content: pair.content };
+          } else {
+            this.previewTemplate = false;
+          }
+
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           this.imgSrc = this.hostname + s.preview_image;
           this.showImage = true;
