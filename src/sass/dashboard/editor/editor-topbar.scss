@@ -6,9 +6,13 @@
     .back-button-container {
       .short-logo-container {
         margin-right: 16px;
+        cursor: pointer;
+        &:focus {
+          outline: none;
+        }
         img {
-          height: 24px;
-          width: 22px;
+          height: 28px;
+          width: 28px;
         }
       }
       .back-button {

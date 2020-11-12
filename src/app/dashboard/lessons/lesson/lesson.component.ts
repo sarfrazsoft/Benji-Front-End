@@ -18,63 +18,62 @@ export class LessonComponent implements OnInit {
       this.activatedRoute.data.forEach((data) => {
         const lesson = data.dashData.lessons.filter((c) => c.id === id)[0];
 
-        this.lessonDetails = lesson.lesson_details;
+        this.lessonDetails = courseDetails;
+        // this.lessonDetails = lesson.lesson_details;
       });
     });
   }
 }
 
-// const courseDetails = {
-//   name: 'Pitch Perfect',
-//   description: 'some description',
-//   facilitator: {
-//     description: 'Rayan Nahas',
-//     img: 'path/to/image',
-//   },
-//   videos: [
-//     {
-//       title: 'How to handle an objection',
-//       description: 'some description of video',
-//       link: 'https://player.vimeo.com/external/myvideo.mp4',
-//     },
-//     {
-//       title: 'How to handle an objection',
-//       description: 'some description of video',
-//       link: 'https://player.vimeo.com/external/myvideo.mp4',
-//     },
-//   ],
-//   resources: [
-//     {
-//       title: 'Document on How to handle an objection',
-//       description: 'some description of document',
-//       link: 'path/to/download/pdf',
-//     },
-//     {
-//       title: 'Document on How to handle an objection',
-//       description: 'some description of document',
-//       link: 'path/to/download/pdf',
-//     },
-//   ],
-//   mcqs: [
-//     {
-//       text: 'Select any option',
-//       correctExplanation: 'You know thats the wrong answer',
-//       choices: [
-//         { text: 'option 1', isCorrect: true, id: 1 },
-//         { text: 'option 1', isCorrect: false, id: 2 },
-//         { text: 'option 1', isCorrect: false, id: 3 },
-//         { text: 'option 1', isCorrect: false, id: 4 },
-//       ],
-//     },
-//     {
-//       text: 'Select any option',
-//       correctExplanation: 'You know what to do',
-//       choices: [
-//         { text: 'option 1', isCorrect: true, id: 1 },
-//         { text: 'option 1', isCorrect: false, id: 2 },
-//         { text: 'option 1', isCorrect: false, id: 3 },
-//         { text: 'option 1', isCorrect: false, id: 4 },
-//       ],
-//     },
-//   ],
-// };
+const courseDetails = {
+  name: 'Pitch Perfect',
+  description: 'Participants learn to deliver a persuasive pitch.',
+  videos: [
+    {
+      title: 'How to handle an objection',
+      description: 'some description of video',
+      link:
+        'https://player.vimeo.com/external/340456701.hd.mp4?s=86908a6f830304253f76b6bbd6f6b07fc8f5f6e6&profile_id=174',
+    },
+    {
+      title: 'How to handle an objection',
+      description: 'some description of video',
+      link:
+        'https://player.vimeo.com/external/340456701.hd.mp4?s=86908a6f830304253f76b6bbd6f6b07fc8f5f6e6&profile_id=174',
+    },
+  ],
+  resources: [
+    {
+      title: 'Document on How to handle an objection',
+      description: 'some description of document',
+      link: 'path/to/download/pdf',
+    },
+    {
+      title: 'Document on How to handle an objection',
+      description: 'some description of document',
+      link: 'path/to/download/pdf',
+    },
+  ],
+  mcqs: [
+    {
+      text: 'Select any option',
+      correctExplanation: 'You know thats the wrong answer',
+      choices: [
+        { text: 'option 1', isCorrect: true, id: 1 },
+        { text: 'option 1', isCorrect: false, id: 2 },
+        { text: 'option 1', isCorrect: false, id: 3 },
+        { text: 'option 1', isCorrect: false, id: 4 },
+      ],
+    },
+    {
+      text: 'Select any option',
+      correctExplanation: 'You know what to do',
+      choices: [
+        { text: 'option 1', isCorrect: true, id: 1 },
+        { text: 'option 1', isCorrect: false, id: 2 },
+        { text: 'option 1', isCorrect: false, id: 3 },
+        { text: 'option 1', isCorrect: false, id: 4 },
+      ],
+    },
+  ],
+};

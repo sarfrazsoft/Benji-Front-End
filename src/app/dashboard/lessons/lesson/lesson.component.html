@@ -1,7 +1,7 @@
 <div class="admin-panel" fxLayout="column" *ngIf="lessonDetails">
   <div class="dashboard-header">
     <div class="dashboard-heading">
-      <h1>{{ lessonDetails?.title }}</h1>
+      <h1>{{ lessonDetails?.name }}</h1>
     </div>
   </div>
 
@@ -20,16 +20,16 @@
             {{ lessonDetails?.description }}
           </div>
         </div>
-        <div class="course-detail">
+        <div class="course-detail" *ngIf="lessonDetails.facilitator">
           <div class="sub-header">
             <span>Meet your facilitator</span>
           </div>
           <div fxLayoutGap="30px" fxLayout="row">
             <div class="description">
-              {{ lessonDetails?.facilitator.description }}
+              {{ lessonDetails?.facilitator?.description }}
             </div>
             <div class="facilitator-img">
-              <img [src]="lessonDetails?.facilitator.img" alt="" />
+              <img [src]="lessonDetails?.facilitator?.img" alt="" />
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
             </video>
           </div>
         </div>
-        <!-- <benji-mcqs class="mcqs" [mcqs]="data.mcqs"></benji-mcqs> -->
+        <benji-mcqs class="mcqs" [mcqs]="lessonDetails.mcqs"></benji-mcqs>
       </div>
 
       <!-- Resources -->

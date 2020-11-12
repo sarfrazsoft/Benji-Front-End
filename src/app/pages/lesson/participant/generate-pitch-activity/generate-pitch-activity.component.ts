@@ -75,7 +75,8 @@ export class ParticipantGeneratePitchActivityComponent
   ngOnChanges() {
     const state = this.activityState;
 
-    const currentUserID = this.myParticipantCode;
+    const currentUserID = this.getParticipantCode();
+
     let currentMember: PitchoMaticGroupMember;
     state.pitchomaticactivity.pitchomaticgroup_set.forEach((group) => {
       group.pitchomaticgroupmember_set.forEach((member) => {
@@ -191,7 +192,7 @@ export class ParticipantGeneratePitchActivityComponent
     //    1: {id: 77, value: "jedi mind-trick"}
     //    2: {id: 78, value: "analogy"}
 
-    const currentUserID = this.myParticipantCode;
+    const currentUserID = this.getParticipantCode();
     let currentMember: PitchoMaticGroupMember;
     act.pitchomaticgroup_set.forEach((group) => {
       group.pitchomaticgroupmember_set.forEach((member) => {
