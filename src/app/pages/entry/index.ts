@@ -1,9 +1,11 @@
 import { AcceptInviteComponent } from './accept-invite/accept-invite.component';
 import { ActivateAccountComponent } from './activate-account/activate-account.component';
 import { BTwemoji2Component } from './activate-account/b-twemoji2/b-twemoji.component';
+import { LoginComponent } from './desktop/login/login.component';
+import { SignupComponent } from './desktop/signup/signup.component';
 import { EntryComponent } from './entry.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+
+import { DesktopComponent as DesktopEntryComponents } from './desktop/desktop.component';
 
 import { LoginComponent as MobLoginComponent } from './mobile/login/login.component';
 import { MobileComponent } from './mobile/mobile.component';
@@ -18,17 +20,18 @@ export {
   SignupComponent,
   MobLoginComponent,
   MobSignupComponent,
-  MobileComponent
+  MobileComponent,
 };
 
 export const EntryComponents = [
   AcceptInviteComponent,
   ActivateAccountComponent,
   BTwemoji2Component,
+  DesktopEntryComponents,
   EntryComponent,
   LoginComponent,
   MobLoginComponent,
   MobSignupComponent,
   SignupComponent,
-  MobileComponent
+  MobileComponent,
 ];
