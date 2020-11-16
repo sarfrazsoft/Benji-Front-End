@@ -15,27 +15,25 @@
           </ng-container>
         </span>
       </h1>
-      <div fxLayoutAlign="end center">
+      <div fxLayoutAlign="end center" class="instructions">
         <h2
-          class="pn-500 discuss-instruction"
-          [ngStyle]="{
-            'font-size': instructions.length > 65 ? '2vw' : '2.8vw'
+          class="pn-500"
+          [ngClass]="{
+            'long-instructions': instructions.length > 65
           }"
         >
           {{ instructions }}
         </h2>
       </div>
       <div
-        class="primary-color-darkest"
-        style="font-size: 2vw;"
+        class="count-info primary-color-darkest"
         fxLayoutAlign="end center"
         *ngIf="submissionScreen"
       >
         {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} submitted
       </div>
       <div
-        class="primary-color-darkest"
-        style="font-size: 2vw;"
+        class="count-info primary-color-darkest"
         fxLayoutAlign="end center"
         *ngIf="voteScreen"
       >

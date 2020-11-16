@@ -67,6 +67,7 @@ export class MainScreenBrainstormingActivityComponent
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
+    this.onChanges();
   }
   ngOnDestroy() {
     if (this.peakBackState) {
@@ -116,14 +117,22 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
-  ngOnChanges() {
+  onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = this.activityState.brainstormactivity;
-    this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
+    if (this.act.brainstormcategory_set.length) {
+      // check if the categories have ids
+      // if categories don't have ids it means
+      // we're in the preview panel
+      if (this.act.brainstormcategory_set[0].id) {
+        this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
+      } else {
+      }
+    }
     this.joinedUsers = this.activityState.lesson_run.participant_set;
     this.ideas = [];
     act.brainstormcategory_set.forEach((category) => {
-      if (!category.removed) {
+      if (!category.removed && category.brainstormidea_set) {
         category.brainstormidea_set.forEach((idea: Idea) => {
           if (!idea.removed) {
             this.ideas.push({ ...idea, showClose: false });
@@ -173,6 +182,11 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
+  ngOnChanges() {
+    console.log('hh');
+    this.onChanges();
+  }
+
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -190,9 +204,13 @@ export class MainScreenBrainstormingActivityComponent
   populateCategories() {
     const act = this.activityState.brainstormactivity;
     act.brainstormcategory_set.forEach((category) => {
-      category.brainstormidea_set.forEach((idea) => {
-        idea = { ...idea, showClose: false, editing: false, addingIdea: false };
-      });
+      if (category.brainstormidea_set) {
+        category.brainstormidea_set.forEach((idea) => {
+          idea = { ...idea, showClose: false, editing: false, addingIdea: false };
+        });
+      } else {
+        // Editor preview panel
+      }
     });
   }
 

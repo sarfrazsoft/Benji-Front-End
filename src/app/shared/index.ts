@@ -7,18 +7,19 @@ import { CmpComponents, CmpEntryComponents } from './components';
 import { Dialogs } from './dialogs';
 import { Directives } from './directives';
 
-import { MainScreenTitleActivityComponent } from 'src/app/pages/lesson/main-screen';
+import { BrainStormComponents, MainScreenTitleActivityComponent } from 'src/app/pages/lesson/main-screen';
 import { AttentionOverlayComponent } from '../ui-components/linear-timer/attention-overlay/attention-overlay.component';
 import { LinearTimerComponent } from '../ui-components/linear-timer/linear-timer.component';
 
+export const ActivityComponents = [MainScreenTitleActivityComponent, ...BrainStormComponents];
 export const Components = [
   ...CmpComponents,
   ...Directives,
   ...Dialogs,
+  ...ActivityComponents,
   BTwemojiComponent,
-  MainScreenTitleActivityComponent,
   LinearTimerComponent,
   AttentionOverlayComponent,
 ];
 
-export const EntryComponents = [...Dialogs, ...CmpEntryComponents, MainScreenTitleActivityComponent];
+export const EntryComponents = [...Dialogs, ...CmpEntryComponents, ...ActivityComponents];

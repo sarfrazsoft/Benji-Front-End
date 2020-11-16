@@ -287,7 +287,7 @@ export interface WhereDoYouStandActivity {
   choice_stats: WhereDoYouStandChoiceStats[];
 }
 
-export interface BrainstormActivity {
+export interface BrainstormActivity extends ParentActivity {
   brainstormcategory_set: Array<Category>;
   instructions: string;
   max_participant_submissions: number;
@@ -305,6 +305,7 @@ export interface BrainstormActivity {
   all_participants_submitted: boolean;
   all_participants_voted: boolean;
   hide_timer: boolean;
+  voted_participants: Array<any>;
 }
 
 export interface Category {

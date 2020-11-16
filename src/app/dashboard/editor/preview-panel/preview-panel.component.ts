@@ -1,4 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { act } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
@@ -44,7 +45,7 @@ export class PreviewPanelComponent implements OnInit {
       .subscribe((pair) => {
         if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
-          if (act_type === Acts.title) {
+          if (act_type === Acts.title || act_type === Acts.brainStorm) {
             this.previewTemplate = true;
             this.activityData = { activity_type: act_type, content: pair.content };
           } else {

@@ -24,11 +24,13 @@ import { MainScreenTriadGroupingActivityComponent } from './triad-grouping-activ
 import { MainScreenVideoActivityComponent } from './video-activity/video-activity.component';
 
 export { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
+export { BrainStormComponents } from './brainstorming-activity';
+export * from './brainstorming-activity';
 export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
   MainScreenBuildPitchActivityComponent,
-  ...BrainStormComponents,
+  // ...BrainStormComponents,
   MainScreenCaseStudyActivityComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,

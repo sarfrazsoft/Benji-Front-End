@@ -1,4 +1,22 @@
 benji-ms-brainstorming-activity {
+  .brainstorming-ms {
+    .lesson-top-banner {
+      .count-info {
+        font-size: 2vw;
+      }
+      h2 {
+        font-size: 2.8vw;
+        color: $secondary-color-dark;
+        &.long-instructions {
+          font-size: 2vw;
+        }
+      }
+    }
+    // local override
+    .linear-timer__timeline {
+      position: relative;
+    }
+  }
   .submitted-ideas {
     padding: 0 3vw;
     height: 100%;
@@ -161,12 +179,6 @@ benji-ms-brainstorming-activity {
           }
         }
       }
-    }
-  }
-  .brainstorming-ms {
-    // local override
-    .linear-timer__timeline {
-      position: relative;
     }
   }
 
