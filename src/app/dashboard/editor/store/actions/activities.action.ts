@@ -87,10 +87,16 @@ export class SelectActivityType implements Action {
 
 // Content added to selected activity under 'Content' tab in activity selector panel
 export const ADD_ACTIVITY_CONTENT = '[Selector Panel] Content added to activity under Content tab';
+export const RESET_STORE = '[Editor] Content removed from store on navigating away';
 
 export class AddActivityContent implements Action {
   readonly type = ADD_ACTIVITY_CONTENT;
   constructor(public payload: any) {}
+}
+
+export class ResetStore implements Action {
+  readonly type = RESET_STORE;
+  constructor() {}
 }
 
 // Save Lesson Name
@@ -198,4 +204,5 @@ export type ActivitiesAction =
   | ActivityHovered
   | ActivityHoverEnd
   | SelectActivityType
-  | AddActivityContent;
+  | AddActivityContent
+  | ResetStore;

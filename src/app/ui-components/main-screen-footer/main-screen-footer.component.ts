@@ -6,8 +6,8 @@ import { ActivityTypes } from 'src/app/globals';
 import { PastSessionsService } from 'src/app/services';
 import { User } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
-import { ConfirmationDialogComponent } from 'src/app/shared';
-import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
+import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs/';
 import {
   BootParticipantEvent,
   BrainstormSubmissionCompleteInternalEvent,

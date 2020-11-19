@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
@@ -547,6 +547,11 @@ export class ActivityContentComponent implements OnInit {
 
   saveValues($event) {
     console.log($event);
+  }
+
+  ngOnDestroy() {
+    // console.log('destroy called');
+    this.store.dispatch(new fromStore.ResetStore());
   }
 
   onSubmit() {

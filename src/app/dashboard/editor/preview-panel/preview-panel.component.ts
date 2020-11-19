@@ -43,9 +43,11 @@ export class PreviewPanelComponent implements OnInit {
         }))
       )
       .subscribe((pair) => {
+        console.log(pair);
         if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
-          if (act_type === Acts.title || act_type === Acts.brainStorm) {
+          // console.log(act_type);
+          if (act_type === Acts.title || act_type === Acts.brainStorm || act_type === Acts.mcq) {
             this.previewTemplate = true;
             this.activityData = { activity_type: act_type, content: pair.content };
           } else {
@@ -57,6 +59,7 @@ export class PreviewPanelComponent implements OnInit {
           this.showImage = true;
         } else if (pair.activity && pair.activity.empty) {
           this.showImage = false;
+          this.previewTemplate = false;
         }
       });
   }

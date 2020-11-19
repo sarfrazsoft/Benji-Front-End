@@ -37,6 +37,18 @@ export class ContextService {
   }
 
   /**
+   * Course
+   */
+  lesson$ = new BehaviorSubject<any>(null);
+
+  set lesson(lesson: any) {
+    this.lesson$.next(lesson);
+  }
+  get lesson(): any {
+    return this.lesson$.getValue();
+  }
+
+  /**
    * Current partner details
    */
   partnerInfo$ = new BehaviorSubject<PartnerInfo>(null);

@@ -4,32 +4,50 @@ import {
   ComponentRef,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
-import { MainScreenBrainstormingActivityComponent, MainScreenTitleActivityComponent } from 'src/app/pages';
+import {
+  MainScreenBrainstormingActivityComponent,
+  MainScreenPopQuizComponent,
+  MainScreenTitleActivityComponent,
+} from 'src/app/pages';
 
 @Component({
   selector: 'benji-preview-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss'],
 })
-export class ActivityComponent implements OnInit, OnChanges {
+export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data;
   componentRef: ComponentRef<any>;
   oldActivityType;
   @ViewChild('previewEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   constructor(private cfr: ComponentFactoryResolver) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('init called');
+  }
+  ngOnDestroy() {
+    if (this.componentRef) {
+      console.log('destroyer called');
+      this.componentRef.destroy();
+    }
+  }
 
   ngOnChanges() {
     if (this.data) {
       const content = this.data.content;
       if (this.data.activity_type === Acts.title) {
+        if (this.oldActivityType !== Acts.title) {
+          if (this.componentRef) {
+            this.componentRef.destroy();
+          }
+        }
         if (this.oldActivityType !== this.data.activity_type) {
           const msAct = this.cfr.resolveComponentFactory(MainScreenTitleActivityComponent);
           this.componentRef = this.entry.createComponent(msAct);
@@ -63,10 +81,8 @@ export class ActivityComponent implements OnInit, OnChanges {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-        // if (this.oldActivityType !== this.data.activity_type) {
         const msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
         this.componentRef = this.entry.createComponent(msAct);
-        // }
         const categorizeFlag =
           content.brainstormcategory_set && content.brainstormcategory_set.length === 0 ? false : true;
         const categoryset =
@@ -115,12 +131,61 @@ export class ActivityComponent implements OnInit, OnChanges {
             voting_seconds: 0,
           },
         };
-        this.componentRef.instance.peakBackState = true;
+        this.componentRef.instance.peakBackState = false;
         const activityStage: Subject<string> = new Subject<string>();
         this.componentRef.instance.activityStage = activityStage.asObservable();
         // this.componentRef.instance.peakBackState = true;
         // this.componentRef.changeDetectorRef.detectChanges();
         // this.componentRef.changeDetectorRef.checkNoChanges();
+      } else if (this.data.activity_type === Acts.mcq) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        const msAct = this.cfr.resolveComponentFactory(MainScreenPopQuizComponent);
+        this.componentRef = this.entry.createComponent(msAct);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          mcqactivity: {
+            activity_id: '1605649483199',
+            activity_type: 'MCQActivity',
+            all_participants_answered: false,
+            answered_participants: [],
+            auto_next: false,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 540,
+            is_paused: true,
+            next_activity: null,
+            next_activity_delay_seconds: 10000,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 65,
+            question: {
+              id: 39,
+              mcqchoice_set: [
+                { id: 121, order: 0, choice_text: 'abc', is_correct: false, explanation: null },
+                { id: 122, order: 0, choice_text: 'def', is_correct: false, explanation: null },
+                { id: 123, order: 0, choice_text: 'emt', is_correct: false, explanation: null },
+              ],
+              question: 'some question',
+            },
+            question_seconds: 600,
+            question_timer: null,
+            quiz_label: null,
+            quiz_leaderboard: null,
+            run_number: 0,
+            start_time: '2020-11-17T16:50:24.144780-05:00',
+            titlecomponent: {
+              participant_instructions: 'Answer the following question',
+              screen_instructions: 'Answer the following question',
+              title: 'some title',
+              title_image: 'emoji://1F642',
+            },
+          },
+        };
       }
       this.oldActivityType = this.data.activity_type;
     }

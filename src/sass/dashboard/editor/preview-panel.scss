@@ -3,37 +3,136 @@ benji-preview-panel {
     padding: 36px;
     .activity-container {
       background-color: white;
-      padding: 30px 20px;
-      font-size: 40px;
+      padding: 10px 10px;
       border-radius: 5px;
-      .facilitator-img {
-        img {
-          width: 100%;
-        }
-      }
       .empty-preview {
         height: 30vw;
       }
+      .activity-template-container {
+        position: relative;
+        .facilitator-img {
+          img {
+            width: 100%;
+          }
+        }
 
-      benji-ms-brainstorming-activity {
-        .brainstorming-ms {
-          position: relative;
-          height: 100%;
-          .lesson-top-banner.compact {
-            .border-bottom {
-              padding-bottom: 5px !important;
+        .mainscreen-toolbar {
+          padding: 8px 30px 8px;
+          .benji-logo-container {
+            height: 32px;
+            img {
+              height: 32px;
             }
-            h1 {
-              font-size: 28px;
+          }
+        }
+
+        .mainscreen-footer {
+          min-height: 40px;
+          .session-info {
+            p {
+              font-size: 12px;
             }
-            .instructions {
-              margin-right: 20px !important;
+          }
+          .mainscreen-footer__controls {
+            button {
+              .mat-icon {
+                width: 30px;
+              }
+              .material-icons {
+                font-size: 24px;
+              }
             }
-            h2 {
-              font-size: 16px;
+            .brainstrom-categories {
+              width: 52px;
+              .img-icon {
+                cursor: pointer;
+                height: 27px;
+              }
             }
-            .count-info {
-              font-size: 16px;
+          }
+        }
+
+        benji-ms-brainstorming-activity {
+          .brainstorming-ms {
+            // position: relative;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            .lesson-top-banner.compact {
+              padding: 5px 5px;
+              .border-bottom {
+                padding-bottom: 5px !important;
+              }
+              h1 {
+                font-size: 28px;
+              }
+              .instructions {
+                margin-right: 20px !important;
+              }
+              h2 {
+                font-size: 16px;
+              }
+              .count-info {
+                font-size: 16px;
+              }
+            }
+            .submitted-ideas {
+              padding: 0 10px;
+
+              .column {
+                min-width: 150px;
+                .header {
+                  margin: 5px;
+                  min-height: 30px;
+                  font-size: 15px;
+                  .add-column {
+                    font-size: 16px;
+                  }
+                }
+                .ideas {
+                  min-width: 150px;
+                  .add-idea-button {
+                    min-height: 25px;
+                  }
+                }
+              }
+              ul {
+                li {
+                  .idea {
+                    font-size: 16px;
+                    padding: 15px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        benji-ms-pop-quiz {
+          .mainscreen-activity {
+            & > div {
+              overflow: hidden;
+            }
+            .lesson-top-banner {
+              // padding: 5px 5px;
+              h1 {
+                font-size: 28px;
+              }
+              h2 {
+                font-size: 16px;
+              }
+            }
+            .activity-instructions {
+              padding: 0 5px;
+            }
+            .quiz-question {
+              font-size: 24px;
+            }
+            .quiz-answers {
+              font-size: 24px;
+            }
+            .number-text {
+              font-size: 24px;
             }
           }
         }

@@ -1,4 +1,4 @@
-import { BrainStormComponents } from './brainstorming-activity';
+// import { BrainStormComponents } from './brainstorming-activity';
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
@@ -16,16 +16,18 @@ import { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.comp
 import { MainScreenMcqresultActivityComponent } from './mcqresult-activity/mcqresult-activity.component';
 import { MainScreenMontyHallComponent } from './monty-hall/monty-hall.component';
 import { MainScreenPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
-import { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
+// import { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { MainScreenPairActivityComponent } from './roleplay-pair-activity/roleplay-pair-activity.component';
 import { MainScreenTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
-import { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
+// import { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
 import { MainScreenTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { MainScreenVideoActivityComponent } from './video-activity/video-activity.component';
 
 export { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
 export { BrainStormComponents } from './brainstorming-activity';
 export * from './brainstorming-activity';
+export { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
+export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
@@ -40,11 +42,11 @@ export const MainScreenComponents = [
   MainScreenLessonComponent,
   MainScreenLobbyComponent,
   MainScreenMontyHallComponent,
-  MainScreenMcqActivityComponent,
+  // MainScreenMcqActivityComponent,
   MainScreenMcqresultActivityComponent,
   MainScreenPairActivityComponent,
   MainScreenPairGroupingActivityComponent,
-  MainScreenPopQuizComponent,
+  // MainScreenPopQuizComponent,
   MainScreenTeletriviaActivityComponent,
   // MainScreenTitleActivityComponent,
   MainScreenTriadGroupingActivityComponent,

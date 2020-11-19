@@ -16,6 +16,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   lightLogo = '';
   timer: Timer;
   @Input() activityState: UpdateMessage;
+  @Input() hideControls = false;
   showTimer = false;
   at: typeof ActivityTypes = ActivityTypes;
 

@@ -59,11 +59,15 @@ export class LessonsComponent implements OnInit {
   }
 
   openDetails(lesson: Lesson) {
-    if (lesson.lesson_id === 'pitch_perfect_1') {
-      this.router.navigate(['lesson', lesson.id], {
-        relativeTo: this.activatedRoute,
-      });
-    }
+    this.adminService.getLessonDetails(lesson.id).subscribe((res: Lesson) => {
+      if (res.lesson_details) {
+        console.log(res);
+        this.contextService.lesson = res;
+        this.router.navigate(['lesson', lesson.id], {
+          relativeTo: this.activatedRoute,
+        });
+      }
+    });
   }
 
   edit($event, lesson: Lesson) {

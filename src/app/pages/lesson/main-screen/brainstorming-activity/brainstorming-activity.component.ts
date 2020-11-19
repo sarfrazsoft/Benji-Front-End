@@ -260,7 +260,9 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   addIdea(column) {
-    column.addingIdea = true;
+    if (column.id) {
+      column.addingIdea = true;
+    }
   }
 
   deleteCol(categoryId) {

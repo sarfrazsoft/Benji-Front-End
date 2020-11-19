@@ -29,7 +29,8 @@ export class Lesson {
   standardize?: boolean;
   owner?: number;
   team?: number;
-  editor_lesson_plan?: any;
+  editor_lesson_plan?: Array<any>;
+  editor_lesson_plan_errors?: any;
   team_permission?: string;
   public_permission?: string;
   creation_time?: string;

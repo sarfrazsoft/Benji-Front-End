@@ -31,6 +31,14 @@ export class AdminService {
     );
   }
 
+  getLessonDetails(id: number): Observable<any> {
+    return this.http.get(global.apiRoot + '/course_details/lesson/' + id + '/').pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
   deleteLesson(lessonId: number): Observable<any> {
     return this.http
       .delete(global.apiRoot + `/course_details/lesson/${lessonId}/`, { observe: 'response' })

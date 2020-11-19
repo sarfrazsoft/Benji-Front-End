@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ContextService } from 'src/app/services';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { AdminService } from '../../admin-panel/services';
 
 @Component({
   selector: 'benji-lesson',
@@ -8,20 +11,32 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LessonComponent implements OnInit {
   lessonDetails;
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private contextService: ContextService,
+    private adminService: AdminService
+  ) {}
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const lId = paramMap.get('lessonId');
-      const id = parseInt(lId, 10);
+    // check if lesson is not available
+    if (!this.contextService.lesson) {
+      this.activatedRoute.paramMap.subscribe((paramMap) => {
+        const lId = paramMap.get('lessonId');
+        const id = parseInt(lId, 10);
 
-      this.activatedRoute.data.forEach((data) => {
-        const lesson = data.dashData.lessons.filter((c) => c.id === id)[0];
-
-        this.lessonDetails = courseDetails;
-        // this.lessonDetails = lesson.lesson_details;
+        this.adminService.getLessonDetails(id).subscribe((res: Lesson) => {
+          if (res.lesson_details) {
+            this.contextService.lesson = res;
+            this.lessonDetails = res.lesson_details;
+          }
+        });
       });
-    });
+    } else {
+      // lesson detail is available
+      this.contextService.lesson$.subscribe((lesson) => {
+        this.lessonDetails = lesson.lesson_details;
+      });
+    }
   }
 }
 

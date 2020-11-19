@@ -42,7 +42,11 @@ export const getSelectedPossibleActivity = createSelector(
 
 export const getActivityThumbnail = (id) =>
   createSelector(getPossibleActivities, (entities) => {
-    return entities[id].thumbnail;
+    if (entities[id]) {
+      return entities[id].thumbnail;
+    } else {
+      return '';
+    }
   });
 
 export const getLessonName = createSelector(getActivitiesState, fromReducers.getLessonName);

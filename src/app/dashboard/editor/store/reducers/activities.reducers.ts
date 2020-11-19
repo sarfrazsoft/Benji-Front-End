@@ -81,6 +81,7 @@ export const ActivityDisplayNames = {
   MCQActivity: 'Quiz',
   FeedbackActivity: 'Survey',
   GenericRoleplayActivity: 'Roleplay',
+  BuildAPitchActivity: 'Madlibs',
 };
 
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
@@ -246,6 +247,10 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
         savingLesson: true,
         lessonSaved: false,
       };
+    }
+
+    case fromActivities.RESET_STORE: {
+      return initialState;
     }
 
     case fromActivities.ADD_EMPTY_LESSON_ACTIVITY: {
