@@ -8,13 +8,13 @@ benji-preview-panel {
       .empty-preview {
         height: 30vw;
       }
+      .facilitator-img {
+        img {
+          width: 100%;
+        }
+      }
       .activity-template-container {
         position: relative;
-        .facilitator-img {
-          img {
-            width: 100%;
-          }
-        }
 
         .mainscreen-toolbar {
           padding: 8px 30px 8px;
@@ -133,6 +133,26 @@ benji-preview-panel {
             }
             .number-text {
               font-size: 24px;
+            }
+          }
+        }
+
+        .single-column-activity {
+          .twemoji-container {
+            width: 95px;
+            padding-top: 30px;
+          }
+          .activity-title-container {
+            h1 {
+              font-size: 38px;
+            }
+          }
+          .activity-title-description-container {
+            p {
+              font-size: 32px;
+              &.smaller-font-class {
+                font-size: 28px;
+              }
             }
           }
         }

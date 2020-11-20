@@ -28,26 +28,6 @@
     }
   }
 }
-.preview-panel {
-  .single-column-activity {
-    .twemoji-container {
-      width: 125px;
-    }
-    .activity-title-container {
-      h1 {
-        font-size: 38px;
-      }
-    }
-    .activity-title-description-container {
-      p {
-        font-size: 32px;
-        &.smaller-font-class {
-          font-size: 28px;
-        }
-      }
-    }
-  }
-}
 
 .exitSession {
   font-size: 4vh;

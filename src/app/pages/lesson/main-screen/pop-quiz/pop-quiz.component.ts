@@ -32,8 +32,10 @@ export class MainScreenPopQuizComponent
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
-    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     const act = this.activityState.mcqactivity;
+    if (act.question.mcqchoice_set[0] && act.question.mcqchoice_set[0].id) {
+      act.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    }
     if (act.titlecomponent) {
       this.title = act.titlecomponent.title;
     }

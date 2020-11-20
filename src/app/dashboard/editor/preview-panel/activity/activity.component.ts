@@ -90,7 +90,6 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             ? content.brainstormcategory_set
             : [];
         const instructions = content.instructions ? content.instructions : 'Enter your question';
-        console.log(categorizeFlag, categoryset, instructions);
 
         this.componentRef.instance.activityState = {
           activity_type: this.data.activity_type,
@@ -135,11 +134,25 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         const activityStage: Subject<string> = new Subject<string>();
         this.componentRef.instance.activityStage = activityStage.asObservable();
         // this.componentRef.instance.peakBackState = true;
-        // this.componentRef.changeDetectorRef.detectChanges();
-        // this.componentRef.changeDetectorRef.checkNoChanges();
       } else if (this.data.activity_type === Acts.mcq) {
         if (this.componentRef) {
           this.componentRef.destroy();
+        }
+        console.log(content);
+        let title = 'Enter title';
+        if (content.titlecomponent) {
+          title = content.titlecomponent.title ? content.titlecomponent.title : 'Enter title';
+        }
+        let questionText = 'Enter your question';
+        let options = [
+          { order: 0, choice_text: 'choice 1', is_correct: false, explanation: null },
+          { order: 0, choice_text: 'choice 2', is_correct: false, explanation: null },
+          { order: 0, choice_text: 'choice 3', is_correct: false, explanation: null },
+        ];
+        if (content.question) {
+          const q = content.question;
+          questionText = q.question ? q.question : 'Enter your question';
+          options = q.mcqchoice_set.length ? q.mcqchoice_set : options;
         }
         const msAct = this.cfr.resolveComponentFactory(MainScreenPopQuizComponent);
         this.componentRef = this.entry.createComponent(msAct);
@@ -165,13 +178,10 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             polymorphic_ctype: 65,
             question: {
               id: 39,
-              mcqchoice_set: [
-                { id: 121, order: 0, choice_text: 'abc', is_correct: false, explanation: null },
-                { id: 122, order: 0, choice_text: 'def', is_correct: false, explanation: null },
-                { id: 123, order: 0, choice_text: 'emt', is_correct: false, explanation: null },
-              ],
-              question: 'some question',
+              mcqchoice_set: options,
+              question: questionText,
             },
+            // question: content.question,
             question_seconds: 600,
             question_timer: null,
             quiz_label: null,
@@ -181,7 +191,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             titlecomponent: {
               participant_instructions: 'Answer the following question',
               screen_instructions: 'Answer the following question',
-              title: 'some title',
+              title: title,
               title_image: 'emoji://1F642',
             },
           },
