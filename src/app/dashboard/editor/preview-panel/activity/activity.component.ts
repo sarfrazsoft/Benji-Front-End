@@ -73,7 +73,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             polymorphic_ctype: 46,
             run_number: 0,
             start_time: '2020-11-11T12:30:41.270208-05:00',
-            title_image: this.data.content.title_image ? content.title_image : 'emoji://1F642',
+            title_image: this.data.content.title_image ? content.title_image : null,
             title_text: content.title_text ? content.title_text : 'Paragraph text',
           },
         };

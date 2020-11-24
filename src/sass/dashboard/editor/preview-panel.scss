@@ -3,7 +3,7 @@ benji-preview-panel {
     padding: 36px;
     .activity-container {
       background-color: white;
-      padding: 10px 10px;
+      padding: 0px 0px;
       border-radius: 5px;
       .empty-preview {
         height: 30vw;
@@ -110,6 +110,7 @@ benji-preview-panel {
 
         benji-ms-pop-quiz {
           .mainscreen-activity {
+            height: 100%;
             & > div {
               overflow: hidden;
             }

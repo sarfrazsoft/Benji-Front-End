@@ -54,6 +54,7 @@ export class BTwemojiComponent implements OnInit, OnChanges {
   // <app-b-twemoji [text]="'emoji://speech'"></app-b-twemoji>
   // <app-b-twemoji [text]="'emoji://1F468-200D-1F469-200D-1F466'"></app-b-twemoji>
   // <app-b-twemoji [text]="'emoji://1F468'"></app-b-twemoji>
+  // <app-b-twemoji [text]="null"></app-b-twemoji>
   @Input() emoji;
   @Input() text;
   hostDiv;
@@ -94,6 +95,10 @@ export class BTwemojiComponent implements OnInit, OnChanges {
           const x = twemoji.convert.fromCodePoint(emojiText);
           this.setupEmoji(x);
         }
+      }
+    } else {
+      if (this.hostDiv) {
+        this.renderer.removeChild(this.el.nativeElement, this.hostDiv);
       }
     }
   }

@@ -12,6 +12,14 @@
   </div>
   <div class="editor-link" *ngIf="this.explanationField.hide" (click)="revealExplanation()">
     <span> + add help text </span>
+    <span
+      class="question-icon"
+      placement="top"
+      tooltip="As participants are filling out their mad-libs they can click the ? icon for more help. Add help text here to support them in filling out the mad-lib sheet"
+      show-delay="100"
+    >
+    <img src="/assets/img/question_icon.svg" />
+  </span>
   </div>
   <formly-field [field]="orderField"></formly-field>
   <formly-field [field]="explanationField"></formly-field>

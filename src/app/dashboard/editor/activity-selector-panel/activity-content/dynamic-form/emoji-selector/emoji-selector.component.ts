@@ -25,6 +25,11 @@ export class EmojiSelectorComponent extends FieldType implements OnInit {
     this.formControl.setValue(this.selectedEmoji);
     this.showemoji = false;
   }
+
+  removeEmoji() {
+    this.selectedEmoji = null;
+    this.formControl.setValue(null);
+  }
   stop(event) {
     event.stopPropagation();
   }

@@ -8,6 +8,7 @@ import { Directives } from './directives';
 
 import {
   BrainStormComponents,
+  MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
 } from 'src/app/pages/lesson/main-screen';
@@ -22,6 +23,7 @@ import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer
 
 const ActivityComponents = [
   MainScreenTitleActivityComponent,
+  MainScreenFeedbackActivityComponent,
   ...BrainStormComponents,
   MainScreenPopQuizComponent,
   MainScreenToolbarComponent,

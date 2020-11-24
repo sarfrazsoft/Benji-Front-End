@@ -93,6 +93,7 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.type = 'emoji';
                   mappedField.wrappers = ['form-field'];
                   mappedField.templateOptions.label = 'Emoji';
+                  mappedField.defaultValue = 'emoji://1F642';
                 } else {
                   mappedField.hide = true;
                   mappedField.defaultValue = 'emoji://1F642';
@@ -140,15 +141,26 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions.label = 'Auto forward after results';
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
-                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
-                  mappedField.templateOptions.label = '';
-                  mappedField.templateOptions['helpText'] = 'Auto-forward after how many seconds?';
-                  mappedField.templateOptions['labelForCheckbox'] = 'Auto forward after results';
-                  mappedField.defaultValue = 10;
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === 'show_distribution') {
-                  mappedField.templateOptions.label = 'Show distribution of results';
+                  mappedField.templateOptions.label = 'Graph of participant answers';
+                  mappedField.templateOptions.description =
+                    'If you want to see how people answered then make sure this option is selected.' +
+                    ' If you want a poll question, you can create a question without any correct ' +
+                    ' answers and then select this option.';
+                } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
                 }
-                // console.log(mappedField);
               } else if (act.activity_type === this.at.title) {
                 // for TitleActivity
                 if (mapSource.internal_type === 'TitleActivitySerializer') {
@@ -227,8 +239,10 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
                   mappedField.templateOptions['helpText'] = 'How long does the submission stage last?';
                 } else if (mapSource.field_name === 'auto_next') {
-                  mappedField.templateOptions.label = 'Auto forward';
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
                 } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.hide = true;
                   mappedField.defaultValue = true;
                 }
               } else if (act.activity_type === this.at.video) {
@@ -314,6 +328,9 @@ export class ActivityContentComponent implements OnInit {
                     'How long does the feedback submission stage last?';
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.templateOptions.label = 'Auto Forward';
+                  mappedField.templateOptions.description =
+                    'If you want the activity to move to the next activity' +
+                    ' once everyone has submitted their answers, click auto-forward';
                 }
               } else if (act.activity_type === this.at.genericRoleplay) {
                 if (mapSource.internal_type === 'GenericRoleplayActivitySerializer') {
@@ -335,12 +352,15 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === 'allow_multiple') {
                   mappedField.templateOptions.label = 'Allow duplicates';
                   mappedField.defaultValue = true;
+                  mappedField.templateOptions.description =
+                    'If you have a group with more people than the number of roles' +
+                    ' created we will assign the role that can be duplicated to the group with extra people';
                 } else if (mapSource.field_name === 'is_non_interactive') {
                   mappedField.templateOptions.label = 'Is this role an observer';
                   mappedField.defaultValue = true;
                 } else if (mapSource.field_name === 'feedbackquestions') {
                   mappedField.templateOptions.label = '';
-                  mappedField.templateOptions['addLabel'] = 'Add question';
+                  mappedField.templateOptions['addLabel'] = 'Add Feedback Questions';
                 } else if (mapSource.internal_type === 'FeedbackQuestionSerializer') {
                   mappedField.templateOptions.label = '';
                   mappedField.type = 'feedbackQuestion';
@@ -353,9 +373,22 @@ export class ActivityContentComponent implements OnInit {
                   delete mappedField.templateOptions.maxLength;
                   delete mappedField.templateOptions.minLength;
                 } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.hide = true;
                   mappedField.defaultValue = true;
-                } else if (mapSource.field_name === '') {
-                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
+                } else if (mapSource.field_name === 'feedback_seconds') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
+                } else if (mapSource.field_name === 'activity_seconds') {
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = 'Activity Seconds';
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add Activity Seconds';
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === '') {
@@ -394,12 +427,13 @@ export class ActivityContentComponent implements OnInit {
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
                   mappedField.defaultValue = 0;
-                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
-                  mappedField.templateOptions.label = '';
-                  mappedField.templateOptions['hideLabel'] = true;
-                  mappedField.templateOptions['labelForCheckbox'] = 'Add Winner Stage';
-                  mappedField.templateOptions['helpText'] = 'How long should the winner be displayed?';
+                  // mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  // mappedField.templateOptions.label = '';
+                  // mappedField.templateOptions['hideLabel'] = true;
+                  // mappedField.templateOptions['labelForCheckbox'] = 'Add Winner Stage';
+                  // mappedField.templateOptions['helpText'] = 'How long should the winner be displayed?';
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.internal_type === 'BuildAPitchBlankSerializer') {
@@ -409,7 +443,7 @@ export class ActivityContentComponent implements OnInit {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
-                  mappedField.defaultValue = false;
+                  mappedField.defaultValue = true;
                 }
               } else if (act.activity_type === this.at.whereDoYouStand) {
                 if (mapSource.internal_type === 'WhereDoYouStandActivitySerializer') {
@@ -507,6 +541,13 @@ export class ActivityContentComponent implements OnInit {
         b.brainstormcategory_set = b.brainstormcategory_set.filter(
           (obj) => obj && obj.category_name && obj.category_name.length !== 0
         );
+
+        if (b.submission_seconds === 10000) {
+          b.hide_timer = true;
+        } else {
+          // show timer when user changes the submission seconds
+          b.hide_timer = false;
+        }
       } else if (b.activity_type === this.at.genericRoleplay) {
         b.instructions = b.short_instructions;
         if (b.grouping_activity_id) {
@@ -523,6 +564,11 @@ export class ActivityContentComponent implements OnInit {
               v['order'] = i + 1;
             }
           });
+        }
+
+        // if user has set a voting stage add a winner stage as well
+        if (b.vote_seconds !== 0) {
+          b.next_activity_delay_seconds = 10000;
         }
       } else if (b.activity_type === this.at.whereDoYouStand) {
         if (b.next_activity_delay_seconds) {

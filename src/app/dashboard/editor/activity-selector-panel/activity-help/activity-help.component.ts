@@ -67,12 +67,6 @@ export const ActivityHelp = {
       Our open text allows your participants to submit text.
       Our rating questions give you a five-point scale from strongly disagree to strongly agree. `,
     },
-    {
-      type: 'video',
-      content:
-        // tslint:disable-next-line:max-line-length
-        'https://player.vimeo.com/external/298880631.hd.mp4?s=69e47bc8bbb2f9bfcbbc919fab096e326ede516a&profile_id=175',
-    },
   ],
   [ActivityTypes.title]: [],
   [ActivityTypes.caseStudy]: [
