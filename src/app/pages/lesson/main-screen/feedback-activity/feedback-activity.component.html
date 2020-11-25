@@ -4,17 +4,17 @@
   </div>
   <div class="activity-title-container">
     <h1 class="primary-color pn-700">
-      {{ activityState.feedbackactivity.titlecomponent.title }}
+      {{ title }}
     </h1>
   </div>
   <div class="activity-title-description-container">
     <p class="secondary-color-dark pn-500">
-      {{ activityState.feedbackactivity.titlecomponent.screen_instructions }}
+      {{ instructions }}
     </p>
   </div>
-  <div class="forms-submitted primary-color-darkest pn-600">
-    {{ activityState.feedbackactivity.answered_participants.length }}/{{
-      activityState.lesson_run.participant_set.length
+  <div class="forms-submitted primary-color-darkest pn-600" *ngIf="participantLength">
+    {{ answeredParticipantsLength }}/{{
+      participantLength
     }}
     forms submitted
   </div>

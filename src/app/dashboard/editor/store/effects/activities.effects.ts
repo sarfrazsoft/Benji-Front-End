@@ -107,8 +107,10 @@ export class ActivitiesEffects {
           newContentArray[i].activity_type === this.at.genericRoleplay
         ) {
           const subjectAct = newContentArray[i];
-          // first time being saved
-          if (subjectAct.grouping_activity_id === true) {
+          if (
+            subjectAct.grouping_activity_id === true ||
+            subjectAct.grouping_activity_type === 'ExternalGroupingActivity'
+          ) {
             const newIndex = new Date().getTime();
             const groupingActivity = {
               activity_id: '' + newIndex,
@@ -117,9 +119,12 @@ export class ActivitiesEffects {
               next_activity_delay_seconds: 0,
               grouping_seconds: 10000,
             };
-            newContentArray.splice(i - 1, 0, groupingActivity);
+            newContentArray.splice(i, 0, groupingActivity);
             subjectAct.grouping_activity_id = newIndex + '';
-          } else if (subjectAct.grouping_activity_id === false) {
+          } else if (
+            subjectAct.grouping_activity_id === false ||
+            subjectAct.grouping_activity_type === 'SingleGroupingActivity'
+          ) {
             const newIndex = new Date().getTime();
             const groupingActivity = {
               activity_id: '' + newIndex,
@@ -128,11 +133,12 @@ export class ActivitiesEffects {
               next_activity_delay_seconds: 0,
               grouping_seconds: 0,
             };
-            newContentArray.splice(i - 1, 0, groupingActivity);
+            newContentArray.splice(i, 0, groupingActivity);
             subjectAct.grouping_activity_id = newIndex + '';
-          } else {
-            // grouping_activity_id is already set to some string and we don't need to change it
           }
+          // increament i so that it skips the casestudy activity now
+          // that it has been moved to the next index in array
+          i++;
         } else if (newContentArray[i].activity_type === this.at.mcq) {
           const mcqAct = newContentArray[i];
 
@@ -175,7 +181,7 @@ export class ActivitiesEffects {
       //     main_title: 'Hello World',
       //   },
       // ];
-      // console.log(lesson_json);
+      console.log(lesson_json);
       return this.editorService.updateLesson(lesson_json, wholeState.activities.lessonId).pipe(
         map((res: any) => {
           return new ActivityActions.SaveLessonSuccess(res);

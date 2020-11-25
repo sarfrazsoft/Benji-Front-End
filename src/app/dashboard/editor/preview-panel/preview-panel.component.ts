@@ -47,7 +47,12 @@ export class PreviewPanelComponent implements OnInit {
         if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
           // console.log(act_type);
-          if (act_type === Acts.title || act_type === Acts.brainStorm || act_type === Acts.mcq) {
+          if (
+            act_type === Acts.title ||
+            act_type === Acts.brainStorm ||
+            act_type === Acts.mcq ||
+            act_type === Acts.feedback
+          ) {
             this.previewTemplate = true;
             this.activityData = { activity_type: act_type, content: pair.content };
           } else {

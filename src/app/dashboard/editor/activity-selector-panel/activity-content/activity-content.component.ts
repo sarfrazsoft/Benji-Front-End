@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Store } from '@ngrx/store';
+import { On, Store } from '@ngrx/store';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { FormlyJsonschema } from '@ngx-formly/core/json-schema';
 import { cloneDeep, mapValues, reverse, sortBy } from 'lodash';
@@ -18,7 +18,7 @@ import { QuestionSet } from './services/question-control.service';
   templateUrl: './activity-content.component.html',
   styleUrls: ['./activity-content.component.scss'],
 })
-export class ActivityContentComponent implements OnInit {
+export class ActivityContentComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromStore.EditorState>, private formlyJsonschema: FormlyJsonschema) {}
   at: typeof ActivityTypes = ActivityTypes;
   activity$: Observable<any>;
@@ -597,7 +597,7 @@ export class ActivityContentComponent implements OnInit {
 
   ngOnDestroy() {
     // console.log('destroy called');
-    this.store.dispatch(new fromStore.ResetStore());
+    // this.store.dispatch(new fromStore.ResetStore());
   }
 
   onSubmit() {

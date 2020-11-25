@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import {
   MainScreenBrainstormingActivityComponent,
+  MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
 } from 'src/app/pages';
@@ -191,6 +192,64 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             titlecomponent: {
               participant_instructions: 'Answer the following question',
               screen_instructions: 'Answer the following question',
+              title: title,
+              title_image: 'emoji://1F642',
+            },
+          },
+        };
+      } else if (this.data.activity_type === Acts.feedback) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        console.log(content);
+        let title = 'Enter title';
+        let instructions = 'Answer the following question';
+        if (content.titlecomponent) {
+          const t = content.titlecomponent;
+          title = t.title ? t.title : 'Enter title';
+          instructions = t.screen_instructions ? t.screen_instructions : 'Answer the following question';
+        }
+        const msAct = this.cfr.resolveComponentFactory(MainScreenFeedbackActivityComponent);
+        this.componentRef = this.entry.createComponent(msAct);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          feedbackactivity: {
+            activity_id: '1606241145122',
+            activity_type: 'FeedbackActivity',
+            answered_participants: [],
+            auto_next: true,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            feedbackquestion_set: [
+              {
+                combo_text: null,
+                id: 108,
+                is_combo: false,
+                question_text: 'question one',
+                question_type: 'rating_agreedisagree',
+              },
+              {
+                combo_text: null,
+                id: 109,
+                is_combo: false,
+                question_text: 'question two',
+                question_type: 'text_only',
+              },
+            ],
+            id: 546,
+            is_paused: true,
+            next_activity: null,
+            next_activity_delay_seconds: 10000,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 60,
+            run_number: 0,
+            start_time: '2020-11-24T13:16:30.794385-05:00',
+            titlecomponent: {
+              participant_instructions: instructions,
+              screen_instructions: instructions,
               title: title,
               title_image: 'emoji://1F642',
             },
