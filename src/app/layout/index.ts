@@ -51,7 +51,7 @@ export const LayoutDeclarations = [
   // MainScreenFooterComponent,
   ParticipantJoinComponent,
   ParticipantLoginComponent,
-  ParticipantToolbarComponent,
+  // ParticipantToolbarComponent,
   MainScreenLessonComponent,
   // RadialTimerComponent,
   // NumberTimerComponent,

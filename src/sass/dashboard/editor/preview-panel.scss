@@ -1,8 +1,13 @@
 benji-preview-panel {
   .panel {
     padding: 36px;
+    .screen-selector {
+      margin-bottom: 8px;
+      .button {
+        cursor: pointer;
+      }
+    }
     .activity-container {
-      background-color: white;
       padding: 0px 0px;
       border-radius: 5px;
       .empty-preview {
@@ -13,9 +18,11 @@ benji-preview-panel {
           width: 100%;
         }
       }
-      .activity-template-container {
+      .template-container {
         position: relative;
-
+        background-color: white;
+      }
+      .m-act-template {
         .mainscreen-toolbar {
           padding: 8px 30px 8px;
           .benji-logo-container {
@@ -157,6 +164,11 @@ benji-preview-panel {
             }
           }
         }
+      }
+
+      .p-act-template {
+        max-width: 500px;
+        margin: 0 auto;
       }
     }
   }

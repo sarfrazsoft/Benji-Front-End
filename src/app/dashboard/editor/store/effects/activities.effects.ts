@@ -146,10 +146,11 @@ export class ActivitiesEffects {
             // this mcqAct already has a mcq results activity we don't need to add
           } else {
             if (mcqAct.show_distribution) {
+              // setTimeout(() => {
               // add mcqresultactivity
               const newIndex = new Date().getTime();
               const mcqresultactivity = {
-                activity_id: '' + newIndex,
+                activity_id: newIndex + '_' + mcqAct.activity_id,
                 activity_type: 'MCQResultsActivity',
                 description: 'Here are your results',
                 next_activity_delay_seconds: 10000,
@@ -157,6 +158,7 @@ export class ActivitiesEffects {
                 summary_questions: [{ question_id: mcqAct.activity_id }],
               };
               newContentArray.splice(i + 1, 0, mcqresultactivity);
+              // }, 0);
             } else {
               // this mcqAct doesn't need a mcqresults activity
             }

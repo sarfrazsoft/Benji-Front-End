@@ -21,7 +21,6 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent i
 
   changes() {
     const act = this.activityState.feedbackactivity;
-    console.log(act);
     if (act) {
       this.title = act.titlecomponent.title;
       this.instructions = act.titlecomponent.screen_instructions;

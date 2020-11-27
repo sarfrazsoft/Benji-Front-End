@@ -45,7 +45,7 @@ export class WhiteLabelResolver implements Resolve<any> {
           // because muralys is the only organzation with a url that looks like
           // https://sessions.muralys.com/participant/login
           console.log('get muralys theme');
-          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'muralys' + '/white_label_info/').subscribe(
+          this.httpClient.get(global.apiRoot + '/whitelabel/theme/' + 'muralys/').subscribe(
             (res: any) => {
               this.contextService.partnerInfo = res;
             },
@@ -62,7 +62,7 @@ export class WhiteLabelResolver implements Resolve<any> {
           const parts = location.hostname.split('.');
           const subdomain = parts.shift();
           console.log(`get ${subdomain} theme`);
-          this.httpClient.get(global.apiRoot + '/tenants/orgs/' + subdomain + '/white_label_info/').subscribe(
+          this.httpClient.get(global.apiRoot + '/whitelabel/theme/' + subdomain + '/').subscribe(
             (res: any) => {
               this.contextService.partnerInfo = res;
             },
@@ -110,7 +110,7 @@ export class WhiteLabelResolver implements Resolve<any> {
 
   applyBenjiTheme() {
     console.log('applying benji theme');
-    this.httpClient.get(global.apiRoot + '/tenants/orgs/' + 'benji' + '/white_label_info/').subscribe(
+    this.httpClient.get(global.apiRoot + '/whitelabel/theme/' + 'benji/').subscribe(
       (res: any) => {
         this.contextService.partnerInfo = res;
       },

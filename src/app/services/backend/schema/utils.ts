@@ -1,3 +1,4 @@
+import { ActivityTypes } from 'src/app/globals';
 import { ParticipantCode } from './activities';
 
 export interface Timer {
@@ -58,4 +59,12 @@ export interface TitleComponent {
   screen_instructions: string;
   title: string;
   title_image: string;
+}
+
+export type ScreenType = 'mainScreen' | 'participantScreen';
+
+export interface PreviewActivity {
+  activity_type: ActivityTypes;
+  content: any;
+  screenType: ScreenType;
 }

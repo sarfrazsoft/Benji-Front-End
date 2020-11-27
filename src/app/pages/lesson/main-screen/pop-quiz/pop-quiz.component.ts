@@ -25,7 +25,7 @@ export class MainScreenPopQuizComponent
     super();
   }
 
-  optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
+  optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
 
   ngOnInit() {
     super.ngOnInit();

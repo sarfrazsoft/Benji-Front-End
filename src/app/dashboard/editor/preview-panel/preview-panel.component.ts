@@ -1,10 +1,11 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { act } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
-import { ActivityTypes as Acts } from 'src/app/globals';
+import { ActivityTypes, ActivityTypes as Acts } from 'src/app/globals';
+import { PreviewActivity, ScreenType } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import * as fromStore from '../store';
 
@@ -15,12 +16,16 @@ import * as fromStore from '../store';
 })
 export class PreviewPanelComponent implements OnInit {
   previewTemplate = false;
+
+  screenType: ScreenType = 'mainScreen';
+  screenType$ = new BehaviorSubject<any>('mainScreen');
+
   activity$: Observable<any>;
   fields$: Observable<any>;
   content$: Observable<any>;
   possibleActivities$: Observable<any>;
 
-  activityData;
+  activityData: PreviewActivity;
 
   hostname = window.location.protocol + '//' + environment.host;
   imgSrc = '';
@@ -34,16 +39,17 @@ export class PreviewPanelComponent implements OnInit {
 
     this.content$ = this.store.select(fromStore.getSelectedLessonActivityContent);
 
-    combineLatest([this.activity$, this.possibleActivities$, this.content$])
+    combineLatest([this.activity$, this.possibleActivities$, this.content$, this.screenType$])
       .pipe(
-        map(([a$, b$, c$]) => ({
+        map(([a$, b$, c$, d$]) => ({
           activity: a$,
           possibleActivities: b$,
           content: c$,
+          screenType: d$,
         }))
       )
       .subscribe((pair) => {
-        console.log(pair);
+        // console.log(pair);
         if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
           // console.log(act_type);
@@ -54,7 +60,11 @@ export class PreviewPanelComponent implements OnInit {
             act_type === Acts.feedback
           ) {
             this.previewTemplate = true;
-            this.activityData = { activity_type: act_type, content: pair.content };
+            this.activityData = {
+              activity_type: act_type,
+              content: pair.content,
+              screenType: pair.screenType,
+            };
           } else {
             this.previewTemplate = false;
           }
@@ -67,5 +77,10 @@ export class PreviewPanelComponent implements OnInit {
           this.previewTemplate = false;
         }
       });
+  }
+
+  selectScreen(screenType: 'mainScreen' | 'participantScreen') {
+    this.screenType$.next(screenType);
+    this.screenType = screenType;
   }
 }

@@ -16,7 +16,9 @@ import {
   MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
+  ParticipantFeedbackActivityComponent,
 } from 'src/app/pages';
+import { PreviewActivity } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-preview-activity',
@@ -24,18 +26,15 @@ import {
   styleUrls: ['./activity.component.scss'],
 })
 export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() data;
+  @Input() data: PreviewActivity;
   componentRef: ComponentRef<any>;
   oldActivityType;
   @ViewChild('previewEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   constructor(private cfr: ComponentFactoryResolver) {}
 
-  ngOnInit() {
-    console.log('init called');
-  }
+  ngOnInit() {}
   ngOnDestroy() {
     if (this.componentRef) {
-      console.log('destroyer called');
       this.componentRef.destroy();
     }
   }
@@ -139,7 +138,6 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-        console.log(content);
         let title = 'Enter title';
         if (content.titlecomponent) {
           title = content.titlecomponent.title ? content.titlecomponent.title : 'Enter title';
@@ -201,7 +199,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-        console.log(content);
+
         let title = 'Enter title';
         let instructions = 'Answer the following question';
         if (content.titlecomponent) {
@@ -209,7 +207,16 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           title = t.title ? t.title : 'Enter title';
           instructions = t.screen_instructions ? t.screen_instructions : 'Answer the following question';
         }
-        const msAct = this.cfr.resolveComponentFactory(MainScreenFeedbackActivityComponent);
+        let feedbackquestion_set = [];
+        if (content.feedbackquestion_set.length) {
+          feedbackquestion_set = content.feedbackquestion_set;
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenFeedbackActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantFeedbackActivityComponent);
+        }
         this.componentRef = this.entry.createComponent(msAct);
         this.componentRef.instance.activityState = {
           activity_type: this.data.activity_type,
@@ -223,22 +230,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             description: null,
             end_time: null,
             facilitation_status: 'running',
-            feedbackquestion_set: [
-              {
-                combo_text: null,
-                id: 108,
-                is_combo: false,
-                question_text: 'question one',
-                question_type: 'rating_agreedisagree',
-              },
-              {
-                combo_text: null,
-                id: 109,
-                is_combo: false,
-                question_text: 'question two',
-                question_type: 'text_only',
-              },
-            ],
+            feedbackquestion_set: feedbackquestion_set,
             id: 546,
             is_paused: true,
             next_activity: null,

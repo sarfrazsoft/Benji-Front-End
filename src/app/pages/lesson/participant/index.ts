@@ -4,7 +4,7 @@ import { ParticipantCaseStudyActivityComponent } from './case-study-activity/cas
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { ParticipantExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
-import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
+// import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 import { ParticiapantGatherActivityComponent } from './gather-activity/gather-activity.component';
 import { ParticipantGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { ParticipantGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
@@ -25,12 +25,14 @@ import { ParticipantTriadGroupingActivityComponent } from './triad-grouping-acti
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 
 import { ParticipantSharedComponents } from './shared';
+export { ParticipantSharedComponents } from './shared';
 
+export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 export { ParticipantLessonComponent };
 
 export const ParticipantScreenComponents = [
   ...BuildPitchComponents,
-  ...ParticipantSharedComponents,
+  // ...ParticipantSharedComponents,
   ...BrainStormingComponents,
   ...ReorderComponents,
   ...ParticipantLobbyComponents,
@@ -40,7 +42,7 @@ export const ParticipantScreenComponents = [
   ParticipantEitherOrActivityComponent,
   ParticipantExternalGroupingActivityComponent,
   ParticipantMontyHallActivityComponent,
-  ParticipantFeedbackActivityComponent,
+  // ParticipantFeedbackActivityComponent,
   ParticipantGeneratePitchActivityComponent,
   ParticipantHintActivityComponent,
   ParticipantLessonComponent,

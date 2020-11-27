@@ -13,6 +13,12 @@ import {
   MainScreenTitleActivityComponent,
 } from 'src/app/pages/lesson/main-screen';
 
+import {
+  ParticipantFeedbackActivityComponent,
+  ParticipantSharedComponents,
+} from 'src/app/pages/lesson/participant';
+import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
+
 import { BTwemojiComponent } from '../ui-components/b-twemoji/b-twemoji.component';
 import { AttentionOverlayComponent } from '../ui-components/linear-timer/attention-overlay/attention-overlay.component';
 import { LinearTimerComponent } from '../ui-components/linear-timer/linear-timer.component';
@@ -22,6 +28,9 @@ import { NumberTimerComponent } from '../ui-components/number-timer/number-timer
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
 const ActivityComponents = [
+  ParticipantFeedbackActivityComponent,
+  ...ParticipantSharedComponents,
+  ParticipantToolbarComponent,
   MainScreenTitleActivityComponent,
   MainScreenFeedbackActivityComponent,
   ...BrainStormComponents,

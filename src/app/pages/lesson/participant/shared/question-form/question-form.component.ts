@@ -1,18 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { FeedbackQuestion } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-question-form',
   templateUrl: './question-form.component.html',
-  styleUrls: ['./question-form.component.scss']
+  styleUrls: ['./question-form.component.scss'],
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
@@ -27,12 +20,16 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.question_set.sort((a, b) => a.id - b.id);
+    // check if the questions have ids
+    // questions coming from editor don't have ids
+    if (this.question_set.length && this.question_set[0].id) {
+      this.question_set.sort((a, b) => a.id - b.id);
+    }
   }
 
   buildForm() {
     this.form = this.builder.group({
-      questions: this.builder.array([])
+      questions: this.builder.array([]),
     });
 
     for (let i = 0; i < this.question_set.length; i++) {
@@ -47,12 +44,12 @@ export class QuestionFormComponent implements OnInit, OnChanges {
         q: q,
         question_type: q.question_type,
         rating_answer: null,
-        text_answer: null
+        text_answer: null,
       },
       {
         validator: (formGroup: FormGroup) => {
           return this.validateForm(formGroup);
-        }
+        },
       }
     );
   }
@@ -67,10 +64,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   }
 
   validateForm(formgroup: FormGroup) {
-    if (
-      formgroup.controls['rating_answer'].value ||
-      formgroup.controls['text_answer'].value
-    ) {
+    if (formgroup.controls['rating_answer'].value || formgroup.controls['text_answer'].value) {
       return null;
     } else {
       return { validateForm: true };
@@ -86,7 +80,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   }
 
   selectPill(pill) {
-    const idx = selectPills.findIndex(x => x.id === pill.id);
+    const idx = selectPills.findIndex((x) => x.id === pill.id);
     this.selectPills[idx].selected = !this.selectPills[idx].selected;
   }
 
@@ -106,11 +100,9 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       'I like it for sho',
       'I definitely like it ',
       'I love it',
-      'I can\'t wait for the next one'
+      'I can\'t wait for the next one',
     ];
-    return sliderTexts[
-      Math.floor((this.sliderValue / 100) * sliderTexts.length)
-    ];
+    return sliderTexts[Math.floor((this.sliderValue / 100) * sliderTexts.length)];
   }
 }
 
@@ -121,5 +113,5 @@ export const selectPills = [
   { id: 4, name: 'Moose', selected: false },
   { id: 5, name: 'Thought provoking', selected: false },
   { id: 6, name: 'Enigma Machine', selected: false },
-  { id: 7, name: 'Ten', selected: false }
+  { id: 7, name: 'Ten', selected: false },
 ];
