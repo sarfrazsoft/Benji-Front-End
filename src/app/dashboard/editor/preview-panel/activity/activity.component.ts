@@ -82,7 +82,6 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-        // const msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
         let msAct = null;
         if (this.data.screenType === 'mainScreen') {
           msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);

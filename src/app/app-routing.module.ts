@@ -4,13 +4,15 @@ import {
   AcceptInviteComponent,
   ActivateAccountComponent,
   EntryComponent,
+  NewLoginComponent,
+  NewSignupComponent,
 } from 'src/app/pages';
 import { WhiteLabelResolver } from './services';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('src/app/layout/layout.module').then(m => m.LayoutModule),
+    loadChildren: () => import('src/app/layout/layout.module').then((m) => m.LayoutModule),
   },
   {
     path: 'login/:partner',
@@ -21,7 +23,14 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: EntryComponent,
+    component: NewLoginComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver,
+    },
+  },
+  {
+    path: 'signup',
+    component: NewSignupComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },
