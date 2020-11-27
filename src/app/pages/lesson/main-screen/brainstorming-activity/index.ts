@@ -1,4 +1,4 @@
 import { MainScreenBrainstormingActivityComponent } from './brainstorming-activity.component';
 export { MainScreenBrainstormingActivityComponent } from './brainstorming-activity.component';
 
-export const BrainStormComponents = [MainScreenBrainstormingActivityComponent];
+export const MainScreenBrainStormComponents = [MainScreenBrainstormingActivityComponent];

@@ -1,4 +1,4 @@
-import { BrainStormingComponents } from './brainstorming-activity';
+// import { ParticipantBrainStormComponents } from './brainstorming-activity';
 import { BuildPitchComponents } from './build-pitch-activity';
 import { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
@@ -29,11 +29,13 @@ export { ParticipantSharedComponents } from './shared';
 
 export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 export { ParticipantLessonComponent };
+export { ParticipantBrainStormComponents } from './brainstorming-activity';
+export { ParticipantBrainstormingActivityComponent } from './brainstorming-activity/brainstorming-activity.component';
 
 export const ParticipantScreenComponents = [
   ...BuildPitchComponents,
   // ...ParticipantSharedComponents,
-  ...BrainStormingComponents,
+  // ...BrainStormingComponents,
   ...ReorderComponents,
   ...ParticipantLobbyComponents,
   ParticiapantGatherActivityComponent,

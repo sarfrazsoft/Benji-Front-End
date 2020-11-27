@@ -24,7 +24,7 @@ import { MainScreenTriadGroupingActivityComponent } from './triad-grouping-activ
 import { MainScreenVideoActivityComponent } from './video-activity/video-activity.component';
 
 export { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
-export { BrainStormComponents } from './brainstorming-activity';
+export { MainScreenBrainStormComponents } from './brainstorming-activity';
 export * from './brainstorming-activity';
 // export { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
@@ -33,7 +33,7 @@ export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
   MainScreenBuildPitchActivityComponent,
-  // ...BrainStormComponents,
+  // ...ParticipantBrainStormComponents,
   MainScreenCaseStudyActivityComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,

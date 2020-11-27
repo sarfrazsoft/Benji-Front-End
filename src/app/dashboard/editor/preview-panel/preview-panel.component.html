@@ -25,7 +25,7 @@
 
       <ng-container *ngIf="screenType === 'participantScreen'">
         <div class="p-act-template template-container">
-          <benji-participant-toolbar [activityState]="activityData"></benji-participant-toolbar>
+          <benji-participant-toolbar [showTimer]="false"></benji-participant-toolbar>
           <benji-preview-activity [data]="activityData"></benji-preview-activity>
         </div>
       </ng-container>

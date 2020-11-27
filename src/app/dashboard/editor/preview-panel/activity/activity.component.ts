@@ -16,6 +16,7 @@ import {
   MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
+  ParticipantBrainstormingActivityComponent,
   ParticipantFeedbackActivityComponent,
 } from 'src/app/pages';
 import { PreviewActivity } from 'src/app/services/backend/schema';
@@ -81,7 +82,13 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-        const msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
+        // const msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantBrainstormingActivityComponent);
+        }
         this.componentRef = this.entry.createComponent(msAct);
         const categorizeFlag =
           content.brainstormcategory_set && content.brainstormcategory_set.length === 0 ? false : true;
@@ -110,7 +117,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             id: 524,
             instructions: instructions,
             is_paused: true,
-            max_participant_submissions: 1,
+            max_participant_submissions: content.max_participant_submissions,
             max_participant_votes: 1,
             next_activity: null,
             next_activity_delay_seconds: 0,

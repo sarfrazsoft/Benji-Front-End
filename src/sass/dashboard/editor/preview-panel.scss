@@ -169,6 +169,10 @@ benji-preview-panel {
       .p-act-template {
         max-width: 500px;
         margin: 0 auto;
+        .b-flat-card {
+          min-height: calc(100vh - 65px - 141px) !important;
+          height: calc(100vh - 65px - 141px) !important;
+        }
       }
     }
   }

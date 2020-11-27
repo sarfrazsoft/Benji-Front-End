@@ -15,7 +15,7 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
   timer: Timer;
   @Input() activityState: UpdateMessage;
   at: typeof ActivityTypes = ActivityTypes;
-  showTimer = false;
+  @Input() showTimer = false;
   constructor(private contextService: ContextService, private router: Router) {}
 
   ngOnInit() {
