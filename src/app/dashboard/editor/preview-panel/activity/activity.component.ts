@@ -18,6 +18,8 @@ import {
   MainScreenTitleActivityComponent,
   ParticipantBrainstormingActivityComponent,
   ParticipantFeedbackActivityComponent,
+  ParticipantPopQuizComponent,
+  ParticipantTitleActivityComponent,
 } from 'src/app/pages';
 import { PreviewActivity } from 'src/app/services/backend/schema';
 
@@ -44,15 +46,17 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
     if (this.data) {
       const content = this.data.content;
       if (this.data.activity_type === Acts.title) {
-        if (this.oldActivityType !== Acts.title) {
-          if (this.componentRef) {
-            this.componentRef.destroy();
-          }
+        if (this.componentRef) {
+          this.componentRef.destroy();
         }
-        if (this.oldActivityType !== this.data.activity_type) {
-          const msAct = this.cfr.resolveComponentFactory(MainScreenTitleActivityComponent);
-          this.componentRef = this.entry.createComponent(msAct);
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenTitleActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantTitleActivityComponent);
         }
+        this.componentRef = this.entry.createComponent(msAct);
+
         this.componentRef.instance.activityState = {
           activity_type: this.data.activity_type,
           lesson: Lesson,
@@ -159,8 +163,16 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           questionText = q.question ? q.question : 'Enter your question';
           options = q.mcqchoice_set.length ? q.mcqchoice_set : options;
         }
-        const msAct = this.cfr.resolveComponentFactory(MainScreenPopQuizComponent);
+
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenPopQuizComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantPopQuizComponent);
+        }
+
         this.componentRef = this.entry.createComponent(msAct);
+        this.componentRef.instance.editor = true;
         this.componentRef.instance.activityState = {
           activity_type: this.data.activity_type,
           lesson: Lesson,

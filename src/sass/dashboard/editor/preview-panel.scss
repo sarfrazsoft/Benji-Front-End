@@ -172,6 +172,7 @@ benji-preview-panel {
         .b-flat-card {
           min-height: calc(100vh - 65px - 141px) !important;
           height: calc(100vh - 65px - 141px) !important;
+          box-shadow: none;
         }
       }
     }

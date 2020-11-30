@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import { MCQChoice, MCQSubmitAnswerEvent, Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -14,6 +14,8 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   showQuestion = false;
   showQuestionsAnswer = false;
   answerSubmitted = false;
+
+  @Input() editor = false;
 
   selectedChoice: MCQChoice = {
     id: null,
@@ -35,17 +37,26 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   ngOnInit() {
     super.ngOnInit();
-    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    const as = this.activityState;
+    if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
+      as.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    }
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
     if (localStorage.getItem(this.localStorageItemName)) {
       this.selectedChoice = JSON.parse(localStorage.getItem(this.localStorageItemName));
     }
+    this.changes();
   }
 
-  ngOnChanges() {
+  changes() {
     const as = this.activityState;
-    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
+      this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    }
+    if (this.editor) {
+      this.showQuestion = true;
+    }
     if (
       as.mcqactivity.question_timer &&
       (as.mcqactivity.question_timer.status === 'running' ||
@@ -75,6 +86,10 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
     } else if (as.mcqresultsactivity) {
       this.showResults = true;
     }
+  }
+
+  ngOnChanges() {
+    this.changes();
   }
 
   selectOption(option: MCQChoice) {

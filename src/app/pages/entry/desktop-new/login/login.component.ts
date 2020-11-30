@@ -2,7 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { AuthService } from 'src/app/services';
+import { AuthService, ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-login-new',
@@ -16,11 +17,14 @@ export class LoginComponent implements OnInit {
   isDemoSite = true;
   @Output() showSignupTab = new EventEmitter();
 
+  logo;
+
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private deviceService: DeviceDetectorService
+    public router: Router,
+    private deviceService: DeviceDetectorService,
+    private contextService: ContextService
   ) {
     // demo.mybenji.com
     if (window.location.href.split('.')[0].includes('demo')) {
@@ -29,6 +33,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.logo = info.parameters.darkLogo;
+      }
+    });
+
     this.form = this.builder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: '',

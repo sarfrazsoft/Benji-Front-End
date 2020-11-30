@@ -17,11 +17,15 @@ import {
 import {
   ParticipantBrainStormComponents,
   ParticipantFeedbackActivityComponent,
+  ParticipantPopQuizComponent,
   ParticipantSharedComponents,
+  ParticipantTitleActivityComponent,
 } from 'src/app/pages/lesson/participant';
 
 const ActivityComponents = [
   ParticipantFeedbackActivityComponent,
+  ParticipantTitleActivityComponent,
+  ParticipantPopQuizComponent,
   ...ParticipantSharedComponents,
   ...ParticipantBrainStormComponents,
   MainScreenTitleActivityComponent,
@@ -29,6 +33,7 @@ const ActivityComponents = [
   ...MainScreenBrainStormComponents,
   MainScreenPopQuizComponent,
 ];
+
 export const Components = [
   ...CmpComponents,
   ...Directives,

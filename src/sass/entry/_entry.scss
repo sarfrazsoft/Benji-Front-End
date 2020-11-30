@@ -156,6 +156,18 @@
   -ms-flex-align: center;
   align-items: center;
 }
+.text-block-91 {
+  margin-top: 16px;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: Inter, sans-serif;
+  text-align: center;
+}
+.bold-text-7,
+.text-block-90,
+.text-block-91 {
+  font-size: 16px;
+}
 
 .small-form-text,
 .text-block-89 {
@@ -166,7 +178,6 @@
 
 .sign-up-field,
 .text-block-89 {
-  margin-bottom: 16px;
   font-size: 16px;
 }
 
@@ -188,7 +199,7 @@
   padding-left: 16px;
   border: 1px solid #e2e2e2;
   border-radius: 4px;
-  color: #e2e2e2;
+  color: $black;
   font-weight: 300;
   box-sizing: border-box;
 }
@@ -196,7 +207,6 @@
 .w-button {
   display: inline-block;
   padding: 9px 15px;
-  background-color: #3898ec;
   color: #fff;
   border: 0;
   line-height: inherit;
@@ -212,7 +222,6 @@
 }
 .submit-button-12 {
   border-radius: 4px;
-  background-color: #0a4cef;
   font-weight: 500;
 }
 
@@ -222,14 +231,16 @@
 .form-block-8 {
   margin-bottom: 0;
   width: 300px;
+  > form > div {
+    margin-bottom: 16px;
+  }
 }
 
 .small-form-text {
   width: 250px;
   margin-bottom: 16px;
-  font-family: Inter, sans-serif;
   color: #9b9b9b;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -265,9 +276,11 @@ figcaption {
 }
 
 .log-in-form {
-  width: 300px;
   margin-top: 24px;
   margin-bottom: 0;
+  form > div {
+    margin-bottom: 16px;
+  }
 }
 .w-input:focus,
 .w-select:focus {
@@ -282,9 +295,17 @@ figcaption {
 
 @media screen and (max-width: 479px) {
   .sign-up-section {
-    height: auto;
-    padding-top: 40px;
-    padding-bottom: 40px;
+    height: 100vh;
+    padding-top: 60px;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    background-image: url(https://uploads-ssl.webflow.com/58eacc2ca0e2f91e7c79a156/5fc17bec0f3f816e3bf62474_iPhone%2011%20Pro%20Max%20-%202.svg),
+      url(https://uploads-ssl.webflow.com/58eacc2ca0e2f91e7c79a156/5fc17bec0f3f816e3bf62474_iPhone%2011%20Pro%20Max%20-%202.svg);
+    background-position: 0 0, 0 0;
+    background-size: cover, cover;
+    box-sizing: border-box;
   }
   .form-9 {
     display: -webkit-box;
@@ -296,11 +317,6 @@ figcaption {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-  }
-  .sign-up-section {
-    height: auto;
-    background-image: none;
-    background-size: auto;
   }
   .sign-up-card {
     display: flex;
@@ -325,7 +341,8 @@ figcaption {
     display: -ms-flexbox;
     display: flex;
     width: 100%;
-    height: auto;
+    margin-top: 32px;
+    padding: 30px 20px;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     -webkit-flex-direction: column;
@@ -339,18 +356,19 @@ figcaption {
   .div-block-183 {
     margin-top: 0;
     margin-bottom: 0;
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
+    // -webkit-box-align: stretch;
+    // -webkit-align-items: stretch;
+    // -ms-flex-align: stretch;
+    // align-items: stretch;
   }
   .log-in-card,
   .sign-up-card {
     overflow: hidden;
-    margin-right: 0;
-    margin-left: 0;
-    padding: 30px;
-    box-shadow: none;
+    height: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 9px 0 #d5d9de;
   }
   .sign-up-field,
   .small-form-text,

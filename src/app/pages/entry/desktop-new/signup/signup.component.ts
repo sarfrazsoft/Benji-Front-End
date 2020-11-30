@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services';
+import { Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { AuthService, ContextService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-signup-new',
@@ -15,9 +18,23 @@ export class SignupComponent implements OnInit {
   emailErr = false;
   emailErrMsg = '';
 
-  constructor(private builder: FormBuilder, private authService: AuthService) {}
+  logo;
+
+  constructor(
+    private builder: FormBuilder,
+    private authService: AuthService,
+    private contextService: ContextService,
+    private deviceService: DeviceDetectorService,
+    public router: Router
+  ) {}
 
   ngOnInit() {
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.logo = info.parameters.darkLogo;
+      }
+    });
+
     this.form = this.builder.group(
       {
         firstName: new FormControl('', [Validators.required]),
@@ -85,6 +102,23 @@ export class SignupComponent implements OnInit {
         (res) => {
           if (res.token) {
             this.isSubmitted = true;
+            this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
+              (signInRes) => {
+                if (res.token) {
+                  // if (this.authService.redirectURL.length) {
+                  // window.location.href = this.authService.redirectURL;
+                  // } else {
+                  this.deviceService.isMobile()
+                    ? this.router.navigate(['/participant/join'])
+                    : this.router.navigate(['/dashboard']);
+                  // }
+                } else {
+                }
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
             return;
           }
 

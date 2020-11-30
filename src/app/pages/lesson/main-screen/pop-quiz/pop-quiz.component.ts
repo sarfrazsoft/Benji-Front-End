@@ -46,8 +46,9 @@ export class MainScreenPopQuizComponent
     const qTimer = as.mcqactivity.question_timer;
     const nt = this.getNextActStartTimer();
 
-    this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
-
+    if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
+      this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    }
     if (this.peakBackState && this.peakBackStage === null) {
       // this.voteScreen = true;
       // this.submissionScreen = false;

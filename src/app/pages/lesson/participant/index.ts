@@ -17,20 +17,22 @@ import { ParticipantMontyHallActivityComponent } from './monty-hall-activity/mon
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
 import { ParticipantPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
-import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
+// import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { ReorderComponents } from './reorder-activity';
 import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
-import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
+// import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
 import { ParticipantTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 
 import { ParticipantSharedComponents } from './shared';
 export { ParticipantSharedComponents } from './shared';
 
+export { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 export { ParticipantLessonComponent };
 export { ParticipantBrainStormComponents } from './brainstorming-activity';
 export { ParticipantBrainstormingActivityComponent } from './brainstorming-activity/brainstorming-activity.component';
+export { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
 
 export const ParticipantScreenComponents = [
   ...BuildPitchComponents,
@@ -52,9 +54,9 @@ export const ParticipantScreenComponents = [
   ParticipantMcqresultActivityComponent,
   ParticipantPairActivityComponent,
   ParticipantPairGroupingActivityComponent,
-  ParticipantPopQuizComponent,
+  // ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,
-  ParticipantTitleActivityComponent,
+  // ParticipantTitleActivityComponent,
   ParticipantTriadGroupingActivityComponent,
   ParticipantVideoActivityComponent,
   ParticipantGenericRoleplayActivityComponent,
