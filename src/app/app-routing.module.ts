@@ -3,9 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   AcceptInviteComponent,
   ActivateAccountComponent,
-  EntryComponent,
-  NewLoginComponent,
-  NewSignupComponent,
+  LoginComponent,
+  SignupComponent,
 } from 'src/app/pages';
 import { WhiteLabelResolver } from './services';
 
@@ -16,21 +15,21 @@ const routes: Routes = [
   },
   {
     path: 'login/:partner',
-    component: EntryComponent,
+    component: LoginComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },
   },
   {
     path: 'login',
-    component: NewLoginComponent,
+    component: LoginComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },
   },
   {
     path: 'signup',
-    component: NewSignupComponent,
+    component: SignupComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },

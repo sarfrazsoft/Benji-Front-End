@@ -1,37 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { MainScreenLessonComponent, ParticipantLessonComponent, SingleUserComponent } from 'src/app/pages';
-import { IcebreakerComponent } from '../pages/landing/icebreaker/icebreaker.component';
-import { LandingComponent } from '../pages/landing/main-screen/landing.component';
-import { ParticipantJoinComponent } from '../pages/landing/participant/join/participant-join.component';
-import { ParticipantLoginComponent } from '../pages/landing/participant/login/participant-login.component';
+import { ParticipantJoinComponent } from '../pages/participant/join/participant-join.component';
+import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
 import { AuthGuard, WhiteLabelResolver } from '../services';
 import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
   { path: '', redirectTo: '/participant/join', pathMatch: 'full' },
-  {
-    path: 'landing',
-    component: LandingComponent,
-    resolve: {
-      labelInfo: WhiteLabelResolver,
-    },
-  },
-  {
-    path: 'icebreaker',
-    component: IcebreakerComponent,
-    resolve: {
-      labelInfo: WhiteLabelResolver,
-    },
-  },
-  {
-    path: 'landing/:partner',
-    component: LandingComponent,
-    resolve: {
-      labelInfo: WhiteLabelResolver,
-    },
-  },
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent,

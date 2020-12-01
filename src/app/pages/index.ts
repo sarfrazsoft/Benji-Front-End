@@ -1,2 +1,2 @@
 export * from './lesson';
-export * from './entry';
+export * from './registration';
