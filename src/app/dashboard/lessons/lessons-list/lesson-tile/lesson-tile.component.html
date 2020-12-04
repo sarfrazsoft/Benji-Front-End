@@ -1,0 +1,62 @@
+<div class="course-tile" fxLayout="column">
+  <div class="title" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+    <h2>{{ lesson.lesson_name }}</h2>
+    <div>
+      <button
+        [matMenuTriggerFor]="menu"
+        benji-click-stop-propagation
+        disableRipple
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="edit($event, lesson)">
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item (click)="editDescription($event, lesson)">
+          <span>Description</span>
+        </button>
+        <button mat-menu-item (click)="delete($event, lesson)">
+          <span>Delete</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <div class="course-detail" fxFlex="1 1 auto">
+    <div *ngIf="!editingDescription" class="description">
+      {{ lesson.lesson_description }}
+    </div>
+
+    <div *ngIf="editingDescription" class="description">
+      <textarea
+       [(ngModel)]='description' 
+       (keyup.enter)="saveDescription($event)"
+       (click)="$event.preventDefault(); $event.stopPropagation()"
+       rows="6">                             
+      </textarea>
+    </div>
+  </div>
+  <div
+    *ngIf="!editingDescription"
+    class="launch-session primary-color"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    (click)="launchSession($event, lesson)"
+  >
+    <div class="button">
+      <span>Launch</span>
+    </div>
+  </div>
+  <div
+    *ngIf="editingDescription"
+    class="launch-session primary-color"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    (click)="saveDescription($event)"
+  >
+    <div class="button">
+      <span>Save</span>
+    </div>
+  </div>
+</div>

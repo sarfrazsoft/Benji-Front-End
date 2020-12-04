@@ -28,9 +28,10 @@ mat-sidenav-container.mat-sidenav-container {
       outline: none;
       display: flex;
       margin-bottom: 50px;
+      text-align: center;
       img {
-        max-height: 52px;
-        max-width: 152px;
+        margin: 0 auto;
+        max-width: 120px;
       }
     }
 

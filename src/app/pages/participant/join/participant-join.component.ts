@@ -15,6 +15,8 @@ export class ParticipantJoinComponent implements OnInit {
   public isRoomCodeValid: boolean;
   public userName: string;
 
+  tokenCleared = false;
+
   public roomCode = new FormControl(null, [Validators.required, Validators.min(4)]);
 
   constructor(
@@ -60,6 +62,12 @@ export class ParticipantJoinComponent implements OnInit {
       },
       (err) => {
         console.error(`Unable to join: ${err.error.error}`);
+        console.log(err);
+        if (err.error.code === 'token_not_valid' && !this.tokenCleared) {
+          localStorage.removeItem('token');
+          this.tokenCleared = true;
+          this.validateRoomCode();
+        }
         this.isRoomCodeValid = false;
       }
     );

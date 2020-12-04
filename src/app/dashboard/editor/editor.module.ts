@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipOptions } from 'ng2-tooltip-directive';
 import { SharedModule } from '../../shared/shared.module';
 import { EditorRoutes } from './editor.routing';
 import { EditorComponents, EditorEntryComponents, EditorProviders } from './index';
@@ -71,6 +72,11 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
   return `should be equal to constant "${field.templateOptions.const}"`;
 }
 
+export const MyDefaultTooltipOptions: TooltipOptions = {
+  'show-delay': 4000,
+  'tooltip-class': 'benji-editor-tooltip',
+};
+
 @NgModule({
   imports: [
     CommonModule,
@@ -78,7 +84,7 @@ export function constValidationMessage(err, field: FormlyFieldConfig) {
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    TooltipModule,
+    TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
     StoreModule.forFeature('editor', reducers),
     EffectsModule.forFeature(effects),
     FormlyModule.forRoot({

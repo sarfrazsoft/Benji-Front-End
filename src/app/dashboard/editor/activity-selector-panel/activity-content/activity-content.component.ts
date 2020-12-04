@@ -280,7 +280,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   if (content && content.grouping_activity_id) {
                   }
                   mappedField.type = 'boolean';
-                  mappedField.templateOptions.label = 'Add External grouping';
+                  mappedField.templateOptions.label = 'Breakout Room Activity';
                   mappedField.defaultValue = true;
                   mappedField.templateOptions['hideRequiredMarker'] = true;
                   delete mappedField.templateOptions.required;
@@ -366,7 +366,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.type = 'feedbackQuestion';
                 } else if (mapSource.field_name === 'grouping_activity_id') {
                   mappedField.type = 'boolean';
-                  mappedField.templateOptions.label = 'Add External grouping';
+                  mappedField.templateOptions.label = 'Breakout Room Activity';
                   mappedField.defaultValue = true;
                   mappedField.templateOptions['hideRequiredMarker'] = true;
                   delete mappedField.templateOptions.required;

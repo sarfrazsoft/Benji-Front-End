@@ -1,10 +1,10 @@
 <div class="add-learners-dialog" fxLayout="column">
   <div fxLayoutAlign="end end">
     <button class="close-button" matDialogClose>
-      <mat-icon class="icon-white">clear</mat-icon>
+      <img src="/assets/img/close_big.svg" />
     </button>
   </div>
-  <mat-dialog-content class="add-learners">
+  <mat-dialog-content class="add-learners dialog-content">
     <div fxLayout="column" fxLayoutGap="15px">
       <h2 class="dialog-heading">
         Add participants
@@ -13,10 +13,10 @@
       <div class="add-learners-section dashboard-form" fxLayout="column">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
           <div class="field">
-            <div class="label">Add comma separated emails</div>
+            <div class="dialog-instructions">Upload your participant emails as a comma separated list. </div>
             <textarea
               id="email"
-              class="dash-input b-standard-textarea"
+              class=""
               required
               type="emails"
               rows="6"
@@ -40,14 +40,15 @@
           </div>
     
           <div *ngIf="invitationsSent" class="success-message">Invitations sent</div>
-    
-          <button
-            type="submit"
-            class="dashboard-secondary-button bg-primary-color white-color padding0-24"
-            style="width: 220px;"
-            >
-            Add participants
-          </button>
+          <div class="controls-container" fxLayoutAlign="end">
+
+            <button
+              type="submit"
+              class=" bg-primary-color white-color dialog-controls"
+              >
+              Add participants
+            </button>
+          </div>
         </form>
       </div>
                         <!-- [ngClass]="{

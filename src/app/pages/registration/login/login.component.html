@@ -1,7 +1,7 @@
 <div class="sign-up-section">
   <div class="log-in-card">
     <div class="div-block-183">
-      <img [src]="logo" loading="lazy" height="48" alt="">
+      <img [src]="logo" loading="lazy" alt="" >
       <div class="log-in-form w-form">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" id="email-form" no-shadow="input[type=text] {        -webkit-appearance: none;     -moz-appearance: none;     appearance: none; }" class="form-9">
           <div class="email-control">
@@ -34,7 +34,11 @@
               placeholder="Password"
               maxlength="256"
               placeholder="Password">
-            <mat-error *ngIf="emailPasswordError"> Email or Password incorrect.</mat-error>
+            <mat-error *ngIf="emailPasswordError"> 
+              <div>
+                Email or Password incorrect.
+              </div> 
+            </mat-error>
           </div>
           <input type="submit" value="Log-in" data-wait="Please wait..." class="submit-button-12 w-button bg-primary-color">
         </form>
@@ -45,11 +49,15 @@
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
       </div>
-      <div class="small-form-text-left-aligned">Forgot Password?</div>
+      <div 
+        class="forgot-password"
+        (click)="router.navigate(['/forgot-password'])">
+          Forgot Password?
+      </div>
       <div 
         class="text-block-91 primary-color"
         style="cursor: pointer"
-        (click)="router.navigate(['/signup'])">
+        (click)="router.navigate(['/sign-up'])">
         Create new account
       </div>
     </div>

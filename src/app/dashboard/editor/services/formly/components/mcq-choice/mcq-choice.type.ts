@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
@@ -11,11 +11,19 @@ export class MCQChoiceTypeComponent extends FieldType implements OnInit {
   orderField: FormlyFieldConfig;
   explanationField: FormlyFieldConfig;
 
+  @Output() someEvent = new EventEmitter<string>();
+
   ngOnInit() {
     this.field.fieldGroup.forEach((val, i) => {
       if (val.key === 'choice_text') {
         this.choiceTextField = val;
         this.choiceTextField.templateOptions.label = null;
+        this.choiceTextField.templateOptions.keydown = (field, event: KeyboardEvent) => {
+          if (event.key === 'Enter') {
+            event.stopPropagation();
+            event.preventDefault();
+          }
+        };
       } else if (val.key === 'is_correct') {
         val.templateOptions.label = '';
         this.isCorrectField = val;

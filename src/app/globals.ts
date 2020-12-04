@@ -76,7 +76,8 @@ export const DefaultwhiteLabelInfo = {
   favicon: './assets/img/favicon.ico',
   parameters: {
     lightLogo: './assets/img/Benji_logo_white.png',
-    darkLogo: './assets/img/logo.png',
+    darkLogo: './assets/img/Benji_logo.svg',
+    // darkLogo: './assets/img/maestro_sessions_logo_spot.png',
     welcomeDescription: 'What\'s Benji? Learn more about the future of learning',
     primary_lighter: '#80a8ff',
     primary_light: '#4c83fc',

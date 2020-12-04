@@ -3,8 +3,20 @@ benji-preview-panel {
     padding: 36px;
     .screen-selector {
       margin-bottom: 8px;
-      .button {
-        cursor: pointer;
+      .container {
+        background: #fff;
+        padding: 4px 8px;
+        border-radius: 4px;
+
+        .button {
+          cursor: pointer;
+          padding: 5px 8px;
+          color: $black;
+          border-radius: 4px;
+          &.selected {
+            background-color: #eef4ff;
+          }
+        }
       }
     }
     .activity-container {
@@ -122,7 +134,8 @@ benji-preview-panel {
               overflow: hidden;
             }
             .lesson-top-banner {
-              // padding: 5px 5px;
+              padding: 20px 20px;
+              background-color: #f7f8fa;
               h1 {
                 font-size: 28px;
               }

@@ -1,32 +1,28 @@
 <div class="confirmation-dialog" fxLayout="column">
   <div fxLayoutAlign="end end">
     <button class="close-button" matDialogClose>
-      <mat-icon class="icon-white">clear</mat-icon>
+      <img src="/assets/img/close_big.svg" />
     </button>
   </div>
-  <mat-dialog-content class="select-session">
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px">
+  <mat-dialog-content class="dialog-content">
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
       <h2 class="dialog-heading primary-color-darkest">Are you sure?</h2>
       <div class="dialog-instructions">
         {{confirmationMessage}}
       </div>
-      <div class="controls-container" fxLayout="row" fxLayoutGap="15px">
-        <div class="launch">
-          <button
-            class="dashboard-button dialog-controls bg-warning-color"
-            (click)="confirm()"
-          >
-            Delete
-          </button>
-        </div>
-        <div class="cancel">
-          <button
-            class="dashboard-button bg-primary-color dialog-controls"
-            (click)="cancel()"
-          >
-            Cancel
-          </button>
-        </div>
+      <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
+        <button
+          class="cancel-button primary-color dialog-controls"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+        <button
+          class="confirm-button dialog-controls"
+          (click)="confirm()"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </mat-dialog-content>

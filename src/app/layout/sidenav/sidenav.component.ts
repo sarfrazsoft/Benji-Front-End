@@ -152,6 +152,17 @@ export class SidenavComponent implements OnInit {
     ],
   };
 
+  helpCenter = {
+    section: 6,
+    items: [
+      {
+        navName: 'Help Center',
+        navRoute: 'http://help.mybenji.com/en/',
+        icon: '../../../../assets/img/helpCenter.svg',
+      },
+    ],
+  };
+
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -200,8 +211,9 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavSections = [
         this.dashboard,
+        this.helpCenter,
         // this.adminSection,
-        // this.groupsSection,
+        this.groupsSection,
         // this.editor,
         this.pastSessionSection,
         this.accountSection,

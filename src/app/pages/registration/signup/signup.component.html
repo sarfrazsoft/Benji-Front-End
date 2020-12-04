@@ -1,7 +1,7 @@
 <div class="sign-up-section">
   <div class="sign-up-card">
     <div class="div-block-183">
-      <img [src]="logo" loading="lazy" height="48" alt="">
+      <img [src]="logo" loading="lazy" alt="">
       <div class="text-block-89">Sign-up and build your first interactive workshop today!</div>
       <div class="form-block-8 w-form">
         <form [formGroup]="form"
@@ -150,10 +150,9 @@
         </div>
       </div>
       <div 
-        class="small-form-text" 
-        style="cursor: pointer;"
+        class="small-form-text already-member"
         (click)="router.navigate(['/login'])">
-        Already a member?<br><strong class="bold-text-7 primary-color">Log-in</strong></div>
+        Already a member?<br><div class="bold-text-7 primary-color">Log-in</div></div>
     </div>
   </div>
 </div>

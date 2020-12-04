@@ -208,13 +208,11 @@ export class PastSessionsService {
     } else if (filter === 'participated') {
       filterParams = '&participated=True';
     }
-    return this.http
-      .get(global.apiRoot + '/course_details/lesson_run/?completed=True&page=' + page + filterParams)
-      .pipe(
-        map((res) => {
-          return res;
-        })
-      );
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/?page=' + page + filterParams).pipe(
+      map((res) => {
+        return res;
+      })
+    );
   }
 
   addLearners(emails: string) {

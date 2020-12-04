@@ -39,6 +39,12 @@ benji-lesson {
     .course-detail {
       padding: 12px 0px;
       font-size: 16px;
+      textarea {
+        width: 99%;
+        color: $black;
+        border-color: $secondary-color;
+        resize: none;
+      }
     }
   }
 }

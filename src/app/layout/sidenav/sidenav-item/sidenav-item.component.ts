@@ -18,6 +18,8 @@ export class SidenavItemComponent {
   itemClicked(navName: string) {
     if (navName === 'Logout') {
       this.logout();
+    } else if (navName === 'Help Center') {
+      window.open('http://help.mybenji.com/en/', '_blank');
     }
   }
 

@@ -1,20 +1,19 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
-  selector: 'benji-login-new',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'benji-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class ForgotPasswordComponent implements OnInit {
   form: FormGroup;
-  isLoginClicked = false;
+  requestSubmitted = false;
   emailPasswordError = false;
-  isDemoSite = true;
 
   logo;
 
@@ -23,13 +22,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    private contextService: ContextService
-  ) {
-    // demo.mybenji.com
-    if (window.location.href.split('.')[0].includes('demo')) {
-      this.isDemoSite = true;
-    }
-  }
+    private contextService: ContextService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -40,7 +35,6 @@ export class LoginComponent implements OnInit {
 
     this.form = this.builder.group({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: '',
     });
   }
 
@@ -49,21 +43,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.isLoginClicked = true;
     if (this.form.valid) {
       const val = this.form.value;
-      this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
+      this.authService.resetPassword(val.email.toLowerCase()).subscribe(
         (res) => {
           if (res) {
-            this.emailPasswordError = true;
-          } else {
-            if (this.authService.redirectURL.length) {
-              window.location.href = this.authService.redirectURL;
-            } else {
-              this.deviceService.isMobile()
-                ? this.router.navigate(['/participant/join'])
-                : this.router.navigate(['/dashboard']);
-            }
+            this.requestSubmitted = true;
           }
         },
         (err) => {

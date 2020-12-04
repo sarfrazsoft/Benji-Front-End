@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   AcceptInviteComponent,
   ActivateAccountComponent,
+  ForgotPasswordComponent,
   LoginComponent,
+  ResetPasswordComponent,
   SignupComponent,
 } from 'src/app/pages';
 import { WhiteLabelResolver } from './services';
@@ -28,7 +30,21 @@ const routes: Routes = [
     },
   },
   {
-    path: 'signup',
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver,
+    },
+  },
+  {
+    path: 'reset_password/:uid/:token',
+    component: ResetPasswordComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver,
+    },
+  },
+  {
+    path: 'sign-up',
     component: SignupComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,

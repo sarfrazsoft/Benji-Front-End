@@ -1,7 +1,21 @@
 <div class="panel">
-  <div class="screen-selector" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
-    <div class="button" (click)="selectScreen('mainScreen')">Main Screen</div> <div>/</div>
-    <div class="button" (click)="selectScreen('participantScreen')">Participant Screen</div>
+  <div class="screen-selector" fxLayout="row" fxLayoutAlign="center">
+    <div class="container" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="8px">
+      <div 
+        class="button"
+        benji-hover-class="primary-color"
+        (click)="selectScreen('mainScreen')"
+        [ngClass]="screenType === 'mainScreen' ? 'selected': ''">
+        Main Screen
+      </div>
+      <div
+        class="button"
+        benji-hover-class="primary-color"
+        (click)="selectScreen('participantScreen')"
+        [ngClass]="screenType === 'participantScreen' ? 'selected': ''">
+        Participant Screen
+      </div>
+    </div>
   </div>
   <div class="activity-container">
     <ng-container *ngIf="previewTemplate">

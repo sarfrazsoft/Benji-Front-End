@@ -181,4 +181,34 @@ export class AuthService {
   closeIntercom() {
     this.intercom.shutdown();
   }
+
+  // Password change
+  resetPassword(email: string) {
+    return this.http
+      .post(global.apiRoot + '/rest-auth/password/reset/', {
+        email: email,
+      })
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError((err) => of(err.error))
+      );
+  }
+
+  resetPasswordConfirm(password1: string, password2: string, uid: string, token: string) {
+    return this.http
+      .post(global.apiRoot + '/rest-auth/password/reset/confirm/', {
+        new_password1: password1,
+        new_password2: password2,
+        uid: uid,
+        token: token,
+      })
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError((err) => of(err.error))
+      );
+  }
 }

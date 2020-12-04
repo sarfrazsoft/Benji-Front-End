@@ -32,6 +32,8 @@ import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wr
 import { FieldRevealWrapperComponent } from './services/formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
 import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
 
+export { EditorService } from './services/editor.service';
+
 export const EditorComponents = [
   ...ActivitySelectorComponents,
   SafePipe,
@@ -56,4 +58,4 @@ export const EditorComponents = [
 
 export const EditorEntryComponents = [...ActivitySelectorEntryComponents];
 
-export const EditorProviders = [EditorService, EditorResolver, ...ActivitySelectorProviders];
+export const EditorProviders = [EditorResolver, ...ActivitySelectorProviders];

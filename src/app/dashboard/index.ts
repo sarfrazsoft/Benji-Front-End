@@ -7,6 +7,7 @@ export * from './workspace';
 
 import { AccountComponents, AccountProviders } from './account';
 import { AdminComponents, AdminProviders } from './admin-panel';
+import { EditorService } from './editor';
 import { LessonsComponents } from './lessons';
 import { WorkspaceComponents, WorkspaceProviders } from './workspace';
 
@@ -19,4 +20,9 @@ export const DashboardComponents = [
 
 export const DashboardEntryComponents = [];
 
-export const DashboardProviders = [...AdminProviders, ...AccountProviders, ...WorkspaceProviders];
+export const DashboardProviders = [
+  ...AdminProviders,
+  ...AccountProviders,
+  ...WorkspaceProviders,
+  EditorService,
+];

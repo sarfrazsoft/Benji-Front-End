@@ -1,27 +1,42 @@
 .dashboard-dialog {
   mat-dialog-container.mat-dialog-container {
-    background-color: $secondary-color-lightest;
-    padding: 10px;
-    width: 480px;
+    background-color: #fff;
+    padding-top: 24px;
+    padding-right: 24px;
+    padding-left: 40px;
+    padding-bottom: 16px;
+    width: 400px;
     box-shadow: none;
+    // height: 182px;
     .close-button {
       background: transparent;
     }
     .dialog-heading {
-      font-family: $pn-regular;
+      font-size: 20px;
+      font-weight: 600;
+      color: $black;
     }
     .dialog-instructions {
-      width: 230px;
-      color: $secondary-color-dark;
-      text-align: center;
+      color: $secondary-color;
     }
-    .select-session {
+    .dialog-content {
+      padding: 0px;
       margin: 0px;
-      padding-bottom: 40px;
+      overflow: hidden;
       .controls-container {
-        width: 200px;
+        width: 100%;
         .dialog-controls {
-          width: 100%;
+          font-size: 16px;
+          font-weight: 400;
+          padding: 8px 16px;
+          border-radius: 4px;
+          &.cancel-button {
+            background-color: $sky;
+          }
+          &.confirm-button {
+            background-color: $warning-color;
+            color: white;
+          }
         }
         // TODO move these styles to dashboard/_input.scss
         .ng-select .ng-select-container {
@@ -39,7 +54,6 @@
         padding: 15px 25px;
       }
       .controls-container {
-        width: auto;
       }
     }
   }
@@ -47,15 +61,23 @@
 
 .add-learner-dialog {
   mat-dialog-container.mat-dialog-container {
-    background-color: $secondary-color-lightest;
-    padding: 10px;
-    width: 70vw;
-    box-shadow: none;
+    width: 440px;
     .add-learners {
       margin: 0px;
       padding-bottom: 40px;
       .dashboard-button {
-        padding: 15px 25px;
+        padding: 8px 16px;
+      }
+      .dialog-instructions {
+        margin-bottom: 16px;
+      }
+      textarea {
+        border: none;
+        background-color: $off-white;
+        resize: none;
+        padding: 8px 16px;
+        width: 100%;
+        box-sizing: border-box;
       }
       .controls-container {
         width: 100%;
@@ -64,7 +86,7 @@
   }
 }
 .cdk-overlay-dark-backdrop {
-  background: rgba(242, 247, 248, 0.8);
+  background: #6d6c6c80;
 }
 
 .ng-dropdown-panel.ng-select-bottom {
