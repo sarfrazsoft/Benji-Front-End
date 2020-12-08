@@ -25,6 +25,7 @@ import { MainScreenVideoActivityComponent } from './video-activity/video-activit
 
 export { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
 export { MainScreenBrainStormComponents } from './brainstorming-activity';
+export { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 export * from './brainstorming-activity';
 // export { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
 export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
@@ -32,7 +33,7 @@ export { MainScreenFeedbackActivityComponent } from './feedback-activity/feedbac
 export { MainScreenLessonComponent };
 
 export const MainScreenComponents = [
-  MainScreenBuildPitchActivityComponent,
+  // MainScreenBuildPitchActivityComponent,
   // ...ParticipantBrainStormComponents,
   MainScreenCaseStudyActivityComponent,
   MainScreenDiscussionActivityComponent,

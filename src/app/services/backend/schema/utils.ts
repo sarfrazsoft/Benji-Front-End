@@ -8,6 +8,7 @@ export interface Timer {
   end_time: string;
   remaining_seconds: number;
   total_seconds: number;
+  editor: boolean;
 }
 
 export interface MCQChoice {

@@ -1,5 +1,5 @@
 <div class="courses" fxLayoutGap="40px" fxLayout="row wrap">
   <div (click)="openDetails(lesson)" *ngFor="let lesson of lessons">
-    <benji-lesson-tile [lesson]="lesson"></benji-lesson-tile>
+    <benji-lesson-tile [lesson]="lesson" (updateLessons)="updateLessons()"></benji-lesson-tile>
   </div>
 </div>

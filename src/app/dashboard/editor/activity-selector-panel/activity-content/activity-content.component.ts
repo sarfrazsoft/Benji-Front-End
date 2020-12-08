@@ -137,7 +137,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   // auto_next is hidden
                   // if user sets next activity delay seconds then it is
                   // set to true else false
-                  mappedField.defaultValue = false;
+                  mappedField.defaultValue = true;
                   mappedField.templateOptions.label = 'Auto forward after results';
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {

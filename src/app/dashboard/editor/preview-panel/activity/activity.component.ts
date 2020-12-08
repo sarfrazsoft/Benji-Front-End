@@ -12,11 +12,14 @@ import {
 import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import {
+  BuildPitchComponents,
   MainScreenBrainstormingActivityComponent,
+  MainScreenBuildPitchActivityComponent,
   MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
   ParticipantBrainstormingActivityComponent,
+  ParticipantBuildPitchActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantTitleActivityComponent,
@@ -200,11 +203,19 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             },
             // question: content.question,
             question_seconds: 600,
-            question_timer: null,
+            question_timer: {
+              end_time: null,
+              id: 187,
+              remaining_seconds: 16.998002999999997,
+              start_time: '2020-12-07T13:34:36.195172-05:00',
+              status: 'paused',
+              total_seconds: 20,
+              editor: true,
+            },
             quiz_label: null,
             quiz_leaderboard: null,
             run_number: 0,
-            start_time: '2020-11-17T16:50:24.144780-05:00',
+            start_time: '2020-12-07T13:34:36.191532-05:00',
             titlecomponent: {
               participant_instructions: 'Answer the following question',
               screen_instructions: 'Answer the following question',
@@ -263,6 +274,78 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
               title: title,
               title_image: 'emoji://1F642',
             },
+          },
+        };
+      } else if (this.data.activity_type === Acts.buildAPitch) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+
+        let title = 'Enter title';
+        let instructions = 'Answer the following question';
+        if (content.titlecomponent) {
+          const t = content.titlecomponent;
+          title = t.title ? t.title : 'Enter title';
+          instructions = t.screen_instructions ? t.screen_instructions : 'Answer the following question';
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenBuildPitchActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantBuildPitchActivityComponent);
+        }
+        console.log(content);
+        let buildapitchblank_set = [
+          { id: 62, order: 1, label: 'label', temp_text: 'blank', help_text: null },
+          { help_text: null, id: 63, label: 'label2', order: 2, temp_text: 'blank2' },
+        ];
+        if (content.buildapitchblank_set.length) {
+          buildapitchblank_set = content.buildapitchblank_set;
+        }
+
+        this.componentRef = this.entry.createComponent(msAct);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          buildapitchactivity: {
+            activity_id: '1604953991523',
+            activity_type: 'BuildAPitchActivity',
+            auto_next: true,
+            build_countdown_timer: {
+              end_time: null,
+              id: 188,
+              remaining_seconds: 29.469526000000002,
+              start_time: '2020-12-07T16:44:13.675231-05:00',
+              status: 'paused',
+              total_seconds: 32,
+              editor: true,
+            },
+            build_seconds: 32,
+            buildapitchblank_set: buildapitchblank_set,
+            buildapitchpitch_set: [],
+            building_done: false,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 610,
+            instructions: content.instructions ? content.instructions : 'Instructions',
+            is_paused: true,
+            next_activity: null,
+            next_activity_delay_seconds: 0,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 141,
+            run_number: 0,
+            share_start_participant: null,
+            sharing_done: false,
+            start_time: '2020-12-07T16:44:13.665617-05:00',
+            title: content.title ? content.title : 'Title',
+            vote_countdown_timer: null,
+            vote_seconds: 0,
+            votes: [],
+            voting_done: false,
+            winning_participant: null,
           },
         };
       }

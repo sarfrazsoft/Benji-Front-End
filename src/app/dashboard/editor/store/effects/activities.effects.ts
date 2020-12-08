@@ -183,7 +183,7 @@ export class ActivitiesEffects {
       //     main_title: 'Hello World',
       //   },
       // ];
-      console.log(lesson_json);
+      // console.log(lesson_json);
       return this.editorService.updateLesson(lesson_json, wholeState.activities.lessonId).pipe(
         map((res: any) => {
           return new ActivityActions.SaveLessonSuccess(res);

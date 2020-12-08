@@ -48,11 +48,17 @@ export class ParticipantBuildPitchActivityComponent
 
     this.act = this.activityState.buildapitchactivity;
 
-    this.act.buildapitchblank_set
-      .sort((a, b) => a.order - b.order)
-      .forEach((v) => {
-        this.builtPitch_set.push({ ...v, ...{ value: null } });
-      });
+    if (this.act.buildapitchblank_set) {
+      this.act.buildapitchblank_set
+        .sort((a, b) => a.order - b.order)
+        .forEach((v) => {
+          this.builtPitch_set.push({ ...v, ...{ value: null } });
+        });
+    }
+
+    if (this.act.build_countdown_timer.editor) {
+      this.createPitch = true;
+    }
   }
 
   ngOnChanges() {

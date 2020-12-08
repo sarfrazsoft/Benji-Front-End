@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import { AdminService } from '../../../admin-panel/services';
 })
 export class LessonTileComponent implements OnInit {
   @Input() lesson: Lesson;
+  @Output() updateLessons = new EventEmitter();
   launchSessionLabel = '';
   rightLaunchArrow = '';
   rightCaret = '';
@@ -91,15 +92,10 @@ export class LessonTileComponent implements OnInit {
           })
           .afterClosed()
           .subscribe((res) => {
+            this.updateLessons.emit();
             if (res) {
               this.adminService.deleteLesson(lesson.id).subscribe((delRes) => {
                 if (delRes.success) {
-                  this.adminService.getLessons().subscribe((lessons) => {
-                    if (lessons.length) {
-                      lessons = lessons.sort((a, b) => b.id - a.id);
-                    }
-                    this.lessons = lessons;
-                  });
                   this.utilsService.openSnackBar(`Lesson successfully deleted.`, `close`);
                 }
               });

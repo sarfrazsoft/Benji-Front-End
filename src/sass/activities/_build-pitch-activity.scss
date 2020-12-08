@@ -1,7 +1,12 @@
 benji-ms-build-pitch-activity {
   .activity-instructions {
     .discuss-instruction {
-      font-size: 3vw;
+      &.short-text {
+        font-size: 3vw;
+      }
+      &.long-text {
+        font-size: 2.5vw;
+      }
     }
     .winning-pitch {
       margin-top: 2vh;

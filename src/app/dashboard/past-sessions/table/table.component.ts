@@ -4,6 +4,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
+import { uniqBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject, merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
@@ -73,6 +74,10 @@ export class PastSessionsTableComponent implements AfterViewInit {
         })
       )
       .subscribe((data) => {
+        data[0].start_time = data[1].start_time;
+        data[2].start_time = data[1].start_time;
+        console.log(data);
+        data = uniqBy(data, 'start_time');
         const tableData = [];
         data.forEach((run) => {
           tableData.push({
@@ -85,6 +90,19 @@ export class PastSessionsTableComponent implements AfterViewInit {
             is_accessible: run.is_accessible,
           });
         });
+
+        const resArr = [];
+        tableData.forEach(function (item) {
+          const i = resArr.findIndex((x) => x.name === item.name);
+          if (i <= -1) {
+            resArr.push({ id: item.id, name: item.name });
+          }
+        });
+        if (tableData.length && tableData[0].id) {
+          tableData.sort((a, b) => b.id - a.id);
+        }
+        console.log(tableData);
+
         this.data = tableData;
         return data;
       });

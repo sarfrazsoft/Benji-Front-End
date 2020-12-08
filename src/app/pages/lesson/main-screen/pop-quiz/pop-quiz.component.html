@@ -16,7 +16,10 @@
       </div>
     </div>
     <div class="" fxFlex="1 0 0" fxLayout="row">
-      <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
+      <div 
+        class="activity-instructions bg-white"
+        [fxFlex]="revealAnswers ? '100%' : '60%'"
+        fxLayoutAlign="start center">
         <div class="content" fxLayout="column" fxLayoutGap="1.8vh" fxLayoutAlign="center start">
           <div class="quiz-question primary-color-darkest">
             {{ activityState.mcqactivity.question.question }}
@@ -62,7 +65,7 @@
         class="bg-secondary-color-lightest"
         fxFlex="40%"
         fxLayoutAlign="center center"
-        *ngIf="!showLeaderboard"
+        *ngIf="!showLeaderboard && !revealAnswers"
       >
         <app-radial-timer
           [timer]="radialTimer"

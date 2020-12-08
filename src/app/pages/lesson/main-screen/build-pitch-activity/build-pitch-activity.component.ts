@@ -12,8 +12,9 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenBuildPitchActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
-  title: string;
-  statement: string;
+  title = '';
+  instructions = '';
+  statement = '';
   infoIcon: string;
   checkIcon: string;
   shareStartUser: string;
@@ -36,9 +37,12 @@ export class MainScreenBuildPitchActivityComponent
     });
     const blanks: any = this.activityState.buildapitchactivity.buildapitchblank_set;
 
-    blanks.sort((a, b) => a.order - b.order);
+    if (blanks.length && blanks[0].id) {
+      blanks.sort((a, b) => a.order - b.order);
+    }
 
     this.title = this.activityState.buildapitchactivity.title;
+    this.instructions = this.activityState.buildapitchactivity.instructions;
 
     this.statement = '';
     blanks.forEach((b) => {

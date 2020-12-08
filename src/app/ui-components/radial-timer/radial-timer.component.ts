@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Timer } from '../../services/backend/schema/utils';
 
 @Component({
@@ -33,18 +25,23 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   audioStarted = false;
   showAttentionTimer = false;
 
-  constructor() {
-    this.getScreenSize();
-  }
+  constructor() {}
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
-    this.timerDiameter = window.innerWidth / 4.5;
-    this.timerDiameter = Math.ceil(this.timerDiameter / 5) * 5;
-    this.textWidth = this.timerDiameter / 25;
+    if (this.timer && this.timer.editor) {
+      this.timerDiameter = window.innerWidth / 7.5;
+      this.timerDiameter = Math.ceil(this.timerDiameter / 7) * 7;
+      this.textWidth = this.timerDiameter / 25;
+    } else {
+      this.timerDiameter = window.innerWidth / 4.5;
+      this.timerDiameter = Math.ceil(this.timerDiameter / 5) * 5;
+      this.textWidth = this.timerDiameter / 25;
+    }
   }
 
   ngOnInit() {
+    this.getScreenSize();
     this.timerInterval = setInterval(() => this.update(), 100);
   }
 
@@ -66,10 +63,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
           offset = 0;
         }
         // console.log(this.timer.end_time, this.timer.end_time.replace(/ /, 'T'));
-        this.remainingTime =
-          Date.parse(this.timer.end_time.replace(/ /, 'T')) -
-          Date.now() -
-          offset;
+        this.remainingTime = Date.parse(this.timer.end_time.replace(/ /, 'T')) - Date.now() - offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }

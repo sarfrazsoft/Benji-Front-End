@@ -1,5 +1,5 @@
 // import { ParticipantBrainStormComponents } from './brainstorming-activity';
-import { BuildPitchComponents } from './build-pitch-activity';
+// import { BuildPitchComponents } from './build-pitch-activity';
 import { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
@@ -33,9 +33,11 @@ export { ParticipantLessonComponent };
 export { ParticipantBrainStormComponents } from './brainstorming-activity';
 export { ParticipantBrainstormingActivityComponent } from './brainstorming-activity/brainstorming-activity.component';
 export { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
+export { BuildPitchComponents } from './build-pitch-activity';
+export { ParticipantBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 
 export const ParticipantScreenComponents = [
-  ...BuildPitchComponents,
+  // ...BuildPitchComponents,
   // ...ParticipantSharedComponents,
   // ...BrainStormingComponents,
   ...ReorderComponents,

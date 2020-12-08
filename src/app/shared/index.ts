@@ -9,12 +9,14 @@ import { Directives } from './directives';
 
 import {
   MainScreenBrainStormComponents,
+  MainScreenBuildPitchActivityComponent,
   MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
 } from 'src/app/pages/lesson/main-screen';
 
 import {
+  BuildPitchComponents,
   ParticipantBrainStormComponents,
   ParticipantFeedbackActivityComponent,
   ParticipantPopQuizComponent,
@@ -28,6 +30,8 @@ const ActivityComponents = [
   ParticipantPopQuizComponent,
   ...ParticipantSharedComponents,
   ...ParticipantBrainStormComponents,
+  ...BuildPitchComponents,
+  MainScreenBuildPitchActivityComponent,
   MainScreenTitleActivityComponent,
   MainScreenFeedbackActivityComponent,
   ...MainScreenBrainStormComponents,

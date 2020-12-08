@@ -7,7 +7,7 @@
     </div>
     <div fxFlex="60%" fxLayoutAlign="center center">
       <h2 class="pn-500 discuss-instruction" *ngIf="createPitches">
-        Fill in the blanks to build your statement.
+        {{ instructions }}
       </h2>
     </div>
   </div>
@@ -23,9 +23,7 @@
           <h2
             class="secondary-color-dark pn-600 discuss-instruction pitch-text"
             innerHTML="{{ statement }}"
-            [ngStyle]="{
-              'font-size': statement.length > 300 ? '2.5vw' : '3vw'
-            }"
+            [ngClass]="{ 'long-text': statement.length > 300, 'short-text': statement.length < 300 }"
           ></h2>
           <div
             class="info-subsection primary-color-lighter pn-500"

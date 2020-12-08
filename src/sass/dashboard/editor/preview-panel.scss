@@ -45,6 +45,29 @@ benji-preview-panel {
           }
         }
 
+        .mainscreen-activity {
+          height: 100%;
+          & > div {
+            overflow: hidden;
+          }
+          .lesson-top-banner {
+            padding: 20px 20px;
+            background-color: #f7f8fa;
+            h1 {
+              font-size: 28px;
+            }
+            h2 {
+              font-size: 16px;
+              color: #6c6c6c;
+            }
+          }
+        }
+
+        // radial timer text size on preview panel
+        .number-text {
+          font-size: 24px;
+        }
+
         .mainscreen-footer {
           min-height: 40px;
           .session-info {
@@ -128,33 +151,14 @@ benji-preview-panel {
         }
 
         benji-ms-pop-quiz {
-          .mainscreen-activity {
-            height: 100%;
-            & > div {
-              overflow: hidden;
-            }
-            .lesson-top-banner {
-              padding: 20px 20px;
-              background-color: #f7f8fa;
-              h1 {
-                font-size: 28px;
-              }
-              h2 {
-                font-size: 16px;
-              }
-            }
-            .activity-instructions {
-              padding: 0 20px;
-            }
-            .quiz-question {
-              font-size: 24px;
-            }
-            .quiz-answers {
-              font-size: 24px;
-            }
-            .number-text {
-              font-size: 24px;
-            }
+          .activity-instructions {
+            padding: 0 20px;
+          }
+          .quiz-question {
+            font-size: 24px;
+          }
+          .quiz-answers {
+            font-size: 24px;
           }
         }
 
@@ -174,6 +178,33 @@ benji-preview-panel {
               &.smaller-font-class {
                 font-size: 28px;
               }
+            }
+          }
+        }
+
+        benji-ms-build-pitch-activity {
+          .smaller-emoji img {
+            height: 100px;
+          }
+
+          .activity-instructions {
+            .discuss-instruction {
+              &.short-text {
+                font-size: 24px;
+              }
+
+              // change these values
+              &.long-text {
+                font-size: 20px;
+              }
+            }
+          }
+
+          .info-subsection {
+            margin-top: 20px;
+            font-size: 20px;
+            img {
+              width: 20px;
             }
           }
         }

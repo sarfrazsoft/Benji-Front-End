@@ -19,6 +19,7 @@ export class MainScreenPopQuizComponent
 
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
+  @Input() editor = false;
   peakBackStage = null;
   private eventsSubscription: Subscription;
   constructor() {
@@ -38,6 +39,12 @@ export class MainScreenPopQuizComponent
     }
     if (act.titlecomponent) {
       this.title = act.titlecomponent.title;
+    }
+
+    if (this.editor) {
+      const as = this.activityState;
+      const qTimer = as.mcqactivity.question_timer;
+      this.radialTimer = qTimer;
     }
   }
 

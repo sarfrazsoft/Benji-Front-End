@@ -57,7 +57,8 @@ export class PreviewPanelComponent implements OnInit {
             act_type === Acts.title ||
             act_type === Acts.brainStorm ||
             act_type === Acts.mcq ||
-            act_type === Acts.feedback
+            act_type === Acts.feedback ||
+            act_type === Acts.buildAPitch
           ) {
             this.previewTemplate = true;
             this.activityData = {

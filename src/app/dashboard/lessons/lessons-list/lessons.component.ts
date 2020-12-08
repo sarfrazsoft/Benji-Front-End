@@ -35,4 +35,13 @@ export class LessonsComponent implements OnInit {
       }
     });
   }
+
+  updateLessons() {
+    this.adminService.getLessons().subscribe((lessons) => {
+      if (lessons.length) {
+        lessons = lessons.sort((a, b) => b.id - a.id);
+      }
+      this.lessons = lessons;
+    });
+  }
 }
