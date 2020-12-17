@@ -20,6 +20,7 @@ import {
   MainScreenTitleActivityComponent,
   ParticipantBrainstormingActivityComponent,
   ParticipantBuildPitchActivityComponent,
+  ParticipantCaseStudyActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantTitleActivityComponent,
@@ -346,6 +347,76 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             votes: [],
             voting_done: false,
             winning_participant: null,
+          },
+        };
+      } else if (this.data.activity_type === Acts.caseStudy) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+
+        let title = 'Enter title';
+        let instructions = 'Answer the following question';
+        if (content.titlecomponent) {
+          const t = content.titlecomponent;
+          title = t.title ? t.title : 'Enter title';
+          instructions = t.screen_instructions ? t.screen_instructions : 'Answer the following question';
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
+        }
+
+        let casestudyquestion_set = [];
+        if (content.casestudyquestion_set.length) {
+          casestudyquestion_set = content.casestudyquestion_set;
+        }
+
+        let participant_instructions = 'Instructions';
+        if (content.participant_instructions) {
+          participant_instructions = content.participant_instructions;
+        }
+
+        this.componentRef = this.entry.createComponent(msAct);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          casestudyactivity: {
+            activity_countdown_timer: {
+              end_time: null,
+              id: 188,
+              remaining_seconds: 29.469526000000002,
+              start_time: '2020-12-07T16:44:13.675231-05:00',
+              status: 'paused',
+              total_seconds: 32,
+              editor: true,
+            },
+            activity_id: '1606248775095',
+            activity_seconds: 10000,
+            activity_title: 'Case Study',
+            activity_type: 'CaseStudyActivity',
+            auto_next: true,
+            case_study_details: content.case_study_details ? content.case_study_details : '',
+            casestudyparticipant_set: [],
+            casestudyquestion_set: casestudyquestion_set,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            grouping_activity: 614,
+            groups: [],
+            hide_timer: true,
+            id: 615,
+            is_paused: false,
+            mainscreen_instructions: 'Work with your group to fill out the worksheet. Click submit when done',
+            next_activity: null,
+            next_activity_delay_seconds: 0,
+            next_activity_start_timer: null,
+            note_taker_instructions: 'sdfa',
+            participant_instructions: participant_instructions,
+            polymorphic_ctype: 133,
+            run_number: 0,
+            start_time: '2020-12-09T13:01:06.974186-05:00',
           },
         };
       }

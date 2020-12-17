@@ -30,16 +30,21 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
+    this.populateQuestions();
   }
 
-  ngOnChanges() {
-    this.act = this.activityState.casestudyactivity;
-    this.contextService.activityTimer = this.act.activity_countdown_timer;
+  populateQuestions() {
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
     questionsTemp.forEach((q, i) => {
       this.questions.push({ ...q, answer: '' });
     });
+  }
+
+  ngOnChanges() {
+    this.act = this.activityState.casestudyactivity;
+    this.contextService.activityTimer = this.act.activity_countdown_timer;
+    this.populateQuestions();
     const myNoteTaker = this.getMyNoteTaker();
 
     // if (myNoteTaker) {

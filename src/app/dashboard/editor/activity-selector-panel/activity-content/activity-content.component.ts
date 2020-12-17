@@ -407,8 +407,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = 'Build your madlib';
                   mappedField.templateOptions['addLabel'] = 'Add new block';
-                } else if (mapSource.field_name === 'question_seconds') {
-                  mappedField.templateOptions.label = 'Time to complete Madlib';
                 } else if (mapSource.field_name === 'vote_seconds') {
                   mappedField.defaultValue = 0;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
@@ -418,6 +416,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['helpText'] = 'How long does the voting stage last?';
                 } else if (mapSource.field_name === 'build_seconds') {
                   mappedField.templateOptions.label = 'Time to complete Madlib';
+                  mappedField.type = 'seconds';
                 } else if (mapSource.field_name === 'sharing_done') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'voting_done') {

@@ -74,10 +74,10 @@ export class PastSessionsTableComponent implements AfterViewInit {
         })
       )
       .subscribe((data) => {
-        data[0].start_time = data[1].start_time;
-        data[2].start_time = data[1].start_time;
-        console.log(data);
-        data = uniqBy(data, 'start_time');
+        // data[0].start_time = data[1].start_time;
+        // data[2].start_time = data[1].start_time;
+        // console.log(data);
+        // data = uniqBy(data, 'start_time');
         const tableData = [];
         data.forEach((run) => {
           tableData.push({

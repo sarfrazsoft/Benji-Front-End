@@ -25,6 +25,7 @@ import {
   ObjectTypeComponent,
   QuestionTypeSelectComponent,
   SafePipe,
+  SecondsTypeComponent,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
@@ -52,6 +53,7 @@ export const EditorComponents = [
   MCQChoiceTypeComponent,
   FeedbackQuestionTypeComponent,
   QuestionTypeSelectComponent,
+  SecondsTypeComponent,
   FormlySelectOptionsPipe,
   BAPBlankTypeComponent,
 ];

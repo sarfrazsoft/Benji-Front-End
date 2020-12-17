@@ -4,7 +4,7 @@
     padding-top: 24px;
     padding-right: 24px;
     padding-left: 40px;
-    padding-bottom: 16px;
+    padding-bottom: 24px;
     width: 400px;
     box-shadow: none;
     // height: 182px;
@@ -27,7 +27,7 @@
         width: 100%;
         .dialog-controls {
           font-size: 16px;
-          font-weight: 400;
+          font-weight: 500;
           padding: 8px 16px;
           border-radius: 4px;
           &.cancel-button {
@@ -64,7 +64,6 @@
     width: 440px;
     .add-learners {
       margin: 0px;
-      padding-bottom: 40px;
       .dashboard-button {
         padding: 8px 16px;
       }

@@ -121,6 +121,22 @@ benji-activity-selector-panel {
                   }
                 }
               }
+
+              .seconds-form {
+                .label {
+                  color: $secondary-color-dark;
+                }
+                .form-control {
+                  width: 50px;
+                }
+                .separator {
+                  height: 30px;
+                  margin: 0px 5px;
+                  font-size: 20px;
+                  font-weight: 700;
+                }
+              }
+
               .question-type-select {
                 .mat-select {
                   width: 80px;

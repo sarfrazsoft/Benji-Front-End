@@ -1489,3 +1489,15 @@ app-root > div {
 //   background: #dfe5e7;
 //   color: #6c6c6c;
 // }
+
+// hide the input type number arrows
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type='number'] {
+  -moz-appearance: textfield; /* Firefox */
+}

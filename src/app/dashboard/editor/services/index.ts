@@ -8,4 +8,5 @@ export * from './formly/components/feedback-question/feedback-question.type';
 export * from './formly/components/question-type-select/question-type-select.type';
 export * from './formly/pipes/select-options/select-options.pipe';
 export * from './formly/components/bap-blank/bap-blank.type';
+export * from './formly/components/seconds/seconds.type';
 export * from './safe.pipe';

@@ -5,13 +5,13 @@
     </button>
   </div>
   <mat-dialog-content class="add-learners dialog-content">
-    <div fxLayout="column" fxLayoutGap="15px">
+    <div fxLayout="column" fxLayoutGap="8px">
       <h2 class="dialog-heading">
         Add participants
       </h2>
       
       <div class="add-learners-section dashboard-form" fxLayout="column">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="16px">
           <div class="field">
             <div class="dialog-instructions">Upload your participant emails as a comma separated list. </div>
             <textarea
@@ -40,7 +40,7 @@
           </div>
     
           <div *ngIf="invitationsSent" class="success-message">Invitations sent</div>
-          <div class="controls-container" fxLayoutAlign="end">
+          <div class="controls-container" fxLayoutAlign="start">
 
             <button
               type="submit"

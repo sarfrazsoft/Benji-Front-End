@@ -27,6 +27,7 @@ import {
   NullTypeComponent,
   ObjectTypeComponent,
   QuestionTypeSelectComponent,
+  SecondsTypeComponent,
 } from './services';
 import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
 import { FieldRevealWrapperComponent } from './services/formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
@@ -137,6 +138,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'bapBlank', component: BAPBlankTypeComponent },
         { name: 'feedbackQuestion', component: FeedbackQuestionTypeComponent },
         { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },
+        { name: 'seconds', component: SecondsTypeComponent },
       ],
       wrappers: [
         { name: 'benji-field-wrapper', component: FieldWrapperComponent },

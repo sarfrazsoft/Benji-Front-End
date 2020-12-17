@@ -18,6 +18,7 @@ import {
 import {
   BuildPitchComponents,
   ParticipantBrainStormComponents,
+  ParticipantCaseStudyActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantSharedComponents,
@@ -28,6 +29,7 @@ const ActivityComponents = [
   ParticipantFeedbackActivityComponent,
   ParticipantTitleActivityComponent,
   ParticipantPopQuizComponent,
+  ParticipantCaseStudyActivityComponent,
   ...ParticipantSharedComponents,
   ...ParticipantBrainStormComponents,
   ...BuildPitchComponents,
