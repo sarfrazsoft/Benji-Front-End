@@ -7,8 +7,8 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 })
 export class SecondsTypeComponent extends FieldType implements OnInit {
   timeInSeconds = 0;
-  mins;
-  secs;
+  mins = 0;
+  secs = 0;
 
   minEntered($event) {
     this.calculateTime();
@@ -24,6 +24,7 @@ export class SecondsTypeComponent extends FieldType implements OnInit {
     const seconds = this.secs;
     const totalSeconds = convertedSeconds + seconds;
     this.formControl.setValue(totalSeconds);
+    console.log(totalSeconds);
   }
 
   ngOnInit() {}

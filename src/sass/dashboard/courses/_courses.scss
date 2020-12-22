@@ -40,10 +40,12 @@ benji-lesson {
       padding: 12px 0px;
       font-size: 16px;
       textarea {
+        padding: 8px;
         width: 99%;
-        color: $black;
-        border-color: $secondary-color;
+        color: #37352f;
+        border-color: #979797;
         resize: none;
+        box-sizing: border-box;
       }
     }
   }

@@ -37,7 +37,7 @@ export class MainScreenBuildPitchActivityComponent
     });
     const blanks: any = this.activityState.buildapitchactivity.buildapitchblank_set;
 
-    if (blanks.length && blanks[0].id) {
+    if (blanks[0] && blanks[0].id) {
       blanks.sort((a, b) => a.order - b.order);
     }
 
@@ -46,7 +46,10 @@ export class MainScreenBuildPitchActivityComponent
 
     this.statement = '';
     blanks.forEach((b) => {
-      this.statement = this.statement + b.label + ' <em class="primary-color">(' + b.temp_text + ')</em> ';
+      if (b) {
+        const tempText = b.temp_text ? ' <em class="primary-color">(' + b.temp_text + ')</em> ' : '';
+        this.statement = this.statement + b.label + tempText;
+      }
     });
   }
 

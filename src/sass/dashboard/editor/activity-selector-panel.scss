@@ -115,9 +115,13 @@ benji-activity-selector-panel {
                     top: 0;
                     width: 40px;
                     height: 38px;
+                    // border: 1px solid #02376d;
                     border: 1px solid #ced4da;
                     border-radius: 3px;
                     box-shadow: none;
+                    &:hover {
+                      border-color: #36f7c0;
+                    }
                   }
                 }
               }

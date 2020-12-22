@@ -295,7 +295,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         } else {
           msAct = this.cfr.resolveComponentFactory(ParticipantBuildPitchActivityComponent);
         }
-        console.log(content);
+        // console.log(content);
         let buildapitchblank_set = [
           { id: 62, order: 1, label: 'label', temp_text: 'blank', help_text: null },
           { help_text: null, id: 63, label: 'label2', order: 2, temp_text: 'blank2' },
