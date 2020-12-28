@@ -26,7 +26,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   lessonName$: Observable<any>;
   lessonName: string;
   showEditableLessonName = false;
-  @ViewChild('name', { static: false }) searchElement: ElementRef;
+  @ViewChild('name') searchElement: ElementRef;
 
   lessonError$: Observable<any>;
   error = null;

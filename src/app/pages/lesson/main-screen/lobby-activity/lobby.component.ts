@@ -16,7 +16,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   startSessionLabel = '';
   joinLobbyUrl = '';
   dialogRef;
-  @ViewChild('sfxPlayer', { static: false }) sfxPlayer: ElementRef;
+  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   constructor(private dialog: MatDialog, private contextService: ContextService) {
     super();

@@ -30,4 +30,6 @@ import { FieldArrayType } from '@ngx-formly/core';
     </div>
   `,
 })
-export class ArrayTypeComponent extends FieldArrayType {}
+export class ArrayTypeComponent extends FieldArrayType {
+  // TODO: add explicit constructor
+}

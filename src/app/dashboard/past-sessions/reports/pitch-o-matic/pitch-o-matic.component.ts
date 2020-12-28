@@ -20,7 +20,7 @@ import { PitchOMaticComponent as LearnerPitchOMaticComponent } from './single-pi
 })
 export class PitchOMaticComponent implements OnInit, OnChanges {
   @Input() data: ActivityReport;
-  @ViewChild(MatTable, { static: false }) table: MatTable<any>;
+  @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild('reportEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   singleUserPOMcomponent: ComponentRef<LearnerPitchOMaticComponent>;
 

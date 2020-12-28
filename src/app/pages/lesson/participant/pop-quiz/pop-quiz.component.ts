@@ -25,7 +25,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
     order: null,
   };
   revealAnswer = false;
-  @ViewChild('timer', { static: false }) timer;
+  @ViewChild('timer') timer;
 
   localStorageItemName = 'mcqSelectedChoice';
 

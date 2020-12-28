@@ -16,7 +16,7 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
   @Input() timerOffset: number;
   @Input() attentionOverlay = false;
 
-  @ViewChild('sfxPlayer', { static: false }) sfxPlayer: ElementRef;
+  @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   totalTime: number;
   remainingTime: number;

@@ -8,7 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./discussion-activity.component.scss'],
 })
 export class MainScreenDiscussionActivityComponent extends BaseActivityComponent implements OnInit {
-  @ViewChild('shareTimer', { static: false }) shareTimer;
+  @ViewChild('shareTimer') shareTimer;
 
   ngOnInit() {
     super.ngOnInit();

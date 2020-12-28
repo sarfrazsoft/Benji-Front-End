@@ -12,7 +12,7 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
   isEndSession = false;
   mainTitle = '';
   titleText = '';
-  @ViewChild('titleTimer', { static: false }) titleTimer;
+  @ViewChild('titleTimer') titleTimer;
 
   constructor(
     private emoji: EmojiLookupService,

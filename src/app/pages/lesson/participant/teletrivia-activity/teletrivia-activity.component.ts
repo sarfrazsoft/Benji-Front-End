@@ -31,8 +31,8 @@ export class ParticipantTeletriviaActivityComponent
 
   initiatorModalVisible = false;
 
-  @ViewChild('questionTimer', { static: false }) questionTimer;
-  @ViewChild('revealTimer', { static: false }) revealTimer;
+  @ViewChild('questionTimer') questionTimer;
+  @ViewChild('revealTimer') revealTimer;
 
   @ViewChild('kickofftemplate', { static: true }) initiatorModal;
   @ViewChild('endTemplate', { static: true }) endModal;

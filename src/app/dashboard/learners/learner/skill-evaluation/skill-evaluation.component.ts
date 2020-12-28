@@ -100,7 +100,7 @@ export class SkillEvaluationComponent implements OnInit {
     enoughData: false,
   };
 
-  @ViewChild('chartCanvas', { static: false }) chartCanvas: ElementRef;
+  @ViewChild('chartCanvas') chartCanvas: ElementRef;
 
   @ViewChild('reportEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   @ViewChild('reportEntry2', { read: ViewContainerRef, static: true })

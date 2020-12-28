@@ -29,7 +29,7 @@ import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/im
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
-  @ViewChild('colName', { static: false }) colNameElement: ElementRef;
+  @ViewChild('colName') colNameElement: ElementRef;
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
