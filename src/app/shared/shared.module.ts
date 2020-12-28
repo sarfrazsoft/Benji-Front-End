@@ -39,6 +39,7 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { NgxEditorModule } from 'ngx-editor';
 import { Components, EntryComponents } from './index';
 
 const SHARED_MODULES = [

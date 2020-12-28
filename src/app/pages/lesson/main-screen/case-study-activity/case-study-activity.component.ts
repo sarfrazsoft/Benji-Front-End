@@ -1,6 +1,8 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study-checkin/case-study-checkin.dialog';
 
 @Component({
   selector: 'benji-ms-case-study-activity',
@@ -10,7 +12,74 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   groups: Array<Group>;
   act: CaseStudyActivity;
-  constructor() {
+  newLayout = true;
+  dialogRef;
+  groupsX = [
+    {
+      name: 'Group 1',
+      participants: ['Matthew Parson', 'Sarah Blakey'],
+    },
+    {
+      name: 'Group 2',
+      participants: ['Matthew Parson 2', 'Sarah Blakey'],
+    },
+    {
+      name: 'Group 3',
+      participants: ['Matthew Parson 2', 'Sarah Blakey', 'Matthew Parson', 'Sarah Blakey'],
+    },
+    {
+      name: 'Group 4',
+      participants: [
+        'Matthew Parson 2',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+      ],
+    },
+    {
+      name: 'Group 5',
+      participants: [
+        'Matthew Parson 2',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+      ],
+    },
+    {
+      name: 'Group 6',
+      participants: [
+        'Matthew Parson 2',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+        'Matthew Parson',
+        'Sarah Blakey',
+      ],
+    },
+  ];
+  constructor(private dialog: MatDialog) {
     super();
   }
 
@@ -61,4 +130,23 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
       }
     }
   }
+
+  openCheckInModal() {
+    this.dialogRef = this.dialog
+      .open(CaseStudyCheckinDialogComponent, {
+        data: {
+          // userId: this.user.id,
+        },
+        disableClose: true,
+        panelClass: ['dashboard-dialog', 'add-learner-dialog'],
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+        }
+      });
+  }
+
+  addLearners() {}
 }

@@ -50,7 +50,7 @@ export class AuthService {
       obj = {
         // TODO get rid of username when backend gets rid of it
         // Is there a character limit on the username?
-        username: email.replace(/@/g, 'at').replace(/\./g, 'dot'),
+        username: this.convertEmailToUserName(email),
         password1: password,
         password2: password,
         first_name: firstName,
@@ -63,7 +63,7 @@ export class AuthService {
       obj = {
         // TODO get rid of username when backend gets rid of it
         // Is there a character limit on the username?
-        username: email.replace(/@/g, 'at').replace(/\./g, 'dot'),
+        username: this.convertEmailToUserName(email),
         password1: password,
         password2: password,
         first_name: firstName,
@@ -92,7 +92,7 @@ export class AuthService {
     this.logout();
     return this.http
       .post(global.apiRoot + '/rest-auth/login/', {
-        username: email.replace('@', 'at').replace('.', 'dot'),
+        username: this.convertEmailToUserName(email),
         // username: email.split('@')[0],
         email: email,
         password: password,
@@ -106,6 +106,10 @@ export class AuthService {
         }),
         catchError((err) => of(err.error))
       );
+  }
+
+  convertEmailToUserName(email: string) {
+    return email.replace(/@/g, 'at').replace(/\./g, 'dot');
   }
 
   signOut() {

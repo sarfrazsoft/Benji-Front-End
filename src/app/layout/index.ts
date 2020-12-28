@@ -10,6 +10,7 @@ import { ParticipantJoinComponent } from '../pages/participant/join/participant-
 import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
 
 import {
+  CaseStudyCheckinDialogComponent,
   ImageViewDialogComponent,
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
@@ -26,6 +27,7 @@ export const LayoutDeclarations = [
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   PeakBackDialogComponent,
+  CaseStudyCheckinDialogComponent,
   ImageViewDialogComponent,
   LayoutComponent,
   ParticipantJoinComponent,
@@ -40,5 +42,6 @@ export const EntryComponents = [
   LowAttendanceDialogComponent,
   LowResponseDialogComponent,
   PeakBackDialogComponent,
+  CaseStudyCheckinDialogComponent,
   ImageViewDialogComponent,
 ];
