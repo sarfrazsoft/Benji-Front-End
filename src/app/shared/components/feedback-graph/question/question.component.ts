@@ -216,6 +216,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           ],
           xAxes: [
             {
+              // TODO figure out barPercentage
               barPercentage: 0.5,
               gridLines: {
                 display: false,
@@ -226,7 +227,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 stepSize: 1,
                 beginAtZero: true,
               },
-            },
+            } as any,
           ],
         },
       },

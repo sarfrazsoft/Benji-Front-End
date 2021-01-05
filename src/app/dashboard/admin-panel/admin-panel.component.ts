@@ -11,6 +11,13 @@ import {
 } from '../../shared';
 import { AdminService } from './services/admin.service';
 
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { EditorView } from 'prosemirror-view';
+
+import { Validators } from 'ngx-editor';
+
+import doc from './../../shared/ngx-editor/doc';
+
 @Component({
   selector: 'benji-admin-panel',
   templateUrl: './admin-panel.component.html',
@@ -18,6 +25,19 @@ import { AdminService } from './services/admin.service';
 })
 export class AdminPanelComponent implements OnInit {
   lessons: Array<any> = [];
+  editorView: EditorView;
+
+  form = new FormGroup({
+    editorContent: new FormControl(doc, Validators.required()),
+  });
+
+  get doc(): AbstractControl {
+    return this.form.get('editorContent');
+  }
+
+  init(view: EditorView): void {
+    this.editorView = view;
+  }
   constructor(
     public intercom: Intercom,
     private activatedRoute: ActivatedRoute,

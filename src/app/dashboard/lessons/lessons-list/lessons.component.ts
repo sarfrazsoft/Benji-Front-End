@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs/Subject';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
@@ -11,6 +12,13 @@ import { AdminService } from '../../admin-panel/services';
 })
 export class LessonsComponent implements OnInit {
   @Input() lessons: Array<any> = [];
+
+  eventsSubject: Subject<void> = new Subject<void>();
+
+  edit(lesson, $event) {
+    this.eventsSubject.next(lesson);
+    $event.stopPropagation();
+  }
 
   constructor(
     private adminService: AdminService,

@@ -1,8 +1,13 @@
-<div style="padding: 20px">
+<!-- <div style="padding: 20px"> -->
 
-  <div benjiTextEditor></div>
-</div>
-
+  <!-- <div benjiTextEditor></div> -->
+<!-- </div> -->
+<ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [customMenuRef]="customMenu"></ngx-editor-menu>
+<ngx-editor [editor]="editor">
+</ngx-editor>
+<ngx-editor
+                
+></ngx-editor>
 <div class="b-flat-card center-text feedback-card heightAuto">
   <div class="b-flat-card__title">
     <h2 class="pn-400">Case Study</h2>
@@ -35,6 +40,7 @@
     </ng-container>
   </div>
 
+
   <div class="content">
     <div class="your-prompt">
       <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
@@ -46,6 +52,7 @@
         innerHTML="{{ act.case_study_details }}"
       ></div>
     </div>
+
     <div *ngFor="let question of questions">
       <div class="your-prompt">
         <div
@@ -67,6 +74,16 @@
               (keyup)="typingStoped($event, question.id)"
               (keydown)="typingStarted()"
             ></textarea>
+            <div 
+              [ngClass]="{
+                editable: isUserNoteTaker() && !isDone,
+                disabled: !(isUserNoteTaker() && !isDone)
+              }">
+
+              <!-- <ngx-editor
+                [editable]="isUserNoteTaker() && !isDone"
+              ></ngx-editor> -->
+            </div>
           </div>
         </div>
       </div>

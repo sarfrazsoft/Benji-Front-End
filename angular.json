@@ -34,9 +34,6 @@
             ],
             "styles": [
               "node_modules/material-design-icons/iconfont/material-icons.css",
-              "node_modules/prosemirror-view/style/prosemirror.css",
-              "node_modules/prosemirror-menu/style/menu.css",
-              "node_modules/prosemirror-example-setup/style/style.css",
               "node_modules/@ctrl/ngx-emoji-mart/picker.css",
               "src/sass/styles.scss"
             ],

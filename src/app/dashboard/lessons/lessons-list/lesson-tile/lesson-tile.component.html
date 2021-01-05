@@ -11,7 +11,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu" xPosition="before">
-        <button mat-menu-item (click)="edit($event, lesson)">
+        <button mat-menu-item (click)="edit(lesson, $event)">
           <span>Edit</span>
         </button>
         <button mat-menu-item (click)="editDescription($event, lesson)">

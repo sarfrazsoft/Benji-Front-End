@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { EditorService } from 'src/app/dashboard/editor/services';
 import * as global from 'src/app/globals';
@@ -16,9 +18,11 @@ import { AdminService } from '../../../admin-panel/services';
   templateUrl: './lesson-tile.component.html',
   styleUrls: ['./lesson-tile.component.scss'],
 })
-export class LessonTileComponent implements OnInit {
+export class LessonTileComponent implements OnInit, OnDestroy {
   @Input() lesson: Lesson;
+  @Input() events: Observable<Lesson>;
   @Output() updateLessons = new EventEmitter();
+  private eventsSubscription: Subscription;
   launchSessionLabel = '';
   rightLaunchArrow = '';
   rightCaret = '';
@@ -39,6 +43,8 @@ export class LessonTileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.eventsSubscription = this.events.subscribe((lesson) => this.edit(lesson));
+
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.launchSessionLabel = info.parameters.launchSession;
@@ -46,6 +52,10 @@ export class LessonTileComponent implements OnInit {
         this.rightLaunchArrow = info.parameters.rightLaunchArrow;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.eventsSubscription.unsubscribe();
   }
 
   launchSession(event, lesson): void {
@@ -65,7 +75,7 @@ export class LessonTileComponent implements OnInit {
     event.stopPropagation();
   }
 
-  edit($event, lesson: Lesson) {
+  edit(lesson: Lesson, $event?) {
     if (lesson.id) {
       if (lesson.effective_permission === 'admin' || lesson.effective_permission === 'edit') {
         this.router.navigate(['editor', lesson.id], {
@@ -75,7 +85,9 @@ export class LessonTileComponent implements OnInit {
         this.utilsService.showWarning(`You don't have sufficient permission to perform this action.`);
       }
     }
-    $event.stopPropagation();
+    if ($event) {
+      $event.stopPropagation();
+    }
   }
 
   delete($event, lesson: Lesson) {

@@ -39,8 +39,12 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
 import { DeviceDetectorModule } from 'ngx-device-detector';
-import { NgxEditorModule } from 'ngx-editor';
 import { Components, EntryComponents } from './index';
+
+import { NgxEditorModule } from 'ngx-editor';
+import nodeViews from './ngx-editor/nodeviews';
+import plugins from './ngx-editor/plugins';
+import schema from './ngx-editor/schema';
 
 const SHARED_MODULES = [
   PickerModule,
@@ -86,7 +90,7 @@ const SHARED_MODULES = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, ...SHARED_MODULES, DeviceDetectorModule.forRoot()],
+  imports: [NgxEditorModule, CommonModule, RouterModule, ...SHARED_MODULES, DeviceDetectorModule.forRoot()],
   declarations: Components,
   entryComponents: [...EntryComponents],
   exports: [...Components, ...SHARED_MODULES],

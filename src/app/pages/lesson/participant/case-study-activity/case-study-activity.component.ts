@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { Editor, Toolbar } from 'ngx-editor';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -23,6 +24,18 @@ export class ParticipantCaseStudyActivityComponent
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
+
+  editor: Editor;
+  toolbar: Toolbar = [
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
+    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['link', 'image'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
+  ];
   constructor(private contextService: ContextService) {
     super();
   }

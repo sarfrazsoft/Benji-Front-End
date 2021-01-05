@@ -1504,6 +1504,10 @@ input[type='number'] {
   -moz-appearance: textfield; /* Firefox */
 }
 
+.NgxEditor {
+  text-align: initial;
+}
+
 .ProseMirror-yjs-cursor {
   position: relative;
   margin-left: -1px;

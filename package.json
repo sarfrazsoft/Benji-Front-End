@@ -33,6 +33,7 @@
     "@ngx-formly/bootstrap": "^5.0.0",
     "@ngx-formly/core": "^5.0.0",
     "@ngx-formly/schematics": "^5.10.1",
+    "@types/chartjs": "0.0.31",
     "@types/lodash": "^4.14.119",
     "@types/prosemirror-schema-basic": "^1.0.1",
     "@types/prosemirror-tables": "^0.9.1",
@@ -55,7 +56,7 @@
     "ng2-tooltip-directive": "^2.9.22",
     "ngrx-store-freeze": "^0.2.4",
     "ngx-device-detector": "^1.3.6",
-    "ngx-editor": "^5.0.0-beta.3",
+    "ngx-editor": "^6.0.1",
     "ngx-perfect-scrollbar": "^8.0.0",
     "node-sass": "^4.12.0",
     "npm": "6.1.0",
@@ -67,11 +68,10 @@
     "prosemirror-history": "^1.1.3",
     "prosemirror-inputrules": "^1.1.3",
     "prosemirror-keymap": "^1.1.4",
-    "prosemirror-model": "^1.4.4",
+    "prosemirror-model": "^1.13.1",
     "prosemirror-schema-basic": "^1.0.0",
     "prosemirror-schema-list": "^1.0.1",
     "prosemirror-state": "^1.2.0",
-    "prosemirror-tables": "^1.1.1",
     "prosemirror-view": "^1.3.0",
     "rxjs": "^6.6.0",
     "rxjs-compat": "^6.3.3",
@@ -87,7 +87,7 @@
     "@angular/cli": "~9.1.13",
     "@angular/compiler-cli": "^9.1.13",
     "@angular/language-service": "^9.1.13",
-    "@types/chart.js": "^2.8.11",
+    "@types/chart.js": "^2.9.29",
     "@types/core-js": "^2.5.0",
     "@types/jasmine": "^3.3.6",
     "@types/jasminewd2": "~2.0.3",
@@ -106,5 +106,8 @@
     "ts-node": "~5.0.1",
     "tslint": "^5.12.1",
     "webpack": "^4.29.6"
+  },
+  "resolutions": {
+    "prosemirror-model": "1.9.1"
   }
 }

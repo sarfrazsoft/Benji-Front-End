@@ -1,17 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as Chart from 'chart.js';
 
 @Component({
   selector: 'benji-skill-line-chart',
   templateUrl: './skill-line-chart.component.html',
-  styleUrls: ['./skill-line-chart.component.scss']
+  styleUrls: ['./skill-line-chart.component.scss'],
 })
 export class SkillLineChartComponent implements OnInit, AfterViewInit {
   @Input() chartData = {
@@ -21,27 +14,27 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
         date: '2nd Jan, 2020',
         name: 'Pitch perfect',
         xlabel: '01/02',
-        value: 3
+        value: 3,
       },
       {
         date: '14th Jan, 2020',
         name: 'Pitch practice',
         xlabel: '01/14',
-        value: 5
+        value: 5,
       },
       {
         date: '12th Jan, 2020',
         name: 'Pitch practice',
         xlabel: '01/12',
-        value: 7
+        value: 7,
       },
       {
         date: '22nd Jan, 2020',
         name: 'Pitch perfect',
         xlabel: '01/22',
-        value: 6
-      }
-    ]
+        value: 6,
+      },
+    ],
   };
   canvas: any;
   ctx: CanvasRenderingContext2D;
@@ -60,7 +53,7 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
     const labels = [];
     const values = [];
 
-    this.chartData.sessionInfo.forEach(s => {
+    this.chartData.sessionInfo.forEach((s) => {
       labels.push(s.xlabel);
       values.push(s.value);
     });
@@ -77,9 +70,9 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
             data: values,
             borderWidth: 5,
             backgroundColor: '#0a4cef',
-            fill: false
-          }
-        ]
+            fill: false,
+          },
+        ],
       },
       options: {
         responsive: true,
@@ -90,8 +83,8 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
           labels: {
             boxWidth: 0,
             fontSize: 14,
-            fontColor: '#000'
-          }
+            fontColor: '#000',
+          },
         },
         tooltips: {
           displayColors: false,
@@ -101,14 +94,14 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
             },
             label: (tooltipItem, d) => {
               return this.chartData.sessionInfo[tooltipItem.index].date;
-            }
-          }
+            },
+          },
         },
         scales: {
           yAxes: [
             {
               gridLines: {
-                display: true
+                display: true,
               },
               ticks: {
                 fontColor: '#000',
@@ -117,27 +110,27 @@ export class SkillLineChartComponent implements OnInit, AfterViewInit {
                 beginAtZero: true,
                 min: 0,
                 max: 10,
-                callback: function(value, index, values) {
+                callback: function (value, index, valuest) {
                   return value ? value : '';
-                }
-              }
-            }
+                },
+              },
+            },
           ],
           xAxes: [
             {
               barPercentage: 0.5,
               gridLines: {
-                display: false
+                display: false,
               },
               ticks: {
                 fontColor: '#000',
                 fontSize: 14,
-                beginAtZero: true
-              }
-            }
-          ]
-        }
-      }
+                beginAtZero: true,
+              },
+            } as any,
+          ],
+        },
+      },
     });
   }
 }
