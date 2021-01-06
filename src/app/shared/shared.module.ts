@@ -42,6 +42,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
+
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
 import schema from './ngx-editor/schema';

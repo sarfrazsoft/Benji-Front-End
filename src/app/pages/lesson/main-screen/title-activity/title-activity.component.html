@@ -4,17 +4,17 @@
   </div>
   <div class="activity-title-container">
     <h1 class="primary-color pn-700">
-      {{ activityState.titleactivity.main_title }}
+      {{ mainTitle }}
     </h1>
   </div>
   <div class="activity-title-description-container">
     <p
       class="secondary-color-dark pn-500"
       [ngClass]="{
-        'smaller-font-class': activityState.titleactivity.title_text.length > 100
+        'smaller-font-class': titleText.length > 100
       }"
     >
-      {{ activityState.titleactivity.title_text }}
+      {{ titleText }}
     </p>
   </div>
   <div class="linear-timer-container">

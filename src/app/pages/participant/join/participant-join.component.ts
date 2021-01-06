@@ -47,18 +47,18 @@ export class ParticipantJoinComponent implements OnInit {
         const lessonrun_code = res.lessonrun_code;
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
-        if (this.authService.isLoggedIn()) {
-          this.backend
-            .createParticipant(this.userName, lessonrun_code)
-            .subscribe((participant: Participant) => {
-              if (res.lessonrun_code) {
-                localStorage.setItem('participant', JSON.stringify(participant));
-                this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
-              }
-            });
-        } else {
-          this.router.navigate([`/participant/login`]);
-        }
+        // if (this.authService.isLoggedIn()) {
+        //   this.backend
+        //     .createParticipant(this.userName, lessonrun_code)
+        //     .subscribe((participant: Participant) => {
+        //       if (res.lessonrun_code) {
+        //         localStorage.setItem('participant', JSON.stringify(participant));
+        //         this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+        //       }
+        //     });
+        // } else {
+        this.router.navigate([`/participant/login`]);
+        // }
       },
       (err) => {
         console.error(`Unable to join: ${err.error.error}`);

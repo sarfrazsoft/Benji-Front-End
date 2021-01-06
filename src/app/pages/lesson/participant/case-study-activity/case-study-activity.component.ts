@@ -1,5 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { Editor, Toolbar } from 'ngx-editor';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -10,6 +9,11 @@ import {
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
+import { Editor, Toolbar } from 'ngx-editor';
+import nodeViews from 'src/app/shared/ngx-editor/nodeviews/index';
+import plugins from 'src/app/shared/ngx-editor/plugins';
+import schema from 'src/app/shared/ngx-editor/schema';
+
 @Component({
   selector: 'benji-ps-case-study-activity',
   templateUrl: './case-study-activity.component.html',
@@ -17,7 +21,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges, OnDestroy {
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
@@ -28,13 +32,13 @@ export class ParticipantCaseStudyActivityComponent
   editor: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],
-    ['underline', 'strike'],
-    ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
+    // ['underline', 'strike'],
+    // ['code', 'blockquote'],
+    // ['ordered_list', 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
     ['link', 'image'],
-    ['text_color', 'background_color'],
-    ['align_left', 'align_center', 'align_right', 'align_justify'],
+    // ['text_color', 'background_color'],
+    // ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
   constructor(private contextService: ContextService) {
     super();
@@ -44,6 +48,16 @@ export class ParticipantCaseStudyActivityComponent
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
     this.populateQuestions();
+
+    this.editor = new Editor({
+      schema,
+      plugins,
+      nodeViews,
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.editor.destroy();
   }
 
   populateQuestions() {

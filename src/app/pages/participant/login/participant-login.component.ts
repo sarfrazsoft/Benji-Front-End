@@ -5,6 +5,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, BackendRestService, ContextService, EmojiLookupService } from 'src/app/services';
 import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-participant-login',
@@ -29,7 +30,8 @@ export class ParticipantLoginComponent implements OnInit {
     private auth: AuthService,
     public router: Router,
     private contextService: ContextService,
-    private emoji: EmojiLookupService
+    private emoji: EmojiLookupService,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit() {
@@ -69,9 +71,8 @@ export class ParticipantLoginComponent implements OnInit {
       return false;
     }
 
-    this.backend
-      .createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code)
-      .subscribe((res: Participant) => {
+    this.backend.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
+      (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {
           localStorage.setItem('participant', JSON.stringify(res));
@@ -79,7 +80,19 @@ export class ParticipantLoginComponent implements OnInit {
         } else {
           this.loginError = true;
         }
-      });
+      },
+      (err) => {
+        console.log(err);
+        if (err && err.error && err.error.non_field_errors) {
+          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+            console.log('err');
+            this.utilsService.showWarning(
+              'A participant with that name has already joined. Try a different name.'
+            );
+          }
+        }
+      }
+    );
   }
 }
 declare var twemoji: {

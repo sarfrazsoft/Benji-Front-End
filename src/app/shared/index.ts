@@ -6,6 +6,7 @@ import { UIComponents } from '../ui-components';
 import { CmpComponents, CmpEntryComponents } from './components';
 import { Dialogs } from './dialogs';
 import { Directives } from './directives';
+import { CustomMenuComponent } from './ngx-editor/custom-menu/custom-menu.component';
 
 import {
   MainScreenBrainStormComponents,
@@ -18,11 +19,18 @@ import {
 import {
   BuildPitchComponents,
   ParticipantBrainStormComponents,
+  ParticipantBrainstormingActivityComponent,
+  ParticipantBuildPitchActivityComponent,
   ParticipantCaseStudyActivityComponent,
   ParticipantFeedbackActivityComponent,
+  ParticipantInstructionTemplateComponent,
   ParticipantPopQuizComponent,
-  ParticipantSharedComponents,
+  // ParticipantSharedComponents,
   ParticipantTitleActivityComponent,
+  QuestionFormComponent,
+  QuestionLayoutComponent,
+  VoteIdeaComponent,
+  VotePitchComponent,
 } from 'src/app/pages/lesson/participant';
 
 const ActivityComponents = [
@@ -30,9 +38,16 @@ const ActivityComponents = [
   ParticipantTitleActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantCaseStudyActivityComponent,
-  ...ParticipantSharedComponents,
-  ...ParticipantBrainStormComponents,
-  ...BuildPitchComponents,
+  ParticipantInstructionTemplateComponent,
+  QuestionFormComponent,
+  QuestionLayoutComponent,
+  ParticipantBuildPitchActivityComponent,
+  VotePitchComponent,
+  // ...ParticipantSharedComponents,
+  // ...ParticipantBrainStormComponents,
+  ParticipantBrainstormingActivityComponent,
+  VoteIdeaComponent,
+  // ...BuildPitchComponents,
   MainScreenBuildPitchActivityComponent,
   MainScreenTitleActivityComponent,
   MainScreenFeedbackActivityComponent,
@@ -40,7 +55,10 @@ const ActivityComponents = [
   MainScreenPopQuizComponent,
 ];
 
+const EditorComponents = [CustomMenuComponent];
+
 export const Components = [
+  ...EditorComponents,
   ...CmpComponents,
   ...Directives,
   ...Dialogs,

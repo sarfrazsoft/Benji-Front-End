@@ -2,12 +2,19 @@
 
   <!-- <div benjiTextEditor></div> -->
 <!-- </div> -->
-<ngx-editor-menu [editor]="editor" [toolbar]="toolbar" [customMenuRef]="customMenu"></ngx-editor-menu>
+<ngx-editor-menu
+  [editor]="editor"
+  [toolbar]="toolbar"
+  [customMenuRef]="customMenu"
+></ngx-editor-menu>
 <ngx-editor [editor]="editor">
 </ngx-editor>
-<ngx-editor
+<ng-template #customMenu>
+  <app-custom-menu [editor]="editor"></app-custom-menu>
+</ng-template>
+<!-- <ngx-editor
                 
-></ngx-editor>
+></ngx-editor> -->
 <div class="b-flat-card center-text feedback-card heightAuto">
   <div class="b-flat-card__title">
     <h2 class="pn-400">Case Study</h2>

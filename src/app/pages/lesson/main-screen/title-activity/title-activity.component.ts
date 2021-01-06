@@ -34,10 +34,10 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
     // console.log(JSON.stringify(this.activityState));
     // console.log(this.activityState);
     // if (this.activityState.titleactivity) {
-    this.mainTitle = this.activityState.titleactivity.main_title;
-    this.titleText = this.activityState.titleactivity.title_text;
+    const act = this.activityState.titleactivity;
+    this.mainTitle = act.main_title ? act.main_title : '';
+    this.titleText = act.title_text ? act.title_text : '';
     // }
-    const act = this.activityState;
     this.contextService.activityTimer = this.getNextActStartTimer();
   }
 
