@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContextService, EmojiLookupService } from 'src/app/services';
+import { TitleActivity } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -24,10 +25,11 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
 
   ngOnInit() {
     super.ngOnInit();
-    const act = this.activityState;
     if (this.isLastActivity()) {
       this.isEndSession = true;
     }
+    const act = this.activityState.titleactivity;
+    this.loadVariables(act);
   }
 
   ngOnChanges() {
@@ -35,10 +37,14 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
     // console.log(this.activityState);
     // if (this.activityState.titleactivity) {
     const act = this.activityState.titleactivity;
-    this.mainTitle = act.main_title ? act.main_title : '';
-    this.titleText = act.title_text ? act.title_text : '';
+    this.loadVariables(act);
     // }
     this.contextService.activityTimer = this.getNextActStartTimer();
+  }
+
+  loadVariables(act: TitleActivity) {
+    this.mainTitle = act.main_title ? act.main_title : '';
+    this.titleText = act.title_text ? act.title_text : '';
   }
 
   public backToStart() {

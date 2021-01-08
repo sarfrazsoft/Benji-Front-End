@@ -162,7 +162,7 @@ export class LearnersTableComponent implements AfterViewInit, OnInit {
     if (selectedParticipants.length > 0) {
       const a = selectedParticipants.length === 1 ? 'this' : 'these';
       const b = selectedParticipants.length === 1 ? '' : 's';
-      const msg = 'Are you sure you want to delete ' + selectedParticipants.length + ' group' + b + '?';
+      const msg = 'Are you sure you want to remove ' + selectedParticipants.length + ' participant' + b + '?';
       this.dialogRef = this.dialog
         .open(ConfirmationDialogComponent, {
           data: {

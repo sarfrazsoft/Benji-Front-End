@@ -1,8 +1,4 @@
-<!-- <div style="padding: 20px"> -->
-
-  <!-- <div benjiTextEditor></div> -->
-<!-- </div> -->
-<ngx-editor-menu
+<!-- <ngx-editor-menu
   [editor]="editor"
   [toolbar]="toolbar"
   [customMenuRef]="customMenu"
@@ -11,10 +7,14 @@
 </ngx-editor>
 <ng-template #customMenu>
   <app-custom-menu [editor]="editor"></app-custom-menu>
-</ng-template>
-<!-- <ngx-editor
-                
-></ngx-editor> -->
+</ng-template> -->
+
+<benji-text-editor></benji-text-editor>
+
+
+
+
+
 <div class="b-flat-card center-text feedback-card heightAuto">
   <div class="b-flat-card__title">
     <h2 class="pn-400">Case Study</h2>
@@ -82,14 +82,14 @@
               (keydown)="typingStarted()"
             ></textarea>
             <div 
+              class="editor-container"
+              style="height: 300px;"
               [ngClass]="{
                 editable: isUserNoteTaker() && !isDone,
                 disabled: !(isUserNoteTaker() && !isDone)
               }">
 
-              <!-- <ngx-editor
-                [editable]="isUserNoteTaker() && !isDone"
-              ></ngx-editor> -->
+              
             </div>
           </div>
         </div>

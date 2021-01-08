@@ -6,6 +6,7 @@ import { TextQuestionComponent } from './feedback-graph/text-question/text-quest
 import { FeedbackGenericGraphComponent } from './generic-feedback-graph/generic-feedback-graph.component';
 import { ResponsePercentBarsComponent } from './response-percent-bars/response-percent-bars.component';
 import { ResponseTagsPercentBarsComponent } from './response-tags-percent-bars/response-tags-percent-bars.component';
+import { TextEditorComponent } from './text-editor/text-editor.component';
 export { AvatarComponent };
 
 export const CmpComponents = [
@@ -16,7 +17,8 @@ export const CmpComponents = [
   ResponsePercentBarsComponent,
   TextQuestionComponent,
   FeedbackGenericGraphComponent,
-  ResponseTagsPercentBarsComponent
+  ResponseTagsPercentBarsComponent,
+  TextEditorComponent,
 ];
 
 export const CmpEntryComponents = [
@@ -24,5 +26,5 @@ export const CmpEntryComponents = [
   FeedbackGraphComponent,
   ResponsePercentBarsComponent,
   FeedbackGenericGraphComponent,
-  ResponseTagsPercentBarsComponent
+  ResponseTagsPercentBarsComponent,
 ];

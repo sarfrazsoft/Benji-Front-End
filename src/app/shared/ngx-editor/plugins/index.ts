@@ -74,7 +74,7 @@ const getPlugins = (): Plugin[] => {
   const listKeyMap = getListKeyMap();
 
   const plugins = [
-    ySyncPlugin(type),
+    // ySyncPlugin(type),
     // OrginalYCursorPlugin(provider.awareness),
     yCursorPlugin(provider.awareness),
     yUndoPlugin(),
@@ -100,7 +100,7 @@ const getPlugins = (): Plugin[] => {
 export default getPlugins();
 
 // Get user's name for displaying in remote cursors
-function getUserName() {
+export function getUserName() {
   const u: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
   if (u) {
     return u.first_name;

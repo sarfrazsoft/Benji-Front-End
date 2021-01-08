@@ -25,7 +25,8 @@ export const defaultCursorBuilder = (user) => {
   cursor.classList.add('ProseMirror-yjs-cursor');
   cursor.setAttribute('style', `border-color: ${user.color}`);
   const userDiv = document.createElement('div');
-  userDiv.setAttribute('style', `background-color: ${user.color}`);
+  userDiv.setAttribute('style', `background-color: ${user.backgroudColor}`);
+  userDiv.setAttribute('style', `color: ${user.color}`);
   console.log(user.name);
   userDiv.insertBefore(document.createTextNode(user.name), null);
   cursor.insertBefore(userDiv, null);

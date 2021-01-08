@@ -290,7 +290,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'activity_seconds') {
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
-                  mappedField.templateOptions.label = 'Duration for timer';
+                  mappedField.templateOptions.label = '';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
                   mappedField.type = 'seconds';
                 } else if (mapSource.field_name === 'hide_timer') {
@@ -387,7 +387,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'activity_seconds') {
                   mappedField.type = 'seconds';
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
-                  mappedField.templateOptions.label = 'Activity Seconds';
+                  mappedField.templateOptions.label = '';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Activity Seconds';
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
