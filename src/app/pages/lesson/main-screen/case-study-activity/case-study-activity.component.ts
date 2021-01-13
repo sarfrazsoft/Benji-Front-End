@@ -12,7 +12,7 @@ import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study
 export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   groups: Array<Group>;
   act: CaseStudyActivity;
-  newLayout = true;
+  newLayout = false;
   dialogRef;
   groupsX = [
     {
