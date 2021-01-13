@@ -4,13 +4,18 @@
       <img [src]="lightLogo" alt="Benji logo" class="benji-logo" />
     </div>
     <div fxLayout="row" fxLayoutGap="50px">
-      <div class="ms-toolbar-timer" *ngIf="showTimer">
+      <div class="ms-toolbar-timer" *ngIf="showTimer" [matMenuTriggerFor]="menu2">
         <benji-number-timer
           [timer]="timer"
           endStateText="Times Up!"
           [endAudio]="'bell.wav'"
         ></benji-number-timer>
       </div>
+      <mat-menu #menu2="matMenu" class="dynamic-timer-menu" [overlapTrigger]="false" xPosition="before">
+        <benji-dynamic-timer 
+
+        ></benji-dynamic-timer>
+      </mat-menu>
       <div class="right-controls" *ngIf="!hideControls">
         <div class="user-controls" [matMenuTriggerFor]="menu">
           <span class="account-name pn-600 white-color">

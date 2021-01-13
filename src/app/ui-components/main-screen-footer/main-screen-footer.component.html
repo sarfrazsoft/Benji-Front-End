@@ -33,13 +33,47 @@
     <div class="mainscreen-footer__controls" *ngIf="!disableControls">
       <ng-container>
         <div>
-          <button
+          <!-- <button
+            [matMenuTriggerFor]="activitySettingsMenu"
+            #activitySettingsMenuTrigger="matMenuTrigger"
+            (click)="getActivities()"
+          >
+            <mat-icon class="icon-white">settings</mat-icon>
+          </button> -->
+          <mat-menu #activitySettingsMenu="matMenu" yPosition="above">
+            <ng-template matMenuContent>
+              <div
+                class="redo-act-item"
+                fxLayoutAlign="start center"
+                fxLayoutGap="10px"
+                *ngFor="let p of pastActivities"
+                (click)="redoAct(p)"
+              >
+                <span>
+                  {{ p.activity_type.replace('Activity', '') + ': ' + p.description }}
+                </span>
+              </div>
+              <div
+                *ngIf="pastActivities.length === 0 && !noActivitiesToShow"
+                class="redo-act-item-loader"
+                fxLayoutAlign="start center"
+              >
+                <mat-spinner></mat-spinner>
+              </div>
+              <div *ngIf="noActivitiesToShow" class="redo-act-item-loader" fxLayoutAlign="start center">
+                no activities to peakback to
+              </div>
+            </ng-template>
+          </mat-menu>
+        </div>
+        <div>
+          <!-- <button
             [matMenuTriggerFor]="clickHoverMenu"
             #clickHoverMenuTrigger="matMenuTrigger"
             (click)="getActivities()"
           >
             <mat-icon class="icon-white">history</mat-icon>
-          </button>
+          </button> -->
           <mat-menu #clickHoverMenu="matMenu" yPosition="above">
             <ng-template matMenuContent>
               <div

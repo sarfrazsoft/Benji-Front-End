@@ -175,6 +175,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'title_image') {
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.type = 'seconds';
+                  mappedField.defaultValue = 10000;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['hideLabel'] = true;
@@ -217,6 +218,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'voting_seconds') {
                   mappedField.type = 'seconds';
+                  mappedField.defaultValue = 0;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['hideLabel'] = true;
@@ -225,6 +227,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'max_participant_votes') {
                   mappedField.hideExpression = '!model.voting_seconds';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.defaultValue = 0;
                   mappedField.type = 'seconds';
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
@@ -233,6 +236,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['helpText'] = 'How long does the winner stage last?';
                 } else if (mapSource.field_name === 'submission_seconds') {
                   mappedField.type = 'seconds';
+                  mappedField.defaultValue = 10000;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['hideLabel'] = true;
@@ -293,6 +297,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
                   mappedField.type = 'seconds';
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.defaultValue = true;
                   mappedField.hide = true;
@@ -319,6 +324,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'question_type') {
                   mappedField.templateOptions.required = false;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.defaultValue = 10000;
                   mappedField.type = 'seconds';
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
@@ -389,6 +395,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Activity Seconds';
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === '') {

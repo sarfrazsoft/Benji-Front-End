@@ -36,7 +36,6 @@
           <app-radial-timer
             [timer]="rplayTimer"
             endStateText="Done!"
-            [endAudio]="'attention-seeker.mp3'"
             [timerOffset]="avgServerTimeOffset"
           ></app-radial-timer>
         </div>
@@ -45,7 +44,6 @@
     <div class="linear-timer-container" *ngIf="roles.length === 3">
       <benji-linear-timer
         [timer]="rplayTimer"
-        [endAudio]="'attention-seeker.mp3'"
         [timerOffset]="avgServerTimeOffset"
       ></benji-linear-timer>
     </div>
@@ -83,7 +81,6 @@
       <app-radial-timer
         [timer]="feedbackTimer"
         endStateText="Done!"
-        [endAudio]="'attention-seeker.mp3'"
         [timerOffset]="avgServerTimeOffset"
       ></app-radial-timer>
     </div>

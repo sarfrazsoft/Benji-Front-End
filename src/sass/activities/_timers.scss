@@ -48,3 +48,60 @@
     }
   }
 }
+
+// Dynamic timer
+.mat-menu-panel.dynamic-timer-menu {
+  max-width: 300px;
+  border-radius: 8px;
+  .mat-menu-content:not(:empty) {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  .dynamic-timer {
+    // height: 144px;
+    // width: 284px;
+    border: $secondary-color 1px solid;
+    border-radius: 8px;
+    position: relative;
+    background-color: #fff;
+    .heading-container {
+      padding: 8px 20px;
+      border-bottom: $secondary-color 1px solid;
+      .heading {
+        color: $black;
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+    .content {
+      padding: 10px 16px;
+      position: relative;
+      .timer {
+        position: relative;
+        .inner-circle {
+          height: 65px;
+          width: 65px;
+          border: 1px solid #c4c4c4;
+          border-radius: 32px;
+        }
+        .number-text {
+          font-size: 18px;
+          color: $black;
+        }
+      }
+      .timer-controls {
+        padding-right: 0px;
+        .add-time-buttons {
+          button {
+            font-size: 8px;
+            font-weight: 600;
+            border: 1px solid $secondary-color;
+            border-radius: 10px;
+            padding: 4px;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

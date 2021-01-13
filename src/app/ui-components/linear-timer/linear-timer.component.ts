@@ -1,13 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Hammer } from 'hammerjs';
 import * as moment from 'moment';
 import { Timer } from '../../services/backend/schema';
@@ -15,7 +7,7 @@ import { Timer } from '../../services/backend/schema';
 @Component({
   selector: 'benji-linear-timer',
   templateUrl: './linear-timer.component.html',
-  styleUrls: ['./linear-timer.component.scss']
+  styleUrls: ['./linear-timer.component.scss'],
 })
 export class LinearTimerComponent implements OnInit, OnDestroy {
   constructor() {}
@@ -34,6 +26,7 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.timerInterval = setInterval(() => this.update(), 100);
+    console.log(this.timer);
   }
 
   ngOnDestroy() {
@@ -57,8 +50,7 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
           offset = 0;
         }
 
-        this.remainingTime =
-          moment(this.timer.end_time).valueOf() - moment().valueOf() - offset;
+        this.remainingTime = moment(this.timer.end_time).valueOf() - moment().valueOf() - offset;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }

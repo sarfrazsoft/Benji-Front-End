@@ -1,0 +1,72 @@
+<div class="dynamic-timer" fxLayout="column">
+  <div class="heading-container" fxLayout="row" fxLayoutAlign="space-between">
+    <!-- <div fxLayout="row" fxLayoutGap="8px"> -->
+      <!-- <div>
+        <button class="close-button" matDialogClose>
+          <img src="/assets/img/chevronBigLeft.svg" />
+        </button>
+      </div> -->
+    <div class="heading">Timer</div>
+    <!-- </div> -->
+    
+    <div (click)="removeEmoji()">
+      <button class="close-button">
+        <img src="/assets/img/close_big.svg" />
+      </button>
+    </div>
+
+
+  </div>
+  <div class="content" fxLayout="row">
+    <div class="timer">
+      <div class="timer-svg">
+        <mat-progress-spinner
+          [strokeWidth]="6"
+          [diameter]="88"
+          mode="determinate"
+          [value]="pctRemaining()"
+        ></mat-progress-spinner>
+      </div>
+      <div
+        class="timer-centered number-text pn-500"
+        *ngIf="timer && timer.status == 'running'"
+      >
+        {{ get_min_sec().min | number: "1.0-0" }}:{{
+          get_min_sec().sec | number: "2.0-0"
+        }}
+      </div>
+
+      <div class="timer-centered inner-circle">
+
+      </div>
+    </div>
+    <div class="timer-controls" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="12px">
+      <div class="add-time-buttons" fxLayout="row" fxLayoutGap="4px" >
+        <div>
+          <button>+30s</button>
+        </div>
+        <div>
+          <button>+1m</button>
+        </div>
+        <div>
+          <button>+5m</button>
+        </div>
+      </div>
+      <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
+        <button
+          class="dialog-controls bg-primary-color white-color"
+          (click)="cancel()"
+        >
+          Start
+        </button>
+        <button
+          class="dialog-controls primary-color bg-sky"
+          (click)="confirm()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

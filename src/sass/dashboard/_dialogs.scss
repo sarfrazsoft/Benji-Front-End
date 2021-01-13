@@ -22,19 +22,7 @@
       overflow: hidden;
       .controls-container {
         width: 100%;
-        .dialog-controls {
-          font-size: 16px;
-          font-weight: 500;
-          padding: 8px 16px;
-          border-radius: 4px;
-          &.cancel-button {
-            background-color: $sky;
-          }
-          &.confirm-button {
-            background-color: $warning-color;
-            color: white;
-          }
-        }
+
         // TODO move these styles to dashboard/_input.scss
         .ng-select .ng-select-container {
           border: none;
@@ -92,4 +80,19 @@
 }
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
   background-color: transparent;
+}
+
+.dialog-controls,
+.timer-controls {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  &.cancel-button {
+    background-color: $sky;
+  }
+  &.confirm-button {
+    background-color: $warning-color;
+    color: white;
+  }
 }

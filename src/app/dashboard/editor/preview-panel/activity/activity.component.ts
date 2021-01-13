@@ -301,7 +301,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           { id: 62, order: 1, label: 'label', temp_text: 'blank', help_text: null },
           { help_text: null, id: 63, label: 'label2', order: 2, temp_text: 'blank2' },
         ];
-        if (content.buildapitchblank_set.length) {
+        if (content.buildapitchblank_set && content.buildapitchblank_set.length) {
           buildapitchblank_set = content.buildapitchblank_set;
         }
 

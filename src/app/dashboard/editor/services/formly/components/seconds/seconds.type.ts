@@ -27,5 +27,7 @@ export class SecondsTypeComponent extends FieldType implements OnInit {
     console.log(totalSeconds);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.formControl.value);
+  }
 }
