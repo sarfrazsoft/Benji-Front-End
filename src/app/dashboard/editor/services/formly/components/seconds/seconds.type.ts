@@ -24,10 +24,13 @@ export class SecondsTypeComponent extends FieldType implements OnInit {
     const seconds = this.secs;
     const totalSeconds = convertedSeconds + seconds;
     this.formControl.setValue(totalSeconds);
-    console.log(totalSeconds);
   }
 
   ngOnInit() {
-    console.log(this.formControl.value);
+    if (this.formControl.value && this.formControl.value !== 10000) {
+      const totalSeconds = this.formControl.value;
+      this.mins = Math.floor(totalSeconds / 60);
+      this.secs = totalSeconds % 60;
+    }
   }
 }

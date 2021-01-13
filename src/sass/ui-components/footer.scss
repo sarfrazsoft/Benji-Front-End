@@ -55,13 +55,21 @@
 .redo-act-item {
   padding: 10px 5px;
   min-width: 256px;
-  // span {
-  //   text-align: left;
-  // }
 }
 
 .redo-act-item-loader {
   min-height: 150px;
   max-width: 100px;
   cursor: pointer;
+}
+
+// styles for activity settings
+.activity-settings-menu.mat-menu-panel {
+  max-width: 360px;
+  min-width: 360px;
+}
+.activity-settings {
+  padding: 8px 16px;
+  .setting {
+  }
 }

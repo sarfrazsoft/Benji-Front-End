@@ -9,7 +9,7 @@
     <div class="heading">Timer</div>
     <!-- </div> -->
     
-    <div (click)="removeEmoji()">
+    <div>
       <button class="close-button">
         <img src="/assets/img/close_big.svg" />
       </button>
@@ -55,14 +55,10 @@
       <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
         <button
           class="dialog-controls bg-primary-color white-color"
-          (click)="cancel()"
         >
           Start
         </button>
-        <button
-          class="dialog-controls primary-color bg-sky"
-          (click)="confirm()"
-        >
+        <button class="dialog-controls primary-color bg-sky">
           Cancel
         </button>
       </div>

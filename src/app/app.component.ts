@@ -205,6 +205,10 @@ export class AppComponent implements OnInit {
         benji-overview-panel .panel .activity-list .activity-container .activity.active {
           border: 2px solid ${info.parameters.primary} !important;
         }
+
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+          background-color: ${info.parameters.primary} !important;
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

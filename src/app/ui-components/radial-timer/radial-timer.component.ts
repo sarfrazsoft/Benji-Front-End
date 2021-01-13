@@ -4,7 +4,6 @@ import { Timer } from '../../services/backend/schema/utils';
 @Component({
   selector: 'app-radial-timer',
   templateUrl: './radial-timer.component.html',
-  styleUrls: [],
 })
 export class RadialTimerComponent implements OnInit, OnDestroy {
   timerDiameter = 1;

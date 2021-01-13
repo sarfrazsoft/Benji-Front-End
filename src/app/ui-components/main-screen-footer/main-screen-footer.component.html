@@ -40,30 +40,32 @@
           >
             <mat-icon class="icon-white">settings</mat-icon>
           </button> -->
-          <mat-menu #activitySettingsMenu="matMenu" yPosition="above">
-            <ng-template matMenuContent>
-              <div
-                class="redo-act-item"
-                fxLayoutAlign="start center"
-                fxLayoutGap="10px"
-                *ngFor="let p of pastActivities"
-                (click)="redoAct(p)"
-              >
-                <span>
-                  {{ p.activity_type.replace('Activity', '') + ': ' + p.description }}
-                </span>
+          <mat-menu class="activity-settings-menu" #activitySettingsMenu="matMenu" yPosition="above">
+            <div class="activity-settings">
+              <div class="setting" 
+                benji-click-stop-propagation
+                fxLayout="row"
+                fxLayoutAlign="space-between">
+                <div>
+                  Show user name
+                </div>
+                <div>
+                  <mat-slide-toggle disableRipple></mat-slide-toggle>
+                </div>
               </div>
-              <div
-                *ngIf="pastActivities.length === 0 && !noActivitiesToShow"
-                class="redo-act-item-loader"
-                fxLayoutAlign="start center"
-              >
-                <mat-spinner></mat-spinner>
+              <div class="setting" benji-click-stop-propagation
+              fxLayout="row"
+              fxLayoutAlign="space-between">
+                Card Size
+                <mat-slide-toggle></mat-slide-toggle>
               </div>
-              <div *ngIf="noActivitiesToShow" class="redo-act-item-loader" fxLayoutAlign="start center">
-                no activities to peakback to
+              <div class="setting" benji-click-stop-propagation
+              fxLayout="row"
+              fxLayoutAlign="space-between">
+                Show vote tally
+                <mat-slide-toggle></mat-slide-toggle>
               </div>
-            </ng-template>
+            </div>
           </mat-menu>
         </div>
         <div>
