@@ -1,0 +1,83 @@
+<ng-container>            
+  <div class="menu-heading">
+    Voting
+  </div>
+  <ng-container *ngIf="votingSetup">
+    <div class="activity-settings" fxLayout="column" fxLayoutGap="16px">
+      <div class="setting" benji-click-stop-propagation
+        fxLayout="column">
+        <div class="label">
+          Votes per person
+        </div>
+        <input class="small-input" type="number">
+      </div>
+      <div class="setting controls-form" benji-click-stop-propagation
+        fxLayout="column">
+       <div class="label">
+         Vote timer <span class="sub-text">(optional)</span>
+       </div> 
+        <div class="" fxLayout="row" fxLayoutAlign="start enter" fxLayoutGap="">
+          <div fxLayout="column">
+            <div class="sub-label">
+              Mins
+            </div>
+            <input class="form-control small-input" type="number" (keyup)="minEntered($event)" [(ngModel)]="mins" >
+            <!-- <formly-field [field]="label"></formly-field> -->
+          </div>
+          <div fxLayoutAlign="end end">
+            <div class="separator" style="">
+              <span>
+                :
+              </span>
+            </div>
+          </div>
+          <div>
+            <div class="sub-label">
+              Secs
+            </div>
+            <input class="form-control small-input" type="number" (keyup)="secEntered($event)" [(ngModel)]="secs">
+            <!-- <formly-field [field]="blank"></formly-field> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reset-settings">
+      <button class="dashboard-secondary-button bg-primary-color white-color">
+        Start voting now
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="votingStarted">
+    <div class="activity-settings" fxLayout="column" fxLayoutGap="16px">
+      <div class="setting" benji-click-stop-propagation
+        fxLayout="column">
+        <div class="label">
+          Votes left
+        </div>
+        <div class="primary-color value" fxLayoutGap="2px">
+          <span>15</span>
+          <span>/</span>
+          <span>32</span>
+        </div>
+      </div>
+      <div class="setting controls-form" benji-click-stop-propagation
+        fxLayout="column">
+       <div class="label">
+         Time left
+       </div> 
+       <div class="primary-color sub-value" fxLayoutGap="2px">
+        2:18
+      </div>
+      </div>
+    </div>
+    <div class="reset-settings" fxLayoutGap="16px">
+      <button class="dialog-controls bg-primary-color white-color">
+        End Voting
+      </button>
+      <button class="dialog-controls bg-sky primary-color">
+        Pause
+      </button>
+    </div>
+  </ng-container>
+</ng-container>

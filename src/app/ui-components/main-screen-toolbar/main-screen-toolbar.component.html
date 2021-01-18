@@ -4,7 +4,7 @@
       <img [src]="lightLogo" alt="Benji logo" class="benji-logo" />
     </div>
     <div fxLayout="row" fxLayoutGap="50px">
-      <div class="ms-toolbar-timer" *ngIf="showTimer" [matMenuTriggerFor]="menu2">
+      <!-- <div class="ms-footer-timer" *ngIf="showTimer" [matMenuTriggerFor]="menu2">
         <benji-number-timer
           [timer]="timer"
           endStateText="Times Up!"
@@ -15,8 +15,8 @@
         <benji-dynamic-timer 
 
         ></benji-dynamic-timer>
-      </mat-menu>
-      <div class="right-controls" *ngIf="!hideControls">
+      </mat-menu> -->
+      <!-- <div class="right-controls" *ngIf="!hideControls">
         <div class="user-controls" [matMenuTriggerFor]="menu">
           <span class="account-name pn-600 white-color">
             Share
@@ -57,11 +57,10 @@
             <div class="team pn-400"></div>
           </div>
         </mat-menu>
-      </div>
+      </div> -->
       <div (click)="toggleFullscreen()" class="fullscreen-container" *ngIf="!hideControls">
         <mat-icon *ngIf="!isFullscreen()" class="icon-white">fullscreen</mat-icon>
         <mat-icon *ngIf="isFullscreen()" class="icon-white">fullscreen_exit</mat-icon>
-        <span> Fullscreen </span>
       </div>
     </div>
   </div>

@@ -1,10 +1,9 @@
 .mainscreen-footer {
   color: #fff;
-  min-height: 55px;
+  min-height: 50px;
   padding: 0px 1vw;
   .session-info {
-    .participantDropdown {
-    }
+    margin-left: 24px;
     p {
       text-transform: uppercase;
       font-size: 22px;
@@ -12,9 +11,29 @@
       letter-spacing: 1.2px;
       margin-bottom: 0;
     }
+    .room-code {
+      .code {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .text {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
   }
   .mainscreen-footer__controls {
     display: flex;
+    .option {
+      padding: 6px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.2s;
+      }
+    }
     button {
       background: none;
       display: flex;
@@ -28,9 +47,10 @@
         height: auto;
       }
       sup {
-        margin-top: 15px;
-        margin-left: -17px;
-        width: 25px;
+        margin-top: 7px;
+        margin-left: 0px;
+        width: 5px;
+        font-size: 10px;
       }
     }
     .brainstrom-categories {
@@ -39,6 +59,11 @@
         cursor: pointer;
         height: 27px;
       }
+    }
+  }
+  .session-controls {
+    .time-info {
+      margin-right: 24px;
     }
   }
 }
@@ -61,15 +86,4 @@
   min-height: 150px;
   max-width: 100px;
   cursor: pointer;
-}
-
-// styles for activity settings
-.activity-settings-menu.mat-menu-panel {
-  max-width: 360px;
-  min-width: 360px;
-}
-.activity-settings {
-  padding: 8px 16px;
-  .setting {
-  }
 }

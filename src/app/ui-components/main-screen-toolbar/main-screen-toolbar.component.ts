@@ -43,37 +43,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.utilsService.copyToClipboard(val);
   }
 
-  ngOnChanges() {
-    const as = this.activityState;
-    if (as) {
-      if (as.activity_type === this.at.brainStorm || as.activity_type === this.at.title) {
-        if (as.activity_type === this.at.title) {
-          if (as.titleactivity.hide_timer) {
-            this.showTimer = false;
-          } else {
-            this.initializeTimer();
-          }
-        } else if (as.activity_type === this.at.brainStorm) {
-          if (as.brainstormactivity.hide_timer) {
-            this.showTimer = false;
-          } else {
-            this.initializeTimer();
-          }
-        }
-      } else {
-        this.showTimer = false;
-      }
-    }
-  }
-
-  initializeTimer() {
-    this.showTimer = true;
-    this.contextService.activityTimer$.subscribe((timer: Timer) => {
-      if (timer) {
-        this.timer = timer;
-      }
-    });
-  }
+  ngOnChanges() {}
 
   toggleFullscreen() {
     this.layoutService.toggleFullscreen();

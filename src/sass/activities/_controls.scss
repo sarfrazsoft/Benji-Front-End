@@ -1,0 +1,122 @@
+// styles for activity settings
+.activity-settings-menu.mat-menu-panel {
+  min-width: fit-content;
+  .mat-menu-content {
+    padding: 16px 0px;
+    .menu-heading {
+      padding: 0px 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .activity-settings {
+      padding: 0px 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid $secondary-color-light;
+      .setting {
+        font-weight: 500;
+        .ng-select.card-size {
+          border: 0px;
+          min-height: 0px;
+          border-radius: 0;
+          width: 100px;
+        }
+        .ng-select.card-size .ng-select-container {
+          border: 0px;
+          width: 100px;
+          min-height: 20px;
+          height: 20px;
+        }
+        .label {
+          margin-bottom: 8px;
+        }
+        .sub-label {
+          font-size: 8px;
+          color: $secondary-color-light;
+        }
+        .small-input {
+          width: 32px;
+          height: 24px;
+          border: 1px solid $secondary-color-light;
+          border-radius: 4px;
+          padding: 2px;
+          &:focus {
+            outline: -webkit-focus-ring-color auto 0px;
+          }
+        }
+        .sub-text {
+          color: #c4c4c4;
+        }
+        .value {
+          font-weight: 700;
+          font-size: 20px;
+        }
+        .sub-value {
+          font-weight: 500;
+          font-size: 20px;
+        }
+        .separator {
+          height: 24px;
+          margin: 0px 2px;
+          font-size: 18px;
+          font-weight: 600;
+          color: $secondary-color;
+        }
+      }
+    }
+    .reset-settings {
+      cursor: pointer;
+      padding: 0px 16px;
+      padding-top: 16px;
+    }
+  }
+}
+
+// session navigation
+benji-session-navigation {
+  .activities {
+    .activity-container {
+      padding: 8px 24px;
+      transition: 0.2s;
+      &:hover {
+        background-color: $sky;
+      }
+      .activity {
+        padding: 16px;
+        border: 1px solid $secondary-color-light;
+        border-radius: 4px;
+        background-color: #fff;
+        cursor: pointer;
+        img {
+          width: 40px;
+        }
+        .name {
+          font-weight: 600;
+        }
+        .description {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.ng-dropdown-panel.ng-select-bottom.card-size {
+  border-radius: 0px;
+  border: 0px;
+  background-color: #f7f8fa;
+  width: 100px !important;
+  max-width: 100px !important;
+  min-width: 100px !important;
+  font-size: 14px;
+  box-shadow: 0px 1px 3px #d5d9de;
+  .ng-dropdown-panel-items .ng-option.ng-option-selected {
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #fff;
+  }
+}
+.mat-menu-panel.mat-elevation-z4 {
+  box-shadow: 0px 1px 3px #d5d9de;
+  margin-bottom: 20px;
+  color: $black;
+}

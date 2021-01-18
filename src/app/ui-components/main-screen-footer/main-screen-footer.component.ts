@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { clone } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
-import { PastSessionsService } from 'src/app/services';
-import { User } from 'src/app/services/backend/schema';
+import { ContextService, PastSessionsService } from 'src/app/services';
+import { Timer, User } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs/';
@@ -40,6 +40,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() isPaused: boolean;
   @Input() disableControls: boolean;
 
+  timer: Timer;
+  showTimer = false;
+
   participants: Array<Participant> = [];
   pastActivities: Array<any> = [];
   noActivitiesToShow = false;
@@ -48,15 +51,25 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   actType = '';
   fastForwarding = false;
 
+  cardSizes = [
+    { id: 1, name: 'small' },
+    { id: 2, name: 'medium' },
+    { id: 3, name: 'large' },
+  ];
+  selectedCardSize;
+
   constructor(
     private videoStateService: VideoStateService,
     private dialog: MatDialog,
-    private pastSessionsService: PastSessionsService
+    private pastSessionsService: PastSessionsService,
+    public contextService: ContextService
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.selectedCardSize = this.cardSizes[0].id;
+  }
 
   ngOnChanges() {
     // if (this.actType !== this.activityState.activity_type) {
@@ -67,6 +80,36 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     if (this.activityState) {
       this.participants = this.activityState.lesson_run.participant_set;
     }
+
+    const as = this.activityState;
+    if (as) {
+      if (as.activity_type === this.at.brainStorm || as.activity_type === this.at.title) {
+        if (as.activity_type === this.at.title) {
+          if (as.titleactivity.hide_timer) {
+            this.showTimer = false;
+          } else {
+            this.initializeTimer();
+          }
+        } else if (as.activity_type === this.at.brainStorm) {
+          if (as.brainstormactivity.hide_timer) {
+            this.showTimer = false;
+          } else {
+            this.initializeTimer();
+          }
+        }
+      } else {
+        this.showTimer = false;
+      }
+    }
+  }
+
+  initializeTimer() {
+    this.showTimer = true;
+    this.contextService.activityTimer$.subscribe((timer: Timer) => {
+      if (timer) {
+        this.timer = timer;
+      }
+    });
   }
 
   controlClicked(eventType) {

@@ -36,6 +36,23 @@
         }}
       </div>
 
+      <div
+        class="timer-centered number-text pn-500"
+        *ngIf="timer && timer.status == 'paused'"
+      >
+        {{ get_min_sec().min | number: "1.0-0" }}:{{
+          get_min_sec().sec | number: "2.0-0"
+        }}
+      </div>
+
+      <div
+        class="timer-centered primary-color number-text pn-500"
+        *ngIf="timer && timer.status == 'ended'"
+      >
+        Times up!
+      </div>
+  
+
       <div class="timer-centered inner-circle">
 
       </div>

@@ -47,6 +47,14 @@ import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
 import schema from './ngx-editor/schema';
 
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipOptions } from 'ng2-tooltip-directive';
+
+export const MyDefaultTooltipOptions: TooltipOptions = {
+  'show-delay': 4000,
+  'tooltip-class': 'benji-editor-tooltip',
+};
+
 const SHARED_MODULES = [
   PickerModule,
   EmojiModule,
@@ -91,7 +99,14 @@ const SHARED_MODULES = [
 ];
 
 @NgModule({
-  imports: [NgxEditorModule, CommonModule, RouterModule, ...SHARED_MODULES, DeviceDetectorModule.forRoot()],
+  imports: [
+    NgxEditorModule,
+    CommonModule,
+    RouterModule,
+    ...SHARED_MODULES,
+    DeviceDetectorModule.forRoot(),
+    TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
+  ],
   declarations: Components,
   entryComponents: [...EntryComponents],
   exports: [...Components, ...SHARED_MODULES],

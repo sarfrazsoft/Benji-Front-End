@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import { Timer } from '../../services/backend/schema/utils';
 @Component({
   selector: 'benji-dynamic-timer',
@@ -20,9 +21,14 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
   timerInterval;
   audioStarted = false;
   showAttentionTimer = false;
-  constructor() {}
+  constructor(public contextService: ContextService) {}
 
   ngOnInit() {
+    this.contextService.activityTimer$.subscribe((timer: Timer) => {
+      if (timer) {
+        this.timer = timer;
+      }
+    });
     this.timerInterval = setInterval(() => this.update(), 100);
 
     this.timer = {

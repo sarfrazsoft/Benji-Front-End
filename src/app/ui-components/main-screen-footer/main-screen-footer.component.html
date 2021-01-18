@@ -29,112 +29,246 @@
       </button>
     </ng-container>
   </div>
-  <div fxLayout="row">
+
+  <div class="session-controls" fxLayout="row">
+    <div class="time-info" fxLayoutAlign="center center">
+      <div class="ms-footer-timer" *ngIf="showTimer" [matMenuTriggerFor]="timerMenu">
+        <benji-number-timer
+          [timer]="timer"
+          endStateText="Times Up!"
+        ></benji-number-timer>
+      </div>
+      <mat-menu #timerMenu="matMenu" class="dynamic-timer-menu" [overlapTrigger]="false" xPosition="before">
+        <benji-dynamic-timer></benji-dynamic-timer>
+      </mat-menu>
+    </div>
     <div class="mainscreen-footer__controls" *ngIf="!disableControls">
-      <ng-container>
-        <div>
-          <!-- <button
-            [matMenuTriggerFor]="activitySettingsMenu"
-            #activitySettingsMenuTrigger="matMenuTrigger"
-            (click)="getActivities()"
-          >
-            <mat-icon class="icon-white">settings</mat-icon>
-          </button> -->
-          <mat-menu class="activity-settings-menu" #activitySettingsMenu="matMenu" yPosition="above">
-            <div class="activity-settings">
+
+      <!-- Timer control -->
+      <div class="option settings" 
+        fxLayoutAlign="center center" 
+        [matMenuTriggerFor]="timerMenu"
+      >
+        <button
+          placement="top"
+          tooltip="Timer"
+          show-delay="100"
+        > 
+          <img src="/assets/img/alarm.svg" /> 
+        </button>
+      </div>
+
+      <!-- Vote control -->
+      <div class="option settings" 
+        fxLayoutAlign="center center"
+        [matMenuTriggerFor]="voteMenu"
+      >
+        <button
+          placement="top"
+          tooltip="Vote"
+          show-delay="100"
+        > 
+          <img src="/assets/img/thumbsUp.svg" /> 
+        </button>
+        <mat-menu 
+          #voteMenu="matMenu" 
+          class="activity-settings-menu "  
+          [overlapTrigger]="false" 
+          xPosition="before">
+          <benji-vote-control></benji-vote-control>
+        </mat-menu>
+      </div>
+
+      <!-- Heart control -->
+      <div 
+        class="option settings"
+        fxLayoutAlign="center center"
+        [matMenuTriggerFor]="navigationMenu">
+        <button
+          placement="top"
+          tooltip="Vote"
+          show-delay="100"
+        > 
+          <img src="/assets/img/heartOutline.svg" /> 
+        </button>
+        <mat-menu 
+          #navigationMenu="matMenu" 
+          class="activity-settings-menu activity-session-menu"  
+          [overlapTrigger]="false" 
+          xPosition="before">
+          <benji-session-navigation></benji-session-navigation>
+        </mat-menu>
+      </div>
+
+      <!-- Activity settins -->
+      <div class="option settings" fxLayoutAlign="center center">
+        <button
+          [matMenuTriggerFor]="activitySettingsMenu"
+          #activitySettingsMenuTrigger="matMenuTrigger"
+          (click)="getActivities()"
+          placement="top"
+          tooltip="menu"
+          show-delay="100"
+        > 
+          <img src="/assets/img/settings.svg" /> 
+        </button>
+        <mat-menu 
+          class="activity-settings-menu" 
+          #activitySettingsMenu="matMenu" 
+          yPosition="above"
+          [overlapTrigger]="false"
+        >
+          <ng-container>            
+            <div class="menu-heading">
+              Properties for Brainstorm
+            </div>
+            <div class="activity-settings" fxLayout="column" fxLayoutGap="8px" fxFlex="360px">
               <div class="setting" 
                 benji-click-stop-propagation
                 fxLayout="row"
-                fxLayoutAlign="space-between">
+                fxLayoutAlign="space-between"
+              >
+                Show user name
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div class="setting"
+                benji-click-stop-propagation
+                fxLayout="row"
+                fxLayoutAlign="space-between"
+              >
                 <div>
-                  Show user name
+                  Card Size
                 </div>
                 <div>
-                  <mat-slide-toggle disableRipple></mat-slide-toggle>
+                  <ng-select
+                    appearance="outline" 
+                    bindLabel="name"
+                    placeholder="Unassigned"
+                    [clearable]="false"
+                    bindValue="id"
+                    (change)="assignRoom($event, user)"
+                    [(ngModel)]="selectedCardSize"
+                    appendTo="body"
+                    [searchable]="false"
+                    [clearable]="false"
+                    class="card-size"
+                    [items]="cardSizes">
+                    <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                      <div *ngIf="item.id !== selectedCardSize">{{item.name}}</div>
+                      <div *ngIf="item.id === selectedCardSize"
+                        fxLayoutAlign="space-between center"
+                      >
+                        <span>
+                          {{item.name}}
+                        </span>
+                        <img src="/assets/img/doneIcon.svg" />
+                      </div>
+                    </ng-template>
+                  </ng-select>
                 </div>
               </div>
               <div class="setting" benji-click-stop-propagation
               fxLayout="row"
               fxLayoutAlign="space-between">
                 Card Size
-                <mat-slide-toggle></mat-slide-toggle>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
               </div>
               <div class="setting" benji-click-stop-propagation
               fxLayout="row"
               fxLayoutAlign="space-between">
                 Show vote tally
-                <mat-slide-toggle></mat-slide-toggle>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
               </div>
             </div>
-          </mat-menu>
-        </div>
-        <div>
-          <!-- <button
-            [matMenuTriggerFor]="clickHoverMenu"
-            #clickHoverMenuTrigger="matMenuTrigger"
-            (click)="getActivities()"
-          >
-            <mat-icon class="icon-white">history</mat-icon>
-          </button> -->
-          <mat-menu #clickHoverMenu="matMenu" yPosition="above">
-            <ng-template matMenuContent>
-              <div
-                class="redo-act-item"
-                fxLayoutAlign="start center"
-                fxLayoutGap="10px"
-                *ngFor="let p of pastActivities"
-                (click)="redoAct(p)"
-              >
-                <span>
-                  {{ p.activity_type.replace('Activity', '') + ': ' + p.description }}
-                </span>
-              </div>
-              <div
-                *ngIf="pastActivities.length === 0 && !noActivitiesToShow"
-                class="redo-act-item-loader"
-                fxLayoutAlign="start center"
-              >
-                <mat-spinner></mat-spinner>
-              </div>
-              <div *ngIf="noActivitiesToShow" class="redo-act-item-loader" fxLayoutAlign="start center">
-                no activities to peakback to
-              </div>
-            </ng-template>
-          </mat-menu>
-        </div>
-        <div class="participantDropdown">
-          <button [matMenuTriggerFor]="participantMenu">
-            <mat-icon class="icon-white">supervisor_account</mat-icon>
-            <sup class="white-color">{{ participants.length }}</sup>
-          </button>
-          <mat-menu #participantMenu="matMenu">
-            <div
-              class="delete-participant"
-              fxLayoutAlign="center"
-              fxLayoutGap="10px"
-              *ngFor="let p of participants"
-            >
-              <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
-              <span fxFlex="90%">{{ p.display_name }}</span>
+            <div class="reset-settings">
+              <img src="/assets/img/refreshIcon.svg" />
+              
+              Reset Activity
             </div>
-          </mat-menu>
-        </div>
-        <div
-          class="brainstrom-categories"
-          *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
-          fxLayoutAlign="center center"
-          (click)="toggleCategorization()"
+          </ng-container>
+        </mat-menu>
+      </div>
+      
+      <!-- <div class="option session-history"> -->
+        <!-- <button
+          [matMenuTriggerFor]="clickHoverMenu"
+          #clickHoverMenuTrigger="matMenuTrigger"
+          (click)="getActivities()"
         >
-          <img class="img-icon" src="/assets/img/coloumns.png" alt="" />
-        </div>
-      </ng-container>
+          <mat-icon class="icon-white">history</mat-icon>
+        </button> -->
+        <!-- <mat-menu #clickHoverMenu="matMenu" yPosition="above">
+          <ng-template matMenuContent>
+            <div
+              class="redo-act-item"
+              fxLayoutAlign="start center"
+              fxLayoutGap="10px"
+              *ngFor="let p of pastActivities"
+              (click)="redoAct(p)"
+            >
+              <span>
+                {{ p.activity_type.replace('Activity', '') + ': ' + p.description }}
+              </span>
+            </div>
+            <div
+              *ngIf="pastActivities.length === 0 && !noActivitiesToShow"
+              class="redo-act-item-loader"
+              fxLayoutAlign="start center"
+            >
+              <mat-spinner></mat-spinner>
+            </div>
+            <div *ngIf="noActivitiesToShow" class="redo-act-item-loader" fxLayoutAlign="start center">
+              no activities to peakback to
+            </div>
+          </ng-template>
+        </mat-menu>
+      </div> -->
+      
+      <!-- Participant dropdown -->
+      <div class="option participantDropdown">
+        <button [matMenuTriggerFor]="participantMenu">
+          <!-- <mat-icon class="icon-white">supervisor_account</mat-icon> -->
+          <img src="/assets/img/participants.svg" /> 
+          <sup class="white-color">{{ participants.length }}</sup>
+        </button>
+        <mat-menu #participantMenu="matMenu">
+          <div
+            class="delete-participant"
+            fxLayoutAlign="center"
+            fxLayoutGap="10px"
+            *ngFor="let p of participants"
+          >
+            <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
+            <span fxFlex="90%">{{ p.display_name }}</span>
+          </div>
+        </mat-menu>
+      </div>
+
+      <!-- Brainstrom categories -->
+      <div class="option brainstrom-categories"
+        *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
+        fxLayoutAlign="center center"
+        (click)="toggleCategorization()"
+      >
+        <img class="img-icon" src="/assets/img/coloumns.png" alt="" />
+      </div>
+    
     </div>
-    <div class="session-info" fxLayout="row" fxLayoutGap="10px">
+    <div class="session-info" fxLayout="row">
       <div fxLayoutAlign="center center">
-        <p>
-          {{ disableControls ? '' : '|' }} {{ lessonName }} | ROOM CODE:
-          {{ roomCode }}
-        </p>
+      </div>
+      <div class="room-code" fxLayout="column" fxLayoutGap="4px">
+        <span class="code">{{ roomCode }}</span>
+        <span class="text">ROOM CODE</span>
       </div>
     </div>
   </div>

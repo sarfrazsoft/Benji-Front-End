@@ -9,6 +9,8 @@ import { NumberTimerComponent } from '../ui-components/number-timer/number-timer
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
+import { ControlComponents } from './controls';
+
 export const UIComponents = [
   DynamicTimerComponent,
   ParticipantToolbarComponent,
@@ -20,4 +22,5 @@ export const UIComponents = [
   MainScreenToolbarComponent,
   NumberTimerComponent,
   RadialTimerComponent,
+  ...ControlComponents,
 ];

@@ -1,7 +1,7 @@
 .mainscreen-toolbar {
-  padding: 12px 30px 12px;
+  padding: 11px 24px 10px;
   .benji-logo-container {
-    height: 45px;
+    height: 30px;
     img {
       height: 100%;
     }
@@ -10,19 +10,18 @@
     align-items: center;
   }
   .fullscreen-container {
-    margin-top: -15px;
     cursor: pointer;
     mat-icon {
       height: 36px;
       width: 36px;
       font-size: 36px;
     }
-    span {
-      position: absolute;
-      margin-top: 36px;
-      color: #fff;
-      right: 16px;
-      font-size: 16px;
-    }
+    // span {
+    //   position: absolute;
+    //   margin-top: 36px;
+    //   color: #fff;
+    //   right: 16px;
+    //   font-size: 16px;
+    // }
   }
 }

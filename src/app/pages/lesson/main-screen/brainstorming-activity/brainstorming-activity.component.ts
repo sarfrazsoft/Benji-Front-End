@@ -183,7 +183,6 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   ngOnChanges() {
-    console.log('hh');
     this.onChanges();
   }
 
