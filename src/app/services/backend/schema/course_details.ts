@@ -44,6 +44,7 @@ export interface LessonRun {
   start_time: string;
   end_time: string;
   lessonrun_code: number;
+  host: any;
   participant_set: Array<Participant>;
 }
 

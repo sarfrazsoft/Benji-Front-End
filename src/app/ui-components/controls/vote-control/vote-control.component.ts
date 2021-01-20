@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [],
 })
 export class VoteControlComponent implements OnInit {
-  votingSetup = false;
-  votingStarted = true;
+  votingSetup = true;
+  votingStarted = false;
   constructor() {}
 
   ngOnInit(): void {}

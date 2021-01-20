@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { Router } from '@angular/router';
 import { clone } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService, PastSessionsService } from 'src/app/services';
@@ -51,25 +52,17 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   actType = '';
   fastForwarding = false;
 
-  cardSizes = [
-    { id: 1, name: 'small' },
-    { id: 2, name: 'medium' },
-    { id: 3, name: 'large' },
-  ];
-  selectedCardSize;
-
   constructor(
     private videoStateService: VideoStateService,
     private dialog: MatDialog,
     private pastSessionsService: PastSessionsService,
-    public contextService: ContextService
+    public contextService: ContextService,
+    private router: Router
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  ngOnInit() {
-    this.selectedCardSize = this.cardSizes[0].id;
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     // if (this.actType !== this.activityState.activity_type) {
@@ -113,6 +106,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   controlClicked(eventType) {
+    console.log(eventType);
     // if (this.videoStateService.videoState) {
     // this.videoStateService.videoState = eventType;
     if (this.disableControls) {
@@ -212,6 +206,19 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       }
     });
     // /api/course_details/lesson_run/{lessonrun_code}/activities/
+  }
+
+  endSession() {
+    if (this.activityState && this.activityState.lesson_run) {
+      const host = this.activityState.lesson_run.host;
+      const benjiUser = JSON.parse(localStorage.getItem('benji_user'));
+      if (host.id === benjiUser.id) {
+        this.router.navigate(['/dashboard']);
+      } else {
+        this.router.navigate(['/participant/join']);
+      }
+    }
+    // console.log(this.activityState);
   }
 }
 

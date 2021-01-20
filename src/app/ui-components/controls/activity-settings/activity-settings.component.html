@@ -1,0 +1,138 @@
+<div fxLayout="column">
+  <div class="menu-heading">
+    Properties for Brainstorm
+  </div>
+  <div class="activity-settings" fxLayout="column" fxLayoutGap="8px">
+    <div class="setting" 
+      benji-click-stop-propagation
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+    >
+      Show user name
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="setting"
+      benji-click-stop-propagation
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+    >
+      <div>
+        Card Size
+      </div>
+      <div>
+        <ng-select
+          appearance="outline" 
+          bindLabel="name"
+          placeholder="Unassigned"
+          [clearable]="false"
+          bindValue="id"
+          (change)="assignRoom($event, user)"
+          [(ngModel)]="selectedCardSize"
+          appendTo="body"
+          [searchable]="false"
+          [clearable]="false"
+          class="card-size"
+          [items]="cardSizes">
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <div *ngIf="item.id !== selectedCardSize">{{item.name}}</div>
+            <div *ngIf="item.id === selectedCardSize"
+              fxLayoutAlign="space-between center"
+            >
+              <span>
+                {{item.name}}
+              </span>
+              <img src="/assets/img/doneIcon.svg" />
+            </div>
+          </ng-template>
+        </ng-select>
+      </div>
+    </div>
+    <div class="setting" benji-click-stop-propagation
+    fxLayout="row"
+    fxLayoutAlign="space-between">
+      Card Size
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="setting" benji-click-stop-propagation
+    fxLayout="row"
+    fxLayoutAlign="space-between">
+      Show vote tally
+      <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
+    </div>
+  </div>
+
+  <div 
+    class="activity-settings" 
+    fxLayout="column" 
+    fxLayoutGap="8px">
+    <ng-container *ngFor="let control of settings">
+      <div 
+        *ngIf="control.type === 'toggle'"
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        {{ control.label }}
+        <label class="switch">
+          <input type="checkbox" checked (change)="toggleChange($event, control.name)">
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div class="setting"
+        *ngIf="control.type === 'select'"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          {{control.label}}
+        </div>
+        <div>
+          <ng-select
+            appearance="outline" 
+            bindLabel="name"
+            placeholder="Unassigned"
+            [clearable]="false"
+            bindValue="id"
+            (change)="selectChange($event, control.name)"
+            [(ngModel)]="selectedCardSize"
+            appendTo="body"
+            [searchable]="false"
+            [clearable]="false"
+            class="card-size"
+            [items]="control.options">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              <div *ngIf="item.id !== selectedCardSize">{{item.name}}</div>
+              <div *ngIf="item.id === selectedCardSize"
+                fxLayoutAlign="space-between center"
+              >
+                <span>
+                  {{item.name}}
+                </span>
+                <img src="/assets/img/doneIcon.svg" />
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+      
+    </ng-container>
+  </div>
+
+
+  <div class="reset-settings" (click)="controlClick('reset')">
+    <img src="/assets/img/refreshIcon.svg" />
+    Reset Activity
+  </div>
+</div>

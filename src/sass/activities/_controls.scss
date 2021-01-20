@@ -14,6 +14,7 @@
       border-bottom: 1px solid $secondary-color-light;
       .setting {
         font-weight: 500;
+        min-width: 360px;
         .ng-select.card-size {
           border: 0px;
           min-height: 0px;
@@ -69,6 +70,15 @@
       padding-top: 16px;
     }
   }
+}
+
+// end session button
+.end-session-button {
+  width: 62px;
+  height: 30px;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 8px;
 }
 
 // session navigation

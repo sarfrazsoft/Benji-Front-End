@@ -5,29 +5,42 @@
   fxLayoutAlign="space-between center"
   *ngIf="showFooter"
 >
-  <div class="mainscreen-footer__controls">
-    <ng-container>
-      <button (click)="controlClicked('previous')">
-        <mat-icon class="icon-white">skip_previous</mat-icon>
+  <div class="mainscreen-footer__controls" fxLayout="row" fxLayoutGap="16px">
+      <button (click)="controlClicked('previous')" fxLayoutAlign="center center">
+        <!-- <mat-icon class="icon-white">skip_previous</mat-icon> -->
+        <img src="/assets/img/chevronBigLeftWhite.svg" />
       </button>
-      <button (click)="controlClicked('reset')">
-        <mat-icon class="icon-white">fast_rewind</mat-icon>
+      <button 
+        [matMenuTriggerFor]="navigationMenu" 
+        fxLayoutAlign="center center"
+        placement="top"
+        tooltip="Vote"
+        show-delay="100">
+        <!-- <mat-icon class="icon-white">fast_rewind</mat-icon> -->
+        <img src="/assets/img/sessionActivities.svg" />
+        <mat-menu 
+          #navigationMenu="matMenu" 
+          class="activity-settings-menu activity-session-menu"  
+          [overlapTrigger]="false" 
+          xPosition="before">
+          <benji-session-navigation></benji-session-navigation>
+        </mat-menu>
       </button>
-      <button (click)="controlClicked('pause')" *ngIf="!isPaused">
-        <mat-icon class="icon-white">pause</mat-icon>
+      <button (click)="controlClicked('pause')" *ngIf="!isPaused" fxLayoutAlign="center center">
+        <!-- <mat-icon class="icon-white">pause</mat-icon> -->
+        <img src="/assets/img/chevronBigRight.svg" />
       </button>
-      <button (click)="controlClicked('resume')" *ngIf="isPaused">
+      <!-- <button (click)="controlClicked('resume')" *ngIf="isPaused">
         <mat-icon class="icon-white">play_arrow</mat-icon>
-      </button>
-      <ng-container *ngIf="!fastForwarding">
+      </button> -->
+      <!-- <ng-container *ngIf="!fastForwarding">
         <button *ngIf="showFastForward" (click)="controlClicked('fastForward')">
           <mat-icon class="icon-white">fast_forward</mat-icon>
         </button>
-      </ng-container>
-      <button *ngIf="showSkip" (click)="controlClicked('next')">
+      </ng-container> -->
+      <!-- <button *ngIf="showSkip" (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
-      </button>
-    </ng-container>
+      </button> -->
   </div>
 
   <div class="session-controls" fxLayout="row">
@@ -82,8 +95,7 @@
       <!-- Heart control -->
       <div 
         class="option settings"
-        fxLayoutAlign="center center"
-        [matMenuTriggerFor]="navigationMenu">
+        fxLayoutAlign="center center">
         <button
           placement="top"
           tooltip="Vote"
@@ -91,13 +103,6 @@
         > 
           <img src="/assets/img/heartOutline.svg" /> 
         </button>
-        <mat-menu 
-          #navigationMenu="matMenu" 
-          class="activity-settings-menu activity-session-menu"  
-          [overlapTrigger]="false" 
-          xPosition="before">
-          <benji-session-navigation></benji-session-navigation>
-        </mat-menu>
       </div>
 
       <!-- Activity settins -->
@@ -118,83 +123,10 @@
           yPosition="above"
           [overlapTrigger]="false"
         >
-          <ng-container>            
-            <div class="menu-heading">
-              Properties for Brainstorm
-            </div>
-            <div class="activity-settings" fxLayout="column" fxLayoutGap="8px" fxFlex="360px">
-              <div class="setting" 
-                benji-click-stop-propagation
-                fxLayout="row"
-                fxLayoutAlign="space-between"
-              >
-                Show user name
-                <label class="switch">
-                  <input type="checkbox" checked>
-                  <span class="slider round"></span>
-                </label>
-              </div>
-              <div class="setting"
-                benji-click-stop-propagation
-                fxLayout="row"
-                fxLayoutAlign="space-between"
-              >
-                <div>
-                  Card Size
-                </div>
-                <div>
-                  <ng-select
-                    appearance="outline" 
-                    bindLabel="name"
-                    placeholder="Unassigned"
-                    [clearable]="false"
-                    bindValue="id"
-                    (change)="assignRoom($event, user)"
-                    [(ngModel)]="selectedCardSize"
-                    appendTo="body"
-                    [searchable]="false"
-                    [clearable]="false"
-                    class="card-size"
-                    [items]="cardSizes">
-                    <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                      <div *ngIf="item.id !== selectedCardSize">{{item.name}}</div>
-                      <div *ngIf="item.id === selectedCardSize"
-                        fxLayoutAlign="space-between center"
-                      >
-                        <span>
-                          {{item.name}}
-                        </span>
-                        <img src="/assets/img/doneIcon.svg" />
-                      </div>
-                    </ng-template>
-                  </ng-select>
-                </div>
-              </div>
-              <div class="setting" benji-click-stop-propagation
-              fxLayout="row"
-              fxLayoutAlign="space-between">
-                Card Size
-                <label class="switch">
-                  <input type="checkbox" checked>
-                  <span class="slider round"></span>
-                </label>
-              </div>
-              <div class="setting" benji-click-stop-propagation
-              fxLayout="row"
-              fxLayoutAlign="space-between">
-                Show vote tally
-                <label class="switch">
-                  <input type="checkbox" checked>
-                  <span class="slider round"></span>
-                </label>
-              </div>
-            </div>
-            <div class="reset-settings">
-              <img src="/assets/img/refreshIcon.svg" />
-              
-              Reset Activity
-            </div>
-          </ng-container>
+          <benji-activity-settings 
+            [activityState]="activityState"
+            (controlClicked)="controlClicked($event)">
+          </benji-activity-settings>
         </mat-menu>
       </div>
       
@@ -263,12 +195,13 @@
       </div>
     
     </div>
-    <div class="session-info" fxLayout="row">
-      <div fxLayoutAlign="center center">
-      </div>
+    <div class="session-info" fxLayout="row" fxLayoutGap="24px">
       <div class="room-code" fxLayout="column" fxLayoutGap="4px">
         <span class="code">{{ roomCode }}</span>
         <span class="text">ROOM CODE</span>
+      </div>
+      <div fxLayoutAlign="center center">
+        <button class="end-session-button bg-white primary-color-darkest" (click)="endSession()">End</button>
       </div>
     </div>
   </div>
