@@ -58,6 +58,10 @@ benji-overview-panel {
           &.active {
             // primary color border applied from white-labeling
           }
+          &.error {
+            border: 2px solid #ffad69;
+            background-color: rgba(255, 173, 105, 0.2);
+          }
           mat-icon {
             font-size: 16px;
             height: 16px;

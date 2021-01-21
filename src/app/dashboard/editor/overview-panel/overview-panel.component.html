@@ -41,7 +41,8 @@
         fxLayout="column"
         fxLayoutAlign="center center"
         [ngClass]="{
-          active: act.selected
+          active: act.selected,
+          error: lessonActivitiesErrors[act.id]
         }"
       >
         <benji-overview-thumbnail [act]="act"></benji-overview-thumbnail>
