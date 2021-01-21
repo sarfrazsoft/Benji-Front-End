@@ -1,4 +1,4 @@
-import { cloneDeep, orderBy } from 'lodash';
+import { cloneDeep, isEmpty, orderBy } from 'lodash';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { SAMPLE_ACTIVITIES } from '../../models';
@@ -14,6 +14,8 @@ export interface ActivityState {
 
   // holds the activities created in the lesson
   lessonActivities: { [id: number]: OverviewLessonActivity };
+  // hold the errors for activities
+  lessonActivitiesErrors: { [id: number]: any };
   // holds the activities' content
   lessonActivitiesContent: { [id: number]: any };
   // id of the selected lesson activity
@@ -45,6 +47,7 @@ export const initialState = {
   possibleActivities: {},
   selectedPossibleActivity: null,
   lessonActivities: {},
+  lessonActivitiesErrors: {},
   lessonActivitiesContent: {},
   selectedLessonActivity: null,
   selectedLessonActivityContent: null,
@@ -237,6 +240,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.ADD_ACTIVITY_CONTENT: {
       const content = action.payload;
+      console.log(content);
       return {
         ...state,
         lessonActivitiesContent: {
@@ -480,11 +484,35 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.SAVE_LESSON_SUCCESS: {
       const lesson: Lesson = action.payload;
+      console.log(lesson);
       let lessonError = false;
+      let lessonActivitiesErrors = {};
       if (!lesson.lesson_plan && !lesson.lesson_plan_json && lesson.editor_lesson_plan) {
         lessonError = true;
+
+        // iterate over editor_lesson_plan_errors
+        // i = on the index where you have an error
+        // get activity_id for that by editor_lesson_plan[i].activity_id
+        // go to state.lessonActivities[activity_id] and add error = true
+        const errors = lesson.editor_lesson_plan_errors;
+
+        errors.forEach((val, i) => {
+          if (!isEmpty(val) && lesson.editor_lesson_plan[i]) {
+            const activity_id = lesson.editor_lesson_plan[i].activity_id;
+            lessonActivitiesErrors = {
+              ...lessonActivitiesErrors,
+              [activity_id]: { ...state.lessonActivitiesErrors[activity_id], error: true },
+            };
+          }
+        });
       }
-      return { ...state, errorInLesson: lessonError, lessonSaved: true, savingLesson: false };
+      return {
+        ...state,
+        lessonActivitiesErrors,
+        errorInLesson: lessonError,
+        lessonSaved: true,
+        savingLesson: false,
+      };
     }
     case fromActivities.SAVE_LESSON_FAILURE: {
       const error = action.payload;
@@ -505,5 +533,6 @@ export const getLessonSaved = (state: ActivityState) => state.lessonSaved;
 export const getPossibleActivities = (state: ActivityState) => state.possibleActivities;
 export const getSelectedPossibleActivity = (state: ActivityState) => state.selectedPossibleActivity;
 export const getLessonActivities = (state: ActivityState) => state.lessonActivities;
+export const getLessonActivitiesErrors = (state: ActivityState) => state.lessonActivitiesErrors;
 export const getSelectedLessonActivity = (state: ActivityState) => state.selectedLessonActivity;
 export const getSelectedLessonActivityContent = (state: ActivityState) => state.selectedLessonActivityContent;

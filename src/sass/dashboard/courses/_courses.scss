@@ -33,6 +33,13 @@ benji-lesson {
         padding: 8px 16px;
         border-radius: 4px;
         font-weight: 600;
+        &.inactive {
+          border-color: $secondary-color-light;
+          color: $secondary-color-light;
+          &:hover {
+            background-color: #fff !important;
+          }
+        }
       }
     }
 

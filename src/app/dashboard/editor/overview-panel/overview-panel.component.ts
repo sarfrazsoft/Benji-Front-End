@@ -16,6 +16,9 @@ export class OverviewPanelComponent implements OnInit {
   lessonActivities$: Observable<OverviewLessonActivity[]>;
   lessonActivitiesLength;
 
+  lessonActivitiesErrors$: Observable<any>;
+  lessonActivitiesErrors;
+
   slideCopied = false;
   addedSlide: OverviewLessonActivity;
   slideToBeCopied: OverviewLessonActivity;
@@ -47,6 +50,13 @@ export class OverviewPanelComponent implements OnInit {
             // }, 400);
           });
       }
+    });
+
+    // get lesson actvities errors
+    this.lessonActivitiesErrors$ = this.store.select(fromStore.getAllLessonActivitiesErrors);
+    this.lessonActivitiesErrors$.subscribe((arr) => {
+      this.lessonActivitiesErrors = arr;
+      console.log(arr);
     });
   }
 

@@ -49,7 +49,6 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {
     if (this.data) {
       const content = this.data.content;
-      console.log(content);
       if (this.data.activity_type === Acts.title) {
         if (this.componentRef) {
           this.componentRef.destroy();

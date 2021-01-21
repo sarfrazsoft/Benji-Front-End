@@ -8,8 +8,23 @@ import { DashboardComponents, DashboardEntryComponents, DashboardProviders } fro
 import { DashboardRoutes } from './dashboard.routing';
 import { LessonTileComponent } from './lessons/lessons-list/lesson-tile/lesson-tile.component';
 
+import { TooltipModule } from 'ng2-tooltip-directive';
+import { TooltipOptions } from 'ng2-tooltip-directive';
+
+export const MyDefaultTooltipOptions: TooltipOptions = {
+  'show-delay': 4000,
+  'tooltip-class': 'benji-editor-tooltip',
+};
+
 @NgModule({
-  imports: [CommonModule, DashboardRoutes, FormsModule, ReactiveFormsModule, SharedModule],
+  imports: [
+    CommonModule,
+    DashboardRoutes,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
+  ],
   exports: [RouterModule],
   declarations: [...DashboardComponents, LessonTileComponent],
   entryComponents: DashboardEntryComponents,

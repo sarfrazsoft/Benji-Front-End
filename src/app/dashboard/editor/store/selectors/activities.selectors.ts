@@ -30,6 +30,17 @@ export const getAllLessonActivities = createSelector(getLessonActivities, (entit
   const acts = Object.keys(entities).map((id) => entities[id]);
   return acts.sort((a, b) => a.order - b.order);
 });
+export const getLessonActivitiesErrors = createSelector(
+  getActivitiesState,
+  fromReducers.getLessonActivitiesErrors
+);
+
+export const getAllLessonActivitiesErrors = createSelector(getLessonActivitiesErrors, (entities) => {
+  const acts = Object.keys(entities).map((id) => entities[id]);
+  // return acts.sort((a, b) => a.order - b.order);
+  // return acts;
+  return entities;
+});
 
 export const getSelectedLessonActivity = createSelector(getActivitiesState, (state) => {
   return state.lessonActivities[state.selectedLessonActivity];
