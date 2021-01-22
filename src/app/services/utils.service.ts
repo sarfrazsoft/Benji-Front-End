@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { SnackBarComponent } from '../ui-components/snack-bar-component/snack-bar.component';
 @Injectable()
 export class UtilsService {
+  notificationConfig: MatSnackBarConfig = {
+    duration: 300000,
+    horizontalPosition: 'center',
+    verticalPosition: 'top',
+  };
   constructor(protected matSnackBar: MatSnackBar) {}
 
   copyToClipboard(val: string) {
@@ -24,6 +30,29 @@ export class UtilsService {
       duration: 5000,
       panelClass: ['bg-success-color', 'white-color', 'simple-snack-bar'],
     });
+  }
+
+  openSubmissionComplete(message: string, action: string) {
+    return this.matSnackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        text: 'All votes are in! ',
+        dismissText: 'Okay',
+        actionButtonText: '',
+        icon: 'successNotificationIcon.svg',
+      },
+      panelClass: ['snackbar-notification', 'success'],
+      ...this.notificationConfig,
+    });
+    // .onAction()
+    // .subscribe(() => {
+    //   console.log('Action button clicked!');
+    // });
+    // return this.matSnackBar.open(message, action, {
+    //   duration: 300000,
+    //   panelClass: ['bg-success-color', 'white-color', 'simple-snack-bar'],
+    //   horizontalPosition: 'center',
+    //   verticalPosition: 'top',
+    // });
   }
 
   showWarning(message: string) {

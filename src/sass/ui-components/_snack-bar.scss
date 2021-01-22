@@ -1,0 +1,79 @@
+.mat-snack-bar-container.snackbar-notification {
+  padding: 0px;
+  min-width: 0px;
+  &.success {
+    background-color: #e5f4e3;
+    button {
+      color: #479a3c;
+      &:hover {
+        background-color: #c2e5bd !important;
+      }
+    }
+    .separator {
+      background-color: #479a3c;
+    }
+  }
+  &.warn {
+    background-color: #fdecee;
+    button {
+      color: #ee3e53;
+    }
+    .separator {
+      background-color: #ee3e53;
+    }
+  }
+  &.error {
+    background-color: #ffebdb;
+    button {
+      color: #ffad69;
+    }
+    .separator {
+      background-color: #ffad69;
+    }
+  }
+  &.info {
+    background-color: $sky;
+    button {
+      color: #0a4cef;
+      &:hover {
+        background-color: #c9d8fd !important;
+      }
+    }
+    .separator {
+      color: #0a4cef;
+    }
+  }
+  .notification-snackbar {
+    padding: 8px 24px;
+    color: #898989;
+    display: flex;
+    align-items: center;
+    .content {
+      display: flex;
+      align-items: center;
+      span {
+        margin-left: 8px;
+      }
+    }
+    .snackbar-controls {
+      margin-left: 24px;
+      button {
+        background-color: transparent;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        height: 32px;
+        padding: 8px;
+        transition: 0.2s;
+      }
+
+      .separator {
+        height: 32px;
+        width: 1px;
+        border: 0px;
+        margin-left: 8px;
+        margin-right: 8px;
+      }
+    }
+  }
+}

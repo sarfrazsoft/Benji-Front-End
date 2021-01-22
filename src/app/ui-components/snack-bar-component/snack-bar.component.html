@@ -1,0 +1,21 @@
+<div class="notification-snackbar" fxLayout="row" fxLayoutAlign="center center">
+  <div class="content" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+    <img [src]="'/assets/img/notificationIcons/' + content.icon" />
+    <span class="text">
+      {{ content.text }}
+    </span>
+  </div>
+  <div class="snackbar-controls" fxLayout="row">
+    <button
+      (click)="snackBarRef.dismiss()">
+      {{ content.dismissText }}
+    </button>
+    <div class="separator" *ngIf="content.actionButtonText.length">
+    </div>
+    <button
+      *ngIf="content.actionButtonText.length"
+      (click)="snackBarRef.dismissWithAction()">
+      {{ content.actionButtonText }}
+    </button>
+  </div>
+</div>

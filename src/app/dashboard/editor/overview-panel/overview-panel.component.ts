@@ -56,7 +56,6 @@ export class OverviewPanelComponent implements OnInit {
     this.lessonActivitiesErrors$ = this.store.select(fromStore.getAllLessonActivitiesErrors);
     this.lessonActivitiesErrors$.subscribe((arr) => {
       this.lessonActivitiesErrors = arr;
-      console.log(arr);
     });
   }
 

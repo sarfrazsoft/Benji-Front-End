@@ -20,6 +20,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-ms-brainstorming-activity',
@@ -35,7 +36,11 @@ export class MainScreenBrainstormingActivityComponent
   peakBackStage = null;
   private eventsSubscription: Subscription;
 
-  constructor(private contextService: ContextService, private dialog: MatDialog) {
+  constructor(
+    private contextService: ContextService,
+    private dialog: MatDialog,
+    private utilsService: UtilsService
+  ) {
     super();
   }
   instructions = '';
@@ -53,6 +58,7 @@ export class MainScreenBrainstormingActivityComponent
   ideas = [];
   hostname = window.location.protocol + '//' + window.location.hostname;
   dialogRef;
+  shownSubmissionCompleteNofitication = false;
 
   columns = [];
 
@@ -179,7 +185,41 @@ export class MainScreenBrainstormingActivityComponent
         this.timer = this.getNextActStartTimer();
         this.contextService.activityTimer = this.timer;
       }
+
+      // show snackbar when submission is complete
+      if (!act.submission_complete && !act.voting_complete && this.isAllSubmissionsComplete(act)) {
+        this.shownSubmissionCompleteNofitication = true;
+        const snackBarRef = this.utilsService.openSubmissionComplete('Submission complete', 'Start voting');
+        snackBarRef.onAction().subscribe(($event) => {
+          console.log($event);
+        });
+      }
     }
+  }
+
+  isAllSubmissionsComplete(act: BrainstormActivity): boolean {
+    const maxSubmissions = act.max_participant_submissions;
+
+    let submissions = 0;
+    act.participant_submission_counts.forEach((element) => {
+      submissions = submissions + element.count;
+    });
+
+    let activeParticipants = 0;
+    this.activityState.lesson_run.participant_set.forEach((element) => {
+      if (element.is_active) {
+        activeParticipants = activeParticipants + 1;
+      }
+    });
+
+    const totalMaxSubmissions = activeParticipants * maxSubmissions;
+    const totalCurrentSubmissions = this.getUsersIdeas(act).length;
+
+    if (totalMaxSubmissions === totalCurrentSubmissions) {
+      return true;
+    }
+
+    return false;
   }
 
   ngOnChanges() {
