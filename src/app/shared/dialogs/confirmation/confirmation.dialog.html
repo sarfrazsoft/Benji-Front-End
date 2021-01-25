@@ -21,7 +21,7 @@
           class="confirm-button dialog-controls"
           (click)="confirm()"
         >
-          Delete
+          {{ data.actionButton ? data.actionButton : 'Delete' }}
         </button>
       </div>
     </div>

@@ -1,4 +1,14 @@
-import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ContextService } from 'src/app/services';
 import { Timer } from '../../services/backend/schema/utils';
 @Component({
@@ -15,6 +25,8 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
   @Input() timerOffset: number;
   @Input() attentionOverlay = false;
 
+  @Output() controlClicked = new EventEmitter<any>();
+
   totalTime: number;
   remainingTime: number;
 
@@ -30,15 +42,6 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
       }
     });
     this.timerInterval = setInterval(() => this.update(), 100);
-
-    this.timer = {
-      end_time: null,
-      id: 267,
-      remaining_seconds: 1.27914,
-      start_time: '2021-01-12T17:36:31.014282-05:00',
-      status: 'paused',
-      total_seconds: 2,
-    } as Timer;
   }
 
   update() {

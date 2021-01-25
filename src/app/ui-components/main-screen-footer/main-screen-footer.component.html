@@ -52,7 +52,9 @@
         ></benji-number-timer>
       </div>
       <mat-menu #timerMenu="matMenu" class="dynamic-timer-menu" [overlapTrigger]="false" xPosition="before">
-        <benji-dynamic-timer></benji-dynamic-timer>
+        <benji-dynamic-timer 
+          (controlClicked)="controlClicked($event)">
+        </benji-dynamic-timer>
       </mat-menu>
     </div>
     <div class="mainscreen-footer__controls" *ngIf="!disableControls">

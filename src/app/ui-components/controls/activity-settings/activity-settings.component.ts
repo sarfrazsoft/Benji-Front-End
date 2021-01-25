@@ -37,11 +37,12 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
   }
 
   controlClick(eventType) {
-    const msg = 'Are you sure you want to activity?';
+    const msg = 'Are you sure you want to reset this activity?';
     this.dialogRef = this.dialog
       .open(ConfirmationDialogComponent, {
         data: {
           confirmationMessage: msg,
+          actionButton: 'Reset',
         },
         disableClose: true,
         panelClass: 'dashboard-dialog',

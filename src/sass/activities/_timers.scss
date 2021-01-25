@@ -51,7 +51,7 @@
 
 // Dynamic timer
 .mat-menu-panel.dynamic-timer-menu {
-  max-width: 300px;
+  max-width: 330px;
   border-radius: 8px;
   .mat-menu-content:not(:empty) {
     padding-top: 0px;
@@ -99,6 +99,11 @@
             border-radius: 10px;
             padding: 4px;
             background-color: #fff;
+          }
+        }
+        .controls-container {
+          .start-resume-buttons {
+            width: 94px;
           }
         }
       }

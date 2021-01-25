@@ -69,11 +69,25 @@
           <button>+5m</button>
         </div>
       </div>
-      <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
+      <div 
+        benji-click-stop-propagation 
+        class="controls-container" 
+        fxLayout="row" 
+        fxLayoutAlign="end" 
+        fxLayoutGap="8px">
         <button
-          class="dialog-controls bg-primary-color white-color"
+          class="dialog-controls bg-primary-color white-color start-resume-buttons"
+          *ngIf="timer && timer.status == 'paused'"
+          (click)="controlClicked.emit('resume')"
         >
-          Start
+          Resume
+        </button>
+        <button
+          class="dialog-controls bg-primary-color white-color start-resume-buttons"
+          *ngIf="timer && timer.status == 'running'"
+          (click)="controlClicked.emit('pause')"
+        >
+          Pause
         </button>
         <button class="dialog-controls primary-color bg-sky">
           Cancel

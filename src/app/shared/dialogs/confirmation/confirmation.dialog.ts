@@ -1,6 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+export interface ConfirmationDialogData {
+  confirmationMessage: string;
+  actionButton?: string;
+}
+
 @Component({
   selector: 'benji-confirmation-dialog',
   templateUrl: 'confirmation.dialog.html',
@@ -9,7 +14,7 @@ export class ConfirmationDialogComponent implements OnInit {
   public confirmationMessage: string;
   constructor(
     private dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData
   ) {
     this.confirmationMessage = data.confirmationMessage;
   }
