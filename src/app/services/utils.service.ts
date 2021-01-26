@@ -55,6 +55,29 @@ export class UtilsService {
     // });
   }
 
+  openTimerComplete() {
+    return this.matSnackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        text: 'Timer is done!',
+        dismissText: 'Okay',
+        actionButtonText: 'Reset Timer',
+        icon: 'timerNotificationIcon.svg',
+      },
+      panelClass: ['snackbar-notification', 'info'],
+      ...this.notificationConfig,
+    });
+    // .onAction()
+    // .subscribe(() => {
+    //   console.log('Action button clicked!');
+    // });
+    // return this.matSnackBar.open(message, action, {
+    //   duration: 300000,
+    //   panelClass: ['bg-success-color', 'white-color', 'simple-snack-bar'],
+    //   horizontalPosition: 'center',
+    //   verticalPosition: 'top',
+    // });
+  }
+
   showWarning(message: string) {
     this.matSnackBar.open(`${message}`, 'close', {
       duration: 5000,

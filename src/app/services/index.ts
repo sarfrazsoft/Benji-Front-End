@@ -4,13 +4,15 @@ import { TokenInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
 import { BackendRestService } from './backend/backend-rest.service';
 import { BackendSocketService } from './backend/backend-socket.service';
-import { EitherOrActivityService } from './either-or-activity.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { LayoutService } from './layout.service';
 import { PastSessionsService } from './past-sessions.service';
 import { UtilsService } from './utils.service';
 import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
+
+import { ActivitySettingsService } from './activities/activity-settings.service';
+import { EitherOrActivityService } from './activities/either-or-activity.service';
 
 export { AuthGuard } from './auth/auth.guard';
 export {
@@ -21,6 +23,7 @@ export {
   ContextService,
   EmojiLookupService,
   EitherOrActivityService,
+  ActivitySettingsService,
   VideoStateService,
   PastSessionsService,
 };
@@ -33,6 +36,7 @@ export const ServicesProviders = [
   ContextService,
   EmojiLookupService,
   EitherOrActivityService,
+  ActivitySettingsService,
   LayoutService,
   PastSessionsService,
   UtilsService,

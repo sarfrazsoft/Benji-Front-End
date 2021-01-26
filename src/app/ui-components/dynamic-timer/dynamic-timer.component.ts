@@ -10,6 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ContextService } from 'src/app/services';
+import { UtilsService } from 'src/app/services/utils.service';
 import { Timer } from '../../services/backend/schema/utils';
 @Component({
   selector: 'benji-dynamic-timer',
@@ -33,7 +34,7 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
   timerInterval;
   audioStarted = false;
   showAttentionTimer = false;
-  constructor(public contextService: ContextService) {}
+  constructor(public contextService: ContextService, private utilsService: UtilsService) {}
 
   ngOnInit() {
     this.contextService.activityTimer$.subscribe((timer: Timer) => {
@@ -99,6 +100,13 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
   }
 
   pctRemaining() {
-    return (100 * this.remainingTime) / this.totalTime;
+    const pctRemaining = (100 * this.remainingTime) / this.totalTime;
+    if (pctRemaining < 0.2) {
+      const snackBarRef = this.utilsService.openTimerComplete();
+      snackBarRef.onAction().subscribe(($event) => {
+        console.log($event);
+      });
+    }
+    return pctRemaining;
   }
 }

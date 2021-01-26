@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivityTypes } from 'src/app/globals';
+import { ActivitySettingsService } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 
@@ -14,7 +15,7 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   settings;
   dialogRef;
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private activitySettingsService: ActivitySettingsService) {}
   selectedCardSize;
   cardSizes = [
     { id: 1, name: 'small' },
@@ -31,7 +32,7 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
     const as = this.activityState;
     if (as) {
       if (as.activity_type === this.at.brainStorm) {
-        this.settings = SETTINGS['brainstorm'];
+        this.settings = this.activitySettingsService.settings['brainstorm'];
       }
     }
   }
@@ -48,33 +49,28 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((res) => {});
-    this.controlClicked.emit(eventType);
+      .subscribe((res) => {
+        if (res) {
+          this.controlClicked.emit(eventType);
+        }
+      });
   }
 
   toggleChange($event, controlName: string) {
-    console.log($event.currentTarget.checked, controlName);
+    // console.log($event.currentTarget.checked, controlName);
+    this.activitySettingsService.settingChange$.next({
+      type: 'toggle',
+      controlName,
+      state: $event.currentTarget.checked,
+    });
   }
 
   selectChange($event, controlName: string) {
-    console.log($event, controlName);
+    // console.log($event, controlName);
+    this.activitySettingsService.settingChange$.next({
+      type: 'select',
+      controlName,
+      state: $event,
+    });
   }
 }
-
-export const SETTINGS = {
-  brainstorm: [
-    { type: 'toggle', name: 'showUserName', label: 'Show user name' },
-    { type: 'toggle', name: 'cardSize', label: 'Case Size' },
-    {
-      type: 'select',
-      label: 'Card Size',
-      name: 'cardSize',
-      options: [
-        { id: 1, name: 'small' },
-        { id: 2, name: 'medium' },
-        { id: 3, name: 'large' },
-      ],
-    },
-    { type: 'toggle', label: 'Show vote tally' },
-  ],
-};

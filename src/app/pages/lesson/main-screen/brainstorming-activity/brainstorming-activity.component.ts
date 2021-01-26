@@ -3,7 +3,7 @@ import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild }
 import { uniqBy } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
-import { ContextService } from 'src/app/services';
+import { ActivitySettingsService, ContextService } from 'src/app/services';
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
@@ -39,7 +39,8 @@ export class MainScreenBrainstormingActivityComponent
   constructor(
     private contextService: ContextService,
     private dialog: MatDialog,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private activitySettingsService: ActivitySettingsService
   ) {
     super();
   }
@@ -67,6 +68,8 @@ export class MainScreenBrainstormingActivityComponent
     'localhost/media/Capture_LGXPk9s.JPG',
     '../../../../../assets//img/Desk_lightblue2.jpg',
   ];
+
+  settingsSubscription;
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
@@ -74,8 +77,15 @@ export class MainScreenBrainstormingActivityComponent
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
     this.onChanges();
+
+    this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
+      console.log(val);
+    });
   }
   ngOnDestroy() {
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
     if (this.peakBackState) {
       this.eventsSubscription.unsubscribe();
     }

@@ -16,9 +16,6 @@ import {
   User,
 } from 'src/app/services/backend/schema';
 import { ContextService } from 'src/app/services/context.service';
-import { activityResult1 } from './activity-result-1';
-import { activityResult2 } from './activity-result-2';
-import { activityResult3 } from './activity-result-3';
 import { Participant } from './backend/schema/course_details';
 
 @Injectable()
