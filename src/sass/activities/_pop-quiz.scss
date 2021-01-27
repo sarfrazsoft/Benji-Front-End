@@ -31,9 +31,10 @@ benji-ps-pop-quiz {
   .b-flat-card__action {
     margin-bottom: 12vh;
     .b-standard-button {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 14px 40px;
+      height: fit-content;
+      border-radius: 16px;
+      text-align: left;
     }
   }
 }

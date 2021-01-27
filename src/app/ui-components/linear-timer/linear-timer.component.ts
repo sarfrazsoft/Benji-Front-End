@@ -26,7 +26,6 @@ export class LinearTimerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.timerInterval = setInterval(() => this.update(), 100);
-    console.log(this.timer);
   }
 
   ngOnDestroy() {

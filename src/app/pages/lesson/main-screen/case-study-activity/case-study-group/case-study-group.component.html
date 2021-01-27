@@ -5,15 +5,21 @@
     </div>
     <div style="flex: 1" fxLayout="row" fxLayoutAlign="space-between">
       <div class="group-controls">
-        <img src="../../../../../assets/img/groupProgressionGrey.svg" alt="">
+        <img src="/assets/img/groupProgressionGrey.svg" alt="">
       </div>
       <div class="group-controls" fxLayout="row" fxLayoutGap="8px">
         <div>
-          <img src="../../../../../assets/img/openGroup.svg" alt="">
+          <img src="/assets/img/openGroup.svg" alt="">
+        </div>
+        <div class="head-count" *ngIf="collapsed">
+          <img src="/assets/img/particpantCountIcon.svg" alt="">
+          <span>
+            {{ group.participants.length }}
+          </span> 
         </div>
         <div style="width: 18px;">
-          <img *ngIf="collapsed" (click)="collapseGroup()" src="../../../../../assets/img/dropDownIcon.svg" alt="">
-          <img *ngIf="!collapsed" (click)="collapseGroup()" src="../../../../../assets/img/dropDownIconUp.svg" alt="">
+          <img *ngIf="collapsed" (click)="collapseGroup()" src="/assets/img/dropDownIcon.svg" alt="">
+          <img *ngIf="!collapsed" (click)="collapseGroup()" src="/assets/img/dropDownIconUp.svg" alt="">
         </div>
       </div>
     </div> 
@@ -24,7 +30,7 @@
       fxLayoutAlign="start center"
       *ngFor="let participant of group.participants"> 
       <span>
-        {{ participant }}
+        {{ participant.name }}
       </span> 
     </div>
   </div>

@@ -101,12 +101,12 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
 
   pctRemaining() {
     const pctRemaining = (100 * this.remainingTime) / this.totalTime;
-    if (pctRemaining < 0.2) {
-      const snackBarRef = this.utilsService.openTimerComplete();
-      snackBarRef.onAction().subscribe(($event) => {
-        console.log($event);
-      });
-    }
+    // if (pctRemaining < 0.2) {
+    //   const snackBarRef = this.utilsService.openTimerComplete();
+    //   snackBarRef.onAction().subscribe(($event) => {
+    //     console.log($event);
+    //   });
+    // }
     return pctRemaining;
   }
 }

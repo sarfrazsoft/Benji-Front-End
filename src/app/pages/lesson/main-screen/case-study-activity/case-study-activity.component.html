@@ -105,7 +105,7 @@
               fxLayoutAlign="start center"
               *ngFor="let participant of group.participants"> 
               <span>
-                {{ participant }}
+                {{ participant.name }}
               </span> 
             </div>
           </ng-container>
@@ -114,7 +114,10 @@
       <div style="width: 100%;">
         <ul>
           <li *ngFor="let group of groupsX">
-            <benji-case-study-group [group]="group"></benji-case-study-group>
+            <benji-case-study-group 
+              [group]="group"
+              [collapsed]="groupsX.lenght < 7"
+            ></benji-case-study-group>
           </li>
         </ul>
       </div>

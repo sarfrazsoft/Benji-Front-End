@@ -12,7 +12,7 @@ import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study
 export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   groups: Array<Group>;
   act: CaseStudyActivity;
-  newLayout = false;
+  newLayout = true;
   dialogRef;
   groupsX = [
     {
@@ -85,6 +85,38 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
 
   ngOnInit() {
     super.ngOnInit();
+    this.groupsX = this.formGroups(this.activityState.casestudyactivity);
+  }
+
+  formGroups(act: CaseStudyActivity): any {
+    // {
+    //   name: 'Group 1',
+    //   participants: ['Matthew Parson', 'Sarah Blakey'],
+    // }
+    const groups = [];
+    // iterate over all groups
+    for (let i = 0; i < act.groups.length; i++) {
+      const elem = act.groups[i];
+      const participants = this.getGroupParticipants(act, elem);
+      groups.push({ name: elem.id, participants: participants });
+    }
+    return groups;
+  }
+
+  getGroupParticipants(act: CaseStudyActivity, group: Group) {
+    const participants = [];
+    const participantSet = this.activityState.lesson_run.participant_set;
+    for (let i = 0; i < group.participantgroupstatus_set.length; i++) {
+      const elem = group.participantgroupstatus_set[i];
+      const participantCode = elem.participant.participant_code;
+      for (let j = 0; j < participantSet.length; j++) {
+        const p = participantSet[j];
+        if (p.participant_code === participantCode) {
+          participants.push({ name: p.display_name, code: participantCode });
+        }
+      }
+    }
+    return participants;
   }
 
   ngOnChanges() {

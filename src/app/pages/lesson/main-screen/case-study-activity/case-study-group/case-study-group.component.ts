@@ -7,7 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CaseStudyGroupComponent implements OnInit {
   @Input() group;
-  collapsed = true;
+
+  @Input() collapsed = false;
   constructor() {}
 
   ngOnInit() {}
