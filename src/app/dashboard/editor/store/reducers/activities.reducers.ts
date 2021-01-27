@@ -67,6 +67,8 @@ export const initialState = {
     'MontyHallActivity',
     'SingleGroupingActivity',
     'ImageActivity',
+    'VideoActivity',
+    'GenericRoleplayActivity',
   ],
   loadedPossibleActivities: false,
   loadingPossibleActivities: false,
