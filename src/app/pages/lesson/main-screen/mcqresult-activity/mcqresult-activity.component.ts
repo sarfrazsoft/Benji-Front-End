@@ -25,7 +25,6 @@ export class MainScreenMcqresultActivityComponent
 
   ngOnChanges() {
     const act = this.activityState.mcqresultsactivity;
-    console.log(act);
 
     this.singleUserLesson = this.activityState.lesson.single_user_lesson;
 

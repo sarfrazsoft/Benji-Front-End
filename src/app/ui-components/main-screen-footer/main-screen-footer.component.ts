@@ -62,9 +62,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  ngOnInit() {
-    console.log(this.activityState);
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     // if (this.actType !== this.activityState.activity_type) {
