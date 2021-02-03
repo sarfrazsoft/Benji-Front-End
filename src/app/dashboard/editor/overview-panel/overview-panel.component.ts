@@ -29,7 +29,6 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
     this.lessonActivitiesSubscription$ = this.lessonActivities$.subscribe((arr) => {
-      console.log('inside lesson activities sub');
       this.lessonActivitiesLength = arr.length;
       if (this.slideCopied) {
         this.slideCopied = false;

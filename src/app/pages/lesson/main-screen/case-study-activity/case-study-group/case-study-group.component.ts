@@ -16,6 +16,5 @@ export class CaseStudyGroupComponent implements OnInit {
   ngOnInit() {}
   collapseGroup() {
     this.collapsed = !this.collapsed;
-    // console.log(this.group);
   }
 }

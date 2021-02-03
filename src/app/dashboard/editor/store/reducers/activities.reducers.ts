@@ -164,7 +164,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
             val.activity_type !== 'MCQResultsActivity'
         );
         acts.forEach((val, i) => {
-          // console.log(val);
           let selected = false;
           if (i === 0) {
             selected = true;
@@ -242,7 +241,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.ADD_ACTIVITY_CONTENT: {
       const content = action.payload;
-      console.log(content);
       return {
         ...state,
         lessonActivitiesContent: {
@@ -306,7 +304,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       });
       let arrayLessonActivities = cloneDeep(arrayLessonActivities2);
       arrayLessonActivities = orderBy(arrayLessonActivities, ['order'], ['asc']);
-      // console.log(cloneDeep(arrayLessonActivities));
       arrayLessonActivities.forEach((element) => {
         if (element.order >= order) {
           element.order = order + 1;
@@ -323,7 +320,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       arrayLessonActivities.forEach((val, index) => {
         arrayLessonActivities[index] = { ...val, order: index + 1 };
       });
-      console.log(arrayLessonActivities);
 
       let lessonActivities = arrayLessonActivities.reduce(
         (entities: { [id: number]: Activity }, activity: Activity) => {
@@ -379,7 +375,6 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
         });
         selectedLessonActivity = nextSelectedActivity.id;
         selectedLessonActivityContent = state.lessonActivitiesContent[nextSelectedActivity.id];
-        console.log(nextSelectedActivityOrder);
       }
 
       const noOfActivities = Object.keys(state.lessonActivities).length;
@@ -480,13 +475,11 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.UPDATE_LESSON_NAME_FAILURE: {
       const error = action.payload;
-      console.log(error);
       return { ...state };
     }
 
     case fromActivities.SAVE_LESSON_SUCCESS: {
       const lesson: Lesson = action.payload;
-      console.log(lesson);
       let lessonError = false;
       let lessonActivitiesErrors = {};
       if (!lesson.lesson_plan && !lesson.lesson_plan_json && lesson.editor_lesson_plan) {

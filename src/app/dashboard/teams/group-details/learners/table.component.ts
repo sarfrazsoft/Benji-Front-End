@@ -8,7 +8,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -25,21 +25,14 @@ import { AddLearnersDialogComponent } from '../add-learners-dialog/add-learners.
 @Component({
   selector: 'benji-group-learners-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
-export class LearnersTableComponent
-  implements AfterViewInit, OnInit, OnDestroy {
+export class LearnersTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() showControls = true;
   private eventsSubscription: Subscription;
   @Input() events: Observable<any>;
   @Output() selectionEvent = new EventEmitter();
-  displayedColumns: string[] = [
-    'select',
-    'firstName',
-    'lastName',
-    'job_title',
-    'view_profile'
-  ];
+  displayedColumns: string[] = ['select', 'firstName', 'lastName', 'job_title', 'view_profile'];
   dialogRef;
 
   data: Array<User> = [];
@@ -62,30 +55,25 @@ export class LearnersTableComponent
   ngOnInit() {
     if (!this.showControls) {
       this.displayedColumns = this.displayedColumns.slice(
-        this.displayedColumns.findIndex(val => val === 'select'),
+        this.displayedColumns.findIndex((val) => val === 'select'),
         this.displayedColumns.length - 1
       );
     }
 
     if (this.events) {
-      this.eventsSubscription = this.events.subscribe(res => {
+      this.eventsSubscription = this.events.subscribe((res) => {
         if (res) {
-          console.log(res);
         }
-        console.log('yolo');
         this.addSelectedLearner();
       });
     }
 
     this.selection.changed.subscribe((change: SelectionChange<User>) => {
-      console.log(change);
       this.selectionEvent.emit(change);
     });
   }
 
-  addSelectedLearner() {
-    console.log(this.selection.selected);
-  }
+  addSelectedLearner() {}
 
   ngOnDestroy() {
     if (this.events) {
@@ -136,9 +124,7 @@ export class LearnersTableComponent
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.data.forEach((row) => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -146,9 +132,7 @@ export class LearnersTableComponent
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${
-      this.selection.isSelected(row) ? 'deselect' : 'select'
-    } row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   showProfile(row) {
@@ -162,15 +146,14 @@ export class LearnersTableComponent
     this.dialogRef = this.dialog
       .open(AddLearnersDialogComponent, {
         data: {
-          confirmationMessage: 'hurr'
+          confirmationMessage: 'hurr',
         },
         disableClose: true,
-        panelClass: ['dashboard-dialog', 'add-learner-dialog']
+        panelClass: ['dashboard-dialog', 'add-learner-dialog'],
       })
       .afterClosed()
-      .subscribe(res => {
+      .subscribe((res) => {
         if (res) {
-          console.log(res);
         }
       });
   }
@@ -180,24 +163,18 @@ export class LearnersTableComponent
     if (selectedLearners.length > 0) {
       const a = selectedLearners.length === 1 ? 'this' : 'these';
       const b = selectedLearners.length === 1 ? '' : 's';
-      const msg =
-        'Are you sure you want to remove ' +
-        selectedLearners.length +
-        ' learner' +
-        b +
-        '?';
+      const msg = 'Are you sure you want to remove ' + selectedLearners.length + ' learner' + b + '?';
       this.dialogRef = this.dialog
         .open(ConfirmationDialogComponent, {
           data: {
-            confirmationMessage: msg
+            confirmationMessage: msg,
           },
           disableClose: true,
-          panelClass: 'dashboard-dialogoo'
+          panelClass: 'dashboard-dialogoo',
         })
         .afterClosed()
-        .subscribe(res => {
+        .subscribe((res) => {
           if (res) {
-            console.log(selectedLearners);
           }
         });
     }

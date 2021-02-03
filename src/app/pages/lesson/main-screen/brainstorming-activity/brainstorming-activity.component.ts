@@ -79,9 +79,7 @@ export class MainScreenBrainstormingActivityComponent
     }
     this.onChanges();
 
-    this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
-      console.log(val);
-    });
+    this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {});
   }
   ngOnDestroy() {
     if (this.settingsSubscription) {
@@ -206,9 +204,7 @@ export class MainScreenBrainstormingActivityComponent
       ) {
         this.shownSubmissionCompleteNofitication = true;
         const snackBarRef = this.utilsService.openSubmissionComplete('Submission complete', 'Start voting');
-        snackBarRef.onAction().subscribe(($event) => {
-          console.log($event);
-        });
+        snackBarRef.onAction().subscribe(($event) => {});
       }
     }
   }

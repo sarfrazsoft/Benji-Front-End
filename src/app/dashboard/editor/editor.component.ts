@@ -41,7 +41,6 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
-    console.log('Back button pressed');
     // event.stopPropagation();
     // event.preventDefault();
     // this.preventBackButton();
