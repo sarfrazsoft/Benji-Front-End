@@ -24,6 +24,8 @@ export class ParticipantCaseStudyActivityComponent
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
 
+  groupId;
+
   constructor(private contextService: ContextService) {
     super();
   }
@@ -32,6 +34,9 @@ export class ParticipantCaseStudyActivityComponent
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
     this.populateQuestions();
+
+    const userId = this.getParticipantCode();
+    this.groupId = this.getMyGroup(userId).id;
   }
 
   populateQuestions() {
@@ -75,8 +80,8 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   getMyNoteTaker() {
-    const userId = this.myParticipantCode;
-    const myGroupFellows = this.getPeopleFromMyGroup();
+    const userId = this.getParticipantCode();
+    const myGroupFellows = this.getPeopleFromMyGroup(userId);
     for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
       const casestudyuser = this.act.casestudyparticipant_set[i];
       if (
@@ -88,21 +93,32 @@ export class ParticipantCaseStudyActivityComponent
     }
   }
 
-  getPeopleFromMyGroup() {
-    const userId = this.myParticipantCode;
+  getPeopleFromMyGroup(userId) {
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
-      for (let j = 0; j < group.participantgroupstatus_set.length; j++) {
-        const participantCode = group.participantgroupstatus_set[j].participant.participant_code;
-        return group.participantgroupstatus_set.map((obj) => {
-          return obj.participant.participant_code;
-        });
+      const groupParticipants = group.participantgroupstatus_set.map((obj) => {
+        return obj.participant.participant_code;
+      });
+      if (groupParticipants.includes(userId)) {
+        return groupParticipants;
+      }
+    }
+  }
+
+  getMyGroup(userId) {
+    for (let i = 0; i < this.act.groups.length; i++) {
+      const group = this.act.groups[i];
+      const groupParticipants = group.participantgroupstatus_set.map((obj) => {
+        return obj.participant.participant_code;
+      });
+      if (groupParticipants.includes(userId)) {
+        return group;
       }
     }
   }
 
   isUserNoteTaker() {
-    const userId = this.myParticipantCode;
+    const userId = this.getParticipantCode();
     for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
       const user = this.act.casestudyparticipant_set[i];
       if (userId === user.participant.participant_code) {

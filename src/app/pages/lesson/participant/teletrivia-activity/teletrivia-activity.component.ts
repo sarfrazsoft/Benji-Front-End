@@ -81,13 +81,14 @@ export class ParticipantTeletriviaActivityComponent
 
   participantInCircle() {
     return (
-      this.activityState.teletriviaactivity.users_in_circle.find((e) => e.id === this.myParticipantCode) !==
-      undefined
+      this.activityState.teletriviaactivity.users_in_circle.find(
+        (e) => e.id === this.getParticipantCode()
+      ) !== undefined
     );
   }
 
   participantIsInitiator() {
-    return this.activityState.teletriviaactivity.first_user_in_chain.id === this.myParticipantCode;
+    return this.activityState.teletriviaactivity.first_user_in_chain.id === this.getParticipantCode();
   }
 
   sendReadyState() {

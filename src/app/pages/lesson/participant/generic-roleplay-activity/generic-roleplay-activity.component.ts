@@ -37,7 +37,7 @@ export class ParticipantGenericRoleplayActivityComponent
   }
 
   ngOnChanges() {
-    this.currentUser = this.myParticipantCode;
+    this.currentUser = this.getParticipantCode();
 
     const act = this.activityState.genericroleplayactivity;
     this.contextService.activityTimer = act.activity_countdown_timer;

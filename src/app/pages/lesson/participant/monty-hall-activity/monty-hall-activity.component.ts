@@ -80,7 +80,7 @@ export class ParticipantMontyHallActivityComponent
   }
 
   hasUserMadeChoice() {
-    const userid = this.myParticipantCode;
+    const userid = this.getParticipantCode();
     const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
       (u) => u.participant.participant_code === userid
     );
@@ -88,7 +88,7 @@ export class ParticipantMontyHallActivityComponent
   }
 
   hasUserPickedAgain() {
-    const userid = this.myParticipantCode;
+    const userid = this.getParticipantCode();
     const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
       (u) => u.participant.participant_code === userid
     );
@@ -100,7 +100,7 @@ export class ParticipantMontyHallActivityComponent
   }
 
   getUserInitialPickedDoor() {
-    const userid = this.myParticipantCode;
+    const userid = this.getParticipantCode();
     const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
       (u) => u.participant.participant_code === userid
     );
@@ -110,7 +110,7 @@ export class ParticipantMontyHallActivityComponent
   }
 
   revealedDoor() {
-    const userid = this.myParticipantCode;
+    const userid = this.getParticipantCode();
     const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
       (u) => u.participant.participant_code === userid
     );
@@ -148,7 +148,7 @@ export class ParticipantMontyHallActivityComponent
   }
 
   isUserWinner() {
-    const userid = this.myParticipantCode;
+    const userid = this.getParticipantCode();
     const userChoice: Array<CurrentRoundDetails> = this.act.current_round_details.filter(
       (u) => u.participant.participant_code === userid
     );

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Editor, Toolbar } from 'ngx-editor';
 import nodeViews from 'src/app/shared/ngx-editor/nodeviews/index';
 import plugins from 'src/app/shared/ngx-editor/plugins';
@@ -14,6 +14,7 @@ import * as Y from 'yjs';
   styleUrls: ['./text-editor.component.scss'],
 })
 export class TextEditorComponent implements OnInit, OnDestroy {
+  @Input() documentId;
   editor: Editor;
   editor2: Editor;
   colors = [
@@ -60,11 +61,7 @@ export class TextEditorComponent implements OnInit, OnDestroy {
     const type = ydoc.getXmlFragment('prosemirror');
 
     const ydoc2 = new Y.Doc();
-    const provider2 = new WebsocketProvider(
-      'wss://prosemirror-collab.glitch.me/',
-      'prosemirror-demo12',
-      ydoc2
-    );
+    const provider2 = new WebsocketProvider('wss://prosemirror-collab.glitch.me/', this.documentId, ydoc2);
     const type2 = ydoc2.getXmlFragment('prosemirror2');
 
     //

@@ -39,7 +39,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent 
 
   ngOnInit() {
     super.ngOnInit();
-    this.user = this.myParticipantCode;
+    this.user = this.getParticipantCode();
     this.state = this.activityState.wheredoyoustandactivity;
   }
 

@@ -68,13 +68,15 @@ export class ParticipantBuildPitchActivityComponent
     if (
       (this.act.build_countdown_timer.status === 'running' ||
         this.act.build_countdown_timer.status === 'paused') &&
-      this.act.buildapitchpitch_set.filter((e) => e.participant.participant_code === this.myParticipantCode)
-        .length === 0
+      this.act.buildapitchpitch_set.filter(
+        (e) => e.participant.participant_code === this.getParticipantCode()
+      ).length === 0
     ) {
       this.createPitch = true;
     } else if (
-      (this.act.buildapitchpitch_set.filter((e) => e.participant.participant_code === this.myParticipantCode)
-        .length > 0 ||
+      (this.act.buildapitchpitch_set.filter(
+        (e) => e.participant.participant_code === this.getParticipantCode()
+      ).length > 0 ||
         this.act.build_countdown_timer.status === 'ended' ||
         this.act.build_countdown_timer.status === 'cancelled') &&
       !this.showMyPitch &&
@@ -110,7 +112,7 @@ export class ParticipantBuildPitchActivityComponent
       this.showMyPitch = false;
       this.voteNow = false;
       this.thanksForVote = false;
-      if (this.act.winning_participant.participant_code === this.myParticipantCode) {
+      if (this.act.winning_participant.participant_code === this.getParticipantCode()) {
         this.yourPitchWon = true;
       } else {
         this.lookAtWinningPitch = true;
@@ -177,11 +179,11 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   yourPitchText() {
-    return this.getPitchText(this.myParticipantCode);
+    return this.getPitchText(this.getParticipantCode());
   }
 
   userPitchExists(userId) {
-    // console.log(this.myParticipantCode);
+    // console.log(this.getParticipantCode());
     // console.log(userId);
     // // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     // console.log(this.activityState.buildapitchactivity.buildapitchpitch_set);

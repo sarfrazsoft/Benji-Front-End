@@ -75,7 +75,7 @@ export class ParticipantPairActivityComponent
       (ug) =>
         concat(ug.primary_roleplayuser_set, ug.secondary_roleplayuser_set)
           .map((u) => u.user.id)
-          .indexOf(this.myParticipantCode) > -1
+          .indexOf(this.getParticipantCode()) > -1
     );
   }
 
@@ -83,7 +83,7 @@ export class ParticipantPairActivityComponent
     const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
       concat(myGroup.primary_roleplayuser_set, myGroup.secondary_roleplayuser_set),
-      (e) => e.user.id !== this.myParticipantCode
+      (e) => e.user.id !== this.getParticipantCode()
     );
     if (myGroupWithoutMe.length === 1) {
       this.partnerName = myGroupWithoutMe[0].user.first_name;
@@ -102,13 +102,14 @@ export class ParticipantPairActivityComponent
   myRoleplayUser() {
     const myGroup = this.myGroup();
     return concat(myGroup.primary_roleplayuser_set, myGroup.secondary_roleplayuser_set).find(
-      (g) => g.user.id === this.myParticipantCode
+      (g) => g.user.id === this.getParticipantCode()
     );
   }
 
   participantIsPrimary() {
     return (
-      this.myGroup().primary_roleplayuser_set.find((g) => g.user.id === this.myParticipantCode) !== undefined
+      this.myGroup().primary_roleplayuser_set.find((g) => g.user.id === this.getParticipantCode()) !==
+      undefined
     );
   }
 

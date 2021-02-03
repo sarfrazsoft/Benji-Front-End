@@ -35,7 +35,7 @@ export class ParticipantPairGroupingActivityComponent
       (ug) =>
         ug.participantgroupstatus_set
           .map((u) => u.participant.participant_code)
-          .indexOf(this.myParticipantCode) > -1
+          .indexOf(this.getParticipantCode()) > -1
     );
   }
 
@@ -43,7 +43,7 @@ export class ParticipantPairGroupingActivityComponent
     const myGroup = this.myGroup();
     const myGroupWithoutMe = remove(
       concat(myGroup.participantgroupstatus_set, []),
-      (e) => e.participant.participant_code !== this.myParticipantCode
+      (e) => e.participant.participant_code !== this.getParticipantCode()
     );
     if (myGroupWithoutMe.length === 1) {
       this.partnerName = this.getParticipantName(myGroupWithoutMe[0].participant.participant_code);
@@ -66,7 +66,7 @@ export class ParticipantPairGroupingActivityComponent
     const myGroup: Group = this.myGroup();
 
     return myGroup.participantgroupstatus_set.find(
-      (g) => g.participant.participant_code === this.myParticipantCode
+      (g) => g.participant.participant_code === this.getParticipantCode()
     );
   }
 

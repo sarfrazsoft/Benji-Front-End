@@ -323,7 +323,7 @@ export class ParticipantGeneratePitchActivityComponent
       (member) => member.is_pitching
     )[0];
 
-    return pitchingMember.participant.participant_code === this.myParticipantCode;
+    return pitchingMember.participant.participant_code === this.getParticipantCode();
   }
 
   submitAnswers(val) {
@@ -357,7 +357,7 @@ export class ParticipantGeneratePitchActivityComponent
   getCurrentUserGroup(): string {
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
     const pitchingMember = act.pitchomaticgroup_set[0].pitchomaticgroupmember_set.filter(
-      (member) => member.participant.participant_code === this.myParticipantCode
+      (member) => member.participant.participant_code === this.getParticipantCode()
     )[0];
     if (pitchingMember) {
       return '1';
@@ -395,7 +395,7 @@ export class ParticipantGeneratePitchActivityComponent
     const act: PitchoMaticActivity = this.activityState.pitchomaticactivity;
     const blank_set: Array<PitchoMaticBlank> = act.pitchomaticblank_set;
     blank_set.sort((a, b) => a.order - b.order);
-    const currentUserID = this.myParticipantCode;
+    const currentUserID = this.getParticipantCode();
     let currentMember: PitchoMaticGroupMember;
     act.pitchomaticgroup_set.forEach((group) => {
       group.pitchomaticgroupmember_set.forEach((member) => {

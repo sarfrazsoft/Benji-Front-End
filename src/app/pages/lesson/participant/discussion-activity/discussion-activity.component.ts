@@ -59,7 +59,7 @@ export class ParticipantDiscussionActivityComponent
       this.activityState.discussionactivity.discussiongroup_set.find(
         (g) =>
           g.discussiongroupmember_set.find(
-            (m) => m.has_volunteered && m.participant.participant_code === this.myParticipantCode
+            (m) => m.has_volunteered && m.participant.participant_code === this.getParticipantCode()
           ) !== undefined
       ) !== undefined
     );
@@ -68,7 +68,7 @@ export class ParticipantDiscussionActivityComponent
   participantIsSharing() {
     return (
       this.activityState.discussionactivity.currently_sharing_group.discussiongroupmember_set.find(
-        (m) => m.participant.participant_code === this.myParticipantCode
+        (m) => m.participant.participant_code === this.getParticipantCode()
       ) !== undefined
     );
   }

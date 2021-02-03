@@ -45,7 +45,7 @@ export class ParticipantHintActivityComponent extends BaseActivityComponent impl
   participantHasSubmitted() {
     return (
       this.activityState.hintwordactivity.submitted_participants.find(
-        (u) => u.participant_code === this.myParticipantCode
+        (u) => u.participant_code === this.getParticipantCode()
       ) !== undefined
     );
   }
@@ -53,7 +53,7 @@ export class ParticipantHintActivityComponent extends BaseActivityComponent impl
   participantHasVoted() {
     return (
       this.activityState.hintwordactivity.voted_participants.find(
-        (u) => u.participant_code === this.myParticipantCode
+        (u) => u.participant_code === this.getParticipantCode()
       ) !== undefined
     );
   }

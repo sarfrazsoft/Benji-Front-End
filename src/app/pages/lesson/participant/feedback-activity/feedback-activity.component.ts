@@ -27,7 +27,7 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
   }
 
   getUserId(): number {
-    return this.myParticipantCode;
+    return this.getParticipantCode();
   }
 
   submitAnswers(val) {
