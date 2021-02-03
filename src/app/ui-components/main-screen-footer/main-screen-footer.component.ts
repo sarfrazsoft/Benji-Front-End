@@ -106,7 +106,6 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   controlClicked(eventType) {
-    console.log(eventType);
     // if (this.videoStateService.videoState) {
     // this.videoStateService.videoState = eventType;
     if (this.disableControls) {

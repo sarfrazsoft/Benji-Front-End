@@ -168,7 +168,6 @@ export class BaseLessonComponent implements OnInit {
     } else if (msg.servererror !== null && msg.servererror !== undefined) {
       console.log(msg);
     } else if (msg.servernotification !== null && msg.servernotification !== undefined) {
-      console.log(msg);
       if (msg.servernotification) {
         const notify_type = msg.servernotification.notification_type;
         if (notify_type === 'no_facilitator') {
