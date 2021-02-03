@@ -8,7 +8,7 @@ import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
-import { ActivityTypes } from 'src/app/globals';
+import { ActivityTitles, ActivityTypes } from 'src/app/globals';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
 import { QuestionSet } from './services/question-control.service';
@@ -121,6 +121,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Timer to answer';
                   mappedField.type = 'seconds';
                 } else if (mapSource.field_name === 'title') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 'Question';
                 } else if (mapSource.field_name === 'screen_instructions') {
                   mappedField.hide = true;
                   mappedField.defaultValue = 'Answer the following question';
@@ -278,7 +280,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'activity_title') {
-                  mappedField.hide = true;
+                  // mappedField.hide = true;
                 } else if (mapSource.field_name === 'grouping_activity_id') {
                   // TODO check if it comes with a model value and process
                   if (content && content.grouping_activity_id) {
@@ -324,6 +326,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'question_type') {
                   mappedField.templateOptions.required = false;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
                   mappedField.defaultValue = 10000;
                   mappedField.type = 'seconds';
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
@@ -333,6 +336,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['helpText'] =
                     'How long does the feedback submission stage last?';
                 } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.defaultValue = false;
+                  mappedField.hide = true;
                   mappedField.templateOptions.label = 'Auto Forward';
                   mappedField.templateOptions.description =
                     'If you want the activity to move to the next activity' +
@@ -415,6 +420,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Build your madlib';
                   mappedField.templateOptions['addLabel'] = 'Add new block';
                 } else if (mapSource.field_name === 'vote_seconds') {
+                  mappedField.type = 'seconds';
                   mappedField.defaultValue = 0;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
@@ -513,12 +519,13 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
       // processing before submitting to BE
       if (b.activity_type === this.at.title) {
         // If the user didn't set next activity delay seconds
-        if (b.next_activity_delay_seconds === 0) {
+        if (b.next_activity_delay_seconds === 10000) {
           b.hide_timer = true;
           b.next_activity_delay_seconds = 10000;
         } else {
           b.hide_timer = false;
         }
+        b.activity_overview_text = ActivityTitles[this.at.title];
       } else if (b.activity_type === this.at.mcq) {
         if (!b.auto_next) {
           b.next_activity_delay_seconds = 10000;
@@ -531,6 +538,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         } else {
           delete b.quiz_label;
         }
+        b.activity_overview_text = ActivityTitles[this.at.mcq];
       } else if (b.activity_type === this.at.caseStudy) {
         if (b.grouping_activity_id) {
           // add ExternalGroupingActivity in the effects
@@ -542,8 +550,10 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         if (b.activity_seconds === 10000) {
           b.hide_timer = true;
         }
+        b.activity_overview_text = ActivityTitles[this.at.caseStudy];
       } else if (b.activity_type === this.at.feedback) {
         b.titlecomponent.participant_instructions = b.titlecomponent.screen_instructions;
+        b.activity_overview_text = ActivityTitles[this.at.feedback];
       } else if (b.activity_type === this.at.brainStorm) {
         b.brainstormcategory_set = b.brainstormcategory_set.filter(
           (obj) => obj && obj.category_name && obj.category_name.length !== 0
@@ -555,6 +565,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           // show timer when user changes the submission seconds
           b.hide_timer = false;
         }
+        b.activity_overview_text = ActivityTitles[this.at.brainStorm];
       } else if (b.activity_type === this.at.genericRoleplay) {
         b.instructions = b.short_instructions;
         if (b.grouping_activity_id) {
@@ -577,6 +588,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         if (b.vote_seconds !== 0) {
           b.next_activity_delay_seconds = 10000;
         }
+        b.activity_overview_text = ActivityTitles[this.at.buildAPitch];
       } else if (b.activity_type === this.at.whereDoYouStand) {
         if (b.next_activity_delay_seconds) {
           b.prediction_seconds = b.next_activity_delay_seconds;
@@ -651,6 +663,7 @@ export const OrderForActivities = {
   MCQActivity: ['titlecomponent', 'title', 'question', 'mcqchoice_set', 'question_seconds', 'quiz_label'],
   VideoActivity: ['video_url', 'auto_next', 'next_activity_delay_seconds'],
   CaseStudyActivity: [
+    'activity_title',
     'participant_instructions',
     'note_taker_instructions',
     'case_study_details',

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'benji-case-study-group',
@@ -9,11 +10,12 @@ export class CaseStudyGroupComponent implements OnInit {
   @Input() group;
 
   @Input() collapsed = false;
+
   constructor() {}
 
   ngOnInit() {}
   collapseGroup() {
     this.collapsed = !this.collapsed;
-    console.log(this.group);
+    // console.log(this.group);
   }
 }

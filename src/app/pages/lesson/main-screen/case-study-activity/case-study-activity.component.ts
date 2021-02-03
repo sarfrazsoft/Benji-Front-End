@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ContextService } from 'src/app/services';
 import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study-checkin/case-study-checkin.dialog';
@@ -79,13 +80,14 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
       ],
     },
   ];
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog, private contextService: ContextService) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.groupsX = this.formGroups(this.activityState.casestudyactivity);
+    this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
   }
 
   formGroups(act: CaseStudyActivity): any {
@@ -98,7 +100,7 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
     for (let i = 0; i < act.groups.length; i++) {
       const elem = act.groups[i];
       const participants = this.getGroupParticipants(act, elem);
-      groups.push({ name: elem.id, participants: participants });
+      groups.push({ name: elem.group_num, participants: participants });
     }
     return groups;
   }

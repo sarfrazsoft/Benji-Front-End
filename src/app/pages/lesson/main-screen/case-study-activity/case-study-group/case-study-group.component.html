@@ -1,7 +1,7 @@
 <div class="group collapseable-group" [ngStyle]="{'height': collapsed ? '50px' : '216px'}">
   <div class="header primary-color" fxLayout="row" fxLayoutGap="8px">
     <div>
-      {{group.name}}
+      {{ 'Room #' + group.name}}
     </div>
     <div style="flex: 1" fxLayout="row" fxLayoutAlign="space-between">
       <div class="group-controls">
@@ -24,7 +24,11 @@
       </div>
     </div> 
   </div>
-  <div class="participant-list">
+  <div 
+    cdkDropList           
+    [cdkDropListData]="group.participants"
+    (cdkDropListDropped)="drop($event)" 
+    class="participant-list">
     <div 
       class="participant-name"
       fxLayoutAlign="start center"

@@ -3,6 +3,7 @@ benji-lesson {
   .courses {
     .course-tile {
       background-color: #fff;
+      color: $black;
       // box-shadow: $box-shadow;
       border: 1px solid $secondary-color-light;
       cursor: pointer;
@@ -17,7 +18,7 @@ benji-lesson {
         h2 {
           font-size: 18px;
           font-weight: 700;
-          color: $black;
+          word-break: break-all;
         }
         button {
           background: transparent;
@@ -46,6 +47,7 @@ benji-lesson {
     .course-detail {
       padding: 12px 0px;
       font-size: 16px;
+      line-height: 20px;
       textarea {
         padding: 8px;
         width: 99%;

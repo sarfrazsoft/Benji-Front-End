@@ -147,14 +147,14 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         this.componentRef.instance.peakBackState = false;
         const activityStage: Subject<string> = new Subject<string>();
         this.componentRef.instance.activityStage = activityStage.asObservable();
-        // this.componentRef.instance.peakBackState = true;
+        this.componentRef.instance.editor = true;
       } else if (this.data.activity_type === Acts.mcq) {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-        let title = 'Enter title';
+        let title = 'Question';
         if (content.titlecomponent) {
-          title = content.titlecomponent.title ? content.titlecomponent.title : 'Enter title';
+          title = content.titlecomponent.title;
         }
         let questionText = 'Enter your question';
         let options = [
@@ -238,7 +238,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           instructions = t.screen_instructions ? t.screen_instructions : 'Answer the following question';
         }
         let feedbackquestion_set = [];
-        if (content.feedbackquestion_set.length) {
+        if (content.feedbackquestion_set && content.feedbackquestion_set.length) {
           feedbackquestion_set = content.feedbackquestion_set;
         }
         let msAct = null;

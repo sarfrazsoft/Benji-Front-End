@@ -3,14 +3,22 @@
     <div class="benji-logo-container">
       <img [src]="logo" alt="Benji logo" class="benji-logo" />
     </div>
-    <ng-container *ngIf="showTimer">
-      <benji-number-timer
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <ng-container *ngIf="showTimer">
+        <benji-number-timer
         [timer]="timer"
         endStateText="Times Up!"
         [endAudio]=""
-      ></benji-number-timer>
-    </ng-container>
-    <!-- <button [matMenuTriggerFor]="appMenu" fxLayoutAlign="center center">
+        ></benji-number-timer>
+      </ng-container>
+      <button 
+        class="end-session" 
+        *ngIf="isLastActivity" 
+        (click)="router.navigate(['/participant/end'])">
+        Finish
+      </button>
+    </div>
+    <!-- <button class="menu-button" [matMenuTriggerFor]="appMenu" fxLayoutAlign="center center">
       <mat-icon class="icon-white">menu</mat-icon>
     </button> -->
   </div>

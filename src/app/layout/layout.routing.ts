@@ -1,6 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 
-import { MainScreenLessonComponent, ParticipantLessonComponent, SingleUserComponent } from 'src/app/pages';
+import {
+  MainScreenLessonComponent,
+  ParticipantLessonComponent,
+  SessionEndComponent,
+  SingleUserComponent,
+} from 'src/app/pages';
 import { ParticipantJoinComponent } from '../pages/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
 import { AuthGuard, WhiteLabelResolver } from '../services';
@@ -40,6 +45,13 @@ const routes: Routes = [
   {
     path: 'participant/lesson/:roomCode',
     component: ParticipantLessonComponent,
+    resolve: {
+      labelInfo: WhiteLabelResolver,
+    },
+  },
+  {
+    path: 'participant/end',
+    component: SessionEndComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },

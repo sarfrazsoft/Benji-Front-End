@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { ContextService } from 'src/app/services';
 import { LeaderBoard, MCQChoiceSet, MCQSubmitAnswerEvent } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -22,7 +23,7 @@ export class MainScreenPopQuizComponent
   @Input() editor = false;
   peakBackStage = null;
   private eventsSubscription: Subscription;
-  constructor() {
+  constructor(private contextService: ContextService) {
     super();
   }
 
@@ -73,9 +74,11 @@ export class MainScreenPopQuizComponent
       if (qTimer && (qTimer.status === 'running' || qTimer.status === 'paused')) {
         this.revealAnswers = false;
         this.radialTimer = qTimer;
+        this.contextService.activityTimer = qTimer;
       } else if (nt && (nt.status === 'running' || nt.status === 'paused')) {
         this.revealAnswers = true;
         this.radialTimer = nt;
+        this.contextService.activityTimer = nt;
         if (as.mcqactivity.quiz_leaderboard) {
           this.showLeaderboard = true;
           this.leaderboard = as.mcqactivity.quiz_leaderboard;

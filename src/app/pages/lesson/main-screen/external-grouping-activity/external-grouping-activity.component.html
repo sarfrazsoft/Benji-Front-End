@@ -1,4 +1,4 @@
-<div class="mainscreen-activity ms-act--multi-column pair-activity">
+<div class="mainscreen-activity ms-act--multi-column pair-activity" *ngIf="!newLayout">
   <div
     class="activity-instructions bg-off-white left-text"
     fxFlex="33%"
@@ -46,4 +46,113 @@
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>
   </div>
+</div>
+
+<div fxLayout="column" class="mainscreen-activity casestudy-ms" *ngIf="newLayout">
+  <div class="lesson-top-banner">
+    <div class="" fxLayout="row" fxLayoutGap="3vw" fxLayoutAlign="space-between center">
+      <h1 class="pn-500">
+        <span class="primary-color pn-700">
+          <ng-container>
+            Case study
+          </ng-container>
+        </span>
+      </h1>
+      <div class="instructions">
+        <button
+          (click)="openCheckInModal()"
+          class="dashboard-secondary-button bg-primary-color white-color padding0-24">
+          Check-in
+        </button>
+      </div>
+    </div>
+  </div>
+  <ng-container>
+    <div
+      class="casestudy-groups"
+      fxLayout="row"
+      fxLayoutGap="30px"
+      cdkDropListGroup
+    >
+      <div class="group">
+        <div class="header primary-color">
+          Main Room
+        </div>
+        <div class="participant-list"
+          cdkDropList
+          [cdkDropListData]="allUsers"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <!-- <ng-container *ngFor="let group of groupsX"> -->
+            <div
+              class="participant-name"
+              fxLayoutAlign="start center"
+              cdkDrag
+              *ngFor="let participant of allUsers">
+              <span>
+                {{ participant.display_name }}
+              </span>
+            </div>
+          <!-- </ng-container> -->
+        </div>
+      </div>
+      <div style="width: 100%;">
+        <ul>
+          <li *ngFor="let group of breakoutRooms">
+            <div class="group collapseable-group" [ngStyle]="{'height': collapsed[group.id] ? '50px' : '216px'}">
+              <div class="header primary-color" fxLayout="row" fxLayoutGap="8px">
+                <div>
+                  {{group.name}}
+                </div>
+                <div style="flex: 1" fxLayout="row" fxLayoutAlign="space-between">
+                  <div class="group-controls">
+                    <img src="/assets/img/groupProgressionGrey.svg" alt="">
+                  </div>
+                  <div class="group-controls" fxLayout="row" fxLayoutGap="8px">
+                    <div>
+                      <img src="/assets/img/openGroup.svg" alt="">
+                    </div>
+                    <div class="head-count" *ngIf="collapsed[group.id]">
+                      <img src="/assets/img/particpantCountIcon.svg" alt="">
+                      <span>
+                        {{ group.participants.length }}
+                      </span>
+                    </div>
+                    <div style="width: 18px;">
+                      <img 
+                        *ngIf="collapsed[group.id]"
+                        (click)="this.collapsed[group.id] = !this.collapsed[group.id];"
+                        src="/assets/img/dropDownIcon.svg" alt="">
+                      <img 
+                        *ngIf="!collapsed[group.id]"
+                        (click)="this.collapsed[group.id] = !this.collapsed[group.id];"
+                        src="/assets/img/dropDownIconUp.svg" alt="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                cdkDropList
+                [cdkDropListData]="group.participants"
+                (cdkDropListDropped)="drop($event)"
+                class="participant-list">
+                <div
+                  class="participant-name"
+                  cdkDrag
+                  fxLayoutAlign="start center"
+                  *ngFor="let participant of group.participants">
+                  <span>
+                    {{ participant.display_name }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </li>
+          <button class="add-group primary-color-darkest" (click)="addGroup()">
+            + Add Group
+          </button>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
 </div>

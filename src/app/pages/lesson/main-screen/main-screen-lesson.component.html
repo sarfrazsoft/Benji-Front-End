@@ -192,7 +192,7 @@
     *ngIf="isConnected() && serverMessage"
     [activityState]="serverMessage"
     [showFastForward]="fastForwardActivities.indexOf(getActivityType()) > -1"
-    [showSkip]="!isLastActivity()"
+    [isLastActivity]="!isLastActivity()"
     [showFooter]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"

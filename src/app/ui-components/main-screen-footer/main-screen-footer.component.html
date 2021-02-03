@@ -14,7 +14,7 @@
         [matMenuTriggerFor]="navigationMenu" 
         fxLayoutAlign="center center"
         placement="top"
-        tooltip="Vote"
+        tooltip="Activities"
         show-delay="100">
         <!-- <mat-icon class="icon-white">fast_rewind</mat-icon> -->
         <img src="/assets/img/sessionActivities.svg" />
@@ -26,7 +26,7 @@
           <benji-session-navigation></benji-session-navigation>
         </mat-menu>
       </button>
-      <button (click)="controlClicked('next')" *ngIf="!isPaused" fxLayoutAlign="center center">
+      <button (click)="controlClicked('next')" *ngIf="isLastActivity" fxLayoutAlign="center center">
         <!-- <mat-icon class="icon-white">pause</mat-icon> -->
         <img src="/assets/img/chevronBigRight.svg" />
       </button>
@@ -38,7 +38,7 @@
           <mat-icon class="icon-white">fast_forward</mat-icon>
         </button>
       </ng-container> -->
-      <!-- <button *ngIf="showSkip" (click)="controlClicked('next')">
+      <!-- <button  (click)="controlClicked('next')">
         <mat-icon class="icon-white">skip_next</mat-icon>
       </button> -->
   </div>
@@ -202,7 +202,7 @@
         <span class="code">{{ roomCode }}</span>
         <span class="text">ROOM CODE</span>
       </div>
-      <div fxLayoutAlign="center center">
+      <div fxLayoutAlign="center center" *ngIf="isLastActivity">
         <button class="end-session-button bg-white primary-color-darkest" (click)="endSession()">End</button>
       </div>
     </div>

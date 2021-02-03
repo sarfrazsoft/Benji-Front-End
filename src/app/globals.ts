@@ -34,6 +34,15 @@ export enum ActivityTypes {
   triadGrouping = 'TriadGroupingActivity',
 }
 
+export const ActivityTitles = {
+  CaseStudyActivity: 'activity_title',
+  BuildAPitchActivity: 'title',
+  BrainstormActivity: 'instructions',
+  TitleActivity: 'main_title',
+  MCQActivity: 'question.question',
+  FeedbackActivity: 'titlecomponent.title',
+};
+
 // export type MeasurementTimeframe = 'alltime' | 'year' | 'month' | 'week' | 'day';
 
 export const DefaultwhiteLabelInfo = {

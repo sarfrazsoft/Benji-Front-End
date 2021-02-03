@@ -1,8 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import * as fromStore from '../store';
@@ -12,8 +12,9 @@ import * as fromStore from '../store';
   templateUrl: './overview-panel.component.html',
   styleUrls: ['./overview-panel.component.scss'],
 })
-export class OverviewPanelComponent implements OnInit {
+export class OverviewPanelComponent implements OnInit, OnDestroy {
   lessonActivities$: Observable<OverviewLessonActivity[]>;
+  lessonActivitiesSubscription$: Subscription;
   lessonActivitiesLength;
 
   lessonActivitiesErrors$: Observable<any>;
@@ -27,7 +28,8 @@ export class OverviewPanelComponent implements OnInit {
 
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
-    this.lessonActivities$.subscribe((arr) => {
+    this.lessonActivitiesSubscription$ = this.lessonActivities$.subscribe((arr) => {
+      console.log('inside lesson activities sub');
       this.lessonActivitiesLength = arr.length;
       if (this.slideCopied) {
         this.slideCopied = false;
@@ -57,6 +59,12 @@ export class OverviewPanelComponent implements OnInit {
     this.lessonActivitiesErrors$.subscribe((arr) => {
       this.lessonActivitiesErrors = arr;
     });
+  }
+
+  ngOnDestroy() {
+    if (this.lessonActivitiesSubscription$) {
+      this.lessonActivitiesSubscription$.unsubscribe();
+    }
   }
 
   select(activityId) {

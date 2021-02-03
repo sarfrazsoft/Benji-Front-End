@@ -1,4 +1,7 @@
-<benji-participant-toolbar [activityState]="serverMessage"></benji-participant-toolbar>
+<benji-participant-toolbar 
+  [activityState]="serverMessage"
+  [isLastActivity]="isLastActivity()">
+</benji-participant-toolbar>
 
 <div *ngIf="isConnected() && serverMessage">
   <benji-ps-brainstorming-activity

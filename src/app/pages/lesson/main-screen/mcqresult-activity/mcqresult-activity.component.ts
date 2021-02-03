@@ -25,6 +25,7 @@ export class MainScreenMcqresultActivityComponent
 
   ngOnChanges() {
     const act = this.activityState.mcqresultsactivity;
+    console.log(act);
 
     this.singleUserLesson = this.activityState.lesson.single_user_lesson;
 
@@ -46,11 +47,12 @@ export class MainScreenMcqresultActivityComponent
               noOfResponses: answer_count,
               responsePercent: Math.round((answer_count / totalResponse) * 100),
               order: choice.order,
+              id: choice.id,
             };
           }
         });
 
-        this.choices.sort((a, b) => a.order - b.order);
+        this.choices.sort((a, b) => a.id - b.id);
       }
     }
     if (false) {

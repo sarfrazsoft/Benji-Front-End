@@ -197,6 +197,13 @@ export class BaseLessonComponent implements OnInit {
     }
   }
 
+  isLastActivity() {
+    if (this.serverMessage) {
+      const activity_type = this.serverMessage.activity_type.toLowerCase();
+      return !this.serverMessage[activity_type].next_activity;
+    }
+  }
+
   public sendSocketMessage(evt: ActivityEvent) {
     this.socket.next(evt.toMessage());
   }

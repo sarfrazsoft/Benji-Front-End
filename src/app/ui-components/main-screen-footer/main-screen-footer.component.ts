@@ -34,7 +34,7 @@ import { VideoStateService } from '../../services/video-state.service';
 export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() showFastForward: boolean;
-  @Input() showSkip: boolean;
+  @Input() isLastActivity: boolean;
   @Input() showFooter: boolean;
   @Input() lessonName: string;
   @Input() roomCode: string;
@@ -62,7 +62,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.activityState);
+  }
 
   ngOnChanges() {
     // if (this.actType !== this.activityState.activity_type) {
@@ -218,7 +220,6 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
         this.router.navigate(['/participant/join']);
       }
     }
-    // console.log(this.activityState);
   }
 }
 

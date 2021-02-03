@@ -104,10 +104,10 @@ export class LessonTileComponent implements OnInit, OnDestroy {
           })
           .afterClosed()
           .subscribe((res) => {
-            this.updateLessons.emit();
             if (res) {
               this.adminService.deleteLesson(lesson.id).subscribe((delRes) => {
                 if (delRes.success) {
+                  this.updateLessons.emit();
                   this.utilsService.openSnackBar(`Lesson successfully deleted.`, `close`);
                 }
               });

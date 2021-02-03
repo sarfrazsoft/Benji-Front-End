@@ -28,7 +28,7 @@ export class SidenavComponent implements OnInit {
         navName: 'My Sessions',
         navRoute: './',
         permission: '',
-        icon: '../../../../assets/img/mySessions.png',
+        icon: '../../../../assets/img/mySessions.svg',
       },
       // {
       //   navName: 'Groups',
@@ -68,7 +68,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Participants',
         navRoute: './participants',
-        icon: '../../../../assets/img/participantIcon.png',
+        icon: '../../../../assets/img/participantIcon.svg',
       },
       // {
       //   navName: 'Groups',
@@ -96,7 +96,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Reports',
         navRoute: './pastsessions',
-        icon: '../../../../assets/img/reportsIcon.png',
+        icon: '../../../../assets/img/reportsIcon.svg',
       },
     ],
   };
@@ -107,7 +107,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Account',
         navRoute: 'account',
-        icon: '../../../../assets/img/accountIcon.png',
+        icon: '../../../../assets/img/accountIcon.svg',
       },
       // {
       //   navName: 'Settings',
@@ -136,7 +136,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Logout',
         navRoute: 'logout',
-        icon: '../../../../assets/img/logoutIcon.png',
+        icon: '../../../../assets/img/logoutIcon.svg',
       },
     ],
   };

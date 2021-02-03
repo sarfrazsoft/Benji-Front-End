@@ -1,43 +1,47 @@
 <!-- New brain storm code  -->
 <div fxLayout="column" class="mainscreen-activity brainstorming-ms">
   <div class="lesson-top-banner compact">
-    <div class="border-bottom" fxLayout="row" fxLayoutGap="3vw">
-      <h1 class="pn-500">
-        <span class="primary-color pn-700">
-          <ng-container *ngIf="voteScreen">
-            Vote
-          </ng-container>
-          <ng-container *ngIf="submissionScreen">
-            Brainstorming
-          </ng-container>
-          <ng-container *ngIf="VnSComplete">
-            Winners
-          </ng-container>
-        </span>
-      </h1>
-      <div fxLayoutAlign="end center" class="instructions">
-        <h2
-          class="pn-500"
-          [ngClass]="{
-            'long-instructions': instructions.length > 65
-          }"
+    <div class="border-bottom" fxLayout="row" fxLayoutAlign="space-between">
+      <div>
+        <h1 class="pn-500">
+          <span class="primary-color pn-700">
+            <ng-container *ngIf="voteScreen">
+              Vote
+            </ng-container>
+            <ng-container *ngIf="submissionScreen">
+              Brainstorming
+            </ng-container>
+            <ng-container *ngIf="VnSComplete">
+              Winners
+            </ng-container>
+          </span>
+        </h1>
+      </div>
+      <div fxLayout="row" fxLayoutGap="3vw">
+        <div fxLayoutAlign="end center" class="instructions">
+          <h2
+            class="pn-500"
+            [ngClass]="{
+              'long-instructions': instructions.length > 65
+            }"
+          >
+            {{ instructions }}
+          </h2>
+        </div>
+        <div
+          class="count-info primary-color-darkest"
+          fxLayoutAlign="end center"
+          *ngIf="submissionScreen"
         >
-          {{ instructions }}
-        </h2>
-      </div>
-      <div
-        class="count-info primary-color-darkest"
-        fxLayoutAlign="end center"
-        *ngIf="submissionScreen"
-      >
-        {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} submitted
-      </div>
-      <div
-        class="count-info primary-color-darkest"
-        fxLayoutAlign="end center"
-        *ngIf="voteScreen"
-      >
-        {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} voted
+          {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} submitted
+        </div>
+        <div
+          class="count-info primary-color-darkest"
+          fxLayoutAlign="end center"
+          *ngIf="voteScreen"
+        >
+          {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} voted
+        </div>
       </div>
     </div>
   </div>

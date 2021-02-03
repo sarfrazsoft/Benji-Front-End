@@ -47,11 +47,6 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     this.at.montyHall,
   ];
 
-  isLastActivity() {
-    const activity_type = this.serverMessage.activity_type.toLowerCase();
-    return !this.serverMessage[activity_type].next_activity;
-  }
-
   isPaused() {
     const activity_type = this.serverMessage.activity_type.toLowerCase();
     return this.serverMessage[activity_type].is_paused;

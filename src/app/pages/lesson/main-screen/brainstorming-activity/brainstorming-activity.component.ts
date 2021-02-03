@@ -32,6 +32,7 @@ export class MainScreenBrainstormingActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @ViewChild('colName') colNameElement: ElementRef;
   @Input() peakBackState = false;
+  @Input() editor = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
   private eventsSubscription: Subscription;
@@ -197,7 +198,12 @@ export class MainScreenBrainstormingActivityComponent
       }
 
       // show snackbar when submission is complete
-      if (!act.submission_complete && !act.voting_complete && this.isAllSubmissionsComplete(act)) {
+      if (
+        !this.editor &&
+        !act.submission_complete &&
+        !act.voting_complete &&
+        this.isAllSubmissionsComplete(act)
+      ) {
         this.shownSubmissionCompleteNofitication = true;
         const snackBarRef = this.utilsService.openSubmissionComplete('Submission complete', 'Start voting');
         snackBarRef.onAction().subscribe(($event) => {

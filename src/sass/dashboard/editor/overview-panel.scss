@@ -27,7 +27,7 @@ benji-overview-panel {
           font-size: 16px;
           font-weight: 600;
           color: $secondary-color-dark;
-          min-width: 20px;
+          margin-right: 8px;
           .copy-delete-icons {
             opacity: 0;
           }
@@ -54,6 +54,11 @@ benji-overview-panel {
           .name {
             font-size: 12px;
             color: $secondary-color-dark;
+            text-overflow: ellipsis;
+            max-width: 90px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-align: center;
           }
           &.active {
             // primary color border applied from white-labeling

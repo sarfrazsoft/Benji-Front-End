@@ -53,14 +53,8 @@
     <div class="" fxLayout="row" fxLayoutGap="3vw" fxLayoutAlign="space-between center">
       <h1 class="pn-500">
         <span class="primary-color pn-700">
-          <ng-container *ngIf="voteScreen">
-            Vote
-          </ng-container>
           <ng-container>
-            Case study
-          </ng-container>
-          <ng-container *ngIf="VnSComplete">
-            Winners
+            {{ act.activity_title }}
           </ng-container>
         </span>
       </h1>
@@ -105,7 +99,7 @@
               fxLayoutAlign="start center"
               *ngFor="let participant of group.participants"> 
               <span>
-                {{ participant.name }}
+                <!-- {{ participant.name }} -->
               </span> 
             </div>
           </ng-container>

@@ -20,11 +20,13 @@ import { ParticipantPairGroupingActivityComponent } from './pair-grouping-activi
 import { ParticipantLessonComponent } from './participant-lesson.component';
 // import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { ReorderComponents } from './reorder-activity';
+import { SessionEndComponent } from './session-end/session-end.component';
 import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
 // import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
 import { ParticipantTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 
+export { SessionEndComponent } from './session-end/session-end.component';
 export { ParticipantSharedComponents } from './shared';
 export { ParticipantInstructionTemplateComponent } from './shared/instruction-template/instruction-template.component';
 export { QuestionFormComponent } from './shared/question-form/question-form.component';
@@ -70,5 +72,6 @@ export const ParticipantScreenComponents = [
   ParticipantTriadGroupingActivityComponent,
   ParticipantVideoActivityComponent,
   ParticipantGenericRoleplayActivityComponent,
+  SessionEndComponent,
   // ParticipantCaseStudyActivityComponent,
 ];

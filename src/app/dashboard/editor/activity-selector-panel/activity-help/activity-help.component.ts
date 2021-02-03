@@ -44,10 +44,6 @@ export const ActivityHelp = {
               you through this!`,
     },
     {
-      type: 'image',
-      content: '/assets/img/helpimg.png',
-    },
-    {
       type: 'header',
       content: 'Tips',
     },

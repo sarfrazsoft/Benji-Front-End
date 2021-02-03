@@ -9,6 +9,7 @@
       (change)="revealField(checkbox.checked)"
     />
     <label class="custom-control-label" for="{{ field.key }}">{{ to['labelForCheckbox'] }}</label>
+    
   </div>
   <div *ngIf="showField" class="field-label" fxLayoutAlign="start center">
     <label *ngIf="to.label && to.hideLabel !== true" [attr.for]="id">
