@@ -267,6 +267,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.type = 'textarea';
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
+                  mappedField.hide = true;
                   // mappedField.type = 'caseStudyQuestions';
                   // mappedField.wrappers = ['benji-field-wrapper'];
                   mappedField.templateOptions['helpText'] =

@@ -33,7 +33,7 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
-    this.populateQuestions();
+    // this.populateQuestions();
 
     const userId = this.getParticipantCode();
     this.groupId = this.getMyGroup(userId).id;
@@ -50,7 +50,7 @@ export class ParticipantCaseStudyActivityComponent
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.contextService.activityTimer = this.act.activity_countdown_timer;
-    this.populateQuestions();
+    // this.populateQuestions();
     const myNoteTaker = this.getMyNoteTaker();
 
     // if (myNoteTaker) {
@@ -63,20 +63,20 @@ export class ParticipantCaseStudyActivityComponent
     }
 
     // Populate the answers if available
-    if (localStorage.getItem(this.localStorageItemName)) {
-      this.questions = JSON.parse(localStorage.getItem(this.localStorageItemName));
-    } else {
-      for (let i = 0; i < this.questions.length; i++) {
-        const questionID = this.questions[i].id;
-        for (let j = 0; j < myNoteTaker.casestudyanswer_set.length; j++) {
-          const noteTakersAns = myNoteTaker.casestudyanswer_set[j];
-          if (noteTakersAns.casestudyquestion === questionID) {
-            this.questions[i].answer = noteTakersAns.answer;
-          }
-        }
-      }
-      // }
-    }
+    // if (localStorage.getItem(this.localStorageItemName)) {
+    //   this.questions = JSON.parse(localStorage.getItem(this.localStorageItemName));
+    // } else {
+    //   for (let i = 0; i < this.questions.length; i++) {
+    //     const questionID = this.questions[i].id;
+    //     for (let j = 0; j < myNoteTaker.casestudyanswer_set.length; j++) {
+    //       const noteTakersAns = myNoteTaker.casestudyanswer_set[j];
+    //       if (noteTakersAns.casestudyquestion === questionID) {
+    //         this.questions[i].answer = noteTakersAns.answer;
+    //       }
+    //     }
+    //   }
+    //   // }
+    // }
   }
 
   getMyNoteTaker() {

@@ -44,24 +44,24 @@ export class TextEditorComponent implements OnInit, OnDestroy {
     { color: '#ffffff', backgroudColor: '#a9a9a9' },
   ];
   toolbar: Toolbar = [
-    ['bold', 'italic'],
-    // ['underline', 'strike'],
-    // ['code', 'blockquote'],
-    // ['ordered_list', 'bullet_list'],
     [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+    ['bold', 'italic'],
+    ['underline', 'strike'],
+    ['code', 'blockquote'],
+    ['ordered_list', 'bullet_list'],
     ['link', 'image'],
-    // ['text_color', 'background_color'],
-    // ['align_left', 'align_center', 'align_right', 'align_justify'],
+    ['text_color', 'background_color'],
+    ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
   constructor() {}
 
   ngOnInit(): void {
     const ydoc = new Y.Doc();
-    const provider = new WebsocketProvider('wss://prosemirror-collab.glitch.me/', 'prosemirror-demo1', ydoc);
+    const provider = new WebsocketProvider('ws://localhost:1234', 'prosemirror-demo1', ydoc);
     const type = ydoc.getXmlFragment('prosemirror');
 
     const ydoc2 = new Y.Doc();
-    const provider2 = new WebsocketProvider('wss://prosemirror-collab.glitch.me/', this.documentId, ydoc2);
+    const provider2 = new WebsocketProvider('ws://localhost:1234', this.documentId, ydoc2);
     const type2 = ydoc2.getXmlFragment('prosemirror2');
 
     //

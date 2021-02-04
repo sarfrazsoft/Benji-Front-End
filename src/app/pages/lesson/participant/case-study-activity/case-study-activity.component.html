@@ -9,9 +9,7 @@
   <app-custom-menu [editor]="editor"></app-custom-menu>
 </ng-template> -->
 
-<ng-container *ngIf="groupId">
-  <benji-text-editor  [documentId]="groupId"></benji-text-editor>
-</ng-container>
+
 
 
 
@@ -61,6 +59,10 @@
         innerHTML="{{ act.case_study_details }}"
       ></div>
     </div>
+
+    <ng-container *ngIf="groupId">
+      <benji-text-editor  [documentId]="groupId"></benji-text-editor>
+    </ng-container>
 
     <div *ngFor="let question of questions">
       <div class="your-prompt">
