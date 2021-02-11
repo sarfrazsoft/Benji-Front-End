@@ -6,7 +6,10 @@
 <ngx-editor [editor]="editor">
 </ngx-editor>
 <ng-template #customMenu>
-  <app-custom-menu [editor]="editor"></app-custom-menu>
+  <app-custom-menu
+    [lessonrun_code]="lessonrun_code" 
+    [participant_code]="participant_code"  
+    [editor]="editor"></app-custom-menu>
 </ng-template>
 
 

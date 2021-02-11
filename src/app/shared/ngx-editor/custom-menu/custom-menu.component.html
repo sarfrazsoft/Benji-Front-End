@@ -3,3 +3,26 @@
   [ngClass]="{'NgxEditor__MenuItem--Active': isActive, 'NgxEditor--Disabled': isDisabled}">
   CodeMirror
 </div>
+
+<div class="NgxEditor__Seperator"></div>
+<div class="NgxEditor__MenuItem NgxEditor__MenuItem--Text"
+  [ngClass]="{'NgxEditor__MenuItem--Active': isActive, 'NgxEditor--Disabled': isDisabled}">
+  <div class="image-upload-button" fxLayoutAlign="start center">
+    <label fxLayout="row" fxLayoutAlign="center center">
+      <input
+        class="file-input"
+        type="file"
+        accept="image/*" 
+        onclick="this.value = null" 
+        (change)="onFileSelect($event)"
+        #file />
+      <div class="details" fxLayoutAlign="space-evenly center">
+        <mat-icon
+          (click)="file.click(); $event.preventDefault()"
+          benji-click-stop-propagation>
+          insert_photo
+        </mat-icon>
+      </div>
+    </label>
+  </div>
+</div>

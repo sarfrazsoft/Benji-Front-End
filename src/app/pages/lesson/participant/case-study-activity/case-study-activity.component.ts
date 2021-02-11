@@ -7,6 +7,7 @@ import {
   CaseStudyTeamDoneEvent,
   Timer,
 } from 'src/app/services/backend/schema';
+import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -27,9 +28,8 @@ export class ParticipantCaseStudyActivityComponent
 
   groupId;
 
-  imagesList: FileList;
-
-  @ViewChild('childComponent') child;
+  participant_code;
+  lessonrun_code;
 
   constructor(private contextService: ContextService) {
     super();
@@ -38,6 +38,8 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
+    this.participant_code = this.getParticipantCode();
+    this.lessonrun_code = this.activityState.lesson_run.lessonrun_code.toString();
     // this.populateQuestions();
 
     const userId = this.getParticipantCode();
@@ -183,19 +185,4 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   locallySaveDraft(event) {}
-
-  onFileSelect(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length === 0) {
-      this.imagesList = null;
-    } else {
-      this.imagesList = fileList;
-      const participant_code = this.getParticipantCode().toString();
-      this.child.imageSelected(
-        this.imagesList,
-        this.activityState.lesson_run.lessonrun_code,
-        participant_code
-      );
-    }
-  }
 }

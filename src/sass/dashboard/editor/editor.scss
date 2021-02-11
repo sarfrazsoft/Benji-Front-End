@@ -22,3 +22,9 @@ benji-editor {
     }
   }
 }
+app-custom-menu {
+  cursor: pointer;
+  .file-input {
+    display: none;
+  }
+}

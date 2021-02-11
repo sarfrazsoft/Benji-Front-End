@@ -45,29 +45,14 @@
       ></div>
     </div> -->
 
-    <ng-container *ngIf="groupId">
-      <benji-text-editor #childComponent  [documentId]="groupId"></benji-text-editor>
+    <ng-container *ngIf="groupId && participant_code">
+      <benji-text-editor 
+        [lessonrun_code]="lessonrun_code" 
+        [participant_code]="participant_code"  
+        [documentId]="groupId"></benji-text-editor>
     </ng-container>
 
-    <div class="image-upload-button" fxLayoutAlign="center center">
-      <label fxLayout="row" fxLayoutAlign="center center">
-        <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
-        <div class="details" fxLayoutAlign="space-evenly center">
-          <div *ngIf="!imagesList">Add to your submission</div>
-          <div class="image-name" *ngIf="imagesList">Selected</div>
-          <mat-icon *ngIf="!imagesList" aria-hidden="false" aria-label="photo camera">
-            photo_camera
-          </mat-icon>
-          <mat-icon
-            *ngIf="imagesList"
-            (click)="imagesList = null; $event.preventDefault()"
-            benji-click-stop-propagation
-          >
-            close
-          </mat-icon>
-        </div>
-      </label>
-    </div>
+
   </div>
 </div>
 
