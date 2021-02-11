@@ -160,8 +160,15 @@ benji-activity-selector-panel {
                 margin-left: 16px;
               }
 
+              .character-limit {
+                font-size: 10px;
+                margin-top: -22px;
+                position: absolute;
+                right: 10px;
+              }
               .form-control {
                 border-radius: 4px;
+                padding-right: 20px;
                 &:focus {
                   border-color: $primary-color;
                   box-shadow: none;

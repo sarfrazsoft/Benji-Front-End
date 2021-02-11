@@ -68,6 +68,14 @@ button {
   }
 }
 
+.b-small-button {
+  color: #fff;
+  padding: 10px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
 .b-standard-button.animated {
   &:hover {
     background: darken(#fff, 10);
@@ -78,7 +86,7 @@ button {
   background: #fff;
   color: $secondary-color-dark;
   &:hover {
-    background: darken(#fff, 10);
+    background: darken(#fff, 10) !important;
   }
 }
 
@@ -215,4 +223,13 @@ button {
     width: 24px;
     margin-right: 8px;
   }
+}
+
+.b-inverted-button {
+  background-color: #fff;
+  border: 2px solid;
+  border-radius: 20px;
+  padding: 6px 24px;
+  font-weight: 600;
+  font-size: 18px;
 }

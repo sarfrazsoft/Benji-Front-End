@@ -6,6 +6,10 @@
     If you had a great time, you can create your own free account below.
   </ng-container>
   <ng-container class="content">
-    <button class="b-standard-button bg-primary-color">Claim your free account</button>
+    <button 
+      class="b-standard-button bg-primary-color"
+      (click)="router.navigate(['/sign-up'])">
+      Claim your free account
+    </button>
   </ng-container>
 </benji-ps-instruction-template>

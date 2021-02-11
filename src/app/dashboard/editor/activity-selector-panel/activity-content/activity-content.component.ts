@@ -170,6 +170,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'main_title') {
                   mappedField.templateOptions.label = 'Header';
                   mappedField.templateOptions.placeholder = 'Header text';
+                  mappedField.templateOptions.maxLength = 40;
                 } else if (mapSource.field_name === 'title_text') {
                   mappedField.type = 'textarea';
                   mappedField.templateOptions.label = 'Subheader';

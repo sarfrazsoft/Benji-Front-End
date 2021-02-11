@@ -16,40 +16,25 @@
 
 
 <div class="b-flat-card center-text feedback-card heightAuto">
-  <div class="b-flat-card__title">
-    <h2 class="pn-400">Case Study</h2>
-  </div>
-  <div class="b-flat-card__body">
-    <div class="twemoji-container">
-      <app-b-twemoji emoji="✍️"></app-b-twemoji>
+
+  <div class="content" fxLayout="column">
+    <div class="worksheet-title">
+      Here’s the title for the work sheet. 
     </div>
-    <ng-container *ngIf="!isDone">
-      <h1 class="pn-700 primary-color-darkest" *ngIf="isUserNoteTaker()">
-        You're the Note-taker
-      </h1>
-      <h1 class="pn-700 primary-color-darkest" *ngIf="!isUserNoteTaker()">
-        You're the partner
-      </h1>
-      <p class="instruction" *ngIf="isUserNoteTaker()">
-        {{ act.note_taker_instructions }}
-      </p>
-      <p class="instruction" *ngIf="!isUserNoteTaker()">
-        {{ act.participant_instructions }}
-      </p>
-    </ng-container>
-    <ng-container *ngIf="isDone">
-      <h1 class="pn-700 primary-color-darkest">
-        Please wait
-      </h1>
-      <p class="instruction">
-        Get ready to share your findings with the others
-      </p>
-    </ng-container>
-  </div>
-
-
-  <div class="content">
-    <div class="your-prompt">
+    <div 
+      class="worksheet-text" 
+      *ngIf="act.case_study_details" 
+      innerHTML="{{ act.case_study_details }}">
+    </div>
+    <div class="worksheet-timer" *ngIf="timer && !act.hide_timer">
+      TIME LEFT: <span>
+        <benji-number-timer
+          [timer]="timer"
+          endStateText="Times Up!"
+        ></benji-number-timer>
+      </span>
+    </div>
+    <!-- <div class="your-prompt">
       <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
         Details:
       </div>
@@ -58,56 +43,32 @@
         *ngIf="act.case_study_details"
         innerHTML="{{ act.case_study_details }}"
       ></div>
-    </div>
+    </div> -->
 
     <ng-container *ngIf="groupId">
-      <benji-text-editor  [documentId]="groupId"></benji-text-editor>
+      <benji-text-editor #childComponent  [documentId]="groupId"></benji-text-editor>
     </ng-container>
 
-    <div *ngFor="let question of questions">
-      <div class="your-prompt">
-        <div
-          class="question"
-          *ngIf="question.question_text"
-          innerHTML="{{ question.question_text }}"
-        ></div>
-        <div class="your-notes">
-          <div class="your-pitch-label left-text">your notes:</div>
-          <div class="draft-pitch">
-            <textarea
-              [disabled]="!isUserNoteTaker() || isDone"
-              matInput
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="7"
-              [(ngModel)]="question.answer"
-              (ngModelChange)="locallySaveDraft($event)"
-              (keyup)="typingStoped($event, question.id)"
-              (keydown)="typingStarted()"
-            ></textarea>
-            <!-- <div 
-              class="editor-container"
-              style="height: 300px;"
-              [ngClass]="{
-                editable: isUserNoteTaker() && !isDone,
-                disabled: !(isUserNoteTaker() && !isDone)
-              }">
-
-              
-            </div> -->
-          </div>
+    <div class="image-upload-button" fxLayoutAlign="center center">
+      <label fxLayout="row" fxLayoutAlign="center center">
+        <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
+        <div class="details" fxLayoutAlign="space-evenly center">
+          <div *ngIf="!imagesList">Add to your submission</div>
+          <div class="image-name" *ngIf="imagesList">Selected</div>
+          <mat-icon *ngIf="!imagesList" aria-hidden="false" aria-label="photo camera">
+            photo_camera
+          </mat-icon>
+          <mat-icon
+            *ngIf="imagesList"
+            (click)="imagesList = null; $event.preventDefault()"
+            benji-click-stop-propagation
+          >
+            close
+          </mat-icon>
         </div>
-      </div>
+      </label>
     </div>
   </div>
-  <button
-    *ngIf="isUserNoteTaker() && !isDone"
-    class="b-standard-button selected"
-    style="margin-bottom: 3vh;"
-    (click)="submitCaseStudyDone()"
-  >
-    Submit
-  </button>
 </div>
 
 

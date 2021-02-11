@@ -2,6 +2,7 @@
 // import { BuildPitchComponents } from './build-pitch-activity';
 // import { ParticipantCaseStudyActivityComponent } from './case-study-activity/
 // case-study-activity.component';
+import { ParticipantConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { ParticipantExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
@@ -26,12 +27,12 @@ import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/te
 import { ParticipantTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 
+export { ParticipantConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 export { SessionEndComponent } from './session-end/session-end.component';
 export { ParticipantSharedComponents } from './shared';
 export { ParticipantInstructionTemplateComponent } from './shared/instruction-template/instruction-template.component';
 export { QuestionFormComponent } from './shared/question-form/question-form.component';
 export { QuestionLayoutComponent } from './shared/question-layout/question-layout.component';
-
 export { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 export { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';

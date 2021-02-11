@@ -12,6 +12,7 @@ import {
 } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
 import { ContextService } from 'src/app/services/context.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -44,7 +45,8 @@ export class ParticipantBrainstormingActivityComponent
   constructor(
     private contextService: ContextService,
     private formBuilder: FormBuilder,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private utilsService: UtilsService
   ) {
     super();
   }
@@ -200,10 +202,11 @@ export class ParticipantBrainstormingActivityComponent
     const fileList: FileList = this.imagesList;
     if (fileList.length > 0) {
       const file: File = fileList[0];
-      this.resizeImage({
-        file: file,
-        maxSize: 500,
-      })
+      this.utilsService
+        .resizeImage({
+          file: file,
+          maxSize: 500,
+        })
         .then((resizedImage: Blob) => {
           const formData: FormData = new FormData();
           formData.append('img', resizedImage, file.name);
@@ -232,62 +235,6 @@ export class ParticipantBrainstormingActivityComponent
     }
   }
 
-  resizeImage = (settings: IResizeImageOptions) => {
-    const file = settings.file;
-    const maxSize = settings.maxSize;
-    const reader = new FileReader();
-    const image = new Image();
-    const canvas = document.createElement('canvas');
-    const dataURItoBlob = (dataURI: string) => {
-      const bytes =
-        dataURI.split(',')[0].indexOf('base64') >= 0
-          ? atob(dataURI.split(',')[1])
-          : unescape(dataURI.split(',')[1]);
-      const mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
-      const max = bytes.length;
-      const ia = new Uint8Array(max);
-      for (let i = 0; i < max; i++) {
-        ia[i] = bytes.charCodeAt(i);
-      }
-      return new Blob([ia], { type: mime });
-    };
-    const resize = () => {
-      let width = image.width;
-      let height = image.height;
-
-      if (width > height) {
-        if (width > maxSize) {
-          height *= maxSize / width;
-          width = maxSize;
-        }
-      } else {
-        if (height > maxSize) {
-          width *= maxSize / height;
-          height = maxSize;
-        }
-      }
-
-      canvas.width = width;
-      canvas.height = height;
-      canvas.getContext('2d').drawImage(image, 0, 0, width, height);
-      const dataUrl = canvas.toDataURL('image/jpeg');
-      return dataURItoBlob(dataUrl);
-    };
-
-    return new Promise((ok, no) => {
-      if (!file.type.match(/image.*/)) {
-        no(new Error('Not an image'));
-        return;
-      }
-
-      reader.onload = (readerEvent: any) => {
-        image.onload = () => ok(resize());
-        image.src = readerEvent.target.result;
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
   getUserIdeas(userID: number): Array<Idea> {
     const arr: Array<Idea> = [];
     this.act.brainstormcategory_set.forEach((category) => {
@@ -303,9 +250,4 @@ export class ParticipantBrainstormingActivityComponent
     });
     return arr;
   }
-}
-
-export interface IResizeImageOptions {
-  maxSize: number;
-  file: File;
 }

@@ -176,6 +176,13 @@
     (sendMessage)="sendSocketMessage($event)"
   ></benji-ps-case-study-activity>
 
+  <!-- <benji-ps-convo-cards-activity
+    *ngIf="getActivityType() === at.caseStudy"
+    [activityState]="serverMessage"
+    [avgServerTimeOffset]="avgServerTimeOffset"
+    (sendMessage)="sendSocketMessage($event)"
+  ></benji-ps-convo-cards-activity> -->
+
   <benji-ps-gather-activity
     *ngIf="getActivityType() === at.gather"
     [activityState]="serverMessage"

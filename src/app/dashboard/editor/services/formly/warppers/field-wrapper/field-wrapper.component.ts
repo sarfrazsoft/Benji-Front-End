@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
 
 @Component({
@@ -7,8 +7,16 @@ import { FieldWrapper } from '@ngx-formly/core';
   styleUrls: ['./field-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldWrapperComponent extends FieldWrapper implements OnInit {
+export class FieldWrapperComponent extends FieldWrapper implements OnInit, OnChanges {
+  characterLimitLeft;
   ngOnInit() {
-    // console.log(this.field);
+    if (this.to.maxLength && this.field.formControl.value) {
+      this.characterLimitLeft = this.to.maxLength - this.field.formControl.value.length;
+    }
+    this.field.formControl.valueChanges.subscribe((val) => {
+      this.characterLimitLeft = this.to.maxLength - this.field.formControl.value.length;
+    });
   }
+
+  ngOnChanges() {}
 }

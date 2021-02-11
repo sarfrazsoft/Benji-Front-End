@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -20,11 +20,16 @@ export class ParticipantCaseStudyActivityComponent
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
+  timer;
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
 
   groupId;
+
+  imagesList: FileList;
+
+  @ViewChild('childComponent') child;
 
   constructor(private contextService: ContextService) {
     super();
@@ -50,6 +55,8 @@ export class ParticipantCaseStudyActivityComponent
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.contextService.activityTimer = this.act.activity_countdown_timer;
+    this.timer = this.act.activity_countdown_timer;
+    console.log(this.timer);
     // this.populateQuestions();
     const myNoteTaker = this.getMyNoteTaker();
 
@@ -176,4 +183,19 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   locallySaveDraft(event) {}
+
+  onFileSelect(event) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length === 0) {
+      this.imagesList = null;
+    } else {
+      this.imagesList = fileList;
+      const participant_code = this.getParticipantCode().toString();
+      this.child.imageSelected(
+        this.imagesList,
+        this.activityState.lesson_run.lessonrun_code,
+        participant_code
+      );
+    }
+  }
 }

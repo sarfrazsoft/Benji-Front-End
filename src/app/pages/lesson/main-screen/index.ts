@@ -2,6 +2,7 @@
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { CaseStudyGroupComponent } from './case-study-activity/case-study-group/case-study-group.component';
+import { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { MainScreenExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
@@ -28,7 +29,7 @@ export { MainScreenTitleActivityComponent } from './title-activity/title-activit
 export { MainScreenBrainStormComponents } from './brainstorming-activity';
 export { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 export * from './brainstorming-activity';
-// export { MainScreenMcqActivityComponent } from './mcq-activity/mcq-activity.component';
+export { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 export { MainScreenLessonComponent };
