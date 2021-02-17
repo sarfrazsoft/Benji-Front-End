@@ -47,6 +47,7 @@ export class CustomMenuComponent implements OnInit {
   }
 
   execute(state: EditorState, dispatch?: (tr: Transaction) => void): boolean {
+    // tslint:disable-next-line:no-shadowed-variable
     const { schema } = state;
 
     if (this.isActive) {
@@ -58,6 +59,7 @@ export class CustomMenuComponent implements OnInit {
 
   update = (view: EditorView) => {
     const { state } = view;
+    // tslint:disable-next-line:no-shadowed-variable
     const { schema } = state;
     this.isActive = isNodeActive(state, schema.nodes.video);
     this.isDisabled = !this.execute(state, null); // returns true if executable
