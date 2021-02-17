@@ -1,0 +1,36 @@
+<div class="add-learners-dialog" fxLayout="column">
+  <div fxLayoutAlign="end end">
+    <button class="close-button" matDialogClose>
+      <img src="/assets/img/closeBig.svg" />
+    </button>
+  </div>
+  <mat-dialog-content class="add-learners dialog-content">
+    <div fxLayout="column" fxLayoutGap="8px">
+      <h2 class="dialog-heading">
+        Add video url
+      </h2>
+      
+      <div class="add-learners-section dashboard-form" fxLayout="column">
+          <div class="field">
+            <input
+              class="dash-input dialog-controls"
+              required
+              placeholder="URL"
+              [(ngModel)]="url"
+            />
+          </div>
+    
+          <div *ngIf="invitationsSent" class="success-message">Invitations sent</div>
+          <div class="controls-container" fxLayoutAlign="start">
+
+            <button
+              (click)="onSubmit()"
+              class=" bg-primary-color white-color dialog-controls">
+              Add video
+            </button>
+          </div>
+      </div>
+
+    </div>
+  </mat-dialog-content>
+</div>

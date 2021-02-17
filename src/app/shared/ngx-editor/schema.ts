@@ -23,13 +23,82 @@ const codeBlock: NodeSpec = {
   },
 };
 
-const nodes = Object.assign({}, basicNodes, {
+const video: NodeSpec = {
+  attrs: {
+    src: {},
+    poster: { default: null },
+  },
+  group: 'block',
+  draggable: true,
+  parseDOM: [
+    {
+      tag: 'video',
+      getAttrs(dom: HTMLElement) {
+        const source = dom.querySelector('source');
+        return {
+          src: source.getAttribute('src'),
+          poster: dom.getAttribute('poster'),
+        };
+      },
+    },
+  ],
+  toDOM(node) {
+    const { src, poster } = node.attrs;
+    return ['video', { controls: '', draggable: 'false', poster }, ['source', { src }]];
+  },
+};
+
+const videoIframe: NodeSpec = {
+  attrs: {
+    src: {},
+    poster: { default: null },
+  },
+  group: 'block',
+  draggable: true,
+  parseDOM: [
+    {
+      tag: 'iframe',
+      getAttrs(dom: HTMLElement) {
+        const source = dom.querySelector('source');
+        return {
+          src: source.getAttribute('src'),
+          poster: dom.getAttribute('poster'),
+        };
+      },
+    },
+  ],
+  toDOM(node) {
+    const { src, poster } = node.attrs;
+    return [
+      'div',
+      {
+        class: 'video-iframe-container',
+      },
+      [
+        'iframe',
+        {
+          class: 'responsive-iframe',
+          controls: '',
+          allowfullscreen: '',
+          draggable: 'false',
+          poster,
+          src,
+        },
+        ['source', { src }],
+      ],
+    ];
+  },
+};
+
+const nodes: any = Object.assign({}, basicNodes, {
   code_mirror: codeBlock,
+  video: video,
+  videoIframe: videoIframe,
 });
 
-const schema = new Schema({
+const schema: any = new Schema({
   nodes,
-  marks: basicMarks,
+  marks: basicMarks as any,
 });
 
 export default schema;

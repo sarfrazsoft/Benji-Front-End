@@ -1,7 +1,31 @@
 <div class="NgxEditor__Seperator"></div>
-<div class="NgxEditor__MenuItem NgxEditor__MenuItem--Text" (mousedown)="onClick($event)"
+<div 
+  class="NgxEditor__MenuItem NgxEditor__MenuItem--Text" 
+  (click)="addVideo($event)"
+  (clickOutside)="close($event)"
   [ngClass]="{'NgxEditor__MenuItem--Active': isActive, 'NgxEditor--Disabled': isDisabled}">
-  CodeMirror
+  Add video
+  <div class="add-video-container" >
+    <div class="add-video-popup" *ngIf="showAddVideoPopup">
+      <div fxLayout="column" fxLayoutGap="16px">
+        <div>
+          <input type="text" [(ngModel)]="videoURL" benji-click-stop-propagation>
+        </div>
+
+        <div>
+          <button
+            benji-click-stop-propagation 
+            (click)="close($event)">
+            Embed video
+          </button>
+        </div>
+
+        <div class="info">
+          Works with YouTube and Vimeo
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="NgxEditor__Seperator"></div>

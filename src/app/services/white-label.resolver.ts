@@ -44,7 +44,6 @@ export class WhiteLabelResolver implements Resolve<any> {
         if (window.location.origin.includes('muralys')) {
           // because muralys is the only organzation with a url that looks like
           // https://sessions.muralys.com/participant/login
-          console.log('get muralys theme');
           this.httpClient.get(global.apiRoot + '/whitelabel/theme/' + 'muralys/').subscribe(
             (res: any) => {
               this.contextService.partnerInfo = res;

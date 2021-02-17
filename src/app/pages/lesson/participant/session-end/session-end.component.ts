@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./session-end.component.scss'],
 })
 export class SessionEndComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   ngOnInit(): void {}
 }

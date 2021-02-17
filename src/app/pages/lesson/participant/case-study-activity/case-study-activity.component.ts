@@ -26,10 +26,13 @@ export class ParticipantCaseStudyActivityComponent
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
 
-  groupId;
+  // unique ID for the group
+  groupId: string;
+  // unique ID for document to be used in collaborative editor
+  documentId: string;
 
-  participant_code;
-  lessonrun_code;
+  participantCode: string;
+  lessonRunCode;
 
   constructor(private contextService: ContextService) {
     super();
@@ -38,12 +41,15 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
-    this.participant_code = this.getParticipantCode();
-    this.lessonrun_code = this.activityState.lesson_run.lessonrun_code.toString();
+    this.participantCode = this.getParticipantCode().toString();
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     // this.populateQuestions();
 
     const userId = this.getParticipantCode();
-    this.groupId = this.getMyGroup(userId).id;
+    this.groupId = this.getMyGroup(userId).id.toString();
+
+    // create a unique ID by combining groupId and Lesson run code
+    this.documentId = this.groupId + this.lessonRunCode;
   }
 
   populateQuestions() {
@@ -58,7 +64,6 @@ export class ParticipantCaseStudyActivityComponent
     this.act = this.activityState.casestudyactivity;
     this.contextService.activityTimer = this.act.activity_countdown_timer;
     this.timer = this.act.activity_countdown_timer;
-    console.log(this.timer);
     // this.populateQuestions();
     const myNoteTaker = this.getMyNoteTaker();
 
@@ -182,6 +187,10 @@ export class ParticipantCaseStudyActivityComponent
 
   submitCaseStudyDone() {
     this.doneTyping(() => this.sendMessage.emit(new CaseStudyTeamDoneEvent()));
+  }
+
+  saveEditCollab() {
+    console.log(localStorage.getItem('editCollab'));
   }
 
   locallySaveDraft(event) {}

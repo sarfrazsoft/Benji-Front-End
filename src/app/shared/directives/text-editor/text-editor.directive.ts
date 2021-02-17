@@ -35,39 +35,39 @@ import { addAnnotation, annotationIcon, commentPlugin, commentUI } from './comme
 import { GET, POST } from './http';
 import { Reporter } from './reporter';
 
-const nodes = addListNodes(schema.spec.nodes, 'paragraph block*', 'block');
+// const nodes = addListNodes(schema.spec.nodes, 'paragraph block*', 'block');
 
-const mySchema = new Schema({
-  nodes: nodes.append({
-    example: {
-      attrs: {
-        value: { default: 'in the app and in ProseMirror' },
-        random: { default: -1 },
-      },
-      inline: false,
-      draggable: true,
-      selectable: true,
-      atom: false,
-      group: 'block',
-      toDOM(nodex) {
-        return ['div', { 'data-type': 'example', value: nodex.attrs.value }, ''];
-      },
-      parseDOM: [
-        {
-          // you could use my-element as a tag, but we want
-          //  some additional features that come with the node view
-          // the custom element would then completely t
-          // ake over the node and only communicate through its attributes
-          tag: 'div[data-type=example]',
-          getAttrs(dom) {
-            return {};
-          },
-        },
-      ],
-    },
-  }),
-  marks: schema.spec.marks,
-});
+// const mySchema = new Schema({
+//   nodes: nodes.append({
+//     example: {
+//       attrs: {
+//         value: { default: 'in the app and in ProseMirror' },
+//         random: { default: -1 },
+//       },
+//       inline: false,
+//       draggable: true,
+//       selectable: true,
+//       atom: false,
+//       group: 'block',
+//       toDOM(nodex) {
+//         return ['div', { 'data-type': 'example', value: nodex.attrs.value }, ''];
+//       },
+//       parseDOM: [
+//         {
+//           // you could use my-element as a tag, but we want
+//           //  some additional features that come with the node view
+//           // the custom element would then completely t
+//           // ake over the node and only communicate through its attributes
+//           tag: 'div[data-type=example]',
+//           getAttrs(dom) {
+//             return {};
+//           },
+//         },
+//       ],
+//     },
+//   }),
+//   marks: schema.spec.marks,
+// });
 
 // const schema2 = new Schema({
 //   nodes: nodes.append(
@@ -125,62 +125,62 @@ const mySchema = new Schema({
 //   ).documentElement
 // );
 
-const node = mySchema.node.bind(mySchema);
-const text = mySchema.text.bind(mySchema);
-const example = mySchema.nodes.example;
-const paragraph = mySchema.nodes.paragraph;
-const heading = mySchema.nodes.heading;
+// const node = mySchema.node.bind(mySchema);
+// const text = mySchema.text.bind(mySchema);
+// const example = mySchema.nodes.example;
+// const paragraph = mySchema.nodes.paragraph;
+// const heading = mySchema.nodes.heading;
 
-const ydoc = new Y.Doc();
-const provider = new WebsocketProvider('wss://demos.yjs.dev', 'prosemirror-demo', ydoc);
-const type = ydoc.getXmlFragment('prosemirror');
+// const ydoc = new Y.Doc();
+// const provider = new WebsocketProvider('wss://demos.yjs.dev', 'prosemirror-demo', ydoc);
+// const type = ydoc.getXmlFragment('prosemirror');
 
-@Directive({
-  // tslint:disable-next-line:directive-selector
-  selector: '[benjiTextEditor]',
-})
-export class TextEditorDirective implements OnInit {
-  view = new EditorView(this.viewContainerRef.element.nativeElement, {
-    state: EditorState.create({
-      schema,
-      // doc: node('doc', {}, [
-      //   heading.create({}, [text('Test document')]),
-      //   example.create({}, []),
-      //   paragraph.create({}, [text('Some paragraph to drag after')]),
-      // ]),
-      plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()].concat(
-        exampleSetup({ schema })
-      ),
-    }),
-    // nodeViews: {
-    //   example: (node, nodeView, getPos) =>
-    //     new CustomView(node, nodeView, getPos, this.injector),
-    // },
-  });
+// @Directive({
+//   // tslint:disable-next-line:directive-selector
+//   selector: '[benjiTextEditor]',
+// })
+// export class TextEditorDirective implements OnInit {
+//   view = new EditorView(this.viewContainerRef.element.nativeElement, {
+//     state: EditorState.create({
+//       schema,
+//       // doc: node('doc', {}, [
+//       //   heading.create({}, [text('Test document')]),
+//       //   example.create({}, []),
+//       //   paragraph.create({}, [text('Some paragraph to drag after')]),
+//       // ]),
+//       plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), yUndoPlugin()].concat(
+//         exampleSetup({ schema })
+//       ),
+//     }),
+//     // nodeViews: {
+//     //   example: (node, nodeView, getPos) =>
+//     //     new CustomView(node, nodeView, getPos, this.injector),
+//     // },
+//   });
 
-  constructor(public viewContainerRef: ViewContainerRef, private injector: Injector) {}
-  ngOnInit() {
-    const awareness = provider.awareness;
-    // get participant information here
-    const benji_user = JSON.parse(localStorage.getItem('benji_user'));
-    console.log(benji_user);
+//   constructor(public viewContainerRef: ViewContainerRef, private injector: Injector) {}
+//   ngOnInit() {
+//     const awareness = provider.awareness;
+//     // get participant information here
+//     const benji_user = JSON.parse(localStorage.getItem('benji_user'));
+//     console.log(benji_user);
 
-    awareness.setLocalStateField('user', {
-      // Define a print name that should be displayed
-      name: benji_user.first_name,
-      // Define a color that should be associated to the user:
-      color: '#ffb61e', // should be a hex color
-    });
-    // console.log(ydoc);
-    // console.log(
-    //   node('doc', {}, [
-    //     heading.create({}, [text('Test document')]),
-    //     example.create({}, []),
-    //     paragraph.create({}, [text('Some paragraph to drag after')]),
-    //   ])
-    // );
-  }
-}
+//     awareness.setLocalStateField('user', {
+//       // Define a print name that should be displayed
+//       name: benji_user.first_name,
+//       // Define a color that should be associated to the user:
+//       color: '#ffb61e', // should be a hex color
+//     });
+//     // console.log(ydoc);
+//     // console.log(
+//     //   node('doc', {}, [
+//     //     heading.create({}, [text('Test document')]),
+//     //     example.create({}, []),
+//     //     paragraph.create({}, [text('Some paragraph to drag after')]),
+//     //   ])
+//     // );
+//   }
+// }
 
 // export class EditorConnection {
 //   report: any;

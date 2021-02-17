@@ -17,10 +17,6 @@ import { WebsocketProvider } from 'y-websocket';
 import * as Y from 'yjs';
 import { yCursorPlugin } from './cursor-plugin/cursor-plugin';
 
-const ydoc = new Y.Doc();
-const provider = new WebsocketProvider('wss://prosemirror-collab.glitch.me/', 'prosemirror-demo1', ydoc);
-const type = ydoc.getXmlFragment('prosemirror');
-
 const isMacOs = /Mac/.test(navigator.platform);
 
 export interface KeyMap {
@@ -54,26 +50,9 @@ const getListKeyMap = (): KeyMap => {
 
 //
 //
-// Remote cursor user's name
 //
-//
-//
-const awareness = provider.awareness;
-// get participant information here
-const userName = getUserName();
-
-awareness.setLocalStateField('user', {
-  // Define a print name that should be displayed
-  name: userName ? userName : 'Panda',
-  // Define a color that should be associated to the user:
-  color: '#ffb61e', // should be a hex color
-  // typing: false,
-});
-
-//
-//
-//
-//  image upload plugin
+// image upload plugin
+// TODO: should have it's own page/file
 export const placeholderPlugin = new Plugin({
   state: {
     init() {
@@ -111,11 +90,8 @@ const getPlugins = (): Plugin[] => {
   const listKeyMap = getListKeyMap();
 
   const plugins = [
-    // ySyncPlugin(type),
-    // OrginalYCursorPlugin(provider.awareness),
-    yCursorPlugin(provider.awareness),
     yUndoPlugin(),
-    history(),
+    // history(),
     keymap({
       'Mod-b': toggleMark(schema.marks.strong),
       'Mod-i': toggleMark(schema.marks.em),
@@ -137,15 +113,15 @@ const getPlugins = (): Plugin[] => {
 
 export default getPlugins();
 
-// Get user's name for displaying in remote cursors
-export function getUserName() {
-  // const u: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
-  // if (u) {
-  //   return u.first_name;
-  // } else {
-  const p: Participant = JSON.parse(localStorage.getItem('participant'));
-  if (p) {
-    return p.display_name;
-  }
-  // }
-}
+// // Get user's name for displaying in remote cursors
+// export function getUserName() {
+//   // const u: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
+//   // if (u) {
+//   //   return u.first_name;
+//   // } else {
+//   const p: Participant = JSON.parse(localStorage.getItem('participant'));
+//   if (p) {
+//     return p.display_name;
+//   }
+//   // }
+// }

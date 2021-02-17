@@ -25,9 +25,8 @@ export const defaultCursorBuilder = (user) => {
   cursor.classList.add('ProseMirror-yjs-cursor');
   cursor.setAttribute('style', `border-color: ${user.color}`);
   const userDiv = document.createElement('div');
-  userDiv.setAttribute('style', `background-color: ${user.backgroudColor}`);
-  userDiv.setAttribute('style', `color: ${user.color}`);
-  console.log(user.name);
+  userDiv.setAttribute('style', `background-color: ${user.backgroundColor}; color: ${user.color}`);
+  // userDiv.setAttribute('style', `color: ${user.color}`);
   userDiv.insertBefore(document.createTextNode(user.name), null);
   cursor.insertBefore(userDiv, null);
   return cursor;
@@ -58,6 +57,7 @@ export const createDecorations = (state, awareness, createCursor) => {
     }
     if (aw.cursor != null) {
       const user = aw.user || {};
+      console.log(JSON.stringify(user));
       if (user.color == null) {
         user.color = '#ffa500';
       }
@@ -67,7 +67,6 @@ export const createDecorations = (state, awareness, createCursor) => {
       if (!user['typing']) {
         user.name = '';
       }
-      console.log(JSON.stringify(user));
       let anchor = relativePositionToAbsolutePosition(
         y,
         ystate.type,
@@ -126,6 +125,8 @@ export const yCursorPlugin = (
         return createDecorations(state, awareness, cursorBuilder);
       },
       apply(tr, prevState, oldState, newState) {
+        // TOD move to it's own plugin
+        localStorage.setItem('collabedit', newState.doc.textContent);
         const ystate = ySyncPluginKey.getState(newState);
         const yCursorState = tr.getMeta(yCursorPluginKey);
         if ((ystate && ystate.isChangeOrigin) || (yCursorState && yCursorState.awarenessUpdated)) {
@@ -212,41 +213,95 @@ export const yCursorPlugin = (
   });
 
 const userName = getUserName();
+let usersNumber;
+
 let typingTimer;
 // on keyup, start the countdown
 function typingStoped(awareness) {
   clearTimeout(typingTimer);
   typingTimer = setTimeout(() => {
     doneTyping(awareness);
-  }, 2000);
+  }, 3000);
 }
 
 // on keydown, clear the countdown
 function typingStarted(awareness) {
   awareness.setLocalStateField('user', {
     name: userName ? userName : 'Panda',
+    color: colors[usersNumber].color, // should be a hex color
+    backgroundColor: colors[usersNumber].backgroundColor, // should be a hex color
     typing: true,
   });
   clearTimeout(typingTimer);
 }
 
-function doneTyping(awarenessx) {
+function doneTyping(awareness) {
   console.log('done typing');
-  awarenessx.setLocalStateField('user', {
+  awareness.setLocalStateField('user', {
     name: userName ? userName : 'Panda',
+    color: colors[usersNumber].color, // should be a hex color
+    backgroundColor: colors[usersNumber].backgroundColor, // should be a hex color
     typing: false,
   });
 }
 
 // Get user's name for displaying in remote cursors
 function getUserName() {
-  const u: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
-  if (u) {
-    return u.first_name;
-  } else {
-    const p: Participant = JSON.parse(localStorage.getItem('participant'));
-    if (p) {
-      return p.display_name;
-    }
+  const p: Participant = JSON.parse(localStorage.getItem('participant'));
+  if (p) {
+    return p.display_name;
   }
 }
+
+export function setAwareness(provider, participantCode) {
+  //
+  //
+  // Remote cursor user's name
+
+  const one = String(participantCode).charAt(0);
+  const oneAsNumber = Number(one);
+  usersNumber = oneAsNumber;
+  const awareness = provider.awareness;
+
+  // const colorIndex = randomIntFromInterval(0, 19);
+  awareness.setLocalStateField('user', {
+    // Define a print name that should be displayed
+    name: userName ? userName : 'Panda',
+    // Define a color that should be associated to the user:
+    color: colors[usersNumber].color, // should be a hex color
+    backgroundColor: colors[usersNumber].backgroundColor, // should be a hex color
+    // typing: false,
+  });
+}
+
+// function randomIntFromInterval(min, max) {
+//   // min and max included
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// }
+
+const colors = [
+  { color: '#ffffff', backgroundColor: '#e6194b' },
+  { color: '#ffffff', backgroundColor: '#3cb44b' },
+  { color: '#000000', backgroundColor: '#ffe119' },
+  { color: '#ffffff', backgroundColor: '#4363d8' },
+  { color: '#ffffff', backgroundColor: '#f58231' },
+  { color: '#ffffff', backgroundColor: '#911eb4' },
+  { color: '#000000', backgroundColor: '#46f0f0' },
+  { color: '#ffffff', backgroundColor: '#f032e6' },
+  { color: '#000000', backgroundColor: '#bcf60c' },
+  { color: '#000000', backgroundColor: '#fabebe' },
+  { color: '#ffffff', backgroundColor: '#469990' },
+  { color: '#000000', backgroundColor: '#008080' },
+  { color: '#000000', backgroundColor: '#e6beff' },
+  { color: '#ffffff', backgroundColor: '#9a6324' },
+  { color: '#000000', backgroundColor: '#fffac8' },
+  { color: '#ffffff', backgroundColor: '#800000' },
+  { color: '#000000', backgroundColor: '#aaffc3' },
+  { color: '#ffffff', backgroundColor: '#808000' },
+  { color: '#000000', backgroundColor: '#ffd8b1' },
+  { color: '#ffffff', backgroundColor: '#000075' },
+  { color: '#000000', backgroundColor: '#808080' },
+  { color: '#000000', backgroundColor: '#ffffff' },
+  { color: '#ffffff', backgroundColor: '#000000' },
+  { color: '#ffffff', backgroundColor: '#a9a9a9' },
+];

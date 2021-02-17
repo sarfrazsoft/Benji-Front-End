@@ -45,13 +45,22 @@
       ></div>
     </div> -->
 
-    <ng-container *ngIf="groupId && participant_code">
+    <ng-container *ngIf="groupId && lessonRunCode">
       <benji-text-editor 
-        [lessonrun_code]="lessonrun_code" 
-        [participant_code]="participant_code"  
-        [documentId]="groupId"></benji-text-editor>
+        [lessonRunCode]="lessonRunCode" 
+        [participantCode]="participantCode"  
+        [documentId]="documentId"
+        (submitActivityValues)="saveEditCollab()"></benji-text-editor>
     </ng-container>
 
+    
+    <div class="button-container" fxLayoutAlign="end end">
+      <button  
+        class="b-small-squared-button bg-primary-color white-color"
+        (click)="saveEditCollab()">
+        Done
+      </button>
+    </div>
 
   </div>
 </div>

@@ -6,10 +6,11 @@
 <ngx-editor [editor]="editor">
 </ngx-editor>
 <ng-template #customMenu>
-  <app-custom-menu
-    [lessonrun_code]="lessonrun_code" 
-    [participant_code]="participant_code"  
-    [editor]="editor"></app-custom-menu>
+  <benji-editor-custom-menu
+    [lessonRunCode]="lessonRunCode" 
+    [participantCode]="participantCode"  
+    [editor]="editor">
+  </benji-editor-custom-menu>
 </ng-template>
 
 

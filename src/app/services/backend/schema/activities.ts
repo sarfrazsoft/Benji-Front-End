@@ -461,6 +461,7 @@ export interface CaseStudyActivity {
   participant_instructions: string;
   mainscreen_instructions: string;
   case_study_details: string;
+  hide_timer: boolean;
 }
 
 export interface CaseStudyParticipantSet {
