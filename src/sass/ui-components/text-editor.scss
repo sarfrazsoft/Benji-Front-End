@@ -30,6 +30,9 @@ div.NgxEditor {
 .NgxEditor__MenuItem .NgxEditor__MenuItem--IconContainer {
   opacity: 0.55;
 }
+.NgxEditor__Dropdown .NgxEditor__Dropdown--Text:after {
+  margin-left: 0.5rem !important;
+}
 
 .video-iframe-container {
   position: relative;

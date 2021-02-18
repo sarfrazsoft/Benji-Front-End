@@ -1,5 +1,6 @@
-<div class="NgxEditor__Seperator"></div>
-<div 
+<div class="NgxEditor__Seperator" *ngIf="allowVideo"></div>
+<div
+  *ngIf="allowVideo"
   class="NgxEditor__MenuItem NgxEditor__MenuItem--Text" 
   (click)="addVideo($event)"
   (clickOutside)="close($event)"

@@ -21,20 +21,20 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   @Input() documentId;
   @Input() participantCode: string;
   @Input() lessonRunCode: string;
+  @Input() allowVideo = false;
   @Output() submitActivityValues = new EventEmitter();
 
   editor: Editor;
   editor2: Editor;
 
   toolbar: Toolbar = [
-    [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
-    ['bold', 'italic'],
-    ['underline'],
+    [{ heading: ['h1', 'h2', 'h3'] }],
+    ['bold', 'italic', 'underline'],
     // ['underline', 'strike'],
     // ['code', 'blockquote'],
     ['ordered_list', 'bullet_list'],
     // ['link', 'image'],
-    ['text_color', 'background_color'],
+    // ['text_color', 'background_color'],
     // ['align_left', 'align_center', 'align_right', 'align_justify'],
   ];
   constructor(private utilsService: UtilsService, private httpClient: HttpClient) {}

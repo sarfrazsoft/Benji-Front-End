@@ -31,6 +31,7 @@ export class CustomMenuComponent implements OnInit {
   @Input() editor: Editor;
   @Input() participantCode: string;
   @Input() lessonRunCode: string;
+  @Input() allowVideo: boolean;
 
   isActive = false;
   isDisabled = false;
