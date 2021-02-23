@@ -4,7 +4,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { clone } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
-import { ContextService, PastSessionsService } from 'src/app/services';
+import { ContextService, PastSessionsService, SharingToolService } from 'src/app/services';
 import { Timer, User } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
@@ -57,7 +57,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private pastSessionsService: PastSessionsService,
     public contextService: ContextService,
-    private router: Router
+    private router: Router,
+    private sharingToolService: SharingToolService
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -217,6 +218,10 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
         this.router.navigate(['/participant/join']);
       }
     }
+  }
+
+  startSharingTool() {
+    this.sharingToolService.sharingToolControl$.next(this.activityState);
   }
 }
 

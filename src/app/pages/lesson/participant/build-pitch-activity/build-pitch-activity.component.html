@@ -52,7 +52,7 @@
 
   <div class="b-flat-card__body" *ngIf="showMyPitch && userPitchExists(myParticipantCode)">
     <div class="your-pitch-label left-text">Your statement:</div>
-    <p class="your-pitch left-text" innerHTML="{{ getPitchText(myParticipantCode) }}"></p>
+    <p class="your-pitch left-text" innerHTML="{{ getPitchText(myParticipantCode, act) }}"></p>
 
     <div *ngIf="isPitchBlank(myParticipantCode)">
       <div
@@ -76,7 +76,7 @@
       <benji-vote-pitch
         [user]="pitchSet.participant.participant_code"
         [expanded]="expandedUserArray['' + pitchSet.user]"
-        [pitchText]="getPitchText(pitchSet.participant.participant_code)"
+        [pitchText]="getPitchText(pitchSet.participant.participant_code, act)"
         [name]="getUserName(pitchSet.participant.participant_code)"
         [(selectedUser)]="selectedUser"
         (userSelected)="userSelected($event)"

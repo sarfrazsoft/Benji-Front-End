@@ -121,3 +121,10 @@ benji-ps-case-study-activity {
     }
   }
 }
+
+.case-study-share-ui {
+  max-height: calc(100% - 150px);
+  position: absolute;
+  width: 30%;
+  overflow-y: auto;
+}

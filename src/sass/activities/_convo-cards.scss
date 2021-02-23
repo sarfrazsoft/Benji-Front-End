@@ -92,7 +92,9 @@
   }
 }
 
-benji-ms-convo-cards-activity {
+$col-padding: 32px;
+benji-ms-convo-cards-activity,
+benji-sharing-tool {
   .mainscreen-activity {
     .content {
       height: 100%;
@@ -100,16 +102,23 @@ benji-ms-convo-cards-activity {
       > div {
         height: 100%;
       }
-      .col-1 {
-        padding: 32px;
-        .container {
-          border-right: 1px solid #979797;
+      .col-1-container {
+        .col-1 {
+          padding: $col-padding;
+          padding-right: 0px;
           height: 100%;
-          font-size: 56px;
-          font-weight: 600;
-          padding: 32px;
-          padding-right: 72px;
+          .container {
+            border-right: 1px solid #979797;
+            height: 100%;
+            font-size: 56px;
+            font-weight: 600;
+            padding: 32px;
+            padding-right: 90px;
+          }
         }
+      }
+      .col-2-container {
+        padding: $col-padding;
       }
       .speaker-cue-container {
         background-color: $sky;
@@ -125,19 +134,26 @@ benji-ms-convo-cards-activity {
         }
         .speaker-list {
           overflow-y: auto;
-          min-width: 400px;
           position: absolute;
           height: calc(100% - 160px);
           .name-row {
-            padding: 16px;
+            padding: 8px;
+            margin: 8px;
             border-radius: 8px;
-            &:hover {
+            cursor: pointer;
+            &:hover,
+            &.current-speaker {
               background: rgba(10, 76, 239, 0.15);
             }
             .name {
               color: #828282;
               font-size: 20px;
               font-weight: 600;
+              min-width: 240px;
+              max-width: 240px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
             }
           }
         }

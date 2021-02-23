@@ -7,13 +7,14 @@ import { BackendSocketService } from './backend/backend-socket.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { LayoutService } from './layout.service';
 import { PastSessionsService } from './past-sessions.service';
+import { SharingToolService } from './sharing-tool.service';
 import { UtilsService } from './utils.service';
 import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
 
-import { ActivitySettingsService } from './activities/activity-settings.service';
-import { EitherOrActivityService } from './activities/either-or-activity.service';
+import { ActivitiesServices } from './activities';
 
+export * from './activities';
 export { AuthGuard } from './auth/auth.guard';
 export {
   WhiteLabelResolver,
@@ -22,10 +23,9 @@ export {
   BackendSocketService,
   ContextService,
   EmojiLookupService,
-  EitherOrActivityService,
-  ActivitySettingsService,
   VideoStateService,
   PastSessionsService,
+  SharingToolService,
 };
 
 export const ServicesProviders = [
@@ -35,10 +35,10 @@ export const ServicesProviders = [
   BackendSocketService,
   ContextService,
   EmojiLookupService,
-  EitherOrActivityService,
-  ActivitySettingsService,
+  ...ActivitiesServices,
   LayoutService,
   PastSessionsService,
   UtilsService,
+  SharingToolService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];

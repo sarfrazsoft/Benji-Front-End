@@ -2,7 +2,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
-import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
+import {
+  AuthService,
+  BackendRestService,
+  BackendSocketService,
+  ContextService,
+  SharingToolService,
+} from 'src/app/services';
+import { UpdateMessage } from 'src/app/services/backend/schema';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -12,6 +19,8 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   at: typeof ActivityTypes = ActivityTypes;
+  showSharingTool = false;
+  sharingData: UpdateMessage;
   constructor(
     protected restService: BackendRestService,
     protected activatedRoute: ActivatedRoute,
@@ -19,7 +28,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     protected contextService: ContextService,
     protected authService: AuthService,
     protected ref: ChangeDetectorRef,
-    protected matSnackBar: MatSnackBar
+    protected matSnackBar: MatSnackBar,
+    protected sharingToolService: SharingToolService
   ) {
     super(
       restService,
@@ -31,6 +41,17 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       ref,
       matSnackBar
     );
+
+    sharingToolService.sharingToolControl$.subscribe((val) => {
+      // console.log(val);
+      if (val) {
+        this.sharingData = val;
+        this.showSharingTool = !this.showSharingTool;
+      } else {
+        this.showSharingTool = false;
+        this.sharingData = null;
+      }
+    });
   }
 
   fastForwardActivities = [

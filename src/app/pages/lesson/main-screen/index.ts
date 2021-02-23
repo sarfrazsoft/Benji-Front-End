@@ -20,6 +20,7 @@ import { MainScreenMontyHallComponent } from './monty-hall/monty-hall.component'
 import { MainScreenPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 // import { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { MainScreenPairActivityComponent } from './roleplay-pair-activity/roleplay-pair-activity.component';
+import { SharedMainScreenComponents } from './shared/index';
 import { MainScreenTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
 // import { MainScreenTitleActivityComponent } from './title-activity/title-activity.component';
 import { MainScreenTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
@@ -37,6 +38,7 @@ export { MainScreenLessonComponent };
 export const MainScreenComponents = [
   // MainScreenBuildPitchActivityComponent,
   // ...ParticipantBrainStormComponents,
+  ...SharedMainScreenComponents,
   MainScreenCaseStudyActivityComponent,
   CaseStudyGroupComponent,
   MainScreenDiscussionActivityComponent,

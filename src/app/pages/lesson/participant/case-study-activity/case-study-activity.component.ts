@@ -190,7 +190,12 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   saveEditCollab() {
-    console.log(localStorage.getItem('editCollab'));
+    console.log(localStorage.getItem('collabedit'));
+    // this.questions.forEach((q) => {
+    //   console.log(q);
+    //   const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(q.id, q.answer);
+    //   casestudysubmissionentry_set.push(caseStudySubmitEventEntry);
+    // });
   }
 
   locallySaveDraft(event) {}

@@ -32,6 +32,7 @@ export class ParticipantBuildPitchActivityComponent
   lookAtWinningPitch = false;
   yourPitchWon = false;
   expandedUserArray = {};
+  myParticipantCode;
 
   selectedUser: number = null;
 
@@ -42,6 +43,7 @@ export class ParticipantBuildPitchActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
+    this.myParticipantCode = this.getParticipantCode();
     // how about we make the list of objects that
     // we are submitting to BE and each node can have an NgModel
     this.builtPitch_set = [];
@@ -179,7 +181,7 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   yourPitchText() {
-    return this.getPitchText(this.getParticipantCode());
+    return this.getPitchText(this.getParticipantCode(), this.act);
   }
 
   userPitchExists(userId) {
@@ -192,10 +194,10 @@ export class ParticipantBuildPitchActivityComponent
     ).length;
   }
 
-  getPitchText(userId) {
-    this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
-    const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
-    const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
+  getPitchText(userId, act) {
+    act.buildapitchblank_set.sort((a, b) => a.order - b.order);
+    const blanks = act.buildapitchblank_set;
+    const buildAPitchPitchSet = act.buildapitchpitch_set.filter(
       (e) => e.participant.participant_code === userId
     );
 

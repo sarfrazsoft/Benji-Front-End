@@ -20,7 +20,7 @@ benji-ms-build-pitch-activity {
     margin-top: 10vh;
     font-size: 3vw;
     img {
-      width: 3vw;
+      max-width: 3vw;
     }
     .instruction {
       margin-left: 1vw;
@@ -34,7 +34,8 @@ benji-ms-build-pitch-activity {
   }
 }
 
-benji-ps-build-pitch-activity {
+benji-ps-build-pitch-activity,
+.bap-share-ui {
   .b-flat-card__body {
     h1 {
       margin: 0px;
@@ -75,11 +76,6 @@ benji-ps-build-pitch-activity {
         }
       }
     }
-    .your-pitch-label {
-      color: $secondary-color-light;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
     .your-pitch {
       font-size: 26px;
       line-height: 1.5;
@@ -89,6 +85,11 @@ benji-ps-build-pitch-activity {
         // Border-bottom-color applied from BE
       }
     }
+  }
+  .your-pitch-label {
+    color: $secondary-color-light;
+    font-size: 24px;
+    margin-bottom: 10px;
   }
 
   benji-vote-pitch {
