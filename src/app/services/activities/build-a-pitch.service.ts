@@ -13,18 +13,20 @@ export class BuildAPitchService {
     );
 
     let statement = '';
-    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
+    if (buildAPitchPitchSet[0]) {
+      const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+      blanks.forEach((b, i) => {
+        const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
 
-      let value = '';
-      if (currentBlanksValue.length === 1) {
-        value = ' <em>' + currentBlanksValue[0].value + '</em> ';
-      } else {
-        value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
-      }
-      statement = statement + b.label + value;
-    });
+        let value = '';
+        if (currentBlanksValue.length === 1) {
+          value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+        } else {
+          value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
+        }
+        statement = statement + b.label + value;
+      });
+    }
     return statement;
   }
 }

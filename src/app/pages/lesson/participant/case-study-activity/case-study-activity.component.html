@@ -15,8 +15,28 @@
 
 
 
+<div class="sharing-ui" *ngIf="showSharingUI" fxLayoutAlign="center center">
+  <!-- <button 
+    class="b-inverted-button border-color-primary primary-color squared-border">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div><img src="/assets/img/yellowPointer.svg" alt=""></div>
+      <div fxLayoutAlign="center center">
+        <span>
+          I want to share!
+        </span>
+      </div>
+    </div>
+  </button> -->
+  <button 
+    class="b-small-squared-button bg-primary-color white-color squared-border">
+    <div fxLayoutAlign="center center">
+      <span>
+        Done Sharing
+      </span>
+    </div>
+  </button>
+</div>
 <div class="b-flat-card center-text feedback-card heightAuto">
-
   <div class="content" fxLayout="column">
     <div class="worksheet-title">
       Here’s the title for the work sheet. 

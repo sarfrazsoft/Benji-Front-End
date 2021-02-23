@@ -25,6 +25,7 @@ export class ParticipantCaseStudyActivityComponent
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
+  showSharingUI = false;
 
   // unique ID for the group
   groupId: string;

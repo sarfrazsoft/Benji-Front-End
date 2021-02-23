@@ -63,7 +63,12 @@
             benji-click-stop-propagation
             (click)="selectSpeaker(i)">
             <div class="name">{{ speaker.displayName }} </div>
-            <!-- <div><img src="/assets/img/yellowPointer.svg" alt=""></div> -->
+            <div
+              [ngStyle]="{
+                'opacity': speaker.optedIn ? 1 : 0
+              }">
+              <img src="/assets/img/yellowPointer.svg" alt="">
+            </div>
             <div (click)="removeSpeaker(i)" benji-click-stop-propagation>
               <img src="/assets/img/closeBig.svg" alt="">
             </div>
