@@ -72,6 +72,17 @@ export class CustomMenuComponent implements OnInit {
     if (this.showAddVideoPopup) {
       this.showAddVideoPopup = false;
       if (this.videoURL) {
+        if (this.videoURL.includes('youtube.com') || this.videoURL.includes('youtu.be')) {
+          // youtube url
+          if (this.videoURL.includes('embed')) {
+            // video is already an embed link
+          } else {
+            const id = this.getYoutubeVideoId(this.videoURL);
+            this.videoURL = 'https://www.youtube.com/embed/' + id;
+          }
+        } else {
+          // vimeo url
+        }
         const view = this.editor.view;
 
         const tr = view.state.tr;
@@ -92,6 +103,13 @@ export class CustomMenuComponent implements OnInit {
       // const videoURL = 'https://www.youtube.com/embed/V0PisGe66mY';
       // const videoURL = 'https://www.youtube.com/watch?v=V0PisGe66mY&ab_channel=AltraModaMusic';
     }
+  }
+
+  getYoutubeVideoId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return match && match[2].length === 11 ? match[2] : null;
   }
 
   //
