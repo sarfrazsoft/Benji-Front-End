@@ -15,8 +15,10 @@ import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/
 import { ActivityComponent as PreviewPanelActivityComponent } from './preview-panel/activity/activity.component';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import {
+  AccordionTypeComponent,
   ArrayTypeComponent,
   BAPBlankTypeComponent,
+  ConvoCardTypeComponent,
   FeedbackQuestionTypeComponent,
   FormlySelectOptionsPipe,
   MCQChoiceTypeComponent,
@@ -44,6 +46,7 @@ export const EditorComponents = [
   PreviewPanelComponent,
   PreviewPanelActivityComponent,
   ArrayTypeComponent,
+  AccordionTypeComponent,
   ObjectTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -53,6 +56,7 @@ export const EditorComponents = [
   MCQChoiceTypeComponent,
   FeedbackQuestionTypeComponent,
   QuestionTypeSelectComponent,
+  ConvoCardTypeComponent,
   SecondsTypeComponent,
   FormlySelectOptionsPipe,
   BAPBlankTypeComponent,

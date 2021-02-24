@@ -12,6 +12,7 @@ export const wsRoot = socket_protocl + '://' + backend;
 export enum ActivityTypes {
   image = 'ImageActivity',
   brainStorm = 'BrainstormActivity',
+  convoCards = 'ConversationCardsActivity',
   gather = 'GatherActivity',
   pitchoMatic = 'PitchoMaticActivity',
   buildAPitch = 'BuildAPitchActivity',

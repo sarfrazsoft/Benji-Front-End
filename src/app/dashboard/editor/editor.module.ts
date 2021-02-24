@@ -19,8 +19,10 @@ import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { EmojiSelectorComponent } from './activity-selector-panel/activity-content/dynamic-form/emoji-selector/emoji-selector.component';
 import { ActivityHelpComponent } from './activity-selector-panel/activity-help/activity-help.component';
 import {
+  AccordionTypeComponent,
   ArrayTypeComponent,
   BAPBlankTypeComponent,
+  ConvoCardTypeComponent,
   FeedbackQuestionTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
@@ -131,6 +133,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'enum', extends: 'select', wrappers: ['benji-field-wrapper'] },
         { name: 'null', component: NullTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'array', component: ArrayTypeComponent },
+        { name: 'accordion', component: AccordionTypeComponent },
         { name: 'object', component: ObjectTypeComponent },
         { name: 'multischema', component: MultiSchemaTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
@@ -138,6 +141,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'bapBlank', component: BAPBlankTypeComponent },
         { name: 'feedbackQuestion', component: FeedbackQuestionTypeComponent },
         { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },
+        { name: 'convoCard', component: ConvoCardTypeComponent },
         { name: 'seconds', component: SecondsTypeComponent },
       ],
       wrappers: [

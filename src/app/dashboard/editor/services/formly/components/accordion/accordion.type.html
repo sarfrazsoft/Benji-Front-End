@@ -1,0 +1,26 @@
+<div class="mb-3">
+  <legend *ngIf="to.label">{{ to.label }}</legend>
+  <p *ngIf="to.description">{{ to.description }}</p>
+
+  <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </div>
+
+  <mat-accordion>
+    <div *ngFor="let field of field.fieldGroup; let i = index" class="" fxLayout="row">
+        <formly-field class="" [field]="field" fxFlex="100"></formly-field>
+        <div class="remove-button text-right">
+          <button class="" (click)="remove(i)"><mat-icon>close</mat-icon></button>
+        </div>
+    </div>
+  </mat-accordion>
+
+  <div class="d-flex mt-3">
+    <button class="editor-content-button add-answer" type="button" (click)="add()">
+      <ng-container *ngIf="to.addLabel">
+        {{ to.addLabel }}
+      </ng-container>
+      <ng-container *ngIf="!to.addLabel"> Add {{ to.label }} </ng-container>
+    </button>
+  </div>
+</div>
