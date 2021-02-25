@@ -19,14 +19,14 @@
     </div>
   </div>
   <div class="content" fxLayout="row">
-    <div class="col-1-container" fxFlex="33%" fxLayoutAlign="center center">
+    <div *ngIf="activityDataAvailable" class="col-1-container" fxFlex="33%" fxLayoutAlign="center center">
       <div class="col-1">
         <div class="container primary-color-darkest" fxFlex="100%" fxLayoutAlign="center center">
           <div>{{ speakers[currentSpeakerIndex].displayName }}, you're up</div>
         </div>
       </div>
     </div>
-    <div class="col-2-container" fxFlex="34%">
+    <div *ngIf="activityDataAvailable" class="col-2-container" fxFlex="34%">
       <div class="col-2">
         <ng-template #activityEntry></ng-template>
       </div>
@@ -47,7 +47,24 @@
         </div>
       </div> -->
     </div>
-    <div fxFlex="33%">
+
+    <div *ngIf="!activityDataAvailable" class="col-1-container" fxFlex="66%" fxLayoutAlign="center center">
+      <div class="col-1" fxLayoutAlign="start center">
+        <div fxLayoutGap="6vw">
+          <div fxFlex="25%">
+            <div class="ms-emoji-container smaller-emoji">
+              <app-b-twemoji emoji="📣"></app-b-twemoji>
+            </div>
+          </div>
+          <div fxFlex="75%" fxLayoutAlign="center start" fxLayout="column">
+            <h2 class="primary-color-darkest pn-600">
+              Matt Parson is sharing
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="34%">
       <div class="speaker-cue-container">
         <div class="header primary-color-darkest">Speaker Cue</div>
         <div class="speaker-list">

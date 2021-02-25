@@ -23,12 +23,31 @@ export class SharingToolComponent implements OnInit {
   groups = [];
   currentSpeakerIndex = 0;
   component;
+  activityDataAvailable = true;
   @Input() data: UpdateMessage;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   constructor(private cfr: ComponentFactoryResolver) {}
 
   ngOnInit(): void {
     console.log(this.data);
+    if (this.activityDataAvailable) {
+      this.initializeActivity();
+    } else {
+      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+      participantSet.forEach((val, index) => {
+        if (index === 1) {
+          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
+        } else {
+          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
+        }
+      });
+      this.speakers.sort(function (obj1, obj2) {
+        return Number(obj2.optedIn) - Number(obj1.optedIn);
+      });
+    }
+  }
+
+  initializeActivity() {
     if (this.data.activity_type === this.at.buildAPitch) {
       const participantSet = cloneDeep(this.data.lesson_run.participant_set);
       participantSet.forEach((val, index) => {
