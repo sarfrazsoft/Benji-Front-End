@@ -13,12 +13,14 @@ import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
 
 import { ActivitiesServices } from './activities';
+import { DeactivateGuard } from './auth/deactivate-guard';
 
 export * from './activities';
 export { AuthGuard } from './auth/auth.guard';
 export {
   WhiteLabelResolver,
   AuthService,
+  DeactivateGuard,
   BackendRestService,
   BackendSocketService,
   ContextService,
@@ -29,6 +31,7 @@ export {
 };
 
 export const ServicesProviders = [
+  DeactivateGuard,
   WhiteLabelResolver,
   AuthService,
   BackendRestService,

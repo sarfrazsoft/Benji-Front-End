@@ -353,13 +353,10 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.componentRef) {
           this.componentRef.destroy();
         }
-
         let title = 'Enter title';
-        let instructions = 'Answer the following question';
-        if (content.titlecomponent) {
+        if (content.activity_title) {
           const t = content.titlecomponent;
           title = t.title ? t.title : 'Enter title';
-          instructions = t.screen_instructions ? t.screen_instructions : 'Answer the following question';
         }
         let msAct = null;
         if (this.data.screenType === 'mainScreen') {
@@ -394,7 +391,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             },
             activity_id: '1606248775095',
             activity_seconds: 10000,
-            activity_title: 'Case Study',
+            activity_title: title,
             activity_type: 'CaseStudyActivity',
             auto_next: true,
             case_study_details: content.case_study_details ? content.case_study_details : '',
@@ -419,6 +416,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             start_time: '2020-12-09T13:01:06.974186-05:00',
           },
         };
+        this.componentRef.instance.actEditor = true;
       }
       this.oldActivityType = this.data.activity_type;
     }

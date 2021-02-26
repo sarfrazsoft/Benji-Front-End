@@ -8,7 +8,7 @@ import {
 } from 'src/app/pages';
 import { ParticipantJoinComponent } from '../pages/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
-import { AuthGuard, WhiteLabelResolver } from '../services';
+import { AuthGuard, DeactivateGuard, WhiteLabelResolver } from '../services';
 import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
@@ -45,6 +45,7 @@ const routes: Routes = [
   {
     path: 'participant/lesson/:roomCode',
     component: ParticipantLessonComponent,
+    canDeactivate: [DeactivateGuard],
     resolve: {
       labelInfo: WhiteLabelResolver,
     },

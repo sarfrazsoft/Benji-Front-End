@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
@@ -14,6 +14,10 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 })
 export class ParticipantLessonComponent extends BaseLessonComponent {
   at: typeof ActivityTypes = ActivityTypes;
+  @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+    console.log('Processing beforeunload...');
+    event.returnValue = false;
+  }
   constructor(
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
@@ -23,15 +27,10 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     protected contextService: ContextService,
     protected matSnackBar: MatSnackBar
   ) {
-    super(
-      restService,
-      route,
-      socketService,
-      'participant',
-      contextService,
-      authService,
-      ref,
-      matSnackBar
-    );
+    super(restService, route, socketService, 'participant', contextService, authService, ref, matSnackBar);
+  }
+
+  canDeactivate() {
+    return confirm('Do you really want to leave?');
   }
 }

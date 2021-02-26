@@ -18,9 +18,6 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
   styleUrls: ['./main-screen-lesson.component.scss'],
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
-  at: typeof ActivityTypes = ActivityTypes;
-  showSharingTool = false;
-  sharingData: UpdateMessage;
   constructor(
     protected restService: BackendRestService,
     protected activatedRoute: ActivatedRoute,
@@ -53,6 +50,9 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       }
     });
   }
+  at: typeof ActivityTypes = ActivityTypes;
+  showSharingTool = false;
+  sharingData: UpdateMessage;
 
   fastForwardActivities = [
     this.at.pitchoMatic,

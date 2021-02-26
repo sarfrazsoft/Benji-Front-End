@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -18,6 +18,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
+  @Input() actEditor = false;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
@@ -26,6 +27,8 @@ export class ParticipantCaseStudyActivityComponent
   isDone = false;
   localStorageItemName = 'caseStudyNotes';
   showSharingUI = false;
+  editorDisabled = false;
+  worksheetTitle = '';
 
   // unique ID for the group
   groupId: string;
@@ -42,15 +45,24 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
-    this.participantCode = this.getParticipantCode().toString();
     this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
-    // this.populateQuestions();
+    this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
+    if (!this.actEditor) {
+      this.editorDisabled = false;
+      this.participantCode = this.getParticipantCode().toString();
+      // this.populateQuestions();
 
-    const userId = this.getParticipantCode();
-    this.groupId = this.getMyGroup(userId).id.toString();
+      const userId = this.getParticipantCode();
+      this.groupId = this.getMyGroup(userId).id.toString();
 
-    // create a unique ID by combining groupId and Lesson run code
-    this.documentId = this.groupId + this.lessonRunCode;
+      // create a unique ID by combining groupId and Lesson run code
+      this.documentId = this.groupId + this.lessonRunCode;
+    } else {
+      this.editorDisabled = true;
+      this.groupId = '1234';
+      this.participantCode = '1234';
+      this.documentId = '333333';
+    }
   }
 
   populateQuestions() {

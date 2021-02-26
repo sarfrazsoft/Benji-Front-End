@@ -261,11 +261,18 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'activity_title') {
+                  // mappedField.hide = true;
+                  mappedField.defaultValue = `Work sheet title`;
                 } else if (mapSource.field_name === 'participant_instructions') {
                   mappedField.type = 'textarea';
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'case_study_details') {
                   mappedField.templateOptions.label = 'Worksheet details';
                   mappedField.type = 'textarea';
+                  mappedField.defaultValue = 'work sheet details';
+                } else if (mapSource.field_name === 'note_taker_instructions') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
                   mappedField.hide = true;
@@ -280,8 +287,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
-                } else if (mapSource.field_name === 'activity_title') {
-                  // mappedField.hide = true;
                 } else if (mapSource.field_name === 'grouping_activity_id') {
                   // TODO check if it comes with a model value and process
                   if (content && content.grouping_activity_id) {

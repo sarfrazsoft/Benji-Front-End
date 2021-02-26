@@ -39,7 +39,7 @@
 <div class="b-flat-card center-text feedback-card heightAuto">
   <div class="content" fxLayout="column">
     <div class="worksheet-title">
-      Here’s the title for the work sheet. 
+      {{ worksheetTitle }}
     </div>
     <div 
       class="worksheet-text" 
@@ -71,7 +71,8 @@
         [participantCode]="participantCode"  
         [documentId]="documentId"
         (submitActivityValues)="saveEditCollab()"
-        [allowVideo]="false"></benji-text-editor>
+        [allowVideo]="false"
+        [disabled]="editorDisabled"></benji-text-editor>
     </ng-container>
 
     
