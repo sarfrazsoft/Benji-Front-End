@@ -51,3 +51,14 @@
     </label>
   </div>
 </div>
+
+
+<div class="NgxEditor__Seperator"></div>
+<div class="NgxEditor__MenuItem NgxEditor__MenuItem--Text"
+  [ngClass]="{'NgxEditor__MenuItem--Active': isActive, 'NgxEditor--Disabled': isDisabled}">
+  <div fxLayoutAlign="start center" (click)="addCallout($event)">
+    <label fxLayout="row" fxLayoutAlign="center center">
+      Callout
+    </label>
+  </div>
+</div>

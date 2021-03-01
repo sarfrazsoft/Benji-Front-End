@@ -243,4 +243,24 @@ export class CustomMenuComponent implements OnInit {
     const found = decos.find(null, null, (spec) => spec.id === id);
     return found.length ? found[0].from : null;
   }
+
+  //
+  //
+  //
+  //
+  // add callout code
+  addCallout($event) {
+    const view = this.editor.view;
+
+    const tr = view.state.tr;
+    if (!tr.selection.empty) {
+      tr.deleteSelection();
+    }
+
+    const pos = tr.selection.from;
+    const section = schema.nodes.callout.create();
+    view.dispatch(view.state.tr.insert(pos, section));
+
+    this.editor.view.focus();
+  }
 }

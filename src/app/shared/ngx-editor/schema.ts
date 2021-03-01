@@ -1,5 +1,6 @@
 import { marks as basicMarks, nodes as basicNodes } from 'ngx-editor';
-import { Node as ProsemirrorNode, NodeSpec, Schema } from 'prosemirror-model';
+import { DOMOutputSpec, Node as ProsemirrorNode, NodeSpec, Schema } from 'prosemirror-model';
+import { callTypeObservers } from 'yjs/dist/src/internals';
 
 const codeBlock: NodeSpec = {
   group: 'block',
@@ -20,6 +21,35 @@ const codeBlock: NodeSpec = {
   ],
   toDOM(node: ProsemirrorNode) {
     return ['pre', { 'data-language': node.attrs.language }, node.attrs.text];
+  },
+};
+
+const callout: NodeSpec = {
+  content: 'text*',
+  group: 'block',
+  code: true,
+  defining: true,
+  marks: '',
+  attrs: { params: { default: '' } },
+  parseDOM: [
+    {
+      tag: 'pre',
+      preserveWhitespace: 'full',
+      getAttrs: (node: HTMLElement) => ({ params: node.getAttribute('data-params') || '' }),
+    },
+  ],
+  toDOM(node) {
+    const structure: DOMOutputSpec = [
+      'pre',
+      { class: 'callout-container' },
+      [
+        'div',
+        { class: 'content-container' },
+        ['div', { class: 'callout-img' }, ['img', { class: 'callout-icon', src: '/assets/img/alarm.svg' }]],
+        ['div', ['callout', { class: 'callout' }, 0]],
+      ],
+    ];
+    return structure;
   },
 };
 
@@ -93,6 +123,7 @@ const videoIframe: NodeSpec = {
 const nodes: any = Object.assign({}, basicNodes, {
   code_mirror: codeBlock,
   video: video,
+  callout: callout,
   videoIframe: videoIframe,
 });
 
