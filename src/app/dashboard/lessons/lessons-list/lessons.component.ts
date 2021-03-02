@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
+
+import { orderBy, sortBy } from 'lodash';
+import * as moment from 'moment';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'benji-lessons-list',
@@ -11,7 +14,7 @@ import { AdminService } from '../../admin-panel/services';
   styleUrls: ['./lessons.component.scss'],
 })
 export class LessonsComponent implements OnInit {
-  @Input() lessons: Array<any> = [];
+  @Input() lessons: Array<Lesson> = [];
 
   eventsSubject: Subject<void> = new Subject<void>();
 
@@ -29,7 +32,7 @@ export class LessonsComponent implements OnInit {
 
   ngOnInit() {
     if (this.lessons.length) {
-      this.lessons = this.lessons.sort((a, b) => b.id - a.id);
+      this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
   }
 
@@ -47,7 +50,7 @@ export class LessonsComponent implements OnInit {
   updateLessons() {
     this.adminService.getLessons().subscribe((lessons) => {
       if (lessons.length) {
-        lessons = lessons.sort((a, b) => b.id - a.id);
+        lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
       }
       this.lessons = lessons;
     });

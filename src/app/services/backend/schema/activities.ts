@@ -362,6 +362,11 @@ export interface PitchoMaticActivity {
   pitchomaticblank_set: PitchoMaticBlank[];
   pitchomaticgroup_set: PitchoMaticGroup[];
   feedbackquestion_set: FeedbackQuestion[];
+
+  prepare_seconds: number;
+  discuss_seconds: number;
+  feedback_seconds: number;
+  group_seconds: number;
 }
 
 export interface PitchoMaticBlank {

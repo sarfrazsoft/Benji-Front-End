@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { ActivityTitles, ActivityTypes } from 'src/app/globals';
+import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
 import { QuestionSet } from './services/question-control.service';
@@ -21,7 +22,7 @@ import { QuestionSet } from './services/question-control.service';
 export class ActivityContentComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromStore.EditorState>, private formlyJsonschema: FormlyJsonschema) {}
   at: typeof ActivityTypes = ActivityTypes;
-  activity$: Observable<any>;
+  activity$: Observable<OverviewLessonActivity>;
   content$: Observable<any>;
   selectedLessonActivityContent;
   possibleActivities$: Observable<any>;

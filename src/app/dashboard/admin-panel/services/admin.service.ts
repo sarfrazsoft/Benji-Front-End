@@ -21,9 +21,9 @@ export class AdminService {
     );
   }
 
-  getLessons(): Observable<Course[]> {
+  getLessons(): Observable<Lesson[]> {
     return this.http.get(global.apiRoot + '/course_details/lesson/').pipe(
-      map((res: PaginatedResponse<Course>) => {
+      map((res: PaginatedResponse<Lesson>) => {
         this.contextService.lessons = res.results;
         return res.results;
       })
