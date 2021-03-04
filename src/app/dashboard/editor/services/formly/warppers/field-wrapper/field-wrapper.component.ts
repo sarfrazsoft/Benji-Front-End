@@ -14,7 +14,9 @@ export class FieldWrapperComponent extends FieldWrapper implements OnInit, OnCha
       this.characterLimitLeft = this.to.maxLength - this.field.formControl.value.length;
     }
     this.field.formControl.valueChanges.subscribe((val) => {
-      this.characterLimitLeft = this.to.maxLength - this.field.formControl.value.length;
+      if (this.field.formControl.value) {
+        this.characterLimitLeft = this.to.maxLength - this.field.formControl.value.length;
+      }
     });
   }
 

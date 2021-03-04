@@ -89,9 +89,12 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
 
           const fields = this.formlyJsonschema.toFieldConfig(schema as any, {
             map: (mappedField: FormlyFieldConfig, mapSource: any) => {
+              //
+              // Emoji field
               if (mapSource.internal_type === 'EmojiURLField') {
                 if (AllowEmojiDic[act.activity_type]) {
-                  mappedField.type = 'emoji';
+                  // mappedField.type = 'emoji';
+                  mappedField.type = 'image';
                   mappedField.wrappers = ['form-field'];
                   mappedField.templateOptions.label = 'Emoji';
                   mappedField.defaultValue = 'emoji://1F642';

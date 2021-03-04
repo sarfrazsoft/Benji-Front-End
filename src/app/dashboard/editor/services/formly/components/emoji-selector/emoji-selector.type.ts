@@ -3,8 +3,7 @@ import { FieldType } from '@ngx-formly/core';
 
 @Component({
   selector: 'benji-emoji-selector',
-  templateUrl: './emoji-selector.component.html',
-  styleUrls: ['./emoji-selector.component.scss'],
+  templateUrl: './emoji-selector.type.html',
 })
 export class EmojiSelectorComponent extends FieldType implements OnInit {
   showemoji;

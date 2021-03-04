@@ -16,14 +16,18 @@ import { effects, reducers } from './store';
 
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
-import { EmojiSelectorComponent } from './activity-selector-panel/activity-content/dynamic-form/emoji-selector/emoji-selector.component';
 import { ActivityHelpComponent } from './activity-selector-panel/activity-help/activity-help.component';
 import {
   AccordionTypeComponent,
   ArrayTypeComponent,
   BAPBlankTypeComponent,
+  CheckboxWrapperComponent,
   ConvoCardTypeComponent,
+  EmojiSelectorComponent,
   FeedbackQuestionTypeComponent,
+  FieldRevealWrapperComponent,
+  FieldWrapperComponent,
+  ImageSelectorComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -31,9 +35,6 @@ import {
   QuestionTypeSelectComponent,
   SecondsTypeComponent,
 } from './services';
-import { CheckboxWrapperComponent } from './services/formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
-import { FieldRevealWrapperComponent } from './services/formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
-import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -137,6 +138,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'object', component: ObjectTypeComponent },
         { name: 'multischema', component: MultiSchemaTypeComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
+        { name: 'image', component: ImageSelectorComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'mcqChoice', component: MCQChoiceTypeComponent },
         { name: 'bapBlank', component: BAPBlankTypeComponent },
         { name: 'feedbackQuestion', component: FeedbackQuestionTypeComponent },

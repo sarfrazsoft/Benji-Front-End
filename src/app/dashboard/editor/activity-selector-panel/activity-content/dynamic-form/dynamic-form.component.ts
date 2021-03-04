@@ -5,7 +5,9 @@ import { QuestionBase, QuestionControlService, QuestionSet } from '../services/q
 import { Store } from '@ngrx/store';
 import { Activity } from '../../../models/';
 import * as fromStore from '../../../store';
-
+//
+// TODO remove if not used anywhere
+// remove by 25/9/2021
 @Component({
   selector: 'benji-dynamic-form',
   templateUrl: './dynamic-form.component.html',

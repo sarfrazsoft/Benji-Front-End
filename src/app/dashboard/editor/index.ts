@@ -21,6 +21,7 @@ import {
   ConvoCardTypeComponent,
   FeedbackQuestionTypeComponent,
   FormlySelectOptionsPipe,
+  ImageSelectorComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -60,6 +61,7 @@ export const EditorComponents = [
   SecondsTypeComponent,
   FormlySelectOptionsPipe,
   BAPBlankTypeComponent,
+  ImageSelectorComponent,
 ];
 
 export const EditorEntryComponents = [...ActivitySelectorEntryComponents];

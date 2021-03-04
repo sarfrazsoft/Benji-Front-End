@@ -44,6 +44,16 @@ export const ActivityTitles = {
   FeedbackActivity: 'titlecomponent.title',
 };
 
+// export const LayoutTypes = ['leftHalfScreen', 'leftImage', 'fullScreen', 'rightHalfScreen', 'rightImage'];
+export type TitleActivityLayouts =
+  | 'emojiLayout'
+  | 'leftHalfScreen'
+  | 'leftImage'
+  | 'fullScreen'
+  | 'rightHalfScreen'
+  | 'backgroundImage'
+  | 'rightImage';
+
 // export type MeasurementTimeframe = 'alltime' | 'year' | 'month' | 'week' | 'day';
 
 export const DefaultwhiteLabelInfo = {
