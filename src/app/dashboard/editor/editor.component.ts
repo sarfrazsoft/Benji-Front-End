@@ -8,7 +8,7 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services';
 import { LayoutService } from 'src/app/services/layout.service';
-import { LessonSettingsDialogComponent } from './dialogs';
+import { LessonSettingsDialogComponent } from 'src/app/shared/dialogs';
 import { Activity } from './models';
 import { EditorService } from './services';
 import * as fromStore from './store';

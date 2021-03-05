@@ -1,6 +1,18 @@
 <div class="course-tile" fxLayout="column">
   <div class="thumbnail">
-    <div class="img-container" [ngStyle]="{
+    <div 
+      class="image-placeholder" 
+      *ngIf="showPlaceholder" 
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="12px"
+      (click)="showSettingsModal()"
+      benji-click-stop-propagation
+    >
+      <div><img src="/assets/img/imageUploadIcon.svg" alt=""></div>
+      <div>Click to upload an image</div>
+    </div>
+    <div *ngIf="!showPlaceholder" class="img-container" [ngStyle]="{
       'background-image': 'url(/assets/img/placeholder.png)'
       }">
       <!-- <img src="/assets/img/placeholder.png" alt=""> -->

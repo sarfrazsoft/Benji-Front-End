@@ -10,7 +10,7 @@ import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent } from 'src/app/shared';
+import { ConfirmationDialogComponent, LessonSettingsDialogComponent } from 'src/app/shared';
 import { AdminService } from '../../../admin-panel/services';
 
 @Component({
@@ -30,6 +30,8 @@ export class LessonTileComponent implements OnInit, OnDestroy {
 
   description = '';
   editingDescription = false;
+  showPlaceholder = true;
+  settingsDialogRef;
 
   constructor(
     private dialog: MatDialog,
@@ -56,6 +58,23 @@ export class LessonTileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.eventsSubscription.unsubscribe();
+  }
+
+  showSettingsModal() {
+    this.settingsDialogRef = this.dialog
+      .open(LessonSettingsDialogComponent, {
+        data: {
+          userId: '22',
+        },
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+        }
+      });
   }
 
   launchSession(event, lesson): void {

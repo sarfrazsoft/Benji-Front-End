@@ -32,17 +32,19 @@
               type="text"
               rows="2"
               formControlName="description"
-              placeholder="Email Address"
-              (keydown)="emailChanged()"
+              placeholder="What is this session about?"
             ></textarea>
           </div>
           <div class="field">
             <div class="label">Cover photo</div>
-            <div class="img-upload"
-              [ngStyle]="{
-              'background-image': 'url(/assets/img/imageUpload.svg)'
-              }">
-
+            
+            <div class="image-placeholder" fxLayout="column" fxLayoutGap="12px" fxLayoutAlign="center center">
+              <div>
+                <img src="/assets/img/imageUploadIcon.svg" alt="">
+              </div>
+              <div>
+                Click to upload an image
+              </div>
             </div>
           </div>
     
