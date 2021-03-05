@@ -26,28 +26,49 @@
       </div>
     </div>
       
-    <div class="save-status secondary-color" >
-      <div class="info" *ngIf="savingLesson" fxLayout="row" fxLayoutAlign="start center">
-        <div>
-          <img src="../../../assets/img/saving.gif" alt="">
+    <div class="save-status secondary-color" 
+      fxLayout="row" 
+      fxLayoutAlign="center center"
+      fxLayoutGap="8px">
+      <div>
+        <div class="info" *ngIf="savingLesson" fxLayout="row" fxLayoutAlign="start center">
+          <div>
+            <img src="../../../assets/img/saving.gif" alt="">
+          </div>
+          <div>
+            Saving
+          </div>
         </div>
-        <div>
-          Saving
+        <div class="info" *ngIf="lessonSaved" fxLayout="row" fxLayoutAlign="start center">
+          <ng-container *ngIf="!error">
+            <img src="../../../assets/img/saved.png" alt="">
+            <div>
+              Saved
+            </div>
+          </ng-container>
+          <ng-container *ngIf="error">
+            <img src="../../../assets/img/incompleteSession.png" alt="">
+            <div>
+              Session Incomplete
+            </div>
+          </ng-container>
         </div>
       </div>
-      <div class="info" *ngIf="lessonSaved" fxLayout="row" fxLayoutAlign="start center">
-        <ng-container *ngIf="!error">
-          <img src="../../../assets/img/saved.png" alt="">
-          <div>
-            Saved
-          </div>
-        </ng-container>
-        <ng-container *ngIf="error">
-          <img src="../../../assets/img/incompleteSession.png" alt="">
-          <div>
-            Session Incomplete
-          </div>
-        </ng-container>
+      <div>
+        <div class="info" fxLayout="row" fxLayoutAlign="start center">
+          <button
+            (click)="showSettingsModal()"
+            type="button"
+            class="editor-content-button emoji-selector"
+          >
+            <div fxLayoutAlign="center center" fxLayout="row">
+              <div class="icon">
+                <img src="/assets/img/settingsGear.svg" />
+              </div>
+              <div>Settings</div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>

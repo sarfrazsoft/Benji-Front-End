@@ -1,7 +1,14 @@
 <div class="course-tile" fxLayout="column">
+  <div class="thumbnail">
+    <div class="img-container" [ngStyle]="{
+      'background-image': 'url(/assets/img/placeholder.png)'
+      }">
+      <!-- <img src="/assets/img/placeholder.png" alt=""> -->
+    </div>
+  </div>
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
     <h2>{{ lesson.lesson_name }}</h2>
-    <div>
+    <!-- <div>
       <button
         [matMenuTriggerFor]="menu"
         benji-click-stop-propagation
@@ -21,7 +28,7 @@
           <span>Delete</span>
         </button>
       </mat-menu>
-    </div>
+    </div> -->
   </div>
   <div class="course-detail" fxFlex="1 1 auto">
     <div *ngIf="!editingDescription" class="description">

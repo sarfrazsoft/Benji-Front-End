@@ -1,15 +1,16 @@
+import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, fromEvent, Observable, Subject } from 'rxjs';
-import { debounceTime, distinct, filter, flatMap, map, takeUntil, tap } from 'rxjs/operators';
-import { LayoutService } from 'src/app/services/layout.service';
-import { EditorService } from './services';
-
-import { LocationStrategy } from '@angular/common';
 import { Store } from '@ngrx/store';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { AuthService } from 'src/app/services';
+import { LayoutService } from 'src/app/services/layout.service';
+import { LessonSettingsDialogComponent } from './dialogs';
 import { Activity } from './models';
+import { EditorService } from './services';
 import * as fromStore from './store';
 
 @Component({
@@ -39,6 +40,8 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   showCancelAddSlide = false;
 
+  settingsDialogRef;
+
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
     // event.stopPropagation();
@@ -54,7 +57,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private editorService: EditorService,
     private store: Store<fromStore.EditorState>,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private dialog: MatDialog
   ) {
     this.preventBackButton();
     this.layoutService.hideSidebar = true;
@@ -170,4 +174,21 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   startNewLesson() {}
+
+  showSettingsModal() {
+    this.settingsDialogRef = this.dialog
+      .open(LessonSettingsDialogComponent, {
+        data: {
+          userId: '22',
+        },
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          console.log(res);
+        }
+      });
+  }
 }

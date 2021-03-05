@@ -9,6 +9,7 @@ import {
   ActivitySelectorProviders,
 } from './activity-selector-panel';
 
+import { EditorDialogs } from './dialogs';
 import { EditorComponent } from './editor.component';
 import { OverviewPanelComponent } from './overview-panel/overview-panel.component';
 import { OverviewThumbnailComponent } from './overview-panel/overview-thumbnail/overview-thumbnail.component';
@@ -39,6 +40,7 @@ import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/
 export { EditorService } from './services/editor.service';
 
 export const EditorComponents = [
+  ...EditorDialogs,
   ...ActivitySelectorComponents,
   SafePipe,
   OverviewThumbnailComponent,
@@ -64,6 +66,6 @@ export const EditorComponents = [
   ImageSelectorComponent,
 ];
 
-export const EditorEntryComponents = [...ActivitySelectorEntryComponents];
+export const EditorEntryComponents = [...ActivitySelectorEntryComponents, ...EditorDialogs];
 
 export const EditorProviders = [EditorResolver, ...ActivitySelectorProviders];

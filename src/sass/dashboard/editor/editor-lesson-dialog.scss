@@ -1,0 +1,21 @@
+.editor-lesson-settings-dialog.dashboard-dialog {
+  .mat-icon {
+    color: $secondary-color-dark;
+  }
+  .mat-dialog-container {
+    width: 480px;
+    .label {
+      font-size: 18px;
+      font-weight: 600;
+      color: $black;
+      margin-bottom: 8px;
+    }
+    .dash-input {
+      padding: 5px 15px;
+      width: 100%;
+    }
+    .img-upload {
+      height: 141px;
+    }
+  }
+}
