@@ -61,6 +61,8 @@ export const getActivityThumbnail = (id) =>
   });
 
 export const getLessonName = createSelector(getActivitiesState, fromReducers.getLessonName);
+export const getLessonId = createSelector(getActivitiesState, fromReducers.getLessonId);
+export const getLessonDescription = createSelector(getActivitiesState, fromReducers.getLessonDescription);
 
 export const getErrorInLeson = createSelector(getActivitiesState, fromReducers.getErrorInLesson);
 

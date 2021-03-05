@@ -32,10 +32,6 @@ benji-lesson {
           font-weight: 700;
           word-break: break-all;
         }
-        button {
-          background: transparent;
-          color: $secondary-color-light;
-        }
       }
     }
 
@@ -44,8 +40,8 @@ benji-lesson {
       cursor: pointer;
       .button {
         padding: 8px 16px;
-        border-radius: 4px;
         font-weight: 600;
+        border: 1px solid;
         &.inactive {
           border-color: $secondary-color-light;
           color: $secondary-color-light;
@@ -68,14 +64,6 @@ benji-lesson {
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
-      textarea {
-        padding: 8px;
-        width: 99%;
-        color: #37352f;
-        border-color: #979797;
-        resize: none;
-        box-sizing: border-box;
-      }
     }
   }
 }
@@ -87,28 +75,4 @@ benji-lesson {
   color: #bdbdbd;
   font-weight: 500;
   font-size: 18px;
-}
-
-// Footer link on the bottom of course card
-.course-preview-footer,
-.view-details-link {
-  .overview-button {
-    cursor: pointer;
-    span {
-      transition: all $animation-time linear;
-      border-bottom: 1px solid #fff;
-    }
-    img {
-      margin-left: 12px;
-      height: 17px;
-      transition: margin-left $animation-time linear;
-      -webkit-transition: margin-left $animation-time linear;
-      -ms-transition: margin-left $animation-time linear;
-    }
-    &:hover {
-      img {
-        margin-left: 20px;
-      }
-    }
-  }
 }

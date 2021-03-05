@@ -20,71 +20,40 @@
   </div>
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
     <h2>{{ lesson.lesson_name }}</h2>
-    <!-- <div>
-      <button
-        [matMenuTriggerFor]="menu"
-        benji-click-stop-propagation
-        disableRipple
-        aria-label="Example icon-button with a menu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu" xPosition="before">
-        <button mat-menu-item (click)="edit(lesson, $event)">
-          <span>Edit</span>
-        </button>
-        <button mat-menu-item (click)="editDescription($event, lesson)">
-          <span>Description</span>
-        </button>
-        <button mat-menu-item (click)="delete($event, lesson)">
-          <span>Delete</span>
-        </button>
-      </mat-menu>
-    </div> -->
   </div>
   <div class="course-detail" fxFlex="1 1 auto">
-    <div *ngIf="!editingDescription" class="description">
+    <div class="description">
       {{ lesson.lesson_description }}
     </div>
-
-    <div *ngIf="editingDescription" class="description">
-      <textarea
-       [(ngModel)]='description' 
-       (keyup.enter)="saveDescription($event)"
-       (click)="$event.preventDefault(); $event.stopPropagation()"
-       rows="6">                             
-      </textarea>
-    </div>
   </div>
-  <div
-    *ngIf="!editingDescription"
-    class="launch-session primary-color"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    (click)="launchSession($event, lesson)"
-  >
-    <div class="button active" *ngIf="lesson.is_valid_lesson">
-      <span>Launch</span>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <div
+      class="launch-session primary-color"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+    >
+      <div class="button border-color-primary primary-color squared-border">
+        <span>Edit</span>
+      </div>
     </div>
-    <div class="button inactive"
-      *ngIf="!lesson.is_valid_lesson"
-      tooltip="Lesson is not complete"
-      placement="top"
-      tooltip="Lesson is not complete"
-      show-delay="100"
-      >
-      <span>Launch</span>
-    </div>
-  </div>
-  <div
-    *ngIf="editingDescription"
-    class="launch-session primary-color"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    (click)="saveDescription($event)"
-  >
-    <div class="button">
-      <span>Save</span>
+    <div
+      class="launch-session primary-color"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      (click)="launchSession($event, lesson)"
+    >
+      <div class="button active squared-border" *ngIf="lesson.is_valid_lesson">
+        <span>Launch</span>
+      </div>
+      <div class="button inactive squared-border"
+        *ngIf="!lesson.is_valid_lesson"
+        tooltip="Lesson is not complete"
+        placement="top"
+        tooltip="Lesson is not complete"
+        show-delay="100"
+        >
+        <span>Launch</span>
+      </div>
     </div>
   </div>
 </div>

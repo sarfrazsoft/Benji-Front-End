@@ -2,6 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { fromEvent, Observable, Subject } from 'rxjs';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { EditorService } from 'src/app/dashboard/editor/services';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-lesson-settings-dialog',
@@ -19,9 +22,10 @@ export class LessonSettingsDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<LessonSettingsDialogComponent>,
     private builder: FormBuilder,
+    private editorService: EditorService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    this.userId = data.userId;
+    console.log(data);
   }
   selectedSession;
 
@@ -30,6 +34,8 @@ export class LessonSettingsDialogComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
     });
+
+    this.form.setValue({ title: this.data.title, description: this.data.description });
   }
 
   get title(): AbstractControl {
@@ -40,30 +46,23 @@ export class LessonSettingsDialogComponent implements OnInit {
     return this.form.get('description');
   }
 
-  emailChanged() {
-    this.emailErr = false;
-    this.emailErrMsg = '';
-  }
-
   onSubmit(): void {
     if (this.form.valid) {
-      const emails = this.form.value.emails.split(',');
-      const json = [];
-      emails.forEach((email) => {
-        json.push({
-          email: email.trim(),
-          inviter: this.userId,
+      const val = this.form.value;
+      const l: Lesson = {
+        id: this.data.id,
+        lesson_name: val.title,
+        lesson_description: val.description,
+      };
+      this.editorService
+        .updateLesson(l, this.data.id)
+        .pipe(
+          map((res) => res),
+          catchError((error) => error)
+        )
+        .subscribe((res: Lesson) => {
+          this.dialogRef.close(l);
         });
-      });
-      // this.groupServices.addLearners(json).subscribe(
-      //   (res) => {
-      //     this.form.reset();
-      //     this.invitationsSent = true;
-      //   },
-      //   (err) => {
-      //     console.log(err);
-      //   }
-      // );
     }
   }
 }

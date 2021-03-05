@@ -26,6 +26,13 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   lessonName$: Observable<any>;
   lessonName: string;
+
+  lessonId$: Observable<any>;
+  lessonId: string;
+
+  lessonDescription$: Observable<any>;
+  lessonDescription: string;
+
   showEditableLessonName = false;
   @ViewChild('name') searchElement: ElementRef;
 
@@ -64,6 +71,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
       if (data && data.editorData && data.editorData.lesson) {
+        console.log(data);
         this.router.navigate([data.editorData.lesson.id], {
           relativeTo: this.activatedRoute,
         });
@@ -88,8 +96,13 @@ export class EditorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authService.startIntercom();
     this.lessonName$ = this.store.select(fromStore.getLessonName);
-
     this.lessonName$.subscribe((name) => (this.lessonName = name));
+
+    this.lessonId$ = this.store.select(fromStore.getLessonId);
+    this.lessonId$.subscribe((id) => (this.lessonId = id));
+
+    this.lessonDescription$ = this.store.select(fromStore.getLessonDescription);
+    this.lessonDescription$.subscribe((description) => (this.lessonDescription = description));
 
     this.lessonError$ = this.store.select(fromStore.getErrorInLeson);
 
@@ -179,7 +192,9 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.settingsDialogRef = this.dialog
       .open(LessonSettingsDialogComponent, {
         data: {
-          userId: '22',
+          id: this.lessonId,
+          title: this.lessonName,
+          description: this.lessonDescription,
         },
         disableClose: false,
         panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
@@ -187,7 +202,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          console.log(res);
+          this.store.dispatch(new fromStore.UpdateLessonName(res.title));
         }
       });
   }

@@ -520,6 +520,8 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 }
 
 export const getLessonName = (state: ActivityState) => state.lessonName;
+export const getLessonId = (state: ActivityState) => state.lessonId;
+export const getLessonDescription = (state: ActivityState) => state.lessonDescription;
 export const getErrorInLesson = (state: ActivityState) => state.errorInLesson;
 export const getActivitiesLoading = (state: ActivityState) => state.loadingLessonActivities;
 export const getActivitiesLoaded = (state: ActivityState) => state.loadedLessonActivities;

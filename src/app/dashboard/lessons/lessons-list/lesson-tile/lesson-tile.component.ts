@@ -29,7 +29,6 @@ export class LessonTileComponent implements OnInit, OnDestroy {
   dialogRef;
 
   description = '';
-  editingDescription = false;
   showPlaceholder = true;
   settingsDialogRef;
 
@@ -64,7 +63,9 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     this.settingsDialogRef = this.dialog
       .open(LessonSettingsDialogComponent, {
         data: {
-          userId: '22',
+          id: this.lesson.id,
+          title: this.lesson.lesson_name,
+          description: this.lesson.lesson_description,
         },
         disableClose: false,
         panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
@@ -141,7 +142,6 @@ export class LessonTileComponent implements OnInit, OnDestroy {
 
   editDescription($event, lesson: Lesson) {
     this.description = lesson.lesson_description;
-    this.editingDescription = true;
   }
 
   saveDescription($event) {
@@ -161,7 +161,6 @@ export class LessonTileComponent implements OnInit, OnDestroy {
       )
       .subscribe((res: Lesson) => {
         this.lesson.lesson_description = res.lesson_description;
-        this.editingDescription = false;
       });
   }
 }
