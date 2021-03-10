@@ -1,14 +1,14 @@
 <div class="" fxLayout="column">
-  <div fxLayoutAlign="end end">
+  <div class="dialog-heading-container" fxLayout="row" fxLayoutAlign="space-between">
+    <h2 class="dialog-heading primary-color-darkest">
+      Session Summary
+    </h2>
     <button class="close-button" matDialogClose>
       <mat-icon class="icon-white">clear</mat-icon>
     </button>
   </div>
   <mat-dialog-content class="add-learners">
     <div fxLayout="column" fxLayoutGap="15px">
-      <h2 class="dialog-heading primary-color-darkest">
-        Session Summary
-      </h2>
       
       <div class="add-learners-section dashboard-form" fxLayout="column">
         <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">

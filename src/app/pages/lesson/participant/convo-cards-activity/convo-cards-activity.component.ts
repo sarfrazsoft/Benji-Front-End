@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { ConvoCardsActivity } from 'src/app/services/backend/schema/activities';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -15,7 +16,10 @@ export class ParticipantConvoCardsActivityComponent
     super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.activityState.convocardsactivity
+    // const c: ConvoCardsActivity;
+  }
   ngOnChanges() {}
 
   nextCard() {

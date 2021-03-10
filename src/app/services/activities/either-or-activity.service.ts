@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WhereDoYouStandActivity, WhereDoYouStandChoice } from '../backend/schema/activities';
+import { WhereDoYouStandActivity, WhereDoYouStandChoice } from '../backend/schema/activities/activities';
 
 @Injectable()
 export class EitherOrActivityService {

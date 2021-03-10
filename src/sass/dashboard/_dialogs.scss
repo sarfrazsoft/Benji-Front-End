@@ -2,16 +2,19 @@
   mat-dialog-container.mat-dialog-container {
     background-color: #fff;
     padding-top: 24px;
-    padding-right: 24px;
+    padding-right: 40px;
     padding-left: 40px;
     padding-bottom: 24px;
     width: 400px;
     box-shadow: none;
     // height: 182px;
-    .dialog-heading {
-      font-size: 20px;
-      font-weight: 600;
-      color: $black;
+    .dialog-heading-container {
+      margin-bottom: 32px;
+      .dialog-heading {
+        font-size: 24px;
+        font-weight: 700;
+        color: $black;
+      }
     }
     .dialog-instructions {
       color: $secondary-color;

@@ -1,4 +1,4 @@
-import { ParticipantCode, PitchoMaticBlank, PitchoMaticGroupMemberPitch } from '../activities';
+import { ParticipantCode, PitchoMaticBlank, PitchoMaticGroupMemberPitch } from '../activities/activities';
 import { User } from '../user';
 import { FeedbackQuestion } from '../utils';
 import { Report } from './reports';

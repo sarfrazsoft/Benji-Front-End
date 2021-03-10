@@ -1,3 +1,4 @@
+import { ConvoCardsActivity } from './activities';
 import {
   BaseActivity,
   BrainstormActivity,
@@ -35,6 +36,7 @@ export interface UpdateMessage {
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;
   casestudyactivity?: CaseStudyActivity;
+  convocardsactivity?: ConvoCardsActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
   pitchomaticactivity?: PitchoMaticActivity;
   // activity type should be specifi rather than a string

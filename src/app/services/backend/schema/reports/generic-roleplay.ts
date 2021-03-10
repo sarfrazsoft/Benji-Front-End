@@ -1,4 +1,4 @@
-import { Group, ParticipantCode } from '../activities';
+import { Group, ParticipantCode } from '../activities/activities';
 import { FeedbackQuestion } from '../utils';
 import { Report } from './reports';
 

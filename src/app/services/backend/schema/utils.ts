@@ -1,5 +1,5 @@
 import { ActivityTypes } from 'src/app/globals';
-import { ParticipantCode } from './activities';
+import { ParticipantCode } from './activities/activities';
 
 export interface Timer {
   id: number;

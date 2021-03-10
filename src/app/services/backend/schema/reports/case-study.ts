@@ -1,4 +1,4 @@
-import { CaseStudyRole, Group, ParticipantCode } from '../activities';
+import { CaseStudyRole, Group, ParticipantCode } from '../activities/activities';
 import { Report } from './reports';
 
 export interface CaseStudyReport extends Report {

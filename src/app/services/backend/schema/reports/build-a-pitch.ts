@@ -1,4 +1,4 @@
-import { ParticipantCode } from '../activities';
+import { ParticipantCode } from '../activities/activities';
 import { Report } from './reports';
 
 export interface BuildAPitchReport extends Report {

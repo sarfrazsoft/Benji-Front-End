@@ -1,4 +1,4 @@
-export * from './activities';
+export * from './activities/activities';
 export * from './messages';
 export * from './utils';
 export * from './user';

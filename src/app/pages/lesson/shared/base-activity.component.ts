@@ -1,6 +1,6 @@
 import { Directive, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Timer } from 'src/app/services/backend/schema';
-import { Group } from 'src/app/services/backend/schema/activities';
+import { Group } from 'src/app/services/backend/schema/activities/activities';
 import { Participant } from 'src/app/services/backend/schema/course_details';
 import { ActivityEvent, UpdateMessage } from 'src/app/services/backend/schema/messages';
 

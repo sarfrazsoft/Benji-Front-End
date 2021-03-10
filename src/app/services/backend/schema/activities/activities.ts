@@ -1,5 +1,5 @@
-import { Participant } from './course_details';
-import { User } from './user';
+import { Participant } from '../course_details';
+import { User } from '../user';
 import {
   BuildAPitchBlank,
   BuildAPitchEntry,
@@ -8,7 +8,7 @@ import {
   MCQQuestion,
   Timer,
   TitleComponent,
-} from './utils';
+} from '../utils';
 
 export interface BaseActivity {
   next_activity: number;
