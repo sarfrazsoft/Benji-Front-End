@@ -47,7 +47,7 @@ const ActivityComponents = [
   ParticipantConvoCardsActivityComponent,
   VotePitchComponent,
   // ...ParticipantSharedComponents,
-  // ...ParticipantBrainStormComponents,
+  ...ParticipantBrainStormComponents,
   ParticipantBrainstormingActivityComponent,
   VoteIdeaComponent,
   // ...BuildPitchComponents,

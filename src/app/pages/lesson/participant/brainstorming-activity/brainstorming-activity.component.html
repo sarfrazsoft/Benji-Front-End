@@ -1,87 +1,53 @@
 <!-- Submit ideas -->
 <ng-container *ngIf="showSubmitIdeas">
-  <benji-ps-instruction-template>
-    <ng-container class="body-title">Brainstorming</ng-container>
-    <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Submit your idea</h1>
-    <ng-container class="body-text">
-      {{ act.instructions }} <br />
-      <!-- show submission limit  -->
-      <ng-container *ngIf="act.max_participant_submissions < 10">
-        <ng-container *ngIf="noOfIdeasSubmitted === 0">
-          You can submit {{ ' ' + act.max_participant_submissions + ' ' }}
-          {{ act.max_participant_submissions == 1 ? 'idea' : 'ideas' }}
-        </ng-container>
-
-        <ng-container *ngIf="noOfIdeasSubmitted > 0">
-          You have {{ act.max_participant_submissions - noOfIdeasSubmitted }}
-          {{ noOfIdeasSubmitted == 1 ? 'submission' : 'submissions' }} left
-        </ng-container>
-      </ng-container>
-      <ng-container *ngIf="act.max_participant_submissions >= 10">
-        You can submit multiple ideas
-      </ng-container>
-    </ng-container>
-    <ng-container class="content">
-      <div class="draft-idea" fxLayout="column" fxLayoutGap="10px">
-        <div>
-          <div class="textarea-container" fxLayout="column">
-            <div fxLayout="row" class="textarea-container-controls" fxLayoutAlign="space-between">
-              <div fxLayout="row">
-                <div class="dropdown-controls-container" *ngIf="showCategoriesDropdown">
-                  <ng-select
-                    class="ps-brainstorm-dropdown-controls"
-                    [items]="categories"
-                    bindLabel="category_name"
-                    placeholder="Categories..."
-                    (change)="selectCategory($event)"
-                    [(ngModel)]="selectedCategory"
-                    appendTo="body"
-                    [searchable]="false"
-                  >
-                  </ng-select>
-                </div>
-                <div fxLayoutAlign="center center">
-                  <div class="image-upload-button" fxLayoutAlign="center center">
-                    <label fxLayout="row" fxLayoutAlign="center center">
-                      <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
-                      <div class="details" fxLayoutAlign="space-evenly center">
-                        <div class="image-name" *ngIf="imagesList">Selected</div>
-                        <mat-icon *ngIf="!imagesList" aria-hidden="false" aria-label="photo camera">
-                          insert_photo
-                        </mat-icon>
-                        <mat-icon
-                          *ngIf="imagesList"
-                          (click)="imagesList = null; $event.preventDefault()"
-                          benji-click-stop-propagation
-                        >
-                          close
-                        </mat-icon>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div fxLayoutAlign="center center">
-                <button class="primary-color share-idea-button" (click)="submitIdea()">Share Idea</button>
-              </div>
-            </div>
-            <div>
-              <textarea class="b-standard-textarea" [(ngModel)]="userIdeaText"></textarea>
-            </div>
-            <div class="left-text bottom-info"  fxLayout="row" fxLayoutGap="8px">
-              <ng-container *ngIf="imagesList">
-                <img class="thumbnail-image" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
-                <div class="image-name" >{{ getSelectedFileName() }}</div>
-              </ng-container>
-            </div>
-          </div>
+  <div class="b-flat-card heightAuto">
+    <div class="content" fxLayout="column">
+      <ng-container class="body-text">
+        <div class="worksheet-title">
+          {{ act.instructions }}
         </div>
-      </div>
-      <!-- <button class="b-standard-button bg-primary-color" type="submit" (click)="submitIdea()">Submit</button> -->
-    </ng-container>
-  </benji-ps-instruction-template>
+        <div class="worksheet-text">
+          <!-- show submission limit  -->
+          <ng-container *ngIf="act.max_participant_submissions < 10">
+            <ng-container *ngIf="noOfIdeasSubmitted === 0">
+              You can submit {{ ' ' + act.max_participant_submissions + ' ' }}
+              {{ act.max_participant_submissions == 1 ? 'idea' : 'ideas' }}
+            </ng-container>
+  
+            <ng-container *ngIf="noOfIdeasSubmitted > 0">
+              You have {{ act.max_participant_submissions - noOfIdeasSubmitted }}
+              {{ noOfIdeasSubmitted == 1 ? 'submission' : 'submissions' }} left
+            </ng-container>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="act.max_participant_submissions >= 10">
+          You can submit multiple ideas
+        </ng-container>
+      </ng-container>
+      <ng-container class="content">
+        <div fxLayout="column" fxLayoutGap="16px">
+          <ng-container *ngFor="let idea of draftIdeas">
+            <benji-idea-container 
+              [sendMessage]="sendMessage" 
+              [categories]="categories" 
+              [activityState]="activityState"
+              [participantCode]="participantCode"
+              [idea]="idea">
+            </benji-idea-container>
+          </ng-container>
+          <button 
+            *ngIf="draftIdeas.length < maxSubmissions" 
+            class="b-standard-button bg-primary-color squared-border"
+            (click)="addDraftIdea()">
+            Add New Idea
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
 </ng-container>
+
 
 <!-- Thank you for submitting Idea -->
 <benji-ps-instruction-template *ngIf="showThankyouForSubmission">

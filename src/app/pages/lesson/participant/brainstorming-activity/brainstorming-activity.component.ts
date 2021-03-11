@@ -29,19 +29,18 @@ export class ParticipantBrainstormingActivityComponent
   ideas = [];
   showVoteSubmitButton = false;
   noOfIdeasSubmitted = 0;
+  maxSubmissions = 1;
+  participantCode;
 
-  showCategoriesDropdown = false;
   categories = [];
-  selectedCategory: Category;
+  // holds ideas in drafting phase
+  draftIdeas: Array<{ id: number; text: string; editing: boolean }> = [];
   // Screens
   showSubmitIdeas = true;
   showThankyouForSubmission = false;
   showSubmitVote = false;
   showThankyouForVoting = false;
   showVoteResults = false;
-
-  imagesList: FileList;
-  imageSrc;
 
   constructor(
     private contextService: ContextService,
@@ -55,21 +54,30 @@ export class ParticipantBrainstormingActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
-    this.selectedCategory = this.act.brainstormcategory_set[0];
     this.categories = this.act.brainstormcategory_set;
+    this.maxSubmissions = this.act.max_participant_submissions;
+    this.participantCode = this.getParticipantCode().toString();
+
+    const submittedIdeas = this.getUserIdeas(this.getParticipantCode());
+    submittedIdeas.forEach((idea: Idea) => {
+      this.draftIdeas.push({ id: idea.id, text: idea.idea, editing: false });
+    });
+
+    console.log(this.draftIdeas);
+    if (this.draftIdeas.length === 0) {
+      this.addDraftIdea();
+    }
+  }
+
+  addDraftIdea() {
+    if (this.draftIdeas.length < this.maxSubmissions) {
+      this.draftIdeas.push({ id: null, text: null, editing: true });
+    }
   }
 
   ngOnChanges() {
     this.act = this.activityState.brainstormactivity;
     const userID = this.getParticipantCode();
-
-    // show dropdown if categorize_flag is set
-    if (this.act.categorize_flag) {
-      this.showCategoriesDropdown = true;
-      this.categories = this.act.brainstormcategory_set;
-    } else {
-      this.showCategoriesDropdown = false;
-    }
 
     // The activity starts by showing Submit idea screen
     if (!this.act.submission_complete && this.act.submission_countdown_timer) {
@@ -161,94 +169,10 @@ export class ParticipantBrainstormingActivityComponent
     }
   }
 
-  submitIdea(): void {
-    if (this.imagesList) {
-      this.submitWithImg();
-    } else {
-      this.submitWithoutImg();
-    }
-  }
-
-  submitWithoutImg() {
-    if (this.userIdeaText.length === 0) {
-      return;
-    }
-    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id));
-    this.userIdeaText = '';
-  }
-
-  submitWithImg() {
-    this.submitImageNIdea();
-  }
-
   submitIdeaVote(): void {
     this.selectedIdeas.forEach((idea) => {
       this.sendMessage.emit(new BrainstormVoteEvent(idea));
     });
-  }
-
-  onFileSelect(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length === 0) {
-      this.imagesList = null;
-    } else {
-      this.imagesList = fileList;
-      // set the imageSrc for preview thumbnail
-      const file = fileList[0];
-      const reader = new FileReader();
-      reader.onload = (e) => (this.imageSrc = reader.result);
-      reader.readAsDataURL(file);
-
-      console.log(this.imagesList);
-    }
-  }
-
-  getSelectedFileName() {
-    let name = '';
-    if (this.imagesList.length > 0) {
-      name = this.imagesList[0].name;
-    }
-    return name;
-  }
-
-  submitImageNIdea() {
-    const code = this.activityState.lesson_run.lessonrun_code;
-    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
-    const participant_code = this.getParticipantCode().toString();
-    const fileList: FileList = this.imagesList;
-    if (fileList.length > 0) {
-      const file: File = fileList[0];
-      this.utilsService
-        .resizeImage({
-          file: file,
-          maxSize: 500,
-        })
-        .then((resizedImage: Blob) => {
-          const formData: FormData = new FormData();
-          formData.append('img', resizedImage, file.name);
-          formData.append('participant_code', participant_code);
-          const headers = new HttpHeaders();
-          headers.set('Content-Type', null);
-          headers.set('Accept', 'multipart/form-data');
-          const params = new HttpParams();
-          this.httpClient
-            .post(url, formData, { params, headers })
-            .map((res: any) => {
-              this.imagesList = null;
-              this.sendMessage.emit(
-                new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
-              );
-              this.userIdeaText = '';
-            })
-            .subscribe(
-              (data) => {},
-              (error) => console.log(error)
-            );
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-    }
   }
 
   getUserIdeas(userID: number): Array<Idea> {

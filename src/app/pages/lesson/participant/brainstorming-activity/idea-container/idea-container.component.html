@@ -1,0 +1,63 @@
+<div class="draft-idea" fxLayout="column" fxLayoutGap="10px">
+  <div>
+    <div class="textarea-container" fxLayout="column">
+      <div fxLayout="row" class="textarea-container-controls" fxLayoutAlign="space-between">
+        <div fxLayout="row">
+          <div class="dropdown-controls-container" *ngIf="showCategoriesDropdown">
+            <ng-select
+              class="ps-brainstorm-dropdown-controls"
+              [items]="categories"
+              bindLabel="category_name"
+              placeholder="Categories..."
+              (change)="selectCategory($event)"
+              [(ngModel)]="selectedCategory"
+              appendTo="body"
+              [searchable]="false"
+              [disabled]="!idea.editing"
+            >
+            </ng-select>
+          </div>
+          <div fxLayoutAlign="center center">
+            <div class="image-upload-button" fxLayoutAlign="center center">
+              <label fxLayout="row" fxLayoutAlign="center center">
+                <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
+                <div class="details" fxLayoutAlign="space-evenly center" *ngIf="idea.editing">
+                  <mat-icon *ngIf="!imagesList" aria-hidden="false" aria-label="photo camera">
+                    insert_photo
+                  </mat-icon>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div fxLayoutAlign="center center">
+          <button 
+            class="primary-color share-idea-button" 
+            (click)="submitIdea()"
+            *ngIf="idea.editing">
+            Share Idea
+          </button>
+        </div>
+      </div>
+      <div>
+        <textarea 
+          class="b-standard-textarea" 
+          [(ngModel)]="userIdeaText" 
+          [readonly]="!idea.editing">
+        </textarea>
+      </div>
+      <div class="left-text bottom-info"  fxLayout="row" fxLayoutGap="8px">
+        <ng-container *ngIf="imagesList">
+          <img class="thumbnail-image" [src]="imageSrc || 'http://placehold.it/180'" alt="your image" />
+          <div class="image-name" >{{ getSelectedFileName() }}</div>
+          <mat-icon
+            (click)="imagesList = null; $event.preventDefault()"
+            benji-click-stop-propagation
+          >
+            close
+          </mat-icon>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

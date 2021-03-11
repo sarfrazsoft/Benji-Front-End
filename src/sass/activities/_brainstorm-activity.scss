@@ -216,6 +216,14 @@ benji-ms-brainstorming-activity {
 }
 
 benji-ps-brainstorming-activity {
+  .b-flat-card {
+    padding: 24px;
+    margin: 0px;
+    button {
+      margin: 0px;
+      width: 100%;
+    }
+  }
   .b-flat-card__body {
     margin-bottom: 100px;
   }
@@ -259,7 +267,7 @@ benji-ps-brainstorming-activity {
       background-color: transparent;
       resize: none;
       &:focus {
-        box-shadow: 0px 0px 0pt 0.2pt $primary-color;
+        box-shadow: 0px 0px 0pt 0.2pt transparent;
         &::placeholder {
           color: $secondary-color;
           opacity: 0;
