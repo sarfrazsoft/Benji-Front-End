@@ -41,6 +41,7 @@ export class ParticipantBrainstormingActivityComponent
   showVoteResults = false;
 
   imagesList: FileList;
+  imageSrc;
 
   constructor(
     private contextService: ContextService,
@@ -192,7 +193,22 @@ export class ParticipantBrainstormingActivityComponent
       this.imagesList = null;
     } else {
       this.imagesList = fileList;
+      // set the imageSrc for preview thumbnail
+      const file = fileList[0];
+      const reader = new FileReader();
+      reader.onload = (e) => (this.imageSrc = reader.result);
+      reader.readAsDataURL(file);
+
+      console.log(this.imagesList);
     }
+  }
+
+  getSelectedFileName() {
+    let name = '';
+    if (this.imagesList.length > 0) {
+      name = this.imagesList[0].name;
+    }
+    return name;
   }
 
   submitImageNIdea() {

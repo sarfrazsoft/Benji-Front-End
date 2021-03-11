@@ -219,64 +219,100 @@ benji-ps-brainstorming-activity {
   .b-flat-card__body {
     margin-bottom: 100px;
   }
-  .dropdown-controls-container {
-    .ps-brainstorm-dropdown-controls {
-      color: $secondary-color-dark;
-      border-radius: 6px;
-      font-size: 2.9vh;
-      &.ng-has-value {
-        color: $primary-color;
+
+  .textarea-container {
+    border-radius: 8px;
+    background-color: #fff9e4;
+    .textarea-container-controls {
+      background: #fff1c2;
+      padding: 4px 8px;
+      border-radius: 8px 8px 0px 0px;
+
+      .share-idea-button {
+        background-color: $sky;
+        padding: 6px 12px;
+        border-radius: 4px;
+        margin: 0px;
+        font-size: 12px;
+        font-weight: 500;
       }
-      .ng-select .ng-select-container {
+      .ps-brainstorm-dropdown-controls {
+        .ng-select-container {
+          color: #828282;
+          background-color: #fff1c2;
+          border: 1px solid transparent;
+          min-height: 36px;
+          align-items: center;
+        }
       }
     }
-  }
-
-  textarea {
-    color: inherit;
-    outline: none;
-    max-height: 130px;
-    min-height: 130px;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px 7px;
-    border-radius: 8px;
-    border: #dfe5e7 1px solid;
-    &:focus {
-      box-shadow: 0px 0px 0pt 0.2pt $primary-color;
+    textarea {
+      color: inherit;
+      outline: none;
+      max-height: 130px;
+      min-height: 130px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 7px;
+      border-radius: 8px;
+      border: transparent 1px solid;
+      background-color: transparent;
+      resize: none;
+      &:focus {
+        box-shadow: 0px 0px 0pt 0.2pt $primary-color;
+        &::placeholder {
+          color: $secondary-color;
+          opacity: 0;
+        }
+      }
       &::placeholder {
         color: $secondary-color;
-        opacity: 0;
+        opacity: 1;
       }
     }
-    &::placeholder {
-      color: $secondary-color;
-      opacity: 1;
+    .bottom-info {
+      margin: 8px 16px;
+      .thumbnail-image {
+        height: 24px;
+        width: 24px;
+      }
     }
   }
+  // .dropdown-controls-container {
+  //   .ps-brainstorm-dropdown-controls {
+  //     color: $secondary-color-dark;
+  //     border-radius: 6px;
+  //     font-size: 2.9vh;
+  //     &.ng-has-value {
+  //       color: $primary-color;
+  //     }
+  //     .ng-select .ng-select-container {
+  //     }
+  //   }
+  // }
 
   input[type='file'] {
     display: none;
   }
 
-  .image-upload-button {
-    background-color: #fff;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    min-height: 36px;
-    align-items: center;
-    label {
-      width: 100%;
-      .details {
-        width: 100%;
-      }
-      .image-name {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        width: 160px;
-      }
-    }
-  }
+  // .image-upload-button {
+  //   background-color: #fff;
+  //   border-radius: 4px;
+  //   border: 1px solid #ccc;
+  //   min-height: 36px;
+  //   align-items: center;
+  //   label {
+  //     width: 100%;
+  //     .details {
+  //       width: 100%;
+  //     }
+  //     .image-name {
+  //       text-overflow: ellipsis;
+  //       overflow: hidden;
+  //       width: 160px;
+  //     }
+  //   }
+  // }
 
   .vote-button-column {
     .button-container {
