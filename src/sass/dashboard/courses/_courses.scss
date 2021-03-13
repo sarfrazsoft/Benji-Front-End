@@ -4,14 +4,22 @@ benji-lesson {
     .course-tile {
       background-color: #fff;
       color: $black;
-      // box-shadow: $box-shadow;
-      border: 1px solid $secondary-color-light;
+      border: 2px solid transparent;
       cursor: pointer;
       width: 260px;
-      // height: 278px;
       margin-bottom: 30px;
       padding: 24px 20px;
       border-radius: 4px;
+      transition: all 0.2s;
+      position: relative;
+
+      &:hover {
+        border: 2px solid $secondary-color-light;
+        border-color: $primary-color;
+        .menu-button {
+          display: block !important;
+        }
+      }
       .thumbnail {
         height: 160px;
         .img-container {
@@ -23,9 +31,22 @@ benji-lesson {
           appearance: none !important;
         }
       }
+      .menu-button {
+        display: none;
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        button {
+          border-radius: 8px;
+          .mat-icon {
+            height: 32px;
+            width: 32px;
+            font-size: 32px;
+            color: #828282;
+          }
+        }
+      }
       .title {
-        // border-bottom: 1px solid $secondary-color;
-        // padding-bottom: 8px;
         padding-top: 16px;
         h2 {
           font-size: 18px;
@@ -41,7 +62,7 @@ benji-lesson {
       .button {
         padding: 8px 16px;
         font-weight: 600;
-        border: 1px solid;
+        border: 1px solid transparent;
         &.inactive {
           border-color: $secondary-color-light;
           color: $secondary-color-light;
@@ -49,6 +70,10 @@ benji-lesson {
             background-color: #fff !important;
           }
         }
+      }
+      .edit-session-button {
+        border: 1px solid transparent;
+        background-color: #f2f4f7;
       }
     }
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services';
 
 export interface SidenavItem {
@@ -6,15 +6,25 @@ export interface SidenavItem {
   navRoute?: string;
   disabled?: boolean;
   icon?: string;
+  hoverIcon?: string;
+  activeIcon?: string;
 }
 
 @Component({
   selector: 'benji-sidenav-item',
   templateUrl: './sidenav-item.component.html',
 })
-export class SidenavItemComponent {
+export class SidenavItemComponent implements OnInit {
   @Input() sidenavItem: SidenavItem;
+  icon;
   constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    if (this.sidenavItem.icon) {
+      this.icon = this.sidenavItem.icon;
+    }
+  }
+
   itemClicked(navName: string) {
     if (navName === 'Logout') {
       this.logout();
@@ -25,5 +35,13 @@ export class SidenavItemComponent {
 
   logout() {
     this.authService.signOut();
+  }
+
+  mouseEnter() {
+    this.icon = this.sidenavItem.hoverIcon;
+  }
+
+  mouseLeave() {
+    this.icon = this.sidenavItem.icon;
   }
 }

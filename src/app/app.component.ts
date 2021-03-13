@@ -120,14 +120,7 @@ export class AppComponent implements OnInit {
 
         .item.active .item-name {
           color: ${info.parameters.primary} !important;
-        }
 
-        .item:hover {
-          border-bottom: 1px solid ${info.parameters.primary} !important;
-        }
-
-        .item.active {
-          border-bottom: 2px solid ${info.parameters.primary} !important;
         }
 
         .dashboard-secondary-button {

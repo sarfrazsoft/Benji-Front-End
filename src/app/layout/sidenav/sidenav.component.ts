@@ -28,7 +28,9 @@ export class SidenavComponent implements OnInit {
         navName: 'My Sessions',
         navRoute: './',
         permission: '',
-        icon: '../../../../assets/img/mySessions.svg',
+        icon: '/assets/img/navigation/mySessions.svg',
+        hoverIcon: '/assets/img/navigation/mySessionsHover.svg',
+        activeIcon: '/assets/img/navigation/mySessionsActive.svg',
       },
       // {
       //   navName: 'Groups',
@@ -70,19 +72,25 @@ export class SidenavComponent implements OnInit {
         navRoute: './participants',
         icon: '../../../../assets/img/participantIcon.svg',
       },
-      // {
-      //   navName: 'Groups',
-      //   navRoute: './groups'
-      // },
-      // {
-      //   navName: 'Past Sessions',
-      //   navRoute: './pastsessions'
-      // }
+    ],
+  };
+
+  templatesSection = {
+    section: 3,
+    items: [
+      {
+        navName: 'Templates',
+        navRoute: './templates',
+        // icon: '../../../../assets/img/participantIcon.svg',
+        icon: '/assets/img/navigation/bulb.svg',
+        hoverIcon: '/assets/img/navigation/bulbHover.svg',
+        activeIcon: '/assets/img/navigation/bulbActive.svg',
+      },
     ],
   };
 
   pastSessionSection = {
-    section: 3,
+    section: 4,
     items: [
       // {
       //   navName: 'Learners',
@@ -96,18 +104,22 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Reports',
         navRoute: './pastsessions',
-        icon: '../../../../assets/img/reportsIcon.svg',
+        icon: '/assets/img/navigation/reports.svg',
+        hoverIcon: '/assets/img/navigation/reportsHover.svg',
+        activeIcon: '/assets/img/navigation/reportsActive.svg',
       },
     ],
   };
 
   accountSection = {
-    section: 4,
+    section: 5,
     items: [
       {
-        navName: 'Account',
+        navName: 'Profile',
         navRoute: 'account',
-        icon: '../../../../assets/img/accountIcon.svg',
+        icon: '/assets/img/navigation/user.svg',
+        hoverIcon: '/assets/img/navigation/userHover.svg',
+        activeIcon: '/assets/img/navigation/userActive.svg',
       },
       // {
       //   navName: 'Settings',
@@ -121,7 +133,7 @@ export class SidenavComponent implements OnInit {
   };
 
   profile = {
-    section: 5,
+    section: 6,
     items: [
       {
         navName: 'Profile',
@@ -131,18 +143,19 @@ export class SidenavComponent implements OnInit {
   };
 
   authSection = {
-    section: 5,
+    section: 7,
     items: [
       {
         navName: 'Logout',
         navRoute: 'logout',
-        icon: '../../../../assets/img/logoutIcon.svg',
+        icon: '/assets/img/navigation/logOut.svg',
+        hoverIcon: '/assets/img/navigation/logOut.svg',
       },
     ],
   };
 
   editor = {
-    section: 6,
+    section: 8,
     items: [
       {
         navName: 'Editor',
@@ -153,12 +166,14 @@ export class SidenavComponent implements OnInit {
   };
 
   helpCenter = {
-    section: 6,
+    section: 9,
     items: [
       {
         navName: 'Help Center',
         navRoute: 'http://help.mybenji.com/en/',
-        icon: '../../../../assets/img/helpCenter.svg',
+        icon: '/assets/img/navigation/help.svg',
+        hoverIcon: '/assets/img/navigation/helpHover.svg',
+        activeIcon: '/assets/img/navigation/helpActive.svg',
       },
     ],
   };
@@ -211,12 +226,13 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavSections = [
         this.dashboard,
-        this.helpCenter,
         // this.adminSection,
-        this.groupsSection,
+        // this.groupsSection,
+        // this.templatesSection,
         // this.editor,
         this.pastSessionSection,
         this.accountSection,
+        this.helpCenter,
         this.authSection,
         //
       ];
