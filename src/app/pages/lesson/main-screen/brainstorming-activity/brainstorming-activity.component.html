@@ -1,10 +1,10 @@
 <!-- New brain storm code  -->
 <div fxLayout="column" class="mainscreen-activity brainstorming-ms">
   <div class="lesson-top-banner compact">
-    <div class="border-bottom" fxLayout="row" fxLayoutAlign="space-between">
+    <div class="" fxLayout="row" fxLayoutAlign="space-between">
       <div>
         <h1 class="pn-500">
-          <span class="primary-color pn-700">
+          <span class="black-color pn-700">
             <ng-container *ngIf="voteScreen">
               Vote
             </ng-container>
@@ -17,7 +17,7 @@
           </span>
         </h1>
       </div>
-      <div fxLayout="row" fxLayoutGap="3vw">
+      <div fxLayout="row" fxLayoutGap="40px">
         <div fxLayoutAlign="end center" class="instructions">
           <h2
             class="pn-500"
@@ -29,11 +29,17 @@
           </h2>
         </div>
         <div
-          class="count-info primary-color-darkest"
-          fxLayoutAlign="end center"
+          class="count-info primary-color pn-700"
+          fxLayoutAlign="end end"
+          fxLayout="column"
           *ngIf="submissionScreen"
         >
-          {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} submitted
+          <div>
+            {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} 
+          </div>
+          <div>
+            submitted
+          </div>
         </div>
         <div
           class="count-info primary-color-darkest"

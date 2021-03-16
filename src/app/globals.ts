@@ -101,7 +101,7 @@ export const DefaultwhiteLabelInfo = {
     welcomeDescription: 'What\'s Benji? Learn more about the future of learning',
     primary_lighter: '#80a8ff',
     primary_light: '#4c83fc',
-    primary: '#0a4cef',
+    primary: '#555BEA',
     primary_dark: '#4c188f',
     primary_darker: '#3a126e',
     primary_darkest: '#00178a',

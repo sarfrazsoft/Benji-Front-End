@@ -172,10 +172,6 @@ export class AppComponent implements OnInit {
           stroke: ${info.parameters.primary};
         }
 
-        .bg-footer-color {
-          background-color: ${info.parameters.footerBackgroundColor}
-        }
-
         .border-color-primary {
           border-color: ${info.parameters.primary} !important;
         }

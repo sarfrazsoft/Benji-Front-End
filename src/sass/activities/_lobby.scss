@@ -12,13 +12,39 @@ benji-ps-lobby {
 }
 
 benji-ms-lobby {
+  .lobby-header {
+    font-size: 48px;
+    text-align: center;
+    .lobby-url {
+    }
+  }
+  .room-code {
+    font-size: 88px;
+    font-weight: 800;
+  }
+
+  .lobby-controls {
+    padding: 24px 40px;
+    font-size: 32px;
+    .participant-count-container {
+      padding: 16px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .lobby-launch-button {
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+    }
+  }
   .joined-users {
     p {
       margin-top: 3vh;
     }
-    padding: 0 3vw;
+    padding: 0 40px;
     height: 100%;
     overflow: hidden;
+    width: 100%;
     ul {
       display: flex;
       flex-wrap: wrap;
