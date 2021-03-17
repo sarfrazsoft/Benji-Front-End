@@ -1,27 +1,33 @@
 .leaderboard {
   .header {
-    font-size: 30px;
+    font-size: 32px;
+    font-weight: 700;
     line-height: normal;
     text-transform: uppercase;
-    letter-spacing: 2.5px;
     text-align: center;
     padding: 15px 0px;
-    border-bottom: 1px solid $secondary-color;
   }
 
   .leader {
     display: block;
     background: white;
-    font-size: 42px;
+    font-size: 32px;
     margin: 15px 0;
-    min-width: 30vw;
+    min-width: 320px;
+    max-width: 320px;
     padding: 8px 20px;
     box-sizing: border-box;
+    .name {
+      max-width: 220px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
     .leader-score {
-      color: $success-color;
+      color: #068E67;
     }
     .leader-rank {
-      padding-right: 40px;
+      padding-right: 8px;
     }
   }
 }

@@ -33,9 +33,9 @@ export class RadialTimerComponent implements OnInit, OnDestroy {
       this.timerDiameter = Math.ceil(this.timerDiameter / 7) * 7;
       this.textWidth = this.timerDiameter / 25;
     } else {
-      this.timerDiameter = window.innerWidth / 4.5;
-      this.timerDiameter = Math.ceil(this.timerDiameter / 5) * 5;
-      this.textWidth = this.timerDiameter / 25;
+      this.timerDiameter = window.innerWidth / 5.5;
+      this.timerDiameter = Math.ceil(this.timerDiameter / 6) * 6;
+      this.textWidth = this.timerDiameter / 35;
     }
   }
 

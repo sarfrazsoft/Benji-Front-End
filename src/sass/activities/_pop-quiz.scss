@@ -3,15 +3,12 @@ benji-ms-pop-quiz {
     overflow: hidden;
   }
   .activity-instructions {
+    padding: 0 30px !important;
     .content {
       width: 100%;
       height: 100%;
-      .quiz-question {
-        font-size: 5vh;
-        font-weight: 700;
-      }
       .quiz-answers {
-        font-size: 5vh;
+        font-size: 32px;
         font-weight: 500;
         overflow: hidden;
         // > div:hover {
@@ -19,11 +16,25 @@ benji-ms-pop-quiz {
         // transition: 0.3s;
         // border-radius: 20px;
         // }
-        div {
+        .answer-container {
+          margin-bottom: 32px;
           cursor: pointer;
+          background-color: #fff;
+          padding: 16px;
+          text-align: center;
+          border-radius: 8px;
+          width: 520px;
+          height: 140px;
+          &.corect-choice {
+            background-color: #D3FBCE;
+            color: #068E67;
+          }
         }
       }
     }
+  }
+  .submitted-info {
+    font-size: 32px;
   }
 }
 

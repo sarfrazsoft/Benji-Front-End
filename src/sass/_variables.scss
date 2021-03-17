@@ -183,6 +183,7 @@ $large-only: 'only screen and (min-width : #{$medium-screen-up}) and (max-width 
 // Pandemic times redesign
 // background colors
 $sky: #eef4ff;
+$yellow: #F6F4E9;
 
 // font colors
 $black: #37352f;
@@ -194,4 +195,8 @@ $black: #37352f;
 // background colors
 .bg-sky {
   background: $sky;
+}
+
+.bg-yellow {
+  background-color: $yellow;
 }
