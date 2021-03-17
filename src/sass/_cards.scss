@@ -2,12 +2,10 @@
   background: white;
   box-shadow: 6px 5px 9px 0 #f2f7f8;
   padding: 0px 5px;
-  margin: 20px;
   height: calc(100vh - 65px - 90px);
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;
-  margin: 20px;
   .b-flat-card__title * {
     border-bottom: 2px solid $secondary-color-lighter;
     margin-bottom: 0;
