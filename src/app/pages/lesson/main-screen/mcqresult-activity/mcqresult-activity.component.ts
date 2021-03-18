@@ -43,6 +43,7 @@ export class MainScreenMcqresultActivityComponent
 
             return {
               text: choice.choice_text,
+              is_correct: choice.is_correct,
               noOfResponses: answer_count,
               responsePercent: Math.round((answer_count / totalResponse) * 100),
               order: choice.order,

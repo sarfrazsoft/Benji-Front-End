@@ -2,33 +2,67 @@
 <div class="participant-start">
   <div class="container">
     <div class="participant-start__vertical-center center-text">
-      <div class="twemoji-container">
+      <!-- <div class="twemoji-container">
         <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
-      </div>
+      </div> -->
       <!-- <h1 class="pn-700 primary-color">Hey {{ userName | titlecase }}!</h1> -->
-      <h1 class="pn-700 primary-color">Enter the Room Code</h1>
-      <p>Look to the main screen to find your room code.</p>
-      <div class="participant-start__action-container">
-        <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
-          Invalid Room Code
-        </p>
-        <div class="participant-start__input-container">
-          <input
-            class="b-standard-input"
-            type="number"
-            pattern="[0-9]*"
-            name=""
-            placeholder="Enter room code"
-            [formControl]="roomCode"
-          />
+      <!-- <h1 class="pn-700 primary-color">Enter the Room Code</h1> -->
+      <!-- <p>Look to the main screen to find your room code.</p> -->
+      <div class="join-session-header" fxLayout="row" fxLayoutGap="8px">
+        <div class="emoji-container">
+          <app-b-twemoji class="" emoji="👋"></app-b-twemoji>
         </div>
-        <benji-animated-checkmark-button
-          loadingStateInnerHTML="Verifying"
-          innerHTML="Join session"
-          buttonStyle="default"
-          [valid]="isRoomCodeValid"
-          (clicked)="validateRoomCode()"
-        ></benji-animated-checkmark-button>
+        <div class="black-color">
+          Welcome!
+        </div>
+      </div>
+      <div class="participant-start__action-container">
+        <!-- <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
+          Invalid Room Code
+        </p> -->
+
+        <div fxLayout="column" fxLayoutGap="16px">
+          <div 
+            class="participant-start__input-container left-text" 
+            fxLayout="column"
+            fxLayoutGap="8px">
+            <span class="label">Room Code</span>
+            <input
+              class="b-standard-input"
+              type="number"
+              pattern="[0-9]*"
+              name=""
+              placeholder="Enter room code"
+              [formControl]="roomCode"
+              (keyup)="typingStoped($event)"
+              (keydown)="typingStarted()"
+            />
+          </div>
+          <div 
+            class="participant-start__input-container left-text" 
+            fxLayout="column"
+            fxLayoutGap="8px">
+            <span class="label">Name</span>
+            <p class="warning-color" *ngIf="loginError">
+              Oops! What should we call you? Drop in your name.<br />
+            </p>
+            <input
+              class="b-standard-input"
+              type="text"
+              name=""
+              placeholder="What's your name?"
+              [formControl]="username"
+            />
+          </div>
+          <button class="b-standard-button bg-primary-color white-color"
+            (click)="createUser()"
+            [ngClass]="{
+              active: isNameValid(),
+              inactive: !isNameValid()
+            }">
+            Enter
+          </button>
+        </div>
         <div class="already-member">
           Already a member?
           <div>

@@ -19,10 +19,12 @@ benji-question-form {
       }
     }
     .feedback-card__question-box {
-      margin-bottom: 40px;
+      margin-bottom: 16px;
       text-align: left;
-      border-top: $secondary-color 1px solid;
       padding-top: 12px;
+      background-color: #eeebdd;
+      padding: 24px;
+      border-radius: 8px;
       .feedback-rating {
         margin: 40px -10px 20px -10px;
       }

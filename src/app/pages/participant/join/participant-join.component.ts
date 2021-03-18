@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
 import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-participant-join',
@@ -12,21 +13,28 @@ import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/c
   encapsulation: ViewEncapsulation.None,
 })
 export class ParticipantJoinComponent implements OnInit {
-  public isRoomCodeValid: boolean;
+  public isRoomCodeValid = true;
   public userName: string;
+  public loginError;
+  public isInformationValid = false;
+  public typingTimer;
+  public lessonRunDetails: LessonRunDetails;
 
   tokenCleared = false;
 
   public roomCode = new FormControl(null, [Validators.required, Validators.min(4)]);
+  public username = new FormControl(null, [Validators.required]);
 
   constructor(
     public router: Router,
     private backend: BackendRestService,
     private socket: BackendSocketService,
-    private authService: AuthService
+    private authService: AuthService,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit() {
+    this.username.disable();
     if (!this.userName) {
       this.backend.get_own_identity().subscribe(
         (res) => {
@@ -47,6 +55,7 @@ export class ParticipantJoinComponent implements OnInit {
         const lessonrun_code = res.lessonrun_code;
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
+        this.username.enable();
         // if (this.authService.isLoggedIn()) {
         //   this.backend
         //     .createParticipant(this.userName, lessonrun_code)
@@ -57,7 +66,7 @@ export class ParticipantJoinComponent implements OnInit {
         //       }
         //     });
         // } else {
-        this.router.navigate([`/participant/login`]);
+        // this.router.navigate([`/participant/login`]);
         // }
       },
       (err) => {
@@ -71,5 +80,66 @@ export class ParticipantJoinComponent implements OnInit {
         this.isRoomCodeValid = false;
       }
     );
+  }
+
+  isNameValid() {
+    if (this.username.valid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public createUser() {
+    if (localStorage.getItem('lessonRunDetails')) {
+      this.lessonRunDetails = JSON.parse(localStorage.getItem('lessonRunDetails'));
+    } else {
+      return false;
+    }
+    if (this.authService.isLoggedIn()) {
+      this.authService.logout();
+    }
+
+    if (!isNaN(this.username.value)) {
+      this.loginError = true;
+      return false;
+    }
+
+    this.backend.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
+      (res: Participant) => {
+        this.loginError = false;
+        if (res.lessonrun_code) {
+          localStorage.setItem('participant', JSON.stringify(res));
+          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+        } else {
+          this.loginError = true;
+        }
+      },
+      (err) => {
+        console.log(err);
+        if (err && err.error && err.error.non_field_errors) {
+          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+            console.log('err');
+            this.utilsService.showWarning(
+              'A participant with that name has already joined. Try a different name.'
+            );
+          }
+        }
+      }
+    );
+  }
+
+  typingStoped(event) {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.doneTyping();
+    }, 1000);
+  }
+  typingStarted() {
+    clearTimeout(this.typingTimer);
+  }
+
+  doneTyping() {
+    this.validateRoomCode();
   }
 }

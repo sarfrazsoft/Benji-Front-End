@@ -3,7 +3,7 @@
   [isLastActivity]="isLastActivity()">
 </benji-participant-toolbar>
 
-<div *ngIf="isConnected() && serverMessage">
+<div fxFill *ngIf="isConnected() && serverMessage">
   <benji-ps-brainstorming-activity
     *ngIf="getActivityType() === at.brainStorm"
     [activityState]="serverMessage"

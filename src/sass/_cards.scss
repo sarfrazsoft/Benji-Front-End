@@ -1,8 +1,9 @@
 .b-flat-card {
-  background: white;
+  background: $yellow;
   box-shadow: 6px 5px 9px 0 #f2f7f8;
   padding: 0px 5px;
-  height: calc(100vh - 65px - 90px);
+  // height: calc(100vh - 65px - 90px);
+  height: 100%;
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;

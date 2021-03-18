@@ -21,13 +21,16 @@
       position: relative;
       text-align: left;
       .info {
+        color: #068e67;
         padding: 8px 30px;
+        font-weight: 500;
+        font-size: 32px;
         .percentage {
           min-width: 80px;
         }
       }
       #progressbar {
-        background: #bec8ca;
+        background: #fff;
         border-radius: 8px;
         padding: 0px;
         position: absolute;
@@ -35,6 +38,14 @@
         height: 100%;
         top: 0;
         z-index: -1;
+        .fill {
+          background-color: #e0ebff;
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+          &.correct-choice {
+            background-color: #d3fbce;
+          }
+        }
       }
       #progressbar > div {
         height: 100%;

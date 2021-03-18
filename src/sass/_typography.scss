@@ -82,7 +82,7 @@ $app-theme: mat-light-theme($primary, $accent, $warn);
 
 /*Utilities: Text alignment*/
 .center-text {
-  text-align: center;
+  text-align: center !important;
 }
 .left-text {
   text-align: left;

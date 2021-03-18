@@ -26,8 +26,8 @@ benji-ms-pop-quiz {
           width: 520px;
           height: 140px;
           &.corect-choice {
-            background-color: #D3FBCE;
-            color: #068E67;
+            background-color: #d3fbce;
+            color: #068e67;
           }
         }
       }
@@ -40,11 +40,10 @@ benji-ms-pop-quiz {
 
 benji-ps-pop-quiz {
   .b-flat-card__action {
-    margin-bottom: 12vh;
+    // margin-bottom: 12vh;
     .b-standard-button {
       padding: 14px 40px;
       height: fit-content;
-      border-radius: 16px;
       text-align: left;
     }
   }
