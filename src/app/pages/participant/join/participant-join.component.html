@@ -1,13 +1,7 @@
 <benji-participant-toolbar></benji-participant-toolbar>
 <div class="participant-start">
   <div class="container">
-    <div class="participant-start__vertical-center center-text">
-      <!-- <div class="twemoji-container">
-        <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
-      </div> -->
-      <!-- <h1 class="pn-700 primary-color">Hey {{ userName | titlecase }}!</h1> -->
-      <!-- <h1 class="pn-700 primary-color">Enter the Room Code</h1> -->
-      <!-- <p>Look to the main screen to find your room code.</p> -->
+    <div class="vertical-center center-text">
       <div class="join-session-header" fxLayout="row" fxLayoutGap="8px">
         <div class="emoji-container">
           <app-b-twemoji class="" emoji="👋"></app-b-twemoji>
@@ -16,17 +10,18 @@
           Welcome!
         </div>
       </div>
-      <div class="participant-start__action-container">
-        <!-- <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
-          Invalid Room Code
-        </p> -->
+      <div class="action-container">
+        
 
         <div fxLayout="column" fxLayoutGap="16px">
           <div 
-            class="participant-start__input-container left-text" 
+            class="input-container left-text" 
             fxLayout="column"
             fxLayoutGap="8px">
             <span class="label">Room Code</span>
+            <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
+              Invalid Room Code
+            </p>
             <input
               class="b-standard-input"
               type="number"
@@ -39,7 +34,7 @@
             />
           </div>
           <div 
-            class="participant-start__input-container left-text" 
+            class="input-container left-text" 
             fxLayout="column"
             fxLayoutGap="8px">
             <span class="label">Name</span>

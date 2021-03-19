@@ -1,7 +1,7 @@
 <benji-participant-toolbar></benji-participant-toolbar>
 <div class="participant-start">
   <div class="container">
-    <div class="participant-start__vertical-center center-text">
+    <div class="vertical-center center-text">
       <div class="twemoji-container">
         <!-- <app-b-twemoji class="body-emoji" [text]="'emoji://1F468-200D-1F469-200D-1F466'"></app-b-twemoji> -->
         <!-- <app-b-twemoji class="body-emoji" [text]="'emoji://1F469'"></app-b-twemoji> -->
@@ -10,11 +10,11 @@
       </div>
       <h1 class="pn-700 primary-color">{{ welcomeText }}</h1>
       <!-- <p>Ready for your next Benji session? When your group is set up, you’ll find your room code up on the screen.</p> -->
-      <div class="participant-start__action-container">
+      <div class="action-container">
         <p class="warning-color" *ngIf="loginError">
           Oops! What should we call you? Drop in your name.<br />
         </p>
-        <div class="participant-start__input-container">
+        <div class="input-container">
           <input
             class="b-standard-input"
             type="text"

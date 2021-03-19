@@ -4,7 +4,7 @@
 
   .container {
     width: 280px;
-    .participant-start__vertical-center {
+    .vertical-center {
       position: absolute;
       left: 0;
       right: 0;
@@ -21,7 +21,7 @@
         }
       }
 
-      .participant-start__input-container {
+      .input-container {
         .label {
           font-size: 24px;
         }
@@ -38,7 +38,7 @@
       }
     }
 
-    .participant-start__action-container button.b-standard-button {
+    .action-container button.b-standard-button {
       width: 100%;
       max-width: 300px;
     }
@@ -61,7 +61,7 @@
         display: block;
         margin: 15px auto 0;
       }
-      .participant-start__input-container {
+      .input-container {
         margin-bottom: 15px;
       }
     }
