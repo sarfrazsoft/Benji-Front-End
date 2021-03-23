@@ -52,6 +52,7 @@ export const initialState = {
   selectedLessonActivity: null,
   selectedLessonActivityContent: null,
   excludedActivities: [
+    'BuildAPitchActivity',
     'LobbyActivity',
     'GatherActivity',
     'HintWordActivity',
