@@ -35,12 +35,27 @@
               [idea]="idea">
             </benji-idea-container>
           </ng-container>
-          <button 
-            *ngIf="draftIdeas.length < maxSubmissions" 
-            class="b-standard-button bg-primary-color squared-border"
-            (click)="addDraftIdea()">
-            Add New Idea
-          </button>
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div 
+              *ngIf="draftIdeas.length < maxSubmissions" 
+              class="primary-color add-idea-link"
+              (click)="addDraftIdea()">
+              + Add New Idea
+            </div>
+            <div>
+              <ng-container *ngIf="act.max_participant_submissions < 10">
+                <ng-container *ngIf="noOfIdeasSubmitted === 0">
+                  {{ ' ' + act.max_participant_submissions + ' ' }}
+                  {{ act.max_participant_submissions == 1 ? 'idea' : 'ideas' }}
+                </ng-container>
+      
+                <ng-container *ngIf="noOfIdeasSubmitted > 0">
+                  {{ act.max_participant_submissions - noOfIdeasSubmitted }}
+                  {{ noOfIdeasSubmitted == 1 ? 'submission' : 'submissions' }} left
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
         </div>
       </ng-container>
     </div>

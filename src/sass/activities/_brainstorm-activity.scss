@@ -229,27 +229,30 @@ benji-ps-brainstorming-activity {
 
   .textarea-container {
     border-radius: 8px;
-    background-color: #fff9e4;
+    background-color: #fff;
     .textarea-container-controls {
-      background: #fff1c2;
+      background: #E7E7E7;
       padding: 4px 8px;
       border-radius: 8px 8px 0px 0px;
 
       .share-idea-button {
-        background-color: $sky;
         padding: 6px 12px;
         border-radius: 4px;
         margin: 0px;
         font-size: 12px;
         font-weight: 500;
+        &.inactive {
+          background-color: #BDBDBD;
+        }
       }
       .ps-brainstorm-dropdown-controls {
         .ng-select-container {
           color: #828282;
-          background-color: #fff1c2;
           border: 1px solid transparent;
-          min-height: 36px;
+          min-height: 24px;
           align-items: center;
+          max-height: 24px;
+          height: 24px;
         }
       }
     }
@@ -284,6 +287,11 @@ benji-ps-brainstorming-activity {
         width: 24px;
       }
     }
+  }
+
+  .add-idea-link {
+    font-weight: 500;
+    cursor: pointer;
   }
   // .dropdown-controls-container {
   //   .ps-brainstorm-dropdown-controls {

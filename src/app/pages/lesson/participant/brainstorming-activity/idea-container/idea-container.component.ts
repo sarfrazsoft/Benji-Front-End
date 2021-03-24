@@ -49,7 +49,10 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     }
   }
 
-  submitIdea(): void {
+  submitIdea(idea): void {
+    if (!idea.editing) {
+      return;
+    }
     if (this.imagesList) {
       this.submitWithImg();
     } else {
