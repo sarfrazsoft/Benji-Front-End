@@ -44,6 +44,26 @@ export const ActivityTitles = {
   FeedbackActivity: 'titlecomponent.title',
 };
 
+export const ActivityThumbnails = {
+  CaseStudyActivity: 'casestudy.svg',
+  BuildAPitchActivity: 'buildapitch.svg',
+  BrainstormActivity: 'brainstorm.svg',
+  TitleActivity: 'slides.svg',
+  MCQActivity: 'mcq.svg',
+  FeedbackActivity: 'feedback.svg',
+};
+
+export const ActivityDisplayNames = {
+  BrainstormActivity: 'Brainstorm',
+  TitleActivity: 'Slides',
+  VideoActivity: 'Video',
+  CaseStudyActivity: 'Worksheets',
+  MCQActivity: 'Quiz',
+  FeedbackActivity: 'Survey',
+  GenericRoleplayActivity: 'Roleplay',
+  BuildAPitchActivity: 'Madlibs',
+};
+
 // export const LayoutTypes = ['leftHalfScreen', 'leftImage', 'fullScreen', 'rightHalfScreen', 'rightImage'];
 export type TitleActivityLayouts =
   | 'emojiLayout'

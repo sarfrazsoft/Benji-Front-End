@@ -23,7 +23,10 @@
           class="activity-settings-menu activity-session-menu"  
           [overlapTrigger]="false" 
           xPosition="before">
-          <benji-session-navigation></benji-session-navigation>
+          <benji-session-navigation 
+            [lesson]="lesson"
+            [disableControls]="disableControls">
+          </benji-session-navigation>
         </mat-menu>
       </button>
       <button (click)="controlClicked('next')" *ngIf="isLastActivity" fxLayoutAlign="center center">

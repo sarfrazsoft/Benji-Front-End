@@ -1,4 +1,5 @@
 import { cloneDeep, isEmpty, orderBy } from 'lodash';
+import { ActivityDisplayNames } from 'src/app/globals';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { SAMPLE_ACTIVITIES } from '../../models';
@@ -79,16 +80,7 @@ export const initialState = {
   lessonSaved: false,
 };
 
-export const ActivityDisplayNames = {
-  BrainstormActivity: 'Brainstorm',
-  TitleActivity: 'Slides',
-  VideoActivity: 'Video',
-  CaseStudyActivity: 'Worksheets',
-  MCQActivity: 'Quiz',
-  FeedbackActivity: 'Survey',
-  GenericRoleplayActivity: 'Roleplay',
-  BuildAPitchActivity: 'Madlibs',
-};
+
 
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
   switch (action.type) {

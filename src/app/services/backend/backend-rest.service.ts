@@ -100,4 +100,9 @@ export class BackendRestService {
     const url = `${global.apiRoot}/course_details/lesson/?page=${page + 1}`;
     return this.http.get<PaginatedResponse<Lesson>>(url);
   }
+  
+  getLessonActivities(lesson: number) {
+    return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/`);
+    // return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/?editor=false`);
+  }
 }

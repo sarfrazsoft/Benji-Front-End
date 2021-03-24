@@ -6,7 +6,7 @@ import { clone } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService, PastSessionsService, SharingToolService } from 'src/app/services';
 import { Timer, User } from 'src/app/services/backend/schema';
-import { Participant } from 'src/app/services/backend/schema/course_details';
+import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs/';
 import {
@@ -50,6 +50,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   dialogRef;
   at: typeof ActivityTypes = ActivityTypes;
   actType = '';
+  lesson: Lesson;
   fastForwarding = false;
 
   constructor(
@@ -63,7 +64,11 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.activityState && this.activityState.lesson) {
+      this.lesson = this.activityState.lesson;
+    }
+  }
 
   ngOnChanges() {
     // if (this.actType !== this.activityState.activity_type) {

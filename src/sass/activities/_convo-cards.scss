@@ -73,6 +73,7 @@
     padding: 0px;
     .card {
       // top: auto;
+      background-color: #fff;
       transform: translate(-50%, -50%);
       .card-content {
         padding: 60px;
@@ -102,29 +103,27 @@ benji-sharing-tool {
       > div {
         height: 100%;
       }
-      .col-1-container {
-        .col-1 {
-          padding: $col-padding;
-          padding-right: 0px;
+      .col-1 {
+        padding: $col-padding;
+        padding-right: 0px;
+        height: 100%;
+        .container {
+          border-right: 1px solid #979797;
           height: 100%;
-          .container {
-            border-right: 1px solid #979797;
-            height: 100%;
-            font-size: 56px;
-            font-weight: 600;
-            padding: 32px;
-            padding-right: 90px;
-          }
-          h2 {
-            font-size: 56px;
-          }
+          font-size: 56px;
+          font-weight: 600;
+          padding: 32px;
+          padding-right: 90px;
+        }
+        h2 {
+          font-size: 56px;
         }
       }
       .col-2-container {
         padding: $col-padding;
       }
       .speaker-cue-container {
-        background-color: $sky;
+        background-color: #EEEBDD;
         padding: 16px;
         height: 100%;
         position: relative;
