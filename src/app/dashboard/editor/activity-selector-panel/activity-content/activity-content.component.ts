@@ -17,7 +17,6 @@ import { QuestionSet } from './services/question-control.service';
 @Component({
   selector: 'benji-activity-content',
   templateUrl: './activity-content.component.html',
-  styleUrls: ['./activity-content.component.scss'],
 })
 export class ActivityContentComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromStore.EditorState>, private formlyJsonschema: FormlyJsonschema) {}

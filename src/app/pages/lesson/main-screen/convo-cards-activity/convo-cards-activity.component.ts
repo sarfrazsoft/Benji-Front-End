@@ -4,7 +4,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-convo-cards-activity',
   templateUrl: './convo-cards-activity.component.html',
-  styleUrls: ['./convo-cards-activity.component.scss'],
 })
 export class MainScreenConvoCardsActivityComponent
   extends BaseActivityComponent
