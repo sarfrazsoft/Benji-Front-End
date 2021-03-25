@@ -505,50 +505,43 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === '') {
                 } else {
                 }
+              } else if (act.activity_type === this.at.convoCards) {
+                if (mapSource.internal_type === 'ConvoActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'main_title') {
+                  mappedField.hide = false;
+                  mappedField.templateOptions.required = false;
+                  mappedField.defaultValue = 'Conversation Cards';
+                } else if (mapSource.field_name === 'title_text') {
+                  mappedField.hide = false;
+                  mappedField.templateOptions.required = false;
+                  mappedField.defaultValue = 'Instructions to be provided by the instructor.';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'convocard_set') {
+                  mappedField.type = 'accordion';
+                  mappedField.templateOptions.label = 'Cards';
+                } else if (mapSource.internal_type === 'ConvoCardSerializer') {
+                  mappedField.templateOptions.label = '';
+                  mappedField.type = 'convoCard';
+                } else if (mapSource.field_name === 'title_text') {
+                  mappedField.templateOptions.label = '';
+                } 
+                
+                else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
+                  mappedField.type = 'seconds';
+                  mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  mappedField.templateOptions.label = '';
+                  mappedField.templateOptions['hideLabel'] = true;
+                  mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
+                  mappedField.templateOptions['helpText'] =
+                    'How long does the feedback submission stage last?';
+                } 
               }
-              // else if (act.activity_type === this.at.feedback) {
-              //   if (mapSource.internal_type === 'FeedbackActivitySerializer') {
-              //     mappedField.templateOptions.label = '';
-              //   } else if (mapSource.field_name === 'titlecomponent') {
-              //     mappedField.templateOptions.label = '';
-              //   } else if (mapSource.field_name === 'participant_instructions') {
-              //     mappedField.hide = true;
-              //     mappedField.templateOptions.required = false;
-              //   } else if (mapSource.field_name === 'screen_instructions') {
-              //     mappedField.templateOptions.label = 'Instructions';
-              //   } else if (mapSource.field_name === 'feedbackquestion_set') {
-              //     mappedField.type = 'accordion';
-              //     mappedField.templateOptions.label = 'Cards';
-              //   } else if (mapSource.internal_type === 'FeedbackQuestionSerializer') {
-              //     mappedField.templateOptions.label = '';
-              //     mappedField.type = 'convoCard';
-              //   } else if (mapSource.field_name === 'combo_text') {
-              //     mappedField.hide = true;
-              //   } else if (mapSource.field_name === 'is_combo') {
-              //     mappedField.hide = true;
-              //     mappedField.defaultValue = false;
-              //   } else if (mapSource.field_name === 'question_text') {
-              //   } else if (mapSource.field_name === 'question_type') {
-              //     mappedField.templateOptions.required = false;
-              //   } else if (mapSource.field_name === 'next_activity_delay_seconds') {
-              //     mappedField.hide = true;
-              //     mappedField.defaultValue = 10000;
-              //     mappedField.type = 'seconds';
-              //     mappedField.wrappers = ['benji-reveal-field-wrapper'];
-              //     mappedField.templateOptions.label = '';
-              //     mappedField.templateOptions['hideLabel'] = true;
-              //     mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
-              //     mappedField.templateOptions['helpText'] =
-              //       'How long does the feedback submission stage last?';
-              //   } else if (mapSource.field_name === 'auto_next') {
-              //     mappedField.defaultValue = false;
-              //     mappedField.hide = true;
-              //     mappedField.templateOptions.label = 'Auto Forward';
-              //     mappedField.templateOptions.description =
-              //       'If you want the activity to move to the next activity' +
-              //       ' once everyone has submitted their answers, click auto-forward';
-              //   }
-              // }
               return mappedField;
             },
           });
@@ -741,4 +734,5 @@ export const OrderForActivities = {
     'choice_img_url',
     'prediction_seconds',
   ],
+  ConvoActivity: ['main_title','title_text', 'convocard_set']
 };

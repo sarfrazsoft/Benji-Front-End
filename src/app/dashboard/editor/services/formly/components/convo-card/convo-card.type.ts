@@ -14,19 +14,19 @@ export class ConvoCardTypeComponent extends FieldType implements OnInit {
 
   ngOnInit() {
     this.field.fieldGroup.forEach((val, i) => {
-      if (val.key === 'question_text') {
+      if (val.key === 'main_title') {
         this.questionTextField = val;
         if (this.questionTextField.formControl) {
           this.textFieldValue = this.questionTextField.formControl.value;
         }
         this.questionTextField.templateOptions.label = null;
-      } else if (val.key === 'is_combo') {
+      } else if (val.key === 'title_text') {
         val.templateOptions.label = '';
-        val.hide = true;
-        this.isComboField = val;
-      } else if (val.key === 'combo_text') {
-        val.hide = true;
-        this.comboTextField = val;
+        val.hide = false;
+      } else if (val.key === 'title_image') {
+        val.hide = false;
+        val.type = 'emoji';
+        // this.comboTextField = val;
       } else if (val.key === 'question_type') {
         val.templateOptions.options = [
           {
