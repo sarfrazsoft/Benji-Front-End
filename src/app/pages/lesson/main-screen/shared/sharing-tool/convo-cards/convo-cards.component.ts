@@ -4,10 +4,10 @@ import { UpdateMessage } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
-  selector: 'benji-case-study',
-  templateUrl: './case-study.component.html'
+  selector: 'benji-convo-cards',
+  templateUrl: './convo-cards.component.html'
 })
-export class CaseStudyComponent implements OnInit, OnChanges {
+export class ConvoCardsComponent implements OnInit, OnChanges {
   @Input() data: UpdateMessage;
   @Input() currentSpeaker: { displayName: string; id: number };
   text = '';

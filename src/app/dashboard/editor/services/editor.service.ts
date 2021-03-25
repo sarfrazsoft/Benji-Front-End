@@ -22,7 +22,6 @@ export class EditorService {
 
   getLessonActivities(lesson: number) {
     return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/`);
-    // return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/?editor=false`);
   }
 
   createYaml(lesson): Observable<any[]> {

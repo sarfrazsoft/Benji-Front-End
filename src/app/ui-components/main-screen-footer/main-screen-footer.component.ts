@@ -153,24 +153,6 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     // }
   }
 
-  deleteUser(p: Participant) {
-    const msg = 'Are you sure you want to delete ' + p.display_name + '?';
-    this.dialogRef = this.dialog
-      .open(ConfirmationDialogComponent, {
-        data: {
-          confirmationMessage: msg,
-        },
-        disableClose: true,
-        panelClass: 'dashboard-dialog',
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res) {
-          this.socketMessage.emit(new BootParticipantEvent(p.participant_code));
-        }
-      });
-  }
-
   toggleCategorization() {
     this.socketMessage.emit(new BrainstormToggleCategoryModeEvent());
   }
@@ -227,6 +209,28 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   startSharingTool() {
     this.sharingToolService.sharingToolControl$.next(this.activityState);
+  }
+
+  deleteUser(p: Participant) {
+    const msg = 'Are you sure you want to delete ' + p.display_name + '?';
+    this.dialogRef = this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: msg,
+        },
+        disableClose: true,
+        panelClass: 'dashboard-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.socketMessage.emit(new BootParticipantEvent(p.participant_code));
+        }
+      });
+  }
+  
+  getActiveParticipants() {
+    return this.activityState.lesson_run.participant_set.filter(x => x.is_active);
   }
 }
 

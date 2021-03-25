@@ -3,7 +3,7 @@
     <div class="" fxLayout="row" fxLayoutAlign="space-between">
       <div>
         <h1 class="pn-500">
-          <span class="primary-color pn-700">
+          <span class="black-color pn-700">
             <!-- <ng-container *ngIf="voteScreen">
               Vote
             </ng-container> -->
@@ -18,34 +18,16 @@
       </div>
     </div>
   </div>
-  <div class="content" fxLayout="row">
-    <div *ngIf="activityDataAvailable" class="col-1-container" fxFlex="33%" fxLayoutAlign="center center">
-      <div class="col-1">
-        <div class="container primary-color-darkest" fxFlex="100%" fxLayoutAlign="center center">
-          <div>{{ speakers[currentSpeakerIndex].displayName }}, you're up</div>
-        </div>
+  <div class="content bg-yellow" fxLayout="row">
+    <div *ngIf="activityDataAvailable" class="col-1" fxFlex="33%" fxLayoutAlign="center center">
+      <div class="container black-color" fxFlex="100%" fxLayoutAlign="center center">
+        <div>{{ speakers[currentSpeakerIndex].displayName }}, you're up</div>
       </div>
     </div>
-    <div *ngIf="activityDataAvailable" class="col-2-container" fxFlex="34%">
+    <div class="col-2-container" fxFlex="34%" style="overflow: auto;">
       <div class="col-2">
         <ng-template #activityEntry></ng-template>
       </div>
-      <!-- <div class="convo-cards-screen main-screen">
-        <div class="card" >
-          <div class="card-content" fxLayout="column">
-            <div class="emoji-container" fxLayoutAlign="center center">
-              <div class="emoji">
-                <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
-              </div>
-            </div>
-            <div class="text-content">
-              <div class="main">
-                If you were a food, what would you be? 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
 
     <div *ngIf="!activityDataAvailable" class="col-1-container" fxFlex="66%" fxLayoutAlign="center center">
@@ -66,7 +48,7 @@
     </div>
     <div fxFlex="34%">
       <div class="speaker-cue-container">
-        <div class="header primary-color-darkest">Speaker Cue</div>
+        <div class="header black-color">Speaker Cue</div>
         <div class="speaker-list">
           <div 
             class="name-row" 
@@ -114,3 +96,80 @@
     </div>
   </div>
 </div>
+
+<!-- <div fxLayout="column" class="mainscreen-activity">
+  <div class="lesson-top-banner compact">
+    <div class="" fxLayout="row" fxLayoutAlign="space-between">
+      <div>
+        <h1 class="pn-500">
+          <span class="black-color pn-700">
+            <ng-container>
+              Share your thoughts
+            </ng-container>
+          </span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class="content bg-yellow" fxLayout="row">
+    <div class="col-1" fxFlex="34%" fxLayoutAlign="center center">
+      <div class="container black-color" fxFlex="100%" fxLayoutAlign="center center">
+        <div>Matt, you're up</div>
+      </div>
+    </div>
+    <div fxFlex="33%">
+      <div class="convo-cards-screen main-screen">
+        <div class="card" >
+          <div class="card-content" fxLayout="column">
+            <div class="emoji-container" fxLayoutAlign="center center">
+              <div class="emoji">
+                <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
+              </div>
+            </div>
+            <div class="text-content">
+              <div class="main">
+                If you were a food, what would you be? 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="33%">
+      <div class="speaker-cue-container">
+        <div class="header black-color">Speaker Cue</div>
+        <div class="speaker-list">
+          <div 
+            class="name-row" 
+            fxLayout="row" 
+            fxLayoutGap="24px"
+            fxLayoutAlign="start center"
+            *ngFor="let speaker of speakers">
+            <div class="name">Matthew Parson {{speaker}}</div>
+            <div><img src="/assets/img/yellowPointer.svg" alt=""></div>
+            <div><img src="/assets/img/closeBig.svg" alt=""></div>
+          </div>
+        </div>
+        <div class="list-controls">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+            <div>
+              <button class="b-small-button bg-primary-color" >
+                Next
+              </button>
+            </div>
+            <div>
+              <button class="b-inverted-button border-color-primary primary-color">
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+                  <img src="/assets/img/diceIcon.svg" alt="">
+                  <span>
+                    Random
+                  </span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

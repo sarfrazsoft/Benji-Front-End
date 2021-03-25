@@ -49,6 +49,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
         this.sharingData = null;
       }
     });
+
+    this.showSharingTool = false;
   }
   at: typeof ActivityTypes = ActivityTypes;
   showSharingTool = false;

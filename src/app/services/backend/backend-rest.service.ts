@@ -102,7 +102,6 @@ export class BackendRestService {
   }
   
   getLessonActivities(lesson: number) {
-    return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/`);
-    // return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/?editor=false`);
+    return this.http.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/?editor=false`);
   }
 }

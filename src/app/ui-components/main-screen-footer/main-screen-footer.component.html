@@ -103,10 +103,12 @@
         fxLayoutAlign="center center">
         <button
           placement="top"
-          tooltip="Vote"
+          tooltip="add text"
           show-delay="100"
+          (click)="startSharingTool()"
         > 
           <img src="/assets/img/heartOutline.svg" /> 
+          share
         </button>
       </div>
 
@@ -175,18 +177,20 @@
         <button [matMenuTriggerFor]="participantMenu">
           <!-- <mat-icon class="icon-white">supervisor_account</mat-icon> -->
           <img src="/assets/img/participants.svg" /> 
-          <sup class="white-color">{{ participants.length }}</sup>
+          <sup class="white-color">{{ getActiveParticipants().length }}</sup>
         </button>
         <mat-menu #participantMenu="matMenu">
-          <div
-            class="delete-participant"
-            fxLayoutAlign="center"
-            fxLayoutGap="10px"
-            *ngFor="let p of participants"
-          >
-            <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
-            <span fxFlex="90%">{{ p.display_name }}</span>
-          </div>
+          <ng-container *ngFor="let p of participants">
+            <div
+              class="delete-participant"
+              fxLayoutAlign="center center"
+              fxLayoutGap="10px"
+              *ngIf="p.is_active"
+            >
+              <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
+              <span fxFlex="90%">{{ p.display_name }}</span>
+            </div>
+          </ng-container>
         </mat-menu>
       </div>
 
@@ -200,7 +204,7 @@
       </div>
     
     </div>
-    <div (click)="startSharingTool()" class="session-info" fxLayout="row" fxLayoutGap="24px">
+    <div class="session-info" fxLayout="row" fxLayoutGap="24px">
       <div class="room-code" fxLayout="column" fxLayoutGap="4px">
         <span class="code">{{ roomCode }}</span>
         <span class="text">ROOM CODE</span>

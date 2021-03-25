@@ -33,8 +33,10 @@ export class SessionNavigationComponent implements OnInit {
   }
 
   getDescendantProp(obj, desc) {
-    const arr = desc.split('.');
-    while (arr.length && (obj = obj[arr.shift()])) {}
-    return obj;
+    if (desc) {
+      const arr = desc.split('.');
+      while (arr.length && (obj = obj[arr.shift()])) {}
+      return obj; 
+    }
   }
 }

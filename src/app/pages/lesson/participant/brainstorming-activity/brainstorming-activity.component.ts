@@ -3,6 +3,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as global from 'src/app/globals';
+import { BrainstormService } from 'src/app/services';
 import {
   BrainstormActivity,
   BrainstormSubmitEvent,
@@ -44,6 +45,7 @@ export class ParticipantBrainstormingActivityComponent
 
   constructor(
     private contextService: ContextService,
+    private brainstormService: BrainstormService,
     private formBuilder: FormBuilder,
     private httpClient: HttpClient,
     private utilsService: UtilsService
@@ -58,7 +60,7 @@ export class ParticipantBrainstormingActivityComponent
     this.maxSubmissions = this.act.max_participant_submissions;
     this.participantCode = this.getParticipantCode().toString();
 
-    const submittedIdeas = this.getUserIdeas(this.getParticipantCode());
+    const submittedIdeas = this.brainstormService.getUserIdeas(this.getParticipantCode(), this.act);
     submittedIdeas.forEach((idea: Idea) => {
       this.draftIdeas.push({ id: idea.id, text: idea.idea, editing: false });
     });
@@ -91,7 +93,7 @@ export class ParticipantBrainstormingActivityComponent
     }
     // Show thank you for idea submission
 
-    const submissionCount = this.getUserIdeas(userID);
+    const submissionCount = this.brainstormService.getUserIdeas(userID, this.act);
     if (submissionCount.length) {
       this.noOfIdeasSubmitted = submissionCount.length;
       if (submissionCount.length >= this.act.max_participant_submissions) {
@@ -173,21 +175,5 @@ export class ParticipantBrainstormingActivityComponent
     this.selectedIdeas.forEach((idea) => {
       this.sendMessage.emit(new BrainstormVoteEvent(idea));
     });
-  }
-
-  getUserIdeas(userID: number): Array<Idea> {
-    const arr: Array<Idea> = [];
-    this.act.brainstormcategory_set.forEach((category) => {
-      if (!category.removed) {
-        category.brainstormidea_set.forEach((idea) => {
-          if (!idea.removed) {
-            if (idea.submitting_participant && idea.submitting_participant.participant_code === userID) {
-              arr.push(idea);
-            }
-          }
-        });
-      }
-    });
-    return arr;
   }
 }

@@ -9,7 +9,7 @@ import {
 import { cloneDeep } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
 import { UpdateMessage } from 'src/app/services/backend/schema';
-import { SharingBuildAPitchComponent, SharingCaseStudyComponent } from './index';
+import { SharingBrainstormComponent, SharingBuildAPitchComponent, SharingCaseStudyComponent, SharingConvoCardsComponent } from './index';
 
 @Component({
   selector: 'benji-sharing-tool',
@@ -58,6 +58,10 @@ export class SharingToolComponent implements OnInit {
         }
       });
 
+      this.speakers.sort(function (obj1, obj2) {
+        return Number(obj2.optedIn) - Number(obj1.optedIn);
+      });
+
       const b = this.cfr.resolveComponentFactory(SharingBuildAPitchComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
@@ -80,16 +84,55 @@ export class SharingToolComponent implements OnInit {
           'we wrote this text on Fridaywe wrote this text on Fridaywe wrote this text on Friday ';
       });
 
+      this.speakers.sort(function (obj1, obj2) {
+        return Number(obj2.optedIn) - Number(obj1.optedIn);
+      });
+
       const b = this.cfr.resolveComponentFactory(SharingCaseStudyComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
       this.component.instance.data = this.data;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
+    } else if (this.data.activity_type === this.at.convoCards) {
+      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+      participantSet.forEach((val, index) => {
+        if (index === 1) {
+          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
+        } else {
+          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
+        }
+      });
+      this.speakers.sort(function (obj1, obj2) {
+        return Number(obj2.optedIn) - Number(obj1.optedIn);
+      });
+
+      const b = this.cfr.resolveComponentFactory(SharingConvoCardsComponent);
+      this.component = this.entry.createComponent(b);
+      this.currentSpeakerIndex = 0;
+      this.component.instance.data = this.data;
+      this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
+      this.component.instance.update();
+    } else if (this.data.activity_type === this.at.brainStorm) {
+      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+      participantSet.forEach((val, index) => {
+        if (index === 1) {
+          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
+        } else {
+          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
+        }
+      });
+      this.speakers.sort(function (obj1, obj2) {
+        return Number(obj2.optedIn) - Number(obj1.optedIn);
+      });
+
+      const b = this.cfr.resolveComponentFactory(SharingBrainstormComponent);
+      this.component = this.entry.createComponent(b);
+      this.currentSpeakerIndex = 0;
+      this.component.instance.data = this.data;
+      this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
+      this.component.instance.update();
     }
-    this.speakers.sort(function (obj1, obj2) {
-      return Number(obj2.optedIn) - Number(obj1.optedIn);
-    });
   }
 
   update() {
