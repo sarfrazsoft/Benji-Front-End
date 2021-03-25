@@ -17,10 +17,20 @@ export class BAPBlankTypeComponent extends FieldType implements OnInit {
         this.label = val;
         this.label.templateOptions.label = null;
         this.label.templateOptions.placeholder = 'Label';
+        this.label.templateOptions.keypress = (fieldConfig, event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+          }
+        };
       } else if (val.key === 'temp_text') {
         val.templateOptions.label = '';
         this.blank = val;
         this.blank.templateOptions.placeholder = 'Blank';
+        this.blank.templateOptions.keypress = (fieldConfig, event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+          }
+        };
       } else if (val.key === 'order') {
         // forgetting about order for now
         val.hide = true;
@@ -28,6 +38,11 @@ export class BAPBlankTypeComponent extends FieldType implements OnInit {
       } else if (val.key === 'help_text') {
         this.explanationField = val;
         this.explanationField.templateOptions.label = null;
+        this.explanationField.templateOptions.keypress = (fieldConfig, event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+          }
+        };
         if (this.explanationField.model && this.explanationField.model.explanation) {
           val.hide = false;
           this.explanationField.hide = false;

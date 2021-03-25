@@ -4,7 +4,7 @@ import { FieldArrayType } from '@ngx-formly/core';
 @Component({
   selector: 'formly-array-type',
   template: `
-    <div class="mb-3">
+    <div class="mb-3" (keypress)="keypress($event)">
       <legend *ngIf="to.label">{{ to.label }}</legend>
       <p *ngIf="to.description">{{ to.description }}</p>
 
@@ -15,7 +15,9 @@ import { FieldArrayType } from '@ngx-formly/core';
       <div *ngFor="let field of field.fieldGroup; let i = index" class="" fxLayout="row">
         <formly-field class="" [field]="field" fxFlex="100"></formly-field>
         <div class="remove-button text-right">
-          <button class="" (click)="remove(i)"><mat-icon>close</mat-icon></button>
+          <button class="" (click)="remove(i)" (keypress)="$event.stopPropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
         </div>
       </div>
 
@@ -32,4 +34,9 @@ import { FieldArrayType } from '@ngx-formly/core';
 })
 export class ArrayTypeComponent extends FieldArrayType {
   // TODO: add explicit constructor
+  keypress(event) {
+    if (event.key === 'Enter') {
+      this.add();
+    }
+  }
 }

@@ -355,8 +355,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         }
         let title = 'Enter title';
         if (content.activity_title) {
-          const t = content.titlecomponent;
-          title = t.title ? t.title : 'Enter title';
+          title = content.activity_title;
         }
         let msAct = null;
         if (this.data.screenType === 'mainScreen') {

@@ -171,21 +171,21 @@
       >
       </benji-ms-external-grouping-activity>
 
-      <benji-ms-case-study-activity
+      <!-- <benji-ms-case-study-activity
         *ngIf="getActivityType() === at.caseStudy"
         [activityState]="serverMessage"
         [avgServerTimeOffset]="avgServerTimeOffset"
         (sendMessage)="sendSocketMessage($event)"
       >
-      </benji-ms-case-study-activity>
+      </benji-ms-case-study-activity> -->
 
-      <!-- <benji-ms-convo-cards-activity
+      <benji-ms-convo-cards-activity
         *ngIf="getActivityType() === at.caseStudy"
         [activityState]="serverMessage"
         [avgServerTimeOffset]="avgServerTimeOffset"
         (sendMessage)="sendSocketMessage($event)"
       >
-      </benji-ms-convo-cards-activity> -->
+      </benji-ms-convo-cards-activity>
 
       <benji-ms-gather-activity
         *ngIf="getActivityType() === at.gather"

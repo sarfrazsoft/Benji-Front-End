@@ -156,13 +156,19 @@ benji-preview-panel {
 
         benji-ms-pop-quiz {
           .activity-instructions {
-            padding: 0 20px;
-          }
-          .quiz-question {
-            font-size: 24px;
+            padding: 0 16px !important;
           }
           .quiz-answers {
-            font-size: 24px;
+            font-size: 16px;
+            .answer-container {
+              margin-bottom: 16px;
+              width: 210px;
+              height: 70px;
+              padding: 8px;
+            }
+          }
+          .submitted-info {
+            font-size: 16px;
           }
         }
 
