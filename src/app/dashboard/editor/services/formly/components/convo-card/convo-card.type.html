@@ -8,13 +8,16 @@
     <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">
       <formly-validation-message [field]="field"></formly-validation-message>
     </div>
-    <div class="" fxLayout="row" fxLayoutAlign="start start">
+    <div class="" fxLayout="column" fxLayoutAlign="start start">
       <div fxFlex="100">
-        <formly-field [field]="questionTextField"></formly-field>
+        <formly-field [field]="cardImageField"></formly-field>
       </div>
-      <!-- <div>
-        <formly-field [field]="typeField"></formly-field>
-      </div> -->
+      <div fxFlex="100">
+        <formly-field [field]="cardTitleField"></formly-field>
+      </div>
+      <div>
+        <formly-field [field]="cardTextField"></formly-field>
+      </div>
     </div>
   </div>
 </mat-expansion-panel>

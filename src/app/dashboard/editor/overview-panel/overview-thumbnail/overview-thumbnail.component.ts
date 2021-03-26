@@ -41,6 +41,7 @@ export class OverviewThumbnailComponent implements OnInit, OnDestroy {
     this.overviewTextObservable = this.store
       .select(fromStore.getLessonActivityContent(activity.id))
       .subscribe((res) => {
+        console.log(res);
         if (res && res.activity_overview_text) {
           this.displayText = this.getDescendantProp(res, res.activity_overview_text)
             ? this.getDescendantProp(res, res.activity_overview_text)

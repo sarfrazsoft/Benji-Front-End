@@ -56,6 +56,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           const act_type = cloneDeep(pair.activity.activity_type);
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           const schema = cloneDeep(s);
+          console.log(schema);
           const content = cloneDeep(this.selectedLessonActivityContent);
 
           // Case study activiy
@@ -92,8 +93,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               // Emoji field
               if (mapSource.internal_type === 'EmojiURLField') {
                 if (AllowEmojiDic[act.activity_type]) {
-                  // mappedField.type = 'emoji';
-                  mappedField.type = 'image';
+                  mappedField.type = 'emoji';
+                  // mappedField.type = 'image';
                   mappedField.wrappers = ['form-field'];
                   mappedField.templateOptions.label = 'Emoji';
                   mappedField.defaultValue = 'emoji://1F642';
@@ -515,9 +516,11 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = false;
                   mappedField.templateOptions.required = false;
                   mappedField.defaultValue = 'Instructions to be provided by the instructor.';
+                } else if (mapSource.field_name === 'title_image') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.hide = true;
-                } else if (mapSource.field_name === 'convocard_set') {
+                } else if (mapSource.field_name === 'cards') {
                   mappedField.type = 'accordion';
                   mappedField.templateOptions.label = 'Cards';
                 } else if (mapSource.internal_type === 'ConvoCardSerializer') {
@@ -525,9 +528,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.type = 'convoCard';
                 } else if (mapSource.field_name === 'title_text') {
                   mappedField.templateOptions.label = '';
-                } 
-                
-                else if (mapSource.field_name === 'hide_timer') {
+                } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
@@ -539,7 +540,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
                   mappedField.templateOptions['helpText'] =
                     'How long does the feedback submission stage last?';
-                } 
+                }
               }
               return mappedField;
             },
@@ -650,16 +651,14 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           b.right_choice.choice_name = b.right_choice.preference_text.replace(/\s/g, '');
           b.right_choice.collective_name = b.right_choice.preference_text;
         }
+      } else if (b.activity_type === this.at.convoCards) {
+        b.activity_overview_text = ActivityTitles[this.at.convoCards];
       }
-
-      // console.log(b);
       this.store.dispatch(new fromStore.AddActivityContent(b));
     });
   }
 
-  saveValues($event) {
-    console.log($event);
-  }
+  saveValues($event) {}
 
   ngOnDestroy() {
     // console.log('destroy called');
@@ -693,6 +692,7 @@ export const AllowEmojiDic = {
   BrainstormActivity: false,
   FeedbackActivity: false,
   GenericRoleplayActivity: true,
+  ConvoActivity: true,
 };
 
 export const OrderForActivities = {
@@ -733,5 +733,5 @@ export const OrderForActivities = {
     'choice_img_url',
     'prediction_seconds',
   ],
-  ConvoActivity: ['main_title','title_text', 'convocard_set']
+  ConvoActivity: ['main_title', 'title_text', 'convocard_set'],
 };

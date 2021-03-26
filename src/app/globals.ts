@@ -42,6 +42,7 @@ export const ActivityTitles = {
   TitleActivity: 'main_title',
   MCQActivity: 'question.question',
   FeedbackActivity: 'titlecomponent.title',
+  ConvoActivity: 'main_title',
 };
 
 export const ActivityThumbnails = {
@@ -62,6 +63,7 @@ export const ActivityDisplayNames = {
   FeedbackActivity: 'Survey',
   GenericRoleplayActivity: 'Roleplay',
   BuildAPitchActivity: 'Madlibs',
+  ConvoActivity: 'Cards',
 };
 
 // export const LayoutTypes = ['leftHalfScreen', 'leftImage', 'fullScreen', 'rightHalfScreen', 'rightImage'];

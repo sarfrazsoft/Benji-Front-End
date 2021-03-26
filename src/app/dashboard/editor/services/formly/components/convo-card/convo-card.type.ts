@@ -6,27 +6,28 @@ import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
   templateUrl: './convo-card.type.html',
 })
 export class ConvoCardTypeComponent extends FieldType implements OnInit {
-  questionTextField: FormlyFieldConfig;
+  cardImageField: FormlyFieldConfig;
+  cardTitleField: FormlyFieldConfig;
   textFieldValue = '';
-  isComboField: FormlyFieldConfig;
+  cardTextField: FormlyFieldConfig;
   typeField: FormlyFieldConfig;
-  comboTextField: FormlyFieldConfig;
 
   ngOnInit() {
     this.field.fieldGroup.forEach((val, i) => {
-      if (val.key === 'main_title') {
-        this.questionTextField = val;
-        if (this.questionTextField.formControl) {
-          this.textFieldValue = this.questionTextField.formControl.value;
-        }
-        this.questionTextField.templateOptions.label = null;
-      } else if (val.key === 'title_text') {
-        val.templateOptions.label = '';
-        val.hide = false;
-      } else if (val.key === 'title_image') {
+      if (val.key === 'card_image') {
         val.hide = false;
         val.type = 'emoji';
-        // this.comboTextField = val;
+        this.cardImageField = val;
+      } else if (val.key === 'card_title') {
+        this.cardTitleField = val;
+        if (this.cardTitleField.formControl) {
+          this.textFieldValue = this.cardTitleField.formControl.value;
+        }
+        this.cardTitleField.templateOptions.label = 'Title';
+      } else if (val.key === 'card_text') {
+        val.hide = false;
+        val.templateOptions.label = 'Text';
+        this.cardTextField = val;
       } else if (val.key === 'question_type') {
         val.templateOptions.options = [
           {
@@ -44,8 +45,8 @@ export class ConvoCardTypeComponent extends FieldType implements OnInit {
   }
 
   getTextFieldValue() {
-    if (this.questionTextField && this.questionTextField.formControl) {
-      return this.questionTextField.formControl.value;
+    if (this.cardTitleField && this.cardTitleField.formControl) {
+      return this.cardTitleField.formControl.value;
     }
   }
 }

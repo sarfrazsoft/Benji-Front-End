@@ -12,17 +12,5 @@
         {{ item.idea }}
       </div>
     </ng-container>
-    <ng-container *ngFor="let item of ideas; let i = index">
-      <div class="brainstorm-idea">
-        <div
-          class="brainstorm-image"
-          *ngIf="item.idea_image"
-          (click)="viewImage(hostname + item.idea_image.img)"
-        >
-          <img [src]="hostname + item.idea_image.img" alt="" />
-        </div>
-        {{ item.idea }}
-      </div>
-    </ng-container>
   </div>
 </div>
