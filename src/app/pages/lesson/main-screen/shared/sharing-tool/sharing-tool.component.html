@@ -81,7 +81,9 @@
               </button>
             </div>
             <div>
-              <button class="b-inverted-button border-color-primary primary-color">
+              <button 
+                (close)="generateRandom()"
+                class="b-inverted-button border-color-primary primary-color">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
                   <img src="/assets/img/diceIcon.svg" alt="">
                   <span>

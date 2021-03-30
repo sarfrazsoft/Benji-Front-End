@@ -9,13 +9,16 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantConvoCardsActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
-  items = CARDS;
+  items = [];
   indexOfCardShown = 0;
   constructor() {
     super();
   }
 
   ngOnInit(): void {
+    console.log(this.activityState);
+    this.indexOfCardShown = 0;
+    this.items = this.activityState.convoactivity.cards;
     // this.activityState.convocardsactivity
     // const c: ConvoCardsActivity;
   }
@@ -40,22 +43,3 @@ export class ParticipantConvoCardsActivityComponent
     }
   }
 }
-
-const CARDS = [
-  {
-    // emoji: 'emoji://1F606',
-    main: '1If you were a food, what would you be?',
-    // sub: 'This is just a silly exercise, don’t over think it!',
-  },
-  {
-    emoji: 'emoji://1F606',
-    main: '2If you were a food, what would you be?',
-    sub:
-      'This is just a silly exercise, don’t over think it! This is just a silly exercise, don’t over think it!',
-  },
-  {
-    emoji: 'emoji://1F606',
-    main: '3If you were a food, what would you be?',
-    // sub: 'This is just a silly exercise, don’t over think it!',
-  },
-];

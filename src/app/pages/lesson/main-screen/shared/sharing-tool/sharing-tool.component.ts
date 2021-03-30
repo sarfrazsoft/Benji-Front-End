@@ -9,12 +9,17 @@ import {
 import { cloneDeep } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
 import { UpdateMessage } from 'src/app/services/backend/schema';
-import { SharingBrainstormComponent, SharingBuildAPitchComponent, SharingCaseStudyComponent, SharingConvoCardsComponent } from './index';
+import { UtilsService } from 'src/app/services/utils.service';
+import {
+  SharingBrainstormComponent,
+  SharingBuildAPitchComponent,
+  SharingCaseStudyComponent,
+  SharingConvoCardsComponent,
+} from './index';
 
 @Component({
   selector: 'benji-sharing-tool',
   templateUrl: './sharing-tool.component.html',
-  styleUrls: ['./sharing-tool.component.scss'],
 })
 export class SharingToolComponent implements OnInit {
   at: typeof ActivityTypes = ActivityTypes;
@@ -26,7 +31,7 @@ export class SharingToolComponent implements OnInit {
   activityDataAvailable = true;
   @Input() data: UpdateMessage;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
-  constructor(private cfr: ComponentFactoryResolver) {}
+  constructor(private cfr: ComponentFactoryResolver, private utilsService: UtilsService) {}
 
   ngOnInit(): void {
     console.log(this.data);
@@ -164,5 +169,9 @@ export class SharingToolComponent implements OnInit {
     console.log('select speaker');
     this.currentSpeakerIndex = index;
     this.update();
+  }
+
+  generateRandom() {
+    this.currentSpeakerIndex = this.utilsService.randomIntFromInterval(0, this.speakers.length - 1);
   }
 }

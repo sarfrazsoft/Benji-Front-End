@@ -93,11 +93,29 @@ benji-lesson {
   }
 }
 
-.image-placeholder {
+.image-placeholder,
+.selected-image {
   height: 160px !important;
   background-color: #f2f4f7;
-  height: 100%;
+  text-align: center;
   color: #bdbdbd;
   font-weight: 500;
   font-size: 18px;
+}
+.selected-image {
+  position: relative;
+  img {
+    height: 100%;
+  }
+  .editor-content-button {
+    color: #fff;
+    height: auto;
+    background-color: #5da9e9;
+    border: 2px solid #5da9e9;
+    border-radius: 4px;
+    padding: 10px;
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+  }
 }

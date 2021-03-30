@@ -228,3 +228,9 @@ benji-activity-selector-panel {
   padding: 16px !important;
   text-align: left !important;
 }
+
+mat-expansion-panel.mat-expansion-panel {
+  box-shadow: none !important;
+  border: 1px solid #ced4da;
+  margin-bottom: 8px;
+}

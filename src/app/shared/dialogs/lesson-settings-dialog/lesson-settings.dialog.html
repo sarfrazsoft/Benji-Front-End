@@ -37,15 +37,47 @@
           </div>
           <div class="field">
             <div class="label">Cover photo</div>
-            
-            <div class="image-placeholder" fxLayout="column" fxLayoutGap="12px" fxLayoutAlign="center center">
-              <div>
-                <img src="/assets/img/imageUploadIcon.svg" alt="">
-              </div>
-              <div>
-                Click to upload an image
+
+            <div  *ngIf="imageURL" class="selected-image">
+              <img [src]="imageURL">
+              <div benji-click-stop-propagation  class="editor-content-button bg-sky">
+                <label for="file-upload">
+                  <input 
+                    type="file" 
+                    id="file-upload" 
+                    accept="image/*"
+                    onclick="this.value = null" 
+                    (change)="onFileSelect($event)"
+                    style="display: none;" />
+                    <div >
+                      Edit Photo
+                    </div>
+                </label>
               </div>
             </div>
+            <label for="file-upload" *ngIf="!imageURL">
+              <input 
+                type="file" 
+                id="file-upload" 
+                accept="image/*" 
+                onclick="this.value = null" 
+                (change)="onFileSelect($event)"
+                style="display: none;" />
+                <div class="image-placeholder" 
+                  fxLayout="column" 
+                  fxLayoutGap="12px" 
+                  fxLayoutAlign="center center">
+                  <div>
+                    <img src="/assets/img/imageUploadIcon.svg" alt="">
+                    <!-- <img *ngIf="imageURL" [src]="imageURL" alt=""> -->
+                  </div>
+                  <div>
+                    Click to upload an image
+                  </div>
+                </div>
+            </label>
+
+
           </div>
     
           <div 

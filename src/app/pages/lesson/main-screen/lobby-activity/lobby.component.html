@@ -31,10 +31,10 @@
     <div class="mainscreen-activity__column mainscreen-activity__column--25 joined-users">
       <ul>
         <li
-          *ngFor="let participant of activityState.lesson_run.participant_set"
+          *ngFor="let participant of participants"
           class=""
           [ngClass]="{
-            'long-list': activityState.lesson_run.participant_set.length > 25
+            'long-list': participants.length > 25
           }"
         >
           {{ participant.display_name }}

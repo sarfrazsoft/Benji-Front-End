@@ -8,7 +8,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-title-activity',
   templateUrl: './title-activity.component.html',
-  styleUrls: ['./title-activity.component.scss'],
 })
 export class MainScreenTitleActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   isEndSession = false;

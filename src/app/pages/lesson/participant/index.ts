@@ -47,6 +47,7 @@ export { BuildPitchComponents } from './build-pitch-activity';
 export { VotePitchComponent } from './build-pitch-activity/vote-pitch/vote-pitch.component';
 export { ParticipantBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 
+export { IdeaContainerComponent } from './brainstorming-activity/idea-container/idea-container.component';
 export const ParticipantScreenComponents = [
   // ...BuildPitchComponents,
   // ...ParticipantSharedComponents,

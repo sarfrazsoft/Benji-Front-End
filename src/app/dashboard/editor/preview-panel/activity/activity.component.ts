@@ -15,12 +15,14 @@ import {
   BuildPitchComponents,
   MainScreenBrainstormingActivityComponent,
   MainScreenBuildPitchActivityComponent,
+  MainScreenConvoCardsActivityComponent,
   MainScreenFeedbackActivityComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
   ParticipantBrainstormingActivityComponent,
   ParticipantBuildPitchActivityComponent,
   ParticipantCaseStudyActivityComponent,
+  ParticipantConvoCardsActivityComponent,
   ParticipantFeedbackActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantTitleActivityComponent,
@@ -30,7 +32,6 @@ import { PreviewActivity } from 'src/app/services/backend/schema';
 @Component({
   selector: 'benji-preview-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.scss'],
 })
 export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
   @Input() data: PreviewActivity;
@@ -416,6 +417,64 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           },
         };
         this.componentRef.instance.actEditor = true;
+      } else if (this.data.activity_type === Acts.convoCards) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenConvoCardsActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantConvoCardsActivityComponent);
+        }
+        this.componentRef = this.entry.createComponent(msAct);
+
+        let cards = [];
+        if (content.cards.length === 0) {
+          cards = [
+            {
+              card_image: 'emoji://1F606',
+              card_title: 'Placeholder text',
+              card_text: 'This is just a silly exercise, don’t over think it!',
+            },
+            {
+              card_title: 'I can be without emoji and text',
+            },
+            {
+              card_image: 'emoji://1F606',
+              card_title: 'I only have an emoji',
+            },
+          ];
+        } else {
+          cards = content.cards;
+        }
+
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          convoactivity: {
+            activity_id: '1605110364952',
+            activity_type: this.data.activity_type,
+            auto_next: true,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 507,
+            is_paused: true,
+            main_title: content.main_title,
+            next_activity: 4,
+            next_activity_delay_seconds: null,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 46,
+            run_number: 0,
+            start_time: '2020-11-11T12:30:41.270208-05:00',
+            title_image: this.data.content.title_image ? content.title_image : null,
+            title_text: content.title_text,
+            cards: cards,
+          },
+        };
       }
       this.oldActivityType = this.data.activity_type;
     }

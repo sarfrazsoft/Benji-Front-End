@@ -1,4 +1,12 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialogs';
 import { ContextService } from 'src/app/services';
@@ -12,10 +20,11 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   styleUrls: ['./lobby.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy {
+export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   startSessionLabel = '';
   joinLobbyUrl = '';
   dialogRef;
+  participants = [];
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   constructor(private dialog: MatDialog, private contextService: ContextService) {
@@ -42,6 +51,11 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
         this.joinLobbyUrl = info.parameters.joinLobbyUrl;
       }
     });
+  }
+
+  ngOnChanges() {
+    console.log(this.activityState.lesson_run.participant_set);
+    this.participants = this.activityState.lesson_run.participant_set;
   }
 
   ngOnDestroy() {

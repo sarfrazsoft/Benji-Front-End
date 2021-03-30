@@ -1,82 +1,20 @@
-<div fxLayout="column" class="mainscreen-activity">
-  <div class="lesson-top-banner compact">
-    <div class="" fxLayout="row" fxLayoutAlign="space-between">
-      <div>
-        <h1 class="pn-500">
-          <span class="black-color pn-700">
-            <!-- <ng-container *ngIf="voteScreen">
-              Vote
-            </ng-container> -->
-            <ng-container>
-              Share your thoughts
-            </ng-container>
-            <!-- <ng-container *ngIf="VnSComplete">
-              Winners
-            </ng-container> -->
-          </span>
-        </h1>
-      </div>
-    </div>
+<div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+  <div class="twemoji-container">
+    <img style="width: 100%;" src="/assets/img/activityThumbnails/convocards.svg" alt="">
   </div>
-  <div class="content bg-yellow" fxLayout="row">
-    <div class="col-1" fxFlex="34%" fxLayoutAlign="center center">
-      <div class="container black-color" fxFlex="100%" fxLayoutAlign="center center">
-        <div>Matt, you're up</div>
-      </div>
-    </div>
-    <div fxFlex="33%">
-      <div class="convo-cards-screen main-screen">
-        <div class="card" >
-          <div class="card-content" fxLayout="column">
-            <div class="emoji-container" fxLayoutAlign="center center">
-              <div class="emoji">
-                <app-b-twemoji class="body-emoji" emoji="💡"></app-b-twemoji>
-              </div>
-            </div>
-            <div class="text-content">
-              <div class="main">
-                If you were a food, what would you be? 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div fxFlex="33%">
-      <div class="speaker-cue-container">
-        <div class="header black-color">Speaker Cue</div>
-        <div class="speaker-list">
-          <div 
-            class="name-row" 
-            fxLayout="row" 
-            fxLayoutGap="24px"
-            fxLayoutAlign="start center"
-            *ngFor="let speaker of speakers">
-            <div class="name">Matthew Parson {{speaker}}</div>
-            <div><img src="/assets/img/yellowPointer.svg" alt=""></div>
-            <div><img src="/assets/img/closeBig.svg" alt=""></div>
-          </div>
-        </div>
-        <div class="list-controls">
-          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-            <div>
-              <button class="b-small-button bg-primary-color" >
-                Next
-              </button>
-            </div>
-            <div>
-              <button class="b-inverted-button border-color-primary primary-color">
-                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-                  <img src="/assets/img/diceIcon.svg" alt="">
-                  <span>
-                    Random
-                  </span>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="activity-title-container">
+    <h1 class="black-color pn-700">
+      {{ mainTitle }}
+    </h1>
+  </div>
+  <div class="activity-title-description-container">
+    <p
+      class="secondary-color-dark pn-500"
+      [ngClass]="{
+        'smaller-font-class': titleText.length > 100
+      }"
+    >
+      {{ titleText }}
+    </p>
   </div>
 </div>

@@ -12,7 +12,6 @@ import * as fromStore from '../store';
 @Component({
   selector: 'benji-preview-panel',
   templateUrl: './preview-panel.component.html',
-  styleUrls: ['./preview-panel.component.scss'],
 })
 export class PreviewPanelComponent implements OnInit {
   previewTemplate = false;
@@ -49,17 +48,16 @@ export class PreviewPanelComponent implements OnInit {
         }))
       )
       .subscribe((pair) => {
-        // console.log(pair);
         if (pair.activity && pair.activity.empty === false && pair.possibleActivities.length) {
           const act_type = pair.activity.activity_type;
-          // console.log(act_type);
           if (
             act_type === Acts.title ||
             act_type === Acts.brainStorm ||
             act_type === Acts.mcq ||
             act_type === Acts.feedback ||
             act_type === Acts.buildAPitch ||
-            (act_type === Acts.caseStudy && pair.screenType === 'participantScreen')
+            (act_type === Acts.caseStudy && pair.screenType === 'participantScreen') ||
+            act_type === Acts.convoCards
           ) {
             this.previewTemplate = true;
             this.activityData = {

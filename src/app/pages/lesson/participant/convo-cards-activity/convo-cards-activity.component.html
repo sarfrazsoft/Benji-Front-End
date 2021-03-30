@@ -1,60 +1,28 @@
-<div class="p-screen convo-cards-screen">
+<div class="p-screen b-flat-card convo-cards-screen">
   <div class="content" fxLayout="column">
-    <div class="header"> Conversation Cards</div>
     <div fxLayoutAlign="center start">
       <div class="cards-container">
-        <!-- <div class="card card-2"></div>
-        <div class="card card-1"></div> -->
-        <!-- <div 
-          class="card" 
-          *ngFor="let item of items; let i = index"
-          [ngClass]="i < items.length-1 ? 'card-'+ i : ''">
-          <div class="card-content" fxLayout="column">
-            <div class="count" fxLayoutAlign="end start">
-              <div>
-                1/8
-              </div>  
-            </div>
-            <div *ngIf="item.emoji" class="emoji-container" fxLayoutAlign="center center">
-              <div class="emoji">
-                <app-b-twemoji 
-                  class="body-emoji" 
-                  [text]="items[indexOfCardShown].emoji">
-                </app-b-twemoji>
-              </div>
-            </div>
-            <div class="text-content">
-              <div class="main">
-                {{ items[indexOfCardShown].main }}
-              </div>
-              <div class="sub">
-                {{ items[indexOfCardShown].sub }}
-              </div>
-            </div>
-            <div class="control" fxLayoutAlign="center center">
-              <button class="b-standard-button b-standard-button--white">
-                Next
-              </button>
-            </div>
-          </div>
-        </div> -->
-        <div 
+        <div
+          *ngIf="items.length" 
           class="card super">
           <div class="card-content" fxLayout="column" fxLayoutGap="16px">
-            <div *ngIf="items[indexOfCardShown].emoji" class="emoji-container" fxLayoutAlign="center center">
+            <div 
+              *ngIf="items[indexOfCardShown].card_image" 
+              class="emoji-container" 
+              fxLayoutAlign="center center">
               <div class="emoji">
                 <app-b-twemoji 
                   class="body-emoji" 
-                  [text]="items[indexOfCardShown].emoji">
+                  [text]="items[indexOfCardShown].card_image">
                 </app-b-twemoji>
               </div>
             </div>
             <div class="text-content" fxLayout="column" fxLayoutGap="16px">
-              <div class="main">
-                {{ items[indexOfCardShown].main }}
+              <div class="main" >
+                {{ items[indexOfCardShown].card_title }}
               </div>
               <div class="sub">
-                {{ items[indexOfCardShown].sub }}
+                {{ items[indexOfCardShown].card_text }}
               </div>
             </div>
           </div>

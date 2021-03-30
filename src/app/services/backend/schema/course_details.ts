@@ -37,6 +37,7 @@ export class Lesson {
   last_edited?: string;
   is_shared?: boolean;
   effective_permission?: EffectivePermission;
+  is_valid_lesson?: boolean;
 }
 
 export interface LessonRun {

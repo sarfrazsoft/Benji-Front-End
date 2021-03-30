@@ -511,10 +511,12 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'main_title') {
                   mappedField.hide = false;
                   mappedField.templateOptions.required = false;
+                  mappedField.templateOptions.label = 'Title';
                   mappedField.defaultValue = 'Conversation Cards';
                 } else if (mapSource.field_name === 'title_text') {
                   mappedField.hide = false;
                   mappedField.templateOptions.required = false;
+                  mappedField.templateOptions.label = 'Instructions';
                   mappedField.defaultValue = 'Instructions to be provided by the instructor.';
                 } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
@@ -523,6 +525,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'cards') {
                   mappedField.type = 'accordion';
                   mappedField.templateOptions.label = 'Cards';
+                  mappedField.templateOptions['addLabel'] = 'Add Card';
                 } else if (mapSource.internal_type === 'ConvoCardSerializer') {
                   mappedField.templateOptions.label = '';
                   mappedField.type = 'convoCard';

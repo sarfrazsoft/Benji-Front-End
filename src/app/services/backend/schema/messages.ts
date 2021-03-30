@@ -36,7 +36,7 @@ export interface UpdateMessage {
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;
   casestudyactivity?: CaseStudyActivity;
-  convocardsactivity?: ConvoCardsActivity;
+  convoactivity?: ConvoCardsActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
   pitchomaticactivity?: PitchoMaticActivity;
   // activity type should be specifi rather than a string

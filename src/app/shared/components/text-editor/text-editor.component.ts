@@ -42,10 +42,10 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const ydoc = new Y.Doc();
     // const provider = new WebsocketProvider(wsRoot + '/yws/', this.documentId, ydoc);
-    // const provider = new WebsocketProvider('ws://staging.mybenji.com/yws/', this.documentId, ydoc);
+    // const provider = new WebsocketProvider('wss://staging.mybenji.com/yws/', this.documentId, ydoc);
     console.log(wsRoot + '/yws/');
-    // const provider = new WebsocketProvider('ws://localhost/yws/', this.documentId, ydoc);
-    const provider = new WebsocketProvider('wss://prosemirror-collab.glitch.me/', this.documentId, ydoc);
+    const provider = new WebsocketProvider('ws://localhost/yws/', this.documentId, ydoc);
+    // const provider = new WebsocketProvider('wss://prosemirror-collab.glitch.me/', this.documentId, ydoc);
     const type = ydoc.getXmlFragment('prosemirror');
     setAwareness(provider, this.participantCode);
 

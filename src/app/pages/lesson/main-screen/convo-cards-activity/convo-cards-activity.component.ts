@@ -8,12 +8,15 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenConvoCardsActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
-  speakers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-  // speakers = [1, 2, 3, 4];
+  mainTitle = 'Conversation Cards';
+  titleText = 'Instructions to be provided by the instructor';
   constructor() {
     super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.mainTitle = this.activityState.convoactivity.main_title;
+    this.titleText = this.activityState.convoactivity.title_text;
+  }
   ngOnChanges() {}
 }

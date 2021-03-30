@@ -169,15 +169,15 @@
     (sendMessage)="sendSocketMessage($event)"
   ></benji-ps-external-grouping-activity>
 
-  <!-- <benji-ps-case-study-activity
+  <benji-ps-case-study-activity
     *ngIf="getActivityType() === at.caseStudy"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"
-  ></benji-ps-case-study-activity> -->
+  ></benji-ps-case-study-activity>
 
   <benji-ps-convo-cards-activity
-    *ngIf="getActivityType() === at.caseStudy"
+    *ngIf="getActivityType() === at.convoCards"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"

@@ -6,7 +6,6 @@ import * as fromStore from '../store';
 @Component({
   selector: 'benji-activity-selector-panel',
   templateUrl: './activity-selector-panel.component.html',
-  styleUrls: ['./activity-selector-panel.component.scss'],
 })
 export class ActivitySelectorPanelComponent implements OnInit {
   selectedTab = 0;

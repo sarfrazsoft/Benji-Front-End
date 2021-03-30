@@ -274,11 +274,6 @@ export function setAwareness(provider, participantCode) {
   });
 }
 
-// function randomIntFromInterval(min, max) {
-//   // min and max included
-//   return Math.floor(Math.random() * (max - min + 1) + min);
-// }
-
 const colors = [
   { color: '#ffffff', backgroundColor: '#e6194b' },
   { color: '#ffffff', backgroundColor: '#3cb44b' },

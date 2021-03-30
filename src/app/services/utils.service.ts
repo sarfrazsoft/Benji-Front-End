@@ -25,6 +25,11 @@ export class UtilsService {
     this.openSnackBar('copied to clipboard', '');
   }
 
+  randomIntFromInterval(min, max) {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+
   openSnackBar(message: string, action: string) {
     this.matSnackBar.open(message, action, {
       duration: 5000,
