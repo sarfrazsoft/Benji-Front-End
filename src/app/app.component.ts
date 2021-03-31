@@ -69,12 +69,8 @@ export class AppComponent implements OnInit {
           color: ${info.parameters.primary_light};
         }
 
-        .primary-color-lighter {
+        .primary-colorjoin-session-header-lighter {
           color: ${info.parameters.primary_lighter};
-        }
-
-        .b-standard-button:hover {
-          background: ${info.parameters.primary_dark};
         }
 
         .b-standard-button.selected {

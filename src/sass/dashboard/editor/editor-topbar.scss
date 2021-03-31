@@ -62,10 +62,20 @@
     .save-status {
       .info {
         img {
-          height: 24px;
-          width: 24px;
+          height: 18px;
+          width: 18px;
           margin-right: 8px;
         }
+      }
+    }
+    .editor-settings-button {
+      background-color: #f2f4f7;
+      transition: all 0.2s;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 16px;
+      &:hover {
+        background-color: #d2d5da;
       }
     }
   }

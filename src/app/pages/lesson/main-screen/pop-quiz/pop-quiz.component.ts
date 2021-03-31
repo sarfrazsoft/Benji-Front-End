@@ -7,7 +7,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-pop-quiz',
   templateUrl: './pop-quiz.component.html',
-  styleUrls: ['./pop-quiz.component.scss'],
 })
 export class MainScreenPopQuizComponent
   extends BaseActivityComponent
@@ -17,6 +16,7 @@ export class MainScreenPopQuizComponent
   leaderboard: Array<LeaderBoard> = [];
   revealAnswers = false;
   title = 'Pop Quiz!';
+  regularDistribution = 100 / 4;
 
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;

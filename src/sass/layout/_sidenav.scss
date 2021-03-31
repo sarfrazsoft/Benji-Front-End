@@ -16,19 +16,23 @@ mat-sidenav-container.mat-sidenav-container {
   min-height: calc(100vh) !important;
 
   // .mat-sidenav-content {
-    // background-color: $sky;
+  // background-color: $sky;
   // }
+  mat-sidenav.mat-sidenav {
+    border-right: solid 1px #eeebdd;
+  }
 
   .nav-container {
     width: 200px;
     padding: 32px 0px;
+
     .logo {
       cursor: pointer;
       outline: none;
       display: flex;
       margin-bottom: 50px;
       text-align: center;
-      margin-left: 16px;
+      margin-left: 24px;
       img {
         max-width: 96px;
       }
@@ -40,7 +44,7 @@ mat-sidenav-container.mat-sidenav-container {
       .item {
         cursor: pointer;
         font-size: 16px;
-        font-weight: 600;
+        font-weight: 500;
         padding: 15px 0px;
         padding-left: 24px;
         transition: margin-left 0.1s linear;

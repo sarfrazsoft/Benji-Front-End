@@ -15,10 +15,12 @@
     </div>
   </div>
   <p *ngIf="to['helpText']" class="text-muted">{{ to['helpText'] }}</p>
-  <ng-template #fieldComponent></ng-template>
-  <span class="character-limit" *ngIf="to.maxLength">
-    {{ characterLimitLeft }}
-  </span> 
+  <div style="position: relative;">
+    <ng-template #fieldComponent></ng-template>
+    <span class="character-limit" *ngIf="to.maxLength">
+      {{ characterLimitLeft }}
+    </span> 
+  </div>
   <div *ngIf="showError" class="invalid-feedback" [style.display]="'block'">
     <formly-validation-message [field]="field"></formly-validation-message>
   </div>

@@ -8,10 +8,17 @@ export class HoverClassDirective {
   @Input('benji-hover-class') hoverClass: any;
 
   @HostListener('mouseenter') onMouseEnter() {
-    this.elementRef.nativeElement.classList.add(this.hoverClass);
+    console.log(this.hoverClass);
+    const classes = this.hoverClass.split(' ');
+    for (let i = 0; i < classes.length; i++) {
+      this.elementRef.nativeElement.classList.add(classes[i]);
+    }
   }
 
   @HostListener('mouseleave') onMouseLeave() {
-    this.elementRef.nativeElement.classList.remove(this.hoverClass);
+    const classes = this.hoverClass.split(' ');
+    for (let i = 0; i < classes.length; i++) {
+      this.elementRef.nativeElement.classList.remove(classes[i]);
+    }
   }
 }

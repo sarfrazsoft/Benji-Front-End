@@ -14,14 +14,16 @@
           <div
             class="quiz-answers"
             fxLayout="row wrap"
-            fxLayoutAlign="space-evenly"
+            fxLayoutAlign="space-between"
+            fxLayoutAlign.md="center center"
             *ngIf="!activityState.lesson.single_user_lesson || revealAnswers">
             <div
               class="answer-container"
               fxLayout="row"
               fxLayoutAlign="center center"
               *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-              [ngClass]="{'corect-choice': option.is_correct && revealAnswers}">
+              [ngClass]="{'corect-choice': option.is_correct && revealAnswers}"
+              style="min-width: 40%;">
                 <div class="text">{{ option.choice_text }}</div>
             </div>
           </div>

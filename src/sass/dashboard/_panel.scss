@@ -1,14 +1,15 @@
 // TODO use variables for border color to keep it consistent across all panels
 .admin-panel {
-  padding: 20px 30px;
+  padding: 60px 30px;
   padding-top: 64px;
+  padding-left: 40px;
 
   .dashboard-header {
     margin-bottom: 36px;
     .dashboard-heading {
       padding: 0px $dash-subsection-sides-padding;
       h1 {
-        font-size: 34px;
+        font-size: 48px;
         margin: 0px;
       }
     }

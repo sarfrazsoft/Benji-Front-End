@@ -169,6 +169,8 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           options = q.mcqchoice_set.length ? q.mcqchoice_set : options;
         }
 
+        console.log(options);
+
         let msAct = null;
         if (this.data.screenType === 'mainScreen') {
           msAct = this.cfr.resolveComponentFactory(MainScreenPopQuizComponent);

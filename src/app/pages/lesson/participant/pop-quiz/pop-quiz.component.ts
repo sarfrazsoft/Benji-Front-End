@@ -6,7 +6,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-pop-quiz',
   templateUrl: './pop-quiz.component.html',
-  styleUrls: ['./pop-quiz.component.scss'],
 })
 export class ParticipantPopQuizComponent extends BaseActivityComponent implements OnInit, OnChanges {
   questionTimerStarted = false;
@@ -93,7 +92,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   }
 
   selectOption(option: MCQChoice) {
-    if (!this.answerSubmitted) {
+    if (!this.answerSubmitted && option.id) {
       this.selectedChoice = option;
       localStorage.setItem(this.localStorageItemName, JSON.stringify(option));
     }

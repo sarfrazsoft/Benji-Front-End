@@ -11,6 +11,7 @@ benji-ms-pop-quiz {
         font-size: 32px;
         font-weight: 500;
         overflow: hidden;
+        width: 85%;
         // > div:hover {
         // background-color: darken(#fff, 10);
         // transition: 0.3s;
@@ -18,9 +19,11 @@ benji-ms-pop-quiz {
         // }
         .answer-container {
           margin-bottom: 32px;
+          margin-right: 32px;
           cursor: pointer;
           background-color: #fff;
           padding: 16px;
+
           text-align: center;
           border-radius: 8px;
           width: 520px;

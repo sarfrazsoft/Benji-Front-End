@@ -6,14 +6,16 @@
     width: 480px;
     .label {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 500;
       color: $black;
       margin-bottom: 8px;
     }
     .dash-input {
       padding: 5px 15px;
       width: 100%;
-      font-size: 18px;
+      font-size: 16px;
+      color: #828282;
+      font-weight: 400;
     }
     .img-upload {
       height: 141px;

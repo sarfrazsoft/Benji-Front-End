@@ -47,7 +47,9 @@
       <div *ngFor="let choice of choices; let i = index">
         <div class="options" fxFlex="100%">
           <div class="option">
-            <div class="info" fxLayout="row" fxLayoutAlign="space-between" >
+            <div 
+              [ngClass]="{'correct-choice': choice.is_correct}"
+              class="info" fxLayout="row" fxLayoutAlign="space-between" >
               <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
                 <!-- <div class="identifier">{{ optionIdentifiers[i] }}.</div> -->
                 <div class="text">{{ choice.text }}</div>

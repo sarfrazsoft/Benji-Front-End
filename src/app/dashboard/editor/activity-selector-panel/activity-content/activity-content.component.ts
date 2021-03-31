@@ -56,7 +56,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           const act_type = cloneDeep(pair.activity.activity_type);
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           const schema = cloneDeep(s);
-          console.log(schema);
           const content = cloneDeep(this.selectedLessonActivityContent);
 
           // Case study activiy

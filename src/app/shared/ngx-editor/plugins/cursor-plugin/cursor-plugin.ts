@@ -275,6 +275,18 @@ export function setAwareness(provider, participantCode) {
 }
 
 const colors = [
+  { color: '#ffffff', backgroundColor: '#686DDE' },
+  { color: '#ffffff', backgroundColor: '#BD68DE' },
+  { color: '#ffffff', backgroundColor: '#DE68A7' },
+  { color: '#ffffff', backgroundColor: '#DE8268' },
+  { color: '#ffffff', backgroundColor: '#DEDA68' },
+  { color: '#ffffff', backgroundColor: '#8ADE68' },
+  { color: '#ffffff', backgroundColor: '#68DE9F' },
+  { color: '#ffffff', backgroundColor: '#68DE9F' },
+  { color: '#ffffff', backgroundColor: '#68C4DE' },
+  { color: '#ffffff', backgroundColor: '#68C4DE' },
+];
+const colors2 = [
   { color: '#ffffff', backgroundColor: '#e6194b' },
   { color: '#ffffff', backgroundColor: '#3cb44b' },
   { color: '#000000', backgroundColor: '#ffe119' },

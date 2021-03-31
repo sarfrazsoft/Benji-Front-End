@@ -21,10 +21,13 @@
       position: relative;
       text-align: left;
       .info {
-        color: #068e67;
-        padding: 8px 30px;
+        color: #828282;
+        padding: 20px 30px;
         font-weight: 500;
         font-size: 32px;
+        &.correct-choice {
+          color: #068e67;
+        }
         .percentage {
           min-width: 80px;
         }
