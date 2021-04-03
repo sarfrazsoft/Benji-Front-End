@@ -11,6 +11,7 @@ import {
   BrainstormRemoveSubmissionEvent,
   BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
+  BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
   Idea,

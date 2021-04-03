@@ -16,7 +16,6 @@ import { AdminService } from '../../../admin-panel/services';
 @Component({
   selector: 'benji-lesson-tile',
   templateUrl: './lesson-tile.component.html',
-  styleUrls: ['./lesson-tile.component.scss'],
 })
 export class LessonTileComponent implements OnInit, OnDestroy {
   @Input() lesson: Lesson;
@@ -75,6 +74,8 @@ export class LessonTileComponent implements OnInit, OnDestroy {
         if (res) {
           this.lesson.lesson_name = res.lesson_name;
           this.lesson.lesson_description = res.lesson_description;
+          console.log(res);
+          this.lesson.feature_image = res.feature_image;
         }
       });
   }

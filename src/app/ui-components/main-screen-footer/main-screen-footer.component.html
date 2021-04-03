@@ -65,8 +65,8 @@
       <!-- Timer control -->
       <div class="option settings" 
         fxLayoutAlign="center center" 
-        [matMenuTriggerFor]="timerMenu"
-      >
+        >
+        <!-- [matMenuTriggerFor]="timerMenu" -->
         <button
           placement="top"
           tooltip="Timer"
@@ -85,6 +85,7 @@
           placement="top"
           tooltip="Vote"
           show-delay="100"
+          (click)="brainstormSubmissionComplete()"
         > 
           <img src="/assets/img/thumbsUp.svg" /> 
         </button>

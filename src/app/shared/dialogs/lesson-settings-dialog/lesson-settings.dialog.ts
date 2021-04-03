@@ -90,8 +90,7 @@ export class LessonSettingsDialogComponent implements OnInit {
             .map((res: any) => {
               console.log(res);
               this.imageURL = res.img;
-              return res;
-
+              // return res;
               // imagesList = null;
               // this.sendMessage.emit(
               //   new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
@@ -116,6 +115,7 @@ export class LessonSettingsDialogComponent implements OnInit {
         id: this.data.id,
         lesson_name: val.title,
         lesson_description: val.description,
+        feature_image: this.imageURL,
       };
       this.editorService
         .updateLesson(l, this.data.id)

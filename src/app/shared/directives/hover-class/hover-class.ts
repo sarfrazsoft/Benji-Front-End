@@ -8,7 +8,6 @@ export class HoverClassDirective {
   @Input('benji-hover-class') hoverClass: any;
 
   @HostListener('mouseenter') onMouseEnter() {
-    console.log(this.hoverClass);
     const classes = this.hoverClass.split(' ');
     for (let i = 0; i < classes.length; i++) {
       this.elementRef.nativeElement.classList.add(classes[i]);

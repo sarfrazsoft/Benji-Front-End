@@ -20,7 +20,7 @@
       <div fxLayout="row" fxLayoutGap="40px">
         <div fxLayoutAlign="end center" class="instructions">
           <h2
-            class="pn-500"
+            class="pn-500 primary-color"
             [ngClass]="{
               'long-instructions': instructions.length > 65
             }"
@@ -29,8 +29,8 @@
           </h2>
         </div>
         <div
-          class="count-info primary-color pn-700"
-          fxLayoutAlign="end end"
+          class="count-info black-color pn-700"
+          fxLayoutAlign="center end"
           fxLayout="column"
           *ngIf="submissionScreen"
         >
@@ -75,7 +75,7 @@
                 fxLayoutAlign="space-between center"
                 *ngIf="!column.editing"
               >
-                <div class="column-name" fxFlex>
+                <div class="column-name black-color" fxFlex>
                   {{ column.category_name }}
                 </div>
                 <button
@@ -111,9 +111,14 @@
                 class="brainstorm-idea add-idea-button"
                 (click)="addIdea(column)"
               >
+              <div class="" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
                 <mat-icon>
                   add
                 </mat-icon>
+                <div>
+                  Add new card
+                </div>
+              </div>
               </div>
               <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
                 <textarea
@@ -134,6 +139,7 @@
                   (mouseleave)="item.showClose = false"
                 >
                   <mat-icon
+                    class="delete-icon"
                     [style.opacity]="item.showClose ? 1 : 0"
                     (click)="deleteIdea(item.id)"
                   >
@@ -159,7 +165,7 @@
       <div class="column">
         <div class="header">
           <div
-            class="add-column"
+            class="add-column primary-color"
             (click)="addColumn(act.brainstormcategory_set.length)"
           >
             + Add column

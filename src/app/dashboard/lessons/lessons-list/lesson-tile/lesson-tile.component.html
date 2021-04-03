@@ -2,7 +2,7 @@
   <div class="thumbnail">
     <div 
       class="image-placeholder" 
-      *ngIf="showPlaceholder" 
+      *ngIf="!lesson.feature_image"
       fxLayout="column"
       fxLayoutAlign="center center"
       fxLayoutGap="12px"
@@ -12,8 +12,8 @@
       <div><img src="/assets/img/imageUploadIcon.svg" alt=""></div>
       <div>Click to upload an image</div>
     </div>
-    <div *ngIf="!showPlaceholder" class="img-container" [ngStyle]="{
-      'background-image': 'url(/assets/img/placeholder.png)'
+    <div *ngIf="lesson.feature_image" class="img-container" [ngStyle]="{
+      'background-image': 'url(' + lesson.feature_image + ')'
       }">
     </div>
   </div>
@@ -30,7 +30,7 @@
       <button mat-menu-item (click)="edit(lesson, $event)">
         <span>Open in Editor</span>
       </button>
-      <button mat-menu-item (click)="editDescription($event, lesson)">
+      <button mat-menu-item (click)="showSettingsModal()">
         <span>Edit Session Details</span>
       </button>
       <button mat-menu-item (click)="delete($event, lesson)">

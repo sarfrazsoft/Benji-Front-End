@@ -11,7 +11,6 @@ import { Subject } from 'rxjs/Subject';
 @Component({
   selector: 'benji-lessons-list',
   templateUrl: './lessons.component.html',
-  styleUrls: ['./lessons.component.scss'],
 })
 export class LessonsComponent implements OnInit {
   @Input() lessons: Array<Lesson> = [];

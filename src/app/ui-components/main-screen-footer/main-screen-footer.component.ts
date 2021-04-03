@@ -10,6 +10,7 @@ import { Lesson, Participant } from 'src/app/services/backend/schema/course_deta
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs/';
 import {
+  BeginShareEvent,
   BootParticipantEvent,
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormToggleCategoryModeEvent,
@@ -29,7 +30,6 @@ import { VideoStateService } from '../../services/video-state.service';
 @Component({
   selector: 'benji-main-screen-footer',
   templateUrl: './main-screen-footer.component.html',
-  styleUrls: ['./main-screen-footer.component.scss'],
 })
 export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
@@ -153,9 +153,15 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     // }
   }
 
+  brainstormSubmissionComplete() {
+    this.socketMessage.emit(new BrainstormSubmissionCompleteInternalEvent());
+  }
+
   toggleCategorization() {
     this.socketMessage.emit(new BrainstormToggleCategoryModeEvent());
   }
+
+  startShareEvent() {}
 
   redoAct(act) {
     const state = clone(this.activityState);
@@ -208,6 +214,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   startSharingTool() {
+    this.socketMessage.emit(new BeginShareEvent());
     this.sharingToolService.sharingToolControl$.next(this.activityState);
   }
 
@@ -228,9 +235,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
         }
       });
   }
-  
+
   getActiveParticipants() {
-    return this.activityState.lesson_run.participant_set.filter(x => x.is_active);
+    return this.activityState.lesson_run.participant_set.filter((x) => x.is_active);
   }
 }
 

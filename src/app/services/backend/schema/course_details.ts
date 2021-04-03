@@ -19,7 +19,7 @@ export type EffectivePermission = 'admin' | 'host' | 'duplicate' | 'edit' | null
 export class Lesson {
   id?: number;
   lesson_id?: string;
-  lesson_name: string;
+  lesson_name?: string;
   single_user_lesson?: boolean;
   lesson_length_minutes?: number;
   lesson_description?: string;
@@ -38,6 +38,7 @@ export class Lesson {
   is_shared?: boolean;
   effective_permission?: EffectivePermission;
   is_valid_lesson?: boolean;
+  feature_image?: string;
 }
 
 export interface LessonRun {

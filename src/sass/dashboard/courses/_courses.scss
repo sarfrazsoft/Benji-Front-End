@@ -3,7 +3,7 @@ benji-lesson {
   .courses {
     .course-tile {
       background-color: #fff;
-      border: 2px solid transparent;
+      border: 2px solid #eeebdd;
       cursor: pointer;
       width: 260px;
       margin-bottom: 30px;
@@ -13,14 +13,17 @@ benji-lesson {
       position: relative;
 
       &:hover {
-        border: 2px solid $secondary-color-light;
-        border-color: #eeebdd;
+        // border: 2px solid $secondary-color-light;
+        // border-color: #eeebdd;
         .menu-button {
           display: block !important;
         }
       }
       .thumbnail {
         height: 160px;
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-top: -24px;
         .img-container {
           background-size: cover;
           box-sizing: border-box;
@@ -28,6 +31,8 @@ benji-lesson {
           background-repeat: no-repeat !important;
           height: 100% !important;
           appearance: none !important;
+          border-top-right-radius: 4px;
+          border-top-left-radius: 4px;
         }
       }
       .menu-button {

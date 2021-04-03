@@ -608,6 +608,13 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         b.brainstormcategory_set = b.brainstormcategory_set.filter(
           (obj) => obj && obj.category_name && obj.category_name.length !== 0
         );
+        if (b.brainstormcategory_set.length > 0) {
+          b.categorize_flag = true;
+        } else {
+          b.categorize_flag = false;
+        }
+        console.log(b.brainstormcategory_set);
+        console.log(b);
 
         if (b.submission_seconds === 10000) {
           b.hide_timer = true;
