@@ -67,6 +67,13 @@ export const ActivityDisplayNames = {
   ConvoActivity: 'Cards',
 };
 
+export const AllowShareActivities = [
+  'BrainstormActivity',
+  'CaseStudyActivity',
+  'BuildAPitchActivity',
+  'ConvoActivity',
+];
+
 // export const LayoutTypes = ['leftHalfScreen', 'leftImage', 'fullScreen', 'rightHalfScreen', 'rightImage'];
 export type TitleActivityLayouts =
   | 'emojiLayout'

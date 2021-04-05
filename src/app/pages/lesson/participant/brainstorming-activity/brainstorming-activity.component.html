@@ -73,26 +73,32 @@
 
 <!-- Submit Votes on ideas -->
 <ng-container *ngIf="showSubmitVote">
-  <benji-ps-instruction-template>
-    <ng-container class="body-title">Brainstorming</ng-container>
-    <app-b-twemoji class="body-emoji" emoji="🧠"></app-b-twemoji>
-    <h1 class="body-heading pn-700 primary-color-darkest">Vote on your favorite idea</h1>
-    <ng-container class="body-text">
-      You can submit{{ ' ' + act.max_participant_votes + ' ' }}
-      {{ act.max_participant_votes === 1 ? 'vote' : 'votes' }}
-    </ng-container>
-    <ng-container class="content">
-      <!-- <p>Press the + icon next to each name to review the pitches.</p> -->
-      <div *ngFor="let idea of ideas; let i = index">
-        <benji-vote-idea
-          [ideaId]="idea.id"
-          [ideaText]="idea.idea"
-          [(selectedIdeas)]="selectedIdeas"
-          (ideaSelected)="ideaSelected($event)"
-        ></benji-vote-idea>
-      </div>
-    </ng-container>
-  </benji-ps-instruction-template>
+  <div class="b-flat-card heightAuto">
+    <div class="content" fxLayout="column">
+      <ng-container class="body-text">
+        <div class="worksheet-title">
+          Voting time!
+        </div>
+        <div class="worksheet-text">
+          <!-- show voting limit  -->
+          You can submit{{ ' ' + act.max_participant_votes + ' ' }}
+          {{ act.max_participant_votes === 1 ? 'vote' : 'votes' }}
+        </div>
+      </ng-container>
+      <ng-container class="content">
+        <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
+          <ng-container *ngFor="let idea of ideas; let i = index">
+            <benji-vote-idea
+              [ideaId]="idea.id"
+              [ideaText]="idea.idea"
+              [(selectedIdeas)]="selectedIdeas"
+              (ideaSelected)="ideaSelected($event)"
+            ></benji-vote-idea>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 
   <div class="b-baseline-action bg-primary-color-dark" *ngIf="showVoteSubmitButton">
     <benji-animated-checkmark-button

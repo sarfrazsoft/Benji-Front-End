@@ -139,6 +139,10 @@ export class AppComponent implements OnInit {
           color: white !important;
         }
 
+        .voting-idea-button.selected {
+          border-color: ${info.parameters.primary} !important;
+        }
+
         .report-cards .card-header {
           color: ${info.parameters.primary_darkest};
           color: black;

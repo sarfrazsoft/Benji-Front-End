@@ -9,7 +9,6 @@ export class VoteIdeaComponent implements OnInit {
   @Input() selectedIdeas = [];
   @Input() ideaText = '';
   @Input() name = '';
-  @Input() expanded = false;
   @Output() ideaSelected = new EventEmitter();
   @Output() ideaExpanded = new EventEmitter();
   @Output() ideaCollapsed = new EventEmitter();
@@ -19,15 +18,5 @@ export class VoteIdeaComponent implements OnInit {
 
   selectIdea(idea) {
     this.ideaSelected.emit(idea);
-  }
-
-  expand(idea) {
-    this.expanded = true;
-    this.ideaExpanded.emit(idea);
-  }
-
-  collapse(idea) {
-    this.expanded = false;
-    this.ideaCollapsed.emit(idea);
   }
 }

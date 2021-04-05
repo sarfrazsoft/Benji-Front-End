@@ -79,8 +79,9 @@
       <!-- Vote control -->
       <div class="option settings" 
         fxLayoutAlign="center center"
-        [matMenuTriggerFor]="voteMenu"
-      >
+        *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
+        >
+        <!-- [matMenuTriggerFor]="voteMenu" -->
         <button
           placement="top"
           tooltip="Vote"
@@ -101,6 +102,7 @@
       <!-- Heart control -->
       <div 
         class="option settings"
+        *ngIf="isSharingAllowed(activityState)"
         fxLayoutAlign="center center">
         <button
           placement="top"

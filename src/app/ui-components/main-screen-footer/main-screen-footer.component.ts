@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { clone } from 'lodash';
-import { ActivityTypes } from 'src/app/globals';
+import { ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, PastSessionsService, SharingToolService } from 'src/app/services';
 import { Timer, User } from 'src/app/services/backend/schema';
 import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
@@ -52,6 +52,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   actType = '';
   lesson: Lesson;
   fastForwarding = false;
+
+  allowShareActivities = AllowShareActivities;
 
   constructor(
     private videoStateService: VideoStateService,
@@ -238,6 +240,14 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   getActiveParticipants() {
     return this.activityState.lesson_run.participant_set.filter((x) => x.is_active);
+  }
+
+  isSharingAllowed(activityState: UpdateMessage) {
+    if (activityState && this.allowShareActivities.includes(activityState.activity_type)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
