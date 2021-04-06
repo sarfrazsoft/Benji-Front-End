@@ -156,14 +156,29 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
 
   addSeconds(seconds: number) {
     const timer = this.contextService.activityTimer;
-    const x = timer.remaining_seconds;
-    const end_time = moment(timer.end_time).add(seconds, 'seconds').format();
+    if (timer && timer.status !== 'cancelled') {
+      const x = timer.remaining_seconds;
+      const end_time = moment(timer.end_time).add(seconds, 'seconds').format();
 
-    this.contextService.activityTimer = {
-      ...this.contextService.activityTimer,
-      end_time: end_time,
-      remaining_seconds: seconds + this.remainingTime / 1000,
-      total_seconds: timer.total_seconds + seconds,
-    };
+      this.contextService.activityTimer = {
+        ...this.contextService.activityTimer,
+        end_time: end_time,
+        remaining_seconds: seconds + this.remainingTime / 1000,
+        total_seconds: timer.total_seconds + seconds,
+      };
+    } else {
+      const startTime = moment().format();
+      const endTime = moment(startTime).add(seconds, 'seconds').format();
+
+      this.contextService.activityTimer = {
+        end_time: endTime,
+        id: 57,
+        remaining_seconds: 100,
+        start_time: startTime,
+        status: 'paused',
+        total_seconds: seconds,
+        editor: false,
+      };
+    }
   }
 }

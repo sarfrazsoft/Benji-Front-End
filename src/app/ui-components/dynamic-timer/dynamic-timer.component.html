@@ -70,12 +70,12 @@
         </div>
       </div>
       <div 
-        benji-click-stop-propagation 
         class="controls-container" 
         fxLayout="row" 
         fxLayoutAlign="end" 
         fxLayoutGap="8px">
         <button
+        benji-click-stop-propagation 
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
           *ngIf="timer && timer.status == 'paused'"
           (click)="resumeClicked()"
@@ -83,6 +83,7 @@
           Resume
         </button>
         <button
+          benji-click-stop-propagation 
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
           *ngIf="timer && timer.status == 'running'"
           (click)="pauseClicked()"

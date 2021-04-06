@@ -37,20 +37,17 @@ export class VoteControlComponent implements OnInit {
   ngOnInit(): void {}
 
   startVoting() {
-    //
-    const CurrentDate = moment().toISOString();
-    console.log(moment().format());
+    // const timer2 = {
+    //   end_time: '2021-04-05T12:42:09.443013-04:00',
+    //   id: 57,
+    //   remaining_seconds: 7654.294812,
+    //   start_time: '2021-04-05T09:55:29.443013-04:00',
+    //   status: 'running',
+    //   total_seconds: 10000,
+    // };
+
     const startTime = moment().format();
     const endTime = moment(startTime).add(this.timeInSeconds, 'seconds').format();
-    const timer2 = {
-      end_time: '2021-04-05T12:42:09.443013-04:00',
-      id: 57,
-      remaining_seconds: 7654.294812,
-      start_time: '2021-04-05T09:55:29.443013-04:00',
-      status: 'running',
-      total_seconds: 10000,
-    };
-
     const timer = {
       end_time: endTime,
       id: 57,

@@ -48,7 +48,8 @@
 
   <div class="session-controls" fxLayout="row">
     <div class="time-info" fxLayoutAlign="center center">
-      <div class="ms-footer-timer" *ngIf="showTimer" [matMenuTriggerFor]="timerMenu">
+      <div class="ms-footer-timer" *ngIf="showTimer" 
+        [matMenuTriggerFor]="timerMenu">
         <benji-number-timer
           [timer]="timer"
           endStateText="Times Up!"
