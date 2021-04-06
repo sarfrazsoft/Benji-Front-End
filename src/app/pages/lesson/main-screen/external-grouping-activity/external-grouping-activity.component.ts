@@ -36,7 +36,7 @@ export class MainScreenExternalGroupingActivityComponent
     super.ngOnInit();
     this.allUsers = this.activityState.lesson_run.participant_set;
     this.act = this.activityState.externalgroupingactivity;
-    this.contextService.activityTimer = this.act.grouping_countdown_timer;
+    // this.contextService.activityTimer = this.act.grouping_countdown_timer;
     // Iterate over all the groups and add them to usersBreakoutRooms
     for (let i = 0; i < this.act.group_set.length; i++) {
       const groupset = this.act.group_set[i];

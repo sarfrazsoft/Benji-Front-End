@@ -75,6 +75,18 @@ export class ContextService {
   /**
    * Activity timer
    */
+  showTimerSubject$ = new BehaviorSubject<boolean>(null);
+
+  set showTimerSubject(activityTimer: boolean) {
+    this.showTimerSubject$.next(activityTimer);
+  }
+  get showTimerSubject(): boolean {
+    return this.showTimerSubject$.getValue();
+  }
+
+  /**
+   * participant
+   */
   p: Participant;
   public set participant(v: Participant) {
     this.p = v;

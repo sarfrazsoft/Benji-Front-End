@@ -1,14 +1,16 @@
 import {
   Component,
   ComponentFactoryResolver,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
-import { UpdateMessage } from 'src/app/services/backend/schema';
+import { SelectParticipantForShareEvent, UpdateMessage } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import {
   SharingBrainstormComponent,
@@ -31,6 +33,8 @@ export class SharingToolComponent implements OnInit {
   activityDataAvailable = true;
   @Input() data: UpdateMessage;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
+
+  @Output() sendMessage = new EventEmitter<any>();
   constructor(private cfr: ComponentFactoryResolver, private utilsService: UtilsService) {}
 
   ngOnInit(): void {
@@ -166,7 +170,10 @@ export class SharingToolComponent implements OnInit {
   }
 
   selectSpeaker(index: number) {
-    console.log('select speaker');
+    console.log(this.speakers[index]);
+
+    this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
+
     this.currentSpeakerIndex = index;
     this.update();
   }

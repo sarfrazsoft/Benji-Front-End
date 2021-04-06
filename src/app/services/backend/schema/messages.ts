@@ -326,6 +326,25 @@ export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
 export class BeginShareEvent extends ActivityEvent {
   event_name = 'BeginShareEvent';
 }
+export class EndShareEvent extends ActivityEvent {
+  event_name = 'EndShareEvent';
+}
+
+export class ParticipantOptInEvent extends ActivityEvent {
+  event_name = 'ParticipantOptInEvent';
+}
+
+export class ParticipantOptOutEvent extends ActivityEvent {
+  event_name = 'ParticipantOptOutEvent';
+}
+
+export class SelectParticipantForShareEvent extends ActivityEvent {
+  event_name = 'SelectParticipantForShareEvent';
+  constructor(userId: number) {
+    super();
+    this.extra_args = { participant_code: userId };
+  }
+}
 
 export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormSubmissionCompleteInternalEvent';

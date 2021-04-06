@@ -184,21 +184,21 @@ export class MainScreenBrainstormingActivityComponent
         this.voteScreen = false;
         this.VnSComplete = false;
         this.timer = act.submission_countdown_timer;
-        this.contextService.activityTimer = act.submission_countdown_timer;
+        // this.contextService.activityTimer = act.submission_countdown_timer;
         this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
       } else if (act.voting_countdown_timer && !act.voting_complete) {
         this.voteScreen = true;
         this.submissionScreen = false;
         this.VnSComplete = false;
         this.timer = act.voting_countdown_timer;
-        this.contextService.activityTimer = act.voting_countdown_timer;
+        // this.contextService.activityTimer = act.voting_countdown_timer;
         this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
       } else if (act.submission_complete && act.voting_complete) {
         this.submissionScreen = false;
         this.voteScreen = false;
         this.VnSComplete = true;
         this.timer = this.getNextActStartTimer();
-        this.contextService.activityTimer = this.timer;
+        // this.contextService.activityTimer = this.timer;
       }
 
       // show snackbar when submission is complete

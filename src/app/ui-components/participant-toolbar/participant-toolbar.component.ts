@@ -1,8 +1,13 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import {
+  ParticipantOptInEvent,
+  ParticipantOptOutEvent,
+  Timer,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
@@ -17,6 +22,9 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
   @Input() isLastActivity = false;
   at: typeof ActivityTypes = ActivityTypes;
   @Input() showTimer = false;
+
+  @Output() sendMessage = new EventEmitter<any>();
+
   constructor(private contextService: ContextService, private router: Router) {}
 
   ngOnInit() {
@@ -58,5 +66,13 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     }
+  }
+
+  optIn() {
+    this.sendMessage.emit(new ParticipantOptInEvent());
+  }
+
+  optOut() {
+    this.sendMessage.emit(new ParticipantOptOutEvent());
   }
 }

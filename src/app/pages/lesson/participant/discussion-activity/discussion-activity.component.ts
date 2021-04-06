@@ -40,13 +40,13 @@ export class ParticipantDiscussionActivityComponent
       this.discussionStage = true;
       this.shareWithGroup = false;
       this.listeningGroup = false;
-      this.contextService.activityTimer = this.act.discussion_countdown_timer;
+      // this.contextService.activityTimer = this.act.discussion_countdown_timer;
     } else if (this.act.discussion_complete && this.participantIsSharing()) {
       this.shareWithGroup = true;
       this.discussionStage = false;
       this.listeningGroup = false;
       const timer = this.act.currently_sharing_group.sharing_countdown_timer;
-      this.contextService.activityTimer = timer;
+      // this.contextService.activityTimer = timer;
     } else if (this.act.discussion_complete && !this.participantIsSharing()) {
       this.shareWithGroup = false;
       this.discussionStage = false;

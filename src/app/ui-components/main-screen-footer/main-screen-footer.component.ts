@@ -7,6 +7,7 @@ import { ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, PastSessionsService, SharingToolService } from 'src/app/services';
 import { Timer, User } from 'src/app/services/backend/schema';
 import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 import { PeakBackDialogComponent } from '../../pages/lesson/shared/dialogs/';
 import {
@@ -16,6 +17,7 @@ import {
   BrainstormToggleCategoryModeEvent,
   BrainstormVotingCompleteInternalEvent,
   EndEvent,
+  EndShareEvent,
   FastForwardEvent,
   NextInternalEvent,
   PauseActivityEvent,
@@ -60,6 +62,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private pastSessionsService: PastSessionsService,
     public contextService: ContextService,
+    private utilsService: UtilsService,
     private router: Router,
     private sharingToolService: SharingToolService
   ) {}
@@ -70,6 +73,14 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     if (this.activityState && this.activityState.lesson) {
       this.lesson = this.activityState.lesson;
     }
+
+    this.contextService.showTimerSubject$.subscribe((val) => {
+      if (val) {
+        this.showTimer = true;
+      } else {
+        this.showTimer = false;
+      }
+    });
   }
 
   ngOnChanges() {
@@ -218,6 +229,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   startSharingTool() {
     this.socketMessage.emit(new BeginShareEvent());
     this.sharingToolService.sharingToolControl$.next(this.activityState);
+  }
+  endSharingTool() {
+    this.socketMessage.emit(new EndShareEvent());
   }
 
   deleteUser(p: Participant) {

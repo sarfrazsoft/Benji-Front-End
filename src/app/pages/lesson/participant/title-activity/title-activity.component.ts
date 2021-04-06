@@ -23,7 +23,7 @@ export class ParticipantTitleActivityComponent extends BaseActivityComponent imp
       this.contextService.activityTimer = { status: 'cancelled' } as Timer;
     } else {
       const timer = this.getNextActStartTimer();
-      this.contextService.activityTimer = timer;
+      // this.contextService.activityTimer = timer;
     }
   }
 }

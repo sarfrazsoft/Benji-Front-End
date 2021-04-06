@@ -75,7 +75,7 @@ export class ParticipantCaseStudyActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
-    this.contextService.activityTimer = this.act.activity_countdown_timer;
+    // this.contextService.activityTimer = this.act.activity_countdown_timer;
     this.timer = this.act.activity_countdown_timer;
     // this.populateQuestions();
     const myNoteTaker = this.getMyNoteTaker();
@@ -84,9 +84,9 @@ export class ParticipantCaseStudyActivityComponent
     this.isDone = myNoteTaker.is_done;
 
     if (!myNoteTaker.is_done) {
-      this.contextService.activityTimer = this.act.activity_countdown_timer;
+      // this.contextService.activityTimer = this.act.activity_countdown_timer;
     } else {
-      this.contextService.activityTimer = { status: 'cancelled' } as Timer;
+      // this.contextService.activityTimer = { status: 'cancelled' } as Timer;
     }
 
     // Populate the answers if available

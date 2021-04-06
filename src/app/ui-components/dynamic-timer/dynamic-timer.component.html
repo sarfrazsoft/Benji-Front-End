@@ -58,15 +58,15 @@
       </div>
     </div>
     <div class="timer-controls" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="12px">
-      <div class="add-time-buttons" fxLayout="row" fxLayoutGap="4px" >
+      <div class="add-time-buttons" fxLayout="row" fxLayoutGap="4px" benji-click-stop-propagation>
         <div>
-          <button>+30s</button>
+          <button (click)="addSeconds(30)">+30s</button>
         </div>
         <div>
-          <button>+1m</button>
+          <button (click)="addSeconds(60)">+1m</button>
         </div>
         <div>
-          <button>+5m</button>
+          <button (click)="addSeconds(300)">+5m</button>
         </div>
       </div>
       <div 
@@ -78,18 +78,19 @@
         <button
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
           *ngIf="timer && timer.status == 'paused'"
-          (click)="controlClicked.emit('resume')"
+          (click)="resumeClicked()"
         >
           Resume
         </button>
         <button
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
           *ngIf="timer && timer.status == 'running'"
-          (click)="controlClicked.emit('pause')"
+          (click)="pauseClicked()"
         >
           Pause
         </button>
-        <button class="dialog-controls primary-color bg-sky">
+        <button class="dialog-controls primary-color bg-sky"
+          (click)="cancelClicked()">
           Cancel
         </button>
       </div>

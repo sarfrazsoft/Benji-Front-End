@@ -19,7 +19,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
-  styleUrls: ['./brainstorming-activity.component.scss'],
 })
 export class ParticipantBrainstormingActivityComponent
   extends BaseActivityComponent
@@ -89,7 +88,6 @@ export class ParticipantBrainstormingActivityComponent
       this.showSubmitVote = false;
       this.showVoteResults = false;
       this.showThankyouForVoting = false;
-      this.contextService.activityTimer = this.act.submission_countdown_timer;
     }
     // Show thank you for idea submission
 
@@ -124,7 +122,6 @@ export class ParticipantBrainstormingActivityComponent
       });
 
       this.ideas.sort((a, b) => b.id - a.id);
-      this.contextService.activityTimer = this.act.voting_countdown_timer;
     }
 
     // Show thank you for vote submission
@@ -145,7 +142,6 @@ export class ParticipantBrainstormingActivityComponent
       this.showThankyouForVoting = false;
       this.showVoteResults = true;
       const timer = this.getNextActStartTimer();
-      this.contextService.activityTimer = timer;
     }
   }
 

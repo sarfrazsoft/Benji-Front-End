@@ -1,6 +1,7 @@
 <benji-participant-toolbar 
   [activityState]="serverMessage"
-  [isLastActivity]="isLastActivity()">
+  [isLastActivity]="isLastActivity()"
+  (sendMessage)="sendSocketMessage($event)">
 </benji-participant-toolbar>
 
 <div fxFill *ngIf="isConnected() && serverMessage">

@@ -87,7 +87,7 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
   ngOnInit() {
     super.ngOnInit();
     this.groupsX = this.formGroups(this.activityState.casestudyactivity);
-    this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
+    // this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
   }
 
   formGroups(act: CaseStudyActivity): any {

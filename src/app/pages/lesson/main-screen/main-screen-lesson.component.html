@@ -200,6 +200,7 @@
     <ng-container *ngIf="showSharingTool">
       <benji-sharing-tool
         [data]="sharingData"
+        (sendMessage)="sendSocketMessage($event)"
       >
 
       </benji-sharing-tool>

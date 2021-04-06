@@ -39,7 +39,7 @@ export class ParticipantExternalGroupingActivityComponent
     this.allUsers = this.activityState.lesson_run.participant_set;
     this.participantCode = this.getParticipantCode();
     this.userRoomNumber = this.getUserRoomNumber();
-    this.contextService.activityTimer = this.act.grouping_countdown_timer;
+    // this.contextService.activityTimer = this.act.grouping_countdown_timer;
     // this.selectRoomModel = this.getUserRoomNumber();
     // check if the user is already grouped
     this.breakoutRooms = [];

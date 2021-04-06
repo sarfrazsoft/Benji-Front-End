@@ -9,7 +9,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import * as moment from 'moment';
+import { ActivityTitles, ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
+import { UpdateMessage } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Timer } from '../../services/backend/schema/utils';
 @Component({
@@ -19,7 +22,9 @@ import { Timer } from '../../services/backend/schema/utils';
 export class DynamicTimerComponent implements OnInit, OnDestroy {
   timerDiameter = 1;
   textWidth = 1;
+  at: typeof ActivityTypes = ActivityTypes;
 
+  @Input() updateMessage: UpdateMessage;
   @Input() endStateText: string;
   @Input() endAudio;
   @Input() timer: Timer;
@@ -40,6 +45,7 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
     this.contextService.activityTimer$.subscribe((timer: Timer) => {
       if (timer) {
         this.timer = timer;
+        this.contextService.showTimerSubject = true;
       }
     });
     this.timerInterval = setInterval(() => this.update(), 100);
@@ -73,9 +79,9 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
           audio.load();
           audio.play();
         }
-        if (this.remainingTime < 10000 && this.attentionOverlay) {
-          this.showAttentionTimer = true;
-        }
+        // if (this.remainingTime < 10000 && this.attentionOverlay) {
+        //   this.showAttentionTimer = true;
+        // }
       }
     } else {
       this.totalTime = 1;
@@ -108,5 +114,56 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
     //   });
     // }
     return pctRemaining;
+  }
+
+  resumeClicked() {
+    if (this.updateMessage.activity_type === this.at.mcq) {
+      this.controlClicked.emit('resume');
+    } else {
+      const timer = this.contextService.activityTimer;
+      const x = timer.remaining_seconds;
+      const end_time = moment().add(x, 'seconds').format();
+
+      this.contextService.activityTimer = {
+        ...this.contextService.activityTimer,
+        status: 'running',
+        end_time: end_time,
+      };
+    }
+  }
+
+  pauseClicked() {
+    if (this.updateMessage.activity_type === this.at.mcq) {
+      this.controlClicked.emit('pause');
+    } else {
+      this.contextService.activityTimer = {
+        ...this.contextService.activityTimer,
+        status: 'paused',
+        remaining_seconds: this.remainingTime / 1000,
+        end_time: null,
+      };
+    }
+  }
+
+  cancelClicked() {
+    this.contextService.activityTimer = { status: 'cancelled' } as Timer;
+    // this.contextService.activityTimer = {
+    //   ...this.contextService.activityTimer,
+    //   status: 'paused',
+    //   remaining_seconds: this.remainingTime / 1000,
+    // };
+  }
+
+  addSeconds(seconds: number) {
+    const timer = this.contextService.activityTimer;
+    const x = timer.remaining_seconds;
+    const end_time = moment(timer.end_time).add(seconds, 'seconds').format();
+
+    this.contextService.activityTimer = {
+      ...this.contextService.activityTimer,
+      end_time: end_time,
+      remaining_seconds: seconds + this.remainingTime / 1000,
+      total_seconds: timer.total_seconds + seconds,
+    };
   }
 }

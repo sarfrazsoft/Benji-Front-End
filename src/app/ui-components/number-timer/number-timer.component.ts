@@ -1,12 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ContextService } from 'src/app/services';
 import { Timer } from '../../services/backend/schema/utils';
 
 @Component({
@@ -33,7 +26,7 @@ export class NumberTimerComponent implements OnInit, OnDestroy {
   audioStarted = false;
   showAttentionTimer = false;
 
-  constructor() {
+  constructor(private contextService: ContextService) {
     this.getScreenSize();
   }
 
@@ -45,6 +38,11 @@ export class NumberTimerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.contextService.activityTimer$.subscribe((timer: Timer) => {
+      if (timer) {
+        this.timer = timer;
+      }
+    });
     this.timerInterval = setInterval(() => this.update(), 100);
   }
 
@@ -65,10 +63,7 @@ export class NumberTimerComponent implements OnInit, OnDestroy {
         } else {
           offset = 0;
         }
-        this.remainingTime =
-          Date.parse(this.timer.end_time.replace(/ /, 'T')) -
-          Date.now() -
-          offset;
+        this.remainingTime = Date.parse(this.timer.end_time.replace(/ /, 'T')) - Date.now() - offset;
 
         if (this.remainingTime < 0) {
           this.remainingTime = 0;

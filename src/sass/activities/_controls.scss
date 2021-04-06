@@ -4,6 +4,7 @@
   .mat-menu-content {
     padding: 16px 0px;
     .menu-heading {
+      font-size: 18px;
       padding: 0px 16px;
       font-weight: 600;
       margin-bottom: 16px;
@@ -128,6 +129,6 @@ benji-session-navigation {
 }
 .mat-menu-panel.mat-elevation-z4 {
   box-shadow: 0px 1px 3px #d5d9de;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   color: $black;
 }

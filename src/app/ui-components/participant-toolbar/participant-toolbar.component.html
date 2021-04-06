@@ -3,6 +3,10 @@
     <div class="benji-logo-container">
       <img [src]="logo" alt="Benji logo" class="benji-logo" />
     </div>
+    <div class="white-color" fxLayout="row" fxLayoutGap="60px">
+      <div (click)="optIn()"> Opt in</div>
+      <div (click)="optOut()"> Opt out</div>
+    </div>
     <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
       <ng-container *ngIf="showTimer">
         <benji-number-timer
