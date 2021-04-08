@@ -8,10 +8,11 @@ export class VoteIdeaComponent implements OnInit {
   @Input() ideaId = null;
   @Input() selectedIdeas = [];
   @Input() ideaText = '';
+  @Input() ideaImage = null;
   @Input() name = '';
   @Output() ideaSelected = new EventEmitter();
-  @Output() ideaExpanded = new EventEmitter();
-  @Output() ideaCollapsed = new EventEmitter();
+
+  hostname = window.location.protocol + '//' + window.location.hostname;
   constructor() {}
 
   ngOnInit() {}

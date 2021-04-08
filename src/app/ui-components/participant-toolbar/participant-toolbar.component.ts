@@ -67,12 +67,4 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
       }
     }
   }
-
-  optIn() {
-    this.sendMessage.emit(new ParticipantOptInEvent());
-  }
-
-  optOut() {
-    this.sendMessage.emit(new ParticipantOptOutEvent());
-  }
 }

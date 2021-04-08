@@ -75,11 +75,8 @@ benji-lesson {
         border: 1px solid transparent;
         transition: all 0.2s;
         &.inactive {
-          border-color: $secondary-color-light;
-          color: $secondary-color-light;
-          &:hover {
-            background-color: #fff !important;
-          }
+          color: #a0a0a0;
+          background: #e0e0e0;
         }
       }
       .edit-session-button {

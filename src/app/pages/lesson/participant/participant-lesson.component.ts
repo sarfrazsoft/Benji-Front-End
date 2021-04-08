@@ -10,7 +10,6 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 @Component({
   selector: 'benji-participant-lesson',
   templateUrl: './participant-lesson.component.html',
-  styleUrls: ['./participant-lesson.component.scss'],
 })
 export class ParticipantLessonComponent extends BaseLessonComponent {
   at: typeof ActivityTypes = ActivityTypes;

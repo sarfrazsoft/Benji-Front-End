@@ -3,6 +3,7 @@ import {
   ComponentFactoryResolver,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -20,10 +21,10 @@ import {
 } from './index';
 
 @Component({
-  selector: 'benji-sharing-tool',
+  selector: 'benji-ms-sharing-tool',
   templateUrl: './sharing-tool.component.html',
 })
-export class SharingToolComponent implements OnInit {
+export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   // speakers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   speakers: Array<{ displayName: string; id: number; optedIn: boolean }> = [];
@@ -31,24 +32,36 @@ export class SharingToolComponent implements OnInit {
   currentSpeakerIndex = 0;
   component;
   activityDataAvailable = true;
-  @Input() data: UpdateMessage;
+  // showSharingTool;
+  @Input() activityState: UpdateMessage;
+  // @Input() activityState: UpdateMessage;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   @Output() sendMessage = new EventEmitter<any>();
-  constructor(private cfr: ComponentFactoryResolver, private utilsService: UtilsService) {}
+  constructor(private cfr: ComponentFactoryResolver, private utilsService: UtilsService) {
+    // if (this.activityState && this.activityState.running_tools.share) {
+    //   this.showSharingTool = true;
+    // } else {
+    //   this.showSharingTool = false;
+    // }
+  }
+
+  ngOnChanges() {
+    console.log(this.activityState);
+    this.initializeActivity();
+  }
 
   ngOnInit(): void {
-    console.log(this.data);
+    console.log(this.activityState);
     if (this.activityDataAvailable) {
       this.initializeActivity();
     } else {
-      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+      const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
+      this.speakers = [];
       participantSet.forEach((val, index) => {
-        if (index === 1) {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
-        } else {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
-        }
+        const volunteers = this.activityState.running_tools.share.volunteers;
+        const optedIn = volunteers.includes(val.participant_code);
+        this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
       this.speakers.sort(function (obj1, obj2) {
         return Number(obj2.optedIn) - Number(obj1.optedIn);
@@ -57,14 +70,12 @@ export class SharingToolComponent implements OnInit {
   }
 
   initializeActivity() {
-    if (this.data.activity_type === this.at.buildAPitch) {
-      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+    if (this.activityState.activity_type === this.at.buildAPitch) {
+      const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
       participantSet.forEach((val, index) => {
-        if (index === 1) {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
-        } else {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
-        }
+        const volunteers = this.activityState.running_tools.share.volunteers;
+        const optedIn = volunteers.includes(val.participant_code);
+        this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
 
       this.speakers.sort(function (obj1, obj2) {
@@ -74,15 +85,15 @@ export class SharingToolComponent implements OnInit {
       const b = this.cfr.resolveComponentFactory(SharingBuildAPitchComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
-      this.component.instance.data = this.data;
+      this.component.instance.data = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
-    } else if (this.data.activity_type === this.at.caseStudy) {
-      const groups = cloneDeep(this.data.casestudyactivity.groups);
+    } else if (this.activityState.activity_type === this.at.caseStudy) {
+      const groups = cloneDeep(this.activityState.casestudyactivity.groups);
       groups.forEach((val) => {
         this.speakers.push({ displayName: 'Room ' + val.group_num, id: val.id, optedIn: false });
       });
-      this.data.casestudyactivity.groups.forEach((val, index) => {
+      this.activityState.casestudyactivity.groups.forEach((val, index) => {
         val['caseStudyGroupText'] =
           index +
           '' +
@@ -100,17 +111,15 @@ export class SharingToolComponent implements OnInit {
       const b = this.cfr.resolveComponentFactory(SharingCaseStudyComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
-      this.component.instance.data = this.data;
+      this.component.instance.data = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
-    } else if (this.data.activity_type === this.at.convoCards) {
-      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+    } else if (this.activityState.activity_type === this.at.convoCards) {
+      const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
       participantSet.forEach((val, index) => {
-        if (index === 1) {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
-        } else {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
-        }
+        const volunteers = this.activityState.running_tools.share.volunteers;
+        const optedIn = volunteers.includes(val.participant_code);
+        this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
       this.speakers.sort(function (obj1, obj2) {
         return Number(obj2.optedIn) - Number(obj1.optedIn);
@@ -119,17 +128,16 @@ export class SharingToolComponent implements OnInit {
       const b = this.cfr.resolveComponentFactory(SharingConvoCardsComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
-      this.component.instance.data = this.data;
+      this.component.instance.data = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
-    } else if (this.data.activity_type === this.at.brainStorm) {
-      const participantSet = cloneDeep(this.data.lesson_run.participant_set);
+    } else if (this.activityState.activity_type === this.at.brainStorm) {
+      const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
+      this.speakers = [];
       participantSet.forEach((val, index) => {
-        if (index === 1) {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: true });
-        } else {
-          this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: false });
-        }
+        const volunteers = this.activityState.running_tools.share.volunteers;
+        const optedIn = volunteers.includes(val.participant_code);
+        this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
       this.speakers.sort(function (obj1, obj2) {
         return Number(obj2.optedIn) - Number(obj1.optedIn);
@@ -138,7 +146,7 @@ export class SharingToolComponent implements OnInit {
       const b = this.cfr.resolveComponentFactory(SharingBrainstormComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
-      this.component.instance.data = this.data;
+      this.component.instance.data = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
     }

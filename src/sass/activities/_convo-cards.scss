@@ -79,7 +79,7 @@
 
 $col-padding: 32px;
 benji-ms-convo-cards-activity,
-benji-sharing-tool {
+benji-ms-sharing-tool {
   .mainscreen-activity {
     .content {
       height: 100%;
@@ -107,7 +107,7 @@ benji-sharing-tool {
         padding: $col-padding;
       }
       .speaker-cue-container {
-        background-color: #EEEBDD;
+        background-color: #eeebdd;
         padding: 16px;
         height: 100%;
         position: relative;
@@ -129,7 +129,10 @@ benji-sharing-tool {
             cursor: pointer;
             &:hover,
             &.current-speaker {
-              background: rgba(10, 76, 239, 0.15);
+              background: #f9f8f1;
+            }
+            &.current-speaker {
+              border: 2px solid;
             }
             .name {
               color: #828282;

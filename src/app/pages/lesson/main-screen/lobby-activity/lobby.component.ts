@@ -54,7 +54,6 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   }
 
   ngOnChanges() {
-    console.log(this.activityState.lesson_run.participant_set);
     this.participants = this.activityState.lesson_run.participant_set;
   }
 

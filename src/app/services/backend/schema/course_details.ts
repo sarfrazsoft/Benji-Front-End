@@ -50,6 +50,10 @@ export interface LessonRun {
   participant_set: Array<Participant>;
 }
 
+export interface RunningTools {
+  share?: { selectedParticipant: number; volunteers: Array<number> };
+}
+
 export interface LessonRunDetails {
   end_time: string;
   host: TeamUser;

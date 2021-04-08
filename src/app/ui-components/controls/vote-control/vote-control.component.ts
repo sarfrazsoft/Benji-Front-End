@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
 import { ContextService } from 'src/app/services';
+import { BrainstormSubmissionCompleteInternalEvent, Timer } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-vote-control',
@@ -14,6 +15,8 @@ export class VoteControlComponent implements OnInit {
   timeInSeconds = 0;
   mins = 0;
   secs = 0;
+
+  @Output() socketMessagezz = new EventEmitter<any>();
 
   constructor(private contextService: ContextService) {}
 
@@ -46,9 +49,10 @@ export class VoteControlComponent implements OnInit {
     //   total_seconds: 10000,
     // };
 
+    this.socketMessagezz.emit(new BrainstormSubmissionCompleteInternalEvent());
     const startTime = moment().format();
     const endTime = moment(startTime).add(this.timeInSeconds, 'seconds').format();
-    const timer = {
+    const timer: Timer = {
       end_time: endTime,
       id: 57,
       remaining_seconds: 100,

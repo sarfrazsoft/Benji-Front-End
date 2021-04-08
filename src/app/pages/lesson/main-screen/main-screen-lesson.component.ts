@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
@@ -15,7 +15,6 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 @Component({
   selector: 'benji-main-screen-lesson',
   templateUrl: './main-screen-lesson.component.html',
-  styleUrls: ['./main-screen-lesson.component.scss'],
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   constructor(
@@ -38,23 +37,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       ref,
       matSnackBar
     );
-
-    sharingToolService.sharingToolControl$.subscribe((val) => {
-      // console.log(val);
-      if (val) {
-        this.sharingData = val;
-        this.showSharingTool = !this.showSharingTool;
-      } else {
-        this.showSharingTool = false;
-        this.sharingData = null;
-      }
-    });
-
-    this.showSharingTool = false;
   }
   at: typeof ActivityTypes = ActivityTypes;
-  showSharingTool = false;
-  sharingData: UpdateMessage;
 
   fastForwardActivities = [
     this.at.pitchoMatic,

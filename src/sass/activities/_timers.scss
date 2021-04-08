@@ -104,6 +104,10 @@
         .controls-container {
           .start-resume-buttons {
             width: 94px;
+            &.inactive {
+              color: #a0a0a0;
+              background: #e0e0e0;
+            }
           }
         }
       }

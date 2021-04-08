@@ -23,7 +23,7 @@ export class SessionNavigationComponent implements OnInit {
     if (!this.disableControls) {
       this.backendRestService.getLessonActivities(this.lesson.id).subscribe((val: any) => {
         this.activities = val.lesson_plan_json;
-        console.log(this.activities);
+        // console.log(this.activities);
       });
     }
   }

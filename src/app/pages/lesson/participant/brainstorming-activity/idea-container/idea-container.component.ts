@@ -3,6 +3,7 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import * as global from 'src/app/globals';
 import { BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
+import { DraftIdea } from '../brainstorming-activity.component';
 
 @Component({
   selector: 'benji-idea-container',
@@ -14,7 +15,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   @Input() activityState;
   act;
   @Input() participantCode;
-  @Input() idea: { id: number; text: string; editing: boolean };
+  @Input() idea: DraftIdea;
 
   userIdeaText = '';
   selectedIdeas = [];

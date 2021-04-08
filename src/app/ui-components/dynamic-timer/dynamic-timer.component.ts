@@ -49,6 +49,21 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
       }
     });
     this.timerInterval = setInterval(() => this.update(), 100);
+
+    if (!this.timer) {
+      const startTime = moment().format();
+      const endTime = moment(startTime).add(0, 'seconds').format();
+
+      this.contextService.activityTimer = {
+        end_time: endTime,
+        id: 57,
+        remaining_seconds: 0,
+        start_time: startTime,
+        status: 'paused',
+        total_seconds: 0,
+        editor: false,
+      };
+    }
   }
 
   update() {
@@ -107,12 +122,13 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
 
   pctRemaining() {
     const pctRemaining = (100 * this.remainingTime) / this.totalTime;
-    // if (pctRemaining < 0.2) {
-    //   const snackBarRef = this.utilsService.openTimerComplete();
-    //   snackBarRef.onAction().subscribe(($event) => {
-    //     console.log($event);
-    //   });
-    // }
+    if (pctRemaining < 0.2) {
+      //   const snackBarRef = this.utilsService.openTimerComplete();
+      //   snackBarRef.onAction().subscribe(($event) => {
+      //     console.log($event);
+      //   });
+      this.cancelClicked();
+    }
     return pctRemaining;
   }
 
@@ -146,12 +162,16 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
   }
 
   cancelClicked() {
-    this.contextService.activityTimer = { status: 'cancelled' } as Timer;
-    // this.contextService.activityTimer = {
-    //   ...this.contextService.activityTimer,
-    //   status: 'paused',
-    //   remaining_seconds: this.remainingTime / 1000,
-    // };
+    const time = moment().format();
+    this.contextService.activityTimer = {
+      end_time: time,
+      id: 57,
+      remaining_seconds: 0,
+      start_time: time,
+      status: 'paused',
+      total_seconds: 0,
+      editor: false,
+    };
   }
 
   addSeconds(seconds: number) {
@@ -173,7 +193,7 @@ export class DynamicTimerComponent implements OnInit, OnDestroy {
       this.contextService.activityTimer = {
         end_time: endTime,
         id: 57,
-        remaining_seconds: 100,
+        remaining_seconds: seconds,
         start_time: startTime,
         status: 'paused',
         total_seconds: seconds,

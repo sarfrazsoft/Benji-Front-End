@@ -16,6 +16,13 @@ import { ContextService } from 'src/app/services/context.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
+export interface DraftIdea {
+  id: number;
+  text: string;
+  editing: boolean;
+  ideaImage?: string;
+}
+
 @Component({
   selector: 'benji-ps-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
@@ -34,7 +41,7 @@ export class ParticipantBrainstormingActivityComponent
 
   categories = [];
   // holds ideas in drafting phase
-  draftIdeas: Array<{ id: number; text: string; editing: boolean }> = [];
+  draftIdeas: Array<DraftIdea> = [];
   // Screens
   showSubmitIdeas = true;
   showThankyouForSubmission = false;
@@ -59,15 +66,14 @@ export class ParticipantBrainstormingActivityComponent
     this.maxSubmissions = this.act.max_participant_submissions;
     this.participantCode = this.getParticipantCode().toString();
 
-    const submittedIdeas = this.brainstormService.getUserIdeas(this.getParticipantCode(), this.act);
-    submittedIdeas.forEach((idea: Idea) => {
-      this.draftIdeas.push({ id: idea.id, text: idea.idea, editing: false });
-    });
+    // const submittedIdeas = this.brainstormService.getUserIdeas(this.getParticipantCode(), this.act);
+    // submittedIdeas.forEach((idea: Idea) => {
+    //   this.draftIdeas.push({ id: idea.id, text: idea.idea, editing: false });
+    // });
 
-    console.log(this.draftIdeas);
-    if (this.draftIdeas.length === 0) {
-      this.addDraftIdea();
-    }
+    // if (this.draftIdeas.length === 0) {
+    //   this.addDraftIdea();
+    // }
   }
 
   addDraftIdea() {
@@ -88,6 +94,19 @@ export class ParticipantBrainstormingActivityComponent
       this.showSubmitVote = false;
       this.showVoteResults = false;
       this.showThankyouForVoting = false;
+      const submittedIdeas = this.brainstormService.getUserIdeas(this.getParticipantCode(), this.act);
+      this.draftIdeas = [];
+      submittedIdeas.forEach((idea: Idea) => {
+        this.draftIdeas.push({
+          id: idea.id,
+          text: idea.idea,
+          editing: false,
+          ideaImage: idea.idea_image ? idea.idea_image.img : null,
+        });
+      });
+      if (this.draftIdeas.length === 0) {
+        this.addDraftIdea();
+      }
     }
     // Show thank you for idea submission
 

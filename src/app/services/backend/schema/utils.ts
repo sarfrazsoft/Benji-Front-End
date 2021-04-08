@@ -3,7 +3,7 @@ import { ParticipantCode } from './activities/activities';
 
 export interface Timer {
   id: number;
-  status: string;
+  status: 'pause' | 'running' | 'paused' | 'cancelled' | 'ended';
   start_time: string;
   end_time: string;
   remaining_seconds: number;

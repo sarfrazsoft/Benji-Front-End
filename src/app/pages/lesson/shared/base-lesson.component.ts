@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
@@ -116,6 +116,7 @@ export class BaseLessonComponent implements OnInit {
     this.socket.subscribe(
       (msg: ServerMessage) => {
         this.handleServerMessage(msg);
+        // console.log(msg);
       },
       (err) => console.log(err),
       () => {
@@ -193,6 +194,15 @@ export class BaseLessonComponent implements OnInit {
       return this.serverMessage.activity_type;
     } else {
       return null;
+    }
+  }
+
+  getIsSharing() {
+    const sm = this.serverMessage;
+    if (sm && sm.running_tools && sm.running_tools.share) {
+      return true;
+    } else {
+      return false;
     }
   }
 

@@ -75,12 +75,15 @@
         fxLayoutAlign="end" 
         fxLayoutGap="8px">
         <button
-        benji-click-stop-propagation 
+          benji-click-stop-propagation 
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
+          [ngClass]="{
+            inactive: timer.total_seconds === 0
+          }"
           *ngIf="timer && timer.status == 'paused'"
           (click)="resumeClicked()"
         >
-          Resume
+          Start
         </button>
         <button
           benji-click-stop-propagation 

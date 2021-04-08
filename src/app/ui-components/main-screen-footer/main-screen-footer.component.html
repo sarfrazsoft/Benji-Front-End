@@ -98,7 +98,9 @@
           class="activity-settings-menu "  
           [overlapTrigger]="false" 
           xPosition="before">
-          <benji-vote-control></benji-vote-control>
+          <benji-vote-control
+            (socketMessagezz)="brainstormSubmissionComplete($event)">
+          </benji-vote-control>
         </mat-menu>
       </div>
 

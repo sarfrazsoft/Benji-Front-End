@@ -3,3 +3,13 @@
   height: 72px;
   box-shadow: 0px 3px 3px rgba(213, 217, 222, 0.25);
 }
+
+.participant-sharing-ui {
+  position: absolute;
+  top: 0px;
+  background: white;
+  height: 72px;
+  z-index: 2;
+  width: 100%;
+  box-shadow: 0px 3px 3px rgba(213, 217, 222, 0.25);
+}

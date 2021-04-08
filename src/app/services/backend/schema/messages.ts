@@ -24,7 +24,7 @@ import {
   WhereDoYouStandActivity,
   WhereDoYouStandChoice,
 } from './activities';
-import { Lesson, LessonRun } from './course_details';
+import { Lesson, LessonRun, RunningTools } from './course_details';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
@@ -32,6 +32,7 @@ export interface UpdateMessage {
   // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson: Lesson;
   lesson_run: LessonRun;
+  running_tools: RunningTools;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;

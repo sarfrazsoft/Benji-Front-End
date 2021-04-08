@@ -189,6 +189,10 @@ export class AppComponent implements OnInit {
         .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
           background-color: ${info.parameters.primary} !important;
         }
+
+        benji-ms-sharing-tool .mainscreen-activity .content .speaker-cue-container .speaker-list .name-row.current-speaker {
+          border-color: ${info.parameters.primary};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

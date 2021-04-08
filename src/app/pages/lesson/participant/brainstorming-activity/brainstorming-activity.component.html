@@ -92,24 +92,24 @@
             <benji-vote-idea
               [ideaId]="idea.id"
               [ideaText]="idea.idea"
+              [ideaImage]="idea.idea_image"
               [(selectedIdeas)]="selectedIdeas"
               (ideaSelected)="ideaSelected($event)"
             ></benji-vote-idea>
           </ng-container>
+          <div *ngIf="showVoteSubmitButton">
+            <button 
+              style="width: 366px;" 
+              class="b-standard-button bg-primary-color white-color" 
+              (click)="submitIdeaVote()">
+              Submit
+            </button>
+          </div>
         </div>
       </ng-container>
     </div>
   </div>
 
-  <div class="b-baseline-action bg-primary-color-dark" *ngIf="showVoteSubmitButton">
-    <benji-animated-checkmark-button
-      loadingStateInnerHTML="Loading"
-      innerHTML="Submit"
-      buttonStyle="white"
-      [valid]="userVoted"
-      (click)="submitIdeaVote()"
-    ></benji-animated-checkmark-button>
-  </div>
 </ng-container>
 
 <!-- Thank you for voting -->
