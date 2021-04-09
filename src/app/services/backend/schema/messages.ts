@@ -512,6 +512,7 @@ export class LobbySetNicknameEvent extends ActivityEvent {
   }
 }
 export class JumpEvent extends ActivityEvent {
+  event_name = 'JumpEvent';
   nav_activity: string;
 
   constructor(nav_activity) {
