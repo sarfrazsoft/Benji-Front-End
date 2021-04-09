@@ -16,7 +16,7 @@ export class VoteControlComponent implements OnInit {
   mins = 0;
   secs = 0;
 
-  @Output() socketMessagezz = new EventEmitter<any>();
+  @Output() socketMessage = new EventEmitter<any>();
 
   constructor(private contextService: ContextService) {}
 
@@ -49,7 +49,7 @@ export class VoteControlComponent implements OnInit {
     //   total_seconds: 10000,
     // };
 
-    this.socketMessagezz.emit(new BrainstormSubmissionCompleteInternalEvent());
+    this.socketMessage.emit(new BrainstormSubmissionCompleteInternalEvent());
     const startTime = moment().format();
     const endTime = moment(startTime).add(this.timeInSeconds, 'seconds').format();
     const timer: Timer = {

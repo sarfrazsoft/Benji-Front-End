@@ -81,13 +81,14 @@ export class MainScreenBrainstormingActivityComponent
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
-      console.log(val);
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
     });
   }
+
   ngOnDestroy() {
+    this.contextService.destroyActivityTimer();
     if (this.settingsSubscription) {
       this.settingsSubscription.unsubscribe();
     }

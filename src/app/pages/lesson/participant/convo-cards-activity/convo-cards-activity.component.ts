@@ -1,4 +1,5 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { ParticipantSelectCardEvent } from 'src/app/services/backend/schema';
 import { ConvoCardsActivity } from 'src/app/services/backend/schema/activities';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -26,11 +27,16 @@ export class ParticipantConvoCardsActivityComponent
 
   nextCard() {
     // this.items.push(this.items.shift());
+
     const newIndex = this.indexOfCardShown + 1;
     if (newIndex >= this.items.length) {
       this.indexOfCardShown = 0;
     } else {
       this.indexOfCardShown = newIndex;
+    }
+
+    if (this.activityState.running_tools && this.activityState.running_tools.share) {
+      this.sendMessage.emit(new ParticipantSelectCardEvent(this.indexOfCardShown));
     }
   }
 
@@ -40,6 +46,9 @@ export class ParticipantConvoCardsActivityComponent
       this.indexOfCardShown = this.items.length - 1;
     } else {
       this.indexOfCardShown = newIndex;
+    }
+    if (this.activityState.running_tools && this.activityState.running_tools.share) {
+      this.sendMessage.emit(new ParticipantSelectCardEvent(this.indexOfCardShown));
     }
   }
 }

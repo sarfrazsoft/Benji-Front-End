@@ -47,7 +47,6 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
     const act = this.activityState.titleactivity;
     this.loadVariables(act);
     // }
-    // this.contextService.activityTimer = this.getNextActStartTimer();
   }
 
   loadVariables(act: TitleActivity) {

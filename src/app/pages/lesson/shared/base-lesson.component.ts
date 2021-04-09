@@ -7,7 +7,7 @@ import { BackendSocketService } from 'src/app/services/backend/backend-socket.se
 import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 
-export class BaseLessonComponent implements OnInit {
+export class BaseLessonComponent implements OnInit, OnDestroy {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
@@ -72,6 +72,8 @@ export class BaseLessonComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy() {}
 
   initSocket() {
     if (localStorage.getItem('participant')) {

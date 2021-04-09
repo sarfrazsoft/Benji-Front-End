@@ -347,6 +347,14 @@ export class SelectParticipantForShareEvent extends ActivityEvent {
   }
 }
 
+export class ParticipantSelectCardEvent extends ActivityEvent {
+  event_name = 'ParticipantSelectCardEvent';
+  constructor(cardNumber: number) {
+    super();
+    this.extra_args = { card_number: cardNumber };
+  }
+}
+
 export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormSubmissionCompleteInternalEvent';
 }

@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import * as Chart from 'chart.js';
+import { ContextService } from 'src/app/services';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -9,7 +10,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenMcqresultActivityComponent
   extends BaseActivityComponent
-  implements AfterViewInit, OnChanges, OnInit {
+  implements AfterViewInit, OnChanges, OnInit, OnDestroy {
   showStatistics = false;
   showLeaderBoard = false;
   singleUserLesson = false;
@@ -18,6 +19,10 @@ export class MainScreenMcqresultActivityComponent
   question = '';
   optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
   leaderBoardUsers = [];
+
+  constructor(private contextService: ContextService) {
+    super();
+  }
 
   ngOnInit() {
     super.ngOnInit();
@@ -72,6 +77,10 @@ export class MainScreenMcqresultActivityComponent
       });
       console.log(act);
     }
+  }
+
+  ngOnDestroy() {
+    this.contextService.destroyActivityTimer();
   }
 
   renderChart() {

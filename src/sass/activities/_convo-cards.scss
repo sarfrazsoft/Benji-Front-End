@@ -58,7 +58,11 @@
     .card {
       // top: auto;
       background-color: #fff;
-      transform: translate(-50%, -50%);
+      // transform: translate(-50%, -50%);
+      border: 1px solid #eeebdd;
+      box-sizing: border-box;
+      box-shadow: 0px 1px 3px #d5d9de;
+      border-radius: 8px;
       .card-content {
         padding: 60px;
         .emoji-container {
@@ -70,6 +74,11 @@
         .text-content {
           .main {
             font-size: 28px;
+            font-weight: 600;
+            font-size: 28px;
+            line-height: 34px;
+            text-align: center;
+            color: #6c6c6c;
           }
         }
       }

@@ -215,6 +215,7 @@
     [lessonName]="serverMessage.lesson.lesson_name"
     [isPaused]="isPaused()"
     [disableControls]="disableControls"
+    [isSharing]="getIsSharing()"
     (socketMessage)="sendSocketMessage($event)"
   ></benji-main-screen-footer>
 </div>

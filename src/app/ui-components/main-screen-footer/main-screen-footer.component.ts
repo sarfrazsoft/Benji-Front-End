@@ -43,6 +43,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() roomCode: string;
   @Input() isPaused: boolean;
   @Input() disableControls: boolean;
+  @Input() isSharing: boolean;
 
   showTimer = false;
 
@@ -92,7 +93,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
     const as = this.activityState;
 
-    if (as.running_tools && as.running_tools.share) {
+    if (as && as.running_tools && as.running_tools.share) {
       this.sharingToolService.sharingToolControl$.next(this.activityState);
     }
   }
@@ -108,14 +109,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     if (eventType === 'pause') {
       this.socketMessage.emit(new PauseActivityEvent());
     } else if (eventType === 'next') {
-      // this.socketMessage.emit(new EndEvent());
-      // Remove pitch notes if that activity was
-      // fowarded without completion
-      // The concerned activity should be told that it has been
-      // skipped over so the activity can close properly
-      // if (localStorage.getItem('pitchDraftNotes')) {
-      //   localStorage.removeItem('pitchDraftNotes');
-      // }
+      if (this.isSharing) {
+        this.endSharingTool();
+      }
       this.socketMessage.emit(new NextInternalEvent());
     } else if (eventType === 'resume') {
       this.socketMessage.emit(new ResumeActivityEvent());

@@ -5,7 +5,7 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-convo-cards',
-  templateUrl: './convo-cards.component.html'
+  templateUrl: './convo-cards.component.html',
 })
 export class ConvoCardsComponent implements OnInit, OnChanges {
   @Input() data: UpdateMessage;
@@ -18,11 +18,11 @@ export class ConvoCardsComponent implements OnInit, OnChanges {
   ngOnChanges() {}
 
   update() {
-    this.text = '';
-    this.data.casestudyactivity.groups.forEach((group) => {
-      if (group.id === this.currentSpeaker.id) {
-        this.text = group['caseStudyGroupText'];
-      }
-    });
+    // this.text = '';
+    // this.data.casestudyactivity.groups.forEach((group) => {
+    //   if (group.id === this.currentSpeaker.id) {
+    //     this.text = group['caseStudyGroupText'];
+    //   }
+    // });
   }
 }

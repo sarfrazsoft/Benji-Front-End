@@ -106,6 +106,7 @@ export class MainScreenPopQuizComponent
   }
 
   ngOnDestroy() {
+    this.contextService.destroyActivityTimer();
     if (this.peakBackState) {
       this.eventsSubscription.unsubscribe();
     }
