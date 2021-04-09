@@ -25,7 +25,8 @@
           xPosition="before">
           <benji-session-navigation 
             [lesson]="lesson"
-            [disableControls]="disableControls">
+            [disableControls]="disableControls"
+            (navigate)="navigateToActivity($event)">
           </benji-session-navigation>
         </mat-menu>
       </button>

@@ -19,6 +19,7 @@ import {
   EndEvent,
   EndShareEvent,
   FastForwardEvent,
+  JumpEvent,
   NextInternalEvent,
   PauseActivityEvent,
   PreviousEvent,
@@ -236,5 +237,10 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     } else {
       return false;
     }
+  }
+
+  navigateToActivity($event) {
+    // console.log($event);
+    this.socketMessage.emit(new JumpEvent($event));
   }
 }

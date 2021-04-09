@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivityDisplayNames, ActivityThumbnails, ActivityTitles } from 'src/app/globals';
 import { BackendRestService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -17,6 +17,8 @@ export class SessionNavigationComponent implements OnInit {
   votingSetup = false;
   votingStarted = true;
   activities = [];
+  @Output() navigate = new EventEmitter<any>();
+
   constructor(private backendRestService: BackendRestService) {}
 
   ngOnInit(): void {
@@ -38,5 +40,10 @@ export class SessionNavigationComponent implements OnInit {
       while (arr.length && (obj = obj[arr.shift()])) {}
       return obj;
     }
+  }
+
+  navigateToActivity(act) {
+    this.navigate.emit(act.activity_id);
+    // console.log(act);
   }
 }

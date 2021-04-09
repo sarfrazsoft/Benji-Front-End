@@ -1,6 +1,7 @@
 <div class="activities" fxLayout="column">
   <div class="activity-container" *ngFor="let act of activities">
-    <div class="activity" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px">
+    <div class="activity" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="8px"
+      (click)="navigateToActivity(act)">
       <img 
         [src]="'/assets/img/activityThumbnails/' + AT[act.activity_type]" />
       <div class="name" fxLayoutAlign="center center">

@@ -511,3 +511,11 @@ export class LobbySetNicknameEvent extends ActivityEvent {
     this.extra_args = { nickname: nickname, user_id: user_id };
   }
 }
+export class JumpEvent extends ActivityEvent {
+  nav_activity: string;
+
+  constructor(nav_activity) {
+    super();
+    this.extra_args = { nav_activity: nav_activity };
+  }
+}

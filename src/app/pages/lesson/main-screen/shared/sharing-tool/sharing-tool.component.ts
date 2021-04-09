@@ -28,6 +28,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   // speakers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   speakers: Array<{ displayName: string; id: number; optedIn: boolean }> = [];
+  volunteers: Array<number>;
   groups = [];
   currentSpeakerIndex = 0;
   component;
@@ -48,7 +49,11 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     console.log(this.activityState);
-    this.initializeActivity();
+    const newVolunteers = this.activityState.running_tools.share.volunteers;
+
+    if (this.volunteers && this.volunteers.length !== newVolunteers.length) {
+      this.initializeActivity();
+    }
   }
 
   ngOnInit(): void {
@@ -58,9 +63,9 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     } else {
       const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
       this.speakers = [];
+      this.volunteers = this.activityState.running_tools.share.volunteers;
       participantSet.forEach((val, index) => {
-        const volunteers = this.activityState.running_tools.share.volunteers;
-        const optedIn = volunteers.includes(val.participant_code);
+        const optedIn = this.volunteers.includes(val.participant_code);
         this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
       this.speakers.sort(function (obj1, obj2) {
@@ -70,11 +75,12 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   }
 
   initializeActivity() {
+    this.volunteers = this.activityState.running_tools.share.volunteers;
+
     if (this.activityState.activity_type === this.at.buildAPitch) {
       const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
       participantSet.forEach((val, index) => {
-        const volunteers = this.activityState.running_tools.share.volunteers;
-        const optedIn = volunteers.includes(val.participant_code);
+        const optedIn = this.volunteers.includes(val.participant_code);
         this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
 
@@ -117,8 +123,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     } else if (this.activityState.activity_type === this.at.convoCards) {
       const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
       participantSet.forEach((val, index) => {
-        const volunteers = this.activityState.running_tools.share.volunteers;
-        const optedIn = volunteers.includes(val.participant_code);
+        const optedIn = this.volunteers.includes(val.participant_code);
         this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
       this.speakers.sort(function (obj1, obj2) {
@@ -134,9 +139,9 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     } else if (this.activityState.activity_type === this.at.brainStorm) {
       const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
       this.speakers = [];
+
       participantSet.forEach((val, index) => {
-        const volunteers = this.activityState.running_tools.share.volunteers;
-        const optedIn = volunteers.includes(val.participant_code);
+        const optedIn = this.volunteers.includes(val.participant_code);
         this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
       });
       this.speakers.sort(function (obj1, obj2) {
@@ -178,8 +183,6 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   }
 
   selectSpeaker(index: number) {
-    console.log(this.speakers[index]);
-
     this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
 
     this.currentSpeakerIndex = index;
