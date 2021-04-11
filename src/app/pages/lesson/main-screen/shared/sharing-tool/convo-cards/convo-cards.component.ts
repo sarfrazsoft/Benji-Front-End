@@ -8,12 +8,18 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
   templateUrl: './convo-cards.component.html',
 })
 export class ConvoCardsComponent implements OnInit, OnChanges {
-  @Input() data: UpdateMessage;
+  @Input() activityState: UpdateMessage;
   @Input() currentSpeaker: { displayName: string; id: number };
   text = '';
+
+  items = [];
+  indexOfCardShown = 0;
   constructor(private buildAPitchService: BuildAPitchService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.indexOfCardShown = 0;
+    this.items = this.activityState.convoactivity.cards;
+  }
 
   ngOnChanges() {}
 

@@ -17,7 +17,7 @@ export class ParticipantConvoCardsActivityComponent
   }
 
   ngOnInit(): void {
-    console.log(this.activityState);
+    // console.log(this.activityState);
     this.indexOfCardShown = 0;
     this.items = this.activityState.convoactivity.cards;
     // this.activityState.convocardsactivity
@@ -35,9 +35,7 @@ export class ParticipantConvoCardsActivityComponent
       this.indexOfCardShown = newIndex;
     }
 
-    if (this.activityState.running_tools && this.activityState.running_tools.share) {
-      this.sendMessage.emit(new ParticipantSelectCardEvent(this.indexOfCardShown));
-    }
+    this.notifyScreen();
   }
 
   previousCard() {
@@ -47,8 +45,12 @@ export class ParticipantConvoCardsActivityComponent
     } else {
       this.indexOfCardShown = newIndex;
     }
+    this.notifyScreen();
+  }
+
+  notifyScreen() {
     if (this.activityState.running_tools && this.activityState.running_tools.share) {
-      this.sendMessage.emit(new ParticipantSelectCardEvent(this.indexOfCardShown));
+      this.sendMessage.emit(new ParticipantSelectCardEvent(this.items[this.indexOfCardShown].id));
     }
   }
 }

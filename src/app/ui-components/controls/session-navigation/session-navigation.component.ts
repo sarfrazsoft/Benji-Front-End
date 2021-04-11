@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { filter } from 'lodash';
 import { ActivityDisplayNames, ActivityThumbnails, ActivityTitles } from 'src/app/globals';
 import { BackendRestService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -24,8 +25,11 @@ export class SessionNavigationComponent implements OnInit {
   ngOnInit(): void {
     if (!this.disableControls) {
       this.backendRestService.getLessonActivities(this.lesson.id).subscribe((val: any) => {
-        this.activities = val.lesson_plan_json;
-        // console.log(this.activities);
+        val.lesson_plan_json.forEach((activity) => {
+          if (activity.activity_type !== 'MCQResultsActivity') {
+            this.activities.push(activity);
+          }
+        });
       });
     }
   }

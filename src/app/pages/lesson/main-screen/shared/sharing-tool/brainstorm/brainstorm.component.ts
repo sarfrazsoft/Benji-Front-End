@@ -5,7 +5,7 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-brainstorm',
-  templateUrl: './brainstorm.component.html'
+  templateUrl: './brainstorm.component.html',
 })
 export class BrainstormComponent implements OnInit, OnChanges {
   @Input() data: UpdateMessage;
@@ -19,7 +19,7 @@ export class BrainstormComponent implements OnInit, OnChanges {
 
   update() {
     this.ideas = this.brainstormService.getUserIdeas(this.currentSpeaker.id, this.data.brainstormactivity);
-    console.log(this.currentSpeaker)
-    console.log(this.data)
+    // console.log(this.currentSpeaker)
+    // console.log(this.data)
   }
 }

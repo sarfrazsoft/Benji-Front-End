@@ -132,7 +132,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
       const b = this.cfr.resolveComponentFactory(SharingConvoCardsComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
-      this.component.instance.data = this.activityState;
+      this.component.instance.activityState = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
     } else if (this.activityState.activity_type === this.at.brainStorm) {
