@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { filter } from 'lodash';
 import { ActivityDisplayNames, ActivityThumbnails, ActivityTitles } from 'src/app/globals';
 import { BackendRestService } from 'src/app/services';
+import { UpdateMessage } from 'src/app/services/backend/schema';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 
 @Component({
@@ -10,7 +11,7 @@ import { Lesson } from 'src/app/services/backend/schema/course_details';
   styleUrls: [],
 })
 export class SessionNavigationComponent implements OnInit {
-  @Input() lesson: Lesson;
+  @Input() activityState: UpdateMessage;
   @Input() disableControls: boolean;
   AT = ActivityThumbnails;
   DisplayNames = ActivityDisplayNames;
@@ -24,13 +25,18 @@ export class SessionNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.disableControls) {
-      this.backendRestService.getLessonActivities(this.lesson.id).subscribe((val: any) => {
-        val.lesson_plan_json.forEach((activity) => {
-          if (activity.activity_type !== 'MCQResultsActivity') {
-            this.activities.push(activity);
-          }
+      this.backendRestService
+        .getLessonRunActivities(this.activityState.lesson_run.lessonrun_code)
+        .subscribe((activities: any) => {
+          activities.forEach((activity) => {
+            if (
+              activity.activity_type !== 'MCQResultsActivity' &&
+              activity.activity_type !== 'LobbyActivity'
+            ) {
+              this.activities.push(activity);
+            }
+          });
         });
-      });
     }
   }
 
@@ -47,7 +53,7 @@ export class SessionNavigationComponent implements OnInit {
   }
 
   navigateToActivity(act) {
-    this.navigate.emit(act.activity_id);
+    this.navigate.emit(act.id);
     // console.log(act);
   }
 }

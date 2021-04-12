@@ -116,7 +116,9 @@ export class BackendRestService {
     return this.httpClient.get<PaginatedResponse<Lesson>>(url);
   }
 
-  getLessonActivities(lesson: number) {
-    return this.httpClient.get<any[]>(global.apiRoot + `/course_details/lesson/${lesson}/?editor=false`);
+  getLessonRunActivities(lessonRunCode: number) {
+    return this.httpClient.get<any[]>(
+      global.apiRoot + `/course_details/lesson_run/${lessonRunCode}/activities`
+    );
   }
 }
