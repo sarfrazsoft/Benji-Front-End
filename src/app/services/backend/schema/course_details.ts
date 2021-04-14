@@ -51,7 +51,15 @@ export interface LessonRun {
 }
 
 export interface RunningTools {
-  share?: { selectedParticipant: number; volunteers: Array<number> };
+  share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number } };
+  grouping?: { selectedGrouping: number; groupings: Array<GroupingToolGroups> };
+}
+
+export interface GroupingToolGroups {
+  id: number;
+  title: string;
+  allowParticipantsJoining: boolean;
+  groups: Array<{ id: number; tilte: string; description: string; participants: Array<number> }>;
 }
 
 export interface LessonRunDetails {

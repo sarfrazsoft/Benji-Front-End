@@ -74,7 +74,6 @@ export class LessonTileComponent implements OnInit, OnDestroy {
         if (res) {
           this.lesson.lesson_name = res.lesson_name;
           this.lesson.lesson_description = res.lesson_description;
-          console.log(res);
           this.lesson.feature_image = res.feature_image;
         }
       });

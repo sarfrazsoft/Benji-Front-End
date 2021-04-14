@@ -204,6 +204,15 @@
       >
       </benji-ms-sharing-tool>
     </ng-container>
+
+    <ng-container>
+      <benji-ms-grouping-tool *ngIf="getIsGrouping()"
+        [activityState]="serverMessage"
+        (sendMessage)="sendSocketMessage($event)"
+      >
+      </benji-ms-grouping-tool>
+      
+    </ng-container>
   </div>
   <benji-main-screen-footer
     *ngIf="isConnected() && serverMessage"

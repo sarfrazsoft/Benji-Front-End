@@ -193,6 +193,18 @@ export class AppComponent implements OnInit {
         benji-ms-sharing-tool .mainscreen-activity .content .speaker-cue-container .speaker-list .name-row.current-speaker {
           border-color: ${info.parameters.primary};
         }
+        .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+          border-color: ${info.parameters.primary};
+        }
+
+        .mat-radio-button.mat-accent .mat-radio-inner-circle {
+          color: ${info.parameters.primary};
+          background-color: ${info.parameters.primary};
+        }
+
+        .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+          background-color: ${info.parameters.primary};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

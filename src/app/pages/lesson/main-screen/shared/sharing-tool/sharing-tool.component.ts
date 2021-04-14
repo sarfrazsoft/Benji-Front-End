@@ -49,14 +49,19 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     const newVolunteers = this.activityState.running_tools.share.volunteers;
-
+    if (this.component && this.component.instance) {
+      this.component.instance.activityState = this.activityState;
+      this.component.instance.update();
+    }
     if (this.volunteers && this.volunteers.length !== newVolunteers.length) {
-      this.initializeActivity();
+      // this.initializeActivity();
+      console.log('hu');
+      this.volunteers = this.activityState.running_tools.share.volunteers;
+      this.changeOptedInUsers();
     }
   }
 
   ngOnInit(): void {
-    console.log(this.activityState);
     if (this.activityDataAvailable) {
       this.initializeActivity();
     } else {
@@ -134,6 +139,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
       this.currentSpeakerIndex = 0;
       this.component.instance.activityState = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
+      this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[this.currentSpeakerIndex].id));
       this.component.instance.update();
     } else if (this.activityState.activity_type === this.at.brainStorm) {
       const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
@@ -157,6 +163,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   }
 
   update() {
+    this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[this.currentSpeakerIndex].id));
     this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
     this.component.instance.update();
   }
@@ -182,7 +189,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   }
 
   selectSpeaker(index: number) {
-    this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
+    // this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
 
     this.currentSpeakerIndex = index;
     this.update();
@@ -190,5 +197,23 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   generateRandom() {
     this.currentSpeakerIndex = this.utilsService.randomIntFromInterval(0, this.speakers.length - 1);
+  }
+
+  changeOptedInUsers() {
+    // const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
+    this.speakers.forEach((speaker) => {
+      if (this.volunteers.includes(speaker.id)) {
+        speaker.optedIn = true;
+      } else {
+        speaker.optedIn = false;
+      }
+    });
+
+    console.log(this.speakers);
+
+    // this.speakers.push({ displayName: val.display_name, id: val.participant_code, optedIn: optedIn });
+    // participantSet.forEach((val, index) => {
+    //   const optedIn = this.volunteers.includes(val.participant_code);
+    // });
   }
 }

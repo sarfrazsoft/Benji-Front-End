@@ -347,6 +347,14 @@ export class SelectParticipantForShareEvent extends ActivityEvent {
   }
 }
 
+export class CreatGroupingEvent extends ActivityEvent {
+  event_name = 'CreatGroupingEvent';
+  constructor(title: string) {
+    super();
+    this.extra_args = { title: title };
+  }
+}
+
 export class ParticipantSelectCardEvent extends ActivityEvent {
   event_name = 'ParticipantSelectCardEvent';
   constructor(cardNumber: number) {

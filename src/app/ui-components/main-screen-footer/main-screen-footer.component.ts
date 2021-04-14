@@ -101,8 +101,6 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   initializeTimer() {}
 
   controlClicked(eventType) {
-    // if (this.videoStateService.videoState) {
-    // this.videoStateService.videoState = eventType;
     if (this.disableControls) {
       return false;
     }
@@ -198,12 +196,17 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   startSharingTool() {
-    this.socketMessage.emit(new BeginShareEvent());
-    this.sharingToolService.sharingToolControl$.next(this.activityState);
+    const as = this.activityState;
+
+    if (as && as.running_tools && as.running_tools.share) {
+      // this.sharingToolService.sharingToolControl$.next(this.activityState);
+      this.socketMessage.emit(new EndShareEvent());
+    } else {
+      this.socketMessage.emit(new BeginShareEvent());
+      this.sharingToolService.sharingToolControl$.next(this.activityState);
+    }
   }
-  endSharingTool() {
-    this.socketMessage.emit(new EndShareEvent());
-  }
+  endSharingTool() {}
 
   deleteUser(p: Participant) {
     const msg = 'Are you sure you want to delete ' + p.display_name + '?';
@@ -236,7 +239,10 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   navigateToActivity($event) {
-    // console.log($event);
     this.socketMessage.emit(new JumpEvent($event));
+  }
+
+  propagate($event) {
+    this.socketMessage.emit($event);
   }
 }

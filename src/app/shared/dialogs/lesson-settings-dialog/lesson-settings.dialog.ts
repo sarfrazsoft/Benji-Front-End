@@ -69,7 +69,7 @@ export class LessonSettingsDialogComponent implements OnInit {
 
   uploadLessonImage(lesson: number, imagesList) {
     // /course_details/lesson/{id}/upload_image/
-    const url = global.apiRoot + '/course_details/lesson/' + lesson + '/upload_image/';
+    const url = global.apiRoot + '/course_details/lesson/' + lesson + '/upload_feature_image/';
     const fileList: FileList = imagesList;
     if (fileList.length > 0) {
       const file: File = fileList[0];
@@ -88,14 +88,7 @@ export class LessonSettingsDialogComponent implements OnInit {
           this.httpClient
             .post(url, formData, { params, headers })
             .map((res: any) => {
-              console.log(res);
               this.imageURL = res.img;
-              // return res;
-              // imagesList = null;
-              // this.sendMessage.emit(
-              //   new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
-              // );
-              // this.userIdeaText = '';
             })
             .subscribe(
               (data) => {},
@@ -115,7 +108,6 @@ export class LessonSettingsDialogComponent implements OnInit {
         id: this.data.id,
         lesson_name: val.title,
         lesson_description: val.description,
-        feature_image: this.imageURL,
       };
       this.editorService
         .updateLesson(l, this.data.id)
@@ -124,6 +116,7 @@ export class LessonSettingsDialogComponent implements OnInit {
           catchError((error) => error)
         )
         .subscribe((res: Lesson) => {
+          l.feature_image = this.imageURL;
           this.dialogRef.close(l);
         });
     }

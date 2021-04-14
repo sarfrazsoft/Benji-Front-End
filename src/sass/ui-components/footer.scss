@@ -30,9 +30,12 @@
       padding: 6px 8px;
       border-radius: 4px;
       cursor: pointer;
+      transition: all 0.2s;
       &:hover {
         background: rgba(255, 255, 255, 0.2);
-        transition: all 0.2s;
+      }
+      &.active {
+        background-color: #fff;
       }
     }
     button {

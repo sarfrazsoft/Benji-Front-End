@@ -11,4 +11,5 @@ export interface Card {
   card_image: string;
   card_title: string;
   card_text: string;
+  id: number;
 }

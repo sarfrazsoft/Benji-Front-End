@@ -49,8 +49,11 @@ export class ParticipantConvoCardsActivityComponent
   }
 
   notifyScreen() {
-    if (this.activityState.running_tools && this.activityState.running_tools.share) {
-      this.sendMessage.emit(new ParticipantSelectCardEvent(this.items[this.indexOfCardShown].id));
+    const tools = this.activityState.running_tools;
+    if (tools && tools.share) {
+      if (tools.share.selectedParticipant && this.getParticipantCode() === tools.share.selectedParticipant) {
+        this.sendMessage.emit(new ParticipantSelectCardEvent(this.items[this.indexOfCardShown].id));
+      }
     }
   }
 }

@@ -1,0 +1,32 @@
+<div class="menu-heading">
+  Grouping
+</div>
+<div class="activity-settings" fxLayout="column" fxLayoutGap="16px">
+  <div class="setting controls-form" benji-click-stop-propagation fxLayout="column">
+    <mat-radio-group [(ngModel)]="groupingType">
+      <div fxLayout="column" fxLayoutGap="16px">
+        <mat-radio-button  [value]="'existing'">
+          Use Existing Grouping
+        </mat-radio-button>
+        <mat-radio-button  [value]="'new'">
+          Create New Grouping
+        </mat-radio-button>
+      </div>
+    </mat-radio-group>
+    <div *ngIf="groupingType === 'new'">
+      <div style="margin-top: 16px;">
+        <input 
+          class="form-control dash-input" 
+          type="text" 
+          [(ngModel)]="newGroupingTitle" >
+      </div>
+    </div>
+  </div>
+</div>
+<div class="reset-settings">
+  <button 
+    class="dashboard-secondary-button bg-primary-color white-color"
+    (click)="start()">
+    Start Grouping
+  </button>
+</div>

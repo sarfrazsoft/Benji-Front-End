@@ -69,6 +69,30 @@
     </div>
     <div class="mainscreen-footer__controls" *ngIf="!disableControls">
 
+      <!-- Grouping control -->
+      <div class="option settings" 
+        fxLayoutAlign="center center"
+        *ngIf="activityState && activityState.activity_type === 'CaseStudyActivity'"
+        [matMenuTriggerFor]="groupingMenu">
+        <button
+          placement="top"
+          tooltip="Vote"
+          show-delay="100"> 
+          <!-- (click)="brainstormSubmissionComplete()" -->
+          <img src="/assets/img/grouping.svg" /> 
+        </button>
+        <mat-menu 
+          #groupingMenu="matMenu" 
+          class="activity-settings-menu "  
+          [overlapTrigger]="false" 
+          xPosition="before">
+          <benji-grouping-control
+            [activityState]="activityState"
+            (socketMessage)="propagate($event)">
+          </benji-grouping-control>
+        </mat-menu>
+      </div>
+
       <!-- Timer control -->
       <div class="option settings" 
         fxLayoutAlign="center center" 
@@ -109,19 +133,22 @@
       <div 
         class="option settings"
         *ngIf="isSharingAllowed(activityState)"
-        fxLayoutAlign="center center">
+        fxLayoutAlign="center center"
+        [ngClass]="{ active: isSharing }"
+        style="min-width: 40px;">
         <button
           placement="top"
-          tooltip="add text"
+          tooltip="Share"
           show-delay="100"
           (click)="startSharingTool()"
+          [ngClass]="{ active: isSharing }"
         > 
-          <img src="/assets/img/heartOutline.svg" /> 
-          share
+          <img *ngIf="!isSharing" src="/assets/img/shareIcon.svg" /> 
+          <img *ngIf="isSharing" src="/assets/img/shareIconDark.svg" /> 
         </button>
       </div>
 
-      <!-- Heart control -->
+      <!-- Heart control
       <div 
         class="option settings"
         *ngIf="isSharingAllowed(activityState)"
@@ -132,10 +159,9 @@
           show-delay="100"
           (click)="endSharingTool()"
         > 
-          <!-- <img src="/assets/img/heartOutline.svg" />  -->
           End Share
         </button>
-      </div>
+      </div> -->
 
       <!-- Activity settins -->
       <div class="option settings" fxLayoutAlign="center center">
@@ -198,7 +224,7 @@
       </div> -->
       
       <!-- Participant dropdown -->
-      <div class="option participantDropdown">
+      <div fxLayoutAlign="center center" class="option participantDropdown">
         <button [matMenuTriggerFor]="participantMenu">
           <!-- <mat-icon class="icon-white">supervisor_account</mat-icon> -->
           <img src="/assets/img/participants.svg" /> 
@@ -229,7 +255,7 @@
       </div>
     
     </div>
-    <div class="session-info" fxLayout="row" fxLayoutGap="24px">
+    <div class="session-info" fxLayout="row" fxLayoutGap="24px" fxLayoutAlign="center center">
       <div class="room-code" fxLayout="column" fxLayoutGap="4px">
         <span class="code">{{ roomCode }}</span>
         <span class="text">ROOM CODE</span>

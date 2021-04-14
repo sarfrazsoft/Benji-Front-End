@@ -208,6 +208,16 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
     }
   }
 
+  getIsGrouping() {
+    return false;
+    const sm = this.serverMessage;
+    if (sm && sm.running_tools && sm.running_tools.grouping && sm.running_tools.grouping.selectedGrouping) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   isLastActivity() {
     if (this.serverMessage) {
       const activity_type = this.serverMessage.activity_type.toLowerCase();

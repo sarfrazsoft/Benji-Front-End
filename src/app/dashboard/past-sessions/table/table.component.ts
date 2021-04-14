@@ -80,6 +80,8 @@ export class PastSessionsTableComponent implements AfterViewInit {
         // data = uniqBy(data, 'start_time');
         const tableData = [];
         data.forEach((run) => {
+          console.log(run);
+          // if (run.participant_set.length) {
           tableData.push({
             id: run.id,
             date: moment(run.start_time).format('MMMM, DD YYYY'),
@@ -89,6 +91,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
             lessonrunCode: run.lessonrun_code,
             is_accessible: run.is_accessible,
           });
+          // }
         });
 
         const resArr = [];
