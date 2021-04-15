@@ -129,6 +129,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       }
       this.fastForwarding = true;
     } else if (eventType === 'previous') {
+      if (this.isSharing) {
+        this.endSharingTool();
+      }
       this.socketMessage.emit(new PreviousEvent());
     } else if (eventType === 'reset') {
       this.socketMessage.emit(new ResetEvent());
@@ -200,14 +203,15 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     const as = this.activityState;
 
     if (as && as.running_tools && as.running_tools.share) {
-      // this.sharingToolService.sharingToolControl$.next(this.activityState);
-      this.socketMessage.emit(new EndShareEvent());
+      this.endSharingTool();
     } else {
       this.socketMessage.emit(new BeginShareEvent());
       this.sharingToolService.sharingToolControl$.next(this.activityState);
     }
   }
-  endSharingTool() {}
+  endSharingTool() {
+    this.socketMessage.emit(new EndShareEvent());
+  }
 
   deleteUser(p: Participant) {
     const msg = 'Are you sure you want to delete ' + p.display_name + '?';
@@ -240,6 +244,9 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   }
 
   navigateToActivity($event) {
+    if (this.isSharing) {
+      this.endSharingTool();
+    }
     this.socketMessage.emit(new JumpEvent($event));
   }
 
