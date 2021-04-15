@@ -36,6 +36,7 @@ export class SessionNavigationComponent implements OnInit {
               this.activities.push(activity);
             }
           });
+          this.activities = this.activities.sort((a, b) => a.id - b.id);
         });
     }
   }
