@@ -5,7 +5,7 @@
   fxLayoutAlign="space-between center"
   *ngIf="showFooter"
 >
-  <div class="mainscreen-footer__controls" fxLayout="row" fxLayoutGap="16px">
+  <div *ngIf="!isEditor" class="mainscreen-footer__controls" fxLayout="row" fxLayoutGap="16px">
       <button (click)="controlClicked('previous')" fxLayoutAlign="center center">
         <!-- <mat-icon class="icon-white">skip_previous</mat-icon> -->
         <img src="/assets/img/chevronBigLeftWhite.svg" />
@@ -47,7 +47,7 @@
       </button> -->
   </div>
 
-  <div class="session-controls" fxLayout="row">
+  <div *ngIf="!isEditor" class="session-controls" fxLayout="row">
     <div class="time-info" fxLayoutAlign="center center">
       <div class="ms-footer-timer" *ngIf="showTimer" 
         [matMenuTriggerFor]="timerMenu">

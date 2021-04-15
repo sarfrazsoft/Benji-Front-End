@@ -44,6 +44,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() isPaused: boolean;
   @Input() disableControls: boolean;
   @Input() isSharing: boolean;
+  @Input() isEditor = false;
 
   showTimer = false;
 
