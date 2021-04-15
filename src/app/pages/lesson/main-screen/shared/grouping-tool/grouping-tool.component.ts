@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainScreenGroupingToolComponent implements OnInit {
   groupingTitle: '';
+  allUsers = [];
+  breakoutRooms = [];
   private typingTimer;
   constructor() {}
 
@@ -26,4 +28,6 @@ export class MainScreenGroupingToolComponent implements OnInit {
   doneTyping() {
     // console.log(this.groupingTitle);
   }
+  drop($event) {}
+  addGroup() {}
 }

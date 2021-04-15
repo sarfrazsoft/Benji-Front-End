@@ -164,7 +164,10 @@
       </div> -->
 
       <!-- Activity settins -->
-      <div class="option settings" fxLayoutAlign="center center">
+      <div 
+        *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
+        class="option settings" 
+        fxLayoutAlign="center center">
         <button
           [matMenuTriggerFor]="activitySettingsMenu"
           #activitySettingsMenuTrigger="matMenuTrigger"
