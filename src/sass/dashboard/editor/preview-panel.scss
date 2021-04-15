@@ -37,10 +37,7 @@ benji-preview-panel {
         .mainscreen-toolbar {
           padding: 8px 30px 8px;
           .benji-logo-container {
-            height: 32px;
-            img {
-              height: 32px;
-            }
+            height: 16px;
           }
         }
 
@@ -51,9 +48,8 @@ benji-preview-panel {
           }
           .lesson-top-banner {
             padding: 20px 20px;
-            // background-color: #f7f8fa;
             .activity-header {
-              font-size: 16px;
+              font-size: 28px;
             }
             h1 {
               font-size: 28px;
@@ -124,7 +120,7 @@ benji-preview-panel {
               padding: 0 10px;
 
               .column {
-                min-width: 150px;
+                min-width: 220px;
                 max-width: 250px;
                 .header {
                   margin: 5px;
@@ -180,14 +176,14 @@ benji-preview-panel {
           }
           .activity-title-container {
             h1 {
-              font-size: 38px;
+              font-size: 36px;
             }
           }
           .activity-title-description-container {
             p {
-              font-size: 32px;
+              font-size: 20px;
               &.smaller-font-class {
-                font-size: 28px;
+                font-size: 18px;
               }
             }
           }
