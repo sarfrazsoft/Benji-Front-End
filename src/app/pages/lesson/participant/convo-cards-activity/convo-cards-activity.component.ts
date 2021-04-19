@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { ParticipantSelectCardEvent } from 'src/app/services/backend/schema';
-import { ConvoCardsActivity } from 'src/app/services/backend/schema/activities';
+import { Card, ConvoCardsActivity } from 'src/app/services/backend/schema/activities';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -10,7 +10,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class ParticipantConvoCardsActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
-  items = [];
+  items: Array<Card> = [];
   indexOfCardShown = 0;
   constructor() {
     super();
@@ -23,7 +23,19 @@ export class ParticipantConvoCardsActivityComponent
     // this.activityState.convocardsactivity
     // const c: ConvoCardsActivity;
   }
-  ngOnChanges() {}
+  ngOnChanges() {
+    // set the currently selected card as selected in sharing tool
+    const tools = this.activityState.running_tools;
+    if (tools && tools.share) {
+      if (tools.share.selectedParticipant && this.getParticipantCode() === tools.share.selectedParticipant) {
+        if (tools.share.convoCard.selectedCard !== this.items[this.indexOfCardShown].id) {
+          // send event only if selectedCard on mainscreen is not the same as user's
+          // selectedcard on the phone
+          this.sendMessage.emit(new ParticipantSelectCardEvent(this.items[this.indexOfCardShown].id));
+        }
+      }
+    }
+  }
 
   nextCard() {
     // this.items.push(this.items.shift());

@@ -16,6 +16,9 @@
       .setting {
         font-weight: 500;
         min-width: 360px;
+        &.small-width {
+          min-width: auto;
+        }
         .ng-select.card-size {
           border: 0px;
           min-height: 0px;
@@ -30,6 +33,7 @@
         }
         .label {
           margin-bottom: 8px;
+          font-weight: 500;
         }
         .sub-label {
           font-size: 8px;

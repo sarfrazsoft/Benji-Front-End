@@ -74,6 +74,8 @@ export const AllowShareActivities = [
   'ConvoActivity',
 ];
 
+export const AllowGroupingActivities = ['CaseStudyActivity'];
+
 // export const LayoutTypes = ['leftHalfScreen', 'leftImage', 'fullScreen', 'rightHalfScreen', 'rightImage'];
 export type TitleActivityLayouts =
   | 'emojiLayout'

@@ -223,15 +223,22 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'removed') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'voting_seconds') {
-                  mappedField.type = 'seconds';
-                  mappedField.defaultValue = 0;
+                  mappedField.hide = true;
+                  // mappedField.type = 'seconds';
+                  mappedField.defaultValue = 10000;
+                  // mappedField.wrappers = ['benji-reveal-field-wrapper'];
+                  // mappedField.templateOptions.label = '';
+                  // mappedField.templateOptions['hideLabel'] = true;
+                  // mappedField.templateOptions['labelForCheckbox'] = 'Add Voting Stage';
+                  // mappedField.templateOptions['helpText'] = 'How long does the voting stage last?';
+                } else if (mapSource.field_name === 'max_participant_votes') {
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
-                  mappedField.templateOptions['hideLabel'] = true;
+                  // mappedField.templateOptions.label = 'Max Participant Votes';
+                  // mappedField.templateOptions['hideLabel'] = true;
+                  mappedField.templateOptions['helpText'] = 'Max Participant Votes';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Voting Stage';
-                  mappedField.templateOptions['helpText'] = 'How long does the voting stage last?';
-                } else if (mapSource.field_name === 'max_participant_votes') {
-                  mappedField.hideExpression = '!model.voting_seconds';
+                  // mappedField.hideExpression = '!model.voting_seconds';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.defaultValue = 0;
                   mappedField.type = 'seconds';

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { clone } from 'lodash';
-import { ActivityTypes, AllowShareActivities } from 'src/app/globals';
+import { ActivityTypes, AllowGroupingActivities, AllowShareActivities } from 'src/app/globals';
 import { ContextService, PastSessionsService, SharingToolService } from 'src/app/services';
 import { Timer, User } from 'src/app/services/backend/schema';
 import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
@@ -44,6 +44,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() isPaused: boolean;
   @Input() disableControls: boolean;
   @Input() isSharing: boolean;
+  @Input() isGrouping: boolean;
   @Input() isEditor = false;
 
   showTimer = false;
@@ -58,6 +59,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   fastForwarding = false;
 
   allowShareActivities = AllowShareActivities;
+  allowGroupingActivities = AllowGroupingActivities;
 
   constructor(
     private videoStateService: VideoStateService,
@@ -237,6 +239,14 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   isSharingAllowed(activityState: UpdateMessage) {
     if (activityState && this.allowShareActivities.includes(activityState.activity_type)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isGroupingAllowed(activityState: UpdateMessage) {
+    if (activityState && this.allowGroupingActivities.includes(activityState.activity_type)) {
       return true;
     } else {
       return false;

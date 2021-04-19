@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
+import { UtilsService } from 'src/app/services/utils.service';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -13,6 +14,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 export class SingleUserComponent extends BaseLessonComponent implements OnInit {
   at: typeof ActivityTypes = ActivityTypes;
   constructor(
+    protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
@@ -21,7 +23,17 @@ export class SingleUserComponent extends BaseLessonComponent implements OnInit {
     protected ref: ChangeDetectorRef,
     protected matSnackBar: MatSnackBar
   ) {
-    super(restService, route, socketService, 'participant', contextService, authService, ref, matSnackBar);
+    super(
+      utilsService,
+      restService,
+      route,
+      socketService,
+      'participant',
+      contextService,
+      authService,
+      ref,
+      matSnackBar
+    );
   }
 
   isPaused() {

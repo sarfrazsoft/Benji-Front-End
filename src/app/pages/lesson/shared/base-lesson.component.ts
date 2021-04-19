@@ -6,6 +6,7 @@ import { BackendRestService } from 'src/app/services/backend/backend-rest.servic
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
 
 export class BaseLessonComponent implements OnInit, OnDestroy {
   roomCode: number;
@@ -22,6 +23,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
   facilitatorConnected = false;
 
   constructor(
+    protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
@@ -135,13 +137,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
     return this.facilitatorConnected;
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 5000,
-      panelClass: ['bg-warning-color', 'white-color', 'simple-snack-bar'],
-    });
-  }
-
   handleServerMessage(msg: ServerMessage) {
     if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
       if (this.serverMessage) {
@@ -160,11 +155,10 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
       console.log(msg);
       const obj = msg.clienterror.error_detail;
       if (typeof obj === 'string') {
-        // this.openSnackBar(obj, '');
       } else {
         if (obj[Object.keys(obj)[0]]) {
           if (obj[Object.keys(obj)[0]][0]) {
-            this.openSnackBar(obj[Object.keys(obj)[0]][0], '');
+            this.utilsService.openWarningNotification(obj[Object.keys(obj)[0]][0], '');
           }
         }
       }
@@ -209,6 +203,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
   }
 
   getIsGrouping() {
+    // return this.getIsSharing();
     return false;
     const sm = this.serverMessage;
     if (sm && sm.running_tools && sm.running_tools.grouping && sm.running_tools.grouping.selectedGrouping) {

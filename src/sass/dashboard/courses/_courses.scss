@@ -5,9 +5,9 @@ benji-lesson {
       background-color: #fff;
       border: 2px solid #eeebdd;
       cursor: pointer;
-      width: 260px;
+      width: 280px;
       margin-bottom: 30px;
-      padding: 24px 20px;
+      padding: 16px 16px;
       border-radius: 4px;
       transition: all 0.2s;
       position: relative;
@@ -21,9 +21,9 @@ benji-lesson {
       }
       .thumbnail {
         height: 160px;
-        margin-left: -20px;
-        margin-right: -20px;
-        margin-top: -24px;
+        margin-left: -16px;
+        margin-right: -16px;
+        margin-top: -18px;
         .img-container {
           background-size: cover;
           box-sizing: border-box;
@@ -79,13 +79,6 @@ benji-lesson {
           background: #e0e0e0;
         }
       }
-      .edit-session-button {
-        border: 1px solid transparent;
-        background-color: #f2f4f7;
-        &:hover {
-          background-color: #d2d5da;
-        }
-      }
     }
 
     .course-detail {
@@ -122,7 +115,6 @@ benji-lesson {
   .editor-content-button {
     color: #fff;
     height: auto;
-    background-color: #5da9e9;
     border: 2px solid #5da9e9;
     border-radius: 4px;
     padding: 10px;

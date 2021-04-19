@@ -10,6 +10,7 @@ import {
   SharingToolService,
 } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
+import { UtilsService } from 'src/app/services/utils.service';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -18,6 +19,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   constructor(
+    protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected activatedRoute: ActivatedRoute,
     protected socketService: BackendSocketService,
@@ -28,6 +30,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     protected sharingToolService: SharingToolService
   ) {
     super(
+      utilsService,
       restService,
       activatedRoute,
       socketService,

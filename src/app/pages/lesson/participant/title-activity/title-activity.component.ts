@@ -6,7 +6,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-title-activity',
   templateUrl: './title-activity.component.html',
-  styleUrls: ['./title-activity.component.scss'],
 })
 export class ParticipantTitleActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   constructor(public emoji: EmojiLookupService, private contextService: ContextService) {

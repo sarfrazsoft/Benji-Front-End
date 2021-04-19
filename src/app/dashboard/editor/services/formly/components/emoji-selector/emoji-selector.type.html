@@ -10,12 +10,12 @@
         *ngIf="!showemoji"
         (click)="showemoji = !showemoji"
         type="button"
-        class="editor-content-button emoji-selector"
+        class="secondary-button emoji-selector black-color"
       >
         <div fxLayoutAlign="center center" fxLayout="row">
-          <div class="icon">
+          <!-- <div class="icon">
             <img src="/assets/img/smiley_face.svg" />
-          </div>
+          </div> -->
           <div>+ Add Icon</div>
         </div>
       </button>
@@ -23,7 +23,7 @@
     <div class="twemoji-container">
       <app-b-twemoji class="body-emoji" [text]="getSelectedEmoji()"></app-b-twemoji>
     </div>
-    <div (click)="removeEmoji()" fxLayoutAlign="center center">
+    <div class="remove-emoji" (click)="removeEmoji()" fxLayoutAlign="center center">
       <button class="close-button">
         <img src="/assets/img/closeBig.svg" />
       </button>

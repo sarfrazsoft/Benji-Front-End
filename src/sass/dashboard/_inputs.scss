@@ -4,13 +4,11 @@
   text-align: left;
   border-radius: 4px;
   background: #fff;
+  color: $black;
   border: 1px solid $secondary-color-lighter;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  &:focus {
-    box-shadow: 0px 0px 0pt 0.2pt $primary-color;
-  }
   &::placeholder {
     color: $secondary-color-light;
   }

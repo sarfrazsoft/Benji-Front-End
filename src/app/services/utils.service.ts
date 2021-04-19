@@ -37,10 +37,22 @@ export class UtilsService {
     });
   }
 
-  openSubmissionComplete(message: string, action: string) {
+  openWarningNotification(message: string, action: string) {
     return this.matSnackBar.openFromComponent(SnackBarComponent, {
       data: {
-        text: 'All votes are in! ',
+        text: message,
+        dismissText: 'uh-oh',
+        actionButtonText: '',
+        icon: 'warningNotificationIcon.svg',
+      },
+      panelClass: ['snackbar-notification', 'success'],
+      ...this.notificationConfig,
+    });
+  }
+  openSuccessNotification(message: string, action: string) {
+    return this.matSnackBar.openFromComponent(SnackBarComponent, {
+      data: {
+        text: message,
         dismissText: 'Okay',
         actionButtonText: '',
         icon: 'successNotificationIcon.svg',

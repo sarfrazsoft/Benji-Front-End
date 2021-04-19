@@ -34,6 +34,7 @@ export { ParticipantInstructionTemplateComponent } from './shared/instruction-te
 export { QuestionFormComponent } from './shared/question-form/question-form.component';
 export { QuestionLayoutComponent } from './shared/question-layout/question-layout.component';
 export { ParticipantSharingToolComponent } from './shared/sharing-tool/sharing-tool.component';
+export { ParticipantGroupingToolComponent } from './shared/grouping-tool/grouping-tool.component';
 export { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 export { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';

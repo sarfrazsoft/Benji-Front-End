@@ -66,26 +66,6 @@ export class ParticipantBrainstormingActivityComponent
     this.maxSubmissions = this.act.max_participant_submissions;
     this.participantCode = this.getParticipantCode().toString();
 
-    // const submittedIdeas = this.brainstormService.getUserIdeas(this.getParticipantCode(), this.act);
-    // submittedIdeas.forEach((idea: Idea) => {
-    //   this.draftIdeas.push({ id: idea.id, text: idea.idea, editing: false });
-    // });
-
-    // if (this.draftIdeas.length === 0) {
-    //   this.addDraftIdea();
-    // }
-  }
-
-  addDraftIdea() {
-    if (this.draftIdeas.length < this.maxSubmissions) {
-      this.draftIdeas.push({ id: null, text: null, editing: true });
-    }
-  }
-
-  ngOnChanges() {
-    this.act = this.activityState.brainstormactivity;
-    const userID = this.getParticipantCode();
-
     // The activity starts by showing Submit idea screen
     if (!this.act.submission_complete && this.act.submission_countdown_timer) {
       localStorage.setItem('resetConnection', 'false');
@@ -108,6 +88,18 @@ export class ParticipantBrainstormingActivityComponent
         this.addDraftIdea();
       }
     }
+  }
+
+  addDraftIdea() {
+    if (this.draftIdeas.length < this.maxSubmissions) {
+      this.draftIdeas.push({ id: null, text: null, editing: true });
+    }
+  }
+
+  ngOnChanges() {
+    this.act = this.activityState.brainstormactivity;
+    const userID = this.getParticipantCode();
+
     // Show thank you for idea submission
 
     const submissionCount = this.brainstormService.getUserIdeas(userID, this.act);

@@ -149,7 +149,7 @@ export class SidenavComponent implements OnInit {
         navName: 'Logout',
         navRoute: 'logout',
         icon: '/assets/img/navigation/logOut.svg',
-        hoverIcon: '/assets/img/navigation/logOut.svg',
+        hoverIcon: '/assets/img/navigation/logOutHover.svg',
       },
     ],
   };

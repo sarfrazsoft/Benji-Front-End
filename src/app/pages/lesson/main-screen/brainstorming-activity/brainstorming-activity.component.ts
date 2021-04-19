@@ -210,7 +210,7 @@ export class MainScreenBrainstormingActivityComponent
         this.isAllSubmissionsComplete(act)
       ) {
         this.shownSubmissionCompleteNofitication = true;
-        const snackBarRef = this.utilsService.openSubmissionComplete('Submission complete', 'Start voting');
+        const snackBarRef = this.utilsService.openSuccessNotification('Submission complete', 'Start voting');
         snackBarRef.onAction().subscribe(($event) => {});
       }
     }

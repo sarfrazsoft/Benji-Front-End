@@ -5,6 +5,7 @@ import { ActivityTypes } from 'src/app/globals';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -18,6 +19,7 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     event.returnValue = false;
   }
   constructor(
+    protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
@@ -26,7 +28,17 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     protected contextService: ContextService,
     protected matSnackBar: MatSnackBar
   ) {
-    super(restService, route, socketService, 'participant', contextService, authService, ref, matSnackBar);
+    super(
+      utilsService,
+      restService,
+      route,
+      socketService,
+      'participant',
+      contextService,
+      authService,
+      ref,
+      matSnackBar
+    );
   }
 
   canDeactivate() {

@@ -61,10 +61,6 @@ export class AppComponent implements OnInit {
           color: ${info.parameters.primary_dark};
         }
 
-        .primary-color-darkest {
-          color: ${info.parameters.primary_darkest};
-        }
-
         .primary-color-light {
           color: ${info.parameters.primary_light};
         }
@@ -79,6 +75,10 @@ export class AppComponent implements OnInit {
 
         .b-standard-button.selected:hover {
           background: ${info.parameters.primary};
+        }
+
+        .editor-content-button {
+          background: ${this.hexToRGB(info.parameters.primary, 0.1)};
         }
 
         .indigo-launch-button:active {
@@ -152,20 +152,12 @@ export class AppComponent implements OnInit {
           color: ${info.parameters.primary};
         }
 
-        .login-container-mob .login-signup-section {
-          color: ${info.parameters.primary_darkest};
-        }
-
-        .login-container-mob .login-signup-section .section-buttons {
-          color: ${info.parameters.primary_darkest};
-        }
-
         .low-response-dialog mat-dialog-container {
-          background-color: ${info.parameters.primary_dark};
+          background-color: ${info.parameters.primary};
         }
 
         .low-response-dialog mat-dialog-container.mat-dialog-container .content button {
-          background-color: ${info.parameters.primary_dark};
+          background-color: ${info.parameters.primary};
         }
 
         .mat-progress-spinner circle, .mat-spinner circle {
@@ -205,6 +197,9 @@ export class AppComponent implements OnInit {
         .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
           background-color: ${info.parameters.primary};
         }
+        .dash-input:focus {
+          box-shadow: 0px 0px 0pt 0.2pt ${info.parameters.primary};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');
@@ -216,6 +211,18 @@ export class AppComponent implements OnInit {
         additionalCssStyle.innerText = cssCode;
       }
     });
+  }
+
+  hexToRGB(hex, alpha) {
+    const r = parseInt(hex.slice(1, 3), 16),
+      g = parseInt(hex.slice(3, 5), 16),
+      b = parseInt(hex.slice(5, 7), 16);
+
+    if (alpha) {
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+    } else {
+      return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+    }
   }
 
   checkWhitelabeling() {

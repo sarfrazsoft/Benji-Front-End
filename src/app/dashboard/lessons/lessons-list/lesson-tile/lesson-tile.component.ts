@@ -126,16 +126,24 @@ export class LessonTileComponent implements OnInit, OnDestroy {
           .afterClosed()
           .subscribe((res) => {
             if (res) {
-              this.adminService.deleteLesson(lesson.id).subscribe((delRes) => {
-                if (delRes.success) {
-                  this.updateLessons.emit();
-                  this.utilsService.openSnackBar(`Lesson successfully deleted.`, `close`);
+              this.adminService.deleteLesson(lesson.id).subscribe(
+                (delRes) => {
+                  if (delRes.success) {
+                    this.updateLessons.emit();
+                    this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
+                  }
+                },
+                (error) => {
+                  this.utilsService.openWarningNotification('Something went wrong.', '');
                 }
-              });
+              );
             }
           });
       } else {
-        this.utilsService.showWarning(`You don't have sufficient permission to perform this action.`);
+        this.utilsService.openWarningNotification(
+          `You don't have sufficient permission to perform this action.`,
+          ''
+        );
       }
     }
     $event.stopPropagation();
