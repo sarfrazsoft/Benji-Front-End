@@ -3,7 +3,6 @@
   <!-- Role play time -->
   <ng-container *ngIf="!giveFeedback">
     <benji-ps-instruction-template>
-      <ng-container class="body-title">Role-play</ng-container>
       <app-b-twemoji
         class="body-emoji"
         [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
@@ -26,7 +25,6 @@
       "
     >
       <benji-ps-instruction-template>
-        <ng-container class="body-title">Role-play</ng-container>
         <app-b-twemoji
           class="body-emoji"
           [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
@@ -50,7 +48,6 @@
     <!-- Feedback submitted successfully non-observer  -->
     <ng-container *ngIf="userFeedbackSubmitted()">
       <benji-ps-instruction-template>
-        <ng-container class="body-title">Thank You</ng-container>
         <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
         <h1 class="body-heading pn-700 primary-color-darkest">
           Thanks for submitting!
@@ -61,7 +58,6 @@
     <!-- Take feedback non-observer -->
     <ng-container *ngIf="!getParticipantRole().feedbackquestions.length">
       <benji-ps-instruction-template>
-        <ng-container class="body-title">Thank You</ng-container>
         <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
       </benji-ps-instruction-template>
     </ng-container>
@@ -72,9 +68,6 @@
 <ng-container *ngIf="isObserver()">
   <ng-container *ngIf="!userFeedbackSubmitted()">
     <benji-question-layout>
-      <ng-container class="body-title">
-        Role-play
-      </ng-container>
       <app-b-twemoji
         class="body-emoji"
         [emoji]="emoji.getEmoji(getParticipantRole().image_url)"
@@ -94,7 +87,6 @@
   </ng-container>
 
   <benji-ps-instruction-template *ngIf="userFeedbackSubmitted()">
-    <ng-container class="body-title">Thank You</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">
       Thanks for submitting!

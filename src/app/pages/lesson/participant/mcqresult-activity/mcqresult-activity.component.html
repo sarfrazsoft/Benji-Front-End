@@ -1,7 +1,4 @@
 <benji-ps-instruction-template *ngIf="!showStatistics">
-  <ng-container class="body-title">
-    Pop quiz
-  </ng-container>
   <app-b-twemoji
     class="body-emoji"
     *ngIf="getPercentageScore() > 75"
@@ -28,7 +25,6 @@
 
 <!-- <div *ngIf="showStatistics">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Poll</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">The most votes went to...</h1>
 
@@ -44,7 +40,6 @@
 
 <div *ngIf="showStatistics">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Poll</ng-container>
     <app-b-twemoji class="body-emoji" emoji="📊"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">
       Look to the main screen to see the results

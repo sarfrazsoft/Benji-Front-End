@@ -7,36 +7,27 @@
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;
-  .b-flat-card__title * {
-    border-bottom: 2px solid $secondary-color-lighter;
-    margin-bottom: 0;
-    text-transform: uppercase;
-    font-size: 16px;
-    letter-spacing: 1px;
-    line-height: normal;
-    padding: 15px 0;
-    margin-top: 0;
-  }
   .b-flat-card__body {
     padding: 5vh 20px 0px;
     > h1,
     h2,
     h3,
     p {
-      padding-bottom: 22px;
+      padding-bottom: 24px;
     }
     h1 {
       margin: 0px;
       font-size: 35px;
     }
     p {
-      font-size: 21px;
+      font-size: 24px;
+      font-weight: 500;
     }
   }
   .twemoji {
     width: 150px;
     margin: 0 auto;
-    margin-bottom: 5vh;
+    margin-bottom: 40px;
   }
   @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
     height: auto;

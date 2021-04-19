@@ -1,6 +1,5 @@
 <div *ngIf="splitIntoGroups">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji
       class="body-emoji"
       [emoji]="emoji.getEmoji(getGroupEmoji())"
@@ -30,7 +29,6 @@
 
 <div *ngIf="generatePitchSection">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎲"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">
       Pitch-o-matic 3000
@@ -142,7 +140,6 @@
 
 <div *ngIf="listenToPitchSection">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="👂"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">Listen up</h1>
     <ng-container class="body-text">
@@ -153,7 +150,6 @@
 
 <div *ngIf="gettingFeedbackSection">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="🎁"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">Feedback!</h1>
     <ng-container class="body-text">
@@ -164,9 +160,6 @@
 
 <div *ngIf="giveOthersFeedbackSection">
   <benji-question-layout>
-    <ng-container class="body-title">
-      Pitch-o-matic 3000
-    </ng-container>
     <app-b-twemoji class="body-emoji" emoji="📣"> </app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">Peer feedback</h1>
     <ng-container class="body-text">
@@ -182,7 +175,6 @@
 
 <div *ngIf="thanksForFeedback">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">
       Thanks for your feedback
@@ -195,7 +187,6 @@
 
 <div *ngIf="shareFeedbackSection">
   <benji-ps-instruction-template>
-    <ng-container class="body-title">Pitch-o-matic 3000</ng-container>
     <app-b-twemoji class="body-emoji" emoji="📣"></app-b-twemoji>
     <h1 class="body-heading pn-700 primary-color-darkest">Feedback</h1>
     <ng-container class="body-text">
