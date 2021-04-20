@@ -15,28 +15,27 @@
 
 
 
-<div class="sharing-ui" *ngIf="showSharingUI" fxLayoutAlign="center center">
-  <!-- <button 
-    class="b-inverted-button border-color-primary primary-color squared-border">
-    <div fxLayout="row" fxLayoutGap="8px">
-      <div><img src="/assets/img/yellowPointer.svg" alt=""></div>
-      <div fxLayoutAlign="center center">
-        <span>
-          I want to share!
-        </span>
+<div class="b-flat-card center-text feedback-card heightAuto">
+  <div class="change-group">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+      <div class="change-group-label">You are in</div>
+      <div>
+        <ng-select
+          class="external-grouping-controls"
+          [items]="groups"
+          bindLabel="name"
+          placeholder="Unassigned"
+          [clearable]="false"
+          bindValue="id"
+          (change)="assignRoom($event, user)"
+          [(ngModel)]="usersBreakoutRooms[i]"
+          appendTo="body"
+          [searchable]="false"
+        >
+        </ng-select>
       </div>
     </div>
-  </button> -->
-  <button 
-    class="b-small-squared-button bg-primary-color white-color squared-border">
-    <div fxLayoutAlign="center center">
-      <span>
-        Done Sharing
-      </span>
-    </div>
-  </button>
-</div>
-<div class="b-flat-card center-text feedback-card heightAuto">
+  </div>
   <div class="content" fxLayout="column">
     <div class="worksheet-title">
       {{ worksheetTitle }}

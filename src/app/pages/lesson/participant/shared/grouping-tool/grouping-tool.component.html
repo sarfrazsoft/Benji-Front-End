@@ -1,4 +1,4 @@
-<ng-container>
+<ng-container *ngif="!selfGroupingAllowed">
   <benji-ps-instruction-template>
     <div class="body-emoji">
       <app-b-twemoji emoji="️️️️️️️🦥"> </app-b-twemoji>
@@ -10,4 +10,31 @@
       Your host is assigning you to a group.
     </ng-container>
   </benji-ps-instruction-template>
+</ng-container>
+
+<ng-container *ngIf="selfGroupingAllowed">
+  <div class="b-flat-card center-text mc-card grouping-tool">
+    <div class="b-flat-card__body">
+      <h1 class="pn-600 black">
+        Join your group
+      </h1>
+    </div>
+    <div class="b-flat-card__action">
+      <button *ngFor="let option of groups; let i = index"
+        class="unselected selected-primary-border group"
+        [ngClass]="{
+          selected: option.id === selectedChoice.id,
+          inactive: answerSubmitted
+        }"
+        (click)="selectOption(option)">
+          {{ option.name }}
+      </button>
+
+      <button 
+        class="b-standard-button white-color bg-primary-color center-text"
+        (click)="submitAnswer()">
+          Join
+      </button>
+    </div>
+  </div>
 </ng-container>

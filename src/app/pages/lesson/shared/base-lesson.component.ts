@@ -203,7 +203,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
   }
 
   getIsGrouping() {
-    // return this.getIsSharing();
+    return this.getIsSharing();
     return false;
     const sm = this.serverMessage;
     if (sm && sm.running_tools && sm.running_tools.grouping && sm.running_tools.grouping.selectedGrouping) {

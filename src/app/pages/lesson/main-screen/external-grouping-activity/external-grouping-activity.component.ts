@@ -83,7 +83,6 @@ export class MainScreenExternalGroupingActivityComponent
       // this.sendCategorizeEvent(event);
       const participant: any = event.container.data[event.currentIndex];
       let breakoutroomid;
-      console.log(participant.participant_code);
       this.breakoutRooms.forEach((b) => {
         b.participants.forEach((p) => {
           if (p.participant_code === participant.participant_code) {

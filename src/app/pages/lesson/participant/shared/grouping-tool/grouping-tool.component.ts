@@ -11,9 +11,67 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
   templateUrl: './Grouping-tool.component.html',
 })
 export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
-  optedIn = false;
+  selfGroupingAllowed = true;
+  groups = [
+    {
+      id: 1,
+      name: 'Getting to Yes',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 2,
+      name: 'Pitch Practice Room',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 3,
+      name: 'Building Rapport',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 4,
+      name: 'Objection Handling',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 5,
+      name: 'Getting to Yes',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 6,
+      name: 'Pitch Practice',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 7,
+      name: 'Building Rapport',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 7,
+      name: 'Building Rapport',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 7,
+      name: 'Building Rapport',
+      description: 'here is what we are going to do in this room.',
+    },
+    {
+      id: 7,
+      name: 'Building Rapport',
+      description: 'here is what we are going to do in this room.',
+    },
+  ];
+  selectedChoice = {
+    id: null,
+    is_correct: null,
+    choice_text: null,
+    explanation: null,
+    order: null,
+  };
   @Input() activityState: UpdateMessage;
-
   @Output() sendMessage = new EventEmitter<any>();
   constructor() {}
 
@@ -34,11 +92,7 @@ export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
     }
   }
 
-  optIn() {
-    this.sendMessage.emit(new ParticipantOptInEvent());
-  }
-
-  optOut() {
-    this.sendMessage.emit(new ParticipantOptOutEvent());
+  selectOption(option) {
+    this.selectedChoice = option;
   }
 }
