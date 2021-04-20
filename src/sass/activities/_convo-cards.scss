@@ -56,13 +56,12 @@
   &.main-screen {
     padding: 0px;
     .card {
-      // top: auto;
       background-color: #fff;
-      // transform: translate(-50%, -50%);
       border: 1px solid #eeebdd;
       box-sizing: border-box;
       box-shadow: 0px 1px 3px #d5d9de;
       border-radius: 8px;
+      min-width: 390px;
       .card-content {
         padding: 60px;
         .emoji-container {
@@ -98,22 +97,6 @@ benji-ms-sharing-tool {
       background: white;
       > div {
         height: 100%;
-      }
-      .col-1 {
-        padding: $col-padding;
-        padding-right: 0px;
-        height: 100%;
-        .container {
-          border-right: 1px solid #979797;
-          height: 100%;
-          font-size: 56px;
-          font-weight: 600;
-          padding: 32px;
-          padding-right: 90px;
-        }
-        h2 {
-          font-size: 56px;
-        }
       }
       .col-2-container {
         padding: $col-padding;

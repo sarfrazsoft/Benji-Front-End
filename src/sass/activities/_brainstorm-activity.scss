@@ -249,7 +249,7 @@ benji-ps-brainstorming-activity {
         padding: 6px 12px;
         border-radius: 4px;
         margin: 0px;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 500;
         &.inactive {
           background-color: #bdbdbd;
@@ -362,5 +362,17 @@ benji-ps-brainstorming-activity {
 
   .b-standard-button--white:hover {
     background: #e6e5e5 !important;
+  }
+}
+
+benji-ms-sharing-tool {
+  .brainstorm-share-ui {
+    position: relative;
+    .ideas {
+      position: absolute;
+      width: 70%;
+      left: 50%;
+      transform: translate(-50%);
+    }
   }
 }
