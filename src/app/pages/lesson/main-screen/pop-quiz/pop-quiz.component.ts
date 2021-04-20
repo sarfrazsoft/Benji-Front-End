@@ -78,7 +78,8 @@ export class MainScreenPopQuizComponent
       } else if (nt && (nt.status === 'running' || nt.status === 'paused')) {
         this.revealAnswers = true;
         this.radialTimer = nt;
-        this.contextService.activityTimer = nt;
+        // this.contextService.activityTimer = nt;
+        this.contextService.destroyActivityTimer();
         if (as.mcqactivity.quiz_leaderboard) {
           this.showLeaderboard = true;
           this.leaderboard = as.mcqactivity.quiz_leaderboard;

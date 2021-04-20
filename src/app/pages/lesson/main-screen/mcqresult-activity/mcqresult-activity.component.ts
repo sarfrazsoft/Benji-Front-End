@@ -26,6 +26,7 @@ export class MainScreenMcqresultActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
+    this.contextService.destroyActivityTimer();
   }
 
   ngOnChanges() {

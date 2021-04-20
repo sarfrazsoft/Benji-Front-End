@@ -69,7 +69,7 @@ export const ActivityDisplayNames = {
 
 export const AllowShareActivities = [
   'BrainstormActivity',
-  // 'CaseStudyActivity',
+  'CaseStudyActivity',
   'BuildAPitchActivity',
   'ConvoActivity',
 ];
