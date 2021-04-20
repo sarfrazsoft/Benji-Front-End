@@ -25,13 +25,15 @@ export class SessionNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.disableControls) {
+      this.activities = [];
       this.backendRestService
         .getLessonRunActivities(this.activityState.lesson_run.lessonrun_code)
         .subscribe((activities: any) => {
           activities.forEach((activity) => {
             if (
               activity.activity_type !== 'MCQResultsActivity' &&
-              activity.activity_type !== 'LobbyActivity'
+              activity.activity_type !== 'LobbyActivity' &&
+              activity.activity_type !== 'ExternalGroupingActivity'
             ) {
               this.activities.push(activity);
             }
