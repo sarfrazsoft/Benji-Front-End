@@ -27,8 +27,8 @@
           placeholder="Unassigned"
           [clearable]="false"
           bindValue="id"
-          (change)="assignRoom($event, user)"
-          [(ngModel)]="usersBreakoutRooms[i]"
+          (change)="changeGroup($event)"
+          [(ngModel)]="group"
           appendTo="body"
           [searchable]="false"
         >

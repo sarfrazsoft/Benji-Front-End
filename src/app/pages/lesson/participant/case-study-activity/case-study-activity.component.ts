@@ -71,6 +71,7 @@ export class ParticipantCaseStudyActivityComponent
       description: 'here is what we are going to do in this room.',
     },
   ];
+  group;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
@@ -264,4 +265,6 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   locallySaveDraft(event) {}
+
+  changeGroup(event) {}
 }
