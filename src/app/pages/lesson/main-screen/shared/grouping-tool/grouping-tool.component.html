@@ -35,7 +35,9 @@
             Let participants choose group
           </span>
           <label class="switch">
-            <input type="checkbox" checked>
+            <input type="checkbox" 
+              checked 
+              (change)="toggleChooseGroup($event)">
             <span class="slider round"></span>
           </label>
         </div>
@@ -47,13 +49,15 @@
             Participants can switch groups mid-activity
           </span>
           <label class="switch">
-            <input type="checkbox" checked>
+            <input type="checkbox" 
+            checked
+            (change)="toggleMidActChooseGroup($event)">
             <span class="slider round"></span>
           </label>
         </div>
         <div class="participant-list"
           cdkDropList
-          [cdkDropListData]="allUsers"
+          [cdkDropListData]="unassignedUsers"
           (cdkDropListDropped)="drop($event)"
         >
           <!-- <ng-container *ngFor="let group of groupsX"> -->
@@ -61,7 +65,7 @@
               class="participant-name"
               fxLayoutAlign="start center"
               cdkDrag
-              *ngFor="let participant of allUsers">
+              *ngFor="let participant of unassignedUsers">
               <span>
                 {{ participant.display_name }}
               </span>

@@ -8,6 +8,21 @@
         <mat-radio-button  [value]="'existing'">
           Use Existing Grouping
         </mat-radio-button>
+        <div *ngIf="groupingType === 'existing'">
+          <ng-select
+            class="external-grouping-controls"
+            [items]="existingGroupings"
+            bindLabel="title"
+            placeholder="Unassigned"
+            [clearable]="false"
+            bindValue="id"
+            (change)="selectGrouping($event)"
+            [(ngModel)]="selectedGrouping"
+            appendTo="body"
+            [searchable]="false"
+          >
+          </ng-select>
+        </div>
         <mat-radio-button  [value]="'new'">
           Create New Grouping
         </mat-radio-button>

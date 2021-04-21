@@ -347,14 +347,6 @@ export class SelectParticipantForShareEvent extends ActivityEvent {
   }
 }
 
-export class CreatGroupingEvent extends ActivityEvent {
-  event_name = 'CreatGroupingEvent';
-  constructor(title: string) {
-    super();
-    this.extra_args = { title: title };
-  }
-}
-
 export class ParticipantSelectCardEvent extends ActivityEvent {
   event_name = 'ParticipantSelectCardEvent';
   constructor(cardNumber: number) {
@@ -534,5 +526,65 @@ export class JumpEvent extends ActivityEvent {
   constructor(nav_activity) {
     super();
     this.extra_args = { nav_activity: nav_activity };
+  }
+}
+
+//
+//
+//
+//
+export class CreateGroupingEvent extends ActivityEvent {
+  event_name = 'CreateGroupingEvent';
+  constructor(title: string) {
+    super();
+    this.extra_args = { title: title };
+  }
+}
+
+export class EditGroupTitleEvent extends ActivityEvent {
+  event_name = 'EditGroupTitleEvent';
+  constructor(group: number, title: string) {
+    super();
+    this.extra_args = { group: group, title: title };
+  }
+}
+
+export class SelectGroupingEvent extends ActivityEvent {
+  event_name = 'SelectGroupingEvent';
+  constructor(grouping: number) {
+    super();
+    this.extra_args = { grouping: grouping };
+  }
+}
+
+export class AllowParticipantGroupingEvent extends ActivityEvent {
+  event_name = 'AllowParticipantGroupingEvent';
+  constructor(permission: boolean) {
+    super();
+    this.extra_args = { grouping: permission };
+  }
+}
+
+export class AllowParticipantGroupingMidActivityEvent extends ActivityEvent {
+  event_name = 'AllowParticipantGroupingMidActivityEvent';
+  constructor(permission: boolean) {
+    super();
+    this.extra_args = { grouping: permission };
+  }
+}
+
+export class CreateGroupEvent extends ActivityEvent {
+  event_name = 'CreateGroupEvent';
+  constructor(grouping: number, title: string) {
+    super();
+    this.extra_args = { grouping: grouping, title: title };
+  }
+}
+
+export class GroupingAssignParticipantEvent extends ActivityEvent {
+  event_name = 'GroupingAssignParticipantEvent';
+  constructor(group: number, participant_code: number) {
+    super();
+    this.extra_args = { group: group, participant_code: participant_code };
   }
 }

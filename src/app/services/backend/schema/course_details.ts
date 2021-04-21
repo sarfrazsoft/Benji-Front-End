@@ -52,14 +52,17 @@ export interface LessonRun {
 
 export interface RunningTools {
   share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number } };
-  grouping?: { selectedGrouping: number; groupings: Array<GroupingToolGroups> };
+  selectedGrouping: number;
+  groupings: Array<GroupingToolGroups>;
 }
 
 export interface GroupingToolGroups {
   id: number;
   title: string;
   allowParticipantsJoining: boolean;
-  groups: Array<{ id: number; tilte: string; description: string; participants: Array<number> }>;
+  allowParticipantsJoiningMidActivity: boolean;
+  unassignedParticipants: Array<number>;
+  groups: Array<{ id: number; title: string; description: string; participants: Array<number> }>;
 }
 
 export interface LessonRunDetails {

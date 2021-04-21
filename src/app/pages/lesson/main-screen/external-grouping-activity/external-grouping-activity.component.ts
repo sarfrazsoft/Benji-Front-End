@@ -12,7 +12,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-external-grouping-activity',
   templateUrl: './external-grouping-activity.component.html',
-  styleUrls: ['./external-grouping-activity.component.scss'],
 })
 export class MainScreenExternalGroupingActivityComponent
   extends BaseActivityComponent
