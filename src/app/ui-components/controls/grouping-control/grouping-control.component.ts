@@ -19,7 +19,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   existingGroupings = [];
   selectedGroup;
-  groupingType = 'existing';
+  groupingType = 'new';
   newGroupingTitle = '';
 
   @Output() socketMessage = new EventEmitter<any>();

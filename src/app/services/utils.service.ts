@@ -4,7 +4,7 @@ import { SnackBarComponent } from '../ui-components/snack-bar-component/snack-ba
 @Injectable()
 export class UtilsService {
   notificationConfig: MatSnackBarConfig = {
-    duration: 300000,
+    duration: 5000,
     horizontalPosition: 'center',
     verticalPosition: 'top',
   };

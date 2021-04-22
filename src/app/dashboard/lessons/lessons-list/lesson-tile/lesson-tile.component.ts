@@ -103,7 +103,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
           relativeTo: this.activatedRoute,
         });
       } else {
-        this.utilsService.showWarning(`You don't have sufficient permission to perform this action.`);
+        this.utilsService.openWarningNotification(`You don't have sufficient permissions.`, '');
       }
     }
     if ($event) {

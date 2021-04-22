@@ -86,8 +86,10 @@ export class ParticipantLoginComponent implements OnInit {
         if (err && err.error && err.error.non_field_errors) {
           if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
             console.log('err');
-            this.utilsService.showWarning(
-              'A participant with that name has already joined. Try a different name.'
+
+            this.utilsService.openWarningNotification(
+              'A participant with that name has already joined. Try a different name.',
+              ''
             );
           }
         }
