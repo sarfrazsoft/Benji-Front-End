@@ -204,7 +204,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
 
   getIsGrouping() {
     const sm = this.serverMessage;
-    if (sm && sm.running_tools && sm.running_tools.groupings && sm.running_tools.selectedGrouping) {
+    if (
+      sm &&
+      sm.running_tools &&
+      sm.running_tools.grouping_tool &&
+      sm.running_tools.grouping_tool.selectedGrouping
+    ) {
       return true;
     } else {
       return false;

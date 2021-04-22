@@ -107,16 +107,16 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
   getGroupParticipants(act: CaseStudyActivity, group: Group) {
     const participants = [];
     const participantSet = this.activityState.lesson_run.participant_set;
-    for (let i = 0; i < group.participantgroupstatus_set.length; i++) {
-      const elem = group.participantgroupstatus_set[i];
-      const participantCode = elem.participant.participant_code;
-      for (let j = 0; j < participantSet.length; j++) {
-        const p = participantSet[j];
-        if (p.participant_code === participantCode) {
-          participants.push({ name: p.display_name, code: participantCode });
-        }
-      }
-    }
+    // for (let i = 0; i < group.participantgroupstatus_set.length; i++) {
+    //   const elem = group.participantgroupstatus_set[i];
+    //   const participantCode = elem.participant.participant_code;
+    //   for (let j = 0; j < participantSet.length; j++) {
+    //     const p = participantSet[j];
+    //     if (p.participant_code === participantCode) {
+    //       participants.push({ name: p.display_name, code: participantCode });
+    //     }
+    //   }
+    // }
     return participants;
   }
 

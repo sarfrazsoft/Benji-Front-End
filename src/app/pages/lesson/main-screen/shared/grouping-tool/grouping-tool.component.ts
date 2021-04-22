@@ -31,8 +31,8 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     const grouping = {
-      groupings: this.activityState.running_tools.groupings,
-      selectedGrouping: this.activityState.running_tools.selectedGrouping,
+      groupings: this.activityState.running_tools.grouping_tool.groupings,
+      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
     };
     this.initSelectedGroup(grouping);
 
