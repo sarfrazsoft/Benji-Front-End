@@ -6,6 +6,7 @@ import {
   CreateGroupEvent,
   EditGroupTitleEvent,
   GroupingAssignParticipantEvent,
+  StartCaseStudyGroupEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
@@ -147,5 +148,9 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
     const number = this.breakoutRooms.length + 1;
     const name = 'Room ' + number;
     this.sendMessage.emit(new CreateGroupEvent(this.selectedGroup.id, name));
+  }
+
+  makeActivityGrouping() {
+    this.sendMessage.emit(new StartCaseStudyGroupEvent());
   }
 }

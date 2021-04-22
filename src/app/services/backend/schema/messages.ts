@@ -588,3 +588,7 @@ export class GroupingAssignParticipantEvent extends ActivityEvent {
     this.extra_args = { group: group, participant_code: participant_code };
   }
 }
+
+export class StartCaseStudyGroupEvent extends ActivityEvent {
+  event_name = 'StartCaseStudyGroupEvent';
+}

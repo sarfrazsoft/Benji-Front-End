@@ -8,7 +8,6 @@ import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study
 @Component({
   selector: 'benji-ms-case-study-activity',
   templateUrl: './case-study-activity.component.html',
-  styleUrls: ['./case-study-activity.component.scss'],
 })
 export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   groups: Array<Group>;
