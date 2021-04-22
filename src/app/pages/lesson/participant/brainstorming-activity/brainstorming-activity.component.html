@@ -81,8 +81,8 @@
         </div>
         <div class="worksheet-text">
           <!-- show voting limit  -->
-          You can submit{{ ' ' + act.max_participant_votes + ' ' }}
-          {{ act.max_participant_votes === 1 ? 'vote' : 'votes' }}
+          You can submit{{ ' ' + getVotesLeft() + ' ' }}
+          {{ getVotesLeft() === 1 ? 'vote' : 'votes' }}
         </div>
       </ng-container>
       <ng-container class="content">

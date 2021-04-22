@@ -183,4 +183,12 @@ export class ParticipantBrainstormingActivityComponent
       this.sendMessage.emit(new BrainstormVoteEvent(idea));
     });
   }
+
+  getVotesLeft() {
+    const pc = this.getParticipantCode();
+    const userVotes = this.act.participant_vote_counts.find((v) => v.participant_code === pc);
+    const maxVotes = this.act.max_participant_votes;
+    const v = maxVotes - userVotes.count;
+    return v;
+  }
 }
