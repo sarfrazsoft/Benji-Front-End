@@ -549,6 +549,14 @@ export class EditGroupTitleEvent extends ActivityEvent {
   }
 }
 
+export class EditGroupingTitleEvent extends ActivityEvent {
+  event_name = 'EditGroupingTitleEvent';
+  constructor(grouping: number, title: string) {
+    super();
+    this.extra_args = { grouping: grouping, title: title };
+  }
+}
+
 export class SelectGroupingEvent extends ActivityEvent {
   event_name = 'SelectGroupingEvent';
   constructor(grouping: number) {

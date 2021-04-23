@@ -4,6 +4,7 @@ import {
   AllowParticipantGroupingEvent,
   AllowParticipantGroupingMidActivityEvent,
   CreateGroupEvent,
+  EditGroupingTitleEvent,
   EditGroupTitleEvent,
   GroupingAssignParticipantEvent,
   StartCaseStudyGroupEvent,
@@ -109,7 +110,7 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   }
 
   doneTyping() {
-    this.sendMessage.emit(new EditGroupTitleEvent(this.selectedGroup.id, this.groupingTitle));
+    this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGroup.id, this.groupingTitle));
   }
 
   toggleChooseGroup($event) {
