@@ -119,9 +119,9 @@ export class ActivitiesEffects {
               next_activity_delay_seconds: 0,
               grouping_seconds: 10000,
             };
-            newContentArray.splice(i, 0, groupingActivity);
-            subjectAct.grouping_activity_id = newIndex + '';
-            // subjectAct.grouping_activity_id = null;
+            // newContentArray.splice(i, 0, groupingActivity);
+            // subjectAct.grouping_activity_id = newIndex + '';
+            subjectAct.grouping_activity_id = null;
           } else if (
             subjectAct.grouping_activity_id === false ||
             subjectAct.grouping_activity_type === 'SingleGroupingActivity'

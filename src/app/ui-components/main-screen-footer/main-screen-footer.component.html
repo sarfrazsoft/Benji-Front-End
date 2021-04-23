@@ -69,6 +69,16 @@
     </div>
     <div class="mainscreen-footer__controls" *ngIf="!disableControls">
 
+      <div fxLayout="row" fxLayoutGap="30px">
+
+        <div (click)="showGroupingView()">
+          Show grouping view
+        </div> 
+        
+        <div (click)="hideGroupingView()">
+          Hide grouping view
+        </div> 
+      </div>
       <!-- Grouping control -->
       <div class="option settings" 
         fxLayoutAlign="center center"

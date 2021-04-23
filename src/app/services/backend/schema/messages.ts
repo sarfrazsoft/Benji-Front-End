@@ -569,7 +569,15 @@ export class AllowParticipantGroupingEvent extends ActivityEvent {
   event_name = 'AllowParticipantGroupingEvent';
   constructor(permission: boolean) {
     super();
-    this.extra_args = { grouping: permission };
+    this.extra_args = { allow: permission };
+  }
+}
+
+export class ViewGroupingEvent extends ActivityEvent {
+  event_name = 'ViewGroupingEvent';
+  constructor(permission: boolean) {
+    super();
+    this.extra_args = { allow: permission };
   }
 }
 
@@ -577,7 +585,7 @@ export class AllowParticipantGroupingMidActivityEvent extends ActivityEvent {
   event_name = 'AllowParticipantGroupingMidActivityEvent';
   constructor(permission: boolean) {
     super();
-    this.extra_args = { grouping: permission };
+    this.extra_args = { allow: permission };
   }
 }
 
@@ -594,6 +602,14 @@ export class GroupingAssignParticipantEvent extends ActivityEvent {
   constructor(group: number, participant_code: number) {
     super();
     this.extra_args = { group: group, participant_code: participant_code };
+  }
+}
+
+export class GroupingParticipantJoinEvent extends ActivityEvent {
+  event_name = 'GroupingParticipantJoinEvent';
+  constructor(group: number) {
+    super();
+    this.extra_args = { group: group };
   }
 }
 

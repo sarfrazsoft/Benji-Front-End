@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import {
+  GroupingParticipantJoinEvent,
+  // GroupingParticipantSelfJoinEvent,
   ParticipantOptInEvent,
   ParticipantOptOutEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { Participant } from 'src/app/services/backend/schema/course_details';
+import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-ps-grouping-tool',
@@ -12,58 +15,9 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
 })
 export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
   selfGroupingAllowed = true;
-  groups = [
-    {
-      id: 1,
-      name: 'Getting to Yes',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 2,
-      name: 'Pitch Practice Room',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 3,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 4,
-      name: 'Objection Handling',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 5,
-      name: 'Getting to Yes',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 6,
-      name: 'Pitch Practice',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-  ];
+  selectedGrouping: GroupingToolGroups;
+  groups: GroupingToolGroups['groups'] = [];
+  userGroupAssigned = false;
   selectedChoice = {
     id: null,
     is_correct: null,
@@ -77,11 +31,20 @@ export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    this.initSelectedGroup(this.activityState.running_tools.grouping_tool);
+  }
 
-  amISharing() {
-    const volunteers = this.activityState.running_tools.share.volunteers;
-    return volunteers.includes(this.getParticipantCode());
+  initSelectedGroup(grouping) {
+    grouping.groupings.forEach((g: GroupingToolGroups) => {
+      if (grouping.selectedGrouping === g.id) {
+        this.selectedGrouping = g;
+        this.groups = g.groups;
+        this.selfGroupingAllowed = g.allowParticipantsJoining;
+        const participantCode = this.getParticipantCode();
+        this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
+      }
+    });
   }
 
   getParticipantCode(): number {
@@ -94,5 +57,10 @@ export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
 
   selectOption(option) {
     this.selectedChoice = option;
+    console.log(this.selectedChoice);
+  }
+
+  joinGroup() {
+    this.sendMessage.emit(new GroupingParticipantJoinEvent(this.selectedChoice.id));
   }
 }

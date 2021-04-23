@@ -27,6 +27,7 @@ import {
   ResumeActivityEvent,
   ServerMessage,
   UpdateMessage,
+  ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { VideoStateService } from '../../services/video-state.service';
 
@@ -262,5 +263,13 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   propagate($event) {
     this.socketMessage.emit($event);
+  }
+
+  showGroupingView() {
+    this.socketMessage.emit(new ViewGroupingEvent(true));
+  }
+
+  hideGroupingView() {
+    this.socketMessage.emit(new ViewGroupingEvent(false));
   }
 }
