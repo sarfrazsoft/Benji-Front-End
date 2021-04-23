@@ -299,11 +299,11 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'grouping_activity_id') {
                   mappedField.hide = true;
+                  mappedField.type = 'boolean';
                   mappedField.defaultValue = true;
                   // TODO check if it comes with a model value and process
                   if (content && content.grouping_activity_id) {
                   }
-                  mappedField.type = 'boolean';
                   mappedField.templateOptions.label = 'Breakout Room Activity';
                   mappedField.templateOptions['hideRequiredMarker'] = true;
                   delete mappedField.templateOptions.required;
