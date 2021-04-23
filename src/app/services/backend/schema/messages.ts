@@ -577,7 +577,7 @@ export class ViewGroupingEvent extends ActivityEvent {
   event_name = 'ViewGroupingEvent';
   constructor(permission: boolean) {
     super();
-    this.extra_args = { allow: permission };
+    this.extra_args = { view: permission };
   }
 }
 
