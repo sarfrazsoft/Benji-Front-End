@@ -605,8 +605,8 @@ export class GroupingAssignParticipantEvent extends ActivityEvent {
   }
 }
 
-export class GroupingParticipantJoinEvent extends ActivityEvent {
-  event_name = 'GroupingParticipantJoinEvent';
+export class GroupingParticipantSelfJoinEvent extends ActivityEvent {
+  event_name = 'GroupingParticipantSelfJoinEvent';
   constructor(group: number) {
     super();
     this.extra_args = { group: group };
