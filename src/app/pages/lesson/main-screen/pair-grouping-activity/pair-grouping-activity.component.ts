@@ -17,20 +17,20 @@ export class MainScreenPairGroupingActivityComponent extends BaseActivityCompone
     super.ngOnInit();
   }
 
-  getGroupText(userGroup: Group): string {
-    return userGroup.participantgroupstatus_set
-      .map((u) => this.getParticipantName(u.participant.participant_code))
-      .join(' + ');
-  }
+  // getGroupText(userGroup: Group): string {
+  //   return userGroup.participantgroupstatus_set
+  //     .map((u) => this.getParticipantName(u.participant.participant_code))
+  //     .join(' + ');
+  // }
 
-  isReversed(): boolean {
-    return (
-      this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
-      this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
-    );
-  }
+  // isReversed(): boolean {
+  //   return (
+  //     this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
+  //     this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
+  //   );
+  // }
 
-  isGroupFound(userGroup: Group): boolean {
-    return !userGroup.participantgroupstatus_set.find((ug) => !ug.ready);
-  }
+  // isGroupFound(userGroup: Group): boolean {
+  //   return !userGroup.participantgroupstatus_set.find((ug) => !ug.ready);
+  // }
 }

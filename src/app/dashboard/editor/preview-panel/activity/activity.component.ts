@@ -27,6 +27,7 @@ import {
   ParticipantPopQuizComponent,
   ParticipantTitleActivityComponent,
 } from 'src/app/pages';
+import { MainScreenCaseStudyActivityComponent } from 'src/app/pages/lesson/main-screen/case-study-activity/case-study-activity.component';
 import { PreviewActivity } from 'src/app/services/backend/schema';
 
 @Component({
@@ -360,14 +361,12 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         }
         let msAct = null;
         if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenCaseStudyActivityComponent);
         } else {
           msAct = this.cfr.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
         }
 
-        let casestudyquestion_set = [];
-        if (content.casestudyquestion_set.length) {
-          casestudyquestion_set = content.casestudyquestion_set;
-        }
+        const casestudyquestion_set = [];
 
         let participant_instructions = 'Instructions';
         if (content.participant_instructions) {

@@ -47,22 +47,22 @@ export class CaseStudyComponent implements OnInit, OnChanges {
       const filteredInUsers = this.pastSessionService.filteredInUsers;
       // all the people in group should be in filteredInUsers
       let allPeoplePresent = true;
-      for (let u = 0; u < group.participantgroupstatus_set.length; u++) {
-        const user = group.participantgroupstatus_set[u];
-        if (filteredInUsers.find((fiu) => fiu === user.participant.participant_code)) {
+      for (let u = 0; u < group.participants.length; u++) {
+        const participantCode = group.participants[u];
+        if (filteredInUsers.find((fiu) => fiu === participantCode)) {
           // user present
         } else {
           allPeoplePresent = false;
         }
       }
       if (allPeoplePresent) {
-        const usersNnotes = group.participantgroupstatus_set.map((u) => {
+        const usersNnotes = group.participants.map((u) => {
           const caseStudyUser = this.data.casestudy.casestudyparticipant_set.find(
-            (x) => u.participant.participant_code === x.participant.participant_code
+            (x) => u === x.participant.participant_code
           );
 
           return {
-            user: this.pastSessionService.getParticipantName(u.participant.participant_code),
+            user: this.pastSessionService.getParticipantName(u),
             answers: caseStudyUser.casestudyanswer_set,
           };
         });

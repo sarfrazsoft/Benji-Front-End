@@ -37,7 +37,7 @@ export abstract class BaseActivityComponent implements OnInit {
   }
 
   public getParticipantCodes(group: Group) {
-    return group.participantgroupstatus_set.map((status) => status.participant.participant_code);
+    return group.participants;
   }
 
   public getParticipantName(code: number) {

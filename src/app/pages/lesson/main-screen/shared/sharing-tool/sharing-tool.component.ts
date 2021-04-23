@@ -101,7 +101,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     } else if (this.activityState.activity_type === this.at.caseStudy) {
       const groups = cloneDeep(this.activityState.casestudyactivity.groups);
       groups.forEach((val) => {
-        this.speakers.push({ displayName: 'Room ' + val.group_num, id: val.id, optedIn: false });
+        this.speakers.push({ displayName: 'Room ' + val.title, id: val.id, optedIn: false });
       });
       this.activityState.casestudyactivity.groups.forEach((val, index) => {
         val['caseStudyGroupText'] =

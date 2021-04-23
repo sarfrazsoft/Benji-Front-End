@@ -298,12 +298,13 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'grouping_activity_id') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = true;
                   // TODO check if it comes with a model value and process
                   if (content && content.grouping_activity_id) {
                   }
                   mappedField.type = 'boolean';
                   mappedField.templateOptions.label = 'Breakout Room Activity';
-                  mappedField.defaultValue = true;
                   mappedField.templateOptions['hideRequiredMarker'] = true;
                   delete mappedField.templateOptions.required;
                   delete mappedField.templateOptions.maxLength;

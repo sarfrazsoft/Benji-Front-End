@@ -68,12 +68,12 @@ export class ParticipantExternalGroupingActivityComponent
   getUserRoomNumber() {
     for (let i = 0; i < this.act.group_set.length; i++) {
       const groupset: Group = this.act.group_set[i];
-      for (let j = 0; j < groupset.participantgroupstatus_set.length; j++) {
+      for (let j = 0; j < groupset.participants.length; j++) {
         // loop through each user in thr group comparing his id to userId
         // if it matches return the breakoutroomid
-        const user = groupset.participantgroupstatus_set[j].participant;
-        if (user.participant_code === this.participantCode) {
-          return groupset.group_num;
+        const user = groupset.participants[j];
+        if (user === this.participantCode) {
+          return groupset.title;
         }
       }
     }

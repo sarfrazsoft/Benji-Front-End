@@ -85,6 +85,7 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
 
   ngOnInit() {
     super.ngOnInit();
+    this.act = this.activityState.casestudyactivity;
     this.groupsX = this.formGroups(this.activityState.casestudyactivity);
     // this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
   }
@@ -99,7 +100,7 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
     for (let i = 0; i < act.groups.length; i++) {
       const elem = act.groups[i];
       const participants = this.getGroupParticipants(act, elem);
-      groups.push({ name: elem.group_num, participants: participants });
+      groups.push({ name: elem.title, participants: participants });
     }
     return groups;
   }
@@ -107,16 +108,15 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
   getGroupParticipants(act: CaseStudyActivity, group: Group) {
     const participants = [];
     const participantSet = this.activityState.lesson_run.participant_set;
-    // for (let i = 0; i < group.participantgroupstatus_set.length; i++) {
-    //   const elem = group.participantgroupstatus_set[i];
-    //   const participantCode = elem.participant.participant_code;
-    //   for (let j = 0; j < participantSet.length; j++) {
-    //     const p = participantSet[j];
-    //     if (p.participant_code === participantCode) {
-    //       participants.push({ name: p.display_name, code: participantCode });
-    //     }
-    //   }
-    // }
+    for (let i = 0; i < group.participants.length; i++) {
+      const participantCode = group.participants[i];
+      for (let j = 0; j < participantSet.length; j++) {
+        const p = participantSet[j];
+        if (p.participant_code === participantCode) {
+          participants.push({ name: p.display_name, code: participantCode });
+        }
+      }
+    }
     return participants;
   }
 
@@ -126,15 +126,7 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
   }
 
   getGroupText(userGroup: Group): string {
-    return userGroup.participantgroupstatus_set
-      .map((u) => this.getParticipantName(u.participant.participant_code))
-      .join(' + ');
-  }
-
-  isGroupDone(userGroup: Group) {
-    const userId = userGroup.participantgroupstatus_set[0].participant.participant_code;
-    const myNoteTaker = this.getMyNoteTaker(userId);
-    return myNoteTaker.is_done;
+    return userGroup.participants.map((u) => this.getParticipantName(u)).join(' + ');
   }
 
   getMyNoteTaker(userId: number): CaseStudyParticipantSet {
@@ -153,12 +145,10 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
   getPeopleFromMyGroup(userId): Array<number> {
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
-      for (let j = 0; j < group.participantgroupstatus_set.length; j++) {
-        const participantCode = group.participantgroupstatus_set[j].participant.participant_code;
+      for (let j = 0; j < group.participants.length; j++) {
+        const participantCode = group.participants[j];
         if (participantCode === userId) {
-          return group.participantgroupstatus_set.map((obj) => {
-            return obj.participant.participant_code;
-          });
+          return group.participants;
         }
       }
     }

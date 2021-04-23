@@ -114,7 +114,8 @@ export class ParticipantPairActivityComponent
   }
 
   participantIsReady() {
-    return this.myRoleplayUser().found;
+    // return this.myRoleplayUser().found;
+    return true;
   }
 
   getParticipantRole() {

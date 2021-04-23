@@ -16,41 +16,41 @@ export class MainScreenTriadGroupingActivityComponent
   }
 
   ngOnInit() {
-    super.ngOnInit();
-    this.triadAct = this.activityState.triadgroupingactivity;
+    // super.ngOnInit();
+    // this.triadAct = this.activityState.triadgroupingactivity;
   }
 
   ngOnChanges() {
-    this.triadAct = this.activityState.triadgroupingactivity;
+    // this.triadAct = this.activityState.triadgroupingactivity;
   }
 
-  getGroupText(userGroup: Group): string {
-    const participantCodes = this.getParticipantCodes(userGroup);
-    participantCodes.sort((a, b) => a - b);
-    const participantNames: Array<string> = [];
-    participantCodes.forEach((pCode) => {
-      participantNames.push(this.getParticipantName(pCode));
-    });
+  // getGroupText(userGroup: Group): string {
+  //   const participantCodes = this.getParticipantCodes(userGroup);
+  //   participantCodes.sort((a, b) => a - b);
+  //   const participantNames: Array<string> = [];
+  //   participantCodes.forEach((pCode) => {
+  //     participantNames.push(this.getParticipantName(pCode));
+  //   });
 
-    return participantNames.join(' + ');
+  //   return participantNames.join(' + ');
 
-    // userGroup.usergroupuser_set.sort((a, b) => a.user.first_name.localeCompare(b.user.first_name));
-    // return userGroup.usergroupuser_set.map((u) => u.user.first_name).join(' + ');
-  }
+  //   // userGroup.usergroupuser_set.sort((a, b) => a.user.first_name.localeCompare(b.user.first_name));
+  //   // return userGroup.usergroupuser_set.map((u) => u.user.first_name).join(' + ');
+  // }
 
-  isReversed(): boolean {
-    return (
-      this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
-      this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
-    );
-  }
+  // isReversed(): boolean {
+  //   return (
+  //     this.activityState.roleplaypairactivity.reverse_group_activity !== null &&
+  //     this.activityState.roleplaypairactivity.reverse_group_activity !== undefined
+  //   );
+  // }
 
-  isGroupFound(userGroup: Group): boolean {
-    const lostUsers = userGroup.participantgroupstatus_set.filter((ug) => !ug.ready);
-    if (lostUsers.length) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  // isGroupFound(userGroup: Group): boolean {
+  //   const lostUsers = userGroup.participantgroupstatus_set.filter((ug) => !ug.ready);
+  //   if (lostUsers.length) {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
 }

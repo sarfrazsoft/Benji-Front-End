@@ -32,46 +32,43 @@ export class ParticipantPairGroupingActivityComponent
 
   myGroup(): Group {
     return this.activityState.pairgroupingactivity.group_set.find(
-      (ug) =>
-        ug.participantgroupstatus_set
-          .map((u) => u.participant.participant_code)
-          .indexOf(this.getParticipantCode()) > -1
+      (ug) => ug.participants.indexOf(this.getParticipantCode()) > -1
     );
   }
 
   partnerText(): string {
-    const myGroup = this.myGroup();
-    const myGroupWithoutMe = remove(
-      concat(myGroup.participantgroupstatus_set, []),
-      (e) => e.participant.participant_code !== this.getParticipantCode()
-    );
-    if (myGroupWithoutMe.length === 1) {
-      this.partnerName = this.getParticipantName(myGroupWithoutMe[0].participant.participant_code);
-      return 'Your partner is ' + this.partnerName;
-    } else {
-      this.partnerName =
-        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
-        ' and ' +
-        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code);
-      return (
-        'Your partners are ' +
-        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
-        ' and ' +
-        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code)
-      );
-    }
+    // const myGroup = this.myGroup();
+    // const myGroupWithoutMe = remove(
+    //   concat(myGroup.participantgroupstatus_set, []),
+    //   (e) => e.participant.participant_code !== this.getParticipantCode()
+    // );
+    // if (myGroupWithoutMe.length === 1) {
+    //   this.partnerName = this.getParticipantName(myGroupWithoutMe[0].participant.participant_code);
+    //   return 'Your partner is ' + this.partnerName;
+    // } else {
+    //   this.partnerName =
+    //     this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
+    //     ' and ' +
+    //     this.getParticipantName(myGroupWithoutMe[1].participant.participant_code);
+    //   return (
+    //     'Your partners are ' +
+    //     this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
+    //     ' and ' +
+    //     this.getParticipantName(myGroupWithoutMe[1].participant.participant_code)
+    //   );
+    // }
+    return 'Default';
   }
 
-  myRoleplayUser(): ParticipantGroupStatus {
-    const myGroup: Group = this.myGroup();
+  // myRoleplayUser(): ParticipantGroupStatus {
+  //   const myGroup: Group = this.myGroup();
 
-    return myGroup.participantgroupstatus_set.find(
-      (g) => g.participant.participant_code === this.getParticipantCode()
-    );
-  }
+  //   return myGroup.participants.find((g) => g === this.getParticipantCode());
+  // }
 
   participantIsReady(): boolean {
-    return this.myRoleplayUser().ready;
+    // return this.myRoleplayUser().ready;
+    return true;
   }
 
   sendReadyState(): void {

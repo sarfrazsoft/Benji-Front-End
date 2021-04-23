@@ -33,49 +33,36 @@ export class ParticipantTriadGroupingActivityComponent
 
   myGroup(): Group {
     return this.activityState.triadgroupingactivity.group_set.find(
-      (ug) =>
-        ug.participantgroupstatus_set
-          .map((u) => u.participant.participant_code)
-          .indexOf(this.participantCode) > -1
+      (ug) => ug.participants.indexOf(this.participantCode) > -1
     );
   }
 
   partnerText(): string {
-    const myGroup: Group = this.myGroup();
-    const myGroupWithoutMe = remove(
-      concat(myGroup.participantgroupstatus_set, []),
-      (e) => e.participant.participant_code !== this.participantCode
-    );
+    // const myGroup: Group = this.myGroup();
+    // const myGroupWithoutMe = remove(concat(myGroup.participants, []), (e) => e !== this.participantCode);
 
-    myGroupWithoutMe.sort((a, b) => a.participant.participant_code - b.participant.participant_code);
+    // myGroupWithoutMe.sort((a, b) => a - b);
 
-    if (myGroupWithoutMe.length === 1) {
-      this.partnerName = this.getParticipantName(myGroupWithoutMe[0].participant.participant_code);
-      return 'Your partner is ' + this.partnerName;
-    } else {
-      this.partnerName =
-        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
-        ' and ' +
-        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code);
-      return (
-        'Your partners are ' +
-        this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
-        ' and ' +
-        this.getParticipantName(myGroupWithoutMe[1].participant.participant_code)
-      );
-    }
-  }
-
-  myRoleplayUser(): ParticipantGroupStatus {
-    const myGroup: Group = this.myGroup();
-
-    return myGroup.participantgroupstatus_set.find(
-      (g) => g.participant.participant_code === this.getParticipantCode()
-    );
+    // if (myGroupWithoutMe.length === 1) {
+    //   this.partnerName = this.getParticipantName(myGroupWithoutMe[0]);
+    //   return 'Your partner is ' + this.partnerName;
+    // } else {
+    //   this.partnerName =
+    //     this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
+    //     ' and ' +
+    //     this.getParticipantName(myGroupWithoutMe[1].participant.participant_code);
+    //   return (
+    //     'Your partners are ' +
+    //     this.getParticipantName(myGroupWithoutMe[0].participant.participant_code) +
+    //     ' and ' +
+    //     this.getParticipantName(myGroupWithoutMe[1].participant.participant_code)
+    //   );
+    // }
+    return 'default';
   }
 
   participantIsReady(): boolean {
-    return this.myRoleplayUser().ready;
+    return true;
   }
 
   sendReadyState(): void {

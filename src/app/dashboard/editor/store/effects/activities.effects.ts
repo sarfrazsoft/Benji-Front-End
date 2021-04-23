@@ -121,6 +121,7 @@ export class ActivitiesEffects {
             };
             newContentArray.splice(i, 0, groupingActivity);
             subjectAct.grouping_activity_id = newIndex + '';
+            // subjectAct.grouping_activity_id = null;
           } else if (
             subjectAct.grouping_activity_id === false ||
             subjectAct.grouping_activity_type === 'SingleGroupingActivity'

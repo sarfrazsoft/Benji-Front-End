@@ -8,7 +8,7 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-ps-grouping-tool',
-  templateUrl: './Grouping-tool.component.html',
+  templateUrl: './grouping-tool.component.html',
 })
 export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
   selfGroupingAllowed = true;

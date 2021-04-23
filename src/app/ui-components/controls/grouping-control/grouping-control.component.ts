@@ -33,11 +33,14 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   }
 
   initExistingGroupins() {
-    const grouping = {
-      groupings: this.activityState.running_tools.grouping_tool.groupings,
-      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-    };
-    this.existingGroupings = grouping.groupings;
+    const rt = this.activityState.running_tools;
+    if (rt && rt.grouping_tool) {
+      const grouping = {
+        groupings: this.activityState.running_tools.grouping_tool.groupings,
+        selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+      };
+      this.existingGroupings = grouping.groupings;
+    }
   }
 
   start() {
@@ -46,6 +49,5 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   selectGrouping($event: GroupingToolGroups) {
     this.socketMessage.emit(new SelectGroupingEvent($event.id));
-    console.log($event);
   }
 }

@@ -444,9 +444,13 @@ export interface RoleplayUser {
 }
 
 export interface Group {
-  id: number;
-  group_num: number;
-  participantgroupstatus_set: Array<ParticipantGroupStatus>;
+  group_num?: number;
+  participantgroupstatus_set?: Array<ParticipantGroupStatus>;
+
+  description?: string;
+  id?: number;
+  participants?: Array<number>;
+  title?: string;
 }
 
 export interface ParticipantGroupStatus {

@@ -77,7 +77,6 @@ export class ParticipantCaseStudyActivityComponent
   typingTimer;
   timer;
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
-  isDone = false;
   localStorageItemName = 'caseStudyNotes';
   showSharingUI = false;
   editorDisabled = false;
@@ -128,35 +127,7 @@ export class ParticipantCaseStudyActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
-    // this.contextService.activityTimer = this.act.activity_countdown_timer;
     this.timer = this.act.activity_countdown_timer;
-    // this.populateQuestions();
-    const myNoteTaker = this.getMyNoteTaker();
-
-    // if (myNoteTaker) {
-    this.isDone = myNoteTaker.is_done;
-
-    if (!myNoteTaker.is_done) {
-      // this.contextService.activityTimer = this.act.activity_countdown_timer;
-    } else {
-      // this.contextService.activityTimer = { status: 'cancelled' } as Timer;
-    }
-
-    // Populate the answers if available
-    // if (localStorage.getItem(this.localStorageItemName)) {
-    //   this.questions = JSON.parse(localStorage.getItem(this.localStorageItemName));
-    // } else {
-    //   for (let i = 0; i < this.questions.length; i++) {
-    //     const questionID = this.questions[i].id;
-    //     for (let j = 0; j < myNoteTaker.casestudyanswer_set.length; j++) {
-    //       const noteTakersAns = myNoteTaker.casestudyanswer_set[j];
-    //       if (noteTakersAns.casestudyquestion === questionID) {
-    //         this.questions[i].answer = noteTakersAns.answer;
-    //       }
-    //     }
-    //   }
-    //   // }
-    // }
   }
 
   getMyNoteTaker() {
@@ -176,9 +147,7 @@ export class ParticipantCaseStudyActivityComponent
   getPeopleFromMyGroup(userId) {
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
-      const groupParticipants = group.participantgroupstatus_set.map((obj) => {
-        return obj.participant.participant_code;
-      });
+      const groupParticipants = group.participants;
       if (groupParticipants.includes(userId)) {
         return groupParticipants;
       }
@@ -188,9 +157,7 @@ export class ParticipantCaseStudyActivityComponent
   getMyGroup(userId) {
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
-      const groupParticipants = group.participantgroupstatus_set.map((obj) => {
-        return obj.participant.participant_code;
-      });
+      const groupParticipants = group.participants;
       if (groupParticipants.includes(userId)) {
         return group;
       }
