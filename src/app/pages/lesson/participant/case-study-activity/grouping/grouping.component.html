@@ -1,0 +1,20 @@
+<div class="change-group">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+    <div class="change-group-label">You are in</div>
+    <div>
+      <ng-select
+        class="external-grouping-controls"
+        [items]="groups"
+        bindLabel="name"
+        placeholder="Unassigned"
+        [clearable]="false"
+        bindValue="id"
+        (change)="changeGroup($event)"
+        [(ngModel)]="group"
+        appendTo="body"
+        [searchable]="false"
+      >
+      </ng-select>
+    </div>
+  </div>
+</div>

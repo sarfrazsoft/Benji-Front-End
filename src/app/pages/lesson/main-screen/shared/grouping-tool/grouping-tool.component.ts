@@ -4,6 +4,7 @@ import {
   AllowParticipantGroupingEvent,
   AllowParticipantGroupingMidActivityEvent,
   CreateGroupEvent,
+  DeleteGroupingGroupEvent,
   EditGroupingTitleEvent,
   EditGroupTitleEvent,
   GroupingAssignParticipantEvent,
@@ -168,5 +169,9 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new StartCaseStudyGroupEvent());
     this.showStartGroupingButton = false;
     this.sendMessage.emit(new ViewGroupingEvent(false));
+  }
+
+  deleteGroup(group) {
+    this.sendMessage.emit(new DeleteGroupingGroupEvent(group.id));
   }
 }

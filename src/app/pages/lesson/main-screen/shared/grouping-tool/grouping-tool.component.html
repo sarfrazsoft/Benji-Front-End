@@ -90,6 +90,9 @@
                 <div>
                   {{group.name}}
                 </div>
+                <div (click)="deleteGroup(group)">
+                  Del
+                </div>
                 <div style="flex: 1" fxLayout="row" fxLayoutAlign="space-between">
                   <div class="group-controls">
                     <img src="/assets/img/groupProgressionGrey.svg" alt="">

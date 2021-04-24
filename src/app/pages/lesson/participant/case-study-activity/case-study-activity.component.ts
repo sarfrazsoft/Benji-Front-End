@@ -18,60 +18,6 @@ export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   @Input() actEditor = false;
-  usersBreakoutRooms = [];
-  groups = [
-    {
-      id: 1,
-      name: 'Getting to Yes',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 2,
-      name: 'Pitch Practice Room',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 3,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 4,
-      name: 'Objection Handling',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 5,
-      name: 'Getting to Yes',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 6,
-      name: 'Pitch Practice',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-    {
-      id: 7,
-      name: 'Building Rapport',
-      description: 'here is what we are going to do in this room.',
-    },
-  ];
-  group;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
@@ -231,7 +177,9 @@ export class ParticipantCaseStudyActivityComponent
     // });
   }
 
-  locallySaveDraft(event) {}
+  propagate($event) {
+    this.sendMessage.emit($event);
+  }
 
-  changeGroup(event) {}
+  locallySaveDraft(event) {}
 }
