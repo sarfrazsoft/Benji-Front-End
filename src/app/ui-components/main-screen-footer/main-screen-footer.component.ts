@@ -4,7 +4,12 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { clone } from 'lodash';
 import { ActivityTypes, AllowGroupingActivities, AllowShareActivities } from 'src/app/globals';
-import { ContextService, PastSessionsService, SharingToolService } from 'src/app/services';
+import {
+  ContextService,
+  GroupingToolService,
+  PastSessionsService,
+  SharingToolService,
+} from 'src/app/services';
 import { Timer, User } from 'src/app/services/backend/schema';
 import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -46,6 +51,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() disableControls: boolean;
   @Input() isSharing: boolean;
   @Input() isGrouping: boolean;
+  @Input() isGroupingShowing: boolean;
   @Input() isEditor = false;
 
   showTimer = false;
@@ -62,6 +68,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   allowShareActivities = AllowShareActivities;
   allowGroupingActivities = AllowGroupingActivities;
 
+  @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   constructor(
     private videoStateService: VideoStateService,
     private dialog: MatDialog,
@@ -69,7 +76,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     public contextService: ContextService,
     private utilsService: UtilsService,
     private router: Router,
-    private sharingToolService: SharingToolService
+    private sharingToolService: SharingToolService,
+    private groupingToolService: GroupingToolService
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -265,11 +273,50 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     this.socketMessage.emit($event);
   }
 
-  showGroupingView() {
-    this.socketMessage.emit(new ViewGroupingEvent(true));
+  showGroupingView() {}
+
+  groupingMenuClicked() {
+    const code =
+      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+
+    if (this.isGroupingShowing) {
+      if (localStorage.getItem('isGroupingCreated') === code) {
+        // grouping ui is showing but grouping has been created for this activity
+        // go back to activity screen
+        this.groupingToolService.showGroupingToolMainScreen = false;
+      } else {
+        // the grouping UI is showing but grouping has not been created
+        // for this activity
+        // open menu
+        this.groupingMenuTrigger.openMenu();
+      }
+    } else {
+      if (localStorage.getItem('isGroupingCreated') === code) {
+        // grouping ui is not showing but grouping has been created for this activity
+        // only show UI on mainscreen
+        this.groupingToolService.showGroupingToolMainScreen = !this.groupingToolService
+          .showGroupingToolMainScreen;
+      } else {
+        // the grouping UI is not showing and the grouping hasn't been created
+        // for this activity
+        // open menu
+        this.groupingMenuTrigger.openMenu();
+      }
+    }
+    // const code =
+    //   this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+    // if (localStorage.getItem('isGroupingCreated') === code) {
+    //   // grouping has been created we only show UI from now on
+    //   if (this.isGroupingShowing) {
+    //     this.socketMessage.emit(new ViewGroupingEvent(false));
+    //   } else {
+    //     this.socketMessage.emit(new ViewGroupingEvent(true));
+    //   }
+    // } else {
+    //   // grouping has not been created yet open the menu
+    //   this.groupingMenuTrigger.openMenu();
+    // }
   }
 
-  hideGroupingView() {
-    this.socketMessage.emit(new ViewGroupingEvent(false));
-  }
+  hideGroupingView() {}
 }

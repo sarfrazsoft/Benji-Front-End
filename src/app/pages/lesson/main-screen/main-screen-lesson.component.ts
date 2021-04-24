@@ -7,6 +7,7 @@ import {
   BackendRestService,
   BackendSocketService,
   ContextService,
+  GroupingToolService,
   SharingToolService,
 } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
@@ -27,7 +28,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     protected authService: AuthService,
     protected ref: ChangeDetectorRef,
     protected matSnackBar: MatSnackBar,
-    protected sharingToolService: SharingToolService
+    protected sharingToolService: SharingToolService,
+    protected groupingToolService: GroupingToolService
   ) {
     super(
       utilsService,
@@ -40,8 +42,13 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       ref,
       matSnackBar
     );
+
+    groupingToolService.showGroupingToolMainScreen$.subscribe((val) => {
+      this.showGroupingOnScreen = val;
+    });
   }
   at: typeof ActivityTypes = ActivityTypes;
+  showGroupingOnScreen;
 
   fastForwardActivities = [
     this.at.pitchoMatic,

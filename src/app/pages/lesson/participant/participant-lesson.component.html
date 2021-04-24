@@ -13,7 +13,7 @@
 
 <div fxFill *ngIf="isConnected() && serverMessage">
 
-  <ng-container *ngIf="getIsGrouping()">
+  <ng-container *ngIf="getIsGroupingShowing()">
     <benji-ps-grouping-tool
       [activityState]="serverMessage"
       (sendMessage)="sendSocketMessage($event)">

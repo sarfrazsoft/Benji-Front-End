@@ -9,6 +9,7 @@ import {
   GroupingAssignParticipantEvent,
   StartCaseStudyGroupEvent,
   UpdateMessage,
+  ViewGroupingEvent,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 
@@ -22,13 +23,22 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   unassignedUsers = [];
   breakoutRooms = [];
   collapsed = {};
+  showStartGroupingButton: boolean;
   private typingTimer;
 
   @Input() activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const code =
+      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+    if (localStorage.getItem('isGroupingCreated') === code) {
+      this.showStartGroupingButton = false;
+    } else {
+      this.showStartGroupingButton = true;
+    }
+  }
 
   ngOnChanges() {
     const grouping = {
@@ -152,6 +162,11 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   }
 
   makeActivityGrouping() {
+    const code =
+      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+    window.localStorage.setItem('isGroupingCreated', code);
     this.sendMessage.emit(new StartCaseStudyGroupEvent());
+    this.showStartGroupingButton = false;
+    this.sendMessage.emit(new ViewGroupingEvent(false));
   }
 }

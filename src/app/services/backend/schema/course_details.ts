@@ -52,7 +52,7 @@ export interface LessonRun {
 
 export interface RunningTools {
   share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number } };
-  grouping_tool?: { selectedGrouping: number; groupings: Array<GroupingToolGroups> };
+  grouping_tool?: { selectedGrouping: number; groupings: Array<GroupingToolGroups>; viewGrouping: boolean };
 }
 
 export interface GroupingToolGroups {

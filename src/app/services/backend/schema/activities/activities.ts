@@ -459,7 +459,7 @@ export interface ParticipantGroupStatus {
   participant: ParticipantCode;
 }
 
-export interface CaseStudyActivity {
+export interface CaseStudyActivity extends ParentActivity {
   activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;

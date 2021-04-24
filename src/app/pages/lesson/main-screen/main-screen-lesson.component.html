@@ -206,7 +206,7 @@
     </ng-container>
 
     <ng-container>
-      <benji-ms-grouping-tool *ngIf="getIsGrouping()"
+      <benji-ms-grouping-tool *ngIf="getIsGroupingShowing() || showGroupingOnScreen"
         [activityState]="serverMessage"
         (sendMessage)="sendSocketMessage($event)"
       >
@@ -226,6 +226,7 @@
     [disableControls]="disableControls"
     [isSharing]="getIsSharing()"
     [isGrouping]="getIsGrouping()"
+    [isGroupingShowing]="getIsGroupingShowing()"
     (socketMessage)="sendSocketMessage($event)"
   ></benji-main-screen-footer>
 </div>

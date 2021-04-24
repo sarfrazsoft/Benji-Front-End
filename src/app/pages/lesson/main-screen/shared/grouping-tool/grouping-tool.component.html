@@ -76,8 +76,9 @@
           <button 
             class="dashboard-secondary-button bg-primary-color white-color padding0-24"
             style="width: 100%;"
-            (click)="makeActivityGrouping()">
-            Start Activity
+            (click)="makeActivityGrouping()"
+            *ngIf="showStartGroupingButton">
+            Start Grouping
           </button>
         </div>
       </div>
@@ -133,7 +134,7 @@
               </div>
             </div>
           </li>
-          <button class="add-group black-color" (click)="addGroup()">
+          <button  class="add-group black-color" (click)="addGroup()">
             + Add Group
           </button>
         </ul>

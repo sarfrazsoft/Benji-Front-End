@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContextService } from 'src/app/services';
 import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
@@ -9,7 +9,9 @@ import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study
   selector: 'benji-ms-case-study-activity',
   templateUrl: './case-study-activity.component.html',
 })
-export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
+export class MainScreenCaseStudyActivityComponent
+  extends BaseActivityComponent
+  implements OnInit, OnChanges, OnDestroy {
   groups: Array<Group>;
   act: CaseStudyActivity;
   newLayout = true;
@@ -172,4 +174,6 @@ export class MainScreenCaseStudyActivityComponent extends BaseActivityComponent 
   }
 
   addLearners() {}
+
+  ngOnDestroy() {}
 }

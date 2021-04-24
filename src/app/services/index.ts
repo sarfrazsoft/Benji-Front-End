@@ -5,6 +5,7 @@ import { AuthService } from './auth/auth.service';
 import { BackendRestService } from './backend/backend-rest.service';
 import { BackendSocketService } from './backend/backend-socket.service';
 import { EmojiLookupService } from './emoji-lookup.service';
+import { GroupingToolService } from './grouping-tool.service';
 import { LayoutService } from './layout.service';
 import { PastSessionsService } from './past-sessions.service';
 import { SharingToolService } from './sharing-tool.service';
@@ -28,6 +29,7 @@ export {
   VideoStateService,
   PastSessionsService,
   SharingToolService,
+  GroupingToolService,
 };
 
 export const ServicesProviders = [
@@ -43,5 +45,6 @@ export const ServicesProviders = [
   PastSessionsService,
   UtilsService,
   SharingToolService,
+  GroupingToolService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];
