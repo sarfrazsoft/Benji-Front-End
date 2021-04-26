@@ -1,16 +1,16 @@
-<div class="change-group">
+<div class="change-group" *ngIf="selfGroupingAllowed && grouping">
   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
     <div class="change-group-label">You are in</div>
     <div>
       <ng-select
         class="external-grouping-controls"
         [items]="groups"
-        bindLabel="name"
+        bindLabel="title"
         placeholder="Unassigned"
         [clearable]="false"
         bindValue="id"
         (change)="changeGroup($event)"
-        [(ngModel)]="group"
+        [(ngModel)]="myGroupId"
         appendTo="body"
         [searchable]="false"
       >

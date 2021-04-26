@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { Editor, Toolbar } from 'ngx-editor';
 import { wsRoot } from 'src/app/globals';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -15,9 +15,8 @@ import { yCursorPlugin } from '../../ngx-editor/plugins/cursor-plugin/cursor-plu
 @Component({
   selector: 'benji-text-editor',
   templateUrl: './text-editor.component.html',
-  styleUrls: ['./text-editor.component.scss'],
 })
-export class TextEditorComponent implements OnInit, OnDestroy {
+export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() documentId;
   @Input() participantCode: string;
   @Input() lessonRunCode: string;
@@ -39,9 +38,12 @@ export class TextEditorComponent implements OnInit, OnDestroy {
   ];
   constructor(private utilsService: UtilsService, private httpClient: HttpClient) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  initEditor() {
     const ydoc = new Y.Doc();
     const provider = new WebsocketProvider(wsRoot + '/yws/', this.documentId, ydoc);
+    // provider.
     // const provider = new WebsocketProvider('wss://staging.mybenji.com/yws/', this.documentId, ydoc);
     // console.log(wsRoot + '/yws/');
     // const provider = new WebsocketProvider('ws://localhost/yws/', this.documentId, ydoc);
@@ -49,11 +51,22 @@ export class TextEditorComponent implements OnInit, OnDestroy {
     const type = ydoc.getXmlFragment('prosemirror');
     setAwareness(provider, this.participantCode);
 
-    this.editor = new Editor({
-      schema,
-      plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), ...plugins],
-      nodeViews,
-    });
+    if (this.editor) {
+      // console.log(this.editor.options.plugins);
+      // this.editor.registerPlugin(ySyncPlugin(type));
+      // this.editor.registerPlugin(yCursorPlugin(provider.awareness));
+    } else {
+      this.editor = new Editor({
+        schema,
+        plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), ...plugins],
+        nodeViews,
+      });
+    }
+  }
+
+  ngOnChanges() {
+    this.initEditor();
+    console.log(this.documentId);
   }
 
   ngOnDestroy(): void {

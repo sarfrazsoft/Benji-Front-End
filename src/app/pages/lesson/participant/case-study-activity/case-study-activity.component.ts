@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -36,31 +45,16 @@ export class ParticipantCaseStudyActivityComponent
   participantCode: string;
   lessonRunCode;
 
-  constructor(private contextService: ContextService) {
+  component;
+  @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
+
+  constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
-    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
-    this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
-    if (!this.actEditor) {
-      this.editorDisabled = false;
-      this.participantCode = this.getParticipantCode().toString();
-      // this.populateQuestions();
-
-      const userId = this.getParticipantCode();
-      this.groupId = this.getMyGroup(userId).id.toString();
-
-      // create a unique ID by combining groupId and Lesson run code
-      this.documentId = this.groupId + this.lessonRunCode;
-    } else {
-      this.editorDisabled = true;
-      this.groupId = '1234';
-      this.participantCode = '1234';
-      this.documentId = '333333';
-    }
   }
 
   populateQuestions() {
@@ -74,6 +68,49 @@ export class ParticipantCaseStudyActivityComponent
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.timer = this.act.activity_countdown_timer;
+
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
+    this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
+    if (!this.actEditor) {
+      this.groupId = null;
+      setTimeout(() => {
+        this.editorDisabled = false;
+        this.participantCode = this.getParticipantCode().toString();
+
+        const userId = this.getParticipantCode();
+        const myGroup = this.getMyGroup(userId);
+        if (myGroup && myGroup.id) {
+          this.groupId = this.getMyGroup(userId).id.toString();
+          // create a unique ID by combining groupId and Lesson run code
+        } else {
+          // if participant is not part of any group
+          this.groupId = 'x';
+        }
+
+        this.documentId = this.groupId + this.lessonRunCode;
+      }, 0);
+
+      // [lessonRunCode]="lessonRunCode"
+      //   [participantCode]="participantCode"
+      //   [documentId]="documentId"
+      //   (submitActivityValues)="saveEditCollab()"
+      //   [allowVideo]="false"
+      //   [disabled]="editorDisabled"
+      // const b = this.cfr.resolveComponentFactory(TextEditorComponent);
+      // this.component = this.entry.createComponent(b);
+      // this.component.instance.lessonRunCode = this.lessonRunCode;
+      // this.component.instance.participantCode = this.participantCode;
+      // this.component.instance.documentId = this.documentId;
+      // this.component.instance.allowVideo = false;
+      // this.component.instance.disabled = this.editorDisabled;
+
+      // this.component.instance.initEditor();
+    } else {
+      this.editorDisabled = true;
+      this.groupId = '1234';
+      this.participantCode = '1234';
+      this.documentId = '333333';
+    }
   }
 
   getMyNoteTaker() {

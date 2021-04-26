@@ -7,6 +7,7 @@ import {
   SelectGroupingEvent,
   Timer,
   UpdateMessage,
+  ViewGroupingEvent,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 
@@ -44,10 +45,15 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   }
 
   start() {
-    this.socketMessage.emit(new CreateGroupingEvent(this.newGroupingTitle));
+    if (this.groupingType === 'new') {
+      this.socketMessage.emit(new CreateGroupingEvent(this.newGroupingTitle));
+    } else {
+      this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
+      this.socketMessage.emit(new ViewGroupingEvent(true));
+    }
   }
 
-  selectGrouping($event: GroupingToolGroups) {
-    this.socketMessage.emit(new SelectGroupingEvent($event.id));
+  selectGrouping(event: GroupingToolGroups) {
+    this.selectedGroup = event;
   }
 }

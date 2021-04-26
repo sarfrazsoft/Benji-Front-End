@@ -287,8 +287,10 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       } else {
         // the grouping UI is showing but grouping has not been created
         // for this activity
-        // open menu
-        this.groupingMenuTrigger.openMenu();
+        // hide grouping UI
+        // this.groupingMenuTrigger.openMenu();
+        // this.groupingToolService.showGroupingToolMainScreen = false;
+        this.socketMessage.emit(new ViewGroupingEvent(false));
       }
     } else {
       if (localStorage.getItem('isGroupingCreated') === code) {
