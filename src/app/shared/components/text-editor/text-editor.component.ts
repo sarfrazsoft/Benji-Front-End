@@ -21,7 +21,6 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() participantCode: string;
   @Input() lessonRunCode: string;
   @Input() allowVideo = false;
-  @Output() submitActivityValues = new EventEmitter();
 
   editor: Editor;
   editor2: Editor;

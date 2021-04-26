@@ -79,8 +79,10 @@ export class ParticipantCaseStudyActivityComponent
 
         const userId = this.getParticipantCode();
         const myGroup = this.getMyGroup(userId);
+        const selectedGrouping = this.getMyGrouping();
         if (myGroup && myGroup.id) {
           this.groupId = this.getMyGroup(userId).id.toString();
+          this.groupId = selectedGrouping + this.groupId;
           // create a unique ID by combining groupId and Lesson run code
         } else {
           // if participant is not part of any group
@@ -93,7 +95,6 @@ export class ParticipantCaseStudyActivityComponent
       // [lessonRunCode]="lessonRunCode"
       //   [participantCode]="participantCode"
       //   [documentId]="documentId"
-      //   (submitActivityValues)="saveEditCollab()"
       //   [allowVideo]="false"
       //   [disabled]="editorDisabled"
       // const b = this.cfr.resolveComponentFactory(TextEditorComponent);
@@ -147,62 +148,73 @@ export class ParticipantCaseStudyActivityComponent
     }
   }
 
-  isUserNoteTaker() {
-    const userId = this.getParticipantCode();
-    for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
-      const user = this.act.casestudyparticipant_set[i];
-      if (userId === user.participant.participant_code) {
-        if (user.role === 'Note Taker') {
-          return true;
-        } else {
-          return false;
-        }
-      }
+  getMyGrouping() {
+    const state = this.activityState;
+    if (
+      state.running_tools &&
+      state.running_tools.grouping_tool &&
+      state.running_tools.grouping_tool.selectedGrouping
+    ) {
+      return state.running_tools.grouping_tool.selectedGrouping;
     }
   }
 
-  getCaseStudyDetails() {
-    const caseStudyDetails =
-      '' +
-      'This is a dummy content. You and your team will need to ' +
-      'consider these details when you are working out your case study' +
-      'consider these details when you are working out your case study' +
-      'consider these details when you are working out your case study' +
-      'consider these details when you are working out your case study' +
-      'consider these details when you are working out your case study';
-    return caseStudyDetails;
-  }
+  // isUserNoteTaker() {
+  //   const userId = this.getParticipantCode();
+  //   for (let i = 0; i < this.act.casestudyparticipant_set.length; i++) {
+  //     const user = this.act.casestudyparticipant_set[i];
+  //     if (userId === user.participant.participant_code) {
+  //       if (user.role === 'Note Taker') {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     }
+  //   }
+  // }
 
-  // on keyup, start the countdown
-  typingStoped(event, questionId) {
-    localStorage.setItem('caseStudyNotes', JSON.stringify(this.questions));
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.doneTyping();
-    }, 3000);
-  }
+  // getCaseStudyDetails() {
+  //   const caseStudyDetails =
+  //     '' +
+  //     'This is a dummy content. You and your team will need to ' +
+  //     'consider these details when you are working out your case study' +
+  //     'consider these details when you are working out your case study' +
+  //     'consider these details when you are working out your case study' +
+  //     'consider these details when you are working out your case study' +
+  //     'consider these details when you are working out your case study';
+  //   return caseStudyDetails;
+  // }
 
-  // on keydown, clear the countdown
-  typingStarted() {
-    clearTimeout(this.typingTimer);
-  }
+  // // on keyup, start the countdown
+  // typingStoped(event, questionId) {
+  //   localStorage.setItem('caseStudyNotes', JSON.stringify(this.questions));
+  //   clearTimeout(this.typingTimer);
+  //   this.typingTimer = setTimeout(() => {
+  //     this.doneTyping();
+  //   }, 3000);
+  // }
 
-  doneTyping(submitCaseStudyDone?) {
-    const casestudysubmissionentry_set = [];
-    this.questions.forEach((q) => {
-      const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(q.id, q.answer);
-      casestudysubmissionentry_set.push(caseStudySubmitEventEntry);
-    });
+  // // on keydown, clear the countdown
+  // typingStarted() {
+  //   clearTimeout(this.typingTimer);
+  // }
 
-    this.sendMessage.emit(new CaseStudySaveFormEvent(casestudysubmissionentry_set));
-    localStorage.removeItem(this.localStorageItemName);
-    if (submitCaseStudyDone) {
-      submitCaseStudyDone();
-    }
-  }
+  // doneTyping(submitCaseStudyDone?) {
+  //   const casestudysubmissionentry_set = [];
+  //   this.questions.forEach((q) => {
+  //     const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(q.id, q.answer);
+  //     casestudysubmissionentry_set.push(caseStudySubmitEventEntry);
+  //   });
+
+  //   this.sendMessage.emit(new CaseStudySaveFormEvent(casestudysubmissionentry_set));
+  //   localStorage.removeItem(this.localStorageItemName);
+  //   if (submitCaseStudyDone) {
+  //     submitCaseStudyDone();
+  //   }
+  // }
 
   submitCaseStudyDone() {
-    this.doneTyping(() => this.sendMessage.emit(new CaseStudyTeamDoneEvent()));
+    // this.doneTyping(() => this.sendMessage.emit(new CaseStudyTeamDoneEvent()));
   }
 
   saveEditCollab() {
