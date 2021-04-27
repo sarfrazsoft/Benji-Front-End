@@ -1,8 +1,20 @@
 <div class="case-study-share-ui-container">
   <div class="case-study-share-ui">
     <div class="header left-text black-color">Your statement:</div>
-    <p class="your-pitch left-text"> 
+    <ng-container *ngIf="showEditor">
+      <benji-text-editor 
+        class="hide-border"
+        [jsonDoc]="jsonDoc"
+        [allowVideo]="false"
+        [disabled]="true"
+        [showMenu]="false">
+      </benji-text-editor>
+    </ng-container>
+  
+     <!-- <p class="your-pitch left-text"> 
       {{text}}
-    </p>
+    </p> -->
   </div>
 </div>
+
+

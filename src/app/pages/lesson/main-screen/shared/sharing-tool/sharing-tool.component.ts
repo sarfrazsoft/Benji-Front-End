@@ -104,14 +104,15 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
         this.speakers.push({ displayName: 'Room ' + val.title, id: val.id, optedIn: false });
       });
       this.activityState.casestudyactivity.groups.forEach((val, index) => {
-        val['caseStudyGroupText'] =
-          index +
-          '' +
-          'we wrote this text on Friday we wrote this text on Friday we wrote this text on Friday ' +
-          'we wrote this text on Friday we wrote this text on Friday we wrote this text on Friday ' +
-          'we wrote this text on Friday we wrote this text on Friday we wrote this text on Friday ' +
-          'we wrote this text on Friday we wrote this text on Friday we wrote this text on Friday ' +
-          'we wrote this text on Fridaywe wrote this text on Fridaywe wrote this text on Friday ';
+        val['caseStudyGroupJSON'] = JSON.parse(
+          '{"doc":{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"sdfasdfff"}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/20191206_172624_-_Copy_2_9josX14.jpg","alt":null,"title":null,"width":null}}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"Caption huzoor"}]},{"type":"paragraph","attrs":{"align":null}},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"this is my text that is significantly important"}]}]},"selection":{"type":"text","anchor":81,"head":81}}'
+        );
+
+        console.log(
+          JSON.parse(
+            '{"doc":{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"sdfasdfff"}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/20191206_172624_-_Copy_2_9josX14.jpg","alt":null,"title":null,"width":null}}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"Caption huzoor"}]},{"type":"paragraph","attrs":{"align":null}},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"this is my text that is significantly important"}]}]},"selection":{"type":"text","anchor":81,"head":81}}'
+          )
+        );
       });
 
       this.speakers.sort(function (obj1, obj2) {

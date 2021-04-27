@@ -1,3 +1,4 @@
+import * as math from 'lib0/math.js';
 import { Plugin } from 'prosemirror-state'; // eslint-disable-line
 import { Decoration, DecorationSet } from 'prosemirror-view'; // eslint-disable-line
 import { Participant } from 'src/app/services/backend/schema/course_details';
@@ -10,8 +11,6 @@ import {
 import { yCursorPluginKey, ySyncPluginKey } from 'y-prosemirror';
 import { Awareness } from 'y-protocols/awareness.js'; // eslint-disable-line
 import * as Y from 'yjs';
-
-import * as math from 'lib0/math.js';
 
 /**
  * Default generator for a cursor element
@@ -127,6 +126,8 @@ export const yCursorPlugin = (
       apply(tr, prevState, oldState, newState) {
         // TOD move to it's own plugin
         localStorage.setItem('collabedit', newState.doc.textContent);
+        localStorage.setItem('collabeditJSONDoc', JSON.stringify(newState.toJSON()));
+
         const ystate = ySyncPluginKey.getState(newState);
         const yCursorState = tr.getMeta(yCursorPluginKey);
         if ((ystate && ystate.isChangeOrigin) || (yCursorState && yCursorState.awarenessUpdated)) {

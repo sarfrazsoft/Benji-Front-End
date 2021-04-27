@@ -1,4 +1,5 @@
 <ngx-editor-menu
+  *ngIf="showMenu"
   [editor]="editor"
   [toolbar]="toolbar"
   [customMenuRef]="customMenu"
@@ -13,11 +14,3 @@
     [allowVideo]="allowVideo">
   </benji-editor-custom-menu>
 </ng-template>
-
-
-<!-- <ngx-editor-menu
-  [editor]="editor2"
-  [toolbar]="toolbar"
-></ngx-editor-menu>
-<ngx-editor [editor]="editor2">
-</ngx-editor> -->

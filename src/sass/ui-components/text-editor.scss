@@ -1,31 +1,38 @@
-ngx-editor-menu {
-  .NgxEditor__MenuBar {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: fit-content;
-    row-gap: 10px;
-    background: #e7e7e7;
-    color: #828282;
-    border: 2px solid #e7e7e7;
-    border-bottom: none;
-    border-radius: 8px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    .NgxEditor__MenuItem {
-      height: auto;
+benji-text-editor {
+  ngx-editor-menu {
+    .NgxEditor__MenuBar {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      height: fit-content;
+      row-gap: 10px;
+      background: #e7e7e7;
+      color: #828282;
+      border: 2px solid #e7e7e7;
+      border-bottom: none;
+      border-radius: 8px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+      .NgxEditor__MenuItem {
+        height: auto;
+      }
     }
   }
-}
-div.NgxEditor {
-  border-top-right-radius: 0px;
-  border-top-left-radius: 0px;
-  border-top: 0px;
-  border: 2px solid #e7e7e7;
-  .NgxEditor__Content {
-    padding: 24px;
-    min-height: 150px;
-    color: $black;
+  &.hide-border {
+    div.NgxEditor {
+      border: 0px;
+    }
+  }
+  div.NgxEditor {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top: 0px;
+    border: 2px solid #e7e7e7;
+    .NgxEditor__Content {
+      padding: 24px;
+      min-height: 150px;
+      color: $black;
+    }
   }
 }
 
