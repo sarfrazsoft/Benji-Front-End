@@ -11,8 +11,7 @@ import {
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
-  CaseStudySaveFormEvent,
-  CaseStudySubmitEventAnswer,
+  CaseStudySubmitAnswerEvent,
   CaseStudyTeamDoneEvent,
   Timer,
 } from 'src/app/services/backend/schema';
@@ -82,13 +81,16 @@ export class ParticipantCaseStudyActivityComponent
         const selectedGrouping = this.getMyGrouping();
         if (myGroup && myGroup.id) {
           this.groupId = this.getMyGroup(userId).id.toString();
-          this.groupId = selectedGrouping + this.groupId;
+          if (selectedGrouping) {
+            this.groupId = selectedGrouping + this.groupId;
+          } else {
+            this.groupId = this.groupId;
+          }
           // create a unique ID by combining groupId and Lesson run code
         } else {
           // if participant is not part of any group
           this.groupId = 'x';
         }
-
         this.documentId = this.groupId + this.lessonRunCode;
       }, 0);
 
@@ -218,7 +220,10 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   saveEditCollab() {
-    console.log(localStorage.getItem('collabedit'));
+    // console.log(localStorage.getItem('collabedit'));
+    const json = JSON.parse(localStorage.getItem('collabeditJSONDoc'));
+    this.sendMessage.emit(new CaseStudySubmitAnswerEvent(json));
+    // console.log(localStorage.getItem('collabeditJSONDoc'));
     // this.questions.forEach((q) => {
     //   console.log(q);
     //   const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(q.id, q.answer);

@@ -460,23 +460,22 @@ export class GenericRoleplayParticipantFeedbackEvent extends ActivityEvent {
   }
 }
 
-export class CaseStudySaveFormEvent extends ActivityEvent {
-  event_name = 'CaseStudySaveFormEvent';
-  constructor(caseStudySubmitEventAnswer_set: CaseStudySubmitEventAnswer[]) {
+// export class CaseStudySaveFormEvent extends ActivityEvent {
+//   event_name = 'CaseStudySaveFormEvent';
+//   constructor(caseStudySubmitEventAnswer_set: CaseStudySubmitEventAnswer[]) {
+//     super();
+//     this.extra_args = {
+//       casestudyeventanswer_set: caseStudySubmitEventAnswer_set,
+//     };
+//   }
+// }
+
+export class CaseStudySubmitAnswerEvent extends ActivityEvent {
+  event_name = 'CaseStudySubmitAnswerEvent';
+
+  constructor(json) {
     super();
-    this.extra_args = {
-      casestudyeventanswer_set: caseStudySubmitEventAnswer_set,
-    };
-  }
-}
-
-export class CaseStudySubmitEventAnswer {
-  casestudyquestion: number;
-  answer: string;
-
-  constructor(qId, text) {
-    this.casestudyquestion = qId;
-    this.answer = text;
+    this.extra_args = { answer: json };
   }
 }
 
