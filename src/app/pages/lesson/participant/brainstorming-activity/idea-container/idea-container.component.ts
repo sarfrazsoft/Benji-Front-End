@@ -71,6 +71,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
 
   submitWithImg() {
     this.submitImageNIdea();
+    this.idea.editing = false;
   }
 
   onFileSelect(event) {
@@ -124,7 +125,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
               this.sendMessage.emit(
                 new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
               );
-              this.userIdeaText = '';
+              // this.userIdeaText = '';
             })
             .subscribe(
               (data) => {},

@@ -85,6 +85,9 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
       }
     }
 
+    if (!selectedgrouping) {
+      return;
+    }
     for (let i = 0; i < selectedgrouping.groups.length; i++) {
       const groupset = selectedgrouping.groups[i];
       const participants = [];

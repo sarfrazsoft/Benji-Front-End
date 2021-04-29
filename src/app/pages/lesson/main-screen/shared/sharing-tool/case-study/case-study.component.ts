@@ -19,7 +19,7 @@ import * as Y from 'yjs';
   templateUrl: './case-study.component.html',
 })
 export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() data: UpdateMessage;
+  @Input() activityState: UpdateMessage;
   @Input() currentSpeaker: { displayName: string; id: number };
   jsonDoc;
   // editor: Editor;
@@ -31,7 +31,7 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges() {}
 
   update() {
-    this.data.casestudyactivity.groups.forEach((group) => {
+    this.activityState.casestudyactivity.groups.forEach((group) => {
       if (group.id === this.currentSpeaker.id) {
         this.showEditor = false;
         setTimeout(() => {
@@ -43,7 +43,9 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   initEditor(group) {
-    this.jsonDoc = group['caseStudyGroupJSON'].doc;
+    if (group && group.answer && group.answer.doc) {
+      this.jsonDoc = group.answer.doc;
+    }
     // const ydoc = new Y.Doc();
     // const provider = new WebsocketProvider(wsRoot + '/yws/', 'xx', ydoc);
     // const type = ydoc.getXmlFragment('prosemirror');

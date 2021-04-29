@@ -13,12 +13,12 @@
       box-sizing: border-box;
       .setting {
         .label-text {
-          max-width: 200px;
+          max-width: 175px;
         }
       }
       .header {
         font-weight: 600;
-        font-size: 24px;
+        font-size: 20px;
       }
       .participant-list {
         overflow-y: auto;
@@ -51,7 +51,7 @@
         margin-bottom: 32px;
       }
       .add-group {
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 700;
         width: 240px;
         height: 64px;

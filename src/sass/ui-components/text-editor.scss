@@ -36,6 +36,27 @@ benji-text-editor {
   }
 }
 
+.mainscreen-activity {
+  .NgxEditor__Content {
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    p {
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
+
 .NgxEditor__MenuItem .NgxEditor__MenuItem--IconContainer {
   opacity: 0.55;
 }

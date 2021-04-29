@@ -49,8 +49,8 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       this.socketMessage.emit(new CreateGroupingEvent(this.newGroupingTitle));
     } else {
       this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
-      this.socketMessage.emit(new ViewGroupingEvent(true));
     }
+    this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   selectGrouping(event: GroupingToolGroups) {

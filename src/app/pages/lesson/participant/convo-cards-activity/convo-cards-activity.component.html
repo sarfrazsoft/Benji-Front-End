@@ -21,7 +21,7 @@
               <div class="main" >
                 {{ items[indexOfCardShown].card_title }}
               </div>
-              <div class="sub">
+              <div class="sub" *ngIf="items[indexOfCardShown].card_text">
                 {{ items[indexOfCardShown].card_text }}
               </div>
             </div>

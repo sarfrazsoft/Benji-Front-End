@@ -24,7 +24,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges, OnDestroy {
   @Input() actEditor = false;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
@@ -54,6 +54,48 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
+
+    if (this.actEditor) {
+      this.editorDisabled = true;
+      this.groupId = '1234';
+      this.participantCode = '1234';
+      this.documentId = new Date().getTime().toString();
+      this.lessonRunCode = '33';
+    } else {
+      this.initEditor();
+    }
+  }
+
+  initEditor() {
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
+    this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
+    this.groupId = null;
+    setTimeout(() => {
+      this.editorDisabled = false;
+      this.participantCode = this.getParticipantCode().toString();
+
+      const particiapntCode = this.getParticipantCode();
+      const myGroup = this.getMyGroup(particiapntCode);
+      const selectedGrouping = this.getMyGrouping();
+      let moddedGroupId;
+      if (myGroup && myGroup.id) {
+        this.groupId = this.getMyGroup(particiapntCode).id.toString();
+        if (selectedGrouping) {
+          moddedGroupId = selectedGrouping + this.groupId;
+        } else {
+          moddedGroupId = this.groupId;
+        }
+        // create a unique ID by combining groupId and Lesson run code
+      } else {
+        // if participant is not part of any group
+        this.groupId = 'x';
+      }
+      if (moddedGroupId) {
+        this.documentId = moddedGroupId + this.lessonRunCode;
+      } else {
+        this.documentId = this.groupId + this.lessonRunCode;
+      }
+    }, 0);
   }
 
   populateQuestions() {
@@ -68,51 +110,14 @@ export class ParticipantCaseStudyActivityComponent
     this.act = this.activityState.casestudyactivity;
     this.timer = this.act.activity_countdown_timer;
 
-    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
-    this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
-    if (!this.actEditor) {
-      this.groupId = null;
-      setTimeout(() => {
-        this.editorDisabled = false;
-        this.participantCode = this.getParticipantCode().toString();
-
-        const userId = this.getParticipantCode();
-        const myGroup = this.getMyGroup(userId);
-        const selectedGrouping = this.getMyGrouping();
-        if (myGroup && myGroup.id) {
-          this.groupId = this.getMyGroup(userId).id.toString();
-          if (selectedGrouping) {
-            this.groupId = selectedGrouping + this.groupId;
-          } else {
-            this.groupId = this.groupId;
-          }
-          // create a unique ID by combining groupId and Lesson run code
-        } else {
-          // if participant is not part of any group
-          this.groupId = 'x';
-        }
-        this.documentId = this.groupId + this.lessonRunCode;
-      }, 0);
-
-      // [lessonRunCode]="lessonRunCode"
-      //   [participantCode]="participantCode"
-      //   [documentId]="documentId"
-      //   [allowVideo]="false"
-      //   [disabled]="editorDisabled"
-      // const b = this.cfr.resolveComponentFactory(TextEditorComponent);
-      // this.component = this.entry.createComponent(b);
-      // this.component.instance.lessonRunCode = this.lessonRunCode;
-      // this.component.instance.participantCode = this.participantCode;
-      // this.component.instance.documentId = this.documentId;
-      // this.component.instance.allowVideo = false;
-      // this.component.instance.disabled = this.editorDisabled;
-
-      // this.component.instance.initEditor();
-    } else {
-      this.editorDisabled = true;
-      this.groupId = '1234';
-      this.participantCode = '1234';
-      this.documentId = '333333';
+    // find out if your grouping just changed
+    const particiapntCode = this.getParticipantCode();
+    const myGroup = this.getMyGroup(particiapntCode);
+    if (myGroup) {
+      if (this.groupId !== myGroup.id.toString()) {
+        // group has changed
+        this.initEditor();
+      }
     }
   }
 
@@ -217,6 +222,10 @@ export class ParticipantCaseStudyActivityComponent
 
   submitCaseStudyDone() {
     // this.doneTyping(() => this.sendMessage.emit(new CaseStudyTeamDoneEvent()));
+  }
+
+  ngOnDestroy() {
+    this.saveEditCollab();
   }
 
   saveEditCollab() {

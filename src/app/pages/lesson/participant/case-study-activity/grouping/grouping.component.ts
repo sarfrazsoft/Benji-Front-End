@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import * as global from 'src/app/globals';
-import { GroupingParticipantSelfJoinEvent } from 'src/app/services/backend/schema';
+import { GroupingParticipantSelfJoinEvent, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 
 @Component({
@@ -15,7 +15,7 @@ export class GroupingComponent implements OnInit, OnChanges {
   userGroupAssigned: boolean;
   myGroupId;
   grouping;
-  @Input() activityState;
+  @Input() activityState: UpdateMessage;
   @Input() participantCode;
   @Output() sendMessage = new EventEmitter<any>();
 
@@ -23,6 +23,8 @@ export class GroupingComponent implements OnInit, OnChanges {
     this.initSelectedGroup(this.activityState);
   }
   ngOnChanges() {
+    // check if group changed
+    // then call initseelctedgroup
     this.initSelectedGroup(this.activityState);
   }
 
@@ -33,18 +35,13 @@ export class GroupingComponent implements OnInit, OnChanges {
       grouping.groupings.forEach((g: GroupingToolGroups) => {
         if (grouping.selectedGrouping === g.id) {
           // this.selectedGrouping = g;
-
-          console.log(this.groups);
+          this.groups = g.groups;
           this.selfGroupingAllowed = g.allowParticipantsJoining;
           const participantCode = parseInt(this.participantCode, 10);
 
-          for (let i = 0; i < this.groups.length; i++) {
-            const group = this.groups[0];
-            if (group.participants.includes(participantCode)) {
-              this.myGroupId = group.id;
-            }
-          }
-          this.groups = g.groups;
+          const group = this.getMyGroup(participantCode);
+          this.myGroupId = group ? group.id : null;
+
           this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
         }
       });
@@ -52,5 +49,15 @@ export class GroupingComponent implements OnInit, OnChanges {
   }
   changeGroup(event) {
     this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(event.id));
+  }
+
+  getMyGroup(userId) {
+    for (let i = 0; i < this.activityState.casestudyactivity.groups.length; i++) {
+      const group = this.activityState.casestudyactivity.groups[i];
+      const groupParticipants = group.participants;
+      if (groupParticipants.includes(userId)) {
+        return group;
+      }
+    }
   }
 }

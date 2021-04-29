@@ -227,8 +227,12 @@ function typingStoped(awareness) {
 
 // on keydown, clear the countdown
 function typingStarted(awareness) {
+  let name = getUserName();
+  if (!name) {
+    name = '';
+  }
   awareness.setLocalStateField('user', {
-    name: userName ? userName : 'Panda',
+    name: name,
     color: colors[usersNumber].color, // should be a hex color
     backgroundColor: colors[usersNumber].backgroundColor, // should be a hex color
     typing: true,
@@ -237,9 +241,12 @@ function typingStarted(awareness) {
 }
 
 function doneTyping(awareness) {
-  console.log('done typing');
+  let name = getUserName();
+  if (!name) {
+    name = '';
+  }
   awareness.setLocalStateField('user', {
-    name: userName ? userName : 'Panda',
+    name: name,
     color: colors[usersNumber].color, // should be a hex color
     backgroundColor: colors[usersNumber].backgroundColor, // should be a hex color
     typing: false,
@@ -264,10 +271,15 @@ export function setAwareness(provider, participantCode) {
   usersNumber = oneAsNumber;
   const awareness = provider.awareness;
 
+  let name = getUserName();
+  if (!name) {
+    name = '';
+  }
   // const colorIndex = randomIntFromInterval(0, 19);
   awareness.setLocalStateField('user', {
     // Define a print name that should be displayed
-    name: userName ? userName : 'Panda',
+
+    name: name,
     // Define a color that should be associated to the user:
     color: colors[usersNumber].color, // should be a hex color
     backgroundColor: colors[usersNumber].backgroundColor, // should be a hex color

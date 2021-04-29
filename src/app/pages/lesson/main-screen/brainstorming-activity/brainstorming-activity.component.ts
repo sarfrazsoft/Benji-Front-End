@@ -207,7 +207,8 @@ export class MainScreenBrainstormingActivityComponent
         !this.editor &&
         !act.submission_complete &&
         !act.voting_complete &&
-        this.isAllSubmissionsComplete(act)
+        this.isAllSubmissionsComplete(act) &&
+        !this.shownSubmissionCompleteNofitication
       ) {
         this.shownSubmissionCompleteNofitication = true;
         const snackBarRef = this.utilsService.openSuccessNotification('Submission complete', 'Start voting');

@@ -55,7 +55,6 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     }
     if (this.volunteers && this.volunteers.length !== newVolunteers.length) {
       // this.initializeActivity();
-      console.log('hu');
       this.volunteers = this.activityState.running_tools.share.volunteers;
       this.changeOptedInUsers();
     }
@@ -101,18 +100,16 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     } else if (this.activityState.activity_type === this.at.caseStudy) {
       const groups = cloneDeep(this.activityState.casestudyactivity.groups);
       groups.forEach((val) => {
-        this.speakers.push({ displayName: 'Room ' + val.title, id: val.id, optedIn: false });
-      });
-      this.activityState.casestudyactivity.groups.forEach((val, index) => {
-        val['caseStudyGroupJSON'] = JSON.parse(
-          '{"doc":{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"sdfasdfff"}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/20191206_172624_-_Copy_2_9josX14.jpg","alt":null,"title":null,"width":null}}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"Caption huzoor"}]},{"type":"paragraph","attrs":{"align":null}},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"this is my text that is significantly important"}]}]},"selection":{"type":"text","anchor":81,"head":81}}'
-        );
+        // get all participants of this group and
+        // figure out if anyone has opted in
 
-        console.log(
-          JSON.parse(
-            '{"doc":{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"sdfasdfff"}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/20191206_172624_-_Copy_2_9josX14.jpg","alt":null,"title":null,"width":null}}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"Caption huzoor"}]},{"type":"paragraph","attrs":{"align":null}},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"this is my text that is significantly important"}]}]},"selection":{"type":"text","anchor":81,"head":81}}'
-          )
-        );
+        let optedIn = false;
+        this.volunteers.forEach((volunteer) => {
+          if (val.participants.includes(volunteer)) {
+            optedIn = true;
+          }
+        });
+        this.speakers.push({ displayName: val.title, id: val.id, optedIn: optedIn });
       });
 
       this.speakers.sort(function (obj1, obj2) {
@@ -122,7 +119,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
       const b = this.cfr.resolveComponentFactory(SharingCaseStudyComponent);
       this.component = this.entry.createComponent(b);
       this.currentSpeakerIndex = 0;
-      this.component.instance.data = this.activityState;
+      this.component.instance.activityState = this.activityState;
       this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
       this.component.instance.update();
     } else if (this.activityState.activity_type === this.at.convoCards) {
@@ -164,7 +161,9 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   }
 
   update() {
-    this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[this.currentSpeakerIndex].id));
+    if (this.activityState.activity_type !== this.at.caseStudy) {
+      this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[this.currentSpeakerIndex].id));
+    }
     this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
     this.component.instance.update();
   }
@@ -202,13 +201,30 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   changeOptedInUsers() {
     // const participantSet = cloneDeep(this.activityState.lesson_run.participant_set);
-    this.speakers.forEach((speaker) => {
-      if (this.volunteers.includes(speaker.id)) {
-        speaker.optedIn = true;
-      } else {
-        speaker.optedIn = false;
-      }
-    });
+    if (this.activityState.activity_type === this.at.caseStudy) {
+      this.speakers.forEach((speaker) => {
+        const groups = cloneDeep(this.activityState.casestudyactivity.groups);
+        groups.forEach((group) => {
+          if (group.id === speaker.id) {
+            let optedIn = false;
+            this.volunteers.forEach((volunteer) => {
+              if (group.participants.includes(volunteer)) {
+                optedIn = true;
+              }
+            });
+            speaker.optedIn = optedIn;
+          }
+        });
+      });
+    } else {
+      this.speakers.forEach((speaker) => {
+        if (this.volunteers.includes(speaker.id)) {
+          speaker.optedIn = true;
+        } else {
+          speaker.optedIn = false;
+        }
+      });
+    }
 
     console.log(this.speakers);
 

@@ -86,21 +86,18 @@
         <ul>
           <li *ngFor="let group of breakoutRooms">
             <div class="group collapseable-group" [ngStyle]="{'height': collapsed[group.id] ? '50px' : '216px'}">
-              <div class="header primary-color" fxLayout="row" fxLayoutGap="8px">
+              <div class="header black-color" fxLayout="row" fxLayoutGap="8px">
                 <div>
                   {{group.name}}
                 </div>
-                <div (click)="deleteGroup(group)">
-                  Del
-                </div>
                 <div style="flex: 1" fxLayout="row" fxLayoutAlign="space-between">
-                  <div class="group-controls">
+                  <div class="group-controls" style="opacity: 0;">
                     <img src="/assets/img/groupProgressionGrey.svg" alt="">
                   </div>
                   <div class="group-controls" fxLayout="row" fxLayoutGap="8px">
-                    <div>
+                    <!-- <div>
                       <img src="/assets/img/openGroup.svg" alt="">
-                    </div>
+                    </div> -->
                     <div class="head-count" *ngIf="collapsed[group.id]">
                       <img src="/assets/img/particpantCountIcon.svg" alt="">
                       <span>
@@ -116,6 +113,10 @@
                         *ngIf="!collapsed[group.id]"
                         (click)="this.collapsed[group.id] = !this.collapsed[group.id];"
                         src="/assets/img/dropDownIconUp.svg" alt="">
+                    </div>
+                    <div>
+                      <img (click)="deleteGroup(group)"
+                        src="/assets/img/close_big_light.svg" alt="">
                     </div>
                   </div>
                 </div>

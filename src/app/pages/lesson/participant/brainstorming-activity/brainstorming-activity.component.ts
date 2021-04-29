@@ -186,9 +186,13 @@ export class ParticipantBrainstormingActivityComponent
 
   getVotesLeft() {
     const pc = this.getParticipantCode();
-    const userVotes = this.act.participant_vote_counts.find((v) => v.participant_code === pc);
+    const userVotes = this.act.participant_vote_counts.find((f) => f.participant_code === pc);
     const maxVotes = this.act.max_participant_votes;
-    const v = maxVotes - userVotes.count;
+    let subtract = 0;
+    if (userVotes) {
+      subtract = userVotes.count;
+    }
+    const v = maxVotes - subtract;
     return v;
   }
 }
