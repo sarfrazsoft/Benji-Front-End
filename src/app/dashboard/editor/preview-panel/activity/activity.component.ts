@@ -429,7 +429,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         this.componentRef = this.entry.createComponent(msAct);
 
         let cards = [];
-        if (content.cards.length === 0) {
+        if (content && content.cards && content.cards.length === 0) {
           cards = [
             {
               card_image: 'emoji://1F606',

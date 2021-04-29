@@ -102,10 +102,6 @@ export class MainScreenPopQuizComponent
     return this.activityState.mcqactivity.answered_participants.length;
   }
 
-  getTotalUsers() {
-    return this.activityState.lesson_run.participant_set.length;
-  }
-
   ngOnDestroy() {
     this.contextService.destroyActivityTimer();
     if (this.peakBackState) {
