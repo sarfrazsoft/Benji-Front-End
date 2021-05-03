@@ -10,7 +10,8 @@
       "prefix": "benji",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "styleext": "scss",
+          "skipTests": true
         }
       },
       "architect": {
