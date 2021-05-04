@@ -23,7 +23,7 @@
       .participant-list {
         overflow-y: auto;
         width: 100%;
-        height: calc(100% - 70px);
+        height: calc(100% - 14px);
 
         .participant-name {
           padding-left: 16px;
@@ -32,6 +32,7 @@
           font-size: 20px;
           &:hover {
             background-color: $sky;
+            border-radius: 4px;
           }
         }
       }
@@ -144,4 +145,12 @@ benji-ps-case-study-activity {
       font-weight: 600;
     }
   }
+}
+
+.cdk-drag.participant-name.cdk-dragging {
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 40px;
+  font-size: 20px;
+  line-height: 20px;
 }
