@@ -166,6 +166,61 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 }
+              } else if (act.activity_type === this.at.poll) {
+                if (mapSource.internal_type === 'PollActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.internal_type === 'MCQChoiceSerializer') {
+                  mappedField.type = 'pollChoice';
+                } else if (mapSource.internal_type === 'MCQQuestionSerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.internal_type === 'TitleComponentSerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'question_seconds') {
+                  mappedField.templateOptions.label = 'Timer to answer';
+                  mappedField.type = 'seconds';
+                } else if (mapSource.field_name === 'title') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 'Question';
+                } else if (mapSource.field_name === 'screen_instructions') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 'Answer the following question';
+                } else if (mapSource.field_name === 'participant_instructions') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 'Answer the following question';
+                } else if (mapSource.field_name === 'quiz_label') {
+                  mappedField.type = 'boolean';
+                  mappedField.defaultValue = false;
+                  mappedField.templateOptions.label = 'Add Leaderboard';
+                  delete mappedField.templateOptions.maxLength;
+                  delete mappedField.templateOptions.minLength;
+                } else if (mapSource.field_name === 'auto_next') {
+                  // auto_next is hidden
+                  // if user sets next activity delay seconds then it is
+                  // set to true else false
+                  mappedField.defaultValue = true;
+                  mappedField.templateOptions.label = 'Auto forward after results';
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = 0;
+                } else if (mapSource.field_name === 'show_distribution') {
+                  mappedField.templateOptions.label = 'Graph of participant answers';
+                  mappedField.templateOptions.description =
+                    'If you want to see how people answered then make sure this option is selected.' +
+                    ' If you want a poll question, you can create a question without any correct ' +
+                    ' answers and then select this option.';
+                } else if (mapSource.field_name === 'hide_timer') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = false;
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === '') {
+                  mappedField.templateOptions.label = '';
+                }
               } else if (act.activity_type === this.at.title) {
                 // for TitleActivity
                 if (mapSource.internal_type === 'TitleActivitySerializer') {
@@ -670,6 +725,15 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         }
       } else if (b.activity_type === this.at.convoCards) {
         b.activity_overview_text = ActivityTitles[this.at.convoCards];
+      } else if (b.activity_type === this.at.poll) {
+        b.activity_overview_text = ActivityTitles[this.at.poll];
+        console.log(b);
+        // b.activity_type = 'MCQActivity';
+        if (b.quiz_label) {
+          b.quiz_label = 'leader_board';
+        } else {
+          delete b.quiz_label;
+        }
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
     });
@@ -751,4 +815,5 @@ export const OrderForActivities = {
     'prediction_seconds',
   ],
   ConvoActivity: ['main_title', 'title_text', 'convocard_set'],
+  PollActivity: ['titlecomponent', 'title', 'question', 'mcqchoice_set', 'question_seconds', 'quiz_label'],
 };

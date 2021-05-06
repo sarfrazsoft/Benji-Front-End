@@ -17,7 +17,6 @@ export class MainScreenMcqresultActivityComponent
   showChart = true;
   choices: Array<any> = [];
   question = '';
-  optionIdentifiers = ['A', 'B', 'C', 'D', 'E', 'F'];
   leaderBoardUsers = [];
 
   constructor(private contextService: ContextService) {

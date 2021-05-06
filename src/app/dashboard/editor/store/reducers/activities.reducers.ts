@@ -80,8 +80,6 @@ export const initialState = {
   lessonSaved: false,
 };
 
-
-
 export function reducer(state = initialState, action: fromActivities.ActivitiesAction): ActivityState {
   switch (action.type) {
     // reducers to load all possible activities

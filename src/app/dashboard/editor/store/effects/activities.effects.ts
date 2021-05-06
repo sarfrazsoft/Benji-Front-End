@@ -140,13 +140,16 @@ export class ActivitiesEffects {
           // increament i so that it skips the casestudy activity now
           // that it has been moved to the next index in array
           i++;
-        } else if (newContentArray[i].activity_type === this.at.mcq) {
+        } else if (
+          newContentArray[i].activity_type === this.at.mcq ||
+          newContentArray[i].activity_type === this.at.poll
+        ) {
           const mcqAct = newContentArray[i];
 
           if (newContentArray[i + 1] && newContentArray[i + 1].activity_type === this.at.mcqResults) {
             // this mcqAct already has a mcq results activity we don't need to add
           } else {
-            if (mcqAct.show_distribution) {
+            if (mcqAct.show_distribution || newContentArray[i].activity_type === this.at.poll) {
               // setTimeout(() => {
               // add mcqresultactivity
               const newIndex = new Date().getTime();

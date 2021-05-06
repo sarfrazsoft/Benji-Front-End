@@ -32,6 +32,7 @@ import {
   MultiSchemaTypeComponent,
   NullTypeComponent,
   ObjectTypeComponent,
+  PollChoiceTypeComponent,
   QuestionTypeSelectComponent,
   SecondsTypeComponent,
 } from './services';
@@ -140,6 +141,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'emoji', component: EmojiSelectorComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'image', component: ImageSelectorComponent, wrappers: ['benji-field-wrapper'] },
         { name: 'mcqChoice', component: MCQChoiceTypeComponent },
+        { name: 'pollChoice', component: PollChoiceTypeComponent },
         { name: 'bapBlank', component: BAPBlankTypeComponent },
         { name: 'feedbackQuestion', component: FeedbackQuestionTypeComponent },
         { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },

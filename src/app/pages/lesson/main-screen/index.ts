@@ -32,6 +32,7 @@ export { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/bu
 export * from './brainstorming-activity';
 export { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
+export { MainScreenPollComponent } from './poll-activity/poll-activity.component';
 export { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 export { MainScreenLessonComponent };
 

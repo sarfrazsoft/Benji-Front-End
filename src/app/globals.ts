@@ -33,6 +33,7 @@ export enum ActivityTypes {
   hintWord = 'HintWordActivity',
   genericRoleplay = 'GenericRoleplayActivity',
   triadGrouping = 'TriadGroupingActivity',
+  poll = 'PollActivity',
 }
 
 export const ActivityTitles = {
@@ -41,6 +42,7 @@ export const ActivityTitles = {
   BrainstormActivity: 'instructions',
   TitleActivity: 'main_title',
   MCQActivity: 'question.question',
+  PollActivity: 'question.question',
   FeedbackActivity: 'titlecomponent.title',
   ConvoActivity: 'main_title',
 };
@@ -51,6 +53,7 @@ export const ActivityThumbnails = {
   BrainstormActivity: 'brainstorm.svg',
   TitleActivity: 'slides.svg',
   MCQActivity: 'mcq.svg',
+  PollActivity: 'poll.svg',
   FeedbackActivity: 'feedback.svg',
   ConvoActivity: 'convocards.svg',
 };
@@ -65,6 +68,7 @@ export const ActivityDisplayNames = {
   GenericRoleplayActivity: 'Roleplay',
   BuildAPitchActivity: 'Madlibs',
   ConvoActivity: 'Cards',
+  PollActivity: 'Poll',
 };
 
 export const AllowShareActivities = [

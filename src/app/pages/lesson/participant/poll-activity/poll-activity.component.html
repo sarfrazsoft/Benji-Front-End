@@ -3,13 +3,13 @@
   <ng-container *ngIf="showQuestion">
     <div class="b-flat-card__body">
       <h3 class="pn-600 primary-color-darkest">
-        {{ activityState.mcqactivity.question.question }}
+        {{ activityState.pollactivity.question.question }}
       </h3>
     </div>
     <div class="b-flat-card__action">
       <button
         *ngFor="
-          let option of activityState.mcqactivity.question.mcqchoice_set;
+          let option of activityState.pollactivity.question.mcqchoice_set;
           let i = index
         "
         class="b-standard-button unselected"
@@ -50,7 +50,7 @@
     <div class="b-flat-card__action">
       <ng-container
         *ngFor="
-          let option of activityState.mcqactivity.question.mcqchoice_set;
+          let option of activityState.pollactivity.question.mcqchoice_set;
           let i = index
         "
       >

@@ -91,6 +91,13 @@
   >
   </benji-ps-pop-quiz>
 
+  <benji-ps-poll
+    *ngIf="getActivityType() === at.poll"
+    [activityState]="serverMessage"
+    (sendMessage)="sendSocketMessage($event)"
+  >
+  </benji-ps-poll>
+
   <benji-ps-mcqresult-activity
     *ngIf="getActivityType() === at.mcqResults"
     [activityState]="serverMessage"
