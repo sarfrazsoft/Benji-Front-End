@@ -9,6 +9,7 @@ export interface CaseStudyReport extends Report {
   mainscreen_instructions: number;
   note_taker_instructions: number;
   participant_instructions: number;
+  activity_title: string;
 }
 
 export interface CaseStudyUser {
