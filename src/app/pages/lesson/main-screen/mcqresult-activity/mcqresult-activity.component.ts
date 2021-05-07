@@ -6,7 +6,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ms-mcqresult-activity',
   templateUrl: './mcqresult-activity.component.html',
-  styleUrls: ['./mcqresult-activity.component.scss'],
 })
 export class MainScreenMcqresultActivityComponent
   extends BaseActivityComponent
@@ -18,6 +17,7 @@ export class MainScreenMcqresultActivityComponent
   choices: Array<any> = [];
   question = '';
   leaderBoardUsers = [];
+  activityType;
 
   constructor(private contextService: ContextService) {
     super();
@@ -26,10 +26,14 @@ export class MainScreenMcqresultActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.contextService.destroyActivityTimer();
+    this.activityType =
+      this.getActivityType() === 'PollResultsActivity' ? 'pollresultsactivity' : 'mcqresultsactivity';
   }
 
   ngOnChanges() {
-    const act = this.activityState.mcqresultsactivity;
+    this.activityType =
+      this.getActivityType() === 'PollResultsActivity' ? 'pollresultsactivity' : 'mcqresultsactivity';
+    const act = this.activityState[this.activityType];
 
     this.singleUserLesson = this.activityState.lesson.single_user_lesson;
 
@@ -84,7 +88,7 @@ export class MainScreenMcqresultActivityComponent
   }
 
   renderChart() {
-    const act = this.activityState.mcqresultsactivity;
+    const act = this.activityState[this.activityType];
     const labels = act.question_list.map((q) => q.question);
     const canvas: any = document.getElementById('myChart');
     const ctx = canvas.getContext('2d');
@@ -150,7 +154,7 @@ export class MainScreenMcqresultActivityComponent
   }
 
   getUserScore() {
-    const scoreCard = this.activityState.mcqresultsactivity.results_summary.find((r) => {
+    const scoreCard = this.activityState[this.activityType].results_summary.find((r) => {
       return r.participant_code === this.getParticipantCode();
     });
 
@@ -158,7 +162,7 @@ export class MainScreenMcqresultActivityComponent
   }
 
   getTotalQuestions() {
-    return this.activityState.mcqresultsactivity.total;
+    return this.activityState[this.activityType].total;
   }
 
   getPercentageScore() {

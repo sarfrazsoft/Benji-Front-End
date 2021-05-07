@@ -66,6 +66,7 @@ export const initialState = {
     'ExternalGroupingActivity',
     'PitchoMaticActivity',
     'MCQResultsActivity',
+    'PollResultsActivity',
     'MontyHallActivity',
     'SingleGroupingActivity',
     'ImageActivity',
@@ -152,6 +153,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
           (val) =>
             val.activity_type !== 'ExternalGroupingActivity' &&
             val.activity_type !== 'SingleGroupingActivity' &&
+            val.activity_type !== 'PollResultsActivity' &&
             val.activity_type !== 'MCQResultsActivity'
         );
         acts.forEach((val, i) => {

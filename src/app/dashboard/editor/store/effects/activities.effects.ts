@@ -146,25 +146,42 @@ export class ActivitiesEffects {
         ) {
           const mcqAct = newContentArray[i];
 
-          if (newContentArray[i + 1] && newContentArray[i + 1].activity_type === this.at.mcqResults) {
+          if (
+            newContentArray[i + 1] &&
+            (newContentArray[i + 1].activity_type === this.at.mcqResults ||
+              newContentArray[i + 1].activity_type === this.at.pollResults)
+          ) {
             // this mcqAct already has a mcq results activity we don't need to add
           } else {
-            if (mcqAct.show_distribution || newContentArray[i].activity_type === this.at.poll) {
-              // setTimeout(() => {
-              // add mcqresultactivity
+            if (newContentArray[i].activity_type === this.at.poll) {
               const newIndex = new Date().getTime();
               const mcqresultactivity = {
                 activity_id: newIndex + '_' + mcqAct.activity_id,
-                activity_type: 'MCQResultsActivity',
+                activity_type: 'PollResultsActivity',
                 description: 'Here are your results',
                 next_activity_delay_seconds: 10000,
                 poll_mode: true,
                 summary_questions: [{ question_id: mcqAct.activity_id }],
               };
               newContentArray.splice(i + 1, 0, mcqresultactivity);
-              // }, 0);
             } else {
-              // this mcqAct doesn't need a mcqresults activity
+              if (mcqAct.show_distribution) {
+                // setTimeout(() => {
+                // add mcqresultactivity
+                const newIndex = new Date().getTime();
+                const mcqresultactivity = {
+                  activity_id: newIndex + '_' + mcqAct.activity_id,
+                  activity_type: 'MCQResultsActivity',
+                  description: 'Here are your results',
+                  next_activity_delay_seconds: 10000,
+                  poll_mode: true,
+                  summary_questions: [{ question_id: mcqAct.activity_id }],
+                };
+                newContentArray.splice(i + 1, 0, mcqresultactivity);
+                // }, 0);
+              } else {
+                // this mcqAct doesn't need a mcqresults activity
+              }
             }
           }
         }

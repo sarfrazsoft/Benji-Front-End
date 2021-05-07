@@ -99,7 +99,7 @@
   </benji-ps-poll>
 
   <benji-ps-mcqresult-activity
-    *ngIf="getActivityType() === at.mcqResults"
+    *ngIf="getActivityType() === at.mcqResults || getActivityType() === at.pollResults"
     [activityState]="serverMessage"
     [avgServerTimeOffset]="avgServerTimeOffset"
     (sendMessage)="sendSocketMessage($event)"

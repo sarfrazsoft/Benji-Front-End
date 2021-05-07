@@ -85,7 +85,7 @@
       ></benji-ms-pop-quiz>
 
       <benji-ms-mcqresult-activity
-        *ngIf="getActivityType() === at.mcqResults"
+        *ngIf="getActivityType() === at.mcqResults || getActivityType() === at.pollResults"
         [activityState]="serverMessage"
         (sendMessage)="sendSocketMessage($event)"
       ></benji-ms-mcqresult-activity>

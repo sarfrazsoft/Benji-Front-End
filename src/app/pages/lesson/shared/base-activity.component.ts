@@ -16,6 +16,14 @@ export abstract class BaseActivityComponent implements OnInit {
     this.myParticipantCode = this.getParticipantCode();
   }
 
+  getActivityType() {
+    if (this.activityState.activity_type !== null) {
+      return this.activityState.activity_type;
+    } else {
+      return null;
+    }
+  }
+
   // TODO remove idToName it is not being used anywhere
   public idToName(id: number) {
     return this.activityState.lesson_run.participant_set.find((user) => user.participant_code === id)

@@ -13,7 +13,6 @@ import { PastSessionsService } from 'src/app/services';
 @Component({
   selector: 'benji-past-sessions-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
 })
 export class PastSessionsTableComponent implements AfterViewInit {
   set sessionFilter(lessons: any) {

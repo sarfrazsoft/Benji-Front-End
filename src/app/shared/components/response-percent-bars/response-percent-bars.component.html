@@ -2,12 +2,12 @@
   class="response-percent-bars"
   fxLayout="column"
   fxLayoutAlign="center center"
-  *ngIf="mcq"
+  *ngIf="data"
 >
   <div class="content" fxLayout="column" fxLayoutGap="10px">
     <div class="header" fxLayout="row" fxLayoutGap="10px">
       <div class="question">
-        {{ mcq.question.question }}
+        {{ data.question.question }}
       </div>
     </div>
     <div class="options-container" fxLayout="column" fxLayoutGap="1%">

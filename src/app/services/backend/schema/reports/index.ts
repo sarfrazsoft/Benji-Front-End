@@ -7,3 +7,4 @@ export * from './generic-roleplay';
 export * from './groups';
 export * from './brainstorm';
 export * from './case-study';
+export * from './poll';

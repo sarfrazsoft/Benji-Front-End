@@ -12,6 +12,7 @@ import {
   GenericRoleplayReport,
   MCQReport,
   PitchOMaticReport,
+  PollReport,
   SessionReport,
   User,
 } from 'src/app/services/backend/schema';
@@ -126,6 +127,13 @@ export class PastSessionsService {
               ...res,
               mcqs: [act] as Array<MCQReport>,
               activity_type: Acts.mcq,
+              title: act.title,
+            });
+          } else if (act.activity_type === Acts.poll) {
+            arr.push({
+              ...res,
+              mcqs: [act] as Array<PollReport>,
+              activity_type: Acts.poll,
               title: act.title,
             });
           } else if (act.activity_type === Acts.feedback) {
