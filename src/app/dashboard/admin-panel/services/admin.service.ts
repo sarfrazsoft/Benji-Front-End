@@ -51,4 +51,13 @@ export class AdminService {
         })
       );
   }
+  duplicateLesson(lessonId: number): Observable<any> {
+    return this.http
+      .post(global.apiRoot + `/course_details/lesson/${lessonId}/duplicate/`, { observe: 'response' })
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
+  }
 }
