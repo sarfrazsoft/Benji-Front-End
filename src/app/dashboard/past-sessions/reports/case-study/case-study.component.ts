@@ -37,9 +37,9 @@ export class CaseStudyComponent implements OnInit, OnChanges {
   }
 
   update() {
-    console.log(this.data.casestudy);
-    // this.groups = this.data.casestudy.groups;
-    this.groups = Groups;
+    // console.log(this.data.casestudy);
+    this.groups = this.data.casestudy.groups;
+    // this.groups = Groups;
     this.casestudy = this.data.casestudy;
     this.questions = this.casestudy.casestudyquestion_set;
 
