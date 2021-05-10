@@ -38,10 +38,23 @@ export class CaseStudyComponent implements OnInit, OnChanges {
 
   update() {
     // console.log(this.data.casestudy);
-    this.groups = this.data.casestudy.groups;
     // this.groups = Groups;
     this.casestudy = this.data.casestudy;
     this.questions = this.casestudy.casestudyquestion_set;
+
+    // this.groups = this.data.casestudy.groups;
+    const tempGroups = [];
+    for (let g = 0; g < this.data.casestudy.groups.length; g++) {
+      const group = this.data.casestudy.groups[g];
+      const filteredInUsers = this.pastSessionService.filteredInUsers;
+      for (let u = 0; u < group.participants.length; u++) {
+        const participantCode = group.participants[u];
+        if (filteredInUsers.find((fiu) => fiu === participantCode)) {
+          tempGroups.push(group);
+        }
+      }
+    }
+    this.groups = tempGroups;
 
     this.getGroupAndTheirAnswers();
   }
