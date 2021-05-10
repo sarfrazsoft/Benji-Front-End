@@ -88,7 +88,7 @@ export class PastSessionsService {
 
   // api/course_details/lesson_run/{room_code}/summary/
   getReports(id: string): Observable<any> {
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary').pipe(
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary/').pipe(
       map((res: any) => {
         // res = activityResult3;
         const arr: Array<ActivityReport> = [];
