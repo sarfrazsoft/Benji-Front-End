@@ -59,52 +59,7 @@ export class CaseStudyComponent implements OnInit, OnChanges {
     this.getGroupAndTheirAnswers();
   }
 
-  getGroupAndTheirAnswers() {
-    // this.groups = [];
-    // for (let g = 0; g < this.data.casestudy.groups.length; g++) {
-    //   const group = this.data.casestudy.groups[g];
-    //   const filteredInUsers = this.pastSessionService.filteredInUsers;
-    //   // all the people in group should be in filteredInUsers
-    //   let allPeoplePresent = true;
-    //   for (let u = 0; u < group.participants.length; u++) {
-    //     const participantCode = group.participants[u];
-    //     if (filteredInUsers.find((fiu) => fiu === participantCode)) {
-    //       // user present
-    //     } else {
-    //       allPeoplePresent = false;
-    //     }
-    //   }
-    //   if (allPeoplePresent) {
-    //     const usersNnotes = group.participants.map((u) => {
-    //       const caseStudyUser = this.data.casestudy.casestudyparticipant_set.find(
-    //         (x) => u === x.participant.participant_code
-    //       );
-    //       return {
-    //         user: this.pastSessionService.getParticipantName(u),
-    //         answers: caseStudyUser.casestudyanswer_set,
-    //       };
-    //     });
-    //     const names = usersNnotes.map((u) => u.user).join(', ');
-    //     let answers = [];
-    //     for (let i = 0; i < usersNnotes.length; i++) {
-    //       const el = usersNnotes[i];
-    //       answers = [...answers, ...el.answers];
-    //     }
-    //     for (let i = 0; i < answers.length; i++) {
-    //       const el = answers[i];
-    //       const question = this.data.casestudy.casestudyquestion_set.find(
-    //         (q) => q.id === el.casestudyquestion
-    //       );
-    //       answers[i].question_text = question.question_text;
-    //     }
-    //     this.groups.push({
-    //       participants: names,
-    //       notes: answers as CaseStudyGroup['notes'],
-    //     });
-    //   } else {
-    //   }
-    // }
-  }
+  getGroupAndTheirAnswers() {}
 
   getGroupWorksheet(group: Group) {
     const doc = JSON.parse(group.answer);
