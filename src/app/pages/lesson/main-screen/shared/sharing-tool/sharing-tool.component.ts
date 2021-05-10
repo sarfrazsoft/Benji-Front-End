@@ -225,6 +225,9 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
         }
       });
     }
+    this.speakers.sort(function (obj1, obj2) {
+      return Number(obj2.optedIn) - Number(obj1.optedIn);
+    });
 
     console.log(this.speakers);
 
