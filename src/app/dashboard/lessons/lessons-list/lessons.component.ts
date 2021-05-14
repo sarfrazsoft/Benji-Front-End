@@ -36,6 +36,9 @@ export class LessonsComponent implements OnInit {
   }
 
   openDetails(lesson: Lesson) {
+    // this.router.navigate(['lesson', lesson.id], {
+    //   relativeTo: this.activatedRoute,
+    // });
     this.adminService.getLessonDetails(lesson.id).subscribe((res: Lesson) => {
       if (res.lesson_details) {
         this.contextService.lesson = res;

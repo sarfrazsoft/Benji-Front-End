@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "npx protractor e2e/protractor.conf.js"
+    "e2e": "npx protractor e2e/protractor.conf.js",
+    "protractor": "npx protractor e2e/protractor.conf.js"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +34,15 @@
     "@ngx-formly/bootstrap": "^5.0.0",
     "@ngx-formly/core": "^5.0.0",
     "@ngx-formly/schematics": "^5.10.1",
+    "@tiptap/core": "^2.0.0-beta.54",
+    "@tiptap/extension-bubble-menu": "^2.0.0-beta.15",
+    "@tiptap/extension-floating-menu": "^2.0.0-beta.12",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.15",
+    "@tiptap/extension-table": "^2.0.0-beta.18",
+    "@tiptap/extension-table-cell": "^2.0.0-beta.11",
+    "@tiptap/extension-table-header": "^2.0.0-beta.13",
+    "@tiptap/extension-table-row": "^2.0.0-beta.11",
+    "@tiptap/starter-kit": "^2.0.0-beta.51",
     "@types/chartjs": "0.0.31",
     "@types/lodash": "^4.14.119",
     "@types/prosemirror-schema-basic": "^1.0.1",
@@ -58,6 +68,7 @@
     "ngx-device-detector": "^1.3.6",
     "ngx-editor": "7.0.3",
     "ngx-perfect-scrollbar": "^8.0.0",
+    "ngx-tiptap": "^1.2.3",
     "node-sass": "^4.12.0",
     "npm": "6.1.0",
     "particles.js": "^2.0.0",

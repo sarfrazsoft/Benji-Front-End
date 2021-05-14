@@ -16,6 +16,8 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
   'tooltip-class': 'benji-editor-tooltip',
 };
 
+import { NgxTiptapModule } from 'ngx-tiptap';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +26,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
     ReactiveFormsModule,
     SharedModule,
     TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
+    NgxTiptapModule,
   ],
   exports: [RouterModule],
   declarations: [...DashboardComponents, LessonTileComponent],
