@@ -87,10 +87,16 @@
           <li *ngFor="let group of breakoutRooms">
             <div class="group collapseable-group" [ngStyle]="{'height': collapsed[group.id] ? '50px' : '216px'}">
               <div class="header black-color" fxLayout="row" fxLayoutGap="8px">
-                <div>
+                <div *ngIf="!editingName[group.id]">
                   {{group.name}}
                 </div>
+                <div *ngIf="editingName[group.id]" style="width: 125px;">
+                  <input type="text" [(ngModel)]="groupName">
+                </div>
                 <div style="flex: 1" fxLayout="row" fxLayoutAlign="space-between">
+                  <div class="group-controls" (click)="editGroupName(group)">
+                    <img src="/assets/img/groupProgressionGrey.svg" alt="">
+                  </div>
                   <div class="group-controls" style="opacity: 0;">
                     <img src="/assets/img/groupProgressionGrey.svg" alt="">
                   </div>

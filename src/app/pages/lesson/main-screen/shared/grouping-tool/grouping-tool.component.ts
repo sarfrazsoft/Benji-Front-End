@@ -24,6 +24,8 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   unassignedUsers = [];
   breakoutRooms = [];
   collapsed = {};
+  editingName = {};
+  groupName = '';
   showStartGroupingButton: boolean;
   private typingTimer;
   numberOfRooms = 0;
@@ -177,6 +179,16 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new StartCaseStudyGroupEvent());
     this.showStartGroupingButton = false;
     this.sendMessage.emit(new ViewGroupingEvent(false));
+  }
+
+  editGroupName(group) {
+    this.editingName[group.id] = true;
+    this.groupName = group.name;
+  }
+
+  saveEditedGroupName(group) {
+    this.sendMessage.emit(new EditGroupingTitleEvent(group.id, this.groupName));
+    this.editingName[group.id] = false;
   }
 
   deleteGroup(group) {

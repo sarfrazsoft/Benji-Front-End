@@ -10,6 +10,7 @@ export * from './lesson-settings-dialog/lesson-settings.dialog';
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
+import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
 import { JobInfoDialogComponent } from './job-info/job-info.dialog';
 import { JoinSessionDialogComponent } from './join-session/join-session.dialog';
 import { LaunchSessionDialogComponent } from './launch-session/launch-session.dialog';
@@ -20,6 +21,7 @@ export const Dialogs = [
   AddVideoDialogComponent,
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
+  ImagePickerDialogComponent,
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
   LaunchSessionDialogComponent,

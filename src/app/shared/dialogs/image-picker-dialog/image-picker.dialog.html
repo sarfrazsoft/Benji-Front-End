@@ -1,0 +1,121 @@
+<div class="" fxLayout="column">
+  <div class="dialog-heading-container" fxLayout="row" fxLayoutAlign="space-between">
+    <h2 class="dialog-heading primary-color-darkest">
+      Session Summary
+    </h2>
+    <button class="close-button" matDialogClose>
+      <mat-icon class="icon-white">clear</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="add-learners">
+    <div fxLayout="column" fxLayoutGap="15px">
+      
+      <div class="add-learners-section dashboard-form" fxLayout="column">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
+          <div class="field">
+            <div class="label">Title</div>
+            <input
+              id="title"
+              class="dash-input b-standard-textarea"
+              required
+              type="text"
+              formControlName="title"
+              placeholder="Give your session a title"
+            >
+          </div>
+          <div class="field">
+            <div class="label">Description</div>
+            <textarea
+              id="description"
+              class="dash-input b-standard-textarea"
+              required
+              type="text"
+              rows="2"
+              formControlName="description"
+              placeholder="What is this session about?"
+            ></textarea>
+          </div>
+          <div class="field">
+            <div class="label">Cover photo</div>
+
+            <div  *ngIf="imageURL" class="selected-image">
+              <img [src]="imageURL">
+              <div benji-click-stop-propagation  class="editor-content-button bg-sky">
+                <label for="file-upload">
+                  <input 
+                    type="file" 
+                    id="file-upload" 
+                    accept="image/*"
+                    onclick="this.value = null" 
+                    (change)="onFileSelect($event)"
+                    style="display: none;" />
+                    <div >
+                      Edit Photo
+                    </div>
+                </label>
+              </div>
+            </div>
+            <label for="file-upload" *ngIf="!imageURL">
+              <input 
+                type="file" 
+                id="file-upload" 
+                accept="image/*" 
+                onclick="this.value = null" 
+                (change)="onFileSelect($event)"
+                style="display: none;" />
+                <div class="image-placeholder" 
+                  fxLayout="column" 
+                  fxLayoutGap="12px" 
+                  fxLayoutAlign="center center">
+                  <div>
+                    <img src="/assets/img/imageUploadIcon.svg" alt="">
+                    <!-- <img *ngIf="imageURL" [src]="imageURL" alt=""> -->
+                  </div>
+                  <div>
+                    Click to upload an image
+                  </div>
+                </div>
+            </label>
+
+
+          </div>
+    
+          <div 
+            benji-click-stop-propagation 
+            class="controls-container" 
+            fxLayout="row" 
+            fxLayoutAlign="start" 
+            fxLayoutGap="8px">
+            <button
+              class="dialog-controls bg-primary-color white-color start-resume-buttons"
+              type="submit"
+            >
+              Save
+            </button>
+            <button class="dialog-controls primary-color bg-sky" matDialogClose>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      
+        <!-- <button
+          (click)="importCSV()"
+          class="dashboard-button"
+          [ngClass]="{
+            active: form.valid,
+            bg-primary-color: form.valid,
+            inactive: !form.valid
+          }"
+        >
+          import csv
+        </button>
+      
+        <input
+          type="file"
+          class="upload"
+          (change)="changeListener($event.target.files)"
+        /> -->
+    </div>
+  </mat-dialog-content>
+</div>
