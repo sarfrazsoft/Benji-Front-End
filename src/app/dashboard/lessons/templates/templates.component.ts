@@ -1,20 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
-
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { orderBy, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
-  selector: 'benji-lessons-list',
-  templateUrl: './lessons.component.html',
+  selector: 'benji-templates-list',
+  templateUrl: './templates.component.html',
 })
-export class LessonsComponent implements OnInit {
-  @Input() lessons: Array<Lesson> = [];
-  @Input() isTemplates = false;
+export class TemplatesComponent implements OnInit {
+  lessons: Array<Lesson> = [];
 
   eventsSubject: Subject<void> = new Subject<void>();
 
@@ -28,7 +27,26 @@ export class LessonsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService
-  ) {}
+  ) {
+    this.activatedRoute.data.forEach((data: any) => {
+      this.lessons = data.dashData.lessons.filter(lesson => lesson.public_permission === 'duplicate');
+
+      // if (!data.dashData.user.job_title) {
+      //   this.dialog
+      //     .open(JobInfoDialogComponent, {
+      //       data: {
+      //         name: data.dashData.user.first_name
+      //       },
+      //       disableClose: true,
+      //       panelClass: 'dashboard-dialog'
+      //     })
+      //     .afterClosed()
+      //     .subscribe(res => {
+      //       console.log(res);
+      //     });
+      // }
+    });
+  }
 
   ngOnInit() {
     if (this.lessons.length) {

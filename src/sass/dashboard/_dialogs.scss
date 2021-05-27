@@ -99,3 +99,29 @@
     color: white;
   }
 }
+
+.templates-dialog .mat-dialog-content,
+.templates-dialog .mat-dialog-container {
+  margin: 0px;
+  padding: 0px;
+  border-radius: 8px;
+}
+
+.templates-dialog {
+  .content {
+    padding: 0px 24px 24px 24px;
+  }
+  .controls-container {
+    margin-top: 24px;
+  }
+  p {
+    color: #6A6A6A;
+    line-height: 24px;
+  }
+  h1 {
+    margin: 0.5em 0;
+  }
+  img {
+    margin-bottom: 0.6em;
+  }
+} 

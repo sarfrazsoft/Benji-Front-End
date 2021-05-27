@@ -2,7 +2,8 @@
   <!-- <div (click)="openDetails(lesson)" *ngFor="let lesson of lessons"> -->
   <div (click)="edit(lesson, $event)" *ngFor="let lesson of lessons">
     <benji-lesson-tile 
-      [lesson]="lesson" 
+      [lesson]="lesson"
+      [isTemplates]="isTemplates" 
       (updateLessons)="updateLessons()" 
       [events]="eventsSubject.asObservable(lesson)"
       ></benji-lesson-tile>

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Inject } from '@angular/core';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
@@ -10,7 +10,7 @@ import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent, LessonSettingsDialogComponent } from 'src/app/shared';
+import { ConfirmationDialogComponent, LessonSettingsDialogComponent, TemplatesDialogComponent } from 'src/app/shared';
 import { AdminService } from '../../../admin-panel/services';
 
 @Component({
@@ -41,6 +41,17 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     private utilsService: UtilsService,
     private editorService: EditorService
   ) {}
+
+  openDialog() {
+    const dialogRef = this.dialog.open(TemplatesDialogComponent, {
+      width: '640px',
+      panelClass: 'templates-dialog',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
   ngOnInit() {
     this.eventsSubscription = this.events.subscribe((lesson) => this.edit(lesson));

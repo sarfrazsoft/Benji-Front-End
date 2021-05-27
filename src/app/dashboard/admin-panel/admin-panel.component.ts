@@ -47,7 +47,8 @@ export class AdminPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.activatedRoute.data.forEach((data: any) => {
-      this.lessons = data.dashData.lessons;
+      this.lessons = data.dashData.lessons.filter(lesson => lesson.public_permission != 'duplicate');
+      
       // if (!data.dashData.user.job_title) {
       //   this.dialog
       //     .open(JobInfoDialogComponent, {

@@ -1,30 +1,17 @@
-
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="dashboard-heading">
-      <h1>Dashboard</h1>
+      <h1>Explore templates</h1>
     </div>
     <div>
       <button class="dashboard-secondary-button bg-primary-color white-color padding0-24" routerLink="editor">
-        New Session
+        Submit a template
       </button>
     </div>
   </div>
 
-  <!-- <div benjiTextEditor></div> -->
-
-  <!-- <form [formGroup]="form">
-    <div class="editor"> -->
-
-    <!-- </div>
-  </form> -->
-
-  <!-- <div class="subsection-container">
-    <benji-stats></benji-stats>
-  </div> -->
-
-
   <div class="subsection-container">
-    <benji-lessons-list [lessons]="lessons" [isTemplates]="false"></benji-lessons-list>
+    <benji-lessons-list [lessons]="lessons" [isTemplates]="true"></benji-lessons-list>
   </div>
+
 </div>
