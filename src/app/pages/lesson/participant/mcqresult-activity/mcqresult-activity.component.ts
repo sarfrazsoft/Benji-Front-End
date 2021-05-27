@@ -6,12 +6,12 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-mcqresult-activity',
   templateUrl: './mcqresult-activity.component.html',
-  styleUrls: ['./mcqresult-activity.component.scss'],
 })
 export class ParticipantMcqresultActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   showStatistics = false;
+  activityType;
   constructor(private contextService: ContextService) {
     super();
   }
@@ -19,16 +19,20 @@ export class ParticipantMcqresultActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
+    this.activityType =
+      this.getActivityType() === 'PollResultsActivity' ? 'pollresultsactivity' : 'mcqresultsactivity';
   }
   ngOnChanges() {
-    const act = this.activityState.mcqresultsactivity;
+    this.activityType =
+      this.getActivityType() === 'PollResultsActivity' ? 'pollresultsactivity' : 'mcqresultsactivity';
+    const act = this.activityState[this.activityType];
 
     if (act.poll_mode) {
       this.showStatistics = true;
     }
   }
   getUserScore() {
-    const scoreCard = this.activityState.mcqresultsactivity.results_summary.find((r) => {
+    const scoreCard = this.activityState[this.activityType].results_summary.find((r) => {
       return r.participant_code === this.getParticipantCode();
     });
 
@@ -36,7 +40,7 @@ export class ParticipantMcqresultActivityComponent
   }
 
   getTotalQuestions() {
-    return this.activityState.mcqresultsactivity.total;
+    return this.activityState[this.activityType].total;
   }
 
   getPercentageScore() {

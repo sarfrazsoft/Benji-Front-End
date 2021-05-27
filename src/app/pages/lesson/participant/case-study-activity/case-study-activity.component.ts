@@ -225,7 +225,7 @@ export class ParticipantCaseStudyActivityComponent
   }
 
   ngOnDestroy() {
-    this.saveEditCollab();
+    // this.saveEditCollab();
   }
 
   saveEditCollab() {

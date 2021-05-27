@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Editor, Toolbar } from 'ngx-editor';
 import { wsRoot } from 'src/app/globals';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -67,7 +68,6 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
       plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), ...plugins],
       nodeViews,
     });
-
     if (this.jsonDoc) {
       this.editor.setContent(this.jsonDoc);
     }

@@ -5,12 +5,10 @@ import { LeaderBoard, MCQChoiceSet, MCQSubmitAnswerEvent } from 'src/app/service
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
-  selector: 'benji-ms-pop-quiz',
-  templateUrl: './pop-quiz.component.html',
+  selector: 'benji-ms-poll',
+  templateUrl: './poll-activity.component.html',
 })
-export class MainScreenPopQuizComponent
-  extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+export class MainScreenPollComponent extends BaseActivityComponent implements OnInit, OnChanges, OnDestroy {
   radialTimer;
   showLeaderboard = false;
   leaderboard: Array<LeaderBoard> = [];
@@ -32,7 +30,7 @@ export class MainScreenPopQuizComponent
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
-    const act = this.activityState.mcqactivity;
+    const act = this.activityState.pollactivity;
     if (act.question.mcqchoice_set[0] && act.question.mcqchoice_set[0].id) {
       act.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     }
@@ -42,32 +40,33 @@ export class MainScreenPopQuizComponent
 
     if (this.editor) {
       const as = this.activityState;
-      const qTimer = as.mcqactivity.question_timer;
+      const qTimer = as.pollactivity.question_timer;
       this.radialTimer = qTimer;
     }
   }
 
   ngOnChanges() {
     const as = this.activityState;
-    const qTimer = as.mcqactivity.question_timer;
+    const act = this.activityState.pollactivity;
+    const qTimer = act.question_timer;
     const nt = this.getNextActStartTimer();
 
-    if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
-      this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    if (act.question.mcqchoice_set[0] && act.question.mcqchoice_set[0].id) {
+      act.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     }
     if (this.peakBackState && this.peakBackStage === null) {
       // this.voteScreen = true;
       // this.submissionScreen = false;
       // this.VnSComplete = false;
       // this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-      this.revealAnswers = true;
-      if (as.mcqactivity.quiz_leaderboard) {
-        this.showLeaderboard = true;
-        this.leaderboard = as.mcqactivity.quiz_leaderboard;
-        this.leaderboard = this.leaderboard.sort((a, b) => {
-          return b.score - a.score;
-        });
-      }
+      // this.revealAnswers = true;
+      // if (act.quiz_leaderboard) {
+      //   this.showLeaderboard = true;
+      //   this.leaderboard = act.quiz_leaderboard;
+      //   this.leaderboard = this.leaderboard.sort((a, b) => {
+      //     return b.score - a.score;
+      //   });
+      // }
     } else if (!this.peakBackState) {
       if (qTimer && (qTimer.status === 'running' || qTimer.status === 'paused')) {
         this.revealAnswers = false;
@@ -78,13 +77,6 @@ export class MainScreenPopQuizComponent
         this.radialTimer = nt;
         // this.contextService.activityTimer = nt;
         this.contextService.destroyActivityTimer();
-        if (as.mcqactivity.quiz_leaderboard) {
-          this.showLeaderboard = true;
-          this.leaderboard = as.mcqactivity.quiz_leaderboard;
-          this.leaderboard = this.leaderboard.sort((a, b) => {
-            return b.score - a.score;
-          });
-        }
       }
     }
   }
@@ -97,7 +89,7 @@ export class MainScreenPopQuizComponent
   }
 
   getChoiceSubmittedUsers() {
-    return this.activityState.mcqactivity.answered_participants.length;
+    return this.activityState.pollactivity.answered_participants.length;
   }
 
   ngOnDestroy() {

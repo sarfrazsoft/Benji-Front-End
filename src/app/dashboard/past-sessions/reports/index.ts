@@ -8,3 +8,4 @@ export * from './pitch-o-matic/pitch-o-matic.component';
 export * from './generic-roleplay/generic-roleplay.component';
 export * from './feedback-tags/feedback-tags.component';
 export * from './case-study/case-study.component';
+export * from './case-study/reports-text-editor/reports-text-editor.component';

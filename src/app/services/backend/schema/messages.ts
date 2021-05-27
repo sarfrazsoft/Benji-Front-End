@@ -45,6 +45,7 @@ export interface UpdateMessage {
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
   mcqactivity?: MCQActivity;
+  pollactivity?: MCQActivity;
   mcqresultsactivity?: MCQResultsActivity;
   montyhallactivity?: MontyHallActivity;
   videoactivity?: VideoActivity;
@@ -202,6 +203,14 @@ export class HintWordSubmitVoteEvent extends ActivityEvent {
 
 export class MCQSubmitAnswerEvent extends ActivityEvent {
   event_name = 'MCQSubmitAnswerEvent';
+
+  constructor(answer: MCQChoice) {
+    super();
+    this.extra_args = { answer: answer.id };
+  }
+}
+export class PollSubmitAnswerEvent extends ActivityEvent {
+  event_name = 'PollSubmitAnswerEvent';
 
   constructor(answer: MCQChoice) {
     super();

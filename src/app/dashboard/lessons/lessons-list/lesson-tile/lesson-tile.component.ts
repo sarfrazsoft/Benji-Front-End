@@ -122,6 +122,22 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     }
   }
 
+  duplicate(lesson: Lesson, $event?) {
+    if (lesson.id) {
+      this.adminService.duplicateLesson(lesson.id).subscribe(
+        (res) => {
+          if (res.id) {
+            this.updateLessons.emit();
+            this.utilsService.openSuccessNotification(`Lesson successfully duplicated.`, `close`);
+          }
+        },
+        (error) => {
+          this.utilsService.openWarningNotification('Something went wrong.', '');
+        }
+      );
+    }
+  }
+
   delete($event, lesson: Lesson) {
     if (lesson.id) {
       if (lesson.effective_permission === 'admin') {

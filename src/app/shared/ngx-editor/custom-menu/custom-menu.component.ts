@@ -170,11 +170,17 @@ export class CustomMenuComponent implements OnInit {
     }
   }
 
+  getAllowImage() {
+    return this.editor.view.state.selection.$from.parent.inlineContent;
+  }
+
   imageSelected(file: File, lessonRunCode: string, participant_code: string) {
-    if (this.editor.view.state.selection.$from.parent.inlineContent && file) {
+    console.log(this.editor);
+    if (file) {
+      // if (this.editor.view.state.selection.$from.parent.inlineContent && file) {
       this.startImageUpload(this.editor.view, file, lessonRunCode, participant_code);
+      this.editor.view.focus();
     }
-    this.editor.view.focus();
   }
 
   startImageUpload(view: EditorView, file: File, lessonRunCode: string, participant_code: string) {

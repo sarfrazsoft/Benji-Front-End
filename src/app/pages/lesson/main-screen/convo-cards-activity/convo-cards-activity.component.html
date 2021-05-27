@@ -7,7 +7,7 @@
       {{ mainTitle }}
     </h1>
   </div>
-  <div class="activity-title-description-container">
+  <div *ngIf="titleText" class="activity-title-description-container">
     <p
       class="secondary-color-dark pn-500"
       [ngClass]="{

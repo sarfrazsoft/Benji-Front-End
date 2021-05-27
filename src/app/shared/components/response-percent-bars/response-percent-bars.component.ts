@@ -1,6 +1,11 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { PastSessionsService } from 'src/app/services';
-import { ActivityReport, MCQActivityParticipantAnswerSet, MCQReport } from 'src/app/services/backend/schema';
+import {
+  ActivityReport,
+  MCQActivityParticipantAnswerSet,
+  MCQReport,
+  PollReport,
+} from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-response-percent-bars',
@@ -8,12 +13,15 @@ import { ActivityReport, MCQActivityParticipantAnswerSet, MCQReport } from 'src/
   styleUrls: ['./response-percent-bars.component.scss'],
 })
 export class ResponsePercentBarsComponent implements OnInit, OnChanges {
-  @Input() mcq: MCQReport;
+  @Input() data: MCQReport | PollReport;
   @Input() questionIndex = 0;
   // Number of users who joined the lesson
-  @Input() lessonJoinedUsers = 0;
+  @Input() lessonJoinedUsersLength = 0;
+  @Input() lessonJoinedUsers = [];
   // Number of users who answered this question
-  @Input() questionRespondents = 0;
+  @Input() questionRespondentsLength = 0;
+  @Input() questionRespondents = [];
+  @Input() choiceSet = [];
   @Input() userFilter = false;
   choices: Array<any> = [];
 
@@ -30,18 +38,19 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
   }
 
   updateBars() {
-    if (this.mcq) {
-      let questionRespondents = this.mcq.mcqactivityparticipantanswer_set;
+    if (this.data) {
+      const questionRespondents = this.questionRespondents;
+      let questionRespondents2 = questionRespondents;
+
+      const choiceSet = this.choiceSet;
 
       // Iterate over each choice
       //    get the number of times this choice was selected
       //    get choice text
       //    get % of respondents for this choice from all respondents of the question
       let choiceRespondents: Array<MCQActivityParticipantAnswerSet>;
-      this.choices = this.mcq.question.mcqchoice_set.map((choice, i) => {
-        choiceRespondents = this.mcq.mcqactivityparticipantanswer_set.filter(
-          (answer) => answer.answer === choice.id
-        );
+      this.choices = choiceSet.map((choice, i) => {
+        choiceRespondents = questionRespondents.filter((answer) => answer.answer === choice.id);
 
         choiceRespondents = choiceRespondents.filter((respondent) => {
           return this.pastSessionService.filteredInUsers.find(
@@ -49,7 +58,7 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
           );
         });
 
-        questionRespondents = questionRespondents.filter((respondent) => {
+        questionRespondents2 = questionRespondents2.filter((respondent) => {
           return this.pastSessionService.filteredInUsers.find(
             (el) => respondent.participant.participant_code === el
           );

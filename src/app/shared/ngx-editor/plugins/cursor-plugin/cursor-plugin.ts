@@ -127,6 +127,7 @@ export const yCursorPlugin = (
         // TOD move to it's own plugin
         localStorage.setItem('collabedit', newState.doc.textContent);
         localStorage.setItem('collabeditJSONDoc', JSON.stringify(newState.toJSON()));
+        // console.log(JSON.stringify(newState.toJSON()));
 
         const ystate = ySyncPluginKey.getState(newState);
         const yCursorState = tr.getMeta(yCursorPluginKey);

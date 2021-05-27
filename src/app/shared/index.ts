@@ -13,6 +13,7 @@ import {
   MainScreenBuildPitchActivityComponent,
   MainScreenConvoCardsActivityComponent,
   MainScreenFeedbackActivityComponent,
+  MainScreenPollComponent,
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
 } from 'src/app/pages/lesson/main-screen';
@@ -29,6 +30,7 @@ import {
   ParticipantGroupingToolComponent,
   // ParticipantSharedComponents,
   ParticipantInstructionTemplateComponent,
+  ParticipantPollComponent,
   ParticipantPopQuizComponent,
   ParticipantSharingToolComponent,
   ParticipantTitleActivityComponent,
@@ -51,6 +53,7 @@ const ActivityComponents = [
   ParticipantGroupingToolComponent,
   ParticipantBuildPitchActivityComponent,
   ParticipantConvoCardsActivityComponent,
+  ParticipantPollComponent,
   VotePitchComponent,
   // ...ParticipantSharedComponents,
   ...ParticipantBrainStormComponents,
@@ -63,6 +66,7 @@ const ActivityComponents = [
   MainScreenConvoCardsActivityComponent,
   ...MainScreenBrainStormComponents,
   MainScreenPopQuizComponent,
+  MainScreenPollComponent,
 ];
 
 const EditorComponents = [CustomMenuComponent];

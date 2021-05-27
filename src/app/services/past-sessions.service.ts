@@ -12,6 +12,7 @@ import {
   GenericRoleplayReport,
   MCQReport,
   PitchOMaticReport,
+  PollReport,
   SessionReport,
   User,
 } from 'src/app/services/backend/schema';
@@ -87,7 +88,7 @@ export class PastSessionsService {
 
   // api/course_details/lesson_run/{room_code}/summary/
   getReports(id: string): Observable<any> {
-    return this.http.get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary').pipe(
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/' + id + '/summary/').pipe(
       map((res: any) => {
         // res = activityResult3;
         const arr: Array<ActivityReport> = [];
@@ -126,6 +127,13 @@ export class PastSessionsService {
               ...res,
               mcqs: [act] as Array<MCQReport>,
               activity_type: Acts.mcq,
+              title: act.title,
+            });
+          } else if (act.activity_type === Acts.poll) {
+            arr.push({
+              ...res,
+              mcqs: [act] as Array<PollReport>,
+              activity_type: Acts.poll,
               title: act.title,
             });
           } else if (act.activity_type === Acts.feedback) {

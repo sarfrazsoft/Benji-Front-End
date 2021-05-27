@@ -38,6 +38,7 @@ export { ParticipantGroupingToolComponent } from './shared/grouping-tool/groupin
 export { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 export { CaseStudyGroupingComponent } from './case-study-activity';
 export { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
+export { ParticipantPollComponent } from './poll-activity/poll-activity.component';
 export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 export { ParticipantLessonComponent };
 

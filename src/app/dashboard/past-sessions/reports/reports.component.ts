@@ -107,6 +107,10 @@ export class ReportsComponent implements OnInit {
           const c = this.cfr.resolveComponentFactory(CaseStudyComponent);
           const component = this.entry.createComponent(c);
           component.instance.data = act;
+        } else if (act.activity_type === Acts.poll) {
+          const mcqCF = this.cfr.resolveComponentFactory(McqsComponent);
+          const component = this.entry.createComponent(mcqCF);
+          component.instance.data = act;
         }
       });
     });

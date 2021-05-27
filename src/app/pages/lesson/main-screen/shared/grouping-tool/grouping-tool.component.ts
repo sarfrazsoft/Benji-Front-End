@@ -26,6 +26,7 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   collapsed = {};
   showStartGroupingButton: boolean;
   private typingTimer;
+  numberOfRooms = 0;
 
   @Input() activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
@@ -109,6 +110,9 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
         participants: participants,
       });
     }
+    if (this.numberOfRooms === 0) {
+      this.numberOfRooms = this.breakoutRooms.length;
+    }
   }
 
   typingStoped(event) {
@@ -160,8 +164,9 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   }
 
   addGroup() {
-    const number = this.breakoutRooms.length + 1;
+    const number = this.numberOfRooms + 1;
     const name = 'Room ' + number;
+    this.numberOfRooms++;
     this.sendMessage.emit(new CreateGroupEvent(this.selectedGroup.id, name));
   }
 

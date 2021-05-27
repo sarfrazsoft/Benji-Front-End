@@ -1,13 +1,14 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ContextService } from 'src/app/services';
-import { MCQChoice, MCQSubmitAnswerEvent, Timer } from 'src/app/services/backend/schema';
+import { MCQChoice, PollSubmitAnswerEvent, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
-  selector: 'benji-ps-pop-quiz',
-  templateUrl: './pop-quiz.component.html',
+  selector: 'benji-ps-poll',
+  templateUrl: './poll-activity.component.html',
 })
-export class ParticipantPopQuizComponent extends BaseActivityComponent implements OnInit, OnChanges {
+export class ParticipantPollComponent extends BaseActivityComponent implements OnInit, OnChanges {
+  act: UpdateMessage['pollactivity'];
   questionTimerStarted = false;
   showResults = false;
   showQuestion = false;
@@ -34,9 +35,9 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   ngOnInit() {
     super.ngOnInit();
-    const as = this.activityState;
-    if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
-      as.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    this.act = this.activityState.pollactivity;
+    if (this.act.question.mcqchoice_set[0] && this.act.question.mcqchoice_set[0].id) {
+      this.act.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     }
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
@@ -48,16 +49,15 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   changes() {
     const as = this.activityState;
-    if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
-      this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
+    if (this.act.question.mcqchoice_set[0] && this.act.question.mcqchoice_set[0].id) {
+      this.act.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     }
     if (this.editor) {
       this.showQuestion = true;
     }
     if (
-      as.mcqactivity.question_timer &&
-      (as.mcqactivity.question_timer.status === 'running' ||
-        as.mcqactivity.question_timer.status === 'paused')
+      this.act.question_timer &&
+      (this.act.question_timer.status === 'running' || this.act.question_timer.status === 'paused')
     ) {
       this.showQuestion = true;
       this.showQuestionsAnswer = false;
@@ -86,6 +86,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   }
 
   ngOnChanges() {
+    this.act = this.activityState.pollactivity;
     this.changes();
   }
 
@@ -98,12 +99,12 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   submitAnswer() {
     if (this.selectedChoice.id) {
-      this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoice));
+      this.sendMessage.emit(new PollSubmitAnswerEvent(this.selectedChoice));
       this.answerSubmitted = true;
     }
   }
 
   getCorrectAnswer() {
-    return this.activityState.mcqactivity.question.mcqchoice_set.find((q) => q.is_correct);
+    return this.act.question.mcqchoice_set.find((q) => q.is_correct);
   }
 }

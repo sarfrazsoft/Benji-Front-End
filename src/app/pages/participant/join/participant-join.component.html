@@ -6,15 +6,13 @@
         <div class="emoji-container">
           <app-b-twemoji class="" emoji="👋"></app-b-twemoji>
         </div>
-        <div class="black-color">
-          Welcome!
-        </div>
+        <div class="welcome-text black-color">Welcome!</div>
       </div>
       <div class="action-container">
         
 
         <div fxLayout="column" fxLayoutGap="16px">
-          <div 
+          <div
             class="input-container left-text" 
             fxLayout="column"
             fxLayoutGap="8px">
@@ -23,6 +21,7 @@
               Invalid Room Code
             </p>
             <input
+              id="room-code"
               class="b-standard-input"
               type="number"
               pattern="[0-9]*"
@@ -42,6 +41,7 @@
               Oops! What should we call you? Drop in your name.<br />
             </p>
             <input
+              id="participant-name"
               class="b-standard-input"
               type="text"
               name=""

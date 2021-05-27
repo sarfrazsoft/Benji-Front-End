@@ -41,7 +41,7 @@
         onclick="this.value = null" 
         (change)="onFileSelect($event)"
         #file />
-      <div class="details" fxLayoutAlign="space-evenly center">
+      <div class="details" *ngIf="getAllowImage()" fxLayoutAlign="space-evenly center">
         <mat-icon
           (click)="file.click(); $event.preventDefault()"
           benji-click-stop-propagation>

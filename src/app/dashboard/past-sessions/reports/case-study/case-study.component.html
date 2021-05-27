@@ -1,16 +1,28 @@
 <div class="report-cards" fxLayout="column">
-  <div class="card-header">Case Study</div>
+  <div class="card-header">{{ caseStudyTitle }}</div>
 
   <div class="case-study-report">
     <div class="report-content">
-      <div class="prompt">
-        Prompt
-      </div>
-      <div class="text-list">
-        <div class="text-list-item">
+      <div class="black-color" style="font-size: 18px;">
           {{ casestudy.case_study_details }}
-        </div>
       </div>
+
+
+      <mat-accordion>  
+        <mat-expansion-panel *ngFor="let group of groups">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ group.title }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="">
+            <benji-reports-text-editor [group]="group">
+
+            </benji-reports-text-editor>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
 
       <ng-container *ngFor="let question of questions">
         <div class="prompt case-study-question">

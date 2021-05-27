@@ -70,6 +70,13 @@
       >
       </benji-ms-title-activity>
 
+      <benji-ms-poll
+        *ngIf="getActivityType() === at.poll"
+        [activityState]="serverMessage"
+        [avgServerTimeOffset]="avgServerTimeOffset"
+        (sendMessage)="sendSocketMessage($event)"
+      ></benji-ms-poll>
+
       <benji-ms-pop-quiz
         *ngIf="getActivityType() === at.mcq"
         [activityState]="serverMessage"
@@ -78,7 +85,7 @@
       ></benji-ms-pop-quiz>
 
       <benji-ms-mcqresult-activity
-        *ngIf="getActivityType() === at.mcqResults"
+        *ngIf="getActivityType() === at.mcqResults || getActivityType() === at.pollResults"
         [activityState]="serverMessage"
         (sendMessage)="sendSocketMessage($event)"
       ></benji-ms-mcqresult-activity>
