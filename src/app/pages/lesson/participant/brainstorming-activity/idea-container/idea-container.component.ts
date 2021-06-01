@@ -33,6 +33,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   imagesList: FileList;
   imageSrc;
   imageDialogRef;
+  selectedImageName;
   constructor(
     private dialog: MatDialog,
     private httpClient: HttpClient,
@@ -103,6 +104,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
       name = this.imagesList[0].name;
     }
     return name;
+    // return this.selectedImageName;
   }
 
   submitImageNIdea() {
@@ -143,6 +145,12 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
         .catch(function (err) {
           console.error(err);
         });
+    } else {
+      if (this.selectedImageName) {
+        this.sendMessage.emit(
+          new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, this.selectedImageName)
+        );
+      }
     }
   }
 
@@ -154,12 +162,28 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
           lessonRunCode: code,
         },
         disableClose: false,
-        panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
+        panelClass: ['dashboard-dialog', 'image-picker-dialog'],
       })
       .afterClosed()
       .subscribe((res) => {
         if (res) {
+          if (res.type === 'upload') {
+            this.imagesList = res.data;
+            // this.imagesList = fileList;
+            // set the imageSrc for preview thumbnail
+            // const fileList: FileList = event.target.files;
+            const fileList: FileList = res.data;
+            const file = fileList[0];
+            const reader = new FileReader();
+            reader.onload = (e) => (this.imageSrc = reader.result);
+            reader.readAsDataURL(file);
+          } else if (res.type === 'unsplash') {
+            this.selectedImageName = res;
+          } else if (res.type === 'giphy') {
+            this.selectedImageName = res;
+          }
           console.log(res);
+          // this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res));
         }
       });
   }

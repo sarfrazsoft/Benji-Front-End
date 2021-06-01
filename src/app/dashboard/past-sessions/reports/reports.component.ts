@@ -115,4 +115,10 @@ export class ReportsComponent implements OnInit {
       });
     });
   }
+
+  downloadCSV() {
+    this.pastSessionsService.getCSV('lessonrunCode').subscribe((res: Array<ActivityReport>) => {
+      console.log(res);
+    });
+  }
 }

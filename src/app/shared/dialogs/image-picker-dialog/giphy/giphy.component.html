@@ -1,0 +1,46 @@
+<mat-dialog-content class="image-selector-container">
+  <div fxLayout="column" fxLayoutGap="15px">
+    <div>
+      <input
+        class="dash-input search-query"
+        type="text"
+        #query
+        placeholder="Search Giphy Gallery"
+        (keyup)="typingStoped(query.value)"
+        (keydown)="typingStarted()"
+      >
+    </div>
+    <div 
+      fxLayout="row wrap" 
+      fxLayoutGap="24px" 
+      class="images-container"
+      style="">
+      <div 
+        *ngFor="let image of images"
+        fxLayout="column"
+        fxLayoutGap="4px">
+        <img 
+          [src]="image.images.preview_gif.url" 
+          (click)="setImage(image.images.original.url)" alt="">
+
+        <div class="photo-attribute" fxLayoutAlign="row">
+          <span>
+            by 
+          </span>
+          <a 
+            *ngIf="image.user; else anonymous" 
+            [href]="image.user.profile_url">
+            {{ image.user.display_name }}
+          </a>
+          <ng-template #anonymous>
+            <a 
+              [href]="">
+              Anonmymous
+            </a>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+      

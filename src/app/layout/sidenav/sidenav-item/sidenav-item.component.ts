@@ -29,7 +29,7 @@ export class SidenavItemComponent implements OnInit {
     if (navName === 'Logout') {
       this.logout();
     } else if (navName === 'Help Center') {
-      window.open('http://help.mybenji.com/en/', '_blank');
+      window.open('https://guides.mybenji.com/', '_blank');
     }
   }
 

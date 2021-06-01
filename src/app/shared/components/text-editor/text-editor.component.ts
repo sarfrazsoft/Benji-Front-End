@@ -26,6 +26,9 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() jsonDoc;
   @Input() showMenu = true;
 
+  @Input() html;
+  @Output() editorUpdated = new EventEmitter<any>();
+
   editor: Editor;
 
   toolbar: Toolbar = [
@@ -40,8 +43,11 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   ];
   constructor(private utilsService: UtilsService, private httpClient: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initEditor();
+  }
 
+  // TODO set editor collaborative or not based on input variable
   initEditor() {
     const ydoc = new Y.Doc();
     const type = ydoc.getXmlFragment('prosemirror');
@@ -63,18 +69,26 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.editor = new Editor({
+      // content: this.jsonDoc,
       enabled: !this.disabled,
       schema,
       plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), ...plugins],
       nodeViews,
     });
     if (this.jsonDoc) {
+      // console.log(this.editor);
+      // console.log(this.jsonDoc);
+      // this.editor.options.content = this.jsonDoc;
       this.editor.setContent(this.jsonDoc);
     }
   }
 
   ngOnChanges() {
     this.initEditor();
+  }
+  onChange(json: object) {
+    // console.log(json);
+    this.editorUpdated.emit(json);
   }
 
   ngOnDestroy(): void {

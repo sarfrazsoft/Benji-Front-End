@@ -24,6 +24,8 @@ export class ImagePickerDialogComponent implements OnInit {
   userId: number;
   orgId: number;
   eventsSubject: Subject<void> = new Subject<void>();
+  images;
+  typingTimer;
   constructor(
     private dialogRef: MatDialogRef<ImagePickerDialogComponent>,
     private builder: FormBuilder,
@@ -67,7 +69,6 @@ export class ImagePickerDialogComponent implements OnInit {
   }
 
   uploadLessonImage(lesson: number, imagesList) {
-    // /course_details/lesson/{id}/upload_image/
     const url = global.apiRoot + '/course_details/lesson/' + lesson + '/upload_feature_image/';
     const fileList: FileList = imagesList;
     if (fileList.length > 0) {
@@ -119,5 +120,26 @@ export class ImagePickerDialogComponent implements OnInit {
       //     this.dialogRef.close(l);
       //   });
     }
+  }
+
+  typingStoped(query) {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      // this.getUnsplashImages(query);
+    }, 1000);
+  }
+  typingStarted() {
+    clearTimeout(this.typingTimer);
+  }
+
+  unsplashImageSelected(url) {
+    console.log(url);
+    // this.dialogRef.close(url);
+    this.dialogRef.close({ type: 'unsplash', data: url });
+  }
+
+  uploadImageSelected($event) {
+    console.log($event);
+    this.dialogRef.close({ type: 'upload', data: $event });
   }
 }

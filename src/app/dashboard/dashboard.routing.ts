@@ -54,6 +54,11 @@ const routes: Routes = [
         loadChildren: () => import('src/app/dashboard/editor/editor.module').then((m) => m.EditorModule),
       },
       {
+        path: 'pages',
+        loadChildren: () =>
+          import('src/app/dashboard/workshop-pages/pages.module').then((m) => m.PagesModule),
+      },
+      {
         path: 'account/password',
         component: ResetPasswordComponent,
       },

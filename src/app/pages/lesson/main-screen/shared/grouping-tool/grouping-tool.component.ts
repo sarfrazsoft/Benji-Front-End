@@ -187,7 +187,7 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   }
 
   saveEditedGroupName(group) {
-    this.sendMessage.emit(new EditGroupingTitleEvent(group.id, this.groupName));
+    this.sendMessage.emit(new EditGroupTitleEvent(group.id, this.groupName));
     this.editingName[group.id] = false;
   }
 

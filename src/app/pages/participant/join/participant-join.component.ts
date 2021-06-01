@@ -119,16 +119,20 @@ export class ParticipantJoinComponent implements OnInit {
   }
 
   typingStoped(event) {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.doneTyping();
-    }, 1000);
+    // clearTimeout(this.typingTimer);
+    // this.typingTimer = setTimeout(() => {
+    //   this.doneTyping();
+    // }, 1000);
   }
   typingStarted() {
-    clearTimeout(this.typingTimer);
+    // clearTimeout(this.typingTimer);
   }
 
   doneTyping() {
+    this.validateRoomCode();
+  }
+
+  onSearchChange(searchValue: string): void {
     this.validateRoomCode();
   }
 }

@@ -467,6 +467,7 @@ export interface CaseStudyActivity extends ParentActivity {
   groups: Array<Group>;
   casestudyparticipant_set: Array<CaseStudyParticipantSet>;
   casestudyquestion_set: Array<{ id: number; question_text: string }>;
+  default_data: string;
   note_taker_instructions: string;
   participant_instructions: string;
   mainscreen_instructions: string;

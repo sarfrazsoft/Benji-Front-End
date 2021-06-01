@@ -33,7 +33,8 @@ export class SessionNavigationComponent implements OnInit {
             if (
               activity.activity_type !== 'MCQResultsActivity' &&
               activity.activity_type !== 'LobbyActivity' &&
-              activity.activity_type !== 'ExternalGroupingActivity'
+              activity.activity_type !== 'ExternalGroupingActivity' &&
+              activity.activity_type !== 'PollResultsActivity'
             ) {
               this.activities.push(activity);
             }
