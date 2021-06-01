@@ -1,10 +1,10 @@
 <div class="" fxLayout="column">
   <mat-dialog-content >
     <div fxLayout="column" >
-      <img src="/assets/img/template/temp-cover.png" alt="">
+      <img [src]="data.img" alt="">
       <div class="content">
-        <h1>Practice your pitch</h1>
-        <p>In this session we will cover the art of pitching your start-up. In this overview section we can add a lot of details like, what kind of activities we will cover. What people going through this session should be able to expect to accomplish by the end of the session. How long the session should be.</p>
+        <h1>{{ data.name }}</h1>
+        <p> {{ data.description }} </p>
         <div class="add-learners-section dashboard-form" fxLayout="column">
           <div 
             benji-click-stop-propagation 

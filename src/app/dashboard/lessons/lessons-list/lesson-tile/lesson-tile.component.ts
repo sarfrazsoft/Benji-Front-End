@@ -19,6 +19,7 @@ import { AdminService } from '../../../admin-panel/services';
 })
 export class LessonTileComponent implements OnInit, OnDestroy {
   @Input() lesson: Lesson;
+  @Input() isTemplates = false;
   @Input() events: Observable<Lesson>;
   @Output() updateLessons = new EventEmitter();
   private eventsSubscription: Subscription;
@@ -42,10 +43,15 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     private editorService: EditorService
   ) {}
 
-  openDialog() {
+  openDialog(lesson: Lesson) {
     const dialogRef = this.dialog.open(TemplatesDialogComponent, {
       width: '640px',
       panelClass: 'templates-dialog',
+      data: {
+        img: lesson.feature_image,
+        name: lesson.lesson_name,
+        description: lesson.lesson_long_description,
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

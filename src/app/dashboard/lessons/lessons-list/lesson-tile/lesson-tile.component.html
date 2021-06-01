@@ -89,7 +89,7 @@
         class="launch-session primary-color"
         fxLayout="row"
         fxLayoutAlign="start center"
-        (click)="duplicate($event, lesson)"
+        (click)="duplicate(lesson, $event)"
       >
         <div 
           class="button active squared-border bg-sky" 
@@ -101,7 +101,7 @@
         class="launch-session black-color"
         fxLayout="row"
         fxLayoutAlign="start center"
-        (click)="openDialog()"
+        (click)="openDialog(lesson)"
       >
         <div class="button secondary-button">
           <span>View Details</span>

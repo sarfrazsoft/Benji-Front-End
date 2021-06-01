@@ -52,7 +52,12 @@ export class LessonsComponent implements OnInit {
       if (lessons.length) {
         lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
       }
-      this.lessons = lessons;
+      if (this.isTemplates) {
+        this.lessons = lessons.filter(lesson => lesson.public_permission === 'duplicate');
+      } else {
+        this.lessons = lessons.filter(lesson => lesson.public_permission !== 'duplicate');
+      }
+      
     });
   }
 }

@@ -70,7 +70,7 @@ export class TemplatesComponent implements OnInit {
       if (lessons.length) {
         lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
       }
-      this.lessons = lessons;
+      this.lessons = lessons.filter(lesson => lesson.public_permission === 'duplicate');;
     });
   }
 }

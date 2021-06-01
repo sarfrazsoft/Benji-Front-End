@@ -107,6 +107,10 @@
   border-radius: 8px;
 }
 
+.templates-dialog .mat-dialog-content {
+  max-height: 80vh;
+}
+
 .templates-dialog {
   .content {
     padding: 0px 24px 24px 24px;
@@ -123,5 +127,6 @@
   }
   img {
     margin-bottom: 0.6em;
+    height: 12.5em;
   }
 } 
