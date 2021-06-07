@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ConfirmationDialogComponent } from 'src/app/shared';
 import { environment } from 'src/environments/environment';
 import * as fromStore from '../../../store';
 
@@ -16,7 +18,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   hostname = window.location.protocol + '//' + environment.host;
   selectedPossibleActivity = '';
   sub: Subscription;
-  constructor(private store: Store<fromStore.EditorState>) {}
+  dialogRef;
+  constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
 
   ngOnInit() {
     // this.activities$ = this.store.select(fromStore.getAllPossibleActivities);
@@ -31,13 +34,54 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   selectActivity(activityId) {
-    if (this.selectedPossibleActivity === activityId) {
-      return;
+    if (this.selectedPossibleActivity) {
+      if (this.selectedPossibleActivity === activityId) {
+        return;
+      } else {
+        const msg = 'Are you sure you want to overwrite the existing activity?';
+        this.dialogRef = this.matDialog
+          .open(ConfirmationDialogComponent, {
+            data: {
+              confirmationMessage: msg,
+              actionButton: 'Overwrite',
+            },
+            disableClose: true,
+            panelClass: 'dashboard-dialog',
+          })
+          .afterClosed()
+          .subscribe((res) => {
+            console.log(res);
+            if (res) {
+              this.store.dispatch(new fromStore.SelectActivityType(activityId));
+            }
+          });
+      }
+    } else {
+      this.store.dispatch(new fromStore.SelectActivityType(activityId));
     }
-    this.store.dispatch(new fromStore.SelectActivityType(activityId));
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 }
+
+// export const page = {
+//   title: 'page title',
+//   backgroundImage: 'path/to/image',
+//   owner: 3,
+//   content: [
+//     {
+//       type: 'editorContent',
+//       data: `{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]}`,
+//     },
+//     {
+//       type: 'mcqActivity',
+//       data: mcqActivityData,
+//     },
+//     {
+//       type: 'editorContent',
+//       data: `{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]}`,
+//     },
+//   ],
+// };

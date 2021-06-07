@@ -15,7 +15,6 @@ import {
   CaseStudyTeamDoneEvent,
   Timer,
 } from 'src/app/services/backend/schema';
-import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -30,6 +29,7 @@ export class ParticipantCaseStudyActivityComponent
   pitchDraftNotes = '';
   typingTimer;
   timer;
+  // jsonDoc;
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
   localStorageItemName = 'caseStudyNotes';
   showSharingUI = false;
@@ -69,6 +69,10 @@ export class ParticipantCaseStudyActivityComponent
   initEditor() {
     this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
+    // this.jsonDoc = null;
+    // if (this.activityState.casestudyactivity.default_data) {
+    //   this.jsonDoc = JSON.parse(this.activityState.casestudyactivity.default_data);
+    // }
     this.groupId = null;
     setTimeout(() => {
       this.editorDisabled = false;
@@ -114,7 +118,7 @@ export class ParticipantCaseStudyActivityComponent
     const particiapntCode = this.getParticipantCode();
     const myGroup = this.getMyGroup(particiapntCode);
     if (myGroup) {
-      if (this.groupId !== myGroup.id.toString()) {
+      if (this.groupId !== myGroup.id.toString() && this.groupId !== undefined) {
         // group has changed
         this.initEditor();
       }

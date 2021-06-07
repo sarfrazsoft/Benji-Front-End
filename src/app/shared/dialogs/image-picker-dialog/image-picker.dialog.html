@@ -1,0 +1,45 @@
+<div class="image" fxLayout="column">
+  <div class="" fxLayout="row">
+    <!-- <h2 class="dialog-heading primary-color-darkest">
+      Session Summary
+    </h2> -->
+    <mat-tab-group dynamicHeight [disableRipple]="true">
+      <mat-tab label="Activity">
+        <ng-template mat-tab-label>
+          <div fxLayout="row" fxLayoutGap="8px">
+            <img src="./assets/img/unsplashLogo.svg" alt="">
+            <div>
+              Unsplash
+            </div> 
+          </div>
+        </ng-template>
+        <benji-unsplash-picker (imageSelected)="unsplashImageSelected($event)"></benji-unsplash-picker>
+      </mat-tab>
+      <mat-tab label="Giphy">
+        <ng-template mat-tab-label class="cotent-label">
+          <div fxLayout="row" fxLayoutGap="8px">
+            <img src="./assets/img/giphyLogo.svg" alt="">
+            <div>
+              Giphy
+            </div> 
+          </div>
+        </ng-template>
+        <benji-giphy-picker></benji-giphy-picker>
+      </mat-tab>
+      <mat-tab label="Upload">
+        <ng-template mat-tab-label class="cutomize-label">
+          <span class="tab-label">Upload</span>
+        </ng-template>
+        <benji-upload-image-picker
+          (imageSelected)="uploadImageSelected($event)">
+        </benji-upload-image-picker>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="close" style="" fxLayoutAlign="center">
+      <button class="close-button" matDialogClose>
+        <mat-icon class="">clear</mat-icon>
+      </button>
+    </div>
+  </div>
+
+</div>

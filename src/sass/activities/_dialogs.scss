@@ -31,38 +31,6 @@
   }
 }
 
-.peak-back-dialog {
-  position: relative;
-  mat-dialog-container.mat-dialog-container {
-    background-color: #f7f8fa;
-    color: #6c6c6c;
-    width: 80vw;
-  }
-  benji-ms-brainstorming-activity {
-    .submitted-ideas ul li .idea {
-      font-size: 0.8vw;
-      min-height: 40px;
-    }
-  }
-  .carousel-control {
-    position: absolute;
-    top: 50%;
-    cursor: pointer;
-    &.left {
-      left: 100px;
-    }
-    &.right {
-      right: 100px;
-    }
-    mat-icon.mat-icon {
-      color: #6c6c6c;
-      font-size: 70px;
-      height: 70px;
-      width: 70px;
-    }
-  }
-}
-
 .image-view-dialog {
   mat-dialog-container.mat-dialog-container {
     background-color: #f7f8fa;

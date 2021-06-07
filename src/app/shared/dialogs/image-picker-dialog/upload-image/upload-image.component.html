@@ -1,0 +1,18 @@
+<mat-dialog-content class="image-selector-container">
+  <div fxLayoutAlign="center center">
+    <div class="image-upload-button" fxLayoutAlign="center center">
+      <label fxLayout="row" fxLayoutAlign="center center">
+        <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
+        <div class="details" fxLayoutAlign="space-evenly center">
+          <mat-icon *ngIf="!imagesList" aria-hidden="false" aria-label="photo camera">
+            insert_photo
+          </mat-icon>
+          <div>
+            Add Photo
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+</mat-dialog-content>
+      

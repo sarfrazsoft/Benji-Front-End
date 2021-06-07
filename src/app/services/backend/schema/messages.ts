@@ -375,13 +375,14 @@ export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number, idea_image?: number) {
+  constructor(text: string, category: number, idea_image?: number, image_path?: string) {
     super();
     if (idea_image) {
       this.extra_args = {
         idea: text,
         category: category,
         idea_image: idea_image,
+        image_path: image_path,
       };
     } else {
       this.extra_args = { idea: text, category: category };

@@ -235,4 +235,14 @@ export class PastSessionsService {
         })
       );
   }
+
+  getCSV(lessonRunCode) {
+    return this.http
+      .get(global.apiRoot + '/course_details/lesson_run/' + lessonRunCode + '/activities/')
+      .pipe(
+        map((res: any) => {
+          return res;
+        })
+      );
+  }
 }

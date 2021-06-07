@@ -51,208 +51,192 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="categorizeFlag">
-    <div
-      class="submitted-ideas"
-      *ngIf="submissionScreen || voteScreen"
-      fxLayout="row"
-      fxLayoutGap="30px"
-      cdkDropListGroup
-    >
-      <ng-container
-        *ngFor="let column of act.brainstormcategory_set; let i = index"
+  <!-- <div class="brainstorm-container"
+    [ngStyle]="{
+      'background-image': 'url(/assets/img/placeholder.png)'
+    }"> -->
+  <div class="brainstorm-container">
+    <ng-container *ngIf="categorizeFlag">
+      <div
+        class="submitted-ideas"
+        *ngIf="submissionScreen || voteScreen"
+        fxLayout="row"
+        fxLayoutGap="30px"
+        cdkDropListGroup
       >
-        <ng-container *ngIf="!column.removed">
-          <div
-            class="column"
-            cdkDropList
-            [cdkDropListData]="column.brainstormidea_set"
-            (cdkDropListDropped)="drop($event)"
-          >
-            <div class="header" (click)="columnHeaderClicked(column)">
-              <div
-                fxLayout="row"
-                fxLayoutAlign="space-between center"
-                *ngIf="!column.editing"
-              >
-                <div class="column-name black-color" fxFlex>
-                  {{ column.category_name }}
-                </div>
-                <button
-                  [matMenuTriggerFor]="menu"
-                  benji-click-stop-propagation
-                  disableRipple
-                  aria-label="Example icon-button with a menu"
-                >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu" xPosition="before">
-                  <button mat-menu-item (click)="deleteCol(column.id)">
-                    <mat-icon>delete</mat-icon>
-                    <span>Delete</span>
-                  </button>
-                  <button mat-menu-item (click)="columnHeaderClicked(column)">
-                    <mat-icon>create</mat-icon>
-                    <span>Rename</span>
-                  </button>
-                </mat-menu>
-              </div>
-              <ng-container *ngIf="column.editing">
-                <input
-                  #colName
-                  type="text"
-                  (blur)="onColumnNameBlur(column)"
-                  [(ngModel)]="column.category_name"
-                />
-              </ng-container>
-            </div>
-            <div class="ideas">
-              <div
-                class="brainstorm-idea add-idea-button"
-                (click)="addIdea(column)"
-              >
-              <div class="" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-                <mat-icon>
-                  add
-                </mat-icon>
-                <div>
-                  Add new card
-                </div>
-              </div>
-              </div>
-              <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
-                <textarea
-                  #textInput
-                  (blur)="saveNewIdea(column, textInput.value)"
-                  (keyup.enter)="saveNewIdea(column, textInput.value)"
-                ></textarea>
-              </div>
-
-              <ng-container
-                *ngFor="let item of column.brainstormidea_set; let i = index"
-              >
+        <ng-container
+          *ngFor="let column of act.brainstormcategory_set; let i = index"
+        >
+          <ng-container *ngIf="!column.removed">
+            <div
+              class="column"
+              cdkDropList
+              [cdkDropListData]="column.brainstormidea_set"
+              (cdkDropListDropped)="drop($event)"
+            >
+              <div class="header" (click)="columnHeaderClicked(column)">
                 <div
-                  *ngIf="!item.removed"
-                  class="brainstorm-idea"
-                  cdkDrag
-                  (mouseenter)="item.showClose = true"
-                  (mouseleave)="item.showClose = false"
+                  fxLayout="row"
+                  fxLayoutAlign="space-between center"
+                  *ngIf="!column.editing"
                 >
-                  <mat-icon
-                    class="delete-icon"
-                    [style.opacity]="item.showClose ? 1 : 0"
-                    (click)="deleteIdea(item.id)"
-                  >
-                    clear
-                  </mat-icon>
-                  <div
-                    class="brainstorm-image"
-                    *ngIf="item.idea_image"
-                    (click)="viewImage(hostname + item.idea_image.img)"
-                  >
-                    <img [src]="hostname + item.idea_image.img" alt="" />
+                  <div class="column-name black-color" fxFlex>
+                    {{ column.category_name }}
                   </div>
-                  {{ item.idea }}
-                  <div class="votes primary-color" *ngIf="voteScreen">
-                    {{ item.num_votes }}
+                  <button
+                    [matMenuTriggerFor]="menu"
+                    benji-click-stop-propagation
+                    disableRipple
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu" xPosition="before">
+                    <button mat-menu-item (click)="deleteCol(column.id)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                    <button mat-menu-item (click)="columnHeaderClicked(column)">
+                      <mat-icon>create</mat-icon>
+                      <span>Rename</span>
+                    </button>
+                  </mat-menu>
+                </div>
+                <ng-container *ngIf="column.editing">
+                  <input
+                    #colName
+                    type="text"
+                    (blur)="onColumnNameBlur(column)"
+                    [(ngModel)]="column.category_name"
+                  />
+                </ng-container>
+              </div>
+              <div class="ideas">
+                <div
+                  class="brainstorm-idea add-idea-button"
+                  (click)="addIdea(column)"
+                >
+                <div class="" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+                  <mat-icon>
+                    add
+                  </mat-icon>
+                  <div>
+                    Add new card
                   </div>
                 </div>
-              </ng-container>
+                </div>
+                <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
+                  <textarea
+                    #textInput
+                    (blur)="saveNewIdea(column, textInput.value)"
+                    (keyup.enter)="saveNewIdea(column, textInput.value)"
+                  ></textarea>
+                </div>
+
+                <ng-container
+                  *ngFor="let item of column.brainstormidea_set; let i = index"
+                >
+                  <div
+                    *ngIf="!item.removed"
+                    class="brainstorm-idea"
+                    cdkDrag
+                    (mouseenter)="item.showClose = true"
+                    (mouseleave)="item.showClose = false"
+                  >
+                    <mat-icon
+                      class="delete-icon"
+                      [style.opacity]="item.showClose ? 1 : 0"
+                      (click)="deleteIdea(item.id)"
+                    >
+                      clear
+                    </mat-icon>
+                    <div
+                      class="brainstorm-image"
+                      *ngIf="item.idea_image"
+                      (click)="viewImage(hostname + item.idea_image.img)"
+                    >
+                      <img [src]="hostname + item.idea_image.img" alt="" />
+                    </div>
+                    {{ item.idea }}
+                    <div class="votes primary-color" *ngIf="voteScreen">
+                      {{ item.num_votes }}
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
             </div>
-          </div>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      <div class="column">
-        <div class="header">
-          <div
-            class="add-column primary-color"
-            (click)="addColumn(act.brainstormcategory_set.length)"
-          >
-            + Add column
+        <div class="column">
+          <div class="header">
+            <div
+              class="add-column primary-color"
+              (click)="addColumn(act.brainstormcategory_set.length)"
+            >
+              + Add column
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </ng-container>
+    </ng-container>
 
-  <ng-container *ngIf="!categorizeFlag">
-    <div class="submitted-ideas" *ngIf="submissionScreen || voteScreen">
-      <ul>
-        <li
-          *ngFor="let idea of ideas"
-          (mouseenter)="idea.showClose = true"
-          (mouseleave)="idea.showClose = false"
-          cdkDrag
-        >
-          <div class="idea">
-            <mat-icon
-              [style.opacity]="idea.showClose ? 1 : 0"
-              (click)="deleteIdea(idea.id)"
-            >
-              clear
-            </mat-icon>
-            <div
-              class="brainstorm-image"
-              *ngIf="idea.idea_image"
-              (click)="viewImage(hostname + idea.idea_image.img)"
-            >
-              <img [src]="hostname + idea.idea_image.img" alt="" />
+    <ng-container *ngIf="!categorizeFlag">
+      <div class="submitted-ideas" *ngIf="submissionScreen || voteScreen">
+        <ul>
+          <li
+            *ngFor="let idea of ideas"
+            (mouseenter)="idea.showClose = true"
+            (mouseleave)="idea.showClose = false"
+            cdkDrag
+          >
+            <div class="idea">
+              <mat-icon
+                [style.opacity]="idea.showClose ? 1 : 0"
+                (click)="deleteIdea(idea.id)"
+              >
+                clear
+              </mat-icon>
+              <div
+                class="brainstorm-image"
+                *ngIf="idea.idea_image"
+                (click)="viewImage(hostname + idea.idea_image.img)"
+              >
+                <img [src]="hostname + idea.idea_image.img" alt="" />
+              </div>
+              {{ idea.idea }}
+              <div class="votes primary-color" *ngIf="voteScreen">
+                {{ idea.num_votes }}
+              </div>
             </div>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <div class="top-ideas" *ngIf="VnSComplete">
+      <ul fxLayout="row" fxLayoutAlign="center space-around">
+        <li *ngFor="let idea of ideas | slice: 0:3; let i = index">
+          <mat-icon
+            [style.opacity]="idea.showClose ? 1 : 0"
+            (click)="deleteIdea(idea.id)"
+            >clear</mat-icon
+          >
+          <div class="primary-color idea-index">
+            <span> {{ i + 1 }}. </span>
+          </div>
+          <div
+            class="idea-text"
+            [ngStyle]="{
+              'font-size': idea.idea.length > 150 ? '3.6vh' : '5vh'
+            }"
+          >
             {{ idea.idea }}
-            <div class="votes primary-color" *ngIf="voteScreen">
+            <div class="votes primary-color">
               {{ idea.num_votes }}
             </div>
           </div>
         </li>
       </ul>
     </div>
-  </ng-container>
-
-  <div class="top-ideas" *ngIf="VnSComplete">
-    <ul fxLayout="row" fxLayoutAlign="center space-around">
-      <li *ngFor="let idea of ideas | slice: 0:3; let i = index">
-        <mat-icon
-          [style.opacity]="idea.showClose ? 1 : 0"
-          (click)="deleteIdea(idea.id)"
-          >clear</mat-icon
-        >
-        <div class="primary-color idea-index">
-          <span> {{ i + 1 }}. </span>
-        </div>
-        <div
-          class="idea-text"
-          [ngStyle]="{
-            'font-size': idea.idea.length > 150 ? '3.6vh' : '5vh'
-          }"
-        >
-          {{ idea.idea }}
-          <div class="votes primary-color">
-            {{ idea.num_votes }}
-          </div>
-        </div>
-      </li>
-    </ul>
   </div>
-  <!-- <div class="linear-timer-container" *ngIf="!peakBackState"> -->
-  <!-- <div class="linear-timer-container" *ngIf="!peakBackState && !act.hide_timer">
-    <benji-linear-timer
-      *ngIf="submissionScreen"
-      [timer]="timer"
-      [endAudio]="'bell.wav'"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
-    <benji-linear-timer
-      *ngIf="voteScreen"
-      [timer]="timer"
-      [endAudio]="'bell.wav'"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
-
-    <benji-linear-timer
-      *ngIf="VnSComplete"
-      [timer]="timer"
-      [endAudio]="'bell.wav'"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
-  </div> -->
 </div>

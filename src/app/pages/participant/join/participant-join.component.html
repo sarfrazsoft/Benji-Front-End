@@ -30,6 +30,7 @@
               [formControl]="roomCode"
               (keyup)="typingStoped($event)"
               (keydown)="typingStarted()"
+              (input)="onSearchChange($event.target.value)"
             />
           </div>
           <div 

@@ -90,7 +90,7 @@ const getPlugins = (): Plugin[] => {
   const listKeyMap = getListKeyMap();
 
   const plugins = [
-    yUndoPlugin(),
+    // yUndoPlugin(),
     // history(),
     keymap({
       'Mod-b': toggleMark(schema.marks.strong),

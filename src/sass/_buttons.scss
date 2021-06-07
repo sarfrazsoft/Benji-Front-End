@@ -162,6 +162,7 @@ button {
   border-radius: 5px;
   font-size: 20px;
   font-weight: 600;
+  transition: all 0.2s;
   &.active {
     border: 1px solid $primary-color;
     color: $primary-color;

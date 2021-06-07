@@ -1,0 +1,35 @@
+<mat-dialog-content class="image-selector-container">
+  <div fxLayout="column" fxLayoutGap="15px">
+    <div>
+      <input
+        class="dash-input search-query"
+        type="text"
+        #query
+        placeholder="Search Unsplash Gallery"
+        (keyup)="typingStoped(query.value)"
+        (keydown)="typingStarted()"
+      >
+    </div>
+    <div 
+      fxLayout="row wrap" 
+      fxLayoutGap="16px" 
+      class="images-container"
+      style="">
+      <div 
+        *ngFor="let image of images"
+        fxLayout="column"
+        fxLayoutGap="4px"
+        style="margin-bottom: 16px;">
+        <img [src]="image.thumb_url" alt=""
+          (click)="setImage(image.image_url)">
+        <div class="photo-attribute" fxLayoutAlign="row">
+          <span>
+            by 
+          </span>
+          <a [href]="image.profile_link">{{ image.name }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+      

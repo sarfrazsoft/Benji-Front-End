@@ -6,7 +6,6 @@ import * as fromStore from '../../store';
 @Component({
   selector: 'benji-activity-types',
   templateUrl: './activity-types.component.html',
-  styleUrls: ['./activity-types.component.scss'],
 })
 export class ActivityTypesComponent implements OnInit {
   activities$: Observable<any[]>;

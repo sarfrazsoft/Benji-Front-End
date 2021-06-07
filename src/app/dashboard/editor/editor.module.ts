@@ -16,6 +16,7 @@ import { effects, reducers } from './store';
 
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
+import { NgxEditorModule } from 'ngx-editor';
 import { ActivityHelpComponent } from './activity-selector-panel/activity-help/activity-help.component';
 import {
   AccordionTypeComponent,
@@ -23,6 +24,7 @@ import {
   BAPBlankTypeComponent,
   CheckboxWrapperComponent,
   ConvoCardTypeComponent,
+  EditorTypeComponent,
   EmojiSelectorComponent,
   FeedbackQuestionTypeComponent,
   FieldRevealWrapperComponent,
@@ -36,7 +38,6 @@ import {
   QuestionTypeSelectComponent,
   SecondsTypeComponent,
 } from './services';
-
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
 }
@@ -86,6 +87,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
   imports: [
     CommonModule,
     EditorRoutes,
+    NgxEditorModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
@@ -147,6 +149,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },
         { name: 'convoCard', component: ConvoCardTypeComponent },
         { name: 'seconds', component: SecondsTypeComponent },
+        { name: 'textEditor', component: EditorTypeComponent },
       ],
       wrappers: [
         { name: 'benji-field-wrapper', component: FieldWrapperComponent },

@@ -12,6 +12,7 @@ export class GroupingComponent implements OnInit, OnChanges {
   group;
   groups = [];
   selfGroupingAllowed = false;
+  midActivityGroupingAllowed = false;
   userGroupAssigned: boolean;
   myGroupId;
   grouping;
@@ -37,6 +38,7 @@ export class GroupingComponent implements OnInit, OnChanges {
           // this.selectedGrouping = g;
           this.groups = g.groups;
           this.selfGroupingAllowed = g.allowParticipantsJoining;
+          this.midActivityGroupingAllowed = g.allowParticipantsJoiningMidActivity;
           const participantCode = parseInt(this.participantCode, 10);
 
           const group = this.getMyGroup(participantCode);

@@ -2,8 +2,8 @@ import { browser, by, element, ElementHelper } from 'protractor';
 
 export class AppPage {
   navigateTo() {
-    // return browser.get('https://app.mybenji.com');
-    return browser.get('/');
+    return browser.get('https://app.mybenji.com/participant/join');
+    // return browser.get('/');
   }
 
   getParagraphText() {

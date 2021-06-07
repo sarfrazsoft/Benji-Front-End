@@ -37,12 +37,12 @@
 </div>
 
 <div fxLayout="column" class="mainscreen-activity poll-result " *ngIf="showStatistics">
-  <div class="lesson-top-banner black-color" fxLayout="row">
+  <div class="lesson-top-banner black-color compact" fxLayout="row">
     <span class="activity-header">
       {{ question }}
     </span>
   </div>
-  <div style="padding: 64px;">
+  <div class="poll-results-container">
     <div fxLayout="column" fxLayoutGap="16px" class="content">
       <div *ngFor="let choice of choices; let i = index">
         <div class="options" fxFlex="100%">

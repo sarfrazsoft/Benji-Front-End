@@ -234,6 +234,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Subheader';
                   mappedField.templateOptions.placeholder = 'Paragraph text';
                 } else if (mapSource.field_name === 'title_image') {
+                  // mappedField.type = 'imageSelector';
+                  // mappedField.templateOptions.label = 'Select an Image';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 10000;
@@ -337,6 +339,10 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.type = 'textarea';
                   mappedField.defaultValue = 'work sheet details';
                 } else if (mapSource.field_name === 'note_taker_instructions') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'default_data') {
+                  mappedField.type = 'textEditor';
+                  mappedField.templateOptions.label = 'Default Data header';
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
@@ -676,8 +682,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         } else {
           b.categorize_flag = false;
         }
-        console.log(b.brainstormcategory_set);
-        console.log(b);
+        // console.log(b.brainstormcategory_set);
+        // console.log(b);
 
         if (b.submission_seconds === 10000) {
           b.hide_timer = true;
@@ -794,6 +800,7 @@ export const OrderForActivities = {
     'activity_title',
     'participant_instructions',
     'note_taker_instructions',
+    'default_data',
     'case_study_details',
     'casestudyquestion_set',
   ],
