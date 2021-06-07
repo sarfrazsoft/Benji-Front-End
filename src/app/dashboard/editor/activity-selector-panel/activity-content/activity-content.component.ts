@@ -234,6 +234,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Subheader';
                   mappedField.templateOptions.placeholder = 'Paragraph text';
                 } else if (mapSource.field_name === 'title_image') {
+                  mappedField.type = 'layoutPicker';
+                  mappedField.templateOptions.label = 'Layout';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 10000;
@@ -631,6 +633,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
       const b = cloneDeep(this.model);
       // processing before submitting to BE
       if (b.activity_type === this.at.title) {
+        console.log(b);
         // If the user didn't set next activity delay seconds
         if (b.next_activity_delay_seconds === 10000) {
           b.hide_timer = true;

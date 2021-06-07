@@ -35,6 +35,7 @@ import {
   PollChoiceTypeComponent,
   QuestionTypeSelectComponent,
   SecondsTypeComponent,
+  LayoutPickerTypeComponent,
 } from './services';
 
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
@@ -147,6 +148,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'questionTypeSelect', component: QuestionTypeSelectComponent },
         { name: 'convoCard', component: ConvoCardTypeComponent },
         { name: 'seconds', component: SecondsTypeComponent },
+        { name: 'layoutPicker', component: LayoutPickerTypeComponent },
       ],
       wrappers: [
         { name: 'benji-field-wrapper', component: FieldWrapperComponent },
