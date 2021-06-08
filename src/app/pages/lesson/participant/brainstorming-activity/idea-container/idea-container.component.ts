@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as global from 'src/app/globals';
-import { BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
+import { BrainstormImageSubmitEvent, BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { DraftIdea } from '../brainstorming-activity.component';
@@ -33,7 +33,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   imagesList: FileList;
   imageSrc;
   imageDialogRef;
-  selectedImageName;
+  selectedImageUrl;
   constructor(
     private dialog: MatDialog,
     private httpClient: HttpClient,
@@ -62,7 +62,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     if (!idea.editing) {
       return;
     }
-    if (this.imagesList) {
+    if (this.imagesList || this.selectedImageUrl) {
       this.submitWithImg();
     } else {
       this.submitWithoutImg();
@@ -104,7 +104,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
       name = this.imagesList[0].name;
     }
     return name;
-    // return this.selectedImageName;
+    // return this.selectedImageUrl;
   }
 
   submitImageNIdea() {
@@ -112,7 +112,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
     const participant_code = this.participantCode;
     const fileList: FileList = this.imagesList;
-    if (fileList.length > 0) {
+    if (fileList && fileList.length > 0) {
       const file: File = fileList[0];
       this.utilsService
         .resizeImage({
@@ -146,9 +146,9 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
           console.error(err);
         });
     } else {
-      if (this.selectedImageName) {
+      if (this.selectedImageUrl) {
         this.sendMessage.emit(
-          new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, this.selectedImageName)
+          new BrainstormImageSubmitEvent(this.userIdeaText, this.selectedCategory.id, this.selectedImageUrl)
         );
       }
     }
@@ -178,9 +178,10 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
             reader.onload = (e) => (this.imageSrc = reader.result);
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
-            this.selectedImageName = res;
+            console.log(res);
+            this.selectedImageUrl = res.data;
           } else if (res.type === 'giphy') {
-            this.selectedImageName = res;
+            this.selectedImageUrl = res.data;
           }
           console.log(res);
           // this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res));

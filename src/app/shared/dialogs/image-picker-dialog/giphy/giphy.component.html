@@ -20,8 +20,8 @@
         fxLayout="column"
         fxLayoutGap="4px">
         <img 
-          [src]="image.images.preview_gif.url" 
-          (click)="setImage(image.images.original.url)" alt="">
+          [src]="image.thumb_url" 
+          (click)="setImage(image.image_url)" alt="">
 
         <div class="photo-attribute" fxLayoutAlign="row">
           <span>

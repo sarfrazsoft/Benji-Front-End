@@ -352,6 +352,15 @@ export class MainScreenBrainstormingActivityComponent
       .afterClosed()
       .subscribe((res) => {});
   }
+
+  isAbsolutePath(imageUrl: string) {
+    console.log(imageUrl);
+    if (imageUrl.includes('https:')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
 
 // categories = [

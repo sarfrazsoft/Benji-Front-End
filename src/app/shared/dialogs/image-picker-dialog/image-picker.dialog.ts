@@ -133,9 +133,15 @@ export class ImagePickerDialogComponent implements OnInit {
   }
 
   unsplashImageSelected(url) {
-    console.log(url);
+    // console.log(url);
     // this.dialogRef.close(url);
     this.dialogRef.close({ type: 'unsplash', data: url });
+  }
+
+  giphyImageSelected(url) {
+    // console.log(url);
+    // this.dialogRef.close(url);
+    this.dialogRef.close({ type: 'giphy', data: url });
   }
 
   uploadImageSelected($event) {

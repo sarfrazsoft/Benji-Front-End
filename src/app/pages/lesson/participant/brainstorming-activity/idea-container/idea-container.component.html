@@ -3,7 +3,7 @@
     <div class="textarea-container" fxLayout="column">
       <div fxLayout="row" class="textarea-container-controls" fxLayoutAlign="space-between">
         <!-- <div fxLayout="row"> -->
-        <div fxLayoutAlign="center center">
+        <!-- <div fxLayoutAlign="center center">
           <div class="image-upload-button" fxLayoutAlign="center center">
             <label fxLayout="row" fxLayoutAlign="center center">
               <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
@@ -17,8 +17,8 @@
               </div>
             </label>
           </div>
-        </div>
-        <!-- <div fxLayoutAlign="center center">
+        </div> -->
+        <div fxLayoutAlign="center center">
           <div class="image-upload-button" fxLayoutAlign="center center">
             <label fxLayout="row" fxLayoutAlign="center center" (click)="openImagePickerDialog()">
               <div class="details" fxLayoutAlign="space-evenly center" *ngIf="idea.editing">
@@ -31,7 +31,7 @@
               </div>
             </label>
           </div>
-        </div> -->
+        </div>
         <!-- </div> -->
         <div fxLayoutAlign="center center" fxLayoutGap="8px">
           <div class="dropdown-controls-container" *ngIf="showCategoriesDropdown">
@@ -71,6 +71,15 @@
           <div class="image-name" >{{ getSelectedFileName() }}</div>
           <mat-icon
             (click)="imagesList = null; $event.preventDefault()"
+            benji-click-stop-propagation
+          >
+            close
+          </mat-icon>
+        </ng-container>
+        <ng-container *ngIf="selectedImageUrl">
+          <img class="thumbnail-image" [src]="selectedImageUrl || 'http://placehold.it/180'" alt="your image" />
+          <mat-icon
+            (click)="selectedImageUrl = null"
             benji-click-stop-propagation
           >
             close

@@ -390,6 +390,19 @@ export class BrainstormSubmitEvent extends ActivityEvent {
   }
 }
 
+export class BrainstormImageSubmitEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitEvent';
+
+  constructor(text: string, category: number, image_path?: string) {
+    super();
+    this.extra_args = {
+      idea: text,
+      category: category,
+      image_path: image_path,
+    };
+  }
+}
+
 export class BrainstormRemoveSubmissionEvent extends ActivityEvent {
   event_name = 'BrainstormRemoveSubmissionEvent';
 

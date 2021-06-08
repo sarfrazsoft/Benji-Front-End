@@ -32,7 +32,7 @@ export class UnsplashComponent implements OnInit {
   }
 
   setImage(url) {
-    console.log(url);
+    // console.log(url);
     this.imageSelected.emit(url);
   }
 }
