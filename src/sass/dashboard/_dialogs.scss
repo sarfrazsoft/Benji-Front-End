@@ -7,6 +7,7 @@
     padding-bottom: 24px;
     width: 400px;
     box-shadow: none;
+    border-radius: 16px;
     // height: 182px;
     .dialog-heading-container {
       margin-bottom: 32px;
@@ -138,21 +139,30 @@
     padding-top: 0px;
     padding-right: 25px;
     padding-left: 25px;
+    position: relative;
+    border-radius: 16px;
     .close {
       height: 48px;
-      position: relative;
-      margin-right: -16px;
+      position: absolute;
+      z-index: 1;
+      right: 19px;
     }
     .image-selector-container {
+      margin: 0px;
       margin-top: 16px;
+      padding: 0px;
       .search-query {
         width: 100%;
       }
       .images-container {
         margin-bottom: 16px;
-        height: 600px;
+        height: 350px;
+        .image {
+          margin-bottom: 8px;
+        }
         img {
           width: 150px;
+          border-radius: 4px;
         }
         .photo-attribute {
           color: #bdbdbd;
@@ -170,6 +180,8 @@
       }
       input[type='file'] {
         display: none;
+      }
+      .image-upload-button {
       }
     }
   }
