@@ -54,52 +54,52 @@ export class ImagePickerDialogComponent implements OnInit {
     return this.form.get('description');
   }
 
-  onFileSelect(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length === 0) {
-      this.imagesList = null;
-    } else {
-      this.imagesList = fileList;
-      this.uploadLessonImage(this.data.id, this.imagesList);
-    }
-  }
+  // onFileSelect(event) {
+  //   const fileList: FileList = event.target.files;
+  //   if (fileList.length === 0) {
+  //     this.imagesList = null;
+  //   } else {
+  //     this.imagesList = fileList;
+  //     this.uploadLessonImage(this.data.id, this.imagesList);
+  //   }
+  // }
 
   editPhoto($event) {
     $event.preventDefault();
   }
 
-  uploadLessonImage(lesson: number, imagesList) {
-    const url = global.apiRoot + '/course_details/lesson/' + lesson + '/upload_feature_image/';
-    const fileList: FileList = imagesList;
-    if (fileList.length > 0) {
-      const file: File = fileList[0];
-      return this.utilsService
-        .resizeImage({
-          file: file,
-          maxSize: 500,
-        })
-        .then((resizedImage: Blob) => {
-          const formData: FormData = new FormData();
-          formData.append('img', resizedImage, file.name);
-          const headers = new HttpHeaders();
-          headers.set('Content-Type', null);
-          headers.set('Accept', 'multipart/form-data');
-          const params = new HttpParams();
-          this.httpClient
-            .post(url, formData, { params, headers })
-            .map((res: any) => {
-              this.imageURL = res.img;
-            })
-            .subscribe(
-              (data) => {},
-              (error) => console.log(error)
-            );
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-    }
-  }
+  // uploadLessonImage(lesson: number, imagesList) {
+  //   const url = global.apiRoot + '/course_details/lesson/' + lesson + '/upload_feature_image/';
+  //   const fileList: FileList = imagesList;
+  //   if (fileList.length > 0) {
+  //     const file: File = fileList[0];
+  //     return this.utilsService
+  //       .resizeImage({
+  //         file: file,
+  //         maxSize: 500,
+  //       })
+  //       .then((resizedImage: Blob) => {
+  //         const formData: FormData = new FormData();
+  //         formData.append('img', resizedImage, file.name);
+  //         const headers = new HttpHeaders();
+  //         headers.set('Content-Type', null);
+  //         headers.set('Accept', 'multipart/form-data');
+  //         const params = new HttpParams();
+  //         this.httpClient
+  //           .post(url, formData, { params, headers })
+  //           .map((res: any) => {
+  //             this.imageURL = res.img;
+  //           })
+  //           .subscribe(
+  //             (data) => {},
+  //             (error) => console.log(error)
+  //           );
+  //       })
+  //       .catch(function (err) {
+  //         console.error(err);
+  //       });
+  //   }
+  // }
 
   onSubmit(): void {
     if (this.form.valid) {

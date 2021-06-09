@@ -55,6 +55,8 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result === "Use Template")
+      this.duplicate(this.lesson);
       console.log(`Dialog result: ${result}`);
     });
   }
