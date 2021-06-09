@@ -19,7 +19,9 @@ export class LessonsComponent implements OnInit {
   eventsSubject: Subject<void> = new Subject<void>();
 
   edit(lesson, $event) {
-    this.eventsSubject.next(lesson);
+    if (!this.isTemplates) {
+      this.eventsSubject.next(lesson);
+    }
     $event.stopPropagation();
   }
 
@@ -56,11 +58,10 @@ export class LessonsComponent implements OnInit {
         lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
       }
       if (this.isTemplates) {
-        this.lessons = lessons.filter(lesson => lesson.public_permission === 'duplicate');
+        this.lessons = lessons.filter((lesson) => lesson.public_permission === 'duplicate');
       } else {
-        this.lessons = lessons.filter(lesson => lesson.public_permission !== 'duplicate');
+        this.lessons = lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
       }
-      
     });
   }
 }
