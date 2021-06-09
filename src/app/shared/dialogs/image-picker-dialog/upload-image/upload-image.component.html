@@ -1,0 +1,15 @@
+<mat-dialog-content class="image-selector-container">
+  <div fxLayoutAlign="center center ">
+    <div class="image-upload-button bg-sky b-small-squared-button" fxLayoutAlign="center center">
+      <label fxLayout="row" fxLayoutAlign="center center">
+        <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
+        <div class="details primary-color " fxLayoutAlign="space-evenly center">
+          <div>
+            Choose an image
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+</mat-dialog-content>
+      

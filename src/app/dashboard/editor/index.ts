@@ -19,6 +19,7 @@ import {
   ArrayTypeComponent,
   BAPBlankTypeComponent,
   ConvoCardTypeComponent,
+  EditorTypeComponent,
   FeedbackQuestionTypeComponent,
   FormlySelectOptionsPipe,
   ImageSelectorComponent,
@@ -39,6 +40,7 @@ import { FieldRevealWrapperComponent } from './services/formly/warppers/field-re
 import { FieldWrapperComponent } from './services/formly/warppers/field-wrapper/field-wrapper.component';
 
 export { EditorService } from './services/editor.service';
+import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 
 export const EditorComponents = [
   ...ActivitySelectorComponents,
@@ -61,6 +63,7 @@ export const EditorComponents = [
   FeedbackQuestionTypeComponent,
   QuestionTypeSelectComponent,
   ConvoCardTypeComponent,
+  EditorTypeComponent,
   SecondsTypeComponent,
   LayoutPickerTypeComponent,
   FormlySelectOptionsPipe,

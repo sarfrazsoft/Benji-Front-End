@@ -68,7 +68,6 @@ export class LessonSettingsDialogComponent implements OnInit {
   }
 
   uploadLessonImage(lesson: number, imagesList) {
-    // /course_details/lesson/{id}/upload_image/
     const url = global.apiRoot + '/course_details/lesson/' + lesson + '/upload_feature_image/';
     const fileList: FileList = imagesList;
     if (fileList.length > 0) {

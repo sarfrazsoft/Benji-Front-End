@@ -41,6 +41,19 @@ describe('workspace-project App', () => {
     'ai',
     'aj',
     'ak',
+    'al',
+    'am',
+    'an',
+    'ao',
+    'ap',
+    'aq',
+    'ar',
+    'as',
+    'at',
+    'au',
+    'av',
+    'aw',
+    'ax',
   ];
 
   beforeEach(() => {
@@ -52,12 +65,12 @@ describe('workspace-project App', () => {
   then click enter and verfiy if it is in lobby screen`, () => {
     page.navigateTo();
     const browsers: Array<ProtractorBrowser> = [];
-    const n = 30;
+    const n = 20;
     for (let i = 0; i < n; i++) {
       browsers.push(browser.forkNewDriverInstance(true));
     }
     for (let i = 0; i < n; i++) {
-      page.injectRoomCode(browsers[i].element, '45344');
+      page.injectRoomCode(browsers[i].element, '32420');
     }
     browser.sleep(2000);
     for (let i = 0; i < n; i++) {

@@ -47,10 +47,12 @@ export class CaseStudyComponent implements OnInit, OnChanges {
     for (let g = 0; g < this.data.casestudy.groups.length; g++) {
       const group = this.data.casestudy.groups[g];
       const filteredInUsers = this.pastSessionService.filteredInUsers;
+      let pushed = false;
       for (let u = 0; u < group.participants.length; u++) {
         const participantCode = group.participants[u];
-        if (filteredInUsers.find((fiu) => fiu === participantCode)) {
+        if (filteredInUsers.find((fiu) => fiu === participantCode) && !pushed) {
           tempGroups.push(group);
+          pushed = true;
         }
       }
     }
@@ -84,9 +86,10 @@ export class CaseStudyComponent implements OnInit, OnChanges {
 }
 export const x = `{"doc":{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]},"selection":{"type":"all"}}`;
 export const y = `{"doc":{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user b decided to add some long text and some headingsuser b decided to add some long text and some headingsuser b decided to add some long text and some headingsuser b decided to add some long text and some headingsuser b decided to add some long text and some headings"}]},{"type":"paragraph","attrs":{"align":null}},{"type":"ordered_list","attrs":{"order":1},"content":[{"type":"list_item","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"yolo"}]}]},{"type":"list_item","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"profit?"}]}]}]},{"type":"heading","attrs":{"level":2,"align":null},"content":[{"type":"text","text":"dddddd"}]},{"type":"heading","attrs":{"level":1,"align":null},"content":[{"type":"text","text":"me long text a"}]},{"type":"paragraph","attrs":{"align":null}}]},"selection":{"type":"all"}}`;
+export const z = `{"doc":{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello, Tiptap!"}]},{"type":"table","content":[{"type":"tableRow","content":[{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1,"colwidth":null},"content":[{"type":"paragraph","content":[{"type":"text","text":"asdf"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1,"colwidth":null},"content":[{"type":"paragraph","content":[{"type":"text","text":"gh"}]}]},{"type":"tableHeader","attrs":{"colspan":1,"rowspan":1,"colwidth":null},"content":[{"type":"paragraph"}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1,"colwidth":null,"backgroundColor":null},"content":[{"type":"paragraph"}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1,"colwidth":null,"backgroundColor":null},"content":[{"type":"paragraph","content":[{"type":"text","text":"b"}]}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1,"colwidth":null,"backgroundColor":null},"content":[{"type":"paragraph","content":[{"type":"text","text":"hh"}]}]}]},{"type":"tableRow","content":[{"type":"tableCell","attrs":{"colspan":1,"rowspan":1,"colwidth":null,"backgroundColor":null},"content":[{"type":"paragraph"}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1,"colwidth":null,"backgroundColor":null},"content":[{"type":"paragraph"}]},{"type":"tableCell","attrs":{"colspan":1,"rowspan":1,"colwidth":null,"backgroundColor":null},"content":[{"type":"paragraph","content":[{"type":"text","text":"n"}]}]}]}]}]}}`;
 const Groups = [
   {
-    answer: JSON.parse(x),
+    answer: JSON.parse(z),
     description: null,
     id: 187,
     participants: [249678],

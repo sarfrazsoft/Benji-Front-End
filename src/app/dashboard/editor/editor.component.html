@@ -20,7 +20,11 @@
             {{ lessonName$ | async }}
           </div>
           <div *ngIf="showEditableLessonName">
-            <input #name type="text" (blur)="updateName(name)" [value]="lessonName" />
+            <input #name 
+              type="text" 
+              (blur)="updateName(name)" 
+              (keyup.enter)="updateName(name)" 
+              [value]="lessonName" />
           </div>
         </div>
       </div>

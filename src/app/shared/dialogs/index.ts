@@ -11,6 +11,10 @@ export * from './templates-dialog/templates.dialog';
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
+import { GiphyComponent } from './image-picker-dialog/giphy/giphy.component';
+import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
+import { UnsplashComponent } from './image-picker-dialog/unsplash/unsplash.component';
+import { UploadImageComponent } from './image-picker-dialog/upload-image/upload-image.component';
 import { JobInfoDialogComponent } from './job-info/job-info.dialog';
 import { JoinSessionDialogComponent } from './join-session/join-session.dialog';
 import { LaunchSessionDialogComponent } from './launch-session/launch-session.dialog';
@@ -22,6 +26,10 @@ export const Dialogs = [
   AddVideoDialogComponent,
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
+  ImagePickerDialogComponent,
+  UnsplashComponent,
+  GiphyComponent,
+  UploadImageComponent,
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
   LaunchSessionDialogComponent,

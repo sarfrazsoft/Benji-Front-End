@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Editor } from '@tiptap/core';
+import Placeholder from '@tiptap/extension-placeholder';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TableRow from '@tiptap/extension-table-row';
+import StarterKit from '@tiptap/starter-kit';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
@@ -11,6 +18,28 @@ import { AdminService } from '../../admin-panel/services';
 })
 export class LessonComponent implements OnInit {
   lessonDetails;
+  editor = new Editor({
+    extensions: [
+      StarterKit,
+      Placeholder,
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      // Default TableCell
+      // TableCell,
+      // Custom TableCell with backgroundColor attribute
+      CustomTableCell,
+    ],
+    editorProps: {
+      attributes: {
+        class: 'p-2 border-black focus:border-blue-700 border-2 rounded-md outline-none',
+      },
+    },
+  });
+
+  value = '<p>Hello, Tiptap!</p>';
   constructor(
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
@@ -37,6 +66,13 @@ export class LessonComponent implements OnInit {
         this.lessonDetails = lesson.lesson_details;
       });
     }
+  }
+  addTable() {
+    this.editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+  }
+  showdoc() {
+    this.editor.getJSON();
+    console.log(JSON.stringify(this.editor.getJSON()));
   }
 }
 
@@ -92,3 +128,27 @@ const courseDetails = {
     },
   ],
 };
+
+const CustomTableCell = TableCell.extend({
+  addAttributes() {
+    return {
+      // extend the existing attributes …
+      ...this.parent?.(),
+      // and add a new one …
+      backgroundColor: {
+        default: null,
+        parseHTML: (element) => {
+          return {
+            backgroundColor: element.getAttribute('data-background-color'),
+          };
+        },
+        renderHTML: (attributes) => {
+          return {
+            'data-background-color': attributes.backgroundColor,
+            style: `background-color: ${attributes.backgroundColor}`,
+          };
+        },
+      },
+    };
+  },
+});

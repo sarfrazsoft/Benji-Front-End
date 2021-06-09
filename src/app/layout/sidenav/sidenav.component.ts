@@ -63,6 +63,26 @@ export class SidenavComponent implements OnInit {
       // }
     ],
   };
+  pagesSection = {
+    section: 1,
+    items: [
+      {
+        navName: 'Workshop Pages',
+        navRoute: './pages',
+        permission: 'admin',
+        disabled: false,
+        icon: null,
+      },
+      // {
+      //   navName: 'Groups',
+      //   navRoute: './groups'
+      // },
+      // {
+      //   navName: 'Past Sessions',
+      //   navRoute: './pastsessions'
+      // }
+    ],
+  };
 
   groupsSection = {
     section: 2,
@@ -169,7 +189,7 @@ export class SidenavComponent implements OnInit {
     items: [
       {
         navName: 'Help Center',
-        navRoute: 'http://help.mybenji.com/en/',
+        navRoute: 'https://guides.mybenji.com/',
         icon: '/assets/img/navigation/help.svg',
         hoverIcon: '/assets/img/navigation/helpHover.svg',
         activeIcon: '/assets/img/navigation/helpActive.svg',
@@ -229,6 +249,7 @@ export class SidenavComponent implements OnInit {
         // this.groupsSection,
         // this.editor,
         this.pastSessionSection,
+        // this.pagesSection,
         this.accountSection,
         this.templatesSection,
         this.helpCenter,

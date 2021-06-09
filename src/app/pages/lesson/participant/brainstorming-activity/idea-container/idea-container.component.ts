@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import * as global from 'src/app/globals';
-import { BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
+import { BrainstormImageSubmitEvent, BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { DraftIdea } from '../brainstorming-activity.component';
 
 @Component({
@@ -30,7 +32,13 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
 
   imagesList: FileList;
   imageSrc;
-  constructor(private httpClient: HttpClient, private utilsService: UtilsService) {}
+  imageDialogRef;
+  selectedImageUrl;
+  constructor(
+    private dialog: MatDialog,
+    private httpClient: HttpClient,
+    private utilsService: UtilsService
+  ) {}
 
   ngOnInit(): void {
     this.selectedCategory = this.act.brainstormcategory_set[0];
@@ -54,7 +62,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     if (!idea.editing) {
       return;
     }
-    if (this.imagesList) {
+    if (this.imagesList || this.selectedImageUrl) {
       this.submitWithImg();
     } else {
       this.submitWithoutImg();
@@ -96,6 +104,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
       name = this.imagesList[0].name;
     }
     return name;
+    // return this.selectedImageUrl;
   }
 
   submitImageNIdea() {
@@ -103,7 +112,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
     const participant_code = this.participantCode;
     const fileList: FileList = this.imagesList;
-    if (fileList.length > 0) {
+    if (fileList && fileList.length > 0) {
       const file: File = fileList[0];
       this.utilsService
         .resizeImage({
@@ -122,6 +131,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
             .post(url, formData, { params, headers })
             .map((res: any) => {
               this.imagesList = null;
+              console.log(res);
               this.sendMessage.emit(
                 new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
               );
@@ -135,6 +145,47 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
         .catch(function (err) {
           console.error(err);
         });
+    } else {
+      if (this.selectedImageUrl) {
+        this.sendMessage.emit(
+          new BrainstormImageSubmitEvent(this.userIdeaText, this.selectedCategory.id, this.selectedImageUrl)
+        );
+      }
     }
+  }
+
+  openImagePickerDialog() {
+    const code = this.activityState.lesson_run.lessonrun_code;
+    this.imageDialogRef = this.dialog
+      .open(ImagePickerDialogComponent, {
+        data: {
+          lessonRunCode: code,
+        },
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'image-picker-dialog'],
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          if (res.type === 'upload') {
+            this.imagesList = res.data;
+            // this.imagesList = fileList;
+            // set the imageSrc for preview thumbnail
+            // const fileList: FileList = event.target.files;
+            const fileList: FileList = res.data;
+            const file = fileList[0];
+            const reader = new FileReader();
+            reader.onload = (e) => (this.imageSrc = reader.result);
+            reader.readAsDataURL(file);
+          } else if (res.type === 'unsplash') {
+            console.log(res);
+            this.selectedImageUrl = res.data;
+          } else if (res.type === 'giphy') {
+            this.selectedImageUrl = res.data;
+          }
+          console.log(res);
+          // this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res));
+        }
+      });
   }
 }

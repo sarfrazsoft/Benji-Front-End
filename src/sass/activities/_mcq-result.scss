@@ -56,6 +56,12 @@
       }
     }
   }
+  .poll-results-container {
+    padding: 23px;
+    height: 100%;
+    overflow-y: auto;
+    margin: 0 auto;
+  }
 }
 
 // TODO move to appropriate file

@@ -46,6 +46,8 @@
 // input setting
 input {
   color: inherit;
+  border: 1px solid $secondary-color-lighter;
+  border-radius: 4px;
 }
 
 .b-standard-input {
