@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Inject } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
@@ -10,7 +10,11 @@ import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent, LessonSettingsDialogComponent, TemplatesDialogComponent } from 'src/app/shared';
+import {
+  ConfirmationDialogComponent,
+  LessonSettingsDialogComponent,
+  TemplatesDialogComponent,
+} from 'src/app/shared';
 import { AdminService } from '../../../admin-panel/services';
 
 @Component({
@@ -51,12 +55,11 @@ export class LessonTileComponent implements OnInit, OnDestroy {
         img: lesson.feature_image,
         name: lesson.lesson_name,
         description: lesson.lesson_long_description,
-      }
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === "Use Template")
-      this.duplicate(this.lesson);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Use Template') { this.duplicate(this.lesson); }
       console.log(`Dialog result: ${result}`);
     });
   }

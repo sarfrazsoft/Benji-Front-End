@@ -129,7 +129,10 @@
   .img-container {
     background-size: cover;
     margin-bottom: 0.6em;
-    height: 12.5em;
+    // height: 12.5em;
+    height: 200px;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
   }
 }
 .image-picker-dialog {
