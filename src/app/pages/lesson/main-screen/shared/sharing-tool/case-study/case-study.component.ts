@@ -45,6 +45,8 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   initEditor(group) {
     if (group && group.answer && group.answer.doc) {
       this.jsonDoc = group.answer.doc;
+    } else {
+      this.jsonDoc = null;
     }
     // const ydoc = new Y.Doc();
     // const provider = new WebsocketProvider(wsRoot + '/yws/', 'xx', ydoc);

@@ -18,7 +18,8 @@
       <div 
         *ngFor="let image of images"
         fxLayout="column"
-        fxLayoutGap="4px">
+        fxLayoutGap="4px"
+        class="image">
         <img 
           [src]="image.thumb_url" 
           (click)="setImage(image.image_url)" alt="">
