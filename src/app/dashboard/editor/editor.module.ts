@@ -38,6 +38,7 @@ import {
   QuestionTypeSelectComponent,
   SecondsTypeComponent,
   LayoutPickerTypeComponent,
+  LayoutImagePickerTypeComponent,
 } from './services';
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -151,6 +152,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'convoCard', component: ConvoCardTypeComponent },
         { name: 'seconds', component: SecondsTypeComponent },
         { name: 'layoutPicker', component: LayoutPickerTypeComponent },
+        { name: 'layoutImagePicker', component: LayoutImagePickerTypeComponent },
         { name: 'textEditor', component: EditorTypeComponent },
       ],
       wrappers: [

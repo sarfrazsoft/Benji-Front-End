@@ -234,7 +234,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Subheader';
                   mappedField.templateOptions.placeholder = 'Paragraph text';
                 } else if (mapSource.field_name === 'title_image') {
-                  // Title image code
+                  mappedField.type = 'layoutImagePicker';
+                  mappedField.templateOptions.label = 'Media';
                 } else if (mapSource.field_name === 'title_emoji') {
                   // Title emoji code
                 } else if (mapSource.field_name === 'layout') {

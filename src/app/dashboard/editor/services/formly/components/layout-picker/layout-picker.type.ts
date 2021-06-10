@@ -15,7 +15,8 @@ export class LayoutPickerTypeComponent extends FieldType implements OnInit {
     }
   }
 
-  public layoutClicked(choice : string){
+  public layoutClicked(choice : string) {
+    //alert (choice);
     this.chosen = choice;
     this.formControl.setValue(this.chosen);
   }

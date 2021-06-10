@@ -32,6 +32,7 @@ import {
   SafePipe,
   SecondsTypeComponent,
   LayoutPickerTypeComponent,
+  LayoutImagePickerTypeComponent,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
@@ -66,6 +67,7 @@ export const EditorComponents = [
   EditorTypeComponent,
   SecondsTypeComponent,
   LayoutPickerTypeComponent,
+  LayoutImagePickerTypeComponent,
   FormlySelectOptionsPipe,
   BAPBlankTypeComponent,
   ImageSelectorComponent,
