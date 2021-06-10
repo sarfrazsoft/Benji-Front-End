@@ -64,6 +64,7 @@ export class ParticipantCaseStudyActivityComponent
       this.participantCode = '1234';
       this.documentId = new Date().getTime().toString();
       this.lessonRunCode = '33';
+      this.jsonDoc = JSON.parse(this.act.default_data);
     } else {
       this.initEditor();
     }

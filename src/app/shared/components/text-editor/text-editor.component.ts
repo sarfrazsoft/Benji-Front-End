@@ -92,7 +92,7 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    this.initEditor();
+    // this.initEditor();
   }
   onChange(json: object) {
     // console.log(json);
