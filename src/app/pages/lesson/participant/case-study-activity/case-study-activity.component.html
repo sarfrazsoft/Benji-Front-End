@@ -54,21 +54,15 @@
     </div> -->
 
     <ng-container *ngIf="groupId && lessonRunCode">
-      <benji-text-editor 
-        [lessonRunCode]="lessonRunCode" 
-        [participantCode]="participantCode"  
-        [documentId]="documentId"
-        [allowVideo]="false"
-        [disabled]="editorDisabled">
-      </benji-text-editor>
-      <!-- <benji-text-editor
+      <benji-text-editor
+        [activityId]="activityId"
         [jsonDoc]="jsonDoc"
         [lessonRunCode]="lessonRunCode" 
         [participantCode]="participantCode"  
         [documentId]="documentId"
         [allowVideo]="false"
         [disabled]="editorDisabled">
-      </benji-text-editor> -->
+      </benji-text-editor>
 
     </ng-container>
 
