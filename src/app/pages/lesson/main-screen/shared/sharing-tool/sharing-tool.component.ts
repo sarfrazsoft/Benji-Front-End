@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { cloneDeep } from 'lodash';
 import { ActivityTypes } from 'src/app/globals';
-import { SelectParticipantForShareEvent, UpdateMessage } from 'src/app/services/backend/schema';
+import { Group, SelectParticipantForShareEvent, UpdateMessage } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import {
   SharingBrainstormComponent,
@@ -27,7 +27,7 @@ import {
 export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   // speakers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-  speakers: Array<{ displayName: string; id: number; optedIn: boolean }> = [];
+  speakers: Array<{ displayName: string; id: number; optedIn: boolean; group?: Group }> = [];
   volunteers: Array<number>;
   groups = [];
   currentSpeakerIndex = 0;
@@ -109,7 +109,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
             optedIn = true;
           }
         });
-        this.speakers.push({ displayName: val.title, id: val.id, optedIn: optedIn });
+        this.speakers.push({ displayName: val.title, id: val.id, optedIn: optedIn, group: val });
       });
 
       this.speakers.sort(function (obj1, obj2) {
@@ -163,6 +163,10 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   update() {
     if (this.activityState.activity_type !== this.at.caseStudy) {
       this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[this.currentSpeakerIndex].id));
+    } else {
+      const selectedGroup = this.speakers[this.currentSpeakerIndex];
+      const selectedParticipant = selectedGroup.group.participants[0];
+      this.sendMessage.emit(new SelectParticipantForShareEvent(selectedParticipant));
     }
     this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
     this.component.instance.update();

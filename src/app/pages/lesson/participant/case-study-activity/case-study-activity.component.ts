@@ -48,6 +48,8 @@ export class ParticipantCaseStudyActivityComponent
   lessonRunCode;
 
   component;
+  saveInterval;
+  selectedParticipant;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -68,6 +70,12 @@ export class ParticipantCaseStudyActivityComponent
     } else {
       this.initEditor();
     }
+
+    // this.saveInterval = setInterval(() => {
+    //   if (this.getIsSharing()) {
+    // this.saveEditCollab();
+    //   }
+    // }, 2000);
   }
 
   initEditor() {
@@ -137,6 +145,19 @@ export class ParticipantCaseStudyActivityComponent
       if (this.groupId !== myGroup.id.toString() && this.groupId !== undefined) {
         // group has changed
         this.initEditor();
+      }
+    }
+
+    const state = this.activityState;
+    if (state.running_tools && state.running_tools && state.running_tools.share) {
+      const share = state.running_tools.share;
+      if (
+        share.selectedParticipant &&
+        share.selectedParticipant === particiapntCode &&
+        share.selectedParticipant !== this.selectedParticipant
+      ) {
+        this.saveEditCollab();
+        this.selectedParticipant = share.selectedParticipant;
       }
     }
   }
@@ -246,6 +267,9 @@ export class ParticipantCaseStudyActivityComponent
 
   ngOnDestroy() {
     // this.saveEditCollab();
+    // if (this.saveInterval) {
+    //   clearInterval(this.saveInterval);
+    // }
   }
 
   saveEditCollab() {

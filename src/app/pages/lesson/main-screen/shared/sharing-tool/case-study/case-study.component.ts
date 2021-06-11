@@ -22,6 +22,7 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   @Input() activityState: UpdateMessage;
   @Input() currentSpeaker: { displayName: string; id: number };
   jsonDoc;
+  editorString;
   // editor: Editor;
   showEditor = false;
   constructor(private buildAPitchService: BuildAPitchService) {}
