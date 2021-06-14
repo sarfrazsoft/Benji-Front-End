@@ -13,15 +13,15 @@
     <div 
       fxLayout="row wrap" 
       fxLayoutGap="16px" 
-      class="images-container"
-      style="">
+      class="images-container">
       <div 
         *ngFor="let image of images"
         fxLayout="column"
         fxLayoutGap="4px"
-        style="margin-bottom: 16px;">
+        style="margin-bottom: 16px;"
+        class="image">
         <img [src]="image.thumb_url" alt=""
-          (click)="setImage(image.image_url)">
+          (click)="setImage(image)">
         <div class="photo-attribute" fxLayoutAlign="row">
           <span>
             by 

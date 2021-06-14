@@ -8,6 +8,7 @@ import {
   LessonComponent,
   PastSessionsComponent,
   ResetPasswordComponent,
+  TemplatesComponent,
 } from './index';
 import { WorkspaceComponent } from './workspace/workspace.component';
 
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: 'lesson/:lessonId',
         component: LessonComponent,
+      },
+      {
+        path: 'templates',
+        component: TemplatesComponent,
       },
       {
         path: 'participants',

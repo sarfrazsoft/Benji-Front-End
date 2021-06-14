@@ -25,6 +25,7 @@ benji-ms-brainstorming-activity {
     background-repeat: no-repeat !important;
     height: 100% !important;
     appearance: none !important;
+    overflow: hidden;
     .submitted-ideas {
       padding: 0 3vw;
       height: 100%;
@@ -120,7 +121,8 @@ benji-ms-brainstorming-activity {
         flex-direction: column;
         overflow-x: auto;
         padding-left: 0;
-        height: 100%;
+        // height: 100%;
+        height: 97%;
         padding-top: 16px;
         li {
           position: relative;

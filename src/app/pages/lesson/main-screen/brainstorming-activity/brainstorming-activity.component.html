@@ -155,7 +155,13 @@
                       *ngIf="item.idea_image"
                       (click)="viewImage(hostname + item.idea_image.img)"
                     >
-                      <img [src]="hostname + item.idea_image.img" alt="" />
+                      <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
+                        <img [src]="idea.idea_image.img" alt="" />
+                      </ng-container>
+
+                      <ng-template #uploadedImage>
+                        <img [src]="hostname + item.idea_image.img" alt="" />
+                      </ng-template>
                     </div>
                     {{ item.idea }}
                     <div class="votes primary-color" *ngIf="voteScreen">
@@ -201,7 +207,13 @@
                 *ngIf="idea.idea_image"
                 (click)="viewImage(hostname + idea.idea_image.img)"
               >
+              <ng-container *ngIf="idea.idea_image.img.includes('https:'); else uploadedImage">
+                <img [src]="idea.idea_image.img" alt="" />
+              </ng-container>
+
+              <ng-template #uploadedImage>
                 <img [src]="hostname + idea.idea_image.img" alt="" />
+              </ng-template>
               </div>
               {{ idea.idea }}
               <div class="votes primary-color" *ngIf="voteScreen">

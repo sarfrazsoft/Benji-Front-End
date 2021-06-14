@@ -24,7 +24,7 @@
             </div> 
           </div>
         </ng-template>
-        <benji-giphy-picker></benji-giphy-picker>
+        <benji-giphy-picker (imageSelected)="giphyImageSelected($event)"></benji-giphy-picker>
       </mat-tab>
       <mat-tab label="Upload">
         <ng-template mat-tab-label class="cutomize-label">

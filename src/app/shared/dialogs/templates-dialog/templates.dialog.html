@@ -1,0 +1,33 @@
+<div class="" fxLayout="column">
+  <mat-dialog-content >
+    <div fxLayout="column" >
+      <!-- <img [src]="data.img" alt=""> -->
+      <div *ngIf="data.img" class="img-container" [ngStyle]="{
+        'background-image': 'url(' + data.img + ')'
+        }">
+      </div>
+      <div class="content">
+        <h1>{{ data.name }}</h1>
+        <p> {{ data.description }} </p>
+        <div class="add-learners-section dashboard-form" fxLayout="column">
+          <div 
+            benji-click-stop-propagation 
+            class="controls-container" 
+            fxLayout="row" 
+            fxLayoutAlign="start" 
+            fxLayoutGap="8px">
+            <button
+              class="dialog-controls bg-primary-color white-color start-resume-buttons"
+              type="submit" (click)="onSubmit()"
+            >
+              Use Template
+            </button>
+            <button class="dialog-controls button secondary-button" matDialogClose>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>

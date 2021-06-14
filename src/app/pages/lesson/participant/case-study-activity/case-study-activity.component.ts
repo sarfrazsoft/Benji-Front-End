@@ -11,8 +11,10 @@ import {
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
+  CaseStudyDefaultWorksheetApplied,
   CaseStudySubmitAnswerEvent,
   CaseStudyTeamDoneEvent,
+  Group,
   Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -29,7 +31,8 @@ export class ParticipantCaseStudyActivityComponent
   pitchDraftNotes = '';
   typingTimer;
   timer;
-  // jsonDoc;
+  jsonDoc;
+  activityId;
   questions: Array<{ id: number; question_text: string; answer: string }> = [];
   localStorageItemName = 'caseStudyNotes';
   showSharingUI = false;
@@ -45,6 +48,8 @@ export class ParticipantCaseStudyActivityComponent
   lessonRunCode;
 
   component;
+  saveInterval;
+  selectedParticipant;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -61,18 +66,37 @@ export class ParticipantCaseStudyActivityComponent
       this.participantCode = '1234';
       this.documentId = new Date().getTime().toString();
       this.lessonRunCode = '33';
+      this.jsonDoc = JSON.parse(this.act.default_data);
     } else {
       this.initEditor();
     }
+
+    // this.saveInterval = setInterval(() => {
+    //   if (this.getIsSharing()) {
+    // this.saveEditCollab();
+    //   }
+    // }, 2000);
   }
 
   initEditor() {
     this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
-    // this.jsonDoc = null;
-    // if (this.activityState.casestudyactivity.default_data) {
-    //   this.jsonDoc = JSON.parse(this.activityState.casestudyactivity.default_data);
-    // }
+    this.jsonDoc = null;
+    this.activityId = this.activityState.casestudyactivity.activity_id;
+    if (this.activityState.casestudyactivity.default_data) {
+      // default data is set by the participant with the lowest participantCode
+      // and also added to localstorage so that it's not added again
+      const participantCode = this.getParticipantCode();
+      const myGroup = this.getMyGroup(participantCode);
+      const sortedParticipant = myGroup.participants.sort((a, b) => a - b);
+      if (participantCode === sortedParticipant[0] && !myGroup.default_worksheet_applied) {
+        this.jsonDoc = JSON.parse(this.activityState.casestudyactivity.default_data);
+        this.sendMessage.emit(new CaseStudyDefaultWorksheetApplied(true));
+      } else {
+        this.jsonDoc = null;
+      }
+    }
+    console.log(this.jsonDoc);
     this.groupId = null;
     setTimeout(() => {
       this.editorDisabled = false;
@@ -123,6 +147,19 @@ export class ParticipantCaseStudyActivityComponent
         this.initEditor();
       }
     }
+
+    const state = this.activityState;
+    if (state.running_tools && state.running_tools && state.running_tools.share) {
+      const share = state.running_tools.share;
+      if (
+        share.selectedParticipant &&
+        share.selectedParticipant === particiapntCode &&
+        share.selectedParticipant !== this.selectedParticipant
+      ) {
+        this.saveEditCollab();
+        this.selectedParticipant = share.selectedParticipant;
+      }
+    }
   }
 
   getMyNoteTaker() {
@@ -149,7 +186,7 @@ export class ParticipantCaseStudyActivityComponent
     }
   }
 
-  getMyGroup(userId) {
+  getMyGroup(userId): Group {
     for (let i = 0; i < this.act.groups.length; i++) {
       const group = this.act.groups[i];
       const groupParticipants = group.participants;
@@ -230,6 +267,9 @@ export class ParticipantCaseStudyActivityComponent
 
   ngOnDestroy() {
     // this.saveEditCollab();
+    // if (this.saveInterval) {
+    //   clearInterval(this.saveInterval);
+    // }
   }
 
   saveEditCollab() {

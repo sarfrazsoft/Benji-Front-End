@@ -343,7 +343,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'default_data') {
                   mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = 'Default Data header';
-                  mappedField.hide = true;
+                  mappedField.hide = false;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
                   mappedField.hide = true;

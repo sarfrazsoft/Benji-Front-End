@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import * as global from 'src/app/globals';
 
 @Component({
@@ -9,6 +9,7 @@ import * as global from 'src/app/globals';
 export class GiphyComponent implements OnInit {
   images;
   typingTimer;
+  @Output() imageSelected = new EventEmitter<any>();
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit() {}
@@ -28,5 +29,10 @@ export class GiphyComponent implements OnInit {
       console.log(res);
       this.images = res.results;
     });
+  }
+
+  setImage(url) {
+    // console.log(url);
+    this.imageSelected.emit(url);
   }
 }

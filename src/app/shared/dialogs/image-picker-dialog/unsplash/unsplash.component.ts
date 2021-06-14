@@ -31,8 +31,11 @@ export class UnsplashComponent implements OnInit {
     });
   }
 
-  setImage(url) {
-    console.log(url);
-    this.imageSelected.emit(url);
+  setImage(image) {
+    const downloadUrl = image.download_url + '&client_id=' + 'Q1DbOLo0lFiydsPULxz_pl6zCGHwKSlJWBkusbAKBZ8';
+    this.httpClient.get(downloadUrl).subscribe((res: any) => {
+      // console.log(res);
+    });
+    this.imageSelected.emit(image.image_url);
   }
 }

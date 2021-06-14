@@ -22,7 +22,7 @@ export class ActivitySettingsService {
 export const SETTINGS = {
   brainstorm: [
     { type: 'toggle', name: 'categorize', label: 'Toggle Categorization' },
-    // { type: 'toggle', name: 'cardSize', label: 'Case Size' },
+    // // { type: 'toggle', name: 'cardSize', label: 'Case Size' },
     // {
     //   type: 'select',
     //   label: 'Card Size',

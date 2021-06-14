@@ -23,6 +23,7 @@ export class Lesson {
   single_user_lesson?: boolean;
   lesson_length_minutes?: number;
   lesson_description?: string;
+  lesson_long_description?: string;
   lesson_plan?: string;
   lesson_plan_json?: Array<any>;
   lesson_details?: any;

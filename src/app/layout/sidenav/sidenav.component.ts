@@ -101,7 +101,6 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Templates',
         navRoute: './templates',
-        // icon: '../../../../assets/img/participantIcon.svg',
         icon: '/assets/img/navigation/bulb.svg',
         hoverIcon: '/assets/img/navigation/bulbHover.svg',
         activeIcon: '/assets/img/navigation/bulbActive.svg',
@@ -248,11 +247,11 @@ export class SidenavComponent implements OnInit {
         this.dashboard,
         // this.adminSection,
         // this.groupsSection,
-        // this.templatesSection,
         // this.editor,
         this.pastSessionSection,
         // this.pagesSection,
         this.accountSection,
+        this.templatesSection,
         this.helpCenter,
         this.authSection,
         //

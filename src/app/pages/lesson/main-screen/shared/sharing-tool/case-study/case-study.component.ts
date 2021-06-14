@@ -22,6 +22,7 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   @Input() activityState: UpdateMessage;
   @Input() currentSpeaker: { displayName: string; id: number };
   jsonDoc;
+  editorString;
   // editor: Editor;
   showEditor = false;
   constructor(private buildAPitchService: BuildAPitchService) {}
@@ -45,6 +46,8 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   initEditor(group) {
     if (group && group.answer && group.answer.doc) {
       this.jsonDoc = group.answer.doc;
+    } else {
+      this.jsonDoc = null;
     }
     // const ydoc = new Y.Doc();
     // const provider = new WebsocketProvider(wsRoot + '/yws/', 'xx', ydoc);

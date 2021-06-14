@@ -49,7 +49,7 @@
       {{ lesson.lesson_description }}
     </div>
   </div>
-  <div fxLayout="row" fxLayoutGap="8px">
+  <div fxLayout="row" fxLayoutGap="8px" *ngIf="!isTemplates; else templateControls">
     <div
       class="launch-session primary-color"
       fxLayout="row"
@@ -82,4 +82,33 @@
       </div>
     </div>
   </div>
+
+  <ng-template #templateControls>
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div
+        class="launch-session primary-color"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        benji-click-stop-propagation
+        (click)="duplicate(lesson, $event)"
+      >
+        <div 
+          class="button active squared-border bg-sky" 
+          benji-hover-class="white-color bg-primary-color">
+          <span>Add</span>
+        </div>
+      </div>
+      <div
+        class="launch-session black-color"
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        benji-click-stop-propagation
+        (click)="openDialog(lesson)"
+      >
+        <div class="button secondary-button">
+          <span>View Details</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>
