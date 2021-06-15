@@ -1,76 +1,58 @@
-<div class="cols">
-    <div class="rows" fxLayout="row wrap" fxLayoutGap="8px">
-        <div class="divborder" (click)="this.layoutClicked('icon-center')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'icon-center.svg'" />
-        </div>
-        <div class="divborder" (click)="this.layoutClicked('image-left')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'image-left.svg'" />
-        </div>
-        <div class="divborder" (click)="this.layoutClicked('image-right')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'image-right.svg'" />
-        </div>
+<div class="mb-3 seconds-form">
+    <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">
+      <formly-validation-message [field]="field"></formly-validation-message>
     </div>
-    <div class="rows" fxLayout="row wrap" fxLayoutGap="8px">
-        <div class="divborder" (click)="this.layoutClicked('image-left-slim')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'image-left-slim.svg'" />
-        </div>
-        <div class="divborder" (click)="this.layoutClicked('image-right-slim')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'image-right-slim.svg'" />
-        </div>
-        <div class="divborder" (click)="this.layoutClicked('image-left-center')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'image-left-center.svg'" />
-        </div>
+    <div class="" fxLayout="row">
+      <label for="">
+        {{ to.label }}
+      </label>
     </div>
-    <div fxLayout="row wrap" fxLayoutGap="8px">
-        <div class="divborder" (click)="this.layoutClicked('image-right-center')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'image-right-center.svg'" />
+    <div class="cols">
+        <div class="rows" fxLayout="row wrap" fxLayoutGap="8px">
+            <div class="divborder" 
+                (click)="layoutClicked('icon-center')" 
+                [class.highlight]="this.chosen==='icon-center'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'icon-center.svg'" />
+            </div>
+            <div class="divborder" 
+                (click)="layoutClicked('image-left')" 
+                [class.highlight]="this.chosen==='image-left'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'image-left.svg'" />
+            </div>
+            <div class="divborder" 
+                (click)="layoutClicked('image-right')" 
+                [class.highlight]="this.chosen==='image-right'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'image-right.svg'" />
+            </div>
         </div>
-        <div class="divborder" (click)="this.layoutClicked('no-image')">
-            <img [src]="'/assets/img/slidesLayouts/' + 'no-image.svg'" />
+        <div class="rows" fxLayout="row wrap" fxLayoutGap="8px">
+            <div class="divborder" 
+                (click)="layoutClicked('image-left-slim')" 
+                [class.highlight]="this.chosen==='image-left-slim'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'image-left-slim.svg'" />
+            </div>
+            <div class="divborder" 
+                (click)="layoutClicked('image-right-slim')" 
+                [class.highlight]="this.chosen==='image-right-slim'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'image-right-slim.svg'" />
+            </div>
+            <div class="divborder" 
+                (click)="layoutClicked('image-left-center')" 
+                [class.highlight]="this.chosen==='image-left-center'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'image-left-center.svg'" />
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="8px">
+            <div class="divborder" 
+                (click)="layoutClicked('image-right-center')" 
+                [class.highlight]="this.chosen==='image-right-center'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'image-right-center.svg'" />
+            </div>
+            <div class="divborder" 
+                (click)="layoutClicked('no-image')" 
+                [class.highlight]="this.chosen==='no-image'">
+                <img [src]="'/assets/img/slidesLayouts/' + 'no-image.svg'" />
+            </div>
         </div>
     </div>
 </div>
-<!-- <div *ngFor="let layout of layouts$ | async" fxFlex="33" fxLayoutAlign="center space-around"> -->
-<!-- <div *ngFor="let layout of layouts$" fxFlex="33" fxLayoutAlign="center space-around">
-    <benji-selector-layout [layout]="layout"></benji-selector-layout>
-</div> -->
-    <!-- <div
-        class="layout-type"
-        >
-        <div class="image">
-            <img [src]="getThumbnailSrc(layout)" />
-            <img [src]="'/assets/img/slidesLayouts/' + '11.svg'" />
-        </div>
-    </div>
-    <div
-        class="layout-type"
-        >
-        <div class="image">
-            <img [src]="getThumbnailSrc(layout)" />
-            <img [src]="'/assets/img/slidesLayouts/' + '11.svg'" />
-        </div>
-    </div>
-    <div
-        class="layout-type"
-        >
-        <div class="image">
-            <img [src]="getThumbnailSrc(layout)" />
-            <img [src]="'/assets/img/slidesLayouts/' + '11.svg'" />
-        </div>
-    </div> -->
-
-
-    <!-- <div class="editor-link" *ngIf="this.explanationField.hide" (click)="revealExplanation()">
-      <span> + add help text </span>
-      <span
-        class="question-icon"
-        placement="top"
-        tooltip="As participants are filling out their mad-libs they can click the ? icon for more help. Add help text here to support them in filling out the mad-lib sheet"
-        show-delay="100"
-      >
-        <img src="/assets/img/question_icon.svg" />
-      </span>
-    </div> -->
-    <!-- <formly-field [field]="orderField"></formly-field>
-    <formly-field [field]="explanationField"></formly-field> -->
- 

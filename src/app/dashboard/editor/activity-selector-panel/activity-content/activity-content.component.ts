@@ -57,7 +57,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           const schema = cloneDeep(s);
           const content = cloneDeep(this.selectedLessonActivityContent);
-
           // Case study activiy
           // set grouping_activity_id to show if External or Internal grouping activity
           if (act.activity_type === this.at.caseStudy || act.activity_type === this.at.genericRoleplay) {
@@ -234,13 +233,16 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Subheader';
                   mappedField.templateOptions.placeholder = 'Paragraph text';
                 } else if (mapSource.field_name === 'title_image') {
+                  mappedField.templateOptions['lessonId'] = 'Add Card';
                   mappedField.type = 'layoutImagePicker';
                   mappedField.templateOptions.label = 'Media';
                 } else if (mapSource.field_name === 'title_emoji') {
-                  // Title emoji code
+                  mappedField.defaultValue = 'emoji://1F3B2';
+                  mappedField.templateOptions.label = 'Title Icon';
                 } else if (mapSource.field_name === 'layout') {
                   mappedField.type = 'layoutPicker';
                   mappedField.templateOptions.label = 'Layout';
+                  mappedField.defaultValue = 'icon-center';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 10000;
@@ -789,7 +791,7 @@ export const AllowEmojiDic = {
 };
 
 export const OrderForActivities = {
-  TitleActivity: ['main_title', 'title_text', 'title_image', 'next_activity_delay_seconds'],
+  TitleActivity: ['title_emoji', 'main_title', 'title_text', 'title_image', 'layout', 'next_activity_delay_seconds'],
   BrainstormActivity: [
     'instructions',
     'max_participant_submissions',

@@ -54,6 +54,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
     if (this.data) {
       const content = this.data.content;
       if (this.data.activity_type === Acts.title) {
+        console.log(this.data)
         if (this.componentRef) {
           this.componentRef.destroy();
         }
@@ -87,6 +88,8 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             run_number: 0,
             start_time: '2020-11-11T12:30:41.270208-05:00',
             title_image: this.data.content.title_image ? content.title_image : null,
+            title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
+            layout: this.data.content.layout,      
             title_text: content.title_text ? content.title_text : 'Paragraph text',
           },
         };

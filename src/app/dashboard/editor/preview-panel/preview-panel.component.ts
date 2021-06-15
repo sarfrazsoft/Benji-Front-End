@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { act } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -7,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { ActivityTypes, ActivityTypes as Acts } from 'src/app/globals';
 import { PreviewActivity, ScreenType } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+import { ContentJSON } from 'yjs';
 import * as fromStore from '../store';
 
 @Component({
@@ -66,6 +68,7 @@ export class PreviewPanelComponent implements OnInit {
               content: pair.content,
               screenType: pair.screenType,
             };
+            console.log(this.activityData.content);
           } else {
             this.previewTemplate = false;
           }

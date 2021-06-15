@@ -14,7 +14,13 @@
             border: 2px solid #555BEA;
         }
     }
-    &:hover {
+    &:hover, &.highlight {
         border: unset;
+    }
+    &.highlight {
+        img {
+            border: 2px solid #555BEA;
+        }
+        
     }
 }
