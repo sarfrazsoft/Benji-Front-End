@@ -1,5 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/shared';
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
@@ -23,8 +25,9 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   slideCopied = false;
   addedSlide: OverviewLessonActivity;
   slideToBeCopied: OverviewLessonActivity;
+  dialogRef;
 
-  constructor(private store: Store<fromStore.EditorState>) {}
+  constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
 
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
@@ -71,9 +74,25 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   }
 
   deleteActivity(activityId) {
-    if (this.lessonActivitiesLength > 1) {
-      this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
-    }
+    const msg = 'Are you sure you want to delete this activity?';
+    this.dialogRef = this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: msg,
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'dashboard-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        console.log(res);
+        if (res) {
+          if (this.lessonActivitiesLength > 1) {
+            this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
+          }
+        }
+      });
   }
 
   drop(event: CdkDragDrop<string[]>) {
