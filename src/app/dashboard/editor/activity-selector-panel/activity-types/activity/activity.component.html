@@ -1,8 +1,8 @@
 <div
   class="activity-type"
   [class.selected]="selectedPossibleActivity === activity.id"
-  (mouseover)="hover = true"
-  (mouseout)="hover = false"
+  (mouseenter)="mouseEnter(activity.id)"
+  (mouseleave)="mouseLeave(activity.id)"
   (click)="selectActivity(activity.id)"
   fxLayout="column"
   fxLayoutAlign="center center"

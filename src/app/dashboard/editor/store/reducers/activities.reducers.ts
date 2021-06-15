@@ -250,6 +250,26 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
       return initialState;
     }
 
+    case fromActivities.SET_LESSON_ACTIVITY_EMPTY: {
+      // Creating the new lesson activity and adding to existing
+      const activityId = action.payload;
+      const lessonActivities = {
+        ...state.lessonActivities,
+        [activityId]: {
+          ...state.lessonActivities[activityId],
+          empty: true,
+          activity_type: null,
+          displayName: null,
+        },
+      };
+
+      return {
+        ...state,
+        lessonActivities,
+        selectedPossibleActivity: null,
+      };
+    }
+
     case fromActivities.ADD_EMPTY_LESSON_ACTIVITY: {
       // Creating the new lesson activity and adding to existing
       const newIndex = new Date().getTime();

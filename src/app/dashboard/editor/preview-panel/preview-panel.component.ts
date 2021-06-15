@@ -74,8 +74,9 @@ export class PreviewPanelComponent implements OnInit {
           this.imgSrc = this.hostname + s.preview_image;
           this.showImage = true;
         } else if (pair.activity && pair.activity.empty) {
-          this.showImage = false;
+          this.showImage = true;
           this.previewTemplate = false;
+          this.imgSrc = this.hostname + '/static/activityflow/previews/placeholder.png';
         }
       });
   }

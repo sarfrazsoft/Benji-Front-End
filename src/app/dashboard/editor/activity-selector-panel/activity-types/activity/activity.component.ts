@@ -9,7 +9,6 @@ import * as fromStore from '../../../store';
 @Component({
   selector: 'benji-selector-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.scss'],
 })
 export class ActivityComponent implements OnInit, OnDestroy {
   @Input() activity;
@@ -18,6 +17,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   hostname = window.location.protocol + '//' + environment.host;
   selectedPossibleActivity = '';
   sub: Subscription;
+  selectedActivity$: Subscription;
+  selectedActivity;
   dialogRef;
   constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
 
@@ -25,6 +26,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
     // this.activities$ = this.store.select(fromStore.getAllPossibleActivities);
     this.sub = this.store.select(fromStore.getSelectedPossibleActivity).subscribe((val) => {
       this.selectedPossibleActivity = val;
+    });
+
+    this.selectedActivity$ = this.store.select(fromStore.getSelectedLessonActivity).subscribe((val) => {
+      this.selectedActivity = val;
     });
   }
   getThumbnailSrc(activity) {
@@ -63,6 +68,26 @@ export class ActivityComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  mouseEnter(activityId) {
+    if (this.selectedActivity.empty) {
+      if (this.selectedPossibleActivity) {
+        if (this.selectedPossibleActivity === activityId) {
+          return;
+        } else {
+          this.store.dispatch(new fromStore.SelectActivityType(activityId));
+        }
+      } else {
+        this.store.dispatch(new fromStore.SelectActivityType(activityId));
+      }
+    }
+  }
+
+  mouseLeave(activityId) {
+    console.log(this.selectedActivity);
+    // empty that lessonActivity
+    this.store.dispatch(new fromStore.SetLessonActivityEmpty(this.selectedActivity.id));
   }
 }
 

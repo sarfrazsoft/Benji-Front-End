@@ -41,6 +41,7 @@ export class LoadLessonActivitiesSuccess implements Action {
 
 // Add empty activity to lesson activities
 export const ADD_EMPTY_LESSON_ACTIVITY = '[Overview panel] Add empty lesson Activity';
+export const SET_LESSON_ACTIVITY_EMPTY = '[Overview panel] Set a lesson Activity to empty state';
 export const ADD_EMPTY_LESSON_ACTIVITY_AT_INDEX =
   '[Overview panel] Add empty lesson Activity at specific index';
 export const REMOVE_LESSON_ACTIVITY = '[Overview panel] Delete lesson activity';
@@ -50,6 +51,11 @@ export const COPY_LESSON_ACTIVITY = '[Overview panel] Copy lesson activity and a
 
 export class AddEmptyLessonActivity implements Action {
   readonly type = ADD_EMPTY_LESSON_ACTIVITY;
+}
+
+export class SetLessonActivityEmpty implements Action {
+  readonly type = SET_LESSON_ACTIVITY_EMPTY;
+  constructor(public payload: number) {}
 }
 
 export class AddEmptyLessonActivityAtIndex implements Action {
@@ -186,6 +192,7 @@ export type ActivitiesAction =
   | LoadLessonActivitiesSuccess
   | LoadLesssonActivitiesFail
   | AddEmptyLessonActivity
+  | SetLessonActivityEmpty
   | AddEmptyLessonActivityAtIndex
   | RemoveLessonActivity
   | SelectLessonActivity
