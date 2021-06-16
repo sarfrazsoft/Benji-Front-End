@@ -236,6 +236,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'title_image') {
                   // mappedField.type = 'imageSelector';
                   // mappedField.templateOptions.label = 'Select an Image';
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 10000;
@@ -248,6 +249,10 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.templateOptions.label = 'Auto forward after timer';
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'layout') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.brainStorm) {

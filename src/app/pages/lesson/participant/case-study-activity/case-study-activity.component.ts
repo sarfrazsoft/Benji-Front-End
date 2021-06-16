@@ -50,6 +50,7 @@ export class ParticipantCaseStudyActivityComponent
   component;
   saveInterval;
   selectedParticipant;
+  saved;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -151,13 +152,14 @@ export class ParticipantCaseStudyActivityComponent
     const state = this.activityState;
     if (state.running_tools && state.running_tools && state.running_tools.share) {
       const share = state.running_tools.share;
-      if (
-        share.selectedParticipant &&
-        share.selectedParticipant === particiapntCode &&
-        share.selectedParticipant !== this.selectedParticipant
-      ) {
-        this.saveEditCollab();
+      if (share.selectedParticipant && share.selectedParticipant !== this.selectedParticipant) {
         this.selectedParticipant = share.selectedParticipant;
+        this.saved = false;
+      }
+
+      if (share.selectedParticipant && share.selectedParticipant === particiapntCode && !this.saved) {
+        this.saved = true;
+        this.saveEditCollab();
       }
     }
   }
