@@ -342,15 +342,15 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.type = 'textarea';
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'case_study_details') {
-                  mappedField.templateOptions.label = 'Worksheet details';
+                  mappedField.templateOptions.label = 'Instructions';
                   mappedField.type = 'textarea';
                   mappedField.defaultValue = 'work sheet details';
                 } else if (mapSource.field_name === 'note_taker_instructions') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'default_data') {
                   mappedField.type = 'textEditor';
-                  mappedField.templateOptions.label = 'Default Data header';
-                  mappedField.hide = true;
+                  mappedField.templateOptions.label = 'Worksheet contents';
+                  mappedField.hide = false;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
                   mappedField.hide = true;
@@ -380,6 +380,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'mainscreen_instructions') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'activity_seconds') {
+                  mappedField.hide = true;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['labelForCheckbox'] = 'Add timer';
@@ -791,7 +792,14 @@ export const AllowEmojiDic = {
 };
 
 export const OrderForActivities = {
-  TitleActivity: ['title_emoji', 'main_title', 'title_text', 'title_image', 'layout', 'next_activity_delay_seconds'],
+  TitleActivity: [
+    'title_emoji',
+    'main_title',
+    'title_text',
+    'title_image',
+    'layout',
+    'next_activity_delay_seconds',
+  ],
   BrainstormActivity: [
     'instructions',
     'max_participant_submissions',
@@ -808,8 +816,8 @@ export const OrderForActivities = {
     'activity_title',
     'participant_instructions',
     'note_taker_instructions',
-    'default_data',
     'case_study_details',
+    'default_data',
     'casestudyquestion_set',
   ],
   FeedbackActivity: [

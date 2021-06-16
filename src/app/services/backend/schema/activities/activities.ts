@@ -454,6 +454,7 @@ export interface Group {
   id?: number;
   participants?: Array<number>;
   title?: string;
+  default_worksheet_applied?: boolean;
 }
 
 export interface ParticipantGroupStatus {

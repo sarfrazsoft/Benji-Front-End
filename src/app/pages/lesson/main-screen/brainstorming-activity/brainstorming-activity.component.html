@@ -156,7 +156,7 @@
                       (click)="viewImage(hostname + item.idea_image.img)"
                     >
                       <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
-                        <img [src]="idea.idea_image.img" alt="" />
+                        <img [src]="item.idea_image.img" alt="" />
                       </ng-container>
 
                       <ng-template #uploadedImage>

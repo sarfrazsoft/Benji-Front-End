@@ -21,12 +21,12 @@
         style="margin-bottom: 16px;"
         class="image">
         <img [src]="image.thumb_url" alt=""
-          (click)="setImage(image.image_url)">
+          (click)="setImage(image)">
         <div class="photo-attribute" fxLayoutAlign="row">
           <span>
             by 
           </span>
-          <a [href]="image.profile_link">{{ image.name }}</a>
+          <a [href]="image.profile_link + 'utm_source=Benji&utm_medium=referral'">{{ image.name }}</a>
         </div>
       </div>
     </div>

@@ -501,6 +501,14 @@ export class CaseStudySubmitAnswerEvent extends ActivityEvent {
     this.extra_args = { answer: json };
   }
 }
+export class CaseStudyDefaultWorksheetApplied extends ActivityEvent {
+  event_name = 'CaseStudyDefaultWorksheetApplied';
+
+  constructor(val: boolean) {
+    super();
+    this.extra_args = { default_worksheet_applied: val };
+  }
+}
 
 export class CaseStudyTeamDoneEvent extends ActivityEvent {
   event_name = 'CaseStudyTeamDoneEvent';

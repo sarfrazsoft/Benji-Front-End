@@ -25,6 +25,7 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() disabled = false;
   @Input() jsonDoc;
   @Input() showMenu = true;
+  @Input() activityId = false;
 
   @Input() html;
   @Output() editorUpdated = new EventEmitter<any>();
@@ -76,15 +77,22 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
       nodeViews,
     });
     if (this.jsonDoc) {
-      // console.log(this.editor);
-      // console.log(this.jsonDoc);
-      // this.editor.options.content = this.jsonDoc;
-      this.editor.setContent(this.jsonDoc);
+      // const defaultContentKey = this.activityId + this.participantCode;
+      const defaultContentKey = this.documentId;
+      if (this.activityId && !localStorage.getItem(defaultContentKey)) {
+        this.editor.setContent(this.jsonDoc);
+        localStorage.setItem(defaultContentKey, 'true');
+      } else {
+        if (!this.activityId) {
+          this.editor.setContent(this.jsonDoc);
+        }
+      }
+      // this.editor.setContent(this.jsonDoc);
     }
   }
 
   ngOnChanges() {
-    this.initEditor();
+    // this.initEditor();
   }
   onChange(json: object) {
     // console.log(json);

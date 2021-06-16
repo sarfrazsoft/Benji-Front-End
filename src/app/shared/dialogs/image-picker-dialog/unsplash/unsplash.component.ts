@@ -26,13 +26,16 @@ export class UnsplashComponent implements OnInit {
 
   getUnsplashImages(query) {
     this.httpClient.get(global.apiRoot + '/integrations/unsplash/?search=' + query).subscribe((res: any) => {
-      console.log(res);
+      // console.log(res);
       this.images = res.results;
     });
   }
 
-  setImage(url) {
-    // console.log(url);
-    this.imageSelected.emit(url);
+  setImage(image) {
+    const downloadUrl = image.download_url + '&client_id=' + '1Edq4aVRPr6QD3GhRxJryyY1bvc_YO7Wn3n8DjO6zrU';
+    this.httpClient.get(downloadUrl).subscribe((res: any) => {
+      // console.log(res);
+    });
+    this.imageSelected.emit(image.image_url);
   }
 }

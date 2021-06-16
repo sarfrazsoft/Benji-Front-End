@@ -4,7 +4,7 @@
   [toolbar]="toolbar"
   [customMenuRef]="customMenu"
 ></ngx-editor-menu>
-<ngx-editor [editor]="editor" [ngModel]="html" (ngModelChange)="onChange($event)">
+<ngx-editor class="prose prose-sm sm:prose" [editor]="editor" [ngModel]="html" (ngModelChange)="onChange($event)">
 </ngx-editor>
 <ng-template #customMenu>
   <benji-editor-custom-menu
