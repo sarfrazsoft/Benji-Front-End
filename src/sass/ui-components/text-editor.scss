@@ -33,14 +33,46 @@ benji-text-editor {
       // padding: 24px;
       // min-height: 150px;
       color: $black;
-      ul {
-        list-style-type: none;
-      }
+      ul,
       ol {
         list-style-type: none;
+        ::before {
+          color: $black !important;
+        }
+      }
+      ul > li::before {
+        background-color: $black !important;
+      }
+      ul {
+        li {
+          ::before {
+            background-color: $black !important;
+          }
+        }
       }
       p {
         margin: 0 0 0.1rem;
+      }
+      h1 {
+        font-weight: 700;
+        font-size: 36px;
+        line-height: 46px;
+        margin-top: 32px;
+        margin-bottom: 4px;
+      }
+      h2 {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+        margin-top: 24px;
+        margin-bottom: 1px;
+      }
+      h3 {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 28px;
+        margin-top: 16px;
+        margin-bottom: 1px;
       }
       h1,
       h2,
