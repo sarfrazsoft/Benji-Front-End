@@ -29,10 +29,14 @@ export class PreviewPanelComponent implements OnInit {
   hostname = window.location.protocol + '//' + environment.host;
   imgSrc = '';
   showImage = false;
+  previewUrl$;
 
   constructor(private store: Store<fromStore.EditorState>) {}
 
   ngOnInit() {
+    this.previewUrl$ = this.store.select(fromStore.getCurrentPreviewImage).subscribe((val) => {
+      this.imgSrc = this.hostname + val;
+    });
     this.activity$ = this.store.select(fromStore.getSelectedLessonActivity);
     this.possibleActivities$ = this.store.select(fromStore.getAllPossibleActivities);
 

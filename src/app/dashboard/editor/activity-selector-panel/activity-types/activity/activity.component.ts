@@ -70,24 +70,24 @@ export class ActivityComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
-  mouseEnter(activityId) {
+  mouseEnter(activity) {
     if (this.selectedActivity.empty) {
       if (this.selectedPossibleActivity) {
-        if (this.selectedPossibleActivity === activityId) {
+        if (this.selectedPossibleActivity === activity.id) {
           return;
         } else {
-          this.store.dispatch(new fromStore.SelectActivityType(activityId));
+          this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
         }
       } else {
-        this.store.dispatch(new fromStore.SelectActivityType(activityId));
+        this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
       }
     }
   }
 
-  mouseLeave(activityId) {
-    console.log(this.selectedActivity);
+  mouseLeave(activity) {
+    // console.log(activity);
     // empty that lessonActivity
-    this.store.dispatch(new fromStore.SetLessonActivityEmpty(this.selectedActivity.id));
+    this.store.dispatch(new fromStore.ShowPlaceholderActivityPreview(activity));
   }
 }
 

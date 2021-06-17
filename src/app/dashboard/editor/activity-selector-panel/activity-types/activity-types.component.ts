@@ -17,18 +17,4 @@ export class ActivityTypesComponent implements OnInit {
 
     this.store.dispatch(new fromStore.LoadAllPossibleActivites());
   }
-
-  mouseOver(categoryId, activity: any) {
-    if (!activity.mouseOvered) {
-      const activityId = activity.id;
-      this.store.dispatch(new fromStore.ActivityHovered({ categoryId, activityId }));
-    }
-  }
-
-  mouseOut(categoryId, activity: any) {
-    if (activity.mouseOvered) {
-      const activityId = activity.id;
-      this.store.dispatch(new fromStore.ActivityHoverEnd({ categoryId, activityId }));
-    }
-  }
 }
