@@ -238,7 +238,7 @@ export class PastSessionsService {
 
   getCSV(lessonRunCode) {
     return this.http
-      .get(global.apiRoot + '/course_details/lesson_run/' + lessonRunCode + '/activities/')
+      .get(global.apiRoot + '/course_details/lesson_run/' + lessonRunCode + '/download/')
       .pipe(
         map((res: any) => {
           return res;
