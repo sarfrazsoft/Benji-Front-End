@@ -81,23 +81,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     this.submitImageNIdea();
     this.idea.editing = false;
   }
-
-  // onFileSelect(event) {
-  //   const fileList: FileList = event.target.files;
-  //   if (fileList.length === 0) {
-  //     this.imagesList = null;
-  //   } else {
-  //     this.imagesList = fileList;
-  //     // set the imageSrc for preview thumbnail
-  //     const file = fileList[0];
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => (this.imageSrc = reader.result);
-  //     reader.readAsDataURL(file);
-
-  //     console.log(this.imagesList);
-  //   }
-  // }
-
+  
   getSelectedFileName() {
     let name = '';
     if (this.imagesList.length > 0) {
@@ -131,7 +115,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
             .post(url, formData, { params, headers })
             .map((res: any) => {
               this.imagesList = null;
-              console.log(res);
               this.sendMessage.emit(
                 new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
               );
@@ -169,22 +152,16 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
         if (res) {
           if (res.type === 'upload') {
             this.imagesList = res.data;
-            // this.imagesList = fileList;
-            // set the imageSrc for preview thumbnail
-            // const fileList: FileList = event.target.files;
             const fileList: FileList = res.data;
             const file = fileList[0];
             const reader = new FileReader();
             reader.onload = (e) => (this.imageSrc = reader.result);
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
-            console.log(res);
             this.selectedImageUrl = res.data;
           } else if (res.type === 'giphy') {
             this.selectedImageUrl = res.data;
           }
-          console.log(res);
-          // this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res));
         }
       });
   }

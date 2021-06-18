@@ -46,7 +46,7 @@ export interface TitleActivity extends ParentActivity {
   title_emoji: string;
   main_title: string;
   title_text: string;
-  title_image;
+  title_image: string;
   hide_timer: boolean;
   layout: string;
 }
