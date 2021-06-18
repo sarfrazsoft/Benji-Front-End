@@ -32,3 +32,30 @@ benji-editor {
   cursor: pointer;
   border-radius: 4px;
 }
+
+.slides-layouts {
+  .layouts {
+      margin-bottom: 8px;
+      .layout {
+          border: 1px solid #fff;
+          img {
+              cursor: pointer;
+              border: 1px solid #bec8ca;
+              border-radius: 4px;
+              &:hover {
+                  border: 2px solid #555BEA;
+              }
+          }
+          &:hover, &.highlight {
+              border: unset;
+          }
+          &.highlight {
+              img {
+                  border: 2px solid #555BEA;
+              }
+              
+          }
+      }
+  }
+}
+

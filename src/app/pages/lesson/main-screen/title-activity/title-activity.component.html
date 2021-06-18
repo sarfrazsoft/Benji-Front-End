@@ -1,5 +1,5 @@
 <ng-container *ngIf="layout === 'icon-center'">
-  <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+  <div class="single-column-activity" fxLayout="column">
     <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_emoji)">
       <app-b-twemoji [text]="activityState.titleactivity.title_emoji"> </app-b-twemoji>
     </div>
@@ -58,7 +58,7 @@
   <div *ngIf="layout === 'image-right'" class="single-column-activity half-screen" fxLayout="row">
     <div fxFlex="50%" fxLayout="column" fxLayoutAlign="center center">
       <div class="activity-title-container">
-        <h1 class="primary-color pn-700">
+        <h1 class="black-color pn-700">
           {{ mainTitle }}
         </h1>
       </div>
@@ -127,7 +127,7 @@
   <div *ngIf="layout === 'image-right-slim'" class="single-column-activity half-screen" fxLayout="row">
     <div fxFlex="65%" fxLayout="column" fxLayoutAlign="center center">
       <div class="activity-title-container">
-        <h1 class="primary-color pn-700">
+        <h1 class="black-color pn-700">
           {{ mainTitle }}
         </h1>
       </div>
@@ -177,7 +177,7 @@
       fxFlex="50%" fxLayout="column" 
       fxLayoutAlign="center center">
       <div class="activity-title-container">
-        <h1 class="primary-color pn-700">
+        <h1 class="black-color pn-700">
           {{ mainTitle }}
         </h1>
       </div>
@@ -198,7 +198,7 @@
       fxFlex="50%" fxLayout="column" 
       fxLayoutAlign="center center">
       <div class="activity-title-container">
-        <h1 class="primary-color pn-700">
+        <h1 class="black-color pn-700">
           {{ mainTitle }}
         </h1>
       </div>
@@ -229,7 +229,7 @@
 </ng-container>
 
 <ng-container *ngIf="layout === 'no-image'">
-  <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+  <div class="single-column-activity" fxLayout="column">
     <div class="activity-title-container">
       <h1 class="black-color pn-700">
         {{ mainTitle }}
