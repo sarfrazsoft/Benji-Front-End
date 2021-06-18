@@ -84,7 +84,7 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
   // For single user activity
   singleUserSubmitAnswer(option: MCQChoiceSet) {
     if (this.activityState.lesson.single_user_lesson) {
-      this.sendMessage.emit(new MCQSubmitAnswerEvent(option));
+      this.sendMessage.emit(new MCQSubmitAnswerEvent([option]));
     }
   }
 

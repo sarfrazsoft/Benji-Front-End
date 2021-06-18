@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { filter, find, remove } from 'lodash';
 import { ContextService } from 'src/app/services';
 import { MCQChoice, MCQSubmitAnswerEvent, Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -16,13 +17,14 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   @Input() editor = false;
 
-  selectedChoice: MCQChoice = {
-    id: null,
-    is_correct: null,
-    choice_text: null,
-    explanation: null,
-    order: null,
-  };
+  selectedChoices: Array<MCQChoice> = [];
+  //  {
+  //   id: null,
+  //   is_correct: null,
+  //   choice_text: null,
+  //   explanation: null,
+  //   order: null,
+  // };
   revealAnswer = false;
   @ViewChild('timer') timer;
 
@@ -41,7 +43,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
     if (localStorage.getItem(this.localStorageItemName)) {
-      this.selectedChoice = JSON.parse(localStorage.getItem(this.localStorageItemName));
+      this.selectedChoices = JSON.parse(localStorage.getItem(this.localStorageItemName));
     }
     this.changes();
   }
@@ -63,13 +65,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
       this.showQuestionsAnswer = false;
       if (!this.questionTimerStarted) {
         localStorage.removeItem(this.localStorageItemName);
-        this.selectedChoice = {
-          id: null,
-          is_correct: null,
-          choice_text: null,
-          explanation: null,
-          order: null,
-        };
+        this.selectedChoices = [];
         this.questionTimerStarted = true;
       }
     } else if (
@@ -91,19 +87,47 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   selectOption(option: MCQChoice) {
     if (!this.answerSubmitted && option.id) {
-      this.selectedChoice = option;
-      localStorage.setItem(this.localStorageItemName, JSON.stringify(option));
+      const alreadyPresent = find(this.selectedChoices, (choice) => choice.id === option.id);
+      if (alreadyPresent) {
+        remove(this.selectedChoices, (choice) => choice.id === option.id);
+      } else {
+        this.selectedChoices.push(option);
+      }
+      localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
     }
   }
 
   submitAnswer() {
-    if (this.selectedChoice.id) {
-      this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoice));
+    if (this.selectedChoices.length) {
+      this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
       this.answerSubmitted = true;
     }
   }
 
   getCorrectAnswer() {
     return this.activityState.mcqactivity.question.mcqchoice_set.find((q) => q.is_correct);
+  }
+
+  isSelected(option: MCQChoice) {
+    const alreadyPresent = find(this.selectedChoices, (choice) => choice.id === option.id);
+    if (alreadyPresent) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getCorrectChoices() {
+    const arr = filter(this.activityState.mcqactivity.question.mcqchoice_set, (choice) => choice.is_correct);
+    return arr;
+  }
+
+  gotCorrectAnswers() {
+    const alreadyPresent = find(this.selectedChoices, (choice) => !choice.is_correct);
+    if (alreadyPresent) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

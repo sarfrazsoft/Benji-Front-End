@@ -204,9 +204,9 @@ export class HintWordSubmitVoteEvent extends ActivityEvent {
 export class MCQSubmitAnswerEvent extends ActivityEvent {
   event_name = 'MCQSubmitAnswerEvent';
 
-  constructor(answer: MCQChoice) {
+  constructor(answers: Array<MCQChoice>) {
     super();
-    this.extra_args = { answer: answer.id };
+    this.extra_args = { answers: answers };
   }
 }
 export class PollSubmitAnswerEvent extends ActivityEvent {

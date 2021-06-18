@@ -24,4 +24,12 @@ export class BrainstormComponent implements OnInit, OnChanges {
     // console.log(this.currentSpeaker)
     // console.log(this.data)
   }
+
+  isAbsolutePath(imageUrl: string) {
+    if (imageUrl.includes('https:')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
