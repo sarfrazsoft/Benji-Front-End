@@ -87,11 +87,20 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
 
   selectOption(option: MCQChoice) {
     if (!this.answerSubmitted && option.id) {
-      const alreadyPresent = find(this.selectedChoices, (choice) => choice.id === option.id);
-      if (alreadyPresent) {
-        remove(this.selectedChoices, (choice) => choice.id === option.id);
+      const multiSelect = this.activityState.mcqactivity.multiple_correct_answer;
+      if (multiSelect) {
+        const alreadyPresent = find(this.selectedChoices, (choice) => choice.id === option.id);
+        if (alreadyPresent) {
+          remove(this.selectedChoices, (choice) => choice.id === option.id);
+        } else {
+          this.selectedChoices.push(option);
+        }
       } else {
-        this.selectedChoices.push(option);
+        if (this.selectedChoices.length) {
+          this.selectedChoices[0] = option;
+        } else {
+          this.selectedChoices.push(option);
+        }
       }
       localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
     }

@@ -62,6 +62,7 @@ export interface MCQActivity {
   all_participant_answered: boolean;
   titlecomponent: TitleComponent;
   quiz_leaderboard: Array<LeaderBoard>;
+  multiple_correct_answer: boolean;
 }
 
 export interface LeaderBoard {
