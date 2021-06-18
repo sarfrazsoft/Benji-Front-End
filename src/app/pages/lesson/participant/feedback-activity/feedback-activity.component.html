@@ -1,4 +1,4 @@
-<benji-question-layout *ngIf="!answersSubmitted">
+<!-- <benji-question-layout *ngIf="!answersSubmitted">
   <app-b-twemoji class="body-emoji" emoji="✍️"> </app-b-twemoji>
   <h1 class="body-heading pn-700 primary-color-darkest">
     {{ activityState.feedbackactivity.titlecomponent.title }}
@@ -12,6 +12,30 @@
     (submitResponse)="submitAnswers($event)"
   ></benji-question-form>
 </benji-question-layout>
+
+<benji-ps-instruction-template *ngIf="answersSubmitted">
+  <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
+  <h1 class="body-heading pn-700 primary-color-darkest">
+    Thanks for submitting!
+  </h1>
+</benji-ps-instruction-template> -->
+
+
+<div class="b-flat-card center-text feedback-card" *ngIf="!answersSubmitted">
+  <div class="b-flat-card__body">
+    <app-b-twemoji class="body-emoji" emoji="✍️"> </app-b-twemoji>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      {{ activityState.feedbackactivity.titlecomponent.title }}
+    </h1>
+    <p class="body-text">
+      {{ activityState.feedbackactivity.titlecomponent.participant_instructions }}
+    </p>
+    <benji-question-form
+    [question_set]="activityState.feedbackactivity.feedbackquestion_set"
+    (submitResponse)="submitAnswers($event)">
+    </benji-question-form>
+  </div>
+</div>
 
 <benji-ps-instruction-template *ngIf="answersSubmitted">
   <app-b-twemoji class="body-emoji" emoji="🎉"></app-b-twemoji>
