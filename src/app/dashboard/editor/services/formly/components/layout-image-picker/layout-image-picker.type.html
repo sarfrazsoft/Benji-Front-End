@@ -1,15 +1,27 @@
 <div class="mb-3 seconds-form">
-    <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">
-      <formly-validation-message [field]="field"></formly-validation-message>
+  <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">
+    <formly-validation-message [field]="field"></formly-validation-message>
+  </div>
+  <div *ngIf="!imgUploaded; else imgLoaded" class="layout-image" 
+    fxLayout="row" 
+    fxLayoutAlign="center center" 
+    fxLayoutGap="8px"
+    (click)="openImagePickerDialog()"
+    (mouseover)="imgSrc = '/assets/img/slideImageUploadIconHover.svg'"
+    (mouseout)="imgSrc = '/assets/img/slideImageUploadIcon.svg';">
+    <img [src]="imgSrc">
+    <div class="layout-text">
+        Click to upload an image
     </div>
-    <div class="layout-image " 
-        fxLayout="row" 
-        fxLayoutAlign="center center" 
-        fxLayoutGap="8px"
-        (click)="openImagePickerDialog()">
-        <img src="/assets/img/slideImageUploadIcon.svg" alt="">
-        <div>
-            Click to upload an image
-        </div>
+  </div>
+  <ng-template #imgLoaded>
+    <div class="layout-image imgloaded" 
+      fxLayout="row" 
+      fxLayoutAlign="start center" 
+      fxLayoutGap="16px"
+      (click)="removeImage()">
+      <img [src]="imageSrc">
+      <button class="confirm-button"> Remove </button>
     </div>
+  </ng-template>
 </div>
