@@ -239,6 +239,7 @@ export interface DiscussionActivity {
 
 export interface FeedbackActivity {
   id: number;
+  title_emoji: string;
   feedbackquestion_set: FeedbackQuestion[];
   answered_participants: Array<ParticipantCode>;
   titlecomponent: TitleComponent;
@@ -464,6 +465,7 @@ export interface ParticipantGroupStatus {
 }
 
 export interface CaseStudyActivity extends ParentActivity {
+  title_emoji: string;
   activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;

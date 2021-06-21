@@ -89,6 +89,7 @@ export class MainScreenCaseStudyActivityComponent
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
     this.groupsX = this.formGroups(this.activityState.casestudyactivity);
+    console.log(this.act)
     // this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
   }
 
@@ -125,7 +126,16 @@ export class MainScreenCaseStudyActivityComponent
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.groups = this.act.groups;
+    //this.loadVariables(this.act);
   }
+
+  // loadVariables(act: TitleActivity) {
+  //   this.mainTitle = act.main_title ? act.main_title : '';
+  //   this.titleText = act.title_text ? act.title_text : '';
+  //   this.layout = act.layout ?  act.layout : '';
+  //   this.title_emoji = act.title_emoji ? act.title_emoji : '';
+  //   this.title_image = act.title_image ? act.title_image : '';
+  // }
 
   getGroupText(userGroup: Group): string {
     return userGroup.participants.map((u) => this.getParticipantName(u)).join(' + ');

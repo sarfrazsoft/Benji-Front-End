@@ -333,8 +333,10 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'title_emoji') {
+                  mappedField.templateOptions.label = 'Icon';
                 } else if (mapSource.field_name === 'activity_title') {
-                  // mappedField.hide = true;
+                  mappedField.hide = true;
                   mappedField.defaultValue = `Work sheet title`;
                 } else if (mapSource.field_name === 'participant_instructions') {
                   mappedField.type = 'textarea';
@@ -389,10 +391,13 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.feedback) {
-                // else if (act.activity_type === 'ff') {
-                // console.log(mapSource);
                 if (mapSource.internal_type === 'FeedbackActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } 
+                else if (mapSource.field_name === 'title_emoji') {
+                  mappedField.templateOptions.label = 'Icon';
+                } else if (mapSource.field_name === 'title_image') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'titlecomponent') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'participant_instructions') {
@@ -779,9 +784,10 @@ export const AllowEmojiDic = {
   MCQActivity: false,
   VideoActivity: false,
   BrainstormActivity: false,
-  FeedbackActivity: false,
+  FeedbackActivity: true,
   GenericRoleplayActivity: true,
   ConvoActivity: true,
+  CaseStudyActivity: true,
 };
 
 export const OrderForActivities = {
@@ -791,7 +797,6 @@ export const OrderForActivities = {
     'title_text',
     'title_image',
     'layout',
-   // 'next_activity_delay_seconds',
   ],
   BrainstormActivity: [
     'instructions',
@@ -806,6 +811,7 @@ export const OrderForActivities = {
   MCQActivity: ['titlecomponent', 'title', 'question', 'mcqchoice_set', 'question_seconds', 'quiz_label'],
   VideoActivity: ['video_url', 'auto_next', 'next_activity_delay_seconds'],
   CaseStudyActivity: [
+    'title_emoji',
     'activity_title',
     'participant_instructions',
     'note_taker_instructions',
@@ -814,6 +820,7 @@ export const OrderForActivities = {
     'casestudyquestion_set',
   ],
   FeedbackActivity: [
+    'title_emoji',
     'titlecomponent',
     'main_title',
     'title_text',

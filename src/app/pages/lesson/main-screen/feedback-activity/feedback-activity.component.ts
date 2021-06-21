@@ -7,6 +7,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   title = '';
+  title_emoji = '';
   instructions = '';
   answeredParticipantsLength = null;
   participantLength = null;
@@ -20,6 +21,8 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent i
 
   changes() {
     const act = this.activityState.feedbackactivity;
+    console.log(act);
+    this.title_emoji = act.title_emoji ? act.title_emoji : '';
     if (act) {
       this.title = act.titlecomponent.title;
       this.instructions = act.titlecomponent.screen_instructions;

@@ -1,7 +1,7 @@
 <ng-container *ngIf="newLayout">
   <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
-    <div class="twemoji-container">
-      <app-b-twemoji emoji="📝"></app-b-twemoji>
+    <div class="twemoji-container" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
+      <app-b-twemoji [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
     </div>
     <div class="activity-title-container">
       <h1 class="black-color pn-700">

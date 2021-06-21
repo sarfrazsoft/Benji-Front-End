@@ -33,6 +33,9 @@ benji-preview-panel {
         }
       }
       .feedback-card {
+        .twemoji-container {
+          margin: unset;
+        }
         .body-emoji {
           img {
             width: 66px;
