@@ -13,6 +13,8 @@ import { ContextService } from 'src/app/services';
 import { LobbySetNicknameEvent, LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'benji-ms-lobby',
@@ -22,11 +24,18 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
   startSessionLabel = '';
   joinLobbyUrl = '';
+  room_code: number;
   dialogRef;
   participants = [];
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
-  constructor(private dialog: MatDialog, private contextService: ContextService) {
+  shareParticipantLink = '';
+  hostname = window.location.host +'/participant/join?link=';
+  
+  constructor(
+    private dialog: MatDialog, 
+    private contextService: ContextService,
+    private utilsService: UtilsService ) {
     super();
   }
 
@@ -43,6 +52,8 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
 
   ngOnInit() {
     super.ngOnInit();
+    this.room_code = this.activityState.lesson_run.lessonrun_code;
+    this.shareParticipantLink = this.hostname + this.room_code;
     // this.sfxPlayer.nativeElement.play();
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
@@ -58,6 +69,10 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
 
   ngOnDestroy() {
     // this.sfxPlayer.nativeElement.pause();
+  }
+
+  copyLink(val: string) {
+    this.utilsService.copyToClipboard(val);
   }
 
   kickOffLesson() {
