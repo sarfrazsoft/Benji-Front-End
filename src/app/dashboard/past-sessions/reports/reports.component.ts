@@ -33,6 +33,8 @@ export class ReportsComponent implements OnInit {
   @ViewChild('reportEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   statsData: ActivityReport;
+  lessonRunCode: string;
+  excellFile: ActivityReport;
 
   constructor(
     private pastSessionsService: PastSessionsService,
@@ -42,9 +44,9 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const lesssonrunCode = paramMap.get('lessonrunCode');
+      this.lessonRunCode = paramMap.get('lessonrunCode');
       this.pastSessionsService.resetFilter();
-      this.getSessionSummary(lesssonrunCode);
+      this.getSessionSummary(this.lessonRunCode);
     });
   }
 
@@ -57,32 +59,6 @@ export class ReportsComponent implements OnInit {
           const mcqCF = this.cfr.resolveComponentFactory(McqsComponent);
           const component = this.entry.createComponent(mcqCF);
           component.instance.data = act;
-
-          // commented out tags feedback report
-          // const FTagsCF = this.cfr.resolveComponentFactory(
-          //   FeedbackTagsComponent
-          // );
-          // const component = this.entry.createComponent(FTagsCF);
-          // component.instance.data = [
-          //   {
-          //     question: 'how do evaluate the pitch',
-          //     tagScores: [
-          //       { name: 'Nice', score: 6 },
-          //       { name: 'Cool', score: 4 },
-          //       { name: 'Bad', score: 2 },
-          //       { name: 'The worse', score: 2 }
-          //     ]
-          //   },
-          //   {
-          //     question: 'how to chase a laser beam',
-          //     tagScores: [
-          //       { name: 'fast', score: 7 },
-          //       { name: 'Nyoom', score: 5 },
-          //       { name: 'slow', score: 2 },
-          //       { name: 'creeping', score: 4 }
-          //     ]
-          //   }
-          // ];
         } else if (act.activity_type === Acts.feedback) {
           const f = this.cfr.resolveComponentFactory(FeedbackComponent);
           const component = this.entry.createComponent(f);
@@ -117,8 +93,9 @@ export class ReportsComponent implements OnInit {
   }
 
   downloadCSV() {
-    this.pastSessionsService.getCSV('lessonrunCode').subscribe((res: Array<ActivityReport>) => {
-      console.log(res);
+    this.pastSessionsService.getCSV(this.lessonRunCode).subscribe((res: Array<ActivityReport>) => {
+      window.open(res['report_path']);
     });
   }
 }
+

@@ -8,7 +8,7 @@ import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/ap
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
-export class BaseLessonComponent implements OnInit, OnDestroy {
+export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
@@ -21,6 +21,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
   serverOffsets: number[];
   avgServerTimeOffset: number;
   facilitatorConnected = false;
+  timer;
 
   constructor(
     protected utilsService: UtilsService,
@@ -73,6 +74,11 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
         this.disableControls = false;
       }
     });
+  }
+
+  ngOnChanges() {
+    // this.timer = this.getTimerTool();
+    // console.log(this.timer);
   }
 
   ngOnDestroy() {}
@@ -199,6 +205,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy {
       return true;
     } else {
       return false;
+    }
+  }
+
+  getTimerTool() {
+    const sm = this.serverMessage;
+    if (sm && sm.running_tools && sm.running_tools.timer_tool) {
+      return sm.running_tools.timer_tool;
+    } else {
+      return sm.running_tools.timer_tool;
     }
   }
 

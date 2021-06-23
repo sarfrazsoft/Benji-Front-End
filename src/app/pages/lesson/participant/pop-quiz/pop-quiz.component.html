@@ -1,6 +1,11 @@
 <div class="b-flat-card center-text mc-card">
   <!-- show questions -->
   <ng-container *ngIf="showQuestion">
+    <benji-participant-timer
+      [timer]="timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-participant-timer>
     <div class="b-flat-card__body">
       <h3 class="pn-600 primary-color-darkest">
         {{ activityState.mcqactivity.question.question }}
@@ -14,7 +19,7 @@
         "
         class="b-standard-button unselected"
         [ngClass]="{
-          selected: option.id === selectedChoice.id,
+          selected: isSelected(option),
           inactive: answerSubmitted
         }"
         (click)="selectOption(option)"
@@ -35,27 +40,26 @@
     <div class="b-flat-card__body">
       <div class="twemoji">
         <app-b-twemoji
-          *ngIf="selectedChoice.is_correct"
+          *ngIf="gotCorrectAnswers()"
           emoji="🎉"
         ></app-b-twemoji>
         <app-b-twemoji
-          *ngIf="!selectedChoice.is_correct"
+          *ngIf="!gotCorrectAnswers()"
           emoji="🙊"
         ></app-b-twemoji>
       </div>
       <h1 class="pn-700 black-color">
-        {{ selectedChoice.is_correct ? "Correct!" : "Oops, incorrect!" }}
+        {{ gotCorrectAnswers() ? "Correct!" : "Oops, incorrect!" }}
       </h1>
     </div>
     <div class="b-flat-card__action">
       <ng-container
         *ngFor="
-          let option of activityState.mcqactivity.question.mcqchoice_set;
+          let option of selectedChoices;
           let i = index
         "
       >
         <button
-          *ngIf="option.id === selectedChoice.id"
           class="b-standard-button unselected"
           [ngClass]="{
             correct: option.is_correct,
@@ -66,12 +70,19 @@
         </button>
       </ng-container>
     </div>
-    <div *ngIf="!selectedChoice.is_correct" class="b-flat-card__action-detail">
-      <p>The correct answer is {{ getCorrectAnswer().choice_text }}</p>
+    <div *ngIf="!gotCorrectAnswers()" class="b-flat-card__action-detail">
+      <p>The correct answer is</p>
+      <ng-container *ngFor="let option of getCorrectChoices();let i = index">
+        <button
+          class="b-standard-button unselected"
+          [ngClass]="{correct: option.is_correct}">
+          {{ option.choice_text }}
+        </button>
+      </ng-container>
     </div>
-    <div class="b-flat-card__action-detail" style="margin-top: 30px;">
+    <!-- <div class="b-flat-card__action-detail" style="margin-top: 30px;">
       <p>{{ selectedChoice.explanation }}</p>
-    </div>
+    </div> -->
   </ng-container>
 </div>
 

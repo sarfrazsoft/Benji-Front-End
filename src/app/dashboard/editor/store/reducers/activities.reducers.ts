@@ -27,6 +27,9 @@ export interface ActivityState {
   // exclude these activities from all possible activities
   excludedActivities: Array<any>;
 
+  // preview image url
+  previewImageUrl: string;
+
   loadedPossibleActivities: boolean;
   loadingPossibleActivities: boolean;
   loadedLessonActivities: boolean;
@@ -52,6 +55,7 @@ export const initialState = {
   lessonActivitiesContent: {},
   selectedLessonActivity: null,
   selectedLessonActivityContent: null,
+  previewImageUrl: null,
   excludedActivities: [
     'BuildAPitchActivity',
     'LobbyActivity',
@@ -102,6 +106,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
               displayName: ActivityDisplayNames[key],
               activity_type: key,
               thumbnail: actProperties.thumbnail,
+              previewImage: actProperties.preview_image,
             };
             arr.push(x);
           }
@@ -248,6 +253,22 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.RESET_STORE: {
       return initialState;
+    }
+
+    case fromActivities.SHOW_ACTIVITY_PREVIEW: {
+      const activity = action.payload;
+      return {
+        ...state,
+        previewImageUrl: activity,
+      };
+    }
+
+    case fromActivities.SHOW_PLACEHOLDER_ACTIVITY_PREVIEW: {
+      const activity = action.payload;
+      return {
+        ...state,
+        previewImageUrl: '/static/activityflow/previews/placeholder.png',
+      };
     }
 
     case fromActivities.ADD_EMPTY_LESSON_ACTIVITY: {
@@ -515,6 +536,7 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 export const getLessonName = (state: ActivityState) => state.lessonName;
 export const getLessonId = (state: ActivityState) => state.lessonId;
 export const getLessonDescription = (state: ActivityState) => state.lessonDescription;
+export const getCurrentPreviewImage = (state: ActivityState) => state.previewImageUrl;
 export const getErrorInLesson = (state: ActivityState) => state.errorInLesson;
 export const getActivitiesLoading = (state: ActivityState) => state.loadingLessonActivities;
 export const getActivitiesLoaded = (state: ActivityState) => state.loadedLessonActivities;

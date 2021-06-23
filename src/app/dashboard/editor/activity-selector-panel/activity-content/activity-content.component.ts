@@ -155,8 +155,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
                   mappedField.defaultValue = false;
-                } else if (mapSource.field_name === '') {
-                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'multiple_correct_answer') {
+                  mappedField.templateOptions.label = 'Allow Multiple Selections';
+                  mappedField.defaultValue = false;
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === '') {

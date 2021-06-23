@@ -10,6 +10,7 @@ export abstract class BaseActivityComponent implements OnInit {
   @Input() activityState: UpdateMessage;
   @Input() avgServerTimeOffset: number;
   @Output() sendMessage = new EventEmitter<ActivityEvent>();
+  timer;
   myParticipantCode: number;
 
   ngOnInit() {
@@ -83,6 +84,13 @@ export abstract class BaseActivityComponent implements OnInit {
       return true;
     } else {
       return false;
+    }
+  }
+
+  getTimerTool() {
+    const sm = this.activityState;
+    if (sm && sm.running_tools && sm.running_tools.timer_tool) {
+      return sm.running_tools.timer_tool;
     }
   }
 }
