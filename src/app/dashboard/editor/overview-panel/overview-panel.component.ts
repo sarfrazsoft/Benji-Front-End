@@ -12,7 +12,6 @@ import * as fromStore from '../store';
 @Component({
   selector: 'benji-overview-panel',
   templateUrl: './overview-panel.component.html',
-  styleUrls: ['./overview-panel.component.scss'],
 })
 export class OverviewPanelComponent implements OnInit, OnDestroy {
   lessonActivities$: Observable<OverviewLessonActivity[]>;

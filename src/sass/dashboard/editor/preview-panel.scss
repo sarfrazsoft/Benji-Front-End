@@ -25,6 +25,55 @@ benji-preview-panel {
       .empty-preview {
         height: 30vw;
       }
+      .participant-screen {
+        img {
+          width: 100%;
+          height: auto;
+          margin-bottom: 5vh;
+        }
+      }
+      .feedback-card {
+        .twemoji-container {
+          margin: unset;
+        }
+        .participant {
+           img{
+            width: 66px;
+            display: block;
+          }
+        }
+        h1.participant {
+          color: #37352f;
+          font-size: 32px;
+          font-weight: 700;
+          text-align: left;
+          margin: 16px 0px 8px 0px;
+          padding: 0;
+        }
+        h2 {
+          font-size: 20px;
+          padding: 0;
+          margin: 0px 0px 16px 0px;
+        }
+        p.body-text {
+          font-size: 18px;
+          color: #6A6A6A;
+          text-align: left;
+        }
+        .b-standard-button {
+          font-size: 24px;
+          font-weight: 600;
+          height: 48px;
+          width: 100%;
+        }
+        .feedback-card__questions {
+          max-width: unset;
+          padding: 0;
+        }
+        .feedback-rating {
+          margin: 20px -10px 10px -10px;
+        }
+      }
       .facilitator-img {
         img {
           width: 100%;
@@ -177,12 +226,13 @@ benji-preview-panel {
           }
           .activity-title-container {
             h1 {
-              font-size: 36px;
+              font-size: 2.85vw;
             }
           }
           .activity-title-description-container {
             p {
               font-size: 20px;
+              margin-top: 5px;
               &.smaller-font-class {
                 font-size: 18px;
               }

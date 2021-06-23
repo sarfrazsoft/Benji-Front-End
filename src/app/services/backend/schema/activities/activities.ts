@@ -46,7 +46,7 @@ export interface TitleActivity extends ParentActivity {
   title_emoji: string;
   main_title: string;
   title_text: string;
-  title_image;
+  title_image: string;
   hide_timer: boolean;
   layout: string;
 }
@@ -240,6 +240,7 @@ export interface DiscussionActivity {
 
 export interface FeedbackActivity {
   id: number;
+  title_emoji: string;
   feedbackquestion_set: FeedbackQuestion[];
   answered_participants: Array<ParticipantCode>;
   titlecomponent: TitleComponent;
@@ -465,6 +466,7 @@ export interface ParticipantGroupStatus {
 }
 
 export interface CaseStudyActivity extends ParentActivity {
+  title_emoji: string;
   activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;

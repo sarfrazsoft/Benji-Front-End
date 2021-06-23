@@ -353,11 +353,13 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             polymorphic_ctype: 60,
             run_number: 0,
             start_time: '2020-11-24T13:16:30.794385-05:00',
+            title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
             titlecomponent: {
               participant_instructions: instructions,
               screen_instructions: instructions,
               title: title,
-              title_image: 'emoji://1F642',
+              //title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
+              //title_image: 'emoji://1F642',
             },
           },
         };
@@ -473,6 +475,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             activity_id: '1606248775095',
             activity_seconds: 10000,
             activity_title: title,
+            title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
             activity_type: 'CaseStudyActivity',
             auto_next: true,
             case_study_details: content.case_study_details ? content.case_study_details : '',

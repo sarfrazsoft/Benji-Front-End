@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
 import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
@@ -26,6 +26,7 @@ export class ParticipantJoinComponent implements OnInit {
   public username = new FormControl(null, [Validators.required]);
 
   constructor(
+    private route: ActivatedRoute,
     public router: Router,
     private backend: BackendRestService,
     private socket: BackendSocketService,
@@ -34,6 +35,12 @@ export class ParticipantJoinComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    if (this.route.snapshot.queryParams['link']) {
+      //alert(this.route.snapshot.queryParams['link']);
+      this.roomCode.setValue(this.route.snapshot.queryParams['link']);
+      //alert(this.roomCode.value);
+      this.validateRoomCode();
+    }
     this.username.disable();
     if (!this.userName) {
       this.backend.get_own_identity().subscribe(

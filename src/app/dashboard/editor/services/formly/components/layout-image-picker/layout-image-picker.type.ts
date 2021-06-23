@@ -17,9 +17,10 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
-
+  imgSrc;
   lessonId;
-
+  imgUploaded: boolean;
+  imgId: string;
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -27,12 +28,34 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
     private httpClient: HttpClient ) {
     super();
   }
+  
   ngOnChanges(changes: SimpleChanges): void {
   }
+
   ngOnInit(): void {
+    this.imgSrc = '/assets/img/slideImageUploadIcon.svg';
+    this.imgUploaded = false;
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.lessonId = paramMap.get('lessonId');
     });
+  }
+
+  removeImage(){
+    const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/delete/png/image/';    
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept', 'application/json');
+    const params = {image_id: this.imgId};
+    this.httpClient
+      .post(url,params)
+      .map((res: any) => {
+        this.imgUploaded = false;
+        this.formControl.setValue(null);
+      })
+      .subscribe(
+        (data) => {},
+        (error) => console.log(error)
+      );
   }
 
   openImagePickerDialog(){
@@ -48,10 +71,7 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
       .subscribe((res) => {
         if (res) {
           if (res.type === 'upload') {
-            //course_details/lesson/{id}/{mode}/{image_type}/image/
-            console.log(res);
             const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/upload/title_activity/image/';
-            console.log(url);
             const fileList: FileList = res.data;
             if (fileList.length > 0) {
               const file: File = fileList[0];
@@ -69,13 +89,10 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
                   this.httpClient
                     .post(url, formData, { params, headers })
                     .map((res: any) => {
+                      this.imgId = res.id;
                       this.imagesList = null;
-                      console.log(res);
-                      this.formControl.setValue(res.img)
-                      // this.sendMessage.emit(
-                      //   new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
-                      // );
-                      // this.userIdeaText = '';
+                      this.formControl.setValue(res.img);
+                      this.imgUploaded = true;
                     })
                     .subscribe(
                       (data) => {},
@@ -88,7 +105,6 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
               const reader = new FileReader();
               reader.onload = (e) => (this.imageSrc = reader.result);
               reader.readAsDataURL(file);
-              console.log(this.imageSrc)
             }
           } else if (res.type === 'unsplash') {
             console.log(res);
@@ -98,8 +114,6 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
             this.selectedImageUrl = res.data;
             this.formControl.setValue(res.data)
           }
-          console.log(res);
-          // this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res));
         }
       });
   }

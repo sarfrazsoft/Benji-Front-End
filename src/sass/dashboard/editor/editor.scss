@@ -31,4 +31,50 @@ benji-editor {
   font-size: 18px;
   cursor: pointer;
   border-radius: 4px;
+  &:hover {
+    color: #6A6A6A;
+  }
+  &.imgloaded {
+    img {
+      height: 40px;
+      margin-left: 16px;
+    }
+    button {
+      font-size: 16px;
+      font-weight: 500;
+      padding: 8px 24px;
+      border-radius: 4px;
+      background-color: #FDECEE;
+      color: #EE3E53;
+      height: 40px;
+      }
+  }
+  
 }
+
+.slides-layouts {
+  .layouts {
+      margin-bottom: 8px;
+      .layout {
+          border: 1px solid #fff;
+          img {
+              cursor: pointer;
+              border: 1px solid #bec8ca;
+              border-radius: 4px;
+              &:hover {
+                  border: 2px solid #555BEA;
+              }
+          }
+          &:hover, &.highlight {
+              border: unset;
+          }
+          &.highlight {
+              img {
+                  border: 2px solid #555BEA;
+              }
+              
+          }
+      }
+  }
+}
+

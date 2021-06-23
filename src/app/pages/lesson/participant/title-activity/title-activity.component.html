@@ -1,20 +1,24 @@
-<benji-ps-instruction-template>
-  <div class="body-emoji" *ngIf="layout === 'icon-center'; else others">
-    <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_emoji)">
-      <app-b-twemoji [text]="activityState.titleactivity.title_emoji"> </app-b-twemoji>
-    </div>
-  </div>
-  <ng-template #others>
-    <div *ngIf="layout === 'image-left' || layout === 'image-right' || layout === 'image-left-center' || layout === 'image-right-center' || layout === 'image-left-slim' || layout === 'image-right-slim'" 
-        class="image-container fill" 
-        fxLayoutAlign="center center">
-        <img [src]="title_image" alt=""> 
+<div class="b-flat-card center-text feedback-card">
+  <div class="b-flat-card__body">
+    <div class="twemoji" *ngIf="layout === 'icon-center'; else others">
+      <div class="body-emoji">
+        <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_emoji)">
+          <app-b-twemoji [text]="activityState.titleactivity.title_emoji"> </app-b-twemoji>
+        </div>
       </div>
-  </ng-template>
-  <h1 class="body-heading pn-700 primary-color-darkest">
-    {{ activityState.titleactivity.main_title }}
-  </h1>
-  <ng-container class="body-text">
-    {{ activityState.titleactivity.title_text }}
-  </ng-container>
-</benji-ps-instruction-template>
+    </div>
+    <ng-template #others>
+      <div *ngIf="layout === 'image-left' || layout === 'image-right' || layout === 'image-left-center' || layout === 'image-right-center' || layout === 'image-left-slim' || layout === 'image-right-slim'" 
+          class="participant-screen" 
+          fxLayoutAlign="center center">
+          <img [src]="title_image" alt=""> 
+        </div>
+    </ng-template>
+    <h1 class="body-heading pn-700 primary-color-darkest">
+      {{ activityState.titleactivity.main_title }}
+    </h1>
+    <ng-container class="body-text">
+      {{ activityState.titleactivity.title_text }}
+    </ng-container>
+  </div>
+</div>

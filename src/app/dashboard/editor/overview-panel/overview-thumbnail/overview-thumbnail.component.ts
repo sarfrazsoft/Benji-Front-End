@@ -7,7 +7,6 @@ import * as fromStore from '../../store';
 @Component({
   selector: 'benji-overview-thumbnail',
   templateUrl: './overview-thumbnail.component.html',
-  styleUrls: ['./overview-thumbnail.component.scss'],
 })
 export class OverviewThumbnailComponent implements OnInit, OnDestroy {
   @Input() act: OverviewLessonActivity;
