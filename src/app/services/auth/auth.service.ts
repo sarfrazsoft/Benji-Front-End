@@ -99,6 +99,7 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
+          console.log(res);
           this.setSession(res);
           this.contextService.user = res.user;
           this.layoutService.hideSidebar = false;

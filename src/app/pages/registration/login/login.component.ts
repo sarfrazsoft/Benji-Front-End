@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
       const val = this.form.value;
       this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
         (res) => {
+          console.log(res);
           if (res) {
             this.emailPasswordError = true;
           } else {

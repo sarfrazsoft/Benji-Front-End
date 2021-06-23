@@ -10,6 +10,8 @@ export * from './formly/components/question-type-select/question-type-select.typ
 export * from './formly/pipes/select-options/select-options.pipe';
 export * from './formly/components/bap-blank/bap-blank.type';
 export * from './formly/components/seconds/seconds.type';
+export * from './formly/components/layout-picker/layout-picker.type';
+export * from './formly/components/layout-image-picker/layout-image-picker.type';
 export * from './formly/components/convo-card/convo-card.type';
 export * from './formly/components/accordion/accordion.type';
 export * from './formly/components/image-selector/image-selector.type';

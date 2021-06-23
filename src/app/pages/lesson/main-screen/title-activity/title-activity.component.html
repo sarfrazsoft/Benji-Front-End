@@ -1,77 +1,43 @@
-<ng-container *ngIf="layout === 'leftHalfScreen' || layout === 'rightHalfScreen'">
-  <div *ngIf="layout === 'leftHalfScreen'" class="single-column-activity half-screen" fxLayout="row">
-    <div fxFlex="50%">
-      <div 
-        class=" image-container fill" 
-        [ngStyle]="{
-          'background-image': 'url(/assets/img/placeholder.png)'
-        }">
-        <!-- <img src="/assets/img/placeholder.png" alt=""> 
-        background-image: url('/assets/img/placeholder.png');-->
-      </div>
+<ng-container *ngIf="layout === 'icon-center'">
+  <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+    <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_emoji)">
+      <app-b-twemoji [text]="activityState.titleactivity.title_emoji"> </app-b-twemoji>
     </div>
-    <div fxFlex="50%" fxLayout="column" fxLayoutAlign="center center">
-      <div class="activity-title-container">
-        <h1 class="black-color pn-700">
-          {{ mainTitle }}
-        </h1>
-      </div>
-      <div class="activity-title-description-container">
-        <p
-          class="secondary-color-dark pn-500"
-          [ngClass]="{
-            'smaller-font-class': titleText.length > 100
-          }"
-        >
-          {{ titleText }}
-        </p>
-      </div>
+    <div class="activity-title-container">
+      <h1 class="black-color pn-700">
+        {{ mainTitle }}
+      </h1>
     </div>
-  </div>
-  <div *ngIf="layout === 'rightHalfScreen'" class="single-column-activity half-screen" fxLayout="row">
-    <div fxFlex="50%" fxLayout="column" fxLayoutAlign="center center">
-      <div class="activity-title-container">
-        <h1 class="primary-color pn-700">
-          {{ mainTitle }}
-        </h1>
-      </div>
-      <div class="activity-title-description-container">
-        <p
-          class="secondary-color-dark pn-500"
-          [ngClass]="{
-            'smaller-font-class': titleText.length > 100
-          }"
-        >
-          {{ titleText }}
-        </p>
-      </div>
-    </div>
-    <div fxFlex="50%">
-      <div 
-        class=" image-container fill" 
-        [ngStyle]="{
-          'background-image': 'url(/assets/img/placeholder.png)'
-        }">
-        <!-- <img src="/assets/img/placeholder.png" alt=""> 
-        background-image: url('/assets/img/placeholder.png');-->
-      </div>
+    <div class="activity-title-description-container">
+      <p
+        class="secondary-color-dark pn-500"
+        [ngClass]="{
+          'smaller-font-class': titleText.length > 100
+        }"
+      >
+        {{ titleText }}
+      </p>
     </div>
   </div>
 </ng-container>
 
-<ng-container *ngIf="layout === 'leftImage' || layout === 'rightImage'">
-  <div *ngIf="layout === 'leftImage'" class="single-column-activity small-image" fxLayout="row">
-    <div fxFlex="50%" fxLayoutAlign="center center">
-      <div class=" image-container fill" fxLayoutAlign="center center">
-        <img src="/assets/img/placeholder.png" alt=""> 
-        <!-- <img src="/assets/img/Desk_lightblue.jpg" alt="">  -->
-        <!-- <img src="/assets/img/Desk_lightblue1.jpg" alt="">  -->
-        <!-- <img src="/assets/img/Desk_lightblue2.jpg" alt="">  -->
+<ng-container *ngIf="layout === 'image-left' || layout === 'image-right'">
+  <div *ngIf="layout === 'image-left'" class="single-column-activity half-screen" fxLayout="row">
+    <div fxFlex="50%">
+      <div *ngIf="this.title_image; else placeholder"
+        class=" image-container fill" 
+        [ngStyle]="{'background-image': 'url(' + title_image + ')'}" >
       </div>
+      <ng-template #placeholder>
+        <div 
+          class=" image-container fill" 
+          [ngStyle]="{
+            'background-image': 'url(/assets/img/placeholder.png)'
+          }">
+        </div>
+      </ng-template>
     </div>
-    <div 
-      fxFlex="50%" fxLayout="column" 
-      fxLayoutAlign="center center">
+    <div fxFlex="50%" fxLayout="column" fxLayoutAlign="center center">
       <div class="activity-title-container">
         <h1 class="black-color pn-700">
           {{ mainTitle }}
@@ -89,7 +55,145 @@
       </div>
     </div>
   </div>
-  <div *ngIf="layout === 'rightImage'" class="single-column-activity small-image" fxLayout="row">
+  <div *ngIf="layout === 'image-right'" class="single-column-activity half-screen" fxLayout="row">
+    <div fxFlex="50%" fxLayout="column" fxLayoutAlign="center center">
+      <div class="activity-title-container">
+        <h1 class="primary-color pn-700">
+          {{ mainTitle }}
+        </h1>
+      </div>
+      <div class="activity-title-description-container">
+        <p
+          class="secondary-color-dark pn-500"
+          [ngClass]="{
+            'smaller-font-class': titleText.length > 100
+          }"
+        >
+          {{ titleText }}
+        </p>
+      </div>
+    </div>
+    <div fxFlex="50%">
+      <div *ngIf="this.title_image; else placeholder"
+        class=" image-container fill" 
+        [ngStyle]="{'background-image': 'url(' + title_image + ')'}" >
+      </div>
+      <ng-template #placeholder>
+        <div 
+          class=" image-container fill" 
+          [ngStyle]="{
+            'background-image': 'url(/assets/img/placeholder.png)'
+          }">
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="layout === 'image-left-slim' || layout === 'image-right-slim'">
+  <div *ngIf="layout === 'image-left-slim'" class="single-column-activity half-screen" fxLayout="row">
+    <div fxFlex="35%">
+      <div *ngIf="this.title_image; else placeholder"
+        class=" image-container fill" 
+        [ngStyle]="{'background-image': 'url(' + title_image + ')'}" >
+      </div>
+      <ng-template #placeholder>
+        <div 
+          class=" image-container fill" 
+          [ngStyle]="{
+            'background-image': 'url(/assets/img/placeholder.png)'
+          }">
+        </div>
+      </ng-template>
+    </div>
+    <div fxFlex="65%" fxLayout="column" fxLayoutAlign="center center">
+      <div class="activity-title-container">
+        <h1 class="black-color pn-700">
+          {{ mainTitle }}
+        </h1>
+      </div>
+      <div class="activity-title-description-container">
+        <p
+          class="secondary-color-dark pn-500"
+          [ngClass]="{
+            'smaller-font-class': titleText.length > 100
+          }"
+        >
+          {{ titleText }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="layout === 'image-right-slim'" class="single-column-activity half-screen" fxLayout="row">
+    <div fxFlex="65%" fxLayout="column" fxLayoutAlign="center center">
+      <div class="activity-title-container">
+        <h1 class="primary-color pn-700">
+          {{ mainTitle }}
+        </h1>
+      </div>
+      <div class="activity-title-description-container">
+        <p
+          class="secondary-color-dark pn-500"
+          [ngClass]="{
+            'smaller-font-class': titleText.length > 100
+          }"
+        >
+          {{ titleText }}
+        </p>
+      </div>
+    </div>
+    <div fxFlex="35%">
+      <div *ngIf="this.title_image; else placeholder"
+        class=" image-container fill" 
+        [ngStyle]="{'background-image': 'url(' + title_image + ')'}" >
+      </div>
+      <ng-template #placeholder>
+        <div 
+          class=" image-container fill" 
+          [ngStyle]="{
+            'background-image': 'url(/assets/img/placeholder.png)'
+          }">
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="layout === 'image-left-center' || layout === 'image-right-center'">
+  <div *ngIf="layout === 'image-left-center'" class="single-column-activity small-image" fxLayout="row">
+    <div fxFlex="50%" fxLayoutAlign="center center">
+      <div *ngIf="this.title_image; else placeholder"
+        class="image-container fill" 
+        fxLayoutAlign="center center">
+        <img [src]="title_image" alt=""> 
+      </div>
+      <ng-template #placeholder>
+        <div class=" image-container fill">
+          <img src="/assets/img/placeholder.png" alt=""> 
+        </div>
+      </ng-template>
+    </div>
+    <div 
+      fxFlex="50%" fxLayout="column" 
+      fxLayoutAlign="center center">
+      <div class="activity-title-container">
+        <h1 class="primary-color pn-700">
+          {{ mainTitle }}
+        </h1>
+      </div>
+      <div class="activity-title-description-container">
+        <p
+          class="secondary-color-dark pn-500"
+          [ngClass]="{
+            'smaller-font-class': titleText.length > 100
+          }"
+        >
+          {{ titleText }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="layout === 'image-right-center'" class="single-column-activity small-image" fxLayout="row">
     <div 
       fxFlex="50%" fxLayout="column" 
       fxLayoutAlign="center center">
@@ -110,12 +214,36 @@
       </div>
     </div>
     <div fxFlex="50%" fxLayoutAlign="center center">
-      <div class=" image-container fill" fxLayoutAlign="center center">
-        <img src="/assets/img/placeholder.png" alt=""> 
-        <!-- <img src="/assets/img/Desk_lightblue.jpg" alt="">  -->
-        <!-- <img src="/assets/img/Desk_lightblue1.jpg" alt="">  -->
-        <!-- <img src="/assets/img/Desk_lightblue2.jpg" alt="">  -->
+      <div *ngIf="this.title_image; else placeholder"
+        class="image-container fill" 
+        fxLayoutAlign="center center">
+        <img [src]="title_image" alt=""> 
       </div>
+      <ng-template #placeholder>
+        <div class=" image-container fill">
+          <img src="/assets/img/placeholder.png" alt=""> 
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="layout === 'no-image'">
+  <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+    <div class="activity-title-container">
+      <h1 class="black-color pn-700">
+        {{ mainTitle }}
+      </h1>
+    </div>
+    <div class="activity-title-description-container">
+      <p
+        class="secondary-color-dark pn-500"
+        [ngClass]="{
+          'smaller-font-class': titleText.length > 100
+        }"
+      >
+        {{ titleText }}
+      </p>
     </div>
   </div>
 </ng-container>
@@ -144,30 +272,6 @@
           {{ titleText }}
         </p>
       </div>
-    </div>
-  </div>
-</ng-container>
-
-
-<ng-container *ngIf="layout === 'emojiLayout'">
-  <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
-    <div class="twemoji-container" *ngIf="isEmoji(activityState.titleactivity.title_image)">
-      <app-b-twemoji [text]="activityState.titleactivity.title_image"> </app-b-twemoji>
-    </div>
-    <div class="activity-title-container">
-      <h1 class="black-color pn-700">
-        {{ mainTitle }}
-      </h1>
-    </div>
-    <div class="activity-title-description-container">
-      <p
-        class="secondary-color-dark pn-500"
-        [ngClass]="{
-          'smaller-font-class': titleText.length > 100
-        }"
-      >
-        {{ titleText }}
-      </p>
     </div>
   </div>
 </ng-container>

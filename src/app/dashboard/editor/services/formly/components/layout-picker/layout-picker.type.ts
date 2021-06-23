@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
-import { Observable } from 'rxjs/Observable';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
   selector: 'benji-layout-picker-type',
@@ -9,10 +7,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   styleUrls: [ './layout-picker.type.scss' ]
 })
 export class LayoutPickerTypeComponent extends FieldType implements OnInit {
-    layouts$: Observable<any[]>;
-    selected: boolean = false;
-
+  chosen: string = "icon-center";
 
   ngOnInit() {
+    if (this.formControl.value) {
+      this.chosen = this.formControl.value;
+    }
   }
+
+  public layoutClicked(choice : string) {
+    this.chosen = choice;
+    this.formControl.setValue(this.chosen);
+  }
+
 }
