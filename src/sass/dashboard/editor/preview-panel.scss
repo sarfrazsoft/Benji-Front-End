@@ -36,13 +36,13 @@ benji-preview-panel {
         .twemoji-container {
           margin: unset;
         }
-        .body-emoji {
-          img {
+        .participant {
+           img{
             width: 66px;
             display: block;
           }
         }
-        h1 {
+        h1.participant {
           color: #37352f;
           font-size: 32px;
           font-weight: 700;

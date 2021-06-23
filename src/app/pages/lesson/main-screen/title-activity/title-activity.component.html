@@ -101,7 +101,7 @@
         <div 
           class=" image-container fill" 
           [ngStyle]="{
-            'background-image': 'url(/assets/img/placeholder.png)'
+            'background-image': 'url(/assets/img/slim-placeholder.png)'
           }">
         </div>
       </ng-template>
@@ -151,7 +151,7 @@
         <div 
           class=" image-container fill" 
           [ngStyle]="{
-            'background-image': 'url(/assets/img/placeholder.png)'
+            'background-image': 'url(/assets/img/slim-placeholder.png)'
           }">
         </div>
       </ng-template>
@@ -168,7 +168,8 @@
         <img [src]="title_image" alt=""> 
       </div>
       <ng-template #placeholder>
-        <div class=" image-container fill">
+        <div class=" image-container fill"
+        fxLayoutAlign="center center">
           <img src="/assets/img/placeholder.png" alt=""> 
         </div>
       </ng-template>
@@ -220,7 +221,8 @@
         <img [src]="title_image" alt=""> 
       </div>
       <ng-template #placeholder>
-        <div class=" image-container fill">
+        <div class=" image-container fill"
+          fxLayoutAlign="center center">
           <img src="/assets/img/placeholder.png" alt=""> 
         </div>
       </ng-template>

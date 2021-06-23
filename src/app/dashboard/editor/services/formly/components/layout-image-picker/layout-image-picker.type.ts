@@ -20,7 +20,7 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
   imgSrc;
   lessonId;
   imgUploaded: boolean;
-
+  imgId: string;
   constructor(
     private dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -38,6 +38,24 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.lessonId = paramMap.get('lessonId');
     });
+  }
+
+  removeImage(){
+    const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/delete/png/image/';    
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept', 'application/json');
+    const params = {image_id: this.imgId};
+    this.httpClient
+      .post(url,params)
+      .map((res: any) => {
+        this.imgUploaded = false;
+        this.formControl.setValue(null);
+      })
+      .subscribe(
+        (data) => {},
+        (error) => console.log(error)
+      );
   }
 
   openImagePickerDialog(){
@@ -71,6 +89,7 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
                   this.httpClient
                     .post(url, formData, { params, headers })
                     .map((res: any) => {
+                      this.imgId = res.id;
                       this.imagesList = null;
                       this.formControl.setValue(res.img);
                       this.imgUploaded = true;
