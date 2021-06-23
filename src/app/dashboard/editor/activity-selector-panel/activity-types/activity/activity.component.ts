@@ -71,42 +71,14 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   mouseEnter(activity) {
-    // if (this.selectedActivity.empty) {
     if (this.selectedPossibleActivity) {
-      if (this.selectedPossibleActivity === activity.id) {
-        return;
-      } else {
-        this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
-      }
+      this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
     } else {
       this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
     }
-    // }
   }
 
   mouseLeave(activity) {
-    // console.log(activity);
-    // empty that lessonActivity
     this.store.dispatch(new fromStore.ShowPlaceholderActivityPreview(activity));
   }
 }
-
-// export const page = {
-//   title: 'page title',
-//   backgroundImage: 'path/to/image',
-//   owner: 3,
-//   content: [
-//     {
-//       type: 'editorContent',
-//       data: `{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]}`,
-//     },
-//     {
-//       type: 'mcqActivity',
-//       data: mcqActivityData,
-//     },
-//     {
-//       type: 'editorContent',
-//       data: `{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]}`,
-//     },
-//   ],
-// };
