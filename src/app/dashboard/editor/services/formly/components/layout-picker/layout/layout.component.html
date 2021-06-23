@@ -1,0 +1,15 @@
+<div
+  class="layout-type"
+  [class.selected]="selectedPossibleLayout === layout.id"
+  (mouseover)="hover = true"
+  (mouseout)="hover = false"
+  (click)="selectLayout(layout.id)"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <div class="image">
+    <!-- <img [src]="getThumbnailSrc(layout)" /> -->
+    <!-- <img [src]="/assets/img/slidesLayouts/11 + '.svg'" /> -->
+    <img [src]="'/assets/img/activityThumbnails/' + AT[act.activity_type]" />
+  </div>
+</div>

@@ -63,7 +63,8 @@
         xPosition="before">
         <benji-dynamic-timer 
           [updateMessage]="activityState"
-          (controlClicked)="controlClicked($event)">
+          (controlClicked)="controlClicked($event)"
+          (propagate)="propagate($event)">
         </benji-dynamic-timer>
       </mat-menu>
     </div>

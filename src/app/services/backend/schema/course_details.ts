@@ -1,4 +1,5 @@
 import { TeamUser, User } from './user';
+import { Timer } from './utils';
 
 export interface PaginatedResponse<T> {
   count: number;
@@ -54,6 +55,7 @@ export interface LessonRun {
 export interface RunningTools {
   share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number } };
   grouping_tool?: { selectedGrouping: number; groupings: Array<GroupingToolGroups>; viewGrouping: boolean };
+  timer_tool?: Timer;
 }
 
 export interface GroupingToolGroups {

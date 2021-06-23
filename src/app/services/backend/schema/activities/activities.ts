@@ -43,10 +43,12 @@ export interface LobbyActivity {
 }
 
 export interface TitleActivity extends ParentActivity {
+  title_emoji: string;
   main_title: string;
   title_text: string;
-  title_image: string;
+  title_image;
   hide_timer: boolean;
+  layout: string;
 }
 export interface ImageActivity extends ParentActivity {
   image: string;
@@ -62,6 +64,7 @@ export interface MCQActivity {
   all_participant_answered: boolean;
   titlecomponent: TitleComponent;
   quiz_leaderboard: Array<LeaderBoard>;
+  multiple_correct_answer: boolean;
 }
 
 export interface LeaderBoard {

@@ -57,7 +57,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           const s = pair.possibleActivities.filter((pa) => pa.id === act_type)[0].schema;
           const schema = cloneDeep(s);
           const content = cloneDeep(this.selectedLessonActivityContent);
-
           // Case study activiy
           // set grouping_activity_id to show if External or Internal grouping activity
           if (act.activity_type === this.at.caseStudy || act.activity_type === this.at.genericRoleplay) {
@@ -157,8 +156,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
                   mappedField.defaultValue = false;
-                } else if (mapSource.field_name === '') {
-                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'multiple_correct_answer') {
+                  mappedField.templateOptions.label = 'Allow Multiple Selections';
+                  mappedField.defaultValue = false;
                 } else if (mapSource.field_name === '') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === '') {
@@ -234,9 +234,16 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = 'Subheader';
                   mappedField.templateOptions.placeholder = 'Paragraph text';
                 } else if (mapSource.field_name === 'title_image') {
-                  // mappedField.type = 'imageSelector';
-                  // mappedField.templateOptions.label = 'Select an Image';
-                  mappedField.hide = true;
+                  mappedField.templateOptions['lessonId'] = 'Add Card';
+                  mappedField.type = 'layoutImagePicker';
+                  mappedField.templateOptions.label = 'Media';
+                } else if (mapSource.field_name === 'title_emoji') {
+                  mappedField.defaultValue = 'emoji://1F3B2';
+                  mappedField.templateOptions.label = 'Title Icon';
+                } else if (mapSource.field_name === 'layout') {
+                  mappedField.type = 'layoutPicker';
+                  mappedField.templateOptions.label = 'Layout';
+                  mappedField.defaultValue = 'icon-center';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 10000;
@@ -249,10 +256,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.templateOptions.label = 'Auto forward after timer';
-                  mappedField.hide = true;
-                } else if (mapSource.field_name === 'layout') {
-                  mappedField.hide = true;
-                } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.brainStorm) {
@@ -643,6 +646,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
       const b = cloneDeep(this.model);
       // processing before submitting to BE
       if (b.activity_type === this.at.title) {
+        console.log(b);
         // If the user didn't set next activity delay seconds
         if (b.next_activity_delay_seconds === 10000) {
           b.hide_timer = true;
@@ -789,7 +793,14 @@ export const AllowEmojiDic = {
 };
 
 export const OrderForActivities = {
-  TitleActivity: ['main_title', 'title_text', 'title_image', 'next_activity_delay_seconds'],
+  TitleActivity: [
+    'title_emoji',
+    'main_title',
+    'title_text',
+    'title_image',
+    'layout',
+    'next_activity_delay_seconds',
+  ],
   BrainstormActivity: [
     'instructions',
     'max_participant_submissions',

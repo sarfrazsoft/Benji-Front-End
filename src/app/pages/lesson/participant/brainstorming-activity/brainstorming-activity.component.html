@@ -21,6 +21,11 @@
             </ng-container>
           </ng-container>
         </div>
+        <benji-participant-timer
+          [timer]="timer"
+          [endAudio]="'bell.wav'"
+          [timerOffset]="avgServerTimeOffset"
+        ></benji-participant-timer>
         <!-- <ng-container *ngIf="act.max_participant_submissions >= 10">
           You can submit multiple ideas
         </ng-container> -->

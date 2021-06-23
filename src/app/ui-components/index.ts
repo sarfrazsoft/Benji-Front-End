@@ -6,6 +6,7 @@ import { LinearTimerComponent } from '../ui-components/linear-timer/linear-timer
 import { MainScreenFooterComponent } from '../ui-components/main-screen-footer/main-screen-footer.component';
 import { MainScreenToolbarComponent } from '../ui-components/main-screen-toolbar/main-screen-toolbar.component';
 import { NumberTimerComponent } from '../ui-components/number-timer/number-timer.component';
+import { ParticipantTimerComponent } from '../ui-components/participant-timer/participant-timer.component';
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 
@@ -23,6 +24,7 @@ export const UIComponents = [
   MainScreenFooterComponent,
   MainScreenToolbarComponent,
   NumberTimerComponent,
+  ParticipantTimerComponent,
   RadialTimerComponent,
   SnackBarComponent,
   ...ControlComponents,

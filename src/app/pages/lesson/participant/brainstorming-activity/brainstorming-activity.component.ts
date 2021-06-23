@@ -49,6 +49,8 @@ export class ParticipantBrainstormingActivityComponent
   showThankyouForVoting = false;
   showVoteResults = false;
 
+  // timer;
+
   constructor(
     private contextService: ContextService,
     private brainstormService: BrainstormService,
@@ -99,6 +101,9 @@ export class ParticipantBrainstormingActivityComponent
   ngOnChanges() {
     this.act = this.activityState.brainstormactivity;
     const userID = this.getParticipantCode();
+
+    this.timer = this.getTimerTool();
+    console.log(this.timer);
 
     // Show thank you for idea submission
 

@@ -9,7 +9,6 @@ import * as fromStore from '../../../store';
 @Component({
   selector: 'benji-selector-activity',
   templateUrl: './activity.component.html',
-  styleUrls: ['./activity.component.scss'],
 })
 export class ActivityComponent implements OnInit, OnDestroy {
   @Input() activity;
@@ -18,6 +17,8 @@ export class ActivityComponent implements OnInit, OnDestroy {
   hostname = window.location.protocol + '//' + environment.host;
   selectedPossibleActivity = '';
   sub: Subscription;
+  selectedActivity$: Subscription;
+  selectedActivity;
   dialogRef;
   constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
 
@@ -25,6 +26,10 @@ export class ActivityComponent implements OnInit, OnDestroy {
     // this.activities$ = this.store.select(fromStore.getAllPossibleActivities);
     this.sub = this.store.select(fromStore.getSelectedPossibleActivity).subscribe((val) => {
       this.selectedPossibleActivity = val;
+    });
+
+    this.selectedActivity$ = this.store.select(fromStore.getSelectedLessonActivity).subscribe((val) => {
+      this.selectedActivity = val;
     });
   }
   getThumbnailSrc(activity) {
@@ -64,24 +69,16 @@ export class ActivityComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-}
 
-// export const page = {
-//   title: 'page title',
-//   backgroundImage: 'path/to/image',
-//   owner: 3,
-//   content: [
-//     {
-//       type: 'editorContent',
-//       data: `{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]}`,
-//     },
-//     {
-//       type: 'mcqActivity',
-//       data: mcqActivityData,
-//     },
-//     {
-//       type: 'editorContent',
-//       data: `{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"user A created this worksheet "}]},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"image","attrs":{"src":"http://localhost/media/881d457a9fd275b352fd495d6e75464d_dSYaYIu.jpg","alt":null,"title":null,"width":null}}]}]}`,
-//     },
-//   ],
-// };
+  mouseEnter(activity) {
+    if (this.selectedPossibleActivity) {
+      this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
+    } else {
+      this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
+    }
+  }
+
+  mouseLeave(activity) {
+    this.store.dispatch(new fromStore.ShowPlaceholderActivityPreview(activity));
+  }
+}

@@ -82,21 +82,21 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     this.idea.editing = false;
   }
 
-  onFileSelect(event) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length === 0) {
-      this.imagesList = null;
-    } else {
-      this.imagesList = fileList;
-      // set the imageSrc for preview thumbnail
-      const file = fileList[0];
-      const reader = new FileReader();
-      reader.onload = (e) => (this.imageSrc = reader.result);
-      reader.readAsDataURL(file);
+  // onFileSelect(event) {
+  //   const fileList: FileList = event.target.files;
+  //   if (fileList.length === 0) {
+  //     this.imagesList = null;
+  //   } else {
+  //     this.imagesList = fileList;
+  //     // set the imageSrc for preview thumbnail
+  //     const file = fileList[0];
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => (this.imageSrc = reader.result);
+  //     reader.readAsDataURL(file);
 
-      console.log(this.imagesList);
-    }
-  }
+  //     console.log(this.imagesList);
+  //   }
+  // }
 
   getSelectedFileName() {
     let name = '';
