@@ -1,0 +1,18 @@
+<div class="participant-timer-container color-black" 
+  *ngIf="timer && (timer.status === 'running' || timer.status === 'paused')">
+  <span>
+    Time Left:
+  </span>  
+  <span class="time pn-500">
+    {{ get_min_sec().min | number: "1.0-0" }}:{{
+      get_min_sec().sec | number: "2.0-0"
+    }}
+  </span>
+  <div class="progress-bar-container">
+    <div
+      class="participant-timer bg-primary-color"
+      [ngClass]="classes"
+      [style.width.%]="progressBarWidth()"
+    ></div>
+  </div>
+</div>

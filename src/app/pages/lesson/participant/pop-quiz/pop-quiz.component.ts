@@ -132,11 +132,16 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   }
 
   gotCorrectAnswers() {
-    const alreadyPresent = find(this.selectedChoices, (choice) => !choice.is_correct);
-    if (alreadyPresent) {
+    const incorrectChoicePresent = find(this.selectedChoices, (choice) => !choice.is_correct);
+    if (incorrectChoicePresent) {
       return false;
     } else {
-      return true;
+      const correctChoices = this.getCorrectChoices();
+      if (this.selectedChoices.length === correctChoices.length) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }

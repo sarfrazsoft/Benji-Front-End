@@ -114,3 +114,22 @@
     }
   }
 }
+
+.participant-timer-container {
+  font-size: 14px;
+  font-weight: 500;
+  .time {
+    font-weight: 700;
+  }
+  .progress-bar-container {
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    .participant-timer {
+      height: 8px;
+      border-radius: 8px;
+      transition: all 0.1s linear;
+      max-width: 100%;
+    }
+  }
+}

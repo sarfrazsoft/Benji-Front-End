@@ -88,6 +88,17 @@
         <button
           benji-click-stop-propagation 
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
+          [ngClass]="{
+            inactive: timer.total_seconds === 0
+          }"
+          *ngIf="timer && timer.status == 'ended'"
+          (click)="resetTimer()"
+        >
+          Reset
+        </button>
+        <button
+          benji-click-stop-propagation 
+          class="dialog-controls bg-primary-color white-color start-resume-buttons"
           *ngIf="timer && timer.status == 'running'"
           (click)="pauseClicked()"
         >
