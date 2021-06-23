@@ -71,17 +71,17 @@ export class ActivityComponent implements OnInit, OnDestroy {
   }
 
   mouseEnter(activity) {
-    if (this.selectedActivity.empty) {
-      if (this.selectedPossibleActivity) {
-        if (this.selectedPossibleActivity === activity.id) {
-          return;
-        } else {
-          this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
-        }
+    // if (this.selectedActivity.empty) {
+    if (this.selectedPossibleActivity) {
+      if (this.selectedPossibleActivity === activity.id) {
+        return;
       } else {
         this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
       }
+    } else {
+      this.store.dispatch(new fromStore.ShowActivityPreview(activity.previewImage));
     }
+    // }
   }
 
   mouseLeave(activity) {

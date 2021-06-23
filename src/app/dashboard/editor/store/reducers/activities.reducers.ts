@@ -55,7 +55,7 @@ export const initialState = {
   lessonActivitiesContent: {},
   selectedLessonActivity: null,
   selectedLessonActivityContent: null,
-  previewImageUrl: 'url',
+  previewImageUrl: null,
   excludedActivities: [
     'BuildAPitchActivity',
     'LobbyActivity',
@@ -265,9 +265,9 @@ export function reducer(state = initialState, action: fromActivities.ActivitiesA
 
     case fromActivities.SHOW_PLACEHOLDER_ACTIVITY_PREVIEW: {
       const activity = action.payload;
-
       return {
         ...state,
+        previewImageUrl: '/static/activityflow/previews/placeholder.png',
       };
     }
 
