@@ -80,7 +80,6 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.updateMessage);
     if (this.updateMessage.mcqactivity) {
       const as = this.updateMessage;
       if (
