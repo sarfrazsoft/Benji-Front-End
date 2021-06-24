@@ -80,21 +80,47 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.getTimerTool()) {
-      this.contextService.activityTimer = this.getTimerTool();
-      this.timer = this.getTimerTool();
+    console.log(this.updateMessage);
+    if (this.updateMessage.mcqactivity) {
+      const as = this.updateMessage;
+      if (
+        as.mcqactivity.question_timer &&
+        (as.mcqactivity.question_timer.status === 'running' ||
+          as.mcqactivity.question_timer.status === 'paused')
+      ) {
+        this.timer = as.mcqactivity.question_timer;
+        this.contextService.activityTimer = this.timer;
+        // this.timer = this.getTimerTool();
+      } else {
+        const time = moment().format();
+        this.timer = {
+          end_time: time,
+          id: 57,
+          remaining_seconds: 0,
+          start_time: time,
+          status: 'paused',
+          total_seconds: 0,
+          editor: false,
+        };
+        this.contextService.activityTimer = this.timer;
+      }
     } else {
-      const time = moment().format();
-      this.timer = {
-        end_time: time,
-        id: 57,
-        remaining_seconds: 0,
-        start_time: time,
-        status: 'paused',
-        total_seconds: 0,
-        editor: false,
-      };
-      this.contextService.activityTimer = this.timer;
+      if (this.getTimerTool()) {
+        this.contextService.activityTimer = this.getTimerTool();
+        this.timer = this.getTimerTool();
+      } else {
+        const time = moment().format();
+        this.timer = {
+          end_time: time,
+          id: 57,
+          remaining_seconds: 0,
+          start_time: time,
+          status: 'paused',
+          total_seconds: 0,
+          editor: false,
+        };
+        this.contextService.activityTimer = this.timer;
+      }
     }
   }
 

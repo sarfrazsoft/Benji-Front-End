@@ -166,7 +166,11 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     } else {
       const selectedGroup = this.speakers[this.currentSpeakerIndex];
       const selectedParticipant = selectedGroup.group.participants[0];
-      this.sendMessage.emit(new SelectParticipantForShareEvent(selectedParticipant));
+      if (selectedParticipant) {
+        this.sendMessage.emit(new SelectParticipantForShareEvent(selectedParticipant));
+      } else {
+        this.utilsService.openWarningNotification(`This group does not have any participants`, '');
+      }
     }
     this.component.instance.currentSpeaker = this.speakers[this.currentSpeakerIndex];
     this.component.instance.update();

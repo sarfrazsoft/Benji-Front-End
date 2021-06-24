@@ -9,6 +9,13 @@
     <p class="body-text">
       {{ activityState.feedbackactivity.titlecomponent.participant_instructions }}
     </p>
+
+    <benji-participant-timer
+      [timer]="timer"
+      [endAudio]="'bell.wav'"
+      [timerOffset]="avgServerTimeOffset"
+    ></benji-participant-timer>
+    
     <benji-question-form
     [question_set]="activityState.feedbackactivity.feedbackquestion_set"
     (submitResponse)="submitAnswers($event)">

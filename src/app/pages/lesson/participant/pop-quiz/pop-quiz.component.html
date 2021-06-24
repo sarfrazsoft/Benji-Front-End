@@ -1,12 +1,12 @@
 <div class="b-flat-card center-text mc-card">
   <!-- show questions -->
   <ng-container *ngIf="showQuestion">
-    <benji-participant-timer
-      [timer]="timer"
-      [endAudio]="'bell.wav'"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-participant-timer>
     <div class="b-flat-card__body">
+      <benji-participant-timer
+        [timer]="timer"
+        [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
+      ></benji-participant-timer>
       <h3 class="pn-600 primary-color-darkest">
         {{ activityState.mcqactivity.question.question }}
       </h3>

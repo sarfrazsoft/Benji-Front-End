@@ -1,20 +1,20 @@
 import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { ContextService, EmojiLookupService } from 'src/app/services';
 import { Timer } from 'src/app/services/backend/schema';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { TitleActivity } from 'src/app/services/backend/schema';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-title-activity',
   templateUrl: './title-activity.component.html',
 })
 export class ParticipantTitleActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
-
   mainTitle = '';
   titleText = '';
   layout: any;
   title_emoji: string;
   title_image: any;
+  timer: Timer;
 
   constructor(public emoji: EmojiLookupService, private contextService: ContextService) {
     super();
@@ -29,12 +29,7 @@ export class ParticipantTitleActivityComponent extends BaseActivityComponent imp
   ngOnChanges() {
     const act = this.activityState;
     this.loadVariables(act.titleactivity);
-    if (act.titleactivity.hide_timer) {
-      this.contextService.activityTimer = { status: 'cancelled' } as Timer;
-    } else {
-      const timer = this.getNextActStartTimer();
-      // this.contextService.activityTimer = timer;
-    }
+    this.timer = this.getTimerTool();
   }
 
   loadVariables(act: TitleActivity) {
@@ -43,7 +38,5 @@ export class ParticipantTitleActivityComponent extends BaseActivityComponent imp
     this.title_emoji = act.title_emoji ? act.title_emoji : '';
     this.title_image = act.title_image ? act.title_image : '';
     this.layout = act.layout ? act.layout : '';
-    console.log(this.layout);
   }
-
 }

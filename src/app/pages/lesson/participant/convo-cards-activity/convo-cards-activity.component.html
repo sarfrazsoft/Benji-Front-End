@@ -2,6 +2,11 @@
   <div class="content" fxLayout="column">
     <div fxLayoutAlign="center start">
       <div class="cards-container">
+        <benji-participant-timer
+          [timer]="timer"
+          [endAudio]="'bell.wav'"
+          [timerOffset]="avgServerTimeOffset"
+        ></benji-participant-timer>
         <div
           *ngIf="items.length" 
           class="card super">

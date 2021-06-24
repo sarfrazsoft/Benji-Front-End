@@ -35,12 +35,11 @@
       innerHTML="{{ act.case_study_details }}">
     </div>
     <div class="worksheet-timer" *ngIf="timer && !act.hide_timer">
-      TIME LEFT: <span>
-        <benji-number-timer
-          [timer]="timer"
-          endStateText="Times Up!"
-        ></benji-number-timer>
-      </span>
+      <benji-participant-timer
+        [timer]="timer"
+        [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
+      ></benji-participant-timer>
     </div>
     <!-- <div class="your-prompt">
       <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
