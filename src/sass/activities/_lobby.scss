@@ -29,6 +29,14 @@ benji-ms-lobby {
       padding: 16px;
       border-radius: 8px;
       font-weight: 600;
+      &.copy-link {
+        font-weight: 500;
+        font-size: 20px;
+        padding: 22px;
+        img {
+          margin-right: 8px;
+        }
+      }
     }
     .lobby-launch-button {
       padding: 16px 24px;

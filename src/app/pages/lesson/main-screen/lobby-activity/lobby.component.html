@@ -9,27 +9,29 @@
       </span>
     </span>
   </div>
-  <div class="bg-white lobby-controls" fxLayout="row" fxLayoutAlign="space-between">
-    <div class="participant-count-container bg-sky" 
-      fxLayout="row" 
-      fxLayoutAlign="center center"
-      fxLayoutGap="8px">
-      <img src="/assets/img/participantCount.svg" alt="">
-      <span class="lobby-activity__participant-number primary-color">
-        {{ activityState.lesson_run.participant_set.length }}
-      </span>
+  <div class="bg-yellow lobby-controls" fxLayout="row" fxLayoutAlign="space-between">
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <div class="participant-count-container bg-sky">
+        <img src="/assets/img/participantCount.svg" alt="">
+        <span class="lobby-activity__participant-number primary-color">
+          {{ activityState.lesson_run.participant_set.length }}
+        </span>
+      </div>
+      <div fxLayoutAlign="space-between center" class="participant-count-container bg-white copy-link" (click)="copyLink(shareParticipantLink)">
+        <img src="/assets/img/coolicon.svg" alt="">
+        <span class="primary-color">
+          Copy Link
+        </span>
+      </div>
     </div>
     <div>
-      <button class="bg-primary-color white-color lobby-launch-button"  style="margin-right: 16px;" (click)="copyLink(shareParticipantLink)">
-        Copy Invite Link
-      </button>
       <button class="bg-primary-color white-color lobby-launch-button" (click)="kickOffLesson()">
         Start
       </button>
     </div>
   </div>
 
-  <div class="bg-white" fxFlex="1 0 0" fxLayout="row">
+  <div class="bg-yellow" fxFlex="1 0 0" fxLayout="row">
     <div class="mainscreen-activity__column mainscreen-activity__column--25 joined-users">
       <ul>
         <li
