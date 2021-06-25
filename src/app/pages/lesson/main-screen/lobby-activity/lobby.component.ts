@@ -12,9 +12,9 @@ import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialog
 import { ContextService } from 'src/app/services';
 import { LobbySetNicknameEvent, LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ms-lobby',
@@ -30,12 +30,13 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   @ViewChild('sfxPlayer') sfxPlayer: ElementRef;
 
   shareParticipantLink = '';
-  hostname = window.location.host +'/participant/join?link=';
-  
+  hostname = window.location.host + '/participant/join?link=';
+
   constructor(
-    private dialog: MatDialog, 
+    private dialog: MatDialog,
     private contextService: ContextService,
-    private utilsService: UtilsService ) {
+    private utilsService: UtilsService
+  ) {
     super();
   }
 
@@ -76,11 +77,11 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   }
 
   kickOffLesson() {
-    if (this.activityState.lesson_run.participant_set.length < 2) {
-      this.openLowAttendanceDialog();
-    } else {
-      this.sendMessage.emit(new LobbyStartButtonClickEvent());
-    }
+    // if (this.activityState.lesson_run.participant_set.length < 2) {
+    //   this.openLowAttendanceDialog();
+    // } else {
+    this.sendMessage.emit(new LobbyStartButtonClickEvent());
+    // }
   }
 
   setNicknameEvent() {
