@@ -24,6 +24,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from './../environments/environment';
 
+import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
 export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
 @NgModule({
@@ -45,8 +48,26 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
       updateOnRouterChange: true,
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    SocialLoginModule,
   ],
-  providers: [...ServicesProviders],
+  providers: [
+    ...ServicesProviders,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              // replace this with your google client id
+              '1045008906243-hfer3eo1mh91gg3oi6khdg000guqg4lq.apps.googleusercontent.com'
+            ),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

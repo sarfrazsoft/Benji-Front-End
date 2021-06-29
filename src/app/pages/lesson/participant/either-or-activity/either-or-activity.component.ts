@@ -19,7 +19,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-either-or-activity',
   templateUrl: './either-or-activity.component.html',
-  styleUrls: ['./either-or-activity.component.scss'],
 })
 export class ParticipantEitherOrActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   state: WhereDoYouStandActivity;

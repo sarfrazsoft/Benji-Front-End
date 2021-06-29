@@ -3,6 +3,15 @@
     <div class="div-block-183">
       <img [src]="logo" loading="lazy" alt="" >
       <div class="log-in-form w-form">
+        <a (click)="signInWithGoogle()" class="nav-link">Sign in with google</a>
+        <div class="navbar-nav ml-auto" *ngIf="user">
+          <span class="navbar-text">
+           {{ user.email }}
+          </span>	
+            <li class="nav-item">
+              <a class="nav-link" (click)="signOut()">Logout</a>
+            </li>
+          </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()" id="email-form" no-shadow="input[type=text] {        -webkit-appearance: none;     -moz-appearance: none;     appearance: none; }" class="form-9">
           <div class="email-control">
             <input 

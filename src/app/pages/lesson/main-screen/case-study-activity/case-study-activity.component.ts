@@ -89,7 +89,7 @@ export class MainScreenCaseStudyActivityComponent
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
     this.groupsX = this.formGroups(this.activityState.casestudyactivity);
-    console.log(this.act)
+    // console.log(this.act)
     // this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
   }
 
@@ -126,7 +126,7 @@ export class MainScreenCaseStudyActivityComponent
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.groups = this.act.groups;
-    //this.loadVariables(this.act);
+    // this.loadVariables(this.act);
   }
 
   // loadVariables(act: TitleActivity) {

@@ -1,8 +1,55 @@
-<div class="either-or-activity mainscreen-activity" fxLayoutAlign="center">
+<!-- <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center" *ngIf="state"> -->
+  <div class="single-column-activity" fxLayout="column" fxLayoutGap="16px">
+    <!-- <div class="twemoji-container" *ngIf="isEmoji(activityState.wheredoyoustandactivity.title_emoji)">
+      <app-b-twemoji [text]="activityState.wheredoyoustandactivity.title_emoji"> </app-b-twemoji>
+    </div> -->
+    <div class="activity-title-container">
+      <div class="question-title black-color pn-700" [innerHTML]="state.question_title">
+      </div>
+    </div>
+    <div>
+      <p class="activity-description secondary-color-dark pn-500" 
+        [ngClass]="{
+          'smaller-font-class': 'act.question'.length > 100
+        }">
+        Guess how this group will answer.
+      </p>
+    </div>
+    <div class="selections" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="64px">
+      <div class="radio-mock-button" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+        <div class="emoji-div">
+          <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
+        </div>
+        <span>
+          {{ state.left_choice.choice_name }}
+        </span>
+      </div>
+      <div class="radio-mock-button" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+        <div class="emoji-div">
+          <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
+        </div>
+        <span>
+          {{ state.right_choice.choice_name }}
+        </span>
+      </div>
+    </div>
+    <div class="forms-submitted primary-color pn-600" *ngIf="participantLength">
+      {{ answeredParticipantsLength }}/{{participantLength}}
+      Submitted
+    </div>
+    <div class="continue-button" (click)="continueClicked()" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <div class="text primary-color">Continue</div>
+      <div class="icon bg-primary-color" >
+
+      </div>
+    </div>
+  </div>
+  
+  
   <ng-container *ngIf="!state.standing_complete && !state.preference_complete">
     <!-- prediction -->
 
-    <ng-container *ngIf="!state.prediction_complete">
+    <!-- <ng-container *ngIf="!state.prediction_complete">
       <div class="single-column-activity">
         <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
           <div>
@@ -27,10 +74,10 @@
           answers submitted
         </div>
       </div>
-    </ng-container>
+    </ng-container> -->
 
     <!-- preference -->
-    <ng-container *ngIf="state.prediction_complete">
+    <!-- <ng-container *ngIf="state.prediction_complete">
       <ng-container *ngIf="!isRemoteSession">
         <div class="single-column-activity">
           <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
@@ -98,10 +145,10 @@
           </div>
         </div>
       </ng-container>
-    </ng-container>
+    </ng-container> -->
   </ng-container>
 
-  <div
+  <!-- <div
     *ngIf="!state.standing_complete && state.preference_complete && state.prediction_complete"
     class="single-column-activity"
   >
@@ -130,7 +177,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div
     class="result"
@@ -207,7 +254,7 @@
     </div>
   </div>
 
-  <div class="hint-activity__linear-timer-container">
+  <!-- <div class="hint-activity__linear-timer-container">
     <benji-linear-timer
       [timer]="state.prediction_countdown_timer"
       [endAudio]="'bell.wav'"
@@ -228,5 +275,5 @@
       [endAudio]="'bell.wav'"
       [timerOffset]="avgServerTimeOffset"
     ></benji-linear-timer>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->

@@ -99,7 +99,6 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
-          console.log(res);
           this.setSession(res);
           this.contextService.user = res.user;
           this.layoutService.hideSidebar = false;
@@ -167,7 +166,6 @@ export class AuthService {
     } else {
       // navigate to login screen with the current url as the parameter
       this.redirectURL = window.location.href;
-      console.log(window.location.href);
       this.router.navigate(['/login']);
     }
   }
@@ -208,6 +206,19 @@ export class AuthService {
         new_password2: password2,
         uid: uid,
         token: token,
+      })
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError((err) => of(err.error))
+      );
+  }
+
+  validateGoogleToken(token) {
+    return this.http
+      .post(global.apiRoot + '/rest-auth/google/', {
+        id_token: token,
       })
       .pipe(
         map((res) => {

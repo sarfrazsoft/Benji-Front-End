@@ -30,6 +30,8 @@ import {
   ParticipantTitleActivityComponent,
 } from 'src/app/pages';
 import { MainScreenCaseStudyActivityComponent } from 'src/app/pages/lesson/main-screen/case-study-activity/case-study-activity.component';
+import { MainScreenEitherOrActivityComponent } from 'src/app/pages/lesson/main-screen/either-or-activity/either-or-activity.component';
+import { ParticipantEitherOrActivityComponent } from 'src/app/pages/lesson/participant/either-or-activity/either-or-activity.component';
 import { PreviewActivity } from 'src/app/services/backend/schema';
 
 @Component({
@@ -54,7 +56,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
     if (this.data) {
       const content = this.data.content;
       if (this.data.activity_type === Acts.title) {
-        console.log(this.data)
+        console.log(this.data);
         if (this.componentRef) {
           this.componentRef.destroy();
         }
@@ -89,7 +91,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             start_time: '2020-11-11T12:30:41.270208-05:00',
             title_image: this.data.content.title_image ? content.title_image : null,
             title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
-            layout: this.data.content.layout,      
+            layout: this.data.content.layout,
             title_text: content.title_text ? content.title_text : 'Paragraph text',
           },
         };
@@ -358,8 +360,8 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
               participant_instructions: instructions,
               screen_instructions: instructions,
               title: title,
-              //title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
-              //title_image: 'emoji://1F642',
+              // title_emoji: this.data.content.title_emoji ? content.title_emoji : null,
+              // title_image: 'emoji://1F642',
             },
           },
         };
@@ -558,6 +560,70 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             title_image: this.data.content.title_image ? content.title_image : null,
             title_text: content.title_text,
             cards: cards,
+          },
+        };
+      } else if (this.data.activity_type === Acts.whereDoYouStand) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenEitherOrActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantEitherOrActivityComponent);
+        }
+        this.componentRef = this.entry.createComponent(msAct);
+        console.log(this.data);
+
+        let right_choice = {
+          choice_img_url: 'emoji://1F412',
+          choice_name: 'Right choice',
+        };
+        if (this.data.content.right_choice) {
+          right_choice = {
+            choice_img_url: this.data.content.right_choice.choice_img_url,
+            choice_name: this.data.content.right_choice.choice_name,
+          };
+        }
+
+        let left_choice = {
+          choice_img_url: 'emoji://1F575-FE0F-200D-2642-FE0F',
+          choice_name: 'Left choice',
+        };
+        if (this.data.content.left_choice) {
+          left_choice = {
+            choice_img_url: this.data.content.left_choice.choice_img_url,
+            choice_name: this.data.content.left_choice.choice_name,
+          };
+        }
+
+        let question_title = 'At a party, what would you rather do?';
+        if (this.data.content.question_title) {
+          question_title = this.data.content.question_title;
+        }
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          wheredoyoustandactivity: {
+            activity_id: '1605110364952',
+            activity_type: this.data.activity_type,
+            auto_next: true,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 507,
+            is_paused: true,
+            next_activity: 4,
+            next_activity_delay_seconds: null,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 46,
+            run_number: 0,
+            start_time: '2020-11-11T12:30:41.270208-05:00',
+            left_choice: left_choice,
+            right_choice: right_choice,
+            question_title: question_title,
           },
         };
       }

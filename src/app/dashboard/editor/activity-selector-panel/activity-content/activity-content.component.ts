@@ -394,8 +394,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.feedback) {
                 if (mapSource.internal_type === 'FeedbackActivitySerializer') {
                   mappedField.templateOptions.label = '';
-                } 
-                else if (mapSource.field_name === 'title_emoji') {
+                } else if (mapSource.field_name === 'title_emoji') {
                   mappedField.templateOptions.label = 'Icon';
                 } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
@@ -559,25 +558,33 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.defaultValue = false;
                 } else if (mapSource.field_name === 'left_choice') {
                   mappedField.templateOptions.label = 'Choice 1';
+                } else if (mapSource.field_name === 'choice_img_url') {
+                  mappedField.type = 'emoji';
                 } else if (mapSource.field_name === 'right_choice') {
                   mappedField.templateOptions.label = 'Choice 2';
                 } else if (mapSource.field_name === 'choice_name') {
-                  mappedField.hide = true;
+                  // mappedField.hide = true;
                 } else if (mapSource.field_name === 'collective_name') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'prediction_text') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'preference_text') {
-                  mappedField.templateOptions.label = '';
+                  // mappedField.templateOptions.label = 'ff';
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'stand_on_side_seconds') {
                   mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === 'prediction_seconds') {
                   mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.templateOptions.label = 'Time to answer questions';
                   mappedField.type = 'seconds';
+                  mappedField.defaultValue = 10000;
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'preference_seconds') {
                   mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === '') {
                 } else if (mapSource.field_name === '') {
                 } else if (mapSource.field_name === '') {
@@ -726,19 +733,28 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         }
         b.activity_overview_text = ActivityTitles[this.at.buildAPitch];
       } else if (b.activity_type === this.at.whereDoYouStand) {
-        if (b.next_activity_delay_seconds) {
-          b.prediction_seconds = b.next_activity_delay_seconds;
-          b.preference_seconds = b.next_activity_delay_seconds;
-          b.stand_on_side_seconds = b.next_activity_delay_seconds;
-        }
-        if (b.left_choice.preference_text) {
-          b.left_choice.choice_name = b.left_choice.preference_text.replace(/\s/g, '');
-          b.left_choice.collective_name = b.left_choice.preference_text;
-        }
-        if (b.right_choice.preference_text) {
-          b.right_choice.choice_name = b.right_choice.preference_text.replace(/\s/g, '');
-          b.right_choice.collective_name = b.right_choice.preference_text;
-        }
+        // if (b.next_activity_delay_seconds) {
+        //   b.prediction_seconds = b.next_activity_delay_seconds;
+        //   b.preference_seconds = b.next_activity_delay_seconds;
+        //   b.stand_on_side_seconds = b.next_activity_delay_seconds;
+        // }
+        // if (b.left_choice.preference_text) {
+        //   b.left_choice.choice_name = b.left_choice.preference_text.replace(/\s/g, '');
+        //   b.left_choice.collective_name = b.left_choice.preference_text;
+        // }
+        // if (b.right_choice.preference_text) {
+        //   b.right_choice.choice_name = b.right_choice.preference_text.replace(/\s/g, '');
+        //   b.right_choice.collective_name = b.right_choice.preference_text;
+        // }
+        b.left_choice.collective_name = 'x';
+        b.left_choice.prediction_text = 'x';
+        b.left_choice.preference_text = 'x';
+        b.right_choice.collective_name = 'x';
+        b.right_choice.prediction_text = 'x';
+        b.right_choice.preference_text = 'x';
+
+        b.prediction_text = 'x';
+        b.preference_text = 'x';
       } else if (b.activity_type === this.at.convoCards) {
         b.activity_overview_text = ActivityTitles[this.at.convoCards];
       } else if (b.activity_type === this.at.poll) {
@@ -789,16 +805,11 @@ export const AllowEmojiDic = {
   GenericRoleplayActivity: true,
   ConvoActivity: true,
   CaseStudyActivity: true,
+  WhereDoYouStandActivity: true,
 };
 
 export const OrderForActivities = {
-  TitleActivity: [
-    'title_emoji',
-    'main_title',
-    'title_text',
-    'title_image',
-    'layout',
-  ],
+  TitleActivity: ['title_emoji', 'main_title', 'title_text', 'title_image', 'layout'],
   BrainstormActivity: [
     'instructions',
     'max_participant_submissions',

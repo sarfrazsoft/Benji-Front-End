@@ -1,4 +1,59 @@
+div.radio-mock-button {
+  display: block;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  border: 1px solid #f3f4f7;
+  box-sizing: border-box;
+  .emoji-div {
+  }
+  span {
+    color: $black;
+    font-weight: 500;
+  }
+}
+
 benji-ms-either-or-activity {
+  .question-title {
+    font-size: 56px;
+    font-weight: 700;
+  }
+  .activity-description {
+    font-size: 40px;
+    font-weight: 500;
+  }
+  div.radio-mock-button {
+    padding: 32px 56px;
+    height: 380px;
+    width: 280px;
+    span {
+      font-size: 32px;
+    }
+    .emoji-div {
+      margin-bottom: 32px;
+    }
+  }
+
+  .continue-button {
+    position: absolute;
+    right: 20px;
+    bottom: 32px;
+    cursor: pointer;
+    .text {
+      font-weight: 500;
+      font-size: 24px;
+    }
+    .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 44px;
+      background-image: url('/../../assets/img/arrowRight.svg');
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+    }
+  }
+
   .either-or-activity {
     position: relative;
     .question-emojis {
@@ -46,25 +101,26 @@ benji-ms-either-or-activity {
 }
 
 benji-ps-either-or-activity {
-  .b-flat-card__question-no {
-    font-weight: 600;
+  .phase {
+    font-weight: 700;
+    font-size: 24px;
+    padding-bottom: 24px;
     margin-bottom: 3vh;
-    font-size: 18px;
+    border-bottom: 1px solid #979797;
+    text-align: left;
+    .phase-icon {
+      img {
+        width: 56px;
+      }
+    }
   }
-  .b-flat-card__question {
-    margin-bottom: 4vh;
+  .wdys-controls {
   }
 
   div.radio-mock-button {
-    display: block;
     padding: 25px 18px;
-    border: 1px solid $secondary-color-lighter;
-    border-radius: 5px;
-    cursor: pointer;
-
     height: 160px;
     width: 100px;
-    overflow: hidden;
   }
 
   .result-tie-emoji {
@@ -82,6 +138,22 @@ benji-ps-either-or-activity {
 
   .selected-option {
     background-color: $secondary-color-lighter;
-    transition: all 0.3s;
+    // transition: all 0.3s;
+  }
+}
+
+benji-preview-activity {
+  benji-ms-either-or-activity {
+    div.radio-mock-button {
+      padding: 25px 32px;
+      height: 160px;
+      width: 100px;
+      .emoji-div {
+        margin-bottom: 18px;
+      }
+      span {
+        font-size: 18px;
+      }
+    }
   }
 }
