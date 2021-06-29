@@ -337,7 +337,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'title_emoji') {
                   mappedField.templateOptions.label = 'Icon';
                 } else if (mapSource.field_name === 'activity_title') {
-                  mappedField.hide = true;
                   mappedField.defaultValue = `Work sheet title`;
                 } else if (mapSource.field_name === 'participant_instructions') {
                   mappedField.type = 'textarea';
