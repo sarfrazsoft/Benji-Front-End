@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+
 import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
 import { PartnerInfo } from './services/backend/schema/whitelabel_info';

@@ -5,10 +5,13 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
+import { SocialAuthService } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
 @Component({
-  selector: 'benji-login-new',
+  selector: 'benji-dashboard-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
@@ -18,17 +21,43 @@ export class LoginComponent implements OnInit {
 
   logo;
 
+  user: SocialUser | null;
+
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private socialAuthService: SocialAuthService
   ) {
     // demo.mybenji.com
     if (window.location.href.split('.')[0].includes('demo')) {
       this.isDemoSite = true;
     }
+
+    this.user = null;
+    this.socialAuthService.authState.subscribe((user: SocialUser) => {
+      this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
+        this.authService.setSession(res);
+        if (this.authService.redirectURL.length) {
+          window.location.href = this.authService.redirectURL;
+        } else {
+          this.deviceService.isMobile()
+            ? this.router.navigate(['/participant/join'])
+            : this.router.navigate(['/dashboard']);
+        }
+      });
+      this.user = user;
+    });
+  }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
+  }
+
+  signOut(): void {
+    this.authService.signOut();
   }
 
   ngOnInit() {

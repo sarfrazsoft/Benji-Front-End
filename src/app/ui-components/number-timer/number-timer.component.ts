@@ -1,4 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import * as moment from 'moment';
 import { ContextService } from 'src/app/services';
 import { Timer } from '../../services/backend/schema/utils';
 
@@ -63,7 +64,8 @@ export class NumberTimerComponent implements OnInit, OnDestroy {
         } else {
           offset = 0;
         }
-        this.remainingTime = Date.parse(this.timer.end_time.replace(/ /, 'T')) - Date.now() - offset;
+        const rt = moment(this.timer.end_time).diff(moment());
+        this.remainingTime = rt;
 
         if (this.remainingTime < 0) {
           this.remainingTime = 0;

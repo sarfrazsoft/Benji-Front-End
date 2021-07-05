@@ -10,11 +10,15 @@
       {{ activityState.feedbackactivity.titlecomponent.participant_instructions }}
     </p>
 
-    <benji-participant-timer
-      [timer]="timer"
-      [endAudio]="'bell.wav'"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-participant-timer>
+    <div>
+      <div style="max-width: 420px; margin: 0 auto;">
+        <benji-participant-timer
+          [timer]="timer"
+          [endAudio]="'bell.wav'"
+          [timerOffset]="avgServerTimeOffset"
+        ></benji-participant-timer>
+      </div>
+    </div>
     
     <benji-question-form
     [question_set]="activityState.feedbackactivity.feedbackquestion_set"

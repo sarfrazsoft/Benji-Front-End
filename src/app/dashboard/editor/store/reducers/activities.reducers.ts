@@ -61,7 +61,7 @@ export const initialState = {
     'LobbyActivity',
     'GatherActivity',
     'HintWordActivity',
-    'WhereDoYouStandActivity',
+    // 'WhereDoYouStandActivity',
     'RoleplayPairActivity',
     'DiscussionActivity',
     'GroupingActivity',

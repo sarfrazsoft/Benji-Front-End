@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 .flexer {
   display: flex;
@@ -83,14 +83,16 @@
       }
     }
     .ms-act__section-text {
-      font-size: 5vh;
+      font-size: 40px;
       line-height: normal;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
       text-align: center;
-      padding: 3vh 0;
-      margin-bottom: 3vh;
-      border-bottom: 1px solid $secondary-color;
+      padding-top: 32px;
+      border-bottom: 1px solid #828282;
+      padding-bottom: 16px;
+      .emoji-div {
+        // height: 40px;
+        width: 40px;
+      }
     }
   }
   .ms-act--multi-column {

@@ -9,14 +9,20 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
-import { Timer, User, WhereDoYouStandActivity, WhereDoYouStandChoice } from 'src/app/services/backend/schema';
+import {
+  FastForwardEvent,
+  NextInternalEvent,
+  Timer,
+  User,
+  WhereDoYouStandActivity,
+  WhereDoYouStandChoice,
+} from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { LowResponseDialogComponent } from '../../shared/dialogs';
 
 @Component({
   selector: 'benji-ms-either-or-activity',
   templateUrl: './either-or-activity.component.html',
-  styleUrls: ['./either-or-activity.component.scss'],
 })
 export class MainScreenEitherOrActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   state: WhereDoYouStandActivity;
@@ -46,6 +52,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
 
   ngOnInit() {
     super.ngOnInit();
+    console.log(this.activityState);
     this.state = this.activityState.wheredoyoustandactivity;
 
     if (window.innerWidth < 1400) {
@@ -82,9 +89,11 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
       this.state.prediction_extra_countdown_timer.status !== 'ended' &&
       !this.state.prediction_extra_time_complete
     ) {
-      if (!this.dialogRef) {
-        this.openLowResponseDialog(this.state.prediction_extra_countdown_timer);
-      }
+      // if (!this.dialogRef) {
+      //   this.openLowResponseDialog(this.state.prediction_extra_countdown_timer);
+      // }
+      // if extra timer starts running fast forward it
+      this.sendMessage.emit(new FastForwardEvent());
     } else if (
       this.state.prediction_complete &&
       this.state.preferences.length === 0 &&
@@ -99,18 +108,21 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
       this.state.preference_extra_countdown_timer.status !== 'ended' &&
       !this.state.preference_extra_time_complete
     ) {
-      if (!this.dialogRef) {
-        this.openLowResponseDialog(this.state.preference_extra_countdown_timer);
-      }
+      // if (!this.dialogRef) {
+      //   this.openLowResponseDialog(this.state.preference_extra_countdown_timer);
+      // }
+      // if extra timer starts running fast forward it
+      this.sendMessage.emit(new FastForwardEvent());
     } else if (
       this.state.prediction_complete &&
       this.state.preference_complete &&
       !this.state.standing_complete
     ) {
-      if (this.dialog) {
-        this.dialog.closeAll();
-        this.dialogRef = undefined;
-      }
+      this.sendMessage.emit(new FastForwardEvent());
+      // if (this.dialog) {
+      //   this.dialog.closeAll();
+      //   this.dialogRef = undefined;
+      // }
     }
   }
 
@@ -166,5 +178,10 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
       return true;
     }
     return false;
+  }
+
+  continueClicked() {
+    // this.sendMessage.emit(new NextInternalEvent());
+    this.sendMessage.emit(new FastForwardEvent());
   }
 }
