@@ -41,7 +41,8 @@ export class LessonSettingsDialogComponent implements OnInit {
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
     });
-
+    this.imageURL = this.data.featureImage;
+    //formControlName="imageURL" id="imageURL"
     this.form.setValue({ title: this.data.title, description: this.data.description });
   }
 

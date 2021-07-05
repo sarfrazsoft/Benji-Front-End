@@ -26,6 +26,9 @@
   </benji-case-study-grouping-container>
   
   <div class="content" fxLayout="column">
+    <div class="twemoji-container" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
+      <app-b-twemoji class="body-emoji participant" [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
+    </div>
     <div class="worksheet-title">
       {{ worksheetTitle }}
     </div>
