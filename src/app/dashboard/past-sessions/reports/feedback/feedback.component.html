@@ -1,8 +1,14 @@
 <div class="report-cards">
-  <benji-feedback-graph
-    [fback]="questions"
-    [userFilter]="true"
-    [showAvg]="true"
-    [cardTitle]="data.title"
-  ></benji-feedback-graph>
+  <div class="report-wrapper">
+    <img class="title-icon" fxLayout="column" fxLayoutAlign="start start" src="../../../assets/img/reportsIcons/feedback.svg" alt="">
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <div class="card-header">{{data.feedback.titlecomponent.title}}</div>
+      <benji-feedback-graph
+      [fback]="questions"
+      [userFilter]="true"
+      [showAvg]="true"
+      [cardTitle]="data.title"
+    ></benji-feedback-graph>
+    </div>
+  </div>
 </div>

@@ -1,13 +1,12 @@
 <div class="report-cards" fxLayout="column">
-  <div class="card-header">Brainstorming</div>
-
-  <div class="brain-storming-report">
-    <div class="report-content">
-      <div class="prompt">
+  <div class="report-wrapper brain-storming-report">
+    <img class="title-icon" fxLayout="column" fxLayoutAlign="start start" src="../../../assets/img/reportsIcons/brainstorm.svg" alt="">
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <div class="card-header">
         {{ brainstorm.instructions }}
       </div>
       <div class="ideas-count">
-        {{ ideas.length }} statements submitted by {{ fIUs?.length }} participants
+        {{ ideas.length }} ideas submitted by {{ fIUs?.length }} participants
       </div>
       <div class="text-list">
         <ng-container *ngFor="let category of brainstorm.brainstormcategory_set">

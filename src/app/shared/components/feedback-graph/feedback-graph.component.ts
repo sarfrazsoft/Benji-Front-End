@@ -17,5 +17,6 @@ export class FeedbackGraphComponent implements OnInit, OnChanges {
   ngOnInit() {}
   ngOnChanges() {
     // console.log(this.fback);
+    console.log(this.cardTitle);
   }
 }

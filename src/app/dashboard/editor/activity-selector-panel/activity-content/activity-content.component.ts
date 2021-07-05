@@ -336,8 +336,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'title_emoji') {
                   mappedField.templateOptions.label = 'Icon';
+                  mappedField.defaultValue = 'emoji://1F4dd';
                 } else if (mapSource.field_name === 'activity_title') {
-                  mappedField.hide = true;
                   mappedField.defaultValue = `Work sheet title`;
                 } else if (mapSource.field_name === 'participant_instructions') {
                   mappedField.type = 'textarea';
@@ -397,6 +397,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } 
                 else if (mapSource.field_name === 'title_emoji') {
                   mappedField.templateOptions.label = 'Icon';
+                  mappedField.defaultValue = 'emoji://1F4cf';
                 } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'titlecomponent') {
