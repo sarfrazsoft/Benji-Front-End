@@ -46,6 +46,7 @@ export const ActivityTitles = {
   PollActivity: 'question.question',
   FeedbackActivity: 'titlecomponent.title',
   ConvoActivity: 'main_title',
+  WhereDoYouStandActivity: 'question_title',
 };
 
 export const ActivityThumbnails = {
@@ -70,6 +71,7 @@ export const ActivityDisplayNames = {
   BuildAPitchActivity: 'Madlibs',
   ConvoActivity: 'Cards',
   PollActivity: 'Poll',
+  WhereDoYouStandActivity: 'Either Or',
 };
 
 export const AllowShareActivities = [

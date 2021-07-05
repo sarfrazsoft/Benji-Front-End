@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { FeedbackSubmitEvent, FeedbackSubmitEventAnswer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-ps-feedback-activity',
   templateUrl: './feedback-activity.component.html',
-  styleUrls: ['./feedback-activity.component.scss'],
 })
-export class ParticipantFeedbackActivityComponent extends BaseActivityComponent implements OnInit {
+export class ParticipantFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   answersSubmitted: boolean;
 
   constructor() {
@@ -24,6 +23,10 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
     if (x) {
       this.answersSubmitted = true;
     }
+  }
+
+  ngOnChanges() {
+    this.timer = this.getTimerTool();
   }
 
   getUserId(): number {

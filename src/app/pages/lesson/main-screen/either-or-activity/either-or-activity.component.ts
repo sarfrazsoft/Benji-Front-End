@@ -89,9 +89,11 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
       this.state.prediction_extra_countdown_timer.status !== 'ended' &&
       !this.state.prediction_extra_time_complete
     ) {
-      if (!this.dialogRef) {
-        this.openLowResponseDialog(this.state.prediction_extra_countdown_timer);
-      }
+      // if (!this.dialogRef) {
+      //   this.openLowResponseDialog(this.state.prediction_extra_countdown_timer);
+      // }
+      // if extra timer starts running fast forward it
+      this.sendMessage.emit(new FastForwardEvent());
     } else if (
       this.state.prediction_complete &&
       this.state.preferences.length === 0 &&
@@ -106,18 +108,21 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
       this.state.preference_extra_countdown_timer.status !== 'ended' &&
       !this.state.preference_extra_time_complete
     ) {
-      if (!this.dialogRef) {
-        this.openLowResponseDialog(this.state.preference_extra_countdown_timer);
-      }
+      // if (!this.dialogRef) {
+      //   this.openLowResponseDialog(this.state.preference_extra_countdown_timer);
+      // }
+      // if extra timer starts running fast forward it
+      this.sendMessage.emit(new FastForwardEvent());
     } else if (
       this.state.prediction_complete &&
       this.state.preference_complete &&
       !this.state.standing_complete
     ) {
-      if (this.dialog) {
-        this.dialog.closeAll();
-        this.dialogRef = undefined;
-      }
+      this.sendMessage.emit(new FastForwardEvent());
+      // if (this.dialog) {
+      //   this.dialog.closeAll();
+      //   this.dialogRef = undefined;
+      // }
     }
   }
 

@@ -1,8 +1,7 @@
-<!-- <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center" *ngIf="state"> -->
-  <div class="single-column-activity" fxLayout="column" fxLayoutGap="16px">
-    <!-- <div class="twemoji-container" *ngIf="isEmoji(activityState.wheredoyoustandactivity.title_emoji)">
-      <app-b-twemoji [text]="activityState.wheredoyoustandactivity.title_emoji"> </app-b-twemoji>
-    </div> -->
+
+<ng-container *ngIf="!state.standing_complete && !state.preference_complete">  
+  <!-- Prediction -->
+  <div *ngIf="!state.prediction_complete" class="single-column-activity" fxLayout="column" fxLayoutGap="16px">
     <div class="activity-title-container">
       <div class="question-title black-color pn-700" [innerHTML]="state.question_title">
       </div>
@@ -44,7 +43,107 @@
       </div>
     </div>
   </div>
-  
+
+  <!-- preference -->
+  <ng-container *ngIf="state.prediction_complete">
+    <ng-container *ngIf="!isRemoteSession">
+      <div class="single-column-activity">
+        <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
+          <div>
+            <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+              <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
+            </div>
+          </div>
+          <div>
+            <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+              <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
+            </div>
+          </div>
+        </div>
+        <div class="activity-question-title-container">
+          <h1 class="primary-color-darkest pn-700 question">Question 2:</h1>
+        </div>
+        <div class="activity-question-description-container">
+          <p class="secondary-color-dark pn-500" [innerHTML]="state.preference_text"></p>
+        </div>
+        <div class="forms-submitted primary-color-darkest pn-600">
+          {{ state.preferences.length }}/{{ activityState.lesson_run.participant_set.length }}
+          answers submitted
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="isRemoteSession">
+      <div fxLayout="column" class="mainscreen-activity">
+        <div class="lesson-top-banner compact">
+          <div class="" fxLayout="row" fxLayoutAlign="space-between">
+              <h1 class="pn-500">
+                <span class="black-color pn-700">
+                  {{ state.question_title }}
+                </span>
+              </h1>
+          </div>
+        </div>
+        <div class="mainscreen-activity ms-act--multi-column pair-activity" style="width: 100%">
+          <div
+            class="mainscreen-activity__column mainscreen-activity__column--50 pair-activity__pairs"
+          >
+            <div 
+              fxLayout="row" 
+              fxLayoutAlign="center center" 
+              fxLayoutGap="24px"
+              class="ms-act__section-text secondary-color-dark">
+              <div class="emoji-div">
+                <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
+              </div>
+              <div>
+                {{ state.left_choice.choice_name }}
+              </div>
+            </div>
+            <ul class="ul-find-partner">
+              <li
+                class="li-find-partner primary-color-darkest pn-600"
+                *ngFor="let user of leftChoiceUsers"
+                [ngClass]="{
+                  'long-list': leftChoiceUsers.length > 30
+                }"
+              >
+                {{ getParticipantName(user) }}
+              </li>
+            </ul>
+          </div>
+          <div
+            class="mainscreen-activity__column mainscreen-activity__column--50 pair-activity__pairs"
+          >
+            <div 
+              fxLayout="row" 
+              fxLayoutAlign="center center" 
+              fxLayoutGap="24px"
+              class="ms-act__section-text secondary-color-dark">
+              <div class="emoji-div">
+                <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
+              </div>
+              <div>
+                {{ state.right_choice.choice_name }}
+              </div>
+            </div>
+            <ul class="ul-find-partner">
+              <li
+                class="li-find-partner primary-color-darkest pn-600"
+                *ngFor="let user of rightChoiceUsers"
+                [ngClass]="{
+                  'long-list': rightChoiceUsers.length > 30
+                }"
+              >
+                {{ getParticipantName(user) }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
   
   <ng-container *ngIf="!state.standing_complete && !state.preference_complete">
     <!-- prediction -->
@@ -76,76 +175,7 @@
       </div>
     </ng-container> -->
 
-    <!-- preference -->
-    <!-- <ng-container *ngIf="state.prediction_complete">
-      <ng-container *ngIf="!isRemoteSession">
-        <div class="single-column-activity">
-          <div class="question-emojis" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="3vw">
-            <div>
-              <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
-                <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
-              </div>
-            </div>
-            <div>
-              <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
-                <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
-              </div>
-            </div>
-          </div>
-          <div class="activity-question-title-container">
-            <h1 class="primary-color-darkest pn-700 question">Question 2:</h1>
-          </div>
-          <div class="activity-question-description-container">
-            <p class="secondary-color-dark pn-500" [innerHTML]="state.preference_text"></p>
-          </div>
-          <div class="forms-submitted primary-color-darkest pn-600">
-            {{ state.preferences.length }}/{{ activityState.lesson_run.participant_set.length }}
-            answers submitted
-          </div>
-        </div>
-      </ng-container>
 
-      <ng-container *ngIf="isRemoteSession">
-        <div class="mainscreen-activity ms-act--multi-column pair-activity" style="width: 100%">
-          <div
-            class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
-          >
-            <p class="ms-act__section-text secondary-color-dark">
-              {{ state.left_choice.preference_text }}
-            </p>
-            <ul class="ul-find-partner">
-              <li
-                class="li-find-partner primary-color-darkest pn-600"
-                *ngFor="let user of leftChoiceUsers"
-                [ngClass]="{
-                  'long-list': leftChoiceUsers.length > 30
-                }"
-              >
-                {{ getParticipantName(user) }}
-              </li>
-            </ul>
-          </div>
-          <div
-            class="mainscreen-activity__column mainscreen-activity__column--50 bg-secondary-color-lightest pair-activity__pairs"
-          >
-            <p class="ms-act__section-text secondary-color-dark">
-              {{ state.right_choice.preference_text }}
-            </p>
-            <ul class="ul-find-partner">
-              <li
-                class="li-find-partner primary-color-darkest pn-600"
-                *ngFor="let user of rightChoiceUsers"
-                [ngClass]="{
-                  'long-list': rightChoiceUsers.length > 30
-                }"
-              >
-                {{ getParticipantName(user) }}
-              </li>
-            </ul>
-          </div>
-        </div>
-      </ng-container>
-    </ng-container> -->
   </ng-container>
 
   <!-- <div
@@ -179,6 +209,7 @@
     </div>
   </div> -->
 
+  <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center" *ngIf="state">
   <div
     class="result"
     fxLayout="row"
@@ -190,9 +221,8 @@
       </div>
       <div class="mb-auto">
         <h1 class="secondary-color-dark pn-500 question">
-          <em>{{ getGroupPercentagePrediction() }}%</em> of you thought that there would be more
-          <em><span [innerHTML]="getGroupPredictionChoice().collective_name"></span></em>
-          in this group
+          <em>{{ getGroupPercentagePrediction() }}%</em> of you thought the group would pick
+          <em><span [innerHTML]="getGroupPredictionChoice().choice_name"></span></em>
         </h1>
       </div>
       <div
@@ -220,9 +250,9 @@
       </div>
       <div class="mb-auto">
         <h1 *ngIf="!isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
-          <em>{{ getGroupPercentagePreference() }}%</em> of you are
+          <em>{{ getGroupPercentagePreference() }}%</em> of you picked
           <em>
-            <span [innerHTML]="getGroupPreferredChoice().collective_name"></span>
+            <span [innerHTML]="getGroupPreferredChoice().choice_name"></span>
           </em>
         </h1>
         <h1 *ngIf="isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
@@ -253,6 +283,8 @@
       </div>
     </div>
   </div>
+
+</div>
 
   <!-- <div class="hint-activity__linear-timer-container">
     <benji-linear-timer

@@ -34,14 +34,14 @@ export class AuthService {
     // localStorage.setItem('userRole', 'mainscreenUser');
   }
 
-  login(username: string, password: string) {
-    return this.http
-      .post(global.apiRoot + '/rest-auth/login/', {
-        username: username,
-        password: password,
-      })
-      .pipe(tap((result) => this.setSession(result)));
-  }
+  // login(username: string, password: string) {
+  //   return this.http
+  //     .post(global.apiRoot + '/rest-auth/login/', {
+  //       username: username,
+  //       password: password,
+  //     })
+  //     .pipe(tap((result) => this.setSession(result)));
+  // }
 
   register(email: string, password: string, firstName: string, lastName: string) {
     this.logout();
@@ -99,10 +99,8 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
+          console.log(res);
           this.setSession(res);
-          this.contextService.user = res.user;
-          this.layoutService.hideSidebar = false;
-          localStorage.setItem('benji_user', JSON.stringify(res.user));
         }),
         catchError((err) => of(err.error))
       );
@@ -117,8 +115,11 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  private setSession(authResult) {
-    localStorage.setItem('token', authResult.token);
+  setSession(res) {
+    localStorage.setItem('token', res.token);
+    this.contextService.user = res.user;
+    this.layoutService.hideSidebar = false;
+    localStorage.setItem('benji_user', JSON.stringify(res.user));
   }
 
   logout() {
@@ -217,8 +218,8 @@ export class AuthService {
 
   validateGoogleToken(token) {
     return this.http
-      .post(global.apiRoot + '/rest-auth/google/', {
-        id_token: token,
+      .post(global.apiRoot + '/social-auth/google/', {
+        auth_token: token,
       })
       .pipe(
         map((res) => {

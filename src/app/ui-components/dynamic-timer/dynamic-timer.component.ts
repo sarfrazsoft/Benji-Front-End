@@ -140,17 +140,17 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
         } else {
           offset = 0;
         }
-        // console.log(this.timer.end_time, this.timer.end_time.replace(/ /, 'T'));
-        this.remainingTime = Date.parse(this.timer.end_time.replace(/ /, 'T')) - Date.now() - offset;
+        const rt = moment(this.timer.end_time).diff(moment());
+        this.remainingTime = rt;
         if (this.remainingTime < 0) {
           this.remainingTime = 0;
         }
-        if (this.remainingTime === 0 && this.endAudio && !this.audioStarted) {
-          this.audioStarted = true;
-          const audio = new Audio('../../../assets/audio/' + this.endAudio);
-          audio.load();
-          audio.play();
-        }
+        // if (this.remainingTime === 0 && this.endAudio && !this.audioStarted) {
+        //   this.audioStarted = true;
+        //   const audio = new Audio('../../../assets/audio/' + this.endAudio);
+        //   audio.load();
+        //   audio.play();
+        // }
         // if (this.remainingTime < 10000 && this.attentionOverlay) {
         //   this.showAttentionTimer = true;
         // }
@@ -166,7 +166,7 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   get_min_sec() {
-    const secondsRemaining = Math.floor(this.remainingTime / 1000);
+    const secondsRemaining = this.remainingTime / 1000;
     const min = Math.floor(secondsRemaining / 60);
     const sec = secondsRemaining - 60 * min;
 
@@ -216,12 +216,12 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
     if (this.updateMessage.activity_type === this.at.mcq) {
       this.controlClicked.emit('pause');
     } else {
-      this.contextService.activityTimer = {
-        ...this.contextService.activityTimer,
-        status: 'paused',
-        remaining_seconds: this.remainingTime / 1000,
-        end_time: null,
-      };
+      // this.contextService.activityTimer = {
+      //   ...this.contextService.activityTimer,
+      //   status: 'paused',
+      //   remaining_seconds: this.remainingTime / 1000,
+      //   end_time: null,
+      // };
 
       this.propagate.emit(new PauseTimerEvent());
     }

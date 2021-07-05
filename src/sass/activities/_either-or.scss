@@ -15,6 +15,9 @@ div.radio-mock-button {
 }
 
 benji-ms-either-or-activity {
+  .lesson-top-banner {
+    font-size: 48px;
+  }
   .question-title {
     font-size: 56px;
     font-weight: 700;
@@ -32,6 +35,14 @@ benji-ms-either-or-activity {
     }
     .emoji-div {
       margin-bottom: 32px;
+    }
+  }
+
+  .pair-activity {
+    .pair-activity__pairs {
+      .ul-find-partner {
+        height: 75% !important;
+      }
     }
   }
 

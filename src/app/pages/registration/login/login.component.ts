@@ -38,9 +38,15 @@ export class LoginComponent implements OnInit {
 
     this.user = null;
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
-      console.log(user);
-      this.authService.validateGoogleToken(user.idToken).subscribe((val) => {
-        console.log(val);
+      this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
+        this.authService.setSession(res);
+        if (this.authService.redirectURL.length) {
+          window.location.href = this.authService.redirectURL;
+        } else {
+          this.deviceService.isMobile()
+            ? this.router.navigate(['/participant/join'])
+            : this.router.navigate(['/dashboard']);
+        }
       });
       this.user = user;
     });

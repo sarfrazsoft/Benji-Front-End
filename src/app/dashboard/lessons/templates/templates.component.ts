@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, Inject } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContextService } from 'src/app/services';
-import { Lesson } from 'src/app/services/backend/schema/course_details';
-import { AdminService } from '../../admin-panel/services';
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { orderBy, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { Subject } from 'rxjs/Subject';
+import { ContextService } from 'src/app/services';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { AdminService } from '../../admin-panel/services';
 
 @Component({
   selector: 'benji-templates-list',
@@ -29,7 +29,7 @@ export class TemplatesComponent implements OnInit {
     private contextService: ContextService
   ) {
     this.activatedRoute.data.forEach((data: any) => {
-      this.lessons = data.dashData.lessons.filter(lesson => lesson.public_permission === 'duplicate');
+      this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission === 'duplicate');
 
       // if (!data.dashData.user.job_title) {
       //   this.dialog
@@ -70,7 +70,11 @@ export class TemplatesComponent implements OnInit {
       if (lessons.length) {
         lessons = orderBy(lessons, (lesson) => new Date(lesson.last_edited), 'desc');
       }
-      this.lessons = lessons.filter(lesson => lesson.public_permission === 'duplicate');;
+      this.lessons = lessons.filter((lesson) => lesson.public_permission === 'duplicate');
     });
+  }
+
+  submitTemplates() {
+    window.open('https://mybenji.typeform.com/to/PAVuFpbx', '_blank');
   }
 }

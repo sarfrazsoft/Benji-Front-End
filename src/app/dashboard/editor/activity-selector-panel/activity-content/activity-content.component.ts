@@ -755,6 +755,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
 
         b.prediction_text = 'x';
         b.preference_text = 'x';
+        b.activity_overview_text = ActivityTitles[this.at.whereDoYouStand];
       } else if (b.activity_type === this.at.convoCards) {
         b.activity_overview_text = ActivityTitles[this.at.convoCards];
       } else if (b.activity_type === this.at.poll) {

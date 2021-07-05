@@ -72,7 +72,7 @@
           <div
             class="radio-mock-button"
             [ngClass]="{
-              'selected-option': state.left_choice.id === selectedPrediction
+              'selected-option': state.left_choice.id === selectedPreference
             }"
             (click)="choosePreference(state.left_choice)"
             *ngIf="isEmoji(state.left_choice.choice_img_url)"
