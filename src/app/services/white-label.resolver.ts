@@ -27,7 +27,7 @@ export class WhiteLabelResolver implements Resolve<any> {
             (err: HttpErrorResponse) => {
               if (err.status === 404) {
                 // Could not find custom whitelabel info
-                console.log(err.status);
+                // console.log(err.status);
                 this.applyDefaultTheme();
               }
             }
@@ -50,7 +50,7 @@ export class WhiteLabelResolver implements Resolve<any> {
             },
             (err: HttpErrorResponse) => {
               if (err.status === 404) {
-                console.log(err.status);
+                // console.log(err.status);
                 this.applyDefaultTheme();
               }
             }
@@ -60,14 +60,14 @@ export class WhiteLabelResolver implements Resolve<any> {
           // ccl.mybenji.com, whetstone.mybenji.com
           const parts = location.hostname.split('.');
           const subdomain = parts.shift();
-          console.log(`get ${subdomain} theme`);
+          // console.log(`get ${subdomain} theme`);
           this.httpClient.get(global.apiRoot + '/whitelabel/theme/' + subdomain + '/').subscribe(
             (res: any) => {
               this.contextService.partnerInfo = res;
             },
             (err: HttpErrorResponse) => {
               if (err.status === 404) {
-                console.log(err.status);
+                // console.log(err.status);
                 this.applyDefaultTheme();
               }
             }
@@ -79,7 +79,7 @@ export class WhiteLabelResolver implements Resolve<any> {
             this.contextService.user = res;
           },
           (error: any) => {
-            console.log('user not found');
+            // console.log('user not found');
             this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
           }
         );
@@ -90,7 +90,7 @@ export class WhiteLabelResolver implements Resolve<any> {
                 this.contextService.partnerInfo = data;
               },
               (error) => {
-                console.log('users org white label details not found');
+                // console.log('users org white label details not found');
                 this.contextService.partnerInfo = global.DefaultwhiteLabelInfo;
               }
             );

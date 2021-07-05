@@ -35,6 +35,8 @@ export class ParticipantConvoCardsActivityComponent
         }
       }
     }
+
+    this.timer = this.getTimerTool();
   }
 
   nextCard() {

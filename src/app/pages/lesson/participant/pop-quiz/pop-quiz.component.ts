@@ -26,7 +26,8 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   //   order: null,
   // };
   revealAnswer = false;
-  @ViewChild('timer') timer;
+  // @ViewChild('timer') timer;
+  timer: Timer;
 
   localStorageItemName = 'mcqSelectedChoice';
 
@@ -63,6 +64,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
     ) {
       this.showQuestion = true;
       this.showQuestionsAnswer = false;
+      this.timer = as.mcqactivity.question_timer;
       if (!this.questionTimerStarted) {
         localStorage.removeItem(this.localStorageItemName);
         this.selectedChoices = [];

@@ -103,7 +103,6 @@ export class ParticipantBrainstormingActivityComponent
     const userID = this.getParticipantCode();
 
     this.timer = this.getTimerTool();
-    console.log(this.timer);
 
     // Show thank you for idea submission
 
