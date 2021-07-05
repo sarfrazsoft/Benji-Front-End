@@ -1,43 +1,45 @@
 <div class="report-cards" fxLayout="column">
-  <div class="card-header">{{ caseStudyTitle }}</div>
-
-  <div class="case-study-report">
-    <div class="report-content">
-      <div class="black-color" style="font-size: 18px;">
-          {{ casestudy.case_study_details }}
-      </div>
-
-
-      <mat-accordion>  
-        <mat-expansion-panel *ngFor="let group of groups">
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              {{ group.title }}
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="">
-            <benji-reports-text-editor [group]="group">
-
-            </benji-reports-text-editor>
+  <div class="report-wrapper">
+    <img class="title-icon" fxLayout="column" fxLayoutAlign="start start" src="../../../assets/img/reportsIcons/case_study.svg" alt="">
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <div class="card-header">{{ caseStudyTitle }}</div>
+      <div class="case-study-report">
+        <div class="report-content">
+          <div class="case-study-details">
+              {{ casestudy.case_study_details }}
           </div>
-        </mat-expansion-panel>
-      </mat-accordion>
+          <mat-accordion class="case-study-accordion">  
+            <mat-expansion-panel *ngFor="let group of groups">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ group.title }}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="">
+                <benji-reports-text-editor [group]="group">
+
+                </benji-reports-text-editor>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
 
 
-      <ng-container *ngFor="let question of questions">
-        <div class="prompt case-study-question">
-          {{ question.question_text }}
-        </div>
-        <div class="text-list" *ngFor="let group of groups; let i = index">
-          <div class="text-list-item">
-            {{ getGroupAnswer(group, question.id) }}
-            <div class="details">
-              <span class="pn-600">Group {{ i + 1 }}: </span>
-              {{ group.participants }}
+          <ng-container *ngFor="let question of questions">
+            <div class="prompt case-study-question">
+              {{ question.question_text }}
             </div>
-          </div>
+            <div class="text-list" *ngFor="let group of groups; let i = index">
+              <div class="text-list-item">
+                {{ getGroupAnswer(group, question.id) }}
+                <div class="details">
+                  <span class="pn-600">Group {{ i + 1 }}: </span>
+                  {{ group.participants }}
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
-      </ng-container>
+      </div>
     </div>
   </div>
 </div>

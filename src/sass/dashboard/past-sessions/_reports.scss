@@ -1,6 +1,6 @@
 $report-heading: 24px;
-$report-subheading: 18px;
-$report-detail: 18px;
+$report-subheading: 16px;
+$report-detail: 16px;
 $report-subdetail: 16px;
 
 benji-reports {
@@ -30,17 +30,22 @@ benji-reports {
   background: white;
   border-radius: 5px;
   box-shadow: $box-shadow;
-  .card-header {
-    margin-bottom: 10px;
-    font-size: $report-heading;
-    font-weight: 600;
-    border-bottom: $header-border-bottom solid $header-border-bottom-color;
-    margin: 10px 0;
+  .report-wrapper {
+    margin: 20px 0px;
+    .title-icon {
+      float: left;
+      margin-right: 16px;
+    }
+    .card-header {
+      font-size: 24px;
+      font-weight: 500;
+      color: #37352F;
+    }
   }
 }
 
 .report-content {
-  padding: 10px 40px;
+  padding: 10px 0px;
 }
 
 // Brain storming activity report
@@ -49,7 +54,8 @@ benji-reports {
 .case-study-report {
   .ideas-count {
     font-size: $report-subheading;
-    color: #4a4a4a;
+    color: #6a6a6a;
+    margin-top: 14px;
   }
   .prompt {
     font-size: $report-subheading;
@@ -60,11 +66,33 @@ benji-reports {
       margin-top: 30px;
     }
   }
-
   .category-name {
     font-size: 20px;
     font-weight: 600;
-    margin-top: 30px;
+    margin-top: 22px;
+  }
+}
+
+.case-study-report {
+  .case-study-details {
+    font-size: $report-subheading;
+    color: #6a6a6a;
+    margin-bottom: 16px;
+  }
+  .case-study-accordion {
+    .mat-expansion-panel {
+      border-radius: 4px !important;
+      border: 1px solid #BDBDBD;
+    }
+    .mat-expansion-panel-header-title {
+      color: #6a6a6a;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .mat-expansion-indicator::after {
+      padding: 5px;
+      margin-top: -5px;
+    }
   }
 }
 
@@ -72,10 +100,10 @@ benji-reports {
 .text-list {
   .text-list-item {
     font-size: $report-detail;
-    margin-top: 30px;
-    padding-bottom: 30px;
-    color: #4a4a4a;
-    border-bottom: 1px solid #979797;
+    margin-top: 15px;
+    padding-bottom: 15px;
+    color: #6a6a6a;
+    border-bottom: 1px solid #BDBDBD;
     .details {
       font-size: $report-subdetail;
       margin-top: 15px;
@@ -85,8 +113,9 @@ benji-reports {
 
 benji-feedback-graph,
 benji-generic-feedback-graph {
+  width: 100%;
   .bar-info {
-    margin: 20px 0px;
+    margin: 10px 0px;
     font-size: $report-subheading;
     .question-text {
       text-align: left;
@@ -129,22 +158,3 @@ benji-generic-feedback-graph {
   }
 }
 
-// #chartjs-tooltip {
-//   opacity: 1;
-//   position: absolute;
-//   background: rgba(0, 0, 0, 0.7);
-//   color: white;
-//   border-radius: 3px;
-//   -webkit-transition: all 0.1s ease;
-//   transition: all 0.1s ease;
-//   pointer-events: none;
-//   -webkit-transform: translate(-50%, 0);
-//   transform: translate(-50%, 0);
-// }
-
-// .chartjs-tooltip-key {
-//   display: inline-block;
-//   width: 10px;
-//   height: 10px;
-//   margin-right: 10px;
-// }

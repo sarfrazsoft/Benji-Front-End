@@ -10,7 +10,7 @@
         {{ data.question.question }}
       </div>
     </div>
-    <div class="options-container" fxLayout="column" fxLayoutGap="1%">
+    <div class="options-container" fxLayout="column" fxLayoutGap="8px">
       <div *ngFor="let choice of choices; let i = index">
         <div
           class="options"
@@ -25,12 +25,12 @@
               <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
                 <div class="text">{{ choice.text }}</div>
               </div>
-              <div class="percentage" fxLayoutAlign="center center">
+              <div class="percentage" fxLayoutAlign="end center">
                 <div class="number">
                   {{ choice.noOfResponses }}
                 </div>
                 &nbsp;
-                {{ choice.noOfResponses === 1 ? "response" : "responses" }}
+                {{ choice.noOfResponses === 1 ? "Response" : "Responses" }}
               </div>
             </div>
             <div

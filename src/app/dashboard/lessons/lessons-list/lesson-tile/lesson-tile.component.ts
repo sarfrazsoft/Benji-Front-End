@@ -87,6 +87,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
           id: this.lesson.id,
           title: this.lesson.lesson_name,
           description: this.lesson.lesson_description,
+          featureImage: this.lesson.feature_image,
         },
         disableClose: false,
         panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
