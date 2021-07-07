@@ -522,6 +522,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'build_seconds') {
                   mappedField.templateOptions.label = 'Time to complete Madlib';
                   mappedField.type = 'seconds';
+                  // mappedField.hide = true;
+                  mappedField.defaultValue = 10000;
                 } else if (mapSource.field_name === 'sharing_done') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'voting_done') {

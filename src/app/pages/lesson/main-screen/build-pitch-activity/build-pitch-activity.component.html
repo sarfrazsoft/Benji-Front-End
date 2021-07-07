@@ -11,44 +11,51 @@
       </h2>
     </div>
   </div>
-  <div class="create-pitches" *ngIf="createPitches" fxFlex="1 0 0" fxLayout="row">
-    <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
-      <div fxLayoutGap="4vw">
-        <div fxFlex="25%">
-          <div class="ms-emoji-container smaller-emoji">
-            <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+
+  <ng-container *ngIf="createPitches && !newCreatePitchLayout">
+    <div class="create-pitches" fxFlex="1 0 0" fxLayout="row">
+      <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
+        <div fxLayoutGap="4vw">
+          <div fxFlex="25%">
+            <div class="ms-emoji-container smaller-emoji">
+              <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+            </div>
           </div>
-        </div>
-        <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
-          <h2
-            class="secondary-color-dark pn-600 discuss-instruction pitch-text"
-            innerHTML="{{ statement }}"
-            [ngClass]="{ 'long-text': statement.length > 300, 'short-text': statement.length < 300 }"
-          ></h2>
-          <div
-            class="info-subsection primary-color-lighter pn-500"
-            fxLayout="row"
-            fxLayoutAlign="start start"
-          >
-            <img [src]="checkIcon" alt="launch" />
-            <div class="instruction">
-              {{ activityState.buildapitchactivity.buildapitchpitch_set.length }}/{{
-                activityState.lesson_run.participant_set.length
-              }}
-              submitted
+          <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
+            <h2
+              class="secondary-color-dark pn-600 discuss-instruction pitch-text"
+              innerHTML="{{ statement }}"
+              [ngClass]="{ 'long-text': statement.length > 300, 'short-text': statement.length < 300 }"
+            ></h2>
+            <div
+              class="info-subsection primary-color-lighter pn-500"
+              fxLayout="row"
+              fxLayoutAlign="start start"
+            >
+              <img [src]="checkIcon" alt="launch" />
+              <div class="instruction">
+                {{ activityState.buildapitchactivity.buildapitchpitch_set.length }}/{{
+                  activityState.lesson_run.participant_set.length
+                }}
+                submitted
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
+        <app-radial-timer
+          [timer]="activityState.buildapitchactivity.build_countdown_timer"
+          endStateText="Done!"
+          [timerOffset]="avgServerTimeOffset"
+        ></app-radial-timer>
+      </div>
     </div>
-    <div class="bg-secondary-color-lightest" fxFlex="40%" fxLayoutAlign="center center">
-      <app-radial-timer
-        [timer]="activityState.buildapitchactivity.build_countdown_timer"
-        endStateText="Done!"
-        [timerOffset]="avgServerTimeOffset"
-      ></app-radial-timer>
-    </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="createPitches && newCreatePitchLayout">
+
+  </ng-container>
 
   <div class="start-pitches" *ngIf="sharePitches" fxFlex="1 0 0" fxLayout="row">
     <div class="activity-instructions bg-white" fxFlex="100%" fxLayoutAlign="start center">
@@ -76,7 +83,7 @@
               Once everyone has shared, press the ‘Done’ button on this device to finish the activity.
             </div>
             <div>
-              <button class="indigo-launch-button bg-primary-color-dark pn-700" (click)="nextActivity()">
+              <button class="indigo-launch-button bg-primary-color pn-700" (click)="nextActivity()">
                 Done
                 <mat-icon class="icon-white">arrow_forward</mat-icon>
               </button>

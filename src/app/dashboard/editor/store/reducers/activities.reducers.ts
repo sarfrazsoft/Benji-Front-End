@@ -57,11 +57,9 @@ export const initialState = {
   selectedLessonActivityContent: null,
   previewImageUrl: null,
   excludedActivities: [
-    'BuildAPitchActivity',
     'LobbyActivity',
     'GatherActivity',
     'HintWordActivity',
-    // 'WhereDoYouStandActivity',
     'RoleplayPairActivity',
     'DiscussionActivity',
     'GroupingActivity',

@@ -20,6 +20,7 @@ export class ParticipantBuildPitchActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges {
   builtPitch_set;
+  builtPitch_setNew;
   act: BuildAPitchActivity;
   createPitch = false;
   pitchSubmitted = false;
@@ -47,15 +48,26 @@ export class ParticipantBuildPitchActivityComponent
     // how about we make the list of objects that
     // we are submitting to BE and each node can have an NgModel
     this.builtPitch_set = [];
+    this.builtPitch_setNew = [];
 
     this.act = this.activityState.buildapitchactivity;
 
     if (this.act.buildapitchblank_set) {
       this.act.buildapitchblank_set
+        .filter((el) => el != null)
         .sort((a, b) => a.order - b.order)
         .forEach((v) => {
           this.builtPitch_set.push({ ...v, ...{ value: null } });
         });
+
+      // console.log(this.builtPitch_set);
+
+      this.builtPitch_set.forEach((element) => {
+        this.builtPitch_setNew.push({ type: 'label', ...element });
+        this.builtPitch_setNew.push({ type: 'blank', ...element });
+      });
+
+      // console.log(this.builtPitch_setNew);
     }
 
     if (this.act.build_countdown_timer.editor) {
@@ -89,7 +101,13 @@ export class ParticipantBuildPitchActivityComponent
     ) {
       if (!this.pitchSubmitted) {
         this.pitchValid = true;
-        this.submitPitch();
+        if (
+          this.act.buildapitchpitch_set.filter(
+            (e) => e.participant.participant_code === this.getParticipantCode()
+          ).length === 0
+        ) {
+          this.submitPitch();
+        }
       }
       this.createPitch = false;
       this.showMyPitch = true;
@@ -142,12 +160,24 @@ export class ParticipantBuildPitchActivityComponent
     });
   }
 
+  // checkValidityOld() {
+  //   this.pitchValid = true;
+  //   for (let i = 0; i < this.builtPitch_set.length; i++) {
+  //     const element = this.builtPitch_set[i];
+  //     if (this.builtPitch_set[i].value === null || this.builtPitch_set[i].value === '') {
+  //       this.pitchValid = false;
+  //     }
+  //   }
+  // }
+
   checkValidity() {
     this.pitchValid = true;
-    for (let i = 0; i < this.builtPitch_set.length; i++) {
-      const element = this.builtPitch_set[i];
-      if (this.builtPitch_set[i].value === null || this.builtPitch_set[i].value === '') {
-        this.pitchValid = false;
+    for (let i = 0; i < this.builtPitch_setNew.length; i++) {
+      const element = this.builtPitch_setNew[i];
+      if (element.type === 'blank') {
+        if (element.value === null || element.value === '') {
+          this.pitchValid = false;
+        }
       }
     }
   }
@@ -157,8 +187,8 @@ export class ParticipantBuildPitchActivityComponent
       return;
     }
     const buildapitchsubmissionentry_set = [];
-    this.builtPitch_set.forEach((p) => {
-      if (p.value) {
+    this.builtPitch_setNew.forEach((p) => {
+      if (p.type === 'blank' && p.value) {
         const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p, p.value);
         buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
       }

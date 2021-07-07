@@ -19,6 +19,8 @@ export class MainScreenBuildPitchActivityComponent
   checkIcon: string;
   shareStartUser: string;
   winningUser: string;
+
+  newCreatePitchLayout = true;
   constructor(private contextService: ContextService) {
     super();
   }

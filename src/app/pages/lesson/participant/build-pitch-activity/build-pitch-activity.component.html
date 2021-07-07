@@ -1,15 +1,15 @@
 <div class="b-flat-card center-text feedback-card">
 
   <div class="b-flat-card__body" *ngIf="createPitch">
-    <div class="twemoji">
-      <app-b-twemoji emoji="🏗️"></app-b-twemoji>
+    <div class="twemoji-container">
+      <app-b-twemoji class="body-emoji participant" emoji="🏗️"></app-b-twemoji>
     </div>
-    <h1 class="pn-700 primary-color-darkest">Fill-in-the-blank</h1>
-    <p>{{ activityState.buildapitchactivity.instructions }}</p>
-    <div class="pitch-form">
-      <div class="pitch-segment" fxLayout="column" *ngFor="let blank of builtPitch_set">
-        <div class="segment-label">{{ blank.label }}</div>
-        <div class="segment-blank" fxLayout="row" fxLayoutAlign="start start">
+    <h1 class="pn-700 primary-color-darkest participant">Fill-in-the-blank</h1>
+    <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p>
+    <div class="pitch-form" fxLayout="row wrap">
+      <div class="pitch-segment" fxLayout="row" *ngFor="let blank of builtPitch_setNew">
+        <div *ngIf="blank.type === 'label'" class="segment-label">{{ blank.label }}</div>
+        <div *ngIf="blank.type === 'blank'" class="segment-blank" fxLayout="row" fxLayoutAlign="start start">
           <div class="blank" fxFlex>
             <textarea
               class="primary-color"
@@ -23,7 +23,7 @@
               (ngModelChange)="checkValidity($event)"
             ></textarea>
           </div>
-          <div class="info">
+          <!-- <div class="info">
             <button
               mat-icon-button
               #tooltip="matTooltip"
@@ -34,7 +34,7 @@
             >
               <img class="participant-utility-icons" src="/assets/img/question_mark.png" alt="launch" />
             </button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
