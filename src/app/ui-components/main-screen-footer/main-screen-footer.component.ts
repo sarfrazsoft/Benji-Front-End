@@ -64,9 +64,13 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   actType = '';
   lesson: Lesson;
   fastForwarding = false;
+  room_code: number;
 
   allowShareActivities = AllowShareActivities;
   allowGroupingActivities = AllowGroupingActivities;
+
+  shareParticipantLink = '';
+  hostname = window.location.host + '/participant/join?link=';
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   constructor(
@@ -83,6 +87,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
+    this.room_code = this.activityState.lesson_run.lessonrun_code;
+    this.shareParticipantLink = this.hostname + this.room_code;
     if (this.activityState && this.activityState.lesson) {
       this.lesson = this.activityState.lesson;
     }
@@ -110,6 +116,10 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     }
   }
 
+  copyLink(val: string) {
+    this.utilsService.copyToClipboard(val);
+  }
+  
   initializeTimer() {}
 
   controlClicked(eventType) {
