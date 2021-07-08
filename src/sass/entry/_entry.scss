@@ -128,7 +128,7 @@
 }
 
 .sign-up-card {
-  width: 460px;
+  width: 544px;
   // height: 580px;
   box-shadow: 0 3px 9px 0 #d5d9de;
 }
@@ -176,6 +176,32 @@
   .text-block-91 {
     font-size: 16px;
   }
+  .google-login {
+    width: 400px;
+    border-radius: 4px;
+    border: 1px solid #37352F;
+    height: 40px;    
+    margin-top: 27px;
+    margin-bottom: 24px;
+    .google-logo {
+      width: 24px;
+    }
+    .google-text {
+      font-weight: 600;
+    }
+  }
+  .or{
+    width: 400px;
+    text-align: center;
+    border-bottom: 2px solid #e7e7e7;
+    line-height: 0.1em;
+    margin: 5px 0 13px;
+    span {
+      background:#fff; 
+      padding:0 10px; 
+      font-weight: 500;
+    }
+  }
 }
 
 .small-form-text,
@@ -185,16 +211,16 @@
   text-align: center;
 }
 
-.sign-up-field,
-.text-block-89 {
+.sign-up-field {
   font-size: 16px;
 }
 
 .text-block-89 {
-  width: 250px;
+  font-size: 18px;
+  width: 360px;
   font-family: Inter, sans-serif;
-  color: #9b9b9b;
-  font-weight: 400;
+  color: #37352F;
+  font-weight: 500;
 }
 
 .sign-up-field,
@@ -206,11 +232,21 @@
 
 .sign-up-field {
   padding-left: 16px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #37352F;
   border-radius: 4px;
-  color: $black;
-  font-weight: 300;
+  color: #37352F;
+  font-weight: 600;
   box-sizing: border-box;
+  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #BDBDBD;
+    opacity: 1; /* Firefox */
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #BDBDBD;
+  }
+  &::-ms-input-placeholder { /* Microsoft Edge */
+    color: #BDBDBD;
+  }
 }
 
 .w-button {
@@ -225,13 +261,13 @@
 }
 .sign-up-field,
 .submit-button-12 {
-  width: 300px;
+  width: 400px;
   height: 40px;
   font-family: Inter, sans-serif;
 }
 .submit-button-12 {
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 .w-form {
@@ -240,7 +276,7 @@
 .form-block-8 {
   margin-bottom: 0px;
   margin-top: 16px;
-  width: 300px;
+  width: 400px;
   > form > div {
     margin-bottom: 16px;
   }
@@ -249,9 +285,9 @@
 .small-form-text {
   width: 250px;
   margin-bottom: 16px;
-  color: #9b9b9b;
+  color: #37352F;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   &.already-member {
     margin-bottom: 0px;
     cursor: pointer;

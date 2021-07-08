@@ -2,7 +2,12 @@
   <div class="sign-up-card">
     <div class="div-block-183">
       <img [src]="logo" loading="lazy" alt="">
-      <div class="text-block-89">Sign-up and build your first interactive workshop today!</div>
+      <div class="text-block-89">More engaging workshop, one click away!</div>
+      <div class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
+        <div class="google-text">Sign up with Google</div>
+      </div>
+      <div class="or"><span>or</span></div>
       <div class="form-block-8 w-form">
         <form [formGroup]="form"
         (ngSubmit)="onSubmit()">
@@ -10,44 +15,21 @@
           <input 
           class="sign-up-field w-input"
           maxlength="256"
-          id="firstName"
+          id="name"
           required
           type="text"
-          formControlName="firstName"
-          placeholder="First name"/>
+          formControlName="name"
+          placeholder="Name"/>
           <mat-error
             *ngIf="
-              firstName.invalid &&
-              (firstName.dirty || firstName.touched) &&
+              name.invalid &&
+              (name.dirty || name.touched) &&
               isSignupClicked
             "
             class="alert alert-danger"
           >
-            <div *ngIf="firstName.errors.required">
-              First name is required.
-            </div>
-          </mat-error>
-        </div>
-        <div>
-
-          <input 
-            class="sign-up-field w-input"
-            maxlength="256"
-            id="lastName"
-            required
-            type="text"
-            formControlName="lastName"
-            placeholder="Last name"/>
-          <mat-error
-            *ngIf="
-              lastName.invalid &&
-              (lastName.dirty || lastName.touched) &&
-              isSignupClicked
-            "
-            class="alert alert-danger"
-          >
-            <div *ngIf="lastName.errors.required">
-              Last name is required.
+            <div *ngIf="name.errors.required">
+              Name is required.
             </div>
           </mat-error>
         </div>
@@ -140,7 +122,9 @@
               </div>
             </mat-error>
           </div>
-          <input type="submit" value="Sign-up" data-wait="Please wait..." class="submit-button-12 w-button bg-primary-color">
+          <input type="submit" value="Sign up" data-wait="Please wait..." 
+          [style.background-color]="(name.value && password.value) ? 'green' : 'gray'"
+          class="submit-button-12 w-button bg-primary-color">
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
@@ -152,7 +136,7 @@
       <div 
         class="small-form-text already-member"
         (click)="router.navigate(['/login'])">
-        Already a member?<br><div class="bold-text-7 primary-color">Log-in</div></div>
+        Already a member?<br><div class="bold-text-7 primary-color">Log in</div></div>
     </div>
   </div>
 </div>

@@ -16,6 +16,8 @@ export class SignupComponent implements OnInit {
   passwordMinLenErr = false;
   emailErr = false;
   emailErrMsg = '';
+  firstName = '';
+  lastName ='';
 
   logo;
 
@@ -36,8 +38,8 @@ export class SignupComponent implements OnInit {
 
     this.form = this.builder.group(
       {
-        firstName: new FormControl('', [Validators.required]),
-        lastName: new FormControl('', [Validators.required]),
+        name: new FormControl('', [Validators.required]),
+        //lastName: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl('', [Validators.required]),
@@ -50,8 +52,8 @@ export class SignupComponent implements OnInit {
     if (this.authService.userInvitation) {
       this.form.get('email').setValue(this.authService.userInvitation.email);
       if (this.authService.userInvitation.suggested_first_name) {
-        this.form.get('firstName').setValue(this.authService.userInvitation.suggested_first_name);
-        this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
+        this.form.get('name').setValue(this.authService.userInvitation.suggested_first_name + ' ' + this.authService.userInvitation.suggested_last_name);
+        //this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
       }
     }
   }
@@ -72,13 +74,13 @@ export class SignupComponent implements OnInit {
     return this.form.get('email');
   }
 
-  get firstName(): AbstractControl {
-    return this.form.get('firstName');
+  get name(): AbstractControl {
+    return this.form.get('name');
   }
 
-  get lastName(): AbstractControl {
-    return this.form.get('lastName');
-  }
+  // get lastName(): AbstractControl {
+  //   return this.form.get('lastName');
+  // }
 
   get password(): AbstractControl {
     return this.form.get('password');
@@ -97,7 +99,15 @@ export class SignupComponent implements OnInit {
     this.isSignupClicked = true;
     if (this.form.valid) {
       const val = this.form.value;
-      this.authService.register(val.email.toLowerCase(), val.password, val.firstName, val.lastName).subscribe(
+      const myArr = (val.name).split(" ");
+      this.firstName = myArr[0];
+      myArr[1]? this.lastName = myArr[1]: this.lastName = " ";
+      if (myArr[2]) {
+        this.lastName += " " + myArr[2];
+      }
+      // console.log("First Name: " + this.firstName);
+      // console.log("Last Name: " + this.lastName);
+      this.authService.register(val.email.toLowerCase(), val.password, this.firstName, this.lastName).subscribe(
         (res) => {
           if (res.token) {
             this.isSubmitted = true;
