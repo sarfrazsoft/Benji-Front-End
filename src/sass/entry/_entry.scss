@@ -139,6 +139,7 @@
 }
 
 .div-block-183 {
+  width: 100%;
   display: flex;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -165,7 +166,8 @@
     color: $black;
   }
   .text-block-91 {
-    margin-top: 16px;
+    margin-top: 24px;
+    font-weight: 600;
     margin-right: auto;
     margin-left: auto;
     font-family: Inter, sans-serif;
@@ -177,12 +179,13 @@
     font-size: 16px;
   }
   .google-login {
-    width: 400px;
+    width: 100%;
     border-radius: 4px;
     border: 1px solid #37352F;
     height: 40px;    
     margin-top: 27px;
     margin-bottom: 24px;
+    cursor: pointer;
     .google-logo {
       width: 24px;
     }
@@ -191,11 +194,11 @@
     }
   }
   .or{
-    width: 400px;
+    width: 100%;
     text-align: center;
     border-bottom: 2px solid #e7e7e7;
     line-height: 0.1em;
-    margin: 5px 0 13px;
+    margin: 5px 0 25px;
     span {
       background:#fff; 
       padding:0 10px; 
@@ -206,7 +209,7 @@
 
 .small-form-text,
 .text-block-89 {
-  margin-top: 16px;
+  margin-top: 24px;
   line-height: 22px;
   text-align: center;
 }
@@ -261,7 +264,7 @@
 }
 .sign-up-field,
 .submit-button-12 {
-  width: 400px;
+  width: 100%;
   height: 40px;
   font-family: Inter, sans-serif;
 }
@@ -276,9 +279,12 @@
 .form-block-8 {
   margin-bottom: 0px;
   margin-top: 16px;
-  width: 400px;
+  width: 74%;
   > form > div {
     margin-bottom: 16px;
+  }
+  .text-block-89 {
+    margin: 0px auto;
   }
 }
 
@@ -326,7 +332,7 @@ figcaption {
 }
 
 .log-in-form {
-  margin-top: 16px;
+  width: 74%;
   margin-bottom: 0;
   form > div {
     margin-bottom: 16px;
@@ -338,12 +344,11 @@ figcaption {
   outline: 0;
 }
 .forgot-password {
-  width: 300px;
-  margin-top: 8px;
-  text-align: left;
+  width: 74%;
   cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline;
+}
+.forgot-form {
+  margin-top: 16px;
 }
 
 @media screen and (max-width: 479px) {

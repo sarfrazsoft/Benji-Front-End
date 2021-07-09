@@ -87,10 +87,10 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    this.room_code = this.activityState.lesson_run.lessonrun_code;
-    this.shareParticipantLink = this.hostname + this.room_code;
     if (this.activityState && this.activityState.lesson) {
       this.lesson = this.activityState.lesson;
+      this.room_code = this.activityState.lesson_run.lessonrun_code;
+      this.shareParticipantLink = this.hostname + this.room_code;
     }
 
     this.contextService.activityTimer$.subscribe((timer: Timer) => {

@@ -5,6 +5,10 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
+import { SocialAuthService } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
+
 @Component({
   selector: 'benji-dashboard-signup',
   templateUrl: './signup.component.html',
@@ -18,16 +22,40 @@ export class SignupComponent implements OnInit {
   emailErrMsg = '';
   firstName = '';
   lastName ='';
-
+  isDemoSite = true;
+  
   logo;
+
+  user: SocialUser | null;
 
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
     private contextService: ContextService,
     private deviceService: DeviceDetectorService,
-    public router: Router
-  ) {}
+    public router: Router,
+    private socialAuthService: SocialAuthService
+  )  {
+    // demo.mybenji.com
+    if (window.location.href.split('.')[0].includes('demo')) {
+      this.isDemoSite = true;
+    }
+
+    this.user = null;
+    this.socialAuthService.authState.subscribe((user: SocialUser) => {
+      this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
+        this.authService.setSession(res);
+        if (this.authService.redirectURL.length) {
+          window.location.href = this.authService.redirectURL;
+        } else {
+          this.deviceService.isMobile()
+            ? this.router.navigate(['/participant/join'])
+            : this.router.navigate(['/dashboard']);
+        }
+      });
+      this.user = user;
+    });
+  }
 
   ngOnInit() {
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -105,8 +133,8 @@ export class SignupComponent implements OnInit {
       if (myArr[2]) {
         this.lastName += " " + myArr[2];
       }
-      // console.log("First Name: " + this.firstName);
-      // console.log("Last Name: " + this.lastName);
+      console.log("First Name: " + this.firstName);
+      console.log("Last Name: " + this.lastName);
       this.authService.register(val.email.toLowerCase(), val.password, this.firstName, this.lastName).subscribe(
         (res) => {
           if (res.token) {
@@ -145,6 +173,10 @@ export class SignupComponent implements OnInit {
         }
       );
     }
+  }
+
+  signInWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
   }
 
   onSignIn(googleUser) {
