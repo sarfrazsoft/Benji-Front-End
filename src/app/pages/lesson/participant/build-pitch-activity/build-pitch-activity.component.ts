@@ -13,7 +13,6 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 @Component({
   selector: 'benji-ps-build-pitch-activity',
   templateUrl: './build-pitch-activity.component.html',
-  styleUrls: ['./build-pitch-activity.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class ParticipantBuildPitchActivityComponent
@@ -73,6 +72,24 @@ export class ParticipantBuildPitchActivityComponent
     if (this.act.build_countdown_timer.editor) {
       this.createPitch = true;
     }
+
+    if (
+      this.act.sharing_done &&
+      !this.act.voting_done &&
+      !this.thanksForVote &&
+      (this.act.vote_countdown_timer.status === 'running' ||
+        this.act.vote_countdown_timer.status === 'paused')
+    ) {
+      if (
+        Object.entries(this.expandedUserArray).length === 0 &&
+        this.expandedUserArray.constructor === Object
+      ) {
+        this.fillExpandedUserArray();
+      }
+      this.createPitch = false;
+      this.showMyPitch = false;
+      this.voteNow = true;
+    }
   }
 
   ngOnChanges() {
@@ -97,7 +114,8 @@ export class ParticipantBuildPitchActivityComponent
       !this.voteNow &&
       !this.act.winning_participant &&
       !this.act.voting_done &&
-      !this.thanksForVote
+      !this.thanksForVote &&
+      !(this.act.vote_countdown_timer && this.act.vote_countdown_timer.status === 'running')
     ) {
       if (!this.pitchSubmitted) {
         this.pitchValid = true;
@@ -116,8 +134,7 @@ export class ParticipantBuildPitchActivityComponent
       this.act.sharing_done &&
       !this.act.voting_done &&
       !this.thanksForVote &&
-      (this.act.vote_countdown_timer.status === 'running' ||
-        this.act.vote_countdown_timer.status === 'paused')
+      this.act.vote_countdown_timer.status === 'running'
     ) {
       if (
         Object.entries(this.expandedUserArray).length === 0 &&

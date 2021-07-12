@@ -68,7 +68,6 @@
 
   <div class="b-flat-card__body" *ngIf="voteNow">
     <h1 class="pn-700 primary-color-darkest">Vote on your favorite</h1>
-    <p>Press the + icon next to each name to review the pitches.</p>
     <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
       <benji-vote-pitch
         [user]="pitchSet.participant.participant_code"
@@ -81,6 +80,12 @@
         (userCollapsed)="userCollapsed($event)"
       ></benji-vote-pitch>
     </div>
+    <button 
+      class="b-standard-button white-color bg-primary-color center-text"
+      *ngIf="selectedUser && !userVoted"
+      (click)="submitVote(selectedUser)">
+      Submit
+    </button>
   </div>
 
   <div class="b-flat-card__body" *ngIf="thanksForVote">
@@ -113,7 +118,7 @@
     </div>
   </div>
 </div>
-<div class="b-baseline-action bg-primary-color-dark" *ngIf="selectedUser && !userVoted">
+<!-- <div class="b-baseline-action bg-primary-color-dark">
   <benji-animated-checkmark-button
     loadingStateInnerHTML="Loading"
     innerHTML="Submit"
@@ -121,4 +126,4 @@
     [valid]="userVoted"
     (click)="submitVote(selectedUser)"
   ></benji-animated-checkmark-button>
-</div>
+</div> -->

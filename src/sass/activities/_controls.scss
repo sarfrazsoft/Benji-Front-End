@@ -138,3 +138,22 @@ benji-session-navigation {
   margin-bottom: 40px;
   color: $black;
 }
+
+.continue-button {
+  position: absolute;
+  right: 20px;
+  bottom: 32px;
+  cursor: pointer;
+  .text {
+    font-weight: 500;
+    font-size: 24px;
+  }
+  .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 44px;
+    background-image: url('/../../assets/img/arrowRight.svg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+}

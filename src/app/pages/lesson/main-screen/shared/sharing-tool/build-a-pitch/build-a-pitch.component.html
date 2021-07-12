@@ -1,6 +1,14 @@
 <div class="bap-share-ui">
-  <div class="your-pitch-label left-text">Your statement:</div>
-  <p class="your-pitch left-text" innerHTML="{{ pitchText }}">
-  
-  </p>
+  <div fxLayout="column">
+    <div class="sharing-label black-color">Sharing now</div>
+    <div class="user-name">
+      {{ getSharingUserName() }}
+    </div>
+  </div>
+  <div class="pitch-container">
+    <div class="pitch-card">
+      <p class="your-pitch left-text" innerHTML="{{ pitchText }}">
+      </p>
+    </div>
+  </div>
 </div>

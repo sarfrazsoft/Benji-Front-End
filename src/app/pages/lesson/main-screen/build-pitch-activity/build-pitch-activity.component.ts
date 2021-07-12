@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
-import { BuildAPitchSharingDoneEvent } from 'src/app/services/backend/schema';
+import { BuildAPitchSharingDoneEvent, FastForwardEvent } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -82,7 +82,7 @@ export class MainScreenBuildPitchActivityComponent
     }
   }
 
-  nextActivity() {
+  sharingDone() {
     this.sendMessage.emit(new BuildAPitchSharingDoneEvent());
   }
 
@@ -113,5 +113,10 @@ export class MainScreenBuildPitchActivityComponent
       statement = statement + b.label + value;
     });
     return statement;
+  }
+
+  continueClicked() {
+    // this.sendMessage.emit(new NextInternalEvent());
+    this.sendMessage.emit(new FastForwardEvent());
   }
 }

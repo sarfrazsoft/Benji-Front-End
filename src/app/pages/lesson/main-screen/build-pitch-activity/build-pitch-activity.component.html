@@ -1,5 +1,5 @@
 <div fxLayout="column" class="mainscreen-activity" style="position: relative">
-  <div class="lesson-top-banner compact" fxLayout="row">
+  <!-- <div class="lesson-top-banner compact" fxLayout="row">
     <div fxFlex="40%">
       <h1 class="pn-500">
         <span class="primary-color pn-700"> {{ title }} </span>
@@ -10,15 +10,15 @@
         {{ instructions }}
       </h2>
     </div>
-  </div>
+  </div> -->
 
   <ng-container *ngIf="createPitches && !newCreatePitchLayout">
     <div class="create-pitches" fxFlex="1 0 0" fxLayout="row">
       <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
         <div fxLayoutGap="4vw">
           <div fxFlex="25%">
-            <div class="ms-emoji-container smaller-emoji">
-              <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+            <div class="twemoji-container">
+              <app-b-twemoji emoji="👋"></app-b-twemoji>
             </div>
           </div>
           <div fxFlex="75%" fxLayout="column" fxLayoutAlign="center start">
@@ -54,45 +54,110 @@
   </ng-container>
 
   <ng-container *ngIf="createPitches && newCreatePitchLayout">
-
+    <div class="single-column-activity" fxLayout="column">
+      <div class="twemoji-container">
+        <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
+      </div>
+      <div class="activity-title-container">
+        <h1 class="black-color pn-700">
+          {{ title }}
+        </h1>
+      </div>
+      <div class="activity-title-description-container" *ngIf="instructions" >
+        <p class="secondary-color-dark pn-500" 
+        [ngClass]="{
+          'smaller-font-class': instructions.length > 100
+        }"
+        innerHTML="{{ instructions }}">
+        </p>
+      </div>
+      <div class="forms-submitted primary-color pn-600" *ngIf="participantLength">
+        {{ answeredParticipantsLength }}/{{
+          participantLength
+        }}
+        Submitted
+      </div>
+      <div class="continue-button" (click)="continueClicked()" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <div class="text primary-color">Continue</div>
+        <div class="icon bg-primary-color" >
+        </div>
+      </div>
+    </div>
   </ng-container>
 
-  <div class="start-pitches" *ngIf="sharePitches" fxFlex="1 0 0" fxLayout="row">
-    <div class="activity-instructions bg-white" fxFlex="100%" fxLayoutAlign="start center">
-      <div fxLayoutGap="4vw">
-        <div fxFlex="15%">
-          <div class="ms-emoji-container smaller-emoji">
-            <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+  <ng-container *ngIf="sharePitches && !newCreatePitchLayout">
+    <div class="start-pitches" fxFlex="1 0 0" fxLayout="row">
+      <div class="activity-instructions bg-white" fxFlex="100%" fxLayoutAlign="start center">
+        <div fxLayoutGap="4vw">
+          <div fxFlex="15%">
+            <div class="ms-emoji-container smaller-emoji">
+              <app-b-twemoji emoji="️️️️️️️🏗️"></app-b-twemoji>
+            </div>
           </div>
-        </div>
-        <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
-          <h2 class="secondary-color-dark pn-600 discuss-instruction">
-            <em class="capitalize"> {{ shareStartUser }}, </em>
-            you’re kicking off the sharing. Everyone present your statements in a clockwise direction.
-          </h2>
-          <div
-            class="info-subsection primary-color-lighter pn-500"
-            fxLayout="row"
-            fxLayoutAlign="start start"
-          >
-            <div>
-              <img class="main-screen-utility-icons" [src]="infoIcon" />
-            </div>
-
-            <div class="instruction">
-              Once everyone has shared, press the ‘Done’ button on this device to finish the activity.
-            </div>
-            <div>
-              <button class="indigo-launch-button bg-primary-color pn-700" (click)="nextActivity()">
-                Done
-                <mat-icon class="icon-white">arrow_forward</mat-icon>
-              </button>
+          <div fxFlex="85%" fxLayout="column" fxLayoutAlign="center start">
+            <h2 class="secondary-color-dark pn-600 discuss-instruction">
+              <em class="capitalize"> {{ shareStartUser }}, </em>
+              you’re kicking off the sharing. Everyone present your statements in a clockwise direction.
+            </h2>
+            <div
+              class="info-subsection primary-color-lighter pn-500"
+              fxLayout="row"
+              fxLayoutAlign="start start"
+            >
+              <div>
+                <img class="main-screen-utility-icons" [src]="infoIcon" />
+              </div>
+  
+              <div class="instruction">
+                Once everyone has shared, press the ‘Done’ button on this device to finish the activity.
+              </div>
+              <div>
+                <button class="indigo-launch-button bg-primary-color pn-700" (click)="nextActivity()">
+                  Done
+                  <mat-icon class="icon-white">arrow_forward</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-container *ngIf="sharePitches && newCreatePitchLayout">
+    <div class="single-column-activity" fxLayout="column">
+      <div class="twemoji-container">
+        <app-b-twemoji class="body-emoji" emoji="👋"></app-b-twemoji>
+      </div>
+      <div class="activity-title-container">
+        <h1 class="black-color pn-700">
+          Share back to the group
+        </h1>
+      </div>
+      <div class="activity-title-description-container">
+        <p class="secondary-color-dark pn-500" 
+        [ngClass]="{
+          'smaller-font-class': 'Click on the share button below to call on participants. Click continue to vote on your favourite.'.length > 100
+        }"
+        innerHTML="{{ 'Click on the share button below to call on participants. Click continue to vote on your favourite.' }}">
+        </p>
+      </div>
+      <div class="forms-submitted primary-color pn-600" *ngIf="participantLength">
+        {{ answeredParticipantsLength }}/{{
+          participantLength
+        }}
+        Submitted
+      </div>
+
+      <div class="continue-button" (click)="sharingDone()" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <div class="text primary-color">Continue</div>
+        <div class="icon bg-primary-color" >
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
 
   <div class="vote-for-pitches" *ngIf="voteNow" fxFlex="1 0 0" fxLayout="row">
     <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">

@@ -34,8 +34,7 @@ benji-ms-build-pitch-activity {
   }
 }
 
-benji-ps-build-pitch-activity,
-.bap-share-ui {
+benji-ps-build-pitch-activity {
   .b-flat-card__body {
     h1 {
       margin: 0px;
@@ -111,4 +110,30 @@ benji-ps-build-pitch-activity,
   box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.25);
   max-width: 150px !important;
   margin-right: -5px !important;
+}
+
+.bap-share-ui {
+  .sharing-label {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    color: #828282;
+    text-transform: uppercase;
+  }
+  .user-name {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 48px;
+  }
+  .pitch-container {
+    margin-top: 55px;
+    .pitch-card {
+      background-color: white;
+      padding: 48px;
+      box-shadow: 0px 4px 4px rgba(152, 151, 151, 0.25);
+      border-radius: 8px;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+  }
 }

@@ -9,37 +9,30 @@ import { Participant } from 'src/app/services/backend/schema/course_details';
   styleUrls: ['./build-a-pitch.component.scss'],
 })
 export class BuildAPitchComponent implements OnInit, OnChanges {
-  // @Input() data: { state: UpdateMessage; participant: Participant };
   @Input() data: UpdateMessage;
-  @Input() currentSpeaker: Participant;
+  @Input() currentSpeaker: { displayName: string; id: number };
   pitchText = '';
   constructor(private buildAPitchService: BuildAPitchService) {}
 
   ngOnInit(): void {
-    // console.log(
-    //   this.buildAPitchService.getPitchText(
-    //     this.data.participant.participant_code,
-    //     this.data.state.buildapitchactivity
-    //   )
-    // );
-    // this.pitchText = this.buildAPitchService.getPitchText(
-    //   this.currentSpeaker.participant_code,
-    //   this.data.buildapitchactivity
-    // );
+    this.getPitchText();
   }
 
-  ngOnChanges() {
-    console.log('jurr');
-    // this.pitchText = this.buildAPitchService.getPitchText(
-    //   this.currentSpeaker.participant_code,
-    //   this.data.buildapitchactivity
-    // );
-  }
+  ngOnChanges() {}
 
   update() {
+    this.getPitchText();
+  }
+
+  getPitchText() {
     this.pitchText = this.buildAPitchService.getPitchText(
-      this.currentSpeaker.participant_code,
-      this.data.buildapitchactivity
+      this.currentSpeaker.id,
+      this.data.buildapitchactivity,
+      true
     );
+  }
+
+  getSharingUserName() {
+    return this.currentSpeaker.displayName;
   }
 }

@@ -5,7 +5,7 @@ import { BuildAPitchActivity } from '../backend/schema';
 export class BuildAPitchService {
   constructor() {}
 
-  getPitchText(participantCode: number, act: BuildAPitchActivity) {
+  getPitchText(participantCode: number, act: BuildAPitchActivity, sharingTool = false) {
     act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     const blanks = act.buildapitchblank_set;
     const buildAPitchPitchSet = act.buildapitchpitch_set.filter(
@@ -20,7 +20,11 @@ export class BuildAPitchService {
 
         let value = '';
         if (currentBlanksValue.length === 1) {
-          value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+          if (sharingTool) {
+            value = ' <em class="primary-color">' + currentBlanksValue[0].value + '</em> ';
+          } else {
+            value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+          }
         } else {
           value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
         }

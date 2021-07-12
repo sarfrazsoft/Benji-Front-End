@@ -94,6 +94,10 @@ export class AppComponent implements OnInit {
           border-bottom-color: ${info.parameters.primary};
         }
 
+        benji-ps-build-pitch-activity benji-vote-pitch .b-standard-button em {
+          color: ${info.parameters.primary};
+        }
+
         mat-toolbar.mat-toolbar {
           border-bottom-color: ${info.parameters.primary}
         }
