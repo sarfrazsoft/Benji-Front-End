@@ -6,12 +6,12 @@
     </div>
     <h1 class="pn-700 primary-color-darkest participant">Fill-in-the-blank</h1>
     <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p>
-    <div class="pitch-form" fxLayout="row wrap">
+    <div class="pitch-form fill-blanks" fxLayout="row wrap">
       <div class="pitch-segment" fxLayout="row" *ngFor="let blank of builtPitch_setNew">
-        <div *ngIf="blank.type === 'label'" class="segment-label">{{ blank.label }}</div>
-        <div *ngIf="blank.type === 'blank'" class="segment-blank" fxLayout="row" fxLayoutAlign="start start">
-          <div class="blank" fxFlex>
-            <textarea
+        <div *ngIf="blank.type === 'label'" class="segment-label" fxLayoutAlign="start center">{{ blank.label }}</div>
+        <div *ngIf="blank.type === 'blank'" class="segment-blank" fxLayout="row" fxLayoutAlign="start center">
+          <div class="blank" >
+            <textarea style="overflow: hidden"
               class="primary-color"
               matInput
               cdkTextareaAutosize
@@ -35,7 +35,7 @@
               <img class="participant-utility-icons" src="/assets/img/question_mark.png" alt="launch" />
             </button>
           </div> -->
-        </div>
+        </div><span>&nbsp;&nbsp;</span>
       </div>
     </div>
     <button
