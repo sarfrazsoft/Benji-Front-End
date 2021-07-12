@@ -43,8 +43,24 @@
   }
 }
 
+.feedback-activity {
+  .b-flat-card__body {
+    width: 267px;
+    margin: 0px auto;
+    text-align: left;
+    .twemoji-container {
+     // float: left;
+     margin-left: 0px;
+    }
+    img {
+      width: 66px;
+    }
+  }
+}
+
 .twemoji-container {
   max-width: 21vh;
+  width: 100%;
   margin: 0 auto;
   margin-bottom: 16px;
 }

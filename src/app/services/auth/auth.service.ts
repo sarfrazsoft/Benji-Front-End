@@ -54,7 +54,7 @@ export class AuthService {
         password1: password,
         password2: password,
         first_name: firstName,
-        last_name: lastName,
+        last_name: lastName? lastName: " ",
         email: email,
         invitation: this.userInvitation ? this.userInvitation.id : null,
         invitation_token: this.invitationToken ? this.invitationToken : null,
@@ -67,7 +67,7 @@ export class AuthService {
         password1: password,
         password2: password,
         first_name: firstName,
-        last_name: lastName,
+        last_name: lastName? lastName:  " ",
         email: email,
       };
     }

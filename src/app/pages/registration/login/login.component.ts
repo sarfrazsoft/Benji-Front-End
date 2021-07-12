@@ -77,6 +77,10 @@ export class LoginComponent implements OnInit {
     return this.form.get('email');
   }
 
+  get password(): AbstractControl {
+    return this.form.get('password');
+  }
+
   onSubmit(): void {
     this.isLoginClicked = true;
     if (this.form.valid) {
