@@ -6,37 +6,31 @@
     </div>
     <h1 class="pn-700 primary-color-darkest participant">Fill-in-the-blank</h1>
     <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p>
-    <div class="pitch-form fill-blanks" fxLayout="row wrap">
-      <div class="pitch-segment" fxLayout="row" *ngFor="let blank of builtPitch_setNew">
-        <div *ngIf="blank.type === 'label'" class="segment-label" fxLayoutAlign="start center">{{ blank.label }}</div>
-        <div *ngIf="blank.type === 'blank'" class="segment-blank" fxLayout="row" fxLayoutAlign="start center">
-          <div class="blank" >
-            <textarea style="overflow: hidden"
-              class="primary-color"
-              matInput
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="5"
-              placeholder="{{ blank.temp_text }}"
-              [(ngModel)]="blank.value"
-              (ngModelChange)="checkValidity($event)"
-            ></textarea>
-          </div>
-          <!-- <div class="info">
-            <button
-              mat-icon-button
-              #tooltip="matTooltip"
-              matTooltipPosition="left"
-              (click)="tooltip.toggle()"
-              matTooltip="{{ blank.help_text }}"
-              matTooltipClass="pitch-tooltip primary-color"
-            >
-              <img class="participant-utility-icons" src="/assets/img/question_mark.png" alt="launch" />
-            </button>
-          </div> -->
-        </div><span>&nbsp;&nbsp;</span>
-      </div>
+    <div class="pitch-form fill-blanks">
+      <p class="pitch-segment">
+        <ng-container *ngFor="let blank of builtPitch_setNew">
+          <ng-container *ngIf="blank.type === 'label'">
+            {{ blank.label }} 
+          </ng-container>
+          <span
+            *ngIf="blank.type === 'blank'"
+            #ref 
+            id="contenteditablediv"
+            class="editable-span"
+            [ngClass]="{ 
+              vanilla: !blank.focused,
+              focused: blank.focused
+              }"
+            contenteditable="true" 
+            (keyup)="triggerUserSearch(blank)"
+            (focus)="focusFunction(blank)"
+            type="text" 
+            placement="bottom"
+            [textContent]="blank.temp_text">
+            {{ blank.temp_text }}
+          </span> 
+        </ng-container>
+      </p>
     </div>
     <button
       class="b-standard-button bg-primary-color"

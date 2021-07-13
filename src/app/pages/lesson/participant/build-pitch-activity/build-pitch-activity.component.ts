@@ -1,5 +1,13 @@
 import { useAnimation } from '@angular/animations';
-import { ChangeDetectorRef, Component, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { ContextService } from 'src/app/services';
 import {
   BuildAPitchActivity,
@@ -36,9 +44,16 @@ export class ParticipantBuildPitchActivityComponent
 
   selectedUser: number = null;
 
+  @ViewChild('ref') ref: ElementRef;
+
   constructor(private cdr: ChangeDetectorRef, private contextService: ContextService) {
     super();
     this.builtPitch_set = [];
+  }
+
+  searchText = 'Angular 6';
+  triggerUserSearch() {
+    console.log(this.ref.nativeElement.innerHTML);
   }
 
   ngOnInit() {
@@ -297,6 +312,10 @@ export class ParticipantBuildPitchActivityComponent
       this.userVoted = true;
       this.thanksForVote = true;
     }
+  }
+
+  focusFunction(blank) {
+    blank.focused = true;
   }
 }
 export const c = {

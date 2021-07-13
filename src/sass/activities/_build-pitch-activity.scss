@@ -47,20 +47,25 @@ benji-ps-build-pitch-activity {
       padding: 24px;
       box-shadow: 0px 4px 4px rgba(152, 151, 151, 0.25);
       .pitch-segment {
-        //margin-top: 25px;
+        line-height: 42px;
         &:last-child {
           //margin-bottom: 35px;
         }
         .segment-label {
           font-size: 24px;
         }
-        textarea {
+        span {
           // Color applied from BE
           font-size: 24px;
           margin-top: 10px;
           width: 100%;
           border: 0;
           border-bottom: 2px solid;
+          padding: 0px 9px;
+          &.focused {
+            color: $black;
+          }
+          color: $secondary-color-light;
           // @include border-bottom-color(primary);
           // Border bottom color applied from BE
           // for iOS safari mobile

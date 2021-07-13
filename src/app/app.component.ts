@@ -90,7 +90,7 @@ export class AppComponent implements OnInit {
           background: ${info.parameters.primary_darker};
         }
 
-        benji-ps-build-pitch-activity .b-flat-card__body .pitch-form .pitch-segment textarea {
+        benji-ps-build-pitch-activity .b-flat-card__body .pitch-form .pitch-segment span {
           border-bottom-color: ${info.parameters.primary};
         }
 
