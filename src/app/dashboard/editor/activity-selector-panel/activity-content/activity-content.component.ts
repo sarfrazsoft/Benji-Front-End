@@ -511,7 +511,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = 'Build your madlib';
                   mappedField.templateOptions['addLabel'] = 'Add new block';
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'vote_seconds') {
+                  mappedField.hide = true;
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 0;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
@@ -520,6 +522,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Voting Stage';
                   mappedField.templateOptions['helpText'] = 'How long does the voting stage last?';
                 } else if (mapSource.field_name === 'build_seconds') {
+                  mappedField.hide = true;
                   mappedField.templateOptions.label = 'Time to complete Madlib';
                   mappedField.type = 'seconds';
                   // mappedField.hide = true;
@@ -543,8 +546,14 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.internal_type === 'BuildAPitchBlankSerializer') {
-                  mappedField.type = 'bapBlank';
-                  mappedField.templateOptions.label = '';
+                  // mappedField.type = 'bapBlank';
+                  // mappedField.type = 'bapTextEditor';
+                  // mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'blanks_string') {
+                  mappedField.type = 'bapTextEditor';
+                  mappedField.templateOptions.label = 'Build your madlib';
+                  mappedField.defaultValue =
+                    '{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"I can’t believe it’s not "},{"type":"text","marks":[{"type":"u"}],"text":"insert food here."}]}]}';
                 } else if (mapSource.field_name === 'help_text') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'hide_timer') {

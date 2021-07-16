@@ -435,6 +435,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             votes: [],
             voting_done: false,
             winning_participant: null,
+            blanks_string: content.blanks_string,
           },
         };
       } else if (this.data.activity_type === Acts.caseStudy) {

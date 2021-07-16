@@ -353,6 +353,7 @@ export interface BuildAPitchActivity {
   voting_done: boolean;
   winning_participant: ParticipantCode;
   title: string;
+  blanks_string: string;
 }
 
 export interface PitchoMaticActivity {

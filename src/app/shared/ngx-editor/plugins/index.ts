@@ -89,6 +89,7 @@ const getPlugins = (): Plugin[] => {
   const historyKeyMap = getHistoryKeyMap();
   const listKeyMap = getListKeyMap();
 
+  console.log(baseKeymap);
   const plugins = [
     // yUndoPlugin(),
     // history(),
@@ -96,6 +97,7 @@ const getPlugins = (): Plugin[] => {
       'Mod-b': toggleMark(schema.marks.strong),
       'Mod-i': toggleMark(schema.marks.em),
       'Mod-`': toggleMark(schema.marks.code),
+      'Ctrl-u': toggleMark(schema.marks.u),
     }),
     keymap(historyKeyMap),
     keymap(listKeyMap),

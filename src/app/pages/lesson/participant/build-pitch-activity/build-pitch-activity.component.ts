@@ -44,6 +44,8 @@ export class ParticipantBuildPitchActivityComponent
 
   selectedUser: number = null;
 
+  blanksArray = [];
+
   @ViewChild('ref') ref: ElementRef;
 
   constructor(private cdr: ChangeDetectorRef, private contextService: ContextService) {
@@ -58,6 +60,11 @@ export class ParticipantBuildPitchActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
+
+    // this.getBlanks(
+    //   '{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"my name is "},{"type":"text","marks":[{"type":"u"}],"text":"baghi."},{"type":"text","text":" I can’t believe it’s not "},{"type":"text","marks":[{"type":"u"}],"text":"insert food here."},{"type":"text","text":" cheers."}]},{"type":"paragraph","attrs":{"align":null}},{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"my name is "},{"type":"text","marks":[{"type":"u"}],"text":"baghi."},{"type":"text","text":" I can’t believe it’s not "},{"type":"text","marks":[{"type":"u"}],"text":"insert food here."},{"type":"text","text":" cheers."}]}]}'
+    // );
+
     this.myParticipantCode = this.getParticipantCode();
     // how about we make the list of objects that
     // we are submitting to BE and each node can have an NgModel
@@ -65,6 +72,7 @@ export class ParticipantBuildPitchActivityComponent
     this.builtPitch_setNew = [];
 
     this.act = this.activityState.buildapitchactivity;
+    this.getBlanks(this.act.blanks_string);
 
     if (this.act.buildapitchblank_set) {
       this.act.buildapitchblank_set
@@ -104,6 +112,38 @@ export class ParticipantBuildPitchActivityComponent
       this.createPitch = false;
       this.showMyPitch = false;
       this.voteNow = true;
+    }
+  }
+
+  getBlanks(blanksString: string) {
+    const json = JSON.parse(blanksString);
+    this.populateBlanksArray(json);
+    // console.log(this.blanksArray);
+    this.builtPitch_setNew = this.blanksArray;
+  }
+
+  populateBlanksArray(json) {
+    if (json.content) {
+      for (let i = 0; i < json.content.length; i++) {
+        this.populateBlanksArray(json.content[i]);
+      }
+    } else if (json.type === 'text') {
+      if (json.marks) {
+        let isUnderline = false;
+        for (let i = 0; i < json.marks.length; i++) {
+          if (json.marks[i].type === 'u') {
+            isUnderline = true;
+            this.blanksArray.push({ type: 'blank', temp_text: json.text });
+          }
+        }
+        if (isUnderline) {
+        } else {
+          this.blanksArray.push({ type: 'label', label: json.text });
+        }
+      } else {
+        this.blanksArray.push({ type: 'label', label: json.text });
+      }
+      return;
     }
   }
 

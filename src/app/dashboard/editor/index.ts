@@ -18,11 +18,14 @@ import {
   AccordionTypeComponent,
   ArrayTypeComponent,
   BAPBlankTypeComponent,
+  BAPEditorTypeComponent,
   ConvoCardTypeComponent,
   EditorTypeComponent,
   FeedbackQuestionTypeComponent,
   FormlySelectOptionsPipe,
   ImageSelectorComponent,
+  LayoutImagePickerTypeComponent,
+  LayoutPickerTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -31,8 +34,6 @@ import {
   QuestionTypeSelectComponent,
   SafePipe,
   SecondsTypeComponent,
-  LayoutPickerTypeComponent,
-  LayoutImagePickerTypeComponent,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
 import { EditorService } from './services/editor.service';
@@ -48,6 +49,7 @@ export const EditorComponents = [
   SafePipe,
   OverviewThumbnailComponent,
   EditorComponent,
+  BAPEditorTypeComponent,
   OverviewPanelComponent,
   PreviewPanelComponent,
   PreviewPanelActivityComponent,
