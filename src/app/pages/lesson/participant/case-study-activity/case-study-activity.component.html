@@ -65,6 +65,7 @@
           <div class="draft-pitch">
             <ng-container *ngIf="groupId && lessonRunCode">
               <benji-case-study-workarea
+                [activityState]="act"
                 [actEditor]="actEditor"
                 [questionId]="question.id"
                 [activityId]="activityId"
