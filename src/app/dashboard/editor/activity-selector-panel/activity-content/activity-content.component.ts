@@ -354,8 +354,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = false;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
-                  mappedField.hide = true;
-                  // mappedField.wrappers = ['benji-field-wrapper'];
+                  // mappedField.hide = true;
+                  mappedField.wrappers = ['benji-field-wrapper'];
                   mappedField.templateOptions['helpText'] =
                     'Work areas are where your participants can collaboratively answer questions.';
                 } else if (mapSource.internal_type === 'CaseStudyQuestionSerializer') {

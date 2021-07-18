@@ -453,7 +453,10 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           msAct = this.cfr.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
         }
 
-        const casestudyquestion_set = [];
+        let casestudyquestion_set = [];
+        if (content.casestudyquestion_set) {
+          casestudyquestion_set = content.casestudyquestion_set;
+        }
 
         let participant_instructions = 'Instructions';
         if (content.participant_instructions) {

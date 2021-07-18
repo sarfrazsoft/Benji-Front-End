@@ -54,19 +54,33 @@
         innerHTML="{{ act.case_study_details }}"
       ></div>
     </div> -->
+    <div *ngFor="let question of questions" style="text-align: left;">
+      <div class="your-prompt">
+        <div
+          class="question"
+          *ngIf="question.question_text"
+          innerHTML="{{ question.question_text }}"
+        ></div>
+        <div class="your-notes">
+          <div class="draft-pitch">
+            <ng-container *ngIf="groupId && lessonRunCode">
+              <benji-case-study-workarea
+                [actEditor]="actEditor"
+                [questionId]="question.id"
+                [activityId]="activityId"
+                [jsonDoc]="jsonDoc"
+                [lessonRunCode]="lessonRunCode" 
+                [participantCode]="participantCode"  
+                [documentId]="documentId"
+                [allowVideo]="false"
+                [editorDisabled]="editorDisabled"
+              ></benji-case-study-workarea>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <ng-container *ngIf="groupId && lessonRunCode">
-      <benji-text-editor
-        [activityId]="activityId"
-        [jsonDoc]="jsonDoc"
-        [lessonRunCode]="lessonRunCode" 
-        [participantCode]="participantCode"  
-        [documentId]="documentId"
-        [allowVideo]="false"
-        [disabled]="editorDisabled">
-      </benji-text-editor>
-
-    </ng-container>
 
     
     <div class="button-container" fxLayoutAlign="end end">
