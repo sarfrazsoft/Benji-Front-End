@@ -52,6 +52,8 @@ export class PitchEvaluationComponent implements OnInit {
               )[0].participant.participant_code,
               rating: response.rating_answer,
               text: response.text_answer,
+              scale:[],
+              multiple_choice: [],
             });
           }
         });
