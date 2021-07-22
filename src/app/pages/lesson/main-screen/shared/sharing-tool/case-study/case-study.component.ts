@@ -37,34 +37,37 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   update() {
     this.activityState.casestudyactivity.groups.forEach((group) => {
       if (group.id === this.currentSpeaker.id) {
-        this.showEditor = false;
-        setTimeout(() => {
-          this.showEditor = true;
-          this.initEditor(group);
-        });
+        // this.showEditor = false;
+        // setTimeout(() => {
+        this.showEditor = true;
+        this.populateQuestions();
+        this.group = group;
+        // console.log(group);
+        // this.initEditor(group);
+        // });
       }
     });
   }
 
-  initEditor(group) {
-    if (group && group.answer && group.answer.doc) {
-      this.group = group;
-      this.jsonDoc = group.answer.doc;
-    } else {
-      this.jsonDoc = null;
-    }
-  }
+  // initEditor(group) {
+  //   if (group && group.answer && group.answer.doc) {
+  //     this.group = group;
+  //     this.jsonDoc = group.answer.doc;
+  //   } else {
+  //     this.jsonDoc = null;
+  //   }
+  // }
 
-  getMyGroup(userId): Group {
-    const act = this.activityState.casestudyactivity;
-    for (let i = 0; i < act.groups.length; i++) {
-      const group = act.groups[i];
-      const groupParticipants = group.participants;
-      if (groupParticipants.includes(userId)) {
-        return group;
-      }
-    }
-  }
+  // getMyGroup(userId): Group {
+  //   const act = this.activityState.casestudyactivity;
+  //   for (let i = 0; i < act.groups.length; i++) {
+  //     const group = act.groups[i];
+  //     const groupParticipants = group.participants;
+  //     if (groupParticipants.includes(userId)) {
+  //       return group;
+  //     }
+  //   }
+  // }
 
   populateQuestions() {
     const questionsTemp = this.activityState.casestudyactivity.casestudyquestion_set;

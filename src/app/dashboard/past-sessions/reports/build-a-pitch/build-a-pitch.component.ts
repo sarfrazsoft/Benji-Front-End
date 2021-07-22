@@ -42,11 +42,10 @@ export class BuildAPitchComponent implements OnInit {
   //   console.log(pitch);
   // }
 
-  getPitchText(participantCode: number, act: BuildAPitchActivity, sharingTool = false) {
+  getPitchText(participantCode: number, act, sharingTool = true) {
     let parsedBlanks = this.buildAPitchService.getBlanks(act.blanks_string);
     parsedBlanks = parsedBlanks.filter((e) => e.type === 'label');
-    const blanks = act.buildapitchblank_set;
-    const buildAPitchPitchSet = act.buildapitchpitch_set.filter(
+    const buildAPitchPitchSet = act.pitch_summaries.filter(
       (e) => e.participant.participant_code === participantCode
     );
 

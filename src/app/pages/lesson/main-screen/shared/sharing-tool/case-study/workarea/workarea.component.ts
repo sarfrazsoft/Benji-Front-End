@@ -37,13 +37,10 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   @Output() sendMessage = new EventEmitter<any>();
   @Output() questionAnswerUpdated = new EventEmitter<any>();
 
-  selectedParticipant;
-  saved;
-
   ngOnInit(): void {
     this.act = this.activityState.casestudyactivity;
-    console.log(this.group);
+  }
+  ngOnChanges() {
     this.jsonDoc = this.group.answer[this.questionId];
   }
-  ngOnChanges() {}
 }

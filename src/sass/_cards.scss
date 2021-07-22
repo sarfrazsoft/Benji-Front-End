@@ -30,10 +30,6 @@
     margin: 0 auto;
     margin-bottom: 16px;
   }
-  @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
-    height: auto;
-    padding-bottom: 60px;
-  }
   @media screen and (min-width: 1200px) {
     min-height: 600px;
   }
@@ -49,8 +45,8 @@
     margin: 0px auto;
     text-align: left;
     .twemoji-container {
-     // float: left;
-     margin-left: 0px;
+      // float: left;
+      margin-left: 0px;
     }
     img {
       width: 66px;
@@ -65,7 +61,7 @@
   margin-bottom: 16px;
 }
 
-@media (max-width: 768px) {   
+@media (max-width: 768px) {
   .title-activity .b-flat-card__body {
     padding: 15vh 20px 0px;
   }

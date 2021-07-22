@@ -1,4 +1,4 @@
-<ng-container *ngIf="groupId && lessonRunCode">
+<ng-container>
   <benji-text-editor
     [activityId]="activityId"
     [jsonDoc]="jsonDoc"
@@ -6,7 +6,6 @@
     [participantCode]="participantCode"  
     [documentId]="documentId"
     [allowVideo]="false"
-    [disabled]="editorDisabled"
-    (editorUpdated)="editorUpdated($event)">
+    [disabled]="editorDisabled">
   </benji-text-editor>
 </ng-container>

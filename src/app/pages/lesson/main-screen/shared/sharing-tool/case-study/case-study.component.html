@@ -16,14 +16,13 @@
                 [questionId]="question.id"
                 [defaultEditorContent]="question.default_editor_content"
                 [activityId]="activityId"
-                [jsonDoc]="jsonDoc"
+                [jsonDoc]="group[question.id]"
                 [lessonRunCode]="lessonRunCode" 
                 [participantCode]="participantCode"  
                 [documentId]="documentId"
                 [allowVideo]="false"
                 [editorDisabled]="true"
-                [group]="getMyGroup(question.id)"
-                (questionAnswerUpdated)="questionAnswerUpdated($event)"
+                [group]="group"
               ></benji-sharing-case-study-workarea>
             </ng-container>
           </div>

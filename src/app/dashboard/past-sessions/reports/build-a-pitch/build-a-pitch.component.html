@@ -6,8 +6,7 @@
       <div *ngFor="let pitch of pitchSummaries">
         <div fxLayout="column">
 
-          <div>
-            {{ getPitchText(pitch) }}
+          <div innerHTML="{{getPitchText(pitch.participant.participant_code, data.bap)}}">
           </div>
           <div fxLayout="row">
             {{ pitch.participant.display_name }},
