@@ -5,8 +5,7 @@
       <button
         class="b-standard-button unselected"
         [ngClass]="{
-          selected: selectedUser === user && selectedUser != null,
-          inactive: answerSubmitted
+          selected: selectedUser === user && selectedUser != null
         }"
         (click)="selectUser(user)"
         [innerHTML]="pitchText"

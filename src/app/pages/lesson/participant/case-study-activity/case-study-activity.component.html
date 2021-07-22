@@ -55,7 +55,7 @@
       ></div>
     </div> -->
     <div *ngFor="let question of questions" style="text-align: left;">
-      <div class="your-prompt">
+      <div class="question-container">
         <div
           class="question"
           *ngIf="question.question_text"
@@ -63,11 +63,12 @@
         ></div>
         <div class="your-notes">
           <div class="draft-pitch">
-            <ng-container *ngIf="groupId && lessonRunCode">
+            <ng-container >
               <benji-case-study-workarea
-                [activityState]="act"
+                [activityState]="activityState"
                 [actEditor]="actEditor"
                 [questionId]="question.id"
+                [defaultEditorContent]="question.default_editor_content"
                 [activityId]="activityId"
                 [jsonDoc]="jsonDoc"
                 [lessonRunCode]="lessonRunCode" 
@@ -75,6 +76,7 @@
                 [documentId]="documentId"
                 [allowVideo]="false"
                 [editorDisabled]="editorDisabled"
+                (questionAnswerUpdated)="questionAnswerUpdated($event)"
               ></benji-case-study-workarea>
             </ng-container>
           </div>

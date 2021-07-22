@@ -272,7 +272,7 @@ export class BuildAPitchSubmitEventEntry {
   value: string;
 
   constructor(entry: BuildAPitchBlank, value: string) {
-    this.buildapitchblank = entry.id;
+    this.buildapitchblank = 123;
     this.value = value;
   }
 }

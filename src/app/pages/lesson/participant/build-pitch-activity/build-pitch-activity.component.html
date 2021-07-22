@@ -20,9 +20,9 @@
             [ngClass]="{ 
               vanilla: !blank.focused,
               focused: blank.focused
-              }"
+            }"
             contenteditable="true" 
-            (keyup)="triggerUserSearch(blank)"
+            (keyup)="updateBlankValue(blank, $event)"
             (focus)="focusFunction(blank)"
             type="text" 
             placement="bottom"

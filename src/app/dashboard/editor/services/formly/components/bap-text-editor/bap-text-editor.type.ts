@@ -49,15 +49,12 @@ export class BAPEditorTypeComponent extends FieldType implements OnInit {
     component.instance.allowPicture = false;
     if (this.formControl.value) {
       component.instance.html = JSON.parse(this.formControl.value);
-    } else {
     }
-
-    // component.instance.html = this.jsonDoc;
     component.instance.editorUpdated.subscribe((jsonDoc) => {
-      const html = toHTML(jsonDoc);
-      console.log(html);
+      // const html = toHTML(jsonDoc);
+      // console.log(html);
       // console.log(JSON.stringify(jsonDoc));
-      console.log(jsonDoc);
+      // console.log(jsonDoc);
       this.formControl.setValue(JSON.stringify(jsonDoc));
     });
   }

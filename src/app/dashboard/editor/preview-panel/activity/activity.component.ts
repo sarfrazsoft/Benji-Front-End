@@ -12,7 +12,6 @@ import {
 import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import {
-  BuildPitchComponents,
   MainScreenBrainstormingActivityComponent,
   MainScreenBuildPitchActivityComponent,
   MainScreenConvoCardsActivityComponent,
@@ -487,7 +486,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             case_study_details: content.case_study_details ? content.case_study_details : '',
             casestudyparticipant_set: [],
             casestudyquestion_set: casestudyquestion_set,
-            default_data: this.data.content.default_data,
+            // default_data: this.data.content.default_data,
             description: null,
             end_time: null,
             facilitation_status: 'running',

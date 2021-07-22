@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Editor, Toolbar } from 'ngx-editor';
 import { wsRoot } from 'src/app/globals';
 import { BuildAPitchService } from 'src/app/services/activities';
-import { UpdateMessage } from 'src/app/services/backend/schema';
+import { Group, UpdateMessage } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import nodeViews from 'src/app/shared/ngx-editor/nodeviews/index';
@@ -25,6 +25,9 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
   editorString;
   // editor: Editor;
   showEditor = false;
+
+  questions = [];
+  group;
   constructor(private buildAPitchService: BuildAPitchService) {}
 
   ngOnInit(): void {}
@@ -45,24 +48,31 @@ export class CaseStudyComponent implements OnInit, OnChanges, OnDestroy {
 
   initEditor(group) {
     if (group && group.answer && group.answer.doc) {
+      this.group = group;
       this.jsonDoc = group.answer.doc;
     } else {
       this.jsonDoc = null;
     }
-    // const ydoc = new Y.Doc();
-    // const provider = new WebsocketProvider(wsRoot + '/yws/', 'xx', ydoc);
-    // const type = ydoc.getXmlFragment('prosemirror');
-    // setAwareness(provider, '00');
-    // this.editor = new Editor({
-    //   schema,
-    //   plugins: [ySyncPlugin(type), yCursorPlugin(provider.awareness), ...plugins],
-    //   nodeViews,
-    // });
-    // this.editor.setContent(this.jsonDoc.doc);
-    // this.editor.disable();
   }
 
-  ngOnDestroy() {
-    // this.editor.destroy();
+  getMyGroup(userId): Group {
+    const act = this.activityState.casestudyactivity;
+    for (let i = 0; i < act.groups.length; i++) {
+      const group = act.groups[i];
+      const groupParticipants = group.participants;
+      if (groupParticipants.includes(userId)) {
+        return group;
+      }
+    }
   }
+
+  populateQuestions() {
+    const questionsTemp = this.activityState.casestudyactivity.casestudyquestion_set;
+    this.questions = [];
+    questionsTemp.forEach((q, i) => {
+      this.questions.push({ ...q });
+    });
+  }
+
+  ngOnDestroy() {}
 }

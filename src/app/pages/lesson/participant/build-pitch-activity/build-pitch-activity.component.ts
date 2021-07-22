@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { ContextService } from 'src/app/services';
+import { BuildAPitchService, ContextService } from 'src/app/services';
 import {
   BuildAPitchActivity,
   BuildAPitchSubmitEventEntry,
@@ -25,7 +25,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantBuildPitchActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges
+{
   builtPitch_set;
   builtPitch_setNew;
   act: BuildAPitchActivity;
@@ -48,14 +49,13 @@ export class ParticipantBuildPitchActivityComponent
 
   @ViewChild('ref') ref: ElementRef;
 
-  constructor(private cdr: ChangeDetectorRef, private contextService: ContextService) {
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private contextService: ContextService,
+    private buildAPitchService: BuildAPitchService
+  ) {
     super();
     this.builtPitch_set = [];
-  }
-
-  searchText = 'Angular 6';
-  triggerUserSearch() {
-    console.log(this.ref.nativeElement.innerHTML);
   }
 
   ngOnInit() {
@@ -72,7 +72,8 @@ export class ParticipantBuildPitchActivityComponent
     this.builtPitch_setNew = [];
 
     this.act = this.activityState.buildapitchactivity;
-    this.getBlanks(this.act.blanks_string);
+    this.blanksArray = this.buildAPitchService.getBlanks(this.act.blanks_string);
+    this.builtPitch_setNew = this.blanksArray;
 
     if (this.act.buildapitchblank_set) {
       this.act.buildapitchblank_set
@@ -84,10 +85,10 @@ export class ParticipantBuildPitchActivityComponent
 
       // console.log(this.builtPitch_set);
 
-      this.builtPitch_set.forEach((element) => {
-        this.builtPitch_setNew.push({ type: 'label', ...element });
-        this.builtPitch_setNew.push({ type: 'blank', ...element });
-      });
+      // this.builtPitch_set.forEach((element) => {
+      //   this.builtPitch_setNew.push({ type: 'label', ...element });
+      //   this.builtPitch_setNew.push({ type: 'blank', ...element });
+      // });
 
       // console.log(this.builtPitch_setNew);
     }
@@ -115,37 +116,38 @@ export class ParticipantBuildPitchActivityComponent
     }
   }
 
-  getBlanks(blanksString: string) {
-    const json = JSON.parse(blanksString);
-    this.populateBlanksArray(json);
-    // console.log(this.blanksArray);
-    this.builtPitch_setNew = this.blanksArray;
-  }
+  // getBlanks(blanksString: string) {
+  //   const json = JSON.parse(blanksString);
+  //   this.blanksArray = [];
+  //   this.populateBlanksArray(json);
+  //   this.builtPitch_setNew = this.blanksArray;
+  //   return this.blanksArray;
+  // }
 
-  populateBlanksArray(json) {
-    if (json.content) {
-      for (let i = 0; i < json.content.length; i++) {
-        this.populateBlanksArray(json.content[i]);
-      }
-    } else if (json.type === 'text') {
-      if (json.marks) {
-        let isUnderline = false;
-        for (let i = 0; i < json.marks.length; i++) {
-          if (json.marks[i].type === 'u') {
-            isUnderline = true;
-            this.blanksArray.push({ type: 'blank', temp_text: json.text });
-          }
-        }
-        if (isUnderline) {
-        } else {
-          this.blanksArray.push({ type: 'label', label: json.text });
-        }
-      } else {
-        this.blanksArray.push({ type: 'label', label: json.text });
-      }
-      return;
-    }
-  }
+  // populateBlanksArray(json) {
+  //   if (json.content) {
+  //     for (let i = 0; i < json.content.length; i++) {
+  //       this.populateBlanksArray(json.content[i]);
+  //     }
+  //   } else if (json.type === 'text') {
+  //     if (json.marks) {
+  //       let isUnderline = false;
+  //       for (let i = 0; i < json.marks.length; i++) {
+  //         if (json.marks[i].type === 'u') {
+  //           isUnderline = true;
+  //           this.blanksArray.push({ type: 'blank', temp_text: json.text });
+  //         }
+  //       }
+  //       if (isUnderline) {
+  //       } else {
+  //         this.blanksArray.push({ type: 'label', label: json.text });
+  //       }
+  //     } else {
+  //       this.blanksArray.push({ type: 'label', label: json.text });
+  //     }
+  //     return;
+  //   }
+  // }
 
   ngOnChanges() {
     this.act = this.activityState.buildapitchactivity;
@@ -232,6 +234,11 @@ export class ParticipantBuildPitchActivityComponent
     });
   }
 
+  updateBlankValue(blank, event) {
+    blank.value = event.srcElement.innerText;
+    this.checkValidity();
+  }
+
   // checkValidityOld() {
   //   this.pitchValid = true;
   //   for (let i = 0; i < this.builtPitch_set.length; i++) {
@@ -297,22 +304,25 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   getPitchText(userId, act) {
+    let parsedBlanks = this.buildAPitchService.getBlanks(this.act.blanks_string);
+    parsedBlanks = parsedBlanks.filter((e) => e.type === 'label');
+
     act.buildapitchblank_set.sort((a, b) => a.order - b.order);
-    const blanks = act.buildapitchblank_set;
+
     const buildAPitchPitchSet = act.buildapitchpitch_set.filter(
       (e) => e.participant.participant_code === userId
     );
 
     let statement = '';
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
+    parsedBlanks.forEach((b, i) => {
+      const currentBlanksValue = buildAPitchEntrySet[i];
 
       let value = '';
-      if (currentBlanksValue.length === 1) {
-        value = ' <em>' + currentBlanksValue[0].value + '</em> ';
+      if (currentBlanksValue) {
+        value = ' <em>' + currentBlanksValue.value + '</em> ';
       } else {
-        value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
+        value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
         this.blankPitch = true;
       }
       statement = statement + b.label + value;
@@ -355,7 +365,11 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   focusFunction(blank) {
-    blank.focused = true;
+    if (blank.focused) {
+    } else {
+      blank.focused = true;
+      // blank.temp_text = '';
+    }
   }
 }
 export const c = {

@@ -334,6 +334,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.internal_type === 'CaseStudyQuestionSerializer') {
+                  mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'title_emoji') {
                   mappedField.templateOptions.label = 'Icon';
                   mappedField.defaultValue = 'emoji://1F4dd';
@@ -351,14 +353,17 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'default_data') {
                   mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = 'Worksheet contents';
-                  mappedField.hide = false;
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
+                  mappedField.templateOptions['hideArrayLabel'] = true;
                   // mappedField.hide = true;
                   mappedField.wrappers = ['benji-field-wrapper'];
+                  // mappedField.templateOptions['hideLabel'] = true;
                   mappedField.templateOptions['helpText'] =
                     'Work areas are where your participants can collaboratively answer questions.';
-                } else if (mapSource.internal_type === 'CaseStudyQuestionSerializer') {
+                } else if (mapSource.field_name === 'default_editor_content') {
+                  mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'question_text') {
                   mappedField.templateOptions.label = '';
@@ -515,7 +520,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'vote_seconds') {
                   mappedField.hide = true;
                   mappedField.type = 'seconds';
-                  mappedField.defaultValue = 0;
+                  mappedField.defaultValue = 10000;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['hideLabel'] = true;

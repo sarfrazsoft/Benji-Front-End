@@ -3,6 +3,7 @@ import * as global from 'src/app/globals';
 import {
   CaseStudyActivity,
   CaseStudyDefaultWorksheetApplied,
+  CaseStudySubmitAnswerEvent,
   Group,
   GroupingParticipantSelfJoinEvent,
   UpdateMessage,
@@ -17,6 +18,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() actEditor;
   @Input() questionId;
+  @Input() defaultEditorContent;
   @Input() activityId;
   @Input() jsonDoc;
   @Input() lessonRunCode;
@@ -25,12 +27,14 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   @Input() allowVideo;
   @Input() editorDisabled;
   act;
+  answeredJson;
 
   // unique ID for the group
   groupId: string;
   constructor() {}
 
   @Output() sendMessage = new EventEmitter<any>();
+  @Output() questionAnswerUpdated = new EventEmitter<any>();
 
   selectedParticipant;
   saved;
@@ -43,8 +47,8 @@ export class WorkAreaComponent implements OnInit, OnChanges {
       this.participantCode = 1234;
       this.documentId = new Date().getTime().toString();
       this.lessonRunCode = '33';
-      if (this.act.default_data) {
-        this.jsonDoc = JSON.parse(this.act.default_data);
+      if (this.defaultEditorContent) {
+        this.jsonDoc = JSON.parse(this.defaultEditorContent);
       } else {
         this.jsonDoc = JSON.parse(
           '{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"Worksheet details go here."}]}]}'
@@ -56,20 +60,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     console.log('onchanges');
-
-    const state = this.activityState;
-    if (state.running_tools && state.running_tools && state.running_tools.share) {
-      const share = state.running_tools.share;
-      if (share.selectedParticipant && share.selectedParticipant !== this.selectedParticipant) {
-        this.selectedParticipant = share.selectedParticipant;
-        this.saved = false;
-      }
-
-      if (share.selectedParticipant && share.selectedParticipant === this.participantCode && !this.saved) {
-        this.saved = true;
-        this.saveEditCollab();
-      }
-    }
+    this.act = this.activityState.casestudyactivity;
 
     // find out if your grouping just changed
     const particiapntCode = this.participantCode;
@@ -86,13 +77,13 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     this.jsonDoc = null;
     this.activityId = this.activityState.casestudyactivity.activity_id;
-    if (this.activityState.casestudyactivity.default_data) {
+    if (this.defaultEditorContent) {
       // default data is set by the participant with the lowest participantCode
       // and also added to localstorage so that it's not added again
       const myGroup = this.getMyGroup(this.participantCode);
       const sortedParticipant = myGroup.participants.sort((a, b) => a - b);
       if (this.participantCode === sortedParticipant[0] && !myGroup.default_worksheet_applied) {
-        this.jsonDoc = JSON.parse(this.activityState.casestudyactivity.default_data);
+        this.jsonDoc = JSON.parse(this.defaultEditorContent);
         this.sendMessage.emit(new CaseStudyDefaultWorksheetApplied(true));
       } else {
         this.jsonDoc = null;
@@ -119,9 +110,9 @@ export class WorkAreaComponent implements OnInit, OnChanges {
         this.groupId = 'x';
       }
       if (moddedGroupId) {
-        this.documentId = moddedGroupId + this.lessonRunCode;
+        this.documentId = moddedGroupId + this.lessonRunCode + this.questionId;
       } else {
-        this.documentId = this.groupId + this.lessonRunCode;
+        this.documentId = this.groupId + this.lessonRunCode + this.questionId;
       }
     }, 0);
   }
@@ -130,8 +121,9 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   changeGroup(event) {}
 
   getMyGroup(userId): Group {
-    for (let i = 0; i < this.act.groups.length; i++) {
-      const group = this.act.groups[i];
+    const act = this.activityState.casestudyactivity;
+    for (let i = 0; i < act.groups.length; i++) {
+      const group = act.groups[i];
       const groupParticipants = group.participants;
       if (groupParticipants.includes(userId)) {
         return group;
@@ -148,5 +140,12 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     ) {
       return state.running_tools.grouping_tool.selectedGrouping;
     }
+  }
+
+  editorUpdated(json) {
+    // console.log(json);
+    this.answeredJson = json;
+    this.questionAnswerUpdated.emit({ [this.questionId]: this.answeredJson });
+    // this.sendMessage.emit(new CaseStudySubmitAnswerEvent(this.questionId, json));
   }
 }

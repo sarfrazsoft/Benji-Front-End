@@ -45,6 +45,7 @@ export class EditorTypeComponent extends FieldType implements OnInit {
     const teCF = this.cfr.resolveComponentFactory(TextEditorComponent);
     const component = this.entry.createComponent(teCF);
     if (this.formControl.value) {
+      // console.log(JSON.parse(this.formControl.value));
       component.instance.html = JSON.parse(this.formControl.value);
       // const totalSeconds = this.formControl.value;
       // this.mins = Math.floor(totalSeconds / 60);

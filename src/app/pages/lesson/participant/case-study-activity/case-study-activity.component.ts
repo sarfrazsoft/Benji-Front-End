@@ -52,6 +52,7 @@ export class ParticipantCaseStudyActivityComponent
   saveInterval;
   selectedParticipant;
   saved;
+  answeredWorksheets;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -70,12 +71,26 @@ export class ParticipantCaseStudyActivityComponent
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
     questionsTemp.forEach((q, i) => {
-      this.questions.push({ ...q, answer: '', default_editor_content: '' });
+      this.questions.push({ ...q, answer: '' });
     });
   }
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
+
+    const state = this.activityState;
+    if (state.running_tools && state.running_tools && state.running_tools.share) {
+      const share = state.running_tools.share;
+      if (share.selectedParticipant && share.selectedParticipant !== this.selectedParticipant) {
+        this.selectedParticipant = share.selectedParticipant;
+        this.saved = false;
+      }
+
+      if (share.selectedParticipant && share.selectedParticipant === this.participantCode && !this.saved) {
+        this.saved = true;
+        this.saveEditCollab();
+      }
+    }
   }
 
   getMyNoteTaker() {
@@ -188,10 +203,16 @@ export class ParticipantCaseStudyActivityComponent
     // }
   }
 
+  propagate($event) {
+    this.sendMessage.emit($event);
+  }
+
+  locallySaveDraft(event) {}
+
   saveEditCollab() {
     // console.log(localStorage.getItem('collabedit'));
-    const json = JSON.parse(localStorage.getItem('collabeditJSONDoc'));
-    this.sendMessage.emit(new CaseStudySubmitAnswerEvent(json));
+    // const json = JSON.parse(localStorage.getItem('collabeditJSONDoc' + '_' + this.questionId));
+    this.sendMessage.emit(new CaseStudySubmitAnswerEvent(this.answeredWorksheets));
     // console.log(localStorage.getItem('collabeditJSONDoc'));
     // this.questions.forEach((q) => {
     //   console.log(q);
@@ -200,10 +221,9 @@ export class ParticipantCaseStudyActivityComponent
     // });
   }
 
-  propagate($event) {
-    this.sendMessage.emit($event);
+  questionAnswerUpdated(event) {
+    this.answeredWorksheets = { ...this.answeredWorksheets, ...event };
+    console.log(this.answeredWorksheets);
   }
-
-  locallySaveDraft(event) {}
 }
 // 15625

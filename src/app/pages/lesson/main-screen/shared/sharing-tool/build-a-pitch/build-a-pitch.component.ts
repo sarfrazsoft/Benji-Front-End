@@ -30,6 +30,8 @@ export class BuildAPitchComponent implements OnInit, OnChanges {
       this.data.buildapitchactivity,
       true
     );
+
+    console.log(this.data.buildapitchactivity);
   }
 
   getSharingUserName() {
