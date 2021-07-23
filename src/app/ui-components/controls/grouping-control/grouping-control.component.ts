@@ -10,6 +10,7 @@ import {
   ViewGroupingEvent,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-grouping-control',
@@ -25,7 +26,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  constructor(private contextService: ContextService) {}
+  constructor(private contextService: ContextService, private utilsService: UtilsService) {}
 
   ngOnInit(): void {}
 
@@ -44,13 +45,20 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     }
   }
 
-  start() {
+  start(event) {
     if (this.groupingType === 'new') {
-      this.socketMessage.emit(new CreateGroupingEvent(this.newGroupingTitle));
+      if (this.newGroupingTitle) {
+        this.socketMessage.emit(new CreateGroupingEvent(this.newGroupingTitle));
+        this.socketMessage.emit(new ViewGroupingEvent(true));
+      } else {
+        this.utilsService.openWarningNotification('Enter a group name', '');
+        event.preventDefault();
+        event.stopPropagation();
+      }
     } else {
       this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
+      this.socketMessage.emit(new ViewGroupingEvent(true));
     }
-    this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   selectGrouping(event: GroupingToolGroups) {
