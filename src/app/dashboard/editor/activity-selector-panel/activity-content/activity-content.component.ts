@@ -508,6 +508,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.buildAPitch) {
                 if (mapSource.internal_type === 'BuildAPitchActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'title_emoji') {
+                  mappedField.defaultValue = 'emoji://1F3D7-FE0F';
                 } else if (mapSource.field_name === 'instructions') {
                   mappedField.type = 'textarea';
                   mappedField.templateOptions.label = 'Instructions';
@@ -819,6 +821,7 @@ export const AllowEmojiDic = {
   MCQActivity: false,
   VideoActivity: false,
   BrainstormActivity: false,
+  BuildAPitchActivity: true,
   FeedbackActivity: true,
   GenericRoleplayActivity: true,
   ConvoActivity: true,
@@ -859,7 +862,14 @@ export const OrderForActivities = {
     'auto_next',
   ],
   GenericRoleplayActivity: ['genericroleplayrole_set', 'name', 'image_url', 'instructions'],
-  BuildAPitchActivity: ['title', 'instructions', 'buildapitchblank_set', 'build_seconds', 'vote_seconds'],
+  BuildAPitchActivity: [
+    'title_emoji',
+    'title',
+    'instructions',
+    'buildapitchblank_set',
+    'build_seconds',
+    'vote_seconds',
+  ],
   WhereDoYouStandActivity: [
     'question_title',
     'left_choice',

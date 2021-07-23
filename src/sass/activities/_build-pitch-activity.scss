@@ -40,23 +40,31 @@ benji-ps-build-pitch-activity {
       margin: 0px;
       margin-bottom: 12px;
     }
+    .bap-instructions {
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 24px;
+      color: #828282;
+    }
     .pitch-form {
       text-align: left;
       background-color: $white;
       border-radius: 8px;
-      padding: 24px;
+      padding: 32px;
       box-shadow: 0px 4px 4px rgba(152, 151, 151, 0.25);
       .pitch-segment {
         line-height: 42px;
+        font-size: 18px;
+        padding-bottom: 0px;
         &:last-child {
           //margin-bottom: 35px;
         }
-        .segment-label {
-          font-size: 24px;
-        }
+        // .segment-label {
+        //   font-size: 24px;
+        // }
         span {
           // Color applied from BE
-          font-size: 24px;
+          font-size: 18px;
           margin-top: 10px;
           width: 100%;
           border: 0;

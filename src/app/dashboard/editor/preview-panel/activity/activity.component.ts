@@ -429,6 +429,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             sharing_done: false,
             start_time: '2020-12-07T16:44:13.665617-05:00',
             title: content.title ? content.title : 'Title',
+            title_emoji: content.title_emoji ? content.title_emoji : null,
             vote_countdown_timer: null,
             vote_seconds: 0,
             votes: [],

@@ -55,8 +55,8 @@
 
   <ng-container *ngIf="createPitches && newCreatePitchLayout">
     <div class="single-column-activity" fxLayout="column">
-      <div class="twemoji-container">
-        <app-b-twemoji class="body-emoji" emoji="🏗️"></app-b-twemoji>
+      <div class="twemoji-container" *ngIf="isEmoji(activityState.buildapitchactivity.title_emoji)">
+        <app-b-twemoji [text]="activityState.buildapitchactivity.title_emoji"> </app-b-twemoji>
       </div>
       <div class="activity-title-container">
         <h1 class="black-color pn-700">

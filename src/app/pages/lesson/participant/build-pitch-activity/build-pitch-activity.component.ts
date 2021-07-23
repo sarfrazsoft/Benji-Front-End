@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { BuildAPitchService, ContextService } from 'src/app/services';
+import { BuildAPitchService, ContextService, EmojiLookupService } from 'src/app/services';
 import {
   BuildAPitchActivity,
   BuildAPitchSubmitEventEntry,
@@ -25,8 +25,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantBuildPitchActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges
-{
+  implements OnInit, OnChanges {
   builtPitch_set;
   builtPitch_setNew;
   act: BuildAPitchActivity;
@@ -266,9 +265,9 @@ export class ParticipantBuildPitchActivityComponent
       return;
     }
     const buildapitchsubmissionentry_set = [];
-    this.builtPitch_setNew.forEach((p) => {
+    this.builtPitch_setNew.forEach((p, i) => {
       if (p.type === 'blank' && p.value) {
-        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p, p.value);
+        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(i, p.value);
         buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
       }
     });

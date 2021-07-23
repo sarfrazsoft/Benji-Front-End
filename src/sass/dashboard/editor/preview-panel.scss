@@ -37,7 +37,7 @@ benji-preview-panel {
           margin: unset;
         }
         .participant {
-           img{
+          img {
             width: 66px;
             display: block;
           }
@@ -57,7 +57,7 @@ benji-preview-panel {
         }
         p.body-text {
           font-size: 18px;
-          color: #6A6A6A;
+          color: #6a6a6a;
           text-align: left;
         }
         .b-standard-button {
@@ -278,5 +278,26 @@ benji-preview-panel {
         }
       }
     }
+  }
+}
+
+.feedback-card .twemoji-container {
+  margin: unset;
+}
+.participant-new-emoji {
+  width: 66px;
+  text-align: left;
+  img {
+    width: 66px;
+  }
+}
+
+benji-ps-build-pitch-activity {
+  h1 {
+    text-align: left;
+    padding-bottom: 16px !important;
+  }
+  .bap-instructions {
+    text-align: left;
   }
 }

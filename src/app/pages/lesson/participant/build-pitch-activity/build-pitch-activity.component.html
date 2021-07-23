@@ -1,11 +1,19 @@
 <div class="b-flat-card center-text feedback-card">
 
   <div class="b-flat-card__body" *ngIf="createPitch">
-    <div class="twemoji-container">
+    <div class="twemoji-container" *ngIf="isEmoji(activityState.buildapitchactivity.title_emoji)">
+      <app-b-twemoji 
+        class="body-emoji participant participant-new-emoji" 
+        [text]="activityState.buildapitchactivity.title_emoji">
+      </app-b-twemoji>
+    </div>
+    <h1 class="pn-700 primary-color-darkest participant">{{ activityState.buildapitchactivity.title }}</h1>
+    <p class="body-text bap-instructions">{{ activityState.buildapitchactivity.instructions }}</p>
+    <!-- <div class="twemoji-container">
       <app-b-twemoji class="body-emoji participant" emoji="🏗️"></app-b-twemoji>
     </div>
     <h1 class="pn-700 primary-color-darkest participant">Fill-in-the-blank</h1>
-    <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p>
+    <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p> -->
     <div class="pitch-form fill-blanks">
       <p class="pitch-segment">
         <ng-container *ngFor="let blank of blanksArray">
