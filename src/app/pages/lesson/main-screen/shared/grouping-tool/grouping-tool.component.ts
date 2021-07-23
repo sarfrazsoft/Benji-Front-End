@@ -13,6 +13,7 @@ import {
   ViewGroupingEvent,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-ms-grouping-tool',
@@ -22,7 +23,7 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   groupingTitle = '';
   selectedGroup: GroupingToolGroups;
   unassignedUsers = [];
-  breakoutRooms = [];
+  breakoutRooms: Array<{ id: number; name: string; participants: Array<any> }> = [];
   collapsed = {};
   editingName = {};
   groupName = '';
@@ -32,7 +33,7 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
 
   @Input() activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
-  constructor() {}
+  constructor(private utilsService: UtilsService) {}
 
   ngOnInit(): void {
     const code =
@@ -173,12 +174,27 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   }
 
   makeActivityGrouping() {
-    const code =
-      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
-    window.localStorage.setItem('isGroupingCreated', code);
-    this.sendMessage.emit(new StartCaseStudyGroupEvent());
-    this.showStartGroupingButton = false;
-    this.sendMessage.emit(new ViewGroupingEvent(false));
+    // check if at least one group has at least one participant
+    if (this.groupingsValid()) {
+      const code =
+        this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+      window.localStorage.setItem('isGroupingCreated', code);
+      this.sendMessage.emit(new StartCaseStudyGroupEvent());
+      this.showStartGroupingButton = false;
+      this.sendMessage.emit(new ViewGroupingEvent(false));
+    } else {
+      this.utilsService.openWarningNotification('Add participants to the groups', '');
+    }
+  }
+
+  groupingsValid(): boolean {
+    let check = false;
+    this.breakoutRooms.forEach((room) => {
+      if (room.participants.length) {
+        check = true;
+      }
+    });
+    return check;
   }
 
   editGroupName(group) {
