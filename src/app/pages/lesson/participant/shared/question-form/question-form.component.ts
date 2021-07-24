@@ -1,22 +1,63 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeedbackQuestion } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-question-form',
   templateUrl: './question-form.component.html',
   styleUrls: ['./question-form.component.scss'],
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
+  //sarfraz
+  @Input('rating') private rating: number = 3;
+  @Input('starCount') private starCount: number = 5;
+  @Input('color') private color: string = 'accent';
+  @Output() private ratingUpdated = new EventEmitter();
+  
   @Output() submitResponse = new EventEmitter();
   sliderValue = 0;
   form: FormGroup;
   selectPills = selectPills;
-  constructor(private builder: FormBuilder) {}
+  constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
+
+  private snackBarDuration: number = 2000;
+  private ratingArr = []; //Sarfraz
 
   ngOnInit() {
     this.buildForm();
+    //sarfraz
+    for (let index = 0; index < this.starCount; index++) {
+      this.ratingArr.push(index);
+    }
+  }
+  //sarfraz
+  onClick(rating:number) {
+    console.log(rating)
+    this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
+      duration: this.snackBarDuration
+    });
+    this.ratingUpdated.emit(rating);
+    this.rating = rating;
+    return false;
+  }
+  //sarfraz
+  showStarIcon(index:number) {
+    if (this.rating >= index + 1) {
+      return 'star';
+    } else {
+      return 'star_border';
+    }
+  }
+  //sarfraz
+  showFavouriteIcon(index:number) {
+    if (this.rating >= index + 1) {
+      return 'favorite';
+    } else {
+      return 'favorite_border';
+    }
   }
 
   ngOnChanges() {

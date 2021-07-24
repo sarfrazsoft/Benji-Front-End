@@ -29,7 +29,15 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
             value: 'rating_agreedisagree',
             label: '<mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> Rating',
           },
-          { value: 'text_only', label: '<mat-icon>format_align_left</mat-icon> Open Text' },
+          { value: 'text_only', 
+            label: '<mat-icon>format_align_left</mat-icon> Open Text' 
+          },
+          // { value: 'scale', 
+          //   label: '<mat-icon>poll</mat-icon> Scale' 
+          // },
+          // { value: 'multiple_choice', 
+          //   label: '<mat-icon>check</mat-icon> Multiple Choice' 
+          // },
         ];
         this.typeField = val;
         this.typeField.templateOptions.label = null;

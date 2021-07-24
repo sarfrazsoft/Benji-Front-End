@@ -3,7 +3,11 @@
     <div class="div-block-183">
       <img [src]="logo" loading="lazy" alt="" >
       <div class="log-in-form w-form">
-        <a (click)="signInWithGoogle()" class="nav-link">Sign in with google</a>
+        <div (click)="signInWithGoogle()"  class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+          <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
+          <div class="google-text">Sign up with Google</div>
+        </div>
+        <div class="or"><span>or</span></div>
         <div class="navbar-nav ml-auto" *ngIf="user">
           <span class="navbar-text">
            {{ user.email }}
@@ -49,7 +53,13 @@
               </div> 
             </mat-error>
           </div>
-          <input type="submit" value="Log-in" data-wait="Please wait..." class="submit-button-12 w-button bg-primary-color">
+          <div 
+            class="forgot-password primary-color"
+            (click)="router.navigate(['/forgot-password'])">
+              Forgot Password?
+          </div>
+          <input type="submit" value="Sign in" data-wait="Please wait..." 
+            [style.background-color]="(email.value && password.value) ? '#555BEA' : '#BDBDBD'" class="submit-button-12 w-button">
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
@@ -59,15 +69,10 @@
         </div>
       </div>
       <div 
-        class="forgot-password"
-        (click)="router.navigate(['/forgot-password'])">
-          Forgot Password?
-      </div>
-      <div 
-        class="text-block-91 primary-color"
-        style="cursor: pointer"
+        class="small-form-text already-member"
         (click)="router.navigate(['/sign-up'])">
-        Create new account
+        Don’t have an account yet?
+        <br><div class="bold-text-7 primary-color">Sign up</div>
       </div>
     </div>
   </div>

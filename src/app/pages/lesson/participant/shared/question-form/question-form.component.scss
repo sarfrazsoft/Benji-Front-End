@@ -1,1 +1,114 @@
+// ::ng-deep {
+//   .mat-slider {
+//    width: 100%;
+//     .mat-slider-thumb-label {
+//       width: 22px;
+//       height: 22px;
+//    }
+//   }
+//   .mat-slider.mat-slider-horizontal {
+//     height: 40px;
+//     .mat-slider-track-wrapper {
+//       height: 3px;
+//     }
+//     .mat-slider-track-fill {
+//       background-color: #555BEA;
+//       .mat-slider-track-background {
+//         height: 100%;
+//       }
+//     }
+//     .mat-slider-thumb-label {
+//       top: -30px !important;
+//       right: -11px !important;
+//     }
+//   } 
+//   .mat-slider-min-value.mat-slider-thumb-label-showing, .mat-accent {
+//     .mat-slider-thumb, .mat-slider-thumb-label, .mat-slider-track-fill, .mat-slider-thumb, .mat-slider-thumb-label-text {
+//       background-color: #555BEA;
+//     }
+//   }
+//   .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+//     background-color: white;
+//   }
+// }
 
+// .mat-card.feedback-slider {
+//   .labels {
+//     font-size: 12px;
+//     color: #828282;
+//     span:last-child {
+//       text-align: right;
+//     }
+//   }
+//   .body-text {
+//     font-size: 18px;
+//     color: #616161;
+//     font-weight: 500;
+//     margin-bottom: 14px;
+//   }
+// }
+// .multiple-choice {
+//   .title {
+//     font-size: 20px;
+//     font-weight: 500;
+//     color: #616161;
+//     line-height: 24px;
+//   }
+//   .sub-title {
+//     font-size: 12px;
+//     color: #828282;
+//     line-height: 24px;
+//     margin-bottom: 8px;
+//   }
+//   .option {
+//     font-size: 16px;
+//     border: 1px solid #bdbdbd;
+//     border-radius: 4px;
+//     height: 40px;
+//     background: #F3F4F7;
+//     margin-bottom: 8px;
+//     &:last-child{
+//       margin-bottom: 0px;
+//     }
+//     &.selected {
+//       border: 2px solid #555BEA;
+//       background: #eeeffd;
+//     }
+//     span {
+//       color: #616161;
+//       border: 1px solid #bdbdbd;
+//       border-radius: 4px;
+//       padding: 6px;
+//       margin: 8px;
+//       line-height: 10px;
+//       font-size: 12px;
+//       font-weight: 700;
+//     }
+//   }
+// }
+// .rating {
+//   .title {
+//     font-size: 18px;
+//     font-weight: 500;
+//     color: #6A6A6A;
+//     line-height: 24px;
+//     margin-bottom: 8px;
+//   }
+//   .star-icon {
+//     color: #F69F41;
+//   }
+//   .favorite-icon {
+//     color: #F05656;
+//   }
+//   .thumb {
+//     padding: 0px;
+//     margin: 0px;
+//     color: #D4D8FA;
+//     &.selected {
+//       color:#7B87F0;
+//     }
+//     .material-icons {
+//       font-size: 40px;
+//     }
+//   }
+// }

@@ -128,7 +128,7 @@
 }
 
 .sign-up-card {
-  width: 460px;
+  width: 544px;
   // height: 580px;
   box-shadow: 0 3px 9px 0 #d5d9de;
 }
@@ -139,6 +139,7 @@
 }
 
 .div-block-183 {
+  width: 100%;
   display: flex;
   margin-top: 40px;
   margin-bottom: 40px;
@@ -165,7 +166,8 @@
     color: $black;
   }
   .text-block-91 {
-    margin-top: 16px;
+    margin-top: 24px;
+    font-weight: 600;
     margin-right: auto;
     margin-left: auto;
     font-family: Inter, sans-serif;
@@ -176,25 +178,52 @@
   .text-block-91 {
     font-size: 16px;
   }
+  .google-login {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #37352F;
+    height: 40px;    
+    margin-top: 27px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    .google-logo {
+      width: 24px;
+    }
+    .google-text {
+      font-weight: 600;
+    }
+  }
+  .or{
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid #e7e7e7;
+    line-height: 0.1em;
+    margin: 5px 0 25px;
+    span {
+      background:#fff; 
+      padding:0 10px; 
+      font-weight: 500;
+    }
+  }
 }
 
 .small-form-text,
 .text-block-89 {
-  margin-top: 16px;
+  margin-top: 24px;
   line-height: 22px;
   text-align: center;
 }
 
-.sign-up-field,
-.text-block-89 {
+.sign-up-field {
   font-size: 16px;
 }
 
 .text-block-89 {
-  width: 250px;
+  font-size: 18px;
+  width: 360px;
   font-family: Inter, sans-serif;
-  color: #9b9b9b;
-  font-weight: 400;
+  color: #37352F;
+  font-weight: 500;
 }
 
 .sign-up-field,
@@ -206,11 +235,21 @@
 
 .sign-up-field {
   padding-left: 16px;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #37352F;
   border-radius: 4px;
-  color: $black;
-  font-weight: 300;
+  color: #37352F;
+  font-weight: 600;
   box-sizing: border-box;
+  &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #BDBDBD;
+    opacity: 1; /* Firefox */
+  }
+  &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #BDBDBD;
+  }
+  &::-ms-input-placeholder { /* Microsoft Edge */
+    color: #BDBDBD;
+  }
 }
 
 .w-button {
@@ -225,13 +264,13 @@
 }
 .sign-up-field,
 .submit-button-12 {
-  width: 300px;
+  width: 100%;
   height: 40px;
   font-family: Inter, sans-serif;
 }
 .submit-button-12 {
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
 .w-form {
@@ -240,18 +279,21 @@
 .form-block-8 {
   margin-bottom: 0px;
   margin-top: 16px;
-  width: 300px;
+  width: 74%;
   > form > div {
     margin-bottom: 16px;
+  }
+  .text-block-89 {
+    margin: 0px auto;
   }
 }
 
 .small-form-text {
   width: 250px;
   margin-bottom: 16px;
-  color: #9b9b9b;
+  color: #37352F;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   &.already-member {
     margin-bottom: 0px;
     cursor: pointer;
@@ -290,7 +332,7 @@ figcaption {
 }
 
 .log-in-form {
-  margin-top: 16px;
+  width: 74%;
   margin-bottom: 0;
   form > div {
     margin-bottom: 16px;
@@ -302,12 +344,11 @@ figcaption {
   outline: 0;
 }
 .forgot-password {
-  width: 300px;
-  margin-top: 8px;
-  text-align: left;
+  width: 74%;
   cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline;
+}
+.forgot-form {
+  margin-top: 16px;
 }
 
 @media screen and (max-width: 479px) {

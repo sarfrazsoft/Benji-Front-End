@@ -225,7 +225,8 @@
           <img src="/assets/img/participants.svg" /> 
           <sup class="white-color">{{ getActiveParticipants().length }}</sup>
         </button>
-        <mat-menu #participantMenu="matMenu">
+        <mat-menu #participantMenu="matMenu" class="participants-menu">
+          <div class="participants">Participants({{ getActiveParticipants().length }})</div>
           <ng-container *ngFor="let p of participants">
             <div
               class="delete-participant"
@@ -233,10 +234,16 @@
               fxLayoutGap="10px"
               *ngIf="p.is_active"
             >
-              <mat-icon fxFlex="10%" (click)="deleteUser(p)">delete</mat-icon>
-              <span fxFlex="90%">{{ p.display_name }}</span>
+              <span fxFlex="100%">{{ p.display_name }}</span>
+              <mat-icon fxFlex="8%" (click)="deleteUser(p)">exit_to_app</mat-icon>
             </div>
           </ng-container>
+          <div fxLayoutAlign="space-between center" class="participant-count-container bg-white copy-link" (click)="copyLink(shareParticipantLink)">
+            <mat-icon fxFlex="10%">add</mat-icon>
+            <span class="black-color" fxFlex="90%">
+              Copy Invite Link
+            </span>
+          </div>
         </mat-menu>
       </div>
 

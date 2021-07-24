@@ -216,6 +216,7 @@
               </ng-template>
               </div>
               {{ idea.idea }}
+              <!-- <span *ngIf="showUserName">{{ ' by ' + getPersonName(idea.submitting_participant.participant_code) }}</span> -->
               <div class="votes primary-color" *ngIf="voteScreen">
                 {{ idea.num_votes }}
               </div>
