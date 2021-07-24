@@ -23,8 +23,8 @@ export enum QuestionType {
   rating_happysad,
   rating_agreedisagree,
   text,
-  scale,
-  multiple_choice,
+  // scale,
+  // multiple_choice,
 }
 
 export interface FeedbackGraphQuestion {
@@ -40,15 +40,15 @@ export interface Assessment {
   participant_code: number;
   rating: number;
   text: string;
-  scale: [],
-  multiple_choice: {},
+  // scale: [],
+  // multiple_choice: {},
 }
 
 export interface FeedbackParticipantAnswerSet {
   participant: { participant_code: number };
   rating_answer: number;
   text_answer: string;
-  scale_answer: [];
-  mcq_answer: {};
+  // scale_answer: [];
+  // mcq_answer: {};
   feedbackquestion: number;
 }

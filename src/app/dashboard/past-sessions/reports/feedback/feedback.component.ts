@@ -39,8 +39,8 @@ export class FeedbackComponent implements OnInit {
           participant_code: answer.participant.participant_code,
           rating: answer.rating_answer,
           text: answer.text_answer,
-          scale: [],
-          multiple_choice: {},
+          // scale: [],
+          // multiple_choice: {},
         });
       });
 

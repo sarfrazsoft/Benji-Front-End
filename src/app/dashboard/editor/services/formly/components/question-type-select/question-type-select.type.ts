@@ -43,7 +43,6 @@ export class QuestionTypeSelectComponent extends FieldType {
               s._elementRef.nativeElement.selectedIndex !== -1
             ) {
               writeValue(value);
-              console.log(value);
             }
           });
       }

@@ -52,22 +52,22 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
         );
         answers.push(ans);
       }
-      if (val.questions[i].question_type === 'scale') {
-        const ans = new FeedbackSubmitEventAnswer(
-          val.questions[i].q,
-          val.questions[i].rating_answer,
-          val.questions[i].text_answer
-        );
-        answers.push(ans);
-      }
-      if (val.questions[i].question_type === 'multiple_choice') {
-        const ans = new FeedbackSubmitEventAnswer(
-          val.questions[i].q,
-          val.questions[i].rating_answer,
-          val.questions[i].text_answer
-        );
-        answers.push(ans);
-      }
+      // if (val.questions[i].question_type === 'scale') {
+      //   const ans = new FeedbackSubmitEventAnswer(
+      //     val.questions[i].q,
+      //     val.questions[i].rating_answer,
+      //     val.questions[i].text_answer
+      //   );
+      //   answers.push(ans);
+      // }
+      // if (val.questions[i].question_type === 'multiple_choice') {
+      //   const ans = new FeedbackSubmitEventAnswer(
+      //     val.questions[i].q,
+      //     val.questions[i].rating_answer,
+      //     val.questions[i].text_answer
+      //   );
+      //   answers.push(ans);
+      // }
     }
     this.sendMessage.emit(new FeedbackSubmitEvent(answers));
     this.answersSubmitted = true;

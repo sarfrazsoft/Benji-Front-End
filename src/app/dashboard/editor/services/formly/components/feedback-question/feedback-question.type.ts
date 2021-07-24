@@ -32,12 +32,12 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
           { value: 'text_only', 
             label: '<mat-icon>format_align_left</mat-icon> Open Text' 
           },
-          { value: 'scale', 
-            label: '<mat-icon>poll</mat-icon> Scale' 
-          },
-          { value: 'multiple_choice', 
-            label: '<mat-icon>check</mat-icon> Multiple Choice' 
-          },
+          // { value: 'scale', 
+          //   label: '<mat-icon>poll</mat-icon> Scale' 
+          // },
+          // { value: 'multiple_choice', 
+          //   label: '<mat-icon>check</mat-icon> Multiple Choice' 
+          // },
         ];
         this.typeField = val;
         this.typeField.templateOptions.label = null;
