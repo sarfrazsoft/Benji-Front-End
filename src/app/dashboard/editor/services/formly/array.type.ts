@@ -5,7 +5,7 @@ import { FieldArrayType } from '@ngx-formly/core';
   selector: 'formly-array-type',
   template: `
     <div class="mb-3" (keypress)="keypress($event)">
-      <legend *ngIf="to.label">{{ to.label }}</legend>
+      <legend *ngIf="to.label && !to.hideArrayLabel">{{ to.label }}</legend>
       <p *ngIf="to.description">{{ to.description }}</p>
 
       <div class="alert alert-danger" role="alert" *ngIf="showError && formControl.errors">

@@ -37,6 +37,7 @@ export { ParticipantSharingToolComponent } from './shared/sharing-tool/sharing-t
 export { ParticipantGroupingToolComponent } from './shared/grouping-tool/grouping-tool.component';
 export { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 export { CaseStudyGroupingComponent } from './case-study-activity';
+export { CaseStudyWorkAreaComponent } from './case-study-activity';
 export { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { ParticipantPollComponent } from './poll-activity/poll-activity.component';
 export { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';

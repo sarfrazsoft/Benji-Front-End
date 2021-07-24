@@ -90,8 +90,16 @@ export class AppComponent implements OnInit {
           background: ${info.parameters.primary_darker};
         }
 
-        benji-ps-build-pitch-activity .b-flat-card__body .pitch-form .pitch-segment textarea {
+        benji-ps-build-pitch-activity .b-flat-card__body .pitch-form .pitch-segment span {
           border-bottom-color: ${info.parameters.primary};
+        }
+
+        benji-ps-build-pitch-activity benji-vote-pitch .b-standard-button em {
+          color: ${info.parameters.primary};
+        }
+
+        benji-ps-build-pitch-activity benji-vote-pitch .b-standard-button.selected em {
+          color: #fff;
         }
 
         mat-toolbar.mat-toolbar {

@@ -334,6 +334,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.internal_type === 'CaseStudyQuestionSerializer') {
+                  mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'title_emoji') {
                   mappedField.templateOptions.label = 'Icon';
                   mappedField.defaultValue = 'emoji://1F4dd';
@@ -351,14 +353,17 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'default_data') {
                   mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = 'Worksheet contents';
-                  mappedField.hide = false;
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
-                  mappedField.hide = true;
-                  // mappedField.wrappers = ['benji-field-wrapper'];
+                  mappedField.templateOptions['hideArrayLabel'] = true;
+                  // mappedField.hide = true;
+                  mappedField.wrappers = ['benji-field-wrapper'];
+                  // mappedField.templateOptions['hideLabel'] = true;
                   mappedField.templateOptions['helpText'] =
                     'Work areas are where your participants can collaboratively answer questions.';
-                } else if (mapSource.internal_type === 'CaseStudyQuestionSerializer') {
+                } else if (mapSource.field_name === 'default_editor_content') {
+                  mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'question_text') {
                   mappedField.templateOptions.label = '';
@@ -503,6 +508,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
               } else if (act.activity_type === this.at.buildAPitch) {
                 if (mapSource.internal_type === 'BuildAPitchActivitySerializer') {
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'title_emoji') {
+                  mappedField.defaultValue = 'emoji://1F3D7-FE0F';
                 } else if (mapSource.field_name === 'instructions') {
                   mappedField.type = 'textarea';
                   mappedField.templateOptions.label = 'Instructions';
@@ -511,15 +518,18 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = 'Build your madlib';
                   mappedField.templateOptions['addLabel'] = 'Add new block';
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'vote_seconds') {
+                  mappedField.hide = true;
                   mappedField.type = 'seconds';
-                  mappedField.defaultValue = 0;
+                  mappedField.defaultValue = 10000;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
                   mappedField.templateOptions.label = '';
                   mappedField.templateOptions['hideLabel'] = true;
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Voting Stage';
                   mappedField.templateOptions['helpText'] = 'How long does the voting stage last?';
                 } else if (mapSource.field_name === 'build_seconds') {
+                  mappedField.hide = true;
                   mappedField.templateOptions.label = 'Time to complete Madlib';
                   mappedField.type = 'seconds';
                   // mappedField.hide = true;
@@ -543,8 +553,14 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.internal_type === 'BuildAPitchBlankSerializer') {
-                  mappedField.type = 'bapBlank';
-                  mappedField.templateOptions.label = '';
+                  // mappedField.type = 'bapBlank';
+                  // mappedField.type = 'bapTextEditor';
+                  // mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'blanks_string') {
+                  mappedField.type = 'bapTextEditor';
+                  mappedField.templateOptions.label = 'Build your madlib';
+                  mappedField.defaultValue =
+                    '{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"I can’t believe it’s not "},{"type":"text","marks":[{"type":"u"}],"text":"insert food here."}]}]}';
                 } else if (mapSource.field_name === 'help_text') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'hide_timer') {
@@ -805,6 +821,7 @@ export const AllowEmojiDic = {
   MCQActivity: false,
   VideoActivity: false,
   BrainstormActivity: false,
+  BuildAPitchActivity: true,
   FeedbackActivity: true,
   GenericRoleplayActivity: true,
   ConvoActivity: true,
@@ -845,7 +862,14 @@ export const OrderForActivities = {
     'auto_next',
   ],
   GenericRoleplayActivity: ['genericroleplayrole_set', 'name', 'image_url', 'instructions'],
-  BuildAPitchActivity: ['title', 'instructions', 'buildapitchblank_set', 'build_seconds', 'vote_seconds'],
+  BuildAPitchActivity: [
+    'title_emoji',
+    'title',
+    'instructions',
+    'buildapitchblank_set',
+    'build_seconds',
+    'vote_seconds',
+  ],
   WhereDoYouStandActivity: [
     'question_title',
     'left_choice',

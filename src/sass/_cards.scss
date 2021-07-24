@@ -31,10 +31,6 @@
     margin: 0 auto;
     margin-bottom: 16px;
   }
-  @media screen and (min-width: 320px) and (max-width: 812px) and (orientation: landscape) {
-    height: auto;
-    padding-bottom: 60px;
-  }
   @media screen and (min-width: 1200px) {
     min-height: 600px;
   }

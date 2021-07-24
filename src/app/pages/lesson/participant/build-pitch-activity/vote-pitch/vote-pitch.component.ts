@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'benji-vote-pitch',
   templateUrl: './vote-pitch.component.html',
-  styleUrls: ['./vote-pitch.component.scss']
 })
 export class VotePitchComponent implements OnInit {
   @Input() user = null;
@@ -16,7 +15,9 @@ export class VotePitchComponent implements OnInit {
   @Output() userCollapsed = new EventEmitter();
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.pitchText);
+  }
 
   selectUser(user) {
     this.userSelected.emit(user);

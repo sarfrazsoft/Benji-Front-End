@@ -42,13 +42,14 @@ benji-ms-pop-quiz {
   }
 }
 
-benji-ps-pop-quiz {
+benji-ps-pop-quiz,
+benji-ps-build-pitch-activity {
   .b-flat-card__action {
-    // margin-bottom: 12vh;
     .b-standard-button {
       padding: 14px 40px;
       height: fit-content;
       text-align: left;
+      overflow-wrap: anywhere;
     }
   }
 }

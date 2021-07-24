@@ -1,4 +1,22 @@
-<div class="vote-button-column" fxLayout="column" fxLayoutAlign="center center">
+<div class="b-flat-card center-text mc-card">
+  <!-- show questions -->
+  <!-- <ng-container *ngIf="showQuestion"> -->
+    <div class="b-flat-card__action">
+      <button
+        class="b-standard-button unselected"
+        [ngClass]="{
+          selected: selectedUser === user && selectedUser != null
+        }"
+        (click)="selectUser(user)"
+        [innerHTML]="pitchText"
+      >
+
+      </button>
+    </div>
+  <!-- </ng-container> -->
+</div>
+
+<!-- <div class="vote-button-column" fxLayout="column" fxLayoutAlign="center center">
   <div fxLayout="row" fxLayoutAlign="center center">
     <button
       class="b-standard-button unselected"
@@ -29,4 +47,4 @@
     class="pitch-details left-text"
     [innerHTML]="pitchText"
   ></div>
-</div>
+</div> -->

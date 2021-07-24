@@ -95,12 +95,12 @@ export class UtilsService {
     // });
   }
 
-  showWarning(message: string) {
-    this.matSnackBar.open(`${message}`, 'close', {
-      duration: 5000,
-      panelClass: ['bg-warning-color', 'white-color'],
-    });
-  }
+  // showWarning(message: string) {
+  //   this.matSnackBar.open(`${message}`, 'close', {
+  //     duration: 5000,
+  //     panelClass: ['bg-warning-color', 'white-color'],
+  //   });
+  // }
 
   resizeImage = (settings: IResizeImageOptions) => {
     const file = settings.file;

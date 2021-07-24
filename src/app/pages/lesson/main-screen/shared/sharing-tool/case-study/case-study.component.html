@@ -1,5 +1,38 @@
 <div class="case-study-share-ui-container">
   <div class="case-study-share-ui">
+    <div *ngFor="let question of questions" style="text-align: left;">
+      <div class="question-container">
+        <div
+          class="question"
+          *ngIf="question.question_text"
+          innerHTML="{{ question.question_text }}"
+        ></div>
+        <div class="your-notes">
+          <div class="draft-pitch">
+            <ng-container >
+              <benji-sharing-case-study-workarea
+                [activityState]="activityState"
+                [actEditor]="actEditor"
+                [questionId]="question.id"
+                [defaultEditorContent]="question.default_editor_content"
+                [activityId]="activityId"
+                [jsonDoc]="group[question.id]"
+                [lessonRunCode]="lessonRunCode" 
+                [participantCode]="participantCode"  
+                [documentId]="documentId"
+                [allowVideo]="false"
+                [editorDisabled]="true"
+                [group]="group"
+              ></benji-sharing-case-study-workarea>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="case-study-share-ui-container">
+  <div class="case-study-share-ui">
     <ng-container *ngIf="showEditor">
       <benji-text-editor 
         class="hide-border"
@@ -9,11 +42,7 @@
         [showMenu]="false">
       </benji-text-editor>
     </ng-container>
-  
-     <!-- <p class="your-pitch left-text"> 
-      {{text}}
-    </p> -->
   </div>
-</div>
+</div> -->
 
 

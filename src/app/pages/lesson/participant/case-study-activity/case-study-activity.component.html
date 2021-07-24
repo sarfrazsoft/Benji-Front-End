@@ -24,11 +24,10 @@
         (sendMessage)="propagate($event)"
         [participantCode]="participantCode"
       >
-
       </benji-case-study-grouping-container>
       
       <div class="content" fxLayout="column">
-        <div class="twemoji-container" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
+        <div class="twemoji-container participant-new-emoji" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
           <app-b-twemoji class="body-emoji participant" [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
         </div>
         <div class="worksheet-title">
@@ -56,27 +55,35 @@
             innerHTML="{{ act.case_study_details }}"
           ></div>
         </div> -->
-
-        <ng-container *ngIf="groupId && lessonRunCode">
-          <benji-text-editor
-            [activityId]="activityId"
-            [jsonDoc]="jsonDoc"
-            [lessonRunCode]="lessonRunCode" 
-            [participantCode]="participantCode"  
-            [documentId]="documentId"
-            [allowVideo]="false"
-            [disabled]="editorDisabled">
-          </benji-text-editor>
-        </ng-container>
-
-        <div class="button-container" fxLayoutAlign="end end">
-          <button  
-            class="b-small-squared-button bg-primary-color white-color"
-            (click)="saveEditCollab()">
-            Done
-          </button>
+        <div *ngFor="let question of questions" style="text-align: left;">
+          <div class="question-container">
+            <div
+              class="question"
+              *ngIf="question.question_text"
+              innerHTML="{{ question.question_text }}"
+            ></div>
+            <div class="your-notes">
+              <div class="draft-pitch">
+                <ng-container >
+                  <benji-case-study-workarea
+                    [activityState]="activityState"
+                    [actEditor]="actEditor"
+                    [questionId]="question.id"
+                    [defaultEditorContent]="question.default_editor_content"
+                    [activityId]="activityId"
+                    [jsonDoc]="jsonDoc"
+                    [lessonRunCode]="lessonRunCode" 
+                    [participantCode]="participantCode"  
+                    [documentId]="documentId"
+                    [allowVideo]="false"
+                    [editorDisabled]="editorDisabled"
+                    (questionAnswerUpdated)="questionAnswerUpdated($event)"
+                  ></benji-case-study-workarea>
+                </ng-container>
+              </div>
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
   </div>

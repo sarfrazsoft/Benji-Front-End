@@ -27,24 +27,41 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
   @Input() showMenu = true;
   @Input() activityId = false;
 
+  @Input() bapActivityEditor = false;
+  @Input() allowPicture = true;
+
   @Input() html;
   @Output() editorUpdated = new EventEmitter<any>();
 
   editor: Editor;
 
-  toolbar: Toolbar = [
-    [{ heading: ['h1', 'h2', 'h3'] }],
-    ['bold', 'italic', 'underline'],
-    // ['underline', 'strike'],
-    // ['code', 'blockquote'],
-    ['ordered_list', 'bullet_list'],
-    // ['link', 'image'],
-    // ['text_color', 'background_color'],
-    // ['align_left', 'align_center', 'align_right', 'align_justify'],
-  ];
+  toolbar: Toolbar;
   constructor(private utilsService: UtilsService, private httpClient: HttpClient) {}
 
   ngOnInit(): void {
+    if (this.bapActivityEditor) {
+      this.toolbar = [
+        // [{ heading: ['h1', 'h2', 'h3'] }],
+        ['underline'],
+        // ['underline', 'strike'],
+        // ['code', 'blockquote'],
+        // ['ordered_list', 'bullet_list'],
+        // ['link', 'image'],
+        // ['text_color', 'background_color'],
+        // ['align_left', 'align_center', 'align_right', 'align_justify'],
+      ];
+    } else {
+      this.toolbar = [
+        [{ heading: ['h1', 'h2', 'h3'] }],
+        ['bold', 'italic', 'underline'],
+        // ['underline', 'strike'],
+        // ['code', 'blockquote'],
+        ['ordered_list', 'bullet_list'],
+        // ['link', 'image'],
+        // ['text_color', 'background_color'],
+        // ['align_left', 'align_center', 'align_right', 'align_justify'],
+      ];
+    }
     this.initEditor();
   }
 
@@ -95,7 +112,6 @@ export class TextEditorComponent implements OnInit, OnChanges, OnDestroy {
     // this.initEditor();
   }
   onChange(json: object) {
-    // console.log(json);
     this.editorUpdated.emit(json);
   }
 

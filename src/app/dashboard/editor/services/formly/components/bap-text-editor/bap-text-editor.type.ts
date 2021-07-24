@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 import { Editor } from 'ngx-editor';
+import { toHTML } from 'ngx-editor';
 import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-editor.component';
 import nodeViews from 'src/app/shared/ngx-editor/nodeviews/index';
 import plugins, { placeholderPlugin } from 'src/app/shared/ngx-editor/plugins';
@@ -9,10 +10,10 @@ import { yCursorPlugin } from 'src/app/shared/ngx-editor/plugins/cursor-plugin/c
 import schema from 'src/app/shared/ngx-editor/schema';
 
 @Component({
-  selector: 'benji-formly-text-editor',
-  templateUrl: './text-editor.type.html',
+  selector: 'benji-formly-bap-text-editor',
+  templateUrl: './bap-text-editor.type.html',
 })
-export class EditorTypeComponent extends FieldType implements OnInit {
+export class BAPEditorTypeComponent extends FieldType implements OnInit {
   timeInSeconds = 0;
   mins = 0;
   secs = 0;
@@ -44,17 +45,15 @@ export class EditorTypeComponent extends FieldType implements OnInit {
   ngOnInit() {
     const teCF = this.cfr.resolveComponentFactory(TextEditorComponent);
     const component = this.entry.createComponent(teCF);
+    component.instance.bapActivityEditor = true;
+    component.instance.allowPicture = false;
     if (this.formControl.value) {
-      // console.log(JSON.parse(this.formControl.value));
       component.instance.html = JSON.parse(this.formControl.value);
-      // const totalSeconds = this.formControl.value;
-      // this.mins = Math.floor(totalSeconds / 60);
-      // this.secs = totalSeconds % 60;
-    } else {
     }
-
-    // component.instance.html = this.jsonDoc;
     component.instance.editorUpdated.subscribe((jsonDoc) => {
+      // const html = toHTML(jsonDoc);
+      // console.log(html);
+      // console.log(JSON.stringify(jsonDoc));
       // console.log(jsonDoc);
       this.formControl.setValue(JSON.stringify(jsonDoc));
     });

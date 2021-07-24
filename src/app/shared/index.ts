@@ -21,6 +21,7 @@ import {
 import {
   BuildPitchComponents,
   CaseStudyGroupingComponent,
+  CaseStudyWorkAreaComponent,
   ParticipantBrainStormComponents,
   ParticipantBrainstormingActivityComponent,
   ParticipantBuildPitchActivityComponent,
@@ -46,6 +47,7 @@ const ActivityComponents = [
   ParticipantPopQuizComponent,
   ParticipantCaseStudyActivityComponent,
   CaseStudyGroupingComponent,
+  CaseStudyWorkAreaComponent,
   ParticipantInstructionTemplateComponent,
   QuestionFormComponent,
   QuestionLayoutComponent,

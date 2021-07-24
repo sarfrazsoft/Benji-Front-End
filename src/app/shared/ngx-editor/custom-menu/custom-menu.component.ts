@@ -5,6 +5,7 @@ import { EditorView } from 'prosemirror-view';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { Editor } from 'ngx-editor';
 import { isNodeActive } from 'ngx-editor/helpers';
 import { Observable } from 'rxjs';
@@ -25,13 +26,17 @@ export class CustomMenuComponent implements OnInit {
   constructor(
     private utilsService: UtilsService,
     private httpClient: HttpClient,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   @Input() editor: Editor;
   @Input() participantCode: string;
   @Input() lessonRunCode: string;
   @Input() allowVideo: boolean;
+  @Input() allowPicture: boolean;
+
+  lessonId;
 
   isActive = false;
   isDisabled = false;
@@ -66,7 +71,11 @@ export class CustomMenuComponent implements OnInit {
     this.isDisabled = !this.execute(state, null); // returns true if executable
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      this.lessonId = paramMap.get('lessonId');
+    });
+  }
 
   close($event) {
     if (this.showAddVideoPopup) {
@@ -166,7 +175,7 @@ export class CustomMenuComponent implements OnInit {
     } else {
       this.imagesList = fileList;
       const participant_code = this.participantCode;
-      this.imageSelected(this.imagesList[0], this.lessonRunCode, participant_code);
+      this.imageSelected(this.imagesList[0], this.lessonId, participant_code);
     }
   }
 
@@ -174,16 +183,16 @@ export class CustomMenuComponent implements OnInit {
     return this.editor.view.state.selection.$from.parent.inlineContent;
   }
 
-  imageSelected(file: File, lessonRunCode: string, participant_code: string) {
-    console.log(this.editor);
+  imageSelected(file: File, lessonId: string, participant_code: string) {
+    // console.log(this.editor);
     if (file) {
       // if (this.editor.view.state.selection.$from.parent.inlineContent && file) {
-      this.startImageUpload(this.editor.view, file, lessonRunCode, participant_code);
+      this.startImageUpload(this.editor.view, file, lessonId, participant_code);
       this.editor.view.focus();
     }
   }
 
-  startImageUpload(view: EditorView, file: File, lessonRunCode: string, participant_code: string) {
+  startImageUpload(view: EditorView, file: File, lessonId: string, participant_code: string) {
     // A fresh object to act as the ID for this upload
     const id = {};
 
@@ -202,11 +211,13 @@ export class CustomMenuComponent implements OnInit {
         maxSize: 500,
       })
       .then((resizedImage: Blob) => {
-        this.uploadFile(resizedImage, file, lessonRunCode, participant_code).subscribe(
+        this.uploadFile(resizedImage, file, lessonId, participant_code).subscribe(
           (url) => {
             url = url.img;
-            const hostname = window.location.protocol + '//' + window.location.hostname;
-            url = hostname + url;
+            if (!url.includes('://')) {
+              const hostname = window.location.protocol + '//' + window.location.hostname;
+              url = hostname + url;
+            }
             const pos = this.findPlaceholder(view.state, id);
             // If the content around the placeholder has been deleted, drop
             // the image
@@ -230,9 +241,10 @@ export class CustomMenuComponent implements OnInit {
   }
 
   // returns observable for image upload
-  uploadFile(resizedImage, file, lessonRunCode, participant_code): Observable<any> {
-    const code = lessonRunCode;
-    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+  uploadFile(resizedImage, file, lessonId, participant_code): Observable<any> {
+    const code = lessonId;
+    // const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+    const url = global.apiRoot + '/course_details/lesson/' + code + '/upload/case_study_activity/image/';
 
     const formData: FormData = new FormData();
     formData.append('img', resizedImage, file.name);

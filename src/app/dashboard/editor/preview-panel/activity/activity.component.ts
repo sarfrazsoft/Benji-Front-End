@@ -12,7 +12,6 @@ import {
 import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import {
-  BuildPitchComponents,
   MainScreenBrainstormingActivityComponent,
   MainScreenBuildPitchActivityComponent,
   MainScreenConvoCardsActivityComponent,
@@ -430,11 +429,13 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             sharing_done: false,
             start_time: '2020-12-07T16:44:13.665617-05:00',
             title: content.title ? content.title : 'Title',
+            title_emoji: content.title_emoji ? content.title_emoji : null,
             vote_countdown_timer: null,
             vote_seconds: 0,
             votes: [],
             voting_done: false,
             winning_participant: null,
+            blanks_string: content.blanks_string,
           },
         };
       } else if (this.data.activity_type === Acts.caseStudy) {
@@ -452,7 +453,10 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           msAct = this.cfr.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
         }
 
-        const casestudyquestion_set = [];
+        let casestudyquestion_set = [];
+        if (content.casestudyquestion_set) {
+          casestudyquestion_set = content.casestudyquestion_set;
+        }
 
         let participant_instructions = 'Instructions';
         if (content.participant_instructions) {
@@ -483,7 +487,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             case_study_details: content.case_study_details ? content.case_study_details : '',
             casestudyparticipant_set: [],
             casestudyquestion_set: casestudyquestion_set,
-            default_data: this.data.content.default_data,
+            // default_data: this.data.content.default_data,
             description: null,
             end_time: null,
             facilitation_status: 'running',

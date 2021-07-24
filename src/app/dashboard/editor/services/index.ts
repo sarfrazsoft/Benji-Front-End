@@ -17,6 +17,7 @@ export * from './formly/components/accordion/accordion.type';
 export * from './formly/components/image-selector/image-selector.type';
 export * from './formly/components/emoji-selector/emoji-selector.type';
 export * from './formly/components/text-editor/text-editor.type';
+export * from './formly/components/bap-text-editor/bap-text-editor.type';
 
 export * from './formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
 export * from './formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';

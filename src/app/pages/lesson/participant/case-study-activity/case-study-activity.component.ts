@@ -33,7 +33,8 @@ export class ParticipantCaseStudyActivityComponent
   timer;
   jsonDoc;
   activityId;
-  questions: Array<{ id: number; question_text: string; answer: string }> = [];
+  questions: Array<{ id: number; question_text: string; answer: string; default_editor_content: string }> =
+    [];
   localStorageItemName = 'caseStudyNotes';
   showSharingUI = false;
   editorDisabled = false;
@@ -44,13 +45,14 @@ export class ParticipantCaseStudyActivityComponent
   // unique ID for document to be used in collaborative editor
   documentId: string;
 
-  participantCode: string;
+  participantCode: number;
   lessonRunCode;
 
   component;
   saveInterval;
   selectedParticipant;
   saved;
+  answeredWorksheets;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -60,71 +62,9 @@ export class ParticipantCaseStudyActivityComponent
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
-
-    if (this.actEditor) {
-      this.editorDisabled = true;
-      this.groupId = '1234';
-      this.participantCode = '1234';
-      this.documentId = new Date().getTime().toString();
-      this.lessonRunCode = '33';
-      this.jsonDoc = JSON.parse(this.act.default_data);
-    } else {
-      this.initEditor();
-    }
-
-    // this.saveInterval = setInterval(() => {
-    //   if (this.getIsSharing()) {
-    // this.saveEditCollab();
-    //   }
-    // }, 2000);
-  }
-
-  initEditor() {
-    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
-    this.worksheetTitle = this.activityState.casestudyactivity.activity_title;
-    this.jsonDoc = null;
-    this.activityId = this.activityState.casestudyactivity.activity_id;
-    if (this.activityState.casestudyactivity.default_data) {
-      // default data is set by the participant with the lowest participantCode
-      // and also added to localstorage so that it's not added again
-      const participantCode = this.getParticipantCode();
-      const myGroup = this.getMyGroup(participantCode);
-      const sortedParticipant = myGroup.participants.sort((a, b) => a - b);
-      if (participantCode === sortedParticipant[0] && !myGroup.default_worksheet_applied) {
-        this.jsonDoc = JSON.parse(this.activityState.casestudyactivity.default_data);
-        this.sendMessage.emit(new CaseStudyDefaultWorksheetApplied(true));
-      } else {
-        this.jsonDoc = null;
-      }
-    }
-    console.log(this.jsonDoc);
-    this.groupId = null;
-    setTimeout(() => {
-      this.editorDisabled = false;
-      this.participantCode = this.getParticipantCode().toString();
-
-      const particiapntCode = this.getParticipantCode();
-      const myGroup = this.getMyGroup(particiapntCode);
-      const selectedGrouping = this.getMyGrouping();
-      let moddedGroupId;
-      if (myGroup && myGroup.id) {
-        this.groupId = this.getMyGroup(particiapntCode).id.toString();
-        if (selectedGrouping) {
-          moddedGroupId = selectedGrouping + this.groupId;
-        } else {
-          moddedGroupId = this.groupId;
-        }
-        // create a unique ID by combining groupId and Lesson run code
-      } else {
-        // if participant is not part of any group
-        this.groupId = 'x';
-      }
-      if (moddedGroupId) {
-        this.documentId = moddedGroupId + this.lessonRunCode;
-      } else {
-        this.documentId = this.groupId + this.lessonRunCode;
-      }
-    }, 0);
+    this.worksheetTitle = this.act.activity_title;
+    this.participantCode = this.getParticipantCode();
+    this.populateQuestions();
   }
 
   populateQuestions() {
@@ -137,17 +77,6 @@ export class ParticipantCaseStudyActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
-    this.timer = this.act.activity_countdown_timer;
-
-    // find out if your grouping just changed
-    const particiapntCode = this.getParticipantCode();
-    const myGroup = this.getMyGroup(particiapntCode);
-    if (myGroup) {
-      if (this.groupId !== myGroup.id.toString() && this.groupId !== undefined) {
-        // group has changed
-        this.initEditor();
-      }
-    }
 
     const state = this.activityState;
     if (state.running_tools && state.running_tools && state.running_tools.share) {
@@ -157,7 +86,7 @@ export class ParticipantCaseStudyActivityComponent
         this.saved = false;
       }
 
-      if (share.selectedParticipant && share.selectedParticipant === particiapntCode && !this.saved) {
+      if (share.selectedParticipant && share.selectedParticipant === this.participantCode && !this.saved) {
         this.saved = true;
         this.saveEditCollab();
       }
@@ -274,10 +203,16 @@ export class ParticipantCaseStudyActivityComponent
     // }
   }
 
+  propagate($event) {
+    this.sendMessage.emit($event);
+  }
+
+  locallySaveDraft(event) {}
+
   saveEditCollab() {
     // console.log(localStorage.getItem('collabedit'));
-    const json = JSON.parse(localStorage.getItem('collabeditJSONDoc'));
-    this.sendMessage.emit(new CaseStudySubmitAnswerEvent(json));
+    // const json = JSON.parse(localStorage.getItem('collabeditJSONDoc' + '_' + this.questionId));
+    this.sendMessage.emit(new CaseStudySubmitAnswerEvent(this.answeredWorksheets));
     // console.log(localStorage.getItem('collabeditJSONDoc'));
     // this.questions.forEach((q) => {
     //   console.log(q);
@@ -286,9 +221,9 @@ export class ParticipantCaseStudyActivityComponent
     // });
   }
 
-  propagate($event) {
-    this.sendMessage.emit($event);
+  questionAnswerUpdated(event) {
+    this.answeredWorksheets = { ...this.answeredWorksheets, ...event };
+    console.log(this.answeredWorksheets);
   }
-
-  locallySaveDraft(event) {}
 }
+// 15625

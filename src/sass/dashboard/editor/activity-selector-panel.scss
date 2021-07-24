@@ -225,6 +225,10 @@ benji-activity-selector-panel {
         margin-bottom: 24px;
       }
     }
+
+    benji-text-editor {
+      width: 100%;
+    }
   }
 }
 
@@ -238,4 +242,10 @@ mat-expansion-panel.mat-expansion-panel {
   box-shadow: none !important;
   border: 1px solid #ced4da;
   margin-bottom: 8px;
+}
+
+benji-formly-bap-text-editor {
+  benji-text-editor {
+    width: 100%;
+  }
 }

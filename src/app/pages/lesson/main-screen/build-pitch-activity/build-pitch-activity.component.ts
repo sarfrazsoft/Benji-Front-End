@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { ContextService } from 'src/app/services';
-import { BuildAPitchSharingDoneEvent } from 'src/app/services/backend/schema';
+import { BuildAPitchService, ContextService } from 'src/app/services';
+import { BuildAPitchSharingDoneEvent, FastForwardEvent } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -21,7 +21,7 @@ export class MainScreenBuildPitchActivityComponent
   winningUser: string;
 
   newCreatePitchLayout = true;
-  constructor(private contextService: ContextService) {
+  constructor(private contextService: ContextService, private buildAPitchService: BuildAPitchService) {
     super();
   }
   createPitches = true;
@@ -82,14 +82,14 @@ export class MainScreenBuildPitchActivityComponent
     }
   }
 
-  nextActivity() {
+  sharingDone() {
     this.sendMessage.emit(new BuildAPitchSharingDoneEvent());
   }
 
   getWinningPitch(): string {
     const acts = this.activityState.buildapitchactivity;
 
-    return this.getPitchText(acts.winning_participant.participant_code);
+    return this.buildAPitchService.getPitchText(acts.winning_participant.participant_code, acts, true);
   }
 
   getPitchText(userId): string {
@@ -113,5 +113,10 @@ export class MainScreenBuildPitchActivityComponent
       statement = statement + b.label + value;
     });
     return statement;
+  }
+
+  continueClicked() {
+    // this.sendMessage.emit(new NextInternalEvent());
+    this.sendMessage.emit(new FastForwardEvent());
   }
 }

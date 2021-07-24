@@ -22,6 +22,7 @@ import {
   AccordionTypeComponent,
   ArrayTypeComponent,
   BAPBlankTypeComponent,
+  BAPEditorTypeComponent,
   CheckboxWrapperComponent,
   ConvoCardTypeComponent,
   EditorTypeComponent,
@@ -30,6 +31,8 @@ import {
   FieldRevealWrapperComponent,
   FieldWrapperComponent,
   ImageSelectorComponent,
+  LayoutImagePickerTypeComponent,
+  LayoutPickerTypeComponent,
   MCQChoiceTypeComponent,
   MultiSchemaTypeComponent,
   NullTypeComponent,
@@ -37,8 +40,6 @@ import {
   PollChoiceTypeComponent,
   QuestionTypeSelectComponent,
   SecondsTypeComponent,
-  LayoutPickerTypeComponent,
-  LayoutImagePickerTypeComponent,
 } from './services';
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {
   return `should NOT have fewer than ${field.templateOptions.minItems} items`;
@@ -154,6 +155,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
         { name: 'layoutPicker', component: LayoutPickerTypeComponent },
         { name: 'layoutImagePicker', component: LayoutImagePickerTypeComponent },
         { name: 'textEditor', component: EditorTypeComponent },
+        { name: 'bapTextEditor', component: BAPEditorTypeComponent },
       ],
       wrappers: [
         { name: 'benji-field-wrapper', component: FieldWrapperComponent },

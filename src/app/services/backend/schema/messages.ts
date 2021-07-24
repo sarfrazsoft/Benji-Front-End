@@ -271,8 +271,9 @@ export class BuildAPitchSubmitEventEntry {
   buildapitchblank: number;
   value: string;
 
-  constructor(entry: BuildAPitchBlank, value: string) {
-    this.buildapitchblank = entry.id;
+  constructor(entry: number, value: string) {
+    const now = Date.now();
+    this.buildapitchblank = now + entry;
     this.value = value;
   }
 }
