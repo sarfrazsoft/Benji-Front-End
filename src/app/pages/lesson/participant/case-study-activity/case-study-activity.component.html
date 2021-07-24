@@ -78,6 +78,7 @@
                     [allowVideo]="false"
                     [editorDisabled]="editorDisabled"
                     (questionAnswerUpdated)="questionAnswerUpdated($event)"
+                    (sendMessage)="propagate($event)"
                   ></benji-case-study-workarea>
                 </ng-container>
               </div>

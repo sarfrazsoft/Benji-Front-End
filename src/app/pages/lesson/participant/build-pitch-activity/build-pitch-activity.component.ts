@@ -267,7 +267,7 @@ export class ParticipantBuildPitchActivityComponent
     const buildapitchsubmissionentry_set = [];
     this.builtPitch_setNew.forEach((p, i) => {
       if (p.type === 'blank' && p.value) {
-        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(i, p.value);
+        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.value);
         buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
       }
     });

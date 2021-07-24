@@ -271,9 +271,7 @@ export class BuildAPitchSubmitEventEntry {
   buildapitchblank: number;
   value: string;
 
-  constructor(entry: number, value: string) {
-    const now = Date.now();
-    this.buildapitchblank = now + entry;
+  constructor(value: string) {
     this.value = value;
   }
 }
@@ -507,7 +505,7 @@ export class CaseStudyDefaultWorksheetApplied extends ActivityEvent {
 
   constructor(val: boolean) {
     super();
-    this.extra_args = { default_worksheet_applied: val };
+    this.extra_args = { default_worksheet_applied: { val: val } };
   }
 }
 
