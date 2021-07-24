@@ -1,115 +1,116 @@
 <div class="b-flat-card center-text feedback-card">
-
-  <div class="b-flat-card__body" *ngIf="createPitch">
-    <div class="twemoji-container">
-      <app-b-twemoji class="body-emoji participant" emoji="🏗️"></app-b-twemoji>
-    </div>
-    <h1 class="pn-700 primary-color-darkest participant">Fill-in-the-blank</h1>
-    <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p>
-    <div class="pitch-form fill-blanks" fxLayout="row wrap">
-      <div class="pitch-segment" fxLayout="row" *ngFor="let blank of builtPitch_setNew">
-        <div *ngIf="blank.type === 'label'" class="segment-label" fxLayoutAlign="start center">{{ blank.label }}</div>
-        <div *ngIf="blank.type === 'blank'" class="segment-blank" fxLayout="row" fxLayoutAlign="start center">
-          <div class="blank" >
-            <textarea style="overflow: hidden"
-              class="primary-color"
-              matInput
-              cdkTextareaAutosize
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="5"
-              placeholder="{{ blank.temp_text }}"
-              [(ngModel)]="blank.value"
-              (ngModelChange)="checkValidity($event)"
-            ></textarea>
-          </div>
-          <!-- <div class="info">
-            <button
-              mat-icon-button
-              #tooltip="matTooltip"
-              matTooltipPosition="left"
-              (click)="tooltip.toggle()"
-              matTooltip="{{ blank.help_text }}"
-              matTooltipClass="pitch-tooltip primary-color"
-            >
-              <img class="participant-utility-icons" src="/assets/img/question_mark.png" alt="launch" />
-            </button>
-          </div> -->
-        </div><span>&nbsp;&nbsp;</span>
+  <div class="activity-wrapper">
+    <div class="b-flat-card__body" *ngIf="createPitch">
+      <div class="twemoji-container">
+        <app-b-twemoji class="body-emoji participant" emoji="🏗️"></app-b-twemoji>
       </div>
-    </div>
-    <button
-      class="b-standard-button bg-primary-color"
-      [ngClass]="{ inactive: !pitchValid }"
-      (click)="submitPitch()"
-    >
-      Submit
-    </button>
-  </div>
-
-  <div class="b-flat-card__body" *ngIf="showMyPitch && userPitchExists(myParticipantCode)">
-    <div class="your-pitch-label left-text">Your statement:</div>
-    <p class="your-pitch left-text" innerHTML="{{ getPitchText(myParticipantCode, act) }}"></p>
-
-    <div *ngIf="isPitchBlank(myParticipantCode)">
-      <div
-        class="info-subsection primary-color-lighter pn-500"
-        fxLayout="row"
-        fxLayoutGap="10px"
-        fxLayoutAlign="start start"
+      <h1 class="pn-700 primary-color-darkest participant">Fill-in-the-blank</h1>
+      <p class="body-text">{{ activityState.buildapitchactivity.instructions }}</p>
+      <div class="pitch-form fill-blanks" fxLayout="row wrap">
+        <div class="pitch-segment" fxLayout="row" *ngFor="let blank of builtPitch_setNew">
+          <div *ngIf="blank.type === 'label'" class="segment-label" fxLayoutAlign="start center">{{ blank.label }}</div>
+          <div *ngIf="blank.type === 'blank'" class="segment-blank" fxLayout="row" fxLayoutAlign="start center">
+            <div class="blank" >
+              <textarea style="overflow: hidden"
+                class="primary-color"
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                placeholder="{{ blank.temp_text }}"
+                [(ngModel)]="blank.value"
+                (ngModelChange)="checkValidity($event)"
+              ></textarea>
+            </div>
+            <!-- <div class="info">
+              <button
+                mat-icon-button
+                #tooltip="matTooltip"
+                matTooltipPosition="left"
+                (click)="tooltip.toggle()"
+                matTooltip="{{ blank.help_text }}"
+                matTooltipClass="pitch-tooltip primary-color"
+              >
+                <img class="participant-utility-icons" src="/assets/img/question_mark.png" alt="launch" />
+              </button>
+            </div> -->
+          </div><span>&nbsp;&nbsp;</span>
+        </div>
+      </div>
+      <button
+        class="b-standard-button bg-primary-color"
+        [ngClass]="{ inactive: !pitchValid }"
+        (click)="submitPitch()"
       >
-        <img class="main-screen-utility-icons" src="/assets/img/red_info_icon.png" alt="info" />
-        <div class="instruction warning-color left-text">
-          Oops! You didn’t finish in time. Try to think of something- you still need to present to the group.
+        Submit
+      </button>
+    </div>
+
+    <div class="b-flat-card__body" *ngIf="showMyPitch && userPitchExists(myParticipantCode)">
+      <div class="your-pitch-label left-text">Your statement:</div>
+      <p class="your-pitch left-text" innerHTML="{{ getPitchText(myParticipantCode, act) }}"></p>
+
+      <div *ngIf="isPitchBlank(myParticipantCode)">
+        <div
+          class="info-subsection primary-color-lighter pn-500"
+          fxLayout="row"
+          fxLayoutGap="10px"
+          fxLayoutAlign="start start"
+        >
+          <img class="main-screen-utility-icons" src="/assets/img/red_info_icon.png" alt="info" />
+          <div class="instruction warning-color left-text">
+            Oops! You didn’t finish in time. Try to think of something- you still need to present to the group.
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="b-flat-card__body" *ngIf="voteNow">
-    <h1 class="pn-700 primary-color-darkest">Vote on your favorite</h1>
-    <p>Press the + icon next to each name to review the pitches.</p>
-    <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
-      <benji-vote-pitch
-        [user]="pitchSet.participant.participant_code"
-        [expanded]="expandedUserArray['' + pitchSet.user]"
-        [pitchText]="getPitchText(pitchSet.participant.participant_code, act)"
-        [name]="getUserName(pitchSet.participant.participant_code)"
-        [(selectedUser)]="selectedUser"
-        (userSelected)="userSelected($event)"
-        (userExpanded)="userExpanded($event)"
-        (userCollapsed)="userCollapsed($event)"
-      ></benji-vote-pitch>
+    <div class="b-flat-card__body" *ngIf="voteNow">
+      <h1 class="pn-700 primary-color-darkest">Vote on your favorite</h1>
+      <p>Press the + icon next to each name to review the pitches.</p>
+      <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
+        <benji-vote-pitch
+          [user]="pitchSet.participant.participant_code"
+          [expanded]="expandedUserArray['' + pitchSet.user]"
+          [pitchText]="getPitchText(pitchSet.participant.participant_code, act)"
+          [name]="getUserName(pitchSet.participant.participant_code)"
+          [(selectedUser)]="selectedUser"
+          (userSelected)="userSelected($event)"
+          (userExpanded)="userExpanded($event)"
+          (userCollapsed)="userCollapsed($event)"
+        ></benji-vote-pitch>
+      </div>
     </div>
-  </div>
 
-  <div class="b-flat-card__body" *ngIf="thanksForVote">
-    <div class="twemoji">
-      <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
+    <div class="b-flat-card__body" *ngIf="thanksForVote">
+      <div class="twemoji">
+        <app-b-twemoji class="body-emoji" emoji="😊"></app-b-twemoji>
+      </div>
+      <h1 class="body-heading pn-700 primary-color-darkest">Thanks for your vote</h1>
+      <div class="activity-title-description-container">
+        <p class="secondary-color-dark pn-500 instruction">Waiting for everyone else to finish voting</p>
+      </div>
     </div>
-    <h1 class="body-heading pn-700 primary-color-darkest">Thanks for your vote</h1>
-    <div class="activity-title-description-container">
-      <p class="secondary-color-dark pn-500 instruction">Waiting for everyone else to finish voting</p>
-    </div>
-  </div>
 
-  <div class="b-flat-card__body" *ngIf="lookAtWinningPitch">
-    <div class="twemoji">
-      <app-b-twemoji class="body-emoji" emoji="🏗️"></app-b-twemoji>
+    <div class="b-flat-card__body" *ngIf="lookAtWinningPitch">
+      <div class="twemoji">
+        <app-b-twemoji class="body-emoji" emoji="🏗️"></app-b-twemoji>
+      </div>
+      <h1 class="body-heading pn-700 primary-color-darkest">Woo!</h1>
+      <div class="activity-title-description-container">
+        <p class="secondary-color-dark pn-500 instruction">Take a look at the winner.</p>
+      </div>
     </div>
-    <h1 class="body-heading pn-700 primary-color-darkest">Woo!</h1>
-    <div class="activity-title-description-container">
-      <p class="secondary-color-dark pn-500 instruction">Take a look at the winner.</p>
-    </div>
-  </div>
 
-  <div class="b-flat-card__body" *ngIf="yourPitchWon">
-    <div class="twemoji">
-      <app-b-twemoji class="body-emoji" emoji="👏"></app-b-twemoji>
-    </div>
-    <h1 class="body-heading pn-700 primary-color-darkest">Congrats!!</h1>
-    <div class="activity-title-description-container">
-      <p class="secondary-color-dark pn-500 instruction">You got the most votes.</p>
+    <div class="b-flat-card__body" *ngIf="yourPitchWon">
+      <div class="twemoji">
+        <app-b-twemoji class="body-emoji" emoji="👏"></app-b-twemoji>
+      </div>
+      <h1 class="body-heading pn-700 primary-color-darkest">Congrats!!</h1>
+      <div class="activity-title-description-container">
+        <p class="secondary-color-dark pn-500 instruction">You got the most votes.</p>
+      </div>
     </div>
   </div>
 </div>

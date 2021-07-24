@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  host: 'localhost',
-  web_protocol: 'http',
-  socket_protocl: 'ws',
+  host: 'staging.mybenji.com',
+  web_protocol: 'https',
+  socket_protocl: 'wss',
 };
 
 /*

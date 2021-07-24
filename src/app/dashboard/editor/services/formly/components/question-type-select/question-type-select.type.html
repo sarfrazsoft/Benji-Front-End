@@ -50,21 +50,21 @@ multiple
   <ng-container *ngIf="to.options | formlySelectOptions: field | async as opts">
     <ng-container *ngIf="to._flatOptions; else grouplist">
       <ng-container>
-        <div class="question-type rating-header" fxLayout="row"
+        <!-- <div class="question-type rating-header" fxLayout="row"
           (click)=rating.open() 
-          fxLayoutAlign="space-between center">
+          fxLayoutAlign="space-between center"> -->
           <mat-option [value]="'rating_agreedisagree'"> <mat-icon>star</mat-icon> Rating </mat-option>
-          <mat-icon>keyboard_arrow_right</mat-icon> 
-        </div>
+          <!-- <mat-icon>keyboard_arrow_right</mat-icon> 
+        </div> -->
         <mat-option [value]="'text_only'">
           <mat-icon>format_align_left</mat-icon> Long text
         </mat-option>
-        <mat-option [value]="'scale'" (click)=scale.open()>
+        <!-- <mat-option [value]="'scale'" (click)=scale.open()>
           <mat-icon>poll</mat-icon> Scale 
         </mat-option>
         <mat-option [value]="'multiple_choice'" (click)=multi.open()>
           <mat-icon>check</mat-icon> Multi Select
-        </mat-option>
+        </mat-option> -->
       </ng-container>
     </ng-container>
     <ng-template #grouplist>

@@ -8,14 +8,14 @@
           <div class="google-text">Sign up with Google</div>
         </div>
         <div class="or"><span>or</span></div>
-        <div class="navbar-nav ml-auto" *ngIf="user">
+        <!-- <div class="navbar-nav ml-auto" *ngIf="user">
           <span class="navbar-text">
            {{ user.email }}
           </span>	
             <li class="nav-item">
               <a class="nav-link" (click)="signOut()">Logout</a>
             </li>
-          </div>
+          </div> -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()" id="email-form" no-shadow="input[type=text] {        -webkit-appearance: none;     -moz-appearance: none;     appearance: none; }" class="form-9">
           <div class="email-control">
             <input 

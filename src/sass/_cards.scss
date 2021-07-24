@@ -18,11 +18,12 @@
     }
     h1 {
       margin: 0px;
-      font-size: 35px;
+      font-size: 32px;
     }
     p {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 500;
+      color: #6A6A6A;
     }
   }
   .twemoji {
@@ -45,11 +46,9 @@
 
 .feedback-activity {
   .b-flat-card__body {
-    width: 267px;
     margin: 0px auto;
     text-align: left;
     .twemoji-container {
-     // float: left;
      margin-left: 0px;
     }
     img {
@@ -65,8 +64,41 @@
   margin-bottom: 16px;
 }
 
+.activity-wrapper {
+  .b-flat-card__body {
+    margin: 0px auto;
+    text-align: left;
+    >h1 {
+      padding-bottom: 8px;
+    }
+    button {
+      width: 100%;
+    }
+    .twemoji-container {
+      margin: unset;
+      margin-bottom: 16px;
+    }
+    img {
+      width: 66px;
+    }
+  }
+}
+
 @media (max-width: 768px) {   
   .title-activity .b-flat-card__body {
     padding: 15vh 20px 0px;
+  }
+  .activity-wrapper {
+    .b-flat-card__body {
+      max-width: 343px;
+    }
+  }
+}
+
+@media (min-width: 768px) {   
+  .activity-wrapper {
+    .b-flat-card__body {
+      max-width: 560px;
+    }
   }
 }
