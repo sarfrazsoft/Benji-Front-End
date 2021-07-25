@@ -59,7 +59,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges() {
-    console.log('onchanges');
+    // console.log('onchanges');
     this.act = this.activityState.casestudyactivity;
 
     // find out if your grouping just changed
@@ -89,7 +89,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
         this.jsonDoc = null;
       }
     }
-    console.log(this.jsonDoc);
+    // console.log(this.jsonDoc);
     this.groupId = null;
     setTimeout(() => {
       this.editorDisabled = false;
