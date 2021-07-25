@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
+import { reverse } from 'lodash';
 import { BuildAPitchService, ContextService, EmojiLookupService } from 'src/app/services';
 import {
   BuildAPitchActivity,
@@ -266,12 +267,17 @@ export class ParticipantBuildPitchActivityComponent
     }
     const buildapitchsubmissionentry_set = [];
     this.builtPitch_setNew.forEach((p, i) => {
-      if (p.type === 'blank' && p.value) {
-        const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.value);
-        buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
+      if (p.type === 'blank') {
+        if (p.value) {
+          const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.value);
+          buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
+        } else {
+          const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.temp_text);
+          buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
+        }
       }
     });
-
+    reverse(buildapitchsubmissionentry_set);
     this.sendMessage.emit(new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set));
     this.pitchSubmitted = true;
   }
@@ -303,8 +309,8 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   getPitchText(userId, act) {
-    let parsedBlanks = this.buildAPitchService.getBlanks(this.act.blanks_string);
-    parsedBlanks = parsedBlanks.filter((e) => e.type === 'label');
+    const parsedBlanks = this.buildAPitchService.getBlanks(this.act.blanks_string);
+    const filteredParsedBlanks = parsedBlanks.filter((e) => e.type === 'label');
 
     act.buildapitchblank_set.sort((a, b) => a.order - b.order);
 
@@ -314,15 +320,14 @@ export class ParticipantBuildPitchActivityComponent
 
     let statement = '';
     const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    parsedBlanks.forEach((b, i) => {
+    filteredParsedBlanks.forEach((b, i) => {
       const currentBlanksValue = buildAPitchEntrySet[i];
-
       let value = '';
       if (currentBlanksValue) {
         value = ' <em>' + currentBlanksValue.value + '</em> ';
       } else {
-        value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
-        this.blankPitch = true;
+        // value = ' <em class="warning-color">(' + b.label + ')</em> ';
+        // this.blankPitch = true;
       }
       statement = statement + b.label + value;
     });
@@ -330,23 +335,24 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   isPitchBlank(userId) {
-    this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
-    const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
-    const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      (e) => e.participant.participant_code === userId
-    );
+    // this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
+    // const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
+    // const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
+    //   (e) => e.participant.participant_code === userId
+    // );
 
-    // let statement = '';
-    let blankPitch = false;
-    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
+    // // let statement = '';
+    // let blankPitch = false;
+    // const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+    // blanks.forEach((b, i) => {
+    //   const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
 
-      if (currentBlanksValue.length === 0) {
-        blankPitch = true;
-      }
-    });
-    return blankPitch;
+    //   if (currentBlanksValue.length === 0) {
+    //     blankPitch = true;
+    //   }
+    // });
+    // return blankPitch;
+    return false;
   }
 
   getUserName(userId) {

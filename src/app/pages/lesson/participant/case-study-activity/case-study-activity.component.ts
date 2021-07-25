@@ -223,7 +223,7 @@ export class ParticipantCaseStudyActivityComponent
 
   questionAnswerUpdated(event) {
     this.answeredWorksheets = { ...this.answeredWorksheets, ...event };
-    console.log(this.answeredWorksheets);
+    // console.log(this.answeredWorksheets);
   }
 }
 // 15625

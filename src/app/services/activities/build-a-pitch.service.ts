@@ -60,7 +60,7 @@ export class BuildAPitchService {
             value = ' <em>' + currentBlanksValue.value + '</em> ';
           }
         } else {
-          value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
+          // value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
         }
         statement = statement + b.label + value;
       });

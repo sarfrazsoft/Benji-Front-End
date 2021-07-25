@@ -9,7 +9,9 @@ import { Observable } from 'rxjs/Observable';
 import { debounceTime } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { ActivityTitles, ActivityTypes } from 'src/app/globals';
+import { BuildAPitchService } from 'src/app/services';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
+import { UtilsService } from 'src/app/services/utils.service';
 import { FieldTypes } from '../../models/activity.model';
 import * as fromStore from '../../store';
 import { QuestionSet } from './services/question-control.service';
@@ -19,7 +21,12 @@ import { QuestionSet } from './services/question-control.service';
   templateUrl: './activity-content.component.html',
 })
 export class ActivityContentComponent implements OnInit, OnDestroy {
-  constructor(private store: Store<fromStore.EditorState>, private formlyJsonschema: FormlyJsonschema) {}
+  constructor(
+    private store: Store<fromStore.EditorState>,
+    private formlyJsonschema: FormlyJsonschema,
+    private utilsService: UtilsService,
+    private buildAPitchService: BuildAPitchService
+  ) {}
   at: typeof ActivityTypes = ActivityTypes;
   activity$: Observable<OverviewLessonActivity>;
   content$: Observable<any>;
@@ -738,6 +745,22 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
           b['grouping_activity_type'] = 'SingleGroupingActivity';
         }
       } else if (b.activity_type === this.at.buildAPitch) {
+        // buildapitchblank_set: [{label: "ffegg", temp_text: "eett", order: 1},
+        // {label: "ggge", temp_text: "eee", order: 2}]
+        // const oldWay = [
+        //   { label: 'ffegg', temp_text: 'eett', order: 1 },
+        //   { label: 'ggge', temp_text: 'eee', order: 2 },
+        // ];
+        // const parsedBlanks = this.buildAPitchService.getBlanks(b.blanks_string);
+
+        // const oldWay2 = [];
+        // for (let i = 0; i < parsedBlanks.lenght; i++) {
+        //   if (parsedBlanks[i].type === 'label') {
+        //     oldWay2 =
+        //   }
+        // }
+
+        // console.log(oldWay, parsedBlanks);
         if (b.buildapitchblank_set.length) {
           b.buildapitchblank_set.forEach((v, i) => {
             if (v) {
