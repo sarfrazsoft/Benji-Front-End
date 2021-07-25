@@ -14,6 +14,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import nodeViews from 'src/app/shared/ngx-editor/nodeviews/index';
 import plugins, { placeholderPlugin } from 'src/app/shared/ngx-editor/plugins';
 import schema from 'src/app/shared/ngx-editor/schema';
+import { environment } from 'src/environments/environment';
 import { AddVideoDialogComponent } from '../../dialogs';
 
 @Component({
@@ -72,8 +73,10 @@ export class CustomMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const lessonRunDetails = localStorage.getItem('lessonRunDetails');
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.lessonId = paramMap.get('lessonId');
+      console.log(this.lessonId);
     });
   }
 
@@ -211,11 +214,11 @@ export class CustomMenuComponent implements OnInit {
         maxSize: 500,
       })
       .then((resizedImage: Blob) => {
-        this.uploadFile(resizedImage, file, lessonId, participant_code).subscribe(
+        this.uploadFile(resizedImage, file, lessonId, this.lessonRunCode, participant_code).subscribe(
           (url) => {
             url = url.img;
             if (!url.includes('://')) {
-              const hostname = window.location.protocol + '//' + window.location.hostname;
+              const hostname = environment.web_protocol + '://' + environment.host;
               url = hostname + url;
             }
             const pos = this.findPlaceholder(view.state, id);
@@ -241,10 +244,13 @@ export class CustomMenuComponent implements OnInit {
   }
 
   // returns observable for image upload
-  uploadFile(resizedImage, file, lessonId, participant_code): Observable<any> {
-    const code = lessonId;
-    // const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
-    const url = global.apiRoot + '/course_details/lesson/' + code + '/upload/case_study_activity/image/';
+  uploadFile(resizedImage, file, lessonId, lessonRunCode, participant_code): Observable<any> {
+    let url = '';
+    if (lessonRunCode) {
+      url = global.apiRoot + '/course_details/lesson_run/' + lessonRunCode + '/upload_image/';
+    } else {
+      url = global.apiRoot + '/course_details/lesson/' + lessonId + '/upload/case_study_activity/image/';
+    }
 
     const formData: FormData = new FormData();
     formData.append('img', resizedImage, file.name);

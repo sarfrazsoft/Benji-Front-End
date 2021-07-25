@@ -9,26 +9,17 @@ import { Group } from 'src/app/services/backend/schema';
 })
 export class ReportsTextEditorComponent implements OnInit, OnChanges {
   @Input() group;
+  @Input() questionId;
   jsonDoc;
   constructor(private pastSessionService: PastSessionsService) {}
   ngOnInit() {
-    // if (group.id === this.currentSpeaker.id) {
-    // this.showEditor = false;
-    // setTimeout(() => {
-    // this.showEditor = true;
-
-    // });
-    if (this.group && this.group.answer && this.group.answer.doc) {
-      this.jsonDoc = this.group.answer.doc;
+    if (this.group && this.group.answer[this.questionId]) {
+      this.jsonDoc = this.group.answer[this.questionId];
     }
-    // }
   }
 
   ngOnChanges() {
     this.update();
-    // this.activityState.casestudyactivity.groups.forEach((group) => {
-
-    // });
   }
 
   update() {}

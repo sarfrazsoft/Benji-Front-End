@@ -88,8 +88,6 @@ export const placeholderPlugin = new Plugin({
 const getPlugins = (): Plugin[] => {
   const historyKeyMap = getHistoryKeyMap();
   const listKeyMap = getListKeyMap();
-
-  console.log(baseKeymap);
   const plugins = [
     // yUndoPlugin(),
     // history(),
