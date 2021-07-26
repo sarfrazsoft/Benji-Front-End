@@ -87,10 +87,23 @@
   }
 }
 
+.title-activity .b-flat-card__body .participant-screen {
+  img {
+    width: 100%;
+    max-width: 444px;
+    margin-bottom: 24px;
+  }
+}
+
 //For mobile
 @media (max-width: 768px) {   
   .title-activity .b-flat-card__body {
-    padding: 15vh 20px 0px;
+    //padding: 15vh 20px 0px;
+    padding: 24px;
+    .twemoji-container {
+      max-width: unset;
+      margin-top: 15vh !important;
+    }
   }
   .activity-wrapper {
     .b-flat-card__body {
