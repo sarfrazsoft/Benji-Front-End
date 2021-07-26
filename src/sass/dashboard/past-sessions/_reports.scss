@@ -39,7 +39,7 @@ benji-reports {
     .card-header {
       font-size: 24px;
       font-weight: 500;
-      color: #37352F;
+      color: #37352f;
     }
   }
 }
@@ -63,7 +63,10 @@ benji-reports {
     margin-top: 10px;
     margin-bottom: 15px;
     &.case-study-question {
-      margin-top: 30px;
+      margin-top: 0px;
+      background-color: #f3f4f7;
+      padding: 6px;
+      border-radius: 4px;
     }
   }
   .category-name {
@@ -82,7 +85,7 @@ benji-reports {
   .case-study-accordion {
     .mat-expansion-panel {
       border-radius: 4px !important;
-      border: 1px solid #BDBDBD;
+      border: 1px solid #bdbdbd;
     }
     .mat-expansion-panel-header-title {
       color: #6a6a6a;
@@ -103,7 +106,7 @@ benji-reports {
     margin-top: 15px;
     padding-bottom: 15px;
     color: #6a6a6a;
-    border-bottom: 1px solid #BDBDBD;
+    border-bottom: 1px solid #bdbdbd;
     .details {
       font-size: $report-subdetail;
       margin-top: 15px;
@@ -157,4 +160,3 @@ benji-generic-feedback-graph {
     }
   }
 }
-

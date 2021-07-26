@@ -79,7 +79,7 @@ export class PastSessionsTableComponent implements AfterViewInit {
         // data = uniqBy(data, 'start_time');
         const tableData = [];
         data.forEach((run) => {
-          console.log(run);
+          // console.log(run);
           // if (run.participant_set.length) {
           tableData.push({
             id: run.id,

@@ -20,24 +20,18 @@
                   <div class="prompt case-study-question">
                     {{ question.question_text }}
                   </div>
-                  <div class="text-list" *ngFor="let group of groups; let i = index">
-                    <div class="text-list-item">
-                      <benji-reports-text-editor [group]="group" [questionId]="question.id">
-      
+                  <div class="" *ngFor="let group of groups; let i = index">
+                    <div class="">
+                      <benji-reports-text-editor 
+                        [group]="group" 
+                        [questionId]="question.id">
                       </benji-reports-text-editor>
-                      <!-- <div class="details">
-                        <span class="pn-600">Group {{ i + 1 }}: </span>
-                        {{ group.participants }}
-                      </div> -->
                     </div>
                   </div>
                 </ng-container>
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-
-
-
         </div>
       </div>
     </div>
