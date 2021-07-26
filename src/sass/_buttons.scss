@@ -67,7 +67,10 @@ button {
     height: 60px;
     font-size: 26px;
   }
-
+  &.build-pitch-button {
+    font-size: 18px;
+    height: 56px;
+  }
   &:disabled {
     background-color: #bdbdbd;
   }

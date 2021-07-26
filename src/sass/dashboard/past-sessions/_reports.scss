@@ -42,6 +42,14 @@ benji-reports {
       color: #37352f;
     }
   }
+  &.key-stats {
+    .card-header {
+      font-size: 24px;
+      font-weight: 600;
+      border-bottom: 1px solid #979797;
+      margin: 10px 0;
+    }
+  }
 }
 
 .report-content {
@@ -111,6 +119,23 @@ benji-reports {
       font-size: $report-subdetail;
       margin-top: 15px;
     }
+  }
+}
+
+//Build a pitch activity
+.bap-container {
+  margin-top: 24px;
+  .question-text {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 32px;
+  }
+  .user-votes {
+    color: #6a6a6a;
+    line-height: 24px;
+    border-bottom: 1px solid #BDBDBD;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
   }
 }
 

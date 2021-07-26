@@ -48,7 +48,7 @@
      margin-left: 0px;
     }
     img {
-      width: 66px;
+      width: 72px;
     }
   }
 }
@@ -66,6 +66,9 @@
     text-align: left;
     >h1 {
       padding-bottom: 8px;
+      &.build-pitch-h1 {
+        margin-bottom: 8px;
+      }
     }
     button {
       width: 100%;
