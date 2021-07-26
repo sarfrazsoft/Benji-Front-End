@@ -13,7 +13,7 @@
     > h1,
     h2,
     h3,
-    p {
+    > p {
       padding-bottom: 24px;
     }
     h1 {
@@ -72,6 +72,10 @@
     }
     button {
       width: 100%;
+      &.worksheet-button {
+        width: unset;
+        margin-bottom: 32px;
+      }
     }
     .twemoji-container {
       margin: unset;
@@ -83,6 +87,7 @@
   }
 }
 
+//For mobile
 @media (max-width: 768px) {   
   .title-activity .b-flat-card__body {
     padding: 15vh 20px 0px;
@@ -94,6 +99,7 @@
   }
 }
 
+//For desktop
 @media (min-width: 768px) {   
   .activity-wrapper {
     .b-flat-card__body {

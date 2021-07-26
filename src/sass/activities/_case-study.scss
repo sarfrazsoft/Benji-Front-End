@@ -123,9 +123,17 @@ benji-ps-case-study-activity {
   }
 }
 
+@media (max-width: 768px) {
+  benji-ps-case-study-activity {
+    .b-flat-card {
+      padding: 0px;
+    }
+  }
+}
+
 .worksheet-title {
   color: $black;
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
   text-align: left;
   margin-bottom: 16px;
@@ -133,7 +141,7 @@ benji-ps-case-study-activity {
 .worksheet-text {
   font-size: 18px;
   color: #898989;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
   text-align: left;
 }
 
