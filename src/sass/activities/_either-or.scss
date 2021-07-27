@@ -96,8 +96,8 @@ benji-ps-either-or-activity {
   .phase {
     font-weight: 700;
     font-size: 24px;
-    padding-bottom: 24px;
-    margin-bottom: 3vh;
+    padding-bottom: 20px;
+    margin-bottom: 32px;
     border-bottom: 1px solid #979797;
     text-align: left;
     .phase-icon {
@@ -110,13 +110,20 @@ benji-ps-either-or-activity {
   }
 
   div.radio-mock-button {
-    padding: 25px 18px;
-    height: 160px;
-    width: 100px;
+    padding: 24px 18px;
+    height: 212px;
+    width: 144px;
   }
 
   .result-tie-emoji {
     width: 70vw;
+    margin-top: 8px;
+  }
+
+  @media (min-width: 768px) {
+    .result-tie-emoji {
+      width: 30vw;
+    }
   }
 
   .twemoji-container {

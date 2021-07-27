@@ -4,7 +4,7 @@
     <!-- Ask for Prediction -->
     <div class="b-flat-card__body" 
       *ngIf="!state.standing_complete && !predictionComplete() && !preferenceComplete()">
-      <div class="phase black-color" fxLayout="row" fxLayoutGap="16px">
+      <div class="phase black-color" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
         <div class="phase-icon">
           <app-b-twemoji emoji="️️️️️️️🎱"></app-b-twemoji>
         </div>
@@ -55,7 +55,7 @@
     <!-- Ask for Preference -->
     <div class="b-flat-card__body" 
       *ngIf="!state.standing_complete && predictionComplete() && !preferenceComplete()">
-      <div class="phase black-color" fxLayout="row" fxLayoutGap="16px">
+      <div class="phase black-color" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
         <div class="phase-icon">
           <app-b-twemoji emoji="️️️️️️️🗳️"></app-b-twemoji>
         </div>
@@ -160,8 +160,8 @@
     >
       <!-- Show It's a tie -->
       <ng-container *ngIf="getGroupPercentagePreference() === 50">
-        <h1 class="pn-700 primary-color-darkest b-flat-card__question">Wow, a tie!</h1>
-        <div fxLayout="column" fxLayoutGap="5vh" fxLayoutAlign="center center">
+        <h1 class="pn-700 primary-color-darkest b-flat-card__question tie-text">Wow, a tie!</h1>
+        <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="center center">
           <div class="result-tie-emoji" fxLayout="row">
             <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
               <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
