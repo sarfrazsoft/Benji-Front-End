@@ -81,7 +81,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     this.submitImageNIdea();
     this.idea.editing = false;
   }
-  
   getSelectedFileName() {
     let name = '';
     if (this.imagesList.length > 0) {

@@ -9,7 +9,7 @@
               {{ casestudy.case_study_details }}
           </div>
           <mat-accordion class="case-study-accordion">  
-            <mat-expansion-panel *ngFor="let group of groups">
+            <mat-expansion-panel *ngFor="let group of groups" style="width: 500px;">
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   {{ group.title }}
@@ -20,7 +20,7 @@
                   <div class="prompt case-study-question">
                     {{ question.question_text }}
                   </div>
-                  <div class="" *ngFor="let group of groups; let i = index">
+                  <div class="">
                     <div class="">
                       <benji-reports-text-editor 
                         [group]="group" 

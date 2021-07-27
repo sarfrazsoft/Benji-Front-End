@@ -57,6 +57,7 @@ export class CaseStudyComponent implements OnInit, OnChanges {
       }
     }
     this.groups = tempGroups;
+    console.log(this.groups);
 
     this.getGroupAndTheirAnswers();
   }

@@ -582,22 +582,26 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         let right_choice = {
           choice_img_url: 'emoji://1F412',
           choice_name: 'Right choice',
+          id: 1,
         };
         if (this.data.content.right_choice) {
           right_choice = {
             choice_img_url: this.data.content.right_choice.choice_img_url,
             choice_name: this.data.content.right_choice.choice_name,
+            id: 1,
           };
         }
 
         let left_choice = {
           choice_img_url: 'emoji://1F575-FE0F-200D-2642-FE0F',
           choice_name: 'Left choice',
+          id: 2,
         };
         if (this.data.content.left_choice) {
           left_choice = {
             choice_img_url: this.data.content.left_choice.choice_img_url,
             choice_name: this.data.content.left_choice.choice_name,
+            id: 2,
           };
         }
 

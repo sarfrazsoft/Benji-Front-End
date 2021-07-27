@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
 
     this.user = null;
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
+      console.log(user);
       this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
         this.authService.setSession(res);
         if (this.authService.redirectURL.length) {

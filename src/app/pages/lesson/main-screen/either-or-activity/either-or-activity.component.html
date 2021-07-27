@@ -208,73 +208,74 @@
     </div>
   </div> -->
 
-  <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center" *ngIf="state">
-  <div
-    class="result"
-    fxLayout="row"
-    *ngIf="state.standing_complete && state.preference_complete && state.prediction_complete"
-  >
-    <div fxLayout="column" fxFlex>
-      <div>
-        <h1 class="primary-color-darkest pn-700 question">Prediction:</h1>
-      </div>
-      <div class="mb-auto">
-        <h1 class="secondary-color-dark pn-500 question">
-          <em>{{ getGroupPercentagePrediction() }}%</em> of you thought the group would pick
-          <em><span [innerHTML]="getGroupPredictionChoice().choice_name"></span></em>
-        </h1>
-      </div>
-      <div
-        class="twemoji-container"
-        *ngIf="isEmoji(getGroupPredictionChoice().choice_img_url) && !hideResultEmoji"
-      >
-        <app-b-twemoji [text]="getGroupPredictionChoice().choice_img_url"></app-b-twemoji>
-      </div>
-    </div>
-    <div fxLayout="column" fxFlex>
-      <div>
-        <h1 class="primary-color-darkest pn-700 question">Reality:</h1>
-      </div>
-      <div>
-        <h1
-          class="pn-500 question"
-          [ngClass]="{
-            'success-color':
-              getGroupPredictionEvaluation() === 'Correct!' || getGroupPredictionEvaluation() === 'Tie!',
-            'warning-color': getGroupPredictionEvaluation() === 'Incorrect!'
-          }"
-        >
-          {{ getGroupPredictionEvaluation() }}
-        </h1>
-      </div>
-      <div class="mb-auto">
-        <h1 *ngIf="!isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
-          <em>{{ getGroupPercentagePreference() }}%</em> of you picked
-          <em>
-            <span [innerHTML]="getGroupPreferredChoice().choice_name"></span>
-          </em>
-        </h1>
-        <h1 *ngIf="isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
-          You're an even 50/50 split!
-        </h1>
-      </div>
-      <div>
+  <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center" *ngIf="state && state.standing_complete && state.preference_complete && state.prediction_complete">
+    <div
+      class="result"
+      fxLayout="row"
+      *ngIf="state.standing_complete && state.preference_complete && state.prediction_complete"
+    >
+      <div fxLayout="column" fxFlex>
+        <div>
+          <h1 class="primary-color-darkest pn-700 question">Prediction:</h1>
+        </div>
+        <div class="mb-auto">
+          <h1 class="secondary-color-dark pn-500 question">
+            <em>{{ getGroupPercentagePrediction() }}%</em> of you thought the group would pick
+            <em><span [innerHTML]="getGroupPredictionChoice().choice_name"></span></em>
+          </h1>
+        </div>
         <div
           class="twemoji-container"
-          *ngIf="!isGroupPredictionEvaluationTie() && isEmoji(getGroupPreferredChoice().choice_img_url)"
+          *ngIf="isEmoji(getGroupPredictionChoice().choice_img_url) && !hideResultEmoji"
         >
-          <app-b-twemoji [text]="getGroupPreferredChoice().choice_img_url"></app-b-twemoji>
+          <app-b-twemoji [text]="getGroupPredictionChoice().choice_img_url"></app-b-twemoji>
         </div>
-        <div *ngIf="isGroupPredictionEvaluationTie()">
-          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3vw">
-            <div>
-              <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
-                <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
+      </div>
+      <div fxLayout="column" fxFlex>
+        <div>
+          <h1 class="primary-color-darkest pn-700 question">Reality:</h1>
+        </div>
+        <div>
+          <h1
+            class="pn-500 question"
+            [ngClass]="{
+              'success-color':
+                getGroupPredictionEvaluation() === 'Correct!' || getGroupPredictionEvaluation() === 'Tie!',
+              'warning-color': getGroupPredictionEvaluation() === 'Incorrect!'
+            }"
+          >
+            {{ getGroupPredictionEvaluation() }}
+          </h1>
+        </div>
+        <div class="mb-auto">
+          <h1 *ngIf="!isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
+            <em>{{ getGroupPercentagePreference() }}%</em> of you picked
+            <em>
+              <span [innerHTML]="getGroupPreferredChoice().choice_name"></span>
+            </em>
+          </h1>
+          <h1 *ngIf="isGroupPredictionEvaluationTie()" class="secondary-color-dark pn-500 question">
+            You're an even 50/50 split!
+          </h1>
+        </div>
+        <div>
+          <div
+            class="twemoji-container"
+            *ngIf="!isGroupPredictionEvaluationTie() && isEmoji(getGroupPreferredChoice().choice_img_url)"
+          >
+            <app-b-twemoji [text]="getGroupPreferredChoice().choice_img_url"></app-b-twemoji>
+          </div>
+          <div *ngIf="isGroupPredictionEvaluationTie()">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3vw">
+              <div>
+                <div class="twemoji-container" *ngIf="isEmoji(state.left_choice.choice_img_url)">
+                  <app-b-twemoji [text]="state.left_choice.choice_img_url"></app-b-twemoji>
+                </div>
               </div>
-            </div>
-            <div>
-              <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
-                <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
+              <div>
+                <div class="twemoji-container" *ngIf="isEmoji(state.right_choice.choice_img_url)">
+                  <app-b-twemoji [text]="state.right_choice.choice_img_url"></app-b-twemoji>
+                </div>
               </div>
             </div>
           </div>
@@ -282,8 +283,6 @@
       </div>
     </div>
   </div>
-
-</div>
 
   <!-- <div class="hint-activity__linear-timer-container">
     <benji-linear-timer
