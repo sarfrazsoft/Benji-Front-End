@@ -144,16 +144,15 @@ benji-session-navigation {
   right: 20px;
   bottom: 32px;
   cursor: pointer;
+  
+  border-radius: 56px;
+  width: 202px;
+  height: 56px;
   .text {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 24px;
   }
-  .icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 44px;
-    background-image: url('/../../assets/img/arrowRight.svg');
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
+  img {
+    width: 28px;
   }
 }

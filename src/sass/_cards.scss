@@ -7,9 +7,12 @@
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;
-
+  .center-all {
+    height: 90%;
+  }
   .b-flat-card__body {
-    padding: 5vh 20px 0px;
+    //padding: 5vh 20px 0px;
+    padding: 24px 20px 0px;
     > h1,
     h2,
     h3,
@@ -87,11 +90,16 @@
   }
 }
 
-.title-activity .b-flat-card__body .participant-screen {
-  img {
-    width: 100%;
-    max-width: 444px;
-    margin-bottom: 24px;
+.title-activity .b-flat-card__body {
+  .participant-screen {
+    img {
+      width: 100%;
+      max-width: 444px;
+      margin-bottom: 24px;
+    }
+  }
+  h1{
+    padding-bottom: 16px;
   }
 }
 
