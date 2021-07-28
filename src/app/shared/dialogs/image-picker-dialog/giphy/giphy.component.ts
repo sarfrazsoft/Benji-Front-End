@@ -12,7 +12,9 @@ export class GiphyComponent implements OnInit {
   @Output() imageSelected = new EventEmitter<any>();
   constructor(private httpClient: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getGiphyImages('nature');
+  }
 
   typingStoped(query) {
     clearTimeout(this.typingTimer);
@@ -26,7 +28,6 @@ export class GiphyComponent implements OnInit {
 
   getGiphyImages(query) {
     this.httpClient.get(global.apiRoot + '/integrations/giphy/?search=' + query).subscribe((res: any) => {
-      console.log(res);
       this.images = res.results;
     });
   }

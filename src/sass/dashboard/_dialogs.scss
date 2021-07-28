@@ -141,16 +141,40 @@
   max-width: 609px !important;
   mat-dialog-container.mat-dialog-container {
     width: 100%;
+    min-width: 600px;
     padding-top: 0px;
     padding-right: 25px;
     padding-left: 25px;
     position: relative;
     border-radius: 16px;
+    @media screen and (max-width: 991px) {
+      min-width: 500px;
+    }
+    @media #{$small-and-down} {
+      min-width: 300px;
+    }
     .close {
       height: 48px;
       position: absolute;
-      z-index: 1;
+      z-index: 20;
       right: 19px;
+      top: 0px;
+    }
+    .mat-tab-group {
+      width: 100%;
+      .mat-tab-label-container {
+        .mat-tab-labels {
+          .mat-tab-label {
+            text-align: left;
+            padding: 0px;
+            justify-content: start;
+            min-width: 0px;
+            margin-right: 24px;
+            &.mat-tab-label-active {
+            }
+          }
+        }
+      }
     }
     .image-selector-container {
       margin: 0px;

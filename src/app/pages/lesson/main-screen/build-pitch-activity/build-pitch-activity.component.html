@@ -71,9 +71,9 @@
         innerHTML="{{ instructions }}">
         </p>
       </div>
-      <div class="forms-submitted primary-color pn-600" *ngIf="participantLength">
+      <div class="forms-submitted primary-color pn-600" *ngIf="activeParticipants.length">
         {{ answeredParticipantsLength }}/{{
-          participantLength
+          activeParticipants.length
         }}
         Submitted
       </div>
@@ -255,6 +255,7 @@
       </div>
     </div>
   </div>
+
   <div class="" *ngIf="votesComplete">
     <benji-linear-timer
       [timer]="getNextActStartTimer()"

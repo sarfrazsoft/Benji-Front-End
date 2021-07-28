@@ -19,6 +19,8 @@ export class MainScreenBuildPitchActivityComponent
   checkIcon: string;
   shareStartUser: string;
   winningUser: string;
+  activeParticipants = [];
+  answeredParticipantsLength;
 
   newCreatePitchLayout = true;
   constructor(private contextService: ContextService, private buildAPitchService: BuildAPitchService) {
@@ -62,6 +64,13 @@ export class MainScreenBuildPitchActivityComponent
       this.sharePitches = false;
       this.voteNow = false;
       this.votesComplete = false;
+      this.activeParticipants = [];
+      this.activityState.lesson_run.participant_set.forEach((element) => {
+        if (element.is_active) {
+          this.activeParticipants.push(element);
+        }
+      });
+      this.answeredParticipantsLength = act.buildapitchpitch_set.length;
     } else if (act.building_done && !act.sharing_done) {
       this.shareStartUser = this.getParticipantName(act.share_start_participant.participant_code);
       this.createPitches = false;

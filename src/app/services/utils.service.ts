@@ -22,7 +22,7 @@ export class UtilsService {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
-    this.openSnackBar('copied to clipboard', '');
+    this.openSuccessNotification('copied to clipboard', '');
   }
 
   randomIntFromInterval(min, max) {
