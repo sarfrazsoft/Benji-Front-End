@@ -325,16 +325,22 @@ export class ParticipantBuildPitchActivityComponent
     // });
     // console.log(buildAPitchEntrySet);
     buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
-    filteredParsedBlanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet[i];
-      let value = '';
-      if (currentBlanksValue) {
-        value = ' <em>' + currentBlanksValue.value + '</em> ';
+    let g = 0;
+    parsedBlanks.forEach((b, i) => {
+      if (b.type === 'label') {
+        statement = statement + b.label;
       } else {
-        // value = ' <em class="warning-color">(' + b.label + ')</em> ';
-        // this.blankPitch = true;
+        const currentBlanksValue = buildAPitchEntrySet[g];
+        let value = '';
+        if (currentBlanksValue) {
+          value = ' <em>' + currentBlanksValue.value + '</em> ';
+        } else {
+          // value = ' <em class="warning-color">(' + b.label + ')</em> ';
+          // this.blankPitch = true;
+        }
+        statement = statement + value;
+        g = g + 1;
       }
-      statement = statement + b.label + value;
     });
     return statement;
   }
