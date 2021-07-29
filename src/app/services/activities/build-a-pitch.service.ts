@@ -48,7 +48,8 @@ export class BuildAPitchService {
 
     let statement = '';
     if (buildAPitchPitchSet[0]) {
-      const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+      let buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+      buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
       parsedBlanks.forEach((b, i) => {
         const currentBlanksValue = buildAPitchEntrySet[i];
 

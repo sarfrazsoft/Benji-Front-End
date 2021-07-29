@@ -26,6 +26,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent 
   selectedPrediction;
   user: number;
   choice = null;
+  timer;
 
   constructor(
     private emoji: EmojiLookupService,
@@ -40,6 +41,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent 
     super.ngOnInit();
     this.user = this.getParticipantCode();
     this.state = this.activityState.wheredoyoustandactivity;
+    this.timer = this.getTimerTool();
   }
 
   choosePrediction(choice): void {
@@ -54,6 +56,7 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent 
 
   ngOnChanges(changes: SimpleChanges) {
     this.state = this.activityState.wheredoyoustandactivity;
+    this.timer = this.getTimerTool();
     if (
       this.state.prediction_extra_countdown_timer &&
       this.state.prediction_extra_countdown_timer.status !== 'ended' &&

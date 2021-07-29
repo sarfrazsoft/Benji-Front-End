@@ -38,7 +38,7 @@
           *ngIf="act.case_study_details" 
           innerHTML="{{ act.case_study_details }}">
         </div>
-        <div class="worksheet-timer" *ngIf="timer && !act.hide_timer">
+        <div class="worksheet-timer" *ngIf="timer">
           <benji-participant-timer
             [timer]="timer"
             [endAudio]="'bell.wav'"

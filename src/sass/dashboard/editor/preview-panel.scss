@@ -270,6 +270,15 @@ benji-preview-panel {
             }
           }
         }
+
+        benji-ms-either-or-activity {
+          .question-title {
+            font-size: 32px;
+          }
+          .activity-description {
+            font-size: 24px;
+          }
+        }
       }
 
       .p-act-template {

@@ -33,8 +33,13 @@ export class ParticipantCaseStudyActivityComponent
   timer;
   jsonDoc;
   activityId;
-  questions: Array<{ id: number; question_text: string; answer: string; default_editor_content: string }> =
-    [];
+  questions: Array<{
+    id: number;
+    question_text: string;
+    answer: string;
+    default_editor_content: string;
+    order?: number;
+  }> = [];
   localStorageItemName = 'caseStudyNotes';
   showSharingUI = false;
   editorDisabled = false;
@@ -65,6 +70,8 @@ export class ParticipantCaseStudyActivityComponent
     this.worksheetTitle = this.act.activity_title;
     this.participantCode = this.getParticipantCode();
     this.populateQuestions();
+
+    this.timer = this.getTimerTool();
   }
 
   populateQuestions() {
@@ -73,10 +80,12 @@ export class ParticipantCaseStudyActivityComponent
     questionsTemp.forEach((q, i) => {
       this.questions.push({ ...q, answer: '' });
     });
+    this.questions = this.questions.sort((a, b) => a.order - b.order);
   }
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
+    this.timer = this.getTimerTool();
 
     const state = this.activityState;
     if (state.running_tools && state.running_tools && state.running_tools.share) {

@@ -714,6 +714,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         if (b.activity_seconds === 10000) {
           b.hide_timer = true;
         }
+        b.casestudyquestion_set.forEach((element, i) => {
+          element['order'] = i;
+        });
         b.activity_overview_text = ActivityTitles[this.at.caseStudy];
       } else if (b.activity_type === this.at.feedback) {
         b.titlecomponent.participant_instructions = b.titlecomponent.screen_instructions;
