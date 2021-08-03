@@ -58,6 +58,7 @@ export const ActivityThumbnails = {
   PollActivity: 'poll.svg',
   FeedbackActivity: 'feedback.svg',
   ConvoActivity: 'convocards.svg',
+  WhereDoYouStandActivity: 'eitheror.svg',
 };
 
 export const ActivityDisplayNames = {
