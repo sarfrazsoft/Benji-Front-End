@@ -239,7 +239,7 @@ benji-ms-brainstorming-activity {
 
 benji-ps-brainstorming-activity {
   .b-flat-card {
-    padding: 24px;
+    padding: 32px 24px;
     button {
       margin: 0px;
       width: 100%;
@@ -350,27 +350,30 @@ benji-ps-brainstorming-activity {
   //     }
   //   }
   // }
-
+  
   .vote-button-column {
-    width: 366px;
-    .button-container {
-      width: 100%;
-      .voting-idea-button {
-        text-align: left;
-        background-color: #fff;
-        border: 3px solid #eeebdd;
-        box-shadow: 0px 1px 2px #d5d9de;
-        border-radius: 8px;
-        width: 100%;
-        padding: 16px;
-        font-size: 18px;
-        line-height: 24px;
-        &.selected {
-          border: 3px solid;
-        }
-      }
-    }
+    //width: 366px;
   }
+  // .vote-button-column {
+  //   width: 366px;
+  //   .button-container {
+  //     width: 100%;
+  //     .voting-idea-button {
+  //       text-align: left;
+  //       background-color: #fff;
+  //       border: 3px solid #eeebdd;
+  //       box-shadow: 0px 1px 2px #d5d9de;
+  //       border-radius: 8px;
+  //       width: 100%;
+  //       padding: 16px;
+  //       font-size: 18px;
+  //       line-height: 24px;
+  //       &.selected {
+  //         border: 3px solid;
+  //       }
+  //     }
+  //   }
+  // }
 
   .b-standard-button--white:hover {
     background: #e6e5e5 !important;

@@ -137,12 +137,18 @@ benji-ps-case-study-activity {
   font-weight: 700;
   text-align: left;
   margin-bottom: 16px;
+  &.voting-title {
+    text-align: center;
+  }
 }
 .worksheet-text {
   font-size: 18px;
   color: #898989;
   margin-bottom: 24px;
   text-align: left;
+  &.voting-text {
+    text-align: center;
+  }
 }
 
 .case-study-share-ui-container {

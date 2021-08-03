@@ -1,4 +1,4 @@
-<div class="b-flat-card center-text mc-card">
+<div class="center-text mcq-card">
   <!-- show questions -->
   <ng-container *ngIf="showQuestion">
     <div class="b-flat-card__body">
@@ -12,26 +12,27 @@
       </h3>
     </div>
     <div class="b-flat-card__action">
-      <button
-        *ngFor="
-          let option of activityState.mcqactivity.question.mcqchoice_set;
-          let i = index
-        "
-        class="b-standard-button unselected"
-        [ngClass]="{
-          selected: isSelected(option),
-          inactive: answerSubmitted
-        }"
-        (click)="selectOption(option)"
-      >
-         {{ option.choice_text }}
-      </button>
-
-      <button 
-        class="b-standard-button white-color bg-primary-color center-text"
-        (click)="submitAnswer()">
-         Submit
-      </button>
+      <div 
+        *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
+        class="mcq-button-container">
+        <button
+          class="unselected voting-idea-button"
+          [ngClass]="{
+            selected: isSelected(option),
+            inactive: answerSubmitted
+          }"
+          (click)="selectOption(option)"
+        >
+          {{ option.choice_text }}
+        </button>
+      </div>
+      <div class="mcq-button-container">
+        <button 
+          class="white-color bg-primary-color center-text voting-submit"
+          (click)="submitAnswer()">
+          Submit
+        </button>
+      </div>
     </div>
   </ng-container>
 

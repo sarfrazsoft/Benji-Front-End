@@ -66,7 +66,7 @@
       </div>
     </div>
   </div>
-  <div class="b-flat-card__body" *ngIf="voteNow">
+  <div class="mcq-card" *ngIf="voteNow">
     <h1 class="pn-700 primary-color-darkest">Vote on your favorite</h1>
     <div *ngFor="let pitchSet of act.buildapitchpitch_set; let i = index">
       <benji-vote-pitch
@@ -80,12 +80,14 @@
         (userCollapsed)="userCollapsed($event)"
       ></benji-vote-pitch>
     </div>
-    <button 
-      class="b-standard-button build-pitch-button white-color bg-primary-color center-text"
-      *ngIf="selectedUser && !userVoted"
-      (click)="submitVote(selectedUser)">
-      Submit
-    </button>
+    <div class="mcq-button-container">
+      <button 
+        class="white-color bg-primary-color center-text voting-submit"
+        *ngIf="selectedUser && !userVoted"
+        (click)="submitVote(selectedUser)">
+        Submit
+      </button>
+    </div>
   </div>
   <div class="b-flat-card__body" *ngIf="thanksForVote">
     <div class="twemoji">

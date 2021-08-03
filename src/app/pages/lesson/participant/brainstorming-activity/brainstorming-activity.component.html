@@ -81,17 +81,17 @@
   <div class="b-flat-card heightAuto">
     <div class="content" fxLayout="column">
       <ng-container class="body-text">
-        <div class="worksheet-title">
+        <div class="worksheet-title voting-title">
           Voting time!
         </div>
-        <div class="worksheet-text">
+        <div class="worksheet-text voting-text">
           <!-- show votes left  -->
           You can submit{{ ' ' + getVotesLeft() + ' ' }}
           {{ getVotesLeft() === 1 ? 'vote' : 'votes' }}
         </div>
       </ng-container>
       <ng-container class="content">
-        <div fxLayout="column" fxLayoutGap="16px" fxLayoutAlign="center center">
+        <div fxLayout="column">
           <ng-container *ngFor="let idea of ideas; let i = index">
             <benji-vote-idea
               [ideaId]="idea.id"
@@ -101,10 +101,9 @@
               (ideaSelected)="ideaSelected($event)"
             ></benji-vote-idea>
           </ng-container>
-          <div *ngIf="showVoteSubmitButton">
+          <div *ngIf="showVoteSubmitButton" class="mcq-button-container">
             <button 
-              style="width: 366px;" 
-              class="b-standard-button bg-primary-color white-color" 
+              class="white-color bg-primary-color center-text voting-submit" 
               (click)="submitIdeaVote()">
               Submit
             </button>
