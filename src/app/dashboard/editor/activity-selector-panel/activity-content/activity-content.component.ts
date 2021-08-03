@@ -694,14 +694,27 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         if (!b.auto_next) {
           b.next_activity_delay_seconds = 10000;
         }
-        // if (b.show_distribution && !b.quiz_label) {
-        //   b.next_activity_delay_seconds = 0;
-        // }
         if (b.quiz_label) {
           b.quiz_label = 'leader_board';
         } else {
           delete b.quiz_label;
         }
+
+        let multiple_correct_answer = false;
+        if (b.question && b.question.mcqchoice_set) {
+          const choices = b.question.mcqchoice_set;
+          let correct_count = 0;
+          choices.forEach((element) => {
+            if (element.is_correct) {
+              correct_count = correct_count + 1;
+            }
+          });
+          if (correct_count > 1) {
+            multiple_correct_answer = true;
+          }
+        }
+        b.multiple_correct_answer = multiple_correct_answer;
+
         b.activity_overview_text = ActivityTitles[this.at.mcq];
       } else if (b.activity_type === this.at.caseStudy) {
         if (b.grouping_activity_id) {

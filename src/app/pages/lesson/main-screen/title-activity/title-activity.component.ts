@@ -35,23 +35,18 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
       this.isEndSession = true;
     }
     const act = this.activityState.titleactivity;
-    console.log(act);
     this.loadVariables(act);
   }
 
   ngOnChanges() {
-    // console.log(JSON.stringify(this.activityState));
-    // console.log(this.activityState);
-    // if (this.activityState.titleactivity) {
     const act = this.activityState.titleactivity;
     this.loadVariables(act);
-    // }
   }
 
   loadVariables(act: TitleActivity) {
     this.mainTitle = act.main_title ? act.main_title : '';
     this.titleText = act.title_text ? act.title_text : '';
-    this.layout = act.layout ?  act.layout : '';
+    this.layout = act.layout ? act.layout : '';
     this.title_emoji = act.title_emoji ? act.title_emoji : '';
     this.title_image = act.title_image ? act.title_image : '';
   }

@@ -5,6 +5,8 @@ export interface ConvoCardsActivity extends ParentActivity {
   title_text: string;
   main_title: string;
   cards: Array<Card>;
+  participant_cards: { number: Array<number> };
+  deal_number: number;
 }
 
 export interface Card {

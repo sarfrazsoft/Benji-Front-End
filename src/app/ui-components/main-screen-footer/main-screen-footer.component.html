@@ -157,7 +157,7 @@
 
       <!-- Activity settins -->
       <div 
-        *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
+        *ngIf="isActivitySettingsAllowed(activityState)"
         class="option settings" 
         fxLayoutAlign="center center">
         <button

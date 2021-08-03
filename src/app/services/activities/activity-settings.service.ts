@@ -22,6 +22,7 @@ export class ActivitySettingsService {
 export const SETTINGS = {
   brainstorm: [
     { type: 'toggle', name: 'categorize', label: 'Toggle Categorization' },
+    { type: 'button', name: 'categorize', label: 'Toggle Categorization' },
     // { type: 'toggle', name: 'participantNames', label: 'Show Participants Names' },
     // // { type: 'toggle', name: 'cardSize', label: 'Case Size' },
     // {
@@ -36,4 +37,5 @@ export const SETTINGS = {
     // },
     // { type: 'toggle', label: 'Show vote tally' },
   ],
+  convocards: [{ type: 'button', name: 'reshuffle', label: 'Reshuffle Cards' }],
 };

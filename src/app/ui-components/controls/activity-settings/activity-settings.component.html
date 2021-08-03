@@ -1,6 +1,6 @@
 <div fxLayout="column">
   <div class="menu-heading">
-    Properties for Brainstorm
+    Properties for {{ activityDisplayName }}
   </div>
   <!-- <div class="activity-settings" fxLayout="column" fxLayoutGap="8px">
     <div class="setting" 
@@ -87,6 +87,21 @@
           <span class="slider round"></span>
         </label>
       </div>
+
+    <div 
+      *ngIf="control.type === 'button'"
+      class="setting"
+      benji-click-stop-propagation
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+    >
+      {{ control.label }}
+      <label class="switch">
+        <span (click)="buttonClick($event, control.name)">
+          button
+        </span>
+      </label>
+    </div>
 
       <div class="setting"
         *ngIf="control.type === 'select'"
