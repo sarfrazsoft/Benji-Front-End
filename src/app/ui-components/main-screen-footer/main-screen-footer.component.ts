@@ -3,7 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
 import { clone } from 'lodash';
-import { ActivityTypes, AllowGroupingActivities, AllowShareActivities } from 'src/app/globals';
+import {
+  ActivitySettingsAllowed,
+  ActivityTypes,
+  AllowGroupingActivities,
+  AllowShareActivities,
+} from 'src/app/globals';
 import {
   ContextService,
   GroupingToolService,
@@ -68,6 +73,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
 
   allowShareActivities = AllowShareActivities;
   allowGroupingActivities = AllowGroupingActivities;
+  activitySettingsAllowed = ActivitySettingsAllowed;
 
   shareParticipantLink = '';
   hostname = window.location.host + '/participant/join?link=';
@@ -119,7 +125,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   copyLink(val: string) {
     this.utilsService.copyToClipboard(val);
   }
-  
+
   initializeTimer() {}
 
   controlClicked(eventType) {
@@ -272,6 +278,14 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     }
   }
 
+  isActivitySettingsAllowed(activityState: UpdateMessage) {
+    if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   navigateToActivity($event) {
     if (this.isSharing) {
       this.endSharingTool();
@@ -306,8 +320,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
       if (localStorage.getItem('isGroupingCreated') === code) {
         // grouping ui is not showing but grouping has been created for this activity
         // only show UI on mainscreen
-        this.groupingToolService.showGroupingToolMainScreen = !this.groupingToolService
-          .showGroupingToolMainScreen;
+        this.groupingToolService.showGroupingToolMainScreen =
+          !this.groupingToolService.showGroupingToolMainScreen;
       } else {
         // the grouping UI is not showing and the grouping hasn't been created
         // for this activity

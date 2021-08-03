@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
-import { ParticipantSelectCardEvent } from 'src/app/services/backend/schema';
+import { isEmpty } from 'lodash';
+import { ParticipantSelectCardEvent, UpdateMessage } from 'src/app/services/backend/schema';
 import { Card, ConvoCardsActivity } from 'src/app/services/backend/schema/activities';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -12,18 +13,39 @@ export class ParticipantConvoCardsActivityComponent
   implements OnInit, OnChanges {
   items: Array<Card> = [];
   indexOfCardShown = 0;
+  act: ConvoCardsActivity;
   constructor() {
     super();
   }
 
   ngOnInit(): void {
-    // console.log(this.activityState);
-    this.indexOfCardShown = 0;
-    this.items = this.activityState.convoactivity.cards;
-    // this.activityState.convocardsactivity
-    // const c: ConvoCardsActivity;
+    this.act = this.activityState.convoactivity;
+    if (!isEmpty(this.act.participant_cards)) {
+      this.getParticipantCards();
+    } else {
+      this.indexOfCardShown = 0;
+      this.items = this.activityState.convoactivity.cards;
+    }
+  }
+
+  getParticipantCards() {
+    const participantCode = this.getParticipantCode();
+    const cardIds = this.act.participant_cards[participantCode];
+    if (!cardIds) {
+      return;
+    }
+    this.items = [];
+    this.act.cards.forEach((val) => {
+      if (cardIds.includes(val.id)) {
+        this.items.push(val);
+      }
+    });
   }
   ngOnChanges() {
+    this.act = this.activityState.convoactivity;
+    if (!isEmpty(this.act.participant_cards)) {
+      this.getParticipantCards();
+    }
     // set the currently selected card as selected in sharing tool
     const tools = this.activityState.running_tools;
     if (tools && tools.share) {

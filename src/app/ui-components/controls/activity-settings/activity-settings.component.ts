@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivityTypes } from 'src/app/globals';
+import { ActivityDisplayNames } from 'src/app/globals';
 import { ActivitySettingsService } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
@@ -15,6 +16,8 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   settings;
   dialogRef;
+  activityDisplayName;
+  DisplayNames = ActivityDisplayNames;
   constructor(private dialog: MatDialog, private activitySettingsService: ActivitySettingsService) {}
   selectedCardSize;
   cardSizes = [
@@ -25,6 +28,8 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
   @Output() controlClicked = new EventEmitter<any>();
 
   ngOnInit(): void {
+    const as = this.activityState;
+    this.activityDisplayName = this.DisplayNames[as.activity_type];
     this.selectedCardSize = this.cardSizes[0].id;
   }
 
@@ -33,6 +38,8 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
     if (as) {
       if (as.activity_type === this.at.brainStorm) {
         this.settings = this.activitySettingsService.settings['brainstorm'];
+      } else if (as.activity_type === this.at.convoCards) {
+        this.settings = this.activitySettingsService.settings['convocards'];
       }
     }
   }
@@ -69,6 +76,14 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
     // console.log($event, controlName);
     this.activitySettingsService.settingChange$.next({
       type: 'select',
+      controlName,
+      state: $event,
+    });
+  }
+
+  buttonClick($event, controlName: string) {
+    this.activitySettingsService.settingChange$.next({
+      type: 'button',
       controlName,
       state: $event,
     });

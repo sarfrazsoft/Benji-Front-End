@@ -55,15 +55,18 @@ export class ActivityComponent implements OnInit, OnDestroy {
           })
           .afterClosed()
           .subscribe((res) => {
-            console.log(res);
             if (res) {
-              this.store.dispatch(new fromStore.SelectActivityType(activityId));
+              this.dispatchSelectActivity(activityId);
             }
           });
       }
     } else {
-      this.store.dispatch(new fromStore.SelectActivityType(activityId));
+      this.dispatchSelectActivity(activityId);
     }
+  }
+
+  dispatchSelectActivity(activityId) {
+    this.store.dispatch(new fromStore.SelectActivityType(activityId));
   }
 
   ngOnDestroy() {

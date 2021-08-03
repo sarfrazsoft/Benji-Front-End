@@ -654,3 +654,11 @@ export class GroupingParticipantSelfJoinEvent extends ActivityEvent {
 export class StartCaseStudyGroupEvent extends ActivityEvent {
   event_name = 'StartCaseStudyGroupEvent';
 }
+
+export class CardsShuffleEvent extends ActivityEvent {
+  event_name = 'CardsShuffleEvent';
+  constructor(deal_number: number) {
+    super();
+    this.extra_args = { deal_number: deal_number };
+  }
+}

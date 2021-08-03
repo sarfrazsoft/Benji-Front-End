@@ -17,8 +17,12 @@ export class ActivitySelectorPanelComponent implements OnInit {
     // so we can change the tabs from other places
     this.store.select(fromStore.getSelectedLessonActivity).subscribe((val) => {
       this.lessonActivity = val;
-      if (this.lessonActivity && this.lessonActivity.empty) {
-        this.selectedTab = 0;
+      if (this.lessonActivity) {
+        if (this.lessonActivity.empty) {
+          this.selectedTab = 0;
+        } else {
+          this.selectedTab = 1;
+        }
       }
     });
   }
