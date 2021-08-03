@@ -473,7 +473,12 @@ export interface CaseStudyActivity extends ParentActivity {
   activity_countdown_timer: Timer;
   groups: Array<Group>;
   casestudyparticipant_set: Array<CaseStudyParticipantSet>;
-  casestudyquestion_set: Array<{ id: number; question_text: string; default_editor_content: any }>;
+  casestudyquestion_set: Array<{
+    id: number;
+    question_text: string;
+    default_editor_content: any;
+    order?: number;
+  }>;
   default_data: string;
   note_taker_instructions: string;
   participant_instructions: string;

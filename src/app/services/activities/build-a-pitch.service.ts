@@ -48,21 +48,27 @@ export class BuildAPitchService {
 
     let statement = '';
     if (buildAPitchPitchSet[0]) {
-      const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+      let buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+      buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
+      let g = 0;
       parsedBlanks.forEach((b, i) => {
-        const currentBlanksValue = buildAPitchEntrySet[i];
-
-        let value = '';
-        if (currentBlanksValue) {
-          if (sharingTool) {
-            value = ' <em class="primary-color">' + currentBlanksValue.value + '</em> ';
-          } else {
-            value = ' <em>' + currentBlanksValue.value + '</em> ';
-          }
+        if (b.type === 'label') {
+          statement = statement + b.label;
         } else {
-          // value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
+          const currentBlanksValue = buildAPitchEntrySet[i];
+          let value = '';
+          if (currentBlanksValue) {
+            if (sharingTool) {
+              value = ' <em class="primary-color">' + currentBlanksValue.value + '</em> ';
+            } else {
+              value = ' <em>' + currentBlanksValue.value + '</em> ';
+            }
+          } else {
+            // value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
+          }
+          statement = statement + value;
+          g = g + 1;
         }
-        statement = statement + b.label + value;
       });
     }
     return statement;

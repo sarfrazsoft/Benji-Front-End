@@ -47,6 +47,7 @@ export interface BuildAPitchBlank {
 export interface BuildAPitchEntry {
   buildapitchblank: number;
   value: string;
+  order?: number;
 }
 
 export interface BuildAPitchPitch {

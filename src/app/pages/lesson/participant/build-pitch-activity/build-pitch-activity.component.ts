@@ -269,15 +269,15 @@ export class ParticipantBuildPitchActivityComponent
     this.builtPitch_setNew.forEach((p, i) => {
       if (p.type === 'blank') {
         if (p.value) {
-          const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.value);
+          const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.value, i);
           buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
         } else {
-          const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.temp_text);
+          const buildAPitchSubmitEventEntry = new BuildAPitchSubmitEventEntry(p.temp_text, i);
           buildapitchsubmissionentry_set.push(buildAPitchSubmitEventEntry);
         }
       }
     });
-    reverse(buildapitchsubmissionentry_set);
+    // reverse(buildapitchsubmissionentry_set);
     this.sendMessage.emit(new BuildAPitchSubmitPitchEvent(buildapitchsubmissionentry_set));
     this.pitchSubmitted = true;
   }
@@ -319,17 +319,28 @@ export class ParticipantBuildPitchActivityComponent
     );
 
     let statement = '';
-    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    filteredParsedBlanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet[i];
-      let value = '';
-      if (currentBlanksValue) {
-        value = ' <em>' + currentBlanksValue.value + '</em> ';
+    let buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+    // buildAPitchEntrySet.forEach((element, i) => {
+    //   element['order'] = i;
+    // });
+    // console.log(buildAPitchEntrySet);
+    buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
+    let g = 0;
+    parsedBlanks.forEach((b, i) => {
+      if (b.type === 'label') {
+        statement = statement + b.label;
       } else {
-        // value = ' <em class="warning-color">(' + b.label + ')</em> ';
-        // this.blankPitch = true;
+        const currentBlanksValue = buildAPitchEntrySet[g];
+        let value = '';
+        if (currentBlanksValue) {
+          value = ' <em>' + currentBlanksValue.value + '</em> ';
+        } else {
+          // value = ' <em class="warning-color">(' + b.label + ')</em> ';
+          // this.blankPitch = true;
+        }
+        statement = statement + value;
+        g = g + 1;
       }
-      statement = statement + b.label + value;
     });
     return statement;
   }

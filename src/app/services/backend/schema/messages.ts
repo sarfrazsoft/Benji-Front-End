@@ -268,11 +268,12 @@ export class FeedbackSubmitEvent extends ActivityEvent {
 }
 
 export class BuildAPitchSubmitEventEntry {
-  buildapitchblank: number;
+  order: number;
   value: string;
 
-  constructor(value: string) {
+  constructor(value: string, order: number) {
     this.value = value;
+    this.order = order;
   }
 }
 

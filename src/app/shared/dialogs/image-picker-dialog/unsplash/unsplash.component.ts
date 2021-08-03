@@ -12,7 +12,9 @@ export class UnsplashComponent implements OnInit {
   @Output() imageSelected = new EventEmitter<any>();
   constructor(private httpClient: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getUnsplashImages('nature');
+  }
 
   typingStoped(query) {
     clearTimeout(this.typingTimer);
