@@ -54,7 +54,7 @@ export class MainScreenBrainstormingActivityComponent
   voteScreen = false;
   VnSComplete = false;
   categorizeFlag = false;
-  //showUserName = true;
+  showUserName = true;
   colDeleted = 0;
   joinedUsers = [];
   ideaSubmittedUsersCount = 0;
@@ -82,19 +82,20 @@ export class MainScreenBrainstormingActivityComponent
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
-      // if (val && val.controlName === 'participantNames') {
-      //   this.showUserName = val.state;
-      // }
+      if (val && val.controlName === 'participantNames') {
+        this.showUserName = val.state;
+        console.log(this.showUserName);
+      }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
     });
   }
 
-  // getPersonName(id: number) {
-  //   const user = this.joinedUsers.find((u) => u.participant_code === id);
-  //   return user.display_name;
-  // }
+  getPersonName(id: number) {
+    const user = this.joinedUsers.find((u) => u.participant_code === id);
+    return user.display_name;
+  }
 
   ngOnDestroy() {
     this.contextService.destroyActivityTimer();

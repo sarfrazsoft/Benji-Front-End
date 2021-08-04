@@ -226,6 +226,11 @@ benji-ms-brainstorming-activity {
   cursor: pointer;
   position: relative;
   color: #616161;
+  .username {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 12px;
+  }
 }
 .brainstorm-image {
   text-align: center;
