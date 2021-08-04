@@ -363,7 +363,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   isAbsolutePath(imageUrl: string) {
-    console.log(imageUrl);
+    //console.log(imageUrl);
     if (imageUrl.includes('https:')) {
       return true;
     } else {

@@ -4,7 +4,7 @@
       [ngClass]="{selected: selectedIdeas.includes(ideaId)}"
       (click)="selectIdea(ideaId)">
       <div *ngIf="ideaImage">
-        <img style="max-width: 100%; max-width: 328px;" [src]="hostname + ideaImage.img" alt="">
+        <img style="max-width: 100%;" [src]="hostname + ideaImage.img" alt="">
       </div>
       <span class="idea-text">
         {{ ideaText }}

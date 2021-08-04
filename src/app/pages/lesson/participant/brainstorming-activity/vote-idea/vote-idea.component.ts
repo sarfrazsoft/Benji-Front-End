@@ -12,7 +12,9 @@ export class VoteIdeaComponent implements OnInit {
   @Input() name = '';
   @Output() ideaSelected = new EventEmitter();
 
-  hostname = window.location.protocol + '//' + window.location.hostname;
+  hostname ="";
+  //If host value set, Giphy images do not display because they have another host
+  //hostname = window.location.protocol + '//' + window.location.hostname; 
   constructor() {}
 
   ngOnInit() {}
