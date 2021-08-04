@@ -139,6 +139,7 @@
                   <div
                     *ngIf="!item.removed"
                     class="brainstorm-idea"
+                    [class.show-user] = "showUserName"
                     cdkDrag
                     (mouseenter)="item.showClose = true"
                     (mouseleave)="item.showClose = false"

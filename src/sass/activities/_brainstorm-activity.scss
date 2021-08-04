@@ -226,6 +226,9 @@ benji-ms-brainstorming-activity {
   cursor: pointer;
   position: relative;
   color: #616161;
+  &.show-user {
+    padding-bottom: 8px;
+  }
   .username {
     text-align: right;
     margin-top: 16px;
