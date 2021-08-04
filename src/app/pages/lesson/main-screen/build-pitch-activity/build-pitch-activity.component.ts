@@ -101,29 +101,6 @@ export class MainScreenBuildPitchActivityComponent
     return this.buildAPitchService.getPitchText(acts.winning_participant.participant_code, acts, true);
   }
 
-  getPitchText(userId): string {
-    const blanks = this.activityState.buildapitchactivity.buildapitchblank_set;
-    const buildAPitchPitchSet = this.activityState.buildapitchactivity.buildapitchpitch_set.filter(
-      (e) => e.participant.participant_code === userId
-    );
-
-    let statement = '';
-    const buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    blanks.sort((a, b) => a.order - b.order);
-    blanks.forEach((b, i) => {
-      const currentBlanksValue = buildAPitchEntrySet.filter((v) => v.buildapitchblank === b.id);
-
-      let value = '';
-      if (currentBlanksValue.length === 1) {
-        value = ' <em class="primary-color">' + currentBlanksValue[0].value + '</em> ';
-      } else {
-        value = ' <em class="warning-color">(' + b.temp_text + ')</em> ';
-      }
-      statement = statement + b.label + value;
-    });
-    return statement;
-  }
-
   continueClicked() {
     // this.sendMessage.emit(new NextInternalEvent());
     this.sendMessage.emit(new FastForwardEvent());

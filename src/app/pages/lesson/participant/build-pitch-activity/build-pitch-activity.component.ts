@@ -309,8 +309,8 @@ export class ParticipantBuildPitchActivityComponent
   }
 
   getPitchText(userId, act) {
+    return this.buildAPitchService.getPitchText(userId, act, true);
     const parsedBlanks = this.buildAPitchService.getBlanks(this.act.blanks_string);
-    const filteredParsedBlanks = parsedBlanks.filter((e) => e.type === 'label');
 
     act.buildapitchblank_set.sort((a, b) => a.order - b.order);
 
@@ -320,10 +320,6 @@ export class ParticipantBuildPitchActivityComponent
 
     let statement = '';
     let buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-    // buildAPitchEntrySet.forEach((element, i) => {
-    //   element['order'] = i;
-    // });
-    // console.log(buildAPitchEntrySet);
     buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
     let g = 0;
     parsedBlanks.forEach((b, i) => {
@@ -334,9 +330,6 @@ export class ParticipantBuildPitchActivityComponent
         let value = '';
         if (currentBlanksValue) {
           value = ' <em>' + currentBlanksValue.value + '</em> ';
-        } else {
-          // value = ' <em class="warning-color">(' + b.label + ')</em> ';
-          // this.blankPitch = true;
         }
         statement = statement + value;
         g = g + 1;

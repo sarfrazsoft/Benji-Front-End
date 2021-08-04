@@ -372,6 +372,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'default_editor_content') {
                   mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'order') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'question_text') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'auto_next') {
