@@ -207,13 +207,13 @@
                 *ngIf="idea.idea_image"
                 (click)="viewImage(hostname + idea.idea_image.img)"
               >
-              <ng-container *ngIf="idea.idea_image.img.includes('https:'); else uploadedImage">
-                <img [src]="idea.idea_image.img" alt="" />
-              </ng-container>
+                <ng-container *ngIf="idea.idea_image.img.includes('https:'); else uploadedImage">
+                  <img [src]="idea.idea_image.img" alt="" />
+                </ng-container>
 
-              <ng-template #uploadedImage>
-                <img [src]="hostname + idea.idea_image.img" alt="" />
-              </ng-template>
+                <ng-template #uploadedImage>
+                  <img [src]="hostname + idea.idea_image.img" alt="" />
+                </ng-template>
               </div>
               {{ idea.idea }}
               <!-- <span *ngIf="showUserName">{{ ' by ' + getPersonName(idea.submitting_participant.participant_code) }}</span> -->

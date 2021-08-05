@@ -84,7 +84,8 @@ export const AllowShareActivities = [
 
 export const AllowGroupingActivities = ['CaseStudyActivity'];
 
-export const ActivitySettingsAllowed = ['BrainstormActivity', 'ConvoActivity'];
+// export const ActivitySettingsAllowed = ['BrainstormActivity', 'ConvoActivity'];
+export const ActivitySettingsAllowed = ['BrainstormActivity'];
 
 // export const LayoutTypes = ['leftHalfScreen', 'leftImage', 'fullScreen', 'rightHalfScreen', 'rightImage'];
 export type TitleActivityLayouts =

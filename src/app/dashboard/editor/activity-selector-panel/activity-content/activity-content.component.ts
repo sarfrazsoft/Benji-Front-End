@@ -633,6 +633,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.required = false;
                   mappedField.templateOptions.label = 'Instructions';
                   mappedField.defaultValue = 'Instructions to be provided by the instructor.';
+                } else if (mapSource.field_name === 'deal_number') {
+                  mappedField.templateOptions.label = 'Cards per Participant';
                 } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'auto_next') {

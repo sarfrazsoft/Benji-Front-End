@@ -1,6 +1,8 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
+import { isEmpty } from 'lodash';
 import { ActivitySettingsService } from 'src/app/services';
 import { CardsShuffleEvent } from 'src/app/services/backend/schema';
+import { UtilsService } from 'src/app/services/utils.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -12,13 +14,19 @@ export class MainScreenConvoCardsActivityComponent
   implements OnInit, OnChanges {
   mainTitle = 'Conversation Cards';
   titleText = 'Instructions to be provided by the instructor';
-  constructor(private activitySettingsService: ActivitySettingsService) {
+  showShuffleButton = false;
+  constructor(private activitySettingsService: ActivitySettingsService, private utilsService: UtilsService) {
     super();
   }
 
   ngOnInit(): void {
     this.mainTitle = this.activityState.convoactivity.main_title;
     this.titleText = this.activityState.convoactivity.title_text;
+
+    const participantCards = this.activityState.convoactivity.participant_cards;
+    if (!isEmpty(participantCards)) {
+      this.showShuffleButton = true;
+    }
 
     this.activitySettingsService.settingChange$.subscribe((val) => {
       const dealNumber = this.activityState.convoactivity.deal_number;
@@ -31,5 +39,9 @@ export class MainScreenConvoCardsActivityComponent
   }
   ngOnChanges() {}
 
-  shuffle() {}
+  shuffle() {
+    const dealNumber = this.activityState.convoactivity.deal_number;
+    this.sendMessage.emit(new CardsShuffleEvent(dealNumber));
+    this.utilsService.openSuccessNotification('Cards reshuffled', '');
+  }
 }

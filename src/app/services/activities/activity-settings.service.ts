@@ -37,5 +37,7 @@ export const SETTINGS = {
     // },
     // { type: 'toggle', label: 'Show vote tally' },
   ],
-  convocards: [{ type: 'button', name: 'reshuffle', label: 'Reshuffle Cards' }],
+  convocards: [
+    // { type: 'button', name: 'reshuffle', label: 'Reshuffle Cards' }
+  ],
 };

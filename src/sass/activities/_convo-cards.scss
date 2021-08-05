@@ -88,6 +88,14 @@
   }
 }
 
+.shuffle-button {
+  cursor: pointer;
+  border-radius: 56px;
+  padding: 16px 40px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
 $col-padding: 32px;
 benji-ms-convo-cards-activity,
 benji-ms-sharing-tool {
