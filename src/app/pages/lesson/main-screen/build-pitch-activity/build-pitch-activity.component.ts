@@ -97,7 +97,7 @@ export class MainScreenBuildPitchActivityComponent
 
   getWinningPitch(): string {
     const acts = this.activityState.buildapitchactivity;
-
+    
     return this.buildAPitchService.getPitchText(acts.winning_participant.participant_code, acts, true);
   }
 

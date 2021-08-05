@@ -55,6 +55,7 @@ export class MainScreenBrainstormingActivityComponent
   VnSComplete = false;
   categorizeFlag = false;
   showUserName = true;
+  minWidth = "medium";
   colDeleted = 0;
   joinedUsers = [];
   ideaSubmittedUsersCount = 0;
@@ -89,12 +90,20 @@ export class MainScreenBrainstormingActivityComponent
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
+      if (val && val.controlName === 'cardSize') {
+        this.minWidth = val.state.name;
+        console.log(this.minWidth);
+      }
     });
   }
 
   getPersonName(id: number) {
     const user = this.joinedUsers.find((u) => u.participant_code === id);
     return user.display_name;
+  }
+
+  getMinWidth() {
+    return (this.minWidth === "small" ? 280 : this.minWidth === "medium" ? 360 : 480);
   }
 
   ngOnDestroy() {

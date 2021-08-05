@@ -73,6 +73,7 @@
               cdkDropList
               [cdkDropListData]="column.brainstormidea_set"
               (cdkDropListDropped)="drop($event)"
+              [ngStyle]="{'min-width.px': getMinWidth()}"
             >
               <div class="header" (click)="columnHeaderClicked(column)">
                 <div
@@ -111,7 +112,7 @@
                   />
                 </ng-container>
               </div>
-              <div class="ideas">
+              <div class="ideas" [ngStyle]="{'min-width.px': getMinWidth()}">
                 <div
                   class="brainstorm-idea add-idea-button"
                   (click)="addIdea(column)"
