@@ -23,4 +23,4 @@ export * from './formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
 export * from './formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
 export * from './formly/warppers/field-wrapper/field-wrapper.component';
 
-export * from './safe.pipe';
+export * from '../../../services/safe.pipe';

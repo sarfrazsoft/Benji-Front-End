@@ -337,6 +337,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'video_url') {
+                  mappedField.templateOptions['helpText'] = 'Add youtube or vimeo url';
                 }
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
@@ -829,6 +831,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         } else {
           delete b.quiz_label;
         }
+      } else if (b.activity_type === this.at.video) {
+        b.activity_overview_text = 'x';
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
     });

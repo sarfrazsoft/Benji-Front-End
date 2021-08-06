@@ -46,7 +46,7 @@ import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-
 
 export const EditorComponents = [
   ...ActivitySelectorComponents,
-  SafePipe,
+  // SafePipe,
   OverviewThumbnailComponent,
   EditorComponent,
   BAPEditorTypeComponent,

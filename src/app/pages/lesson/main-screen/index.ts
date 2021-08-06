@@ -1,4 +1,5 @@
 // import { BrainStormComponents } from './brainstorming-activity';
+import { SafePipe } from 'src/app/services/safe.pipe';
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { CaseStudyGroupComponent } from './case-study-activity/case-study-group/case-study-group.component';
@@ -63,4 +64,5 @@ export const MainScreenComponents = [
   MainScreenVideoActivityComponent,
   MainScreenGatherActivityComponent,
   MainScreenImageActivityComponent,
+  SafePipe,
 ];
