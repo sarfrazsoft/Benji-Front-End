@@ -17,6 +17,8 @@ export class MainScreenPopQuizComponent
   revealAnswers = false;
   title = 'Pop Quiz!';
   regularDistribution = 100 / 4;
+  answeredParticipants = [];
+  activeParticipants = [];
 
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
@@ -45,6 +47,8 @@ export class MainScreenPopQuizComponent
       const qTimer = as.mcqactivity.question_timer;
       this.radialTimer = qTimer;
     }
+
+    this.activeParticipants = this.getActiveParticipants();
   }
 
   ngOnChanges() {
@@ -97,6 +101,7 @@ export class MainScreenPopQuizComponent
   }
 
   getChoiceSubmittedUsers() {
+    this.answeredParticipants = this.activityState.mcqactivity.answered_participants;
     return this.activityState.mcqactivity.answered_participants.length;
   }
 

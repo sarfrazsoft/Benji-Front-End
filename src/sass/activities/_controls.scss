@@ -155,3 +155,16 @@ benji-session-navigation {
     width: 28px;
   }
 }
+
+benji-preview-panel .continue-button {
+  right: 16px;
+  bottom: 24px;
+  padding: 12px 20px;
+  .text {
+    font-weight: 500;
+    font-size: 20px;
+  }
+  img {
+    width: 22px;
+  }
+}

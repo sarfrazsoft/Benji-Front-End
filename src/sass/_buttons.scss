@@ -326,4 +326,12 @@ button {
     margin-bottom: 24px;
     padding-top: 16px;
   }
+  .twemoji {
+    img {
+      max-width: 150px;
+    }
+  }
+  .incorrect {
+    text-align: center;
+  }
 }
