@@ -94,8 +94,15 @@ export class ReportsComponent implements OnInit {
 
   downloadCSV() {
     this.pastSessionsService.getCSV(this.lessonRunCode).subscribe((res: Array<ActivityReport>) => {
-      window.open(res['report_path']);
+      this.downloadURI(res['report_path']);
     });
   }
-}
 
+  downloadURI(uri) {
+    const link = document.createElement('a');
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
