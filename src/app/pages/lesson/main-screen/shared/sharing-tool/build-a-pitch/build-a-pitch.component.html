@@ -1,8 +1,18 @@
 <div class="bap-share-ui">
-  <div fxLayout="column">
-    <div class="sharing-label black-color">Sharing now</div>
-    <div class="user-name">
-      {{ getSharingUserName() }}
+  <div class="bap-share-ui" fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="column">
+      <div class="sharing-label black-color">Sharing now</div>
+      <div class="user-name">
+        {{ getSharingUserName() }}
+      </div>
+    </div>
+    <div fxLayout="column">
+      <div class="sharing-label black-color">TIME SHARING</div>
+      <div class="time-sharing">
+        <span *ngIf="getElapsedTime() as elapsed">
+          {{elapsed.minutes < 10 ? "0" + elapsed.minutes : elapsed.minutes}}:{{elapsed.seconds < 10 ? "0" + elapsed.seconds : elapsed.seconds}}
+        </span>
+      </div>
     </div>
   </div>
   <div class="pitch-container">
