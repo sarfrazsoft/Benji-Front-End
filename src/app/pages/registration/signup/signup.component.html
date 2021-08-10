@@ -3,7 +3,7 @@
     <div class="div-block-183">
       <img [src]="logo" loading="lazy" alt="">
       <div class="form-block-8 w-form">
-        <div class="text-block-89">More engaging workshop, one click away!</div>
+        <div class="text-block-89 signup-title">More engaging workshop, one click away!</div>
         <!-- <div (click)="signInWithGoogle()"  class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
           <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
           <div class="google-text">Sign up with Google</div>
@@ -122,6 +122,13 @@
               </div>
             </mat-error>
           </div>
+          <div fxLayout="column" fxLayoutGap="11px">
+            <div class="tos-text" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <mat-checkbox class="example-margin"></mat-checkbox><p>I accept Benji’s <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></p>
+            </div>
+            <mat-checkbox class="example-margin">Keep me up to-date with Benji product updates and other exciting annoucements.</mat-checkbox>
+          </div>
+
           <input type="submit" value="Sign up" data-wait="Please wait..." 
             [style.background-color]="(name.value && email.value && password.value && confirmPassword.value) ? '#555BEA' : '#BDBDBD'" class="submit-button-12 w-button">
         </form>
