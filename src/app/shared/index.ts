@@ -40,6 +40,7 @@ import {
   VoteIdeaComponent,
   VotePitchComponent,
 } from 'src/app/pages/lesson/participant';
+import { SafePipe } from '../services/safe.pipe';
 
 const ActivityComponents = [
   ParticipantFeedbackActivityComponent,
@@ -80,6 +81,7 @@ export const Components = [
   ...Dialogs,
   ...ActivityComponents,
   ...UIComponents,
+  SafePipe,
 ];
 
 export const EntryComponents = [...Dialogs, ...CmpEntryComponents, ...ActivityComponents];
