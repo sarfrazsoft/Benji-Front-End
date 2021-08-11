@@ -18,6 +18,7 @@ export class MainScreenPopQuizComponent
   title = 'Pop Quiz!';
   regularDistribution = 100 / 4;
   answeredParticipants = [];
+  unansweredParticipants = [];
   activeParticipants = [];
 
   @Input() peakBackState = false;
@@ -47,11 +48,14 @@ export class MainScreenPopQuizComponent
       const qTimer = as.mcqactivity.question_timer;
       this.radialTimer = qTimer;
     }
-
-    this.activeParticipants = this.getActiveParticipants();
   }
 
   ngOnChanges() {
+
+    this.activeParticipants = this.getActiveParticipants();
+    this.answeredParticipants = this.activityState.mcqactivity.answered_participants;
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+
     const as = this.activityState;
     const qTimer = as.mcqactivity.question_timer;
     const nt = this.getNextActStartTimer();
@@ -100,8 +104,24 @@ export class MainScreenPopQuizComponent
     }
   }
 
-  getChoiceSubmittedUsers() {
+  loadUserCounts() {
     this.answeredParticipants = this.activityState.mcqactivity.answered_participants;
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  getUnAnsweredUsers() {
+    let answered = [];
+    let active = [];
+    for (let index = 0; index < this.activeParticipants.length; index++) {
+      active.push(this.activeParticipants[index].display_name);
+    }
+    for (let index = 0; index < this.answeredParticipants.length; index++) {
+      answered.push(this.answeredParticipants[index].display_name);
+    }
+    return (active.filter(name => !answered.includes(name)));
+  }
+
+  getChoiceSubmittedUsers() {
     return this.activityState.mcqactivity.answered_participants.length;
   }
 
