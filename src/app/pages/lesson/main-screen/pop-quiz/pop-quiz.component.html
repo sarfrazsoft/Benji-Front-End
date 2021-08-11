@@ -61,8 +61,7 @@
           ></app-radial-timer>
 
           <div class="pn-700 submitted-info primary-color"
-            [matMenuTriggerFor]="participantMenu"
-            (click)="loadUserCounts()">
+            [matMenuTriggerFor]="participantMenu">
             {{ getChoiceSubmittedUsers() }}/{{  getActiveParticipants().length }}
             Submitted
           </div>

@@ -58,6 +58,8 @@ export class MainScreenBrainstormingActivityComponent
   minWidth = "medium";
   colDeleted = 0;
   joinedUsers = [];
+  answeredParticipants = [];
+  unansweredParticipants = [];
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
   ideas = [];
@@ -159,6 +161,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   onChanges() {
+    this.loadUsersCounts();
     const act = this.activityState.brainstormactivity;
     this.act = this.activityState.brainstormactivity;
     if (this.act.brainstormcategory_set.length) {
@@ -234,6 +237,23 @@ export class MainScreenBrainstormingActivityComponent
         snackBarRef.onAction().subscribe(($event) => {});
       }
     }
+  }
+
+  loadUsersCounts() {
+    this.joinedUsers = this.activityState.lesson_run.participant_set;
+    this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
+      this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+    });
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  getUnAnsweredUsers() {
+    let answered = this.answeredParticipants;
+    let active = [];
+    for (let index = 0; index < this.joinedUsers.length; index++) {
+      active.push(this.joinedUsers[index].display_name);
+    }
+    return (active.filter(name => !answered.includes(name)));
   }
 
   isAllSubmissionsComplete(act: BrainstormActivity): boolean {

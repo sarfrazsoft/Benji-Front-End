@@ -51,11 +51,7 @@ export class MainScreenPopQuizComponent
   }
 
   ngOnChanges() {
-
-    this.activeParticipants = this.getActiveParticipants();
-    this.answeredParticipants = this.activityState.mcqactivity.answered_participants;
-    this.unansweredParticipants = this.getUnAnsweredUsers();
-
+    this.loadUsersCounts();
     const as = this.activityState;
     const qTimer = as.mcqactivity.question_timer;
     const nt = this.getNextActStartTimer();
@@ -104,7 +100,8 @@ export class MainScreenPopQuizComponent
     }
   }
 
-  loadUserCounts() {
+  loadUsersCounts() {
+    this.activeParticipants = this.getActiveParticipants();
     this.answeredParticipants = this.activityState.mcqactivity.answered_participants;
     this.unansweredParticipants = this.getUnAnsweredUsers();
   }
