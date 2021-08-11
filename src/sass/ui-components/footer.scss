@@ -113,8 +113,13 @@
   max-width: 100px;
   cursor: pointer;
 }
+
 .mat-menu-panel {
   &.participants-counts-menu {
+    &.centered-align {
+      position: relative;
+      left: 147%;
+    } 
     width: 386px;
     min-width: 386px;
     border-radius: 8px;
@@ -145,4 +150,8 @@
       padding-bottom: 99999px;
     }
   }
+}
+
+.count-info {
+  cursor: pointer;
 }
