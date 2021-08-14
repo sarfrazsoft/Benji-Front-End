@@ -3,9 +3,6 @@
     <div class="b-flat-card__action feedback-card__questions" formArrayName="questions">
       <div class="feedback-card__question-box" *ngFor="let question of questions.controls; let i = index">
         <div [formGroupName]="i">
-          <h2 class="secondary-color-dark pn-500">
-            {{ question_set[i].question_text }}
-          </h2>
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'rating_agreedisagree'">
             <div class="feedback-rating">
@@ -88,6 +85,42 @@
               placeholder="Your comments!"
               class="b-standard-textarea"
             ></textarea>
+          </div>
+
+          <div fxLayout="column"  
+            *ngIf="question_set[i].question_type === 'heart'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" (mouseleave)="mouseoutIcon()">
+              <button mat-icon-button class="question-icon favorite-icon" 
+                *ngFor="let ratingId of heartsArr;index as j" 
+                [id]="'favorite_'+j" 
+                (click)="onClick(i, j)"
+                (mouseover)="mouseoverIcon(j)"
+                [matTooltip]="ratingId" 
+                matTooltipPosition="above">
+                <mat-icon>
+                  {{ showFavouriteIcon(j) }}
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column"  
+            *ngIf="question_set[i].question_type === 'stars'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" (mouseleave)="mouseoutStarIcon()">
+              <button mat-icon-button class="question-icon star-icon" 
+                *ngFor="let ratingId of starsArr;index as j" 
+                [id]="'star_'+j" 
+                (click)="onClickStar(i, j)"
+                (mouseover)="mouseoverStarIcon(j)"
+                [matTooltip]="ratingId+1"
+                matTooltipPosition="above">
+                <mat-icon>
+                  {{ showStarIcon(i) }}
+                </mat-icon>
+              </button>
+            </div>
           </div>
 
           <!-- <div

@@ -32,6 +32,7 @@ import {
   ObjectTypeComponent,
   PollChoiceTypeComponent,
   QuestionTypeSelectComponent,
+  RatingTypeComponent,
   SecondsTypeComponent,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
@@ -63,6 +64,7 @@ export const EditorComponents = [
   PollChoiceTypeComponent,
   FeedbackQuestionTypeComponent,
   QuestionTypeSelectComponent,
+  RatingTypeComponent,
   ConvoCardTypeComponent,
   EditorTypeComponent,
   SecondsTypeComponent,

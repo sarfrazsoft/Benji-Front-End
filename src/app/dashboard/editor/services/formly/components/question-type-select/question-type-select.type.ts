@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, NgZone, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { SelectControlValueAccessor } from '@angular/forms';
 import { FieldType } from '@ngx-formly/core';
 import { take } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './question-type-select.type.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class QuestionTypeSelectComponent extends FieldType {
+export class QuestionTypeSelectComponent extends FieldType implements OnInit {
   defaultOptions = {
     templateOptions: {
       options: [],
@@ -17,6 +17,13 @@ export class QuestionTypeSelectComponent extends FieldType {
       },
     },
   };
+
+  ngOnInit() {
+    this.to['compareWith'] = (o1: any, o2: any) => {
+      return o1 === o2;
+    };
+    console.log(this.to);
+  }
 
   // workaround for https://github.com/angular/angular/issues/10010
   @ViewChild(SelectControlValueAccessor, { static: true }) set selectAccessor(s: any) {

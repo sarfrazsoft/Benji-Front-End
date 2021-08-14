@@ -7,56 +7,109 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
   selector: 'benji-question-form',
   templateUrl: './question-form.component.html',
   styleUrls: ['./question-form.component.scss'],
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
-  //sarfraz
-  @Input('rating') private rating: number = 3;
-  @Input('starCount') private starCount: number = 5;
-  @Input('color') private color: string = 'accent';
+  // sarfraz
+  @Input() private rating = 3;
+  @Input() private starCount = 5;
+  @Input() private color = 'accent';
   @Output() private ratingUpdated = new EventEmitter();
-  
+
   @Output() submitResponse = new EventEmitter();
   sliderValue = 0;
   form: FormGroup;
   selectPills = selectPills;
+
+  heartsArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  starsArr = [1, 2, 3, 4, 5];
+  tempHoverRating = 0;
+
+  tempHoverStarRating = 0;
+  starRating = 0;
   constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
-  private snackBarDuration: number = 2000;
-  private ratingArr = []; //Sarfraz
+  private snackBarDuration = 2000;
+  private ratingArr = []; // Sarfraz
 
   ngOnInit() {
     this.buildForm();
-    //sarfraz
+    // sarfraz
     for (let index = 0; index < this.starCount; index++) {
       this.ratingArr.push(index);
     }
   }
-  //sarfraz
-  onClick(rating:number) {
-    console.log(rating)
-    this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
-      duration: this.snackBarDuration
-    });
-    this.ratingUpdated.emit(rating);
+  // sarfraz
+  onClick(i, rating: number) {
+    console.log(rating);
+    // this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
+    //   duration: this.snackBarDuration,
+    // });
+    // this.ratingUpdated.emit(rating);
+    console.log(this.form.value);
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[i].get('rating_answer').setValue(rating);
+    // this.form.setValue({ questions: [this.form.value.questions[i].rating_answer]  });
+    // this.submitResponse.emit(this.form.value);
     this.rating = rating;
     return false;
   }
-  //sarfraz
-  showStarIcon(index:number) {
-    if (this.rating >= index + 1) {
-      return 'star';
+  onClickStar(i, rating: number) {
+    console.log(rating);
+    // this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
+    //   duration: this.snackBarDuration,
+    // });
+    // this.ratingUpdated.emit(rating);
+
+    // this.submitResponse.emit(this.form.value);
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[i].get('rating_answer').setValue(rating);
+    this.starRating = rating;
+    return false;
+  }
+  // sarfraz
+  showStarIcon(index: number) {
+    if (this.tempHoverStarRating || this.tempHoverStarRating === 0) {
+      if (this.tempHoverStarRating >= index) {
+        return 'star';
+      } else {
+        return 'star_border';
+      }
     } else {
-      return 'star_border';
+      if (this.starRating >= index) {
+        return 'star';
+      } else {
+        return 'star_border';
+      }
     }
   }
-  //sarfraz
-  showFavouriteIcon(index:number) {
-    if (this.rating >= index + 1) {
-      return 'favorite';
+  mouseoverStarIcon(index: number) {
+    this.tempHoverStarRating = index;
+  }
+  mouseoutStarIcon() {
+    this.tempHoverStarRating = null;
+  }
+  mouseoverIcon(index: number) {
+    this.tempHoverRating = index;
+  }
+  mouseoutIcon() {
+    this.tempHoverRating = null;
+  }
+  // sarfraz
+  showFavouriteIcon(index: number) {
+    if (this.tempHoverRating || this.tempHoverRating === 0) {
+      if (this.tempHoverRating >= index) {
+        return 'favorite';
+      } else {
+        return 'favorite_border';
+      }
     } else {
-      return 'favorite_border';
+      if (this.rating >= index) {
+        return 'favorite';
+      } else {
+        return 'favorite_border';
+      }
     }
   }
 

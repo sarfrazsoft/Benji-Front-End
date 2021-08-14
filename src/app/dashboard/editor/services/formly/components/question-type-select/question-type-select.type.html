@@ -1,60 +1,37 @@
-<select
-  *ngIf="to.multiple; else singleSelect"
-  class="form-control"
-  multiple
-  [class.custom-select]="to.customSelect"
-  [formControl]="formControl"
-  [compareWith]="to.compareWith"
-  [class.is-invalid]="showError"
-  [formlyAttributes]="field">
-  <ng-container *ngIf="to.options | formlySelectOptions: field | async as opts">
-    <ng-container *ngIf="to._flatOptions; else grouplist">
-      <ng-container *ngFor="let opt of opts">
-        <option [ngValue]="opt.value" [disabled]="opt.disabled">{{ opt.label }}</option>
-      </ng-container>
-    </ng-container>
-    <ng-template #grouplist>
-      <ng-container *ngFor="let opt of opts">
-        <option *ngIf="!opt.group; else optgroup" [ngValue]="opt.value" [disabled]="opt.disabled">
-          {{ opt.label }}
-        </option>
-        <ng-template #optgroup>
-          <optgroup [label]="opt.label">
-            <option *ngFor="let child of opt.group" [ngValue]="child.value" [disabled]="child.disabled">
-              {{ child.label }}
-            </option>
-          </optgroup>
-        </ng-template>
-      </ng-container>
-    </ng-template>
-  </ng-container>
-</select>
-<ng-template #singleSelect>
 <mat-select
+  #sele
   placeholder="Type"
   class="form-control"
-  [formControl]="formControl"
   [compareWith]="to.compareWith"
   [class.custom-select]="to.customSelect"
   [class.is-invalid]="showError"
-  [formlyAttributes]="field"
   panelClass="selected-panel"
+  [formControl]="formControl"
+  [formlyAttributes]="field"
 >
   <mat-select-trigger>
     <mat-icon *ngIf="formControl.value === 'rating_agreedisagree'">star</mat-icon>
     <mat-icon *ngIf="formControl.value === 'text_only'">format_align_left</mat-icon>
     <mat-icon *ngIf="formControl.value === 'scale'">poll</mat-icon>
     <mat-icon *ngIf="formControl.value === 'multiple_choice'">check</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'stars'">star</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'thumb_up'">thumb_up</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'heart'">favorite</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'emoji'">insert_emoticon</mat-icon>
   </mat-select-trigger>
   <ng-container *ngIf="to.options | formlySelectOptions: field | async as opts">
-    <ng-container *ngIf="to._flatOptions; else grouplist">
+    <ng-container *ngIf="to._flatOptions">
       <ng-container>
-        <!-- <div class="question-type rating-header" fxLayout="row"
-          (click)=rating.open() 
-          fxLayoutAlign="space-between center"> -->
-          <mat-option [value]="'rating_agreedisagree'"> <mat-icon>star</mat-icon> Rating </mat-option>
-          <!-- <mat-icon>keyboard_arrow_right</mat-icon> 
-        </div> -->
+        <div class="question-type rating-header" 
+          [matMenuTriggerFor]="activitySettingsMenu"
+          #activitySettingsMenuTrigger="matMenuTrigger"
+          benji-click-stop-propagation>
+          <mat-option [value]="formControl.value"> 
+            <mat-icon>star</mat-icon> 
+            Rating 
+            <mat-icon>keyboard_arrow_right</mat-icon> 
+          </mat-option>
+        </div>
         <mat-option [value]="'text_only'">
           <mat-icon>format_align_left</mat-icon> Long text
         </mat-option>
@@ -66,56 +43,73 @@
         </mat-option> -->
       </ng-container>
     </ng-container>
-    <ng-template #grouplist>
-      <ng-container *ngFor="let opt of opts">
-        <option *ngIf="!opt.group; else optgroup" [ngValue]="opt.value" [disabled]="opt.disabled">
-          {{ opt.label }}
-        </option>
-        <ng-template #optgroup>
-          <optgroup [label]="opt.label">
-            <option *ngFor="let child of opt.group" [ngValue]="child.value" [disabled]="child.disabled">
-              {{ child.label }}
-            </option>
-          </optgroup>
-        </ng-template>
-      </ng-container>
-    </ng-template>
   </ng-container>
 </mat-select>
-</ng-template>
-<!--Opper mahin hay-->
-<!-- <mat-select #rating [(value)]="selected" panelClass="selected-panel rating">
-  <div class="question-type rating-header" fxLayout="row"
-  (click)=rating.open() 
-  fxLayoutAlign="space-between center">
-    <mat-option [value]="'rating_agreedisagree'" disabled> <mat-icon>star</mat-icon> Rating </mat-option>
-    <mat-icon>keyboard_arrow_right</mat-icon> 
-  </div>
-  <div class="settings">
-    <div fxLayout="row" fxLayoutAlign="space-between center" >
-      <mat-label>Required</mat-label>
-      <mat-slide-toggle ngModel name="required"></mat-slide-toggle>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" >
-      <mat-label>Options</mat-label>
-      <select matNativeControl required>
-        <option value="volvo">3</option>
-        <option value="saab">4</option>
-        <option value="mercedes">5</option>
-        <option value="audi">6</option>
-      </select>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center" >
-      <mat-label>Icon</mat-label>
-      <select matNativeControl required>
-        <option value="volvo">Star</option>
-        <option value="saab">Circle</option>
-      </select>
-    </div>
-  </div>
-</mat-select>
 
-<mat-select #scale [(value)]="selected" panelClass="selected-panel scale">
+<!-- Different options -->
+<mat-menu 
+  class="activity-settings-menu" 
+  #activitySettingsMenu="matMenu" 
+  yPosition="below"
+  [overlapTrigger]="true">
+  <div #rating panelClass="selected-panel rating">
+    <div class="question-type rating-header" fxLayout="row"
+      (click)="sele.open()"
+      fxLayoutAlign="space-between center">
+      <mat-option> 
+        <mat-icon>keyboard_arrow_left</mat-icon> 
+        <mat-icon>star</mat-icon> 
+        Rating 
+      </mat-option>
+    </div>
+    <div class="settings" benji-click-stop-propagation>
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-label>Required</mat-label>
+        <mat-slide-toggle ngModel name="required"></mat-slide-toggle>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-select
+        #sele
+        placeholder="Type"
+        class="form-control"
+        [formControl]="formControl"
+        [formlyAttributes]="field"
+        [compareWith]="to.compareWith"
+        [class.custom-select]="to.customSelect"
+        [class.is-invalid]="showError"
+        panelClass="selected-panel"
+      >
+        <mat-select-trigger>
+          <mat-icon *ngIf="formControl.value === 'stars'">star</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'thumb_up'">thumb_up</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'heart'">favorite</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'emoji'">insert_emoticon</mat-icon>
+        </mat-select-trigger>
+        <ng-container *ngIf="to.options | formlySelectOptions: field | async as opts">
+          <ng-container *ngIf="to._flatOptions">
+            <ng-container>
+              <mat-option [value]="'stars'">
+                <mat-icon>star</mat-icon> Stars
+              </mat-option>
+              <mat-option [value]="'thumb_up'">
+                <mat-icon>poll</mat-icon> Thums up 
+              </mat-option>
+              <mat-option [value]="'heart'">
+                <mat-icon>favorite</mat-icon> Heart
+              </mat-option>
+              <mat-option [value]="'emoji'">
+                <mat-icon>insert_emoticon</mat-icon> Emoji
+              </mat-option>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </mat-select>
+      </div>
+    </div>
+  </div>
+</mat-menu>
+
+<!-- <mat-select #scale [(value)]="selected" panelClass="selected-panel scale">
   <div class="question-type scale-header" fxLayout="row"
   fxLayoutAlign="space-between center">
     <mat-option [value]="'scale'" disabled> <mat-icon>poll</mat-icon> Scale </mat-option>
@@ -149,10 +143,10 @@
     <mat-label fxLayout="row" class="label">High-value label</mat-label>
     <input matInput >
   </div>
-</mat-select>
+</mat-select> -->
 
 
-<mat-select #multi [(value)]="selected" panelClass="selected-panel multi">
+<!-- <mat-select #multi [(value)]="selected" panelClass="selected-panel multi">
   <div class="question-type multi-header" fxLayout="row"
   fxLayoutAlign="space-between center">
     <mat-option [value]="'multiple_choice'" disabled> <mat-icon>check</mat-icon> Multiple Choice </mat-option>

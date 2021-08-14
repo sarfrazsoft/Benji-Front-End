@@ -1,0 +1,41 @@
+<mat-menu 
+  class="activity-settings-menu" 
+  #activitySettingsMenu="matMenu" 
+  yPosition="below"
+  [overlapTrigger]="true">
+  <div #rating panelClass="selected-panel rating">
+    <div class="question-type rating-header" fxLayout="row"
+      (click)="sele.open()"
+      fxLayoutAlign="space-between center">
+      <mat-option disabled> 
+        <mat-icon>star</mat-icon> 
+        Rating 
+      </mat-option>
+      <mat-icon>keyboard_arrow_right</mat-icon> 
+    </div>
+    <div class="settings" benji-click-stop-propagation>
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-label>Required</mat-label>
+        <mat-slide-toggle ngModel name="required"></mat-slide-toggle>
+      </div>
+      <!-- <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-label>Options</mat-label>
+        <select matNativeControl required>
+          <option value="volvo">3</option>
+          <option value="saab">4</option>
+          <option value="mercedes">5</option>
+          <option value="audi">6</option>
+        </select>
+      </div> -->
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-label>Type</mat-label>
+        <select matNativeControl required>
+          <option value="volvo">Stars</option>
+          <option value="saab">Thums up</option>
+          <option value="saab">Heart</option>
+          <option value="saab">Emoji</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</mat-menu>

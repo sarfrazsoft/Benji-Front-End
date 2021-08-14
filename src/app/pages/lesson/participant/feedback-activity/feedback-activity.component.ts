@@ -35,8 +35,13 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
 
   submitAnswers(val) {
     const answers: Array<FeedbackSubmitEventAnswer> = [];
+    console.log(val);
     for (let i = 0; i < val.questions.length; i++) {
-      if (val.questions[i].question_type === 'rating_agreedisagree') {
+      if (
+        val.questions[i].question_type === 'rating_agreedisagree' ||
+        val.questions[i].question_type === 'stars' ||
+        val.questions[i].question_type === 'heart'
+      ) {
         const ans = new FeedbackSubmitEventAnswer(
           val.questions[i].q,
           val.questions[i].rating_answer,
