@@ -11,11 +11,9 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
-  // sarfraz
-  private rating = 3;
-  @Input() private starCount = 5;
-  @Input() private color = 'accent';
-  @Output() private ratingUpdated = new EventEmitter();
+  heartRating = 0;
+  emojiRating = 0;
+  thumbRating;
 
   @Output() submitResponse = new EventEmitter();
   sliderValue = 0;
@@ -24,36 +22,25 @@ export class QuestionFormComponent implements OnInit, OnChanges {
 
   heartsArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   starsArr = [1, 2, 3, 4, 5];
-  tempHoverRating = 0;
+  tempHoverHeartRating = 0;
 
   tempHoverStarRating = 0;
   starRating = 0;
   constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
-  private snackBarDuration = 2000;
-  private ratingArr = []; // Sarfraz
-
   ngOnInit() {
     this.buildForm();
-    // sarfraz
-    for (let index = 0; index < this.starCount; index++) {
-      this.ratingArr.push(index);
-    }
   }
-  // sarfraz
+
   onClickHeart(questionIndex: number, rating: number) {
-    const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[questionIndex].get('rating_answer').setValue(rating);
-    this.rating = rating;
-    return false;
+    this.setRating(questionIndex, rating);
+    this.heartRating = rating;
   }
   onClickStar(questionIndex: number, rating: number) {
-    const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[questionIndex].get('rating_answer').setValue(rating);
+    this.setRating(questionIndex, rating);
     this.starRating = rating;
-    return false;
   }
-  // sarfraz
+
   showStarIcon(index: number) {
     if (this.tempHoverStarRating || this.tempHoverStarRating === 0) {
       if (this.tempHoverStarRating >= index) {
@@ -69,33 +56,54 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       }
     }
   }
+
   mouseoverStarIcon(index: number) {
     this.tempHoverStarRating = index;
   }
+
   mouseoutStarIcon() {
     this.tempHoverStarRating = null;
   }
+
   mouseoverIcon(index: number) {
-    this.tempHoverRating = index;
+    this.tempHoverHeartRating = index;
   }
+
   mouseoutIcon() {
-    this.tempHoverRating = null;
+    this.tempHoverHeartRating = null;
   }
-  // sarfraz
+
   showFavouriteIcon(index: number) {
-    if (this.tempHoverRating || this.tempHoverRating === 0) {
-      if (this.tempHoverRating >= index) {
+    if (this.tempHoverHeartRating || this.tempHoverHeartRating === 0) {
+      if (this.tempHoverHeartRating >= index) {
         return 'favorite';
       } else {
         return 'favorite_border';
       }
     } else {
-      if (this.rating >= index) {
+      if (this.heartRating >= index) {
         return 'favorite';
       } else {
         return 'favorite_border';
       }
     }
+  }
+
+  // for Emoji type question
+  onSentimentClick(questionIndex: number, sentiment: number) {
+    this.setRating(questionIndex, sentiment);
+    this.emojiRating = sentiment;
+  }
+
+  // for Thumbs up type questions
+  onThumbClick(questionIndex: number, sentiment: number) {
+    this.setRating(questionIndex, sentiment);
+    this.thumbRating = sentiment;
+  }
+
+  setRating(questionIndex: number, sentiment: number) {
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[questionIndex].get('rating_answer').setValue(sentiment);
   }
 
   ngOnChanges() {

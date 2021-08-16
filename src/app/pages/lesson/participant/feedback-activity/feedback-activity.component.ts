@@ -40,7 +40,9 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
       if (
         val.questions[i].question_type === 'rating_agreedisagree' ||
         val.questions[i].question_type === 'stars' ||
-        val.questions[i].question_type === 'heart'
+        val.questions[i].question_type === 'heart' ||
+        val.questions[i].question_type === 'emoji' ||
+        val.questions[i].question_type === 'thumb_up'
       ) {
         const ans = new FeedbackSubmitEventAnswer(
           val.questions[i].q,

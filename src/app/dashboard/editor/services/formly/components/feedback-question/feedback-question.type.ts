@@ -37,11 +37,12 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
           //   label: '<mat-icon>check</mat-icon> Multiple Choice'
           // },
         ];
-        console.log(val);
         this.typeField = val;
         this.typeField.templateOptions.label = null;
         this.typeField.templateOptions.required = false;
         this.typeField.type = 'questionTypeSelect';
+      } else if (val.key === 'question_json') {
+        console.log(val);
       }
     });
   }

@@ -87,8 +87,7 @@
             ></textarea>
           </div>
 
-          <div fxLayout="column"  
-            *ngIf="question_set[i].question_type === 'heart'">
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'heart'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" (mouseleave)="mouseoutIcon()">
               <button mat-icon-button class="question-icon favorite-icon" 
@@ -105,8 +104,7 @@
             </div>
           </div>
 
-          <div fxLayout="column"  
-            *ngIf="question_set[i].question_type === 'stars'">
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'stars'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" (mouseleave)="mouseoutStarIcon()">
               <button mat-icon-button class="question-icon star-icon" 
@@ -114,10 +112,10 @@
                 [id]="'star_'+j" 
                 (click)="onClickStar(i, j)"
                 (mouseover)="mouseoverStarIcon(j)"
-                [matTooltip]="ratingId+1"
+                [matTooltip]="ratingId"
                 matTooltipPosition="above">
                 <mat-icon>
-                  {{ showStarIcon(i) }}
+                  {{ showStarIcon(j) }}
                 </mat-icon>
               </button>
             </div>
@@ -126,29 +124,45 @@
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'emoji'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" fxLayoutAlign="start center">
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(1)">
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)">
                 <mat-icon>
                   sentiment_very_dissatisfied
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(2)">
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)">
                 <mat-icon>
                   sentiment_dissatisfied
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(3)">
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)">
                 <mat-icon>
                   sentiment_neutral
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(4)">
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)">
                 <mat-icon>
                   sentiment_satisfied
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(5)">
+              <button mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)">
                 <mat-icon>
                   sentiment_very_satisfied
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'thumb_up'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <button mat-icon-button class="question-icon thumb" (click)="onThumbClick(i, 1)">
+                <mat-icon>
+                  thumb_up
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="question-icon thumb selected" (click)="onThumbClick(i, 0)">
+                <mat-icon>
+                  thumb_down
                 </mat-icon>
               </button>
             </div>
