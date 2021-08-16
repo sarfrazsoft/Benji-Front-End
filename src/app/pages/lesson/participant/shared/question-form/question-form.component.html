@@ -94,7 +94,7 @@
               <button mat-icon-button class="question-icon favorite-icon" 
                 *ngFor="let ratingId of heartsArr;index as j" 
                 [id]="'favorite_'+j" 
-                (click)="onClick(i, j)"
+                (click)="onClickHeart(i, j)"
                 (mouseover)="mouseoverIcon(j)"
                 [matTooltip]="ratingId" 
                 matTooltipPosition="above">
@@ -118,6 +118,37 @@
                 matTooltipPosition="above">
                 <mat-icon>
                   {{ showStarIcon(i) }}
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'emoji'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(1)">
+                <mat-icon>
+                  sentiment_very_dissatisfied
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(2)">
+                <mat-icon>
+                  sentiment_dissatisfied
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(3)">
+                <mat-icon>
+                  sentiment_neutral
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(4)">
+                <mat-icon>
+                  sentiment_satisfied
+                </mat-icon>
+              </button>
+              <button mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(5)">
+                <mat-icon>
+                  sentiment_very_satisfied
                 </mat-icon>
               </button>
             </div>

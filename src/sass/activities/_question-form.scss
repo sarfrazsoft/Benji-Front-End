@@ -63,11 +63,12 @@ benji-question-form {
       }
       button.question-icon {
         width: auto;
+        margin: 0px;
         margin-right: 8px;
         mat-icon {
-          height: 20px;
-          width: 20px;
-          font-size: 20px;
+          height: 22px;
+          width: 22px;
+          font-size: 22px;
         }
       }
     }

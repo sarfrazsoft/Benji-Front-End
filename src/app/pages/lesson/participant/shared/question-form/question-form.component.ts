@@ -12,7 +12,7 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
   // sarfraz
-  @Input() private rating = 3;
+  private rating = 3;
   @Input() private starCount = 5;
   @Input() private color = 'accent';
   @Output() private ratingUpdated = new EventEmitter();
@@ -41,30 +41,15 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     }
   }
   // sarfraz
-  onClick(i, rating: number) {
-    console.log(rating);
-    // this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
-    //   duration: this.snackBarDuration,
-    // });
-    // this.ratingUpdated.emit(rating);
-    console.log(this.form.value);
+  onClickHeart(questionIndex: number, rating: number) {
     const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[i].get('rating_answer').setValue(rating);
-    // this.form.setValue({ questions: [this.form.value.questions[i].rating_answer]  });
-    // this.submitResponse.emit(this.form.value);
+    controlArray.controls[questionIndex].get('rating_answer').setValue(rating);
     this.rating = rating;
     return false;
   }
-  onClickStar(i, rating: number) {
-    console.log(rating);
-    // this.snackBar.open('You rated ' + rating + ' / ' + this.starCount, '', {
-    //   duration: this.snackBarDuration,
-    // });
-    // this.ratingUpdated.emit(rating);
-
-    // this.submitResponse.emit(this.form.value);
+  onClickStar(questionIndex: number, rating: number) {
     const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[i].get('rating_answer').setValue(rating);
+    controlArray.controls[questionIndex].get('rating_answer').setValue(rating);
     this.starRating = rating;
     return false;
   }
