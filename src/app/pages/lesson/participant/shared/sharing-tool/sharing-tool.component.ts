@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import {
   ParticipantOptInEvent,
   ParticipantOptOutEvent,
+  SubmitSharingParticipantCommentEvent,
+  SubmitSharingParticipantReactionEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
@@ -40,5 +42,13 @@ export class ParticipantSharingToolComponent implements OnInit, OnChanges {
 
   optOut() {
     this.sendMessage.emit(new ParticipantOptOutEvent());
+  }
+
+  handleReaction(reaction: string) {
+    this.sendMessage.emit(new SubmitSharingParticipantReactionEvent(reaction));
+  }
+
+  handleComment(comment: string) {
+    this.sendMessage.emit(new SubmitSharingParticipantCommentEvent(comment));
   }
 }

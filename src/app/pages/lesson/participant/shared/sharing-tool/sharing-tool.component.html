@@ -1,6 +1,6 @@
 <div class="participant-sharing-ui" fxLayoutAlign="center center">
   <div class="opt-in-out" fxLayoutAlign="center center">
-    <div fxLayout="row" class="sharing-tools" fxLayoutGap="32px" fxLayoutAlign="center center">
+    <div fxLayout="row" class="sharing-tools" fxLayoutGap="48px" fxLayoutAlign="center center">
       <div fxLayout="row" class="hands trigger" fxLayoutAlign="center center">
         <ng-container *ngIf="!amISharing()">
           <div fxLayout="column"
@@ -37,6 +37,7 @@
           </div>
         </ng-container>
       </div>
+
       <div fxLayout="row" class="comment trigger" fxLayoutAlign="center center" [matMenuTriggerFor]="commentMenu" #cmt="matMenuTrigger">
         <ng-container *ngIf="!cmt.menuOpen">
           <div fxLayout="column"
@@ -61,31 +62,31 @@
       </div>
     </div>
     <mat-menu #reactionMenu="matMenu" class="reaction-menu">
-      <div fxLayout="column" fxLayoutGap="6px">
+      <div benji-click-stop-propagation fxLayout="column" fxLayoutGap="6px">
         <div fxLayout="row" fxLayoutGap="8px">
-          <div class="reaction">
+          <div class="reaction" (click)="handleReaction('star_eyes')">
             <img src="/assets/img/starred-smiley.svg">
           </div>
-          <div class="reaction">
+          <div class="reaction" (click)="handleReaction('amazing')">
             <img src="/assets/img/starred-smiley.svg">
             <span fxLayoutAlign="center center">Amazing</span>
           </div>
         </div>
         <div fxLayout="row" fxLayoutGap="8px">
-          <div class="reaction">
+          <div class="reaction" (click)="handleReaction('could_be_better')">
             <img src="/assets/img/flash-reaction.svg">
             <span fxLayoutAlign="center center">Could be a bit better</span>
           </div>
         </div>
       </div>
     </mat-menu>
-    <mat-menu #commentMenu="matMenu" class="comment-menu">
-      <form action="" fxLayout="row" fxLayoutGap="5px">
-        <input type="text">
-        <button class="" type="submit" fxLayoutAlign="center center">
+    <mat-menu #commentMenu="matMenu" class="comment-menu" >
+      <div benji-click-stop-propagation action="" fxLayout="row" fxLayoutGap="5px">
+        <input type="text" #comment>
+        <button class="" type="submit" fxLayoutAlign="center center" (click)="handleComment(comment.value)">
           <img class="" src="/assets/img/submit-arrow.svg" alt="">
         </button>
-      </form>
+      </div>
     </mat-menu>
   </div>
 </div>

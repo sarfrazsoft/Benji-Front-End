@@ -348,6 +348,22 @@ export class ParticipantOptOutEvent extends ActivityEvent {
   event_name = 'ParticipantOptOutEvent';
 }
 
+export class SubmitSharingParticipantCommentEvent extends ActivityEvent {
+  event_name = 'SubmitSharingParticipantCommentEvent';
+  constructor(comment: string) {
+    super();
+    this.extra_args = { text: comment };
+  }
+}
+
+export class SubmitSharingParticipantReactionEvent extends ActivityEvent {
+  event_name = 'SubmitSharingParticipantReactionEvent';
+  constructor(reaction: string) {
+    super();
+    this.extra_args = { reaction: reaction };
+  }
+}
+
 export class SelectParticipantForShareEvent extends ActivityEvent {
   event_name = 'SelectParticipantForShareEvent';
   constructor(userId: number) {
