@@ -62,11 +62,14 @@
   &.comment-menu {
     min-height: unset;
     margin-top: 16px;
+    width: 245px;
     .mat-menu-content:not(:empty){
       padding: 8px;
       input {
         height: 32px;
+        width: 174px;
         border: 1px solid #e7e7e7;
+        padding: 0px 8px;
         &:active, &:focus-visible {
           border: 1px solid $primary-color;
           outline: unset;
@@ -78,5 +81,12 @@
         background: $primary-color;
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-menu-panel.reaction-menu {
+    position: absolute;
+    left: -96px;
   }
 }

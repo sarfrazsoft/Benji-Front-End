@@ -51,4 +51,5 @@ export class ParticipantSharingToolComponent implements OnInit, OnChanges {
   handleComment(comment: string) {
     this.sendMessage.emit(new SubmitSharingParticipantCommentEvent(comment));
   }
+  
 }
