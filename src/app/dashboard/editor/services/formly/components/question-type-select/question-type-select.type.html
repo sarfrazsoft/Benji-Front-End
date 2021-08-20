@@ -35,12 +35,20 @@
         <mat-option [value]="'text_only'">
           <mat-icon>format_align_left</mat-icon> Long text
         </mat-option>
-        <!-- <mat-option [value]="'scale'" (click)=scale.open()>
-          <mat-icon>poll</mat-icon> Scale 
+        <mat-option 
+          [value]="'scale'" 
+          [matMenuTriggerFor]="scaleMenu"
+          #scaleMenuTrigger="matMenuTrigger"
+          benji-click-stop-propagation>
+          <mat-icon>poll</mat-icon> Scale
+          <mat-icon>keyboard_arrow_right</mat-icon> 
         </mat-option>
-        <mat-option [value]="'multiple_choice'" (click)=multi.open()>
+        <mat-option [value]="'multiple_choice'" 
+          [matMenuTriggerFor]="mcqMenu"
+          #mcqMenuTrigger="matMenuTrigger"
+          benji-click-stop-propagation>
           <mat-icon>check</mat-icon> Multi Select
-        </mat-option> -->
+        </mat-option>
       </ng-container>
     </ng-container>
   </ng-container>
@@ -109,6 +117,112 @@
   </div>
 </mat-menu>
 
+<mat-menu 
+  class="activity-settings-menu scale-feedback-question" 
+  #scaleMenu="matMenu" 
+  yPosition="below"
+  [overlapTrigger]="true">
+  <div #rating panelClass="selected-panel rating">
+    <div class="question-type rating-header" fxLayout="row"
+      (click)="sele.open()"
+      fxLayoutAlign="space-between center">
+      <mat-option> 
+        <mat-icon>keyboard_arrow_left</mat-icon> 
+        <mat-icon>star</mat-icon> 
+        Scale 
+      </mat-option>
+    </div>
+    <div class="settings scale-body" benji-click-stop-propagation>
+      <form [formGroup]="scaleForm">
+        <div fxLayout="row" fxLayoutAlign="space-between center" >
+          <mat-label>Required</mat-label>
+          <mat-slide-toggle name="required"></mat-slide-toggle>
+        </div>
+        <mat-label fxLayout="row" class="label">Value range</mat-label>
+        <div formGroupName="scale_json" fxLayout="column" fxLayoutGap="8px">
+          <div fxLayout="row" fxLayoutGap="8px">
+            <ng-select
+              class="scale-range-dropdown"
+              appearance="outline" 
+              placeholder="from"
+              [clearable]="false"
+              formControlName="from"
+              [searchable]="false"
+              [clearable]="false"
+              [items]="scaleRangeDropdown"
+              dropdownPosition="bottom">
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <span> {{item}} </span>
+              </ng-template>
+            </ng-select>
+            <div> To </div>
+            <ng-select
+              class="scale-range-dropdown"
+              appearance="outline" 
+              placeholder="to"
+              [clearable]="false"
+              formControlName="to"
+              [searchable]="false"
+              [clearable]="false"
+              [items]="scaleRangeDropdown"
+              dropdownPosition="bottom">
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <span> {{ item }} </span>
+              </ng-template>
+            </ng-select>
+          </div>
+          <div formArrayName="labels" fxLayout="column" fxLayoutGap="8px">
+            <div *ngFor="let label of labelsFormArray.controls; let i = index;">
+              <mat-label fxLayout="row" class="label">
+                {{ scaleLabels[i] }}
+              </mat-label>
+              <input matInput [formControlName]="i">
+            </div>
+          </div>
+        </div> 
+      </form>
+    </div>
+  </div>
+</mat-menu>
+
+
+<mat-menu 
+  class="activity-settings-menu scale-feedback-question" 
+  #mcqMenu="matMenu" 
+  yPosition="below"
+  [overlapTrigger]="true">
+  <div class="question-type multi-header" 
+    fxLayout="row"
+    fxLayoutAlign="space-between center">
+    <mat-option [value]="'multiple_choice'" disabled> 
+      <mat-icon>check</mat-icon> Multiple Choice </mat-option>
+    <mat-icon>keyboard_arrow_right</mat-icon> 
+  </div>
+  <div class="settings multi-body" benji-click-stop-propagation>
+    <form [formGroup]="mcqForm">
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-label>Required</mat-label>
+        <mat-slide-toggle formControlName="required"></mat-slide-toggle>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <mat-label>Multiple Selection</mat-label>
+        <mat-slide-toggle formControlName="multiSelect"></mat-slide-toggle>
+      </div>
+      <mat-label class="label">Choices</mat-label>
+      <div formArrayName="mcqchoices">
+        <div 
+          *ngFor="let label of choicesFormArray.controls; let j = index;" 
+          [formGroupName]="j">
+          <input matInput formControlName="choice_text">
+          <button type="button" (click)="removeMcqChoice(j)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+    <a class="add-choice" (click)="addMCQchoice()">+ Add choice</a>
+  </div>
+</mat-menu>
 <!-- <mat-select #scale [(value)]="selected" panelClass="selected-panel scale">
   <div class="question-type scale-header" fxLayout="row"
   fxLayoutAlign="space-between center">

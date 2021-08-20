@@ -58,7 +58,14 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
           val.questions[i].text_answer
         );
         answers.push(ans);
+      } else if (val.questions[i].question_type === 'multiple_choice') {
+        const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].mcq_answer);
+        answers.push(ans);
+      } else if (val.questions[i].question_type === 'scale') {
+        const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].scale_answer);
+        answers.push(ans);
       }
+
       // if (val.questions[i].question_type === 'scale') {
       //   const ans = new FeedbackSubmitEventAnswer(
       //     val.questions[i].q,

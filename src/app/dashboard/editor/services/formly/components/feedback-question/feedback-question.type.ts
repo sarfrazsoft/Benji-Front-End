@@ -11,6 +11,8 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
   typeField: FormlyFieldConfig;
   comboTextField: FormlyFieldConfig;
 
+  questionJsonField: FormlyFieldConfig;
+
   ngOnInit() {
     this.field.fieldGroup.forEach((val, i) => {
       if (val.key === 'question_text') {
@@ -43,6 +45,7 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
         this.typeField.type = 'questionTypeSelect';
       } else if (val.key === 'question_json') {
         console.log(val);
+        this.questionJsonField = val;
       }
     });
   }

@@ -26,10 +26,54 @@ export class QuestionFormComponent implements OnInit, OnChanges {
 
   tempHoverStarRating = 0;
   starRating = 0;
+
+  identifier = ['A', 'B', 'C', 'D', 'E'];
   constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.buildForm();
+  }
+
+  ngOnChanges() {
+    // check if the questions have ids
+    // questions coming from editor don't have ids
+    if (this.question_set.length && this.question_set[0].id) {
+      this.question_set.sort((a, b) => a.id - b.id);
+    }
+  }
+
+  buildForm() {
+    this.form = this.builder.group({
+      questions: this.builder.array([]),
+    });
+
+    for (let i = 0; i < this.question_set.length; i++) {
+      const question = this.question_set[i];
+      this.addItem(question);
+    }
+  }
+
+  addItem(q: FeedbackQuestion): void {
+    const questions = this.form.get('questions') as FormArray;
+    questions.push(this.createQuestion(q));
+  }
+
+  createQuestion(q: FeedbackQuestion): FormGroup {
+    return this.builder.group(
+      {
+        q: q,
+        question_type: q.question_type,
+        rating_answer: null,
+        text_answer: null,
+        scale_answer: null,
+        mcq_answer: null,
+      },
+      {
+        validator: (formGroup: FormGroup) => {
+          return this.validateForm(formGroup);
+        },
+      }
+    );
   }
 
   onClickHeart(questionIndex: number, rating: number) {
@@ -106,52 +150,18 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     controlArray.controls[questionIndex].get('rating_answer').setValue(sentiment);
   }
 
-  ngOnChanges() {
-    // check if the questions have ids
-    // questions coming from editor don't have ids
-    if (this.question_set.length && this.question_set[0].id) {
-      this.question_set.sort((a, b) => a.id - b.id);
-    }
-  }
-
-  buildForm() {
-    this.form = this.builder.group({
-      questions: this.builder.array([]),
-    });
-
-    for (let i = 0; i < this.question_set.length; i++) {
-      const question = this.question_set[i];
-      this.addItem(question);
-    }
-  }
-
-  createQuestion(q: FeedbackQuestion): FormGroup {
-    return this.builder.group(
-      {
-        q: q,
-        question_type: q.question_type,
-        rating_answer: null,
-        text_answer: null,
-      },
-      {
-        validator: (formGroup: FormGroup) => {
-          return this.validateForm(formGroup);
-        },
-      }
-    );
-  }
-
-  addItem(q: FeedbackQuestion): void {
-    const questions = this.form.get('questions') as FormArray;
-    questions.push(this.createQuestion(q));
-  }
-
   get questions() {
     return this.form.get('questions') as FormArray;
   }
 
   validateForm(formgroup: FormGroup) {
-    if (formgroup.controls['rating_answer'].value || formgroup.controls['text_answer'].value) {
+    if (
+      formgroup.controls['rating_answer'].value ||
+      formgroup.controls['rating_answer'].value === 0 ||
+      formgroup.controls['text_answer'].value ||
+      formgroup.controls['scale_answer'].value ||
+      formgroup.controls['mcq_answer'].value
+    ) {
       return null;
     } else {
       return { validateForm: true };
@@ -163,7 +173,6 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       const val = this.form.value;
       this.submitResponse.emit(val);
     }
-    // console.log(this.selectPills);
   }
 
   selectPill(pill) {
@@ -190,6 +199,29 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       'I can\'t wait for the next one',
     ];
     return sliderTexts[Math.floor((this.sliderValue / 100) * sliderTexts.length)];
+  }
+
+  getScaleMin(question) {
+    if (question.question_json && question.question_json.scale_json) {
+      return question.question_json.scale_json.from;
+    }
+  }
+
+  getScaleMax(question) {
+    if (question.question_json && question.question_json.scale_json) {
+      return question.question_json.scale_json.to;
+    }
+  }
+
+  getScaleLabels(question) {
+    if (question.question_json && question.question_json.scale_json) {
+      return question.question_json.scale_json.labels;
+    }
+  }
+
+  scaleChanged(value, questionIndex) {
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[questionIndex].get('scale_answer').setValue(value.value);
   }
 }
 
