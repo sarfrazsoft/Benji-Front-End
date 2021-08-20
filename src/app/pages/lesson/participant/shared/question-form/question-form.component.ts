@@ -223,6 +223,11 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     const controlArray = <FormArray>this.form.get('questions');
     controlArray.controls[questionIndex].get('scale_answer').setValue(value.value);
   }
+
+  mcqChoiceSelect(questionIndex: number, selectedChoice: number) {
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[questionIndex].get('mcq_answer').setValue(selectedChoice);
+  }
 }
 
 export const selectPills = [

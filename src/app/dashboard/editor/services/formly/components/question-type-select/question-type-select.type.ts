@@ -81,6 +81,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
 
     this.scaleForm = this.formBuilder.group({
       question_type: new FormControl('scale'),
+      required: new FormControl(false),
       scale_json: this.formBuilder.group({
         from: new FormControl(0),
         to: new FormControl(100),

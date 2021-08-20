@@ -73,7 +73,7 @@
     <div class="settings" benji-click-stop-propagation>
       <div fxLayout="row" fxLayoutAlign="space-between center" >
         <mat-label>Required</mat-label>
-        <mat-slide-toggle ngModel name="required"></mat-slide-toggle>
+        <mat-slide-toggle (change)="ratingTypeRequiredChanged($event)"></mat-slide-toggle>
       </div>
       <div fxLayout="row" fxLayoutAlign="space-between center" >
         <mat-select
@@ -136,7 +136,7 @@
       <form [formGroup]="scaleForm">
         <div fxLayout="row" fxLayoutAlign="space-between center" >
           <mat-label>Required</mat-label>
-          <mat-slide-toggle name="required"></mat-slide-toggle>
+          <mat-slide-toggle formControlName="required"></mat-slide-toggle>
         </div>
         <mat-label fxLayout="row" class="label">Value range</mat-label>
         <div formGroupName="scale_json" fxLayout="column" fxLayoutGap="8px">

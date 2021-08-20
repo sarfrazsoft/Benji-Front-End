@@ -196,7 +196,9 @@
             <div class="choices-container">
               <div class="sub-title" *ngIf="question_set[i].question_json.multiSelect">Choose as many as you like</div>
               <div class="choices">
-                <div class="option" *ngFor="let choice of question_set[i].question_json.mcqchoices; let j = index">
+                <div class="option" 
+                  *ngFor="let choice of question_set[i].question_json.mcqchoices; let j = index"
+                  (click)="mcqChoiceSelect(i, j)">
                   <div fxLayout="row" fxLayoutGap="8px">
                     <span>{{ identifier[j] }}</span>
                     <span>
