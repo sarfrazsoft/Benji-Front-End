@@ -46,9 +46,44 @@
         </div>
       </div>
     </div>
-    <div fxFlex="34%">
+    <div fxFlex="34%" class="speakers-feedback">
+      <!--Starts-->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="black-color">
+            Speaker Queue
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="speaker-list">
+          <div 
+            class="name-row" 
+            fxLayout="row" 
+            fxLayoutGap="24px"
+            fxLayoutAlign="start center"
+            *ngFor="let speaker of speakers; index as i"
+            [ngClass]="{
+              'current-speaker': i === currentSpeakerIndex
+            }"
+            benji-click-stop-propagation
+            (click)="selectSpeaker(i)">
+            <div class="name">{{ speaker.displayName }} </div>
+            <!-- <div
+              [ngStyle]="{
+                'opacity': speaker.optedIn ? 1 : 0
+              }"> -->
+            <div>
+              <img src="/assets/img/yellowPointer.svg" alt="">
+            </div>
+            <div (click)="removeSpeaker(i)" benji-click-stop-propagation>
+              <img src="/assets/img/closeBig.svg" alt="">
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel> 
+      <!--Ends-->
       <div class="speaker-cue-container">
-        <div class="header black-color">Speaker Queue</div>
+        <!--Starts-->
+        <!-- <div class="header black-color">Speaker Queue</div>
         <div class="speaker-list">
           <div 
             class="name-row" 
@@ -72,7 +107,8 @@
               <img src="/assets/img/closeBig.svg" alt="">
             </div>
           </div>
-        </div>
+        </div> -->
+        <!--Ends-->
         <div class="list-controls">
           <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <div>

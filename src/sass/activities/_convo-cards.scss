@@ -112,14 +112,12 @@ benji-ms-sharing-tool {
       .speaker-cue-container {
         background-color: #eeebdd;
         padding: 16px;
-        height: 100%;
+        height: 50%;
         position: relative;
         box-sizing: border-box;
         .header {
-          padding: 16px;
-          padding-bottom: 4px;
-          font-size: 32px;
-          font-weight: 700;
+          font-size: 20px;
+          font-weight: 600;
         }
         .speaker-list {
           overflow-y: auto;
@@ -152,6 +150,43 @@ benji-ms-sharing-tool {
         .list-controls {
           position: absolute;
           bottom: 32px;
+        }
+      }
+      .speakers-feedback {
+        mat-expansion-panel {
+          border: unset;
+          border-radius: 8px;
+          margin: 24px 16px 16px 0px;
+          // max-height: 232px;
+          // overflow-y: scroll;
+          mat-panel-title {
+            font-size: 20px;
+            font-weight: 600;
+          }
+          .mat-expansion-panel-content {
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 400;
+          }
+          .name-row {
+            img {
+              opacity: 0;
+            }  
+            &:hover, .active {
+              padding: 3px 8px;
+              margin-bottom: 2px;
+              border: 2px solid #555BEA;
+              border-radius: 8px;
+              background: #eeeffd;
+              img {
+                opacity: 1;
+              }
+            }
+            .name {
+              color: #37352F;
+              min-width: 64%;      
+            }
+          }
         }
       }
     }
