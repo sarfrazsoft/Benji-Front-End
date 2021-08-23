@@ -5,7 +5,7 @@
   [compareWith]="to.compareWith"
   [class.custom-select]="to.customSelect"
   [class.is-invalid]="showError"
-  panelClass="selected-panel"
+  panelClass="selected-panel select-question"
   [formControl]="formControl"
   [formlyAttributes]="field"
 >
@@ -26,10 +26,10 @@
           [matMenuTriggerFor]="activitySettingsMenu"
           #activitySettingsMenuTrigger="matMenuTrigger"
           benji-click-stop-propagation>
-          <mat-option [value]="formControl.value"> 
+          <mat-option [value]="formControl.value" class="right-arrow"> 
             <mat-icon>star</mat-icon> 
             Rating 
-            <mat-icon>keyboard_arrow_right</mat-icon> 
+            <mat-icon class="rating-arrow">keyboard_arrow_right</mat-icon> 
           </mat-option>
         </div>
         <mat-option [value]="'text_only'">
@@ -37,11 +37,12 @@
         </mat-option>
         <mat-option 
           [value]="'scale'" 
+          class="right-arrow"
           [matMenuTriggerFor]="scaleMenu"
           #scaleMenuTrigger="matMenuTrigger"
           benji-click-stop-propagation>
           <mat-icon>poll</mat-icon> Scale
-          <mat-icon>keyboard_arrow_right</mat-icon> 
+          <mat-icon class="scale-arrow">keyboard_arrow_right</mat-icon> 
         </mat-option>
         <mat-option [value]="'multiple_choice'" 
           [matMenuTriggerFor]="mcqMenu"
@@ -56,7 +57,7 @@
 
 <!-- Different options -->
 <mat-menu 
-  class="activity-settings-menu" 
+  class="selected-panel" 
   #activitySettingsMenu="matMenu" 
   yPosition="below"
   [overlapTrigger]="true">
@@ -64,9 +65,9 @@
     <div class="question-type rating-header" fxLayout="row"
       (click)="sele.open()"
       fxLayoutAlign="space-between center">
-      <mat-option> 
-        <mat-icon>keyboard_arrow_left</mat-icon> 
-        <mat-icon>star</mat-icon> 
+      <mat-option class="left-arrow"> 
+        <mat-icon class="rating-arrow-left">keyboard_arrow_left</mat-icon> 
+        <mat-icon class="rating-star-inner">star</mat-icon> 
         Rating 
       </mat-option>
     </div>
@@ -85,7 +86,7 @@
         [compareWith]="to.compareWith"
         [class.custom-select]="to.customSelect"
         [class.is-invalid]="showError"
-        panelClass="selected-panel"
+        panelClass="selected-panel select-rating-type"
       >
         <mat-select-trigger>
           <mat-icon *ngIf="formControl.value === 'stars'">star</mat-icon>
@@ -100,7 +101,7 @@
                 <mat-icon>star</mat-icon> Stars
               </mat-option>
               <mat-option [value]="'thumb_up'">
-                <mat-icon>poll</mat-icon> Thums up 
+                <mat-icon>thumb_up</mat-icon> Thums up 
               </mat-option>
               <mat-option [value]="'heart'">
                 <mat-icon>favorite</mat-icon> Heart
@@ -118,29 +119,29 @@
 </mat-menu>
 
 <mat-menu 
-  class="activity-settings-menu scale-feedback-question" 
+  class="scale-feedback-question selected-panel" 
   #scaleMenu="matMenu" 
   yPosition="below"
   [overlapTrigger]="true">
-  <div #rating panelClass="selected-panel rating">
-    <div class="question-type rating-header" fxLayout="row"
+  <div #rating panelClass="rating">
+    <div class="question-type scale-header" fxLayout="row"
       (click)="sele.open()"
       fxLayoutAlign="space-between center">
-      <mat-option> 
-        <mat-icon>keyboard_arrow_left</mat-icon> 
-        <mat-icon>star</mat-icon> 
+      <mat-option class="left-arrow"> 
+        <mat-icon class="rating-arrow-left">keyboard_arrow_left</mat-icon> 
+        <mat-icon class="rating-star-inner">star</mat-icon> 
         Scale 
       </mat-option>
     </div>
     <div class="settings scale-body" benji-click-stop-propagation>
       <form [formGroup]="scaleForm">
-        <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <div  class="scale-required" fxLayout="row" fxLayoutAlign="space-between center" >
           <mat-label>Required</mat-label>
           <mat-slide-toggle formControlName="required"></mat-slide-toggle>
         </div>
         <mat-label fxLayout="row" class="label">Value range</mat-label>
-        <div formGroupName="scale_json" fxLayout="column" fxLayoutGap="8px">
-          <div fxLayout="row" fxLayoutGap="8px">
+        <div formGroupName="scale_json" fxLayout="column" fxLayoutGap="16px">
+          <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
             <ng-select
               class="scale-range-dropdown"
               appearance="outline" 
@@ -155,7 +156,7 @@
                 <span> {{item}} </span>
               </ng-template>
             </ng-select>
-            <div> To </div>
+            <div> to </div>
             <ng-select
               class="scale-range-dropdown"
               appearance="outline" 
@@ -187,7 +188,7 @@
 
 
 <mat-menu 
-  class="activity-settings-menu scale-feedback-question" 
+  class="multi-feedback-question selected-panel" 
   #mcqMenu="matMenu" 
   yPosition="below"
   [overlapTrigger]="true">
@@ -195,32 +196,34 @@
     fxLayout="row"
     fxLayoutAlign="space-between center">
     <mat-option [value]="'multiple_choice'" disabled> 
-      <mat-icon>check</mat-icon> Multiple Choice </mat-option>
-    <mat-icon>keyboard_arrow_right</mat-icon> 
+      <mat-icon>check</mat-icon> Multiple Choice </mat-option> 
   </div>
   <div class="settings multi-body" benji-click-stop-propagation>
     <form [formGroup]="mcqForm">
-      <div fxLayout="row" fxLayoutAlign="space-between center" >
-        <mat-label>Required</mat-label>
-        <mat-slide-toggle formControlName="required"></mat-slide-toggle>
+      <div fxLayout="column" fxLayoutGap="12px">
+        <div fxLayout="row" fxLayoutAlign="space-between center" >
+          <mat-label>Required</mat-label>
+          <mat-slide-toggle formControlName="required"></mat-slide-toggle>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center" >
+          <mat-label>Multiple Selection</mat-label>
+          <mat-slide-toggle formControlName="multiSelect"></mat-slide-toggle>
+        </div>
+        <mat-label class="label">Choices</mat-label>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center" >
-        <mat-label>Multiple Selection</mat-label>
-        <mat-slide-toggle formControlName="multiSelect"></mat-slide-toggle>
-      </div>
-      <mat-label class="label">Choices</mat-label>
-      <div formArrayName="mcqchoices">
+      <div formArrayName="mcqchoices" fxLayout="column" fxLayoutGap="8px">
         <div 
           *ngFor="let label of choicesFormArray.controls; let j = index;" 
-          [formGroupName]="j">
-          <input matInput formControlName="choice_text">
-          <button type="button" (click)="removeMcqChoice(j)">
+          [formGroupName]="j"
+          fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+          <input matInput formControlName="choice_text" fxFlex="90">
+          <button class="close-choice" type="button" (click)="removeMcqChoice(j)" fxFlex="10">
             <mat-icon>close</mat-icon>
           </button>
         </div>
       </div>
     </form>
-    <a class="add-choice" (click)="addMCQchoice()">+ Add choice</a>
+    <a class="add-choice" (click)="addMCQchoice()" fxLayoutAlign="center center">+ Add choice</a>
   </div>
 </mat-menu>
 <!-- <mat-select #scale [(value)]="selected" panelClass="selected-panel scale">
