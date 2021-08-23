@@ -116,16 +116,14 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
 
     this.mcqForm.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
       const control = this.form.get('question_json');
-      console.log(val);
-      JSON.stringify(val);
       control.setValue(JSON.stringify(val));
     });
 
     if (this.model.question_type === 'multiple_choice') {
       if (this.model.question_json) {
-        const json = this.model.question_json;
+        const json = JSON.parse(this.model.question_json);
         this.mcqForm.patchValue(this.model.question_json);
-        if (json.mcqchoices.length > 1) {
+        if (json.mcqchoices && json.mcqchoices.length > 1) {
           for (let i = 1; i < json.mcqchoices.length; i++) {
             const element = json.mcqchoices[i];
             const choices = this.mcqForm.get('mcqchoices') as FormArray;
@@ -169,5 +167,9 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
   removeMcqChoice(choiceIndex: number) {
     const choices = this.mcqForm.get('mcqchoices') as FormArray;
     choices.removeAt(choiceIndex);
+  }
+
+  ratingTypeRequiredChanged(event) {
+    console.log(event);
   }
 }

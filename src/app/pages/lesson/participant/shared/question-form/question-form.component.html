@@ -194,10 +194,10 @@
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'multiple_choice'" class="rating-slider">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div class="choices-container">
-              <div class="sub-title" *ngIf="question_set[i].question_json.multiSelect">Choose as many as you like</div>
+              <div class="sub-title" *ngIf="getIsMultiSelect(question_set[i])">Choose as many as you like</div>
               <div class="choices">
                 <div class="option" 
-                  *ngFor="let choice of question_set[i].question_json.mcqchoices; let j = index"
+                  *ngFor="let choice of getMCQChoices(question_set[i]); let j = index"
                   (click)="mcqChoiceSelect(i, j)">
                   <div fxLayout="row" fxLayoutGap="8px">
                     <span>{{ identifier[j] }}</span>

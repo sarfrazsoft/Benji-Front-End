@@ -228,6 +228,16 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     const controlArray = <FormArray>this.form.get('questions');
     controlArray.controls[questionIndex].get('mcq_answer').setValue(selectedChoice);
   }
+
+  getMCQChoices(question) {
+    const json = JSON.parse(question.question_json);
+    return json.mcqchoices ? json.mcqchoices : [];
+  }
+
+  getIsMultiSelect(question) {
+    const json = JSON.parse(question.question_json);
+    return json.multiSelect ? true : false;
+  }
 }
 
 export const selectPills = [
