@@ -116,7 +116,9 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
 
     this.mcqForm.valueChanges.pipe(debounceTime(500)).subscribe((val) => {
       const control = this.form.get('question_json');
-      control.setValue(val);
+      console.log(val);
+      JSON.stringify(val);
+      control.setValue(JSON.stringify(val));
     });
 
     if (this.model.question_type === 'multiple_choice') {
