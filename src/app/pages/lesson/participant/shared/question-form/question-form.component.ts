@@ -11,11 +11,9 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
-  // sarfraz
-  private rating = 3;
-  @Input() private starCount = 5;
-  @Input() private color = 'accent';
-  @Output() private ratingUpdated = new EventEmitter();
+  heartRating = 0;
+  emojiRating = 0;
+  thumbRating;
 
   @Output() submitResponse = new EventEmitter();
   sliderValue = 0;
@@ -24,78 +22,16 @@ export class QuestionFormComponent implements OnInit, OnChanges {
 
   heartsArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   starsArr = [1, 2, 3, 4, 5];
-  tempHoverRating = 0;
+  tempHoverHeartRating = 0;
 
   tempHoverStarRating = 0;
   starRating = 0;
-  constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
-  private snackBarDuration = 2000;
-  private ratingArr = []; // Sarfraz
+  identifier = ['A', 'B', 'C', 'D', 'E'];
+  constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.buildForm();
-    // sarfraz
-    for (let index = 0; index < this.starCount; index++) {
-      this.ratingArr.push(index);
-    }
-  }
-  // sarfraz
-  onClickHeart(questionIndex: number, rating: number) {
-    const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[questionIndex].get('rating_answer').setValue(rating);
-    this.rating = rating;
-    return false;
-  }
-  onClickStar(questionIndex: number, rating: number) {
-    const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[questionIndex].get('rating_answer').setValue(rating);
-    this.starRating = rating;
-    return false;
-  }
-  // sarfraz
-  showStarIcon(index: number) {
-    if (this.tempHoverStarRating || this.tempHoverStarRating === 0) {
-      if (this.tempHoverStarRating >= index) {
-        return 'star';
-      } else {
-        return 'star_border';
-      }
-    } else {
-      if (this.starRating >= index) {
-        return 'star';
-      } else {
-        return 'star_border';
-      }
-    }
-  }
-  mouseoverStarIcon(index: number) {
-    this.tempHoverStarRating = index;
-  }
-  mouseoutStarIcon() {
-    this.tempHoverStarRating = null;
-  }
-  mouseoverIcon(index: number) {
-    this.tempHoverRating = index;
-  }
-  mouseoutIcon() {
-    this.tempHoverRating = null;
-  }
-  // sarfraz
-  showFavouriteIcon(index: number) {
-    if (this.tempHoverRating || this.tempHoverRating === 0) {
-      if (this.tempHoverRating >= index) {
-        return 'favorite';
-      } else {
-        return 'favorite_border';
-      }
-    } else {
-      if (this.rating >= index) {
-        return 'favorite';
-      } else {
-        return 'favorite_border';
-      }
-    }
   }
 
   ngOnChanges() {
@@ -117,6 +53,11 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     }
   }
 
+  addItem(q: FeedbackQuestion): void {
+    const questions = this.form.get('questions') as FormArray;
+    questions.push(this.createQuestion(q));
+  }
+
   createQuestion(q: FeedbackQuestion): FormGroup {
     return this.builder.group(
       {
@@ -124,6 +65,8 @@ export class QuestionFormComponent implements OnInit, OnChanges {
         question_type: q.question_type,
         rating_answer: null,
         text_answer: null,
+        scale_answer: null,
+        mcq_answer: null,
       },
       {
         validator: (formGroup: FormGroup) => {
@@ -133,9 +76,78 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     );
   }
 
-  addItem(q: FeedbackQuestion): void {
-    const questions = this.form.get('questions') as FormArray;
-    questions.push(this.createQuestion(q));
+  onClickHeart(questionIndex: number, rating: number) {
+    this.setRating(questionIndex, rating);
+    this.heartRating = rating;
+  }
+  onClickStar(questionIndex: number, rating: number) {
+    this.setRating(questionIndex, rating);
+    this.starRating = rating;
+  }
+
+  showStarIcon(index: number) {
+    if (this.tempHoverStarRating || this.tempHoverStarRating === 0) {
+      if (this.tempHoverStarRating >= index) {
+        return 'star';
+      } else {
+        return 'star_border';
+      }
+    } else {
+      if (this.starRating >= index) {
+        return 'star';
+      } else {
+        return 'star_border';
+      }
+    }
+  }
+
+  mouseoverStarIcon(index: number) {
+    this.tempHoverStarRating = index;
+  }
+
+  mouseoutStarIcon() {
+    this.tempHoverStarRating = null;
+  }
+
+  mouseoverIcon(index: number) {
+    this.tempHoverHeartRating = index;
+  }
+
+  mouseoutIcon() {
+    this.tempHoverHeartRating = null;
+  }
+
+  showFavouriteIcon(index: number) {
+    if (this.tempHoverHeartRating || this.tempHoverHeartRating === 0) {
+      if (this.tempHoverHeartRating >= index) {
+        return 'favorite';
+      } else {
+        return 'favorite_border';
+      }
+    } else {
+      if (this.heartRating >= index) {
+        return 'favorite';
+      } else {
+        return 'favorite_border';
+      }
+    }
+  }
+
+  // for Emoji type question
+  onSentimentClick(questionIndex: number, sentiment: number) {
+    this.setRating(questionIndex, sentiment);
+    this.emojiRating = sentiment;
+  }
+
+  // for Thumbs up type questions
+  onThumbClick(questionIndex: number, sentiment: number) {
+    this.setRating(questionIndex, sentiment);
+    this.thumbRating = sentiment;
+  }
+
+  setRating(questionIndex: number, sentiment: number) {
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[questionIndex].get('rating_answer').setValue(sentiment);
   }
 
   get questions() {
@@ -143,7 +155,13 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   }
 
   validateForm(formgroup: FormGroup) {
-    if (formgroup.controls['rating_answer'].value || formgroup.controls['text_answer'].value) {
+    if (
+      formgroup.controls['rating_answer'].value ||
+      formgroup.controls['rating_answer'].value === 0 ||
+      formgroup.controls['text_answer'].value ||
+      formgroup.controls['scale_answer'].value ||
+      formgroup.controls['mcq_answer'].value
+    ) {
       return null;
     } else {
       return { validateForm: true };
@@ -155,7 +173,6 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       const val = this.form.value;
       this.submitResponse.emit(val);
     }
-    // console.log(this.selectPills);
   }
 
   selectPill(pill) {
@@ -182,6 +199,34 @@ export class QuestionFormComponent implements OnInit, OnChanges {
       'I can\'t wait for the next one',
     ];
     return sliderTexts[Math.floor((this.sliderValue / 100) * sliderTexts.length)];
+  }
+
+  getScaleMin(question) {
+    if (question.question_json && question.question_json.scale_json) {
+      return question.question_json.scale_json.from;
+    }
+  }
+
+  getScaleMax(question) {
+    if (question.question_json && question.question_json.scale_json) {
+      return question.question_json.scale_json.to;
+    }
+  }
+
+  getScaleLabels(question) {
+    if (question.question_json && question.question_json.scale_json) {
+      return question.question_json.scale_json.labels;
+    }
+  }
+
+  scaleChanged(value, questionIndex) {
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[questionIndex].get('scale_answer').setValue(value.value);
+  }
+
+  mcqChoiceSelect(questionIndex: number, selectedChoice: number) {
+    const controlArray = <FormArray>this.form.get('questions');
+    controlArray.controls[questionIndex].get('mcq_answer').setValue(selectedChoice);
   }
 }
 

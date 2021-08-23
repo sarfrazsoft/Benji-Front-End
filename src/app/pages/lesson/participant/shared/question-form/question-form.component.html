@@ -87,11 +87,10 @@
             ></textarea>
           </div>
 
-          <div fxLayout="column"  
-            *ngIf="question_set[i].question_type === 'heart'">
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'heart'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" (mouseleave)="mouseoutIcon()">
-              <button mat-icon-button class="question-icon favorite-icon" 
+              <button mat-icon-button type="button" class="question-icon favorite-icon" 
                 *ngFor="let ratingId of heartsArr;index as j" 
                 [id]="'favorite_'+j" 
                 (click)="onClickHeart(i, j)"
@@ -105,19 +104,18 @@
             </div>
           </div>
 
-          <div fxLayout="column"  
-            *ngIf="question_set[i].question_type === 'stars'">
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'stars'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" (mouseleave)="mouseoutStarIcon()">
-              <button mat-icon-button class="question-icon star-icon" 
+              <button type="button" mat-icon-button class="question-icon star-icon" 
                 *ngFor="let ratingId of starsArr;index as j" 
                 [id]="'star_'+j" 
                 (click)="onClickStar(i, j)"
                 (mouseover)="mouseoverStarIcon(j)"
-                [matTooltip]="ratingId+1"
+                [matTooltip]="ratingId"
                 matTooltipPosition="above">
                 <mat-icon>
-                  {{ showStarIcon(i) }}
+                  {{ showStarIcon(j) }}
                 </mat-icon>
               </button>
             </div>
@@ -126,31 +124,89 @@
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'emoji'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" fxLayoutAlign="start center">
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(1)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)">
                 <mat-icon>
                   sentiment_very_dissatisfied
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(2)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)">
                 <mat-icon>
                   sentiment_dissatisfied
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(3)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)">
                 <mat-icon>
                   sentiment_neutral
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb" (click)="onSentimentClick(4)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)">
                 <mat-icon>
                   sentiment_satisfied
                 </mat-icon>
               </button>
-              <button mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(5)">
+              <button type="button" mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)">
                 <mat-icon>
                   sentiment_very_satisfied
                 </mat-icon>
               </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'thumb_up'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <button type="button" 
+                mat-icon-button 
+                class="question-icon thumb" 
+                (click)="onThumbClick(i, 1)">
+                <mat-icon>
+                  thumb_up
+                </mat-icon>
+              </button>
+              <button 
+                type="button" 
+                mat-icon-button 
+                class="question-icon thumb selected" 
+                (click)="onThumbClick(i, 0)">
+                <mat-icon>
+                  thumb_down
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'scale'" class="rating-slider">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <mat-slider 
+              [min]="getScaleMin(question_set[i])" 
+              [max]="getScaleMax(question_set[i])" 
+              thumbLabel 
+              aria-label="unit(s)"
+              (change)="scaleChanged($event, i)">
+            </mat-slider>
+            <div class="labels" 
+              fxLayout="row" 
+              fxLayoutAlign="space-between center">
+              <span *ngFor="let label of getScaleLabels(question_set[i])">{{ label }}</span>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'multiple_choice'" class="rating-slider">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div class="choices-container">
+              <div class="sub-title" *ngIf="question_set[i].question_json.multiSelect">Choose as many as you like</div>
+              <div class="choices">
+                <div class="option" 
+                  *ngFor="let choice of question_set[i].question_json.mcqchoices; let j = index"
+                  (click)="mcqChoiceSelect(i, j)">
+                  <div fxLayout="row" fxLayoutGap="8px">
+                    <span>{{ identifier[j] }}</span>
+                    <span>
+                      {{ choice.choice_text }}
+                    </span> 
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -171,18 +227,6 @@
             >
               {{ pill.name }}
             </button>
-          </div> -->
-
-          <!-- <div class="rating-slider">
-            <div class="text">
-              {{ getSliderText() }}
-            </div>
-            <mat-slider
-              [max]="100"
-              [min]="0"
-              [thumbLabel]="true"
-              (input)="sliderValueChange($event)"
-            ></mat-slider>
           </div> -->
         </div>
       </div>
