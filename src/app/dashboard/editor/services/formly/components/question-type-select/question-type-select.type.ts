@@ -106,6 +106,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
       multiSelect: new FormControl(false),
       mcqchoices: this.formBuilder.array([
         this.formBuilder.group({
+          // id: 0,
           order: new FormControl(1),
           choice_text: new FormControl(''),
           is_correct: new FormControl(true),
@@ -122,13 +123,14 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
     if (this.model.question_type === 'multiple_choice') {
       if (this.model.question_json) {
         const json = JSON.parse(this.model.question_json);
-        this.mcqForm.patchValue(this.model.question_json);
+        this.mcqForm.patchValue(json);
         if (json.mcqchoices && json.mcqchoices.length > 1) {
           for (let i = 1; i < json.mcqchoices.length; i++) {
             const element = json.mcqchoices[i];
             const choices = this.mcqForm.get('mcqchoices') as FormArray;
             choices.push(
               this.formBuilder.group({
+                // id: i,
                 order: new FormControl(element.order),
                 choice_text: new FormControl(element.choice_text),
                 is_correct: new FormControl(element.is_correct),
@@ -156,6 +158,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
     const choicesLength = choices.length;
     choices.push(
       this.formBuilder.group({
+        id: choicesLength + 1,
         order: new FormControl(choicesLength + 1),
         choice_text: new FormControl(''),
         is_correct: new FormControl(true),
