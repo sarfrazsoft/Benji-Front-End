@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="submitFeedback()">
-  <div class="questionForm">
+  <div class="questionForm infeedback">
     <div class="b-flat-card__action feedback-card__questions" formArrayName="questions">
       <div class="feedback-card__question-box" *ngFor="let question of questions.controls; let i = index">
         <div [formGroupName]="i">
@@ -191,21 +191,19 @@
             </div>
           </div>
 
-          <div fxLayout="column" *ngIf="question_set[i].question_type === 'multiple_choice'" class="rating-slider">
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'multiple_choice'" class="multiple-choice">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div class="choices-container">
               <div class="sub-title" *ngIf="getIsMultiSelect(question_set[i])">Choose as many as you like</div>
               <div class="choices">
                 <div class="option" 
                   *ngFor="let choice of getMCQChoices(question_set[i]); let j = index"
-                  (click)="mcqChoiceSelect(i, j)">
-                  <div fxLayout="row" fxLayoutGap="8px">
-                    <span>{{ identifier[j] }}</span>
-                    <span>
-                      {{ choice.choice_text }}
-                    </span> 
-                  </div>
+                  (click)="mcqChoiceSelect(i, j)"
+                  fxLayout="row" fxLayoutAlign="start center">
+                  <span>{{ identifier[j] }}</span>
+                  {{ choice.choice_text }}
                 </div>
+                <div  class="option selected" fxLayout="row" fxLayoutAlign="start center" ><span>C</span>Option 3</div>
               </div>
             </div>
           </div>

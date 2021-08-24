@@ -66,3 +66,45 @@ benji-ps-mcq-activity {
     }
   }
 }
+
+// styles for Feedback MCQ
+.multiple-choice {
+  .title {
+    font-size: 20px;
+    font-weight: 500;
+    color: #616161;
+    line-height: 24px;
+  }
+  .sub-title {
+    font-size: 12px;
+    color: #828282;
+    line-height: 24px;
+    margin-bottom: 8px;
+  }
+  .option {
+    font-size: 16px;
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    height: 40px;
+    background: #F3F4F7;
+    margin-bottom: 8px;
+    cursor: pointer;
+    &:last-child{
+      margin-bottom: 0px;
+    }
+    &.selected {
+      border: 2px solid #555BEA;
+      background: #eeeffd;
+    }
+    span:first-child {
+      color: #616161;
+      border: 1px solid #bdbdbd;
+      border-radius: 4px;
+      padding: 6px;
+      margin: 8px;
+      line-height: 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+  }
+}
