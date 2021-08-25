@@ -78,11 +78,21 @@
             <div class="title">{{ question_set[i].question_text }}</div>
             <div>
               <textarea
+                id="text_answer"
                 formControlName="text_answer"
                 placeholder="Your comments!"
                 class="b-standard-textarea"
               ></textarea>
             </div>
+            <mat-error
+              *ngIf="text_answer(i).invalid && (text_answer(i).dirty || text_answer(i).touched) && submitClicked"
+              class="alert alert-danger">
+              <div *ngIf="text_answer(i).errors.required">this is required.</div>
+            </mat-error>
+            <!-- <mat-error *ngIf="text_answer.invalid && (text_answer.dirty || text_answer.touched)" class="alert alert-danger">
+              <div *ngIf="text_answer.errors.required">Email is required.</div>
+              <div *ngIf="text_answer.errors.email">It should be a valid email.</div>
+            </mat-error> -->
           </div>
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'heart'">

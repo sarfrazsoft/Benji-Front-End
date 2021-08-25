@@ -66,8 +66,10 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
           answers.push(ans);
         }
       } else if (val.questions[i].question_type === 'scale') {
-        const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].scale_answer);
-        answers.push(ans);
+        if (val.questions[i].scale_answer) {
+          const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].scale_answer);
+          answers.push(ans);
+        }
       }
 
       // if (val.questions[i].question_type === 'scale') {
