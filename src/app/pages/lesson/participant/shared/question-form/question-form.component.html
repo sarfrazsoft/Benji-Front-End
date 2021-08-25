@@ -5,6 +5,7 @@
         <div [formGroupName]="i">
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'rating_agreedisagree'">
+            <div class="title">{{ question_set[i].question_text }}</div>
             <div class="feedback-rating">
               <div class="linked-radio-btns">
                 <ol class="nodes">
@@ -71,20 +72,27 @@
                 </ol>
               </div>
             </div>
-            <textarea
-              placeholder="What makes you say that?"
-              formControlName="text_answer"
-              class="b-standard-textarea"
-              *ngIf="question_set[i].is_combo"
-            ></textarea>
           </div>
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'text_only'">
-            <textarea
-              formControlName="text_answer"
-              placeholder="Your comments!"
-              class="b-standard-textarea"
-            ></textarea>
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div>
+              <textarea
+                id="text_answer"
+                formControlName="text_answer"
+                placeholder="Your comments!"
+                class="b-standard-textarea"
+              ></textarea>
+            </div>
+            <mat-error
+              *ngIf="text_answer(i).invalid && (text_answer(i).dirty || text_answer(i).touched) && submitClicked"
+              class="alert alert-danger">
+              <div *ngIf="text_answer(i).errors.required">this is required.</div>
+            </mat-error>
+            <!-- <mat-error *ngIf="text_answer.invalid && (text_answer.dirty || text_answer.touched)" class="alert alert-danger">
+              <div *ngIf="text_answer.errors.required">Email is required.</div>
+              <div *ngIf="text_answer.errors.email">It should be a valid email.</div>
+            </mat-error> -->
           </div>
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'heart'">
@@ -194,20 +202,11 @@
           </div>
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'multiple_choice'" class="multiple-choice">
-            <div class="title">{{ question_set[i].question_text }}</div>
-            <div class="choices-container">
-              <div class="sub-title" *ngIf="getIsMultiSelect(question_set[i])">Choose as many as you like</div>
-              <div class="choices">
-                <div class="option" 
-                  *ngFor="let choice of getMCQChoices(question_set[i]); let j = index"
-                  (click)="mcqChoiceSelect(i, j)"
-                  fxLayout="row" fxLayoutAlign="start center">
-                  <span>{{ identifier[j] }}</span>
-                  {{ choice.choice_text }}
-                </div>
-                <div  class="option selected" fxLayout="row" fxLayoutAlign="start center" ><span>C</span>Option 3</div>
-              </div>
-            </div>
+            <benji-ps-feedback-mcq
+              [question]="question_set[i]"
+              (selectChoice)="mcqChoiceSelect(i, $event)"
+              [actEditor]="actEditor">
+            </benji-ps-feedback-mcq>
           </div>
 
           <!-- <div

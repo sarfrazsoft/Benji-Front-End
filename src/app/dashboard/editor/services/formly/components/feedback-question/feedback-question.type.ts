@@ -44,7 +44,6 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
         this.typeField.templateOptions.required = false;
         this.typeField.type = 'questionTypeSelect';
       } else if (val.key === 'question_json') {
-        console.log(val);
         this.questionJsonField = val;
       }
     });

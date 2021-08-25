@@ -21,7 +21,6 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent i
 
   changes() {
     const act = this.activityState.feedbackactivity;
-    console.log(act);
     this.title_emoji = act.title_emoji ? act.title_emoji : '';
     if (act) {
       this.title = act.titlecomponent.title;

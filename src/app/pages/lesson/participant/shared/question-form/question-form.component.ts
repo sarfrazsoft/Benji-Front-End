@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FeedbackQuestion } from 'src/app/services/backend/schema';
 
@@ -11,9 +11,11 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
+  @Input() actEditor = false;
   heartRating = 0;
   emojiRating = 0;
   thumbRating;
+  submitClicked;
 
   @Output() submitResponse = new EventEmitter();
   sliderValue = 0;
@@ -27,7 +29,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   tempHoverStarRating = 0;
   starRating = 0;
 
-  identifier = ['A', 'B', 'C', 'D', 'E'];
+  mcqSelectedChoices = [];
   constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -64,7 +66,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
         q: q,
         question_type: q.question_type,
         rating_answer: null,
-        text_answer: null,
+        text_answer: new FormControl('', [Validators.required]),
         scale_answer: null,
         mcq_answer: null,
       },
@@ -154,21 +156,41 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     return this.form.get('questions') as FormArray;
   }
 
+  text_answer(questionIndex): AbstractControl {
+    const controlArray = <FormArray>this.form.get('questions');
+    return controlArray.controls[questionIndex].get('text_answer');
+  }
+
   validateForm(formgroup: FormGroup) {
-    if (
-      formgroup.controls['rating_answer'].value ||
-      formgroup.controls['rating_answer'].value === 0 ||
-      formgroup.controls['text_answer'].value ||
-      formgroup.controls['scale_answer'].value ||
-      formgroup.controls['mcq_answer'].value
-    ) {
-      return null;
+    if (formgroup.controls['question_type'].value === 'scale') {
+      console.log(formgroup);
+      const is_required = formgroup.controls['q'].value.is_required;
+      if (!is_required) {
+        return null;
+      } else {
+        if (formgroup.controls['scale_answer'].value) {
+          return null;
+        } else {
+          return { validateForm: true, requred: true };
+        }
+      }
+    } else if (formgroup.controls['question_type'].value === 'text_only') {
     } else {
-      return { validateForm: true };
+      if (
+        formgroup.controls['rating_answer'].value ||
+        formgroup.controls['rating_answer'].value === 0 ||
+        formgroup.controls['text_answer'].value ||
+        formgroup.controls['mcq_answer'].value
+      ) {
+        return null;
+      } else {
+        return { validateForm: true };
+      }
     }
   }
 
   submitFeedback() {
+    this.submitClicked = true;
     if (this.form.valid) {
       const val = this.form.value;
       this.submitResponse.emit(val);
@@ -224,9 +246,14 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     controlArray.controls[questionIndex].get('scale_answer').setValue(value.value);
   }
 
-  mcqChoiceSelect(questionIndex: number, selectedChoice: number) {
+  mcqChoiceSelect(questionIndex: number, choiceObject) {
     const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[questionIndex].get('mcq_answer').setValue(selectedChoice);
+    if (choiceObject.isMultiSelect) {
+      this.mcqSelectedChoices.push(choiceObject.selectedChoiceId);
+    } else {
+      this.mcqSelectedChoices = [choiceObject.selectedChoiceId];
+    }
+    controlArray.controls[questionIndex].get('mcq_answer').setValue(this.mcqSelectedChoices);
   }
 
   getMCQChoices(question) {
@@ -234,10 +261,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     return json.mcqchoices ? json.mcqchoices : [];
   }
 
-  getIsMultiSelect(question) {
-    const json = JSON.parse(question.question_json);
-    return json.multiSelect ? true : false;
-  }
+  isChoiceSelected(question, choice) {}
 }
 
 export const selectPills = [

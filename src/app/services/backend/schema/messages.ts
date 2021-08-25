@@ -254,7 +254,7 @@ export class FeedbackSubmitEventAnswer {
   constructor(q: FeedbackQuestion, answer, text?) {
     this.feedbackquestion = q.id;
     this.rating_answer = answer;
-    this.text_answer = text ? text : '';
+    this.text_answer = text ? text : null;
     this.mcq_answer = answer;
     this.scale_answer = answer;
   }

@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FeedbackSubmitEvent, FeedbackSubmitEventAnswer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -8,6 +8,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantFeedbackActivityComponent extends BaseActivityComponent implements OnInit, OnChanges {
   answersSubmitted: boolean;
+  @Input() actEditor = false;
 
   constructor() {
     super();
@@ -59,11 +60,16 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
         );
         answers.push(ans);
       } else if (val.questions[i].question_type === 'multiple_choice') {
-        const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].mcq_answer);
-        answers.push(ans);
+        for (let j = 0; j < val.questions[i].mcq_answer.length; j++) {
+          const element = val.questions[i].mcq_answer[j];
+          const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, element);
+          answers.push(ans);
+        }
       } else if (val.questions[i].question_type === 'scale') {
-        const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].scale_answer);
-        answers.push(ans);
+        if (val.questions[i].scale_answer) {
+          const ans = new FeedbackSubmitEventAnswer(val.questions[i].q, val.questions[i].scale_answer);
+          answers.push(ans);
+        }
       }
 
       // if (val.questions[i].question_type === 'scale') {
