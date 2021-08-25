@@ -1,0 +1,14 @@
+<div class="title">{{ question.question_text }}</div>
+<div class="choices-container">
+  <div class="sub-title" *ngIf="isMultiSelect">Choose as many as you like</div>
+  <div class="choices">
+    <div class="option"
+      *ngFor="let choice of question.mcq_question.mcqchoice_set; let j = index"
+      (click)="mcqChoiceSelect(choice.id)"
+      [ngClass]="{ selected: selected[choice.id]}"
+      fxLayout="row" fxLayoutAlign="start center">
+      <span>{{ identifier[j] }}</span>
+      {{ choice.choice_text }}
+    </div>
+  </div>
+</div>

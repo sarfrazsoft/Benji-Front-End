@@ -366,6 +366,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             },
           },
         };
+        this.componentRef.instance.actEditor = true;
       } else if (this.data.activity_type === Acts.buildAPitch) {
         if (this.componentRef) {
           this.componentRef.destroy();

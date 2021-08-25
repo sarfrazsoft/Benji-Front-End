@@ -11,6 +11,7 @@ import { FeedbackQuestion } from 'src/app/services/backend/schema';
 })
 export class QuestionFormComponent implements OnInit, OnChanges {
   @Input() question_set;
+  @Input() actEditor = false;
   heartRating = 0;
   emojiRating = 0;
   thumbRating;
@@ -27,7 +28,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   tempHoverStarRating = 0;
   starRating = 0;
 
-  identifier = ['A', 'B', 'C', 'D', 'E'];
+  mcqSelectedChoices = [];
   constructor(private builder: FormBuilder, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -224,9 +225,14 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     controlArray.controls[questionIndex].get('scale_answer').setValue(value.value);
   }
 
-  mcqChoiceSelect(questionIndex: number, selectedChoice) {
+  mcqChoiceSelect(questionIndex: number, choiceObject) {
     const controlArray = <FormArray>this.form.get('questions');
-    controlArray.controls[questionIndex].get('mcq_answer').setValue(selectedChoice);
+    if (choiceObject.isMultiSelect) {
+      this.mcqSelectedChoices.push(choiceObject.selectedChoiceId);
+    } else {
+      this.mcqSelectedChoices = [choiceObject.selectedChoiceId];
+    }
+    controlArray.controls[questionIndex].get('mcq_answer').setValue(this.mcqSelectedChoices);
   }
 
   getMCQChoices(question) {
@@ -234,10 +240,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
     return json.mcqchoices ? json.mcqchoices : [];
   }
 
-  getIsMultiSelect(question) {
-    const json = JSON.parse(question.question_json);
-    return json.multiSelect ? true : false;
-  }
+  isChoiceSelected(question, choice) {}
 }
 
 export const selectPills = [
