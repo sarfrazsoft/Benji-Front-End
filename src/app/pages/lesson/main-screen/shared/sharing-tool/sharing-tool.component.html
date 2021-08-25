@@ -47,8 +47,10 @@
       </div>
     </div>
     <div fxFlex="34%" class="speakers-feedback">
-      <!--Starts-->
-      <mat-expansion-panel>
+      <mat-expansion-panel 
+        (opened)="panelOpenState = true" 
+        (closed)="panelOpenState = false" 
+        [ngClass]="{ 'open' : panelOpenState }">
         <mat-expansion-panel-header>
           <mat-panel-title class="black-color">
             Speaker Queue
@@ -57,9 +59,8 @@
         <div class="speaker-list">
           <div 
             class="name-row" 
-            fxLayout="row" 
-            fxLayoutGap="24px"
-            fxLayoutAlign="start center"
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
             *ngFor="let speaker of speakers; index as i"
             [ngClass]="{
               'current-speaker': i === currentSpeakerIndex
@@ -67,23 +68,37 @@
             benji-click-stop-propagation
             (click)="selectSpeaker(i)">
             <div class="name">{{ speaker.displayName }} </div>
-            <!-- <div
-              [ngStyle]="{
-                'opacity': speaker.optedIn ? 1 : 0
-              }"> -->
-            <div>
-              <img src="/assets/img/yellowPointer.svg" alt="">
-            </div>
-            <div (click)="removeSpeaker(i)" benji-click-stop-propagation>
-              <img src="/assets/img/closeBig.svg" alt="">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="11px">
+              <div [ngStyle]="{'opacity': speaker.optedIn ? 1 : 0}">
+                <img src="/assets/img/yellowPointer.svg" alt="">
+              </div>
+              <div (click)="removeSpeaker(i)" benji-click-stop-propagation>
+                <img src="/assets/img/closeBig.svg" alt="">
+              </div>
             </div>
           </div>
         </div>
       </mat-expansion-panel> 
-      <!--Ends-->
-      <div class="speaker-cue-container">
-        <!--Starts-->
-        <!-- <div class="header black-color">Speaker Queue</div>
+      <mat-expansion-panel 
+        (opened)="panelOpen = true" 
+        (closed)="panelOpen = false" 
+        [ngClass]="{ 'open' : panelOpen }">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="black-color">
+            Reactions/Feedback
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="feedback-list">
+          <div fxLayout="column">
+            <span class="name">Awesome job!!</span>
+            <span class="name">Awesome job!!</span>
+            <span class="name">Awesome job!!</span>
+          </div>
+        </div>
+      </mat-expansion-panel> 
+      <!--Starts-->
+      <!-- <div class="speaker-cue-container">
+      <div class="header black-color">Speaker Queue</div>
         <div class="speaker-list">
           <div 
             class="name-row" 
@@ -107,8 +122,7 @@
               <img src="/assets/img/closeBig.svg" alt="">
             </div>
           </div>
-        </div> -->
-        <!--Ends-->
+        </div>
         <div class="list-controls">
           <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
             <div>
@@ -130,7 +144,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
+      <!--Ends-->
     </div>
   </div>
 </div>

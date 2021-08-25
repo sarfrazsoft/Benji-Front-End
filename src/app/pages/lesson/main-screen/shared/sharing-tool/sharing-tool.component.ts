@@ -198,7 +198,6 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   selectSpeaker(index: number) {
     // this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
-
     this.currentSpeakerIndex = index;
     this.update();
   }

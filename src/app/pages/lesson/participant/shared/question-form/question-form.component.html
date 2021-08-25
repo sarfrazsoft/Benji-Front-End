@@ -96,7 +96,8 @@
                 (click)="onClickHeart(i, j)"
                 (mouseover)="mouseoverIcon(j)"
                 [matTooltip]="ratingId" 
-                matTooltipPosition="above">
+                matTooltipPosition="above"
+                [disableRipple]="true">
                 <mat-icon>
                   {{ showFavouriteIcon(j) }}
                 </mat-icon>
@@ -113,7 +114,8 @@
                 (click)="onClickStar(i, j)"
                 (mouseover)="mouseoverStarIcon(j)"
                 [matTooltip]="ratingId"
-                matTooltipPosition="above">
+                matTooltipPosition="above"
+                [disableRipple]="true">
                 <mat-icon>
                   {{ showStarIcon(j) }}
                 </mat-icon>
@@ -124,27 +126,27 @@
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'emoji'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" fxLayoutAlign="start center">
-              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)" [disableRipple]="true">
                 <mat-icon>
                   sentiment_very_dissatisfied
                 </mat-icon>
               </button>
-              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)" [disableRipple]="true">
                 <mat-icon>
                   sentiment_dissatisfied
                 </mat-icon>
               </button>
-              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)" [disableRipple]="true">
                 <mat-icon>
                   sentiment_neutral
                 </mat-icon>
               </button>
-              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)" [disableRipple]="true">
                 <mat-icon>
                   sentiment_satisfied
                 </mat-icon>
               </button>
-              <button type="button" mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)">
+              <button type="button" mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)" [disableRipple]="true">
                 <mat-icon>
                   sentiment_very_satisfied
                 </mat-icon>
@@ -155,7 +157,7 @@
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'thumb_up'">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-              <button type="button" 
+              <button type="button" [disableRipple]="true"
                 mat-icon-button 
                 class="question-icon thumb" 
                 (click)="onThumbClick(i, 1)">
@@ -163,7 +165,7 @@
                   thumb_up
                 </mat-icon>
               </button>
-              <button 
+              <button [disableRipple]="true"
                 type="button" 
                 mat-icon-button 
                 class="question-icon thumb selected" 

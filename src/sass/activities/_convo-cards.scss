@@ -151,36 +151,65 @@ benji-ms-sharing-tool {
           position: absolute;
           bottom: 32px;
         }
-      }
+      } 
+// Mahin's CSS Ends
       .speakers-feedback {
         mat-expansion-panel {
+          mat-expansion-panel-header {
+            padding: 0 16px;
+          }
+          .mat-expansion-panel-body {
+            padding: 0 16px 16px;
+          }
           border: unset;
           border-radius: 8px;
           margin: 24px 16px 16px 0px;
-          // max-height: 232px;
-          // overflow-y: scroll;
           mat-panel-title {
             font-size: 20px;
             font-weight: 600;
           }
+          &.open {
+            .mat-expansion-panel-content {
+              margin-bottom: 16px;
+            }
+          }
+          .feedback-list {
+            span {
+              //margin-left: 8px;
+            }
+          }
           .mat-expansion-panel-content {
             font-size: 18px;
-            line-height: 28px;
             font-weight: 400;
+            max-height: 232px;
+            overflow-y: scroll;
+            /* width */
+            &::-webkit-scrollbar {
+              width: 4px;
+            }
+            /* Track */
+            &::-webkit-scrollbar-track {
+              background: #EEECEC;
+            }
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+              background: #828282;
+              border-radius: 2px;
+            }
           }
           .name-row {
-            img {
-              opacity: 0;
-            }  
-            &:hover, .active {
-              padding: 3px 8px;
-              margin-bottom: 2px;
-              border: 2px solid #555BEA;
-              border-radius: 8px;
+            width: 94%;
+            padding: 8px 14px 8px 10px;
+            margin: 8px 8px 8px 0px;
+            border-radius: 8px;
+            cursor: pointer;
+            &:hover {
               background: #eeeffd;
-              img {
-                opacity: 1;
-              }
+            }
+            &.current-speaker {
+              padding: 6px 12px 6px 8px;
+              border: 2px solid #555BEA;
+              background: #eeeffd;
             }
             .name {
               color: #37352F;
