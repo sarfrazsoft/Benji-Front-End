@@ -30,6 +30,8 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   speakers: Array<{ displayName: string; id: number; optedIn: boolean; group?: Group }> = [];
   volunteers: Array<number>;
   groups = [];
+  panelOpen: boolean;
+  panelOpenState: boolean;
   currentSpeakerIndex = 0;
   component;
   activityDataAvailable = true;
@@ -200,6 +202,11 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     // this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
     this.currentSpeakerIndex = index;
     this.update();
+    this.populateFeedback(index);
+  }
+
+  populateFeedback(index: number) {
+    
   }
 
   generateRandom() {
