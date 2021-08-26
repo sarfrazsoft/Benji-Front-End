@@ -30,6 +30,8 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   speakers: Array<{ displayName: string; id: number; optedIn: boolean; group?: Group }> = [];
   volunteers: Array<number>;
   groups = [];
+  panelOpen: boolean;
+  panelOpenState: boolean;
   currentSpeakerIndex = 0;
   component;
   activityDataAvailable = true;
