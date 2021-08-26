@@ -16,11 +16,22 @@ benji-question-form {
         display: block;
         text-align: center;
       }
+      .title {
+        font-size: 18px;
+        font-weight: 500;
+        color: #616161;
+        margin-bottom: 16px;
+      }
       textarea {
         color: inherit;
         outline: none;
         height: 74px;
         resize: none;
+        width: 100%;
+        width: -moz-available;          
+        width: -webkit-fill-available;
+        width: stretch;
+        max-width: 490px;
         padding: 10px 10px;
         border-radius: 8px;
         border: $secondary-color-lighter 1px solid;
