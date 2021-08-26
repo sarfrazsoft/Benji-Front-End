@@ -66,7 +66,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
         q: q,
         question_type: q.question_type,
         rating_answer: null,
-        text_answer: new FormControl('', [Validators.required]),
+        text_answer: null,
         scale_answer: null,
         mcq_answer: null,
       },
@@ -249,7 +249,12 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   mcqChoiceSelect(questionIndex: number, choiceObject) {
     const controlArray = <FormArray>this.form.get('questions');
     if (choiceObject.isMultiSelect) {
-      this.mcqSelectedChoices.push(choiceObject.selectedChoiceId);
+      const index = this.mcqSelectedChoices.indexOf(choiceObject.selectedChoiceId);
+      if (index > -1) {
+        this.mcqSelectedChoices.splice(index, 1);
+      } else {
+        this.mcqSelectedChoices.push(choiceObject.selectedChoiceId);
+      }
     } else {
       this.mcqSelectedChoices = [choiceObject.selectedChoiceId];
     }

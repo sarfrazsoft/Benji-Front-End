@@ -71,10 +71,10 @@
       </mat-option>
     </div>
     <div class="settings" benji-click-stop-propagation>
-      <div fxLayout="row" fxLayoutAlign="space-between center" >
+      <!-- <div fxLayout="row" fxLayoutAlign="space-between center" >
         <mat-label>Required</mat-label>
         <mat-slide-toggle (change)="ratingTypeRequiredChanged($event)"></mat-slide-toggle>
-      </div>
+      </div> -->
       <div fxLayout="row" fxLayoutAlign="space-between center" >
         <mat-select
         #sele
@@ -133,10 +133,10 @@
     </div>
     <div class="settings scale-body" benji-click-stop-propagation>
       <form [formGroup]="scaleForm">
-        <div  class="scale-required" fxLayout="row" fxLayoutAlign="space-between center" >
+        <!-- <div  class="scale-required" fxLayout="row" fxLayoutAlign="space-between center" >
           <mat-label>Required</mat-label>
           <mat-slide-toggle formControlName="required"></mat-slide-toggle>
-        </div>
+        </div> -->
         <mat-label fxLayout="row" class="label">Value range</mat-label>
         <div formGroupName="scale_json" fxLayout="column" fxLayoutGap="16px">
           <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
@@ -199,10 +199,10 @@
   <div class="settings multi-body" benji-click-stop-propagation>
     <form [formGroup]="mcqForm">
       <div fxLayout="column" fxLayoutGap="12px">
-        <div fxLayout="row" fxLayoutAlign="space-between center" >
+        <!-- <div fxLayout="row" fxLayoutAlign="space-between center" >
           <mat-label>Required</mat-label>
           <mat-slide-toggle formControlName="required"></mat-slide-toggle>
-        </div>
+        </div> -->
         <div fxLayout="row" fxLayoutAlign="space-between center" >
           <mat-label>Multiple Selection</mat-label>
           <mat-slide-toggle formControlName="multiSelect"></mat-slide-toggle>

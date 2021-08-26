@@ -20,11 +20,16 @@ export class ParticipantFeedbackMCQComponent implements OnInit, OnChanges {
   isMultiSelect = false;
   identifier = ['A', 'B', 'C', 'D', 'E'];
   selected = {};
+  showChoices = false;
 
   @Output() selectChoice = new EventEmitter<any>();
   constructor() {}
 
   ngOnInit() {
+    if (!this.question.question_json) {
+      this.showChoices = false;
+      return;
+    }
     const json = JSON.parse(this.question.question_json);
     this.isMultiSelect = json.multiSelect ? true : false;
 
@@ -36,22 +41,31 @@ export class ParticipantFeedbackMCQComponent implements OnInit, OnChanges {
         },
       };
     }
+    this.showChoices = true;
   }
 
   ngOnChanges() {}
 
   mcqChoiceSelect(selectedChoiceId: number) {
     if (this.actEditor) {
-    } else {
-      this.selectChoice.emit({ isMultiSelect: this.isMultiSelect, selectedChoiceId: selectedChoiceId });
-      if (this.isMultiSelect) {
+      return;
+    }
+
+    this.selectChoice.emit({ isMultiSelect: this.isMultiSelect, selectedChoiceId: selectedChoiceId });
+    if (this.isMultiSelect) {
+      if (this.selected[selectedChoiceId]) {
+        this.selected = {
+          ...this.selected,
+          [selectedChoiceId]: false,
+        };
+      } else {
         this.selected = {
           ...this.selected,
           [selectedChoiceId]: true,
         };
-      } else {
-        this.selected = { [selectedChoiceId]: true };
       }
+    } else {
+      this.selected = { [selectedChoiceId]: true };
     }
   }
 }
