@@ -89,10 +89,8 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="feedback-list">
-          <div fxLayout="column">
-            <span class="name">Awesome job!!</span>
-            <span class="name">Awesome job!!</span>
-            <span class="name">Awesome job!!</span>
+          <div fxLayout="column" *ngFor="let feedback of feedbackArray">
+            <span class="name">{{feedback.text}}</span>
           </div>
         </div>
       </mat-expansion-panel> 

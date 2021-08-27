@@ -74,7 +74,7 @@
             </div>
           </div>
 
-          <div fxLayout="column" *ngIf="question_set[i].question_type === 'text_only'">
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'text_only'" class="text-question">
             <div class="title">{{ question_set[i].question_text }}</div>
             <div>
               <textarea
