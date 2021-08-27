@@ -78,7 +78,21 @@
             </div>
           </div>
         </div>
-      </mat-expansion-panel> 
+      </mat-expansion-panel>
+      <div class="next-random"
+        [ngClass]="{ 'active' : panelOpenState }">
+        <div class="next">
+          <button class="b-small-button bg-primary-color" (click)="nextSpeaker()">
+            Next
+          </button>
+        </div>
+        <div>
+          <button (click)="generateRandom()" class="b-small-button bg-sky primary-color">
+            Random
+          </button>
+        </div>
+      </div>
+      
       <mat-expansion-panel 
         (opened)="panelOpen = true" 
         (closed)="panelOpen = false" 
@@ -94,7 +108,7 @@
           </div>
         </div>
       </mat-expansion-panel> 
-      <!--Starts-->
+      <!-- Starts -->
       <!-- <div class="speaker-cue-container">
       <div class="header black-color">Speaker Queue</div>
         <div class="speaker-list">
@@ -130,7 +144,7 @@
             </div>
             <div>
               <button 
-                (close)="generateRandom()"
+                (click)="generateRandom()"
                 class="b-small-button bg-sky primary-color">
                 <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
                   <img src="/assets/img/diceIcon.svg" alt="">

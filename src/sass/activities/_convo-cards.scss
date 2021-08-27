@@ -155,22 +155,22 @@ benji-ms-sharing-tool {
 // Mahin's CSS Ends
       .speakers-feedback {
         mat-expansion-panel {
+          border: unset;
+          border-radius: 8px;
+          margin: 24px 16px 0px 0px;
           mat-expansion-panel-header {
             padding: 0 16px;
           }
           .mat-expansion-panel-body {
             padding: 0 16px 16px;
           }
-          border: unset;
-          border-radius: 8px;
-          margin: 24px 16px 16px 0px;
           mat-panel-title {
             font-size: 20px;
             font-weight: 600;
           }
           &.open {
             .mat-expansion-panel-content {
-              margin-bottom: 16px;
+              margin-bottom: 8px;
             }
           }
           .feedback-list {
@@ -181,7 +181,7 @@ benji-ms-sharing-tool {
           .mat-expansion-panel-content {
             font-size: 18px;
             font-weight: 400;
-            max-height: 232px;
+            max-height: 160px;
             overflow-y: scroll;
             /* width */
             &::-webkit-scrollbar {
@@ -215,6 +215,20 @@ benji-ms-sharing-tool {
               color: #37352F;
               min-width: 64%;      
             }
+          }
+        }
+        .next-random{
+          background: #fff;
+          padding: 8px 16px 16px 16px;
+          margin-right: 16px;
+          border-radius: 0px 0px 8px 8px;
+          display: none;
+          &.active {
+            display: block;
+          }
+          .next{
+            float: left;
+            margin-right: 16px;
           }
         }
       }
