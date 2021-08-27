@@ -42,11 +42,17 @@
           </div>
         </div>
         <div
-          class="count-info primary-color-darkest"
+          class="count-info black-color pn-700"
           fxLayoutAlign="end center"
+          fxLayout="column"
           *ngIf="voteScreen"
         >
-          {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} voted
+          <div>
+            {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} 
+          </div>
+          <div>
+            voted
+          </div>
         </div>
       </div>
     </div>
