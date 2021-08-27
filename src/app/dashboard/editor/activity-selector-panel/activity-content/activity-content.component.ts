@@ -268,6 +268,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'instructions') {
                   mappedField.templateOptions.label = 'Prompt';
+                  mappedField.templateOptions.maxLength = 35;
                   mappedField.templateOptions.placeholder = 'Enter your question';
                 } else if (mapSource.field_name === 'max_participant_submissions') {
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
@@ -310,6 +311,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Voting Stage';
                   // mappedField.hideExpression = '!model.voting_seconds';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
                   mappedField.defaultValue = 0;
                   mappedField.type = 'seconds';
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
@@ -318,6 +320,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['labelForCheckbox'] = 'Add Winner screen';
                   mappedField.templateOptions['helpText'] = 'How long does the winner stage last?';
                 } else if (mapSource.field_name === 'submission_seconds') {
+                  mappedField.hide = true;
                   mappedField.type = 'seconds';
                   mappedField.defaultValue = 10000;
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];
