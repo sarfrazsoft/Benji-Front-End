@@ -11,6 +11,8 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
   typeField: FormlyFieldConfig;
   comboTextField: FormlyFieldConfig;
 
+  questionJsonField: FormlyFieldConfig;
+
   ngOnInit() {
     this.field.fieldGroup.forEach((val, i) => {
       if (val.key === 'question_text') {
@@ -25,24 +27,24 @@ export class FeedbackQuestionTypeComponent extends FieldType implements OnInit {
         this.comboTextField = val;
       } else if (val.key === 'question_type') {
         val.templateOptions.options = [
-          {
-            value: 'rating_agreedisagree',
-            label: '<mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> Rating',
-          },
-          { value: 'text_only', 
-            label: '<mat-icon>format_align_left</mat-icon> Open Text' 
-          },
-          // { value: 'scale', 
-          //   label: '<mat-icon>poll</mat-icon> Scale' 
+          // {
+          //   value: 'rating_agreedisagree',
+          //   label: '<mat-icon>home</mat-icon> Rating',
           // },
-          // { value: 'multiple_choice', 
-          //   label: '<mat-icon>check</mat-icon> Multiple Choice' 
+          // { value: 'text_only', label: '<mat-icon>format_align_left</mat-icon> Open Textx' },
+          // { value: 'scale',
+          //   label: '<mat-icon>poll</mat-icon> Scale'
+          // },
+          // { value: 'multiple_choice',
+          //   label: '<mat-icon>check</mat-icon> Multiple Choice'
           // },
         ];
         this.typeField = val;
         this.typeField.templateOptions.label = null;
         this.typeField.templateOptions.required = false;
         this.typeField.type = 'questionTypeSelect';
+      } else if (val.key === 'question_json') {
+        this.questionJsonField = val;
       }
     });
   }

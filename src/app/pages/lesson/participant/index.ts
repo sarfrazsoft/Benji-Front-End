@@ -32,6 +32,7 @@ export { SessionEndComponent } from './session-end/session-end.component';
 export { ParticipantSharedComponents } from './shared';
 export { ParticipantInstructionTemplateComponent } from './shared/instruction-template/instruction-template.component';
 export { QuestionFormComponent } from './shared/question-form/question-form.component';
+export { ParticipantFeedbackMCQComponent } from './shared/question-form/mcq/mcq.component';
 export { QuestionLayoutComponent } from './shared/question-layout/question-layout.component';
 export { ParticipantSharingToolComponent } from './shared/sharing-tool/sharing-tool.component';
 export { ParticipantGroupingToolComponent } from './shared/grouping-tool/grouping-tool.component';

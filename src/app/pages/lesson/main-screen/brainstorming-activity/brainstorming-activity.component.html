@@ -58,11 +58,17 @@
           </div>
         </mat-menu>
         <div
-          class="count-info primary-color-darkest"
+          class="count-info black-color pn-700"
           fxLayoutAlign="end center"
+          fxLayout="column"
           *ngIf="voteScreen"
         >
-          {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} voted
+          <div>
+            {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} 
+          </div>
+          <div>
+            voted
+          </div>
         </div>
       </div>
     </div>
@@ -226,13 +232,13 @@
                 *ngIf="idea.idea_image"
                 (click)="viewImage(hostname + idea.idea_image.img)"
               >
-              <ng-container *ngIf="idea.idea_image.img.includes('https:'); else uploadedImage">
-                <img [src]="idea.idea_image.img" alt="" />
-              </ng-container>
+                <ng-container *ngIf="idea.idea_image.img.includes('https:'); else uploadedImage">
+                  <img [src]="idea.idea_image.img" alt="" />
+                </ng-container>
 
-              <ng-template #uploadedImage>
-                <img [src]="hostname + idea.idea_image.img" alt="" />
-              </ng-template>
+                <ng-template #uploadedImage>
+                  <img [src]="hostname + idea.idea_image.img" alt="" />
+                </ng-template>
               </div>
               {{ idea.idea }}
               <div class="username" *ngIf="showUserName">{{ getPersonName(item.submitting_participant.participant_code) }}</div>

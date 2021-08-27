@@ -248,11 +248,15 @@ export class FeedbackSubmitEventAnswer {
   feedbackquestion: number;
   rating_answer: number;
   text_answer: string;
+  mcq_answer: number;
+  scale_answer: number;
 
-  constructor(q: FeedbackQuestion, rating, text) {
+  constructor(q: FeedbackQuestion, answer, text?) {
     this.feedbackquestion = q.id;
-    this.rating_answer = rating;
-    this.text_answer = text;
+    this.rating_answer = answer;
+    this.text_answer = text ? text : null;
+    this.mcq_answer = answer;
+    this.scale_answer = answer;
   }
 }
 
@@ -346,6 +350,22 @@ export class ParticipantOptInEvent extends ActivityEvent {
 
 export class ParticipantOptOutEvent extends ActivityEvent {
   event_name = 'ParticipantOptOutEvent';
+}
+
+export class SubmitSharingParticipantCommentEvent extends ActivityEvent {
+  event_name = 'SubmitSharingParticipantCommentEvent';
+  constructor(comment: string) {
+    super();
+    this.extra_args = { text: comment };
+  }
+}
+
+export class SubmitSharingParticipantReactionEvent extends ActivityEvent {
+  event_name = 'SubmitSharingParticipantReactionEvent';
+  constructor(reaction: string) {
+    super();
+    this.extra_args = { reaction: reaction };
+  }
 }
 
 export class SelectParticipantForShareEvent extends ActivityEvent {

@@ -32,7 +32,7 @@ benji-editor {
   cursor: pointer;
   border-radius: 4px;
   &:hover {
-    color: #6A6A6A;
+    color: #6a6a6a;
   }
   &.imgloaded {
     img {
@@ -44,119 +44,194 @@ benji-editor {
       font-weight: 500;
       padding: 8px 24px;
       border-radius: 4px;
-      background-color: #FDECEE;
-      color: #EE3E53;
+      background-color: #fdecee;
+      color: #ee3e53;
       height: 40px;
-      }
+    }
   }
-  
 }
 
 .slides-layouts {
   .layouts {
-      margin-bottom: 8px;
-      .layout {
-          border: 1px solid #fff;
-          img {
-              cursor: pointer;
-              border: 1px solid #bec8ca;
-              border-radius: 4px;
-              &:hover {
-                  border: 2px solid #555BEA;
-              }
-          }
-          &:hover, &.highlight {
-              border: unset;
-          }
-          &.highlight {
-              img {
-                  border: 2px solid #555BEA;
-              }
-              
-          }
+    margin-bottom: 8px;
+    .layout {
+      border: 1px solid #fff;
+      img {
+        cursor: pointer;
+        border: 1px solid #bec8ca;
+        border-radius: 4px;
+        &:hover {
+          border: 2px solid #555bea;
+        }
       }
+      &:hover,
+      &.highlight {
+        border: unset;
+      }
+      &.highlight {
+        img {
+          border: 2px solid #555bea;
+        }
+      }
+    }
   }
 }
 
-// .selected-panel {
-//   width: 200px;
-//   .question-type {
-//     &.rating-header {
-//       background: #EFF0FC;
-//     }
-//     &.scale-header {
-//       background: #ffddc0;
-//     }
-//     &.multi-header {
-//       background: #ffc5c6;
-//     }
-//     .mat-selected {
-//       background: unset !important;
-//     }
-//     .mat-option {
-//       width: 100%;
-//       &:focus, &:hover {
-//         background: unset !important;
-//       }
-//     }
-//   }
-//   .scale-body, .multi-body {
-//     .label {
-//       margin-bottom: 8px;
-//     }
-//   }
-//   .mat-active {
-//     background: unset !important;
-//   }
-//   .settings {
-//     padding: 16px  16px  0px  16px;
-//     font-size: 14px;
-//     color: #6A6A6A;
-//     > div {
-//       padding-bottom: 16px;
-//     }
-//     .mat-slide-toggle-thumb {
-//       height: 12px;
-//       width: 12px;
-//       border-radius: 50%;
-//       margin: 6px 2px 0px 2px;
-//     }
-//     .mat-slide-toggle-bar {
-//       width: 32px;
-//       height: 17px; 
-//       background: #c4c4c4;
-//     }
-//     select {
-//       border: 1px solid #C4C4C4;
-//       border-radius: 2px;
-//       color: #6a6a6a;
-//       outline: none;
-//     }
-//     input {
-//       width: 95%;
-//       height: 24px;
-//       margin-bottom: 16px;
-//       outline: none;
-//       padding: 0% 2%;
-//     }
-//     .add-choice {
-//       color: #37352F;
-//       width: 100%;
-//       height: 32px;
-//       background: #ecedfd;
-//       border-radius: 2px;
-//       margin-bottom: 16px;
-//       cursor: pointer;
-//     }
-//   }
-//   .mat-option-disabled {
-//     color: unset;
-//   }
-//   &.scale, &.rating, &.multi {
-//     max-height: 666px;
-//     position: absolute;
-//     bottom: 0px;
-//     right: -60px;
-//     width: 230px;
-//   }
-// }
+.selected-panel {
+  width: 200px;
+  mat-icon {
+    line-height: 22px;
+  }
+  .right-arrow {
+    padding: 0px 0px 0px 16px;
+    .rating-arrow {
+      margin-right: 0px !important;
+      margin-left: 50px;
+    }
+    .scale-arrow {
+      margin-right: 0px !important;
+      margin-left: 56px;
+    }
+  }
+  .left-arrow {
+    padding: 0px 16px 0px 0px;
+    .rating-arrow-left {
+      margin-left: 3px;
+      margin-right: 8px;
+    }
+    .rating-star-inner {
+      margin-right: 4px;
+    }
+  }
+  .mat-menu-content {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+  &.select-rating-type {
+    max-width: 150px;
+    min-width: 150px !important;
+    mat-option {
+      padding: 0px 12px;
+    }
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+  &.select-question {
+    width: 159px;
+  }
+  .question-type {
+    &.rating-header {
+      background: #eff0fc;
+    }
+    &.scale-header {
+      background: #ffddc0;
+    }
+    &.multi-header {
+      background: #ffc5c6;
+    }
+    .mat-selected {
+      background: unset !important;
+    }
+    .mat-option {
+      width: 100%;
+      &:focus,
+      &:hover {
+        background: unset !important;
+      }
+    }
+  }
+  .scale-body,
+  .multi-body {
+    .label {
+      margin-bottom: 8px;
+    }
+    .scale-required {
+      margin-bottom: 12px;
+    }
+    .scale-vrange {
+      padding-bottom: 16px;
+    }
+    .ng-select-container {
+      width: 66px;
+      height: 23px;
+      color: #6A6A6A;
+      border-radius: 4px;
+      border: 1px solid #C4C4C4;
+      min-height: 30px;
+    }
+  }
+  .mat-active {
+    background: unset !important;
+  }
+  .settings {
+    padding: 16px 16px 8px 16px;
+    font-size: 14px;
+    color: #6a6a6a;
+    > div {
+      padding-bottom: 16px;
+    }
+    .mat-slide-toggle-thumb {
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      margin: 6px 2px 0px 2px;
+    }
+    .mat-slide-toggle-bar {
+      width: 32px;
+      height: 17px;
+      background: #c4c4c4;
+    }
+    select {
+      border: 1px solid #c4c4c4;
+      border-radius: 2px;
+      color: #6a6a6a;
+      outline: none;
+    }
+    input {
+      width: 95%;
+      height: 32px;
+      margin-bottom: 8px;
+      outline: none;
+      padding: 0% 2%;
+    }
+    .add-choice {
+      color: #37352f;
+      width: 100%;
+      height: 32px;
+      background: #ecedfd;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .close-choice {
+      background: unset;
+      mat-icon {
+        line-height: 16px;
+      }
+    }
+  }
+  .mat-option-disabled {
+    color: unset;
+  }
+  &.scale,
+  &.rating,
+  &.multi {
+    max-height: 666px;
+    position: absolute;
+    bottom: 0px;
+    right: -60px;
+    width: 230px;
+  }
+}
+
+.scale-feedback-question {
+  &.mat-menu-panel {
+    overflow: visible;
+  }
+  .scale-range-dropdown {
+    .ng-dropdown-panel-items {
+      max-height: 135px;
+    }
+  }
+}

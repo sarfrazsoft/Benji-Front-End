@@ -32,7 +32,7 @@ import {
   ObjectTypeComponent,
   PollChoiceTypeComponent,
   QuestionTypeSelectComponent,
-  SafePipe,
+  RatingTypeComponent,
   SecondsTypeComponent,
 } from './services';
 import { EditorResolver } from './services/editor.resolver';
@@ -46,7 +46,6 @@ import { TextEditorComponent } from 'src/app/shared/components/text-editor/text-
 
 export const EditorComponents = [
   ...ActivitySelectorComponents,
-  SafePipe,
   OverviewThumbnailComponent,
   EditorComponent,
   BAPEditorTypeComponent,
@@ -65,6 +64,7 @@ export const EditorComponents = [
   PollChoiceTypeComponent,
   FeedbackQuestionTypeComponent,
   QuestionTypeSelectComponent,
+  RatingTypeComponent,
   ConvoCardTypeComponent,
   EditorTypeComponent,
   SecondsTypeComponent,

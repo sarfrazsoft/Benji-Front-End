@@ -1,13 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="submitFeedback()">
-  <div class="questionForm">
+  <div class="questionForm infeedback">
     <div class="b-flat-card__action feedback-card__questions" formArrayName="questions">
       <div class="feedback-card__question-box" *ngFor="let question of questions.controls; let i = index">
         <div [formGroupName]="i">
-          <h2 class="secondary-color-dark pn-500">
-            {{ question_set[i].question_text }}
-          </h2>
 
           <div fxLayout="column" *ngIf="question_set[i].question_type === 'rating_agreedisagree'">
+            <div class="title">{{ question_set[i].question_text }}</div>
             <div class="feedback-rating">
               <div class="linked-radio-btns">
                 <ol class="nodes">
@@ -74,20 +72,141 @@
                 </ol>
               </div>
             </div>
-            <textarea
-              placeholder="What makes you say that?"
-              formControlName="text_answer"
-              class="b-standard-textarea"
-              *ngIf="question_set[i].is_combo"
-            ></textarea>
           </div>
 
-          <div fxLayout="column" *ngIf="question_set[i].question_type === 'text_only'">
-            <textarea
-              formControlName="text_answer"
-              placeholder="Your comments!"
-              class="b-standard-textarea"
-            ></textarea>
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'text_only'" class="text-question">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div>
+              <textarea
+                id="text_answer"
+                formControlName="text_answer"
+                placeholder="Your comments!"
+                class="b-standard-textarea"
+              ></textarea>
+            </div>
+            <mat-error
+              *ngIf="text_answer(i).invalid && (text_answer(i).dirty || text_answer(i).touched) && submitClicked"
+              class="alert alert-danger">
+              <div *ngIf="text_answer(i).errors.required">this is required.</div>
+            </mat-error>
+            <!-- <mat-error *ngIf="text_answer.invalid && (text_answer.dirty || text_answer.touched)" class="alert alert-danger">
+              <div *ngIf="text_answer.errors.required">Email is required.</div>
+              <div *ngIf="text_answer.errors.email">It should be a valid email.</div>
+            </mat-error> -->
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'heart'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" (mouseleave)="mouseoutIcon()">
+              <button mat-icon-button type="button" class="question-icon favorite-icon" 
+                *ngFor="let ratingId of heartsArr;index as j" 
+                [id]="'favorite_'+j" 
+                (click)="onClickHeart(i, j)"
+                (mouseover)="mouseoverIcon(j)"
+                [matTooltip]="ratingId" 
+                matTooltipPosition="above"
+                [disableRipple]="true">
+                <mat-icon>
+                  {{ showFavouriteIcon(j) }}
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'stars'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" (mouseleave)="mouseoutStarIcon()">
+              <button type="button" mat-icon-button class="question-icon star-icon" 
+                *ngFor="let ratingId of starsArr;index as j" 
+                [id]="'star_'+j" 
+                (click)="onClickStar(i, j)"
+                (mouseover)="mouseoverStarIcon(j)"
+                [matTooltip]="ratingId"
+                matTooltipPosition="above"
+                [disableRipple]="true">
+                <mat-icon>
+                  {{ showStarIcon(j) }}
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'emoji'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)" [disableRipple]="true">
+                <mat-icon>
+                  sentiment_very_dissatisfied
+                </mat-icon>
+              </button>
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)" [disableRipple]="true">
+                <mat-icon>
+                  sentiment_dissatisfied
+                </mat-icon>
+              </button>
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)" [disableRipple]="true">
+                <mat-icon>
+                  sentiment_neutral
+                </mat-icon>
+              </button>
+              <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)" [disableRipple]="true">
+                <mat-icon>
+                  sentiment_satisfied
+                </mat-icon>
+              </button>
+              <button type="button" mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)" [disableRipple]="true">
+                <mat-icon>
+                  sentiment_very_satisfied
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'thumb_up'">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <button type="button" [disableRipple]="true"
+                mat-icon-button 
+                class="question-icon thumb" 
+                (click)="onThumbClick(i, 1)">
+                <mat-icon>
+                  thumb_up
+                </mat-icon>
+              </button>
+              <button [disableRipple]="true"
+                type="button" 
+                mat-icon-button 
+                class="question-icon thumb selected" 
+                (click)="onThumbClick(i, 0)">
+                <mat-icon>
+                  thumb_down
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'scale'" class="rating-slider">
+            <div class="title">{{ question_set[i].question_text }}</div>
+            <mat-slider 
+              [min]="getScaleMin(question_set[i])" 
+              [max]="getScaleMax(question_set[i])" 
+              thumbLabel 
+              aria-label="unit(s)"
+              (change)="scaleChanged($event, i)">
+            </mat-slider>
+            <div class="labels" 
+              fxLayout="row" 
+              fxLayoutAlign="space-between center">
+              <span *ngFor="let label of getScaleLabels(question_set[i])">{{ label }}</span>
+            </div>
+          </div>
+
+          <div fxLayout="column" *ngIf="question_set[i].question_type === 'multiple_choice'" class="multiple-choice">
+            <benji-ps-feedback-mcq
+              [question]="question_set[i]"
+              (selectChoice)="mcqChoiceSelect(i, $event)"
+              [actEditor]="actEditor">
+            </benji-ps-feedback-mcq>
           </div>
 
           <!-- <div
@@ -107,18 +226,6 @@
             >
               {{ pill.name }}
             </button>
-          </div> -->
-
-          <!-- <div class="rating-slider">
-            <div class="text">
-              {{ getSliderText() }}
-            </div>
-            <mat-slider
-              [max]="100"
-              [min]="0"
-              [thumbLabel]="true"
-              (input)="sliderValueChange($event)"
-            ></mat-slider>
           </div> -->
         </div>
       </div>

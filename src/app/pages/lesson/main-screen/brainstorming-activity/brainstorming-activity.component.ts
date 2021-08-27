@@ -22,6 +22,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'benji-ms-brainstorming-activity',
@@ -55,7 +56,7 @@ export class MainScreenBrainstormingActivityComponent
   VnSComplete = false;
   categorizeFlag = false;
   showUserName = true;
-  minWidth = "medium";
+  minWidth = 'medium';
   colDeleted = 0;
   joinedUsers = [];
   answeredParticipants = [];
@@ -63,7 +64,7 @@ export class MainScreenBrainstormingActivityComponent
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
   ideas = [];
-  hostname = window.location.protocol + '//' + window.location.hostname;
+  hostname = environment.web_protocol + '://' + environment.host;
   dialogRef;
   shownSubmissionCompleteNofitication = false;
 
@@ -105,7 +106,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   getMinWidth() {
-    return (this.minWidth === "small" ? 280 : this.minWidth === "medium" ? 360 : 480);
+    return this.minWidth === 'small' ? 280 : this.minWidth === 'medium' ? 360 : 480;
   }
 
   ngOnDestroy() {
@@ -248,12 +249,12 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   getUnAnsweredUsers() {
-    let answered = this.answeredParticipants;
-    let active = [];
+    const answered = this.answeredParticipants;
+    const active = [];
     for (let index = 0; index < this.joinedUsers.length; index++) {
       active.push(this.joinedUsers[index].display_name);
     }
-    return (active.filter(name => !answered.includes(name)));
+    return active.filter((name) => !answered.includes(name));
   }
 
   isAllSubmissionsComplete(act: BrainstormActivity): boolean {
@@ -393,7 +394,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   isAbsolutePath(imageUrl: string) {
-    //console.log(imageUrl);
+    // console.log(imageUrl);
     if (imageUrl.includes('https:')) {
       return true;
     } else {

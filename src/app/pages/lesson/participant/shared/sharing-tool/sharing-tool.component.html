@@ -1,28 +1,92 @@
 <div class="participant-sharing-ui" fxLayoutAlign="center center">
   <div class="opt-in-out" fxLayoutAlign="center center">
-    <div fxLayout="row" fxLayoutAlign="column" fxLayoutAlign="center center">
-      <ng-container *ngIf="!amISharing()">
-        <button class="dashboard-secondary-button primary-color bg-white-color padding0-24" 
-          fxLayoutAlign="center center"
-          fxLayoutGap="16px"
-          (click)="optIn()">
-          <img src="/assets/img/yellowPointer.svg" alt="">
-          <span>
-            I want to share!
-          </span>
-        </button>
-      </ng-container>
-      <ng-container *ngIf="amISharing()">
-        <button class="dashboard-secondary-button primary-color bg-white-color padding0-24" 
-        fxLayoutAlign="center center"
-        fxLayoutGap="16px"
-        (click)="optOut()">
-        <img src="/assets/img/yellowPointer.svg" alt="">
-        <span>
-          Lower hand
-        </span>
-      </button>
-      </ng-container>
+    <div fxLayout="row" class="sharing-tools" fxLayoutGap="48px" fxLayoutAlign="center center">
+      <div fxLayout="row" class="hands trigger" fxLayoutAlign="center center">
+        <ng-container *ngIf="!amISharing()">
+          <div fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="4px"
+            (click)="optIn()">
+            <img class="grey-color" src="/assets/img/yellowPointerUp.svg" alt="">
+            <span>
+              Queue
+            </span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="amISharing()">
+          <div fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="4px"
+            (click)="optOut()">
+            <img class="sky-color" src="/assets/img/yellowPointerUp.svg" alt="">
+            <span>
+              Lower hand
+            </span>
+          </div>
+        </ng-container>
+      </div>
+      <div fxLayout="row" class="react trigger" fxLayoutAlign="center center" [matMenuTriggerFor]="reactionMenu" #rmt="matMenuTrigger">
+        <ng-container>
+          <div fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="4px">
+            <img [class.sky-color]="rmt.menuOpen" class="grey-color" src="/assets/img/starred-smiley.svg" alt="">
+            <span>
+              React
+            </span>
+          </div>
+        </ng-container>
+      </div>
+
+      <div fxLayout="row" class="comment trigger" fxLayoutAlign="center center" [matMenuTriggerFor]="commentMenu" #cmt="matMenuTrigger">
+        <ng-container *ngIf="!cmt.menuOpen">
+          <div fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="4px">
+            <img class="grey-color" src="/assets/img/comment-inactive.svg" alt="">
+            <span>
+              Comment
+            </span>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="cmt.menuOpen">
+          <div fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="4px">
+            <img class="sky-color" src="/assets/img/comment-active.svg" alt="">
+            <span>
+              Comment
+            </span>
+          </div>
+        </ng-container>
+      </div>
     </div>
+    <mat-menu #reactionMenu="matMenu" class="reaction-menu">
+      <div benji-click-stop-propagation fxLayout="column" fxLayoutGap="6px">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <div class="reaction" (click)="handleReaction('star_eyes'); rmt.closeMenu()">
+            <img src="/assets/img/starred-smiley.svg">
+          </div>
+          <div class="reaction" (click)="handleReaction('amazing'); rmt.closeMenu()">
+            <img src="/assets/img/starred-smiley.svg">
+            <span fxLayoutAlign="center center">Amazing</span>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="8px">
+          <div class="reaction" (click)="handleReaction('could_be_better'); rmt.closeMenu()">
+            <img src="/assets/img/flash-reaction.svg">
+            <span fxLayoutAlign="center center">Could be a bit better</span>
+          </div>
+        </div>
+      </div>
+    </mat-menu>
+    <mat-menu #commentMenu="matMenu" class="comment-menu" >
+      <div benji-click-stop-propagation action="" fxLayout="row" fxLayoutGap="5px">
+        <input type="text" #comment>
+        <button type="submit" fxLayoutAlign="center center" (click)="handleComment(comment.value); cmt.closeMenu()">
+          <img src="/assets/img/submit-arrow.svg">
+        </button>
+      </div>
+    </mat-menu>
   </div>
 </div>

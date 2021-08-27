@@ -28,8 +28,11 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   // speakers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
   speakers: Array<{ displayName: string; id: number; optedIn: boolean; group?: Group }> = [];
+  feedbackArray: Array<{ participant: number; text: string; reaction: string; }> = [];
   volunteers: Array<number>;
   groups = [];
+  panelOpen: boolean;
+  panelOpenState: boolean;
   currentSpeakerIndex = 0;
   component;
   activityDataAvailable = true;
@@ -198,9 +201,21 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   selectSpeaker(index: number) {
     // this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
-
     this.currentSpeakerIndex = index;
     this.update();
+    this.populateFeedback();
+  }
+
+  populateFeedback() {
+    this.feedbackArray = [];
+    const participants = this.activityState.running_tools.share.feedback.participants;
+    if (participants) {
+      participants.forEach((participant) => {
+        this.feedbackArray.push({ participant: participant.participant, 
+          text: participant.text,  
+          reaction: participant.reaction });
+      });
+    }
   }
 
   generateRandom() {

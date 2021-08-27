@@ -28,8 +28,9 @@ import {
   ParticipantCaseStudyActivityComponent,
   ParticipantConvoCardsActivityComponent,
   ParticipantFeedbackActivityComponent,
-  ParticipantGroupingToolComponent,
+  ParticipantFeedbackMCQComponent,
   // ParticipantSharedComponents,
+  ParticipantGroupingToolComponent,
   ParticipantInstructionTemplateComponent,
   ParticipantPollComponent,
   ParticipantPopQuizComponent,
@@ -40,6 +41,7 @@ import {
   VoteIdeaComponent,
   VotePitchComponent,
 } from 'src/app/pages/lesson/participant';
+import { SafePipe } from '../services/safe.pipe';
 
 const ActivityComponents = [
   ParticipantFeedbackActivityComponent,
@@ -50,6 +52,7 @@ const ActivityComponents = [
   CaseStudyWorkAreaComponent,
   ParticipantInstructionTemplateComponent,
   QuestionFormComponent,
+  ParticipantFeedbackMCQComponent,
   QuestionLayoutComponent,
   ParticipantSharingToolComponent,
   ParticipantGroupingToolComponent,
@@ -80,6 +83,7 @@ export const Components = [
   ...Dialogs,
   ...ActivityComponents,
   ...UIComponents,
+  SafePipe,
 ];
 
 export const EntryComponents = [...Dialogs, ...CmpEntryComponents, ...ActivityComponents];
