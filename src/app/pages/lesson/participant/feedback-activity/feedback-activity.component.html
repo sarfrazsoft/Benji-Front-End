@@ -23,7 +23,8 @@
       
       <benji-question-form
       [question_set]="activityState.feedbackactivity.feedbackquestion_set"
-      (submitResponse)="submitAnswers($event)">
+      (submitResponse)="submitAnswers($event)"
+      [actEditor]="actEditor">
       </benji-question-form>
     </div>
   </div>

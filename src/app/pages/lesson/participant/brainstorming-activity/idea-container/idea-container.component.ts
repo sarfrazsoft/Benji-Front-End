@@ -114,6 +114,9 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
             .post(url, formData, { params, headers })
             .map((res: any) => {
               this.imagesList = null;
+              if (!this.userIdeaText) {
+                this.userIdeaText = '';
+              }
               this.sendMessage.emit(
                 new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
               );

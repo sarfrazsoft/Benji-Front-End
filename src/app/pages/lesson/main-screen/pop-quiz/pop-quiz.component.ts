@@ -1,7 +1,12 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ContextService } from 'src/app/services';
-import { LeaderBoard, MCQChoiceSet, MCQSubmitAnswerEvent } from 'src/app/services/backend/schema';
+import {
+  LeaderBoard,
+  MCQChoiceSet,
+  MCQSubmitAnswerEvent,
+  ParticipantRanks,
+} from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 @Component({
@@ -13,7 +18,7 @@ export class MainScreenPopQuizComponent
   implements OnInit, OnChanges, OnDestroy {
   radialTimer;
   showLeaderboard = false;
-  leaderboard: Array<LeaderBoard> = [];
+  leaderboard: Array<ParticipantRanks> = [];
   revealAnswers = false;
   title = 'Pop Quiz!';
   regularDistribution = 100 / 4;
@@ -59,38 +64,39 @@ export class MainScreenPopQuizComponent
     if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
       this.activityState.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     }
-    if (this.peakBackState && this.peakBackStage === null) {
-      // this.voteScreen = true;
-      // this.submissionScreen = false;
-      // this.VnSComplete = false;
-      // this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+    // if (this.peakBackState && this.peakBackStage === null) {
+    //   // this.voteScreen = true;
+    //   // this.submissionScreen = false;
+    //   // this.VnSComplete = false;
+    //   // this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+    //   this.revealAnswers = true;
+    //   if (as.mcqactivity.quiz_leaderboard) {
+    //     this.showLeaderboard = true;
+    //     this.leaderboard = as.mcqactivity.quiz_leaderboard;
+    //     this.leaderboard = this.leaderboard.sort((a, b) => {
+    //       return b.score - a.score;
+    //     });
+    //   }
+    // } else if (!this.peakBackState) {
+    if (qTimer && (qTimer.status === 'running' || qTimer.status === 'paused')) {
+      this.revealAnswers = false;
+      this.radialTimer = qTimer;
+      this.contextService.activityTimer = qTimer;
+    } else if (nt && (nt.status === 'running' || nt.status === 'paused')) {
       this.revealAnswers = true;
+      this.radialTimer = nt;
+      // this.contextService.activityTimer = nt;
+      this.contextService.destroyActivityTimer();
       if (as.mcqactivity.quiz_leaderboard) {
         this.showLeaderboard = true;
-        this.leaderboard = as.mcqactivity.quiz_leaderboard;
+        this.leaderboard = as.mcqactivity.participant_ranks;
+        this.leaderboard = this.leaderboard.filter((user) => user.rank);
         this.leaderboard = this.leaderboard.sort((a, b) => {
-          return b.score - a.score;
+          return a.rank - b.rank;
         });
       }
-    } else if (!this.peakBackState) {
-      if (qTimer && (qTimer.status === 'running' || qTimer.status === 'paused')) {
-        this.revealAnswers = false;
-        this.radialTimer = qTimer;
-        this.contextService.activityTimer = qTimer;
-      } else if (nt && (nt.status === 'running' || nt.status === 'paused')) {
-        this.revealAnswers = true;
-        this.radialTimer = nt;
-        // this.contextService.activityTimer = nt;
-        this.contextService.destroyActivityTimer();
-        if (as.mcqactivity.quiz_leaderboard) {
-          this.showLeaderboard = true;
-          this.leaderboard = as.mcqactivity.quiz_leaderboard;
-          this.leaderboard = this.leaderboard.sort((a, b) => {
-            return b.score - a.score;
-          });
-        }
-      }
     }
+    // }
   }
 
   // For single user activity
@@ -124,9 +130,9 @@ export class MainScreenPopQuizComponent
 
   ngOnDestroy() {
     this.contextService.destroyActivityTimer();
-    if (this.peakBackState) {
-      this.eventsSubscription.unsubscribe();
-    }
+    // if (this.peakBackState) {
+    //   this.eventsSubscription.unsubscribe();
+    // }
   }
   changeStage(state) {
     this.peakBackStage = state;

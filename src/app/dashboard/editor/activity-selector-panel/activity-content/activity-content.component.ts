@@ -337,6 +337,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'video_url') {
+                  mappedField.templateOptions['helpText'] = 'Add youtube or vimeo url';
                 }
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {
@@ -372,6 +374,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'default_editor_content') {
                   mappedField.type = 'textEditor';
                   mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'order') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'question_text') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'auto_next') {
@@ -631,6 +635,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.required = false;
                   mappedField.templateOptions.label = 'Instructions';
                   mappedField.defaultValue = 'Instructions to be provided by the instructor.';
+                } else if (mapSource.field_name === 'deal_number') {
+                  mappedField.templateOptions.label = 'Cards per Participant';
                 } else if (mapSource.field_name === 'title_image') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'auto_next') {
@@ -825,6 +831,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         } else {
           delete b.quiz_label;
         }
+      } else if (b.activity_type === this.at.video) {
+        b.activity_overview_text = 'x';
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
     });

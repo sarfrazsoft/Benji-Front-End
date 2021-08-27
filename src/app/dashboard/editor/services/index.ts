@@ -7,6 +7,7 @@ export * from './formly/components/mcq-choice/mcq-choice.type';
 export * from './formly/components/poll-choice/poll-choice.type';
 export * from './formly/components/feedback-question/feedback-question.type';
 export * from './formly/components/question-type-select/question-type-select.type';
+export * from './formly/components/question-type-select/rating-type/rating-type.component';
 export * from './formly/pipes/select-options/select-options.pipe';
 export * from './formly/components/bap-blank/bap-blank.type';
 export * from './formly/components/seconds/seconds.type';
@@ -23,4 +24,4 @@ export * from './formly/warppers/checkbox-wrapper/checkbox-wrapper.component';
 export * from './formly/warppers/field-reveal-wrapper/field-reveal-wrapper.component';
 export * from './formly/warppers/field-wrapper/field-wrapper.component';
 
-export * from './safe.pipe';
+export * from '../../../services/safe.pipe';

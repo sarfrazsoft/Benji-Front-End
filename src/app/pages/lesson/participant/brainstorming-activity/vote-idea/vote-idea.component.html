@@ -4,7 +4,15 @@
       [ngClass]="{selected: selectedIdeas.includes(ideaId)}"
       (click)="selectIdea(ideaId)">
       <div *ngIf="ideaImage">
-        <img style="max-width: 100%;" [src]="hostname + ideaImage.img" alt="">
+        <div class="brainstorm-image" *ngIf="ideaImage">
+          <ng-container *ngIf="ideaImage.img.includes('https:'); else uploadedImage">
+            <img [src]="ideaImage.img" alt="" />
+          </ng-container>
+
+          <ng-template #uploadedImage>
+            <img [src]="hostname + ideaImage.img" alt="" />
+          </ng-template>
+        </div>        
       </div>
       <span class="idea-text">
         {{ ideaText }}

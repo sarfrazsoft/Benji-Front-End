@@ -154,7 +154,6 @@
     </div>
   </ng-container>
 
-
   <ng-container *ngIf="voteNow && !newCreatePitchLayout">
     <div class="vote-for-pitches" fxFlex="1 0 0" fxLayout="row">
       <div class="activity-instructions bg-white" fxFlex="60%" fxLayoutAlign="start center">
@@ -225,7 +224,7 @@
 
 
   <div class="votes-complete" *ngIf="votesComplete" fxFlex="1 0 0" fxLayout="row">
-    <div class="activity-instructions bg-white" fxFlex="100%" fxLayoutAlign="start center">
+    <div class="activity-instructions" fxFlex="100%" fxLayoutAlign="start center">
       <div fxLayoutGap="4vw" fxFlex="100%">
         <div fxFlex="15%">
           <div class="ms-emoji-container smaller-emoji">
@@ -250,13 +249,5 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="" *ngIf="votesComplete">
-    <benji-linear-timer
-      [timer]="getNextActStartTimer()"
-      [endAudio]="'bell.wav'"
-      [timerOffset]="avgServerTimeOffset"
-    ></benji-linear-timer>
   </div>
 </div>

@@ -22,6 +22,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'benji-ms-brainstorming-activity',
@@ -63,7 +64,7 @@ export class MainScreenBrainstormingActivityComponent
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
   ideas = [];
-  hostname = window.location.protocol + '//' + window.location.hostname;
+  hostname = environment.web_protocol + '://' + environment.host;
   dialogRef;
   shownSubmissionCompleteNofitication = false;
 

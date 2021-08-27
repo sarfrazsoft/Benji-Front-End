@@ -39,38 +39,34 @@ export class BuildAPitchService {
   }
 
   getPitchText(participantCode: number, act: BuildAPitchActivity, sharingTool = false) {
-    let parsedBlanks = this.getBlanks(act.blanks_string);
-    parsedBlanks = parsedBlanks.filter((e) => e.type === 'label');
+    const parsedBlanks = this.getBlanks(act.blanks_string);
+
     const blanks = act.buildapitchblank_set;
     const buildAPitchPitchSet = act.buildapitchpitch_set.filter(
       (e) => e.participant.participant_code === participantCode
     );
 
     let statement = '';
-    if (buildAPitchPitchSet[0]) {
-      let buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
-      buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
-      let g = 0;
-      parsedBlanks.forEach((b, i) => {
-        if (b.type === 'label') {
-          statement = statement + b.label;
-        } else {
-          const currentBlanksValue = buildAPitchEntrySet[i];
-          let value = '';
-          if (currentBlanksValue) {
-            if (sharingTool) {
-              value = ' <em class="primary-color">' + currentBlanksValue.value + '</em> ';
-            } else {
-              value = ' <em>' + currentBlanksValue.value + '</em> ';
-            }
+    let buildAPitchEntrySet = buildAPitchPitchSet[0].buildapitchentry_set;
+    buildAPitchEntrySet = buildAPitchEntrySet.sort((a, b) => a.order - b.order);
+    let g = 0;
+    parsedBlanks.forEach((b, i) => {
+      if (b.type === 'label') {
+        statement = statement + b.label;
+      } else {
+        const currentBlanksValue = buildAPitchEntrySet[g];
+        let value = '';
+        if (currentBlanksValue) {
+          if (sharingTool) {
+            value = ' <em class="primary-color">' + currentBlanksValue.value + '</em> ';
           } else {
-            // value = ' <em class="warning-color">(' + b.temp_text ? b.temp_text : '' + ')</em> ';
+            value = ' <em>' + currentBlanksValue.value + '</em> ';
           }
-          statement = statement + value;
-          g = g + 1;
         }
-      });
-    }
+        statement = statement + value;
+        g = g + 1;
+      }
+    });
     return statement;
   }
 }

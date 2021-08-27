@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'benji-vote-idea',
@@ -12,9 +13,7 @@ export class VoteIdeaComponent implements OnInit {
   @Input() name = '';
   @Output() ideaSelected = new EventEmitter();
 
-  hostname ="";
-  //If host value set, Giphy images do not display because they have another host
-  //hostname = window.location.protocol + '//' + window.location.hostname; 
+  hostname = environment.web_protocol + '://' + environment.host;
   constructor() {}
 
   ngOnInit() {}
