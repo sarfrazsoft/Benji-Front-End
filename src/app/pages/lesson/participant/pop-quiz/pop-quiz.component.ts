@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
-import { filter, find, remove } from 'lodash';
+import { filter, find, findIndex, remove } from 'lodash';
 import { ContextService } from 'src/app/services';
 import { MCQChoice, MCQSubmitAnswerEvent, Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -29,7 +29,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   // @ViewChild('timer') timer;
   timer: Timer;
 
-  localStorageItemName = 'mcqSelectedChoice';
+  localStorageItemName;
 
   constructor(private contextService: ContextService) {
     super();
@@ -38,11 +38,14 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   ngOnInit() {
     super.ngOnInit();
     const as = this.activityState;
+    this.localStorageItemName = 'mcqSelectedChoice' + as.mcqactivity.activity_id;
+
     if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
       as.mcqactivity.question.mcqchoice_set.sort((a, b) => a.id - b.id);
     }
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
+    this.selectedChoices = [];
     if (localStorage.getItem(this.localStorageItemName)) {
       this.selectedChoices = JSON.parse(localStorage.getItem(this.localStorageItemName));
     }
@@ -136,13 +139,30 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
   gotCorrectAnswers() {
     const incorrectChoicePresent = find(this.selectedChoices, (choice) => !choice.is_correct);
     if (incorrectChoicePresent) {
-      return false;
+      return 'allCorrect';
     } else {
       const correctChoices = this.getCorrectChoices();
-      if (this.selectedChoices.length === correctChoices.length) {
-        return true;
-      } else {
-        return false;
+      // iterate over selected choices
+      // push into an array when he gets one correct answer
+      // if the new array is same length as correctChoices return allCorrect
+      // if it is less than the correctChoices return someCorrect
+      // if new array is empty return allWrong
+
+      const correctChoicesGotten = [];
+      this.selectedChoices.forEach((val: MCQChoice) => {
+        const index = findIndex(correctChoices, (o) => {
+          return o.id === val.id;
+        });
+        if (index > -1) {
+          correctChoicesGotten.push(val);
+        }
+      });
+      if (correctChoicesGotten.length === 0) {
+        return 'allWrong';
+      } else if (correctChoicesGotten.length === correctChoices.length) {
+        return 'allCorrect';
+      } else if (correctChoicesGotten.length < correctChoices.length) {
+        return 'someCorrect';
       }
     }
   }

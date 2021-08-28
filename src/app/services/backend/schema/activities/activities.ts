@@ -56,7 +56,7 @@ export interface ImageActivity extends ParentActivity {
   image_url: { id: number; img: string };
 }
 
-export interface MCQActivity {
+export interface MCQActivity extends ParentActivity {
   question: MCQQuestion;
   question_seconds: number;
   question_timer: Timer;
