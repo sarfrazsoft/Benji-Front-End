@@ -33,7 +33,7 @@
           fxLayoutAlign="center end"
           fxLayout="column"
           *ngIf="submissionScreen"
-        >
+          [matMenuTriggerFor]="participantMenu">
           <div>
             {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} 
           </div>
@@ -41,12 +41,34 @@
             submitted
           </div>
         </div>
+        <mat-menu #participantMenu="matMenu" class="participants-counts-menu">
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
+            <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
+              <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
+              <ul>
+                <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
+              </ul>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
+              <span class="title">Submitted ({{answeredParticipants.length}})</span>
+              <ul>
+                <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
+              </ul>
+            </div>
+          </div>
+        </mat-menu>
         <div
-          class="count-info primary-color-darkest"
+          class="count-info black-color pn-700"
           fxLayoutAlign="end center"
+          fxLayout="column"
           *ngIf="voteScreen"
         >
-          {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} voted
+          <div>
+            {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} 
+          </div>
+          <div>
+            voted
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +95,7 @@
               cdkDropList
               [cdkDropListData]="column.brainstormidea_set"
               (cdkDropListDropped)="drop($event)"
+              [ngStyle]="{'min-width.px': getMinWidth()}"
             >
               <div class="header" (click)="columnHeaderClicked(column)">
                 <div
@@ -111,7 +134,7 @@
                   />
                 </ng-container>
               </div>
-              <div class="ideas">
+              <div class="ideas" [ngStyle]="{'min-width.px': getMinWidth()}">
                 <div
                   class="brainstorm-idea add-idea-button"
                   (click)="addIdea(column)"
@@ -139,6 +162,7 @@
                   <div
                     *ngIf="!item.removed"
                     class="brainstorm-idea"
+                    [class.show-user] = "showUserName"
                     cdkDrag
                     (mouseenter)="item.showClose = true"
                     (mouseleave)="item.showClose = false"
@@ -164,6 +188,7 @@
                       </ng-template>
                     </div>
                     {{ item.idea }}
+                    <div class="username" *ngIf="showUserName">{{ getPersonName(item.submitting_participant.participant_code) }}</div>
                     <div class="votes primary-color" *ngIf="voteScreen">
                       {{ item.num_votes }}
                     </div>
@@ -216,7 +241,7 @@
                 </ng-template>
               </div>
               {{ idea.idea }}
-              <!-- <span *ngIf="showUserName">{{ ' by ' + getPersonName(idea.submitting_participant.participant_code) }}</span> -->
+              <div class="username" *ngIf="showUserName">{{ getPersonName(item.submitting_participant.participant_code) }}</div>
               <div class="votes primary-color" *ngIf="voteScreen">
                 {{ idea.num_votes }}
               </div>

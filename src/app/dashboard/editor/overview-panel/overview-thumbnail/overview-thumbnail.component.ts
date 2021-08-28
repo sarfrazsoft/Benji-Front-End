@@ -45,6 +45,7 @@ export class OverviewThumbnailComponent implements OnInit, OnDestroy {
             ? this.getDescendantProp(res, res.activity_overview_text)
             : activity.displayName;
         } else {
+          console.log(res);
           this.displayText = '';
         }
       });

@@ -113,3 +113,45 @@
   max-width: 100px;
   cursor: pointer;
 }
+
+.mat-menu-panel {
+  &.participants-counts-menu {
+    &.centered-align {
+      position: relative;
+      left: 147%;
+    } 
+    width: 386px;
+    min-width: 386px;
+    border-radius: 8px;
+    .mat-menu-content:not(:empty) {
+      padding: 16px;
+      .title {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 14px;
+        color: #37352F;
+        margin-bottom: 8px;
+      }
+      > div {
+        overflow: hidden;
+      }
+    }
+    ul {
+      list-style: none;
+      font-size: 12px;
+      color: #616161;
+      line-height: 19px;
+      width: 137px;
+      padding: 8px 16px 16px 16px;
+      background: #EFF1F2;
+      border-radius: 4px;
+      float: left;
+      margin-bottom: -99986px;
+      padding-bottom: 99999px;
+    }
+  }
+}
+
+.count-info {
+  cursor: pointer;
+}

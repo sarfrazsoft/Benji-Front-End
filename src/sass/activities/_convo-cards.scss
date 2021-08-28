@@ -112,14 +112,12 @@ benji-ms-sharing-tool {
       .speaker-cue-container {
         background-color: #eeebdd;
         padding: 16px;
-        height: 100%;
+        height: 50%;
         position: relative;
         box-sizing: border-box;
         .header {
-          padding: 16px;
-          padding-bottom: 4px;
-          font-size: 32px;
-          font-weight: 700;
+          font-size: 20px;
+          font-weight: 600;
         }
         .speaker-list {
           overflow-y: auto;
@@ -152,6 +150,86 @@ benji-ms-sharing-tool {
         .list-controls {
           position: absolute;
           bottom: 32px;
+        }
+      } 
+// Mahin's CSS Ends
+      .speakers-feedback {
+        mat-expansion-panel {
+          border: unset;
+          border-radius: 8px;
+          margin: 24px 16px 0px 0px;
+          mat-expansion-panel-header {
+            padding: 0 16px;
+          }
+          .mat-expansion-panel-body {
+            padding: 0 16px 16px;
+          }
+          mat-panel-title {
+            font-size: 20px;
+            font-weight: 600;
+          }
+          &.open {
+            .mat-expansion-panel-content {
+              margin-bottom: 8px;
+            }
+          }
+          .feedback-list {
+            span {
+              margin-bottom: 12px;
+            }
+          }
+          .mat-expansion-panel-content {
+            font-size: 18px;
+            font-weight: 400;
+            max-height: 160px;
+            overflow-y: scroll;
+            /* width */
+            &::-webkit-scrollbar {
+              width: 4px;
+            }
+            /* Track */
+            &::-webkit-scrollbar-track {
+              background: #EEECEC;
+            }
+            /* Handle */
+            &::-webkit-scrollbar-thumb {
+              background: #828282;
+              border-radius: 2px;
+            }
+          }
+          .name-row {
+            width: 94%;
+            padding: 8px 14px 8px 10px;
+            margin: 8px 8px 8px 0px;
+            border-radius: 8px;
+            cursor: pointer;
+            &:hover {
+              background: #eeeffd;
+            }
+            &.current-speaker {
+              padding: 6px 12px 6px 8px;
+              border: 2px solid #555BEA;
+              background: #eeeffd;
+            }
+            .name {
+              color: #37352F;
+              min-width: 64%;      
+            }
+          }
+        }
+        .next-random{
+          background: #fff;
+          padding: 8px 16px 16px 16px;
+          margin-right: 16px;
+          border-radius: 0px 0px 8px 8px;
+          display: none;
+          &.active {
+            display: block;
+          }
+          .next{
+            float: left;
+            margin-right: 16px;
+          }
         }
       }
     }

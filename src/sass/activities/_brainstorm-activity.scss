@@ -3,6 +3,7 @@ benji-ms-brainstorming-activity {
     .lesson-top-banner {
       .count-info {
         font-size: 24px;
+        cursor: pointer;
       }
       h2 {
         font-size: 32px;
@@ -40,7 +41,7 @@ benji-ms-brainstorming-activity {
       }
       .column {
         position: relative;
-        min-width: 400px;
+        //min-width: 400px;
         border-radius: 5px;
         &:hover {
           box-shadow: 0 0 0 1px #e8ecee;
@@ -76,7 +77,7 @@ benji-ms-brainstorming-activity {
 
         .ideas {
           overflow-y: auto;
-          min-width: 400px;
+          //min-width: 400px;
           position: absolute;
           height: calc(100% - 70px);
           .add-idea-button {
@@ -226,6 +227,14 @@ benji-ms-brainstorming-activity {
   cursor: pointer;
   position: relative;
   color: #616161;
+  &.show-user {
+    padding-bottom: 8px;
+  }
+  .username {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 12px;
+  }
 }
 .brainstorm-image {
   text-align: center;

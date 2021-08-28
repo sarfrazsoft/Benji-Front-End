@@ -15,6 +15,9 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
   revealAnswers = false;
   title = 'Pop Quiz!';
   regularDistribution = 100 / 4;
+  joinedUsers = [];
+  answeredParticipants = [];
+  unansweredParticipants = [];
 
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
@@ -46,6 +49,7 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
   }
 
   ngOnChanges() {
+    this.loadUsersCounts();
     const as = this.activityState;
     const act = this.activityState.pollactivity;
     const qTimer = act.question_timer;
@@ -79,6 +83,24 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
         this.contextService.destroyActivityTimer();
       }
     }
+  }
+
+
+  loadUsersCounts() {
+    this.joinedUsers = this.activityState.lesson_run.participant_set;
+    this.activityState.pollactivity.answered_participants.forEach((code) => {
+      this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+    });
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  getUnAnsweredUsers() {
+    let answered = this.answeredParticipants;
+    let active = [];
+    for (let index = 0; index < this.joinedUsers.length; index++) {
+      active.push(this.joinedUsers[index].display_name);
+    }
+    return (active.filter(name => !answered.includes(name)));
   }
 
   // For single user activity

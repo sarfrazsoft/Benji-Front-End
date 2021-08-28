@@ -39,6 +39,7 @@ import {
   ObjectTypeComponent,
   PollChoiceTypeComponent,
   QuestionTypeSelectComponent,
+  RatingTypeComponent,
   SecondsTypeComponent,
 } from './services';
 export function minItemsValidationMessage(err, field: FormlyFieldConfig) {

@@ -26,10 +26,10 @@
           width: 100px;
         }
         .ng-select.card-size .ng-select-container {
-          border: 0px;
+          border: 1px solid #e7e7e7;
           width: 100px;
-          min-height: 20px;
-          height: 20px;
+          min-height: 23px;
+          height: 23px;
         }
         .label {
           margin-bottom: 8px;
@@ -146,13 +146,25 @@ benji-session-navigation {
   cursor: pointer;
   
   border-radius: 56px;
-  width: 202px;
-  height: 56px;
+  padding: 16px 32px;
   .text {
     font-weight: 600;
     font-size: 24px;
   }
   img {
     width: 28px;
+  }
+}
+
+benji-preview-panel .continue-button {
+  right: 16px;
+  bottom: 24px;
+  padding: 12px 20px;
+  .text {
+    font-weight: 500;
+    font-size: 20px;
+  }
+  img {
+    width: 22px;
   }
 }

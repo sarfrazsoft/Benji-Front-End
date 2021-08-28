@@ -30,7 +30,7 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     const as = this.activityState;
     this.activityDisplayName = this.DisplayNames[as.activity_type];
-    this.selectedCardSize = this.cardSizes[0].id;
+    this.selectedCardSize = this.cardSizes[1].id;
   }
 
   ngOnChanges() {

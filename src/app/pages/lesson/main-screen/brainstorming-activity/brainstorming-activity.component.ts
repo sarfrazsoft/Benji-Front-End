@@ -55,9 +55,12 @@ export class MainScreenBrainstormingActivityComponent
   voteScreen = false;
   VnSComplete = false;
   categorizeFlag = false;
-  // showUserName = true;
+  showUserName = true;
+  minWidth = "medium";
   colDeleted = 0;
   joinedUsers = [];
+  answeredParticipants = [];
+  unansweredParticipants = [];
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
   ideas = [];
@@ -83,19 +86,28 @@ export class MainScreenBrainstormingActivityComponent
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
-      // if (val && val.controlName === 'participantNames') {
-      //   this.showUserName = val.state;
-      // }
+      if (val && val.controlName === 'participantNames') {
+        this.showUserName = val.state;
+        console.log(this.showUserName);
+      }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
+      }
+      if (val && val.controlName === 'cardSize') {
+        this.minWidth = val.state.name;
+        console.log(this.minWidth);
       }
     });
   }
 
-  // getPersonName(id: number) {
-  //   const user = this.joinedUsers.find((u) => u.participant_code === id);
-  //   return user.display_name;
-  // }
+  getPersonName(id: number) {
+    const user = this.joinedUsers.find((u) => u.participant_code === id);
+    return user.display_name;
+  }
+
+  getMinWidth() {
+    return this.minWidth === 'small' ? 280 : this.minWidth === 'medium' ? 360 : 480;
+  }
 
   ngOnDestroy() {
     this.contextService.destroyActivityTimer();
@@ -150,6 +162,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   onChanges() {
+    this.loadUsersCounts();
     const act = this.activityState.brainstormactivity;
     this.act = this.activityState.brainstormactivity;
     if (this.act.brainstormcategory_set.length) {
@@ -225,6 +238,23 @@ export class MainScreenBrainstormingActivityComponent
         snackBarRef.onAction().subscribe(($event) => {});
       }
     }
+  }
+
+  loadUsersCounts() {
+    this.joinedUsers = this.activityState.lesson_run.participant_set;
+    this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
+      this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+    });
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  getUnAnsweredUsers() {
+    const answered = this.answeredParticipants;
+    const active = [];
+    for (let index = 0; index < this.joinedUsers.length; index++) {
+      active.push(this.joinedUsers[index].display_name);
+    }
+    return active.filter((name) => !answered.includes(name));
   }
 
   isAllSubmissionsComplete(act: BrainstormActivity): boolean {
@@ -364,7 +394,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   isAbsolutePath(imageUrl: string) {
-    console.log(imageUrl);
+    // console.log(imageUrl);
     if (imageUrl.includes('https:')) {
       return true;
     } else {

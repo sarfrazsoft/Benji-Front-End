@@ -60,12 +60,30 @@
             [timerOffset]="avgServerTimeOffset"
           ></app-radial-timer>
 
-          <div class="pn-700 submitted-info primary-color">
+          <div class="pn-700 submitted-info primary-color"
+            [matMenuTriggerFor]="participantMenu">
             {{ getChoiceSubmittedUsers() }}/{{  getActiveParticipants().length }}
             Submitted
           </div>
+          <mat-menu #participantMenu="matMenu" class="participants-counts-menu">
+            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
+              <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
+                <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
+                <ul>
+                  <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
+                </ul>
+              </div>
+              <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
+                <span class="title">Submitted ({{answeredParticipants.length}})</span>
+                <ul>
+                  <li *ngFor="let particpant of answeredParticipants">{{particpant.display_name}}</li>
+                </ul>
+              </div>
+            </div>
+          </mat-menu>
         </div>
       </div>
+
       <div
         class="bg-yellow"
         fxFlex="25%"
@@ -80,7 +98,7 @@
                 <div fxLayoutAlign="space-between">
                   <span class="name black-color">
                     <span class="leader-rank black-color"> {{ i + 1 }}. </span>
-                    {{ getParticipantName(leader.participant_code) }}
+                    {{ getParticipantName(leader.participant) }}
                   </span>
                   <span class="leader-score">{{ leader.score }}</span>
                 </div>

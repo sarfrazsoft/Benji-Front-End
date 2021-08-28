@@ -53,7 +53,8 @@ export interface LessonRun {
 }
 
 export interface RunningTools {
-  share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number } };
+  share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number }; 
+            feedback: {sharing_participant: number, participants: [{participant: number, text: string, reaction: string}]} };
   grouping_tool?: { selectedGrouping: number; groupings: Array<GroupingToolGroups>; viewGrouping: boolean };
   timer_tool?: Timer;
 }

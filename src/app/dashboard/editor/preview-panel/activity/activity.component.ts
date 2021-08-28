@@ -30,7 +30,9 @@ import {
 } from 'src/app/pages';
 import { MainScreenCaseStudyActivityComponent } from 'src/app/pages/lesson/main-screen/case-study-activity/case-study-activity.component';
 import { MainScreenEitherOrActivityComponent } from 'src/app/pages/lesson/main-screen/either-or-activity/either-or-activity.component';
+import { MainScreenVideoActivityComponent } from 'src/app/pages/lesson/main-screen/video-activity/video-activity.component';
 import { ParticipantEitherOrActivityComponent } from 'src/app/pages/lesson/participant/either-or-activity/either-or-activity.component';
+import { ParticipantVideoActivityComponent } from 'src/app/pages/lesson/participant/video-activity/video-activity.component';
 import { PreviewActivity } from 'src/app/services/backend/schema';
 
 @Component({
@@ -364,6 +366,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             },
           },
         };
+        this.componentRef.instance.actEditor = true;
       } else if (this.data.activity_type === Acts.buildAPitch) {
         if (this.componentRef) {
           this.componentRef.destroy();
@@ -577,7 +580,6 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           msAct = this.cfr.resolveComponentFactory(ParticipantEitherOrActivityComponent);
         }
         this.componentRef = this.entry.createComponent(msAct);
-        console.log(this.data);
 
         let right_choice = {
           choice_img_url: 'emoji://1F412',
@@ -632,6 +634,41 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             left_choice: left_choice,
             right_choice: right_choice,
             question_title: question_title,
+          },
+        };
+      } else if (this.data.activity_type === Acts.video) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenVideoActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(ParticipantVideoActivityComponent);
+        }
+        this.componentRef = this.entry.createComponent(msAct);
+        console.log(this.data);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          videoactivity: {
+            activity_id: '1605110364952',
+            activity_type: this.data.activity_type,
+            auto_next: true,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 507,
+            is_paused: true,
+            next_activity: 4,
+            next_activity_delay_seconds: null,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 46,
+            run_number: 0,
+            start_time: '2020-11-11T12:30:41.270208-05:00',
+            video_url: this.data.content.video_url,
           },
         };
       }

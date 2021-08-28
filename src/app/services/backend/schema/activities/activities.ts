@@ -56,7 +56,7 @@ export interface ImageActivity extends ParentActivity {
   image_url: { id: number; img: string };
 }
 
-export interface MCQActivity {
+export interface MCQActivity extends ParentActivity {
   question: MCQQuestion;
   question_seconds: number;
   question_timer: Timer;
@@ -64,9 +64,13 @@ export interface MCQActivity {
   all_participant_answered: boolean;
   titlecomponent: TitleComponent;
   quiz_leaderboard: Array<LeaderBoard>;
+  participant_ranks: Array<ParticipantRanks>;
   multiple_correct_answer: boolean;
 }
-
+export interface ParticipantRanks {
+  participant_code: number;
+  rank: number;
+}
 export interface LeaderBoard {
   participant_code: number;
   score: number;

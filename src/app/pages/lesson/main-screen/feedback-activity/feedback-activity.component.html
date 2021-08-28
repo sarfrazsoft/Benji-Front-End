@@ -12,10 +12,28 @@
       {{ instructions }}
     </p>
   </div>
-  <div class="forms-submitted primary-color pn-600" *ngIf="participantLength">
+  <div class="forms-submitted primary-color pn-600" 
+    *ngIf="participantLength"
+    [matMenuTriggerFor]="participantMenu">
     {{ answeredParticipantsLength }}/{{
       participantLength
     }}
     forms submitted
   </div>
+  <mat-menu #participantMenu="matMenu" class="participants-counts-menu centered-align">
+    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
+      <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
+        <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
+        <ul>
+          <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
+        </ul>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
+        <span class="title">Submitted ({{answeredParticipants.length}})</span>
+        <ul>
+          <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
+        </ul>
+      </div>
+    </div>
+  </mat-menu>
 </div>
