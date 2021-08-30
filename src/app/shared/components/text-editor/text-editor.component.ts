@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Editor, Toolbar } from 'ngx-editor';
+import { EditorView } from 'prosemirror-view';
 import { wsRoot } from 'src/app/globals';
 import { UtilsService } from 'src/app/services/utils.service';
 import nodeViews from 'src/app/shared/ngx-editor/nodeviews/index';
@@ -9,7 +10,12 @@ import plugins, { placeholderPlugin } from 'src/app/shared/ngx-editor/plugins';
 import { setAwareness } from 'src/app/shared/ngx-editor/plugins/cursor-plugin/cursor-plugin';
 import { yCursorPlugin } from 'src/app/shared/ngx-editor/plugins/cursor-plugin/cursor-plugin';
 import schema from 'src/app/shared/ngx-editor/schema';
-import { yCursorPlugin as OrginalYCursorPlugin, ySyncPlugin, yUndoPlugin } from 'y-prosemirror';
+import {
+  prosemirrorJSONToYDoc,
+  yCursorPlugin as OrginalYCursorPlugin,
+  ySyncPlugin,
+  yUndoPlugin,
+} from 'y-prosemirror';
 import { WebsocketProvider } from 'y-websocket';
 import * as Y from 'yjs';
 

@@ -58,6 +58,7 @@ export class ParticipantCaseStudyActivityComponent
   selectedParticipant;
   saved;
   answeredWorksheets;
+  answeredWorksheetTexts;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -221,7 +222,9 @@ export class ParticipantCaseStudyActivityComponent
   saveEditCollab() {
     // console.log(localStorage.getItem('collabedit'));
     // const json = JSON.parse(localStorage.getItem('collabeditJSONDoc' + '_' + this.questionId));
-    this.sendMessage.emit(new CaseStudySubmitAnswerEvent(this.answeredWorksheets));
+    this.sendMessage.emit(
+      new CaseStudySubmitAnswerEvent(this.answeredWorksheets, this.answeredWorksheetTexts)
+    );
     // console.log(localStorage.getItem('collabeditJSONDoc'));
     // this.questions.forEach((q) => {
     //   console.log(q);
@@ -232,7 +235,27 @@ export class ParticipantCaseStudyActivityComponent
 
   questionAnswerUpdated(event) {
     this.answeredWorksheets = { ...this.answeredWorksheets, ...event };
-    // console.log(this.answeredWorksheets);
+    this.jsonToText(this.answeredWorksheets);
+  }
+
+  jsonToText(worksheets) {
+    const textObj = {};
+    Object.entries(worksheets).forEach(([key, val]) => {
+      const text = this.getTextForJson(val);
+      textObj[key] = text;
+    });
+    this.answeredWorksheetTexts = textObj;
+  }
+
+  getTextForJson(json) {
+    let text = '';
+    if (json.content) {
+      for (let i = 0; i < json.content.length; i++) {
+        text = text + this.getTextForJson(json.content[i]);
+      }
+    } else if (json.type === 'text') {
+      return json.text;
+    }
+    return text;
   }
 }
-// 15625

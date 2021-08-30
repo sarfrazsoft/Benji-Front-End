@@ -516,9 +516,9 @@ export class GenericRoleplayParticipantFeedbackEvent extends ActivityEvent {
 export class CaseStudySubmitAnswerEvent extends ActivityEvent {
   event_name = 'CaseStudySubmitAnswerEvent';
 
-  constructor(json) {
+  constructor(json, texts) {
     super();
-    this.extra_args = { answer: json };
+    this.extra_args = { answer: json, answer_text: texts };
   }
 }
 export class CaseStudyDefaultWorksheetApplied extends ActivityEvent {
