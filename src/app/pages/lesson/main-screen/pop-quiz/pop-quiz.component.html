@@ -1,9 +1,15 @@
 <ng-container>
   <div fxLayout="column" class="mainscreen-activity">
-    <div class="lesson-top-banner black-color" fxLayout="row">
+    <div class="lesson-top-banner black-color" fxLayout="row" fxLayoutAlign="space-between center" >
       <span class="activity-header">
         {{ activityState.mcqactivity.question.question }}
       </span>
+      <div>
+        <submitted-counter 
+          [answeredParticipants]="answeredParticipants" 
+          [unansweredParticipants]="unansweredParticipants">
+        </submitted-counter>
+      </div>
     </div>
     <div class="" fxFlex="1 0 0" fxLayout="row">
       <div 
@@ -41,11 +47,9 @@
             >
               <div>{{ option.choice_text }}</div>
             </button>
-            <!-- </div> -->
           </div>
         </div>
       </div>
-
       <div
         class="bg-yellow"
         fxFlex="25%"
@@ -59,31 +63,8 @@
             [endAudio]="'bell.wav'"
             [timerOffset]="avgServerTimeOffset"
           ></app-radial-timer>
-
-          <div class="pn-700 submitted-info primary-color"
-            [matMenuTriggerFor]="participantMenu">
-            {{ getChoiceSubmittedUsers() }}/{{  getActiveParticipants().length }}
-            Submitted
-          </div>
-          <mat-menu #participantMenu="matMenu" class="participants-counts-menu">
-            <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
-              <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-                <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
-                <ul>
-                  <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
-                </ul>
-              </div>
-              <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-                <span class="title">Submitted ({{answeredParticipants.length}})</span>
-                <ul>
-                  <li *ngFor="let particpant of answeredParticipants">{{particpant.display_name}}</li>
-                </ul>
-              </div>
-            </div>
-          </mat-menu>
         </div>
       </div>
-
       <div
         class="bg-yellow"
         fxFlex="25%"

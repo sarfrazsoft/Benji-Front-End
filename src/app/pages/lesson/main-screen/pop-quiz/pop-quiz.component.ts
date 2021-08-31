@@ -107,8 +107,13 @@ export class MainScreenPopQuizComponent
   }
 
   loadUsersCounts() {
+    this.activeParticipants = [];
+    this.answeredParticipants = [];
+    this.unansweredParticipants = [];
     this.activeParticipants = this.getActiveParticipants();
-    this.answeredParticipants = this.activityState.mcqactivity.answered_participants;
+    this.activityState.mcqactivity.answered_participants.forEach((code) => {
+      this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+    });
     this.unansweredParticipants = this.getUnAnsweredUsers();
   }
 

@@ -17,7 +17,7 @@
           </span>
         </h1>
       </div>
-      <div fxLayout="row" fxLayoutGap="40px">
+      <div fxLayout="row">
         <div fxLayoutAlign="end center" class="instructions">
           <h2
             class="pn-500 primary-color"
@@ -28,35 +28,10 @@
             {{ instructions }}
           </h2>
         </div>
-        <div
-          class="count-info black-color pn-700"
-          fxLayoutAlign="center end"
-          fxLayout="column"
-          *ngIf="submissionScreen"
-          [matMenuTriggerFor]="participantMenu">
-          <div>
-            {{ ideaSubmittedUsersCount }}/{{ joinedUsers.length }} 
-          </div>
-          <div>
-            submitted
-          </div>
-        </div>
-        <mat-menu #participantMenu="matMenu" class="participants-counts-menu">
-          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
-            <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-              <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
-              <ul>
-                <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
-              </ul>
-            </div>
-            <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-              <span class="title">Submitted ({{answeredParticipants.length}})</span>
-              <ul>
-                <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
-              </ul>
-            </div>
-          </div>
-        </mat-menu>
+        <submitted-counter 
+          [answeredParticipants]="answeredParticipants" 
+          [unansweredParticipants]="unansweredParticipants">
+        </submitted-counter>
         <div
           class="count-info black-color pn-700"
           fxLayoutAlign="end center"

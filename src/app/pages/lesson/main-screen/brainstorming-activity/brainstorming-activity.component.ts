@@ -241,7 +241,10 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   loadUsersCounts() {
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
+    this.joinedUsers = [];
+    this.answeredParticipants = [];
+    this.unansweredParticipants = [];
+    this.joinedUsers = this.getActiveParticipants();
     this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
     });
