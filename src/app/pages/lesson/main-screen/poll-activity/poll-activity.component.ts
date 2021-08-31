@@ -87,7 +87,10 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
 
 
   loadUsersCounts() {
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
+    this.joinedUsers = [];
+    this.answeredParticipants = [];
+    this.unansweredParticipants = [];
+    this.joinedUsers = this.getActiveParticipants();
     this.activityState.pollactivity.answered_participants.forEach((code) => {
       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
     });

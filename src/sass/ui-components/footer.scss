@@ -116,13 +116,10 @@
 
 .mat-menu-panel {
   &.participants-counts-menu {
-    &.centered-align {
-      position: relative;
-      left: 147%;
-    } 
     width: 386px;
     min-width: 386px;
     border-radius: 8px;
+    margin-top: 2%;
     .mat-menu-content:not(:empty) {
       padding: 16px;
       .title {
@@ -153,5 +150,20 @@
 }
 
 .count-info {
+  font-size: 20px;
+  font-weight: 500;
   cursor: pointer;
+  padding: 10px 12px 10px 10px;
+  border-radius: 8px;
+  background: #fff;
+  mat-icon {
+    font-size: 24px;
+  }
+}
+.count-info {
+  cursor: pointer;
+}
+.top-right {
+  margin: 32px;
+  padding-bottom: 6vh;
 }

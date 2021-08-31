@@ -5,7 +5,9 @@
   flex-direction: column;
   justify-content: center;
   position: relative;
-
+  &.with-counter {
+    height: unset;
+  }
   .activity-title-container {
     h1 {
       line-height: normal;

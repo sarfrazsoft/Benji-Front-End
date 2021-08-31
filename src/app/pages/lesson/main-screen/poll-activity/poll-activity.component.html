@@ -6,37 +6,13 @@
           {{ activityState.pollactivity.question.question }}
         </span>
       </div>
-
-      <div
-        class="count-info black-color pn-700"
-        fxLayoutAlign="center end"
-        fxLayout="column"
-        style="font-size: 24px;"
-        [matMenuTriggerFor]="participantMenu">
-        <div>
-          {{ getChoiceSubmittedUsers() }}/{{ getActiveParticipants().length }} 
-        </div>
-        <div>
-          submitted
-        </div>
+      <div>
+        <submitted-counter 
+          [answeredParticipants]="answeredParticipants" 
+          [unansweredParticipants]="unansweredParticipants">
+        </submitted-counter>
       </div>
     </div>
-    <mat-menu #participantMenu="matMenu" class="participants-counts-menu">
-      <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
-        <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-          <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
-          <ul>
-            <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
-          </ul>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-          <span class="title">Submitted ({{answeredParticipants.length}})</span>
-          <ul>
-            <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
-          </ul>
-        </div>
-      </div>
-    </mat-menu>
     <div class="" fxFlex="1 0 0" fxLayout="row">
       <div 
         class="activity-instructions bg-yellow"

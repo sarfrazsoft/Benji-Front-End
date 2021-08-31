@@ -1,4 +1,10 @@
-<div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+<div class="single-column-activity with-counter" fxLayout="column" fxLayoutGap="2.5vh">
+  <div fxLayout="row" fxLayoutAlign="end center" class="top-right">
+    <submitted-counter 
+      [answeredParticipants]="answeredParticipants" 
+      [unansweredParticipants]="unansweredParticipants">
+    </submitted-counter>
+  </div>
   <div class="twemoji-container" *ngIf="isEmoji(activityState.feedbackactivity.title_emoji)">
     <app-b-twemoji [text]="activityState.feedbackactivity.title_emoji"> </app-b-twemoji>
   </div>
@@ -12,28 +18,4 @@
       {{ instructions }}
     </p>
   </div>
-  <div class="forms-submitted primary-color pn-600" 
-    *ngIf="participantLength"
-    [matMenuTriggerFor]="participantMenu">
-    {{ answeredParticipantsLength }}/{{
-      participantLength
-    }}
-    forms submitted
-  </div>
-  <mat-menu #participantMenu="matMenu" class="participants-counts-menu centered-align">
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
-      <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-        <span class="title">Not Submitted ({{unansweredParticipants.length}})</span>
-        <ul>
-          <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
-        </ul>
-      </div>
-      <div fxLayout="column" fxLayoutAlign="center start" fxFlex="50">
-        <span class="title">Submitted ({{answeredParticipants.length}})</span>
-        <ul>
-          <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
-        </ul>
-      </div>
-    </div>
-  </mat-menu>
 </div>

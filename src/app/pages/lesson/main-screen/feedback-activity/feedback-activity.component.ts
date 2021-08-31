@@ -10,7 +10,6 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent i
   title_emoji = '';
   instructions = '';
   answeredParticipantsLength = null;
-  participantLength = null;
   joinedUsers = [];
   answeredParticipants = [];
   unansweredParticipants = [];
@@ -29,7 +28,7 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent i
       this.title = act.titlecomponent.title;
       this.instructions = act.titlecomponent.screen_instructions;
       this.answeredParticipantsLength = act.answered_participants.length;
-      this.participantLength = this.activityState.lesson_run.participant_set.length;
+      //this.participantsLength = this.activityState.lesson_run.participant_set.length;
     }
   }
 
@@ -39,7 +38,10 @@ export class MainScreenFeedbackActivityComponent extends BaseActivityComponent i
   }
 
   loadUsersCounts() {
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
+    this.joinedUsers = [];
+    this.answeredParticipants = [];
+    this.unansweredParticipants = [];
+    this.joinedUsers = this.getActiveParticipants();
     this.activityState.feedbackactivity.answered_participants.forEach((code) => {
       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
     });
