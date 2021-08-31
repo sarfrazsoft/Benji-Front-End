@@ -78,10 +78,10 @@ export class ParticipantCaseStudyActivityComponent
   populateQuestions() {
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
-    questionsTemp.forEach((q, i) => {
+    const sortedQuestions = questionsTemp.sort((a, b) => a.order - b.order);
+    sortedQuestions.forEach((q, i) => {
       this.questions.push({ ...q, answer: '' });
     });
-    this.questions = this.questions.sort((a, b) => a.order - b.order);
   }
 
   ngOnChanges() {

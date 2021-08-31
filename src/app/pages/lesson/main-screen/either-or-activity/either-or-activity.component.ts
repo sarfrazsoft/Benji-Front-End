@@ -126,6 +126,24 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
     }
   }
 
+  getNumberOfSubmittedPreferences() {
+    if (this.state.preferences) {
+      return this.state.preferences;
+    }
+    return [];
+  }
+
+  getNumberOfSubmittedPredictions() {
+    if (this.state.predictions) {
+      return this.state.predictions;
+    }
+    return [];
+  }
+
+  getAllJoinedParticipantCount() {
+    return this.getActiveParticipants();
+  }
+
   getGroupPreferredChoice(): WhereDoYouStandChoice {
     return this.eitherOrActivityService.getGroupChoice(this.state, 'num_preferences');
   }

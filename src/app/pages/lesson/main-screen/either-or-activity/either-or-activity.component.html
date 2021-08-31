@@ -32,8 +32,8 @@
         </span>
       </div>
     </div>
-    <div class="forms-submitted primary-color pn-600" *ngIf="participantLength">
-      {{ answeredParticipantsLength }}/{{participantLength}}
+    <div class="forms-submitted primary-color pn-600">
+      {{ getNumberOfSubmittedPredictions().length }}/{{ getAllJoinedParticipantCount().length }}
       Submitted
     </div>
     <div class="continue-button bg-primary-color white-color" (click)="continueClicked()" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
@@ -65,7 +65,7 @@
           <p class="secondary-color-dark pn-500" [innerHTML]="state.preference_text"></p>
         </div>
         <div class="forms-submitted primary-color-darkest pn-600">
-          {{ state.preferences.length }}/{{ activityState.lesson_run.participant_set.length }}
+          {{  getNumberOfSubmittedPreferences() }}/{{ getAllJoinedParticipantCount() }}
           answers submitted
         </div>
       </div>
@@ -83,9 +83,7 @@
           </div>
         </div>
         <div class="mainscreen-activity ms-act--multi-column pair-activity" style="width: 100%">
-          <div
-            class="mainscreen-activity__column mainscreen-activity__column--50 pair-activity__pairs"
-          >
+          <div class="mainscreen-activity__column mainscreen-activity__column--50 pair-activity__pairs">
             <div 
               fxLayout="row" 
               fxLayoutAlign="center center" 
@@ -137,6 +135,10 @@
               </li>
             </ul>
           </div>
+        </div>
+        <div class="forms-submitted primary-color pn-600">
+          {{ getNumberOfSubmittedPreferences().length }}/{{ getAllJoinedParticipantCount().length }}
+          Submitted
         </div>
         <div class="continue-button bg-primary-color white-color" (click)="continueClicked()" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
           <div class="text">Continue</div>
@@ -211,7 +213,11 @@
     </div>
   </div> -->
 
-  <div class="either-or-activity mainscreen-activity" fxLayoutAlign="center" *ngIf="state && state.standing_complete && state.preference_complete && state.prediction_complete">
+  <!-- Result screen -->
+  <div 
+    class="either-or-activity mainscreen-activity" 
+    fxLayoutAlign="center" 
+    *ngIf="state && state.standing_complete && state.preference_complete && state.prediction_complete">
     <div
       class="result"
       fxLayout="row"

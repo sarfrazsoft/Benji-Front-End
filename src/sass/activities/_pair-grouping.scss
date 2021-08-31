@@ -21,7 +21,8 @@ benji-ms-either-or-activity {
           text-overflow: ellipsis;
           text-transform: capitalize;
           list-style: none;
-          margin-bottom: 1vh;
+          margin-bottom: 8px;
+          color: #898989;
           &.long-list {
             font-size: 2vh;
           }

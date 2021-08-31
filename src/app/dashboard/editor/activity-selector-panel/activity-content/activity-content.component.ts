@@ -126,7 +126,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.internal_type === 'TitleComponentSerializer') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'question_seconds') {
-                  mappedField.templateOptions.label = 'Timer to answer';
+                  mappedField.templateOptions.label = 'Time to answer';
                   mappedField.type = 'seconds';
                 } else if (mapSource.field_name === 'title') {
                   mappedField.hide = true;
@@ -369,18 +369,16 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'casestudyquestion_set') {
                   mappedField.templateOptions.label = 'Work Areas';
                   mappedField.templateOptions['hideArrayLabel'] = true;
-                  // mappedField.hide = true;
                   mappedField.wrappers = ['benji-field-wrapper'];
-                  // mappedField.templateOptions['hideLabel'] = true;
                   mappedField.templateOptions['helpText'] =
                     'Work areas are where your participants can collaboratively answer questions.';
                 } else if (mapSource.field_name === 'default_editor_content') {
                   mappedField.type = 'textEditor';
-                  mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'order') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'question_text') {
                   mappedField.templateOptions.label = '';
+                  mappedField.className = 'mb-8';
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
@@ -586,6 +584,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'question_title') {
                   mappedField.templateOptions.label = 'Title';
+                  mappedField.templateOptions.maxLength = 35;
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.hide = true;
                   mappedField.defaultValue = false;
@@ -893,7 +892,7 @@ export const OrderForActivities = {
     'next_activity_delay_seconds',
     'submission_seconds',
   ],
-  MCQActivity: ['titlecomponent', 'title', 'question', 'mcqchoice_set', 'question_seconds', 'quiz_label'],
+  MCQActivity: ['titlecomponent', 'title', 'question', 'question_seconds', 'mcqchoice_set', 'quiz_label'],
   VideoActivity: ['video_url', 'auto_next', 'next_activity_delay_seconds'],
   CaseStudyActivity: [
     'title_emoji',
