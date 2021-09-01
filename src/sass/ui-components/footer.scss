@@ -164,6 +164,7 @@
   cursor: pointer;
 }
 .top-right {
-  margin: 32px;
-  padding-bottom: 6vh;
+  position: absolute;
+  top: 32px;
+  right: 32px;
 }

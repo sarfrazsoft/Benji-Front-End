@@ -32,6 +32,11 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
   leftChoiceUsers: Array<number> = [];
   isRemoteSession = true;
   @ViewChild('timer') timer;
+  joinedUsers: any[];
+  answeredParticipants: any[];
+  unansweredParticipants: any[];
+  skipPredictions: boolean;
+  skipPreferences: boolean;
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -124,6 +129,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
       //   this.dialogRef = undefined;
       // }
     }
+    this.loadUsersCounts();
   }
 
   getNumberOfSubmittedPreferences() {
@@ -135,13 +141,40 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
 
   getNumberOfSubmittedPredictions() {
     if (this.state.predictions) {
+      //console.log(this.state.predictions || JSON)
       return this.state.predictions;
     }
     return [];
   }
 
-  getAllJoinedParticipantCount() {
+  getAllJoinedParticipants() {
     return this.getActiveParticipants();
+  }
+
+  loadUsersCounts() {
+    this.joinedUsers = [];
+    this.answeredParticipants = [];
+    this.unansweredParticipants = [];
+    this.joinedUsers = this.getActiveParticipants();
+    let answered;
+    if (this.state.prediction_complete || this.skipPredictions) {
+      answered = this.getNumberOfSubmittedPreferences();
+    } else if (!this.state.prediction_complete) {
+      answered = this.getNumberOfSubmittedPredictions();
+    }
+    answered.forEach((code) => {
+      this.answeredParticipants.push(this.getParticipantName(code.participant.participant_code));
+    });
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  getUnAnsweredUsers() {
+    let answered = this.answeredParticipants;
+    let active = [];
+    for (let index = 0; index < this.joinedUsers.length; index++) {
+      active.push(this.joinedUsers[index].display_name);
+    }
+    return (active.filter(name => !answered.includes(name)));
   }
 
   getGroupPreferredChoice(): WhereDoYouStandChoice {
@@ -198,8 +231,12 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
     return false;
   }
 
-  continueClicked() {
-    // this.sendMessage.emit(new NextInternalEvent());
+  continueClicked(clickedFor: string) {
+    if (clickedFor === "predictions") {
+      this.skipPredictions = true;
+    } if (clickedFor === "preferences") {
+      this.skipPreferences = true;
+    }
     this.sendMessage.emit(new FastForwardEvent());
   }
 }
