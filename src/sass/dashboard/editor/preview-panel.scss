@@ -225,7 +225,8 @@ benji-preview-panel {
 
         .single-column-activity {
           .twemoji-container {
-            width: 95px;
+            //width: 95px;
+            width: 135px;
             padding-top: 30px;
           }
           .activity-title-container {
@@ -235,7 +236,8 @@ benji-preview-panel {
           }
           .activity-title-description-container {
             p {
-              font-size: 20px;
+              //font-size: 20px;
+              font-size: 1.881vw;
               margin-top: 5px;
               &.smaller-font-class {
                 font-size: 18px;

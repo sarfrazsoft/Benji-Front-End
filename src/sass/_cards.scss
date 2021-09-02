@@ -90,6 +90,7 @@
 }
 
 .title-activity .b-flat-card__body {
+  font-size: 18px;
   .participant-screen {
     img {
       width: 100%;
@@ -99,7 +100,7 @@
   }
   h1 {
     padding-bottom: 16px;
-    font-size: 2.1vw;
+    font-size: 24px;
   }
 }
 
@@ -110,7 +111,7 @@
     padding: 24px;
     .twemoji-container {
       max-width: unset;
-      margin-top: 15vh !important;
+     // margin-top: 15vh !important;
     }
   }
   .activity-wrapper {
