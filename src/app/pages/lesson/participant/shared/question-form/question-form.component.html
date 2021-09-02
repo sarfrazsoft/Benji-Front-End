@@ -106,7 +106,7 @@
                 [matTooltip]="ratingId" 
                 matTooltipPosition="above"
                 [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-favorite">
                   {{ showFavouriteIcon(j) }}
                 </mat-icon>
               </button>
@@ -124,7 +124,7 @@
                 [matTooltip]="ratingId"
                 matTooltipPosition="above"
                 [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-star">
                   {{ showStarIcon(j) }}
                 </mat-icon>
               </button>
@@ -135,27 +135,27 @@
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" fxLayoutAlign="start center">
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)" [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-emoticon">
                   sentiment_very_dissatisfied
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)" [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-emoticon">
                   sentiment_dissatisfied
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)" [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-emoticon">
                   sentiment_neutral
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)" [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-emoticon">
                   sentiment_satisfied
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)" [disableRipple]="true">
-                <mat-icon>
+                <mat-icon class="mat-emoticon">
                   sentiment_very_satisfied
                 </mat-icon>
               </button>
@@ -169,7 +169,7 @@
                 mat-icon-button 
                 class="question-icon thumb" 
                 (click)="onThumbClick(i, 1)">
-                <mat-icon>
+                <mat-icon class="mat-thumb-up">
                   thumb_up
                 </mat-icon>
               </button>
@@ -178,7 +178,7 @@
                 mat-icon-button 
                 class="question-icon thumb selected" 
                 (click)="onThumbClick(i, 0)">
-                <mat-icon>
+                <mat-icon class="mat-thumb-up">
                   thumb_down
                 </mat-icon>
               </button>

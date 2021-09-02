@@ -224,7 +224,15 @@ benji-editor {
     width: 230px;
   }
 }
-
+.mat-star {
+  color: #F69F41;
+}
+.mat-thumb-up, .mat-emoticon {
+  color: #7B87F0;
+}
+.mat-favorite {
+  color: #F05656;
+}
 .scale-feedback-question {
   &.mat-menu-panel {
     overflow: visible;
