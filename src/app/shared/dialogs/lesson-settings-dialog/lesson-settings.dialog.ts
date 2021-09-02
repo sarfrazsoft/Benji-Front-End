@@ -17,6 +17,7 @@ export class LessonSettingsDialogComponent implements OnInit {
   // public confirmationMessage: string;
   imagesList: FileList;
   imageURL;
+  imgSrc;
   form: FormGroup;
   emailErr = false;
   emailErrMsg = '';
@@ -42,7 +43,7 @@ export class LessonSettingsDialogComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
     });
     this.imageURL = this.data.featureImage;
-    //formControlName="imageURL" id="imageURL"
+    // formControlName="imageURL" id="imageURL"
     this.form.setValue({ title: this.data.title, description: this.data.description });
   }
 

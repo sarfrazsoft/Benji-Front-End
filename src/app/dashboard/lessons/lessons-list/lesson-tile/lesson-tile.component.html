@@ -8,8 +8,11 @@
       fxLayoutGap="12px"
       (click)="showSettingsModal()"
       benji-click-stop-propagation
-    >
-      <div><img src="/assets/img/imageUploadIcon.svg" alt=""></div>
+      (mouseover)="imgSrc = '/assets/img/imageUploadIconHover.svg'"
+      (mouseout)="imgSrc = '/assets/img/imageUploadIcon.svg';">
+      <div>
+        <img [src]="imgSrc" alt="">
+      </div>
       <div>Click to upload an image</div>
     </div>
     <div *ngIf="lesson.feature_image" class="img-container" [ngStyle]="{

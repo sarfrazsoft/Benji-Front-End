@@ -20,6 +20,7 @@ export class BuildAPitchComponent implements OnInit {
   displayedColumns: string[] = [];
   bapTableData = [];
   ngOnInit() {
+    console.log(this.data);
     this.updateBAPData();
     this.pastSessionService.filteredInUsers$.subscribe((updatedUserFilter) => {
       this.updateBAPData();

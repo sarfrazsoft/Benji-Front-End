@@ -529,7 +529,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions['helpText'] = 'Instructions to be shown to people.';
                 } else if (mapSource.field_name === 'buildapitchblank_set') {
                   mappedField.templateOptions.label = 'Build your madlib';
-                  mappedField.templateOptions['addLabel'] = 'Add new block';
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'vote_seconds') {
                   mappedField.hide = true;
@@ -570,6 +569,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   // mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'blanks_string') {
                   mappedField.type = 'bapTextEditor';
+                  mappedField.templateOptions['helpText'] =
+                    'Underline text that you want to be a fillable blank';
                   mappedField.templateOptions.label = 'Build your madlib';
                   mappedField.defaultValue =
                     '{"type":"doc","content":[{"type":"paragraph","attrs":{"align":null},"content":[{"type":"text","text":"I can’t believe it’s not "},{"type":"text","marks":[{"type":"u"}],"text":"insert food here."}]}]}';

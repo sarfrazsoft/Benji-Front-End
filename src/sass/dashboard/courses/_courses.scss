@@ -105,6 +105,12 @@ benji-lesson {
   color: #bdbdbd;
   font-weight: 500;
   font-size: 18px;
+  cursor: pointer;
+}
+.image-placeholder {
+  &:hover {
+    color: #6a6a6a;
+  }
 }
 .selected-image {
   position: relative;

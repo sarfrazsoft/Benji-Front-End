@@ -66,9 +66,11 @@
                 <div class="image-placeholder" 
                   fxLayout="column" 
                   fxLayoutGap="12px" 
-                  fxLayoutAlign="center center">
+                  fxLayoutAlign="center center"
+                  (mouseover)="imgSrc = '/assets/img/imageUploadIconHover.svg'"
+                  (mouseout)="imgSrc = '/assets/img/imageUploadIcon.svg';">
                   <div>
-                    <img src="/assets/img/imageUploadIcon.svg" alt="">
+                    <img [src]="imgSrc" alt="">
                     <img *ngIf="imageURL" [src]="imageURL" alt="">
                   </div>
                   <div>

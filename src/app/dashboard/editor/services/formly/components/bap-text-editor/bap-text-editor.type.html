@@ -7,8 +7,8 @@
       {{ to.label }}
     </label>
   </div>
+  <p style="margin-top: 0px;" *ngIf="to['helpText']" class="text-muted">{{ to['helpText'] }}</p>
   <div class="" fxLayout="row" fxLayoutAlign="start enter" fxLayoutGap="">
-    <!-- <input type="hidden" [formControl]="formControl"> -->
     <ng-template #editorEntry></ng-template>
   </div>
 </div>

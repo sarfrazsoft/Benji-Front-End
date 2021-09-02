@@ -31,6 +31,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
   rightLaunchArrow = '';
   rightCaret = '';
   dialogRef;
+  imgSrc;
 
   description = '';
   showPlaceholder = true;
@@ -59,7 +60,9 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'Use Template') { this.duplicate(this.lesson); }
+      if (result === 'Use Template') {
+        this.duplicate(this.lesson);
+      }
       console.log(`Dialog result: ${result}`);
     });
   }
