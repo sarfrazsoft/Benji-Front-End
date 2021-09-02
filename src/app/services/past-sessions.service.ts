@@ -117,9 +117,15 @@ export class PastSessionsService {
           let title = '';
           for (const key in act) {
             if (act.hasOwnProperty(key)) {
-              title = act[key].description;
-              act = act[key];
-              act.title = title;
+              if (key === 'buildapitchactivity') {
+                title = act[key].title;
+                act = act[key];
+                act.title = title;
+              } else {
+                title = act[key].description;
+                act = act[key];
+                act.title = title;
+              }
             }
           }
           if (act.activity_type === Acts.mcq) {
@@ -237,12 +243,10 @@ export class PastSessionsService {
   }
 
   getCSV(lessonRunCode) {
-    return this.http
-      .get(global.apiRoot + '/course_details/lesson_run/' + lessonRunCode + '/download/')
-      .pipe(
-        map((res: any) => {
-          return res;
-        })
-      );
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/' + lessonRunCode + '/download/').pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
   }
 }

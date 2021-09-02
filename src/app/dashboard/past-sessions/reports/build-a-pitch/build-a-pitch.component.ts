@@ -12,6 +12,7 @@ export class BuildAPitchComponent implements OnInit {
   data: ActivityReport;
   pitchSummaries = [];
   pitchSummariesRaw = [];
+  title = '';
   constructor(
     private pastSessionService: PastSessionsService,
     private buildAPitchService: BuildAPitchService
@@ -29,6 +30,9 @@ export class BuildAPitchComponent implements OnInit {
 
   updateBAPData() {
     if (this.data) {
+      if (this.data.bap.title) {
+        this.title = this.data.bap.title ? this.data.bap.title : 'Madlibs';
+      }
       this.pitchSummariesRaw = this.data.bap.pitch_summaries;
 
       this.pitchSummaries = this.pitchSummariesRaw.filter((pitchSummary) => {
