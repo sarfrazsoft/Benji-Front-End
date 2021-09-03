@@ -20,7 +20,8 @@
       fxLayoutAlign="start center" 
       fxLayoutGap="16px"
       (click)="removeImage()">
-      <img [src]="imageSrc">
+      <img [src]="imageSrc" *ngIf="imageSrc !== null">
+      <img [src]="selectedImageUrl" *ngIf="selectedImageUrl !== null">
       <button class="confirm-button"> Remove </button>
     </div>
   </ng-template>
