@@ -10,7 +10,6 @@ import {
 @Component({
   selector: 'benji-response-percent-bars',
   templateUrl: './response-percent-bars.component.html',
-  styleUrls: ['./response-percent-bars.component.scss'],
 })
 export class ResponsePercentBarsComponent implements OnInit, OnChanges {
   @Input() data: MCQReport | PollReport;
@@ -24,6 +23,7 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
   @Input() choiceSet = [];
   @Input() userFilter = false;
   choices: Array<any> = [];
+  question;
 
   constructor(private pastSessionService: PastSessionsService) {}
 
@@ -75,6 +75,8 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
           responsePercent: responsePercent,
         };
       });
+
+      this.question = { choices: this.choices, text: this.data.question.question };
     }
   }
 }

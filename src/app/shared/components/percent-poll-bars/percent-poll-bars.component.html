@@ -1,0 +1,55 @@
+<div
+  class="response-percent-bars"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  *ngIf="question"
+>
+  <div class="content" fxLayout="column" fxLayoutGap="10px">
+    <div class="header" fxLayout="row" fxLayoutGap="10px">
+      <div class="question">
+        {{ question.text }}
+      </div>
+    </div>
+    <div class="options-container" fxLayout="column" fxLayoutGap="8px">
+      <div *ngFor="let choice of question.choices; let i = index">
+        <div
+          class="options"
+          fxFlex="100%"
+          [ngClass]="{
+            'correct-choice': choice.is_correct,
+            'correct-selected-choice': choice.responsePercent > 0 ? true : false
+          }"
+        >
+          <div class="option">
+            <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+              <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
+                <div class="text">{{ choice.text }}</div>
+              </div>
+              <div class="percentage" fxLayoutAlign="end center">
+                <div class="number">
+                  {{ choice.noOfResponses }}
+                </div>
+                &nbsp;
+                {{ choice.noOfResponses === 1 ? "Response" : "Responses" }}
+              </div>
+            </div>
+            <div
+              id="progressbar"
+              [ngClass]="{ 'correct-choice': choice.is_correct }"
+            >
+              <div
+                class="bg-primary-color-light"
+                [style.width.%]="choice.responsePercent"
+                [ngClass]="{
+                  'correct-choice': choice.is_correct,
+                  'correct-selected-choice':
+                    choice.responsePercent > 0 ? true : false
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
