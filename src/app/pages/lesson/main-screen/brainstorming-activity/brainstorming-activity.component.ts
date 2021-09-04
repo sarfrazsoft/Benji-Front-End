@@ -245,9 +245,17 @@ export class MainScreenBrainstormingActivityComponent
     this.answeredParticipants = [];
     this.unansweredParticipants = [];
     this.joinedUsers = this.getActiveParticipants();
-    this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
-      this.answeredParticipants.push(this.getParticipantName(code.participant_code));
-    });
+    
+    //participant_vote_counts
+    if (!this.voteScreen) {
+      this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
+        this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+      });
+    } else if (this.voteScreen) {
+      this.activityState.brainstormactivity.participant_vote_counts.forEach((code) => {
+        this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+      });
+    }
     this.unansweredParticipants = this.getUnAnsweredUsers();
   }
 

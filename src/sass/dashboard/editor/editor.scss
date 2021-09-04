@@ -241,7 +241,7 @@ benji-editor {
   color: #D4D8FA;
   width: 34px !important;
   font-size: 40px;
-  &.selected, &:hover {
+  &.selected, &:hover, &.trigger-icon {
     color: #7B87F0;
   }
 }
@@ -249,6 +249,9 @@ benji-editor {
   color: #F05656;
   width: 20px !important;
   font-size: 24px;
+}
+.trigger-icon {
+  font-size: 24px !important;
 }
 .scale-feedback-question {
   &.mat-menu-panel {
