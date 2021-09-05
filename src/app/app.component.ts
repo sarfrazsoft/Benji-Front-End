@@ -152,6 +152,11 @@ export class AppComponent implements OnInit {
         .selected-primary-border-only.selected {
           border-color: ${info.parameters.primary} !important;
         }
+        
+        .selected-primary-border-bg.selected {
+          border-color: ${info.parameters.primary} !important;
+          background-color: ${this.hexToRGB(info.parameters.primary, 0.08)} !important;
+        }
 
         .report-cards .card-header {
           color: ${info.parameters.primary_darkest};
