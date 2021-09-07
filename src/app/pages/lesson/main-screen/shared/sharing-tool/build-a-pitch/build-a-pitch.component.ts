@@ -75,22 +75,22 @@ export class BuildAPitchComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-  //  this.reactionsCounts();
   }
 
   reactionsCounts() {
     this.smilyCount = 0;
     this.flashCount = 0;
-    console.log(this.data.running_tools.share.feedback.participants);
-    this.data.running_tools.share.feedback.participants.forEach(participant => {
-      if (participant.reaction === null) {
-        return;
-      } else if (participant.reaction === "could_be_better") {
-        this.flashCount++;
-      } else {
-        this.smilyCount++;
-      }
-    });
+    if (this.data.running_tools.share.feedback.participants) {
+      this.data.running_tools.share.feedback.participants.forEach(participant => {
+        if (participant.reaction === null) {
+          return;
+        } else if (participant.reaction === "could_be_better") {
+          this.flashCount++;
+        } else {
+          this.smilyCount++;
+        }
+      });
+    }
   }
 
   update() {

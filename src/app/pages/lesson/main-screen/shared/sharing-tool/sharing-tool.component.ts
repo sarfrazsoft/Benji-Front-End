@@ -52,7 +52,6 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     const newVolunteers = this.activityState.running_tools.share.volunteers;
-    console.log("Here we are");
     if (this.component && this.component.instance) {
       this.component.instance.activityState = this.activityState;
       this.component.instance.data = this.activityState;
