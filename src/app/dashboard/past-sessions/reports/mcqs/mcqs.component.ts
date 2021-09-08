@@ -14,7 +14,6 @@ export class McqsComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.data);
     if (this.data.activity_type === Acts.poll) {
       this.title = 'Poll';
     } else {

@@ -4,12 +4,18 @@
   </div>
 
   <div class="feedback-report" *ngFor="let question of fback">
-    <benji-question
-      *ngIf="question.question_type !== 'text_only'"
-      [question]="question"
-      [showAvg]="showAvg"
-      [userFilter]="userFilter"
-    ></benji-question>
+    <ng-container *ngIf="question.question_type !== 'text_only'">
+      <benji-report-mcq
+        *ngIf="question.question_type === 'multiple_choice'"
+        [question]="question">
+      </benji-report-mcq>
+      <benji-question
+        *ngIf="question.question_type !== 'multiple_choice'"
+        [question]="question"
+        [showAvg]="showAvg"
+        [userFilter]="userFilter">
+      </benji-question>
+    </ng-container>
     <benji-text-question
       *ngIf="question.question_type === 'text_only'"
       [question]="question"

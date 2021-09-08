@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as Chart from 'chart.js';
+import { ImageSelectorComponent } from 'src/app/dashboard/editor/services';
 import { PastSessionsService } from 'src/app/services';
 import { FeedbackGraphQuestion, User } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.scss'],
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
   @Input() question: FeedbackGraphQuestion;
@@ -43,9 +43,11 @@ export class QuestionComponent implements OnInit, AfterViewInit {
         ratingSum = ratingSum + answer.rating;
         noOfRatings = noOfRatings + 1;
         assessments[answer.rating - 1]++;
-        this.users[answer.rating - 1].push(
-          this.pastSessionService.getParticipantName(answer.participant_code)
-        );
+        if (answer.rating > 0) {
+          this.users[answer.rating - 1].push(
+            this.pastSessionService.getParticipantName(answer.participant_code)
+          );
+        }
         if (answer.text) {
           this.comboAnswersExist = true;
         }
@@ -135,11 +137,36 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     //   tooltipEl.style.padding =
     //     tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
     // };
+    const images = [
+      'https://i.stack.imgur.com/2RAv2.png',
+      'https://i.stack.imgur.com/Tq5DA.png',
+      'https://i.stack.imgur.com/3KRtW.png',
+      'https://i.stack.imgur.com/iLyVi.png',
+      'https://i.stack.imgur.com/iLyVi.png',
+    ];
+    const yourImage = new Image();
+    yourImage.src = 'http://your.site.com/your_image.png';
 
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
       type: 'bar',
+      // plugins: [
+      //   {
+      //     afterDraw: (chart: any) => {
+      //       const ctx = chart.ctx;
+      //       const xAxis = chart.scales['x-axis-0'];
+      //       const yAxis = chart.scales['y-axis-0'];
+      //       xAxis.ticks.forEach((value, index) => {
+      //         const x = xAxis.getPixelForTick(index);
+      //         const image = new Image();
+      //         image.src = images[index];
+
+      //         ctx.drawImage(image, x - 12, yAxis.bottom + 10);
+      //       });
+      //     },
+      //   },
+      // ],
       data: {
         labels: this.question.labels,
         datasets: [
@@ -226,6 +253,9 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 fontSize: 16,
                 stepSize: 1,
                 beginAtZero: true,
+                // callback: function (value, index, values) {
+                //   return '<img src="https://i.stack.imgur.com/2RAv2.png">' + value;
+                // },
               },
             } as any,
           ],

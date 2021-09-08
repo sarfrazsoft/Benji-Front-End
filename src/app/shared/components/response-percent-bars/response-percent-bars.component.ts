@@ -12,7 +12,7 @@ import {
   templateUrl: './response-percent-bars.component.html',
 })
 export class ResponsePercentBarsComponent implements OnInit, OnChanges {
-  @Input() data: MCQReport | PollReport;
+  @Input() questionText: MCQReport | PollReport;
   @Input() questionIndex = 0;
   // Number of users who joined the lesson
   @Input() lessonJoinedUsersLength = 0;
@@ -22,6 +22,7 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
   @Input() questionRespondents = [];
   @Input() choiceSet = [];
   @Input() userFilter = false;
+  @Input() questionType;
   choices: Array<any> = [];
   question;
 
@@ -38,7 +39,7 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
   }
 
   updateBars() {
-    if (this.data) {
+    if (this.questionText) {
       const questionRespondents = this.questionRespondents;
       let questionRespondents2 = questionRespondents;
 
@@ -50,7 +51,11 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
       //    get % of respondents for this choice from all respondents of the question
       let choiceRespondents: Array<MCQActivityParticipantAnswerSet>;
       this.choices = choiceSet.map((choice, i) => {
-        choiceRespondents = questionRespondents.filter((answer) => answer.answer === choice.id);
+        if (this.questionType === 'multiple_choice') {
+          choiceRespondents = questionRespondents.filter((answer) => answer.mcq_answer.id === choice.id);
+        } else {
+          choiceRespondents = questionRespondents.filter((answer) => answer.answer === choice.id);
+        }
 
         choiceRespondents = choiceRespondents.filter((respondent) => {
           return this.pastSessionService.filteredInUsers.find(
@@ -76,7 +81,7 @@ export class ResponsePercentBarsComponent implements OnInit, OnChanges {
         };
       });
 
-      this.question = { choices: this.choices, text: this.data.question.question };
+      this.question = { choices: this.choices, text: this.questionText };
     }
   }
 }

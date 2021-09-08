@@ -1,6 +1,7 @@
 import { AssessmentBarComponent } from './assessment-bar/assessment-bar.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { FeedbackGraphComponent } from './feedback-graph/feedback-graph.component';
+import { ReportMCQComponent } from './feedback-graph/mcq/report-mcq.component';
 import { QuestionComponent } from './feedback-graph/question/question.component';
 import { TextQuestionComponent } from './feedback-graph/text-question/text-question.component';
 import { FeedbackGenericGraphComponent } from './generic-feedback-graph/generic-feedback-graph.component';
@@ -12,6 +13,7 @@ export { AvatarComponent };
 
 export const CmpComponents = [
   QuestionComponent,
+  ReportMCQComponent,
   AvatarComponent,
   AssessmentBarComponent,
   FeedbackGraphComponent,

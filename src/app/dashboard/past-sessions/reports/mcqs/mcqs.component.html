@@ -5,7 +5,7 @@
     <ng-container *ngIf="data.activity_type === at.mcq">
       <div *ngFor="let mcq of data.mcqs; let i = index">
         <benji-response-percent-bars
-          [data]="mcq"
+          [questionText]="mcq.question.question"
           [lessonJoinedUsersLength]="data.participant_set.length"
           [lessonJoinedUsers]="data.participant_set"
           [questionRespondentsLength]="mcq.mcqactivityparticipantanswer_set.length"
@@ -19,7 +19,7 @@
     <ng-container *ngIf="data.activity_type === at.poll">
       <div *ngFor="let mcq of data.mcqs; let i = index">
         <benji-response-percent-bars
-          [data]="mcq"
+          [questionText]="mcq.question.question"
           [lessonJoinedUsersLength]="data.participant_set.length"
           [lessonJoinedUsers]="data.participant_set"
           [questionRespondentsLength]="mcq.pollactivityparticipantanswer_set.length"

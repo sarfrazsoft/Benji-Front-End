@@ -107,7 +107,7 @@
                 matTooltipPosition="above"
                 [disableRipple]="true">
                 <mat-icon class="mat-favorite">
-                  {{ showFavouriteIcon(j) }}
+                  {{ showFavouriteIcon(j+1) }}
                 </mat-icon>
               </button>
             </div>
@@ -119,7 +119,7 @@
               <button type="button" mat-icon-button class="question-icon star-icon" 
                 *ngFor="let ratingId of starsArr;index as j" 
                 [id]="'star_'+j" 
-                (click)="onClickStar(i, j)"
+                (click)="onClickStar(i, j+1)"
                 (mouseover)="mouseoverStarIcon(j)"
                 [matTooltip]="ratingId"
                 matTooltipPosition="above"
@@ -168,7 +168,7 @@
               <button type="button" [disableRipple]="true"
                 mat-icon-button 
                 class="question-icon thumb" 
-                (click)="onThumbClick(i, 1)">
+                (click)="onThumbClick(i, 2)">
                 <mat-icon class="mat-thumb-up">
                   thumb_up
                 </mat-icon>
@@ -177,7 +177,7 @@
                 type="button" 
                 mat-icon-button 
                 class="question-icon thumb selected" 
-                (click)="onThumbClick(i, 0)">
+                (click)="onThumbClick(i, 1)">
                 <mat-icon class="mat-thumb-up">
                   thumb_down
                 </mat-icon>

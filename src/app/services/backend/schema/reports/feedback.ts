@@ -17,6 +17,7 @@ export interface FeedbackQuestionSet {
   pitchomaticactivity?: any;
   question_text: string;
   question_type: string;
+  mcq_question?: any;
 }
 
 export enum QuestionType {
