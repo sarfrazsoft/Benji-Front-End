@@ -185,3 +185,22 @@ benji-generic-feedback-graph {
     }
   }
 }
+
+.feedback-roprts {
+  .card-header {
+    margin-bottom: 8px;
+  }
+  .question, .question-text {
+    font-size: 18px;
+    font-weight: 600 !important;
+    margin-top: 32px;
+  }
+  .question-text {
+    margin-bottom: 24px;
+  }
+  .average {
+    margin: 24px 0px;
+    background: #E7E7E7 !important;
+    color: #808080 !important;
+  }
+}
