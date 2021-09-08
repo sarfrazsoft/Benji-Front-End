@@ -2,31 +2,35 @@
   <!-- show questions -->
   <ng-container *ngIf="showQuestion">
     <div class="b-flat-card__body">
-      <h3 class="pn-600 primary-color-darkest">
+      <h3 class="pn-600 primary-color-darkest poll-quiz-title">
         {{ activityState.pollactivity.question.question }}
       </h3>
     </div>
     <div class="b-flat-card__action">
-      <button
+      <div 
         *ngFor="
           let option of activityState.pollactivity.question.mcqchoice_set;
           let i = index
         "
-        class="b-standard-button unselected"
-        [ngClass]="{
-          selected: option.id === selectedChoice.id,
-          inactive: answerSubmitted
-        }"
-        (click)="selectOption(option)"
-      >
-         {{ option.choice_text }}
-      </button>
-
-      <button 
-        class="b-standard-button white-color bg-primary-color center-text"
-        (click)="submitAnswer()">
-         Submit
-      </button>
+        class="mcq-button-container bg-primary-color">
+        <button
+        class="unselected selected-primary-border-only voting-idea-button"
+          [ngClass]="{
+            selected: option.id === selectedChoice.id,
+            inactive: answerSubmitted
+          }"
+          (click)="selectOption(option)"
+        >
+          {{ option.choice_text }}
+        </button>
+      </div>
+      <div class="mcq-button-container">
+        <button 
+          class="white-color bg-primary-color center-text voting-submit"
+          (click)="submitAnswer()">
+          Submit
+        </button>
+      </div>
     </div>
   </ng-container>
 

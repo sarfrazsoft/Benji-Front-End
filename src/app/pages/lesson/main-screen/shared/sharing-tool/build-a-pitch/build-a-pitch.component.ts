@@ -3,6 +3,7 @@ import { Subject, interval } from 'rxjs';
 import { BuildAPitchService } from 'src/app/services/activities';
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { Participant } from 'src/app/services/backend/schema/course_details';
+import { UpdateDecoderV1 } from 'yjs/dist/src/internals';
 export interface Entry {
   created: Date;
 }
@@ -20,6 +21,8 @@ export class BuildAPitchComponent implements OnInit, OnChanges {
   @Input() data: UpdateMessage;
   @Input() currentSpeaker: { displayName: string; id: number };
   pitchText = '';
+  smilyCount = 0;
+  flashCount = 0;
 
   constructor(private buildAPitchService: BuildAPitchService, private changeDetector: ChangeDetectorRef) {}
 
@@ -29,7 +32,7 @@ export class BuildAPitchComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getPitchText();
-
+    this.reactionsCounts();
     this.addEntry();
     
     interval(1000).subscribe(() => {
@@ -74,8 +77,25 @@ export class BuildAPitchComponent implements OnInit, OnChanges {
   ngOnChanges() {
   }
 
+  reactionsCounts() {
+    this.smilyCount = 0;
+    this.flashCount = 0;
+    if (this.data.running_tools.share.feedback.participants) {
+      this.data.running_tools.share.feedback.participants.forEach(participant => {
+        if (participant.reaction === null) {
+          return;
+        } else if (participant.reaction === "could_be_better") {
+          this.flashCount++;
+        } else {
+          this.smilyCount++;
+        }
+      });
+    }
+  }
+
   update() {
     this.getPitchText();
+    this.reactionsCounts();
   }
 
   getPitchText() {

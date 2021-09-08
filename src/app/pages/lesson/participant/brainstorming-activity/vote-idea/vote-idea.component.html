@@ -1,6 +1,6 @@
 <div class="vote-button-column" fxLayout="column" fxLayoutAlign="center center">
-  <div class="mcq-button-container" fxLayout="row">
-    <div class="voting-idea-button unselected"
+  <div class="mcq-button-container bg-primary-color" fxLayout="row">
+    <div class="voting-idea-button unselected selected-primary-border-only"
       [ngClass]="{selected: selectedIdeas.includes(ideaId)}"
       (click)="selectIdea(ideaId)">
       <div *ngIf="ideaImage">

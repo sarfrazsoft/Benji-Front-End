@@ -14,9 +14,9 @@
     <div class="b-flat-card__action">
       <div 
         *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-        class="mcq-button-container">
+        class="mcq-button-container bg-primary-color">
         <button
-          class="unselected voting-idea-button"
+          class="unselected selected-primary-border-only voting-idea-button"
           [ngClass]="{
             selected: isSelected(option),
             inactive: answerSubmitted

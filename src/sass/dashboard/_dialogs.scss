@@ -98,6 +98,9 @@
   &.confirm-button {
     background-color: $warning-color;
     color: white;
+    :focus {
+      outline: 1px dotted; 
+    }
   }
 }
 

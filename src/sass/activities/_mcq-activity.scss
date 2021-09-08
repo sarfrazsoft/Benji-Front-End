@@ -95,8 +95,8 @@ benji-ps-mcq-activity {
       margin-bottom: 0px;
     }
     &.selected {
-      border: 2px solid #555BEA;
-      background: #eeeffd;
+      background: rgba(255, 255, 255, 0.92);
+      border: 2px solid $primary-color;
     }
     span:first-child {
       color: #616161;

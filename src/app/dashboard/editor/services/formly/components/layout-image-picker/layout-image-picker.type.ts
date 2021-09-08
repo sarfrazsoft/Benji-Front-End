@@ -40,21 +40,28 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
   }
 
   removeImage() {
-    const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/delete/png/image/';
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    headers.set('Accept', 'application/json');
-    const params = { image_id: this.imgId };
-    this.httpClient
-      .post(url, params)
-      .map((res: any) => {
-        this.imgUploaded = false;
-        this.formControl.setValue(null);
-      })
-      .subscribe(
-        (data) => {},
-        (error) => console.log(error)
-      );
+    if(this.imageSrc !== null) {
+      const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/delete/png/image/';
+      const headers = new HttpHeaders();
+      headers.set('Content-Type', 'application/json');
+      headers.set('Accept', 'application/json');
+      const params = { image_id: this.imgId };
+      this.httpClient
+        .post(url, params)
+        .map((res: any) => {
+          this.imgUploaded = false;
+          this.formControl.setValue(null);
+        })
+        .subscribe(
+          (data) => {},
+          (error) => console.log(error)
+        );
+    } else if(this.selectedImageUrl !== null) {
+      this.selectedImageUrl = null;
+      this.imgUploaded = false;
+      this.formControl.setValue(null);
+    }
+    
   }
 
   openImagePickerDialog() {
@@ -93,10 +100,12 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
                       this.imgId = res.id;
                       this.imagesList = null;
                       this.formControl.setValue(res.img);
-                      this.imgUploaded = true;
                     })
                     .subscribe(
-                      (data) => {},
+                      (data) => {
+                        this.imgUploaded = true;
+                        this.selectedImageUrl = null;
+                      },
                       (error) => console.log(error)
                     );
                 })
@@ -111,9 +120,13 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
             console.log(res);
             this.selectedImageUrl = res.data;
             this.formControl.setValue(res.data);
+            this.imgUploaded = true;
+            this.imageSrc = null;
           } else if (res.type === 'giphy') {
             this.selectedImageUrl = res.data;
             this.formControl.setValue(res.data);
+            this.imgUploaded = true;
+            this.imageSrc = null;
           }
         }
       });

@@ -135,27 +135,27 @@
             <div class="title">{{ question_set[i].question_text }}</div>
             <div fxLayout="row" fxLayoutAlign="start center">
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 1)" [disableRipple]="true">
-                <mat-icon class="mat-emoticon">
+                <mat-icon class="mat-emoticon" [ngClass]="{'selected': emojiRating === 1}">
                   sentiment_very_dissatisfied
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 2)" [disableRipple]="true">
-                <mat-icon class="mat-emoticon">
+                <mat-icon class="mat-emoticon" [ngClass]="{'selected': emojiRating === 2}">
                   sentiment_dissatisfied
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 3)" [disableRipple]="true">
-                <mat-icon class="mat-emoticon">
+                <mat-icon class="mat-emoticon" [ngClass]="{'selected': emojiRating === 3}">
                   sentiment_neutral
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb" (click)="onSentimentClick(i, 4)" [disableRipple]="true">
-                <mat-icon class="mat-emoticon">
+                <mat-icon class="mat-emoticon" [ngClass]="{'selected': emojiRating === 4}">
                   sentiment_satisfied
                 </mat-icon>
               </button>
               <button type="button" mat-icon-button class="question-icon thumb selected" (click)="onSentimentClick(i, 5)" [disableRipple]="true">
-                <mat-icon class="mat-emoticon">
+                <mat-icon class="mat-emoticon" [ngClass]="{'selected': emojiRating === 5}">
                   sentiment_very_satisfied
                 </mat-icon>
               </button>
@@ -167,18 +167,18 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
               <button type="button" [disableRipple]="true"
                 mat-icon-button 
-                class="question-icon thumb" 
+                class="question-icon thumb"
                 (click)="onThumbClick(i, 2)">
-                <mat-icon class="mat-thumb-up">
+                <mat-icon class="mat-thumb" [ngClass]="{'selected': thumbRating === 2}">
                   thumb_up
                 </mat-icon>
               </button>
               <button [disableRipple]="true"
                 type="button" 
                 mat-icon-button 
-                class="question-icon thumb selected" 
+                class="question-icon thumb"
                 (click)="onThumbClick(i, 1)">
-                <mat-icon class="mat-thumb-up">
+                <mat-icon class="mat-thumb" [ngClass]="{'selected': thumbRating === 1}">
                   thumb_down
                 </mat-icon>
               </button>

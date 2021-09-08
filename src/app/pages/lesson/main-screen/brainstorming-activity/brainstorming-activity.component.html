@@ -28,23 +28,10 @@
             {{ instructions }}
           </h2>
         </div>
-        <submitted-counter 
+        <submitted-counter  
           [answeredParticipants]="answeredParticipants" 
           [unansweredParticipants]="unansweredParticipants">
         </submitted-counter>
-        <div
-          class="count-info black-color pn-700"
-          fxLayoutAlign="end center"
-          fxLayout="column"
-          *ngIf="voteScreen"
-        >
-          <div>
-            {{ voteSubmittedUsersCount }}/{{ joinedUsers.length }} 
-          </div>
-          <div>
-            voted
-          </div>
-        </div>
       </div>
     </div>
   </div>

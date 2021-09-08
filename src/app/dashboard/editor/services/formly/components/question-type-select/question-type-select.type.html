@@ -10,14 +10,14 @@
   [formlyAttributes]="field"
 >
   <mat-select-trigger>
-    <mat-icon *ngIf="formControl.value === 'rating_agreedisagree'" class="mat-star">star</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'rating_agreedisagree'" class="mat-star trigger-icon">star</mat-icon>
     <mat-icon *ngIf="formControl.value === 'text_only'">format_align_left</mat-icon>
     <mat-icon *ngIf="formControl.value === 'scale'">poll</mat-icon>
     <mat-icon *ngIf="formControl.value === 'multiple_choice'">check</mat-icon>
-    <mat-icon *ngIf="formControl.value === 'stars'" class="mat-star">star</mat-icon>
-    <mat-icon *ngIf="formControl.value === 'thumb_up'" class="mat-thumb-up">thumb_up</mat-icon>
-    <mat-icon *ngIf="formControl.value === 'heart'" class="mat-favorite">favorite</mat-icon>
-    <mat-icon *ngIf="formControl.value === 'emoji'" class="mat-emoticon">insert_emoticon</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'stars'" class="mat-star trigger-icon">star</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'thumb_up'" class="mat-thumb-up trigger-icon">thumb_up</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'heart'" class="mat-favorite trigger-icon">favorite</mat-icon>
+    <mat-icon *ngIf="formControl.value === 'emoji'" class="mat-emoticon trigger-icon">insert_emoticon</mat-icon>
   </mat-select-trigger>
   <ng-container *ngIf="to.options | formlySelectOptions: field | async as opts">
     <ng-container *ngIf="to._flatOptions">
@@ -88,25 +88,25 @@
         panelClass="selected-panel select-rating-type"
       >
         <mat-select-trigger>
-          <mat-icon *ngIf="formControl.value === 'stars'" class="mat-star">star</mat-icon>
-          <mat-icon *ngIf="formControl.value === 'thumb_up'" class="mat-thumb-up">thumb_up</mat-icon>
-          <mat-icon *ngIf="formControl.value === 'heart'" class="mat-favorite">favorite</mat-icon>
-          <mat-icon *ngIf="formControl.value === 'emoji'" class="mat-emoticon">insert_emoticon</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'stars'" class="mat-star trigger-icon">star</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'thumb_up'" class="mat-thumb-up trigger-icon">thumb_up</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'heart'" class="mat-favorite trigger-icon">favorite</mat-icon>
+          <mat-icon *ngIf="formControl.value === 'emoji'" class="mat-emoticon trigger-icon">insert_emoticon</mat-icon>
         </mat-select-trigger>
         <ng-container *ngIf="to.options | formlySelectOptions: field | async as opts">
           <ng-container *ngIf="to._flatOptions">
             <ng-container>
               <mat-option [value]="'stars'">
-                <mat-icon class="mat-star">star</mat-icon> Stars
+                <mat-icon class="mat-star trigger-icon">star</mat-icon> Stars
               </mat-option>
               <mat-option [value]="'thumb_up'">
-                <mat-icon class="mat-thumb-up">thumb_up</mat-icon> Thums up 
+                <mat-icon class="mat-thumb-up trigger-icon">thumb_up</mat-icon> Thums up 
               </mat-option>
               <mat-option [value]="'heart'">
-                <mat-icon class="mat-favorite">favorite</mat-icon> Heart
+                <mat-icon class="mat-favorite trigger-icon">favorite</mat-icon> Heart
               </mat-option>
               <mat-option [value]="'emoji'">
-                <mat-icon class="mat-emoticon">insert_emoticon</mat-icon> Emoji
+                <mat-icon class="mat-emoticon trigger-icon">insert_emoticon</mat-icon> Emoji
               </mat-option>
             </ng-container>
           </ng-container>

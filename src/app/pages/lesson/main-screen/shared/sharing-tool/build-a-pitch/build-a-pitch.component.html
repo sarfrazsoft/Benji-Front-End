@@ -19,6 +19,16 @@
     <div class="pitch-card">
       <p class="your-pitch left-text" innerHTML="{{ pitchText }}">
       </p>
+      <div fxLayout="row" fxLayoutGap="8px" class="reaction">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+          <img src="/assets/img/starred-smiley.svg">
+          <span fxLayoutAlign="center center">{{ smilyCount }}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="4px">
+          <img src="/assets/img/flash-reaction.svg">
+          <span fxLayoutAlign="center center">{{ flashCount }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

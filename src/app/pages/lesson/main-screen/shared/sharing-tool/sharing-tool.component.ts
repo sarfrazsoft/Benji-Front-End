@@ -54,6 +54,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
     const newVolunteers = this.activityState.running_tools.share.volunteers;
     if (this.component && this.component.instance) {
       this.component.instance.activityState = this.activityState;
+      this.component.instance.data = this.activityState;
       this.component.instance.update();
     }
     if (this.volunteers && this.volunteers.length !== newVolunteers.length) {
@@ -61,6 +62,7 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
       this.volunteers = this.activityState.running_tools.share.volunteers;
       this.changeOptedInUsers();
     }
+    this.populateFeedback();
   }
 
   ngOnInit(): void {
@@ -202,8 +204,8 @@ export class MainScreenSharingToolComponent implements OnInit, OnChanges {
   selectSpeaker(index: number) {
     // this.sendMessage.emit(new SelectParticipantForShareEvent(this.speakers[index].id));
     this.currentSpeakerIndex = index;
-    this.update();
     this.populateFeedback();
+    this.update();
   }
 
   populateFeedback() {
