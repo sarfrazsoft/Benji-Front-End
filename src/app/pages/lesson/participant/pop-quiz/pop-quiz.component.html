@@ -40,20 +40,16 @@
   <ng-container *ngIf="showQuestionsAnswer">
     <div class="b-flat-card__body">
       <div class="twemoji">
-        <!-- <app-b-twemoji
-          *ngIf="answersResults() === 'allCorrect'"
-          emoji="🎉"
-        ></app-b-twemoji> -->
         <app-b-twemoji
-          *ngIf="gotCorrectAnswers() === 'allCorrect'"
+          *ngIf="answersResults() === 'allCorrect'"
           emoji="🎉"
         ></app-b-twemoji>
         <app-b-twemoji
-          *ngIf="gotCorrectAnswers() === 'allWrong'"
+          *ngIf="answersResults() === 'allWrong'"
           emoji="🙊"
         ></app-b-twemoji>
         <app-b-twemoji
-          *ngIf="gotCorrectAnswers() === 'someCorrect'"
+          *ngIf="answersResults() === 'someCorrect'"
           emoji="👏"
         ></app-b-twemoji>
       </div>
