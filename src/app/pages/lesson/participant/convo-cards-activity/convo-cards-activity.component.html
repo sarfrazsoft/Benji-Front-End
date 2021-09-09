@@ -32,7 +32,7 @@
             </div>
           </div>
         </div>
-        <div class="control" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="24px">
+        <div *ngIf="items.length > 1" class="control" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="24px">
           <div (click)="previousCard()">
             <img src="/assets/img/leftArrowIcon.svg" alt="">
           </div>

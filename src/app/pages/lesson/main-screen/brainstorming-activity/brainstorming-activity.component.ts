@@ -88,21 +88,21 @@ export class MainScreenBrainstormingActivityComponent
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
         this.showUserName = val.state;
-        console.log(this.showUserName);
       }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
       if (val && val.controlName === 'cardSize') {
         this.minWidth = val.state.name;
-        console.log(this.minWidth);
       }
     });
   }
 
-  getPersonName(id: number) {
-    const user = this.joinedUsers.find((u) => u.participant_code === id);
-    return user.display_name;
+  getPersonName(idea: Idea) {
+    if(idea && idea.submitting_participant) {
+      const user = this.joinedUsers.find((u) => u.participant_code === idea.submitting_participant.participant_code);
+      return user.display_name;
+    }
   }
 
   getMinWidth() {

@@ -7,6 +7,9 @@
   box-sizing: border-box;
   overflow-y: auto;
   position: relative;
+  &.add-mcq-pad {
+    padding: 0px 24px;
+  }
   .center-all {
     height: 90%;
   }

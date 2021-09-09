@@ -118,15 +118,11 @@ export class MainScreenPopQuizComponent
   }
 
   getUnAnsweredUsers() {
-    let answered = [];
     let active = [];
     for (let index = 0; index < this.activeParticipants.length; index++) {
       active.push(this.activeParticipants[index].display_name);
     }
-    for (let index = 0; index < this.answeredParticipants.length; index++) {
-      answered.push(this.answeredParticipants[index].display_name);
-    }
-    return (active.filter(name => !answered.includes(name)));
+    return (active.filter(name => !this.answeredParticipants.includes(name)));
   }
 
   getChoiceSubmittedUsers() {
