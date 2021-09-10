@@ -268,7 +268,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'instructions') {
                   mappedField.templateOptions.label = 'Prompt';
-                  mappedField.templateOptions.maxLength = 35;
+                  mappedField.templateOptions.maxLength = 100;
                   mappedField.templateOptions.placeholder = 'Enter your question';
                 } else if (mapSource.field_name === 'max_participant_submissions') {
                   mappedField.wrappers = ['benji-reveal-field-wrapper'];

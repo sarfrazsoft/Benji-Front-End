@@ -82,6 +82,7 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
   }
 
   buttonClick($event, controlName: string) {
+    // console.log($event.currentTarget.checked, controlName);
     this.activitySettingsService.settingChange$.next({
       type: 'button',
       controlName,

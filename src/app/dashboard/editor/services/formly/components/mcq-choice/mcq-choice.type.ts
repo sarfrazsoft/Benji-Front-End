@@ -18,6 +18,7 @@ export class MCQChoiceTypeComponent extends FieldType implements OnInit {
       if (val.key === 'choice_text') {
         this.choiceTextField = val;
         this.choiceTextField.templateOptions.label = null;
+        this.choiceTextField.templateOptions.maxLength = 50;
         this.choiceTextField.templateOptions.keydown = (field, event: KeyboardEvent) => {
           if (event.key === 'Enter') {
             event.stopPropagation();

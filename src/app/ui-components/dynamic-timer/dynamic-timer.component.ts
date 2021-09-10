@@ -166,7 +166,8 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   get_min_sec() {
-    const secondsRemaining = this.remainingTime / 1000;
+    let secondsRemaining = this.remainingTime / 1000;
+    secondsRemaining = Math.ceil(secondsRemaining);
     const min = Math.floor(secondsRemaining / 60);
     const sec = secondsRemaining - 60 * min;
 

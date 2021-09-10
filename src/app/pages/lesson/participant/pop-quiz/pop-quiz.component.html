@@ -54,22 +54,24 @@
         ></app-b-twemoji>
       </div>
       <h1 class="pn-700 black-color">
-        {{ gotCorrectAnswers() ? "Correct!" : "Oops, incorrect!" }}
+        {{ getResultText() }}
       </h1>
     </div>
-    <div class="b-flat-card__action">
+    <div class="b-flat-card__action"
+      *ngIf="answersResults() !== 'someCorrect'">
       <ng-container *ngFor="let option of selectedChoices; let i = index">
         <button
           class="b-standard-button unselected"
           [ngClass]="{
             correct: option.is_correct,
             incorrect: !option.is_correct
-          }">
+          }"
+          style="margin-bottom: 16px;">
           {{ option.choice_text }}
         </button>
       </ng-container>
     </div>
-    <div *ngIf="!gotCorrectAnswers()" class="b-flat-card__action-detail">
+    <div *ngIf="answersResults() === 'allWrong' || answersResults() === 'allCorrect'" class="b-flat-card__action-detail">
       <p>The correct answer is</p>
       <ng-container *ngFor="let option of getCorrectChoices();let i = index">
         <button

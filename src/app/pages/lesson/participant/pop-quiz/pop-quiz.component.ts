@@ -136,34 +136,46 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
     return arr;
   }
 
-  gotCorrectAnswers() {
+  answersResults(): 'allWrong' | 'allCorrect' | 'someCorrect' {
     const incorrectChoicePresent = find(this.selectedChoices, (choice) => !choice.is_correct);
-    if (incorrectChoicePresent) {
-      return 'allCorrect';
-    } else {
-      const correctChoices = this.getCorrectChoices();
-      // iterate over selected choices
-      // push into an array when he gets one correct answer
-      // if the new array is same length as correctChoices return allCorrect
-      // if it is less than the correctChoices return someCorrect
-      // if new array is empty return allWrong
+    // console.log(incorrectChoicePresent);
+    // if (incorrectChoicePresent) {
+    //   return 'allCorrect';
+    // } else {
+    const correctChoices = this.getCorrectChoices();
+    // iterate over selected choices
+    // push into an array when he gets one correct answer
+    // if the new array is same length as correctChoices return allCorrect
+    // if it is less than the correctChoices return someCorrect
+    // if new array is empty return allWrong
 
-      const correctChoicesGotten = [];
-      this.selectedChoices.forEach((val: MCQChoice) => {
-        const index = findIndex(correctChoices, (o) => {
-          return o.id === val.id;
-        });
-        if (index > -1) {
-          correctChoicesGotten.push(val);
-        }
+    const correctChoicesGotten = [];
+    this.selectedChoices.forEach((val: MCQChoice) => {
+      const index = findIndex(correctChoices, (o) => {
+        return o.id === val.id;
       });
-      if (correctChoicesGotten.length === 0) {
-        return 'allWrong';
-      } else if (correctChoicesGotten.length === correctChoices.length) {
-        return 'allCorrect';
-      } else if (correctChoicesGotten.length < correctChoices.length) {
-        return 'someCorrect';
+      if (index > -1) {
+        correctChoicesGotten.push(val);
       }
+    });
+    if (correctChoicesGotten.length === 0) {
+      return 'allWrong';
+    } else if (correctChoicesGotten.length === correctChoices.length) {
+      return 'allCorrect';
+    } else if (correctChoicesGotten.length < correctChoices.length) {
+      return 'someCorrect';
+    }
+    // }
+  }
+
+  getResultText() {
+    const result = this.answersResults();
+    if (result === 'allCorrect') {
+      return 'You got it!';
+    } else if (result === 'allWrong') {
+      return 'Oops, incorrect!';
+    } else if (result === 'someCorrect') {
+      return 'Nearly got it!';
     }
   }
 }

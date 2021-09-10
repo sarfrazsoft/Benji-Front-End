@@ -1,7 +1,7 @@
 <!-- New brain storm code  -->
 <div fxLayout="column" class="mainscreen-activity brainstorming-ms">
   <div class="lesson-top-banner compact">
-    <div class="" fxLayout="row" fxLayoutAlign="space-between">
+    <div class="" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="16px">
       <div>
         <h1 class="pn-500">
           <span class="black-color pn-700">
@@ -138,15 +138,13 @@
                     </mat-icon>
                     <div
                       class="brainstorm-image"
-                      *ngIf="item.idea_image"
-                      (click)="viewImage(hostname + item.idea_image.img)"
-                    >
+                      *ngIf="item.idea_image">
                       <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
-                        <img [src]="item.idea_image.img" alt="" />
+                        <img (click)="viewImage(item.idea_image.img)" [src]="item.idea_image.img" alt="" />
                       </ng-container>
 
                       <ng-template #uploadedImage>
-                        <img [src]="hostname + item.idea_image.img" alt="" />
+                        <img (click)="viewImage(hostname + item.idea_image.img)" [src]="hostname + item.idea_image.img" alt="" />
                       </ng-template>
                     </div>
                     {{ item.idea }}

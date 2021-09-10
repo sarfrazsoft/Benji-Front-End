@@ -31,7 +31,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
   rightLaunchArrow = '';
   rightCaret = '';
   dialogRef;
-  imgSrc;
+  imgSrc = '/assets/img/imageUploadIcon.svg';
 
   description = '';
   showPlaceholder = true;

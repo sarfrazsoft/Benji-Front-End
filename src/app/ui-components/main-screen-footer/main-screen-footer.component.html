@@ -220,7 +220,10 @@
       
       <!-- Participant dropdown -->
       <div fxLayoutAlign="center center" class="option participantDropdown">
-        <button [matMenuTriggerFor]="participantMenu">
+        <button [matMenuTriggerFor]="participantMenu"
+          placement="top"
+          tooltip="Participants"
+          show-delay="100">
           <!-- <mat-icon class="icon-white">supervisor_account</mat-icon> -->
           <img src="/assets/img/participants.svg" /> 
           <sup class="white-color">{{ getActiveParticipants().length }}</sup>

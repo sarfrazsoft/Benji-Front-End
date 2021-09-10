@@ -90,6 +90,7 @@ export class MainScreenBrainstormingActivityComponent
         this.showUserName = val.state;
       }
       if (val && val.controlName === 'categorize') {
+        console.log('hurr');
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
       if (val && val.controlName === 'cardSize') {
@@ -99,8 +100,10 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   getPersonName(idea: Idea) {
-    if(idea && idea.submitting_participant) {
-      const user = this.joinedUsers.find((u) => u.participant_code === idea.submitting_participant.participant_code);
+    if (idea && idea.submitting_participant) {
+      const user = this.joinedUsers.find(
+        (u) => u.participant_code === idea.submitting_participant.participant_code
+      );
       return user.display_name;
     }
   }
@@ -245,8 +248,8 @@ export class MainScreenBrainstormingActivityComponent
     this.answeredParticipants = [];
     this.unansweredParticipants = [];
     this.joinedUsers = this.getActiveParticipants();
-    
-    //participant_vote_counts
+
+    // participant_vote_counts
     if (!this.voteScreen) {
       this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
         this.answeredParticipants.push(this.getParticipantName(code.participant_code));

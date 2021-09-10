@@ -19,15 +19,14 @@ benji-ms-pop-quiz {
         // border-radius: 20px;
         // }
         .answer-container {
-          margin-bottom: 32px;
-          margin-right: 32px;
+          margin-bottom: 24px;
+          margin-right: 24px;
           cursor: pointer;
           background-color: #fff;
           padding: 16px;
-
           text-align: center;
           border-radius: 8px;
-          width: 520px;
+          width: 302px;
           height: 140px;
           &.corect-choice {
             background-color: #d3fbce;
@@ -51,7 +50,8 @@ benji-ps-build-pitch-activity {
       height: fit-content;
       text-align: left;
       overflow-wrap: anywhere;
-      &.mcq-button, &.mcq-submit {
+      &.mcq-button,
+      &.mcq-submit {
         padding: 16px 32px;
         font-size: 18px;
         line-height: 24px;
