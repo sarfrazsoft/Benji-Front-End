@@ -79,12 +79,12 @@
         margin-bottom: 8px;
       }
     }
-    button {
-      &.worksheet-button {
-        width: unset;
-        margin-bottom: 32px;
-      }
-    }
+    // button {
+    //   &.worksheet-button {
+    //     width: unset;
+    //     margin-bottom: 32px;
+    //   }
+    // }
     .twemoji-container {
       margin: unset;
       margin-bottom: 16px;
@@ -96,7 +96,7 @@
 }
 
 .title-activity .b-flat-card__body {
-  font-size: 18px;
+  font-size: 24px;
   .participant-screen {
     img {
       width: 100%;
@@ -106,7 +106,6 @@
   }
   h1 {
     padding-bottom: 16px;
-    font-size: 24px;
   }
 }
 

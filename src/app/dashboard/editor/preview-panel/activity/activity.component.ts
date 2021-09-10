@@ -607,7 +607,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
           };
         }
 
-        let question_title = 'At a party, what would you rather do?';
+        let question_title = 'Would you rather...';
         if (this.data.content.question_title) {
           question_title = this.data.content.question_title;
         }

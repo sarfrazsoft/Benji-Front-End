@@ -47,7 +47,8 @@
       </div>
     </div>
     <div fxFlex="28%" class="speakers-feedback">
-      <mat-expansion-panel 
+      <mat-expansion-panel
+        [expanded]="true"
         (opened)="panelOpenState = true" 
         (closed)="panelOpenState = false" 
         [ngClass]="{ 'open' : panelOpenState }">
@@ -94,6 +95,7 @@
       </div>
       
       <mat-expansion-panel 
+        [expanded]="true"
         (opened)="panelOpen = true" 
         (closed)="panelOpen = false" 
         [ngClass]="{ 'open' : panelOpen }">
