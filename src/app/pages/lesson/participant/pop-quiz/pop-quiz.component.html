@@ -10,6 +10,9 @@
       <h3 class="pn-600 primary-color-darkest">
         {{ activityState.mcqactivity.question.question }}
       </h3>
+      <div *ngIf="getCorrectChoices().length > 1" class="multi-correct">
+        Select all correct answers
+      </div>
     </div>
     <div class="b-flat-card__action">
       <div 

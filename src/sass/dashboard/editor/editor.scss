@@ -66,7 +66,7 @@ benji-editor {
       }
       &:hover,
       &.highlight {
-        border: unset;
+        border: 0px;
       }
       &.highlight {
         img {
@@ -226,7 +226,7 @@ benji-editor {
 }
 .mat-star {
   color: #F69F41;
-  width: 24px !important;
+  width: 34px !important;
   font-size: 32px;
 }
 .mat-thumb {
@@ -247,11 +247,14 @@ benji-editor {
 }
 .mat-favorite {
   color: #F05656;
-  width: 20px !important;
-  font-size: 24px;
+  width: 30px !important;
+  font-size: 28px;
 }
 .trigger-icon {
   font-size: 24px !important;
+}
+.tool-tip {
+  margin-bottom: -10px !important;
 }
 .scale-feedback-question {
   &.mat-menu-panel {

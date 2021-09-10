@@ -101,6 +101,9 @@
   margin-top: 8px;
   padding: 10px 12px 2px 12px;
   cursor: pointer;
+  &.copy-link-white {
+    border-top: unset;
+  }
 }
 
 .redo-act-item {
