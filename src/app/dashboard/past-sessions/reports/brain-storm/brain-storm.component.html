@@ -15,7 +15,8 @@
               {{ category.category_name }}
             </div>
             <ng-container *ngFor="let idea of category.brainstormidea_set">
-              <ng-container *ngIf="idea.submitting_participant && isUserIncluded(idea.submitting_participant.participant_code)">
+              <ng-container 
+                *ngIf="idea && idea.submitting_participant && isUserIncluded(idea.submitting_participant.participant_code)">
                 <div class="text-list-item" *ngIf="!idea.remove">
                   {{ idea.idea }}
                   <div *ngIf="idea.idea_image && idea.idea_image.img">
@@ -25,14 +26,14 @@
                       style="height: 300px; margin-top: 20px; max-width: 100%"
                     />
                   </div>
-                  <div class="details">
+                  <div class="details" *ngIf="idea && idea.submitting_participant">
                     {{ getPersonName(idea.submitting_participant.participant_code) }},
                     {{ ' ' + idea.num_votes }}
                     {{ idea.num_votes === 1 ? ' vote' : ' votes' }}
                   </div>
                 </div>
               </ng-container>
-              <ng-container *ngIf="!idea.submitting_participant">
+              <ng-container *ngIf="idea && !idea.submitting_participant">
                 <div class="text-list-item" *ngIf="!idea.remove">
                   {{ idea.idea }}
                   <div *ngIf="idea.idea_image && idea.idea_image.img">

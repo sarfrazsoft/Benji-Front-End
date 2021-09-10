@@ -59,6 +59,7 @@ export const ActivityThumbnails = {
   FeedbackActivity: 'feedback.svg',
   ConvoActivity: 'convocards.svg',
   WhereDoYouStandActivity: 'eitheror.svg',
+  VideoActivity: 'video.svg',
 };
 
 export const ActivityDisplayNames = {

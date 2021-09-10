@@ -341,7 +341,10 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'video_url') {
+                  delete mappedField.templateOptions.maxLength;
                   mappedField.templateOptions['helpText'] = 'Add youtube or vimeo url';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.caseStudy) {
                 if (mapSource.internal_type === 'CaseStudyActivitySerializer') {

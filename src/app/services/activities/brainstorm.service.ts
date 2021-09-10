@@ -11,7 +11,11 @@ export class BrainstormService {
       if (!category.removed) {
         category.brainstormidea_set.forEach((idea) => {
           if (!idea.removed) {
-            if (idea.submitting_participant && idea.submitting_participant.participant_code === userID) {
+            if (
+              idea &&
+              idea.submitting_participant &&
+              idea.submitting_participant.participant_code === userID
+            ) {
               arr.push(idea);
             }
           }

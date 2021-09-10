@@ -113,8 +113,8 @@ export class PreviewPanelComponent implements OnInit {
               }
             }
           } else {
-            this.showImage = false;
-            this.previewTemplate = true;
+            // this.showImage = false;
+            // this.previewTemplate = true;
           }
         }
       });

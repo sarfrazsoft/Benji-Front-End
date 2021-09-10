@@ -79,6 +79,7 @@ export class QuestionFormComponent implements OnInit, OnChanges {
   }
 
   onClickHeart(questionIndex: number, rating: number) {
+    console.log(rating);
     this.setRating(questionIndex, rating);
     this.heartRating = rating;
   }
