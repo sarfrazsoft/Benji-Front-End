@@ -57,7 +57,6 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
 
   ngOnInit() {
     super.ngOnInit();
-    console.log(this.activityState);
     this.state = this.activityState.wheredoyoustandactivity;
 
     if (window.innerWidth < 1400) {
@@ -141,7 +140,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
 
   getNumberOfSubmittedPredictions() {
     if (this.state.predictions) {
-      //console.log(this.state.predictions || JSON)
+      // console.log(this.state.predictions || JSON)
       return this.state.predictions;
     }
     return [];
@@ -169,12 +168,12 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
   }
 
   getUnAnsweredUsers() {
-    let answered = this.answeredParticipants;
-    let active = [];
+    const answered = this.answeredParticipants;
+    const active = [];
     for (let index = 0; index < this.joinedUsers.length; index++) {
       active.push(this.joinedUsers[index].display_name);
     }
-    return (active.filter(name => !answered.includes(name)));
+    return active.filter((name) => !answered.includes(name));
   }
 
   getGroupPreferredChoice(): WhereDoYouStandChoice {
@@ -232,9 +231,10 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
   }
 
   continueClicked(clickedFor: string) {
-    if (clickedFor === "predictions") {
+    if (clickedFor === 'predictions') {
       this.skipPredictions = true;
-    } if (clickedFor === "preferences") {
+    }
+    if (clickedFor === 'preferences') {
       this.skipPreferences = true;
     }
     this.sendMessage.emit(new FastForwardEvent());

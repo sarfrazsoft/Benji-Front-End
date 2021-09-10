@@ -71,7 +71,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.layoutService.hideSidebar = true;
     this.activatedRoute.data.forEach((data: any) => {
       if (data && data.editorData && data.editorData.lesson) {
-        console.log(data);
         this.router.navigate([data.editorData.lesson.id], {
           relativeTo: this.activatedRoute,
         });

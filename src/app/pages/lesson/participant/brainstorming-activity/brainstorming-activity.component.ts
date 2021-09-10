@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as global from 'src/app/globals';
@@ -49,6 +49,8 @@ export class ParticipantBrainstormingActivityComponent
   showThankyouForVoting = false;
   showVoteResults = false;
 
+  @Input() editor = false;
+
   // timer;
 
   constructor(
@@ -66,7 +68,9 @@ export class ParticipantBrainstormingActivityComponent
     this.act = this.activityState.brainstormactivity;
     this.categories = this.act.brainstormcategory_set;
     this.maxSubmissions = this.act.max_participant_submissions;
-    this.participantCode = this.getParticipantCode().toString();
+    if (!this.editor) {
+      this.participantCode = this.getParticipantCode().toString();
+    }
 
     // The activity starts by showing Submit idea screen
     if (!this.act.submission_complete && this.act.submission_countdown_timer) {
