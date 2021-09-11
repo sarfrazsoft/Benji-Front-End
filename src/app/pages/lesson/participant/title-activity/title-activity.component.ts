@@ -33,10 +33,11 @@ export class ParticipantTitleActivityComponent extends BaseActivityComponent imp
   }
 
   loadVariables(act: TitleActivity) {
+    console.log(act);
     this.mainTitle = act.main_title ? act.main_title : '';
     this.titleText = act.title_text ? act.title_text : '';
     this.title_emoji = act.title_emoji ? act.title_emoji : '';
-    this.title_image = act.title_image ? act.title_image : '';
+    this.title_image = act.title_image ? act.title_image : '/assets/img/placeholder.png';
     this.layout = act.layout ? act.layout : '';
   }
 }
