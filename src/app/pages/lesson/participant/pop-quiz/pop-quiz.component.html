@@ -1,18 +1,18 @@
-<div class="center-text mcq-card">
+<div class="mcq-card">
   <!-- show questions -->
   <ng-container *ngIf="showQuestion">
     <div class="b-flat-card__body">
-      <benji-participant-timer
-        [timer]="timer"
-        [endAudio]="'bell.wav'"
-        [timerOffset]="avgServerTimeOffset"
-      ></benji-participant-timer>
       <h3 class="pn-600 primary-color-darkest">
         {{ activityState.mcqactivity.question.question }}
       </h3>
       <div *ngIf="getCorrectChoices().length > 1" class="multi-correct">
         Select all correct answers
       </div>
+      <benji-participant-timer
+        [timer]="timer"
+        [endAudio]="'bell.wav'"
+        [timerOffset]="avgServerTimeOffset"
+      ></benji-participant-timer>
     </div>
     <div class="b-flat-card__action">
       <div 
