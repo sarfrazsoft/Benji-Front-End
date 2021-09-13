@@ -26,6 +26,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
   };
 
   scaleRangeDropdown = [];
+  selected = 'stars';
 
   // workaround for https://github.com/angular/angular/issues/10010
   @ViewChild(SelectControlValueAccessor, { static: true }) set selectAccessor(s: any) {
@@ -75,7 +76,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
     };
 
     // Code for scale type questions
-    for (let i = 1; i <= 100; i++) {
+    for (let i = 1; i <= 10; i++) {
       this.scaleRangeDropdown.push(i);
     }
 
@@ -84,7 +85,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
       required: new FormControl(false),
       scale_json: this.formBuilder.group({
         from: new FormControl(0),
-        to: new FormControl(100),
+        to: new FormControl(10),
         labels: this.formBuilder.array([new FormControl(''), new FormControl(''), new FormControl('')]),
       }),
     });
