@@ -32,7 +32,8 @@
       <div class="mcq-button-container">
         <button 
           class="white-color bg-primary-color center-text voting-submit"
-          (click)="submitAnswer()">
+          (click)="submitAnswer()"
+          [disabled]="answerSubmitted ? 'disabled': null" >
           Submit
         </button>
       </div>
@@ -41,7 +42,7 @@
 
   <!-- show result -->
   <ng-container *ngIf="showQuestionsAnswer">
-    <div class="b-flat-card__body">
+    <div class="b-flat-card__body center-text">
       <div class="twemoji">
         <app-b-twemoji
           *ngIf="answersResults() === 'allCorrect'"

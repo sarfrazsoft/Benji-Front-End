@@ -224,38 +224,7 @@ benji-editor {
     width: 230px;
   }
 }
-.mat-star {
-  color: #F69F41;
-  width: 34px !important;
-  font-size: 32px;
-}
-.mat-thumb {
-  color: #D4D8FA;
-  width: 40px !important;
-  font-size: 40px;
-  &.selected, &:hover {
-    color: #7B87F0;
-  }
-}
-.mat-emoticon {
-  color: #D4D8FA;
-  width: 34px !important;
-  font-size: 40px;
-  &.selected, &:hover, &.trigger-icon {
-    color: #7B87F0;
-  }
-}
-.mat-favorite {
-  color: #F05656;
-  width: 30px !important;
-  font-size: 28px;
-}
-.trigger-icon {
-  font-size: 24px !important;
-}
-.tool-tip {
-  margin-bottom: -10px !important;
-}
+
 .scale-feedback-question {
   &.mat-menu-panel {
     overflow: visible;
