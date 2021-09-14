@@ -34,15 +34,6 @@ export class AuthService {
     // localStorage.setItem('userRole', 'mainscreenUser');
   }
 
-  // login(username: string, password: string) {
-  //   return this.http
-  //     .post(global.apiRoot + '/rest-auth/login/', {
-  //       username: username,
-  //       password: password,
-  //     })
-  //     .pipe(tap((result) => this.setSession(result)));
-  // }
-
   register(email: string, password: string, firstName: string, lastName: string) {
     this.logout();
     let obj;
@@ -54,7 +45,7 @@ export class AuthService {
         password1: password,
         password2: password,
         first_name: firstName,
-        last_name: lastName? lastName: " ",
+        last_name: lastName ? lastName : ' ',
         email: email,
         invitation: this.userInvitation ? this.userInvitation.id : null,
         invitation_token: this.invitationToken ? this.invitationToken : null,
@@ -67,7 +58,7 @@ export class AuthService {
         password1: password,
         password2: password,
         first_name: firstName,
-        last_name: lastName? lastName:  " ",
+        last_name: lastName ? lastName : ' ',
         email: email,
       };
     }
@@ -99,8 +90,7 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
-          console.log(res);
-          this.setSession(res);
+          this.setFacilitatorSession(res);
         }),
         catchError((err) => of(err.error))
       );
@@ -115,11 +105,30 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  setSession(res) {
+  setFacilitatorSession(res) {
     localStorage.setItem('token', res.token);
     this.contextService.user = res.user;
     this.layoutService.hideSidebar = false;
     localStorage.setItem('benji_user', JSON.stringify(res.user));
+  }
+
+  // DEMO ONLY
+  createParticipant(username: string, enteredRoomCode: number) {
+    return this.http
+      .post(global.apiRoot + '/course_details/participant/', {
+        lessonrun_code: enteredRoomCode,
+        display_name: username,
+      })
+      .pipe(
+        map((res: LoginResponse) => {
+          this.setParticipantSession(res);
+        }),
+        catchError((err) => of(err.error))
+      );
+  }
+
+  setParticipantSession(res) {
+    localStorage.setItem('participant', JSON.stringify(res));
   }
 
   logout() {

@@ -36,9 +36,9 @@ export class ParticipantJoinComponent implements OnInit {
 
   ngOnInit() {
     if (this.route.snapshot.queryParams['link']) {
-      //alert(this.route.snapshot.queryParams['link']);
+      // alert(this.route.snapshot.queryParams['link']);
       this.roomCode.setValue(this.route.snapshot.queryParams['link']);
-      //alert(this.roomCode.value);
+      // alert(this.roomCode.value);
       this.validateRoomCode();
     }
     this.username.disable();
@@ -100,11 +100,10 @@ export class ParticipantJoinComponent implements OnInit {
       return false;
     }
 
-    this.backend.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
+    this.authService.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
       (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {
-          localStorage.setItem('participant', JSON.stringify(res));
           this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
         } else {
           this.loginError = true;

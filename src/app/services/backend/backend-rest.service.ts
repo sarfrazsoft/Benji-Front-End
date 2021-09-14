@@ -29,14 +29,6 @@ export class BackendRestService {
     );
   }
 
-  // DEMO ONLY
-  createParticipant(username: string, enteredRoomCode: number) {
-    return this.httpClient.post(global.apiRoot + '/course_details/participant/', {
-      lessonrun_code: enteredRoomCode,
-      display_name: username,
-    });
-  }
-
   start_lesson(lessonID: number): Observable<LessonRun> {
     return this.httpClient.post<LessonRun>(
       global.apiRoot + '/course_details/lesson/' + lessonID + '/start_lesson/',
