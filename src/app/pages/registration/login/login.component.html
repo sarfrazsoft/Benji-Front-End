@@ -1,7 +1,7 @@
 <div class="sign-up-section">
   <div class="log-in-card">
     <div class="div-block-183">
-      <img [src]="logo" loading="lazy" alt="" >
+      <img [src]="logo" class="sign-in-logo" loading="lazy" alt="" >
       <div class="log-in-form w-form">
         <!-- <div (click)="signInWithGoogle()"  class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
           <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
@@ -58,8 +58,9 @@
             (click)="router.navigate(['/forgot-password'])">
               Forgot Password?
           </div>
-          <input type="submit" value="Sign in" data-wait="Please wait..." 
-            [style.background-color]="(email.value && password.value) ? '#555BEA' : '#BDBDBD'" class="submit-button-12 w-button">
+          <input type="submit" value="Sign in" data-wait="Please wait..."
+            [ngClass]="{'bg-primary-color': (email.value && password.value), 'inactive': !(email.value && password.value)}" 
+            class="submit-button-12 w-button">
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>
