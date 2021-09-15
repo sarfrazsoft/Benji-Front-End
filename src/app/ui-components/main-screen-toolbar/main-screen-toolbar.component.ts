@@ -13,7 +13,7 @@ import { LayoutService } from '../../services/layout.service';
   styleUrls: ['./main-screen-toolbar.component.scss'],
 })
 export class MainScreenToolbarComponent implements OnInit, OnChanges {
-  lightLogo = '';
+  darkLogo = '';
   timer: Timer;
   @Input() activityState: UpdateMessage;
   @Input() hideControls = false;
@@ -34,7 +34,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
-        this.lightLogo = info.parameters.lightLogo;
+        this.darkLogo = info.parameters.darkLogo;
       }
     });
   }

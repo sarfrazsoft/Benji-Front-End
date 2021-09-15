@@ -1,66 +1,48 @@
-<div class="mainscreen-toolbar bg-primary-color">
+<div class="mainscreen-toolbar bg-white">
   <div class="flexer--space-between">
     <div class="benji-logo-container">
-      <img [src]="lightLogo" alt="Benji logo" class="benji-logo" />
+      <img [src]="darkLogo" alt="Benji Logo" class="benji-logo" />
     </div>
-    <div fxLayout="row" fxLayoutGap="50px">
-      <!-- <div class="ms-footer-timer" *ngIf="showTimer" [matMenuTriggerFor]="menu2">
-        <benji-number-timer
-          [timer]="timer"
-          endStateText="Times Up!"
-          [endAudio]="'bell.wav'"
-        ></benji-number-timer>
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div class="option" 
+        fxLayoutAlign="center center">
+        <button
+          placement="top"
+          tooltip="Timer"
+          show-delay="100"
+        > 
+          <img src="/assets/img/dark_alarm.svg" /> 
+        </button>
       </div>
-      <mat-menu #menu2="matMenu" class="dynamic-timer-menu" [overlapTrigger]="false" xPosition="before">
-        <benji-dynamic-timer 
-
-        ></benji-dynamic-timer>
-      </mat-menu> -->
-      <!-- <div class="right-controls" *ngIf="!hideControls">
-        <div class="user-controls" [matMenuTriggerFor]="menu">
-          <span class="account-name pn-600 white-color">
-            Share
-          </span>
-        </div>
-        <mat-menu #menu="matMenu" class="share-ms-links" [overlapTrigger]="false" xPosition="before">
-          <div class="menu-section info" benji-click-stop-propagation>
-            <div class="link-container">
-              <div fxLayout="row" fxLayoutAlign="space-between">
-                <div>
-                  Facilitator link
-                </div>
-                <div class="primary-color copy-button" (click)="copyMessage(shareFacilitatorLink)">
-                  copy
-                </div>
-              </div>
-              <div class="share-link bg-secondary-color-lighter" fxLayoutAlign="start center">
-                <span>
-                  {{ shareFacilitatorLink }}
-                </span>
-              </div>
-            </div>
-            <div class="link-container">
-              <div fxLayout="row" fxLayoutAlign="space-between">
-                <div>
-                  Participant link
-                </div>
-                <div class="primary-color copy-button" (click)="copyMessage(shareParticipantLink)">
-                  copy
-                </div>
-              </div>
-              <div class="share-link bg-secondary-color-lighter" fxLayoutAlign="start center">
-                <span>
-                  {{ shareParticipantLink }}
-                </span>
-              </div>
-            </div>
-            <div class="team pn-400"></div>
-          </div>
-        </mat-menu>
-      </div> -->
-      <div (click)="toggleFullscreen()" class="fullscreen-container" *ngIf="!hideControls">
-        <mat-icon *ngIf="!isFullscreen()" class="icon-white">fullscreen</mat-icon>
-        <mat-icon *ngIf="isFullscreen()" class="icon-white">fullscreen_exit</mat-icon>
+      <div class="option" 
+        fxLayoutAlign="center center">
+        <button
+          placement="top"
+          tooltip="Timer"
+          show-delay="100"
+        > 
+          <img src="/assets/img/thumb.svg" /> 
+        </button>
+      </div>
+      <div class="option" 
+        fxLayoutAlign="center center">
+        <button
+          placement="top"
+          tooltip="Timer"
+          show-delay="100"
+        > 
+          <img src="/assets/img/chevron_big_right.svg" /> 
+        </button>
+      </div>
+      <div class="option" 
+        fxLayoutAlign="center center">
+        <button
+          placement="top"
+          tooltip="Timer"
+          show-delay="100"
+        > 
+          <img src="/assets/img/chevron_big_left.svg" /> 
+        </button>
       </div>
     </div>
   </div>
