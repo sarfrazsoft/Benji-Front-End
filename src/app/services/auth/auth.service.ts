@@ -112,7 +112,6 @@ export class AuthService {
     localStorage.setItem('benji_user', JSON.stringify(res.user));
   }
 
-  // DEMO ONLY
   createParticipant(username: string, enteredRoomCode: number) {
     return this.http
       .post(global.apiRoot + '/course_details/participant/', {
@@ -122,6 +121,7 @@ export class AuthService {
       .pipe(
         map((res: LoginResponse) => {
           this.setParticipantSession(res);
+          return res;
         }),
         catchError((err) => of(err.error))
       );

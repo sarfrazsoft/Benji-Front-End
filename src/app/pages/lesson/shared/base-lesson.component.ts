@@ -99,7 +99,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         } else {
           // create a single user and store it in local storage so that we don't
           // sign in again and again
-          this.restService
+          this.authService
             .createParticipant(lessonRun.host.first_name, lessonRun.lessonrun_code)
             .subscribe((participant: Participant) => {
               if (participant) {

@@ -71,7 +71,7 @@ export class ParticipantLoginComponent implements OnInit {
       return false;
     }
 
-    this.backend.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
+    this.auth.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
       (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {

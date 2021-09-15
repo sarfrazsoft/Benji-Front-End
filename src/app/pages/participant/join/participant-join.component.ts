@@ -104,7 +104,8 @@ export class ParticipantJoinComponent implements OnInit {
       (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {
-          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          // this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
         } else {
           this.loginError = true;
         }
