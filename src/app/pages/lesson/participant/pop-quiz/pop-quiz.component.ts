@@ -46,9 +46,9 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
     this.selectedChoices = [];
-    if (localStorage.getItem(this.localStorageItemName)) {
-      this.selectedChoices = JSON.parse(localStorage.getItem(this.localStorageItemName));
-    }
+    // if (localStorage.getItem(this.localStorageItemName)) {
+    //   this.selectedChoices = JSON.parse(localStorage.getItem(this.localStorageItemName));
+    // }
     this.changes();
   }
 
@@ -107,7 +107,7 @@ export class ParticipantPopQuizComponent extends BaseActivityComponent implement
           this.selectedChoices.push(option);
         }
       }
-      localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
+      // localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
     }
   }
 
