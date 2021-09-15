@@ -111,8 +111,17 @@ export class MainScreenPopQuizComponent
     this.answeredParticipants = [];
     this.unansweredParticipants = [];
     this.activeParticipants = this.getActiveParticipants();
-    this.activityState.mcqactivity.answered_participants.forEach((code) => {
-      this.answeredParticipants.push(this.getParticipantName(code.participant_code));
+    this.activityState.mcqactivity.answered_participants.forEach((user) => {
+      let participant = this.getParticipantName(user.participant_code);
+      let duplicat: boolean = false;
+      for (let index = 0; index < this.answeredParticipants.length; index++) {
+        if (participant === this.answeredParticipants[index]) {
+          duplicat = true;
+        }
+      }
+      if (!duplicat) {
+        this.answeredParticipants.push(this.getParticipantName(user.participant_code));
+      }
     });
     this.unansweredParticipants = this.getUnAnsweredUsers();
   }
