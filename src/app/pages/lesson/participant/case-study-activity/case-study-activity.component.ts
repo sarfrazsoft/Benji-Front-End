@@ -78,7 +78,8 @@ export class ParticipantCaseStudyActivityComponent
   populateQuestions() {
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
-    const sortedQuestions = questionsTemp.sort((a, b) => a.order - b.order);
+    let arrayForSort = [...questionsTemp]
+    const sortedQuestions = arrayForSort.sort((a, b) => a.order - b.order);
     sortedQuestions.forEach((q, i) => {
       this.questions.push({ ...q, answer: '' });
     });

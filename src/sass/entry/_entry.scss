@@ -234,6 +234,9 @@
   width: 300px;
   height: 40px;
   font-family: Inter, sans-serif;
+  &.inactive{
+    background-color: #BDBDBD;
+  }
 }
 
 .sign-up-field {
@@ -462,4 +465,8 @@ figcaption {
   .forgot-password {
     width: 100%;
   }
+}
+
+.sign-in-logo {
+  margin-bottom: 32px;
 }

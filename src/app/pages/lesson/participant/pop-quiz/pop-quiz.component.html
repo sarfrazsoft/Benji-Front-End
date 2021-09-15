@@ -65,21 +65,20 @@
       *ngIf="answersResults() !== 'someCorrect'">
       <ng-container *ngFor="let option of selectedChoices; let i = index">
         <button
-          class="b-standard-button unselected"
+          class="b-standard-button unselected result-button"
           [ngClass]="{
             correct: option.is_correct,
             incorrect: !option.is_correct
-          }"
-          style="margin-bottom: 16px;">
+          }">
           {{ option.choice_text }}
         </button>
       </ng-container>
     </div>
     <div *ngIf="answersResults() === 'allWrong' || answersResults() === 'allCorrect'" class="b-flat-card__action-detail">
-      <p>The correct answer is</p>
+      <p class="result-button">The correct answer is</p>
       <ng-container *ngFor="let option of getCorrectChoices();let i = index">
         <button
-          class="b-standard-button unselected"
+          class="b-standard-button unselected result-button"
           [ngClass]="{correct: option.is_correct}">
           {{ option.choice_text }}
         </button>

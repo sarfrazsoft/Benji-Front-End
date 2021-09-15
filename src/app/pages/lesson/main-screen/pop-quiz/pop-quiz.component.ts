@@ -92,7 +92,7 @@ export class MainScreenPopQuizComponent
         this.leaderboard = as.mcqactivity.participant_ranks;
         this.leaderboard = this.leaderboard.filter((user) => user.rank);
         this.leaderboard = this.leaderboard.sort((a, b) => {
-          return a.rank - b.rank;
+          return b.rank - a.rank;
         });
       }
     }
@@ -118,11 +118,11 @@ export class MainScreenPopQuizComponent
   }
 
   getUnAnsweredUsers() {
-    let active = [];
+    const active = [];
     for (let index = 0; index < this.activeParticipants.length; index++) {
       active.push(this.activeParticipants[index].display_name);
     }
-    return (active.filter(name => !this.answeredParticipants.includes(name)));
+    return active.filter((name) => !this.answeredParticipants.includes(name));
   }
 
   getChoiceSubmittedUsers() {

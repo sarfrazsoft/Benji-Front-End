@@ -342,7 +342,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'video_url') {
                   delete mappedField.templateOptions.maxLength;
-                  mappedField.templateOptions['helpText'] = 'Add youtube or vimeo url';
+                  mappedField.templateOptions['helpText'] = 'Add youtube url';
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.hide = true;
                 }
