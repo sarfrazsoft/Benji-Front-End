@@ -105,7 +105,7 @@
                 (mouseover)="mouseoverIcon(j)"
                 [matTooltip]="ratingId" 
                 matTooltipPosition="above"
-                [matTooltipClass]="{ 'tool-tip': true }"
+                [matTooltipClass]="{ 'fav-tip': true }"
                 [disableRipple]="true">
                 <mat-icon class="mat-favorite">
                   {{ showFavouriteIcon(j) }}
@@ -124,7 +124,7 @@
                 (mouseover)="mouseoverStarIcon(j)"
                 [matTooltip]="ratingId"
                 matTooltipPosition="above"
-                [matTooltipClass]="{ 'tool-tip': true }"
+                [matTooltipClass]="{ 'star-tip': true }"
                 [disableRipple]="true">
                 <mat-icon class="mat-star">
                   {{ showStarIcon(j) }}
