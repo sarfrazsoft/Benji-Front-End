@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
 import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
@@ -31,7 +32,8 @@ export class ParticipantJoinComponent implements OnInit {
     private backend: BackendRestService,
     private socket: BackendSocketService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private permissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit() {
@@ -104,6 +106,10 @@ export class ParticipantJoinComponent implements OnInit {
       (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {
+          if (localStorage.getItem('benji_facilitator')) {
+            localStorage.removeItem('benji_facilitator');
+          }
+
           this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
           // this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
         } else {

@@ -106,6 +106,7 @@ const SHARED_MODULES = [
     CommonModule,
     RouterModule,
     ...SHARED_MODULES,
+    NgxPermissionsModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
   ],

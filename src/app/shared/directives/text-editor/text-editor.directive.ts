@@ -162,12 +162,12 @@ import { Reporter } from './reporter';
 //   ngOnInit() {
 //     const awareness = provider.awareness;
 //     // get participant information here
-//     const benji_user = JSON.parse(localStorage.getItem('benji_user'));
-//     console.log(benji_user);
+//     const benji_facilitator = JSON.parse(localStorage.getItem('benji_facilitator'));
+//     console.log(benji_facilitator);
 
 //     awareness.setLocalStateField('user', {
 //       // Define a print name that should be displayed
-//       name: benji_user.first_name,
+//       name: benji_facilitator.first_name,
 //       // Define a color that should be associated to the user:
 //       color: '#ffb61e', // should be a hex color
 //     });

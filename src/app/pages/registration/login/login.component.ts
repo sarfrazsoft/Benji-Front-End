@@ -8,6 +8,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { SocialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'benji-dashboard-login',
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
     public router: Router,
     private deviceService: DeviceDetectorService,
     private contextService: ContextService,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService,
+    private permissionsService: NgxPermissionsService
   ) {
     // demo.mybenji.com
     if (window.location.href.split('.')[0].includes('demo')) {
@@ -88,7 +90,9 @@ export class LoginComponent implements OnInit {
       const val = this.form.value;
       this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
         (res) => {
-          console.log(res);
+          if (localStorage.getItem('participant')) {
+            localStorage.removeItem('participant');
+          }
           if (res) {
             this.emailPasswordError = true;
           } else {

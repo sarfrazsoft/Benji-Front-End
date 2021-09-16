@@ -89,8 +89,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private router: Router,
     private sharingToolService: SharingToolService,
-    private groupingToolService: GroupingToolService,
-    private permissionsService: NgxPermissionsService
+    private groupingToolService: GroupingToolService
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -109,18 +108,6 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     });
-
-    // const perm = ["ADMIN", "EDITOR"];
-
-    // this.permissionsService.loadPermissions(perm);
-  }
-
-  addAdminPermission() {
-    this.permissionsService.loadPermissions(['ADMIN']);
-  }
-
-  removePermission() {
-    this.permissionsService.removePermission('ADMIN');
   }
 
   ngOnChanges() {
@@ -232,7 +219,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   endSession() {
     if (this.activityState && this.activityState.lesson_run) {
       const host = this.activityState.lesson_run.host;
-      const benjiUser = JSON.parse(localStorage.getItem('benji_user'));
+      const benjiUser = JSON.parse(localStorage.getItem('benji_facilitator'));
       if (host.id === benjiUser.id) {
         this.router.navigate(['/dashboard']);
       } else {

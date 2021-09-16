@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -20,6 +21,7 @@ export class SingleUserComponent extends BaseLessonComponent implements OnInit {
     protected socketService: BackendSocketService,
     protected contextService: ContextService,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected ref: ChangeDetectorRef,
     protected matSnackBar: MatSnackBar
   ) {
@@ -31,6 +33,7 @@ export class SingleUserComponent extends BaseLessonComponent implements OnInit {
       'participant',
       contextService,
       authService,
+      permissionsService,
       ref,
       matSnackBar
     );

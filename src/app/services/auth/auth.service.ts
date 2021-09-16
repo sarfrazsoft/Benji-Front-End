@@ -109,7 +109,7 @@ export class AuthService {
     localStorage.setItem('token', res.token);
     this.contextService.user = res.user;
     this.layoutService.hideSidebar = false;
-    localStorage.setItem('benji_user', JSON.stringify(res.user));
+    localStorage.setItem('benji_facilitator', JSON.stringify(res.user));
   }
 
   createParticipant(username: string, enteredRoomCode: number) {
@@ -181,7 +181,7 @@ export class AuthService {
   }
 
   startIntercom() {
-    const user: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
+    const user: TeamUser = JSON.parse(localStorage.getItem('benji_facilitator'));
     this.intercom.boot({
       name: user.first_name + ' ' + user.last_name,
       email: user.email,

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
@@ -31,6 +32,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     clientType: string,
     protected contextService: ContextService,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected ref?: ChangeDetectorRef,
     protected _snackBar?: MatSnackBar
   ) {
@@ -43,6 +45,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.initSocket();
+
+    if (localStorage.getItem('participant')) {
+      this.permissionsService.loadPermissions(['PARTICIPANT']);
+    } else if (localStorage.getItem('benji_facilitator')) {
+      this.permissionsService.loadPermissions(['ADMIN']);
+    }
 
     document.addEventListener('visibilitychange', () => {
       const resetConnection = localStorage.getItem('resetConnection');
