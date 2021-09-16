@@ -1,27 +1,25 @@
 .mainscreen-toolbar {
-  padding: 11px 24px 10px;
+  padding: 12px 16px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0; /* required */
+  z-index: 1;
   .benji-logo-container {
-    height: 30px;
+    height: 32px;
     img {
       height: 100%;
     }
   }
   .flexer--space-between {
     align-items: center;
-  }
-  .fullscreen-container {
-    cursor: pointer;
-    mat-icon {
-      height: 36px;
-      width: 36px;
-      font-size: 36px;
+    .option {
+      padding: 8px;
+      border-radius: 8px;
+      background-color: #F3F4F7;
+      button {
+        height: 16px;
+        width: 16px;
+      }
     }
-    // span {
-    //   position: absolute;
-    //   margin-top: 36px;
-    //   color: #fff;
-    //   right: 16px;
-    //   font-size: 16px;
-    // }
   }
 }
