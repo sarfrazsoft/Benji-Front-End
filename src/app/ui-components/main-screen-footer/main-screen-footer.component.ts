@@ -41,6 +41,8 @@ import {
 } from '../../services/backend/schema/messages';
 import { VideoStateService } from '../../services/video-state.service';
 
+import { NgxPermissionsService } from 'ngx-permissions';
+
 @Component({
   selector: 'benji-main-screen-footer',
   templateUrl: './main-screen-footer.component.html',
@@ -87,7 +89,8 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private router: Router,
     private sharingToolService: SharingToolService,
-    private groupingToolService: GroupingToolService
+    private groupingToolService: GroupingToolService,
+    private permissionsService: NgxPermissionsService
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -106,6 +109,18 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     });
+
+    // const perm = ["ADMIN", "EDITOR"];
+
+    // this.permissionsService.loadPermissions(perm);
+  }
+
+  addAdminPermission() {
+    this.permissionsService.loadPermissions(['ADMIN']);
+  }
+
+  removePermission() {
+    this.permissionsService.removePermission('ADMIN');
   }
 
   ngOnChanges() {

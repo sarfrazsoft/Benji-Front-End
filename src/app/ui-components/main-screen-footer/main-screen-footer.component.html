@@ -100,8 +100,10 @@
         </benji-grouping-control>
       </mat-menu>
 
+      <button (click)="addAdminPermission()">Add Admin Permission</button>
+         <button (click)="removePermission()">Remove Admin Permission</button>
       <!-- Timer control -->
-      <div class="option settings" 
+      <div *ngxPermissionsOnly="'ADMIN'" class="option settings"
         fxLayoutAlign="center center" 
         [matMenuTriggerFor]="timerMenu">
         <button
