@@ -147,13 +147,14 @@ benji-preview-activity {
   benji-ms-either-or-activity {
     div.radio-mock-button {
       padding: 24px 16px;
-      height: 212px;
+      height: auto;
       width: 144px;
       .emoji-div {
         margin-bottom: 18px;
       }
       span {
-        font-size: 18px;
+        font-size: 1.24vw;
+        color: #828282;
       }
     }
   }
