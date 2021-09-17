@@ -38,7 +38,7 @@ export class FeedbackComponent implements OnInit {
     this.fback.forEach((question: FeedbackQuestionSet) => {
       let labels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
       let label_icons;
-      console.log(question);
+      // console.log(question);
       if (question.question_type === 'multiple_choice') {
         // over here we create data needed in
         // benji-response-percent-bars
@@ -52,6 +52,25 @@ export class FeedbackComponent implements OnInit {
           question_type: question.question_type,
         });
       } else if (question.question_type === 'scale') {
+      } else if (question.question_type === 'stars') {
+        labels = ['', '', '', '', ''];
+        label_icons = ['star.svg', 'star.svg', 'star.svg', 'star.svg', 'star.svg'];
+        this.pushInAssessments(question, labels, label_icons);
+      } else if (question.question_type === 'heart') {
+        labels = ['', '', '', '', '', '', '', '', '', ''];
+        label_icons = [
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+          'heart.svg',
+        ];
+        this.pushInAssessments(question, labels, label_icons);
       } else if (question.question_type === 'thumb_up') {
         labels = ['', ''];
         label_icons = ['thumb_up.svg', 'thumb_down.svg'];
