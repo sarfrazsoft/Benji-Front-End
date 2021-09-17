@@ -40,6 +40,8 @@ export class ParticipantFeedbackMCQComponent implements OnInit, OnChanges {
           mcqchoice_set: json.mcqchoices,
         },
       };
+    } else {
+      this.question.mcq_question.mcqchoice_set.sort((a, b) => a.order - b.order);
     }
     this.showChoices = true;
   }
