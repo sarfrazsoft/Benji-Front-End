@@ -21,6 +21,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
   ctx: CanvasRenderingContext2D;
   myChart: any;
   users = [[], [], [], [], []];
+  labelsSet = {};
   @ViewChild('chartCanvas', { static: true }) chartCanvas: ElementRef;
   constructor(private pastSessionService: PastSessionsService) {}
 
@@ -138,35 +139,44 @@ export class QuestionComponent implements OnInit, AfterViewInit {
     //     tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
     // };
     const images = [
-      'https://i.stack.imgur.com/2RAv2.png',
+      '../../../assets/img/reportsIcons/feedback.svg',
       'https://i.stack.imgur.com/Tq5DA.png',
       'https://i.stack.imgur.com/3KRtW.png',
       'https://i.stack.imgur.com/iLyVi.png',
       'https://i.stack.imgur.com/iLyVi.png',
     ];
-    const yourImage = new Image();
-    yourImage.src = 'http://your.site.com/your_image.png';
 
     this.canvas = document.getElementById('myChart');
     this.ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.myChart = new Chart(this.ctx, {
       type: 'bar',
-      // plugins: [
-      //   {
-      //     afterDraw: (chart: any) => {
-      //       const ctx = chart.ctx;
-      //       const xAxis = chart.scales['x-axis-0'];
-      //       const yAxis = chart.scales['y-axis-0'];
-      //       xAxis.ticks.forEach((value, index) => {
-      //         const x = xAxis.getPixelForTick(index);
-      //         const image = new Image();
-      //         image.src = images[index];
-
-      //         ctx.drawImage(image, x - 12, yAxis.bottom + 10);
-      //       });
-      //     },
-      //   },
-      // ],
+      plugins: [
+        {
+          // afterDraw
+          afterDraw: (chart: any) => {
+            const ctx = chart.ctx;
+            const xAxis = chart.scales['x-axis-0'];
+            const yAxis = chart.scales['y-axis-0'];
+            if (this.question.label_icons) {
+              const labelIcons = this.question.label_icons;
+              xAxis.ticks.forEach((value, index) => {
+                const x = xAxis.getPixelForTick(index);
+                if (this.labelsSet[index]) {
+                  ctx.drawImage(this.labelsSet[index], x - 12, yAxis.bottom + 10);
+                } else {
+                  const image = new Image();
+                  image.src = '../../../assets/img/reportsIcons/' + labelIcons[index];
+                  this.labelsSet = { ...this.labelsSet, [index]: image };
+                  image.onload = () => {
+                    // When image loaded, you can then draw it on the canvas.
+                    ctx.drawImage(image, x - 12, yAxis.bottom + 10);
+                  };
+                }
+              });
+            }
+          },
+        },
+      ],
       data: {
         labels: this.question.labels,
         datasets: [
@@ -249,6 +259,7 @@ export class QuestionComponent implements OnInit, AfterViewInit {
                 display: false,
               },
               ticks: {
+                padding: 30,
                 fontColor: '#000',
                 fontSize: 16,
                 stepSize: 1,
@@ -279,9 +290,11 @@ export class QuestionComponent implements OnInit, AfterViewInit {
           ratingSum = ratingSum + answer.rating;
           noOfRatings = noOfRatings + 1;
           assessments[answer.rating - 1]++;
-          this.users[answer.rating - 1].push(
-            this.pastSessionService.getParticipantName(answer.participant_code)
-          );
+          if (answer.rating > 0) {
+            this.users[answer.rating - 1].push(
+              this.pastSessionService.getParticipantName(answer.participant_code)
+            );
+          }
           this.comboAnswers.push(answer.text);
         }
       });

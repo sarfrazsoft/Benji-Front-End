@@ -110,7 +110,7 @@ export class QuestionTypeSelectComponent extends FieldType implements OnInit {
           // id: 0,
           order: new FormControl(1),
           choice_text: new FormControl(''),
-          is_correct: new FormControl(true),
+          is_correct: new FormControl(false),
           explanation: new FormControl('Test A'),
         }),
       ]),

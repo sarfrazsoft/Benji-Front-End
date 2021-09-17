@@ -37,6 +37,7 @@ export class FeedbackComponent implements OnInit {
 
     this.fback.forEach((question: FeedbackQuestionSet) => {
       let labels = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
+      let label_icons;
       console.log(question);
       if (question.question_type === 'multiple_choice') {
         // over here we create data needed in
@@ -52,28 +53,45 @@ export class FeedbackComponent implements OnInit {
         });
       } else if (question.question_type === 'scale') {
       } else if (question.question_type === 'thumb_up') {
-        labels = ['Thumbs down', 'Thumbs up'];
+        labels = ['', ''];
+        label_icons = ['thumb_up.svg', 'thumb_down.svg'];
+        this.pushInAssessments(question, labels, label_icons);
+      } else if (question.question_type === 'emoji') {
+        labels = ['', '', '', '', ''];
+        label_icons = [
+          'very_dissatisfied.svg',
+          'dissatisfied.svg',
+          'unamused.svg',
+          'satisfied.svg',
+          'very_satisfied.svg',
+        ];
+        this.pushInAssessments(question, labels, label_icons);
       } else {
-        const assessments: Array<Assessment> = [];
-        question.feedbackparticipantanswer_set.forEach((answer: FeedbackParticipantAnswerSet) => {
-          assessments.push({
-            participant_code: answer.participant.participant_code,
-            rating: answer.rating_answer,
-            text: answer.text_answer,
-            // scale: [],
-            // multiple_choice: {},
-          });
-        });
-
-        this.questions.push({
-          question_text: question.question_text,
-          assessments: assessments,
-          labels: labels,
-          is_combo: question.is_combo,
-          question_type: question.question_type,
-          combo_text: question.combo_text,
-        });
+        this.pushInAssessments(question, labels, label_icons);
       }
+    });
+  }
+
+  pushInAssessments(question, labels, label_icons) {
+    const assessments: Array<Assessment> = [];
+    question.feedbackparticipantanswer_set.forEach((answer: FeedbackParticipantAnswerSet) => {
+      assessments.push({
+        participant_code: answer.participant.participant_code,
+        rating: answer.rating_answer,
+        text: answer.text_answer,
+        // scale: [],
+        // multiple_choice: {},
+      });
+    });
+
+    this.questions.push({
+      question_text: question.question_text,
+      assessments: assessments,
+      labels: labels,
+      label_icons: label_icons,
+      is_combo: question.is_combo,
+      question_type: question.question_type,
+      combo_text: question.combo_text,
     });
   }
 }
