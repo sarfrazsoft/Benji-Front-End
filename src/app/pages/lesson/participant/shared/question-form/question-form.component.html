@@ -120,7 +120,7 @@
               <button type="button" mat-icon-button class="question-icon star-icon" 
                 *ngFor="let ratingId of starsArr;index as j" 
                 [id]="'star_'+j" 
-                (click)="onClickStar(i, j+1)"
+                (click)="onClickStar(i, j)"
                 (mouseover)="mouseoverStarIcon(j)"
                 [matTooltip]="ratingId"
                 matTooltipPosition="above"
