@@ -112,8 +112,8 @@ export class MainScreenPopQuizComponent
     this.unansweredParticipants = [];
     this.activeParticipants = this.getActiveParticipants();
     this.activityState.mcqactivity.answered_participants.forEach((user) => {
-      let participant = this.getParticipantName(user.participant_code);
-      let duplicat: boolean = false;
+      const participant = this.getParticipantName(user.participant_code);
+      let duplicat = false;
       for (let index = 0; index < this.answeredParticipants.length; index++) {
         if (participant === this.answeredParticipants[index]) {
           duplicat = true;
