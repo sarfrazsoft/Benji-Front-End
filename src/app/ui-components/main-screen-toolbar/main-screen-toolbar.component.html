@@ -1,48 +1,67 @@
 <div class="mainscreen-toolbar bg-white">
   <div class="flexer--space-between">
     <div class="benji-logo-container">
-      <img [src]="darkLogo" alt="Benji Logo" class="benji-logo" />
+      <img [src]="darkLogo" alt="Benji Logo" class="benji-logo"/>
     </div>
     <div fxLayout="row" fxLayoutGap="8px">
-      <div class="option" 
-        fxLayoutAlign="center center">
-        <button
-          placement="top"
-          tooltip="Timer"
-          show-delay="100"
-        > 
-          <img src="/assets/img/dark_alarm.svg" /> 
-        </button>
+      <div class="time-info" fxLayoutAlign="center center">
+        <div class="ms-header-timer" *ngIf="showTimer" 
+          [matMenuTriggerFor]="timerMenu">
+          <benji-number-timer
+            [timer]="timer"
+            endStateText="Times Up!"
+          ></benji-number-timer>
+        </div>
+        <mat-menu 
+          #timerMenu="matMenu" 
+          class="dynamic-timer-menu" 
+          [overlapTrigger]="false" 
+          xPosition="before">
+          <benji-dynamic-timer 
+            [updateMessage]="activityState"
+            (controlClicked)="controlClicked($event)"
+            (propagate)="propagate($event)">
+          </benji-dynamic-timer>
+        </mat-menu>
       </div>
-      <div class="option" 
-        fxLayoutAlign="center center">
-        <button
-          placement="top"
-          tooltip=""
-          show-delay="100"
-        > 
-          <img src="/assets/img/thumb.svg" /> 
-        </button>
+      <div *ngIf="!isEditor" >
+        <div class="option" fxLayoutAlign="center center"
+          [matMenuTriggerFor]="timerMenu"
+          [matTooltipPosition]="'below'"
+          matTooltip="Timer"
+          show-delay="100">
+            <img src="/assets/img/dark_alarm.svg"/>
+        </div>
       </div>
-      <div class="option" 
-        fxLayoutAlign="center center">
-        <button
-          placement="top"
-          tooltip=""
-          show-delay="100"
-        > 
-          <img src="/assets/img/chevron_big_right.svg" /> 
-        </button>
+      <div class="option" fxLayoutAlign="center center"
+        matTooltip="Vote"
+        [matTooltipPosition]="'below'"
+        show-delay="100">
+          <img src="/assets/img/thumb.svg"/> 
       </div>
-      <div class="option" 
-        fxLayoutAlign="center center">
-        <button
-          placement="top"
-          tooltip=""
-          show-delay="100"
-        > 
-          <img src="/assets/img/chevron_big_left.svg" /> 
-        </button>
+      <div class="option arrow" fxLayoutAlign="center center" (click)="controlClicked('previous')">
+        <img src="/assets/img/chevron_left.svg"/> 
+      </div>
+      <div class="option" fxLayoutAlign="center center"
+        [matMenuTriggerFor]="navigationMenu"
+        [matTooltipPosition]="'below'"
+        matTooltip="Activities"
+        show-delay="100">
+          <span>1</span>
+      </div>
+      <mat-menu 
+        #navigationMenu="matMenu" 
+        class="activity-settings-menu activity-session-menu"  
+        [overlapTrigger]="false" 
+        xPosition="before">
+        <benji-session-navigation 
+          [activityState]="activityState"
+          [disableControls]="disableControls"
+          (navigate)="navigateToActivity($event)">
+        </benji-session-navigation>
+      </mat-menu>
+      <div class="option arrow" fxLayoutAlign="center center" (click)="controlClicked('next')" *ngIf="isLastActivity">
+        <img src="/assets/img/chevron_right.svg" /> 
       </div>
     </div>
   </div>
