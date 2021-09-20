@@ -9,6 +9,13 @@
       </div>
       <h1 class="pn-700 primary-color-darkest build-pitch-h1 participant">{{ activityState.buildapitchactivity.title }}</h1>
       <p class="body-text bap-instructions">{{ activityState.buildapitchactivity.instructions }}</p>
+      <div class="worksheet-timer" *ngIf="timer">
+        <benji-participant-timer
+          [timer]="timer"
+          [endAudio]="'bell.wav'"
+          [timerOffset]="avgServerTimeOffset"
+        ></benji-participant-timer>
+      </div>
       <!-- <div class="twemoji-container">
         <app-b-twemoji class="body-emoji participant" emoji="🏗️"></app-b-twemoji>
       </div>

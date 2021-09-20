@@ -32,6 +32,7 @@ export interface FeedbackGraphQuestion {
   question_text: string;
   assessments: Array<Assessment>;
   labels: Array<string>;
+  label_icons?: Array<string>;
   is_combo: boolean;
   combo_text: string;
   question_type: string;

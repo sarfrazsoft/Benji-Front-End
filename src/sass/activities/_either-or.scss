@@ -102,6 +102,7 @@ benji-ps-either-or-activity {
     border-bottom: 1px solid #979797;
     text-align: left;
     .phase-icon {
+      width: 56px;
       img {
         width: 56px;
       }
@@ -146,13 +147,14 @@ benji-preview-activity {
   benji-ms-either-or-activity {
     div.radio-mock-button {
       padding: 24px 16px;
-      height: 167px;
-      width: 120px;
+      height: auto;
+      width: 144px;
       .emoji-div {
         margin-bottom: 18px;
       }
       span {
-        font-size: 18px;
+        font-size: 1.24vw;
+        color: #828282;
       }
     }
   }

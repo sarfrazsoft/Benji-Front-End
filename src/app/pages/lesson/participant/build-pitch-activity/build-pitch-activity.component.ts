@@ -46,6 +46,7 @@ export class ParticipantBuildPitchActivityComponent
   selectedUser: number = null;
 
   blanksArray = [];
+  timer;
 
   @ViewChild('ref') ref: ElementRef;
 
@@ -150,6 +151,7 @@ export class ParticipantBuildPitchActivityComponent
   // }
 
   ngOnChanges() {
+    this.timer = this.getTimerTool();
     this.act = this.activityState.buildapitchactivity;
     this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     this.setTimer(this.act);

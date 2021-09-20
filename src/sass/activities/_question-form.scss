@@ -70,6 +70,9 @@ benji-question-form {
           text-align: center;
           margin-bottom: 25px;
         }
+        span {
+          margin: 0px auto;
+        }
       }
       button.question-icon {
         width: auto;
@@ -114,11 +117,13 @@ textarea:focus:-ms-input-placeholder {
 .mat-star {
   color: #F69F41;
   width: 34px !important;
+  height: 34px !important;
   font-size: 32px;
 }
 .mat-thumb {
   color: #D4D8FA;
   width: 40px !important;
+  height: 40px !important;
   font-size: 40px;
   &.selected, &:hover {
     color: #7B87F0;
@@ -127,6 +132,7 @@ textarea:focus:-ms-input-placeholder {
 .mat-emoticon {
   color: #D4D8FA;
   width: 40px !important;
+  height: 40px !important;
   font-size: 40px;
   &.selected, &:hover, &.trigger-icon {
     color: #7B87F0;
@@ -135,12 +141,16 @@ textarea:focus:-ms-input-placeholder {
 .mat-favorite {
   color: #F05656;
   width: 20px !important;
+  height: 20px !important;
   font-size: 20px;
   margin-right: 3px;
 }
 .trigger-icon {
   font-size: 24px !important;
 }
-.tool-tip {
-  margin-bottom: -10px !important;
+.fav-tip {
+  margin-bottom: -14px !important;
+}
+.star-tip {
+  margin-bottom: -4px !important;
 }
