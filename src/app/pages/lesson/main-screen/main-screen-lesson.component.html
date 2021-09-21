@@ -6,9 +6,8 @@
   <benji-main-screen-toolbar 
     [activityState]="serverMessage"
     *ngIf="isConnected() && serverMessage"
-    [showFastForward]="fastForwardActivities.indexOf(getActivityType()) > -1"
     [isLastActivity]="!isLastActivity()"
-    [showFooter]="getActivityType() !== at.lobby"
+    [showHeader]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"
     [isPaused]="isPaused()"

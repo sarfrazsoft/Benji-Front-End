@@ -21,10 +21,10 @@
     <ng-container *ngIf="previewTemplate">
       <div class="m-act-template template-container bg-yellow">
         <ng-container *ngIf="screenType === 'mainScreen'">
-          <benji-main-screen-toolbar [hideControls]="true"
-            [showFastForward]="true"
+          <benji-main-screen-toolbar 
+            [hideControls]="true"
             [isLastActivity]="true"
-            [showFooter]="true"
+            [showHeader]="true"
             [roomCode]="1234"
             [lessonName]="'Example lesson'"
             [isPaused]="false"
