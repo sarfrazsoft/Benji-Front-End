@@ -3,7 +3,7 @@
     <div class="benji-logo-container">
       <img [src]="darkLogo" alt="Benji Logo" class="benji-logo"/>
     </div>
-    <div fxLayout="row" fxLayoutGap="8px">
+    <div *ngIf="!isEditor" fxLayout="row" fxLayoutGap="8px">
       <div class="time-info" fxLayoutAlign="center center">
         <div class="ms-header-timer" *ngIf="showTimer" 
           [matMenuTriggerFor]="timerMenu">
@@ -24,7 +24,7 @@
           </benji-dynamic-timer>
         </mat-menu>
       </div>
-      <div *ngIf="!isEditor" >
+      <div>
         <div class="option" fxLayoutAlign="center center"
           [matMenuTriggerFor]="timerMenu"
           [matTooltipPosition]="'below'"
