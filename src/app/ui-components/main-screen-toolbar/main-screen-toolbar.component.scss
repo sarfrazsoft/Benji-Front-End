@@ -13,13 +13,23 @@
   .flexer--space-between {
     align-items: center;
     .option {
+      height: 34px;
+      width: 34px;
       padding: 8px;
       border-radius: 8px;
+      cursor: pointer;
       background-color: #F3F4F7;
-      button {
-        height: 16px;
-        width: 16px;
+      &.arrow {
+        background-color: unset;
       }
+    }
+  }
+  .time-info {
+    .number-text {
+      color: #616161;
+    }
+    .ms-header-timer {
+      margin-right: 24px;
     }
   }
 }

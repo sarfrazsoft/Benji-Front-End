@@ -1,7 +1,7 @@
 <!-- Parent of the following container must be set to position relative in order to achieve vertical and horizontal centering -->
 <div class="timer-container digital-timer">
   <div
-    class="white-color number-text pn-500"
+    class="number-text pn-500"
     *ngIf="timer && timer.status == 'running'"
   >
     {{ get_min_sec().min | number: "1.0-0" }}:{{
@@ -10,7 +10,7 @@
   </div>
 
   <div
-    class="white-color number-text pn-500"
+    class="number-text pn-500"
     *ngIf="timer && timer.status == 'paused'"
   >
     {{ get_min_sec().min | number: "1.0-0" }}:{{
@@ -19,7 +19,7 @@
   </div>
 
   <div
-    class="white-color number-text pn-500"
+    class="number-text pn-500"
     *ngIf="timer && timer.status == 'ended'"
   >
     {{ endStateText }}
