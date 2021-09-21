@@ -4,20 +4,20 @@ import { ContextService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { LayoutService } from '../../services/layout.service';
 import {
   BeginShareEvent,
-  PauseActivityEvent,
-  NextInternalEvent,
-  ResumeActivityEvent,
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormVotingCompleteInternalEvent,
+  EndShareEvent,
   FastForwardEvent,
+  JumpEvent,
+  NextInternalEvent,
+  PauseActivityEvent,
   PreviousEvent,
   ResetEvent,
-  EndShareEvent,
-  JumpEvent,
+  ResumeActivityEvent,
 } from '../../services/backend/schema/messages';
+import { LayoutService } from '../../services/layout.service';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -35,6 +35,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   showTimer = false;
   fastForwarding = false;
+  currentActivityIndex;
 
   at: typeof ActivityTypes = ActivityTypes;
 
@@ -44,11 +45,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private layoutService: LayoutService,
     public contextService: ContextService,
     private utilsService: UtilsService,
-    private sharingToolService: SharingToolService,
+    private sharingToolService: SharingToolService
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
-  
+
   ngOnInit() {
     this.shareParticipantLink = window.location.href + '?share=participant';
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
@@ -58,7 +59,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.darkLogo = info.parameters.darkLogo;
       }
     });
-    
+
     this.contextService.activityTimer$.subscribe((timer: Timer) => {
       if (timer && timer.total_seconds !== 0) {
         this.showTimer = true;
@@ -66,7 +67,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     });
-
   }
 
   copyMessage(val: string) {
@@ -126,7 +126,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.sharingToolService.sharingToolControl$.next(this.activityState);
     }
   }
-  
+
   endSharingTool() {
     this.socketMessage.emit(new EndShareEvent());
   }
@@ -137,5 +137,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
     this.socketMessage.emit(new JumpEvent($event));
   }
-  
+
+  setCurrentActivityIndex(dropdownActivities) {
+    const currentActivityId = this.activityState[this.activityState.activity_type.toLowerCase()].activity_id;
+    dropdownActivities.forEach((act, i) => {
+      if (act.activity_id === currentActivityId) {
+        this.currentActivityIndex = i + 1;
+      }
+    });
+  }
 }
