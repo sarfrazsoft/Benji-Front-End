@@ -5,8 +5,7 @@
 <div class="ms-fullheight-container">
   <benji-main-screen-toolbar
     *ngIf="isConnected() && serverMessage"
-    [showFastForward]="getActivityType() === at.pitchoMatic"
-    [showFooter]="getActivityType() !== at.lobby"
+    [showHeader]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"
     [isPaused]="isPaused()"
