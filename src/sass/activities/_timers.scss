@@ -135,3 +135,16 @@
     }
   }
 }
+.mcq-card {
+  .progress-bar-container {
+    background-color: #ebebeb;
+    border-radius: 32px;
+    margin-bottom: 16px;
+    .participant-timer {
+      height: 32px;
+      border-radius: 32px;
+      transition: all 0.1s linear;
+      max-width: 100%;
+    }
+  }
+}

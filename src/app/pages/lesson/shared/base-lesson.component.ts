@@ -13,7 +13,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
-  clientType: string;
+  clientType: 'screen' | 'participant';
   disableControls: boolean;
   participantDetails: Participant;
 
@@ -29,7 +29,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
-    clientType: string,
+    clientType: 'screen' | 'participant',
     protected contextService: ContextService,
     protected authService: AuthService,
     protected permissionsService: NgxPermissionsService,
@@ -44,13 +44,13 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.initSocket();
-
     if (localStorage.getItem('participant')) {
       this.permissionsService.loadPermissions(['PARTICIPANT']);
+      this.clientType = 'participant';
     } else if (localStorage.getItem('benji_facilitator')) {
       this.permissionsService.loadPermissions(['ADMIN']);
     }
+    this.initSocket();
 
     document.addEventListener('visibilitychange', () => {
       const resetConnection = localStorage.getItem('resetConnection');

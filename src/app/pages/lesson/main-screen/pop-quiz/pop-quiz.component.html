@@ -14,29 +14,34 @@
         [timerOffset]="avgServerTimeOffset"
       ></benji-participant-timer>
     </div>
-    <div class="b-flat-card__action">
-      <div 
-        *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-        class="mcq-button-container bg-primary-color">
-        <button
-          class="unselected selected-primary-border-only voting-idea-button"
-          [ngClass]="{
-            selected: isSelected(option),
-            inactive: answerSubmitted
-          }"
-          (click)="selectOption(option)"
-        >
-          {{ option.choice_text }}
-        </button>
+    <div class="b-flat-card__action" >
+      <div  fxLayout="row wrap"
+        fxLayoutAlign="space-between"
+        fxLayoutAlign.md="center center">
+        <div 
+          *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
+          fxFlex="48%"
+          class="mcq-button-container bg-primary-color">
+          <button
+            class="unselected selected-primary-border-only voting-idea-button"
+            [ngClass]="{
+              selected: isSelected(option),
+              inactive: answerSubmitted
+            }"
+            (click)="selectOption(option)"
+          >
+            {{ option.choice_text }}
+          </button>
+        </div>
       </div>
-      <div class="mcq-button-container">
+      <!-- <div class="mcq-button-container">
         <button 
           class="white-color bg-primary-color center-text voting-submit"
           (click)="submitAnswer()"
           [disabled]="answerSubmitted ? 'disabled': null" >
           Submit
         </button>
-      </div>
+      </div> -->
     </div>
   </ng-container>
 

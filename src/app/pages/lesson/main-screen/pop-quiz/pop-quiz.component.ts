@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { filter, find, findIndex, remove } from 'lodash';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
 import { ContextService } from 'src/app/services';
 import { LeaderBoard, MCQChoiceSet, ParticipantRanks } from 'src/app/services/backend/schema';
@@ -12,7 +13,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenPopQuizComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   questionTimerStarted = false;
   showResults = false;
   showQuestion = false;
@@ -34,14 +36,18 @@ export class MainScreenPopQuizComponent
   timer: Timer;
 
   localStorageItemName;
+  isAdmin;
 
-  constructor(private contextService: ContextService) {
+  constructor(private contextService: ContextService, private permissionsService: NgxPermissionsService) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
     const as = this.activityState;
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      this.isAdmin = val;
+    });
     this.localStorageItemName = 'mcqSelectedChoice' + as.mcqactivity.activity_id;
 
     if (as.mcqactivity.question.mcqchoice_set[0] && as.mcqactivity.question.mcqchoice_set[0].id) {
@@ -97,14 +103,18 @@ export class MainScreenPopQuizComponent
   }
 
   selectOption(option: MCQChoice) {
+    if (this.isAdmin) {
+      return;
+    }
     if (!this.answerSubmitted && option.id) {
       const multiSelect = this.activityState.mcqactivity.multiple_correct_answer;
       if (multiSelect) {
         const alreadyPresent = find(this.selectedChoices, (choice) => choice.id === option.id);
         if (alreadyPresent) {
-          remove(this.selectedChoices, (choice) => choice.id === option.id);
+          // remove(this.selectedChoices, (choice) => choice.id === option.id);
         } else {
           this.selectedChoices.push(option);
+          this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
         }
       } else {
         if (this.selectedChoices.length) {
@@ -112,6 +122,7 @@ export class MainScreenPopQuizComponent
         } else {
           this.selectedChoices.push(option);
         }
+        this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
       }
       // localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
     }

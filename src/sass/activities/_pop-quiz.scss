@@ -1,8 +1,16 @@
 benji-ms-poll,
 benji-ms-pop-quiz {
-  .mainscreen-activity > div {
-    overflow: hidden;
+  .mcq-card {
+    .mcq-button-container {
+      height: 160px;
+      button {
+        font-size: 32px;
+        font-weight: 500;
+        height: 160px;
+      }
+    }
   }
+
   .activity-instructions {
     padding: 0 30px !important;
     .content {
@@ -36,10 +44,6 @@ benji-ms-pop-quiz {
       }
     }
   }
-  .submitted-info {
-    font-size: 32px;
-    cursor: pointer;
-  }
 }
 
 benji-ps-pop-quiz,
@@ -57,5 +61,35 @@ benji-ps-build-pitch-activity {
         line-height: 24px;
       }
     }
+  }
+}
+
+.mcq-card {
+  padding: 32px 24px;
+  max-width: 960px;
+  margin: 0px auto;
+  h3 {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    padding-top: 16px;
+  }
+  .multi-correct {
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+  .twemoji {
+    img {
+      max-width: 150px;
+    }
+  }
+  .incorrect {
+    text-align: center;
+  }
+  .result-button {
+    display: block;
+    text-align: center;
+    margin: 0px auto;
+    margin-bottom: 16px;
   }
 }
