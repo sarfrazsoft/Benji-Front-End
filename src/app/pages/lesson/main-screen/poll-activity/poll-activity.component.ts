@@ -85,7 +85,6 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
     }
   }
 
-
   loadUsersCounts() {
     this.joinedUsers = [];
     this.answeredParticipants = [];
@@ -98,12 +97,12 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
   }
 
   getUnAnsweredUsers() {
-    let answered = this.answeredParticipants;
-    let active = [];
+    const answered = this.answeredParticipants;
+    const active = [];
     for (let index = 0; index < this.joinedUsers.length; index++) {
       active.push(this.joinedUsers[index].display_name);
     }
-    return (active.filter(name => !answered.includes(name)));
+    return active.filter((name) => !answered.includes(name));
   }
 
   // For single user activity
@@ -130,39 +129,5 @@ export class MainScreenPollComponent extends BaseActivityComponent implements On
     } else {
       // state === 'previous'
     }
-
-    // if (this.submissionScreen) {
-    //   if (state === 'next') {
-    //     this.voteScreen = true;
-    //     this.submissionScreen = false;
-    //     this.VnSComplete = false;
-    //     this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-    //   } else {
-    //     // state === 'previous'
-    //     // do nothing
-    //   }
-    // } else if (this.voteScreen) {
-    //   if (state === 'next') {
-    //     this.submissionScreen = false;
-    //     this.voteScreen = false;
-    //     this.VnSComplete = true;
-    //   } else {
-    //     // state === 'previous'
-    //     this.submissionScreen = true;
-    //     this.voteScreen = false;
-    //     this.VnSComplete = false;
-    //     this.ideaSubmittedUsersCount = this.getIdeaSubmittedUsersCount(act);
-    //   }
-    // } else if (this.VnSComplete) {
-    //   if (state === 'next') {
-    //     // do nothing
-    //   } else {
-    //     // state === 'previous'
-    //     this.voteScreen = true;
-    //     this.submissionScreen = false;
-    //     this.VnSComplete = false;
-    //     this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-    //   }
-    // }
   }
 }
