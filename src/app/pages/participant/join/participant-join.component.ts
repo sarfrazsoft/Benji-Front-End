@@ -110,8 +110,8 @@ export class ParticipantJoinComponent implements OnInit {
             localStorage.removeItem('benji_facilitator');
           }
 
-          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
-          // this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+          // this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
         } else {
           this.loginError = true;
         }

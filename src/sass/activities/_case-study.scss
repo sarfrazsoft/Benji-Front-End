@@ -238,3 +238,16 @@ benji-ps-case-study-activity {
   font-size: 20px;
   line-height: 20px;
 }
+
+.case-study-main {
+  .feedback-card, .groups-list {
+    overflow-y: scroll;
+  }
+  .feedback-card {
+    max-height: calc(100vh - 120px);
+  }
+  .groups-list {
+    max-height: calc(100vh - 142px);
+    padding: 16px;
+  }
+}

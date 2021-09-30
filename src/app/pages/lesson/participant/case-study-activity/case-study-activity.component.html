@@ -1,100 +1,91 @@
-<!-- <ngx-editor-menu
-  [editor]="editor"
-  [toolbar]="toolbar"
-  [customMenuRef]="customMenu"
-></ngx-editor-menu>
-<ngx-editor [editor]="editor">
-</ngx-editor>
-<ng-template #customMenu>
-  <app-custom-menu [editor]="editor"></app-custom-menu>
-</ng-template> -->
-
-
-
-
-
-
-
-<div class="b-flat-card center-text feedback-card heightAuto">
-  <div class="activity-wrapper">
-    <div class="b-flat-card__body">
-      <benji-case-study-grouping-container
-        *ngIf="!actEditor"
-        [activityState]="activityState"
-        (sendMessage)="propagate($event)"
-        [participantCode]="participantCode"
+<div class="case-study-main" fxLayout="row">
+  <div fxLayout="column" class="" fxFlex="176px">
+    <div class="groups-list">
+      <div
+        class="group-container"
+        fxLayout="row"
+        *ngFor="let group of groups"
       >
-      </benji-case-study-grouping-container>
-      
-      <div class="content" fxLayout="column">
-        <div class="twemoji-container participant-new-emoji" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
-          <app-b-twemoji class="body-emoji participant" [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
-        </div>
-        <div class="worksheet-title">
-          {{ worksheetTitle }}
-        </div>
-        <div 
-          class="worksheet-text" 
-          *ngIf="act.case_study_details" 
-          innerHTML="{{ act.case_study_details }}">
-        </div>
-        <div class="worksheet-timer" *ngIf="timer">
-          <benji-participant-timer
-            [timer]="timer"
-            [endAudio]="'bell.wav'"
-            [timerOffset]="avgServerTimeOffset"
-          ></benji-participant-timer>
-        </div>
-        <!-- <div class="your-prompt">
-          <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
-            Details:
-          </div>
-          <div
-            class="case-details bg-off-white"
-            *ngIf="act.case_study_details"
-            innerHTML="{{ act.case_study_details }}"
-          ></div>
-        </div> -->
-        <div *ngFor="let question of questions" style="text-align: left;">
-          <div class="question-container">
-            <div
-              class="question"
-              *ngIf="question.question_text"
-              innerHTML="{{ question.question_text }}"
-            ></div>
-            <div class="your-notes">
-              <div class="draft-pitch">
-                <ng-container >
-                  <benji-case-study-workarea
-                    [activityState]="activityState"
-                    [actEditor]="actEditor"
-                    [questionId]="question.id"
-                    [defaultEditorContent]="question.default_editor_content"
-                    [activityId]="activityId"
-                    [jsonDoc]="jsonDoc"
-                    [lessonRunCode]="lessonRunCode" 
-                    [participantCode]="participantCode"  
-                    [documentId]="documentId"
-                    [allowVideo]="false"
-                    [editorDisabled]="editorDisabled"
-                    (questionAnswerUpdated)="questionAnswerUpdated($event)"
-                    (sendMessage)="propagate($event)"
-                  ></benji-case-study-workarea>
-                </ng-container>
+        {{group.name}}
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column" class="" fxFlex="100%">
+    <div class="b-flat-card center-text feedback-card">
+      <div class="activity-wrapper">
+        <div class="b-flat-card__body">
+          <benji-case-study-grouping-container
+            *ngIf="!actEditor"
+            [activityState]="activityState"
+            (sendMessage)="propagate($event)"
+            [participantCode]="participantCode"
+          >
+          </benji-case-study-grouping-container>
+          
+          <div class="content" fxLayout="column">
+            <div class="twemoji-container participant-new-emoji" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
+              <app-b-twemoji class="body-emoji participant" [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
+            </div>
+            <div class="worksheet-title">
+              {{ worksheetTitle }}
+            </div>
+            <div 
+              class="worksheet-text" 
+              *ngIf="act.case_study_details" 
+              innerHTML="{{ act.case_study_details }}">
+            </div>
+            <div class="worksheet-timer" *ngIf="timer">
+              <benji-participant-timer
+                [timer]="timer"
+                [endAudio]="'bell.wav'"
+                [timerOffset]="avgServerTimeOffset"
+              ></benji-participant-timer>
+            </div>
+            <div *ngFor="let question of questions" style="text-align: left;">
+              <div class="question-container">
+                <div
+                  class="question"
+                  *ngIf="question.question_text"
+                  innerHTML="{{ question.question_text }}"
+                ></div>
+                <div class="your-notes">
+                  <div class="draft-pitch">
+                    <ng-container >
+                      <benji-case-study-workarea
+                        [activityState]="activityState"
+                        [actEditor]="actEditor"
+                        [questionId]="question.id"
+                        [defaultEditorContent]="question.default_editor_content"
+                        [activityId]="activityId"
+                        [jsonDoc]="jsonDoc"
+                        [lessonRunCode]="lessonRunCode" 
+                        [participantCode]="participantCode"  
+                        [documentId]="documentId"
+                        [allowVideo]="false"
+                        [editorDisabled]="editorDisabled"
+                        (questionAnswerUpdated)="questionAnswerUpdated($event)"
+                        (sendMessage)="propagate($event)"
+                      ></benji-case-study-workarea>
+                    </ng-container>
+                  </div>
+                </div>
               </div>
+            </div>
+            <div class="button-container" fxLayoutAlign="end end">
+              <button  
+                class="b-small-squared-button bg-primary-color white-color"
+                (click)="saveEditCollab()">
+                Done
+              </button>
             </div>
           </div>
         </div>
-        <!-- <div class="button-container" fxLayoutAlign="end end">
-          <button  
-            class="b-small-squared-button worksheet-button bg-primary-color white-color"
-            (click)="saveEditCollab()">
-            Done
-          </button>
-        </div> -->
       </div>
     </div>
   </div>
 </div>
+
+
+
 
 

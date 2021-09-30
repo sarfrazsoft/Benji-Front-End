@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -18,7 +19,6 @@ import {
   Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-
 @Component({
   selector: 'benji-ps-case-study-activity',
   templateUrl: './case-study-activity.component.html',
@@ -45,6 +45,7 @@ export class ParticipantCaseStudyActivityComponent
   editorDisabled = false;
   worksheetTitle = '';
 
+  groups = [];
   // unique ID for the group
   groupId: string;
   // unique ID for document to be used in collaborative editor
@@ -73,6 +74,14 @@ export class ParticipantCaseStudyActivityComponent
     this.populateQuestions();
 
     this.timer = this.getTimerTool();
+    this.loadGroups();
+  }
+
+  loadGroups() {
+    for (let i = 0; i < this.act.groups.length; i++) {
+      const group = this.act.groups[i];
+        this.groups.push({name: group.title});
+    }
   }
 
   populateQuestions() {
