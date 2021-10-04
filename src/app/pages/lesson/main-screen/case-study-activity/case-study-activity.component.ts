@@ -1,9 +1,10 @@
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnChanges, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContextService } from 'src/app/services';
 import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study-checkin/case-study-checkin.dialog';
+import { ParticipantCaseStudyActivityComponent } from '../../participant/case-study-activity/case-study-activity.component';
 
 @Component({
   selector: 'benji-ms-case-study-activity',
@@ -12,6 +13,11 @@ import { CaseStudyCheckinDialogComponent } from '../../shared/dialogs/case-study
 export class MainScreenCaseStudyActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
+  
+  @ViewChild('caseStudyEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
+  component: any;
+  currentGroupName: any;
+
   groups: Array<Group>;
   act: CaseStudyActivity;
   newLayout = true;
@@ -81,7 +87,10 @@ export class MainScreenCaseStudyActivityComponent
       ],
     },
   ];
-  constructor(private dialog: MatDialog, private contextService: ContextService) {
+  constructor(
+    private dialog: MatDialog, 
+    private contextService: ContextService,
+    private cfr: ComponentFactoryResolver) {
     super();
   }
 
@@ -91,6 +100,10 @@ export class MainScreenCaseStudyActivityComponent
     this.groupsX = this.formGroups(this.activityState.casestudyactivity);
     // console.log(this.act)
     // this.contextService.activityTimer = this.activityState.casestudyactivity.activity_countdown_timer;
+    const b = this.cfr.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
+    this.component = this.entry.createComponent(b);
+    this.component.instance.activityState = this.activityState;
+    this.component.instance.currentGroup = this.currentGroupName;
   }
 
   formGroups(act: CaseStudyActivity): any {
@@ -186,4 +199,16 @@ export class MainScreenCaseStudyActivityComponent
   addLearners() {}
 
   ngOnDestroy() {}
+
+  selectGroup(name) {
+    //console.log(name);
+    this.currentGroupName = name;
+    this.update();
+  }
+
+  update() {
+    this.component.instance.currentGroup = this.currentGroupName;
+    //this.component.instance.update();
+  }
+
 }
