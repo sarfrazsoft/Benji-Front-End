@@ -278,18 +278,14 @@ button {
   border-radius: 9px;
   margin: 0px auto;
   margin-bottom: 8px;
-  &:nth-last-child(2) {
-    margin-bottom: 16px;
-  }
   .voting-idea-button {
-    background-color: #fff;
     color: #727272;
     border-radius: 8px;
     width: 100%;
     padding: 16px 32px;
     font-size: 18px;
     font-weight: 500;
-    line-height: 24px;
+    text-align: left;
     cursor: pointer;
     &.madlibs-button {
       color: #37352f;
@@ -305,11 +301,18 @@ button {
     &:hover {
       background: rgba(255, 255, 255, 0.92);
     }
-    &.inactive {
-      color: #a0a0a0;
-      background: #e0e0e0;
+    &.inactive.selected {
+      color: #fff;
+      background: #999df2;
       opacity: 1;
       cursor: default;
+      border: none;
+    }
+  }
+  .voting-submit {
+    &.submit-inactive {
+      color: #fff;
+      background: #999df2 !important;
     }
   }
 }

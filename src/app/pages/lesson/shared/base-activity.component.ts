@@ -93,4 +93,8 @@ export abstract class BaseActivityComponent implements OnInit {
       return sm.running_tools.timer_tool;
     }
   }
+
+  sendSocketMessage($event) {
+    this.sendMessage.emit($event);
+  }
 }

@@ -1,5 +1,15 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  expandRightOnEnterAnimation,
+  fadeInOnEnterAnimation,
+  fadeInRightOnEnterAnimation,
+  fadeInUpOnEnterAnimation,
+  fadeOutOnLeaveAnimation,
+  slideInRightOnEnterAnimation,
+  slideInUpOnEnterAnimation,
+  slideOutRightOnLeaveAnimation,
+} from 'angular-animations';
 import { uniqBy } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
@@ -29,15 +39,25 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
   selector: 'benji-ms-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
   styleUrls: ['./brainstorming-activity.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ duration: 200 }),
+    fadeInUpOnEnterAnimation({ duration: 1000, delay: 0, translate: '300px' }),
+    fadeOutOnLeaveAnimation({ duration: 200 }),
+    slideInRightOnEnterAnimation({ duration: 100, translate: '600px' }),
+    slideOutRightOnLeaveAnimation(),
+    fadeInRightOnEnterAnimation(),
+    slideInUpOnEnterAnimation(),
+    expandRightOnEnterAnimation(),
+  ],
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+  implements OnInit, OnChanges, OnDestroy {
   @Input() peakBackState = false;
   @Input() editor = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
+  showParticipantUI = false;
   private eventsSubscription: Subscription;
 
   constructor(
@@ -301,5 +321,20 @@ export class MainScreenBrainstormingActivityComponent
 
   deleteIdea(id) {
     this.sendMessage.emit(new BrainstormRemoveSubmissionEvent(id));
+  }
+
+  sendSocketMessage($event) {
+    this.sendMessage.emit($event);
+  }
+
+  viewImage(imageUrl: string) {
+    this.dialogRef = this.dialog
+      .open(ImageViewDialogComponent, {
+        data: { imageUrl: imageUrl },
+        disableClose: false,
+        panelClass: 'image-view-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {});
   }
 }

@@ -15,12 +15,9 @@
       ></benji-participant-timer>
     </div>
     <div class="b-flat-card__action" >
-      <div  fxLayout="row wrap"
-        fxLayoutAlign="space-between"
-        fxLayoutAlign.md="center center">
+      <div  fxLayout="column">
         <div 
           *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-          fxFlex="48%"
           class="mcq-button-container bg-primary-color">
           <button
             class="unselected selected-primary-border-only voting-idea-button"
@@ -34,20 +31,72 @@
           </button>
         </div>
       </div>
-      <!-- <div class="mcq-button-container">
+      <div class="mcq-button-container">
         <button 
-          class="white-color bg-primary-color center-text voting-submit"
+          class="white-color center-text voting-submit"
           (click)="submitAnswer()"
+          [ngClass]="{
+            'submit-inactive': answerSubmitted,
+            'bg-primary-color': !answerSubmitted
+          }"
           [disabled]="answerSubmitted ? 'disabled': null" >
-          Submit
+           {{ answerSubmitted ? 'Submitted' : 'Submit' }}
         </button>
-      </div> -->
+      </div>
     </div>
   </ng-container>
 
   <!-- show result -->
   <ng-container *ngIf="showQuestionsAnswer">
-    <div class="b-flat-card__body center-text">
+    <div class="b-flat-card__body">
+      <h3 class="pn-600 primary-color-darkest">
+        {{ activityState.mcqactivity.question.question }}
+      </h3>
+    </div>
+    <div class="b-flat-card__action" >
+      <div  fxLayout="column" fxLayout="column" fxLayoutGap="16px">
+        <div 
+          *ngFor="let choice of activityState.mcqactivity.question.mcqchoice_set; let i = index"
+          class="mcq-button-container bg-primary-color">
+          <div
+          class="options"
+          fxFlex="100%"
+          [ngClass]="{
+            'correct-choice': choice.is_correct,
+            'correct-selected-choice': choice.responsePercent > 0 ? true : false
+          }"
+        >
+          <div class="option">
+            <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+              <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
+                <div class="text">{{ choice.text }}</div>
+              </div>
+              <div class="percentage" fxLayoutAlign="end center">
+                <div class="number">
+                  {{ choice.noOfResponses }}
+                </div>
+              </div>
+            </div>
+            <div
+              id="progressbar"
+              [ngClass]="{ 'correct-choice': choice.is_correct }"
+            >
+              <div
+                class="bg-primary-color-light"
+                [style.width.%]="choice.responsePercent"
+                [ngClass]="{
+                  'correct-choice': choice.is_correct,
+                  'correct-selected-choice':
+                    choice.responsePercent > 0 ? true : false
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="b-flat-card__body center-text">
       <div class="twemoji">
         <app-b-twemoji
           *ngIf="answersResults() === 'allCorrect'"
@@ -88,6 +137,19 @@
           {{ option.choice_text }}
         </button>
       </ng-container>
-    </div>
+    </div> -->
   </ng-container>
 </div>
+
+
+
+
+
+
+
+<!-- 
+<div class="options-container" fxLayout="column" fxLayoutGap="8px">
+  <div *ngFor="let choice of question.choices; let i = index">
+
+  </div>
+</div> -->

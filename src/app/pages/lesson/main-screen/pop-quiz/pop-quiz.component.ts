@@ -3,7 +3,7 @@ import { filter, find, findIndex, remove } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
 import { ContextService } from 'src/app/services';
-import { LeaderBoard, MCQChoiceSet, ParticipantRanks } from 'src/app/services/backend/schema';
+import { LeaderBoard, MCQActivity, MCQChoiceSet, ParticipantRanks } from 'src/app/services/backend/schema';
 import { MCQChoice, MCQSubmitAnswerEvent, Timer } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -13,13 +13,13 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenPopQuizComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+  implements OnInit, OnChanges, OnDestroy {
   questionTimerStarted = false;
   showResults = false;
   showQuestion = false;
   showQuestionsAnswer = false;
   answerSubmitted = false;
+  answeredChoices = [];
 
   @Input() editor = false;
 
@@ -91,11 +91,27 @@ export class MainScreenPopQuizComponent
     ) {
       this.questionTimerStarted = false;
       this.showQuestion = false;
+      this.populateResponsePercents(as.mcqactivity);
       this.showQuestionsAnswer = true;
       this.answerSubmitted = false;
     } else if (as.mcqresultsactivity) {
       this.showResults = true;
     }
+  }
+
+  populateResponsePercents(act: MCQActivity) {
+    const choice_answers = [
+      { choice_id: 3, selections: 4 },
+      { choice_id: 1, selections: 2 },
+    ];
+    console.log(act);
+    this.answeredChoices = [];
+    let totalSelections = 0;
+    act.question.mcqchoice_set.forEach((choice) => {
+      const selections = choice_answers.filter((v) => v.choice_id === choice.id)[0].selections;
+      totalSelections = selections + totalSelections;
+      this.answeredChoices.push({ ...choice, noOfResponses: selections });
+    });
   }
 
   ngOnChanges() {
@@ -111,10 +127,10 @@ export class MainScreenPopQuizComponent
       if (multiSelect) {
         const alreadyPresent = find(this.selectedChoices, (choice) => choice.id === option.id);
         if (alreadyPresent) {
-          // remove(this.selectedChoices, (choice) => choice.id === option.id);
+          remove(this.selectedChoices, (choice) => choice.id === option.id);
         } else {
           this.selectedChoices.push(option);
-          this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
+          // this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
         }
       } else {
         if (this.selectedChoices.length) {
@@ -122,7 +138,7 @@ export class MainScreenPopQuizComponent
         } else {
           this.selectedChoices.push(option);
         }
-        this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
+        // this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
       }
       // localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
     }

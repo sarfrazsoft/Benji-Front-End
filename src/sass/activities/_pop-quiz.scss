@@ -2,11 +2,11 @@ benji-ms-poll,
 benji-ms-pop-quiz {
   .mcq-card {
     .mcq-button-container {
-      height: 160px;
+      height: 56px;
       button {
-        font-size: 32px;
+        font-size: 18px;
         font-weight: 500;
-        height: 160px;
+        height: 56px;
       }
     }
   }
@@ -65,18 +65,21 @@ benji-ps-build-pitch-activity {
 }
 
 .mcq-card {
-  padding: 32px 24px;
-  max-width: 960px;
   margin: 0px auto;
+  margin-top: 80px;
+  padding: 24px;
+  padding-bottom: 32px;
+  max-width: 640px;
+  background-color: #fff;
+  border-radius: 16px;
   h3 {
-    font-size: 40px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 500;
     margin-bottom: 16px;
-    padding-top: 16px;
   }
   .multi-correct {
-    margin-bottom: 16px;
-    font-size: 18px;
+    margin-bottom: 8px;
+    font-size: 16px;
   }
   .twemoji {
     img {
