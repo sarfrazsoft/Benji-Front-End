@@ -245,9 +245,15 @@ benji-ps-case-study-activity {
   }
   .feedback-card {
     max-height: calc(100vh - 120px);
+    height: 100vh;
   }
   .groups-list {
     max-height: calc(100vh - 142px);
+    height: 100vh;
     padding: 16px;
+    .group-container {
+      cursor: pointer;
+      margin-bottom: 11px;
+    }
   }
 }

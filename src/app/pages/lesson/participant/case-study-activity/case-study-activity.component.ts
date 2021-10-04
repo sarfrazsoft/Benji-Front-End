@@ -44,8 +44,6 @@ export class ParticipantCaseStudyActivityComponent
   showSharingUI = false;
   editorDisabled = false;
   worksheetTitle = '';
-
-  groups = [];
   // unique ID for the group
   groupId: string;
   // unique ID for document to be used in collaborative editor
@@ -60,6 +58,7 @@ export class ParticipantCaseStudyActivityComponent
   saved;
   answeredWorksheets;
   answeredWorksheetTexts;
+  currentGroup;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -74,15 +73,8 @@ export class ParticipantCaseStudyActivityComponent
     this.populateQuestions();
 
     this.timer = this.getTimerTool();
-    this.loadGroups();
   }
 
-  loadGroups() {
-    for (let i = 0; i < this.act.groups.length; i++) {
-      const group = this.act.groups[i];
-        this.groups.push({name: group.title});
-    }
-  }
 
   populateQuestions() {
     const questionsTemp = this.act.casestudyquestion_set;
