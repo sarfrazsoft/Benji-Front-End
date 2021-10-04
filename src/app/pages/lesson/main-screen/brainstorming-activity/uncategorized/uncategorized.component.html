@@ -1,0 +1,37 @@
+<div class="submitted-ideas" *ngIf="submissionScreen || voteScreen">
+  <ul>
+    <li
+      *ngFor="let idea of ideas"
+      (mouseenter)="idea.showClose = true"
+      (mouseleave)="idea.showClose = false"
+      cdkDrag
+    >
+      <div class="idea">
+        <mat-icon
+          [style.opacity]="idea.showClose ? 1 : 0"
+          (click)="deleteIdea(idea.id)"
+        >
+          clear
+        </mat-icon>
+        <div
+          class="brainstorm-image"
+          *ngIf="idea.idea_image"
+          (click)="viewImage(hostname + idea.idea_image.img)"
+        >
+          <ng-container *ngIf="isAbsolutePath(idea.idea_image.img); else uploadedImage">
+            <img [src]="idea.idea_image.img" alt="" />
+          </ng-container>
+
+          <ng-template #uploadedImage>
+            <img [src]="hostname + idea.idea_image.img" alt="" />
+          </ng-template>
+        </div>
+        {{ idea.idea }}
+        <div class="username" *ngIf="showUserName">{{ getPersonName(item) }}</div>
+        <div class="votes primary-color" *ngIf="voteScreen">
+          {{ idea.num_votes }}
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
