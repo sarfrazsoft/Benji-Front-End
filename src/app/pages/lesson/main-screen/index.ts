@@ -10,6 +10,7 @@ import { MainScreenExternalGroupingActivityComponent } from './external-grouping
 import { MainScreenGatherActivityComponent } from './gather-activity/gather-activity.component';
 import { MainScreenGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { MainScreenGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
+import { MainScreenGoogleSlidesActivityComponent } from './google-slides-activity/google-slides.component';
 import { MainScreenHintActivityComponent } from './hint-activity/hint-activity.component';
 import { MainScreenImageActivityComponent } from './image-activity/image-activity.component';
 import { MainScreenLobbyComponent } from './lobby-activity/lobby.component';
@@ -61,6 +62,7 @@ export const MainScreenComponents = [
   MainScreenGenericRoleplayActivityComponent,
   MainScreenExternalGroupingActivityComponent,
   MainScreenVideoActivityComponent,
+  MainScreenGoogleSlidesActivityComponent,
   MainScreenGatherActivityComponent,
   MainScreenImageActivityComponent,
 ];

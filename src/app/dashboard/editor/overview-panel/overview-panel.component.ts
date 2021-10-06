@@ -1,12 +1,15 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from 'src/app/shared';
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
+import { of } from 'rxjs/observable/of';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
+import { ConfirmationDialogComponent } from 'src/app/shared';
+import { EditorService } from '../services/editor.service';
 import * as fromStore from '../store';
 
 @Component({
@@ -26,7 +29,11 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   slideToBeCopied: OverviewLessonActivity;
   dialogRef;
 
-  constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
+  constructor(
+    private store: Store<fromStore.EditorState>,
+    private matDialog: MatDialog,
+    private editorService: EditorService
+  ) {}
 
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
@@ -108,5 +115,22 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     this.slideToBeCopied = activity;
     // this.store.dispatch(new fromStore.AddEmptyLessonActivity());
     this.store.dispatch(new fromStore.AddEmptyLessonActivityAtIndex(activity.order));
+  }
+
+  uploadFile($event) {
+    console.log($event.target.files[0]); // outputs the first file
+    const file = $event.target.files[0];
+    if (file) {
+      this.editorService
+        .uploadFile(file)
+        .pipe(
+          map((res) => res),
+          catchError((error) => error)
+        )
+        .subscribe((res) => {
+          console.log(res);
+        });
+    }
+    const url = '';
   }
 }

@@ -35,6 +35,7 @@ export enum ActivityTypes {
   genericRoleplay = 'GenericRoleplayActivity',
   triadGrouping = 'TriadGroupingActivity',
   poll = 'PollActivity',
+  slides = 'GoogleSlidesActivity',
 }
 
 export const ActivityTitles = {

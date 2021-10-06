@@ -31,4 +31,8 @@ export class EditorService {
   updateLesson(lesson: Lesson, id): Observable<any[]> {
     return this.httpClient.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
   }
+
+  uploadFile(file: File): Observable<any[]> {
+    return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', file);
+  }
 }

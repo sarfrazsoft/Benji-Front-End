@@ -114,6 +114,15 @@
       >
       </benji-ms-activity-video>
 
+      <!-- *ngIf="getActivityType() === at.slides" -->
+      <!-- <benji-ms-google-slides
+        *ngIf="getActivityType() === at.video"
+        [activityState]="serverMessage"
+        [avgServerTimeOffset]="avgServerTimeOffset"
+        (sendMessage)="sendSocketMessage($event)"
+      >
+      </benji-ms-google-slides> -->
+
       <benji-ms-pair-grouping-activity
         *ngIf="getActivityType() === at.pairGrouping"
         [activityState]="serverMessage"

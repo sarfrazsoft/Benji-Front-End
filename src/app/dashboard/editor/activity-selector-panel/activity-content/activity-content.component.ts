@@ -335,6 +335,18 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                   mappedField.defaultValue = true;
                 }
+              } else if (act.activity_type === this.at.slides) {
+                // else if (act.activity_type === this.at.video) {
+                if (mapSource.internal_type === 'VideoActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'google_slides_url') {
+                  delete mappedField.templateOptions.maxLength;
+                  mappedField.templateOptions['helpText'] = 'Add google slides url';
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
+                }
               } else if (act.activity_type === this.at.video) {
                 if (mapSource.internal_type === 'VideoActivitySerializer') {
                   mappedField.templateOptions.label = '';
