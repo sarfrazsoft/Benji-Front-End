@@ -61,6 +61,7 @@ export interface MCQActivity extends ParentActivity {
   question_seconds: number;
   question_timer: Timer;
   answered_participants: Array<ParticipantCode>;
+  choice_answers: Array<{ choice_id: number; selections: number }>;
   all_participant_answered: boolean;
   titlecomponent: TitleComponent;
   quiz_leaderboard: Array<LeaderBoard>;

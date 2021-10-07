@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { filter, find, findIndex, remove } from 'lodash';
+import { filter, find, findIndex, noop, remove } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
 import { ContextService } from 'src/app/services';
@@ -24,6 +24,7 @@ export class MainScreenPopQuizComponent
   @Input() editor = false;
 
   selectedChoices: Array<MCQChoice> = [];
+  totalSelections = 0;
   //  {
   //   id: null,
   //   is_correct: null,
@@ -100,17 +101,29 @@ export class MainScreenPopQuizComponent
   }
 
   populateResponsePercents(act: MCQActivity) {
-    const choice_answers = [
-      { choice_id: 3, selections: 4 },
-      { choice_id: 1, selections: 2 },
-    ];
-    console.log(act);
+    const choice_answers = act.choice_answers;
     this.answeredChoices = [];
-    let totalSelections = 0;
+    this.totalSelections = 0;
+    choice_answers.forEach((answer) => {
+      this.totalSelections = this.totalSelections + answer.selections;
+    });
     act.question.mcqchoice_set.forEach((choice) => {
-      const selections = choice_answers.filter((v) => v.choice_id === choice.id)[0].selections;
-      totalSelections = selections + totalSelections;
-      this.answeredChoices.push({ ...choice, noOfResponses: selections });
+      const selections = choice_answers.filter((v) => v.choice_id === choice.id);
+      let noOfSelections = 0;
+      if (selections.length) {
+        noOfSelections = selections[0].selections;
+      }
+
+      const responsePercent = this.totalSelections
+        ? Math.round((noOfSelections / this.totalSelections) * 100)
+        : 0;
+
+      this.answeredChoices.push({
+        ...choice,
+        text: choice.choice_text,
+        noOfResponses: noOfSelections,
+        responsePercent: responsePercent,
+      });
     });
   }
 
@@ -145,9 +158,11 @@ export class MainScreenPopQuizComponent
   }
 
   submitAnswer() {
+    console.log('hurs');
     if (this.selectedChoices.length) {
       this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
       this.answerSubmitted = true;
+      console.log('hurr');
     }
   }
 

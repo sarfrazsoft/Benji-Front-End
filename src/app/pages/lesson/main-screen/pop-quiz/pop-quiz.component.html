@@ -53,46 +53,48 @@
         {{ activityState.mcqactivity.question.question }}
       </h3>
     </div>
-    <div class="b-flat-card__action" >
-      <div  fxLayout="column" fxLayout="column" fxLayoutGap="16px">
-        <div 
-          *ngFor="let choice of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-          class="mcq-button-container bg-primary-color">
-          <div
-          class="options"
-          fxFlex="100%"
-          [ngClass]="{
-            'correct-choice': choice.is_correct,
-            'correct-selected-choice': choice.responsePercent > 0 ? true : false
-          }"
-        >
-          <div class="option">
-            <div class="info" fxLayout="row" fxLayoutAlign="space-between">
-              <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
-                <div class="text">{{ choice.text }}</div>
-              </div>
-              <div class="percentage" fxLayoutAlign="end center">
-                <div class="number">
-                  {{ choice.noOfResponses }}
+    <div class="b-flat-card__action pop-quiz-results" >
+      <div class="content" fxLayout="column" fxLayout="column" fxLayoutGap="16px">
+        <div class="options-container">
+          <div 
+            *ngFor="let choice of answeredChoices; let i = index"
+            class="mcq-button-container">
+            <div
+              class="options"
+              fxFlex="100%"
+              [ngClass]="{
+                'correct-choice': choice.is_correct,
+                'incorrect-choice' : !choice.is_correct,
+                'selected-choice': choice.responsePercent > 0 ? true : false
+              }">
+            <div class="option">
+              <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+                <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
+                  <div class="text">{{ choice.text }}</div>
+                </div>
+                <div class="percentage" fxLayoutAlign="end center">
+                  <div class="number">
+                    {{ choice.noOfResponses }} / {{ totalSelections }}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              id="progressbar"
-              [ngClass]="{ 'correct-choice': choice.is_correct }"
-            >
               <div
-                class="bg-primary-color-light"
-                [style.width.%]="choice.responsePercent"
-                [ngClass]="{
-                  'correct-choice': choice.is_correct,
-                  'correct-selected-choice':
-                    choice.responsePercent > 0 ? true : false
-                }"
-              ></div>
+                id="progressbar"
+                [ngClass]="{ 'correct-choice': choice.is_correct }"
+              >
+                <div
+                  class=""
+                  [style.width.%]="choice.responsePercent"
+                  [ngClass]="{
+                    'correct-choice': choice.is_correct,
+                    'correct-selected-choice':
+                      choice.responsePercent > 0 ? true : false
+                  }"
+                ></div>
+              </div>
             </div>
           </div>
-        </div>
+          </div>
         </div>
       </div>
     </div>
