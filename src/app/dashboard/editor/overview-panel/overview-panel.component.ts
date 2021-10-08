@@ -20,6 +20,7 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   lessonActivities$: Observable<OverviewLessonActivity[]>;
   lessonActivitiesSubscription$: Subscription;
   lessonActivitiesLength;
+  @Input() lessonId;
 
   lessonActivitiesErrors$: Observable<any>;
   lessonActivitiesErrors;
@@ -122,7 +123,7 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     const file = $event.target.files[0];
     if (file) {
       this.editorService
-        .uploadFile(file)
+        .uploadFile(file, this.lessonId)
         .pipe(
           map((res) => res),
           catchError((error) => error)
