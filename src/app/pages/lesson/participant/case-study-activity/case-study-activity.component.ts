@@ -27,6 +27,7 @@ export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @Input() actEditor = false;
+  @Input() currentGroupID;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;

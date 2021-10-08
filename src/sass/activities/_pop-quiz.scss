@@ -66,6 +66,7 @@ benji-ps-build-pitch-activity {
 
 .mcq-card {
   margin: 0px auto;
+  position: relative;
   margin-top: 80px;
   padding: 24px;
   padding-bottom: 32px;
@@ -157,5 +158,30 @@ benji-ps-build-pitch-activity {
         }
       }
     }
+  }
+}
+
+.mcq-leaderboard {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 16px;
+  width: 272px;
+  position: absolute;
+  top: 0px;
+  right: -332px;
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 22px;
+  }
+  .name{
+    color: #616161;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .score{
+    color: #068E67;
+    font-size: 24px;
+    font-weight: 600;
   }
 }
