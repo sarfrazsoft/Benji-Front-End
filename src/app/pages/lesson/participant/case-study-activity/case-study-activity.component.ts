@@ -75,11 +75,10 @@ export class ParticipantCaseStudyActivityComponent
     this.timer = this.getTimerTool();
   }
 
-
   populateQuestions() {
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
-    let arrayForSort = [...questionsTemp]
+    const arrayForSort = [...questionsTemp];
     const sortedQuestions = arrayForSort.sort((a, b) => a.order - b.order);
     sortedQuestions.forEach((q, i) => {
       this.questions.push({ ...q, answer: '' });
@@ -222,7 +221,6 @@ export class ParticipantCaseStudyActivityComponent
   locallySaveDraft(event) {}
 
   saveEditCollab() {
-    // console.log(localStorage.getItem('collabedit'));
     // const json = JSON.parse(localStorage.getItem('collabeditJSONDoc' + '_' + this.questionId));
     this.sendMessage.emit(
       new CaseStudySubmitAnswerEvent(this.answeredWorksheets, this.answeredWorksheetTexts)
@@ -247,6 +245,8 @@ export class ParticipantCaseStudyActivityComponent
       textObj[key] = text;
     });
     this.answeredWorksheetTexts = textObj;
+    this.typingStarted();
+    this.typingStoped();
   }
 
   getTextForJson(json) {
@@ -259,5 +259,18 @@ export class ParticipantCaseStudyActivityComponent
       return json.text;
     }
     return text;
+  }
+
+  // on keyup, start the countdown
+  typingStoped() {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.saveEditCollab();
+    }, 3000);
+  }
+
+  // on keydown, clear the countdown
+  typingStarted() {
+    clearTimeout(this.typingTimer);
   }
 }
