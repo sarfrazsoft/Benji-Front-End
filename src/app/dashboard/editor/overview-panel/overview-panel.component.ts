@@ -8,6 +8,7 @@ import { forkJoin, Observable, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import * as fromStore from '../store';
+import { ImportSlidesDialogComponent } from 'src/app/shared/dialogs/import-slides-dialog/import-slides.dialog';
 
 @Component({
   selector: 'benji-overview-panel',
@@ -26,7 +27,11 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   slideToBeCopied: OverviewLessonActivity;
   dialogRef;
 
-  constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
+  constructor(
+    private store: Store<fromStore.EditorState>, 
+    private matDialog: MatDialog,
+    private importDialog: MatDialog
+    ) {}
 
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
@@ -108,5 +113,20 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     this.slideToBeCopied = activity;
     // this.store.dispatch(new fromStore.AddEmptyLessonActivity());
     this.store.dispatch(new fromStore.AddEmptyLessonActivityAtIndex(activity.order));
+  }
+
+  openImportDialog() {
+    const dialogRef = this.importDialog.open(ImportSlidesDialogComponent, {
+      width: '621px',
+      panelClass: 'import-slides',
+      data: {
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Use Template') {
+      }
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

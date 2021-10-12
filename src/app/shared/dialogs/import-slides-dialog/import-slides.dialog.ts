@@ -2,21 +2,17 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'idea-creation-dialog',
-  templateUrl: 'idea-creation.dialog.html',
+  selector: 'import-slides-dialog',
+  templateUrl: 'import-slides.dialog.html',
 })
-export class IdeaCreationDialogComponent {
+export class ImportSlidesDialogComponent {
   constructor (
-    private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
+    private dialogRef: MatDialogRef<ImportSlidesDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: {img: string, description: string, name: string}) { 
     console.log(data)
   }
   
   onSubmit() {
     this.dialogRef.close("Use Template");
-  }
-
-  closeDialog() {
-    this.dialogRef.close();
   }
 }
