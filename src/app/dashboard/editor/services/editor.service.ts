@@ -38,7 +38,8 @@ export class EditorService {
     //   lesson_id: lessonId,
     // });
     const formData: FormData = new FormData();
-    formData.append('file', file);
+    formData.append('document', file);
+    formData.append('lesson_id', lessonId);
     // const headers = new HttpHeaders();
     // headers.set('Content-Type', null);
     // headers.set('Accept', 'multipart/form-data');
@@ -46,9 +47,6 @@ export class EditorService {
     params.append('lesson_id', lessonId);
     // this.httpClient
     //                 .post(url, formData, { params, headers });
-    return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData, {
-      params,
-      // headers,
-    });
+    return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData);
   }
 }
