@@ -33,20 +33,9 @@ export class EditorService {
   }
 
   uploadFile(file: File, lessonId): Observable<any[]> {
-    // return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', {
-    //   file: file,
-    //   lesson_id: lessonId,
-    // });
     const formData: FormData = new FormData();
     formData.append('document', file);
     formData.append('lesson_id', lessonId);
-    // const headers = new HttpHeaders();
-    // headers.set('Content-Type', null);
-    // headers.set('Accept', 'multipart/form-data');
-    const params = new HttpParams();
-    params.append('lesson_id', lessonId);
-    // this.httpClient
-    //                 .post(url, formData, { params, headers });
     return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData);
   }
 }
