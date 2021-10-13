@@ -13,7 +13,7 @@ import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-
 })
 export class LayoutImagePickerTypeComponent extends FieldType implements OnInit, OnChanges {
   imagesList: FileList;
-  imageSrc;
+  imageSrc = null;
   imageDialogRef;
   selectedImageUrl;
   imgSrc;
@@ -32,14 +32,27 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
-    this.imgSrc = '/assets/img/slideImageUploadIcon.svg';
-    this.imgUploaded = false;
+    if(this.formControl.value) {
+      this.imgUploaded = true;
+      let imgUrl = this.formControl.value;
+      if (imgUrl.search('mybenji') !== -1) {
+        this.imageSrc = imgUrl;
+        this.selectedImageUrl = null;
+      } else {
+        this.selectedImageUrl = imgUrl;
+        this.imgSrc = null;
+      }
+    } else {
+      this.imgSrc = '/assets/img/slideImageUploadIcon.svg';
+      this.imgUploaded = false;
+    }
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.lessonId = paramMap.get('lessonId');
     });
   }
 
   removeImage() {
+    console.log(this.imageSrc);
     if(this.imageSrc !== null) {
       const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/delete/png/image/';
       const headers = new HttpHeaders();
@@ -104,7 +117,7 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
                     .subscribe(
                       (data) => {
                         this.imgUploaded = true;
-                        this.selectedImageUrl = null;
+                        //this.selectedImageUrl = null;
                       },
                       (error) => console.log(error)
                     );

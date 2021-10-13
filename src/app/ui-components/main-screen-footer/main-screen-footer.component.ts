@@ -41,6 +41,8 @@ import {
 } from '../../services/backend/schema/messages';
 import { VideoStateService } from '../../services/video-state.service';
 
+import { NgxPermissionsService } from 'ngx-permissions';
+
 @Component({
   selector: 'benji-main-screen-footer',
   templateUrl: './main-screen-footer.component.html',
@@ -217,7 +219,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   endSession() {
     if (this.activityState && this.activityState.lesson_run) {
       const host = this.activityState.lesson_run.host;
-      const benjiUser = JSON.parse(localStorage.getItem('benji_user'));
+      const benjiUser = JSON.parse(localStorage.getItem('benji_facilitator'));
       if (host.id === benjiUser.id) {
         this.router.navigate(['/dashboard']);
       } else {

@@ -9,6 +9,7 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import { ConfirmationDialogComponent } from 'src/app/shared';
+import { ImportSlidesDialogComponent } from 'src/app/shared/dialogs/import-slides-dialog/import-slides.dialog';
 import { EditorService } from '../services/editor.service';
 import * as fromStore from '../store';
 
@@ -33,7 +34,7 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromStore.EditorState>,
     private matDialog: MatDialog,
-    private editorService: EditorService
+    private importDialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -118,20 +119,17 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromStore.AddEmptyLessonActivityAtIndex(activity.order));
   }
 
-  uploadFile($event) {
-    console.log($event.target.files[0]); // outputs the first file
-    const file = $event.target.files[0];
-    if (file) {
-      this.editorService
-        .uploadFile(file, this.lessonId)
-        .pipe(
-          map((res) => res),
-          catchError((error) => error)
-        )
-        .subscribe((res) => {
-          console.log(res);
-        });
-    }
-    const url = '';
+  openImportDialog() {
+    const dialogRef = this.importDialog.open(ImportSlidesDialogComponent, {
+      width: '621px',
+      panelClass: 'import-slides',
+      data: {},
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Use Template') {
+      }
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

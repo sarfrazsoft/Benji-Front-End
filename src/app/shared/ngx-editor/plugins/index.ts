@@ -115,7 +115,7 @@ export default getPlugins();
 
 // // Get user's name for displaying in remote cursors
 // export function getUserName() {
-//   // const u: TeamUser = JSON.parse(localStorage.getItem('benji_user'));
+//   // const u: TeamUser = JSON.parse(localStorage.getItem('benji_facilitator'));
 //   // if (u) {
 //   //   return u.first_name;
 //   // } else {

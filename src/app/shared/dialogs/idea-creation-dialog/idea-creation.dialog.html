@@ -1,0 +1,64 @@
+<div class="idea-dialog" fxLayout="row">
+  <div class="white-area">
+    <div class="white-content">
+      <div class="title">
+        Title
+      </div>
+      <textarea
+        [(ngModel)]="userIdeaText" 
+        class="description"
+        placeholder="Description..."
+        [ngClass]="{
+          'image-selected': imageSelected
+        }">
+      </textarea>
+      <div class="preview-image" *ngIf="imageSelected" fxLayoutAlign="center center">
+        <img *ngIf="imageSrc" [src]="imageSrc" alt="">
+        <img *ngIf="selectedImageUrl" [src]="selectedImageUrl" alt="">
+        <button class="remove-button" (click)="removeImage()">
+          Remove
+        </button>
+      </div>
+      <div class="attachments">
+        <img class="close" src="/assets/img/idea-creation/scenery.svg">   
+        <img class="close" src="/assets/img/idea-creation/video.svg">
+        <img class="close" (click)="openImagePickerDialog()" src="/assets/img/idea-creation/camera.svg">
+        <img class="close" src="/assets/img/idea-creation/file.svg">
+      </div>
+      <button class="post" (click)="onSubmit()">Post</button>
+    </div>
+  </div>
+  <div class="grey-area">
+    <div class="grey-content">
+      <img class="close" (click)="closeDialog()" src="/assets/img/idea-creation/close_big.svg"> 
+      <div class="menu-like menu">MENU</div>
+      <!-- <div class="option">
+        <img src="/assets/img/idea-creation/color.svg"> 
+        <span>Color</span>
+      </div>
+      <div class="option">
+        <img src="/assets/img/idea-creation/group.svg"> 
+        <span>Group</span>
+      </div> -->
+      <div class="option">
+        <div class="dropdown-controls-container" *ngIf="showCategoriesDropdown">
+          <ng-select
+            class="ps-brainstorm-dropdown-controls"
+            [items]="categories"
+            bindLabel="category_name"
+            placeholder="Categories..."
+            [(ngModel)]="selectedCategory"
+            appendTo="body"
+            [searchable]="false"
+          >
+          </ng-select>
+        </div>
+      </div>
+      <div class="menu-like like">LIKES (1)</div>
+      <div class="person">
+        <img class="dp" src="/assets/img/idea-creation/mahin.svg"> 
+        <div class="name">Mahin</div>
+      </div>
+    </div>
+  </div>
+</div>

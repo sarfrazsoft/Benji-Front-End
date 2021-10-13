@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
@@ -25,6 +26,7 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     protected socketService: BackendSocketService,
     protected ref: ChangeDetectorRef,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected contextService: ContextService,
     protected matSnackBar: MatSnackBar
   ) {
@@ -36,6 +38,7 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
       'participant',
       contextService,
       authService,
+      permissionsService,
       ref,
       matSnackBar
     );

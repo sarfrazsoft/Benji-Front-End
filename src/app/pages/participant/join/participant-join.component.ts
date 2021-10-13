@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
 import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
@@ -31,14 +32,15 @@ export class ParticipantJoinComponent implements OnInit {
     private backend: BackendRestService,
     private socket: BackendSocketService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private permissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit() {
     if (this.route.snapshot.queryParams['link']) {
-      //alert(this.route.snapshot.queryParams['link']);
+      // alert(this.route.snapshot.queryParams['link']);
       this.roomCode.setValue(this.route.snapshot.queryParams['link']);
-      //alert(this.roomCode.value);
+      // alert(this.roomCode.value);
       this.validateRoomCode();
     }
     this.username.disable();
@@ -100,12 +102,16 @@ export class ParticipantJoinComponent implements OnInit {
       return false;
     }
 
-    this.backend.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
+    this.authService.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
       (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {
-          localStorage.setItem('participant', JSON.stringify(res));
-          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+          if (localStorage.getItem('benji_facilitator')) {
+            localStorage.removeItem('benji_facilitator');
+          }
+
+          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          // this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
         } else {
           this.loginError = true;
         }

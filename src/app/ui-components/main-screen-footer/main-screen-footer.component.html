@@ -101,7 +101,7 @@
       </mat-menu>
 
       <!-- Timer control -->
-      <div class="option settings" 
+      <div *ngxPermissionsOnly="'ADMIN'" class="option settings"
         fxLayoutAlign="center center" 
         [matMenuTriggerFor]="timerMenu">
         <button

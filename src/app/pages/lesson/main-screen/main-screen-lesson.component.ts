@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivityTypes } from 'src/app/globals';
 import {
   AuthService,
@@ -26,6 +27,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     protected socketService: BackendSocketService,
     protected contextService: ContextService,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected ref: ChangeDetectorRef,
     protected matSnackBar: MatSnackBar,
     protected sharingToolService: SharingToolService,
@@ -39,6 +41,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       'screen',
       contextService,
       authService,
+      permissionsService,
       ref,
       matSnackBar
     );

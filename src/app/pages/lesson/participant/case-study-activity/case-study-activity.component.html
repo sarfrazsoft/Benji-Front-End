@@ -1,21 +1,4 @@
-<!-- <ngx-editor-menu
-  [editor]="editor"
-  [toolbar]="toolbar"
-  [customMenuRef]="customMenu"
-></ngx-editor-menu>
-<ngx-editor [editor]="editor">
-</ngx-editor>
-<ng-template #customMenu>
-  <app-custom-menu [editor]="editor"></app-custom-menu>
-</ng-template> -->
-
-
-
-
-
-
-
-<div class="b-flat-card center-text feedback-card heightAuto">
+<div class="b-flat-card center-text feedback-card">
   <div class="activity-wrapper">
     <div class="b-flat-card__body">
       <benji-case-study-grouping-container
@@ -45,16 +28,6 @@
             [timerOffset]="avgServerTimeOffset"
           ></benji-participant-timer>
         </div>
-        <!-- <div class="your-prompt">
-          <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
-            Details:
-          </div>
-          <div
-            class="case-details bg-off-white"
-            *ngIf="act.case_study_details"
-            innerHTML="{{ act.case_study_details }}"
-          ></div>
-        </div> -->
         <div *ngFor="let question of questions" style="text-align: left;">
           <div class="question-container">
             <div
@@ -85,16 +58,14 @@
             </div>
           </div>
         </div>
-        <!-- <div class="button-container" fxLayoutAlign="end end">
+        <div class="button-container" fxLayoutAlign="end end">
           <button  
-            class="b-small-squared-button worksheet-button bg-primary-color white-color"
+            class="b-small-squared-button bg-primary-color white-color"
             (click)="saveEditCollab()">
             Done
           </button>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-

@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
@@ -12,7 +13,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
-  clientType: string;
+  clientType: 'screen' | 'participant';
   disableControls: boolean;
   participantDetails: Participant;
 
@@ -28,9 +29,10 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
-    clientType: string,
+    clientType: 'screen' | 'participant',
     protected contextService: ContextService,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected ref?: ChangeDetectorRef,
     protected _snackBar?: MatSnackBar
   ) {
@@ -42,6 +44,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('participant')) {
+      this.permissionsService.loadPermissions(['PARTICIPANT']);
+      this.clientType = 'participant';
+    } else if (localStorage.getItem('benji_facilitator')) {
+      this.permissionsService.loadPermissions(['ADMIN']);
+    }
     this.initSocket();
 
     document.addEventListener('visibilitychange', () => {
@@ -99,7 +107,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         } else {
           // create a single user and store it in local storage so that we don't
           // sign in again and again
-          this.restService
+          this.authService
             .createParticipant(lessonRun.host.first_name, lessonRun.lessonrun_code)
             .subscribe((participant: Participant) => {
               if (participant) {

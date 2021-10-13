@@ -1,10 +1,14 @@
 benji-overview-panel {
   .panel {
-    .dashboard-secondary-button {
+    .dashboard-secondary-button, .import-button {
       width: 150px;
       margin: 0 auto;
       margin-top: 16px;
       min-height: 42px;
+    }
+    .import-button {
+      font-size: 18px;
+      font-weight: 500;
     }
     background-color: white;
     height: 100%;

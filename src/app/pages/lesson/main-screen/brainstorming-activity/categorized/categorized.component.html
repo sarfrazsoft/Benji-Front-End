@@ -1,0 +1,155 @@
+<div
+  class="submitted-ideas"
+  *ngIf="submissionScreen || voteScreen"
+  fxLayout="row"
+  fxLayoutGap="30px"
+  cdkDropListGroup>
+  <ng-container *ngFor="let column of act.brainstormcategory_set; let i = index">
+    <ng-container *ngIf="!column.removed">
+      <div
+        class="column"
+        cdkDropList
+        [cdkDropListData]="column.brainstormidea_set"
+        (cdkDropListDropped)="drop($event)"
+        [ngStyle]="{'min-width.px': minWidth}"
+      >
+        <div class="header" (click)="columnHeaderClicked(column)">
+          <div
+            fxLayout="row"
+            fxLayoutAlign="space-between center"
+            *ngIf="!column.editing"
+          >
+            <div class="column-name black-color" fxFlex>
+              {{ column.category_name }}
+            </div>
+            <button
+              [matMenuTriggerFor]="menu"
+              benji-click-stop-propagation
+              disableRipple
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="deleteCol(column.id)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+              <button mat-menu-item (click)="columnHeaderClicked(column)">
+                <mat-icon>create</mat-icon>
+                <span>Rename</span>
+              </button>
+            </mat-menu>
+          </div>
+          <ng-container *ngIf="column.editing">
+            <input
+              #colName
+              type="text"
+              (blur)="onColumnNameBlur(column)"
+              [(ngModel)]="column.category_name"
+            />
+          </ng-container>
+        </div>
+        <div class="ideas" [ngStyle]="{'min-width.px': minWidth}">
+          <div
+            class="brainstorm-idea add-idea-button"
+            (click)="addIdea(column)"
+          >
+          <div class="" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <mat-icon>
+              add
+            </mat-icon>
+            <div>
+              Add new card
+            </div>
+          </div>
+          </div>
+          <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
+            <textarea
+              #textInput
+              (blur)="saveNewIdea(column, textInput.value)"
+              (keyup.enter)="saveNewIdea(column, textInput.value)"
+            ></textarea>
+          </div>
+
+          <ng-container
+            *ngFor="let item of column.brainstormidea_set; let i = index"
+          >
+            <div
+              *ngIf="!item.removed"
+              class="brainstorm-idea"
+              [class.show-user] = ""
+              cdkDrag
+              (mouseenter)="item.showClose = true"
+              (mouseleave)="item.showClose = false"
+            >
+              <mat-icon
+                class="delete-icon"
+                [style.opacity]="item.showClose ? 1 : 0"
+                (click)="delete(item.id)"
+              >
+                clear
+              </mat-icon>
+              <div
+                class="brainstorm-image"
+                *ngIf="item.idea_image">
+                <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
+                  <img (click)="openImage(item.idea_image.img)" [src]="item.idea_image.img" alt="" />
+                </ng-container>
+
+                <ng-template #uploadedImage>
+                  <img (click)="openImage(hostname + item.idea_image.img)" [src]="hostname + item.idea_image.img" alt="" />
+                </ng-template>
+              </div>
+              <div class="content"> {{ item.idea }} </div>
+              <!-- <div class="username" *ngIf="showUserName">{{ getPersonName(item) }}</div>
+              <div class="votes primary-color" *ngIf="voteScreen">
+                {{ item.num_votes }}
+              </div> -->
+              <div class="feedback">
+                <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
+                  <div>
+                    <img class="heart" src="/assets/img/grey-heart.svg"> 
+                    <span>2</span>
+                  </div>
+                  <div>
+                    <img class="thought" src="/assets/img/grey-thought.svg"> 
+                    <span>5</span>
+                  </div>
+                </div>
+                <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
+                  <img class="dp" src="/assets/img/placeholder.png"> 
+                  <div fxLayout="column" fxLayoutAlign="start start">
+                    <div class="name">Mahin</div>
+                    <div class="comment">I love what you did with this response!</div>
+                  </div>
+                </div>
+                <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
+                  <img class="dp" src="/assets/img/placeholder.png"> 
+                  <div fxLayout="column" fxLayoutAlign="start start">
+                    <div class="name">Matt Parson</div>
+                    <div class="comment">Thanks Mahin!</div>
+                  </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+                  <input class="input-comment" type="text" placeholder="Add a comment">
+                  <img class="" src="/assets/img/submit-vector.svg">
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+  <div class="column">
+    <div class="header">
+      <div
+        class="add-column primary-color"
+        (click)="addColumn(act.brainstormcategory_set.length)"
+      >
+        + Add column
+      </div>
+    </div>
+  </div>
+</div>

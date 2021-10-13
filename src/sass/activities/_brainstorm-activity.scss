@@ -210,17 +210,66 @@ benji-ms-brainstorming-activity {
     right: 10px;
     bottom: 10px;
   }
+
+  .brainstorm-ps-container {
+    position: absolute;
+    right: 24px;
+    width: 467px;
+    height: 90%;
+    top: 20px;
+    border: 1px #d0afaf solid;
+    border-radius: 5px;
+    overflow: auto;
+    background-color: #fff;
+    // padding: 32px 24px;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    .participant-view-hide-trigger-container {
+      position: relative;
+      .participant-view-hide-trigger {
+        // position: absolute;
+        right: 24px;
+        width: 15px;
+        height: 15px;
+        top: 8px;
+        border-radius: 15px;
+        background-color: #e7e7e7;
+        cursor: pointer;
+        img {
+          width: 8px;
+          height: 8px;
+        }
+      }
+    }
+    .b-flat-card {
+      padding: 0px;
+      background-color: #fff;
+      box-shadow: none;
+    }
+  }
+
+  .participant-view-trigger {
+    position: absolute;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    border-radius: 48px;
+    background-color: #828282;
+    cursor: pointer;
+    img {
+      width: 18px;
+      height: 18px;
+    }
+  }
 }
 
 .brainstorm-idea {
-  padding: 16px;
   min-height: 50px;
   background-color: white;
-  border: 1px solid #979797;
+  border: 1px solid #e2e0df;
   margin: 10px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px 0 rgba(21, 27, 38, 0.15);
+  border-radius: 8px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   cursor: pointer;
@@ -234,11 +283,67 @@ benji-ms-brainstorming-activity {
     margin-top: 16px;
     font-size: 12px;
   }
+  img.title {
+    width: 100%;
+  }
+  .content {
+    padding: 12px;
+  }
+  .feedback {
+    padding: 8px 12px 12px;
+    border-top: 1px solid #e2e0df;
+    .counts {
+      margin-bottom: 12px;
+    }
+    .heart {
+      width: 13.33px;
+      margin-right: 4px;
+    }
+    .thought {
+      width: 12px;
+      margin-right: 4px;
+    }
+    span {
+      font-size: 13px;
+      color: #bdbdbd;
+    }
+    .user-feed {
+      margin-bottom: 8px;
+      .dp {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+      .name {
+        font-size: 10px;
+        color: #37352f;
+        font-weight: 500;
+        margin-bottom: 4px;
+      }
+      .comment {
+        font-size: 12px;
+        color: #37352f;
+        font-weight: 400;
+      }
+    }
+    .input-comment {
+      height: 24px;
+      background: #f3f4f7;
+      border-radius: 20px;
+      margin-left: 13px;
+      border: unset;
+      color: #777777;
+      font-weight: 400;
+      font-size: 10px;
+      padding: 0px 12px;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
 .brainstorm-image {
   text-align: center;
-  margin: -8px;
-  margin-bottom: 5px;
   img {
     max-height: 300px;
     max-width: 100%;
@@ -273,16 +378,6 @@ benji-ps-brainstorming-activity {
         font-weight: 500;
         &.inactive {
           background-color: #bdbdbd;
-        }
-      }
-      .ps-brainstorm-dropdown-controls {
-        .ng-select-container {
-          color: #828282;
-          border: 1px solid transparent;
-          min-height: 24px;
-          align-items: center;
-          max-height: 24px;
-          height: 24px;
         }
       }
     }
@@ -358,7 +453,7 @@ benji-ps-brainstorming-activity {
   //     }
   //   }
   // }
-  
+
   .vote-button-column {
     //width: 366px;
   }
@@ -388,7 +483,7 @@ benji-ps-brainstorming-activity {
   }
 }
 
-benji-ms-sharing-tool {
+.brainstorm- benji-ms-sharing-tool {
   .brainstorm-share-ui {
     position: relative;
     .ideas {

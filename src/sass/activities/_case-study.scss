@@ -121,19 +121,74 @@ benji-ps-case-study-activity {
       }
     }
   }
-}
 
-@media (max-width: 768px) {
-  benji-ps-case-study-activity {
-    .b-flat-card {
+  .activity-wrapper {
+    max-width: 1186px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 36px 24px;
+    margin: 0px auto;
+  }
+
+  @media (min-width: 768px) {
+    .activity-wrapper {
+      .b-flat-card__body {
+        max-width: unset;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .activity-wrapper {
+      padding: 0px;
+    }
+    .activity-wrapper {
+      .b-flat-card__body {
+        max-width: unset;
+      }
+    }
+  }
+
+  benji-text-editor {
+    div.NgxEditor {
+      border: 0px;
+      border-radius: 8px;
+      background: #F6F7F9;
+      color: #5E6678;
+      padding: 0px 24px 24px;
+      .NgxEditor__Content {
+        padding: 0px;
+      }
+    }
+    ngx-editor-menu .NgxEditor__MenuBar {
+      row-gap: 24px;
+      background: #F6F7F9;
+      color: #5E6678;
+      border: 0px;
+      padding: 16px 24px;
+    }
+  }
+
+  .NgxEditor__MenuItem {
+    margin: 0px 12px;
+    cursor: pointer;
+    .image-upload-button label {
+      cursor: pointer;
+    }
+  }
+
+  .NgxEditor__Dropdown {
+    margin-right: 16px;
+    .NgxEditor__Dropdown--Text {
       padding: 0px;
     }
   }
+
 }
 
 .worksheet-title {
   color: $black;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 700;
   text-align: left;
   margin-bottom: 16px;
@@ -182,4 +237,23 @@ benji-ps-case-study-activity {
   height: 40px;
   font-size: 20px;
   line-height: 20px;
+}
+
+.case-study-main {
+  .feedback-card, .groups-list {
+    overflow-y: scroll;
+  }
+  .feedback-card {
+    max-height: calc(100vh - 120px);
+    height: 100vh;
+  }
+  .groups-list {
+    max-height: calc(100vh - 142px);
+    height: 100vh;
+    padding: 16px;
+    .group-container {
+      cursor: pointer;
+      margin-bottom: 11px;
+    }
+  }
 }

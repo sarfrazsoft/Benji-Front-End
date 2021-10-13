@@ -3,7 +3,20 @@
 </div>
 
 <div class="ms-fullheight-container">
-  <benji-main-screen-toolbar [activityState]="serverMessage"></benji-main-screen-toolbar>
+  <benji-main-screen-toolbar 
+    [activityState]="serverMessage"
+    *ngIf="isConnected() && serverMessage"
+    [isLastActivity]="!isLastActivity()"
+    [showHeader]="getActivityType() !== at.lobby"
+    [roomCode]="serverMessage.lesson_run.lessonrun_code"
+    [lessonName]="serverMessage.lesson.lesson_name"
+    [isPaused]="isPaused()"
+    [disableControls]="disableControls"
+    [isSharing]="getIsSharing()"
+    [isGrouping]="getIsGrouping()"
+    [isGroupingShowing]="getIsGroupingShowing()"
+    (socketMessage)="sendSocketMessage($event)"
+  ></benji-main-screen-toolbar>
 
   <div
     *ngIf="isConnected() && serverMessage"
@@ -194,6 +207,13 @@
         (sendMessage)="sendSocketMessage($event)"
       >
       </benji-ms-case-study-activity>
+      <!-- <benji-ps-case-study-activity
+        *ngIf="getActivityType() === at.caseStudy"
+        [activityState]="serverMessage"
+        [avgServerTimeOffset]="avgServerTimeOffset"
+        (sendMessage)="sendSocketMessage($event)"
+      >
+      </benji-ps-case-study-activity> -->
 
       <benji-ms-convo-cards-activity
         *ngIf="getActivityType() === at.convoCards"

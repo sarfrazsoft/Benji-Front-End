@@ -99,8 +99,6 @@ export type TitleActivityLayouts =
   | 'backgroundImage'
   | 'rightImage';
 
-// export type MeasurementTimeframe = 'alltime' | 'year' | 'month' | 'week' | 'day';
-
 export const DefaultwhiteLabelInfo = {
   // name: 'Refound',
   // welcome_text: 'Welcome to the Accountability Dial!',

@@ -8,6 +8,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import { ContextService } from 'src/app/services';
 import {
   CaseStudyActivity,
@@ -18,7 +19,6 @@ import {
   Timer,
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-
 @Component({
   selector: 'benji-ps-case-study-activity',
   templateUrl: './case-study-activity.component.html',
@@ -27,6 +27,7 @@ export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @Input() actEditor = false;
+  @Input() currentGroupID;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
@@ -44,7 +45,6 @@ export class ParticipantCaseStudyActivityComponent
   showSharingUI = false;
   editorDisabled = false;
   worksheetTitle = '';
-
   // unique ID for the group
   groupId: string;
   // unique ID for document to be used in collaborative editor
@@ -59,6 +59,7 @@ export class ParticipantCaseStudyActivityComponent
   saved;
   answeredWorksheets;
   answeredWorksheetTexts;
+  currentGroup;
   @ViewChild('activityEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
 
   constructor(private cfr: ComponentFactoryResolver, private contextService: ContextService) {
@@ -78,7 +79,7 @@ export class ParticipantCaseStudyActivityComponent
   populateQuestions() {
     const questionsTemp = this.act.casestudyquestion_set;
     this.questions = [];
-    let arrayForSort = [...questionsTemp]
+    const arrayForSort = [...questionsTemp];
     const sortedQuestions = arrayForSort.sort((a, b) => a.order - b.order);
     sortedQuestions.forEach((q, i) => {
       this.questions.push({ ...q, answer: '' });
@@ -221,7 +222,6 @@ export class ParticipantCaseStudyActivityComponent
   locallySaveDraft(event) {}
 
   saveEditCollab() {
-    // console.log(localStorage.getItem('collabedit'));
     // const json = JSON.parse(localStorage.getItem('collabeditJSONDoc' + '_' + this.questionId));
     this.sendMessage.emit(
       new CaseStudySubmitAnswerEvent(this.answeredWorksheets, this.answeredWorksheetTexts)
@@ -246,6 +246,8 @@ export class ParticipantCaseStudyActivityComponent
       textObj[key] = text;
     });
     this.answeredWorksheetTexts = textObj;
+    this.typingStarted();
+    this.typingStoped();
   }
 
   getTextForJson(json) {
@@ -258,5 +260,18 @@ export class ParticipantCaseStudyActivityComponent
       return json.text;
     }
     return text;
+  }
+
+  // on keyup, start the countdown
+  typingStoped() {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.saveEditCollab();
+    }, 3000);
+  }
+
+  // on keydown, clear the countdown
+  typingStarted() {
+    clearTimeout(this.typingTimer);
   }
 }

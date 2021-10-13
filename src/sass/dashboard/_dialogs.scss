@@ -99,7 +99,7 @@
     background-color: $warning-color;
     color: white;
     :focus {
-      outline: 1px dotted; 
+      outline: 1px dotted;
     }
   }
 }
@@ -214,6 +214,150 @@
         display: none;
       }
       .image-upload-button {
+      }
+    }
+  }
+}
+
+.idea-dialog {
+  mat-dialog-container {
+    border-radius: 16px;
+    box-shadow: unset;
+    padding: unset;
+    .white-area {
+      width: 390px;
+      float: left;
+      .white-content {
+        padding: 24px 32px 24px 24px;
+        .title {
+          font-size: 24px;
+          color: #bdbdbd;
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+        .description {
+          border: unset;
+          width: 100%;
+          height: 230px;
+          resize: none;
+          font-size: 14px;
+          color: #bdbdbd;
+          font-weight: 400;
+          border-bottom: 1px solid #f3f4f7;
+          &:focus {
+            outline: none;
+          }
+          &::placeholder {
+            color: #bdbdbd;
+          }
+          &.image-selected {
+            height: auto;
+          }
+        }
+        .preview-image {
+          position: relative;
+          img {
+            max-width: 100%;
+            max-height: 340px;
+          }
+          .remove-button {
+            position: absolute;
+            width: 55px;
+            height: 22px;
+            top: 12px;
+            background: #f3f4f7;
+            border-radius: 4px;
+            right: 12px;
+            font-weight: 500;
+            font-size: 12px;
+          }
+        }
+        .attachments {
+          margin-top: 16px;
+          float: left;
+          img {
+            margin-right: 16px;
+            cursor: pointer;
+          }
+        }
+        .post {
+          margin: 8px 0px 15px 0px;
+          float: right;
+          background: #555bea;
+          color: #fff;
+          font-size: 16px;
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 4px;
+        }
+      }
+    }
+    .grey-area {
+      width: 231px;
+      float: right;
+      background: #f3f4f7;
+      .grey-content {
+        padding: 20px 20px 20px 32px;
+        .close {
+          float: right;
+          cursor: pointer;
+        }
+        .menu-like {
+          font-weight: 500;
+          font-size: 14px;
+          color: #828282;
+        }
+        .menu {
+          margin: 4px 0px 8px 0px;
+        }
+        .like {
+          margin: 16px 0px 8px 0px;
+        }
+        .option {
+          background: #ffffff;
+          box-shadow: 0px 2px 2px #e7e7e7;
+          border-radius: 4px;
+          padding: 10px 16px;
+          margin: 0px 12px 8px 0px;
+          img {
+            margin-right: 8px;
+            float: left;
+          }
+          span {
+            font-weight: normal;
+            font-size: 16px;
+            color: #828282;
+            line-height: 20px;
+          }
+        }
+        .person {
+          .dp {
+            float: left;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+          }
+          .name {
+            font-weight: 500;
+            font-size: 12px;
+            color: #37352f;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+    .ps-brainstorm-dropdown-controls {
+      .ng-select-container {
+        color: #828282;
+        border: 1px solid transparent;
+        min-height: 20px;
+        align-items: center;
+        max-height: 20px;
+        height: 20px;
+        .ng-value-container .ng-input {
+          top: 0px;
+        }
       }
     }
   }

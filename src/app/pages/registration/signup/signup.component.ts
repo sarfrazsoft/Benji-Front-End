@@ -21,9 +21,9 @@ export class SignupComponent implements OnInit {
   emailErr = false;
   emailErrMsg = '';
   firstName = '';
-  lastName ='';
+  lastName = '';
   isDemoSite = true;
-  
+
   logo;
 
   user: SocialUser | null;
@@ -35,7 +35,7 @@ export class SignupComponent implements OnInit {
     private deviceService: DeviceDetectorService,
     public router: Router,
     private socialAuthService: SocialAuthService
-  )  {
+  ) {
     // demo.mybenji.com
     if (window.location.href.split('.')[0].includes('demo')) {
       this.isDemoSite = true;
@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
     this.user = null;
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
-        this.authService.setSession(res);
+        this.authService.setFacilitatorSession(res);
         if (this.authService.redirectURL.length) {
           window.location.href = this.authService.redirectURL;
         } else {
@@ -67,7 +67,7 @@ export class SignupComponent implements OnInit {
     this.form = this.builder.group(
       {
         name: new FormControl('', [Validators.required]),
-        //lastName: new FormControl('', [Validators.required]),
+        // lastName: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
         confirmPassword: new FormControl('', [Validators.required]),
@@ -80,8 +80,14 @@ export class SignupComponent implements OnInit {
     if (this.authService.userInvitation) {
       this.form.get('email').setValue(this.authService.userInvitation.email);
       if (this.authService.userInvitation.suggested_first_name) {
-        this.form.get('name').setValue(this.authService.userInvitation.suggested_first_name + ' ' + this.authService.userInvitation.suggested_last_name);
-        //this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
+        this.form
+          .get('name')
+          .setValue(
+            this.authService.userInvitation.suggested_first_name +
+              ' ' +
+              this.authService.userInvitation.suggested_last_name
+          );
+        // this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
       }
     }
   }
@@ -127,51 +133,53 @@ export class SignupComponent implements OnInit {
     this.isSignupClicked = true;
     if (this.form.valid) {
       const val = this.form.value;
-      const myArr = (val.name).split(" ");
+      const myArr = val.name.split(' ');
       this.firstName = myArr[0];
-      myArr[1]? this.lastName = myArr[1]: this.lastName = " ";
+      myArr[1] ? (this.lastName = myArr[1]) : (this.lastName = ' ');
       if (myArr[2]) {
-        this.lastName += " " + myArr[2];
+        this.lastName += ' ' + myArr[2];
       }
-      console.log("First Name: " + this.firstName);
-      console.log("Last Name: " + this.lastName);
-      this.authService.register(val.email.toLowerCase(), val.password, this.firstName, this.lastName).subscribe(
-        (res) => {
-          if (res.token) {
-            this.isSubmitted = true;
-            this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
-              (signInRes) => {
-                if (res.token) {
-                  // if (this.authService.redirectURL.length) {
-                  // window.location.href = this.authService.redirectURL;
-                  // } else {
-                  this.deviceService.isMobile()
-                    ? this.router.navigate(['/participant/join'])
-                    : this.router.navigate(['/dashboard']);
-                  // }
-                } else {
+      console.log('First Name: ' + this.firstName);
+      console.log('Last Name: ' + this.lastName);
+      this.authService
+        .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName)
+        .subscribe(
+          (res) => {
+            if (res.token) {
+              this.isSubmitted = true;
+              this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
+                (signInRes) => {
+                  if (res.token) {
+                    // if (this.authService.redirectURL.length) {
+                    // window.location.href = this.authService.redirectURL;
+                    // } else {
+                    this.deviceService.isMobile()
+                      ? this.router.navigate(['/participant/join'])
+                      : this.router.navigate(['/dashboard']);
+                    // }
+                  } else {
+                  }
+                },
+                (err) => {
+                  console.log(err);
                 }
-              },
-              (err) => {
-                console.log(err);
-              }
-            );
-            return;
-          }
+              );
+              return;
+            }
 
-          if (res.password1) {
-            this.passwordMinLenErr = true;
-          }
+            if (res.password1) {
+              this.passwordMinLenErr = true;
+            }
 
-          if (res.email) {
-            this.emailErr = true;
-            this.emailErrMsg = res.email[0];
+            if (res.email) {
+              this.emailErr = true;
+              this.emailErrMsg = res.email[0];
+            }
+          },
+          (err) => {
+            console.log(err);
           }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        );
     }
   }
 

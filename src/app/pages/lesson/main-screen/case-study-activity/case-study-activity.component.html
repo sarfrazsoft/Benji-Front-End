@@ -1,4 +1,21 @@
-<ng-container *ngIf="newLayout">
+<div class="case-study-main" fxLayout="row">
+  <div fxLayout="column" class="" fxFlex="176px">
+    <div class="groups-list">
+      <div
+        class="group-container"
+        fxLayout="row"
+        *ngFor="let group of groupsX"
+      >
+        <div (click)="selectGroup(group.name)"> {{group.name}} </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column" class="" fxFlex="100%">
+    <ng-template #caseStudyEntry></ng-template>
+  </div>
+</div>
+
+<!-- <ng-container *ngIf="newLayout">
   <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
     <div class="twemoji-container" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
       <app-b-twemoji [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
@@ -76,7 +93,7 @@
               fxLayoutAlign="start center"
               *ngFor="let participant of group.participants"> 
               <span>
-                <!-- {{ participant.name }} -->
+                {{ participant.name }} --><!-- 
               </span> 
             </div>
           </ng-container>
@@ -94,5 +111,4 @@
       </div>
     </div>
   </ng-container>
-</div>
-
+</div> -->
