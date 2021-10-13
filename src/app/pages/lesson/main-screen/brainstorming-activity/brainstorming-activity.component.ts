@@ -13,10 +13,12 @@ import {
 import { uniqBy } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
+import * as global from 'src/app/globals';
 import { ActivitySettingsService, ContextService } from 'src/app/services';
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
+  BrainstormImageSubmitEvent,
   BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormRenameCategoryEvent,
@@ -29,9 +31,12 @@ import {
 } from 'src/app/services/backend/schema';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import { UtilsService } from 'src/app/services/utils.service';
+import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
+import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
 import { UncategorizedComponent } from './uncategorized/uncategorized.component';
 
@@ -64,7 +69,8 @@ export class MainScreenBrainstormingActivityComponent
     private contextService: ContextService,
     private dialog: MatDialog,
     private utilsService: UtilsService,
-    private activitySettingsService: ActivitySettingsService
+    private activitySettingsService: ActivitySettingsService,
+    private httpClient: HttpClient
   ) {
     super();
   }
@@ -94,6 +100,11 @@ export class MainScreenBrainstormingActivityComponent
   ];
 
   settingsSubscription;
+  imagesList: FileList;
+  imageSrc;
+  imageDialogRef;
+  selectedImageUrl;
+
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
@@ -336,5 +347,101 @@ export class MainScreenBrainstormingActivityComponent
       })
       .afterClosed()
       .subscribe((res) => {});
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(IdeaCreationDialogComponent, {
+      width: '621px',
+      panelClass: 'idea-dialog',
+      data: {
+        showCategoriesDropdown: this.categorizeFlag,
+        categories: this.activityState.brainstormactivity.brainstormcategory_set,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log(result);
+        this.submitIdea(result);
+      }
+    });
+  }
+
+  submitIdea(idea): void {
+    // if (!idea.editing) {
+    //   return;
+    // }
+    if (idea.imagesList || idea.selectedImageUrl) {
+      this.submitImageNIdea(idea);
+    } else {
+      this.submitWithoutImg(idea);
+    }
+  }
+
+  submitWithoutImg(idea) {
+    if (idea.text.length === 0) {
+      return;
+    }
+    this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.category.id));
+    // this.idea.editing = false;
+  }
+
+  // submitWithImg() {
+  // this.submitImageNIdea();
+  // this.idea.editing = false;
+  // }
+  // getSelectedFileName() {
+  //   let name = '';
+  //   if (this.imagesList.length > 0) {
+  //     name = this.imagesList[0].name;
+  //   }
+  //   return name;
+  // }
+
+  submitImageNIdea(idea) {
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+
+    const participant_code = this.getParticipantCode().toString();
+    const fileList: FileList = idea.imagesList;
+    if (fileList && fileList.length > 0) {
+      const file: File = fileList[0];
+      this.utilsService
+        .resizeImage({
+          file: file,
+          maxSize: 500,
+        })
+        .then((resizedImage: Blob) => {
+          const formData: FormData = new FormData();
+          formData.append('img', resizedImage, file.name);
+          formData.append('participant_code', participant_code);
+          const headers = new HttpHeaders();
+          headers.set('Content-Type', null);
+          headers.set('Accept', 'multipart/form-data');
+          const params = new HttpParams();
+          this.httpClient
+            .post(url, formData, { params, headers })
+            .map((res: any) => {
+              this.imagesList = null;
+              if (!idea.text) {
+                idea.text = '';
+              }
+              this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.category.id, res.id));
+            })
+            .subscribe(
+              (data) => {},
+              (error) => console.log(error)
+            );
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    } else {
+      if (idea.selectedImageUrl) {
+        this.sendMessage.emit(
+          new BrainstormImageSubmitEvent(idea.text, idea.category.id, idea.selectedImageUrl)
+        );
+      }
+    }
   }
 }

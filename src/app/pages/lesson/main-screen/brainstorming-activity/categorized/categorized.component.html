@@ -1,7 +1,4 @@
-<div (click)="openDialog()">
-  <span>Open Dialog</span>
-</div>
-  <div
+<div
   class="submitted-ideas"
   *ngIf="submissionScreen || voteScreen"
   fxLayout="row"
@@ -104,7 +101,6 @@
                   <img (click)="openImage(hostname + item.idea_image.img)" [src]="hostname + item.idea_image.img" alt="" />
                 </ng-template>
               </div>
-              <img class="title" src="/assets/img/placeholder.png" alt=""> 
               <div class="content"> {{ item.idea }} </div>
               <!-- <div class="username" *ngIf="showUserName">{{ getPersonName(item) }}</div>
               <div class="votes primary-color" *ngIf="voteScreen">

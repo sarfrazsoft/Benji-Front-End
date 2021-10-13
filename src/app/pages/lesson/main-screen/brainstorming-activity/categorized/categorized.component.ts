@@ -11,7 +11,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-
 import * as global from 'src/app/globals';
 import {
   BrainstormCreateCategoryEvent,
@@ -25,7 +24,6 @@ import {
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
-import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 
 @Component({
   selector: 'benji-categorized-ideas',
@@ -152,20 +150,4 @@ export class CategorizedComponent implements OnInit, OnChanges {
     });
     this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryId));
   }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(IdeaCreationDialogComponent, {
-      width: '621px',
-      panelClass: 'idea-dialog',
-      data: {
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'Use Template') {
-      }
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
 }
