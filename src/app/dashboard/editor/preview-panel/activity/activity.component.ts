@@ -30,6 +30,7 @@ import {
 } from 'src/app/pages';
 import { MainScreenCaseStudyActivityComponent } from 'src/app/pages/lesson/main-screen/case-study-activity/case-study-activity.component';
 import { MainScreenEitherOrActivityComponent } from 'src/app/pages/lesson/main-screen/either-or-activity/either-or-activity.component';
+import { MainScreenGoogleSlidesActivityComponent } from 'src/app/pages/lesson/main-screen/google-slides-activity/google-slides.component';
 import { MainScreenVideoActivityComponent } from 'src/app/pages/lesson/main-screen/video-activity/video-activity.component';
 import { ParticipantEitherOrActivityComponent } from 'src/app/pages/lesson/participant/either-or-activity/either-or-activity.component';
 import { ParticipantVideoActivityComponent } from 'src/app/pages/lesson/participant/video-activity/video-activity.component';
@@ -669,6 +670,41 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             run_number: 0,
             start_time: '2020-11-11T12:30:41.270208-05:00',
             video_url: this.data.content.video_url,
+          },
+        };
+      } else if (this.data.activity_type === Acts.slides) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenGoogleSlidesActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(MainScreenGoogleSlidesActivityComponent);
+        }
+        this.componentRef = this.entry.createComponent(msAct);
+        console.log(this.data);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          googleslidesactivity: {
+            activity_id: '1605110364952',
+            activity_type: this.data.activity_type,
+            auto_next: true,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 507,
+            is_paused: true,
+            next_activity: 4,
+            next_activity_delay_seconds: null,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 46,
+            run_number: 0,
+            start_time: '2020-11-11T12:30:41.270208-05:00',
+            slide_url: this.data.content.slide_url,
           },
         };
       }

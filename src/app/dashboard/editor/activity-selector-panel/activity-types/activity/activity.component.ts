@@ -23,6 +23,7 @@ export class ActivityComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
 
   ngOnInit() {
+    // console.log(this.activity);
     // this.activities$ = this.store.select(fromStore.getAllPossibleActivities);
     this.sub = this.store.select(fromStore.getSelectedPossibleActivity).subscribe((val) => {
       this.selectedPossibleActivity = val;

@@ -115,6 +115,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 mappedField.hide = true;
                 mappedField.templateOptions.readonly = true;
               }
+
               // for MCQ activity
               if (act.activity_type === this.at.mcq) {
                 if (mapSource.internal_type === 'MCQActivitySerializer') {
@@ -336,14 +337,15 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.defaultValue = true;
                 }
               } else if (act.activity_type === this.at.slides) {
-                // else if (act.activity_type === this.at.video) {
-                if (mapSource.internal_type === 'VideoActivitySerializer') {
+                console.log(act);
+                if (mapSource.internal_type === 'GoogleSlidesActivitySerializer') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
-                } else if (mapSource.field_name === 'google_slides_url') {
+                } else if (mapSource.field_name === 'slide_url') {
                   delete mappedField.templateOptions.maxLength;
                   mappedField.templateOptions['helpText'] = 'Add google slides url';
+                } else if (mapSource.field_name === 'slide_name') {
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.hide = true;
                 }
@@ -851,6 +853,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         }
       } else if (b.activity_type === this.at.video) {
         b.activity_overview_text = 'x';
+      } else if (b.activity_type === this.at.slides) {
+        b.activity_overview_text = ActivityTitles[this.at.slides];
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
     });
@@ -908,6 +912,7 @@ export const OrderForActivities = {
     'next_activity_delay_seconds',
     'submission_seconds',
   ],
+  GoogleSlidesActivity: ['slide_url', 'slide_name'],
   MCQActivity: ['titlecomponent', 'title', 'question', 'question_seconds', 'mcqchoice_set', 'quiz_label'],
   VideoActivity: ['video_url', 'auto_next', 'next_activity_delay_seconds'],
   CaseStudyActivity: [

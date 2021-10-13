@@ -93,6 +93,10 @@ export interface MCQResultsActivity {
 export interface VideoActivity {
   video_url: string;
 }
+export interface GoogleSlidesActivity {
+  slide_url: string;
+  slide_name: string;
+}
 
 export interface LeaderBoardItem {
   user: User;

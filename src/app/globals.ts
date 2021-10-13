@@ -48,6 +48,7 @@ export const ActivityTitles = {
   FeedbackActivity: 'titlecomponent.title',
   ConvoActivity: 'main_title',
   WhereDoYouStandActivity: 'question_title',
+  GoogleSlidesActivity: 'slide_name',
 };
 
 export const ActivityThumbnails = {
@@ -61,6 +62,7 @@ export const ActivityThumbnails = {
   ConvoActivity: 'convocards.svg',
   WhereDoYouStandActivity: 'eitheror.svg',
   VideoActivity: 'video.svg',
+  GoogleSlidesActivity: 'googleslides.svg',
 };
 
 export const ActivityDisplayNames = {
@@ -75,6 +77,7 @@ export const ActivityDisplayNames = {
   ConvoActivity: 'Cards',
   PollActivity: 'Poll',
   WhereDoYouStandActivity: 'Either Or',
+  GoogleSlidesActivity: 'Google Slides',
 };
 
 export const AllowShareActivities = [

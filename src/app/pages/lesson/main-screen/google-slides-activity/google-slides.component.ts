@@ -27,7 +27,7 @@ export class MainScreenGoogleSlidesActivityComponent
   }
 
   initVideo() {
-    this.videoURL = this.activityState.videoactivity.video_url;
+    this.videoURL = this.activityState.googleslidesactivity.slide_url;
   }
 
   ngOnAfterViewInit() {}

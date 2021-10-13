@@ -1,4 +1,4 @@
-import { ConvoCardsActivity } from './activities';
+import { ConvoCardsActivity, GoogleSlidesActivity } from './activities';
 import {
   BaseActivity,
   BrainstormActivity,
@@ -36,6 +36,7 @@ export interface UpdateMessage {
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;
+  googleslidesactivity?: GoogleSlidesActivity;
   casestudyactivity?: CaseStudyActivity;
   convoactivity?: ConvoCardsActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
