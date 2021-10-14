@@ -12,12 +12,17 @@ import { ConfirmationDialogComponent } from 'src/app/shared';
 import { ImportSlidesDialogComponent } from 'src/app/shared/dialogs/import-slides-dialog/import-slides.dialog';
 import { EditorService } from '../services/editor.service';
 import * as fromStore from '../store';
+import {ThemePalette} from '@angular/material/core';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'benji-overview-panel',
   templateUrl: './overview-panel.component.html',
 })
 export class OverviewPanelComponent implements OnInit, OnDestroy {
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'determinate';
+  value = 50;
   lessonActivities$: Observable<OverviewLessonActivity[]>;
   lessonActivitiesSubscription$: Subscription;
   lessonActivitiesLength;
@@ -121,9 +126,10 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
 
   openImportDialog() {
     const dialogRef = this.importDialog.open(ImportSlidesDialogComponent, {
-      width: '621px',
-      panelClass: 'import-slides',
-      data: {},
+      width: '440px',
+      panelClass: 'import-slides-dialog',
+      data: {
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -132,4 +138,5 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
       console.log(`Dialog result: ${result}`);
     });
   }
+  
 }
