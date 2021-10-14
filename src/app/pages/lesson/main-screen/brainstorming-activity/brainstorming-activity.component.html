@@ -20,6 +20,9 @@
       </ng-container>
     </div>
   </div>
+  <div (click)="openDialog()">
+    <span>Open Dialog</span>
+  </div>
   <div class="brainstorm-container">
     <ng-container *ngIf="categorizeFlag">
       <benji-categorized-ideas

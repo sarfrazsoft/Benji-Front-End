@@ -27,7 +27,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   maxSubmissions = 1;
 
   showCategoriesDropdown = false;
-  // categories = [];
   selectedCategory: Category;
 
   imagesList: FileList;
@@ -35,7 +34,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   imageDialogRef;
   selectedImageUrl;
   constructor(
-    private dialog: MatDialog,
+    private matDialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService
   ) {}
@@ -87,7 +86,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
       name = this.imagesList[0].name;
     }
     return name;
-    // return this.selectedImageUrl;
   }
 
   submitImageNIdea() {
@@ -141,7 +139,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
 
   openImagePickerDialog() {
     const code = this.activityState.lesson_run.lessonrun_code;
-    this.imageDialogRef = this.dialog
+    this.imageDialogRef = this.matDialog
       .open(ImagePickerDialogComponent, {
         data: {
           lessonRunCode: code,

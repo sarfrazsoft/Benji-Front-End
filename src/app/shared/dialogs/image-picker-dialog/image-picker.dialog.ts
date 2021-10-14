@@ -46,13 +46,13 @@ export class ImagePickerDialogComponent implements OnInit {
     this.form.setValue({ title: 'e', description: 'this.data.description' });
   }
 
-  get title(): AbstractControl {
-    return this.form.get('title');
-  }
+  // get title(): AbstractControl {
+  //   return this.form.get('title');
+  // }
 
-  get description(): AbstractControl {
-    return this.form.get('description');
-  }
+  // get description(): AbstractControl {
+  //   return this.form.get('description');
+  // }
 
   // onFileSelect(event) {
   //   const fileList: FileList = event.target.files;
@@ -101,26 +101,26 @@ export class ImagePickerDialogComponent implements OnInit {
   //   }
   // }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      const val = this.form.value;
-      const l: Lesson = {
-        id: this.data.id,
-        lesson_name: val.title,
-        lesson_description: val.description,
-      };
-      // this.editorService
-      //   .updateLesson(l, this.data.id)
-      //   .pipe(
-      //     map((res) => res),
-      //     catchError((error) => error)
-      //   )
-      //   .subscribe((res: Lesson) => {
-      //     l.feature_image = this.imageURL;
-      //     this.dialogRef.close(l);
-      //   });
-    }
-  }
+  // onSubmit(): void {
+  //   if (this.form.valid) {
+  //     const val = this.form.value;
+  //     const l: Lesson = {
+  //       id: this.data.id,
+  //       lesson_name: val.title,
+  //       lesson_description: val.description,
+  //     };
+  // this.editorService
+  //   .updateLesson(l, this.data.id)
+  //   .pipe(
+  //     map((res) => res),
+  //     catchError((error) => error)
+  //   )
+  //   .subscribe((res: Lesson) => {
+  //     l.feature_image = this.imageURL;
+  //     this.dialogRef.close(l);
+  //   });
+  //   }
+  // }
 
   typingStoped(query) {
     clearTimeout(this.typingTimer);
