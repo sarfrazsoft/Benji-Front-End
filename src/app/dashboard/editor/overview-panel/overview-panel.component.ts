@@ -9,12 +9,17 @@ import { take } from 'rxjs/operators';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
 import * as fromStore from '../store';
 import { ImportSlidesDialogComponent } from 'src/app/shared/dialogs/import-slides-dialog/import-slides.dialog';
+import {ThemePalette} from '@angular/material/core';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'benji-overview-panel',
   templateUrl: './overview-panel.component.html',
 })
 export class OverviewPanelComponent implements OnInit, OnDestroy {
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'determinate';
+  value = 50;
   lessonActivities$: Observable<OverviewLessonActivity[]>;
   lessonActivitiesSubscription$: Subscription;
   lessonActivitiesLength;
@@ -117,8 +122,8 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
 
   openImportDialog() {
     const dialogRef = this.importDialog.open(ImportSlidesDialogComponent, {
-      width: '621px',
-      panelClass: 'import-slides',
+      width: '440px',
+      panelClass: 'import-slides-dialog',
       data: {
       },
     });
@@ -129,4 +134,5 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
       console.log(`Dialog result: ${result}`);
     });
   }
+  
 }
