@@ -2,6 +2,7 @@
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { CaseStudyGroupComponent } from './case-study-activity/case-study-group/case-study-group.component';
+import { CaseStudyFacilitatorViewComponent } from './case-study-activity/facilitatorView/facilitator-view.component';
 import { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
@@ -34,13 +35,14 @@ export { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/co
 export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { MainScreenPollComponent } from './poll-activity/poll-activity.component';
 export { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
-export { MainScreenLessonComponent };
+export { MainScreenLessonComponent, CaseStudyFacilitatorViewComponent };
 
 export const MainScreenComponents = [
   // MainScreenBuildPitchActivityComponent,
   // ...ParticipantBrainStormComponents,
   ...SharedMainScreenComponents,
   MainScreenCaseStudyActivityComponent,
+  CaseStudyFacilitatorViewComponent,
   CaseStudyGroupComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,
