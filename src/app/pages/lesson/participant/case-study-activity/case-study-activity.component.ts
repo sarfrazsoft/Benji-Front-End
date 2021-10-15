@@ -25,7 +25,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() actEditor = false;
   @Input() currentGroupID;
   @Input() showingToFacilitator = false;
@@ -229,6 +230,7 @@ export class ParticipantCaseStudyActivityComponent
 
   saveEditCollab() {
     if (this.showingToFacilitator) {
+      // do nothing
     } else {
       this.sendMessage.emit(
         new CaseStudySubmitAnswerEvent(this.answeredWorksheets, this.answeredWorksheetTexts)
