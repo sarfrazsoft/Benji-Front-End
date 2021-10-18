@@ -125,28 +125,12 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromStore.AddEmptyLessonActivityAtIndex(activity.order));
   }
 
-  uploadFile($event) {
-    console.log($event.target.files[0]); // outputs the first file
-    const file = $event.target.files[0];
-    if (file) {
-      this.editorService
-        .uploadFile(file, this.lessonId)
-        .pipe(
-          map((res) => res),
-            catchError((error) => error)
-        )
-        .subscribe((res) => {
-          console.log(res);
-        });
-    }
-    const url = '';
-  }
-
   openImportDialog() {
     const dialogRef = this.importDialog.open(ImportSlidesDialogComponent, {
       width: '440px',
       panelClass: 'import-slides-dialog',
       data: {
+        lessonID: this.lessonId,
       },
     });
 

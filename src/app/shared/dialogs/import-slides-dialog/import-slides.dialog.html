@@ -4,9 +4,9 @@
   </div>
   <div class="title">Import slides</div>
   <div class="description">Upload a PDF file up to 50MB or 100 slides</div>
-  <div class="upbutton" (click)="uploadFile.click()">
+  <div class="upbutton" (click)="uploader.click()">
     <button mat-raised-button color="primary">Choose File</button>
-    <input #uploadFile (change)="upload($event)" type='file' style="display:none"/> 
+    <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
   </div>
   <div class="spinner">
     <mat-progress-spinner
