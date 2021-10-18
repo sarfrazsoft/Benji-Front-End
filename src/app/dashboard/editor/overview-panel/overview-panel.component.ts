@@ -39,6 +39,7 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<fromStore.EditorState>,
     private matDialog: MatDialog,
+    private editorService: EditorService,
     private importDialog: MatDialog
   ) {}
 
@@ -122,6 +123,23 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     this.slideToBeCopied = activity;
     // this.store.dispatch(new fromStore.AddEmptyLessonActivity());
     this.store.dispatch(new fromStore.AddEmptyLessonActivityAtIndex(activity.order));
+  }
+
+  uploadFile($event) {
+    console.log($event.target.files[0]); // outputs the first file
+    const file = $event.target.files[0];
+    if (file) {
+      this.editorService
+        .uploadFile(file, this.lessonId)
+        .pipe(
+          map((res) => res),
+            catchError((error) => error)
+        )
+        .subscribe((res) => {
+          console.log(res);
+        });
+    }
+    const url = '';
   }
 
   openImportDialog() {
