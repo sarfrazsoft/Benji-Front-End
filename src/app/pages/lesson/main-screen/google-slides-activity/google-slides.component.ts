@@ -25,7 +25,7 @@ export class MainScreenGoogleSlidesActivityComponent
 
     this.initVideo();
   }
-
+  // https://docs.google.com/presentation/d/1HzNwrvyaUYi8ZKi8csK1SOTSKC07ePBeENOt-MPLXek/preview
   initVideo() {
     this.videoURL = this.activityState.googleslidesactivity.slide_url;
   }
