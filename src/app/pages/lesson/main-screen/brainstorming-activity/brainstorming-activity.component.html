@@ -10,23 +10,17 @@
         >
           {{ instructions }}
         </h2>
-        <div class="menus">
-          <button mat-button [matMenuTriggerFor]="menu">Groups
-            <mat-icon class="arrow-down">keyboard_arrow_down</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-          </mat-menu>
-        </div>
-        <div class="menus">
-          <button mat-button [matMenuTriggerFor]="menu">Room1
-            <mat-icon class="arrow-down">keyboard_arrow_down</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button>
-          </mat-menu>
+        <div *ngIf="categorizeFlag">
+          <ng-select
+            class="menus"
+            [items]="activityState.brainstormactivity.brainstormcategory_set"
+            bindLabel="category_name"
+            placeholder="Groups"
+            [(ngModel)]="selectedCategory"
+            appendTo="body"
+            [searchable]="false"
+          >
+          </ng-select>
         </div>
       </div>
     </div>

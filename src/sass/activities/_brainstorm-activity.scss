@@ -521,14 +521,17 @@ benji-ps-brainstorming-activity {
       margin: 0px 24px;
     }
     .menus {
-      font-size: 16px;
-      color: #616161;
-      font-weight: 500;
-      background: #F3F4F7;
-      box-shadow: 1px 1px 1px rgba(213, 217, 222, 0.5);
-      border-radius: 24px;
-      .arrow-down {
-        margin-right: -8px;
+      .ng-select-container {
+        font-size: 16px;
+        color: #616161;
+        font-weight: 500;
+        background: #F3F4F7;
+        border: 0px;
+        border-radius: 24px;
+        border: 1px 1px 1px rgba(213, 217, 222, 0.5);
+      }
+      &.ng-dropdown-panel {
+        top: 155px;
       }
     }
 
@@ -544,5 +547,17 @@ benji-ps-brainstorming-activity {
         height: 56px;
       }
     }
+  }
+}
+
+ng-dropdown-panel.menus {
+  top: 146px !important;
+  width: auto !important;
+  box-shadow: 0px 1px 2px #e7e7e7;
+  border-radius: 8px !important;
+  padding: 8px 0px;
+  background: #fff !important;
+  .ng-dropdown-panel-items {
+    padding: 0px 8px !important;
   }
 }
