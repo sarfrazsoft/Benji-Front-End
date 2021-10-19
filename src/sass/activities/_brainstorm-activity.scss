@@ -309,6 +309,7 @@ benji-ms-brainstorming-activity {
     }
     .user-feed {
       margin-bottom: 8px;
+      position: relative;
       .dp {
         width: 16px;
         height: 16px;
@@ -324,6 +325,17 @@ benji-ms-brainstorming-activity {
         font-size: 12px;
         color: #37352f;
         font-weight: 400;
+      }
+      .delete-icon {
+        opacity: 0;
+        height: 18px;
+        width: 18px;
+        font-size: 18px;
+      }
+      &:hover {
+        .delete-icon {
+          opacity: 1;
+        }
       }
     }
     .input-comment {

@@ -33,6 +33,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
@@ -63,6 +64,7 @@ export class MainScreenBrainstormingActivityComponent
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
   showParticipantUI = false;
+  participantCode;
   private eventsSubscription: Subscription;
 
   constructor(
@@ -70,7 +72,8 @@ export class MainScreenBrainstormingActivityComponent
     private dialog: MatDialog,
     private utilsService: UtilsService,
     private activitySettingsService: ActivitySettingsService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private permissionsService: NgxPermissionsService
   ) {
     super();
   }
@@ -111,6 +114,9 @@ export class MainScreenBrainstormingActivityComponent
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      this.participantCode = this.getParticipantCode();
+    });
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
