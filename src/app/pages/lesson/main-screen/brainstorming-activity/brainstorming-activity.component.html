@@ -1,27 +1,38 @@
-<!-- New brain storm code  -->
-<div fxLayout="column" class="mainscreen-activity brainstorming-ms" style="overflow: hidden;">
-  <div class="lesson-top-banner compact">
-    <div fxLayout="row" fxLayoutAlign="space-between center" >
-      <div fxLayoutAlign="start center" class="instructions">
+<div fxLayout="column" class="barinstorm-main">
+  <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" >
+    <div fxLayout="column" class="instructions">
+      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
         <h2
-          class="pn-500 primary-color"
+          class="brainstorm-h2 black-color"
           [ngClass]="{
             'long-instructions': instructions.length > 65
           }"
         >
           {{ instructions }}
         </h2>
+        <div class="menus">
+          <button mat-button [matMenuTriggerFor]="menu">Groups
+            <mat-icon class="arrow-down">keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+          </mat-menu>
+        </div>
+        <div class="menus">
+          <button mat-button [matMenuTriggerFor]="menu">Room1
+            <mat-icon class="arrow-down">keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+          </mat-menu>
+        </div>
       </div>
-      <ng-container *ngxPermissionsOnly="'ADMIN'">
-        <submitted-counter  
-          [answeredParticipants]="answeredParticipants" 
-          [unansweredParticipants]="unansweredParticipants">
-        </submitted-counter>
-      </ng-container>
     </div>
-  </div>
-  <div (click)="openDialog()">
-    <span>Open Dialog</span>
+    <div fxLayout="column" fxLayoutAlign="center center" class="import-button" (click)="openDialog()">
+      <mat-icon>add_circle</mat-icon>
+    </div>
   </div>
   <div class="brainstorm-container">
     <ng-container *ngIf="categorizeFlag">
@@ -54,6 +65,34 @@
       </benji-uncategorized-ideas>
     </ng-container>
   </div>
+</div>
+
+<!-- New brain storm code  -->
+<div fxLayout="column" class="mainscreen-activity brainstorming-ms" style="overflow: hidden;">
+  <!-- <div class="lesson-top-banner compact">
+    <div fxLayout="row" fxLayoutAlign="space-between center" >
+      <div fxLayoutAlign="start center" class="instructions">
+        <h2
+          class="pn-500 primary-color"
+          [ngClass]="{
+            'long-instructions': instructions.length > 65
+          }"
+        >
+          {{ instructions }}
+        </h2>
+      </div>
+      <ng-container *ngxPermissionsOnly="'ADMIN'">
+        <submitted-counter  
+          [answeredParticipants]="answeredParticipants" 
+          [unansweredParticipants]="unansweredParticipants">
+        </submitted-counter>
+      </ng-container>
+    </div>
+  </div>
+  <div (click)="openDialog()">
+    <span>Open Dialog</span>
+  </div> -->
+
 
   <ng-container *ngxPermissionsOnly="'PARTICIPANT'" >
     <div class="brainstorm-ps-container" *ngIf="showParticipantUI" [@slideInRightOnEnter] [@fadeOutOnLeave]>
