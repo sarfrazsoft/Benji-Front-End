@@ -506,3 +506,43 @@ benji-ps-brainstorming-activity {
     }
   }
 }
+
+.barinstorm-main {
+  margin: 24px 24px 0px 24px;
+  background-color: #fff;
+  border-radius: 16px 16px 0px 0px;
+  height: 100%;
+  .barinstorm-header {
+    padding: 8px;
+    border-bottom: 1px solid #E7E7E7;
+    .brainstorm-h2 {
+      font-weight: 700;
+      font-size: 24px;
+      margin: 0px 24px;
+    }
+    .menus {
+      font-size: 16px;
+      color: #616161;
+      font-weight: 500;
+      background: #F3F4F7;
+      box-shadow: 1px 1px 1px rgba(213, 217, 222, 0.5);
+      border-radius: 24px;
+      .arrow-down {
+        margin-right: -8px;
+      }
+    }
+
+
+    .import-button {
+      cursor: pointer;
+      mat-icon {
+        color: $primary-color;
+        font-size: 56px;
+        font-weight: 700;
+        background-color: #fff;
+        width: 56px;
+        height: 56px;
+      }
+    }
+  }
+}
