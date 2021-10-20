@@ -16,6 +16,8 @@
       [value]="value">
     </mat-progress-spinner>
   </div>
-  <div class="importing">Importing slides</div>
-  <div class="wait">This may take a few minutes.</div>
+  <div *ngIf="uploading">
+    <div class="importing">Importing slides</div>
+    <div class="wait">This may take a few minutes.</div>
+  </div>
 </div>

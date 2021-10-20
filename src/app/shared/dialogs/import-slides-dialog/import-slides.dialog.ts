@@ -15,6 +15,7 @@ export class ImportSlidesDialogComponent {
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
   lessonId;
+  uploading = false;
 
   constructor (
     private editorService: EditorService,
@@ -31,6 +32,7 @@ export class ImportSlidesDialogComponent {
     console.log($event.target.files[0]); // outputs the first file
     const file = $event.target.files[0];
     if (file) {
+      this.uploading = true;
       this.editorService
         .uploadFile(file, this.lessonId)
         .pipe(
@@ -39,6 +41,7 @@ export class ImportSlidesDialogComponent {
         )
         .subscribe((res) => {
           console.log(res);
+          this.uploading = false;
         });
     }
     const url = '';
