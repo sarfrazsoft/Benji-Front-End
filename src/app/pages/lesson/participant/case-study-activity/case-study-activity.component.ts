@@ -25,9 +25,11 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() actEditor = false;
   @Input() currentGroupID;
+  @Input() showingToFacilitator = false;
   act: CaseStudyActivity;
   pitchDraftNotes = '';
   typingTimer;
@@ -50,7 +52,7 @@ export class ParticipantCaseStudyActivityComponent
   // unique ID for document to be used in collaborative editor
   documentId: string;
 
-  participantCode: number;
+  @Input() participantCode: number;
   lessonRunCode;
 
   component;
@@ -70,7 +72,12 @@ export class ParticipantCaseStudyActivityComponent
     super.ngOnInit();
     this.act = this.activityState.casestudyactivity;
     this.worksheetTitle = this.act.activity_title;
-    this.participantCode = this.getParticipantCode();
+    if (this.participantCode) {
+      // If participantCode is sent from parent don't do anything
+      // just pass it along to child
+    } else {
+      this.participantCode = this.getParticipantCode();
+    }
     this.populateQuestions();
 
     this.timer = this.getTimerTool();
@@ -222,16 +229,13 @@ export class ParticipantCaseStudyActivityComponent
   locallySaveDraft(event) {}
 
   saveEditCollab() {
-    // const json = JSON.parse(localStorage.getItem('collabeditJSONDoc' + '_' + this.questionId));
-    this.sendMessage.emit(
-      new CaseStudySubmitAnswerEvent(this.answeredWorksheets, this.answeredWorksheetTexts)
-    );
-    // console.log(localStorage.getItem('collabeditJSONDoc'));
-    // this.questions.forEach((q) => {
-    //   console.log(q);
-    //   const caseStudySubmitEventEntry = new CaseStudySubmitEventAnswer(q.id, q.answer);
-    //   casestudysubmissionentry_set.push(caseStudySubmitEventEntry);
-    // });
+    if (this.showingToFacilitator) {
+      // do nothing
+    } else {
+      this.sendMessage.emit(
+        new CaseStudySubmitAnswerEvent(this.answeredWorksheets, this.answeredWorksheetTexts)
+      );
+    }
   }
 
   questionAnswerUpdated(event) {

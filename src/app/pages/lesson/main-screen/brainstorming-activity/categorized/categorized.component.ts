@@ -11,14 +11,19 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { includes } from 'lodash';
 import * as global from 'src/app/globals';
 import {
   BrainstormCreateCategoryEvent,
   BrainstormImageSubmitEvent,
   BrainstormRemoveCategoryEvent,
+  BrainstormRemoveIdeaCommentEvent,
+  BrainstormRemoveIdeaHeartEvent,
   BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
   BrainstormSubmitEvent,
+  BrainstormSubmitIdeaCommentEvent,
+  BrainstormSubmitIdeaHeartEvent,
   Category,
   Idea,
 } from 'src/app/services/backend/schema';
@@ -33,10 +38,12 @@ export class CategorizedComponent implements OnInit, OnChanges {
   @Input() submissionScreen;
   @Input() voteScreen;
   @Input() act;
+  @Input() activityState;
   @Input() minWidth;
   @Input() sendMessage;
   @Input() joinedUsers;
   @Input() showUserName;
+  @Input() participantCode;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -113,6 +120,16 @@ export class CategorizedComponent implements OnInit, OnChanges {
     }
   }
 
+  getParticipantName(code: number) {
+    let name = 'John Doe';
+    this.activityState.lesson_run.participant_set.forEach((p) => {
+      if (p.participant_code === code) {
+        name = p.display_name;
+      }
+    });
+    return name;
+  }
+
   columnHeaderClicked(column) {
     column.editing = true;
     setTimeout(() => {
@@ -149,5 +166,44 @@ export class CategorizedComponent implements OnInit, OnChanges {
       });
     });
     this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryId));
+  }
+
+  submitComment(ideaId, val) {
+    this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+  }
+
+  removeComment(commentId, ideaId) {
+    this.sendMessage.emit(new BrainstormRemoveIdeaCommentEvent(commentId, ideaId));
+  }
+
+  isUserTheCommentor(participantCode) {
+    if (this.participantCode && this.participantCode === participantCode) {
+      return true;
+    }
+    return false;
+  }
+
+  isHearted(item) {
+    let hearted = false;
+    item.hearts.forEach((element) => {
+      if (element.participant === this.participantCode) {
+        hearted = true;
+      }
+    });
+    return hearted;
+  }
+
+  removeHeart(item) {
+    let hearted;
+    item.hearts.forEach((element) => {
+      if (element.participant === this.participantCode) {
+        hearted = element;
+      }
+    });
+    this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+  }
+
+  setHeart(ideaId) {
+    this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
   }
 }

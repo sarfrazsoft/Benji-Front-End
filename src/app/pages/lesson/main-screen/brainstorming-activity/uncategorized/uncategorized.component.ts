@@ -71,7 +71,6 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   }
 
   getPersonName(idea: Idea) {
-    console.log(idea);
     if (idea && idea.submitting_participant) {
       const user = this.joinedUsers.find(
         (u) => u.participant_code === idea.submitting_participant.participant_code

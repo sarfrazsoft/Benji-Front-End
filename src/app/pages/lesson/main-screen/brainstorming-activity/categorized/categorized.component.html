@@ -51,7 +51,7 @@
           </ng-container>
         </div>
         <div class="ideas" [ngStyle]="{'min-width.px': minWidth}">
-          <div
+          <!-- <div
             class="brainstorm-idea add-idea-button"
             (click)="addIdea(column)"
           >
@@ -63,7 +63,7 @@
               Add new card
             </div>
           </div>
-          </div>
+          </div> -->
           <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
             <textarea
               #textInput
@@ -109,31 +109,43 @@
               <div class="feedback">
                 <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
                   <div>
-                    <img class="heart" src="/assets/img/grey-heart.svg"> 
-                    <span>2</span>
+                    <img
+                      *ngIf="!isHearted(item)"
+                      (click)="setHeart(item.id)" 
+                      class="heart" 
+                      src="/assets/img/grey-heart.svg"> 
+                    <img
+                      *ngIf="isHearted(item)"
+                      (click)="removeHeart(item)" 
+                      class="heart" 
+                      src="/assets/img/red-heart.svg"> 
+                    <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
                   </div>
                   <div>
                     <img class="thought" src="/assets/img/grey-thought.svg"> 
                     <span>5</span>
                   </div>
                 </div>
-                <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
-                  <img class="dp" src="/assets/img/placeholder.png"> 
-                  <div fxLayout="column" fxLayoutAlign="start start">
-                    <div class="name">Mahin</div>
-                    <div class="comment">I love what you did with this response!</div>
+                <ng-container *ngFor="let comment of item.comments">
+                  <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
+                    <img class="dp" src="/assets/img/placeholder.png"> 
+                    <div fxLayout="column" fxLayoutAlign="start start">
+                      <div class="name">{{ getParticipantName(comment.participant) }}</div>
+                      <div class="comment">{{ comment.comment }}</div>
+                    </div>
+                    <mat-icon
+                      *ngIf="isUserTheCommentor(comment.participant)"
+                      class="delete-icon"
+                      (click)="removeComment(comment.id, item.id)">
+                      clear
+                    </mat-icon>
                   </div>
-                </div>
-                <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
-                  <img class="dp" src="/assets/img/placeholder.png"> 
-                  <div fxLayout="column" fxLayoutAlign="start start">
-                    <div class="name">Matt Parson</div>
-                    <div class="comment">Thanks Mahin!</div>
-                  </div>
-                </div>
+                </ng-container>
                 <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-                  <input class="input-comment" type="text" placeholder="Add a comment">
-                  <img class="" src="/assets/img/submit-vector.svg">
+                  <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
+                  <div (click)="submitComment(item.id, commentInput.value)">
+                    <img src="/assets/img/submit-vector.svg">
+                  </div>
                 </div>
               </div>
             </div>

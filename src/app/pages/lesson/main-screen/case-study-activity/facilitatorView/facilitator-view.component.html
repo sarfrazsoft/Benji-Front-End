@@ -1,0 +1,16 @@
+<div class="case-study-main" fxLayout="row">
+  <div fxLayout="column" class="" fxFlex="176px">
+    <div class="groups-list">
+      <div
+        class="group-container"
+        fxLayout="row"
+        *ngFor="let group of groupsX"
+      >
+        <div (click)="selectGroup(group)"> {{group.name}} </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column" class="" fxFlex="100%">
+    <ng-template #caseStudyEntry></ng-template>
+  </div>
+</div>
