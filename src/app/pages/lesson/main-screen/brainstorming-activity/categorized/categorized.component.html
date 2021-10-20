@@ -4,7 +4,7 @@
   fxLayout="row"
   fxLayoutGap="30px"
   cdkDropListGroup>
-  <ng-container *ngFor="let column of act.brainstormcategory_set; let i = index">
+  <ng-container *ngFor="let column of columns; let i = index">
     <ng-container *ngIf="!column.removed">
       <div
         class="column"
@@ -51,19 +51,6 @@
           </ng-container>
         </div>
         <div class="ideas" [ngStyle]="{'min-width.px': minWidth}">
-          <!-- <div
-            class="brainstorm-idea add-idea-button"
-            (click)="addIdea(column)"
-          >
-          <div class="" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <mat-icon>
-              add
-            </mat-icon>
-            <div>
-              Add new card
-            </div>
-          </div>
-          </div> -->
           <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
             <textarea
               #textInput
