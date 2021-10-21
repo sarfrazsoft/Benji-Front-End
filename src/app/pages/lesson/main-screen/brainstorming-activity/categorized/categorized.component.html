@@ -89,10 +89,6 @@
                 </ng-template>
               </div>
               <div class="content"> {{ item.idea }} </div>
-              <!-- <div class="username" *ngIf="showUserName">{{ getPersonName(item) }}</div>
-              <div class="votes primary-color" *ngIf="voteScreen">
-                {{ item.num_votes }}
-              </div> -->
               <div class="feedback">
                 <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
                   <div>
@@ -110,7 +106,7 @@
                   </div>
                   <div>
                     <img class="thought" src="/assets/img/grey-thought.svg"> 
-                    <span>5</span>
+                    <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
                   </div>
                 </div>
                 <ng-container *ngFor="let comment of item.comments">

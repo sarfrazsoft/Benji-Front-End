@@ -2,12 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as global from 'src/app/globals';
-import {
-  BrainstormImageSubmitEvent,
-  BrainstormSubmitEvent,
-  Category,
-  Idea,
-} from 'src/app/services/backend/schema';
+import { BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';

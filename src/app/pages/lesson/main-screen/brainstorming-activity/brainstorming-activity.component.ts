@@ -367,7 +367,6 @@ export class MainScreenBrainstormingActivityComponent
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log(result);
         this.submitIdea(result);
       }
     });

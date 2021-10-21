@@ -30,7 +30,6 @@ export class IdeaCreationDialogComponent {
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];
     }
-    console.log(data);
   }
 
   onSubmit() {

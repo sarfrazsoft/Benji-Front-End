@@ -11,11 +11,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, includes } from 'lodash';
+import { differenceBy, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import {
   BrainstormCreateCategoryEvent,
-  BrainstormImageSubmitEvent,
   BrainstormRemoveCategoryEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
@@ -68,24 +67,24 @@ export class CategorizedComponent implements OnInit, OnChanges {
     } else {
       let eventType;
       // eventType = 'AddedIdea';
-      eventType = 'heartedIdea';
+      // eventType = 'heartedIdea';
+      eventType = 'removeIdea';
       if (eventType === 'AddedIdea') {
         this.addIdeaToCategory();
       } else if (eventType === 'heartedIdea') {
         this.ideaHearted();
+      } else if (eventType === 'removeIdea') {
+        this.ideaRemoved();
       }
     }
   }
 
   addIdeaToCategory() {
     this.act.brainstormcategory_set.forEach((category, index) => {
-      if (category.brainstormidea_set.length === this.columns[index].brainstormidea_set.length) {
+      const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+      if (BEIdeas.length === this.columns[index].brainstormidea_set.length) {
       } else {
-        const myDifferences = differenceBy(
-          category.brainstormidea_set,
-          this.columns[index].brainstormidea_set,
-          'id'
-        );
+        const myDifferences = differenceBy(BEIdeas, this.columns[index].brainstormidea_set, 'id');
         this.columns[index].brainstormidea_set.push(myDifferences[0]);
       }
     });
@@ -108,7 +107,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
   ideaHearted() {
     this.act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
-        category.brainstormidea_set.forEach((idea, ideaIndex) => {
+        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+        BEIdeas.forEach((idea, ideaIndex) => {
           const existingHearts = this.columns[categoryIndex].brainstormidea_set[ideaIndex].hearts;
           const existingHeartsLength = this.columns[categoryIndex].brainstormidea_set[ideaIndex].hearts;
           const newHearts = idea.hearts.length;
@@ -117,6 +117,19 @@ export class CategorizedComponent implements OnInit, OnChanges {
             existingHearts.push(myDifferences[0]);
           }
         });
+      }
+    });
+  }
+
+  ideaRemoved() {
+    this.act.brainstormcategory_set.forEach((category, index) => {
+      const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+      if (BEIdeas.length === this.columns[index].brainstormidea_set.length) {
+      } else {
+        const myDifferences: Array<any> = differenceBy(this.columns[index].brainstormidea_set, BEIdeas, 'id');
+        console.log(myDifferences);
+
+        remove(this.columns[index].brainstormidea_set, (idea: any) => idea.id === myDifferences[0].id);
       }
     });
   }
