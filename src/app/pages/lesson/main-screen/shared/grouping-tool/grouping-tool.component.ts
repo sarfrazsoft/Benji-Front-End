@@ -8,6 +8,7 @@ import {
   EditGroupingTitleEvent,
   EditGroupTitleEvent,
   GroupingAssignParticipantEvent,
+  StartBrainstormGroupEvent,
   StartCaseStudyGroupEvent,
   UpdateMessage,
   ViewGroupingEvent,
@@ -36,8 +37,15 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   constructor(private utilsService: UtilsService) {}
 
   ngOnInit(): void {
-    const code =
-      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+    let activityID = '';
+    const state = this.activityState;
+    if (state.casestudyactivity) {
+      activityID = state.casestudyactivity.activity_id;
+    } else if (state.brainstormactivity) {
+      activityID = state.brainstormactivity.activity_id;
+    }
+    const code = activityID + state.lesson_run.lessonrun_code;
+
     if (localStorage.getItem('isGroupingCreated') === code) {
       this.showStartGroupingButton = false;
     } else {
@@ -176,10 +184,21 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   makeActivityGrouping() {
     // check if at least one group has at least one participant
     if (this.groupingsValid()) {
-      const code =
-        this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+      let activityID = '';
+      const state = this.activityState;
+      if (state.casestudyactivity) {
+        activityID = state.casestudyactivity.activity_id;
+      } else if (state.brainstormactivity) {
+        activityID = state.brainstormactivity.activity_id;
+      }
+      const code = activityID + state.lesson_run.lessonrun_code;
       window.localStorage.setItem('isGroupingCreated', code);
-      this.sendMessage.emit(new StartCaseStudyGroupEvent());
+
+      if (state.casestudyactivity) {
+        this.sendMessage.emit(new StartCaseStudyGroupEvent());
+      } else if (state.brainstormactivity) {
+        this.sendMessage.emit(new StartBrainstormGroupEvent());
+      }
       this.showStartGroupingButton = false;
       this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {

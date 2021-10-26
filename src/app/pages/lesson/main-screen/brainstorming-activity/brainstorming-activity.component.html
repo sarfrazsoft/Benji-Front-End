@@ -13,7 +13,7 @@
         <div *ngIf="categorizeFlag">
           <ng-select
             class="menus"
-            [items]="activityState.brainstormactivity.brainstormcategory_set"
+            [items]="groups"
             bindLabel="category_name"
             placeholder="Groups"
             [(ngModel)]="selectedCategory"
@@ -40,6 +40,7 @@
         [joinedUsers]="joinedUsers"
         [showUserName]="showUserName"
         [participantCode]="participantCode"
+        [eventType]="eventType"
         (viewImage)="viewImage($event)"
         (deleteIdea)="deleteIdea($event)"
       >

@@ -37,27 +37,33 @@
           </div>
 
           <!-- Grouping control -->
+          <button
+            [matMenuTriggerFor]="groupingMenu"
+            #groupingMenuTrigger="matMenuTrigger"
+            style="width: 0px;">
+          </button>
           <div class="option" 
             fxLayoutAlign="center center"
-            *ngIf="activityState && activityState.activity_type === 'CaseStudyActivity'"
+            *ngIf="activityState && 
+              (activityState.activity_type === 'CaseStudyActivity' || 
+              activityState.activity_type === 'BrainstormActivity')"
             (click)="groupingMenuClicked()"
             [ngClass]="{ active: isGroupingShowing }"
-            [matMenuTriggerFor]="groupingMenu"
             matTooltip="Groups"
             [matTooltipPosition]="'below'"
             show-delay="100">
               <img src="/assets/img/grouping.svg"/> 
-              <mat-menu 
-                #groupingMenu="matMenu" 
-                class="activity-settings-menu "  
-                [overlapTrigger]="false" 
-                xPosition="before">
-                <benji-grouping-control
-                  [activityState]="activityState"
-                  (socketMessage)="propagate($event)">
-                </benji-grouping-control>
-              </mat-menu>
-          </div>
+            </div>
+            <mat-menu 
+              #groupingMenu="matMenu" 
+              class="activity-settings-menu "  
+              [overlapTrigger]="false" 
+              xPosition="before">
+              <benji-grouping-control
+                [activityState]="activityState"
+                (socketMessage)="propagate($event)">
+              </benji-grouping-control>
+            </mat-menu>
 
           <!-- Vote control -->
           <div class="option" 

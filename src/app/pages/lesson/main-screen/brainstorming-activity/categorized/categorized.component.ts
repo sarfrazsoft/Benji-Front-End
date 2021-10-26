@@ -43,6 +43,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   @Input() joinedUsers;
   @Input() showUserName;
   @Input() participantCode;
+  @Input() eventType;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -65,15 +66,22 @@ export class CategorizedComponent implements OnInit, OnChanges {
       this.populateCategories();
       this.cycle = 'second';
     } else {
-      let eventType;
+      // let eventType;
       // eventType = 'AddedIdea';
       // eventType = 'heartedIdea';
-      eventType = 'removeIdea';
-      if (eventType === 'AddedIdea') {
+      // eventType = 'removeIdea';
+      // console.log(this.eventType);
+      if (this.eventType === 'BrainstormSubmitEvent') {
         this.addIdeaToCategory();
-      } else if (eventType === 'heartedIdea') {
+      } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
+        this.ideaCommented();
+      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
+        this.ideaCommented();
+      } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
         this.ideaHearted();
-      } else if (eventType === 'removeIdea') {
+      } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
+        this.ideaHearted();
+      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
         this.ideaRemoved();
       }
     }
@@ -110,11 +118,36 @@ export class CategorizedComponent implements OnInit, OnChanges {
         const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
         BEIdeas.forEach((idea, ideaIndex) => {
           const existingHearts = this.columns[categoryIndex].brainstormidea_set[ideaIndex].hearts;
-          const existingHeartsLength = this.columns[categoryIndex].brainstormidea_set[ideaIndex].hearts;
-          const newHearts = idea.hearts.length;
-          if (existingHeartsLength < newHearts) {
+          const existingHeartsLength = existingHearts.length;
+          const newHeartsLength = idea.hearts.length;
+          if (existingHeartsLength < newHeartsLength) {
             const myDifferences = differenceBy(idea.hearts, existingHearts, 'id');
             existingHearts.push(myDifferences[0]);
+          } else if (existingHeartsLength > newHeartsLength) {
+            const myDifferences: Array<any> = differenceBy(existingHearts, idea.hearts, 'id');
+
+            remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
+          }
+        });
+      }
+    });
+  }
+
+  ideaCommented() {
+    this.act.brainstormcategory_set.forEach((category, categoryIndex) => {
+      if (category.brainstormidea_set) {
+        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+        BEIdeas.forEach((idea, ideaIndex) => {
+          const existingHearts = this.columns[categoryIndex].brainstormidea_set[ideaIndex].comments;
+          const existingHeartsLength = existingHearts.length;
+          const newHeartsLength = idea.comments.length;
+          if (existingHeartsLength < newHeartsLength) {
+            const myDifferences = differenceBy(idea.comments, existingHearts, 'id');
+            existingHearts.push(myDifferences[0]);
+          } else if (existingHeartsLength > newHeartsLength) {
+            const myDifferences: Array<any> = differenceBy(existingHearts, idea.comments, 'id');
+
+            remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
           }
         });
       }
@@ -127,7 +160,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
       if (BEIdeas.length === this.columns[index].brainstormidea_set.length) {
       } else {
         const myDifferences: Array<any> = differenceBy(this.columns[index].brainstormidea_set, BEIdeas, 'id');
-        console.log(myDifferences);
 
         remove(this.columns[index].brainstormidea_set, (idea: any) => idea.id === myDifferences[0].id);
       }

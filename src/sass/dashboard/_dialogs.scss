@@ -231,9 +231,14 @@
         padding: 24px 32px 24px 24px;
         .title {
           font-size: 24px;
-          color: #bdbdbd;
           font-weight: 600;
           margin-bottom: 16px;
+          border: 0px;
+          color: #37352f;
+          &:focus {
+            border: 0px;
+            outline: none;
+          }
         }
         .description {
           border: unset;
@@ -370,7 +375,7 @@
     padding: 16px 16px 24px 32px;
     .dialog-content {
       padding-right: 16px;
-      .close{
+      .close {
         cursor: pointer;
         position: relative;
         float: right;
@@ -382,7 +387,7 @@
       }
       .title {
         font-size: 24px;
-        color: #37352F;
+        color: #37352f;
         font-weight: 700;
         margin-top: 11px;
         margin-bottom: 16px;
@@ -400,7 +405,7 @@
           font-weight: 600;
           font-size: 16px;
           color: #fff;
-          background: #555BEA;
+          background: #555bea;
           padding: 11px 37px;
           border-radius: 4px;
         }
@@ -422,4 +427,3 @@
     }
   }
 }
-

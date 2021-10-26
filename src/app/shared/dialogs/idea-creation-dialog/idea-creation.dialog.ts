@@ -12,6 +12,7 @@ export class IdeaCreationDialogComponent {
   categories: Array<Category> = [];
   selectedCategory: Category;
   userIdeaText = '';
+  ideaTitle;
   lessonRunCode;
   imageSelected = false;
 
@@ -35,6 +36,7 @@ export class IdeaCreationDialogComponent {
   onSubmit() {
     this.dialogRef.close({
       text: this.userIdeaText,
+      title: this.ideaTitle,
       category: this.selectedCategory,
       imagesList: this.imagesList,
       selectedImageUrl: this.selectedImageUrl,

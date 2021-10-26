@@ -165,8 +165,9 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       }
       this.facilitatorConnected = true;
       this.serverMessage = msg.updatemessage;
+      this.serverMessage.eventType = msg.eventtype;
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
-      console.log(msg);
+      // console.log(msg);
       const obj = msg.clienterror.error_detail;
       if (typeof obj === 'string') {
       } else {
@@ -262,5 +263,9 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
 
   public sendSocketMessage(evt: ActivityEvent) {
     this.socket.next(evt.toMessage());
+  }
+
+  getEventType() {
+    console.log(this.serverMessage);
   }
 }

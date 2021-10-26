@@ -1,9 +1,7 @@
 <div class="idea-dialog" fxLayout="row">
   <div class="white-area">
     <div class="white-content">
-      <div class="title">
-        Title
-      </div>
+      <input class="title" type="text" placeholder="Title" [(ngModel)]="ideaTitle">
       <textarea
         [(ngModel)]="userIdeaText" 
         class="description"

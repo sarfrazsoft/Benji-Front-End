@@ -12,9 +12,11 @@ export abstract class BaseActivityComponent implements OnInit {
   @Output() sendMessage = new EventEmitter<ActivityEvent>();
   timer;
   myParticipantCode: number;
+  eventType;
 
   ngOnInit() {
     this.myParticipantCode = this.getParticipantCode();
+    // this.eventType = this.getEventType();
   }
 
   getActivityType() {
@@ -96,5 +98,9 @@ export abstract class BaseActivityComponent implements OnInit {
 
   sendSocketMessage($event) {
     this.sendMessage.emit($event);
+  }
+
+  getEventType() {
+    return this.activityState.eventType;
   }
 }

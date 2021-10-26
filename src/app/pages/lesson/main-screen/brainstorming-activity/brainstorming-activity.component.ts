@@ -95,6 +95,7 @@ export class MainScreenBrainstormingActivityComponent
   voteSubmittedUsersCount = 0;
   dialogRef;
   shownSubmissionCompleteNofitication = false;
+  groups;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -110,6 +111,7 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
+
     this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
@@ -198,9 +200,13 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   onChanges() {
+    this.eventType = this.getEventType();
     this.loadUsersCounts();
     const act = this.activityState.brainstormactivity;
     this.act = this.activityState.brainstormactivity;
+    if (this.act.groups) {
+      this.groups = this.act.groups;
+    }
     if (this.act.brainstormcategory_set.length) {
       // check if the categories have ids
       // if categories don't have ids it means
@@ -387,21 +393,9 @@ export class MainScreenBrainstormingActivityComponent
     if (idea.text.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.category.id));
+    this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id));
     // this.idea.editing = false;
   }
-
-  // submitWithImg() {
-  // this.submitImageNIdea();
-  // this.idea.editing = false;
-  // }
-  // getSelectedFileName() {
-  //   let name = '';
-  //   if (this.imagesList.length > 0) {
-  //     name = this.imagesList[0].name;
-  //   }
-  //   return name;
-  // }
 
   submitImageNIdea(idea) {
     const code = this.activityState.lesson_run.lessonrun_code;
@@ -431,7 +425,9 @@ export class MainScreenBrainstormingActivityComponent
               if (!idea.text) {
                 idea.text = '';
               }
-              this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.category.id, res.id));
+              this.sendMessage.emit(
+                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, res.id)
+              );
             })
             .subscribe(
               (data) => {},
@@ -444,7 +440,7 @@ export class MainScreenBrainstormingActivityComponent
     } else {
       if (idea.selectedImageUrl) {
         this.sendMessage.emit(
-          new BrainstormImageSubmitEvent(idea.text, idea.category.id, idea.selectedImageUrl)
+          new BrainstormImageSubmitEvent(idea.text, idea.title, idea.category.id, idea.selectedImageUrl)
         );
       }
     }

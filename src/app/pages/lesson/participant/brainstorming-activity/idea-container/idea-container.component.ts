@@ -72,7 +72,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     if (this.userIdeaText.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id));
+    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, '', this.selectedCategory.id));
     this.idea.editing = false;
   }
 
@@ -115,9 +115,9 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
               if (!this.userIdeaText) {
                 this.userIdeaText = '';
               }
-              this.sendMessage.emit(
-                new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
-              );
+              // this.sendMessage.emit(
+              //   new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
+              // );
               // this.userIdeaText = '';
             })
             .subscribe(
@@ -131,7 +131,12 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     } else {
       if (this.selectedImageUrl) {
         this.sendMessage.emit(
-          new BrainstormImageSubmitEvent(this.userIdeaText, this.selectedCategory.id, this.selectedImageUrl)
+          new BrainstormImageSubmitEvent(
+            this.userIdeaText,
+            '',
+            this.selectedCategory.id,
+            this.selectedImageUrl
+          )
         );
       }
     }

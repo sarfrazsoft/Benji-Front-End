@@ -33,6 +33,7 @@ export interface UpdateMessage {
   lesson: Lesson;
   lesson_run: LessonRun;
   running_tools: RunningTools;
+  eventType: string;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;
@@ -85,6 +86,7 @@ export interface ServerMessage {
   clienterror?: ClientError;
   servererror?: ServerError;
   servernotification?: ServerNotification;
+  eventtype: string;
 }
 
 // export class Ddatemessage implements UpdateMessage {
@@ -396,17 +398,18 @@ export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number, idea_image?: number, image_path?: string) {
+  constructor(text: string, title: string, category: number, idea_image?: number, image_path?: string) {
     super();
     if (idea_image) {
       this.extra_args = {
         idea: text,
+        title: title,
         category: category,
         idea_image: idea_image,
         image_path: image_path,
       };
     } else {
-      this.extra_args = { idea: text, category: category };
+      this.extra_args = { idea: text, title: title, category: category };
     }
   }
 }
@@ -414,10 +417,11 @@ export class BrainstormSubmitEvent extends ActivityEvent {
 export class BrainstormImageSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number, image_path?: string) {
+  constructor(text: string, title: string, category: number, image_path?: string) {
     super();
     this.extra_args = {
       idea: text,
+      title: title,
       category: category,
       image_path: image_path,
     };
@@ -721,6 +725,9 @@ export class GroupingParticipantSelfJoinEvent extends ActivityEvent {
 
 export class StartCaseStudyGroupEvent extends ActivityEvent {
   event_name = 'StartCaseStudyGroupEvent';
+}
+export class StartBrainstormGroupEvent extends ActivityEvent {
+  event_name = 'StartBrainstormGroupEvent';
 }
 
 export class CardsShuffleEvent extends ActivityEvent {

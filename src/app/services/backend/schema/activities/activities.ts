@@ -319,6 +319,7 @@ export interface BrainstormActivity extends ParentActivity {
   all_participants_voted: boolean;
   hide_timer: boolean;
   voted_participants: Array<any>;
+  groups: Array<Group>;
 }
 
 export interface Category {

@@ -88,7 +88,11 @@
                   <img (click)="openImage(hostname + item.idea_image.img)" [src]="hostname + item.idea_image.img" alt="" />
                 </ng-template>
               </div>
-              <div class="content"> {{ item.idea }} </div>
+
+              <div class="content">
+                <div class="title">{{ item.title }}</div>
+                 {{ item.idea }} 
+                </div>
               <div class="feedback">
                 <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
                   <div>
@@ -126,7 +130,7 @@
                 </ng-container>
                 <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
                   <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
-                  <div (click)="submitComment(item.id, commentInput.value)">
+                  <div (click)="submitComment(item.id, commentInput.value); commentInput.value = null">
                     <img src="/assets/img/submit-vector.svg">
                   </div>
                 </div>
