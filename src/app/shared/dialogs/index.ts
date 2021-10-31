@@ -8,6 +8,7 @@ export * from './add-video-dialog/add-video.dialog';
 export * from './lesson-settings-dialog/lesson-settings.dialog';
 export * from './templates-dialog/templates.dialog';
 export * from './idea-creation-dialog/idea-creation.dialog';
+export * from './grouping-tool-dialog/grouping-tool.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
@@ -23,6 +24,7 @@ import { LaunchSessionDialogComponent } from './launch-session/launch-session.di
 import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-settings.dialog';
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
+import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 
 export const Dialogs = [
   AddVideoDialogComponent,
@@ -39,4 +41,5 @@ export const Dialogs = [
   MCQFeedbackDialogComponent,
   TemplatesDialogComponent,
   IdeaCreationDialogComponent,
+  GroupingToolDialogComponent,
 ];

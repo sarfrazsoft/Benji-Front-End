@@ -5,6 +5,7 @@ import { ContextService, GroupingToolService, SharingToolService } from 'src/app
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
+import { GroupingToolDialogComponent } from '../../shared/dialogs/grouping-tool-dialog/grouping-tool.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -20,6 +21,7 @@ import {
   ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -56,7 +58,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     public contextService: ContextService,
     private utilsService: UtilsService,
     private sharingToolService: SharingToolService,
-    private groupingToolService: GroupingToolService
+    private groupingToolService: GroupingToolService,
+    private groupingToolDialog: MatDialog,
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -185,4 +188,20 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  openGroupingToolDialog() {
+    const dialogRef = this.groupingToolDialog.open(GroupingToolDialogComponent, {
+      width: '1168px',
+      panelClass: 'grouping-tool-dialog',
+      data: {
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Use Template') {
+      }
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }

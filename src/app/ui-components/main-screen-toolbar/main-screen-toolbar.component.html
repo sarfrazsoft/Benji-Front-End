@@ -36,11 +36,11 @@
               </mat-menu>
           </div>
 
-          <!-- Grouping control -->
+          <!-- Grouping control (click)="groupingMenuClicked()" -->
           <div class="option" 
             fxLayoutAlign="center center"
             *ngIf="activityState && activityState.activity_type === 'CaseStudyActivity'"
-            (click)="groupingMenuClicked()"
+            (click)="openGroupingToolDialog()"
             [ngClass]="{ active: isGroupingShowing }"
             [matMenuTriggerFor]="groupingMenu"
             matTooltip="Groups"

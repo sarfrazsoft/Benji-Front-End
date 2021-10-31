@@ -423,3 +423,170 @@
   }
 }
 
+.grouping-tool-dialog {
+  .mat-dialog-container {
+    border-radius: 16px; 
+    padding: 40px;
+    .content-header {
+      margin-bottom: 15px;
+      .title {
+        font-weight: 600;
+        font-size: 24px;
+        color: #37352F;
+      }
+      .edit {
+        cursor: pointer;
+        margin-left: 11px;
+        margin-top: 4px;
+      }
+      .close{
+        margin-top: -40px;
+        cursor: pointer;
+      }
+    }
+    .settings {
+      border: 1px solid #E6E4E3;
+      border-radius: 4px;
+      padding: 16px 24px;
+      height: 72px;
+      margin-bottom: 32px;
+      .header {
+        color: #37352F;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .subheader{
+        color: #828282;
+        font-size: 12px;
+        font-weight: 400;
+      }
+      .groups-count {
+        height: 20px;
+        width: 26px;
+        padding: 10px;
+        text-align: right;
+        font-size: 16px;
+        color: #616161;
+        font-weight: 400;
+        &:focus{
+          outline: none;
+        }
+      }
+      .ng-select-container {
+        background: #F3F4F7;
+        border-radius: 4px;
+        border: 0px;
+        width: 134px;
+        &:focus{
+          outline: none;
+        }
+      }
+      .mat-slide-toggle-thumb {
+        height: 14px;
+        width: 14px;
+        margin-top: 4px;
+      }
+      .mat-slide-toggle-bar {
+        width: 32px;
+        height: 16px;
+      }
+      .mat-slide-toggle .mat-slide-toggle-ripple {
+        height: 0px; 
+      }
+    }
+    .sub-title {
+      color: #37352F;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .free-users {
+      margin-bottom: 32px;
+      .user {
+        font-size: 12px;
+        font-weight: 500;
+        color: #6a6a6a;
+        padding: 9px 16px;
+        background: #F3F4F7;
+        border-radius: 100px;
+      }
+    }
+    .groups {
+      .group {
+        padding: 16px;
+        border: 1px solid #E2E0DF;
+        border-radius: 8px;
+        height: 240px;
+        width: 280px;
+        .group-title {
+          font-size: 16px;
+          font-weight: 500;
+          color: #616161;
+          margin-left: 8px;
+        }
+        .count {
+          font-size: 14px;
+          font-weight: 600;
+          color: #37352F;
+        }
+        .close {
+          width: 11px;
+        }
+        .bg-area {
+          background: #EFF1F2;
+          border-radius: 4px;
+          height: 100%;
+          margin-top: 16px;      
+          font-size: 16px;
+          font-weight: 400;
+          text-align: center;
+          font-style: italic;
+          padding: 10px;
+        }
+        .gtitle {
+          width: 99px;
+        }
+        &.occupied {
+          .user{
+            font-size: 12px;
+            font-weight: 500;
+            color: #6a6a6a;
+            padding: 8px 12px 8px 16px;
+            background: #fff;
+            border-radius: 100px;
+            font-style: normal;
+          }
+        }
+      }
+      .add-group {
+        align-items: center;
+        height: 240px;
+        width: 280px;
+        border: 2px dotted #E2E0DF;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #616161;
+      }
+    }
+    .end-buttons {
+      margin-top: 25px;
+      .white-button {
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .blue-button {
+        background: $primary-color;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+}
