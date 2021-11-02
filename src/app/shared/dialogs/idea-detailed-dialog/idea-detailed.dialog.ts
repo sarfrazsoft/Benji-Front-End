@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Category, Idea } from 'src/app/services/backend/schema';
+import { ActivitiesService } from 'src/app/services/activities';
+import { Category, Group, Idea, UpdateMessage } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 
@@ -13,6 +14,8 @@ export class IdeaDetailedDialogComponent {
   categories: Array<Category> = [];
   idea: Idea;
   selectedCategory: Category;
+  group: Group;
+  activityState: UpdateMessage;
   userIdeaText = '';
   ideaTitle;
   lessonRunCode;
@@ -25,12 +28,15 @@ export class IdeaDetailedDialogComponent {
   hostname = environment.web_protocol + '://' + environment.host;
   constructor(
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
+    private activitiesService: ActivitiesService,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       showCategoriesDropdown: boolean;
       categories: Array<Category>;
       item: Idea;
       category: Category;
+      myGroup: Group;
+      activityState: UpdateMessage;
     },
     private matDialog: MatDialog
   ) {
@@ -49,6 +55,10 @@ export class IdeaDetailedDialogComponent {
     if (data.category) {
       this.selectedCategory = data.category;
     }
+    if (data.myGroup) {
+      this.group = data.myGroup;
+    }
+    this.activityState = data.activityState;
   }
 
   onSubmit() {
@@ -110,5 +120,9 @@ export class IdeaDetailedDialogComponent {
     } else {
       return false;
     }
+  }
+
+  getParticipantName(code: number) {
+    return this.activitiesService.getParticipantName(this.activityState, code);
   }
 }

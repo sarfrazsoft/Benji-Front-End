@@ -49,6 +49,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   @Input() participantCode;
   @Input() eventType;
   @Input() categorizeFlag;
+  @Input() myGroup;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 

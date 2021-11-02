@@ -53,6 +53,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() participantCode;
   @Input() eventType;
   @Input() categorizeFlag;
+  @Input() myGroup;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -159,6 +160,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         categories: this.activityState.brainstormactivity.brainstormcategory_set,
         item: this.item,
         category: this.category,
+        group: this.myGroup,
+        activityState: this.activityState,
       },
     });
 

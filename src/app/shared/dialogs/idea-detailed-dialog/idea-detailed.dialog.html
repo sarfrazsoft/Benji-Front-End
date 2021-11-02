@@ -40,11 +40,11 @@
         <!-- <div class="option">
           <img src="/assets/img/idea-creation/color.svg"> 
           <span>Color</span>
-        </div>
-        <div class="option">
-          <img src="/assets/img/idea-creation/group.svg"> 
-          <span>Group</span>
         </div> -->
+        <div class="option" *ngIf="group">
+          <img src="/assets/img/idea-creation/group.svg"> 
+          <span>{{ group.title }}</span>
+        </div>
         <div class="option">
           <div class="dropdown-controls-container">
             <ng-select
@@ -62,10 +62,12 @@
         </div>
       </ng-container>
       <div class="menu-like like">LIKES ({{ idea?.hearts.length }})</div>
-      <!-- <div class="person">
-        <img class="dp" src="/assets/img/idea-creation/mahin.svg"> 
-        <div class="name">Mahin</div>
-      </div> -->
+      <ng-container *ngIf="idea?.hearts.length">
+        <div class="person" *ngFor="let heart of idea.hearts">
+          <div class="dp"></div>
+          <div class="name">{{ getParticipantName(heart.participant) }}</div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

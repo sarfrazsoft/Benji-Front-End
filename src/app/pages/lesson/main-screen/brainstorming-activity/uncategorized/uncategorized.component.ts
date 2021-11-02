@@ -25,6 +25,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   @Input() participantCode;
   @Input() eventType;
   @Input() categorizeFlag;
+  @Input() myGroup;
 
   ideas = [];
   cycle = 'first';
