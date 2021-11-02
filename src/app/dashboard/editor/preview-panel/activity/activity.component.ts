@@ -9,6 +9,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import {
@@ -110,10 +111,16 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         this.componentRef = this.entry.createComponent(msAct);
         const categorizeFlag =
           content.brainstormcategory_set && content.brainstormcategory_set.length === 0 ? false : true;
+
         const categoryset =
           content.brainstormcategory_set && content.brainstormcategory_set.length
-            ? content.brainstormcategory_set
+            ? cloneDeep(content.brainstormcategory_set)
             : [];
+        if (categoryset.length) {
+          for (let i = 0; i < categoryset.length; i++) {
+            categoryset[i].brainstormidea_set = [];
+          }
+        }
         const instructions = content.instructions ? content.instructions : 'Enter your question';
 
         this.componentRef.instance.activityState = {

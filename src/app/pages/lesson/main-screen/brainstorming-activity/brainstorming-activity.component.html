@@ -10,18 +10,52 @@
         >
           {{ instructions }}
         </h2>
-        <div *ngIf="categorizeFlag">
-          <ng-select
-            class="menus"
-            [items]="groups"
-            bindLabel="category_name"
-            placeholder="Groups"
-            [(ngModel)]="selectedCategory"
-            appendTo="body"
-            [searchable]="false"
-          >
-          </ng-select>
-        </div>
+        <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <div *ngIf="classificationTypes">
+            <ng-select
+              class="menus"
+              [items]="classificationTypes"
+              bindLabel="title"
+              placeholder="Groups"
+              (change)="classificationTypeChanged(selectedClassificationType)"
+              [(ngModel)]="selectedClassificationType"
+              appendTo="body"
+              [searchable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div fxLayout="row">
+                  <div>icon</div>
+                  <div fxLayout="column">
+                    <div>{{ item.title }}</div>
+                    <div>{{ item.description }}</div>
+                  </div>
+                </div>
+            </ng-template>
+            </ng-select>
+          </div>
+          <div *ngIf="participantGroups">
+            <ng-select
+              class="menus"
+              [items]="participantGroups"
+              bindLabel="title"
+              placeholder="Groups"
+              (change)="ParticipantGroupChanged(selectedParticipantGroup)"
+              [(ngModel)]="selectedParticipantGroup"
+              appendTo="body"
+              [searchable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <div>{{ item.title }}</div>
+              </ng-template>
+            </ng-select>
+          </div>
+        </ng-container>
+        <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+          <benji-participant-grouping-container
+            *ngIf="!actEditor"
+            [activityState]="activityState"
+            (sendMessage)="sendSocketMessage($event)"
+            [participantCode]="participantCode">
+          </benji-participant-grouping-container>
+        </ng-container>
       </div>
     </div>
     <div fxLayout="column" fxLayoutAlign="center center" class="import-button" (click)="openDialog()">
@@ -41,6 +75,7 @@
         [showUserName]="showUserName"
         [participantCode]="participantCode"
         [eventType]="eventType"
+        [categorizeFlag]="categorizeFlag"
         (viewImage)="viewImage($event)"
         (deleteIdea)="deleteIdea($event)"
       >
@@ -52,10 +87,14 @@
         [submissionScreen]="submissionScreen"
         [voteScreen]="voteScreen"
         [act]="act"
+        [activityState]="activityState"
         [minWidth]="getMinWidth()"
         [sendMessage]="sendMessage"
         [joinedUsers]="joinedUsers"
         [showUserName]="showUserName"
+        [participantCode]="participantCode"
+        [eventType]="eventType"
+        [categorizeFlag]="categorizeFlag"
         (viewImage)="viewImage($event)"
         (deleteIdea)="deleteIdea($event)">
 

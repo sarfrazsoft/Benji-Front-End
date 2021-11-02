@@ -76,7 +76,7 @@ export class CustomMenuComponent implements OnInit {
     const lessonRunDetails = localStorage.getItem('lessonRunDetails');
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.lessonId = paramMap.get('lessonId');
-      console.log(this.lessonId);
+      // console.log(this.lessonId);
     });
   }
 

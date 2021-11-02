@@ -13,7 +13,9 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
+import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
 import {
+  BrainstormActivity,
   BrainstormCreateCategoryEvent,
   BrainstormRemoveCategoryEvent,
   BrainstormRemoveIdeaCommentEvent,
@@ -24,10 +26,12 @@ import {
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Category,
+  Group,
   Idea,
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
+import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-categorized-ideas',
@@ -36,7 +40,7 @@ import { environment } from 'src/environments/environment';
 export class CategorizedComponent implements OnInit, OnChanges {
   @Input() submissionScreen;
   @Input() voteScreen;
-  @Input() act;
+  @Input() act: BrainstormActivity;
   @Input() activityState;
   @Input() minWidth;
   @Input() sendMessage;
@@ -44,6 +48,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   @Input() showUserName;
   @Input() participantCode;
   @Input() eventType;
+  @Input() categorizeFlag;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -56,14 +61,18 @@ export class CategorizedComponent implements OnInit, OnChanges {
   constructor(
     private dialog: MatDialog,
     private httpClient: HttpClient,
-    private utilsService: UtilsService
-  ) {}
+    private utilsService: UtilsService,
+    private brainstormService: BrainstormService
+  ) {
+    // super();
+  }
 
   ngOnInit(): void {}
 
   ngOnChanges() {
-    if (this.cycle === 'first') {
-      this.populateCategories();
+    // console.log(this.act);
+    if (this.cycle === 'first' || this.eventType === 'filtered') {
+      this.columns = this.brainstormService.populateCategories(this.act, this.columns);
       this.cycle = 'second';
     } else {
       // let eventType;
@@ -72,98 +81,19 @@ export class CategorizedComponent implements OnInit, OnChanges {
       // eventType = 'removeIdea';
       // console.log(this.eventType);
       if (this.eventType === 'BrainstormSubmitEvent') {
-        this.addIdeaToCategory();
+        this.brainstormService.addIdeaToCategory(this.act, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.ideaCommented();
+        this.brainstormService.ideaCommented(this.act, this.columns);
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-        this.ideaCommented();
+        this.brainstormService.ideaCommented(this.act, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
-        this.ideaHearted();
+        this.brainstormService.ideaHearted(this.act, this.columns);
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
-        this.ideaHearted();
+        this.brainstormService.ideaHearted(this.act, this.columns);
       } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
-        this.ideaRemoved();
+        this.brainstormService.ideaRemoved(this.act, this.columns);
       }
     }
-  }
-
-  addIdeaToCategory() {
-    this.act.brainstormcategory_set.forEach((category, index) => {
-      const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-      if (BEIdeas.length === this.columns[index].brainstormidea_set.length) {
-      } else {
-        const myDifferences = differenceBy(BEIdeas, this.columns[index].brainstormidea_set, 'id');
-        this.columns[index].brainstormidea_set.push(myDifferences[0]);
-      }
-    });
-  }
-
-  populateCategories() {
-    this.columns = [];
-    this.act.brainstormcategory_set.forEach((category) => {
-      if (category.brainstormidea_set) {
-        category.brainstormidea_set.forEach((idea) => {
-          idea = { ...idea, showClose: false, editing: false, addingIdea: false };
-        });
-      } else {
-        // Editor preview panel
-      }
-    });
-    this.columns = this.act.brainstormcategory_set;
-  }
-
-  ideaHearted() {
-    this.act.brainstormcategory_set.forEach((category, categoryIndex) => {
-      if (category.brainstormidea_set) {
-        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-        BEIdeas.forEach((idea, ideaIndex) => {
-          const existingHearts = this.columns[categoryIndex].brainstormidea_set[ideaIndex].hearts;
-          const existingHeartsLength = existingHearts.length;
-          const newHeartsLength = idea.hearts.length;
-          if (existingHeartsLength < newHeartsLength) {
-            const myDifferences = differenceBy(idea.hearts, existingHearts, 'id');
-            existingHearts.push(myDifferences[0]);
-          } else if (existingHeartsLength > newHeartsLength) {
-            const myDifferences: Array<any> = differenceBy(existingHearts, idea.hearts, 'id');
-
-            remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
-          }
-        });
-      }
-    });
-  }
-
-  ideaCommented() {
-    this.act.brainstormcategory_set.forEach((category, categoryIndex) => {
-      if (category.brainstormidea_set) {
-        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-        BEIdeas.forEach((idea, ideaIndex) => {
-          const existingHearts = this.columns[categoryIndex].brainstormidea_set[ideaIndex].comments;
-          const existingHeartsLength = existingHearts.length;
-          const newHeartsLength = idea.comments.length;
-          if (existingHeartsLength < newHeartsLength) {
-            const myDifferences = differenceBy(idea.comments, existingHearts, 'id');
-            existingHearts.push(myDifferences[0]);
-          } else if (existingHeartsLength > newHeartsLength) {
-            const myDifferences: Array<any> = differenceBy(existingHearts, idea.comments, 'id');
-
-            remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
-          }
-        });
-      }
-    });
-  }
-
-  ideaRemoved() {
-    this.act.brainstormcategory_set.forEach((category, index) => {
-      const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-      if (BEIdeas.length === this.columns[index].brainstormidea_set.length) {
-      } else {
-        const myDifferences: Array<any> = differenceBy(this.columns[index].brainstormidea_set, BEIdeas, 'id');
-
-        remove(this.columns[index].brainstormidea_set, (idea: any) => idea.id === myDifferences[0].id);
-      }
-    });
   }
 
   addIdea(column) {
@@ -180,13 +110,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormRemoveCategoryEvent(categoryId, true));
   }
 
-  isAbsolutePath(imageUrl: string) {
-    // console.log(imageUrl);
-    if (imageUrl.includes('https:')) {
-      return true;
-    } else {
-      return false;
-    }
+  onColumnNameBlur(column) {
+    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, column.category_name));
+    column.editing = false;
   }
 
   openImage(imageUrl: string) {

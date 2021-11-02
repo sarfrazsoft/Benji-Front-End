@@ -225,7 +225,7 @@
     box-shadow: unset;
     padding: unset;
     .white-area {
-      width: 390px;
+      // width: 390px;
       float: left;
       .white-content {
         padding: 24px 32px 24px 24px;
@@ -235,6 +235,7 @@
           margin-bottom: 16px;
           border: 0px;
           color: #37352f;
+          width: 100%;
           &:focus {
             border: 0px;
             outline: none;
@@ -277,23 +278,31 @@
             font-size: 12px;
           }
         }
-        .attachments {
-          margin-top: 16px;
-          float: left;
-          img {
-            margin-right: 16px;
-            cursor: pointer;
+        .idea-creation-controls {
+          margin-top: 8px;
+          height: 32px;
+          .attachments {
+            // margin-top: 16px;
+            // float: left;
+            img {
+              margin-right: 16px;
+              cursor: pointer;
+            }
           }
-        }
-        .post {
-          margin: 8px 0px 15px 0px;
-          float: right;
-          background: #555bea;
-          color: #fff;
-          font-size: 16px;
-          font-weight: 500;
-          padding: 8px 16px;
-          border-radius: 4px;
+          .divider {
+            height: 32px;
+            border-left: 1px solid #f3f4f7;
+          }
+          .post {
+            // margin: 8px 0px 15px 0px;
+            // float: right;
+            background: #555bea;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+          }
         }
       }
     }

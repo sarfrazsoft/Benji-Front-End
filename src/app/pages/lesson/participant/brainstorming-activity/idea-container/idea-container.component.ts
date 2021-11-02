@@ -72,7 +72,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     if (this.userIdeaText.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, '', this.selectedCategory.id));
+    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, '', this.selectedCategory.id, null));
     this.idea.editing = false;
   }
 

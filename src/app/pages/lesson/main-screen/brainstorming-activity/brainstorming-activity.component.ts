@@ -10,7 +10,7 @@ import {
   slideInUpOnEnterAnimation,
   slideOutRightOnLeaveAnimation,
 } from 'angular-animations';
-import { uniqBy } from 'lodash';
+import { clone, cloneDeep, uniqBy } from 'lodash';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
 import * as global from 'src/app/globals';
@@ -26,6 +26,7 @@ import {
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
+  Group,
   Idea,
   Timer,
 } from 'src/app/services/backend/schema';
@@ -60,7 +61,6 @@ export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @Input() peakBackState = false;
-  @Input() editor = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
   showParticipantUI = false;
@@ -95,7 +95,13 @@ export class MainScreenBrainstormingActivityComponent
   voteSubmittedUsersCount = 0;
   dialogRef;
   shownSubmissionCompleteNofitication = false;
-  groups;
+
+  // Groupings
+  classificationTypes;
+  participantGroups: Array<Group>;
+  selectedClassificationType;
+  selectedParticipantGroup: Group;
+  myGroup: Group;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -112,13 +118,30 @@ export class MainScreenBrainstormingActivityComponent
   ngOnInit() {
     super.ngOnInit();
 
+    // this.act = clone(this.activityState.brainstormactivity);
     this.act = this.activityState.brainstormactivity;
     if (this.peakBackState) {
       this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
     }
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      this.participantCode = this.getParticipantCode();
+      if (val) {
+        this.participantCode = this.getParticipantCode();
+        this.participantGroups = this.act.groups;
+
+        this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
+      }
     });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.classificationTypes = [
+          { type: 'everyone', title: 'Everyone', description: `Display everyone's work` },
+          { type: 'groups', title: 'Groups', description: `Display group's work` },
+          // { type: 'individuals', title: 'Individuals', description: `Display single persons work` },
+        ];
+      }
+    });
+
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
@@ -132,6 +155,10 @@ export class MainScreenBrainstormingActivityComponent
         this.minWidth = val.state.name;
       }
     });
+  }
+
+  getParticipantGroup(participantCode, participantGroups) {
+    return this.getMyGroup(participantCode, participantGroups);
   }
 
   getPersonName(idea: Idea) {
@@ -199,14 +226,66 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
+  classificationTypeChanged(selectedClassificationType) {
+    // console.log(selectedClassificationType);
+    const sct = selectedClassificationType;
+    if (sct.type === 'everyone') {
+      this.participantGroups = null;
+      this.selectedParticipantGroup = null;
+
+      this.act = cloneDeep(this.activityState.brainstormactivity);
+    } else if (sct.type === 'groups') {
+      this.participantGroups = this.act.groups;
+    } else if (sct.type === 'individuals') {
+      this.participantGroups = null;
+    }
+  }
+
+  ParticipantGroupChanged(selectedParticipantGroup: Group) {
+    this.filterIdeasBasedOnGroup(selectedParticipantGroup);
+  }
+
+  filterIdeasBasedOnGroup(selectedParticipantGroup: Group) {
+    // console.log(selectedParticipantGroup);
+    // console.log(this.act);
+    const act = cloneDeep(this.activityState.brainstormactivity);
+    for (let i = 0; i < act.brainstormcategory_set.length; i++) {
+      const category = act.brainstormcategory_set[i];
+      if (!category.removed) {
+        for (let j = 0; j < category.brainstormidea_set.length; j++) {
+          const idea = category.brainstormidea_set[j];
+          if (idea.submitting_participant) {
+            if (
+              !selectedParticipantGroup.participants.includes(idea.submitting_participant.participant_code)
+            ) {
+              category.brainstormidea_set.splice(j, 1);
+              j--;
+            }
+          }
+        }
+      }
+    }
+    this.act = act;
+    this.eventType = 'filtered';
+  }
+
   onChanges() {
     this.eventType = this.getEventType();
     this.loadUsersCounts();
     const act = this.activityState.brainstormactivity;
-    this.act = this.activityState.brainstormactivity;
-    if (this.act.groups) {
-      this.groups = this.act.groups;
+    this.act = cloneDeep(this.activityState.brainstormactivity);
+    // populate groupings dropdown
+    if (this.act.groups && this.act.groups.length) {
+      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+        if (val) {
+          this.participantCode = this.getParticipantCode();
+          this.participantGroups = this.act.groups;
+          this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
+          this.filterIdeasBasedOnGroup(this.myGroup);
+        }
+      });
     }
+
     if (this.act.brainstormcategory_set.length) {
       // check if the categories have ids
       // if categories don't have ids it means
@@ -251,7 +330,7 @@ export class MainScreenBrainstormingActivityComponent
 
       // show snackbar when submission is complete
       if (
-        !this.editor &&
+        !this.actEditor &&
         !act.submission_complete &&
         !act.voting_complete &&
         this.isAllSubmissionsComplete(act) &&
@@ -363,7 +442,6 @@ export class MainScreenBrainstormingActivityComponent
 
   openDialog() {
     const dialogRef = this.dialog.open(IdeaCreationDialogComponent, {
-      width: '621px',
       panelClass: 'idea-dialog',
       data: {
         showCategoriesDropdown: this.categorizeFlag,
@@ -373,6 +451,15 @@ export class MainScreenBrainstormingActivityComponent
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        if (this.myGroup || this.selectedParticipantGroup) {
+          let groupId = null;
+          if (this.myGroup) {
+            groupId = this.myGroup.id;
+          } else {
+            groupId = this.selectedParticipantGroup.id;
+          }
+          result = { ...result, groupId: groupId };
+        }
         this.submitIdea(result);
       }
     });
@@ -393,7 +480,7 @@ export class MainScreenBrainstormingActivityComponent
     if (idea.text.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id));
+    this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId));
     // this.idea.editing = false;
   }
 
@@ -426,7 +513,7 @@ export class MainScreenBrainstormingActivityComponent
                 idea.text = '';
               }
               this.sendMessage.emit(
-                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, res.id)
+                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
               );
             })
             .subscribe(
@@ -440,7 +527,13 @@ export class MainScreenBrainstormingActivityComponent
     } else {
       if (idea.selectedImageUrl) {
         this.sendMessage.emit(
-          new BrainstormImageSubmitEvent(idea.text, idea.title, idea.category.id, idea.selectedImageUrl)
+          new BrainstormImageSubmitEvent(
+            idea.text,
+            idea.title,
+            idea.category.id,
+            idea.groupId,
+            idea.selectedImageUrl
+          )
         );
       }
     }

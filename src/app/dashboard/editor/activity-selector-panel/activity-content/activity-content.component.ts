@@ -337,7 +337,6 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.defaultValue = true;
                 }
               } else if (act.activity_type === this.at.slides) {
-                console.log(act);
                 if (mapSource.internal_type === 'GoogleSlidesActivitySerializer') {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {

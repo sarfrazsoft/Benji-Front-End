@@ -8,11 +8,13 @@ export * from './add-video-dialog/add-video.dialog';
 export * from './lesson-settings-dialog/lesson-settings.dialog';
 export * from './templates-dialog/templates.dialog';
 export * from './idea-creation-dialog/idea-creation.dialog';
+export * from './idea-detailed-dialog/idea-detailed.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
+import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
 import { GiphyComponent } from './image-picker-dialog/giphy/giphy.component';
 import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
 import { UnsplashComponent } from './image-picker-dialog/unsplash/unsplash.component';
@@ -39,4 +41,5 @@ export const Dialogs = [
   MCQFeedbackDialogComponent,
   TemplatesDialogComponent,
   IdeaCreationDialogComponent,
+  IdeaDetailedDialogComponent,
 ];

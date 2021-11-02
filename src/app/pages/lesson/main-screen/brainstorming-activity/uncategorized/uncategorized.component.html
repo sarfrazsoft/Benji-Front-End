@@ -6,7 +6,18 @@
       (mouseleave)="idea.showClose = false"
       cdkDrag
     >
-      <div class="idea">
+    <benji-brainstorm-card
+      [item]="idea"
+      [act]="act"
+      [activityState]="activityState"
+      [showUserName]="showUserName"
+      [participantCode]="participantCode"
+      (deleteIdea)="delete($event)"
+      [sendMessage]="sendMessage"
+      [categorizeFlag]="categorizeFlag"
+    >
+    </benji-brainstorm-card>
+      <!-- <div class="idea">
         <mat-icon
           [style.opacity]="idea.showClose ? 1 : 0"
           (click)="deleteIdea(idea.id)"
@@ -31,7 +42,7 @@
         <div class="votes primary-color" *ngIf="voteScreen">
           {{ idea.num_votes }}
         </div>
-      </div>
+      </div> -->
     </li>
   </ul>
 </div>
