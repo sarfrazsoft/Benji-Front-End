@@ -194,6 +194,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       width: '1168px',
       panelClass: 'grouping-tool-dialog',
       data: {
+        activityState: this.activityState,
       },
     });
 

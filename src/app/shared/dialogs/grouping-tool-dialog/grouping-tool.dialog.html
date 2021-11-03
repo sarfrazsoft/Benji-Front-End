@@ -1,7 +1,15 @@
 <div class="content-header" fxLayout="row" fxLayoutAlign="space-between center">
   <div fxLayout="row">
-    <div class="title">Untitled Grouping</div>
-    <img class="edit" src="/assets/img/idea-creation/edit-pen.svg">
+    <input
+      style="width: 100%;"
+      class="title" 
+      type="text"
+      (keyup)="typingStoped($event)"
+      (keydown)="typingStarted()"
+      [(ngModel)]="groupingTitle"
+      value="Untitled Grouping"
+      [disabled]='editingTitle'>
+    <img class="edit" src="/assets/img/idea-creation/edit-pen.svg" (click)="editTitle()">
   </div>
   <img fxLayout="column" class="close" (click)="closeDialog()" src="/assets/img/idea-creation/close_bigrey.svg">
 </div>
@@ -29,64 +37,90 @@
     <div class="header">Set # of groups</div>
     <input class="groups-count" type="number" value="0" min="0" max="99">
   </div>
-  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px"
+    benji-click-stop-propagation>
     <div class="header">Learners can switch groups</div>
-    <mat-slide-toggle></mat-slide-toggle>
+      <label class="switch">
+        <input type="checkbox" 
+          checked 
+          (change)="toggleChooseGroup($event)">
+        <span class="slider round"></span>
+      </label>
   </div>
 </div>
 
 <div class="sub-title" fxLayout="row" fxLayoutAlign="start center"> Unassigned </div>
-<div class="free-users" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-  <div class="user">Matthew Parson</div>
-  <div class="user">Linh Ngo</div>
-  <div class="user">Azim Wazeer</div>
-  <div class="user">Mahin Khan</div>
+<div class="free-users" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px"
+  cdkDropList
+  [cdkDropListData]="unassignedUsers"
+  (cdkDropListDropped)="drop($event)">
+  <div class="user"
+    cdkDrag
+    *ngFor="let participant of unassignedUsers">
+    <span>
+      {{ participant.display_name }}
+    </span>
+  </div>
 </div>
 
 <div class="sub-title" fxLayout="row" fxLayoutAlign="start center"> Groups </div>
 <div class="groups" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
-  <div class="group" fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="column" class="group-title">
-        Group 1
-      </div>
-      <div fxLayout="row" fxLayoutGap="8px">
-        <span class="count">4</span>
-        <img class="close" (click)="closeGroup()" src="/assets/img/idea-creation/close_big.svg">
-      </div>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="center center" class="bg-area">
-      Drag-n-drop participants to assign them to the group
-    </div>
-  </div>
-  <div class="group occupied" fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="column" class="group-title">
-        <input class="gtitle" type="text" value="Group 2">
-      </div>
-      <div fxLayout="row" fxLayoutGap="8px">
-        <span class="count">4</span>
-        <img class="close" (click)="closeGroup()" src="/assets/img/idea-creation/close_big.svg">
-      </div>
-    </div>
-    <div fxLayout="column" fxLayoutAlign="start start" class="bg-area">
-      <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-        <div class="user" fxLayoutGap="8px" fxLayout="row">
-          <span>Matthew Parson</span>
-          <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
+  <ul>
+    <li *ngFor="let group of breakoutRooms">
+      <div class="group" *[ngClass]="{'occupied': 'group.participants'}" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="column" class="group-title">
+            <div 
+              *ngIf="!editingName[group.id]"
+              (click)="editGroupName(group)">
+              {{group.name}}
+            </div>
+            <div *ngIf="editingName[group.id]" >
+              <input 
+                type="text" 
+                style="width: 125px;" 
+                [(ngModel)]="groupName" 
+                (blur)="saveEditedGroupName(group)"
+                (keyup.enter)="saveEditedGroupName(group)">
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="8px">
+            <span class="count">{{ group.participants.length }}</span>
+            <img class="close" (click)="deleteGroup(group)" src="/assets/img/idea-creation/close_big.svg">
+          </div>
         </div>
-        <div class="user" fxLayoutGap="8px" fxLayout="row">
-          <span>Linh Ngo</span>
-          <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
+        <div fxLayout="column" fxLayoutAlign="center center" class="bg-area"
+          *ngIf="!group.participants">
+          Drag-n-drop participants to assign them to the group
+        </div>
+        <div fxLayout="column" fxLayoutAlign="start start" class="bg-area"
+          *ngIf="group.participants">
+          <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
+            cdkDropList
+            [cdkDropListData]="group.participants"
+            (cdkDropListDropped)="drop($event)">
+            <div class="user" fxLayoutGap="8px" fxLayout="row"  
+              cdkDrag
+              *ngFor="let participant of group.participants">
+              <span>
+                {{ participant.display_name }}
+              </span>
+              <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="add-group" fxLayout="column" fxLayoutAlign="center center">
+    </li>
+  </ul>
+  <div class="add-group" fxLayout="column" fxLayoutAlign="center center" (click)="addGroup()">
     + Add Group
   </div>
 </div>
 <div class="end-buttons" fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="18px">
   <div fxLayout="column" class="white-button">Save changes</div>
-  <div fxLayout="column" class="blue-button">Start Grouping</div>
+  <div fxLayout="column" class="blue-button"
+    (click)="makeActivityGrouping()">
+    <!-- *ngIf="showStartGroupingButton" -->
+    Start Grouping
+  </div>
 </div>

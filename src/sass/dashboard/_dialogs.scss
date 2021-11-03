@@ -429,10 +429,15 @@
     padding: 40px;
     .content-header {
       margin-bottom: 15px;
-      .title {
+      input.title {
         font-weight: 600;
         font-size: 24px;
         color: #37352F;
+        border: 0px;
+        &:focus {
+          border: 0px;
+          outline: 0px;
+        }
       }
       .edit {
         cursor: pointer;
@@ -481,17 +486,8 @@
           outline: none;
         }
       }
-      .mat-slide-toggle-thumb {
-        height: 14px;
-        width: 14px;
-        margin-top: 4px;
-      }
-      .mat-slide-toggle-bar {
-        width: 32px;
-        height: 16px;
-      }
-      .mat-slide-toggle .mat-slide-toggle-ripple {
-        height: 0px; 
+      input:checked + .slider {
+        background-color: $primary-color;
       }
     }
     .sub-title {
@@ -567,6 +563,7 @@
         font-size: 20px;
         font-weight: 700;
         color: #616161;
+        cursor: pointer;
       }
     }
     .end-buttons {
@@ -578,6 +575,7 @@
         border-radius: 4px;
         font-size: 16px;
         font-weight: 500;
+        cursor: pointer;
       }
       .blue-button {
         background: $primary-color;
@@ -586,6 +584,7 @@
         border-radius: 4px;
         font-size: 16px;
         font-weight: 500;
+        cursor: pointer;
       }
     }
   }
