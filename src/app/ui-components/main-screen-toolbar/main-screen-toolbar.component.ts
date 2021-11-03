@@ -52,7 +52,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   shareParticipantLink = '';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
-  
+
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   constructor(
     private layoutService: LayoutService,
@@ -123,8 +123,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   groupingMenuClicked() {
-    const code =
-      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+    let activityID = '';
+    const state = this.activityState;
+    if (state.casestudyactivity) {
+      activityID = state.casestudyactivity.activity_id;
+    } else if (state.brainstormactivity) {
+      activityID = state.brainstormactivity.activity_id;
+    }
+    const code = activityID + state.lesson_run.lessonrun_code;
 
     if (this.isGroupingShowing) {
       if (localStorage.getItem('isGroupingCreated') === code) {
@@ -151,7 +157,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     }
   }
-  
+
   isSharingAllowed(activityState: UpdateMessage) {
     if (activityState && this.allowShareActivities.includes(activityState.activity_type)) {
       return true;
@@ -159,7 +165,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       return false;
     }
   }
-  
+
   startSharingTool() {
     const as = this.activityState;
 

@@ -49,8 +49,6 @@ export class ParticipantBrainstormingActivityComponent
   showThankyouForVoting = false;
   showVoteResults = false;
 
-  @Input() editor = false;
-
   // timer;
 
   constructor(
@@ -68,7 +66,7 @@ export class ParticipantBrainstormingActivityComponent
     this.act = this.activityState.brainstormactivity;
     this.categories = this.act.brainstormcategory_set;
     this.maxSubmissions = this.act.max_participant_submissions;
-    if (!this.editor) {
+    if (!this.actEditor) {
       this.participantCode = this.getParticipantCode().toString();
     }
 

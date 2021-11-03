@@ -43,38 +43,23 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.act = this.activityState.casestudyactivity;
-    this.groupsX = this.formGroups(this.activityState.casestudyactivity);
+    this.groupsX = this.act.groups;
 
-    const participantCode = this.groupsX[0].participants[0].code;
+    const group = this.groupsX[0];
 
-    this.createComponent(participantCode);
+    this.createComponent(group);
 
     this.componentRef.instance.sendMessage.subscribe((v) => {
       this.sendMessage.emit(v);
     });
   }
 
-  createComponent(participantCode) {
+  createComponent(group: Group) {
     const b = this.componentFactoryResolver.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
     this.componentRef = this.entry.createComponent(b);
     this.componentRef.instance.activityState = this.activityState;
-    this.componentRef.instance.participantCode = participantCode;
+    this.componentRef.instance.facilitatorSelectedGroup = group;
     this.componentRef.instance.showingToFacilitator = true;
-  }
-
-  formGroups(act: CaseStudyActivity): any {
-    // {
-    //   name: 'Group 1',
-    //   participants: ['Matthew Parson', 'Sarah Blakey'],
-    // }
-    const groups = [];
-    // iterate over all groups
-    for (let i = 0; i < act.groups.length; i++) {
-      const elem = act.groups[i];
-      const participants = this.getGroupParticipants(act, elem);
-      groups.push({ name: elem.title, participants: participants });
-    }
-    return groups;
   }
 
   getGroupParticipants(act: CaseStudyActivity, group: Group) {
@@ -96,10 +81,6 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
     this.act = this.activityState.casestudyactivity;
     this.groups = this.act.groups;
   }
-
-  // getGroupText(userGroup: Group): string {
-  //   return userGroup.participants.map((u) => this.getParticipantName(u)).join(' + ');
-  // }
 
   getMyNoteTaker(userId: number): CaseStudyParticipantSet {
     const myGroupFellows = this.getPeopleFromMyGroup(userId);
@@ -146,13 +127,13 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   addLearners() {}
 
   selectGroup(group: Group) {
-    this.update(group.participants[0]);
+    this.update(group);
   }
 
-  update(participant) {
+  update(group) {
     if (this.componentRef) {
       this.componentRef.destroy();
     }
-    this.createComponent(participant.code);
+    this.createComponent(group);
   }
 }

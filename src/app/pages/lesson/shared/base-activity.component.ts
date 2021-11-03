@@ -9,12 +9,15 @@ import { ActivityEvent, UpdateMessage } from 'src/app/services/backend/schema/me
 export abstract class BaseActivityComponent implements OnInit {
   @Input() activityState: UpdateMessage;
   @Input() avgServerTimeOffset: number;
+  @Input() actEditor = false;
   @Output() sendMessage = new EventEmitter<ActivityEvent>();
   timer;
   myParticipantCode: number;
+  eventType;
 
   ngOnInit() {
     this.myParticipantCode = this.getParticipantCode();
+    // this.eventType = this.getEventType();
   }
 
   getActivityType() {
@@ -50,7 +53,18 @@ export abstract class BaseActivityComponent implements OnInit {
   }
 
   public getParticipantName(code: number) {
-    let name = 'John Doe';
+    const host = this.activityState.lesson_run.host;
+    let name = host.first_name + ' ' + host.last_name;
+    if (host) {
+      name = 'Facilitator';
+    }
+    if (host.fist_name) {
+      name = host.first_name;
+    }
+    if (host.last_name) {
+      name = name + ' ' + host.last_name;
+    }
+
     this.activityState.lesson_run.participant_set.forEach((p) => {
       if (p.participant_code === code) {
         name = p.display_name;
@@ -96,5 +110,19 @@ export abstract class BaseActivityComponent implements OnInit {
 
   sendSocketMessage($event) {
     this.sendMessage.emit($event);
+  }
+
+  getEventType() {
+    return this.activityState.eventType;
+  }
+
+  getMyGroup(userId, groups) {
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
+      const groupParticipants = group.participants;
+      if (groupParticipants.includes(userId)) {
+        return group;
+      }
+    }
   }
 }

@@ -10,18 +10,52 @@
         >
           {{ instructions }}
         </h2>
-        <div *ngIf="categorizeFlag">
-          <ng-select
-            class="menus"
-            [items]="activityState.brainstormactivity.brainstormcategory_set"
-            bindLabel="category_name"
-            placeholder="Groups"
-            [(ngModel)]="selectedCategory"
-            appendTo="body"
-            [searchable]="false"
-          >
-          </ng-select>
-        </div>
+        <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <div *ngIf="classificationTypes">
+            <ng-select
+              class="menus"
+              [items]="classificationTypes"
+              bindLabel="title"
+              placeholder="Groups"
+              (change)="classificationTypeChanged(selectedClassificationType)"
+              [(ngModel)]="selectedClassificationType"
+              appendTo="body"
+              [searchable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div fxLayout="row">
+                  <div>icon</div>
+                  <div fxLayout="column">
+                    <div>{{ item.title }}</div>
+                    <div>{{ item.description }}</div>
+                  </div>
+                </div>
+            </ng-template>
+            </ng-select>
+          </div>
+          <div *ngIf="participantGroups">
+            <ng-select
+              class="menus"
+              [items]="participantGroups"
+              bindLabel="title"
+              placeholder="Groups"
+              (change)="ParticipantGroupChanged(selectedParticipantGroup)"
+              [(ngModel)]="selectedParticipantGroup"
+              appendTo="body"
+              [searchable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <div>{{ item.title }}</div>
+              </ng-template>
+            </ng-select>
+          </div>
+        </ng-container>
+        <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+          <benji-participant-grouping-container
+            *ngIf="!actEditor"
+            [activityState]="activityState"
+            (sendMessage)="sendSocketMessage($event)"
+            [participantCode]="participantCode">
+          </benji-participant-grouping-container>
+        </ng-container>
       </div>
     </div>
     <div fxLayout="column" fxLayoutAlign="center center" class="import-button" (click)="openDialog()">
@@ -40,6 +74,9 @@
         [joinedUsers]="joinedUsers"
         [showUserName]="showUserName"
         [participantCode]="participantCode"
+        [eventType]="eventType"
+        [categorizeFlag]="categorizeFlag"
+        [myGroup]="myGroup"
         (viewImage)="viewImage($event)"
         (deleteIdea)="deleteIdea($event)"
       >
@@ -51,68 +88,19 @@
         [submissionScreen]="submissionScreen"
         [voteScreen]="voteScreen"
         [act]="act"
+        [activityState]="activityState"
         [minWidth]="getMinWidth()"
         [sendMessage]="sendMessage"
         [joinedUsers]="joinedUsers"
         [showUserName]="showUserName"
+        [participantCode]="participantCode"
+        [eventType]="eventType"
+        [categorizeFlag]="categorizeFlag"
+        [myGroup]="myGroup"
         (viewImage)="viewImage($event)"
         (deleteIdea)="deleteIdea($event)">
 
       </benji-uncategorized-ideas>
     </ng-container>
   </div>
-</div>
-
-<!-- New brain storm code  -->
-<div fxLayout="column" class="brainstorming-ms" style="overflow: hidden;">
-  <!-- <div class="lesson-top-banner compact">
-    <div fxLayout="row" fxLayoutAlign="space-between center" >
-      <div fxLayoutAlign="start center" class="instructions">
-        <h2
-          class="pn-500 primary-color"
-          [ngClass]="{
-            'long-instructions': instructions.length > 65
-          }"
-        >
-          {{ instructions }}
-        </h2>
-      </div>
-      <ng-container *ngxPermissionsOnly="'ADMIN'">
-        <submitted-counter  
-          [answeredParticipants]="answeredParticipants" 
-          [unansweredParticipants]="unansweredParticipants">
-        </submitted-counter>
-      </ng-container>
-    </div>
-  </div>
-  <div (click)="openDialog()">
-    <span>Open Dialog</span>
-  </div> -->
-
-
-  <ng-container *ngxPermissionsOnly="'PARTICIPANT'" >
-    <div class="brainstorm-ps-container" *ngIf="showParticipantUI" [@slideInRightOnEnter] [@fadeOutOnLeave]>
-      <div 
-        class="participant-view-hide-trigger-container" 
-        fxLayoutAlign="end"
-        (click)="showParticipantUI = false">
-        <div class="participant-view-hide-trigger" fxLayoutAlign="center center"> 
-          <img src="../../../assets/img/goBack.svg" alt="">
-        </div>
-      </div>
-      <div >
-        <benji-ps-brainstorming-activity
-          [activityState]="activityState"
-          [avgServerTimeOffset]="avgServerTimeOffset"
-          (sendMessage)="sendSocketMessage($event)">
-        </benji-ps-brainstorming-activity>
-      </div>
-    </div>
-    <div
-      *ngIf="!showParticipantUI"
-      (click)="showParticipantUI = true" 
-      class="participant-view-trigger" fxLayoutAlign="center center">
-      <img  src="../../../assets/img/whiteCross.svg" alt="">
-    </div>
-  </ng-container>
 </div>

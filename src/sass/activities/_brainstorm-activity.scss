@@ -288,6 +288,11 @@ benji-ms-brainstorming-activity {
   }
   .content {
     padding: 12px;
+    .title {
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
   }
   .feedback {
     padding: 8px 12px 12px;
@@ -515,7 +520,7 @@ benji-ps-brainstorming-activity {
   max-width: 840px;
   .barinstorm-header {
     padding: 8px;
-    border-bottom: 1px solid #E7E7E7;
+    border-bottom: 1px solid #e7e7e7;
     .brainstorm-h2 {
       font-weight: 700;
       font-size: 24px;
@@ -526,7 +531,7 @@ benji-ps-brainstorming-activity {
         font-size: 16px;
         color: #616161;
         font-weight: 500;
-        background: #F3F4F7;
+        background: #f3f4f7;
         border: 0px;
         border-radius: 24px;
         border: 1px 1px 1px rgba(213, 217, 222, 0.5);
@@ -535,7 +540,6 @@ benji-ps-brainstorming-activity {
         top: 155px;
       }
     }
-
 
     .import-button {
       cursor: pointer;

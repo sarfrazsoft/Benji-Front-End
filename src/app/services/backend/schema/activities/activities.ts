@@ -319,6 +319,7 @@ export interface BrainstormActivity extends ParentActivity {
   all_participants_voted: boolean;
   hide_timer: boolean;
   voted_participants: Array<any>;
+  groups: Array<Group>;
 }
 
 export interface Category {
@@ -332,12 +333,15 @@ export interface Idea {
   id: number;
   num_votes: number;
   idea: string;
+  title: string;
   removed: boolean;
   submitting_participant: ParticipantCode;
   idea_image: Image;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
+  comments: Array<any>;
+  hearts: Array<any>;
 }
 
 export interface ParticipantCode {
