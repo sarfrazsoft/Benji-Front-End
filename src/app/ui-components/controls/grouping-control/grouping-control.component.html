@@ -1,3 +1,71 @@
+<div class="title"> Collaborate </div>
+
+<div class="bg-area" fxLayout="row" fxLayoutAlign="center center" >
+  Make boards, docs, and cards collaborative with groups.
+</div>
+
+<div class="activities">
+  <div class="activity">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="title">
+        Icebreaker Grouping
+      </div>
+      <img 
+        class="edit" 
+        src="/assets/img/grouping/three-dots.svg" 
+        [matMenuTriggerFor]="menu"
+        benji-click-stop-propagation
+        disableRipple>
+    </div>
+    <div class="counts" fxLayout="row" fxLayoutAlign="space-between center">
+      <div >
+        5 Groups
+      </div>
+      <div>
+        Host Assigned
+      </div>
+    </div>
+    <div class="start">Start Grouping</div>
+  </div>
+  <div class="activity">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="title">
+        Role Playing Activity
+      </div>
+      <img 
+        class="edit" 
+        src="/assets/img/grouping/three-dots.svg" 
+        [matMenuTriggerFor]="menu"
+        benji-click-stop-propagation
+        disableRipple>
+    </div>
+    <div class="counts" fxLayout="row" fxLayoutAlign="space-between center">
+      <div >
+        5 Groups
+      </div>
+      <div>
+        Host Assigned
+      </div>
+    </div>
+    <div class="start">Start Grouping</div>
+  </div>
+</div>
+
+<div class="blue-button">
+  + New Grouping
+</div>
+<div class="edit-menu">
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item (click)="deleteCol(column.id)">
+      <span>Delete</span>
+    </button>
+    <button mat-menu-item (click)="columnHeaderClicked(column)">
+      <span>Edit</span>
+    </button>
+  </mat-menu>
+</div>
+
+<!-- 
 <div class="menu-heading">
   Grouping
 </div>
@@ -47,4 +115,4 @@
     (click)="start($event)">
     Start Grouping
   </button>
-</div>
+</div> -->

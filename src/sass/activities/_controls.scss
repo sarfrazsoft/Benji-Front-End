@@ -171,3 +171,79 @@ benji-preview-panel .continue-button {
     width: 22px;
   }
 }
+
+.activity-settings-menu.mat-menu-panel {
+  border: 1px solid #e2e0df;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 248px;
+  .mat-menu-content {
+    padding: 0px;
+  }
+  .title {
+    font-weight: 600;
+    font-size: 20px;
+    color: #37352f;
+    margin: 8px 0px 16px 0px;
+  }
+  .bg-area {
+    height: 116px;
+    background: #f7f8f9;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #616161;
+    margin-bottom: 16px;
+    padding: 16px;
+  }
+  .blue-button {
+    background: $primary-color;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+  }
+  .activity {
+    border: 1px solid #E2E0DF;
+    border-radius: 8px;   
+    padding: 16px;
+    margin-bottom: 12px;
+    .title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #000;
+      margin-top: 0px;
+    }
+    .edit {
+      margin: -30px -5px 0px 0px;
+      cursor: pointer;
+    }
+    .counts {
+      font-size: 14px;
+      font-weight: 400;
+      color: #828282;
+      margin-bottom: 16px;
+    }
+    .start {
+      background: #F3F4F7;
+      padding: 8px;
+      border-radius: 4px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: #37352F;
+    }
+  }
+}
+.mat-menu-panel {
+  min-width: 142px !important;
+}
+.mat-menu-item {
+  line-height: 24px !important;
+  height: 24px !important;
+}
