@@ -605,16 +605,21 @@
   }
 }
 
-.grouping-collaborate-dialog {
+.grouping-participant-dialog {
   .mat-dialog-container {
-    border: 1px solid #e2e0df;
     border-radius: 8px;
-    padding: 16px;
+    padding: 24px 40px 40px 40px;
     .title {
-      font-weight: 600;
-      font-size: 20px;
-      color: #37352f;
-      margin: 8px 0px 16px 0px;
+      .header{
+        font-weight: 700;
+        font-size: 32px;
+        color: #37352f;
+        margin-bottom: 24px;
+      }
+    }
+    .close {
+      margin-top: -40px;
+      cursor: pointer;
     }
     .bg-area {
       height: 116px;
