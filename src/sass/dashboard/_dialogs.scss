@@ -589,3 +589,44 @@
     }
   }
 }
+
+.grouping-collaborate-dialog {
+  .mat-dialog-container {
+    border: 1px solid #E2E0DF;
+    border-radius: 8px;
+    padding: 16px;
+    .title {
+      font-weight: 600;
+      font-size: 20px;
+      color: #37352F;
+      margin: 8px 0px 16px 0px;
+    }
+    .bg-area {
+      height: 116px;
+      background: #F7F8F9;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: #616161;
+      margin-bottom: 16px;
+    }
+    .blue-button {
+      background: $primary-color;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+    .activity {
+      .title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #000;
+      }
+    }
+  }
+}

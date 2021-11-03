@@ -25,6 +25,7 @@ import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-s
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
+import { GroupingCollaborateDialogComponent } from './grouping-collaborate/grouping-collaborate.dialog'
 
 export const Dialogs = [
   AddVideoDialogComponent,
@@ -42,4 +43,5 @@ export const Dialogs = [
   TemplatesDialogComponent,
   IdeaCreationDialogComponent,
   GroupingToolDialogComponent,
+  GroupingCollaborateDialogComponent,
 ];

@@ -59,6 +59,14 @@
               </mat-menu>
           </div>
 
+          <!-- Grouping collaborate Dialog" -->
+          <div class="option" 
+            fxLayoutAlign="center center"
+            *ngIf="activityState && activityState.activity_type === 'CaseStudyActivity'"
+            (click)="openGroupingCollaborateDialog()">
+              <img src="/assets/img/grouping/collaborate.svg"/>
+          </div>
+
           <!-- Vote control -->
           <div class="option" 
             fxLayoutAlign="center center"

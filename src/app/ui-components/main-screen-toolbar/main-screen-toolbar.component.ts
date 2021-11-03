@@ -6,6 +6,7 @@ import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { GroupingToolDialogComponent } from '../../shared/dialogs/grouping-tool-dialog/grouping-tool.dialog';
+import { GroupingCollaborateDialogComponent } from '../../shared/dialogs/grouping-collaborate/grouping-collaborate.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -60,6 +61,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private sharingToolService: SharingToolService,
     private groupingToolService: GroupingToolService,
     private groupingToolDialog: MatDialog,
+    private groupingCollaborateDialog: MatDialog,
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -202,6 +204,20 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       if (result === 'Use Template') {
       }
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openGroupingCollaborateDialog() {
+    const dialogRef = this.groupingCollaborateDialog.open(GroupingCollaborateDialogComponent, {
+      width: '248px',
+      panelClass: 'grouping-collaborate-dialog',
+      data: {
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Use Template') {
+      }
     });
   }
 
