@@ -4,9 +4,8 @@
       <div
         class="group-container"
         fxLayout="row"
-        *ngFor="let group of groupsX"
-      >
-        <div (click)="selectGroup(group)"> {{group.name}} </div>
+        *ngFor="let group of groupsX">
+        <div (click)="selectGroup(group)"> {{ group.title }} </div>
       </div>
     </div>
   </div>

@@ -20,7 +20,6 @@ import {
 
 import {
   BuildPitchComponents,
-  CaseStudyGroupingComponent,
   CaseStudyWorkAreaComponent,
   ParticipantBrainStormComponents,
   ParticipantBrainstormingActivityComponent,
@@ -48,7 +47,6 @@ const ActivityComponents = [
   ParticipantTitleActivityComponent,
   ParticipantPopQuizComponent,
   ParticipantCaseStudyActivityComponent,
-  CaseStudyGroupingComponent,
   CaseStudyWorkAreaComponent,
   ParticipantInstructionTemplateComponent,
   QuestionFormComponent,

@@ -1,13 +1,12 @@
 <div class="b-flat-card center-text feedback-card">
   <div class="activity-wrapper">
     <div class="b-flat-card__body">
-      <benji-case-study-grouping-container
-        *ngIf="!actEditor"
+      <benji-participant-grouping-container
+        *ngIf="!actEditor && !showingToFacilitator"
         [activityState]="activityState"
         (sendMessage)="propagate($event)"
-        [participantCode]="participantCode"
-      >
-      </benji-case-study-grouping-container>
+        [participantCode]="participantCode">
+      </benji-participant-grouping-container>
       
       <div class="content" fxLayout="column">
         <div class="twemoji-container participant-new-emoji" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
@@ -51,6 +50,7 @@
                     [allowVideo]="false"
                     [editorDisabled]="editorDisabled"
                     [showingToFacilitator]="showingToFacilitator"
+                    [facilitatorSelectedGroup]="facilitatorSelectedGroup"
                     (questionAnswerUpdated)="questionAnswerUpdated($event)"
                     (sendMessage)="propagate($event)"
                   ></benji-case-study-workarea>

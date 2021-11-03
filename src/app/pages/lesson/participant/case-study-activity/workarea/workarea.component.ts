@@ -27,6 +27,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   @Input() allowVideo;
   @Input() editorDisabled;
   @Input() showingToFacilitator = false;
+  @Input() facilitatorSelectedGroup: Group;
   act;
   answeredJson;
 
@@ -98,11 +99,14 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.editorDisabled = false;
 
-      const myGroup = this.getMyGroup(this.participantCode);
+      let myGroup = this.getMyGroup(this.participantCode);
+      if (this.facilitatorSelectedGroup) {
+        myGroup = this.facilitatorSelectedGroup;
+      }
       const selectedGrouping = this.getMyGrouping();
       let moddedGroupId;
       if (myGroup && myGroup.id) {
-        this.groupId = this.getMyGroup(this.participantCode).id.toString();
+        this.groupId = myGroup.id.toString();
         if (selectedGrouping) {
           moddedGroupId = selectedGrouping + this.groupId;
         } else {

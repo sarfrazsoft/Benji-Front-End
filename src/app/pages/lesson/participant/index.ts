@@ -1,12 +1,7 @@
-// import { ParticipantBrainStormComponents } from './brainstorming-activity';
-// import { BuildPitchComponents } from './build-pitch-activity';
-// import { ParticipantCaseStudyActivityComponent } from './case-study-activity/
-// case-study-activity.component';
 import { ParticipantConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 import { ParticipantDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { ParticipantEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
 import { ParticipantExternalGroupingActivityComponent } from './external-grouping-activity/external-grouping-activity.component';
-// import { ParticipantFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
 import { ParticiapantGatherActivityComponent } from './gather-activity/gather-activity.component';
 import { ParticipantGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { ParticipantGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
@@ -19,11 +14,9 @@ import { ParticipantMontyHallActivityComponent } from './monty-hall-activity/mon
 import { ParticipantPairActivityComponent } from './pair-activity/pair-activity.component';
 import { ParticipantPairGroupingActivityComponent } from './pair-grouping-activity/pair-grouping-activity.component';
 import { ParticipantLessonComponent } from './participant-lesson.component';
-// import { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 import { ReorderComponents } from './reorder-activity';
 import { SessionEndComponent } from './session-end/session-end.component';
 import { ParticipantTeletriviaActivityComponent } from './teletrivia-activity/teletrivia-activity.component';
-// import { ParticipantTitleActivityComponent } from './title-activity/title-activity.component';
 import { ParticipantTriadGroupingActivityComponent } from './triad-grouping-activity/triad-grouping-activity.component';
 import { ParticipantVideoActivityComponent } from './video-activity/video-activity.component';
 
@@ -37,7 +30,6 @@ export { QuestionLayoutComponent } from './shared/question-layout/question-layou
 export { ParticipantSharingToolComponent } from './shared/sharing-tool/sharing-tool.component';
 export { ParticipantGroupingToolComponent } from './shared/grouping-tool/grouping-tool.component';
 export { ParticipantCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
-export { CaseStudyGroupingComponent } from './case-study-activity';
 export { CaseStudyWorkAreaComponent } from './case-study-activity';
 export { ParticipantPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { ParticipantPollComponent } from './poll-activity/poll-activity.component';
@@ -55,9 +47,6 @@ export { ParticipantBuildPitchActivityComponent } from './build-pitch-activity/b
 
 export { IdeaContainerComponent } from './brainstorming-activity/idea-container/idea-container.component';
 export const ParticipantScreenComponents = [
-  // ...BuildPitchComponents,
-  // ...ParticipantSharedComponents,
-  // ...BrainStormingComponents,
   ...ReorderComponents,
   ...ParticipantLobbyComponents,
   ParticiapantGatherActivityComponent,
@@ -66,7 +55,6 @@ export const ParticipantScreenComponents = [
   ParticipantEitherOrActivityComponent,
   ParticipantExternalGroupingActivityComponent,
   ParticipantMontyHallActivityComponent,
-  // ParticipantFeedbackActivityComponent,
   ParticipantGeneratePitchActivityComponent,
   ParticipantHintActivityComponent,
   ParticipantLessonComponent,
@@ -74,12 +62,9 @@ export const ParticipantScreenComponents = [
   ParticipantMcqresultActivityComponent,
   ParticipantPairActivityComponent,
   ParticipantPairGroupingActivityComponent,
-  // ParticipantPopQuizComponent,
   ParticipantTeletriviaActivityComponent,
-  // ParticipantTitleActivityComponent,
   ParticipantTriadGroupingActivityComponent,
   ParticipantVideoActivityComponent,
   ParticipantGenericRoleplayActivityComponent,
   SessionEndComponent,
-  // ParticipantCaseStudyActivityComponent,
 ];

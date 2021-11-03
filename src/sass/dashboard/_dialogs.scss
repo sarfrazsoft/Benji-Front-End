@@ -225,15 +225,21 @@
     box-shadow: unset;
     padding: unset;
     .white-area {
-      width: 390px;
+      // width: 390px;
       float: left;
       .white-content {
         padding: 24px 32px 24px 24px;
         .title {
           font-size: 24px;
-          color: #bdbdbd;
           font-weight: 600;
           margin-bottom: 16px;
+          border: 0px;
+          color: #37352f;
+          width: 100%;
+          &:focus {
+            border: 0px;
+            outline: none;
+          }
         }
         .description {
           border: unset;
@@ -272,23 +278,31 @@
             font-size: 12px;
           }
         }
-        .attachments {
-          margin-top: 16px;
-          float: left;
-          img {
-            margin-right: 16px;
-            cursor: pointer;
+        .idea-creation-controls {
+          margin-top: 8px;
+          height: 32px;
+          .attachments {
+            // margin-top: 16px;
+            // float: left;
+            img {
+              margin-right: 16px;
+              cursor: pointer;
+            }
           }
-        }
-        .post {
-          margin: 8px 0px 15px 0px;
-          float: right;
-          background: #555bea;
-          color: #fff;
-          font-size: 16px;
-          font-weight: 500;
-          padding: 8px 16px;
-          border-radius: 4px;
+          .divider {
+            height: 32px;
+            border-left: 1px solid #f3f4f7;
+          }
+          .post {
+            // margin: 8px 0px 15px 0px;
+            // float: right;
+            background: #555bea;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 4px;
+          }
         }
       }
     }
@@ -337,6 +351,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
+            background-color: cadetblue;
           }
           .name {
             font-weight: 500;
@@ -370,7 +385,7 @@
     padding: 16px 16px 24px 32px;
     .dialog-content {
       padding-right: 16px;
-      .close{
+      .close {
         cursor: pointer;
         position: relative;
         float: right;
@@ -382,7 +397,7 @@
       }
       .title {
         font-size: 24px;
-        color: #37352F;
+        color: #37352f;
         font-weight: 700;
         margin-top: 11px;
         margin-bottom: 16px;
@@ -400,7 +415,7 @@
           font-weight: 600;
           font-size: 16px;
           color: #fff;
-          background: #555BEA;
+          background: #555bea;
           padding: 11px 37px;
           border-radius: 4px;
         }
@@ -425,14 +440,14 @@
 
 .grouping-tool-dialog {
   .mat-dialog-container {
-    border-radius: 16px; 
+    border-radius: 16px;
     padding: 40px;
     .content-header {
       margin-bottom: 15px;
       input.title {
         font-weight: 600;
         font-size: 24px;
-        color: #37352F;
+        color: #37352f;
         border: 0px;
         &:focus {
           border: 0px;
@@ -444,23 +459,23 @@
         margin-left: 11px;
         margin-top: 4px;
       }
-      .close{
+      .close {
         margin-top: -40px;
         cursor: pointer;
       }
     }
     .settings {
-      border: 1px solid #E6E4E3;
+      border: 1px solid #e6e4e3;
       border-radius: 4px;
       padding: 16px 24px;
       height: 72px;
       margin-bottom: 32px;
       .header {
-        color: #37352F;
+        color: #37352f;
         font-size: 16px;
         font-weight: 500;
       }
-      .subheader{
+      .subheader {
         color: #828282;
         font-size: 12px;
         font-weight: 400;
@@ -473,16 +488,16 @@
         font-size: 16px;
         color: #616161;
         font-weight: 400;
-        &:focus{
+        &:focus {
           outline: none;
         }
       }
       .ng-select-container {
-        background: #F3F4F7;
+        background: #f3f4f7;
         border-radius: 4px;
         border: 0px;
         width: 134px;
-        &:focus{
+        &:focus {
           outline: none;
         }
       }
@@ -491,7 +506,7 @@
       }
     }
     .sub-title {
-      color: #37352F;
+      color: #37352f;
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 16px;
@@ -503,14 +518,14 @@
         font-weight: 500;
         color: #6a6a6a;
         padding: 9px 16px;
-        background: #F3F4F7;
+        background: #f3f4f7;
         border-radius: 100px;
       }
     }
     .groups {
       .group {
         padding: 16px;
-        border: 1px solid #E2E0DF;
+        border: 1px solid #e2e0df;
         border-radius: 8px;
         height: 240px;
         width: 280px;
@@ -523,16 +538,16 @@
         .count {
           font-size: 14px;
           font-weight: 600;
-          color: #37352F;
+          color: #37352f;
         }
         .close {
           width: 11px;
         }
         .bg-area {
-          background: #EFF1F2;
+          background: #eff1f2;
           border-radius: 4px;
           height: 100%;
-          margin-top: 16px;      
+          margin-top: 16px;
           font-size: 16px;
           font-weight: 400;
           text-align: center;
@@ -543,7 +558,7 @@
           width: 99px;
         }
         &.occupied {
-          .user{
+          .user {
             font-size: 12px;
             font-weight: 500;
             color: #6a6a6a;
@@ -558,7 +573,7 @@
         align-items: center;
         height: 240px;
         width: 280px;
-        border: 2px dotted #E2E0DF;
+        border: 2px dotted #e2e0df;
         border-radius: 8px;
         font-size: 20px;
         font-weight: 700;
@@ -592,18 +607,18 @@
 
 .grouping-collaborate-dialog {
   .mat-dialog-container {
-    border: 1px solid #E2E0DF;
+    border: 1px solid #e2e0df;
     border-radius: 8px;
     padding: 16px;
     .title {
       font-weight: 600;
       font-size: 20px;
-      color: #37352F;
+      color: #37352f;
       margin: 8px 0px 16px 0px;
     }
     .bg-area {
       height: 116px;
-      background: #F7F8F9;
+      background: #f7f8f9;
       border-radius: 8px;
       text-align: center;
       font-size: 12px;
