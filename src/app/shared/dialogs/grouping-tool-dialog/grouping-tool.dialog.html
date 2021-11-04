@@ -7,7 +7,7 @@
       (keyup)="typingStoped($event)"
       (keydown)="typingStarted()"
       [(ngModel)]="groupingTitle"
-      value="Untitled Grouping"
+      placeholder="Untitled Grouping"
       [disabled]='editingTitle'>
     <img class="edit" src="/assets/img/grouping/edit-pen.svg" (click)="editTitle()">
   </div>
@@ -119,8 +119,8 @@
 <div class="end-buttons" fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="18px">
   <div fxLayout="column" class="white-button">Save changes</div>
   <div fxLayout="column" class="blue-button"
-    (click)="makeActivityGrouping()">
-    <!-- *ngIf="showStartGroupingButton" -->
+    (click)="makeActivityGrouping()"
+    *ngIf="showStartGroupingButton">
     Start Grouping
   </div>
 </div>

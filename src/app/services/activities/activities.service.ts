@@ -25,4 +25,10 @@ export class ActivitiesService {
     });
     return name;
   }
+
+  getActivityType(activityState: UpdateMessage): string {
+    const activity_type = activityState.activity_type.toLowerCase();
+    const state = activityState;
+    return state[activity_type].activity_id;
+  }
 }

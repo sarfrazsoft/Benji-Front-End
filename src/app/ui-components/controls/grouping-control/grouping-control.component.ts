@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { ContextService } from 'src/app/services';
 import {
@@ -11,6 +12,7 @@ import {
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
+import { GroupingToolDialogComponent } from 'src/app/shared/dialogs';
 
 @Component({
   selector: 'benji-grouping-control',
@@ -23,15 +25,22 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   selectedGroup;
   groupingType = 'new';
   newGroupingTitle = '';
+  dialogRef: MatDialogRef<GroupingToolDialogComponent>;
 
   @Output() socketMessage = new EventEmitter<any>();
 
-  constructor(private contextService: ContextService, private utilsService: UtilsService) {}
+  constructor(
+    private contextService: ContextService,
+    private utilsService: UtilsService,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {}
 
   ngOnChanges() {
     this.initExistingGroupins();
+
+    this.initSelectedGroup();
   }
 
   initExistingGroupins() {
@@ -45,23 +54,62 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     }
   }
 
-  start(event) {
-    if (this.groupingType === 'new') {
-      if (this.newGroupingTitle) {
-        this.socketMessage.emit(new CreateGroupingEvent(this.newGroupingTitle));
-        this.socketMessage.emit(new ViewGroupingEvent(true));
-      } else {
-        this.utilsService.openWarningNotification('Enter a group name', '');
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    } else {
-      this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
-      this.socketMessage.emit(new ViewGroupingEvent(true));
+  initSelectedGroup() {
+    const rt = this.activityState.running_tools;
+    if (rt && rt.grouping_tool) {
+      const grouping = {
+        groupings: this.activityState.running_tools.grouping_tool.groupings,
+        selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+      };
+      grouping.groupings.forEach((g: GroupingToolGroups) => {
+        if (grouping.selectedGrouping === g.id) {
+          this.selectedGroup = g;
+          if (this.dialogRef) {
+            this.dialogRef.componentInstance.updateGroupData(this.selectedGroup);
+          }
+        }
+      });
+      // this.existingGroupings = grouping.groupings;
     }
+  }
+
+  start() {
+    this.socketMessage.emit(new CreateGroupingEvent('Untitled Grouping'));
+    this.openGroupingToolDialog();
+    // this.socketMessage.emit(new ViewGroupingEvent(true));
+  }
+
+  selectExistingGrouping() {
+    this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
+    this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   selectGrouping(event: GroupingToolGroups) {
     this.selectedGroup = event;
+  }
+
+  newGrouping() {
+    this.openGroupingToolDialog();
+  }
+
+  openGroupingToolDialog() {
+    this.dialogRef = this.matDialog.open(GroupingToolDialogComponent, {
+      width: '1168px',
+      panelClass: 'grouping-tool-dialog',
+      data: {
+        activityState: this.activityState,
+      },
+    });
+
+    const sub = this.dialogRef.componentInstance.sendMessage.subscribe((event) => {
+      this.socketMessage.emit(event);
+    });
+
+    this.dialogRef.afterClosed().subscribe((result) => {
+      sub.unsubscribe();
+      if (result === 'Use Template') {
+      }
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

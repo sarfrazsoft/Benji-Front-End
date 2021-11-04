@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { GroupingToolDialogComponent } from '../../shared/dialogs/grouping-tool-dialog/grouping-tool.dialog';
-import { GroupingParticipantDialogComponent } from '../../shared/dialogs/grouping-participant/grouping-participant.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -22,7 +21,6 @@ import {
   ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
-import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -60,8 +58,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private sharingToolService: SharingToolService,
     private groupingToolService: GroupingToolService,
-    private groupingToolDialog: MatDialog,
-    private groupingParticipantDialog: MatDialog,
+    private matDialog: MatDialog
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -124,12 +121,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   groupingMenuClicked() {
     let activityID = '';
+    const activity_type = this.activityState.activity_type.toLowerCase();
     const state = this.activityState;
-    if (state.casestudyactivity) {
-      activityID = state.casestudyactivity.activity_id;
-    } else if (state.brainstormactivity) {
-      activityID = state.brainstormactivity.activity_id;
-    }
+    activityID = state[activity_type].activity_id;
     const code = activityID + state.lesson_run.lessonrun_code;
 
     if (this.isGroupingShowing) {
@@ -197,34 +191,16 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
   }
 
-  openGroupingToolDialog() {
-    const dialogRef = this.groupingToolDialog.open(GroupingToolDialogComponent, {
-      width: '1168px',
-      panelClass: 'grouping-tool-dialog',
-      data: {
-        activityState: this.activityState,
-      },
-    });
+  // openGroupingCollaborateDialog() {
+  //   const dialogRef = this.groupingCollaborateDialog.open(GroupingCollaborateDialogComponent, {
+  //     width: '248px',
+  //     panelClass: 'grouping-collaborate-dialog',
+  //     data: {},
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'Use Template') {
-      }
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  openGroupingParticipantDialog() {
-    const dialogRef = this.groupingParticipantDialog.open(GroupingParticipantDialogComponent, {
-      width: '1168px',
-      panelClass: 'grouping-participant-dialog',
-      data: {
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'Use Template') {
-      }
-    });
-  }
-
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     if (result === 'Use Template') {
+  //     }
+  //   });
+  // }
 }

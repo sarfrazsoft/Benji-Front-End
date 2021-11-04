@@ -1,7 +1,8 @@
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Category } from 'src/app/services/backend/schema';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivitiesService } from 'src/app';
+import { Category } from 'src/app/services/backend/schema';
 import {
   AllowParticipantGroupingEvent,
   AllowParticipantGroupingMidActivityEvent,
@@ -22,7 +23,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: 'grouping-tool.dialog.html',
 })
 export class GroupingToolDialogComponent implements OnInit, OnChanges {
-  groupingTitle = '';
+  groupingTitle;
   selectedGroup: GroupingToolGroups;
   unassignedUsers = [];
   breakoutRooms: Array<{ id: number; name: string; participants: Array<any> }> = [];
@@ -36,13 +37,14 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
-  categories = ['Individual', 'Custom', 'Self-Assign']
+  categories = ['Individual', 'Custom', 'Self-Assign'];
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { activityState: UpdateMessage; },
+    public data: { activityState: UpdateMessage },
     private matDialog: MatDialog,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private activitiesService: ActivitiesService
   ) {
     this.activityState = data.activityState;
   }
@@ -52,8 +54,10 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    const code =
-      this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+    const state = this.activityState;
+    const activityID = this.activitiesService.getActivityType(state);
+    const code = activityID + state.lesson_run.lessonrun_code;
+
     if (localStorage.getItem('isGroupingCreated') === code) {
       this.showStartGroupingButton = false;
     } else {
@@ -79,6 +83,12 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         // this.unassignedUsers = g.unassignedParticipants;
       }
     });
+  }
+
+  updateGroupData(g: GroupingToolGroups) {
+    console.log(g);
+    this.selectedGroup = g;
+    this.groupingTitle = g.title;
   }
 
   initGroups(grouping) {
@@ -230,5 +240,4 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   editTitle() {
     this.editingTitle = !this.editingTitle;
   }
-
 }

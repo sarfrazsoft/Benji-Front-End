@@ -37,30 +37,28 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
   constructor(private utilsService: UtilsService) {}
 
   ngOnInit(): void {
-    let activityID = '';
-    const state = this.activityState;
-    if (state.casestudyactivity) {
-      activityID = state.casestudyactivity.activity_id;
-    } else if (state.brainstormactivity) {
-      activityID = state.brainstormactivity.activity_id;
-    }
-    const code = activityID + state.lesson_run.lessonrun_code;
-
-    if (localStorage.getItem('isGroupingCreated') === code) {
-      this.showStartGroupingButton = false;
-    } else {
-      this.showStartGroupingButton = true;
-    }
+    // let activityID = '';
+    // const state = this.activityState;
+    // if (state.casestudyactivity) {
+    //   activityID = state.casestudyactivity.activity_id;
+    // } else if (state.brainstormactivity) {
+    //   activityID = state.brainstormactivity.activity_id;
+    // }
+    // const code = activityID + state.lesson_run.lessonrun_code;
+    // if (localStorage.getItem('isGroupingCreated') === code) {
+    //   this.showStartGroupingButton = false;
+    // } else {
+    //   this.showStartGroupingButton = true;
+    // }
   }
 
   ngOnChanges() {
-    const grouping = {
-      groupings: this.activityState.running_tools.grouping_tool.groupings,
-      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-    };
-    this.initSelectedGroup(grouping);
-
-    this.initGroups(grouping);
+    // const grouping = {
+    //   groupings: this.activityState.running_tools.grouping_tool.groupings,
+    //   selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+    // };
+    // this.initSelectedGroup(grouping);
+    // this.initGroups(grouping);
   }
 
   initSelectedGroup(grouping) {
