@@ -21,6 +21,7 @@ import {
   ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
+import { GroupingParticipantDialogComponent } from 'src/app/shared/dialogs';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -191,16 +192,15 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
   }
 
-  // openGroupingCollaborateDialog() {
-  //   const dialogRef = this.groupingCollaborateDialog.open(GroupingCollaborateDialogComponent, {
-  //     width: '248px',
-  //     panelClass: 'grouping-collaborate-dialog',
-  //     data: {},
-  //   });
+  openGroupingParticipantDialog() {
+    const dialogRef = this.matDialog.open(GroupingParticipantDialogComponent, {
+      panelClass: 'grouping-participant-dialog',
+      data: {},
+    });
 
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result === 'Use Template') {
-  //     }
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'Use Template') {
+      }
+    });
+  }
 }

@@ -621,6 +621,95 @@
       margin-top: -40px;
       cursor: pointer;
     }
+    .border-primary {
+      border: 2px solid $primary-color;
+      border-radius: 8px;
+      background: $primary-color;
+      .group {
+        border: 0px;
+      }
+    }
+    .group {
+      padding: 16px;
+      width: 352px;
+      height: 222px;
+      border: 1px solid #E2E0DF;
+      border-radius: 8px;
+      background: #fff;
+      position: relative;
+      .title {
+        font-weight: 700;
+        color: #000;
+        font-size: 18px;
+        margin: 8px 0px 12px 4px;
+      }
+      .description {
+        font-size: 14px;
+        font-weight: 400;
+        color: #616161;
+        margin: 0px 0px 16px 4px;
+      }
+      .counts {
+        color: #bdbdbd;
+        font-weight: 400;
+        font-size: 14px;
+        margin: 0px 0px 4px 4px;
+      }
+      .users {
+        margin: 0px 0px 24px 4px;
+        .circle {
+          width: 32px;
+          height: 32px;
+          font-size: 12px;
+          font-weight: 500;
+          color: #fff;
+          padding: 4px;
+          border-radius: 50%;
+          &.purple {
+            background: #B0AEF6;
+          }
+          &.blue {
+            background: #AEC2F6;
+          }
+          &.pink {
+            background: #F6AEE2;
+          }
+          &.orange {
+            background: #F6AEAE;
+          }
+        }
+      }
+      .empty {
+        padding: 19px;
+        background: #EFF1F2;
+        border-radius: 8px;
+        color: #000;
+        font-size: 16px;
+        font-weight: 400;
+        font-style: italic;
+        margin-top: 4px;
+      }
+      .button {
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        position: absolute;
+        width: 318px;
+        bottom: 16px;
+        &.grey{
+          color: #37352f;
+          background: #e7e7e7;
+        }
+        &.light-grey {
+          color: #37352f;
+          background: #F3F4F7;
+        }
+      }
+    }
     .bg-area {
       height: 116px;
       background: #f7f8f9;
@@ -630,23 +719,6 @@
       font-weight: 400;
       color: #616161;
       margin-bottom: 16px;
-    }
-    .blue-button {
-      background: $primary-color;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      text-align: center;
-    }
-    .activity {
-      .title {
-        font-size: 14px;
-        font-weight: 700;
-        color: #000;
-      }
     }
   }
 }
