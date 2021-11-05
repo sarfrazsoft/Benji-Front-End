@@ -553,6 +553,11 @@
           text-align: center;
           font-style: italic;
           padding: 10px;
+          .users {
+            overflow-y: auto;
+            width: 100%;
+            height: calc(100% - 14px);
+          }
         }
         .gtitle {
           width: 99px;
@@ -610,7 +615,7 @@
     border-radius: 8px;
     padding: 24px 40px 40px 40px;
     .title {
-      .header{
+      .header {
         font-weight: 700;
         font-size: 32px;
         color: #37352f;
@@ -636,7 +641,7 @@
       padding: 16px;
       width: 352px;
       height: 222px;
-      border: 1px solid #E2E0DF;
+      border: 1px solid #e2e0df;
       border-radius: 8px;
       background: #fff;
       position: relative;
@@ -669,22 +674,22 @@
           padding: 4px;
           border-radius: 50%;
           &.purple {
-            background: #B0AEF6;
+            background: #b0aef6;
           }
           &.blue {
-            background: #AEC2F6;
+            background: #aec2f6;
           }
           &.pink {
-            background: #F6AEE2;
+            background: #f6aee2;
           }
           &.orange {
-            background: #F6AEAE;
+            background: #f6aeae;
           }
         }
       }
       .empty {
         padding: 19px;
-        background: #EFF1F2;
+        background: #eff1f2;
         border-radius: 8px;
         color: #000;
         font-size: 16px;
@@ -703,13 +708,13 @@
         position: absolute;
         width: 318px;
         bottom: 16px;
-        &.grey{
+        &.grey {
           color: #37352f;
           background: #e7e7e7;
         }
         &.light-grey {
           color: #37352f;
-          background: #F3F4F7;
+          background: #f3f4f7;
         }
       }
     }

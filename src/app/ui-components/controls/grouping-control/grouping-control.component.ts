@@ -21,8 +21,8 @@ import { GroupingToolDialogComponent } from 'src/app/shared/dialogs';
 })
 export class GroupingControlComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
-  existingGroupings = [];
-  selectedGroup;
+  existingGroupings: Array<GroupingToolGroups> = [];
+  selectedGroup: GroupingToolGroups;
   groupingType = 'new';
   newGroupingTitle = '';
   dialogRef: MatDialogRef<GroupingToolDialogComponent>;
@@ -73,6 +73,12 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     }
   }
 
+  editGrouping(grouping: GroupingToolGroups) {
+    const dialogRef = this.openGroupingToolDialog();
+    this.selectedGroup = grouping;
+    dialogRef.componentInstance.updateGroupData(this.selectedGroup);
+  }
+
   start() {
     this.socketMessage.emit(new CreateGroupingEvent('Untitled Grouping'));
     this.openGroupingToolDialog();
@@ -111,5 +117,6 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       }
       console.log(`Dialog result: ${result}`);
     });
+    return this.dialogRef;
   }
 }
