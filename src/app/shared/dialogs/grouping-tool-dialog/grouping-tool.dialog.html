@@ -22,13 +22,22 @@
     </div>
     <div class="dropdown-controls-container" *ngIf="categories">
       <ng-select
-        class="dropdown-controls"
+        class="groups-controls "
         [items]="categories"
         bindLabel="category_name"
         placeholder="Custom"
+        (change)="classificationTypeChanged(selectedCategory)"
         [(ngModel)]="selectedCategory"
         appendTo="body"
         [searchable]="false">
+        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+            <div fxLayout="column">
+              <div class="title">{{ item.title }}</div>
+              <div class="description">{{ item.description }}</div>
+            </div>
+          </div>
+        </ng-template>
       </ng-select>
     </div>
   </div>

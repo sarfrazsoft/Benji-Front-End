@@ -138,7 +138,6 @@ benji-session-navigation {
 }
 .mat-menu-panel.mat-elevation-z4 {
   box-shadow: 0px 1px 3px #d5d9de;
-  margin-top: 40px;
   color: $black;
 }
 
@@ -241,13 +240,11 @@ benji-preview-panel .continue-button {
     }
   }
 }
+
 .mat-menu-panel.edit-delete {
-  margin-top: 10px !important;
-}
-.mat-menu-panel {
   min-width: 142px !important;
-}
-.mat-menu-item {
-  line-height: 24px !important;
-  height: 24px !important;
+  .mat-menu-item {
+    line-height: 24px !important;
+    height: 24px !important;
+  }
 }

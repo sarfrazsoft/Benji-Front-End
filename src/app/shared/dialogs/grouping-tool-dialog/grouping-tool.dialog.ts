@@ -38,7 +38,10 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
-  categories = ['Individual', 'Custom', 'Self-Assign'];
+  categories = [
+    { type: 'custom', title: 'Custom', description: `Host assigns people` },
+    { type: 'self-assign', title: 'Self-Assign', description: `People choose their group` },
+  ];
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
     @Inject(MAT_DIALOG_DATA)

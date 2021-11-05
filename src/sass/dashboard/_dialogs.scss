@@ -474,6 +474,7 @@
         color: #37352f;
         font-size: 16px;
         font-weight: 500;
+        margin-bottom: 6px;
       }
       .subheader {
         color: #828282;
@@ -607,6 +608,32 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+ng-dropdown-panel.groups-controls {
+  top: 176px !important;
+  width: auto !important;
+  box-shadow: 0px 3px 5px #bdbdbd;
+  border-radius: 8px !important;
+  padding: 8px 0px;
+  background: #fff !important;
+  .ng-option {
+    padding: 12px !important;
+    &.ng-option-selected, &.ng-option-marked {
+     background: #F3F4F7 !important;
+    }
+  }
+  .title {
+    color: #37352f;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .description {
+    color: #818181;
+    font-size: 14px;
+    font-weight: 400;
   }
 }
 

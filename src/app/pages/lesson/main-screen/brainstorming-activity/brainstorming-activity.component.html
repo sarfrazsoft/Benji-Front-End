@@ -13,7 +13,7 @@
         <ng-container *ngxPermissionsOnly="'ADMIN'">
           <div *ngIf="classificationTypes">
             <ng-select
-              class="menus"
+              class="brainstorm-groups"
               [items]="classificationTypes"
               bindLabel="title"
               placeholder="Groups"
@@ -22,11 +22,13 @@
               appendTo="body"
               [searchable]="false">
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                <div fxLayout="row">
-                  <div>icon</div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                  <div *ngIf="item.title=='Everyone'"><img src="/assets/img/brainstorm/everyone.svg" /></div>
+                  <div *ngIf="item.title=='Groups'"><img src="/assets/img/brainstorm/groups.svg" /></div>
+                  <div *ngIf="item.title=='Individuals'"><img src="/assets/img/brainstorm/individuals.svg" /></div>
                   <div fxLayout="column">
-                    <div>{{ item.title }}</div>
-                    <div>{{ item.description }}</div>
+                    <div class="title">{{ item.title }}</div>
+                    <div class="description">{{ item.description }}</div>
                   </div>
                 </div>
             </ng-template>

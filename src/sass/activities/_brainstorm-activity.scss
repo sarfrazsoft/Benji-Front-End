@@ -555,14 +555,38 @@ benji-ps-brainstorming-activity {
   }
 }
 
-ng-dropdown-panel.menus {
+ng-select.groups-controls {
+  .ng-select-container {
+    background: #F3F4F7;
+    box-shadow: 1px 1px 1px rgba(213, 217, 222, 0.5);
+    border-radius: 24px;
+    border: 0px;
+    padding: 0px 6px;
+  }
+}
+
+ng-dropdown-panel.brainstorm-groups {
   top: 146px !important;
   width: auto !important;
-  box-shadow: 0px 1px 2px #e7e7e7;
+  box-shadow: 0px 3px 5px #bdbdbd;
   border-radius: 8px !important;
   padding: 8px 0px;
   background: #fff !important;
-  .ng-dropdown-panel-items {
-    padding: 0px 8px !important;
+  .ng-option {
+    padding: 12px !important;
+    &.ng-option-selected, &.ng-option-marked {
+     background: #F3F4F7 !important;
+    }
+  }
+  .title {
+    color: #37352f;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .description {
+    color: #818181;
+    font-size: 14px;
+    font-weight: 400;
   }
 }
