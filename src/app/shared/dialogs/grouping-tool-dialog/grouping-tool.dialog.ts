@@ -31,6 +31,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   editingName = {};
   groupName = '';
   showStartGroupingButton: boolean;
+  allowParticipantsJoining: boolean;
   private typingTimer;
   numberOfRooms = 0;
   editingTitle = false;
@@ -86,26 +87,28 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   updateGroupData(g: GroupingToolGroups) {
-    console.log(g);
     this.selectedGroup = g;
-    this.groupingTitle = g.title;
+    if (g) {
+      this.groupingTitle = g.title;
+      this.allowParticipantsJoining = g.allowParticipantsJoining;
+    }
+
+    const grouping = {
+      groupings: this.activityState.running_tools.grouping_tool.groupings,
+      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+    };
+
+    this.initUnassignedParticipants();
+
+    this.initGroups(grouping);
   }
 
-  initGroups(grouping) {
+  initUnassignedParticipants() {
     const allUsers = this.activityState.lesson_run.participant_set;
-    let unassignedUsers = [];
-    let selectedgrouping: GroupingToolGroups;
-    this.breakoutRooms = [];
-    grouping.groupings.forEach((g: GroupingToolGroups) => {
-      if (grouping.selectedGrouping === g.id) {
-        selectedgrouping = g;
-        unassignedUsers = g.unassignedParticipants;
-      }
-    });
 
     this.unassignedUsers = [];
-    for (let j = 0; j < unassignedUsers.length; j++) {
-      const participantCode = unassignedUsers[j];
+    for (let j = 0; j < this.selectedGroup.unassignedParticipants.length; j++) {
+      const participantCode = this.selectedGroup.unassignedParticipants[j];
       for (let k = 0; k < allUsers.length; k++) {
         const user = allUsers[k];
         if (user.participant_code === participantCode) {
@@ -114,6 +117,17 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  initGroups(grouping) {
+    const allUsers = this.activityState.lesson_run.participant_set;
+    let selectedgrouping: GroupingToolGroups;
+    this.breakoutRooms = [];
+    grouping.groupings.forEach((g: GroupingToolGroups) => {
+      if (grouping.selectedGrouping === g.id) {
+        selectedgrouping = g;
+      }
+    });
 
     if (!selectedgrouping) {
       return;
@@ -139,6 +153,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         participants: participants,
       });
     }
+    console.log(this.breakoutRooms);
     if (this.numberOfRooms === 0) {
       this.numberOfRooms = this.breakoutRooms.length;
     }
