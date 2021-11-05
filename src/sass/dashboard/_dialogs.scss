@@ -626,12 +626,11 @@
       margin-top: -40px;
       cursor: pointer;
     }
-    .border-primary {
-      border: 2px solid $primary-color;
-      border-radius: 8px;
-      background: $primary-color;
+    .colored {
+      border-radius: 9px;
       .group {
-        border: 0px;
+        border: 2px solid $primary-color;
+        background: rgba(255, 255, 255, 0.92);
       }
     }
     .groups {

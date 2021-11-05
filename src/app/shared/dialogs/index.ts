@@ -10,12 +10,12 @@ export * from './templates-dialog/templates.dialog';
 export * from './idea-creation-dialog/idea-creation.dialog';
 export * from './grouping-tool-dialog/grouping-tool.dialog';
 export * from './idea-detailed-dialog/idea-detailed.dialog';
-export * from './grouping-participant/grouping-participant.dialog';
+export * from './participant-grouping/participant-grouping.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
-import { GroupingParticipantDialogComponent } from './grouping-participant/grouping-participant.dialog';
+import { ParticipantGroupingDialogComponent } from './participant-grouping/participant-grouping.dialog';
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
 import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
@@ -46,6 +46,6 @@ export const Dialogs = [
   TemplatesDialogComponent,
   IdeaCreationDialogComponent,
   GroupingToolDialogComponent,
-  GroupingParticipantDialogComponent,
+  ParticipantGroupingDialogComponent,
   IdeaDetailedDialogComponent,
 ];

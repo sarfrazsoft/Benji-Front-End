@@ -2,12 +2,12 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'benji-grouping-participant-dialog',
-  templateUrl: 'grouping-participant.dialog.html',
+  selector: 'benji-participant-grouping-dialog',
+  templateUrl: 'participant-grouping.dialog.html',
 })
-export class GroupingParticipantDialogComponent {
+export class ParticipantGroupingDialogComponent {
   constructor(
-    private dialogRef: MatDialogRef<GroupingParticipantDialogComponent>,
+    private dialogRef: MatDialogRef<ParticipantGroupingDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     private matDialog: MatDialog
   ) {}

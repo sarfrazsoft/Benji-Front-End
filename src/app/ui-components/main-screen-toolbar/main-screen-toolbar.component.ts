@@ -21,7 +21,7 @@ import {
   ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
-import { GroupingParticipantDialogComponent } from 'src/app/shared/dialogs';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -193,7 +193,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   openGroupingParticipantDialog() {
-    const dialogRef = this.matDialog.open(GroupingParticipantDialogComponent, {
+    const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
       panelClass: 'grouping-participant-dialog',
       data: {},
     });
