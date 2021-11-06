@@ -240,14 +240,15 @@
       </benji-ms-sharing-tool>
     </ng-container>
 
-    <ng-container>
+    <!-- old grouping tool commented out -->
+    <!-- <ng-container>
       <benji-ms-grouping-tool *ngIf="getIsGroupingShowing() || showGroupingOnScreen"
         [activityState]="serverMessage"
         (sendMessage)="sendSocketMessage($event)"
       >
       </benji-ms-grouping-tool>
       
-    </ng-container>
+    </ng-container> -->
   </div>
   <benji-main-screen-footer
     *ngIf="isConnected() && serverMessage"

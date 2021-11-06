@@ -30,7 +30,7 @@
         [(ngModel)]="selectedCategory"
         appendTo="body"
         [searchable]="false">
-        <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+        <ng-template ng-option-tmp let-item="item" let-index="index">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
             <div fxLayout="column">
               <div class="title">{{ item.title }}</div>
@@ -80,51 +80,49 @@
   <div>
     <div class="sub-title"> Groups </div>
     <div class="groups" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="24px">
-      <ul>
-        <li *ngFor="let group of breakoutRooms">
-          <div class="group" [ngClass]="{'occupied': 'group.participants'}" fxLayout="column">
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-              <div fxLayout="column" class="group-title">
-                <div 
-                  *ngIf="!editingName[group.id]"
-                  (click)="editGroupName(group)">
-                  {{ group.name }}
-                </div>
-                <div *ngIf="editingName[group.id]" >
-                  <input 
-                    type="text" 
-                    style="width: 125px;" 
-                    [(ngModel)]="groupName" 
-                    (blur)="saveEditedGroupName(group)"
-                    (keyup.enter)="saveEditedGroupName(group)">
-                </div>
+      <div *ngFor="let group of breakoutRooms">
+        <div class="group" [ngClass]="{'occupied': 'group.participants'}" fxLayout="column">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" class="group-title">
+              <div 
+                *ngIf="!editingName[group.id]"
+                (click)="editGroupName(group)">
+                {{ group.name }}
               </div>
-              <div fxLayout="row" fxLayoutGap="8px">
-                <span class="count">{{ group.participants.length }}</span>
-                <img class="close" (click)="deleteGroup(group)" src="/assets/img/idea-creation/close_big.svg">
+              <div *ngIf="editingName[group.id]" >
+                <input 
+                  type="text" 
+                  style="width: 125px;" 
+                  [(ngModel)]="groupName" 
+                  (blur)="saveEditedGroupName(group)"
+                  (keyup.enter)="saveEditedGroupName(group)">
               </div>
             </div>
-            <!-- <div class="bg-area" *ngIf="!group.participants">
-              Drag-n-drop participants to assign them to the group
-            </div> -->
-            <div class="bg-area" *ngIf="group.participants">
-              <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
-                cdkDropList
-                [cdkDropListData]="group.participants"
-                (cdkDropListDropped)="drop($event)">
-                <div class="user" fxLayoutGap="8px" fxLayout="row"  
-                  cdkDrag
-                  *ngFor="let participant of group.participants">
-                  <span>
-                    {{ participant.display_name }}
-                  </span>
-                  <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
-                </div>
+            <div fxLayout="row" fxLayoutGap="8px">
+              <span class="count">{{ group.participants.length }}</span>
+              <img class="close" (click)="deleteGroup(group)" src="/assets/img/idea-creation/close_big.svg">
+            </div>
+          </div>
+          <!-- <div class="bg-area" *ngIf="!group.participants">
+            Drag-n-drop participants to assign them to the group
+          </div> -->
+          <div class="bg-area" *ngIf="group.participants">
+            <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
+              cdkDropList
+              [cdkDropListData]="group.participants"
+              (cdkDropListDropped)="drop($event)">
+              <div class="user" fxLayoutGap="8px" fxLayout="row"  
+                cdkDrag
+                *ngFor="let participant of group.participants">
+                <span>
+                  {{ participant.display_name }}
+                </span>
+                <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
               </div>
             </div>
           </div>
-        </li>
-      </ul>
+        </div>
+      </div>
       <div class="add-group" fxLayout="column" fxLayoutAlign="center center" (click)="addGroup()">
         + Add Group
       </div>

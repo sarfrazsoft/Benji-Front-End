@@ -34,7 +34,7 @@
             </ng-template>
             </ng-select>
           </div>
-          <div *ngIf="participantGroups">
+          <div *ngIf="participantGroups?.length">
             <ng-select
               class="menus"
               [items]="participantGroups"

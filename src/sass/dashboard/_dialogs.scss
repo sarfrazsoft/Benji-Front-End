@@ -524,6 +524,7 @@
       }
     }
     .groups {
+      overflow: auto;
       .group {
         padding: 16px;
         border: 1px solid #e2e0df;
@@ -620,8 +621,9 @@ ng-dropdown-panel.groups-controls {
   background: #fff !important;
   .ng-option {
     padding: 12px !important;
-    &.ng-option-selected, &.ng-option-marked {
-     background: #F3F4F7 !important;
+    &.ng-option-selected,
+    &.ng-option-marked {
+      background: #f3f4f7 !important;
     }
   }
   .title {
