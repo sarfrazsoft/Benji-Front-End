@@ -558,7 +558,7 @@ benji-ps-brainstorming-activity {
 
 ng-select.brainstorm-groups {
   .ng-select-container {
-    background: #F3F4F7;
+    background: #f3f4f7;
     box-shadow: 1px 1px 1px rgba(213, 217, 222, 0.5);
     border-radius: 24px;
     border: 0px;
@@ -575,8 +575,9 @@ ng-dropdown-panel.brainstorm-groups {
   background: #fff !important;
   .ng-option {
     padding: 12px !important;
-    &.ng-option-selected, &.ng-option-marked {
-     background: #F3F4F7 !important;
+    &.ng-option-selected,
+    &.ng-option-marked {
+      background: #f3f4f7 !important;
     }
   }
   .title {

@@ -39,6 +39,7 @@ import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/im
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping/participant-grouping.dialog';
 import { environment } from 'src/environments/environment';
 import { UncategorizedComponent } from './uncategorized/uncategorized.component';
 
@@ -64,6 +65,7 @@ export class MainScreenBrainstormingActivityComponent
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
   showParticipantUI = false;
+  showParticipantsGroupsDropdown = false;
   participantCode;
   private eventsSubscription: Subscription;
 
@@ -135,8 +137,18 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.classificationTypes = [
-          { type: 'everyone', title: 'Everyone', description: `Display everyone's work`, imgUrl: '/assets/img/brainstorm/everyone.svg' },
-          { type: 'groups', title: 'Groups', description: `Display group's work`, imgUrl: '/assets/img/brainstorm/groups.svg' },
+          {
+            type: 'everyone',
+            title: 'Everyone',
+            description: `Display everyone's work`,
+            imgUrl: '/assets/img/brainstorm/everyone.svg',
+          },
+          {
+            type: 'groups',
+            title: 'Groups',
+            description: `Display group's work`,
+            imgUrl: '/assets/img/brainstorm/groups.svg',
+          },
           // { type: 'individuals', title: 'Individuals', description: `Display single persons work`, imgUrl: '/assets/img/brainstorm/individuals.svg' },
         ];
       }
@@ -230,12 +242,14 @@ export class MainScreenBrainstormingActivityComponent
     // console.log(selectedClassificationType);
     const sct = selectedClassificationType;
     if (sct.type === 'everyone') {
-      this.participantGroups = null;
+      // this.participantGroups = null;
       this.selectedParticipantGroup = null;
+      this.showParticipantsGroupsDropdown = false;
 
       this.act = cloneDeep(this.activityState.brainstormactivity);
     } else if (sct.type === 'groups') {
       this.participantGroups = this.act.groups;
+      this.showParticipantsGroupsDropdown = true;
     } else if (sct.type === 'individuals') {
       this.participantGroups = null;
     }
@@ -284,6 +298,20 @@ export class MainScreenBrainstormingActivityComponent
           this.filterIdeasBasedOnGroup(this.myGroup);
         }
       });
+      this.permissionsService.hasPermission('ADMIN').then((val) => {
+        if (val) {
+          this.participantGroups = this.act.groups;
+        }
+      });
+    }
+
+    const sm = this.activityState;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+      const gt = sm.running_tools.grouping_tool;
+      if (gt.viewGrouping) {
+        console.log(gt);
+        this.openParticipantGroupingToolDialog();
+      }
     }
 
     if (this.act.brainstormcategory_set.length) {
@@ -360,6 +388,28 @@ export class MainScreenBrainstormingActivityComponent
       });
     }
     this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  openParticipantGroupingToolDialog() {
+    this.dialogRef = this.dialog.open(ParticipantGroupingDialogComponent, {
+      width: '1168px',
+      panelClass: 'grouping-tool-dialog',
+      data: {
+        activityState: this.activityState,
+      },
+    });
+
+    const sub = this.dialogRef.componentInstance.sendMessage.subscribe((event) => {
+      this.sendSocketMessage(event);
+    });
+
+    this.dialogRef.afterClosed().subscribe((result) => {
+      sub.unsubscribe();
+      if (result === 'Use Template') {
+      }
+      console.log(`Dialog result: ${result}`);
+    });
+    return this.dialogRef;
   }
 
   getUnAnsweredUsers() {

@@ -11,16 +11,17 @@
           {{ instructions }}
         </h2>
         <ng-container *ngxPermissionsOnly="'ADMIN'">
-          <div *ngIf="classificationTypes">
+          <div *ngIf="classificationTypes && participantGroups?.length">
             <ng-select
-              class="brainstorm-groups"
+              class="brainstorm-groups menus"
               [items]="classificationTypes"
               bindLabel="title"
               placeholder="Groups"
               (change)="classificationTypeChanged(selectedClassificationType)"
               [(ngModel)]="selectedClassificationType"
               appendTo="body"
-              [searchable]="false">
+              [searchable]="false"
+              [clearable]="false">
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
                   <img src="{{item.imgUrl}}" />
@@ -32,7 +33,7 @@
             </ng-template>
             </ng-select>
           </div>
-          <div *ngIf="participantGroups?.length">
+          <div *ngIf="showParticipantsGroupsDropdown">
             <ng-select
               class="menus"
               [items]="participantGroups"
@@ -41,7 +42,8 @@
               (change)="ParticipantGroupChanged(selectedParticipantGroup)"
               [(ngModel)]="selectedParticipantGroup"
               appendTo="body"
-              [searchable]="false">
+              [searchable]="false"
+              [clearable]="false">
               <ng-template ng-option-tmp let-item="item" let-index="index">
                 <div>{{ item.title }}</div>
               </ng-template>
