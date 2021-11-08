@@ -6,7 +6,7 @@ import { ContextService, GroupingToolService, SharingToolService } from 'src/app
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,

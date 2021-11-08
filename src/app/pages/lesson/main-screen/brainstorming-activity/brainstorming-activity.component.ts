@@ -39,7 +39,7 @@ import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/im
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping/participant-grouping.dialog';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { environment } from 'src/environments/environment';
 import { UncategorizedComponent } from './uncategorized/uncategorized.component';
 
