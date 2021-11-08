@@ -43,3 +43,322 @@
     max-width: 100%;
   }
 }
+
+
+.grouping-tool-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+    padding: 40px;
+    .content-header {
+      margin-bottom: 15px;
+      input.title {
+        font-weight: 600;
+        font-size: 24px;
+        color: #37352f;
+        border: 0px;
+        &:focus {
+          border: 0px;
+          outline: 0px;
+        }
+      }
+      .edit {
+        cursor: pointer;
+        margin-left: 11px;
+        margin-top: 4px;
+      }
+      .close {
+        margin-top: -40px;
+        cursor: pointer;
+      }
+    }
+    .settings {
+      border: 1px solid #e6e4e3;
+      border-radius: 4px;
+      padding: 16px 24px;
+      height: 72px;
+      margin-bottom: 32px;
+      .header {
+        color: #37352f;
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 6px;
+      }
+      .subheader {
+        color: #828282;
+        font-size: 12px;
+        font-weight: 400;
+      }
+      .groups-count {
+        height: 20px;
+        width: 26px;
+        padding: 10px;
+        text-align: right;
+        font-size: 16px;
+        color: #616161;
+        font-weight: 400;
+        &:focus {
+          outline: none;
+        }
+      }
+      .ng-select-container {
+        background: #f3f4f7;
+        border-radius: 4px;
+        border: 0px;
+        width: 134px;
+        &:focus {
+          outline: none;
+        }
+      }
+      input:checked + .slider {
+        background-color: $primary-color;
+      }
+    }
+    .sub-title {
+      color: #37352f;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .free-users {
+      margin-bottom: 32px;
+      .user {
+        font-size: 12px;
+        font-weight: 500;
+        color: #6a6a6a;
+        padding: 9px 16px;
+        background: #f3f4f7;
+        border-radius: 100px;
+      }
+    }
+    .groups {
+      .group {
+        padding: 16px;
+        border: 1px solid #e2e0df;
+        border-radius: 8px;
+        height: 240px;
+        width: 280px;
+        .group-title {
+          font-size: 16px;
+          font-weight: 500;
+          color: #616161;
+          margin-left: 8px;
+        }
+        .count {
+          font-size: 14px;
+          font-weight: 600;
+          color: #37352f;
+        }
+        .close {
+          width: 11px;
+        }
+        .bg-area {
+          background: #eff1f2;
+          border-radius: 4px;
+          height: 100%;
+          margin-top: 16px;
+          font-size: 16px;
+          font-weight: 400;
+          text-align: center;
+          font-style: italic;
+          padding: 10px;
+          .users {
+            overflow-y: auto;
+            width: 100%;
+            height: calc(100% - 14px);
+          }
+        }
+        .gtitle {
+          width: 99px;
+        }
+        &.occupied {
+          .user {
+            font-size: 12px;
+            font-weight: 500;
+            color: #6a6a6a;
+            padding: 8px 12px 8px 16px;
+            background: #fff;
+            border-radius: 100px;
+            font-style: normal;
+          }
+        }
+      }
+      .add-group {
+        align-items: center;
+        height: 240px;
+        width: 280px;
+        border: 2px dotted #e2e0df;
+        border-radius: 8px;
+        font-size: 20px;
+        font-weight: 700;
+        color: #616161;
+        cursor: pointer;
+      }
+    }
+    .end-buttons {
+      margin-top: 25px;
+      .white-button {
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .blue-button {
+        background: $primary-color;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+ng-dropdown-panel.groups-controls {
+  width: auto !important;
+  box-shadow: 0px 3px 5px #bdbdbd;
+  border-radius: 8px !important;
+  padding: 8px 0px;
+  background: #fff !important;
+  .ng-option {
+    padding: 12px !important;
+    &.ng-option-selected, &.ng-option-marked {
+     background: #F3F4F7 !important;
+    }
+  }
+  .title {
+    color: #37352f;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .description {
+    color: #818181;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.grouping-participant-dialog {
+  .mat-dialog-container {
+    border-radius: 8px;
+    padding: 24px 40px 40px 40px;
+    .title {
+      .header {
+        font-weight: 700;
+        font-size: 32px;
+        color: #37352f;
+        margin-bottom: 8px;
+      }
+    }
+    .close {
+      margin-top: -40px;
+      cursor: pointer;
+    }
+    .colored {
+      border-radius: 9px;
+      .group {
+        border: 2px solid $primary-color;
+        background: rgba(255, 255, 255, 0.92);
+      }
+    }
+    .groups {
+      margin-top: 16px;
+    }
+    .group {
+      padding: 16px;
+      width: 352px;
+      height: 222px;
+      border: 1px solid #e2e0df;
+      border-radius: 8px;
+      background: #fff;
+      position: relative;
+      .title {
+        font-weight: 700;
+        color: #000;
+        font-size: 18px;
+        margin: 8px 0px 12px 4px;
+      }
+      .description {
+        font-size: 14px;
+        font-weight: 400;
+        color: #616161;
+        margin: 0px 0px 16px 4px;
+      }
+      .counts {
+        color: #bdbdbd;
+        font-weight: 400;
+        font-size: 14px;
+        margin: 0px 0px 4px 4px;
+      }
+      .users {
+        margin: 0px 0px 24px 4px;
+        .circle {
+          width: 32px;
+          height: 32px;
+          font-size: 12px;
+          font-weight: 500;
+          color: #fff;
+          padding: 4px;
+          border-radius: 50%;
+          &.purple {
+            background: #b0aef6;
+          }
+          &.blue {
+            background: #aec2f6;
+          }
+          &.pink {
+            background: #f6aee2;
+          }
+          &.orange {
+            background: #f6aeae;
+          }
+        }
+      }
+      .empty {
+        padding: 19px;
+        background: #eff1f2;
+        border-radius: 8px;
+        color: #000;
+        font-size: 16px;
+        font-weight: 400;
+        font-style: italic;
+        margin-top: 4px;
+      }
+      .button {
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+        color: #fff;
+        position: absolute;
+        width: 318px;
+        bottom: 16px;
+        &.grey {
+          color: #37352f;
+          background: #e7e7e7;
+        }
+        &.light-grey {
+          color: #37352f;
+          background: #f3f4f7;
+        }
+      }
+    }
+    .bg-area {
+      height: 116px;
+      background: #f7f8f9;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: #616161;
+      margin-bottom: 16px;
+    }
+  }
+}
