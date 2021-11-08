@@ -271,10 +271,12 @@ ng-dropdown-panel.groups-controls {
           margin: 0px;
           border: 2px solid $primary-color;
           background: rgba(255, 255, 255, 0.92);
+          display: flex;
+          flex-flow: column;
+          height: 100%;
         }
       }
       .group {
-        padding: 16px;
         margin-bottom: 16px;
         width: 352px;
         height: 222px;
@@ -282,6 +284,12 @@ ng-dropdown-panel.groups-controls {
         border-radius: 8px;
         background: #fff;
         position: relative;
+        display: flex;
+        flex-flow: column;
+        .title-area {
+          flex: 0 1 auto;
+          padding: 16px 16px 0px 16px;
+        }
         .title {
           font-weight: 700;
           color: #000;
@@ -302,6 +310,11 @@ ng-dropdown-panel.groups-controls {
         }
         .users {
           margin: 0px 0px 24px 4px;
+          display: flex;
+          flex-flow: column;
+          flex: 1 1 auto;
+          overflow-y: auto;
+          padding: 0px 16px 0px 16px;
           .circle {
             width: 32px;
             height: 32px;
@@ -342,9 +355,8 @@ ng-dropdown-panel.groups-controls {
           text-align: center;
           cursor: pointer;
           color: #fff;
-          position: absolute;
           width: 318px;
-          bottom: 16px;
+          flex: 0 1 40px;
           &.grey {
             color: #37352f;
             background: #e7e7e7;
