@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app';
-import { Category } from 'src/app/services/backend/schema';
+import { Category, StartBrainstormGroupEvent } from 'src/app/services/backend/schema';
 import {
   AllowParticipantGroupingEvent,
   AllowParticipantGroupingMidActivityEvent,
@@ -24,7 +24,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class GroupingToolDialogComponent implements OnInit, OnChanges {
   groupingTitle;
-  selectedGroup: GroupingToolGroups;
+  selectedGrouping: GroupingToolGroups;
   unassignedUsers = [];
   breakoutRooms: Array<{ id: number; name: string; participants: Array<any> }> = [];
   collapsed = {};
@@ -59,7 +59,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     const state = this.activityState;
-    const activityID = this.activitiesService.getActivityType(state);
+    const activityID = this.activitiesService.getActivityID(state);
     const code = activityID + state.lesson_run.lessonrun_code;
 
     if (localStorage.getItem('isGroupingCreated') === code) {
@@ -70,19 +70,18 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    const grouping = {
-      groupings: this.activityState.running_tools.grouping_tool.groupings,
-      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-    };
-    this.initSelectedGroup(grouping);
-
-    this.initGroups(grouping);
+    // const grouping = {
+    //   groupings: this.activityState.running_tools.grouping_tool.groupings,
+    //   selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+    // };
+    // this.initSelectedGroup(grouping);
+    // this.initGroups(grouping);
   }
 
   initSelectedGroup(grouping) {
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
-        this.selectedGroup = g;
+        this.selectedGrouping = g;
         this.groupingTitle = g.title;
         // this.unassignedUsers = g.unassignedParticipants;
       }
@@ -90,28 +89,23 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   updateGroupData(g: GroupingToolGroups) {
-    this.selectedGroup = g;
+    this.selectedGrouping = g;
     if (g) {
       this.groupingTitle = g.title;
       this.allowParticipantsJoining = g.allowParticipantsJoining;
     }
 
-    const grouping = {
-      groupings: this.activityState.running_tools.grouping_tool.groupings,
-      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-    };
-
     this.initUnassignedParticipants();
 
-    this.initGroups(grouping);
+    this.initGroups(this.selectedGrouping);
   }
 
   initUnassignedParticipants() {
     const allUsers = this.activityState.lesson_run.participant_set;
 
     this.unassignedUsers = [];
-    for (let j = 0; j < this.selectedGroup.unassignedParticipants.length; j++) {
-      const participantCode = this.selectedGroup.unassignedParticipants[j];
+    for (let j = 0; j < this.selectedGrouping.unassignedParticipants.length; j++) {
+      const participantCode = this.selectedGrouping.unassignedParticipants[j];
       for (let k = 0; k < allUsers.length; k++) {
         const user = allUsers[k];
         if (user.participant_code === participantCode) {
@@ -122,15 +116,9 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     }
   }
 
-  initGroups(grouping) {
+  initGroups(selectedgrouping: GroupingToolGroups) {
     const allUsers = this.activityState.lesson_run.participant_set;
-    let selectedgrouping: GroupingToolGroups;
     this.breakoutRooms = [];
-    grouping.groupings.forEach((g: GroupingToolGroups) => {
-      if (grouping.selectedGrouping === g.id) {
-        selectedgrouping = g;
-      }
-    });
 
     if (!selectedgrouping) {
       return;
@@ -156,7 +144,6 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         participants: participants,
       });
     }
-    console.log(this.breakoutRooms);
     if (this.numberOfRooms === 0) {
       this.numberOfRooms = this.breakoutRooms.length;
     }
@@ -175,7 +162,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   doneTyping() {
-    this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGroup.id, this.groupingTitle));
+    this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGrouping.id, this.groupingTitle));
   }
 
   toggleChooseGroup($event) {
@@ -214,16 +201,21 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     const number = this.numberOfRooms + 1;
     const name = 'Room ' + number;
     this.numberOfRooms++;
-    this.sendMessage.emit(new CreateGroupEvent(this.selectedGroup.id, name));
+    this.sendMessage.emit(new CreateGroupEvent(this.selectedGrouping.id, name));
   }
 
   makeActivityGrouping() {
     // check if at least one group has at least one participant
     if (this.groupingsValid()) {
-      const code =
-        this.activityState.casestudyactivity.activity_id + this.activityState.lesson_run.lessonrun_code;
+      const activityID = this.activitiesService.getActivityID(this.activityState);
+      const activityType = this.activitiesService.getActivityType(this.activityState);
+      const code = activityID + this.activityState.lesson_run.lessonrun_code;
       window.localStorage.setItem('isGroupingCreated', code);
-      this.sendMessage.emit(new StartCaseStudyGroupEvent());
+      if (activityType === 'casestudyactivity') {
+        this.sendMessage.emit(new StartCaseStudyGroupEvent());
+      } else if (activityType === 'brainstormactivity') {
+        this.sendMessage.emit(new StartBrainstormGroupEvent());
+      }
       this.showStartGroupingButton = false;
       this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {

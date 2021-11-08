@@ -26,9 +26,13 @@ export class ActivitiesService {
     return name;
   }
 
-  getActivityType(activityState: UpdateMessage): string {
+  getActivityID(activityState: UpdateMessage): string {
     const activity_type = activityState.activity_type.toLowerCase();
     const state = activityState;
     return state[activity_type].activity_id;
+  }
+
+  getActivityType(activityState: UpdateMessage): string {
+    return activityState.activity_type.toLowerCase();
   }
 }
