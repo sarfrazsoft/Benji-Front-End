@@ -9,12 +9,12 @@
     <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
   </div>
   <div class="spinner">
-    <mat-progress-spinner
+    <!-- <mat-progress-spinner
       class="example-margin"
       [color]="color"
       [mode]="mode"
       [value]="value">
-    </mat-progress-spinner>
+    </mat-progress-spinner> -->
   </div>
   <div *ngIf="uploading">
     <div class="importing">Importing slides</div>

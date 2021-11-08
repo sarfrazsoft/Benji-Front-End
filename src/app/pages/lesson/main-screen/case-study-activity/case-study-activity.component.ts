@@ -39,7 +39,7 @@ export class MainScreenCaseStudyActivityComponent
   ) {
     super();
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(): void {}
 
   ngOnInit() {
     super.ngOnInit();

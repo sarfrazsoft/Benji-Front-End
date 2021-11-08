@@ -10,12 +10,11 @@ export * from './templates-dialog/templates.dialog';
 export * from './idea-creation-dialog/idea-creation.dialog';
 export * from './grouping-tool-dialog/grouping-tool.dialog';
 export * from './idea-detailed-dialog/idea-detailed.dialog';
-export * from './participant-grouping/participant-grouping.dialog';
+export * from './participant-grouping-dialog/participant-grouping.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
-import { ParticipantGroupingDialogComponent } from './participant-grouping/participant-grouping.dialog';
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
 import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
@@ -28,6 +27,7 @@ import { JoinSessionDialogComponent } from './join-session/join-session.dialog';
 import { LaunchSessionDialogComponent } from './launch-session/launch-session.dialog';
 import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-settings.dialog';
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
+import { ParticipantGroupingDialogComponent } from './participant-grouping-dialog/participant-grouping.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 
 export const Dialogs = [

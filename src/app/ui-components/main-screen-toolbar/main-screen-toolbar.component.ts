@@ -6,6 +6,7 @@ import { ContextService, GroupingToolService, SharingToolService } from 'src/app
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -21,7 +22,6 @@ import {
   ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs';
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -121,36 +121,35 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   groupingMenuClicked() {
-    let activityID = '';
-    const activity_type = this.activityState.activity_type.toLowerCase();
-    const state = this.activityState;
-    activityID = state[activity_type].activity_id;
-    const code = activityID + state.lesson_run.lessonrun_code;
+    // const activity_type = this.activityState.activity_type.toLowerCase();
+    // const state = this.activityState;
+    // const activityID = state[activity_type].activity_id;
+    // const code = activityID + state.lesson_run.lessonrun_code;
 
-    if (this.isGroupingShowing) {
-      if (localStorage.getItem('isGroupingCreated') === code) {
-        // grouping ui is showing but grouping has been created for this activity
-        // go back to activity screen
-        this.groupingToolService.showGroupingToolMainScreen = false;
-      } else {
-        // the grouping UI is showing but grouping has not been created
-        // for this activity
-        // hide grouping UI
-        this.socketMessage.emit(new ViewGroupingEvent(false));
-      }
-    } else {
-      if (localStorage.getItem('isGroupingCreated') === code) {
-        // grouping ui is not showing but grouping has been created for this activity
-        // only show UI on mainscreen
-        this.groupingToolService.showGroupingToolMainScreen =
-          !this.groupingToolService.showGroupingToolMainScreen;
-      } else {
-        // the grouping UI is not showing and the grouping hasn't been created
-        // for this activity
-        // open menu
-        this.groupingMenuTrigger.openMenu();
-      }
-    }
+    // if (this.isGroupingShowing) {
+    //   if (localStorage.getItem('isGroupingCreated') === code) {
+    //     // grouping ui is showing but grouping has been created for this activity
+    //     // go back to activity screen
+    //     // this.groupingToolService.showGroupingToolMainScreen = false;
+    //   } else {
+    //     // the grouping UI is showing but grouping has not been created
+    //     // for this activity
+    //     // hide grouping UI
+    //     this.socketMessage.emit(new ViewGroupingEvent(false));
+    //   }
+    // } else {
+    // if (localStorage.getItem('isGroupingCreated') === code) {
+    //   // grouping ui is not showing but grouping has been created for this activity
+    //   // only show UI on mainscreen
+    //   this.groupingToolService.showGroupingToolMainScreen =
+    //     !this.groupingToolService.showGroupingToolMainScreen;
+    // } else {
+    // the grouping UI is not showing and the grouping hasn't been created
+    // for this activity
+    // open menu
+    this.groupingMenuTrigger.openMenu();
+    // }
+    // }
   }
 
   isSharingAllowed(activityState: UpdateMessage) {

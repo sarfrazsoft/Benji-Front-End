@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -13,6 +14,7 @@ import {
 } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -20,6 +22,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
   templateUrl: './main-screen-lesson.component.html',
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
+  dialogRef: any;
   constructor(
     protected utilsService: UtilsService,
     protected restService: BackendRestService,
@@ -46,10 +49,15 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       matSnackBar
     );
 
-    groupingToolService.showGroupingToolMainScreen$.subscribe((val) => {
-      this.showGroupingOnScreen = val;
-    });
+    // groupingToolService.showGroupingToolMainScreen$.subscribe((val) => {
+    //   this.showGroupingOnScreen = val;
+    //   console.log(val);
+    //   if (val) {
+    //     this.openParticipantGroupingToolDialog();
+    //   }
+    // });
   }
+
   at: typeof ActivityTypes = ActivityTypes;
   showGroupingOnScreen;
 

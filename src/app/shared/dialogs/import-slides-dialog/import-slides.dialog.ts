@@ -1,29 +1,29 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef,  } from '@angular/material/dialog';
-import {ThemePalette} from '@angular/material/core';
-import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import { ThemePalette } from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { EditorService } from '../../../dashboard/editor/services/editor.service';
 
 @Component({
-  selector: 'import-slides-dialog',
+  selector: 'benji-import-slides-dialog',
   templateUrl: 'import-slides.dialog.html',
 })
 export class ImportSlidesDialogComponent {
-
   color: ThemePalette = 'primary';
   mode: ProgressSpinnerMode = 'determinate';
   value = 50;
   lessonId;
   uploading = false;
 
-  constructor (
+  constructor(
     private editorService: EditorService,
     private dialogRef: MatDialogRef<ImportSlidesDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {lessonID}) { 
+    @Inject(MAT_DIALOG_DATA) public data: { lessonID }
+  ) {
     this.lessonId = data.lessonID;
   }
-  
+
   closeImportDialog() {
     this.dialogRef.close();
   }
@@ -37,7 +37,7 @@ export class ImportSlidesDialogComponent {
         .uploadFile(file, this.lessonId)
         .pipe(
           map((res) => res),
-            catchError((error) => error)
+          catchError((error) => error)
         )
         .subscribe((res) => {
           console.log(res);
@@ -46,5 +46,4 @@ export class ImportSlidesDialogComponent {
     }
     const url = '';
   }
-
 }
