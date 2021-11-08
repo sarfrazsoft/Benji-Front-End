@@ -23,9 +23,7 @@
               [searchable]="false">
               <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                  <div *ngIf="item.title=='Everyone'"><img src="/assets/img/brainstorm/everyone.svg" /></div>
-                  <div *ngIf="item.title=='Groups'"><img src="/assets/img/brainstorm/groups.svg" /></div>
-                  <div *ngIf="item.title=='Individuals'"><img src="/assets/img/brainstorm/individuals.svg" /></div>
+                  <img src="{{item.imgUrl}}" />
                   <div fxLayout="column">
                     <div class="title">{{ item.title }}</div>
                     <div class="description">{{ item.description }}</div>

@@ -135,9 +135,9 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.classificationTypes = [
-          { type: 'everyone', title: 'Everyone', description: `Display everyone's work` },
-          { type: 'groups', title: 'Groups', description: `Display group's work` },
-          // { type: 'individuals', title: 'Individuals', description: `Display single persons work` },
+          { type: 'everyone', title: 'Everyone', description: `Display everyone's work`, imgUrl: '/assets/img/brainstorm/everyone.svg' },
+          { type: 'groups', title: 'Groups', description: `Display group's work`, imgUrl: '/assets/img/brainstorm/groups.svg' },
+          // { type: 'individuals', title: 'Individuals', description: `Display single persons work`, imgUrl: '/assets/img/brainstorm/individuals.svg' },
         ];
       }
     });
