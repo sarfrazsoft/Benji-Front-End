@@ -1,5 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import {
   expandRightOnEnterAnimation,
   fadeInOnEnterAnimation,
@@ -11,10 +13,12 @@ import {
   slideOutRightOnLeaveAnimation,
 } from 'angular-animations';
 import { clone, cloneDeep, uniqBy } from 'lodash';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
 import * as global from 'src/app/globals';
-import { ActivitySettingsService, ContextService } from 'src/app/services';
+import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
+import { ActivitySettingsService, ContextService, SharingToolService } from 'src/app/services';
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
@@ -30,16 +34,12 @@ import {
   Idea,
   Timer,
 } from 'src/app/services/backend/schema';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
-
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { NgxPermissionsService } from 'ngx-permissions';
-import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { environment } from 'src/environments/environment';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { UncategorizedComponent } from './uncategorized/uncategorized.component';
 
 @Component({
@@ -64,16 +64,18 @@ export class MainScreenBrainstormingActivityComponent
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
   showParticipantUI = false;
+  showParticipantsGroupsDropdown = false;
   participantCode;
   private eventsSubscription: Subscription;
 
   constructor(
     private contextService: ContextService,
-    private dialog: MatDialog,
+    private matDialog: MatDialog,
     private utilsService: UtilsService,
     private activitySettingsService: ActivitySettingsService,
     private httpClient: HttpClient,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private sharingToolService: SharingToolService
   ) {
     super();
   }
@@ -135,9 +137,20 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.classificationTypes = [
-          { type: 'everyone', title: 'Everyone', description: `Display everyone's work`, imgUrl: '/assets/img/brainstorm/everyone.svg' },
-          { type: 'groups', title: 'Groups', description: `Display group's work`, imgUrl: '/assets/img/brainstorm/groups.svg' },
-          // { type: 'individuals', title: 'Individuals', description: `Display single persons work`, imgUrl: '/assets/img/brainstorm/individuals.svg' },
+          {
+            type: 'everyone',
+            title: 'Everyone',
+            description: `Display everyone's work`,
+            imgUrl: '/assets/img/brainstorm/everyone.svg',
+          },
+          {
+            type: 'groups',
+            title: 'Groups',
+            description: `Display group's work`,
+            imgUrl: '/assets/img/brainstorm/groups.svg',
+          },
+          // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
+          // imgUrl: '/assets/img/brainstorm/individuals.svg' },
         ];
       }
     });
@@ -230,12 +243,14 @@ export class MainScreenBrainstormingActivityComponent
     // console.log(selectedClassificationType);
     const sct = selectedClassificationType;
     if (sct.type === 'everyone') {
-      this.participantGroups = null;
+      // this.participantGroups = null;
       this.selectedParticipantGroup = null;
+      this.showParticipantsGroupsDropdown = false;
 
       this.act = cloneDeep(this.activityState.brainstormactivity);
     } else if (sct.type === 'groups') {
       this.participantGroups = this.act.groups;
+      this.showParticipantsGroupsDropdown = true;
     } else if (sct.type === 'individuals') {
       this.participantGroups = null;
     }
@@ -282,6 +297,31 @@ export class MainScreenBrainstormingActivityComponent
           this.participantGroups = this.act.groups;
           this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
           this.filterIdeasBasedOnGroup(this.myGroup);
+        }
+      });
+      this.permissionsService.hasPermission('ADMIN').then((val) => {
+        if (val) {
+          this.participantGroups = this.act.groups;
+        }
+      });
+    }
+
+    const sm = this.activityState;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool && sm.eventType === 'ViewGroupingEvent') {
+      const gt = sm.running_tools.grouping_tool;
+      console.log(this.dialogRef);
+      // if viewGrouping is true AND the dialog has not been opened
+      // then open dialog
+      this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
+        if (gt.viewGrouping && !this.dialogRef) {
+          if (permission) {
+            this.dialogRef = this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
+            this.sharingToolService.sendMessage$.subscribe((v) => {
+              if (v) {
+                this.sendMessage.emit(v);
+              }
+            });
+          }
         }
       });
     }
@@ -430,7 +470,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   viewImage(imageUrl: string) {
-    this.dialogRef = this.dialog
+    this.dialogRef = this.matDialog
       .open(ImageViewDialogComponent, {
         data: { imageUrl: imageUrl },
         disableClose: false,
@@ -441,7 +481,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(IdeaCreationDialogComponent, {
+    const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
       panelClass: 'idea-dialog',
       data: {
         showCategoriesDropdown: this.categorizeFlag,

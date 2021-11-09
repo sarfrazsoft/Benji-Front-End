@@ -79,10 +79,10 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     dialogRef.componentInstance.updateGroupData(this.selectedGroup);
   }
 
-  start() {
+  addNewGrouping() {
     this.socketMessage.emit(new CreateGroupingEvent('Untitled Grouping'));
     this.openGroupingToolDialog();
-    // this.socketMessage.emit(new ViewGroupingEvent(true));
+    this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   selectExistingGrouping() {
@@ -92,10 +92,6 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   selectGrouping(event: GroupingToolGroups) {
     this.selectedGroup = event;
-  }
-
-  newGrouping() {
-    this.openGroupingToolDialog();
   }
 
   openGroupingToolDialog() {
