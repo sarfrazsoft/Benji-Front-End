@@ -7,7 +7,7 @@
 <div class="groups" fxLayout="row wrap" fxLayoutGap="16px">
   <div class="group">
     <div class="title-area">
-      <div class="title">Group 1</div>
+      <div class="title" (click)="toggleMidActChooseGroup($event)">Group 1</div>
       <div class="description">Here is a description - not necessary, but nice. </div>
       <div class="counts">Participants (4)</div>
     </div>
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="grey button">
-      Join Group on hover
+      Join Group
     </div>
   </div>
   <div class="colored bg-primary-color">

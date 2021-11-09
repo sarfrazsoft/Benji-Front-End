@@ -52,6 +52,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.initSocket();
 
+    console.log(document);
     document.addEventListener('visibilitychange', () => {
       const resetConnection = localStorage.getItem('resetConnection');
       if (resetConnection === 'false') {
