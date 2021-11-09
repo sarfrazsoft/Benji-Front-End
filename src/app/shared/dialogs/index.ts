@@ -10,6 +10,7 @@ export * from './templates-dialog/templates.dialog';
 export * from './idea-creation-dialog/idea-creation.dialog';
 export * from './grouping-tool-dialog/grouping-tool.dialog';
 export * from './idea-detailed-dialog/idea-detailed.dialog';
+export * from './import-slides-dialog/import-slides.dialog'
 export * from './participant-grouping-dialog/participant-grouping.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
@@ -20,6 +21,7 @@ import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creatio
 import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
 import { GiphyComponent } from './image-picker-dialog/giphy/giphy.component';
 import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
+import { ImportSlidesDialogComponent } from './import-slides-dialog/import-slides.dialog'
 import { UnsplashComponent } from './image-picker-dialog/unsplash/unsplash.component';
 import { UploadImageComponent } from './image-picker-dialog/upload-image/upload-image.component';
 import { JobInfoDialogComponent } from './job-info/job-info.dialog';
@@ -35,6 +37,7 @@ export const Dialogs = [
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
   ImagePickerDialogComponent,
+ // ImportSlidesDialogComponent,
   UnsplashComponent,
   GiphyComponent,
   UploadImageComponent,
