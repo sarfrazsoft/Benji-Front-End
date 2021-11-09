@@ -18,10 +18,16 @@ import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
 import * as global from 'src/app/globals';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
-import { ActivitySettingsService, ContextService, SharingToolService } from 'src/app/services';
+import {
+  ActivitySettingsService,
+  BrainstormService,
+  ContextService,
+  SharingToolService,
+} from 'src/app/services';
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
+  BrainstormEditIdeaSubmitEvent,
   BrainstormImageSubmitEvent,
   BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
@@ -75,7 +81,8 @@ export class MainScreenBrainstormingActivityComponent
     private activitySettingsService: ActivitySettingsService,
     private httpClient: HttpClient,
     private permissionsService: NgxPermissionsService,
-    private sharingToolService: SharingToolService
+    private sharingToolService: SharingToolService,
+    private brainstormService: BrainstormService
   ) {
     super();
   }
@@ -112,6 +119,7 @@ export class MainScreenBrainstormingActivityComponent
   ];
 
   settingsSubscription;
+  saveIdeaSubscription;
   imagesList: FileList;
   imageSrc;
   imageDialogRef;
@@ -168,6 +176,12 @@ export class MainScreenBrainstormingActivityComponent
         this.minWidth = val.state.name;
       }
     });
+
+    this.saveIdeaSubscription = this.brainstormService.saveIdea$.subscribe((val) => {
+      if (val) {
+        this.saveIdea(val);
+      }
+    });
   }
 
   getParticipantGroup(participantCode, participantGroups) {
@@ -191,6 +205,9 @@ export class MainScreenBrainstormingActivityComponent
     this.contextService.destroyActivityTimer();
     if (this.settingsSubscription) {
       this.settingsSubscription.unsubscribe();
+    }
+    if (this.saveIdeaSubscription) {
+      this.saveIdeaSubscription.unsubscribe();
     }
     if (this.peakBackState) {
       this.eventsSubscription.unsubscribe();
@@ -491,18 +508,22 @@ export class MainScreenBrainstormingActivityComponent
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        if (this.myGroup || this.selectedParticipantGroup) {
-          let groupId = null;
-          if (this.myGroup) {
-            groupId = this.myGroup.id;
-          } else {
-            groupId = this.selectedParticipantGroup.id;
-          }
-          result = { ...result, groupId: groupId };
-        }
-        this.submitIdea(result);
+        this.saveIdea(result);
       }
     });
+  }
+
+  saveIdea(result) {
+    if (this.myGroup || this.selectedParticipantGroup) {
+      let groupId = null;
+      if (this.myGroup) {
+        groupId = this.myGroup.id;
+      } else {
+        groupId = this.selectedParticipantGroup.id;
+      }
+      result = { ...result, groupId: groupId };
+    }
+    this.submitIdea(result);
   }
 
   submitIdea(idea): void {
@@ -520,8 +541,15 @@ export class MainScreenBrainstormingActivityComponent
     if (idea.text.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId));
-    // this.idea.editing = false;
+    if (idea.id) {
+      // if there's id in the idea that means we're editing existing idea
+      this.sendMessage.emit(
+        new BrainstormEditIdeaSubmitEvent(idea.id, idea.text, idea.title, idea.category.id, idea.groupId)
+      );
+    } else {
+      // create new idea
+      this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId));
+    }
   }
 
   submitImageNIdea(idea) {

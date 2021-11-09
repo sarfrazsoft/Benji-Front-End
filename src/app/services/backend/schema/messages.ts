@@ -431,7 +431,7 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
     image_path?: string
   ) {
     super();
-    this.extra_args = { id: id, idea: text, title: title, category: category, group_id: groupId };
+    this.extra_args = { brainstormidea: id, idea: text, title: title, category: category, group_id: groupId };
 
     if (idea_image) {
       this.extra_args = {

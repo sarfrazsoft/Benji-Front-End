@@ -62,11 +62,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     const activityID = this.activitiesService.getActivityID(state);
     const code = activityID + state.lesson_run.lessonrun_code;
 
-    if (localStorage.getItem('isGroupingCreated') === code) {
-      this.showStartGroupingButton = false;
-    } else {
-      this.showStartGroupingButton = true;
-    }
+    // if (localStorage.getItem('isGroupingCreated') === code) {
+    //   this.showStartGroupingButton = false;
+    // } else {
+    this.showStartGroupingButton = true;
+    // }
   }
 
   ngOnChanges() {

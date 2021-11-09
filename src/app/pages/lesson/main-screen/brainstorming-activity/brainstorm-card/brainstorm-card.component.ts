@@ -13,7 +13,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
-import { ActivitiesService } from 'src/app/services/activities';
+import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
@@ -67,7 +67,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private brainstormService: BrainstormService
   ) {
     // super();
   }
@@ -166,7 +167,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+      if (result) {
+        this.brainstormService.saveIdea$.next(result);
+      }
     });
   }
 }

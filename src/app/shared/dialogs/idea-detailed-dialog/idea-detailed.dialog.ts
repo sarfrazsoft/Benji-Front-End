@@ -63,6 +63,7 @@ export class IdeaDetailedDialogComponent {
 
   onSubmit() {
     this.dialogRef.close({
+      ...this.idea,
       text: this.userIdeaText,
       title: this.ideaTitle,
       category: this.selectedCategory,

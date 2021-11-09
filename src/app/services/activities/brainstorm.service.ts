@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 import { differenceBy, remove } from 'lodash';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { BrainstormActivity, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
+  saveIdea$ = new BehaviorSubject<any>(null);
+
+  set saveIdea(l: any) {
+    this.saveIdea$.next(l);
+  }
+  get saveIdea(): any {
+    return this.saveIdea$.getValue();
+  }
   constructor() {}
 
   getUserIdeas(userID: number, act: BrainstormActivity): Array<Idea> {
