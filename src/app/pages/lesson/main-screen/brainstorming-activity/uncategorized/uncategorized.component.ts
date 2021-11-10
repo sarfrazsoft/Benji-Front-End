@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, find, includes, remove } from 'lodash';
+import { differenceBy, find, findIndex, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
 import { BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
@@ -67,6 +67,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.ideaHearted(this.act, this.ideas);
       } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
         this.ideaRemoved(this.act, this.ideas);
+      } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
+        this.ideaEdited(this.act, this.ideas);
       }
     }
   }
@@ -93,6 +95,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       existingIdeas.push(myDifferences[0]);
     }
   }
+
   ideaRemoved(act, existingIdeas) {
     const newIdeas = this.populateIdeas(act);
     if (newIdeas.length === existingIdeas.length) {
@@ -126,6 +129,16 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       } else if (existingIdea.hearts.length > newIdea.hearts.length) {
         const myDifferences: Array<any> = differenceBy(existingIdea.hearts, newIdea.hearts, 'id');
         remove(existingIdea.hearts, (idea: any) => idea.id === myDifferences[0].id);
+      }
+    });
+  }
+
+  ideaEdited(act, existingIdeas: Array<Idea>) {
+    const newIdeas = this.populateIdeas(act);
+    newIdeas.forEach((newIdea: Idea, index) => {
+      const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
+      if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
+        existingIdeas.splice(existingIdeaIndex, 1, newIdea);
       }
     });
   }

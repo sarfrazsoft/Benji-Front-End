@@ -118,4 +118,21 @@ export class BrainstormService {
     });
     return columns;
   }
+
+  ideaEdited(act: BrainstormActivity, columns) {
+    act.brainstormcategory_set.forEach((category, categoryIndex) => {
+      if (category.brainstormidea_set) {
+        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+        BEIdeas.forEach((idea, ideaIndex) => {
+          const existingIdea = columns[categoryIndex].brainstormidea_set[ideaIndex];
+          const existingVersionNo = existingIdea.version;
+          const newVersionNo = idea.version;
+          if (existingVersionNo < newVersionNo) {
+            columns[categoryIndex].brainstormidea_set.splice(ideaIndex, 1, idea);
+          }
+        });
+      }
+    });
+    return columns;
+  }
 }

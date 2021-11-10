@@ -342,6 +342,7 @@ export interface Idea {
   addingIdea?: boolean;
   comments: Array<any>;
   hearts: Array<any>;
+  version: number;
 }
 
 export interface ParticipantCode {

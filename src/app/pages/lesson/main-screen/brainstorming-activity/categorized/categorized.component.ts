@@ -64,23 +64,15 @@ export class CategorizedComponent implements OnInit, OnChanges {
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private brainstormService: BrainstormService
-  ) {
-    // super();
-  }
+  ) {}
 
   ngOnInit(): void {}
 
   ngOnChanges() {
-    // console.log(this.act);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.act, this.columns);
       this.cycle = 'second';
     } else {
-      // let eventType;
-      // eventType = 'AddedIdea';
-      // eventType = 'heartedIdea';
-      // eventType = 'removeIdea';
-      // console.log(this.eventType);
       if (this.eventType === 'BrainstormSubmitEvent') {
         this.brainstormService.addIdeaToCategory(this.act, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
@@ -93,6 +85,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.ideaHearted(this.act, this.columns);
       } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
         this.brainstormService.ideaRemoved(this.act, this.columns);
+      } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
+        this.brainstormService.ideaEdited(this.act, this.columns);
       }
     }
   }
