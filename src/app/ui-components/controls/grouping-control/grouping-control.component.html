@@ -19,7 +19,7 @@
           disableRipple>
         </div>
         <mat-menu class="edit-delete" #menu="matMenu" xPosition="before">
-          <button mat-menu-item (click)="deleteCol(column.id)">
+          <button mat-menu-item (click)="deleteGroup(grouping)">
             <span>Delete</span>
           </button>
           <button mat-menu-item (click)="editGrouping(grouping)">
@@ -34,7 +34,7 @@
           {{ grouping.allowParticipantsJoining ? 'Self Assigned' : 'Host Assigned' }}
         </div>
       </div>
-      <div class="start" (click)="startGrouping()">Start Grouping</div>
+      <div class="start" (click)="startGrouping(grouping)">Start Grouping</div>
     </div>
     <!-- <div class="activity">
       <div fxLayout="row" fxLayoutAlign="space-between center">

@@ -206,7 +206,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   makeActivityGrouping() {
     // check if at least one group has at least one participant
-    if (this.groupingsValid()) {
+    if (this.activitiesService.groupingsValid(this.selectedGrouping)) {
       const activityID = this.activitiesService.getActivityID(this.activityState);
       const activityType = this.activitiesService.getActivityType(this.activityState);
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
@@ -214,23 +214,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       if (activityType === 'casestudyactivity') {
         this.sendMessage.emit(new StartCaseStudyGroupEvent());
       } else if (activityType === 'brainstormactivity') {
-        this.sendMessage.emit(new StartBrainstormGroupEvent());
+        this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
       }
       this.showStartGroupingButton = false;
       this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
     }
-  }
-
-  groupingsValid(): boolean {
-    let check = false;
-    this.breakoutRooms.forEach((room) => {
-      if (room.participants.length) {
-        check = true;
-      }
-    });
-    return check;
   }
 
   editGroupName(group) {

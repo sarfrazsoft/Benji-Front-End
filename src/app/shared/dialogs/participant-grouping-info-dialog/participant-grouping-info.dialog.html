@@ -1,0 +1,14 @@
+<ng-container *ngIf="groupingStyle === 'hostAssigned'">
+  Hang tight! Your host will be assigning you to a group in a moment. 
+</ng-container>
+
+<ng-container *ngIf="groupingStyle === 'selfAssigned'">
+  <div fxLayout="column">
+    <div>
+      This activity is going to be collaborative. Join a group.
+    </div>
+    <button (click)="openGroupingDialog()">
+      Join a group
+    </button>
+  </div>
+</ng-container>

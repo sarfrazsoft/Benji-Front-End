@@ -42,6 +42,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() roomCode: string;
   @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
+  @Input() participantCode: number;
 
   showTimer = false;
   currentActivityIndex;
@@ -194,7 +195,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   openGroupingParticipantDialog() {
     const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
       panelClass: 'grouping-participant-dialog',
-      data: {},
+      data: { activityState: this.activityState, participantCode: this.participantCode },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
-import { ContextService } from 'src/app/services';
+import { ActivitiesService, ContextService } from 'src/app/services';
 import {
   BrainstormSubmissionCompleteInternalEvent,
   CreateGroupingEvent,
+  DeleteGroupingEvent,
   SelectGroupingEvent,
+  StartBrainstormGroupEvent,
+  StartCaseStudyGroupEvent,
   Timer,
   UpdateMessage,
   ViewGroupingEvent,
@@ -32,7 +35,8 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   constructor(
     private contextService: ContextService,
     private utilsService: UtilsService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private activitiesService: ActivitiesService
   ) {}
 
   ngOnInit(): void {}
@@ -77,6 +81,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     const dialogRef = this.openGroupingToolDialog();
     this.selectedGroup = grouping;
     dialogRef.componentInstance.updateGroupData(this.selectedGroup);
+    this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   addNewGrouping() {
@@ -88,6 +93,10 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   selectExistingGrouping() {
     this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
     this.socketMessage.emit(new ViewGroupingEvent(true));
+  }
+
+  deleteGroup(grouping) {
+    this.socketMessage.emit(new DeleteGroupingEvent(grouping.id));
   }
 
   selectGrouping(event: GroupingToolGroups) {
@@ -114,5 +123,22 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       console.log(`Dialog result: ${result}`);
     });
     return this.dialogRef;
+  }
+
+  startGrouping(grouping) {
+    if (this.activitiesService.groupingsValid(grouping)) {
+      const activityID = this.activitiesService.getActivityID(this.activityState);
+      const activityType = this.activitiesService.getActivityType(this.activityState);
+      const code = activityID + this.activityState.lesson_run.lessonrun_code;
+      window.localStorage.setItem('isGroupingCreated', code);
+      if (activityType === 'casestudyactivity') {
+        this.socketMessage.emit(new StartCaseStudyGroupEvent());
+      } else if (activityType === 'brainstormactivity') {
+        this.socketMessage.emit(new StartBrainstormGroupEvent(grouping.id));
+      }
+      this.socketMessage.emit(new ViewGroupingEvent(false));
+    } else {
+      this.utilsService.openWarningNotification('Add participants to the groups', '');
+    }
   }
 }

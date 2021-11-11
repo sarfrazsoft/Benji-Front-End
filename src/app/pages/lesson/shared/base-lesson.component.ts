@@ -52,7 +52,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.initSocket();
 
-    console.log(document);
     document.addEventListener('visibilitychange', () => {
       const resetConnection = localStorage.getItem('resetConnection');
       if (resetConnection === 'false') {
@@ -241,6 +240,20 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  getIsGroupingAppliedToActivity() {
+    const sm = this.serverMessage;
+    if (
+      sm &&
+      sm.running_tools &&
+      sm.running_tools.grouping_tool &&
+      sm.running_tools.grouping_tool.selectedGrouping
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getIsGroupingShowing() {
     const sm = this.serverMessage;
     if (
@@ -267,6 +280,14 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   getEventType() {
-    console.log(this.serverMessage);
+    // console.log(this.serverMessage);
+  }
+
+  public getParticipantCode(): number {
+    let details: Participant;
+    if (localStorage.getItem('participant')) {
+      details = JSON.parse(localStorage.getItem('participant'));
+      return details.participant_code;
+    }
   }
 }

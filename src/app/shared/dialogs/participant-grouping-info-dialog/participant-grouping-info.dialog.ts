@@ -8,14 +8,15 @@ import {
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
-  selector: 'benji-participant-grouping-dialog',
-  templateUrl: 'participant-grouping.dialog.html',
+  selector: 'benji-participant-grouping-info-dialog',
+  templateUrl: 'participant-grouping-info.dialog.html',
 })
-export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
+export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges {
   selfGroupingAllowed = true;
   selectedGrouping: GroupingToolGroups;
   groups: GroupingToolGroups['groups'] = [];
   userGroupAssigned = false;
+  groupingStyle = 'hostAssigned';
   selectedChoice = {
     id: null,
     is_correct: null,
@@ -27,7 +28,7 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
-    private dialogRef: MatDialogRef<ParticipantGroupingDialogComponent>,
+    private dialogRef: MatDialogRef<ParticipantGroupingInfoDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { activityState: UpdateMessage; participantCode: number },
     private matDialog: MatDialog
@@ -56,6 +57,8 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groups = g.groups;
+        // this.groupingStyle = 'hostAssigned';
+        this.groupingStyle = 'selfAssigned';
         this.selfGroupingAllowed = g.allowParticipantsJoining;
         const participantCode = this.participantCode;
         this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
@@ -78,5 +81,9 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
 
   joinGroup() {
     this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedChoice.id));
+  }
+
+  openGroupingDialog() {
+    this.dialogRef.close('openDialog');
   }
 }

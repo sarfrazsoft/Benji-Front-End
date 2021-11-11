@@ -1,7 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   expandRightOnEnterAnimation,
   fadeInOnEnterAnimation,
@@ -44,6 +44,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
+import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 import { UncategorizedComponent } from './uncategorized/uncategorized.component';
@@ -102,7 +103,7 @@ export class MainScreenBrainstormingActivityComponent
   unansweredParticipants = [];
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
-  dialogRef;
+  dialogRef: MatDialogRef<ParticipantGroupingInfoDialogComponent>;
   shownSubmissionCompleteNofitication = false;
 
   // Groupings
@@ -211,6 +212,9 @@ export class MainScreenBrainstormingActivityComponent
     }
     if (this.peakBackState) {
       this.eventsSubscription.unsubscribe();
+    }
+    if (this.dialogRef) {
+      this.dialogRef.close();
     }
   }
   changeStage(state) {
@@ -326,13 +330,12 @@ export class MainScreenBrainstormingActivityComponent
     const sm = this.activityState;
     if (sm && sm.running_tools && sm.running_tools.grouping_tool && sm.eventType === 'ViewGroupingEvent') {
       const gt = sm.running_tools.grouping_tool;
-      console.log(this.dialogRef);
       // if viewGrouping is true AND the dialog has not been opened
       // then open dialog
       this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
         if (gt.viewGrouping && !this.dialogRef) {
           if (permission) {
-            this.dialogRef = this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
+            this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(this.activityState);
             this.sharingToolService.sendMessage$.subscribe((v) => {
               if (v) {
                 this.sendMessage.emit(v);
@@ -487,7 +490,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   viewImage(imageUrl: string) {
-    this.dialogRef = this.matDialog
+    const dialogRef = this.matDialog
       .open(ImageViewDialogComponent, {
         data: { imageUrl: imageUrl },
         disableClose: false,

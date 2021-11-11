@@ -728,6 +728,13 @@ export class CreateGroupEvent extends ActivityEvent {
     this.extra_args = { grouping: grouping, title: title };
   }
 }
+export class DeleteGroupingEvent extends ActivityEvent {
+  event_name = 'DeleteGroupingEvent';
+  constructor(grouping: number) {
+    super();
+    this.extra_args = { grouping: grouping };
+  }
+}
 
 export class DeleteGroupingGroupEvent extends ActivityEvent {
   event_name = 'DeleteGroupingGroupEvent';
@@ -758,6 +765,10 @@ export class StartCaseStudyGroupEvent extends ActivityEvent {
 }
 export class StartBrainstormGroupEvent extends ActivityEvent {
   event_name = 'StartBrainstormGroupEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { grouping: id };
+  }
 }
 
 export class CardsShuffleEvent extends ActivityEvent {

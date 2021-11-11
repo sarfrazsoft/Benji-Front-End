@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GroupingToolGroups } from '../backend/schema/course_details';
 import { UpdateMessage } from '../backend/schema/messages';
 
 @Injectable()
@@ -34,5 +35,19 @@ export class ActivitiesService {
 
   getActivityType(activityState: UpdateMessage): string {
     return activityState.activity_type.toLowerCase();
+  }
+
+  groupingsValid(grouping: GroupingToolGroups): boolean {
+    if (grouping.groups.length === 0) {
+      return false;
+    }
+    let check = false;
+    grouping.groups.forEach((room) => {
+      // at least one group should have one person
+      if (room.participants.length) {
+        check = true;
+      }
+    });
+    return check;
   }
 }

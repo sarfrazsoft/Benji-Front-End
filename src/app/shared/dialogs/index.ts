@@ -10,8 +10,9 @@ export * from './templates-dialog/templates.dialog';
 export * from './idea-creation-dialog/idea-creation.dialog';
 export * from './grouping-tool-dialog/grouping-tool.dialog';
 export * from './idea-detailed-dialog/idea-detailed.dialog';
-export * from './import-slides-dialog/import-slides.dialog'
+export * from './import-slides-dialog/import-slides.dialog';
 export * from './participant-grouping-dialog/participant-grouping.dialog';
+export * from './participant-grouping-info-dialog/participant-grouping-info.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
@@ -21,15 +22,17 @@ import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creatio
 import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
 import { GiphyComponent } from './image-picker-dialog/giphy/giphy.component';
 import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
-import { ImportSlidesDialogComponent } from './import-slides-dialog/import-slides.dialog'
 import { UnsplashComponent } from './image-picker-dialog/unsplash/unsplash.component';
 import { UploadImageComponent } from './image-picker-dialog/upload-image/upload-image.component';
+import { ImportSlidesDialogComponent } from './import-slides-dialog/import-slides.dialog';
 import { JobInfoDialogComponent } from './job-info/job-info.dialog';
 import { JoinSessionDialogComponent } from './join-session/join-session.dialog';
 import { LaunchSessionDialogComponent } from './launch-session/launch-session.dialog';
 import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-settings.dialog';
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { ParticipantGroupingDialogComponent } from './participant-grouping-dialog/participant-grouping.dialog';
+import { ParticipantGroupingInfoDialogComponent } from './participant-grouping-info-dialog/participant-grouping-info.dialog';
+
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 
 export const Dialogs = [
@@ -37,7 +40,7 @@ export const Dialogs = [
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
   ImagePickerDialogComponent,
- // ImportSlidesDialogComponent,
+  // ImportSlidesDialogComponent,
   UnsplashComponent,
   GiphyComponent,
   UploadImageComponent,
@@ -50,5 +53,6 @@ export const Dialogs = [
   IdeaCreationDialogComponent,
   GroupingToolDialogComponent,
   ParticipantGroupingDialogComponent,
+  ParticipantGroupingInfoDialogComponent,
   IdeaDetailedDialogComponent,
 ];
