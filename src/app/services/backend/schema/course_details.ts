@@ -62,10 +62,14 @@ export interface RunningTools {
       participants: [{ participant: number; text: string; reaction: string }];
     };
   };
-  grouping_tool?: { selectedGrouping: number; groupings: Array<GroupingToolGroups>; viewGrouping: boolean };
+  grouping_tool?: GroupingTool;
   timer_tool?: Timer;
 }
-
+export interface GroupingTool {
+  selectedGrouping: number;
+  groupings: Array<GroupingToolGroups>;
+  viewGrouping: boolean;
+}
 export interface GroupingToolGroups {
   id: number;
   title: string;

@@ -5,7 +5,11 @@ import {
   GroupingParticipantSelfJoinEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
+import {
+  GroupingTool,
+  GroupingToolGroups,
+  Participant,
+} from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-participant-grouping-dialog',
@@ -51,7 +55,6 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
   }
 
   initSelectedGroup(grouping) {
-    console.log(grouping);
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
@@ -61,6 +64,14 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
         this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
       }
     });
+  }
+
+  updateGroupingInfo(gt: GroupingTool) {
+    const grouping = {
+      groupings: gt.groupings,
+      selectedGrouping: gt.selectedGrouping,
+    };
+    this.initSelectedGroup(grouping);
   }
 
   getParticipantCode(): number {

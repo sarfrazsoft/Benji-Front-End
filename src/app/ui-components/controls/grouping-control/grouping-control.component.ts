@@ -69,18 +69,24 @@ export class GroupingControlComponent implements OnInit, OnChanges {
         if (grouping.selectedGrouping === g.id) {
           this.selectedGroup = g;
           if (this.dialogRef) {
+            // if the trainer grouping dialog is open then update the data for it
             this.dialogRef.componentInstance.updateGroupData(this.selectedGroup);
           }
         }
       });
-      // this.existingGroupings = grouping.groupings;
     }
   }
 
   editGrouping(grouping: GroupingToolGroups) {
+    // open the grouping modal for the trainer and
+    // send the SelectGroupingEvent for the clicked grouping.
+
+    // it will trigger onChanges and send the updated information
+    // to the open grouping modal.
+
     const dialogRef = this.openGroupingToolDialog();
     this.selectedGroup = grouping;
-    dialogRef.componentInstance.updateGroupData(this.selectedGroup);
+    this.socketMessage.emit(new SelectGroupingEvent(grouping.id));
     this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 

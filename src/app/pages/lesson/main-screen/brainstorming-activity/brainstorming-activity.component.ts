@@ -328,22 +328,25 @@ export class MainScreenBrainstormingActivityComponent
     }
 
     const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool && sm.eventType === 'ViewGroupingEvent') {
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
       const gt = sm.running_tools.grouping_tool;
-      // if viewGrouping is true AND the dialog has not been opened
-      // then open dialog
-      this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
-        if (gt.viewGrouping && !this.dialogRef) {
-          if (permission) {
-            this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(this.activityState);
-            this.sharingToolService.sendMessage$.subscribe((v) => {
-              if (v) {
-                this.sendMessage.emit(v);
-              }
-            });
+      if (sm.eventType === 'ViewGroupingEvent') {
+        // if viewGrouping is true AND the dialog has not been opened
+        // then open dialog
+        this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
+          if (gt.viewGrouping && !this.dialogRef) {
+            if (permission) {
+              this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(this.activityState);
+              this.sharingToolService.sendMessage$.subscribe((v) => {
+                if (v) {
+                  this.sendMessage.emit(v);
+                }
+              });
+            }
           }
-        }
-      });
+        });
+      }
+      this.sharingToolService.updateParticipantGroupingToolDialog(gt);
     }
 
     if (this.act.brainstormcategory_set.length) {

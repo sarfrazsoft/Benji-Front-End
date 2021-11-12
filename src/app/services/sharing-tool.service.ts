@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ParticipantGroupingDialogComponent } from '../shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from '../shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
@@ -29,6 +29,7 @@ export class SharingToolService {
     return this.sendMessage$.getValue();
   }
 
+  participantGroupingToolDialogRef: MatDialogRef<ParticipantGroupingDialogComponent>;
   openParticipantGroupingInfoDialog(activityState: UpdateMessage) {
     const state = activityState;
     const dialogRef = this.matDialog.open(ParticipantGroupingInfoDialogComponent, {
@@ -45,7 +46,7 @@ export class SharingToolService {
     dialogRef.afterClosed().subscribe((result) => {
       // sub.unsubscribe();
       if (result === 'openDialog') {
-        this.openParticipantGroupingToolDialog(state);
+        this.participantGroupingToolDialogRef = this.openParticipantGroupingToolDialog(state);
       }
     });
     return dialogRef;
@@ -69,5 +70,11 @@ export class SharingToolService {
     //   }
     // });
     return dialogRef;
+  }
+
+  updateParticipantGroupingToolDialog(groupingTool) {
+    if (this.participantGroupingToolDialogRef) {
+      this.participantGroupingToolDialogRef.componentInstance.updateGroupingInfo(groupingTool);
+    }
   }
 }

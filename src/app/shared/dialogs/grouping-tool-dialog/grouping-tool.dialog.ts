@@ -241,3 +241,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.editingTitle = !this.editingTitle;
   }
 }
+
+// participant grouping modal only opens up
+// when the trainer selects self assigned in their groupin dialog
+// all through out the grouping process the participants don't see the groups being made
