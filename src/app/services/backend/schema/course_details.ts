@@ -75,6 +75,12 @@ export interface GroupingToolGroups {
   groups: Array<{ id: number; title: string; description: string; participants: Array<number> }>;
 }
 
+export interface BeforeLessonRunDetails {
+  host: string;
+  description: string;
+  participants: Array<any>;
+}
+
 export interface LessonRunDetails {
   end_time: string;
   host: TeamUser;

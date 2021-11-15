@@ -1,0 +1,157 @@
+.lobby-wrapper {
+  height: calc(100vh - 60px);
+  background: #E5E5E5;
+  .content-wrapper {
+    padding: 48px 64px;
+    background: #fff;
+    box-shadow: 0px 1px 2px #E7E7E7;
+    border-radius: 16px;
+    .session-details {
+      max-width: 588px;
+      margin-right: 64px;
+      float: left;
+      .session-title {
+        font-size: 40px;
+        font-weight: 700;
+        color: #37352F;
+        margin-bottom: 16px;
+      }
+      .session-host {
+        margin-bottom: 16px;
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+        }
+        .name {
+          font-size: 18px;
+          font-weight: 500;
+          color: #37352F;
+          text-transform: capitalize;
+        }
+        .initials {
+          color: #fff;
+          font-size: 12px;
+          font-weight: 500;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: #5E8DEB;
+          line-height: 0px;
+        }
+      }
+      .description {
+        color: #000;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        padding-bottom: 28px;
+        margin-bottom: 32px;
+        border-bottom: 2px solid #EAEAEA;
+      }
+      .session-participants {
+        font-size: 24px;
+        font-weight: 700;
+        color: #37352F;
+        margin-bottom: 24px;
+        .participant {
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+          .initials {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #5E8DEB;
+            line-height: 0px;
+          }
+          .name {
+            font-size: 14px;
+            font-weight: 400;
+            color: #000;
+            text-transform: capitalize;
+          }
+        }
+      }
+      .participants-list {
+        height: 168px;
+        overflow-y: auto;
+        padding-right: 32px;
+      }
+    }
+    .sub-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #37352F;
+      margin-bottom: 24px;
+    }
+    .join-session {
+      float: right;
+      background: #F3F4F7;
+      border-radius: 16px;
+      padding: 40px 32px;
+      .sub-title {
+        margin-bottom: 24px;
+      }
+      .label {
+        color: #37352F;
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      input {
+        background: #FFF;
+        border-radius: 8px;
+        width: 356px;
+        padding: 16px;
+        color: #37352F;
+        font-size: 16px;
+        font-weight: 500;
+        border: 0px;
+        margin-bottom: 24px;
+        &:focus {
+          outline-width: 0;
+        }
+      }
+      .edit-profile {
+        margin-bottom: 24px;
+        cursor: pointer;
+        .initials {
+          color: #fff;
+          font-size: 28px;
+          font-weight: 500;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          background: #5E8DEB;
+          margin-right: 17px;
+        }
+        .edit-pen {
+          width: 16px;
+          height: 16px;
+          margin-right: 8px;
+        }
+        .change-profile {
+          font-size: 16px;
+          font-weight: 500;
+          color: #828282;
+        }
+      }
+      .button {
+        width: 105px;
+        padding: 8px 32px;
+        text-align: center;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
+  }
+}

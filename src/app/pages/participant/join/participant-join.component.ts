@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
-import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
+import * as global from 'src/app/globals';
+import { HttpClient } from "@angular/common/http";
+import { BeforeLessonRunDetails, LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -20,6 +22,7 @@ export class ParticipantJoinComponent implements OnInit {
   public isInformationValid = false;
   public typingTimer;
   public lessonRunDetails: LessonRunDetails;
+  public beforeLessonRunDetails: BeforeLessonRunDetails;
 
   tokenCleared = false;
 
@@ -33,7 +36,8 @@ export class ParticipantJoinComponent implements OnInit {
     private socket: BackendSocketService,
     private authService: AuthService,
     private utilsService: UtilsService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private http: HttpClient,
   ) {}
 
   ngOnInit() {
@@ -55,6 +59,11 @@ export class ParticipantJoinComponent implements OnInit {
         }
       );
     }
+    this.getBeforeLessonRunDetails(this.roomCode.value).subscribe((res: BeforeLessonRunDetails) => {
+      //console.log(res);
+      this.beforeLessonRunDetails = res;
+      console.log(this.beforeLessonRunDetails);
+    });
   }
 
   public validateRoomCode() {
@@ -147,5 +156,10 @@ export class ParticipantJoinComponent implements OnInit {
 
   onSearchChange(searchValue: string): void {
     this.validateRoomCode();
+  }
+  
+  getBeforeLessonRunDetails(lessonrun_code) {
+    const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';
+    return this.http.post(request,{});
   }
 }

@@ -9,6 +9,7 @@ import { GroupingComponent as ParticipantGroupingComponent } from './grouping/gr
 import { PercentPollBarsComponent } from './percent-poll-bars/percent-poll-bars.component';
 import { ResponsePercentBarsComponent } from './response-percent-bars/response-percent-bars.component';
 import { ResponseTagsPercentBarsComponent } from './response-tags-percent-bars/response-tags-percent-bars.component';
+import { SessionLobbyLayoutComponent } from './session-lobby-layout/session-lobby-layout.component'
 import { TextEditorComponent } from './text-editor/text-editor.component';
 export { AvatarComponent };
 
@@ -24,6 +25,7 @@ export const CmpComponents = [
   TextQuestionComponent,
   FeedbackGenericGraphComponent,
   ResponseTagsPercentBarsComponent,
+  SessionLobbyLayoutComponent,
   TextEditorComponent,
 ];
 

@@ -1,4 +1,12 @@
-<benji-participant-toolbar></benji-participant-toolbar>
+<benji-main-screen-toolbar></benji-main-screen-toolbar>
+<ng-container *ngIf="beforeLessonRunDetails">
+
+  <benji-session-lobby-layout
+    [beforeLessonRunDetails]="beforeLessonRunDetails"
+    [from]="'participant-join'">
+  </benji-session-lobby-layout>
+</ng-container>
+
 <div class="participant-start">
   <div class="container">
     <div class="vertical-center center-text">
