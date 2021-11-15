@@ -343,6 +343,9 @@ export class MainScreenBrainstormingActivityComponent
                 }
               });
             }
+          } else if (!gt.viewGrouping && this.dialogRef) {
+            this.dialogRef.close();
+            this.dialogRef = null;
           }
         });
       }

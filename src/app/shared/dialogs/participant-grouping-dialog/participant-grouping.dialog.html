@@ -1,6 +1,6 @@
 
 
-<ng-container>
+<!-- <ng-container>
   <div class="b-flat-card center-text mc-card grouping-tool">
     <div class="b-flat-card__body">
       <h1 class="pn-600 black">
@@ -25,7 +25,7 @@
       </button>
     </div>
   </div>
-</ng-container>
+</ng-container> -->
 
 
 <div>
@@ -35,18 +35,17 @@
   </div>
   
   <div class="groups" fxLayout="row wrap" fxLayoutGap="16px">
-    <ng-container *ngFor="let option of groups; let i = index">
+    <ng-container *ngFor="let group of groups; let i = index">
       <div class="group-container" 
-        [ngClass]="{ selected: option.id === selectedChoice.id, inactive: answerSubmitted }">
+        [ngClass]="{ selected: group.id === selectedChoice.id, inactive: answerSubmitted }">
         <div class="group" 
           [ngClass]="{
-            selected: option.id === selectedChoice.id,
+            selected: group.id === selectedChoice.id,
             inactive: answerSubmitted
           }">
           <div class="title-area">
-            <div class="title">Group 1</div>
-            <div class="description">Here is a description - not necessary, but nice. </div>
-            <div class="counts">Participants (4)</div>
+            <div class="title">{{ group.title }}</div>
+            <div class="counts">Participants ({{group.participants.length}})</div>
           </div>
           <div class="users">
             <div fxLayout="row wrap" fxLayoutGap="8px">

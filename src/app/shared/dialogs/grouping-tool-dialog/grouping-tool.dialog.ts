@@ -38,9 +38,9 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
-  categories = [
-    { type: 'custom', title: 'Custom', description: `Host assigns people` },
-    { type: 'self-assign', title: 'Self-Assign', description: `People choose their group` },
+  groupingStyles = [
+    { type: 'hostAssgined', title: 'Custom', description: `Host assigns people` },
+    { type: 'selfAssigned', title: 'Self-Assign', description: `People choose their group` },
   ];
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
@@ -76,6 +76,16 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     // };
     // this.initSelectedGroup(grouping);
     // this.initGroups(grouping);
+  }
+
+  groupingStyleChanged(event) {
+    if (event.type === 'selfAssigned') {
+      this.sendMessage.emit(new ViewGroupingEvent(true));
+    } else {
+      // hostAssigned
+      this.sendMessage.emit(new ViewGroupingEvent(false));
+    }
+    console.log(event);
   }
 
   initSelectedGroup(grouping) {

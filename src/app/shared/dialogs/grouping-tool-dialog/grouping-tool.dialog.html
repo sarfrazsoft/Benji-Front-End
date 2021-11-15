@@ -20,16 +20,17 @@
       <div class="header">Grouping Style</div>
       <div class="subheader">Assign workspaces</div> 
     </div>
-    <div class="dropdown-controls-container" *ngIf="categories">
+    <div class="dropdown-controls-container" *ngIf="groupingStyles">
       <ng-select
         class="groups-controls "
-        [items]="categories"
-        bindLabel="category_name"
+        [items]="groupingStyles"
+        bindLabel="title"
         placeholder="Custom"
-        (change)="classificationTypeChanged(selectedCategory)"
+        (change)="groupingStyleChanged($event)"
         [(ngModel)]="selectedCategory"
         appendTo="body"
-        [searchable]="false">
+        [searchable]="false"
+        [clearable]="false">
         <ng-template ng-option-tmp let-item="item" let-index="index">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
             <div fxLayout="column">

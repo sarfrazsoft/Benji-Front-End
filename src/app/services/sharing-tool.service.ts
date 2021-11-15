@@ -54,7 +54,7 @@ export class SharingToolService {
 
   openParticipantGroupingToolDialog(activityState: UpdateMessage) {
     const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
-      panelClass: 'grouping-participant-info-dialog',
+      panelClass: 'participant-grouping-dialog',
       data: {
         activityState: activityState,
       },

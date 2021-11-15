@@ -87,26 +87,17 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     const dialogRef = this.openGroupingToolDialog();
     this.selectedGroup = grouping;
     this.socketMessage.emit(new SelectGroupingEvent(grouping.id));
-    this.socketMessage.emit(new ViewGroupingEvent(true));
+    // this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   addNewGrouping() {
     this.socketMessage.emit(new CreateGroupingEvent('Untitled Grouping'));
     this.openGroupingToolDialog();
-    this.socketMessage.emit(new ViewGroupingEvent(true));
-  }
-
-  selectExistingGrouping() {
-    this.socketMessage.emit(new SelectGroupingEvent(this.selectedGroup.id));
-    this.socketMessage.emit(new ViewGroupingEvent(true));
+    // this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   deleteGroup(grouping) {
     this.socketMessage.emit(new DeleteGroupingEvent(grouping.id));
-  }
-
-  selectGrouping(event: GroupingToolGroups) {
-    this.selectedGroup = event;
   }
 
   openGroupingToolDialog() {
@@ -142,7 +133,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       } else if (activityType === 'brainstormactivity') {
         this.socketMessage.emit(new StartBrainstormGroupEvent(grouping.id));
       }
-      this.socketMessage.emit(new ViewGroupingEvent(false));
+      // this.socketMessage.emit(new ViewGroupingEvent(false));
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
     }
