@@ -22,6 +22,21 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
+  session_host = { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' };
+  session_participants = [
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Tessa Chassen' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Kelly Mason' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Parmis Rashidi' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Baz Sturman' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Corinna Grof' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Paul Statmets' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Rosa Wan' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
+    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' }
+  ];
   startSessionLabel = '';
   joinLobbyUrl = '';
   room_code: number;

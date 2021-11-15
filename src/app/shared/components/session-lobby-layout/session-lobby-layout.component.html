@@ -1,0 +1,48 @@
+<div fxLayout="row" fxLayoutAlign="center center" class="lobby-wrapper"> 
+  <div class="content-wrapper">
+    <div class="session-details">
+      <div>
+        <div class="session-title">
+          Pitch Perfect
+        </div>
+        <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+          <!-- <img src="{{session_host.photo}}" alt/> -->
+          <div class="initials" fxLayout="column" fxLayoutAlign="center center">{{getInitials(beforeLessonRunDetails.host)}}</div>
+          <div class="name"> {{beforeLessonRunDetails.host}} </div>
+        </div>
+        <div class="description">
+          {{beforeLessonRunDetails.description}} 
+        </div>
+      </div>
+      <div>
+        <div class="sub-title"> Participants </div>
+        <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
+          <div class="session-participants" *ngFor="let participant of beforeLessonRunDetails.participants">
+            <div
+              fxLayoutGap="8px"
+              class="participant" 
+              fxLayoutAlign="start center">
+              <!-- <img src="{{participant.photo}}" /> -->
+              <div class="initials" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant)}}</div>
+              <div class="name"> {{participant}} </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="join-session">
+      <div class="sub-title"> Join Session </div>
+      <div class="label"> Enter your name </div>
+      <input type="text">
+      <!-- <div class="label"> Choose your avatar </div>
+      <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
+        <img src="">
+        <div class="initials" fxLayout="column" fxLayoutAlign="center center">MK</div>
+        <img class="edit-pen" src="/assets/img/edit-pen.svg">
+        <div class="change-profile">Change profile</div>
+      </div> -->
+      <div class="bg-primary-color button"
+        (click)="getLearnerData(lessonrun_code)">Join</div>
+    </div>
+  </div>
+</div>
