@@ -44,7 +44,15 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
     <div class="header">Set # of groups</div>
-    <input class="groups-count" type="number" value="0" min="0" max="99">
+    <input 
+      class="groups-count" 
+      type="number" 
+      value="0" 
+      min="0" 
+      max="99"
+      #noOfGroups
+      (keyup)="typingStopedGroups(noOfGroups.value)"
+      (keydown)="typingStartedGroups()">
   </div>
   <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px"
     benji-click-stop-propagation>

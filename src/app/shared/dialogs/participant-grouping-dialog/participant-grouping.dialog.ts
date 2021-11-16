@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivitiesService } from 'src/app/services/activities';
 import {
   AllowParticipantGroupingMidActivityEvent,
   GroupingParticipantSelfJoinEvent,
@@ -34,7 +35,8 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
     private dialogRef: MatDialogRef<ParticipantGroupingDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { activityState: UpdateMessage; participantCode: number },
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private activitiesService: ActivitiesService
   ) {
     this.activityState = data.activityState;
     this.participantCode = data.participantCode;
@@ -59,6 +61,7 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groups = g.groups;
+        console.log(this.groups);
         this.selfGroupingAllowed = g.allowParticipantsJoining;
         const participantCode = this.participantCode;
         this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
@@ -82,12 +85,22 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
     }
   }
 
-  selectOption(option) {
-    this.selectedChoice = option;
-    console.log(this.selectedChoice);
+  selectOption(group) {
+    this.selectedChoice = group;
+    this.joinGroup();
   }
 
   joinGroup() {
     this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedChoice.id));
+  }
+
+  getInitials(participantCode: number) {
+    const nameString = this.activitiesService.getParticipantName(this.activityState, participantCode);
+    const fullName = nameString.split(' ');
+    let inits = '';
+    fullName.forEach((name) => {
+      inits = inits + name.charAt(0);
+    });
+    return inits.toUpperCase();
   }
 }

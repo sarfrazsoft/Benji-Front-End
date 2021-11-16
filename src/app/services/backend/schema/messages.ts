@@ -696,6 +696,13 @@ export class SelectGroupingEvent extends ActivityEvent {
     this.extra_args = { grouping: grouping };
   }
 }
+export class CreateGroupsEvent extends ActivityEvent {
+  event_name = 'CreateGroupsEvent';
+  constructor(grouping: number, groups: number) {
+    super();
+    this.extra_args = { grouping: grouping, groups: groups };
+  }
+}
 
 export class AllowParticipantGroupingEvent extends ActivityEvent {
   event_name = 'AllowParticipantGroupingEvent';

@@ -334,9 +334,11 @@ export class MainScreenBrainstormingActivityComponent
         // if viewGrouping is true AND the dialog has not been opened
         // then open dialog
         this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
-          if (gt.viewGrouping && !this.dialogRef) {
+          if (gt.viewGrouping && (!this.dialogRef || !this.dialogRef.componentInstance)) {
             if (permission) {
               this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(this.activityState);
+              // this.dialogRef =
+              // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
               this.sharingToolService.sendMessage$.subscribe((v) => {
                 if (v) {
                   this.sendMessage.emit(v);

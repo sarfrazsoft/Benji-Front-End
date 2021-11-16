@@ -49,24 +49,14 @@
           </div>
           <div class="users">
             <div fxLayout="row wrap" fxLayoutGap="8px">
-              <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
-              <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
-              <div class="circle blue" fxLayout="column" fxLayoutAlign="center center"> AK </div>
-              <div class="circle pink" fxLayout="column" fxLayoutAlign="center center"> ST </div>
-              <div class="circle orange" fxLayout="column" fxLayoutAlign="center center"> YZ </div>
-              <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
-              <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
-              <div class="circle blue" fxLayout="column" fxLayoutAlign="center center"> AK </div>
-              <div class="circle pink" fxLayout="column" fxLayoutAlign="center center"> ST </div>
-              <div class="circle orange" fxLayout="column" fxLayoutAlign="center center"> YZ </div>
-              <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
-              <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
-              <div class="circle blue" fxLayout="column" fxLayoutAlign="center center"> AK </div>
-              <div class="circle pink" fxLayout="column" fxLayoutAlign="center center"> ST </div>
-              <div class="circle orange" fxLayout="column" fxLayoutAlign="center center"> YZ </div>
+              <div class="circle purple"
+                fxLayout="column" fxLayoutAlign="center center"
+                *ngFor="let participant of group.participants">
+                {{ getInitials(participant) }}
+              </div>
             </div>
           </div>
-          <div class="grey button" (click)="selectOption(option)">
+          <div class="grey button" (click)="selectOption(group)">
             Join Group
           </div>
         </div>

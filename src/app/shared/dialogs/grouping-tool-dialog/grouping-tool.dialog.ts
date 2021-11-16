@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app';
-import { Category, StartBrainstormGroupEvent } from 'src/app/services/backend/schema';
+import { Category, CreateGroupsEvent, StartBrainstormGroupEvent } from 'src/app/services/backend/schema';
 import {
   AllowParticipantGroupingEvent,
   AllowParticipantGroupingMidActivityEvent,
@@ -33,13 +33,14 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   showStartGroupingButton: boolean;
   allowParticipantsJoining: boolean;
   private typingTimer;
+  private typingTimerGroups;
   numberOfRooms = 0;
   editingTitle = false;
 
   activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
   groupingStyles = [
-    { type: 'hostAssgined', title: 'Custom', description: `Host assigns people` },
+    { type: 'hostAssigned', title: 'Custom', description: `Host assigns people` },
     { type: 'selfAssigned', title: 'Self-Assign', description: `People choose their group` },
   ];
   constructor(
@@ -83,7 +84,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       this.sendMessage.emit(new ViewGroupingEvent(true));
     } else {
       // hostAssigned
-      this.sendMessage.emit(new ViewGroupingEvent(false));
+      this.sendMessage.emit(new ViewGroupingEvent(true));
     }
     console.log(event);
   }
@@ -173,6 +174,21 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   doneTyping() {
     this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGrouping.id, this.groupingTitle));
+  }
+
+  typingStopedGroups(noOfGroups) {
+    clearTimeout(this.typingTimerGroups);
+    this.typingTimerGroups = setTimeout(() => {
+      this.doneTypingGroups(noOfGroups);
+    }, 1500);
+  }
+
+  typingStartedGroups() {
+    clearTimeout(this.typingTimerGroups);
+  }
+
+  doneTypingGroups(noOfGroups) {
+    this.sendMessage.emit(new CreateGroupsEvent(this.selectedGrouping.id, noOfGroups));
   }
 
   toggleChooseGroup($event) {
