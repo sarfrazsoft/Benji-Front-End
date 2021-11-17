@@ -1,67 +1,89 @@
-<div fxLayout="column" class="mainscreen-activity">
-  <div class="lesson-top-banner black-color" fxLayout="row" fxLayoutAlign="center center">
-    <span class="lobby-header activity-header" fxLayoutAlign="center center">
-      Join at&nbsp;
-      <span class="lobby-url pn-700"> {{ joinLobbyUrl }}  </span>
-      &nbsp;with room code&nbsp;
-      <span class="room-code primary-color">
-        {{ activityState.lesson_run.lessonrun_code }}
+<ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+  <ng-container *ngIf="beforeLessonRunDetails">
+    <benji-session-lobby-layout
+      [beforeLessonRunDetails]="beforeLessonRunDetails"
+      [participantLobbyScreeen]="true">
+    </benji-session-lobby-layout>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngxPermissionsOnly="'ADMIN'">
+  <ng-container *ngIf="beforeLessonRunDetails">
+    <benji-session-lobby-layout
+      [beforeLessonRunDetails]="beforeLessonRunDetails"
+      [adminLobbyScreeen]="true"
+      [room_code]="room_code"
+      (startLessonEvent)="kickOffLesson($event)">
+    </benji-session-lobby-layout>
+  </ng-container>
+</ng-container>
+<!-- 
+<ng-container *ngxPermissionsOnly="'ADMIN'">
+  <div fxLayout="column" class="mainscreen-activity">
+    <div class="lesson-top-banner black-color" fxLayout="row" fxLayoutAlign="center center">
+      <span class="lobby-header activity-header" fxLayoutAlign="center center">
+        Join at&nbsp;
+        <span class="lobby-url pn-700"> {{ joinLobbyUrl }}  </span>
+        &nbsp;with room code&nbsp;
+        <span class="room-code primary-color">
+          {{ activityState.lesson_run.lessonrun_code }}
+        </span>
       </span>
-    </span>
-  </div>
-  <div class="bg-yellow lobby-controls" fxLayout="row" fxLayoutAlign="space-between">
-    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-      <div class="participant-count-container bg-sky">
-        <img src="/assets/img/participantCount.svg" alt="">
-        <span class="lobby-activity__participant-number primary-color">
-          {{ activityState.lesson_run.participant_set.length }}
-        </span>
+    </div>
+    <div class="bg-yellow lobby-controls" fxLayout="row" fxLayoutAlign="space-between">
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+        <div class="participant-count-container bg-sky">
+          <img src="/assets/img/participantCount.svg" alt="">
+          <span class="lobby-activity__participant-number primary-color">
+            {{ activityState.lesson_run.participant_set.length }}
+          </span>
+        </div>
+        <div fxLayoutAlign="space-between center" 
+          class="participant-count-container bg-white copy-link copy-link-white" 
+          (click)="copyLink(shareParticipantLink)">
+          <img src="/assets/img/coolicon.svg" alt="">
+          <span class="primary-color">
+            Copy Link
+          </span>
+        </div>
       </div>
-      <div fxLayoutAlign="space-between center" 
-        class="participant-count-container bg-white copy-link copy-link-white" 
-        (click)="copyLink(shareParticipantLink)">
-        <img src="/assets/img/coolicon.svg" alt="">
-        <span class="primary-color">
-          Copy Link
-        </span>
+      <div>
+        <button class="bg-primary-color white-color lobby-launch-button" (click)="kickOffLesson()">
+          Start
+        </button>
       </div>
     </div>
-    <div>
-      <button class="bg-primary-color white-color lobby-launch-button" (click)="kickOffLesson()">
-        Start
-      </button>
+  
+    <div class="bg-yellow" fxFlex="1 0 0" fxLayout="row">
+      <div class="mainscreen-activity__column mainscreen-activity__column--25 joined-users">
+        <ul>
+          <li
+            *ngFor="let participant of participants"
+            class=""
+            [ngClass]="{
+              'long-list': participants.length > 25
+            }"
+          >
+            {{ participant.display_name }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-
-  <div class="bg-yellow" fxFlex="1 0 0" fxLayout="row">
-    <div class="mainscreen-activity__column mainscreen-activity__column--25 joined-users">
-      <ul>
-        <li
-          *ngFor="let participant of participants"
-          class=""
-          [ngClass]="{
-            'long-list': participants.length > 25
-          }"
-        >
-          {{ participant.display_name }}
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- <audio
-  class="hideAndShrink"
-  src="../../../../../assets/audio/191678__porphyr__waterdrop.wav"
-  #sfxPlayer
->
-  Your browser does not support the <code>audio</code> element.
-</audio>
-<audio
-  autoplay
-  loop
-  class="hideAndShrink"
-  src="../../../../../assets/audio/A_A_Aalto_-_Admin.mp3"
->
-  Your browser does not support the <code>audio</code> element.
-</audio> -->
+  
+  <audio
+    class="hideAndShrink"
+    src="../../../../../assets/audio/191678__porphyr__waterdrop.wav"
+    #sfxPlayer
+  >
+    Your browser does not support the <code>audio</code> element.
+  </audio>
+  <audio
+    autoplay
+    loop
+    class="hideAndShrink"
+    src="../../../../../assets/audio/A_A_Aalto_-_Admin.mp3"
+  >
+    Your browser does not support the <code>audio</code> element.
+  </audio>
+</ng-container> -->

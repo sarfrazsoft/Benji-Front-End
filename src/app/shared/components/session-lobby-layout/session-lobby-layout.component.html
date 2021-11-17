@@ -1,9 +1,29 @@
 <div fxLayout="row" fxLayoutAlign="center center" class="lobby-wrapper"> 
   <div class="content-wrapper">
-    <div class="session-details">
+    <div class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
       <div>
-        <div class="session-title">
-          Pitch Perfect
+        <div fxLayout="row" fxLayoutAlign="space-between center"  fxLayoutGap="157px">
+          <div class="session-title">
+            Pitch Perfect
+          </div>
+          <div 
+            *ngIf="adminLobbyScreeen" 
+            class="session-start" 
+            fxLayout="row" 
+            fxLayoutAlign="start center"
+            fxLayoutGap="16px">
+            <div class="join-code">
+              Join Code: <span class="primary-color">1ef326a</span>
+            </div>
+            <img 
+              src="../../../assets/img/sessionLobby/copy-link.svg" 
+              (click)="copyLink(shareParticipantLink)">
+            <div
+              class="start-button bg-primary-color white-color"
+              (click)="kickOffLesson()">
+              Start Session
+            </div>
+          </div>
         </div>
         <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
           <!-- <img src="{{session_host.photo}}" alt/> -->
@@ -17,32 +37,46 @@
       <div>
         <div class="sub-title"> Participants </div>
         <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
-          <div class="session-participants" *ngFor="let participant of beforeLessonRunDetails.participants">
+          <div class="session-participants" *ngFor="let participant of beforeLessonRunDetails.participants; let i = index;">
             <div
               fxLayoutGap="8px"
               class="participant" 
               fxLayoutAlign="start center">
               <!-- <img src="{{participant.photo}}" /> -->
-              <div class="initials" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant)}}</div>
+              <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant)}}</div>
               <div class="name"> {{participant}} </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="join-session">
-      <div class="sub-title"> Join Session </div>
-      <div class="label"> Enter your name </div>
-      <input type="text">
-      <!-- <div class="label"> Choose your avatar </div>
-      <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
-        <img src="">
-        <div class="initials" fxLayout="column" fxLayoutAlign="center center">MK</div>
-        <img class="edit-pen" src="/assets/img/edit-pen.svg">
-        <div class="change-profile">Change profile</div>
-      </div> -->
-      <div class="bg-primary-color button"
-        (click)="getLearnerData(lessonrun_code)">Join</div>
+    <div class="join-session" *ngIf="!adminLobbyScreeen">
+      <div *ngIf="participantJoinScreeen">
+        <div class="sub-title"> Join Session </div>
+        <div class="label"> Enter your name </div>
+        <p class="warning-color" *ngIf="loginError">
+          Oops! What should we call you? Drop in your name.<br />
+        </p>
+        <input type="text"
+          [formControl]="username">
+        <!-- <div class="label"> Choose your avatar </div>
+        <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
+          <img src="">
+          <div class="initials" fxLayout="column" fxLayoutAlign="center center">MK</div>
+          <img class="edit-pen" src="/assets/img/edit-pen.svg">
+          <div class="change-profile">Change profile</div>
+        </div> -->
+        <div class="bg-primary-color button"
+          (click)="createUser()"
+          [ngClass]="{
+            active: isNameValid(),
+            inactive: !isNameValid()
+          }">Join
+        </div>
+      </div>
+      <div *ngIf="participantLobbyScreeen" class="session-joined" fxLayout="column" fxLayoutAlign="center center">
+        Wait for your host to start the session.
+      </div>
     </div>
   </div>
 </div>

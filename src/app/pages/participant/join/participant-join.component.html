@@ -1,12 +1,12 @@
 <benji-main-screen-toolbar></benji-main-screen-toolbar>
 <ng-container *ngIf="beforeLessonRunDetails">
-
   <benji-session-lobby-layout
     [beforeLessonRunDetails]="beforeLessonRunDetails"
-    [from]="'participant-join'">
+    [participantJoinScreeen]="true">
   </benji-session-lobby-layout>
 </ng-container>
 
+<!-- 
 <div class="participant-start">
   <div class="container">
     <div class="vertical-center center-text">
@@ -36,8 +36,6 @@
               name=""
               placeholder="Enter room code"
               [formControl]="roomCode"
-              (keyup)="typingStoped($event)"
-              (keydown)="typingStarted()"
               (input)="onSearchChange($event.target.value)"
             />
           </div>
@@ -76,4 +74,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

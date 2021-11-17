@@ -7,14 +7,41 @@
     box-shadow: 0px 1px 2px #E7E7E7;
     border-radius: 16px;
     .session-details {
-      max-width: 588px;
+      min-width: 588px;
       margin-right: 64px;
       float: left;
+      &.adminLobby{
+        margin-right: 0px;
+        max-width: unset;
+      }
       .session-title {
         font-size: 40px;
         font-weight: 700;
         color: #37352F;
         margin-bottom: 16px;
+      }
+      .session-start {
+        font-size: 16px;
+        .join-code {
+          color: #616161;
+          font-weight: 500;
+          cursor: pointer;
+          span {
+            font-weight: 700;
+          }
+        }
+        img {
+          background: #F3F4F7;
+          padding: 8px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        .start-button {
+          font-weight: 700;
+          padding: 11px 32px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
       }
       .session-host {
         margin-bottom: 16px;
@@ -69,6 +96,36 @@
             border-radius: 50%;
             background: #5E8DEB;
             line-height: 0px;
+            &.color0 {
+              background: #AB446F;
+            }
+            &.color1 {
+              background: #B95050;
+            }
+            &.color2 {
+              background: #E86A4A;
+            }
+            &.color3 {
+              background: #FFBA08;
+            }
+            &.color4 {
+              background: #FBE065;
+            }
+            &.color5 {
+              background: #38AD80;
+            }
+            &.color6 {
+              background: #084A44;
+            }
+            &.color7 {
+              background: #4472CA;
+            }
+            &.color8 {
+              background: #675AAA;
+            }
+            &.color9 {
+              background: #7C48AD;
+            }
           }
           .name {
             font-size: 14px;
@@ -79,7 +136,7 @@
         }
       }
       .participants-list {
-        height: 168px;
+        max-height: 168px;
         overflow-y: auto;
         padding-right: 32px;
       }
@@ -143,14 +200,21 @@
         }
       }
       .button {
-        width: 105px;
-        padding: 8px 32px;
+        width: max-content;
+        padding: 12px 32px;
         text-align: center;
         border-radius: 8px;
         color: #fff;
         font-size: 20px;
         font-weight: 600;
         cursor: pointer;
+      }
+      .session-joined {
+        max-width: 330px;
+        min-height: 330px;
+        font-weight: 600;
+        font-size: 24px;
+        text-align: center;
       }
     }
   }
