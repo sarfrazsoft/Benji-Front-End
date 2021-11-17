@@ -140,7 +140,8 @@
       <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
         <div fxLayout="row" fxLayoutGap="8px">
           <!-- Participant grouping -->
-          <div class="participant-grouping">
+          <div class="participant-grouping" 
+            *ngIf="letParticipantChangeGroupingMidActivity">
             <button
               (click)="openGroupingParticipantDialog()">
               {{ 'Group 1'}}

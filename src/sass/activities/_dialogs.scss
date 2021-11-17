@@ -264,108 +264,109 @@ ng-dropdown-panel.groups-controls {
       margin-top: 16px;
       height: 460px;
       overflow-y: scroll;
-      .colored {
-        border-radius: 9px;
-        margin-bottom: 16px;
+      .group-container {
+        &.selected {
+          border-radius: 9px;
+          margin-bottom: 16px;
+          .group {
+            margin: 0px;
+            border: 2px solid $primary-color;
+            background: rgba(255, 255, 255, 0.92);
+            display: flex;
+            flex-flow: column;
+          }
+        }
         .group {
-          margin: 0px;
-          border: 2px solid $primary-color;
-          background: rgba(255, 255, 255, 0.92);
-          display: flex;
-          flex-flow: column;
-          height: 100%;
-        }
-      }
-      .group {
-        margin-bottom: 16px;
-        width: 352px;
-        height: 222px;
-        border: 1px solid #e2e0df;
-        border-radius: 8px;
-        background: #fff;
-        position: relative;
-        display: flex;
-        flex-flow: column;
-        .title-area {
-          flex: 0 1 auto;
-          padding: 16px 16px 0px 16px;
-        }
-        .title {
-          font-weight: 700;
-          color: #000;
-          font-size: 18px;
-          margin: 8px 0px 12px 4px;
-        }
-        .description {
-          font-size: 14px;
-          font-weight: 400;
-          color: #616161;
-          margin: 0px 0px 16px 4px;
-        }
-        .counts {
-          color: #bdbdbd;
-          font-weight: 400;
-          font-size: 14px;
-          margin: 0px 0px 4px 4px;
-        }
-        .users {
-          margin-left: 4px;
-          display: flex;
-          flex-flow: column;
-          flex: 1 1 auto;
-          overflow-y: auto;
-          padding-left: 16px;
-          margin-right: 16px;
-          .circle {
-            width: 32px;
-            height: 32px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #fff;
-            padding: 4px;
-            border-radius: 50%;
-            margin-bottom: 8px;
-            &.purple {
-              background: #b0aef6;
-            }
-            &.blue {
-              background: #aec2f6;
-            }
-            &.pink {
-              background: #f6aee2;
-            }
-            &.orange {
-              background: #f6aeae;
-            }
-          }
-        }
-        .empty {
-          padding: 19px;
-          background: #eff1f2;
+          margin-bottom: 16px;
+          width: 352px;
+          height: 222px;
+          border: 1px solid #e2e0df;
           border-radius: 8px;
-          color: #000;
-          font-size: 16px;
-          font-weight: 400;
-          font-style: italic;
-          margin-top: 4px;
-        }
-        .button {
-          padding: 8px;
-          border-radius: 4px;
-          font-size: 16px;
-          font-weight: 600;
-          text-align: center;
-          cursor: pointer;
-          color: #fff;
-          margin: 16px;
-          flex: 0 1 19px;
-          &.grey {
-            color: #37352f;
-            background: #e7e7e7;
+          background: #fff;
+          position: relative;
+          display: flex;
+          flex-flow: column;
+          .title-area {
+            flex: 0 1 auto;
+            padding: 16px 16px 0px 16px;
           }
-          &.light-grey {
-            color: #37352f;
-            background: #f3f4f7;
+          .title {
+            font-weight: 700;
+            color: #000;
+            font-size: 18px;
+            margin: 8px 0px 12px 4px;
+          }
+          .description {
+            font-size: 14px;
+            font-weight: 400;
+            color: #616161;
+            margin: 0px 0px 16px 4px;
+          }
+          .counts {
+            color: #bdbdbd;
+            font-weight: 400;
+            font-size: 14px;
+            margin: 0px 0px 4px 4px;
+          }
+          .users {
+            margin-left: 4px;
+            display: flex;
+            flex-flow: column;
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding-left: 16px;
+            margin-right: 16px;
+            .circle {
+              width: 32px;
+              height: 32px;
+              font-size: 12px;
+              font-weight: 500;
+              color: #fff;
+              padding: 4px;
+              border-radius: 50%;
+              margin-bottom: 8px;
+              &.purple {
+                background: #b0aef6;
+              }
+              &.blue {
+                background: #aec2f6;
+              }
+              &.pink {
+                background: #f6aee2;
+              }
+              &.orange {
+                background: #f6aeae;
+              }
+            }
+          }
+          .empty {
+            padding: 19px;
+            background: #eff1f2;
+            border-radius: 8px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 400;
+            font-style: italic;
+            margin-top: 4px;
+          }
+          .button {
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            color: #fff;
+            margin: 16px;
+            flex: 0 1 19px;
+            &.grey {
+              color: #37352f;
+              background: #e7e7e7;
+            }
+            &.light-grey {
+              color: #37352f;
+              background: #f3f4f7;
+            }
           }
         }
       }

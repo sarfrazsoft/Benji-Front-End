@@ -53,6 +53,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
 
+  letParticipantChangeGroupingMidActivity = false;
+
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   constructor(
     private layoutService: LayoutService,
@@ -198,9 +200,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       data: { activityState: this.activityState, participantCode: this.participantCode },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'Use Template') {
-      }
-    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 }

@@ -158,11 +158,9 @@ export class MainScreenPopQuizComponent
   }
 
   submitAnswer() {
-    console.log('hurs');
     if (this.selectedChoices.length) {
       this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
       this.answerSubmitted = true;
-      console.log('hurr');
     }
   }
 

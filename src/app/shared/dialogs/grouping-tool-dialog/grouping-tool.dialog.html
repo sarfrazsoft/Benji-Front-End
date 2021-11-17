@@ -59,9 +59,9 @@
     <div class="header">Learners can switch groups</div>
       <label class="switch">
         <input type="checkbox" 
-          [(ngModel)]="allowParticipantsJoining"
+          [(ngModel)]="allowParticipantsJoiningMidActivity"
           [ngModelOptions]="{standalone: true}"
-          (change)="toggleChooseGroup($event)">
+          (change)="toggleChooseGroupMidActivity($event)">
         <span class="slider round"></span>
       </label>
   </div>

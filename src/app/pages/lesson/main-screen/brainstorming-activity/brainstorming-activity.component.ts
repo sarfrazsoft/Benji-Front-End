@@ -336,7 +336,10 @@ export class MainScreenBrainstormingActivityComponent
         this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
           if (gt.viewGrouping && (!this.dialogRef || !this.dialogRef.componentInstance)) {
             if (permission) {
-              this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(this.activityState);
+              this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
+                this.activityState,
+                this.participantCode
+              );
               // this.dialogRef =
               // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
               this.sharingToolService.sendMessage$.subscribe((v) => {

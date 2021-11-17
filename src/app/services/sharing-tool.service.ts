@@ -30,8 +30,9 @@ export class SharingToolService {
   }
 
   participantGroupingToolDialogRef: MatDialogRef<ParticipantGroupingDialogComponent>;
-  openParticipantGroupingInfoDialog(activityState: UpdateMessage) {
+  openParticipantGroupingInfoDialog(activityState: UpdateMessage, participantCode: number) {
     const state = activityState;
+    const pCode = participantCode;
     const dialogRef = this.matDialog.open(ParticipantGroupingInfoDialogComponent, {
       panelClass: 'grouping-participant-info-dialog',
       data: {
@@ -46,18 +47,19 @@ export class SharingToolService {
     dialogRef.afterClosed().subscribe((result) => {
       // sub.unsubscribe();
       if (result === 'openDialog') {
-        this.participantGroupingToolDialogRef = this.openParticipantGroupingToolDialog(state);
+        this.participantGroupingToolDialogRef = this.openParticipantGroupingToolDialog(state, pCode);
       }
     });
     return dialogRef;
   }
 
-  openParticipantGroupingToolDialog(activityState: UpdateMessage) {
+  openParticipantGroupingToolDialog(activityState: UpdateMessage, pCode: number) {
     console.log(activityState);
     const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
       panelClass: 'participant-grouping-dialog',
       data: {
         activityState: activityState,
+        participantCode: pCode,
       },
     });
 

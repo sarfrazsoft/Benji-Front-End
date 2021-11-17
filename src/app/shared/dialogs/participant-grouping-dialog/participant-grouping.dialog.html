@@ -11,7 +11,7 @@
       <button *ngFor="let option of groups; let i = index"
         class="unselected selected-primary-border group"
         [ngClass]="{
-          selected: option.id === selectedChoice.id,
+          selected: option.id === selectedGroup.id,
           inactive: answerSubmitted
         }"
         (click)="selectOption(option)">
@@ -37,12 +37,8 @@
   <div class="groups" fxLayout="row wrap" fxLayoutGap="16px">
     <ng-container *ngFor="let group of groups; let i = index">
       <div class="group-container" 
-        [ngClass]="{ selected: group.id === selectedChoice.id, inactive: answerSubmitted }">
-        <div class="group" 
-          [ngClass]="{
-            selected: group.id === selectedChoice.id,
-            inactive: answerSubmitted
-          }">
+        [ngClass]="{ selected: group.id === selectedGroup.id }">
+        <div class="group">
           <div class="title-area">
             <div class="title">{{ group.title }}</div>
             <div class="counts">Participants ({{group.participants.length}})</div>
@@ -66,7 +62,7 @@
 </div>
 
 <!-- <div class="group-container" [ngClass]="{
-    selected: option.id === selectedChoice.id,
+    selected: option.id === selectedGroup.id,
     inactive: answerSubmitted
   }">
   <div class="group" fxLayout="column">

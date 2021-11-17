@@ -76,7 +76,13 @@ export interface GroupingToolGroups {
   allowParticipantsJoining: boolean;
   allowParticipantsJoiningMidActivity: boolean;
   unassignedParticipants: Array<number>;
-  groups: Array<{ id: number; title: string; description: string; participants: Array<number> }>;
+  groups: Array<Group>;
+}
+export interface Group {
+  id: number;
+  title: string;
+  description: string;
+  participants: Array<number>;
 }
 
 export interface BeforeLessonRunDetails {

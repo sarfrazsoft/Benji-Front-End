@@ -39,9 +39,7 @@ export class MainScreenCaseStudyActivityComponent
   ) {
     super();
   }
-  ngOnChanges(): void {
-    console.log('hur');
-  }
+  ngOnChanges(): void {}
 
   ngOnInit() {
     super.ngOnInit();

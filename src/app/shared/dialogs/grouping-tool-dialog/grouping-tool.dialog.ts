@@ -31,7 +31,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   editingName = {};
   groupName = '';
   showStartGroupingButton: boolean;
-  allowParticipantsJoining: boolean;
+  allowParticipantsJoiningMidActivity: boolean;
   private typingTimer;
   private typingTimerGroups;
   numberOfRooms = 0;
@@ -94,6 +94,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groupingTitle = g.title;
+        this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
         // this.unassignedUsers = g.unassignedParticipants;
       }
     });
@@ -103,7 +104,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.selectedGrouping = g;
     if (g) {
       this.groupingTitle = g.title;
-      this.allowParticipantsJoining = g.allowParticipantsJoining;
+      this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
     }
 
     this.initUnassignedParticipants();
@@ -195,8 +196,9 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new AllowParticipantGroupingEvent($event.currentTarget.checked));
   }
 
-  toggleMidActChooseGroup($event) {
-    this.sendMessage.emit(new AllowParticipantGroupingMidActivityEvent($event.currentTarget.checked));
+  toggleChooseGroupMidActivity(event) {
+    this.allowParticipantsJoiningMidActivity = event.currentTarget.checked;
+    this.sendMessage.emit(new AllowParticipantGroupingMidActivityEvent(event.currentTarget.checked));
   }
 
   drop(event: CdkDragDrop<string[]>) {

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { ActivitiesService } from 'src/app/services/activities';
 import {
   AllowParticipantGroupingMidActivityEvent,
+  Group,
   GroupingParticipantSelfJoinEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -21,13 +22,7 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
   selectedGrouping: GroupingToolGroups;
   groups: GroupingToolGroups['groups'] = [];
   userGroupAssigned = false;
-  selectedChoice = {
-    id: null,
-    is_correct: null,
-    choice_text: null,
-    explanation: null,
-    order: null,
-  };
+  selectedGroup;
   participantCode: number;
   @Input() activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
@@ -62,11 +57,22 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
         this.selectedGrouping = g;
         this.groups = g.groups;
         console.log(this.groups);
+        this.selectedGroup = this.getParticipantGroup(g);
         this.selfGroupingAllowed = g.allowParticipantsJoining;
         const participantCode = this.participantCode;
         this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
       }
     });
+  }
+
+  getParticipantGroup(grouping: GroupingToolGroups) {
+    let myGroup;
+    grouping.groups.forEach((g) => {
+      if (g.participants.includes(this.participantCode)) {
+        myGroup = g;
+      }
+    });
+    return myGroup;
   }
 
   updateGroupingInfo(gt: GroupingTool) {
@@ -86,12 +92,12 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
   }
 
   selectOption(group) {
-    this.selectedChoice = group;
+    this.selectedGroup = group;
     this.joinGroup();
   }
 
   joinGroup() {
-    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedChoice.id));
+    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedGroup.id));
   }
 
   getInitials(participantCode: number) {
