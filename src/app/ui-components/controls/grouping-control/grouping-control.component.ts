@@ -30,6 +30,10 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   newGroupingTitle = '';
   dialogRef: MatDialogRef<GroupingToolDialogComponent>;
 
+  // id of the grouping that is applied
+  // to the current activity
+  currentlyAppliedGrouping;
+
   @Output() socketMessage = new EventEmitter<any>();
 
   constructor(
@@ -49,6 +53,8 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   initExistingGroupins() {
     const rt = this.activityState.running_tools;
+    this.currentlyAppliedGrouping = this.getCurrentlyAppliedGrouping(this.activityState);
+
     if (rt && rt.grouping_tool) {
       const grouping = {
         groupings: this.activityState.running_tools.grouping_tool.groupings,
@@ -56,6 +62,11 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       };
       this.existingGroupings = grouping.groupings;
     }
+  }
+
+  getCurrentlyAppliedGrouping(state: UpdateMessage) {
+    const activityType = this.activitiesService.getActivityType(this.activityState);
+    return this.activityState[activityType].grouping;
   }
 
   initSelectedGroup() {

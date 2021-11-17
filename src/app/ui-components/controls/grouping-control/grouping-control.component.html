@@ -5,59 +5,42 @@
     Make boards, docs, and cards collaborative with groups.
   </div>
 
-  <div class="activities" *ngFor="let grouping of existingGroupings">
-    <div class="activity">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="title">
-          {{ grouping.title }}
+  <div class="activities">
+    <ng-container *ngFor="let grouping of existingGroupings">
+      <div class="activity" 
+        [ngClass]="{ 
+          selected: currentlyAppliedGrouping === grouping.id 
+        }">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="title">
+            {{ grouping.title }}
+          </div>
+          <img 
+            class="edit" 
+            src="/assets/img/grouping/three-dots.svg" 
+            [matMenuTriggerFor]="menu"
+            benji-click-stop-propagation
+            disableRipple>
+          </div>
+          <mat-menu class="edit-delete" #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="deleteGroup(grouping)">
+              <span>Delete</span>
+            </button>
+            <button mat-menu-item (click)="editGrouping(grouping)">
+              <span>Edit</span>
+            </button>
+          </mat-menu>
+        <div class="counts" fxLayout="row" fxLayoutAlign="space-between center">
+          <div >
+            {{ grouping.groups.length }} Groups
+          </div>
+          <div>
+            {{ grouping.allowParticipantsJoining ? 'Self Assigned' : 'Host Assigned' }}
+          </div>
         </div>
-        <img 
-          class="edit" 
-          src="/assets/img/grouping/three-dots.svg" 
-          [matMenuTriggerFor]="menu"
-          benji-click-stop-propagation
-          disableRipple>
-        </div>
-        <mat-menu class="edit-delete" #menu="matMenu" xPosition="before">
-          <button mat-menu-item (click)="deleteGroup(grouping)">
-            <span>Delete</span>
-          </button>
-          <button mat-menu-item (click)="editGrouping(grouping)">
-            <span>Edit</span>
-          </button>
-        </mat-menu>
-      <div class="counts" fxLayout="row" fxLayoutAlign="space-between center">
-        <div >
-          {{ grouping.groups.length }} Groups
-        </div>
-        <div>
-          {{ grouping.allowParticipantsJoining ? 'Self Assigned' : 'Host Assigned' }}
-        </div>
+        <div class="start" (click)="startGrouping(grouping)">Start Grouping</div>
       </div>
-      <div class="start" (click)="startGrouping(grouping)">Start Grouping</div>
-    </div>
-    <!-- <div class="activity">
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="title">
-          Role Playing Activity
-        </div>
-        <img 
-          class="edit" 
-          src="/assets/img/grouping/three-dots.svg" 
-          [matMenuTriggerFor]="menu"
-          benji-click-stop-propagation
-          disableRipple>
-      </div>
-      <div class="counts" fxLayout="row" fxLayoutAlign="space-between center">
-        <div >
-          5 Groups
-        </div>
-        <div>
-          Host Assigned
-        </div>
-      </div>
-      <div class="start">Start Grouping</div>
-    </div> -->
+    </ng-container>
   </div>
 
   <div class="blue-button" (click)="addNewGrouping()">
