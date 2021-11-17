@@ -36,15 +36,35 @@
       </div>
       <div>
         <div class="sub-title"> Participants </div>
-        <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
-          <div class="session-participants" *ngFor="let participant of beforeLessonRunDetails.participants; let i = index;">
-            <div
-              fxLayoutGap="8px"
-              class="participant" 
-              fxLayoutAlign="start center">
-              <!-- <img src="{{participant.photo}}" /> -->
-              <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant)}}</div>
-              <div class="name"> {{participant}} </div>
+        <div *ngIf="!latestParticipants">
+          <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
+            <div 
+              class="session-participants" 
+              *ngFor="let participant of beforeLessonRunDetails.participants; let i = index;">
+              <div
+                fxLayoutGap="8px"
+                class="participant" 
+                fxLayoutAlign="start center">
+                <!-- <img src="{{participant.photo}}" /> -->
+                <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant)}}</div>
+                <div class="name"> {{participant}} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="latestParticipants">
+          <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
+            <div 
+              class="session-participants" 
+              *ngFor="let participant of latestParticipants; let i = index;">
+              <div
+                fxLayoutGap="8px"
+                class="participant" 
+                fxLayoutAlign="start center">
+                <!-- <img src="{{participant.photo}}" /> -->
+                <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant.display_name)}}</div>
+                <div class="name"> {{participant.display_name}} </div>
+              </div>
             </div>
           </div>
         </div>
