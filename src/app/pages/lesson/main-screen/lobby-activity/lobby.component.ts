@@ -13,8 +13,10 @@ import { ContextService } from 'src/app/services';
 import { LobbySetNicknameEvent, LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
-import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
+import * as global from 'src/app/globals';
+import { HttpClient } from '@angular/common/http';
+import { BeforeLessonRunDetails } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-ms-lobby',
@@ -22,21 +24,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
   encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
-  session_host = { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' };
-  session_participants = [
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Tessa Chassen' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Kelly Mason' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Parmis Rashidi' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Baz Sturman' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Corinna Grof' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Paul Statmets' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Rosa Wan' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' },
-    { photo: '/assets/img/idea-creation/mahin.svg', name: 'Eduardo Garcia' }
-  ];
+  
+  public beforeLessonRunDetails: BeforeLessonRunDetails;
   startSessionLabel = '';
   joinLobbyUrl = '';
   room_code: number;
@@ -50,7 +39,8 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
   constructor(
     private dialog: MatDialog,
     private contextService: ContextService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private http: HttpClient,
   ) {
     super();
   }
@@ -77,6 +67,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
         this.joinLobbyUrl = info.parameters.joinLobbyUrl;
       }
     });
+    this.updateBeforeLessonRunDetails();
   }
 
   ngOnChanges() {
@@ -91,15 +82,29 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
     this.utilsService.copyToClipboard(val);
   }
 
-  kickOffLesson() {
+  kickOffLesson(msg) {
     // if (this.activityState.lesson_run.participant_set.length < 2) {
     //   this.openLowAttendanceDialog();
     // } else {
-    this.sendMessage.emit(new LobbyStartButtonClickEvent());
+    if(msg=="startLesson") {
+      this.sendMessage.emit(new LobbyStartButtonClickEvent());
+    }
     // }
   }
 
   setNicknameEvent() {
     this.sendMessage.emit(new LobbySetNicknameEvent({ nickname: 'ironman', user_id: 4 }));
   }
+
+  getBeforeLessonRunDetails(lessonrun_code) {
+    const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';
+    return this.http.post(request,{});
+  }
+
+  updateBeforeLessonRunDetails() {
+    this.getBeforeLessonRunDetails(this.room_code).subscribe((res: BeforeLessonRunDetails) => {
+      this.beforeLessonRunDetails = res;
+    });
+  }
+
 }
