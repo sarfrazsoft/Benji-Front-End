@@ -221,7 +221,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
           }
         });
       });
-      this.sendMessage.emit(new GroupingAssignParticipantEvent(breakoutroomid, participant.participant_code));
+      this.sendMessage.emit(
+        new GroupingAssignParticipantEvent(
+          this.selectedGrouping.id,
+          breakoutroomid,
+          participant.participant_code
+        )
+      );
     }
   }
 

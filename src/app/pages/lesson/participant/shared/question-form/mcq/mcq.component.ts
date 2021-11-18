@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import {
-  // GroupingParticipantJoinEvent,
-  GroupingParticipantSelfJoinEvent,
   ParticipantOptInEvent,
   ParticipantOptOutEvent,
   UpdateMessage,

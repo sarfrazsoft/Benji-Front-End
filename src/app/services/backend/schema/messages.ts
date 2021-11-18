@@ -753,17 +753,17 @@ export class DeleteGroupingGroupEvent extends ActivityEvent {
 
 export class GroupingAssignParticipantEvent extends ActivityEvent {
   event_name = 'GroupingAssignParticipantEvent';
-  constructor(group: number, participant_code: number) {
+  constructor(grouping: number, group: number, participant_code: number) {
     super();
-    this.extra_args = { group: group, participant_code: participant_code };
+    this.extra_args = { grouping: grouping, group: group, participant_code: participant_code };
   }
 }
 
 export class GroupingParticipantSelfJoinEvent extends ActivityEvent {
   event_name = 'GroupingParticipantSelfJoinEvent';
-  constructor(group: number) {
+  constructor(grouping: number, group: number) {
     super();
-    this.extra_args = { group: group };
+    this.extra_args = { grouping: grouping, group: group };
   }
 }
 

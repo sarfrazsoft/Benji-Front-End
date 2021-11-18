@@ -1,10 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import {
-  AllowParticipantGroupingMidActivityEvent,
-  GroupingParticipantSelfJoinEvent,
-  UpdateMessage,
-} from 'src/app/services/backend/schema';
+import { AllowParticipantGroupingMidActivityEvent, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 
 @Component({
@@ -77,10 +73,6 @@ export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges
   selectOption(option) {
     this.selectedChoice = option;
     console.log(this.selectedChoice);
-  }
-
-  joinGroup() {
-    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedChoice.id));
   }
 
   openGroupingDialog() {

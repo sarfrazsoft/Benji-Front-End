@@ -9,7 +9,8 @@
     <ng-container *ngFor="let grouping of existingGroupings">
       <div class="activity" 
         [ngClass]="{ 
-          selected: currentlyAppliedGrouping === grouping.id 
+          selected: currentlyAppliedGrouping === grouping.id,
+          'selected-primary-border-only': currentlyAppliedGrouping === grouping.id
         }">
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <div class="title">

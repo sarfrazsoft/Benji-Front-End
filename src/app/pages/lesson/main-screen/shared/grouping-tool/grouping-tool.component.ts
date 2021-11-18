@@ -168,7 +168,8 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
           }
         });
       });
-      this.sendMessage.emit(new GroupingAssignParticipantEvent(breakoutroomid, participant.participant_code));
+      // this.sendMessage.emit(new GroupingAssignParticipantEvent
+      // (breakoutroomid, participant.participant_code));
     }
   }
 

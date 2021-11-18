@@ -5,7 +5,6 @@ import {
   CaseStudyDefaultWorksheetApplied,
   CaseStudySubmitAnswerEvent,
   Group,
-  GroupingParticipantSelfJoinEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';

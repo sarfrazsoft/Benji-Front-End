@@ -51,7 +51,7 @@ export class GroupingComponent implements OnInit, OnChanges {
     }
   }
   changeGroup(event) {
-    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(event.id));
+    // this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(event.id));
   }
 
   getMyGroup(userId, groups) {

@@ -97,7 +97,9 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
   }
 
   joinGroup() {
-    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedGroup.id));
+    this.sendMessage.emit(
+      new GroupingParticipantSelfJoinEvent(this.selectedGrouping.id, this.selectedGroup.id)
+    );
   }
 
   getInitials(participantCode: number) {
