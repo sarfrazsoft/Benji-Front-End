@@ -89,6 +89,7 @@ export interface BeforeLessonRunDetails {
   host: string;
   description: string;
   participants: Array<any>;
+  title: string;
 }
 
 export interface LessonRunDetails {
