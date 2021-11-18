@@ -213,11 +213,55 @@
         cursor: pointer;
       }
       .session-joined {
-        max-width: 330px;
+        width: 400px;
         min-height: 330px;
         font-weight: 600;
         font-size: 24px;
         text-align: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .lobby-wrapper {
+    height: auto;
+    padding: 24px;
+    .content-wrapper {
+      .session-details {
+        margin-right: 0px;
+        float: none;
+        margin-bottom: 32px;
+      }
+      .join-session {
+        float: none;
+        input {
+          width: 94%;
+        }
+        .session-joined {
+          margin: 0px auto;
+          min-height: 180px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .lobby-wrapper {
+    .content-wrapper {
+      padding: 32px;
+      .session-details {
+        width: 100%;
+      }
+      .join-session {
+        float: none;
+        input {
+          width: 90%;
+        }
+        .session-joined {
+          width: auto;
+        }
       }
     }
   }
