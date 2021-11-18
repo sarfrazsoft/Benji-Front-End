@@ -7,12 +7,15 @@
     box-shadow: 0px 1px 2px #E7E7E7;
     border-radius: 16px;
     .session-details {
-      min-width: 588px;
+      //min-width: 588px;
       margin-right: 64px;
       float: left;
+      width: 588px;
       &.adminLobby{
         margin-right: 0px;
         max-width: unset;
+        //min-width: 900px;
+        width: 909px;
       }
       .session-title {
         font-size: 40px;
