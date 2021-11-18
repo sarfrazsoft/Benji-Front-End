@@ -22,6 +22,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   @Input() participantLobbyScreeen;
   @Input() adminLobbyScreeen;
   @Input() room_code;
+  @Input() latestParticipants;
   @Output() startLessonEvent = new EventEmitter<string>();
   public isRoomCodeValid = true;
   public userName: string;
