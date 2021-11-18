@@ -8,8 +8,6 @@ import * as global from 'src/app/globals';
 import { HttpClient } from "@angular/common/http";
 import { BeforeLessonRunDetails, LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { BaseActivityComponent } from 'src/app/pages/lesson/shared/base-activity.component';
-import { LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-session-lobby-layout',
@@ -71,7 +69,6 @@ export class SessionLobbyLayoutComponent implements OnInit {
       );
     }
     this.shareParticipantLink = this.hostname + this.room_code;
-    this.updateBeforeLessonRunDetails();
   }
 
   public validateRoomCode() {
@@ -121,7 +118,6 @@ export class SessionLobbyLayoutComponent implements OnInit {
 
     this.authService.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
       (res: Participant) => {
-        this.updateBeforeLessonRunDetails();
         this.loginError = false;
         if (res.lessonrun_code) {
           if (localStorage.getItem('benji_facilitator')) {
@@ -151,17 +147,6 @@ export class SessionLobbyLayoutComponent implements OnInit {
 
   onSearchChange(searchValue: string): void {
     this.validateRoomCode();
-  }
-  
-  getBeforeLessonRunDetails(lessonrun_code) {
-    const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';
-    return this.http.post(request,{});
-  }
-
-  updateBeforeLessonRunDetails() {
-    this.getBeforeLessonRunDetails(this.roomCode.value).subscribe((res: BeforeLessonRunDetails) => {
-      this.beforeLessonRunDetails = res;
-    });
   }
 
   getInitials(nameString: string) {
