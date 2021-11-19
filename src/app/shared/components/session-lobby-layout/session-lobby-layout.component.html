@@ -1,4 +1,8 @@
-<div fxLayout="row" fxLayoutAlign="center center" class="lobby-wrapper"> 
+<div 
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  class="lobby-wrapper"
+  [ngClass]="{'participant-lobby': !adminLobbyScreeen}"> 
   <div class="content-wrapper">
     <div class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
       <div>

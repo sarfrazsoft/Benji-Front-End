@@ -225,8 +225,10 @@
 
 @media (max-width: 1250px) {
   .lobby-wrapper {
-    height: auto;
-    padding: 24px;
+    &.participant-lobby {
+      height: auto;
+      padding: 24px;
+    }
     .content-wrapper {
       .session-details {
         margin-right: 0px;
