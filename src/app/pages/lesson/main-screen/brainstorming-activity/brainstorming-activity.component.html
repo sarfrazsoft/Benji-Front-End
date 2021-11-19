@@ -2,54 +2,17 @@
   <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" >
     <div fxLayout="column" class="instructions">
       <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
-        <h2
-          class="brainstorm-h2 black-color"
-          [ngClass]="{
-            'long-instructions': instructions.length > 65
-          }"
-        >
-          {{ instructions }}
-        </h2>
-        <ng-container *ngxPermissionsOnly="'ADMIN'">
-          <div *ngIf="classificationTypes && participantGroups?.length">
-            <ng-select
-              class="brainstorm-groups menus"
-              [items]="classificationTypes"
-              bindLabel="title"
-              placeholder="Groups"
-              (change)="classificationTypeChanged(selectedClassificationType)"
-              [(ngModel)]="selectedClassificationType"
-              appendTo="body"
-              [searchable]="false"
-              [clearable]="false">
-              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                  <img src="{{item.imgUrl}}" />
-                  <div fxLayout="column">
-                    <div class="title">{{ item.title }}</div>
-                    <div class="description">{{ item.description }}</div>
-                  </div>
-                </div>
-            </ng-template>
-            </ng-select>
+        <div>
+          <div
+            class="brainstorm-h2 black-color"
+            [ngClass]="{
+              'long-instructions': instructions.length > 65
+            }"
+          >
+            {{ instructions }}
           </div>
-          <div *ngIf="showParticipantsGroupsDropdown">
-            <ng-select
-              class="menus"
-              [items]="participantGroups"
-              bindLabel="title"
-              placeholder="Groups"
-              (change)="ParticipantGroupChanged(selectedParticipantGroup)"
-              [(ngModel)]="selectedParticipantGroup"
-              appendTo="body"
-              [searchable]="false"
-              [clearable]="false">
-              <ng-template ng-option-tmp let-item="item" let-index="index">
-                <div>{{ item.title }}</div>
-              </ng-template>
-            </ng-select>
-          </div>
-        </ng-container>
+          <div class="sub-header">Here are the secondary instructions that can go onto a brainstorm board. </div>
+        </div>
         <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
           <benji-participant-grouping-container
             *ngIf="!actEditor"
@@ -60,8 +23,51 @@
         </ng-container>
       </div>
     </div>
-    <div fxLayout="column" fxLayoutAlign="center center" class="import-button" (click)="openDialog()">
-      <mat-icon>add_circle</mat-icon>
+    <div fxLayout="row" fxLayoutGap="16px">
+      <ng-container *ngxPermissionsOnly="'ADMIN'">
+        <div *ngIf="classificationTypes && participantGroups?.length">
+          <ng-select
+            class="brainstorm-groups menus"
+            [items]="classificationTypes"
+            bindLabel="title"
+            placeholder="Groups"
+            (change)="classificationTypeChanged(selectedClassificationType)"
+            [(ngModel)]="selectedClassificationType"
+            appendTo="body"
+            [searchable]="false"
+            [clearable]="false">
+            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                <img src="{{item.imgUrl}}" />
+                <div fxLayout="column">
+                  <div class="title">{{ item.title }}</div>
+                  <div class="description">{{ item.description }}</div>
+                </div>
+              </div>
+          </ng-template>
+          </ng-select>
+        </div>
+        <div *ngIf="showParticipantsGroupsDropdown">
+          <ng-select
+            class="menus"
+            [items]="participantGroups"
+            bindLabel="title"
+            placeholder="Groups"
+            (change)="ParticipantGroupChanged(selectedParticipantGroup)"
+            [(ngModel)]="selectedParticipantGroup"
+            appendTo="body"
+            [searchable]="false"
+            [clearable]="false">
+            <ng-template ng-option-tmp let-item="item" let-index="index">
+              <div>{{ item.title }}</div>
+            </ng-template>
+          </ng-select>
+        </div>
+      </ng-container>
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px" class="import-button bg-primary-color" (click)="openDialog()">
+        <div class="plus">+</div>
+        <div>Submit idea</div>
+      </div>
     </div>
   </div>
   <div class="brainstorm-container">

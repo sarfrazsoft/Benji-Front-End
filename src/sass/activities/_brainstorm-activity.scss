@@ -515,26 +515,32 @@ benji-ps-brainstorming-activity {
   max-width: 840px;
 }
 .barinstorm-main {
-  margin: 24px 24px 0px 24px;
+  margin: 12px 24px 0px 24px;
   background-color: #fff;
   border-radius: 16px 16px 0px 0px;
   height: 100%;
   .barinstorm-header {
-    padding: 8px;
+    padding: 16px;
     border-bottom: 1px solid #e7e7e7;
     .brainstorm-h2 {
       font-weight: 700;
       font-size: 24px;
-      margin: 0px 24px;
+      margin: 8px;
+    }
+    .sub-header {
+      font-size: 14px;
+      font-weight: 400;
+      color: #828282;
+      margin-left: 8px;
     }
     .menus {
       .ng-select-container {
-        font-size: 16px;
+        font-size: 14px;
         color: #616161;
         font-weight: 500;
         background: #f3f4f7;
         border: 0px;
-        border-radius: 24px;
+        border-radius: 8px;
         border: 1px 1px 1px rgba(213, 217, 222, 0.5);
       }
       &.ng-dropdown-panel {
@@ -544,14 +550,11 @@ benji-ps-brainstorming-activity {
 
     .import-button {
       cursor: pointer;
-      mat-icon {
-        color: $primary-color;
-        font-size: 56px;
-        font-weight: 700;
-        background-color: #fff;
-        width: 56px;
-        height: 56px;
-      }
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 12px 16px;
+      border-radius: 8px;
     }
   }
 }
@@ -560,7 +563,7 @@ ng-select.brainstorm-groups {
   .ng-select-container {
     background: #f3f4f7;
     box-shadow: 1px 1px 1px rgba(213, 217, 222, 0.5);
-    border-radius: 24px;
+    border-radius: 8px;
     border: 0px;
     padding: 0px 6px;
   }
