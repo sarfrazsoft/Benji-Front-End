@@ -39,7 +39,18 @@
             {{ grouping.allowParticipantsJoining ? 'Self Assigned' : 'Host Assigned' }}
           </div>
         </div>
-        <div class="start" (click)="startGrouping(grouping)">Start Grouping</div>
+        <ng-container>
+          <div class="start" 
+            *ngIf="currentlyAppliedGrouping !== grouping.id"
+            (click)="startGrouping(grouping)">
+            Start Grouping
+          </div>
+          <div class="start" 
+            *ngIf="currentlyAppliedGrouping === grouping.id"
+            (click)="editGrouping(grouping)">
+            Edit Live Grouping
+          </div>
+        </ng-container>
       </div>
     </ng-container>
   </div>
