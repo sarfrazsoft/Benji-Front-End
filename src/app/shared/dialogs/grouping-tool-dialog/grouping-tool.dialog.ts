@@ -36,6 +36,8 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   private typingTimerGroups;
   numberOfRooms = 0;
   editingTitle = false;
+  groupAccess = true; 
+  groupsCount = 1;
 
   activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
@@ -273,6 +275,20 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   editTitle() {
     this.editingTitle = !this.editingTitle;
+  }
+
+  updateGroupsCount (value) {
+    if (value == '-') {
+      if (this.groupsCount == 1) {
+        return;
+      } else {
+        this.groupsCount--;
+      }
+
+    } 
+    else if (value == '+') {
+      this.groupsCount++;
+    }
   }
 }
 

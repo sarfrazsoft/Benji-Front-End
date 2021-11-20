@@ -15,7 +15,33 @@
 </div>
 
 <div fxLayout="row" fxLayoutAlign="space-between center" class="settings">
-  <div fxLayout="row" fxLayoutGap="16px">
+  <div fxLayout="column">
+    <div class="header">Group Access</div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="toggler">
+      <div class="option" [ngClass]="{'active': groupAccess}" (click)="groupAccess = !groupAccess">Open</div>
+      <div class="option" [ngClass]="{'active': !groupAccess}" (click)="groupAccess = !groupAccess">Closed</div>
+    </div>
+    <div class="subheader">Host needs to assign participants to groups.</div>
+  </div>
+  <div fxLayout="column">
+    <div class="header">Number of groups</div>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+      <div 
+        fxLayout="column" 
+        fxLayoutAlign="center center" 
+        class="plusminus" 
+        (click)="updateGroupsCount('-')"> - 
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center center" class="count"> {{groupsCount}} </div>
+      <div 
+        fxLayout="column" 
+        fxLayoutAlign="center center" 
+        class="plusminus"
+        (click)="updateGroupsCount('+')"> + 
+      </div>
+    </div>
+  </div>
+  <!-- <div fxLayout="row" fxLayoutGap="16px">
     <div fxLayout="column">
       <div class="header">Grouping Style</div>
       <div class="subheader">Assign workspaces</div> 
@@ -64,7 +90,7 @@
           (change)="toggleChooseGroupMidActivity($event)">
         <span class="slider round"></span>
       </label>
-  </div>
+  </div> -->
 </div>
 
 <div cdkDropListGroup>
@@ -117,7 +143,7 @@
           <!-- <div class="bg-area" *ngIf="!group.participants">
             Drag-n-drop participants to assign them to the group
           </div> -->
-          <div class="bg-area" *ngIf="group.participants">
+          <div class="bg-area" *ngIf="group.participants; else blank_box">
             <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
               cdkDropList
               [cdkDropListData]="group.participants"
@@ -131,6 +157,9 @@
                 <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
               </div>
             </div>
+            <ng-template #blank_box>
+              <div class="blank-text" fxLayoutAlign="center center">Drag-n-drop participants to assign them to the group</div>
+            </ng-template>
           </div>
         </div>
       </div>
