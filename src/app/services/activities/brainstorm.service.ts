@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { differenceBy, remove } from 'lodash';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { BrainstormActivity, Idea } from '../backend/schema';
+import { BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
@@ -35,16 +35,20 @@ export class BrainstormService {
     return arr;
   }
 
-  addIdeaToCategory(act, columns) {
+  addIdeaToCategory(act, existingCategories) {
     act.brainstormcategory_set.forEach((category, index) => {
-      const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-      if (BEIdeas.length === columns[index].brainstormidea_set.length) {
-      } else {
-        const myDifferences = differenceBy(BEIdeas, columns[index].brainstormidea_set, 'id');
-        columns[index].brainstormidea_set.push(myDifferences[0]);
-      }
+      existingCategories.forEach((existingCategory) => {
+        if (existingCategory.id === category.id) {
+          const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+          if (BEIdeas.length === existingCategory.brainstormidea_set.length) {
+          } else {
+            const myDifferences = differenceBy(BEIdeas, existingCategory.brainstormidea_set, 'id');
+            existingCategory.brainstormidea_set.push(myDifferences[0]);
+          }
+        }
+      });
     });
-    return columns;
+    return existingCategories;
   }
 
   populateCategories(act, columns) {
@@ -62,77 +66,97 @@ export class BrainstormService {
     return columns;
   }
 
-  ideaHearted(act, columns) {
+  ideaHearted(act, existingCategories) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
-        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-        BEIdeas.forEach((idea, ideaIndex) => {
-          const existingHearts = columns[categoryIndex].brainstormidea_set[ideaIndex].hearts;
-          const existingHeartsLength = existingHearts.length;
-          const newHeartsLength = idea.hearts.length;
-          if (existingHeartsLength < newHeartsLength) {
-            const myDifferences = differenceBy(idea.hearts, existingHearts, 'id');
-            existingHearts.push(myDifferences[0]);
-          } else if (existingHeartsLength > newHeartsLength) {
-            const myDifferences: Array<any> = differenceBy(existingHearts, idea.hearts, 'id');
+        existingCategories.forEach((existingCategory) => {
+          if (existingCategory.id === category.id) {
+            const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+            BEIdeas.forEach((idea, ideaIndex) => {
+              const existingHearts = existingCategory.brainstormidea_set[ideaIndex].hearts;
+              const existingHeartsLength = existingHearts.length;
+              const newHeartsLength = idea.hearts.length;
+              if (existingHeartsLength < newHeartsLength) {
+                const myDifferences = differenceBy(idea.hearts, existingHearts, 'id');
+                existingHearts.push(myDifferences[0]);
+              } else if (existingHeartsLength > newHeartsLength) {
+                const myDifferences: Array<any> = differenceBy(existingHearts, idea.hearts, 'id');
 
-            remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
+                remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
+              }
+            });
           }
         });
       }
     });
-    return columns;
+    return existingCategories;
   }
 
-  ideaCommented(act, columns) {
+  ideaCommented(act: BrainstormActivity, existingCategories) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
-        const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-        BEIdeas.forEach((idea, ideaIndex) => {
-          const existingHearts = columns[categoryIndex].brainstormidea_set[ideaIndex].comments;
-          const existingHeartsLength = existingHearts.length;
-          const newHeartsLength = idea.comments.length;
-          if (existingHeartsLength < newHeartsLength) {
-            const myDifferences = differenceBy(idea.comments, existingHearts, 'id');
-            existingHearts.push(myDifferences[0]);
-          } else if (existingHeartsLength > newHeartsLength) {
-            const myDifferences: Array<any> = differenceBy(existingHearts, idea.comments, 'id');
+        existingCategories.forEach((existingCategory) => {
+          if (existingCategory.id === category.id) {
+            const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+            BEIdeas.forEach((idea, ideaIndex) => {
+              const existingHearts = existingCategory.brainstormidea_set[ideaIndex].comments;
+              const existingHeartsLength = existingHearts.length;
+              const newHeartsLength = idea.comments.length;
+              if (existingHeartsLength < newHeartsLength) {
+                const myDifferences = differenceBy(idea.comments, existingHearts, 'id');
+                existingHearts.push(myDifferences[0]);
+              } else if (existingHeartsLength > newHeartsLength) {
+                const myDifferences: Array<any> = differenceBy(existingHearts, idea.comments, 'id');
 
-            remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
+                remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
+              }
+            });
           }
         });
       }
     });
-    return columns;
+    return existingCategories;
   }
 
-  ideaRemoved(act, columns) {
+  ideaRemoved(act: BrainstormActivity, existingCategories) {
     act.brainstormcategory_set.forEach((category, index) => {
-      const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-      if (BEIdeas.length === columns[index].brainstormidea_set.length) {
-      } else {
-        const myDifferences: Array<any> = differenceBy(columns[index].brainstormidea_set, BEIdeas, 'id');
+      existingCategories.forEach((existingCategory) => {
+        if (existingCategory.id === category.id) {
+          const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+          if (BEIdeas.length === existingCategory.brainstormidea_set.length) {
+          } else {
+            const myDifferences: Array<any> = differenceBy(
+              existingCategory.brainstormidea_set,
+              BEIdeas,
+              'id'
+            );
 
-        remove(columns[index].brainstormidea_set, (idea: any) => idea.id === myDifferences[0].id);
-      }
+            remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === myDifferences[0].id);
+          }
+        }
+      });
     });
-    return columns;
+    return existingCategories;
   }
 
-  ideaEdited(act: BrainstormActivity, columns) {
-    act.brainstormcategory_set.forEach((category, categoryIndex) => {
+  ideaEdited(act: BrainstormActivity, existingCategories) {
+    act.brainstormcategory_set.forEach((category: Category, categoryIndex) => {
       if (category.brainstormidea_set) {
         const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-        BEIdeas.forEach((idea, ideaIndex) => {
-          const existingIdea = columns[categoryIndex].brainstormidea_set[ideaIndex];
-          const existingVersionNo = existingIdea.version;
-          const newVersionNo = idea.version;
-          if (existingVersionNo < newVersionNo) {
-            columns[categoryIndex].brainstormidea_set.splice(ideaIndex, 1, idea);
+        existingCategories.forEach((existingCategory) => {
+          if (existingCategory.id === category.id) {
+            BEIdeas.forEach((idea, ideaIndex) => {
+              const existingIdea = existingCategory.brainstormidea_set[ideaIndex];
+              const existingVersionNo = existingIdea.version;
+              const newVersionNo = idea.version;
+              if (existingVersionNo < newVersionNo) {
+                existingCategory.brainstormidea_set.splice(ideaIndex, 1, idea);
+              }
+            });
           }
         });
       }
     });
-    return columns;
+    return existingCategories;
   }
 }
