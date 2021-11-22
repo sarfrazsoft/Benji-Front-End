@@ -36,7 +36,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   private typingTimerGroups;
   numberOfRooms = 0;
   editingTitle = false;
-  groupAccess = true; 
+  groupAccess = true;
   groupsCount = 1;
 
   activityState: UpdateMessage;
@@ -179,21 +179,6 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGrouping.id, this.groupingTitle));
   }
 
-  typingStopedGroups(noOfGroups) {
-    clearTimeout(this.typingTimerGroups);
-    this.typingTimerGroups = setTimeout(() => {
-      this.doneTypingGroups(noOfGroups);
-    }, 1500);
-  }
-
-  typingStartedGroups() {
-    clearTimeout(this.typingTimerGroups);
-  }
-
-  doneTypingGroups(noOfGroups) {
-    this.sendMessage.emit(new CreateGroupsEvent(this.selectedGrouping.id, noOfGroups));
-  }
-
   toggleChooseGroup($event) {
     this.sendMessage.emit(new AllowParticipantGroupingEvent($event.currentTarget.checked));
   }
@@ -277,18 +262,33 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.editingTitle = !this.editingTitle;
   }
 
-  updateGroupsCount (value) {
-    if (value == '-') {
-      if (this.groupsCount == 1) {
+  updateGroupsCount(value) {
+    this.typingStartedGroups();
+    if (value === '-') {
+      if (this.groupsCount === 1) {
         return;
       } else {
         this.groupsCount--;
       }
-
-    } 
-    else if (value == '+') {
+    } else if (value === '+') {
       this.groupsCount++;
     }
+    this.typingStopedGroups(this.groupsCount);
+  }
+
+  typingStopedGroups(noOfGroups) {
+    clearTimeout(this.typingTimerGroups);
+    this.typingTimerGroups = setTimeout(() => {
+      this.doneTypingGroups(noOfGroups);
+    }, 1500);
+  }
+
+  typingStartedGroups() {
+    clearTimeout(this.typingTimerGroups);
+  }
+
+  doneTypingGroups(noOfGroups) {
+    this.sendMessage.emit(new CreateGroupsEvent(this.selectedGrouping.id, noOfGroups));
   }
 }
 

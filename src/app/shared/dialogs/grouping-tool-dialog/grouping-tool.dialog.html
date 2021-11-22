@@ -143,7 +143,7 @@
           <!-- <div class="bg-area" *ngIf="!group.participants">
             Drag-n-drop participants to assign them to the group
           </div> -->
-          <div class="bg-area" *ngIf="group.participants; else blank_box">
+          <div class="bg-area" *ngIf="group.participants">
             <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
               cdkDropList
               [cdkDropListData]="group.participants"
@@ -157,9 +157,6 @@
                 <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
               </div>
             </div>
-            <ng-template #blank_box>
-              <div class="blank-text" fxLayoutAlign="center center">Drag-n-drop participants to assign them to the group</div>
-            </ng-template>
           </div>
         </div>
       </div>

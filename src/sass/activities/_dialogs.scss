@@ -92,7 +92,7 @@
         font-size: 14px;
         width: 143px;
         padding: 4px;
-        background: #F3F4F7;
+        background: #f3f4f7;
         margin-bottom: 8px;
         color: #616161;
         font-weight: 500;
@@ -101,7 +101,7 @@
           &.active {
             background: #fff;
             border-radius: 8px;
-            color: #37352F;
+            color: #37352f;
             transition: background 0.2s;
           }
         }
@@ -113,14 +113,16 @@
         border-radius: 8px;
         color: #828282;
         cursor: pointer;
-        &::selection { background: transparent; }
+        &::selection {
+          background: transparent;
+        }
       }
       .count {
         width: 52px;
         height: 40px;
         border: 1px solid #828282;
         border-radius: 8px;
-        color: #37352F;
+        color: #37352f;
         font-size: 14px;
         font-weight: 600;
       }
@@ -157,9 +159,9 @@
     }
     .free-users {
       margin-bottom: 24px;
-      background: #EFF1F2;
+      background: #eff1f2;
       border-radius: 8px;
-      padding: 16px;  
+      padding: 16px;
       .user {
         font-size: 12px;
         font-weight: 400;
@@ -205,7 +207,7 @@
           .users {
             overflow-y: auto;
             width: 100%;
-            height: auto;
+            height: 100%;
           }
         }
         .gtitle {
