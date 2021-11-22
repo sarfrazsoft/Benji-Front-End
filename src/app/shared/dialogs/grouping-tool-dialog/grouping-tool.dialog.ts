@@ -2,7 +2,12 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app';
-import { Category, CreateGroupsEvent, StartBrainstormGroupEvent } from 'src/app/services/backend/schema';
+import {
+  Category,
+  CreateGroupsEvent,
+  StartBrainstormGroupEvent,
+  UpdateGroupingStyleEvent,
+} from 'src/app/services/backend/schema';
 import {
   AllowParticipantGroupingEvent,
   AllowParticipantGroupingMidActivityEvent,
@@ -70,6 +75,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     // } else {
     this.showStartGroupingButton = true;
     // }
+    const grouping = {
+      groupings: this.activityState.running_tools.grouping_tool.groupings,
+      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+    };
+    this.initSelectedGroup(grouping);
   }
 
   ngOnChanges() {
@@ -88,7 +98,6 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       // hostAssigned
       this.sendMessage.emit(new ViewGroupingEvent(true));
     }
-    console.log(event);
   }
 
   initSelectedGroup(grouping) {
@@ -96,6 +105,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groupingTitle = g.title;
+        if (g.style === 'hostAssigned') {
+          this.groupAccess = false;
+        } else if (g.style === 'selfAssigned') {
+          this.groupAccess = true;
+        }
         this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
         // this.unassignedUsers = g.unassignedParticipants;
       }
@@ -241,6 +255,16 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
+    }
+  }
+
+  changeGroupAccess(status) {
+    if (status === 'close') {
+      this.groupAccess = false;
+      this.sendMessage.emit(new UpdateGroupingStyleEvent(this.selectedGrouping.id, 'hostAssigned'));
+    } else if (status === 'open') {
+      this.sendMessage.emit(new UpdateGroupingStyleEvent(this.selectedGrouping.id, 'selfAssigned'));
+      this.groupAccess = true;
     }
   }
 

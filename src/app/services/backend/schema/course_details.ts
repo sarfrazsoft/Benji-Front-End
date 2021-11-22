@@ -77,6 +77,7 @@ export interface GroupingToolGroups {
   allowParticipantsJoiningMidActivity: boolean;
   unassignedParticipants: Array<number>;
   groups: Array<Group>;
+  style: 'hostAssigned' | 'selfAssigned';
 }
 export interface Group {
   id: number;

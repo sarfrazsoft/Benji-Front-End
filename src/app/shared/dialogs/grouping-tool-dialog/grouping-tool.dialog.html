@@ -18,8 +18,16 @@
   <div fxLayout="column">
     <div class="header">Group Access</div>
     <div fxLayout="row" fxLayoutAlign="space-between center" class="toggler">
-      <div class="option" [ngClass]="{'active': groupAccess}" (click)="groupAccess = !groupAccess">Open</div>
-      <div class="option" [ngClass]="{'active': !groupAccess}" (click)="groupAccess = !groupAccess">Closed</div>
+      <div class="option" 
+        [ngClass]="{'active': groupAccess}" 
+        (click)="changeGroupAccess('open')">
+        Open
+      </div>
+      <div class="option" 
+        [ngClass]="{'active': !groupAccess}" 
+        (click)="changeGroupAccess('close')">
+        Closed
+      </div>
     </div>
     <div class="subheader">Host needs to assign participants to groups.</div>
   </div>

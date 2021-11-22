@@ -98,6 +98,7 @@
         font-weight: 500;
         .option {
           padding: 9px 12px;
+          cursor: pointer;
           &.active {
             background: #fff;
             border-radius: 8px;
@@ -193,6 +194,7 @@
         }
         .close {
           width: 11px;
+          cursor: pointer;
         }
         .bg-area {
           background: #eff1f2;

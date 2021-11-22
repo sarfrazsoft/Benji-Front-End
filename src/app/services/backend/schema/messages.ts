@@ -719,6 +719,13 @@ export class ViewGroupingEvent extends ActivityEvent {
     this.extra_args = { view: permission };
   }
 }
+export class UpdateGroupingStyleEvent extends ActivityEvent {
+  event_name = 'UpdateGroupingStyleEvent';
+  constructor(grouping: number, permission: string) {
+    super();
+    this.extra_args = { grouping: grouping, view: permission };
+  }
+}
 
 export class AllowParticipantGroupingMidActivityEvent extends ActivityEvent {
   event_name = 'AllowParticipantGroupingMidActivityEvent';

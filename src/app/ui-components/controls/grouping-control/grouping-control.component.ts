@@ -95,9 +95,9 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     // it will trigger onChanges and send the updated information
     // to the open grouping modal.
 
+    this.socketMessage.emit(new SelectGroupingEvent(grouping.id));
     const dialogRef = this.openGroupingToolDialog();
     this.selectedGroup = grouping;
-    this.socketMessage.emit(new SelectGroupingEvent(grouping.id));
     // this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
