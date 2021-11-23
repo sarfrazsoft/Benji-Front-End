@@ -52,7 +52,6 @@ export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges
   }
 
   initSelectedGroup(grouping) {
-    console.log(grouping);
     if (!grouping.groupings) {
       return;
     }
@@ -60,7 +59,6 @@ export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groups = g.groups;
-        // this.groupingStyle = 'hostAssigned';
         this.groupingStyle = g.style;
         this.selfGroupingAllowed = g.allowParticipantsJoining;
         const participantCode = this.participantCode;

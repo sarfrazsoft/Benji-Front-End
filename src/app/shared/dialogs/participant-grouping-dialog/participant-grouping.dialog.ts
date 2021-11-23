@@ -56,7 +56,6 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groups = g.groups;
-        console.log(this.groups);
         this.selectedGroup = this.getParticipantGroup(g);
         this.selfGroupingAllowed = g.allowParticipantsJoining;
         const participantCode = this.participantCode;
