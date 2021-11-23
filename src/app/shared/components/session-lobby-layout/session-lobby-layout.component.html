@@ -3,7 +3,7 @@
   fxLayoutAlign="center center"
   class="lobby-wrapper"
   [ngClass]="{'participant-lobby': !adminLobbyScreeen}"> 
-  <div class="content-wrapper">
+  <div class="content-wrapper" *ngIf="beforeLessonRunDetails">
     <div class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
       <div>
         <div fxLayout="row" fxLayoutAlign="space-between center"  fxLayoutGap="157px">

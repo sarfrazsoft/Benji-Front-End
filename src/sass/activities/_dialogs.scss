@@ -47,217 +47,215 @@
 .grouping-tool-dialog {
   .mat-dialog-container {
     border-radius: 16px;
-    padding: 40px;
-    .content-header {
-      margin-bottom: 15px;
-      input.title {
-        font-weight: 600;
-        font-size: 24px;
-        color: #37352f;
-        border: 0px;
-        &:focus {
+    padding: 0px;
+    .grey-area {
+      background: #F3F4F7;
+      border-radius: 16px 0px 0px 16px;
+      padding: 32px;
+      width: 245px;
+      float: left;
+      height: 631px;
+      .content-header {
+        margin-bottom: 32px;
+        input.title {
+          font-weight: 600;
+          font-size: 24px;
+          color: #37352f;
+          margin-left: 8px;
           border: 0px;
-          outline: 0px;
-        }
-      }
-      .edit {
-        cursor: pointer;
-        margin-left: 11px;
-        margin-top: 4px;
-      }
-      .close {
-        margin-top: -40px;
-        cursor: pointer;
-      }
-    }
-    .settings {
-      border: 1px solid #e6e4e3;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 24px;
-      width: 400px;
-      .header {
-        color: #37352f;
-        font-size: 16px;
-        font-weight: 500;
-        margin-bottom: 16px;
-      }
-      .subheader {
-        color: #828282;
-        font-size: 10px;
-        font-weight: 400;
-      }
-      .toggler {
-        border-radius: 8px;
-        font-size: 14px;
-        width: 143px;
-        padding: 4px;
-        background: #f3f4f7;
-        margin-bottom: 8px;
-        color: #616161;
-        font-weight: 500;
-        .option {
-          padding: 9px 12px;
-          cursor: pointer;
-          &.active {
-            background: #fff;
-            border-radius: 8px;
-            color: #37352f;
-            transition: background 0.2s;
+          height: 27px;
+          background: #F3F4F7;
+          &:focus {
+            border: 0px;
+            outline: 0px;
           }
         }
+        .edit {
+          cursor: pointer;
+          margin-left: 11px;
+          margin-top: 4px;
+        }
       }
-      .plusminus {
-        width: 34px;
-        height: 32px;
-        border: 1px solid #828282;
-        border-radius: 8px;
-        color: #828282;
-        cursor: pointer;
-        &::selection {
-          background: transparent;
+      .settings {
+        margin-left: 8px;
+        .header {
+          color: #37352f;
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+        .subheader {
+          color: #37352f;
+          font-size: 10px;
+          font-weight: 500;
+          margin-bottom: 24px;
+        }
+        .toggler {
+          border-radius: 8px;
+          font-size: 14px;
+          width: 143px;
+          padding: 4px;
+          background: #fff;
+          margin-bottom: 8px;
+          color: #616161;
+          font-weight: 500;
+          .option {
+            padding: 9px 12px;
+            cursor: pointer;
+            &.active {
+              background: #f3f4f7;
+              border-radius: 8px;
+              color: #37352f;
+              transition: background 0.2s;
+            }
+          }
+        }
+        .plusminus {
+          width: 34px;
+          height: 32px;
+          background: #fff;
+          border: 1px solid #828282;
+          border-radius: 8px;
+          color: #828282;
+          cursor: pointer;
+          &::selection {
+            background: transparent;
+          }
         }
       }
       .count {
         width: 52px;
         height: 40px;
+        background: #fff;
         border: 1px solid #828282;
         border-radius: 8px;
         color: #37352f;
         font-size: 14px;
         font-weight: 600;
       }
-      .groups-count {
-        height: 20px;
-        width: 26px;
-        padding: 10px;
-        text-align: right;
-        font-size: 16px;
-        color: #616161;
-        font-weight: 400;
-        &:focus {
-          outline: none;
-        }
-      }
-      .ng-select-container {
-        background: #f3f4f7;
-        border-radius: 4px;
-        border: 0px;
-        width: 134px;
-        &:focus {
-          outline: none;
-        }
-      }
-      input:checked + .slider {
-        background-color: $primary-color;
-      }
     }
-    .sub-title {
-      color: #37352f;
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    .free-users {
-      margin-bottom: 24px;
-      background: #eff1f2;
-      border-radius: 8px;
-      padding: 16px;
-      .user {
-        font-size: 12px;
-        font-weight: 400;
-        color: #616161;
-        padding: 9px 16px;
-        background: #fff;
-        border-radius: 100px;
+    .white-area {
+      float: right;
+      padding: 24px;
+      .close {
+        float: right;
+        cursor: pointer;
       }
-    }
-    .groups {
-      overflow-x: auto;
-      padding-bottom: 16px;
-      .group {
-        padding: 16px;
-        border: 1px solid #e2e0df;
+      .content-wrapper {
+        padding: 8px;
+      }
+      .sub-title {
+        color: #37352f;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .free-users {
+        margin-bottom: 8px;
+        background: #eff1f2;
         border-radius: 8px;
-        height: 240px;
-        width: 280px;
-        .group-title {
+        padding: 16px;
+        .user {
+          font-size: 12px;
+          font-weight: 400;
+          color: #616161;
+          padding: 9px 16px;
+          background: #fff;
+          border-radius: 100px;
+        }
+      }
+      .groups {
+        width: 650px;
+        height: 400px;
+        overflow-y: auto;
+        .group {
+          padding: 16px;
+          border: 1px solid #e2e0df;
+          border-radius: 8px;
+          height: 192px;
+          width: 280px;
+          float: left;
+          margin: 0px 12px 16px;
+          .group-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #616161;
+            margin-left: 8px;
+          }
+          .count {
+            font-size: 14px;
+            font-weight: 600;
+            color: #37352f;
+          }
+          .close {
+            width: 11px;
+            cursor: pointer;
+          }
+          .bg-area {
+            background: #eff1f2;
+            border-radius: 4px;
+            height: 152px;
+            margin-top: 16px;
+            font-size: 16px;
+            font-weight: 400;
+            text-align: center;
+            font-style: italic;
+            padding: 10px;
+            .users {
+              overflow-y: auto;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .gtitle {
+            width: 99px;
+          }
+          &.occupied {
+            .user {
+              font-size: 12px;
+              font-weight: 500;
+              color: #6a6a6a;
+              padding: 8px 12px 8px 16px;
+              background: #fff;
+              border-radius: 100px;
+              font-style: normal;
+            }
+          }
+        }
+        .add-group {
+          align-items: center;
+          height: 192px;
+          width: 280px;
+          border: 2px dotted #e2e0df;
+          border-radius: 8px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #616161;
+          cursor: pointer;
+          float: left;
+          margin: 0px 12px 16px 
+        }
+      }
+      .end-buttons {
+        margin-top: 25px;
+        .white-button {
+          border: 1px solid $primary-color;
+          color: $primary-color;
+          padding: 11px 16px;
+          border-radius: 4px;
           font-size: 16px;
           font-weight: 500;
-          color: #616161;
-          margin-left: 8px;
-        }
-        .count {
-          font-size: 14px;
-          font-weight: 600;
-          color: #37352f;
-        }
-        .close {
-          width: 11px;
           cursor: pointer;
         }
-        .bg-area {
-          background: #eff1f2;
+        .blue-button {
+          background: $primary-color;
+          color: white;
+          padding: 11px 16px;
           border-radius: 4px;
-          height: 152px;
-          margin-top: 16px;
           font-size: 16px;
-          font-weight: 400;
-          text-align: center;
-          font-style: italic;
-          padding: 10px;
-          .users {
-            overflow-y: auto;
-            width: 100%;
-            height: 100%;
-          }
+          font-weight: 500;
+          cursor: pointer;
         }
-        .gtitle {
-          width: 99px;
-        }
-        &.occupied {
-          .user {
-            font-size: 12px;
-            font-weight: 500;
-            color: #6a6a6a;
-            padding: 8px 12px 8px 16px;
-            background: #fff;
-            border-radius: 100px;
-            font-style: normal;
-          }
-        }
-      }
-      .add-group {
-        align-items: center;
-        height: 240px;
-        min-width: 280px;
-        border: 2px dotted #e2e0df;
-        border-radius: 8px;
-        font-size: 20px;
-        font-weight: 700;
-        color: #616161;
-        cursor: pointer;
-      }
-    }
-    .end-buttons {
-      margin-top: 25px;
-      .white-button {
-        border: 1px solid $primary-color;
-        color: $primary-color;
-        padding: 8px 16px;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-      }
-      .blue-button {
-        background: $primary-color;
-        color: white;
-        padding: 8px 16px;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
       }
     }
   }

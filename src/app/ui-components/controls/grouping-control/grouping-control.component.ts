@@ -113,7 +113,6 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   openGroupingToolDialog() {
     this.dialogRef = this.matDialog.open(GroupingToolDialogComponent, {
-      width: '1168px',
       panelClass: 'grouping-tool-dialog',
       data: {
         activityState: this.activityState,
