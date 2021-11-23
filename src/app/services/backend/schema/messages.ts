@@ -723,7 +723,7 @@ export class UpdateGroupingStyleEvent extends ActivityEvent {
   event_name = 'UpdateGroupingStyleEvent';
   constructor(grouping: number, permission: string) {
     super();
-    this.extra_args = { grouping: grouping, view: permission };
+    this.extra_args = { grouping: grouping, style: permission };
   }
 }
 
