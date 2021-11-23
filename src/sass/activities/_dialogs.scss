@@ -433,3 +433,26 @@ ng-dropdown-panel.groups-controls {
     }
   }
 }
+
+.grouping-participant-info-dialog {
+  .wrappr {
+    padding: 64px;
+    width: 579px;
+    .message {
+      color: #616161;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .blue-button {
+      background: $primary-color;
+      color: #fff;
+      padding: 13px 102px;
+      border-radius: 8px;
+      font-size: 24px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
