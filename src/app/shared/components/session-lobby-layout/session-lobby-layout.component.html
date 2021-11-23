@@ -16,10 +16,13 @@
             fxLayout="row" 
             fxLayoutAlign="start center"
             fxLayoutGap="16px">
-            <div class="join-code">
+            <!-- <div class="join-code">
               Join Code: <span class="primary-color">1ef326a</span>
-            </div>
-            <img 
+            </div> -->
+            <img
+              matTooltip="Copy lesson link"
+              [matTooltipPosition]="'below'"
+              show-delay="100"
               src="../../../assets/img/sessionLobby/copy-link.svg" 
               (click)="copyLink(shareParticipantLink)">
             <div

@@ -335,6 +335,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
                   mappedField.defaultValue = true;
+                } else if (mapSource.field_name === 'grouping') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = null;
                 }
               } else if (act.activity_type === this.at.slides) {
                 if (mapSource.internal_type === 'GoogleSlidesActivitySerializer') {
