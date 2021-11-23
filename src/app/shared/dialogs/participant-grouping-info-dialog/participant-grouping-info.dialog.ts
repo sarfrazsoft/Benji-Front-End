@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AllowParticipantGroupingMidActivityEvent, UpdateMessage } from 'src/app/services/backend/schema';
-import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
+import {
+  GroupingTool,
+  GroupingToolGroups,
+  Participant,
+} from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-participant-grouping-info-dialog',
@@ -49,12 +53,15 @@ export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges
 
   initSelectedGroup(grouping) {
     console.log(grouping);
+    if (!grouping.groupings) {
+      return;
+    }
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
         this.groups = g.groups;
         // this.groupingStyle = 'hostAssigned';
-        this.groupingStyle = 'selfAssigned';
+        this.groupingStyle = g.style;
         this.selfGroupingAllowed = g.allowParticipantsJoining;
         const participantCode = this.participantCode;
         this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
@@ -77,5 +84,9 @@ export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges
 
   openGroupingDialog() {
     this.dialogRef.close('openDialog');
+  }
+
+  updateGroupingInfo(gt: GroupingTool) {
+    this.initSelectedGroup(gt);
   }
 }

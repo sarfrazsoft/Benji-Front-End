@@ -66,7 +66,8 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
@@ -128,20 +129,7 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
-
-    // this.act = clone(this.activityState.brainstormactivity);
     this.act = this.activityState.brainstormactivity;
-    if (this.peakBackState) {
-      this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
-    }
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.participantCode = this.getParticipantCode();
-        this.participantGroups = this.act.groups;
-
-        this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
-      }
-    });
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
@@ -185,124 +173,8 @@ export class MainScreenBrainstormingActivityComponent
     });
   }
 
-  getParticipantGroup(participantCode, participantGroups) {
-    return this.getMyGroup(participantCode, participantGroups);
-  }
-
-  getPersonName(idea: Idea) {
-    if (idea && idea.submitting_participant) {
-      const user = this.joinedUsers.find(
-        (u) => u.participant_code === idea.submitting_participant.participant_code
-      );
-      return user.display_name;
-    }
-  }
-
-  getMinWidth() {
-    return this.minWidth === 'small' ? 280 : this.minWidth === 'medium' ? 360 : 480;
-  }
-
-  ngOnDestroy() {
-    this.contextService.destroyActivityTimer();
-    if (this.settingsSubscription) {
-      this.settingsSubscription.unsubscribe();
-    }
-    if (this.saveIdeaSubscription) {
-      this.saveIdeaSubscription.unsubscribe();
-    }
-    if (this.peakBackState) {
-      this.eventsSubscription.unsubscribe();
-    }
-    if (this.dialogRef) {
-      this.dialogRef.close();
-    }
-  }
-  changeStage(state) {
-    this.peakBackStage = state;
-    const act = this.activityState.brainstormactivity;
-    if (state === 'next') {
-    } else {
-      // state === 'previous'
-    }
-
-    if (this.submissionScreen) {
-      if (state === 'next') {
-        this.voteScreen = true;
-        this.submissionScreen = false;
-        this.VnSComplete = false;
-        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-      } else {
-        // state === 'previous'
-        // do nothing
-      }
-    } else if (this.voteScreen) {
-      if (state === 'next') {
-        this.submissionScreen = false;
-        this.voteScreen = false;
-        this.VnSComplete = true;
-      } else {
-        // state === 'previous'
-        this.submissionScreen = true;
-        this.voteScreen = false;
-        this.VnSComplete = false;
-        this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
-      }
-    } else if (this.VnSComplete) {
-      if (state === 'next') {
-        // do nothing
-      } else {
-        // state === 'previous'
-        this.voteScreen = true;
-        this.submissionScreen = false;
-        this.VnSComplete = false;
-        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-      }
-    }
-  }
-
-  classificationTypeChanged(selectedClassificationType) {
-    // console.log(selectedClassificationType);
-    const sct = selectedClassificationType;
-    if (sct.type === 'everyone') {
-      // this.participantGroups = null;
-      this.selectedParticipantGroup = null;
-      this.showParticipantsGroupsDropdown = false;
-
-      this.act = cloneDeep(this.activityState.brainstormactivity);
-    } else if (sct.type === 'groups') {
-      this.participantGroups = this.act.groups;
-      this.showParticipantsGroupsDropdown = true;
-    } else if (sct.type === 'individuals') {
-      this.participantGroups = null;
-    }
-  }
-
-  ParticipantGroupChanged(selectedParticipantGroup: Group) {
-    this.filterIdeasBasedOnGroup(selectedParticipantGroup);
-  }
-
-  filterIdeasBasedOnGroup(selectedParticipantGroup: Group) {
-    // console.log(selectedParticipantGroup);
-    // console.log(this.act);
-    const act = cloneDeep(this.activityState.brainstormactivity);
-    for (let i = 0; i < act.brainstormcategory_set.length; i++) {
-      const category = act.brainstormcategory_set[i];
-      if (!category.removed) {
-        for (let j = 0; j < category.brainstormidea_set.length; j++) {
-          const idea = category.brainstormidea_set[j];
-          if (idea.submitting_participant) {
-            if (
-              !selectedParticipantGroup.participants.includes(idea.submitting_participant.participant_code)
-            ) {
-              category.brainstormidea_set.splice(j, 1);
-              j--;
-            }
-          }
-        }
-      }
-    }
-    this.act = act;
-    this.eventType = 'filtered';
+  ngOnChanges() {
+    this.onChanges();
   }
 
   onChanges() {
@@ -315,9 +187,7 @@ export class MainScreenBrainstormingActivityComponent
       this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
         if (val) {
           this.participantCode = this.getParticipantCode();
-          this.participantGroups = this.act.groups;
-          this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
-          this.filterIdeasBasedOnGroup(this.myGroup);
+          this.initParticipantGrouping(this.act);
         }
       });
       this.permissionsService.hasPermission('ADMIN').then((val) => {
@@ -330,30 +200,6 @@ export class MainScreenBrainstormingActivityComponent
     const sm = this.activityState;
     if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
       const gt = sm.running_tools.grouping_tool;
-      if (sm.eventType === 'ViewGroupingEvent') {
-        // if viewGrouping is true AND the dialog has not been opened
-        // then open dialog
-        this.permissionsService.hasPermission('PARTICIPANT').then((permission) => {
-          if (gt.viewGrouping && (!this.dialogRef || !this.dialogRef.componentInstance)) {
-            if (permission) {
-              this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
-                this.activityState,
-                this.participantCode
-              );
-              // this.dialogRef =
-              // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
-              this.sharingToolService.sendMessage$.subscribe((v) => {
-                if (v) {
-                  this.sendMessage.emit(v);
-                }
-              });
-            }
-          } else if (!gt.viewGrouping && this.dialogRef) {
-            this.dialogRef.close();
-            this.dialogRef = null;
-          }
-        });
-      }
       this.sharingToolService.updateParticipantGroupingToolDialog(gt);
     }
 
@@ -414,6 +260,118 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
+  ngOnDestroy() {
+    this.contextService.destroyActivityTimer();
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
+    if (this.saveIdeaSubscription) {
+      this.saveIdeaSubscription.unsubscribe();
+    }
+    if (this.peakBackState) {
+      this.eventsSubscription.unsubscribe();
+    }
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
+  }
+
+  getParticipantGroup(participantCode, participantGroups) {
+    return this.getMyGroup(participantCode, participantGroups);
+  }
+
+  initParticipantGrouping(act: BrainstormActivity) {
+    // Check if groups are created
+    // if groups are present then check if participant is in the group
+    // if participant is not present in the group then open grouping info dialog
+    this.participantGroups = this.act.groups;
+    if (this.participantGroups.length > 0) {
+      this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
+      if (this.myGroup === null) {
+        // There are groups in the activity but this participant is not in any groups
+        if (!this.dialogRef || !this.dialogRef.componentInstance) {
+          this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
+            this.activityState,
+            this.participantCode
+          );
+          // this.dialogRef =
+          // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
+          this.sharingToolService.sendMessage$.subscribe((v) => {
+            if (v) {
+              this.sendMessage.emit(v);
+            }
+          });
+        } else if (this.dialogRef) {
+          this.sharingToolService.updateParticipantGroupingInfoDialog(
+            this.activityState.running_tools.grouping_tool
+          );
+          // this.dialogRef.close();
+          // this.dialogRef = null;
+        }
+      } else {
+        // filter ideas on participant screen by the group they are in.
+        this.filterIdeasBasedOnGroup(this.myGroup);
+      }
+    }
+  }
+
+  getPersonName(idea: Idea) {
+    if (idea && idea.submitting_participant) {
+      const user = this.joinedUsers.find(
+        (u) => u.participant_code === idea.submitting_participant.participant_code
+      );
+      return user.display_name;
+    }
+  }
+
+  getMinWidth() {
+    return this.minWidth === 'small' ? 280 : this.minWidth === 'medium' ? 360 : 480;
+  }
+  classificationTypeChanged(selectedClassificationType) {
+    // console.log(selectedClassificationType);
+    const sct = selectedClassificationType;
+    if (sct.type === 'everyone') {
+      // this.participantGroups = null;
+      this.selectedParticipantGroup = null;
+      this.showParticipantsGroupsDropdown = false;
+
+      this.act = cloneDeep(this.activityState.brainstormactivity);
+    } else if (sct.type === 'groups') {
+      this.participantGroups = this.act.groups;
+      this.showParticipantsGroupsDropdown = true;
+    } else if (sct.type === 'individuals') {
+      this.participantGroups = null;
+    }
+  }
+
+  ParticipantGroupChanged(selectedParticipantGroup: Group) {
+    this.filterIdeasBasedOnGroup(selectedParticipantGroup);
+  }
+
+  filterIdeasBasedOnGroup(selectedParticipantGroup: Group) {
+    // console.log(selectedParticipantGroup);
+    // console.log(this.act);
+    const act = cloneDeep(this.activityState.brainstormactivity);
+    for (let i = 0; i < act.brainstormcategory_set.length; i++) {
+      const category = act.brainstormcategory_set[i];
+      if (!category.removed) {
+        for (let j = 0; j < category.brainstormidea_set.length; j++) {
+          const idea = category.brainstormidea_set[j];
+          if (idea.submitting_participant) {
+            if (
+              !selectedParticipantGroup.participants.includes(idea.submitting_participant.participant_code)
+            ) {
+              category.brainstormidea_set.splice(j, 1);
+              j--;
+            }
+          }
+        }
+      }
+    }
+    this.act = act;
+    this.eventType = 'filtered';
+  }
+
   loadUsersCounts() {
     this.joinedUsers = [];
     this.answeredParticipants = [];
@@ -465,10 +423,6 @@ export class MainScreenBrainstormingActivityComponent
     }
 
     return false;
-  }
-
-  ngOnChanges() {
-    this.onChanges();
   }
 
   getUsersIdeas(act: BrainstormActivity): Array<Idea> {
@@ -620,4 +574,47 @@ export class MainScreenBrainstormingActivityComponent
       }
     }
   }
+
+  // changeStage(state) {
+  //   this.peakBackStage = state;
+  //   const act = this.activityState.brainstormactivity;
+  //   if (state === 'next') {
+  //   } else {
+  //     // state === 'previous'
+  //   }
+
+  //   if (this.submissionScreen) {
+  //     if (state === 'next') {
+  //       this.voteScreen = true;
+  //       this.submissionScreen = false;
+  //       this.VnSComplete = false;
+  //       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+  //     } else {
+  //       // state === 'previous'
+  //       // do nothing
+  //     }
+  //   } else if (this.voteScreen) {
+  //     if (state === 'next') {
+  //       this.submissionScreen = false;
+  //       this.voteScreen = false;
+  //       this.VnSComplete = true;
+  //     } else {
+  //       // state === 'previous'
+  //       this.submissionScreen = true;
+  //       this.voteScreen = false;
+  //       this.VnSComplete = false;
+  //       this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
+  //     }
+  //   } else if (this.VnSComplete) {
+  //     if (state === 'next') {
+  //       // do nothing
+  //     } else {
+  //       // state === 'previous'
+  //       this.voteScreen = true;
+  //       this.submissionScreen = false;
+  //       this.VnSComplete = false;
+  //       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+  //     }
+  //   }
+  // }
 }

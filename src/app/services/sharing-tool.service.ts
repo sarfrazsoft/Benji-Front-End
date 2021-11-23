@@ -30,6 +30,8 @@ export class SharingToolService {
   }
 
   participantGroupingToolDialogRef: MatDialogRef<ParticipantGroupingDialogComponent>;
+  participantGroupingInfoDialogRef: MatDialogRef<ParticipantGroupingInfoDialogComponent>;
+
   openParticipantGroupingInfoDialog(activityState: UpdateMessage, participantCode: number) {
     const state = activityState;
     const pCode = participantCode;
@@ -50,6 +52,7 @@ export class SharingToolService {
         this.participantGroupingToolDialogRef = this.openParticipantGroupingToolDialog(state, pCode);
       }
     });
+    this.participantGroupingInfoDialogRef = dialogRef;
     return dialogRef;
   }
 
@@ -78,6 +81,12 @@ export class SharingToolService {
   updateParticipantGroupingToolDialog(groupingTool) {
     if (this.participantGroupingToolDialogRef && this.participantGroupingToolDialogRef.componentInstance) {
       this.participantGroupingToolDialogRef.componentInstance.updateGroupingInfo(groupingTool);
+    }
+  }
+
+  updateParticipantGroupingInfoDialog(groupingTool) {
+    if (this.participantGroupingInfoDialogRef && this.participantGroupingInfoDialogRef.componentInstance) {
+      this.participantGroupingInfoDialogRef.componentInstance.updateGroupingInfo(groupingTool);
     }
   }
 }

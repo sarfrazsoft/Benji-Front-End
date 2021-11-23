@@ -124,5 +124,6 @@ export abstract class BaseActivityComponent implements OnInit {
         return group;
       }
     }
+    return null;
   }
 }
