@@ -155,6 +155,7 @@
         background: #eff1f2;
         border-radius: 8px;
         padding: 16px;
+        min-height: 64px;
         .user {
           font-size: 12px;
           font-weight: 400;
@@ -258,6 +259,12 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 1280px) {
+  .grouping-tool-dialog .mat-dialog-container .white-area .groups {
+    width: 450px;
   }
 }
 
