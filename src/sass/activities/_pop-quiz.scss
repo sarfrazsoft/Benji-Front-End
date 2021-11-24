@@ -65,12 +65,10 @@ benji-ps-build-pitch-activity {
 }
 
 .mcq-card {
-  margin: 0px auto;
-  position: relative;
-  margin-top: 80px;
+  margin-top: 48px;
   padding: 24px;
   padding-bottom: 32px;
-  max-width: 640px;
+  width: 640px;
   background-color: #fff;
   border-radius: 16px;
   h3 {
@@ -162,13 +160,12 @@ benji-ps-build-pitch-activity {
 }
 
 .mcq-leaderboard {
+  margin-top: 48px;
   padding: 24px;
   background-color: #fff;
   border-radius: 16px;
   width: 272px;
-  position: absolute;
-  top: 0px;
-  right: -332px;
+  height: auto;
   .title {
     font-size: 24px;
     font-weight: 600;
