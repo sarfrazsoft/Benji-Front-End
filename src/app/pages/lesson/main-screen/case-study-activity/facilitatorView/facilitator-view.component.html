@@ -24,7 +24,8 @@
   <div fxLayout="row" fxLayoutAlign="start start">
     <div fxLayout="column">
       <div class="groups-list">
-        <div class="groups-type">Participants</div>
+        <div *ngIf="groupingType=='participants'" class="groups-type">Participants</div>
+        <div *ngIf="groupingType=='groups'" class="groups-type">Groups</div>
         <div
           class="group-container"
           fxLayout="row"
