@@ -34,6 +34,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   newLayout = true;
   dialogRef;
   groupsX;
+  groupingType ="participants";
 
   constructor(
     private dialog: MatDialog,
@@ -44,7 +45,6 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.act = this.activityState.casestudyactivity;
     this.groupsX = this.act.groups;
-
     const group = this.groupsX[0];
 
     this.createComponent(group);
@@ -52,6 +52,8 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
     this.componentRef.instance.sendMessage.subscribe((v) => {
       this.sendMessage.emit(v);
     });
+
+    this.setGroupingType ()
   }
 
   createComponent(group: Group) {
@@ -135,5 +137,13 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
       this.componentRef.destroy();
     }
     this.createComponent(group);
+  }
+
+  setGroupingType () {
+    this.groupsX.forEach(group => {
+      if (group.participants.length > 1) {
+        this.groupingType = "groups";
+      }
+    });
   }
 }
