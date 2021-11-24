@@ -90,6 +90,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   showParticipantGroupingButton() {
+    if (!this.activityState || !this.activityState.activity_type) {
+      return;
+    }
     const currentActivity = this.activityState[this.activityState.activity_type.toLowerCase()];
     const grouping: GroupingToolGroups = currentActivity.grouping;
     if (grouping) {
