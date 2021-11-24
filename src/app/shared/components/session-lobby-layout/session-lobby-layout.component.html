@@ -16,9 +16,9 @@
             fxLayout="row" 
             fxLayoutAlign="start center"
             fxLayoutGap="16px">
-            <!-- <div class="join-code">
-              Join Code: <span class="primary-color">1ef326a</span>
-            </div> -->
+            <div class="join-code" (click)="copyLink(room_code)">
+              Join Code: <span class="primary-color">{{ room_code }}</span>
+            </div>
             <img
               matTooltip="Copy lesson link"
               [matTooltipPosition]="'below'"
