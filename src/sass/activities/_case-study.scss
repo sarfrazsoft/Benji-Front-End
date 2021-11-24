@@ -126,7 +126,7 @@ benji-ps-case-study-activity {
     max-width: 1186px;
     background: #fff;
     border-radius: 16px;
-    padding: 16px 36px 24px;
+    padding: 16px 20px;
     margin: 0px auto;
   }
 
@@ -240,20 +240,79 @@ benji-ps-case-study-activity {
 }
 
 .case-study-main {
-  .feedback-card, .groups-list {
-    overflow-y: scroll;
+  margin-top: 24px !important;
+  max-width: 1044px;
+  border-radius: 16px;
+  margin: 0px auto;
+  background: #fff;
+  height: 100%;
+  .title-bar {
+    padding: 24px 32px;
+    border-bottom: 1px solid #E7E7E7;
+    .emoji {
+      width: 40px;
+      height: 40px;
+    }
+    .title {
+      color: #37352F;
+      font-weight: bold;
+      font-size: 32px;
+    }
+    .inbox {
+      padding: 10px 12px  10px  16px;
+      background: #F3F4F7;
+      margin-right: 25px;
+      border-radius: 8px;
+    }
+    .count {
+      color: #37352F;
+      font-weight: 500;
+      font-size: 24px;
+    }
+    .sub-title {
+      color: #828282;
+      font-weight: 500;
+      font-size: 12px;
+    }
+    .border-left {
+      border-left: 1px solid #BDBDBD;
+      margin: 0px 16px;
+      height: 40px;
+    }
   }
-  .feedback-card {
-    max-height: calc(100vh - 120px);
-    height: 100vh;
+  benji-ps-case-study-activity {
+    .activity-wrapper {
+      border-radius: 0px;
+    }
+  } .b-flat-card {
+    padding: 0px;
+    box-shadow: unset;
+    min-height: unset;
+  }
+  .feedback-card, .groups-list {
+    overflow-y: auto;
+  }
+  .activity-wrapper {
+    height: calc(100vh - 250px);
+    overflow: auto;
   }
   .groups-list {
-    max-height: calc(100vh - 142px);
-    height: 100vh;
-    padding: 16px;
+    width: 244px;
+    border-right: 1px solid #E7E7E7;
+    height: calc(100vh - 200px);
+    .groups-type {
+      margin: 20px 32px 8px 32px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #616161;
+    }
     .group-container {
       cursor: pointer;
-      margin-bottom: 11px;
+      height: 56px;
+      border-bottom: 1px solid #E7E7E7;
+      .group-name {
+        margin-left: 32px;
+      }
     }
   }
 }
