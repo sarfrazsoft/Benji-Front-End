@@ -1,8 +1,8 @@
-<div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="24px">
 
-  <div fxLayout="column" class="mcq-card">
-    <!-- show questions -->
-    <ng-container *ngIf="showQuestion">
+<!-- show questions -->
+<ng-container *ngIf="showQuestion">
+  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="24px">
+    <div fxLayout="column" class="mcq-card">
       <div class="b-flat-card__body">
         <h3 class="pn-600 primary-color-darkest">
           {{ activityState.mcqactivity.question.question }}
@@ -46,10 +46,32 @@
           </button>
         </div>
       </div>
-    </ng-container>
-  
-    <!-- show result -->
-    <ng-container *ngIf="showQuestionsAnswer">
+    </div>
+    <div fxLayout="column" class="participants-counts">
+      <div class="heading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+        <img src="/assets/img/mcq/player-status.svg">
+        <div class="text">Player Status</div>
+      </div>
+      <div fxLayout="column">
+        <span class="title">Answered ({{unansweredParticipants.length}})</span>
+        <ul>
+          <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
+        </ul>
+      </div>
+      <div fxLayout="column">
+        <span class="title">Not Answered ({{answeredParticipants.length}})</span>
+        <ul>
+          <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- show result -->
+<ng-container *ngIf="showQuestionsAnswer">
+  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="24px">
+    <div fxLayout="column" class="mcq-card">
       <div class="b-flat-card__body">
         <h3 class="pn-600 primary-color-darkest">
           {{ activityState.mcqactivity.question.question }}
@@ -100,68 +122,24 @@
           </div>
         </div>
       </div>
-      <!-- <div class="b-flat-card__body center-text">
-        <div class="twemoji">
-          <app-b-twemoji
-            *ngIf="answersResults() === 'allCorrect'"
-            emoji="🎉"
-          ></app-b-twemoji>
-          <app-b-twemoji
-            *ngIf="answersResults() === 'allWrong'"
-            emoji="🙊"
-          ></app-b-twemoji>
-          <app-b-twemoji
-            *ngIf="answersResults() === 'someCorrect'"
-            emoji="👏"
-          ></app-b-twemoji>
+    </div>
+    <div class="mcq-leaderboard" fxLayout="column" fxLayoutGap="20px">
+      <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="8px">
+        <div fxLayout="column">
+          <img src="/assets/img/trophy.svg" width="20" height="20">
         </div>
-        <h1 class="pn-700 black-color">
-          {{ getResultText() }}
-        </h1>
+        <div class="title" fxLayout="column">
+          Leaderboard
+        </div>
       </div>
-      <div class="b-flat-card__action"
-        *ngIf="answersResults() !== 'someCorrect'">
-        <ng-container *ngFor="let option of selectedChoices; let i = index">
-          <button
-            class="b-standard-button unselected result-button"
-            [ngClass]="{
-              correct: option.is_correct,
-              incorrect: !option.is_correct
-            }">
-            {{ option.choice_text }}
-          </button>
-        </ng-container>
-      </div>
-      <div *ngIf="answersResults() === 'allWrong' || answersResults() === 'allCorrect'" class="b-flat-card__action-detail">
-        <p class="result-button">The correct answer is</p>
-        <ng-container *ngFor="let option of getCorrectChoices();let i = index">
-          <button
-            class="b-standard-button unselected result-button"
-            [ngClass]="{correct: option.is_correct}">
-            {{ option.choice_text }}
-          </button>
-        </ng-container>
-      </div> -->
-    </ng-container>
-  </div>
-  
-  <div class="mcq-leaderboard" fxLayout="column" fxLayoutGap="20px">
-    <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="8px">
-      <div fxLayout="column">
-        <img src="/assets/img/trophy.svg" width="20" height="20">
-      </div>
-      <div class="title" fxLayout="column">
-        Leaderboard
-      </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-      <div class="name" fxLayout="column">
-        1. Mahin
-      </div>
-      <div class="score" fxLayout="column">
-        23234
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="name" fxLayout="column">
+          1. Mahin
+        </div>
+        <div class="score" fxLayout="column">
+          23234
+        </div>
       </div>
     </div>
   </div>
-
-</div>
+</ng-container>
