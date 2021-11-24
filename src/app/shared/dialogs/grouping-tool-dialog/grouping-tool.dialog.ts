@@ -41,7 +41,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   private typingTimerGroups;
   numberOfRooms = 0;
   editingTitle = false;
-  groupAccess = true;
+  groupAccess = false;
   groupsCount = 1;
 
   activityState: UpdateMessage;
@@ -101,6 +101,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   initSelectedGroup(grouping) {
+    console.log(grouping);
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;

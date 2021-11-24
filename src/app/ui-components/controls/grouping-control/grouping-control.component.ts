@@ -66,7 +66,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   getCurrentlyAppliedGrouping(state: UpdateMessage) {
     const activityType = this.activitiesService.getActivityType(this.activityState);
-    return this.activityState[activityType].grouping;
+    return this.activityState[activityType].grouping.id;
   }
 
   initSelectedGroup() {

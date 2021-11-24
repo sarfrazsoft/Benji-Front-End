@@ -4,6 +4,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
@@ -53,7 +54,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
 
-  letParticipantChangeGroupingMidActivity = false;
+  openGroupAccess = false;
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   constructor(
@@ -84,13 +85,29 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     });
+
+    this.showParticipantGroupingButton();
+  }
+
+  showParticipantGroupingButton() {
+    const currentActivity = this.activityState[this.activityState.activity_type.toLowerCase()];
+    const grouping: GroupingToolGroups = currentActivity.grouping;
+    if (grouping) {
+      if (grouping.style === 'hostAssigned') {
+        this.openGroupAccess = false;
+      } else if (grouping.style === 'selfAssigned') {
+        this.openGroupAccess = true;
+      }
+    }
   }
 
   copyMessage(val: string) {
     this.utilsService.copyToClipboard(val);
   }
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    this.showParticipantGroupingButton();
+  }
 
   controlClicked(eventType) {
     if (this.disableControls) {

@@ -134,7 +134,9 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.participantCode = this.getParticipantCode();
-        this.initParticipantGrouping(this.act);
+        if (this.act.grouping && this.act.grouping.groups.length) {
+          this.initParticipantGrouping(this.act);
+        }
       }
     });
 
@@ -296,7 +298,13 @@ export class MainScreenBrainstormingActivityComponent
       this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
       if (this.myGroup === null) {
         // There are groups in the activity but this participant is not in any groups
-        if (!this.dialogRef || !this.dialogRef.componentInstance) {
+        if (this.dialogRef) {
+          this.sharingToolService.updateParticipantGroupingInfoDialog(
+            this.activityState.running_tools.grouping_tool
+          );
+          // this.dialogRef.close();
+          // this.dialogRef = null;
+        } else if (!this.dialogRef || !this.dialogRef.componentInstance) {
           this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
             this.activityState,
             this.participantCode
@@ -308,12 +316,6 @@ export class MainScreenBrainstormingActivityComponent
               this.sendMessage.emit(v);
             }
           });
-        } else if (this.dialogRef) {
-          this.sharingToolService.updateParticipantGroupingInfoDialog(
-            this.activityState.running_tools.grouping_tool
-          );
-          // this.dialogRef.close();
-          // this.dialogRef = null;
         }
       } else {
         // filter ideas on participant screen by the group they are in.
@@ -344,7 +346,7 @@ export class MainScreenBrainstormingActivityComponent
 
       this.act = cloneDeep(this.activityState.brainstormactivity);
     } else if (sct.type === 'groups') {
-      this.participantGroups = this.act.groups;
+      this.participantGroups = this.act.grouping.groups;
       this.showParticipantsGroupsDropdown = true;
     } else if (sct.type === 'individuals') {
       this.participantGroups = null;

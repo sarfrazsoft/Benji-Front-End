@@ -141,10 +141,10 @@
         <div fxLayout="row" fxLayoutGap="8px">
           <!-- Participant grouping -->
           <div class="participant-grouping" 
-            *ngIf="letParticipantChangeGroupingMidActivity">
+            *ngIf="openGroupAccess">
             <button
               (click)="openGroupingParticipantDialog()">
-              {{ 'Group 1'}}
+              {{ 'Select group'}}
             </button>
           </div>
         </div>
