@@ -96,6 +96,43 @@ benji-ps-build-pitch-activity {
   }
 }
 
+.participants-counts {
+  width: 288px;
+  margin-top: 48px;
+  border-radius: 16px;
+  background: #fff;
+  padding: 24px;
+  .heading {
+    margin-bottom: 8px;
+    .text {
+      font-size: 24px;
+      font-weight: 600;
+      color: #37352F;
+    }
+  }
+  .title{
+    font-size: 16px;
+    font-weight: 500;
+    color: #37352F;
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+  > div {
+    overflow: hidden;
+  }
+  ul {
+    list-style: none;
+    font-size: 14px;
+    line-height: 19px;
+    color: #616161;
+    font-weight: 400;
+    padding: 8px 16px 16px 16px;
+    background: #EFF1F2;
+    border-radius: 4px;
+    float: left;
+  }
+}
+
 .pop-quiz-results {
   .content {
     width: 100%;

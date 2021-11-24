@@ -25,6 +25,8 @@ export class MainScreenPopQuizComponent
 
   selectedChoices: Array<MCQChoice> = [];
   totalSelections = 0;
+  unansweredParticipants = ['Aaaa', 'Baaa'];
+  answeredParticipants = ['Caaa', 'Daaa'];
   //  {
   //   id: null,
   //   is_correct: null,
