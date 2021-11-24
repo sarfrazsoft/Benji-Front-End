@@ -131,6 +131,13 @@ export class MainScreenBrainstormingActivityComponent
     super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
 
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.participantCode = this.getParticipantCode();
+        this.initParticipantGrouping(this.act);
+      }
+    });
+
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.classificationTypes = [
@@ -183,7 +190,7 @@ export class MainScreenBrainstormingActivityComponent
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     // populate groupings dropdown
-    if (this.act.groups && this.act.groups.length) {
+    if (this.act.grouping && this.act.grouping.groups.length) {
       this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
         if (val) {
           this.participantCode = this.getParticipantCode();
@@ -192,7 +199,7 @@ export class MainScreenBrainstormingActivityComponent
       });
       this.permissionsService.hasPermission('ADMIN').then((val) => {
         if (val) {
-          this.participantGroups = this.act.groups;
+          this.participantGroups = this.act.grouping.groups;
         }
       });
     }
@@ -284,7 +291,7 @@ export class MainScreenBrainstormingActivityComponent
     // Check if groups are created
     // if groups are present then check if participant is in the group
     // if participant is not present in the group then open grouping info dialog
-    this.participantGroups = this.act.groups;
+    this.participantGroups = this.act.grouping.groups;
     if (this.participantGroups.length > 0) {
       this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
       if (this.myGroup === null) {

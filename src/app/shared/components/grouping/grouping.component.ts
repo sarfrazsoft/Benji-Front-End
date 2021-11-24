@@ -21,12 +21,12 @@ export class GroupingComponent implements OnInit, OnChanges {
   @Output() sendMessage = new EventEmitter<any>();
 
   ngOnInit(): void {
-    this.initSelectedGroup(this.activityState);
+    // this.initSelectedGroup(this.activityState);
   }
   ngOnChanges() {
     // check if group changed
     // then call initseelctedgroup
-    this.initSelectedGroup(this.activityState);
+    // this.initSelectedGroup(this.activityState);
   }
 
   initSelectedGroup(act) {
