@@ -23,58 +23,10 @@
   </div>
 </ng-container>  
 
-<!-- 
-<ng-container *ngIf="!joinLinkExists">
-  <div class="participant-start">
-    <div class="container">
-      <div class="vertical-center center-text">
-        <div class="join-session-header" fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="8px">
-          <div class="emoji-container">
-            <app-b-twemoji class="" emoji="👋"></app-b-twemoji>
-          </div>
-          <div class="welcome-text black-color">Welcome!</div>
-        </div>
-        <div class="action-container">
-          
-  
-          <div fxLayout="column" fxLayoutGap="16px">
-            <div
-              class="input-container left-text" 
-              fxLayout="column"
-              fxLayoutGap="8px">
-              <span class="label">Room Code</span>
-              <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
-                Invalid Room Code
-              </p>
-              <input
-                id="room-code"
-                class="b-standard-input"
-                type="number"
-                pattern="[0-9]*"
-                name=""
-                placeholder="Enter room code"
-                [formControl]="roomCode"
-                (input)="onRoomCodeChange($event.target.value)"
-              />
-            </div>
-          </div>
-          <div class="already-member">
-            Host Sign in
-            <div>
-              <a class="b-link guest-link primary-color" (click)="router.navigate(['/login'])"> Host Sign in </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> 
-</ng-container>
-
-
 <ng-container *ngIf="joinLinkExists">
   <benji-session-lobby-layout
     [beforeLessonRunDetails]="beforeLessonRunDetails"
     [participantJoinScreeen]="true">
   </benji-session-lobby-layout>
 </ng-container>
- -->
+

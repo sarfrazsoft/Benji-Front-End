@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
 import * as global from 'src/app/globals';
@@ -32,11 +32,16 @@ export class ParticipantJoinComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe((val) => {
-      this.joinLinkExists = true;
-      this.roomCode.setValue(this.route.snapshot.queryParams['link']);
-      this.updateBeforeLessonRunDetails();
-      this.validateRoomCode();
+    this.route.queryParamMap.subscribe((val: any) => {
+      console.log(this.route.snapshot.queryParams['link']);
+      if (this.route.snapshot.queryParams['link']) {
+        this.joinLinkExists = true;
+        this.roomCode.setValue(this.route.snapshot.queryParams['link']);
+        this.updateBeforeLessonRunDetails();
+        this.validateRoomCode();
+      } else {
+        this.joinLinkExists = false;
+      }
     });
     if (this.route.snapshot.queryParams['link']) {
     } else {
