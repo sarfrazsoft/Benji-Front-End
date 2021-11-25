@@ -106,7 +106,9 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.data.screenType === 'mainScreen') {
           msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
         } else {
+          // msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
           msAct = this.cfr.resolveComponentFactory(ParticipantBrainstormingActivityComponent);
+          // return;
         }
         this.componentRef = this.entry.createComponent(msAct);
         const categorizeFlag =
@@ -165,7 +167,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         this.componentRef.instance.peakBackState = false;
         const activityStage: Subject<string> = new Subject<string>();
         this.componentRef.instance.activityStage = activityStage.asObservable();
-        this.componentRef.instance.editor = true;
+        this.componentRef.instance.actEditor = true;
       } else if (this.data.activity_type === Acts.mcq) {
         if (this.componentRef) {
           this.componentRef.destroy();

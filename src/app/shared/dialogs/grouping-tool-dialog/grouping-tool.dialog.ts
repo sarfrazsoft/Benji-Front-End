@@ -1,7 +1,9 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivitiesService } from 'src/app';
+import { Observable } from 'rxjs-compat/Observable';
+import { ActivityTypes } from 'src/app/globals';
+import { ActivitiesService, BackendRestService } from 'src/app/services';
 import {
   Category,
   CreateGroupsEvent,
@@ -41,7 +43,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   private typingTimerGroups;
   numberOfRooms = 0;
   editingTitle = false;
-  groupAccess = true;
+  groupAccess = false;
   groupsCount = 1;
 
   activityState: UpdateMessage;
@@ -50,13 +52,20 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     { type: 'hostAssigned', title: 'Custom', description: `Host assigns people` },
     { type: 'selfAssigned', title: 'Self-Assign', description: `People choose their group` },
   ];
+
+  activities$: Observable<any[]>;
+
+  at: typeof ActivityTypes = ActivityTypes;
+  selectedActivities = [];
+
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: { activityState: UpdateMessage },
     private matDialog: MatDialog,
     private utilsService: UtilsService,
-    private activitiesService: ActivitiesService
+    private activitiesService: ActivitiesService,
+    private backendRestService: BackendRestService
   ) {
     this.activityState = data.activityState;
   }
@@ -80,6 +89,8 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
     };
     this.initSelectedGroup(grouping);
+
+    this.getLessonActivities();
   }
 
   ngOnChanges() {
@@ -101,6 +112,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   initSelectedGroup(grouping) {
+    console.log(grouping);
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
@@ -313,6 +325,29 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   doneTypingGroups(noOfGroups) {
     this.sendMessage.emit(new CreateGroupsEvent(this.selectedGrouping.id, noOfGroups));
+  }
+
+  getLessonActivities() {
+    this.activities$ = this.backendRestService
+      .getLessonRunActivities(this.activityState.lesson_run.lessonrun_code)
+      .map((activities) => {
+        const acts = [];
+        activities.forEach((activity) => {
+          if (
+            activity.activity_type !== 'MCQResultsActivity' &&
+            activity.activity_type !== 'LobbyActivity' &&
+            activity.activity_type !== 'ExternalGroupingActivity' &&
+            activity.activity_type !== 'PollResultsActivity'
+          ) {
+            if (activity.activity_type === this.at.brainStorm) {
+              acts.push({ id: activity.id, name: activity.instructions });
+            } else if (activity.activity_type === this.at.caseStudy) {
+              acts.push({ id: activity.id, name: activity.activity_title });
+            }
+          }
+        });
+        return acts;
+      });
   }
 }
 

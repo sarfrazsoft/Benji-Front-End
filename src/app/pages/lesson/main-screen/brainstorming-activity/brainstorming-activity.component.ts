@@ -131,6 +131,15 @@ export class MainScreenBrainstormingActivityComponent
     super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
 
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.participantCode = this.getParticipantCode();
+        if (this.act.grouping && this.act.grouping.groups.length) {
+          this.initParticipantGrouping(this.act);
+        }
+      }
+    });
+
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.classificationTypes = [
@@ -183,7 +192,7 @@ export class MainScreenBrainstormingActivityComponent
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     // populate groupings dropdown
-    if (this.act.groups && this.act.groups.length) {
+    if (this.act.grouping && this.act.grouping.groups.length) {
       this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
         if (val) {
           this.participantCode = this.getParticipantCode();
@@ -192,7 +201,7 @@ export class MainScreenBrainstormingActivityComponent
       });
       this.permissionsService.hasPermission('ADMIN').then((val) => {
         if (val) {
-          this.participantGroups = this.act.groups;
+          this.participantGroups = this.act.grouping.groups;
         }
       });
     }
@@ -284,12 +293,18 @@ export class MainScreenBrainstormingActivityComponent
     // Check if groups are created
     // if groups are present then check if participant is in the group
     // if participant is not present in the group then open grouping info dialog
-    this.participantGroups = this.act.groups;
+    this.participantGroups = this.act.grouping.groups;
     if (this.participantGroups.length > 0) {
       this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
       if (this.myGroup === null) {
         // There are groups in the activity but this participant is not in any groups
-        if (!this.dialogRef || !this.dialogRef.componentInstance) {
+        if (this.dialogRef) {
+          this.sharingToolService.updateParticipantGroupingInfoDialog(
+            this.activityState.running_tools.grouping_tool
+          );
+          // this.dialogRef.close();
+          // this.dialogRef = null;
+        } else if (!this.dialogRef || !this.dialogRef.componentInstance) {
           this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
             this.activityState,
             this.participantCode
@@ -301,12 +316,6 @@ export class MainScreenBrainstormingActivityComponent
               this.sendMessage.emit(v);
             }
           });
-        } else if (this.dialogRef) {
-          this.sharingToolService.updateParticipantGroupingInfoDialog(
-            this.activityState.running_tools.grouping_tool
-          );
-          // this.dialogRef.close();
-          // this.dialogRef = null;
         }
       } else {
         // filter ideas on participant screen by the group they are in.
@@ -337,7 +346,7 @@ export class MainScreenBrainstormingActivityComponent
 
       this.act = cloneDeep(this.activityState.brainstormactivity);
     } else if (sct.type === 'groups') {
-      this.participantGroups = this.act.groups;
+      this.participantGroups = this.act.grouping.groups;
       this.showParticipantsGroupsDropdown = true;
     } else if (sct.type === 'individuals') {
       this.participantGroups = null;

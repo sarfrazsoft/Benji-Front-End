@@ -2,9 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { BackendRestService } from 'src/app/services';
+import { HttpClient } from '@angular/common/http';
 import * as global from 'src/app/globals';
-import { HttpClient } from "@angular/common/http";
+import { BackendRestService } from 'src/app/services';
 import { BeforeLessonRunDetails, LessonRunDetails } from 'src/app/services/backend/schema/course_details';
 
 @Component({
@@ -19,39 +19,32 @@ export class ParticipantJoinComponent implements OnInit {
   public beforeLessonRunDetails: BeforeLessonRunDetails;
 
   tokenCleared = false;
+  joinLinkExists = false;
+  hostname = window.location.host + '/participant/join?link=';
 
   public roomCode = new FormControl(null, [Validators.required, Validators.min(4)]);
-  public username = new FormControl(null, [Validators.required]);
 
   constructor(
     public router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
-    private backend: BackendRestService,
+    private backend: BackendRestService
   ) {}
 
   ngOnInit() {
-    if (this.route.snapshot.queryParams['link']) {
-      // alert(this.route.snapshot.queryParams['link']);
+    this.route.queryParamMap.subscribe((val) => {
+      this.joinLinkExists = true;
       this.roomCode.setValue(this.route.snapshot.queryParams['link']);
-      // alert(this.roomCode.value);
+      this.updateBeforeLessonRunDetails();
       this.validateRoomCode();
+    });
+    if (this.route.snapshot.queryParams['link']) {
+    } else {
+      this.joinLinkExists = false;
     }
-    this.username.disable();
-    if (!this.userName) {
-      this.backend.get_own_identity().subscribe(
-        (res) => {
-          // console.log(res);
-          this.userName = res.first_name;
-        },
-        (err) => {
-          // this.router.navigate([`/login`]);
-        }
-      );
-    }
-    this.updateBeforeLessonRunDetails();
+    // this.updateBeforeLessonRunDetails();
   }
-  
+
   public validateRoomCode() {
     this.backend.validateRoomCode(this.roomCode.value).subscribe(
       (res: LessonRunDetails) => {
@@ -59,7 +52,12 @@ export class ParticipantJoinComponent implements OnInit {
         const lessonrun_code = res.lessonrun_code;
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
-        this.username.enable();
+        // take the user to next screen where they will input their name
+        // const linkToNavigateTo = this.hostname + this.roomCode.value;
+        // localhost:4200/participant/join?link=39622
+        // this.router.navigate([''], { queryParams: { link: this.roomCode.value } });
+        this.router.navigateByUrl('/participant/join?link=' + this.roomCode.value);
+        // this.router.navigate([linkToNavigateTo]);
       },
       (err) => {
         console.error(`Unable to join: ${err.error.error}`);
@@ -74,9 +72,13 @@ export class ParticipantJoinComponent implements OnInit {
     );
   }
 
+  onRoomCodeChange(roomCode: string): void {
+    this.validateRoomCode();
+  }
+
   getBeforeLessonRunDetails(lessonrun_code) {
     const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';
-    return this.http.post(request,{});
+    return this.http.post(request, {});
   }
 
   updateBeforeLessonRunDetails() {
@@ -84,5 +86,4 @@ export class ParticipantJoinComponent implements OnInit {
       this.beforeLessonRunDetails = res;
     });
   }
-
 }

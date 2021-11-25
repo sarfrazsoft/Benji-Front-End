@@ -49,6 +49,28 @@
           </div>
         </div>
       </div>
+      <div fxLayout="column">
+        <div class="header">Activities</div>
+        <div>
+          <ng-select
+            [items]="activities$ | async"
+            [multiple]="true"
+            bindLabel="name"
+            [closeOnSelect]="false"
+            bindValue="id"
+            [(ngModel)]="selectedActivities">
+            <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.gender | uppercase}}
+            </ng-template> -->
+            <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
+            </ng-template>
+          </ng-select>
+      
+          <br>
+          <small>{{selectedActivities | json}}</small>
+        </div>
+      </div>
       <!-- <div fxLayout="row" fxLayoutGap="16px">
         <div fxLayout="column">
           <div class="header">Grouping Style</div>

@@ -1,4 +1,4 @@
-import { Participant } from '../course_details';
+import { GroupingToolGroups, Participant } from '../course_details';
 import { User } from '../user';
 import {
   BuildAPitchBlank,
@@ -319,7 +319,7 @@ export interface BrainstormActivity extends ParentActivity {
   all_participants_voted: boolean;
   hide_timer: boolean;
   voted_participants: Array<any>;
-  groups: Array<Group>;
+  grouping: GroupingToolGroups;
 }
 
 export interface Category {
@@ -465,7 +465,7 @@ export interface RoleplayUser {
 export interface Group {
   group_num?: number;
   participantgroupstatus_set?: Array<ParticipantGroupStatus>;
-  answer: any;
+  answer?: any;
 
   description?: string;
   id?: number;

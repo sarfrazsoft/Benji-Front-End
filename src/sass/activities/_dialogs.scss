@@ -435,8 +435,11 @@ ng-dropdown-panel.groups-controls {
 }
 
 .grouping-participant-info-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+  }
   .wrappr {
-    padding: 64px;
+    padding: 40px;
     width: 579px;
     .message {
       color: #616161;
