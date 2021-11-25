@@ -53,15 +53,15 @@
         <div class="text">Player Status</div>
       </div>
       <div fxLayout="column">
-        <span class="title">Answered ({{unansweredParticipants.length}})</span>
+        <span class="title"> Answered ({{answeredParticipants.length}})</span>
         <ul>
-          <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
+          <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
         </ul>
       </div>
       <div fxLayout="column">
-        <span class="title">Not Answered ({{answeredParticipants.length}})</span>
+        <span class="title"> Not Answered ({{unansweredParticipants.length}})</span>
         <ul>
-          <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
+          <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
         </ul>
       </div>
     </div>

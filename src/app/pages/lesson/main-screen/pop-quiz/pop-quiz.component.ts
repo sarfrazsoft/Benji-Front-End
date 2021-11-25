@@ -40,6 +40,7 @@ export class MainScreenPopQuizComponent
 
   localStorageItemName;
   isAdmin;
+  joinedUsers: any[];
 
   constructor(private contextService: ContextService, private permissionsService: NgxPermissionsService) {
     super();
@@ -100,6 +101,8 @@ export class MainScreenPopQuizComponent
     } else if (as.mcqresultsactivity) {
       this.showResults = true;
     }
+    
+    this.loadUsersCounts();
   }
 
   populateResponsePercents(act: MCQActivity) {
@@ -226,4 +229,27 @@ export class MainScreenPopQuizComponent
       return 'Nearly got it!';
     }
   }
+
+  
+  loadUsersCounts() {
+    this.joinedUsers = [];
+    this.answeredParticipants = [];
+    this.unansweredParticipants = [];
+    this.joinedUsers = this.getActiveParticipants();
+    this.activityState.mcqactivity.answered_participants.forEach((participant) => {
+      this.answeredParticipants.push(this.getParticipantName(participant.participant_code));
+    });
+    this.unansweredParticipants = this.getUnAnsweredUsers();
+  }
+
+  getUnAnsweredUsers() {
+    const answered = this.answeredParticipants;
+    const active = [];
+    for (let index = 0; index < this.joinedUsers.length; index++) {
+      active.push(this.joinedUsers[index].display_name);
+    }
+    return active.filter((name) => !answered.includes(name));
+  }
+
+
 }
