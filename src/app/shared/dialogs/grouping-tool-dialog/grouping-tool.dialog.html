@@ -130,7 +130,12 @@
       <!-- unassigned users -->
       <div class="content-wrapper">
         <div class="sub-title"> Unassigned </div>
-        <div class="free-users" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px"
+        <div 
+          id="free-users"
+          class="free-users" 
+          fxLayout="row" 
+          fxLayoutAlign="start center" 
+          fxLayoutGap="16px"
           cdkDropList
           [cdkDropListData]="unassignedUsers"
           (cdkDropListDropped)="drop($event)">
@@ -180,11 +185,18 @@
                 Drag-n-drop participants to assign them to the group
               </div> -->
               <div class="bg-area" *ngIf="group.participants">
-                <div class="users" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px"
+                <div 
+                  id="groups-list"
+                  class="users" 
+                  fxLayout="column" 
+                  fxLayoutAlign="start start" 
+                  fxLayoutGap="8px"
                   cdkDropList
                   [cdkDropListData]="group.participants"
                   (cdkDropListDropped)="drop($event)">
-                  <div class="user" fxLayoutGap="8px" fxLayout="row"  
+                  <div
+                    [id]="group.id"
+                    class="user" fxLayoutGap="8px" fxLayout="row"  
                     cdkDrag
                     *ngFor="let participant of group.participants">
                     <span>

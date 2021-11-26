@@ -7,6 +7,7 @@ import { ActivitiesService, BackendRestService } from 'src/app/services';
 import {
   Category,
   CreateGroupsEvent,
+  RemoveParticipantFromGroupEvent,
   StartBrainstormGroupEvent,
   UpdateGroupingStyleEvent,
 } from 'src/app/services/backend/schema';
@@ -76,18 +77,21 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     const state = this.activityState;
+    const grouping = {
+      groupings: state.running_tools.grouping_tool.groupings,
+      selectedGrouping: state.running_tools.grouping_tool.selectedGrouping,
+    };
+
+    const type = state.activity_type.toLowerCase();
+    if (state[type].grouping && state[type].grouping.id) {
+      if (state[type].grouping.id === state.running_tools.grouping_tool.selectedGrouping) {
+        this.showStartGroupingButton = false;
+      }
+    }
+    this.showStartGroupingButton = true;
     const activityID = this.activitiesService.getActivityID(state);
     const code = activityID + state.lesson_run.lessonrun_code;
 
-    // if (localStorage.getItem('isGroupingCreated') === code) {
-    //   this.showStartGroupingButton = false;
-    // } else {
-    this.showStartGroupingButton = true;
-    // }
-    const grouping = {
-      groupings: this.activityState.running_tools.grouping_tool.groupings,
-      selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-    };
     this.initSelectedGroup(grouping);
 
     this.getLessonActivities();
@@ -234,13 +238,20 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
           }
         });
       });
-      this.sendMessage.emit(
-        new GroupingAssignParticipantEvent(
-          this.selectedGrouping.id,
-          breakoutroomid,
-          participant.participant_code
-        )
-      );
+      if (event.container.id === 'groups-list') {
+        this.sendMessage.emit(
+          new GroupingAssignParticipantEvent(
+            this.selectedGrouping.id,
+            breakoutroomid,
+            participant.participant_code
+          )
+        );
+      } else if (event.container.id === 'free-users') {
+        const groupId = event.previousContainer.element.nativeElement.firstChild['id'];
+        this.sendMessage.emit(
+          new RemoveParticipantFromGroupEvent(this.selectedGrouping.id, groupId, participant.participant_code)
+        );
+      }
     }
   }
 

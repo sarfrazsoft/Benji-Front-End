@@ -320,6 +320,9 @@ export class MainScreenBrainstormingActivityComponent
       } else {
         // filter ideas on participant screen by the group they are in.
         this.filterIdeasBasedOnGroup(this.myGroup);
+        if (this.dialogRef) {
+          this.dialogRef.close();
+        }
       }
     }
   }
