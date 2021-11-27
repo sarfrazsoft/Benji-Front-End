@@ -132,12 +132,12 @@
           Leaderboard
         </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="name" fxLayout="column">
-          1. Mahin
+      <div fxLayout="row" fxLayoutAlign="space-between center"  *ngFor="let item of participantRanks; let i = index">
+        <div class="name" fxLayout="column" >
+          {{ i+1 }}. {{ item.name }}
         </div>
         <div class="score" fxLayout="column">
-          23234
+          {{ item.score * 10000 }}
         </div>
       </div>
     </div>

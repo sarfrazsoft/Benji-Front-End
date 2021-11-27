@@ -25,22 +25,14 @@ export class MainScreenPopQuizComponent
 
   selectedChoices: Array<MCQChoice> = [];
   totalSelections = 0;
-  unansweredParticipants = ['Aaaa', 'Baaa'];
-  answeredParticipants = ['Caaa', 'Daaa'];
-  //  {
-  //   id: null,
-  //   is_correct: null,
-  //   choice_text: null,
-  //   explanation: null,
-  //   order: null,
-  // };
+  unansweredParticipants = [];
+  answeredParticipants = [];
   revealAnswer = false;
-  // @ViewChild('timer') timer;
   timer: Timer;
-
   localStorageItemName;
   isAdmin;
   joinedUsers: any[];
+  participantRanks = [];
 
   constructor(private contextService: ContextService, private permissionsService: NgxPermissionsService) {
     super();
@@ -60,9 +52,6 @@ export class MainScreenPopQuizComponent
     this.contextService.activityTimer = { status: 'cancelled' } as Timer;
 
     this.selectedChoices = [];
-    // if (localStorage.getItem(this.localStorageItemName)) {
-    //   this.selectedChoices = JSON.parse(localStorage.getItem(this.localStorageItemName));
-    // }
     this.changes();
   }
 
@@ -102,7 +91,8 @@ export class MainScreenPopQuizComponent
       this.showResults = true;
     }
     
-    this.loadUsersCounts();
+    this.loadParticipantsCounts();
+    this.loadParticipantRanks();
   }
 
   populateResponsePercents(act: MCQActivity) {
@@ -148,7 +138,6 @@ export class MainScreenPopQuizComponent
           remove(this.selectedChoices, (choice) => choice.id === option.id);
         } else {
           this.selectedChoices.push(option);
-          // this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
         }
       } else {
         if (this.selectedChoices.length) {
@@ -156,9 +145,7 @@ export class MainScreenPopQuizComponent
         } else {
           this.selectedChoices.push(option);
         }
-        // this.sendMessage.emit(new MCQSubmitAnswerEvent(this.selectedChoices));
       }
-      // localStorage.setItem(this.localStorageItemName, JSON.stringify(this.selectedChoices));
     }
   }
 
@@ -189,10 +176,6 @@ export class MainScreenPopQuizComponent
 
   answersResults(): 'allWrong' | 'allCorrect' | 'someCorrect' {
     const incorrectChoicePresent = find(this.selectedChoices, (choice) => !choice.is_correct);
-    // console.log(incorrectChoicePresent);
-    // if (incorrectChoicePresent) {
-    //   return 'allCorrect';
-    // } else {
     const correctChoices = this.getCorrectChoices();
     // iterate over selected choices
     // push into an array when he gets one correct answer
@@ -231,7 +214,7 @@ export class MainScreenPopQuizComponent
   }
 
   
-  loadUsersCounts() {
+  loadParticipantsCounts() {
     this.joinedUsers = [];
     this.answeredParticipants = [];
     this.unansweredParticipants = [];
@@ -251,5 +234,16 @@ export class MainScreenPopQuizComponent
     return active.filter((name) => !answered.includes(name));
   }
 
+  loadParticipantRanks() {
 
+    this.participantRanks = [];
+    let obj = this.activityState.mcqactivity.participant_ranks;
+    let entries = Object.entries (obj);
+    let sorted = entries.sort((a: any, b: any) => a[1] - b[1]);
+    
+    sorted.forEach((value) => {
+      this.participantRanks.push({'name': this.getParticipantName(parseInt(value[0])), 'score': value[1]});
+    });
+
+  }
 }
