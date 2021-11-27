@@ -246,7 +246,5 @@ export class MainScreenPopQuizComponent
         {'name': this.getParticipantName(parseInt(value[0])), 
           'score': (1 - parseFloat(value[1].toString())).toFixed(3) });
     });
-
-    console.log(this.participantRanks);
   }
 }

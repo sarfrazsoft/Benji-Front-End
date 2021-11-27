@@ -51,7 +51,13 @@ benji-ms-brainstorming-activity {
           font-size: 24px;
           .column-name {
             text-transform: capitalize;
-            padding-right: 22px;
+            //padding-right: 22px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #37352f;
+            background: #F3F4F7;
+            border-radius: 8px;
+            padding: 12px;
           }
           input {
             border-radius: 8px;
@@ -66,6 +72,7 @@ benji-ms-brainstorming-activity {
           button {
             background: transparent;
             color: #828282;
+            height: 23px;
           }
           .add-column {
             font-size: 20px;
