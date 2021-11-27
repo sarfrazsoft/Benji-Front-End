@@ -242,8 +242,11 @@ export class MainScreenPopQuizComponent
     let sorted = entries.sort((a: any, b: any) => a[1] - b[1]);
     
     sorted.forEach((value) => {
-      this.participantRanks.push({'name': this.getParticipantName(parseInt(value[0])), 'score': value[1]});
+      this.participantRanks.push(
+        {'name': this.getParticipantName(parseInt(value[0])), 
+          'score': (1 - parseFloat(value[1].toString())).toFixed(3) });
     });
 
+    console.log(this.participantRanks);
   }
 }
