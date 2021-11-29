@@ -361,10 +361,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
             activity.activity_type !== 'PollResultsActivity'
           ) {
             if (activity.activity_type === this.at.brainStorm) {
-              acts.push({ id: activity.id, name: activity.instructions });
-              // acts.push({ id: activity.activity_id, name: activity.instructions });
+              // acts.push({ id: activity.id, name: activity.instructions });
+              acts.push({ id: activity.activity_id, name: activity.instructions });
             } else if (activity.activity_type === this.at.caseStudy) {
-              acts.push({ id: activity.id, name: activity.activity_title });
+              acts.push({ id: activity.activity_id, name: activity.activity_title });
+              // acts.push({ id: activity.id, name: activity.activity_title });
             }
           }
         });
