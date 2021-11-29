@@ -110,7 +110,7 @@ export class BackendRestService {
 
   getLessonRunActivities(lessonRunCode: number) {
     return this.httpClient.get<any[]>(
-      global.apiRoot + `/course_details/lesson_run/${lessonRunCode}/activities`
+      global.apiRoot + `/course_details/lesson_run/${lessonRunCode}/activities/`
     );
   }
 }

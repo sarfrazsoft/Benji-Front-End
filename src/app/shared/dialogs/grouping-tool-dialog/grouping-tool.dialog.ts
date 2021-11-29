@@ -9,6 +9,7 @@ import {
   CreateGroupsEvent,
   RemoveParticipantFromGroupEvent,
   StartBrainstormGroupEvent,
+  StartGroupingEvent,
   UpdateGroupingStyleEvent,
 } from 'src/app/services/backend/schema';
 import {
@@ -58,6 +59,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   at: typeof ActivityTypes = ActivityTypes;
   selectedActivities = [];
+  selectedActivitiesIds = [];
 
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
@@ -86,9 +88,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     if (state[type].grouping && state[type].grouping.id) {
       if (state[type].grouping.id === state.running_tools.grouping_tool.selectedGrouping) {
         this.showStartGroupingButton = false;
+      } else {
+        this.showStartGroupingButton = true;
       }
+    } else {
+      // there is no grouping in the activity
+      this.showStartGroupingButton = true;
     }
-    this.showStartGroupingButton = true;
     const activityID = this.activitiesService.getActivityID(state);
     const code = activityID + state.lesson_run.lessonrun_code;
 
@@ -126,6 +132,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         } else if (g.style === 'selfAssigned') {
           this.groupAccess = true;
         }
+        // this.selectedActivitiesIds = [3695, 3695];
         this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
         // this.unassignedUsers = g.unassignedParticipants;
       }
@@ -272,7 +279,10 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       if (activityType === 'casestudyactivity') {
         this.sendMessage.emit(new StartCaseStudyGroupEvent());
       } else if (activityType === 'brainstormactivity') {
-        this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
+        const ids = this.selectedActivities.map((val) => {
+          return val.id;
+        });
+        this.sendMessage.emit(new StartGroupingEvent(this.selectedGrouping.id, ids));
       }
       this.showStartGroupingButton = false;
       this.sendMessage.emit(new ViewGroupingEvent(false));
@@ -352,11 +362,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
           ) {
             if (activity.activity_type === this.at.brainStorm) {
               acts.push({ id: activity.id, name: activity.instructions });
+              // acts.push({ id: activity.activity_id, name: activity.instructions });
             } else if (activity.activity_type === this.at.caseStudy) {
               acts.push({ id: activity.id, name: activity.activity_title });
             }
           }
         });
+        this.selectedActivities = acts;
         return acts;
       });
   }
