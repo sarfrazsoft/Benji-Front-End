@@ -284,10 +284,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         const ids = this.selectedActivities.map((val) => {
           return val.id;
         });
+        // this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
         this.sendMessage.emit(new StartGroupingEvent(this.selectedGrouping.id, ids));
       }
       this.showStartGroupingButton = false;
-      this.sendMessage.emit(new ViewGroupingEvent(false));
+      // this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
     }
@@ -366,9 +367,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
               // acts.push({ id: activity.id, name: activity.instructions });
               acts.push({ id: activity.activity_id, name: activity.instructions });
               if (this.selectedActivitiesIds.includes(activity.activity_id)) {
+                this.selectedActivities.push({ id: activity.activity_id, name: activity.instructions });
               }
             } else if (activity.activity_type === this.at.caseStudy) {
               acts.push({ id: activity.activity_id, name: activity.activity_title });
+              if (this.selectedActivitiesIds.includes(activity.activity_id)) {
+                this.selectedActivities.push({ id: activity.activity_id, name: activity.activity_title });
+              }
               // acts.push({ id: activity.id, name: activity.activity_title });
             }
           }

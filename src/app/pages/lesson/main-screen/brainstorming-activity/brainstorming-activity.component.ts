@@ -38,8 +38,11 @@ import {
   BrainstormToggleCategoryModeEvent,
   Group,
   Idea,
+  StartBrainstormGroupEvent,
   Timer,
+  UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
@@ -66,8 +69,7 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+  implements OnInit, OnChanges, OnDestroy {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
@@ -142,6 +144,9 @@ export class MainScreenBrainstormingActivityComponent
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
+        if (this.getEventType() === 'StartGroupingEvent') {
+        }
+        this.applyGroupingOnActivity(this.activityState);
         this.classificationTypes = [
           {
             type: 'everyone',
@@ -322,6 +327,28 @@ export class MainScreenBrainstormingActivityComponent
         this.filterIdeasBasedOnGroup(this.myGroup);
         if (this.dialogRef) {
           this.dialogRef.close();
+        }
+      }
+    }
+  }
+
+  applyGroupingOnActivity(state: UpdateMessage) {
+    const activityType = this.getActivityType().toLowerCase();
+    if (state[activityType].grouping !== null) {
+      // if grouping is already applied return
+      return;
+    }
+    // if grouping is not applied check if grouping tool has
+    // information if grouping should be applied on this activity or not
+    const sm = state;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+      const gt = sm.running_tools.grouping_tool;
+      for (const grouping of gt.groupings) {
+        if (grouping.assignedActivities.includes(state[activityType].activity_id)) {
+          // const assignedActivities = ['1637726964645'];
+          // if (assignedActivities.includes(state[activityType].activity_id)) {
+          this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
+          break;
         }
       }
     }

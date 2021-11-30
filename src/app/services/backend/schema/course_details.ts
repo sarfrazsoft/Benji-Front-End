@@ -78,6 +78,7 @@ export interface GroupingToolGroups {
   unassignedParticipants: Array<number>;
   groups: Array<Group>;
   style: 'hostAssigned' | 'selfAssigned';
+  assignedActivities: Array<string>;
 }
 export interface Group {
   id: number;
