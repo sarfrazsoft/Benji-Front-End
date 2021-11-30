@@ -30,6 +30,20 @@ export class AdminService {
     );
   }
 
+  getLessonRuns(): Observable<Lesson[]> {
+    const page = 1;
+    let filterParams = '';
+    const filter = 'hosted';
+    if (filter === 'hosted') {
+      filterParams = '&hosted=True';
+    }
+    return this.http.get(global.apiRoot + '/course_details/lesson_run/?page=' + page + filterParams).pipe(
+      map((res: PaginatedResponse<Lesson>) => {
+        return res.results;
+      })
+    );
+  }
+
   getLessonDetails(id: number): Observable<any> {
     return this.http.get(global.apiRoot + '/course_details/lesson/' + id + '/').pipe(
       map((res) => {

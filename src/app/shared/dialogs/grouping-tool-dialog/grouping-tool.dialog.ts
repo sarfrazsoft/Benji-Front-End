@@ -60,6 +60,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
   selectedActivities = [];
   selectedActivitiesIds = [];
+  lessonRunActivities = [];
 
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
@@ -99,8 +100,6 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     const code = activityID + state.lesson_run.lessonrun_code;
 
     this.initSelectedGroup(grouping);
-
-    this.getLessonActivities();
   }
 
   ngOnChanges() {
@@ -132,11 +131,14 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         } else if (g.style === 'selfAssigned') {
           this.groupAccess = true;
         }
-        // this.selectedActivitiesIds = [3695, 3695];
+        this.selectedActivitiesIds = [3695, 3695];
+
         this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
         // this.unassignedUsers = g.unassignedParticipants;
       }
     });
+    // get lesson activities to populate in the dropdown
+    this.getLessonActivities();
   }
 
   updateGroupData(g: GroupingToolGroups) {
@@ -363,13 +365,17 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
             if (activity.activity_type === this.at.brainStorm) {
               // acts.push({ id: activity.id, name: activity.instructions });
               acts.push({ id: activity.activity_id, name: activity.instructions });
+              if (this.selectedActivitiesIds.includes(activity.activity_id)) {
+              }
             } else if (activity.activity_type === this.at.caseStudy) {
               acts.push({ id: activity.activity_id, name: activity.activity_title });
               // acts.push({ id: activity.id, name: activity.activity_title });
             }
           }
         });
-        this.selectedActivities = acts;
+        // this.selectedActivities = acts;
+        this.lessonRunActivities = acts;
+
         return acts;
       });
   }
