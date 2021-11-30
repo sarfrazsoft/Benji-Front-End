@@ -19,6 +19,8 @@ export class MainScreenConvoCardsActivityComponent
     super();
   }
 
+  times = ['30 seconds', '45 seconds', '1 minute', '2 minutes', '3 minutes', '4 minutes', '5 minutes'];
+
   ngOnInit(): void {
     this.mainTitle = this.activityState.convoactivity.main_title;
     this.titleText = this.activityState.convoactivity.title_text;

@@ -220,7 +220,10 @@ export class MainScreenPopQuizComponent
     this.unansweredParticipants = [];
     this.joinedUsers = this.getActiveParticipants();
     this.activityState.mcqactivity.answered_participants.forEach((participant) => {
-      this.answeredParticipants.push(this.getParticipantName(participant.participant_code));
+      let participantName = this.getParticipantName(participant.participant_code);
+      if(!this.answeredParticipants.includes(participantName)) {
+        this.answeredParticipants.push(participantName);
+      }
     });
     this.unansweredParticipants = this.getUnAnsweredUsers();
   }
@@ -244,7 +247,7 @@ export class MainScreenPopQuizComponent
     sorted.forEach((value) => {
       this.participantRanks.push(
         {'name': this.getParticipantName(parseInt(value[0])), 
-          'score': (1 - parseFloat(value[1].toString())).toFixed(3) });
+          'score': parseInt(value[1].toString()) });
     });
   }
 }
