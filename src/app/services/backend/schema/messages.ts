@@ -791,6 +791,13 @@ export class StartBrainstormGroupEvent extends ActivityEvent {
     this.extra_args = { grouping: id };
   }
 }
+export class StartGroupingEvent extends ActivityEvent {
+  event_name = 'StartGroupingEvent';
+  constructor(id: number, activityIDs: Array<number>) {
+    super();
+    this.extra_args = { grouping: id, activity_ids: activityIDs };
+  }
+}
 
 export class CardsShuffleEvent extends ActivityEvent {
   event_name = 'CardsShuffleEvent';

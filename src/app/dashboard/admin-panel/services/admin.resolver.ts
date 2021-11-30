@@ -23,7 +23,9 @@ export class AdminResolver implements Resolve<any> {
       }
       const lessons = await this.adminService.getLessons().toPromise();
 
-      return { user: user, lessons: lessons };
+      const lessonRuns = await this.adminService.getLessonRuns().toPromise();
+
+      return { user: user, lessons: lessons, lessonRuns: lessonRuns };
     } catch (err) {
       console.log(err);
     }

@@ -34,6 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class LessonsComponent implements OnInit {
   @Input() lessons: Array<Lesson> = [];
+  @Input() lessonRuns: Array<Lesson> = [];
   @Input() isTemplates = false;
 
   eventsSubject: Subject<void> = new Subject<void>();
@@ -59,6 +60,8 @@ export class LessonsComponent implements OnInit {
     if (this.lessons.length) {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
+
+    console.log(this.lessonRuns);
   }
 
   openDetails(lesson: Lesson) {

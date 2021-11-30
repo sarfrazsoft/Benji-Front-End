@@ -25,6 +25,7 @@ import doc from './../../shared/ngx-editor/doc';
 })
 export class AdminPanelComponent implements OnInit {
   lessons: Array<any> = [];
+  lessonRuns: Array<any> = [];
   editorView: EditorView;
 
   form = new FormGroup({
@@ -47,8 +48,9 @@ export class AdminPanelComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.activatedRoute.data.forEach((data: any) => {
-      this.lessons = data.dashData.lessons.filter(lesson => lesson.public_permission != 'duplicate');
-      
+      this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
+
+      this.lessonRuns = data.dashData.lessonRuns;
       // if (!data.dashData.user.job_title) {
       //   this.dialog
       //     .open(JobInfoDialogComponent, {
