@@ -40,8 +40,8 @@ export class ImportSlidesDialogComponent {
           catchError((error) => error)
         )
         .subscribe((res) => {
-          console.log(res);
           this.uploading = false;
+          this.dialogRef.close('success');
         });
     }
     const url = '';

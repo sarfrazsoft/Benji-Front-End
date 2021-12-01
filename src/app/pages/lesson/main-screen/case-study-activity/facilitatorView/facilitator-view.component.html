@@ -1,8 +1,10 @@
 
 <div class="case-study-main">
   <div class="title-bar" fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="16px">
-      <img draggable="false" class="emoji" alt="🇵🇰" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f1f5-1f1f0.svg">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+      <div *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
+        <app-b-twemoji class="body-emoji participant" [text]="activityState.casestudyactivity.title_emoji"> </app-b-twemoji>
+      </div>
       <div class="title">Case Study</div>
     </div>
     <div fxLayout="row" fxLayoutAlign="start start">
@@ -10,7 +12,7 @@
         <img src="/assets/img/worksheets/inbox.svg" />
         <span>inbox</span>
       </div> -->
-      <div fxLayout="column" fxLayoutAlign="start start">
+      <!-- <div fxLayout="column" fxLayoutAlign="start start">
         <div class="count">8</div>
         <div class="sub-title">Done</div>
       </div>
@@ -18,7 +20,7 @@
       <div fxLayout="column" fxLayoutAlign="start start">
         <div class="count">1</div>
         <div class="sub-title">Not Done</div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign="start start">
@@ -30,8 +32,9 @@
           class="group-container"
           fxLayout="row"
           fxLayoutAlign="start center"
-          *ngFor="let group of groupsX">
-          <div class="group-name" (click)="selectGroup(group)"> {{ group.title }} </div>
+          *ngFor="let group of groupsX"
+          (click)="selectGroup(group)">
+          <div class="group-name"> {{ group.title }} </div>
         </div>
       </div>
     </div>

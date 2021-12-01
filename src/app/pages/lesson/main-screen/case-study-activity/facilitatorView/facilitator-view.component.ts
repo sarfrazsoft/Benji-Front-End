@@ -65,6 +65,12 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
     this.initGroupingOnActivity();
   }
 
+  public isEmoji(url: string) {
+    if (url) {
+      return url.includes('emoji://');
+    }
+  }
+
   initGroupingOnActivity() {
     // this.permissionsService.hasPermission('ADMIN').then((val) => {
     //   if (val) {

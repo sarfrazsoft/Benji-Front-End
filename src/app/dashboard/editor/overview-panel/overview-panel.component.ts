@@ -1,6 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
@@ -12,8 +14,6 @@ import { ConfirmationDialogComponent } from 'src/app/shared';
 import { ImportSlidesDialogComponent } from 'src/app/shared/dialogs/import-slides-dialog/import-slides.dialog';
 import { EditorService } from '../services/editor.service';
 import * as fromStore from '../store';
-import {ThemePalette} from '@angular/material/core';
-import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'benji-overview-panel',
@@ -135,10 +135,9 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'Use Template') {
+      if (result === 'success') {
+        this.store.dispatch(new fromStore.LoadLessonActivites(this.lessonId));
       }
-      console.log(`Dialog result: ${result}`);
     });
   }
-  
 }
