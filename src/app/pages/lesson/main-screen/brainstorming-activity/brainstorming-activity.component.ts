@@ -38,7 +38,9 @@ import {
   BrainstormToggleCategoryModeEvent,
   Group,
   Idea,
+  ResetGroupingEvent,
   StartBrainstormGroupEvent,
+  StartCaseStudyGroupEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -209,6 +211,11 @@ export class MainScreenBrainstormingActivityComponent
           this.participantGroups = this.act.grouping.groups;
         }
       });
+    } else {
+      // grouping is null in activity
+      if (this.getEventType() === 'StartGroupingEvent') {
+        this.applyGroupingOnActivity(this.activityState);
+      }
     }
 
     const sm = this.activityState;
@@ -332,26 +339,9 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
-  applyGroupingOnActivity(state: UpdateMessage) {
+  resetGrouping() {
     const activityType = this.getActivityType().toLowerCase();
-    if (state[activityType].grouping !== null) {
-      // if grouping is already applied return
-      return;
-    }
-    // if grouping is not applied check if grouping tool has
-    // information if grouping should be applied on this activity or not
-    const sm = state;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      for (const grouping of gt.groupings) {
-        if (grouping.assignedActivities.includes(state[activityType].activity_id)) {
-          // const assignedActivities = ['1637726964645'];
-          // if (assignedActivities.includes(state[activityType].activity_id)) {
-          this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
-          break;
-        }
-      }
-    }
+    this.sendMessage.emit(new ResetGroupingEvent(this.activityState[activityType].grouping.id));
   }
 
   getPersonName(idea: Idea) {

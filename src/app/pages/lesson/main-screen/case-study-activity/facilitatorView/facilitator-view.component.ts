@@ -13,7 +13,13 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ContextService } from 'src/app/services';
-import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
+import {
+  CaseStudyActivity,
+  CaseStudyParticipantSet,
+  Group,
+  StartCaseStudyGroupEvent,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
 import { ParticipantCaseStudyActivityComponent } from '../../../participant/case-study-activity/case-study-activity.component';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
 import { CaseStudyCheckinDialogComponent } from '../../../shared/dialogs/case-study-checkin/case-study-checkin.dialog';
@@ -34,7 +40,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   newLayout = true;
   dialogRef;
   groupsX;
-  groupingType ="participants";
+  groupingType = 'participants';
 
   constructor(
     private dialog: MatDialog,
@@ -53,7 +59,46 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
       this.sendMessage.emit(v);
     });
 
-    this.setGroupingType ()
+    this.setGroupingType();
+
+    this.act = this.activityState.casestudyactivity;
+    this.initGroupingOnActivity();
+  }
+
+  initGroupingOnActivity() {
+    // this.permissionsService.hasPermission('ADMIN').then((val) => {
+    //   if (val) {
+    // if (this.getEventType() === 'StartGroupingEvent') {
+    // }
+    this.applyGroupingOnActivity(this.activityState);
+    //   }
+    // });
+  }
+
+  applyGroupingOnActivity(state: UpdateMessage) {
+    const activityType = state.activity_type.toLowerCase();
+    if (state[activityType].groups !== null) {
+      // if grouping is already applied return
+      return;
+    }
+    // if grouping is not applied check if grouping tool has
+    // information if grouping should be applied on this activity or not
+    const sm = state;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+      const gt = sm.running_tools.grouping_tool;
+      for (const grouping of gt.groupings) {
+        if (grouping.assignedActivities.includes(state[activityType].activity_id)) {
+          // const assignedActivities = ['1637726964645'];
+          // if (assignedActivities.includes(state[activityType].activity_id)) {
+          if (activityType === 'BrainstormActivity') {
+            // this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
+          } else if (activityType === 'CaseStudyActivity') {
+            this.sendMessage.emit(new StartCaseStudyGroupEvent());
+          }
+          break;
+        }
+      }
+    }
   }
 
   createComponent(group: Group) {
@@ -82,6 +127,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
     this.groups = this.act.groups;
+    this.applyGroupingOnActivity(this.activityState);
   }
 
   getMyNoteTaker(userId: number): CaseStudyParticipantSet {
@@ -139,10 +185,10 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
     this.createComponent(group);
   }
 
-  setGroupingType () {
-    this.groupsX.forEach(group => {
+  setGroupingType() {
+    this.groupsX.forEach((group) => {
       if (group.participants.length > 1) {
-        this.groupingType = "groups";
+        this.groupingType = 'groups';
       }
     });
   }

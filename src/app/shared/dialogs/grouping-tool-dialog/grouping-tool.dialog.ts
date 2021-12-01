@@ -121,7 +121,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   initSelectedGroup(grouping) {
-    console.log(grouping);
+    // console.log(grouping);
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
@@ -131,7 +131,9 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         } else if (g.style === 'selfAssigned') {
           this.groupAccess = true;
         }
-        this.selectedActivitiesIds = [3695, 3695];
+        if (g.assignedActivities) {
+          this.selectedActivitiesIds = g.assignedActivities.length ? g.assignedActivities : [];
+        }
 
         this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
         // this.unassignedUsers = g.unassignedParticipants;
@@ -352,10 +354,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   getLessonActivities() {
-    this.activities$ = this.backendRestService
+    this.backendRestService
       .getLessonRunActivities(this.activityState.lesson_run.lessonrun_code)
       .map((activities) => {
         const acts = [];
+        const selectedActivities = [];
         activities.forEach((activity) => {
           if (
             activity.activity_type !== 'MCQResultsActivity' &&
@@ -367,21 +370,23 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
               // acts.push({ id: activity.id, name: activity.instructions });
               acts.push({ id: activity.activity_id, name: activity.instructions });
               if (this.selectedActivitiesIds.includes(activity.activity_id)) {
-                this.selectedActivities.push({ id: activity.activity_id, name: activity.instructions });
+                selectedActivities.push(activity.activity_id);
               }
             } else if (activity.activity_type === this.at.caseStudy) {
               acts.push({ id: activity.activity_id, name: activity.activity_title });
               if (this.selectedActivitiesIds.includes(activity.activity_id)) {
-                this.selectedActivities.push({ id: activity.activity_id, name: activity.activity_title });
+                selectedActivities.push(activity.activity_id);
               }
               // acts.push({ id: activity.id, name: activity.activity_title });
             }
           }
         });
-        // this.selectedActivities = acts;
-        this.lessonRunActivities = acts;
 
-        return acts;
+        return { a: acts, b: selectedActivities };
+      })
+      .subscribe((v) => {
+        this.lessonRunActivities = v.a;
+        this.selectedActivities = v.b;
       });
   }
 }

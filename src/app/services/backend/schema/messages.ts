@@ -798,6 +798,13 @@ export class StartGroupingEvent extends ActivityEvent {
     this.extra_args = { grouping: id, activity_ids: activityIDs };
   }
 }
+export class ResetGroupingEvent extends ActivityEvent {
+  event_name = 'ResetGroupingEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { grouping: id };
+  }
+}
 
 export class CardsShuffleEvent extends ActivityEvent {
   event_name = 'CardsShuffleEvent';
