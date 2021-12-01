@@ -19,17 +19,18 @@
             fxLayoutAlign="space-between center"
             *ngIf="!column.editing"
           >
-            <div class="column-name black-color" fxFlex>
+            <div class="column-name black-color" fxFlex fxLayoutAlign="space-between center">
               {{ column.category_name }}
+                  
+              <button
+                [matMenuTriggerFor]="menu"
+                benji-click-stop-propagation
+                disableRipple
+                aria-label="Example icon-button with a menu"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
             </div>
-            <button
-              [matMenuTriggerFor]="menu"
-              benji-click-stop-propagation
-              disableRipple
-              aria-label="Example icon-button with a menu"
-            >
-              <mat-icon>more_vert</mat-icon>
-            </button>
             <mat-menu #menu="matMenu" xPosition="before">
               <button mat-menu-item (click)="deleteCol(column.id)">
                 <mat-icon>delete</mat-icon>
