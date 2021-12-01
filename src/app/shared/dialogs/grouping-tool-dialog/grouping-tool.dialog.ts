@@ -5,11 +5,11 @@ import { Observable } from 'rxjs-compat/Observable';
 import { ActivityTypes } from 'src/app/globals';
 import { ActivitiesService, BackendRestService } from 'src/app/services';
 import {
+  AssignGroupingToActivities,
   Category,
   CreateGroupsEvent,
   RemoveParticipantFromGroupEvent,
   StartBrainstormGroupEvent,
-  StartGroupingEvent,
   UpdateGroupingStyleEvent,
 } from 'src/app/services/backend/schema';
 import {
@@ -281,13 +281,15 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
       window.localStorage.setItem('isGroupingCreated', code);
       if (activityType === 'casestudyactivity') {
-        this.sendMessage.emit(new StartCaseStudyGroupEvent());
+        this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
       } else if (activityType === 'brainstormactivity') {
         const ids = this.selectedActivities.map((val) => {
           return val.id;
         });
         // this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
-        this.sendMessage.emit(new StartGroupingEvent(this.selectedGrouping.id, ids));
+        this.sendMessage.emit(
+          new AssignGroupingToActivities(this.selectedGrouping.id, this.selectedActivities)
+        );
       }
       this.showStartGroupingButton = false;
       // this.sendMessage.emit(new ViewGroupingEvent(false));

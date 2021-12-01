@@ -194,7 +194,7 @@ export class MainScreenGroupingToolComponent implements OnInit, OnChanges {
       window.localStorage.setItem('isGroupingCreated', code);
 
       if (state.casestudyactivity) {
-        this.sendMessage.emit(new StartCaseStudyGroupEvent());
+        // this.sendMessage.emit(new StartCaseStudyGroupEvent());
       } else if (state.brainstormactivity) {
         // this.sendMessage.emit(new StartBrainstormGroupEvent());
       }

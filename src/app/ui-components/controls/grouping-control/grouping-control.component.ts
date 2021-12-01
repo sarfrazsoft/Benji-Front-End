@@ -143,7 +143,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
       window.localStorage.setItem('isGroupingCreated', code);
       if (activityType === 'casestudyactivity') {
-        this.socketMessage.emit(new StartCaseStudyGroupEvent());
+        this.socketMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
       } else if (activityType === 'brainstormactivity') {
         this.socketMessage.emit(new StartBrainstormGroupEvent(grouping.id));
       }

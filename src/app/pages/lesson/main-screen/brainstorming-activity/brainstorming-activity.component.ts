@@ -71,7 +71,8 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
@@ -146,7 +147,7 @@ export class MainScreenBrainstormingActivityComponent
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        if (this.getEventType() === 'StartGroupingEvent') {
+        if (this.getEventType() === 'AssignGroupingToActivities') {
         }
         this.applyGroupingOnActivity(this.activityState);
         this.classificationTypes = [
@@ -213,7 +214,7 @@ export class MainScreenBrainstormingActivityComponent
       });
     } else {
       // grouping is null in activity
-      if (this.getEventType() === 'StartGroupingEvent') {
+      if (this.getEventType() === 'AssignGroupingToActivities') {
         this.applyGroupingOnActivity(this.activityState);
       }
     }

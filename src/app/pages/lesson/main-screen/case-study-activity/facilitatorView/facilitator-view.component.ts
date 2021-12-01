@@ -74,7 +74,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   initGroupingOnActivity() {
     // this.permissionsService.hasPermission('ADMIN').then((val) => {
     //   if (val) {
-    // if (this.getEventType() === 'StartGroupingEvent') {
+    // if (this.getEventType() === 'AssignGroupingToActivities') {
     // }
     this.applyGroupingOnActivity(this.activityState);
     //   }
@@ -99,7 +99,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
           if (activityType === 'BrainstormActivity') {
             // this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
           } else if (activityType === 'CaseStudyActivity') {
-            this.sendMessage.emit(new StartCaseStudyGroupEvent());
+            this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
           }
           break;
         }

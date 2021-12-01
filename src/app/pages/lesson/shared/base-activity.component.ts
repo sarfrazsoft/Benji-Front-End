@@ -150,7 +150,7 @@ export abstract class BaseActivityComponent implements OnInit {
           if (activityType === 'brainstormactivity') {
             this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
           } else if (activityType === 'casestudyactivity') {
-            this.sendMessage.emit(new StartCaseStudyGroupEvent());
+            this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
           }
           break;
         }

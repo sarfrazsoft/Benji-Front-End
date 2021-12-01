@@ -783,7 +783,12 @@ export class GroupingParticipantSelfJoinEvent extends ActivityEvent {
 
 export class StartCaseStudyGroupEvent extends ActivityEvent {
   event_name = 'StartCaseStudyGroupEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { grouping: id };
+  }
 }
+
 export class StartBrainstormGroupEvent extends ActivityEvent {
   event_name = 'StartBrainstormGroupEvent';
   constructor(id: number) {
@@ -791,8 +796,8 @@ export class StartBrainstormGroupEvent extends ActivityEvent {
     this.extra_args = { grouping: id };
   }
 }
-export class StartGroupingEvent extends ActivityEvent {
-  event_name = 'StartGroupingEvent';
+export class AssignGroupingToActivities extends ActivityEvent {
+  event_name = 'AssignGroupingToActivities';
   constructor(id: number, activityIDs: Array<number>) {
     super();
     this.extra_args = { grouping: id, activity_ids: activityIDs };
