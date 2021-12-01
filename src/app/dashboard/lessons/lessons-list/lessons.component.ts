@@ -9,24 +9,14 @@ import * as moment from 'moment';
 import { Subject } from 'rxjs/Subject';
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  title: string;
+  host: string;
+  participants: number;
+  startDate: string;
+  endDate: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
   selector: 'benji-lessons-list',
@@ -39,8 +29,27 @@ export class LessonsComponent implements OnInit {
 
   eventsSubject: Subject<void> = new Subject<void>();
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'endDate', 'options'];
   dataSource = ELEMENT_DATA;
+
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+  options = [
+    {
+      option: 'Open',
+      icon: '../../../../assets/img/dashboard-active-sessions/open.svg'
+    },
+    {
+      option: 'View only',
+      icon: '../../../../assets/img/dashboard-active-sessions/view-only.svg'
+    },
+    {
+      option: 'Closed',
+      icon: '../../../../assets/img/dashboard-active-sessions/closed.svg'
+    },
+  ]
+
+  selectedCategory = 'Open';
 
   edit(lesson, $event) {
     if (!this.isTemplates) {
@@ -61,13 +70,21 @@ export class LessonsComponent implements OnInit {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
 
-    console.log(this.lessonRuns);
+    const slicedArray = this.lessonRuns.slice(0, 5);
+    slicedArray.forEach((val: any) => {
+      let startDate = new Date(val.start_time);
+      let endDate = new Date(val.end_time);
+      this.dataSource.push(
+        { title: val.lesson.lesson_name, 
+          host:  val.host.first_name + ' ' + val.host.last_name, 
+          participants: val.participant_set.length, 
+          startDate: this.months[startDate.getMonth()] +' '+ startDate.getDate().toString() +', '+ startDate.getFullYear(),
+          endDate: this.months[endDate.getMonth()] +' '+ endDate.getDate().toString() +', '+ endDate.getFullYear(),
+        })
+    });
   }
 
   openDetails(lesson: Lesson) {
-    // this.router.navigate(['lesson', lesson.id], {
-    //   relativeTo: this.activatedRoute,
-    // });
     this.adminService.getLessonDetails(lesson.id).subscribe((res: Lesson) => {
       if (res.lesson_details) {
         this.contextService.lesson = res;
