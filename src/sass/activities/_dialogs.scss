@@ -78,6 +78,9 @@
       }
       .settings {
         margin-left: 8px;
+        .setting {
+          margin-bottom: 24px;
+        }
         .header {
           color: #37352f;
           font-size: 16px;
@@ -88,7 +91,6 @@
           color: #37352f;
           font-size: 10px;
           font-weight: 500;
-          margin-bottom: 24px;
         }
         .toggler {
           border-radius: 8px;
