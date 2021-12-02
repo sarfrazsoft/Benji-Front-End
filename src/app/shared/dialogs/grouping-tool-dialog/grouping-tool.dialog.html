@@ -144,7 +144,7 @@
           cdkDropList
           [cdkDropListData]="unassignedUsers"
           (cdkDropListDropped)="drop($event)">
-          <div class="user"
+          <div class="grouping-pill-user"
             cdkDrag
             *ngFor="let participant of unassignedUsers">
             <span>
@@ -204,7 +204,7 @@
                   (cdkDropListDropped)="drop($event)">
                   <div
                     [id]="group.id"
-                    class="user" fxLayoutGap="8px" fxLayout="row"  
+                    class="grouping-pill-user" fxLayoutGap="8px" fxLayout="row"  
                     cdkDrag
                     *ngFor="let participant of group.participants">
                     <span>

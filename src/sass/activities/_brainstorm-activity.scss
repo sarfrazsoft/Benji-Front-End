@@ -40,7 +40,6 @@ benji-ms-brainstorming-activity {
       }
       .column {
         position: relative;
-        //min-width: 400px;
         border-radius: 5px;
         .header {
           margin: 10px;
@@ -51,8 +50,6 @@ benji-ms-brainstorming-activity {
             border-radius: 8px;
           }
           .column-name {
-            text-transform: capitalize;
-            //padding-right: 22px;
             font-size: 16px;
             font-weight: 600;
             color: #37352f;
@@ -64,7 +61,7 @@ benji-ms-brainstorming-activity {
             border: 1px solid #828282;
             border-radius: 8px;
             padding: 8px;
-            outline: 4px solid #F3F4F7;
+            outline: 4px solid #f3f4f7;
             width: 314px;
             font-size: 16px;
             font-weight: 600;
@@ -276,11 +273,11 @@ benji-ms-brainstorming-activity {
     }
   }
 }
-.cdk-drag-animating {
-  transition: transform 190000ms cubic-bezier(0, 0, 0.2, 1);
-}
-.cdk-drag-preview,
-.cdk-drag-dragging,
+// .cdk-drag-animating {
+//   transition: transform 190000ms cubic-bezier(0, 0, 0.2, 1);
+// }
+.cdk-drag-preview.brainstorm-idea,
+.cdk-drag-dragging.brainstorm-idea,
 .brainstorm-idea {
   min-height: 50px;
   background-color: white;

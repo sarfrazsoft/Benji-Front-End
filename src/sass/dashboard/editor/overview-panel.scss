@@ -1,6 +1,7 @@
 benji-overview-panel {
   .panel {
-    .dashboard-secondary-button, .import-button {
+    .dashboard-secondary-button,
+    .import-button {
       width: 150px;
       margin: 0 auto;
       margin-top: 16px;
@@ -92,7 +93,7 @@ benji-overview-panel {
   }
 }
 
-.cdk-drag-preview {
+.cdk-drag-preview.activity-container {
   display: flex;
   border-top-right-radius: 7px;
   border-bottom-right-radius: 7px;
