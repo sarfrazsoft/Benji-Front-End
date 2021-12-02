@@ -48,7 +48,24 @@ export class GroupingControlComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.initExistingGroupins();
 
-    this.initSelectedGroup();
+    if (this.activityState.eventType === 'CreateGroupingEvent') {
+      const rt = this.activityState.running_tools;
+      if (rt && rt.grouping_tool) {
+        const grouping = {
+          groupings: this.activityState.running_tools.grouping_tool.groupings,
+          selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
+        };
+        grouping.groupings.forEach((g: GroupingToolGroups) => {
+          if (grouping.selectedGrouping === g.id) {
+            this.selectedGroup = g;
+            this.openGroupingToolDialog(g);
+            this.dialogRef.componentInstance.updateGroupData(g);
+          }
+        });
+      }
+    } else {
+      this.initSelectedGroup();
+    }
   }
 
   initExistingGroupins() {
@@ -100,14 +117,14 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     // to the open grouping modal.
 
     this.socketMessage.emit(new SelectGroupingEvent(grouping.id));
-    const dialogRef = this.openGroupingToolDialog();
+    const dialogRef = this.openGroupingToolDialog(grouping);
     this.selectedGroup = grouping;
     // this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
   addNewGrouping() {
     this.socketMessage.emit(new CreateGroupingEvent('Untitled Grouping'));
-    this.openGroupingToolDialog();
+    // this.openGroupingToolDialog();
     // this.socketMessage.emit(new ViewGroupingEvent(true));
   }
 
@@ -115,10 +132,11 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     this.socketMessage.emit(new DeleteGroupingEvent(grouping.id));
   }
 
-  openGroupingToolDialog() {
+  openGroupingToolDialog(clickedGrouping) {
     this.dialogRef = this.matDialog.open(GroupingToolDialogComponent, {
       panelClass: 'grouping-tool-dialog',
       data: {
+        clickedGrouping: clickedGrouping,
         activityState: this.activityState,
       },
     });

@@ -30,6 +30,8 @@ import { CaseStudyCheckinDialogComponent } from '../../../shared/dialogs/case-st
 })
 export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
   @Input() activityState;
+  @Input() eventType;
+  @Output() applyGroupingOnActivity = new EventEmitter<any>();
   @Output() sendMessage = new EventEmitter<any>();
   @ViewChild('caseStudyEntry', { read: ViewContainerRef, static: true }) entry: ViewContainerRef;
   componentRef: ComponentRef<ParticipantCaseStudyActivityComponent>;
@@ -50,6 +52,25 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.act = this.activityState.casestudyactivity;
+    this.setUpFacilitatorView();
+
+    // this.initGroupingOnActivity();
+  }
+
+  ngOnChanges() {
+    this.act = this.activityState.casestudyactivity;
+    this.groups = this.act.groups;
+    this.applyGroupingOnActivity.emit(this.activityState);
+
+    if (this.eventType === 'GroupingAssignParticipantEvent') {
+      this.setUpFacilitatorView();
+    } else if (this.eventType === 'StartCaseStudyGroupEvent') {
+      this.setUpFacilitatorView();
+    }
+    console.log(this.eventType);
+  }
+
+  setUpFacilitatorView() {
     this.groupsX = this.act.groups;
     const group = this.groupsX[0];
 
@@ -60,8 +81,6 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
     });
 
     this.setGroupingType();
-
-    this.initGroupingOnActivity();
   }
 
   public isEmoji(url: string) {
@@ -75,39 +94,45 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
     //   if (val) {
     // if (this.getEventType() === 'AssignGroupingToActivities') {
     // }
-    this.applyGroupingOnActivity(this.activityState);
+    this.applyGroupingOnActivity.emit(this.activityState);
     //   }
     // });
   }
 
-  applyGroupingOnActivity(state: UpdateMessage) {
-    const activityType = state.activity_type.toLowerCase();
-    console.log(state[activityType].grouping);
-    if (state[activityType].grouping !== null) {
-      // if grouping is already applied return
-      return;
-    }
-    // if grouping is not applied check if grouping tool has
-    // information if grouping should be applied on this activity or not
-    const sm = state;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      for (const grouping of gt.groupings) {
-        if (grouping.assignedActivities.includes(state[activityType].activity_id)) {
-          // const assignedActivities = ['1637726964645'];
-          // if (assignedActivities.includes(state[activityType].activity_id)) {
-          if (activityType === 'BrainstormActivity') {
-            // this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
-          } else if (activityType === 'casestudyactivity') {
-            this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
-          }
-          break;
-        }
-      }
-    }
-  }
+  // applyGroupingOnActivity(state: UpdateMessage) {
+  //   const activityType = state.activity_type.toLowerCase();
+  //   console.log(state[activityType].grouping);
+  //   if (state[activityType].grouping !== null) {
+  //     // if grouping is already applied return
+  //     return;
+  //   }
+  //   // if grouping is not applied check if grouping tool has
+  //   // information if grouping should be applied on this activity or not
+  //   const sm = state;
+  //   if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+  //     const gt = sm.running_tools.grouping_tool;
+  //     for (const grouping of gt.groupings) {
+  //       if (
+  //         grouping.assignedActivities &&
+  //         grouping.assignedActivities.includes(state[activityType].activity_id)
+  //       ) {
+  //         // const assignedActivities = ['1637726964645'];
+  //         // if (assignedActivities.includes(state[activityType].activity_id)) {
+  //         // if (activityType === 'BrainstormActivity') {
+  //         // this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
+  //         // } else if (activityType === 'casestudyactivity') {
+  //         this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
+  //         // }
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
 
   createComponent(group: Group) {
+    if (this.componentRef) {
+      this.componentRef.destroy();
+    }
     const b = this.componentFactoryResolver.resolveComponentFactory(ParticipantCaseStudyActivityComponent);
     this.componentRef = this.entry.createComponent(b);
     this.componentRef.instance.activityState = this.activityState;
@@ -128,12 +153,6 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
       }
     }
     return participants;
-  }
-
-  ngOnChanges() {
-    this.act = this.activityState.casestudyactivity;
-    this.groups = this.act.groups;
-    this.applyGroupingOnActivity(this.activityState);
   }
 
   getMyNoteTaker(userId: number): CaseStudyParticipantSet {

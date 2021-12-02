@@ -121,6 +121,11 @@ export abstract class BaseActivityComponent implements OnInit {
     return this.activityState.eventType;
   }
 
+  // getterEventType
+  public get getterEventType(): string {
+    return this.activityState.eventType;
+  }
+
   getMyGroup(userId, groups) {
     for (let i = 0; i < groups.length; i++) {
       const group = groups[i];

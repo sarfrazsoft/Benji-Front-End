@@ -42,6 +42,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   editingName = {};
   groupName = '';
   showStartGroupingButton: boolean;
+  showSaveChangesButton = false;
   allowParticipantsJoiningMidActivity: boolean;
   private typingTimer;
   private typingTimerGroups;
@@ -67,13 +68,14 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   constructor(
     private dialogRef: MatDialogRef<GroupingToolDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { activityState: UpdateMessage },
+    public data: { activityState: UpdateMessage; clickedGrouping: GroupingToolGroups },
     private matDialog: MatDialog,
     private utilsService: UtilsService,
     private activitiesService: ActivitiesService,
     private backendRestService: BackendRestService
   ) {
     this.activityState = data.activityState;
+    this.selectedGrouping = data.clickedGrouping;
   }
 
   closeDialog() {
@@ -89,8 +91,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
     const type = state.activity_type.toLowerCase();
     if (state[type].grouping && state[type].grouping.id) {
-      if (state[type].grouping.id === state.running_tools.grouping_tool.selectedGrouping) {
+      if (state[type].grouping.id === this.selectedGrouping.id) {
         this.showStartGroupingButton = false;
+        if (type === 'casestudyactivity') {
+          this.showSaveChangesButton = true;
+        }
       } else {
         this.showStartGroupingButton = true;
       }
@@ -123,7 +128,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   initSelectedGroup(grouping) {
-    // console.log(grouping);
+    console.log(grouping);
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
@@ -135,6 +140,8 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         }
         if (g.assignedActivities) {
           this.selectedActivitiesIds = g.assignedActivities.length ? g.assignedActivities : [];
+        } else {
+          this.selectedActivitiesIds = [];
         }
 
         this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
@@ -282,16 +289,23 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       const activityType = this.activitiesService.getActivityType(this.activityState);
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
       // window.localStorage.setItem('isGroupingCreated', code);
-      // if (activityType === 'casestudyactivity') {
-      //   this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
-      // } else if (activityType === 'brainstormactivity') {
-
-      // }
+      if (activityType === 'casestudyactivity') {
+        this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
+      } else if (activityType === 'brainstormactivity') {
+        this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
+      }
       // this.showStartGroupingButton = false;
       // this.sendMessage.emit(new ViewGroupingEvent(false));
+      this.dialogRef.close();
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
     }
+  }
+
+  saveActivityGrouping() {
+    this.sendMessage.emit(new ResetGroupingEvent(this.selectedGrouping.id));
+    this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
+    this.dialogRef.close();
   }
 
   changeGroupAccess(status) {
@@ -360,7 +374,11 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         if (diff[0] === currentActivityID) {
           // the grouping was removed from current activity
           // reset grouping on the activity hoe
+          this.sendMessage.emit(
+            new AssignGroupingToActivities(this.selectedGrouping.id, this.selectedActivities)
+          );
           this.sendMessage.emit(new ResetGroupingEvent(this.selectedGrouping.id));
+          return;
         }
       } else if (activities.length > this.selectedGrouping.assignedActivities.length) {
       }

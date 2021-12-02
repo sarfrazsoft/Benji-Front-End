@@ -216,7 +216,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   openGroupingParticipantDialog() {
     const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
-      panelClass: 'grouping-participant-dialog',
+      panelClass: 'participant-grouping-dialog',
       data: { activityState: this.activityState, participantCode: this.participantCode },
     });
 

@@ -49,10 +49,9 @@
           </div>
         </div>
       </div>
-      <div fxLayout="column">
+      <!-- <div fxLayout="column">
         <div class="header">Activities</div>
         <div>
-          <!-- [items]="activities$ | async" -->
           <ng-select
             [items]="lessonRunActivities"
             [multiple]="true"
@@ -61,18 +60,14 @@
             bindValue="id"
             [(ngModel)]="selectedActivities"
             (change)="selectedActivitiesChanged($event)">
-            <!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
-                <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.gender | uppercase}}
-            </ng-template> -->
             <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
                 <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
             </ng-template>
           </ng-select>
       
-          <!-- <br>
-          <small>{{selectedActivities | json}}</small> -->
         </div>
-      </div>
+      </div> -->
+      <!-- <small>{{selectedActivities | json}}</small> -->
       <!-- <div fxLayout="row" fxLayoutGap="16px">
         <div fxLayout="column">
           <div class="header">Grouping Style</div>
@@ -216,7 +211,13 @@
 
     <!-- controls -->
     <div class="end-buttons" fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="18px">
-      <!-- <div fxLayout="column" class="white-button">Save changes</div> -->
+      <div 
+        fxLayout="column" 
+        class="white-button"
+        *ngIf="showSaveChangesButton"
+        (click)="saveActivityGrouping()">
+        Save changes
+      </div>
       <div fxLayout="column" class="blue-button"
         (click)="makeActivityGrouping()"
         *ngIf="showStartGroupingButton">

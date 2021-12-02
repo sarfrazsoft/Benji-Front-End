@@ -1,6 +1,8 @@
 <ng-container *ngxPermissionsOnly="'ADMIN'">
   <benji-case-study-facilitator-view
+    [eventType]="getterEventType"
     [activityState]="activityState"
+    (applyGroupingOnActivity)="applyGroupingOnActivity($event)"
     (sendMessage)="sendSocketMessage($event)"
   >
   </benji-case-study-facilitator-view>
