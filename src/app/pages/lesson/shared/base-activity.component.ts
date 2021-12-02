@@ -2,7 +2,12 @@ import { Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Timer } from 'src/app/services/backend/schema';
 import { Group } from 'src/app/services/backend/schema/activities/activities';
 import { Participant } from 'src/app/services/backend/schema/course_details';
-import { ActivityEvent, UpdateMessage } from 'src/app/services/backend/schema/messages';
+import {
+  ActivityEvent,
+  StartBrainstormGroupEvent,
+  StartCaseStudyGroupEvent,
+  UpdateMessage,
+} from 'src/app/services/backend/schema/messages';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
@@ -125,5 +130,34 @@ export abstract class BaseActivityComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  applyGroupingOnActivity(state: UpdateMessage) {
+    const activityType = this.getActivityType().toLowerCase();
+    if (state[activityType].grouping !== null) {
+      // if grouping is already applied return
+      return;
+    }
+    // if grouping is not applied check if grouping tool has
+    // information if grouping should be applied on this activity or not
+    const sm = state;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+      const gt = sm.running_tools.grouping_tool;
+      for (const grouping of gt.groupings) {
+        if (
+          grouping.assignedActivities &&
+          grouping.assignedActivities.includes(state[activityType].activity_id)
+        ) {
+          // const assignedActivities = ['1637726964645'];
+          // if (assignedActivities.includes(state[activityType].activity_id)) {
+          if (activityType === 'brainstormactivity') {
+            this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
+          } else if (activityType === 'casestudyactivity') {
+            this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
+          }
+          break;
+        }
+      }
+    }
   }
 }

@@ -40,7 +40,7 @@ export const Dialogs = [
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
   ImagePickerDialogComponent,
-  // ImportSlidesDialogComponent,
+  ImportSlidesDialogComponent,
   UnsplashComponent,
   GiphyComponent,
   UploadImageComponent,

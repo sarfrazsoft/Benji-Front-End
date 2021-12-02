@@ -1,15 +1,17 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { difference } from 'lodash';
 import { Observable } from 'rxjs-compat/Observable';
 import { ActivityTypes } from 'src/app/globals';
 import { ActivitiesService, BackendRestService } from 'src/app/services';
 import {
+  AssignGroupingToActivities,
   Category,
   CreateGroupsEvent,
   RemoveParticipantFromGroupEvent,
+  ResetGroupingEvent,
   StartBrainstormGroupEvent,
-  StartGroupingEvent,
   UpdateGroupingStyleEvent,
 } from 'src/app/services/backend/schema';
 import {
@@ -121,7 +123,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   }
 
   initSelectedGroup(grouping) {
-    console.log(grouping);
+    // console.log(grouping);
     grouping.groupings.forEach((g: GroupingToolGroups) => {
       if (grouping.selectedGrouping === g.id) {
         this.selectedGrouping = g;
@@ -131,7 +133,9 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         } else if (g.style === 'selfAssigned') {
           this.groupAccess = true;
         }
-        this.selectedActivitiesIds = [3695, 3695];
+        if (g.assignedActivities) {
+          this.selectedActivitiesIds = g.assignedActivities.length ? g.assignedActivities : [];
+        }
 
         this.allowParticipantsJoiningMidActivity = g.allowParticipantsJoiningMidActivity;
         // this.unassignedUsers = g.unassignedParticipants;
@@ -277,17 +281,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       const activityID = this.activitiesService.getActivityID(this.activityState);
       const activityType = this.activitiesService.getActivityType(this.activityState);
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
-      window.localStorage.setItem('isGroupingCreated', code);
-      if (activityType === 'casestudyactivity') {
-        this.sendMessage.emit(new StartCaseStudyGroupEvent());
-      } else if (activityType === 'brainstormactivity') {
-        const ids = this.selectedActivities.map((val) => {
-          return val.id;
-        });
-        // this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
-        this.sendMessage.emit(new StartGroupingEvent(this.selectedGrouping.id, ids));
-      }
-      this.showStartGroupingButton = false;
+      // window.localStorage.setItem('isGroupingCreated', code);
+      // if (activityType === 'casestudyactivity') {
+      //   this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
+      // } else if (activityType === 'brainstormactivity') {
+
+      // }
+      // this.showStartGroupingButton = false;
       // this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
@@ -351,11 +351,29 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new CreateGroupsEvent(this.selectedGrouping.id, noOfGroups));
   }
 
+  selectedActivitiesChanged(activities: Array<{ id: string; name: string }>) {
+    if (this.selectedGrouping.assignedActivities) {
+      if (activities.length < this.selectedGrouping.assignedActivities.length) {
+        const currentActivityID = this.activitiesService.getActivityID(this.activityState);
+        const ids = activities.map((val) => val.id);
+        const diff = difference(this.selectedGrouping.assignedActivities, ids);
+        if (diff[0] === currentActivityID) {
+          // the grouping was removed from current activity
+          // reset grouping on the activity hoe
+          this.sendMessage.emit(new ResetGroupingEvent(this.selectedGrouping.id));
+        }
+      } else if (activities.length > this.selectedGrouping.assignedActivities.length) {
+      }
+    }
+    this.sendMessage.emit(new AssignGroupingToActivities(this.selectedGrouping.id, this.selectedActivities));
+  }
+
   getLessonActivities() {
-    this.activities$ = this.backendRestService
+    this.backendRestService
       .getLessonRunActivities(this.activityState.lesson_run.lessonrun_code)
       .map((activities) => {
         const acts = [];
+        const selectedActivities = [];
         activities.forEach((activity) => {
           if (
             activity.activity_type !== 'MCQResultsActivity' &&
@@ -367,21 +385,23 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
               // acts.push({ id: activity.id, name: activity.instructions });
               acts.push({ id: activity.activity_id, name: activity.instructions });
               if (this.selectedActivitiesIds.includes(activity.activity_id)) {
-                this.selectedActivities.push({ id: activity.activity_id, name: activity.instructions });
+                selectedActivities.push(activity.activity_id);
               }
             } else if (activity.activity_type === this.at.caseStudy) {
               acts.push({ id: activity.activity_id, name: activity.activity_title });
               if (this.selectedActivitiesIds.includes(activity.activity_id)) {
-                this.selectedActivities.push({ id: activity.activity_id, name: activity.activity_title });
+                selectedActivities.push(activity.activity_id);
               }
               // acts.push({ id: activity.id, name: activity.activity_title });
             }
           }
         });
-        // this.selectedActivities = acts;
-        this.lessonRunActivities = acts;
 
-        return acts;
+        return { a: acts, b: selectedActivities };
+      })
+      .subscribe((v) => {
+        this.lessonRunActivities = v.a;
+        this.selectedActivities = v.b;
       });
   }
 }

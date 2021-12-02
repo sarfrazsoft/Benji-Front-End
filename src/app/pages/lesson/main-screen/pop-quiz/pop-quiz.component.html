@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div fxLayout="column" class="participants-counts">
+    <div fxLayout="column" class="participants-counts" *ngxPermissionsOnly="'ADMIN'">
       <div class="heading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
         <img src="/assets/img/mcq/player-status.svg">
         <div class="text">Player Status</div>
@@ -123,7 +123,7 @@
         </div>
       </div>
     </div>
-    <div class="mcq-leaderboard" fxLayout="column" fxLayoutGap="20px">
+    <div class="mcq-leaderboard" fxLayout="column" fxLayoutGap="20px" *ngxPermissionsOnly="'ADMIN'">
       <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="8px">
         <div fxLayout="column">
           <img src="/assets/img/trophy.svg" width="20" height="20">

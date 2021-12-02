@@ -53,8 +53,13 @@
                 class="participant" 
                 fxLayoutAlign="start center">
                 <!-- <img src="{{participant.photo}}" /> -->
-                <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant)}}</div>
-                <div class="name"> {{participant}} </div>
+                <div 
+                  class="initials {{'color' + getRemainder(i)}}" 
+                  fxLayout="column" 
+                  fxLayoutAlign="center center">
+                  {{ getInitials(participant) }}
+                </div>
+                <div class="name"> {{ participant }} </div>
               </div>
             </div>
           </div>

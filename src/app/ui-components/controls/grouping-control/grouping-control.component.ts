@@ -83,7 +83,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       grouping.groupings.forEach((g: GroupingToolGroups) => {
         if (grouping.selectedGrouping === g.id) {
           this.selectedGroup = g;
-          if (this.dialogRef) {
+          if (this.dialogRef && this.dialogRef.componentInstance) {
             // if the trainer grouping dialog is open then update the data for it
             this.dialogRef.componentInstance.updateGroupData(this.selectedGroup);
           }
@@ -129,8 +129,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
     this.dialogRef.afterClosed().subscribe((result) => {
       sub.unsubscribe();
-      if (result === 'Use Template') {
-      }
+      this.dialogRef = null;
       console.log(`Dialog result: ${result}`);
     });
     return this.dialogRef;
@@ -143,7 +142,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
       window.localStorage.setItem('isGroupingCreated', code);
       if (activityType === 'casestudyactivity') {
-        this.socketMessage.emit(new StartCaseStudyGroupEvent());
+        this.socketMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
       } else if (activityType === 'brainstormactivity') {
         this.socketMessage.emit(new StartBrainstormGroupEvent(grouping.id));
       }

@@ -87,6 +87,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.ideaRemoved(this.act, this.columns);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.ideaEdited(this.act, this.columns);
+      } else if (this.eventType === 'BrainstormCreateCategoryEvent') {
+        this.columns = this.brainstormService.populateCategories(this.act, this.columns);
       }
     }
   }

@@ -27,7 +27,13 @@ export class MainScreenGoogleSlidesActivityComponent
   }
   // https://docs.google.com/presentation/d/1HzNwrvyaUYi8ZKi8csK1SOTSKC07ePBeENOt-MPLXek/preview
   initVideo() {
-    this.videoURL = this.activityState.googleslidesactivity.slide_url;
+    let url = this.activityState.googleslidesactivity.slide_url;
+    url = url.replace('/pub', '/embed');
+    // this.videoURL = this.activityState.googleslidesactivity.slide_url;
+    this.videoURL = url;
+    // 'https://docs.google.com/presentation/d/1HzNwrvyaUYi8ZKi8csK1SOTSKC07ePBeENOt-MPLXek/preview';
+    // 'https://docs.google.com/presentation/d/e/2PACX-1vRoKUJq6iFZmjUavTVZIaglj-5U6WiFClc2jUwh4BLskajJ18eNjSfjRKI/embed?start=false&loop=false&delayms=3000';
+    // 'https://docs.google.com/presentation/d/e/2PACX-1vRoKUJq6iFZmjUavTVZIaglj-5U6WiFClc2jUwh4BLskajJ18eNjSfjRKI/pub?start=false&loop=false&delayms=3000';
   }
 
   ngOnAfterViewInit() {}

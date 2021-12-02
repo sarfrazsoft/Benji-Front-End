@@ -10,6 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { CaseStudyActivity, CaseStudyParticipantSet, Group } from 'src/app/services/backend/schema';
 import { ParticipantCaseStudyActivityComponent } from '../../participant/case-study-activity/case-study-activity.component';
@@ -35,7 +36,8 @@ export class MainScreenCaseStudyActivityComponent
   constructor(
     private dialog: MatDialog,
     private contextService: ContextService,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private permissionsService: NgxPermissionsService
   ) {
     super();
   }
