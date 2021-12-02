@@ -146,4 +146,17 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
       }
     });
   }
+
+  getInitials(nameString: string) {
+    const fullName = nameString.split(' ');
+    let inits = '';
+    fullName.forEach((name) => {
+      inits = inits + name.charAt(0);
+    });
+    return inits.toUpperCase();
+  }
+  
+  getRemainder (num) {
+    return num % 10;
+  }
 }
