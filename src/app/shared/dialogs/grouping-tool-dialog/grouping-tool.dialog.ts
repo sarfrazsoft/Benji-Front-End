@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { difference } from 'lodash';
 import { Observable } from 'rxjs-compat/Observable';
 import { ActivityTypes } from 'src/app/globals';
 import { ActivitiesService, BackendRestService } from 'src/app/services';
@@ -9,6 +10,7 @@ import {
   Category,
   CreateGroupsEvent,
   RemoveParticipantFromGroupEvent,
+  ResetGroupingEvent,
   StartBrainstormGroupEvent,
   UpdateGroupingStyleEvent,
 } from 'src/app/services/backend/schema';
@@ -279,19 +281,13 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       const activityID = this.activitiesService.getActivityID(this.activityState);
       const activityType = this.activitiesService.getActivityType(this.activityState);
       const code = activityID + this.activityState.lesson_run.lessonrun_code;
-      window.localStorage.setItem('isGroupingCreated', code);
-      if (activityType === 'casestudyactivity') {
-        this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
-      } else if (activityType === 'brainstormactivity') {
-        const ids = this.selectedActivities.map((val) => {
-          return val.id;
-        });
-        // this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
-        this.sendMessage.emit(
-          new AssignGroupingToActivities(this.selectedGrouping.id, this.selectedActivities)
-        );
-      }
-      this.showStartGroupingButton = false;
+      // window.localStorage.setItem('isGroupingCreated', code);
+      // if (activityType === 'casestudyactivity') {
+      //   this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
+      // } else if (activityType === 'brainstormactivity') {
+
+      // }
+      // this.showStartGroupingButton = false;
       // this.sendMessage.emit(new ViewGroupingEvent(false));
     } else {
       this.utilsService.openWarningNotification('Add participants to the groups', '');
@@ -353,6 +349,23 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   doneTypingGroups(noOfGroups) {
     this.sendMessage.emit(new CreateGroupsEvent(this.selectedGrouping.id, noOfGroups));
+  }
+
+  selectedActivitiesChanged(activities: Array<{ id: string; name: string }>) {
+    if (this.selectedGrouping.assignedActivities) {
+      if (activities.length < this.selectedGrouping.assignedActivities.length) {
+        const currentActivityID = this.activitiesService.getActivityID(this.activityState);
+        const ids = activities.map((val) => val.id);
+        const diff = difference(this.selectedGrouping.assignedActivities, ids);
+        if (diff[0] === currentActivityID) {
+          // the grouping was removed from current activity
+          // reset grouping on the activity hoe
+          this.sendMessage.emit(new ResetGroupingEvent(this.selectedGrouping.id));
+        }
+      } else if (activities.length > this.selectedGrouping.assignedActivities.length) {
+      }
+    }
+    this.sendMessage.emit(new AssignGroupingToActivities(this.selectedGrouping.id, this.selectedActivities));
   }
 
   getLessonActivities() {

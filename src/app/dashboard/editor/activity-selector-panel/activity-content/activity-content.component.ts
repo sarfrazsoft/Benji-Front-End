@@ -426,6 +426,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.defaultValue = true;
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'grouping') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = null;
                 }
               } else if (act.activity_type === this.at.feedback) {
                 if (mapSource.internal_type === 'FeedbackActivitySerializer') {

@@ -485,6 +485,7 @@ export interface CaseStudyActivity extends ParentActivity {
   activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;
+  grouping: GroupingToolGroups;
   groups: Array<Group>;
   casestudyparticipant_set: Array<CaseStudyParticipantSet>;
   casestudyquestion_set: Array<{

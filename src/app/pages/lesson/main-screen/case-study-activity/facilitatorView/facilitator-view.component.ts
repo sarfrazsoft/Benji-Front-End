@@ -83,6 +83,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
 
   applyGroupingOnActivity(state: UpdateMessage) {
     const activityType = state.activity_type.toLowerCase();
+    console.log(state[activityType].groups);
     if (state[activityType].groups !== null) {
       // if grouping is already applied return
       return;

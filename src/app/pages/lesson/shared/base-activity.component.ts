@@ -144,7 +144,10 @@ export abstract class BaseActivityComponent implements OnInit {
     if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
       const gt = sm.running_tools.grouping_tool;
       for (const grouping of gt.groupings) {
-        if (grouping.assignedActivities.includes(state[activityType].activity_id)) {
+        if (
+          grouping.assignedActivities &&
+          grouping.assignedActivities.includes(state[activityType].activity_id)
+        ) {
           // const assignedActivities = ['1637726964645'];
           // if (assignedActivities.includes(state[activityType].activity_id)) {
           if (activityType === 'brainstormactivity') {
