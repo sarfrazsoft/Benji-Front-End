@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { difference } from 'lodash';
 import { Observable } from 'rxjs-compat/Observable';
@@ -34,7 +34,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: 'grouping-tool.dialog.html',
 })
 export class GroupingToolDialogComponent implements OnInit, OnChanges {
-  groupingTitle;
+  groupingTitle = "Untitled Grouping";
   selectedGrouping: GroupingToolGroups;
   unassignedUsers = [];
   breakoutRooms: Array<{ id: number; name: string; participants: Array<any> }> = [];
@@ -46,12 +46,14 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   private typingTimer;
   private typingTimerGroups;
   numberOfRooms = 0;
-  editingTitle = false;
+  editingGroupingTitle = false;
   groupAccess = false;
   groupsCount = 1;
 
   activityState: UpdateMessage;
   @Output() sendMessage = new EventEmitter<any>();
+  @ViewChild('groupingName') groupingNameElement: ElementRef;
+  @ViewChild('groupNam') groupNameElement: ElementRef;
   groupingStyles = [
     { type: 'hostAssigned', title: 'Custom', description: `Host assigns people` },
     { type: 'selfAssigned', title: 'Self-Assign', description: `People choose their group` },
@@ -206,22 +208,6 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     }
   }
 
-  typingStoped(event) {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.doneTyping();
-    }, 1500);
-  }
-
-  // on keydown, clear the countdown
-  typingStarted() {
-    clearTimeout(this.typingTimer);
-  }
-
-  doneTyping() {
-    this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGrouping.id, this.groupingTitle));
-  }
-
   toggleChooseGroup($event) {
     this.sendMessage.emit(new AllowParticipantGroupingEvent($event.currentTarget.checked));
   }
@@ -307,6 +293,9 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
   editGroupName(group) {
     this.editingName[group.id] = true;
     this.groupName = group.name;
+    setTimeout(() => {
+      this.groupNameElement.nativeElement.focus();
+    }, 0);
   }
 
   saveEditedGroupName(group) {
@@ -314,12 +303,19 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     this.editingName[group.id] = false;
   }
 
-  deleteGroup(group) {
-    this.sendMessage.emit(new DeleteGroupingGroupEvent(group.id));
+  editGroupingTitle() {
+    this.editingGroupingTitle = true;
+    setTimeout(() => {
+      this.groupingNameElement.nativeElement.focus();
+    }, 0);
+  }
+  saveEditedGroupingTitle() {
+    this.editingGroupingTitle = false;
+    this.sendMessage.emit(new EditGroupingTitleEvent(this.selectedGrouping.id, this.groupingTitle));
   }
 
-  editTitle() {
-    this.editingTitle = !this.editingTitle;
+  deleteGroup(group) {
+    this.sendMessage.emit(new DeleteGroupingGroupEvent(group.id));
   }
 
   updateGroupsCount(value) {

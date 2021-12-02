@@ -51,33 +51,41 @@
     .grey-area {
       background: #F3F4F7;
       border-radius: 16px 0px 0px 16px;
-      padding: 32px;
+      padding: 28px;
       width: 245px;
       float: left;
       height: 631px;
       .content-header {
         margin-bottom: 32px;
-        input.title {
+        .title {
           font-weight: 600;
-          font-size: 24px;
+          font-size: 20px;
           color: #37352f;
-          margin-left: 8px;
-          border: 0px;
-          height: 27px;
-          background: #F3F4F7;
-          &:focus {
-            border: 0px;
-            outline: 0px;
+          .not-editing {
+            margin: 13px 0px 8px 12px;
           }
-        }
-        .edit {
-          cursor: pointer;
-          margin-left: 11px;
-          margin-top: 4px;
+          .editing {
+            margin-top: 4px;
+            input {
+              font-weight: 600;
+              font-size: 20px;
+              color: #37352f;
+              width: 212px;
+              height: 40px;
+              background: #FFFFFF;
+              border: 1px solid #828282;
+              box-sizing: border-box;
+              border-radius: 8px;
+              padding: 8px 11px;
+              &:focus-visible {
+                outline: none;
+              }
+            }
+          }
         }
       }
       .settings {
-        margin-left: 8px;
+        margin-left: 12px;
         .setting {
           margin-bottom: 24px;
         }
@@ -122,6 +130,19 @@
           cursor: pointer;
           &::selection {
             background: transparent;
+          }
+        }
+        .activities {
+          .ng-select-container {
+            background: #FFFFFF;
+            border: 1px solid #828282;
+            box-sizing: border-box;
+            border-radius: 8px;
+            padding: 8px;
+            .ng-value-container {
+              padding-top: 0px;
+              padding-left: 0px;
+            }
           }
         }
       }
@@ -172,7 +193,7 @@
         height: 400px;
         overflow-y: auto;
         .group {
-          padding: 16px;
+          padding: 8px 16px 16px 16px;
           border: 1px solid #e2e0df;
           border-radius: 8px;
           height: 192px;
@@ -183,7 +204,21 @@
             font-size: 16px;
             font-weight: 500;
             color: #616161;
-            margin-left: 8px;
+            input {
+              width: 66px;
+              border: 1px solid #BDBDBD;
+              border-radius: 4px;
+              padding: 7px 8px;
+              color: #37352f;
+              &:focus-visible {
+                outline: unset;
+              }
+            }
+            .not-editing {
+              margin-left: 9px;
+              margin-top: 8px;
+              margin-bottom: 8px;
+            }
           }
           .count {
             font-size: 14px;
@@ -198,7 +233,7 @@
             background: #eff1f2;
             border-radius: 4px;
             height: 152px;
-            margin-top: 16px;
+            margin-top: 8px;
             font-size: 16px;
             font-weight: 400;
             text-align: center;
