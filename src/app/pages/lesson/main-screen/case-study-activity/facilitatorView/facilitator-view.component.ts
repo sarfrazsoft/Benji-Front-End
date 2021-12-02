@@ -61,7 +61,6 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
 
     this.setGroupingType();
 
-    this.act = this.activityState.casestudyactivity;
     this.initGroupingOnActivity();
   }
 
@@ -83,8 +82,8 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
 
   applyGroupingOnActivity(state: UpdateMessage) {
     const activityType = state.activity_type.toLowerCase();
-    console.log(state[activityType].groups);
-    if (state[activityType].groups !== null) {
+    console.log(state[activityType].grouping);
+    if (state[activityType].grouping !== null) {
       // if grouping is already applied return
       return;
     }
@@ -99,7 +98,7 @@ export class CaseStudyFacilitatorViewComponent implements OnInit, OnChanges {
           // if (assignedActivities.includes(state[activityType].activity_id)) {
           if (activityType === 'BrainstormActivity') {
             // this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
-          } else if (activityType === 'CaseStudyActivity') {
+          } else if (activityType === 'casestudyactivity') {
             this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
           }
           break;
