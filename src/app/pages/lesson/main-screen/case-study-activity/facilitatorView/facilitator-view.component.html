@@ -31,10 +31,11 @@
         <div
           class="group-container"
           fxLayout="row"
+          fxLayoutGap="8px"
           fxLayoutAlign="start center"
-          *ngFor="let group of groupsX"
-          (click)="selectGroup(group)">
-          <div class="group-name"> {{ group.title }} </div>
+          *ngFor="let group of groupsX; let i = index;">
+          <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(group.title)}}</div>
+          <div class="group-name" (click)="selectGroup(group)"> {{ group.title }} </div>
         </div>
       </div>
     </div>

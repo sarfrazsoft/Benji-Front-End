@@ -1,21 +1,27 @@
 <div class="wrapper">
   <div class="grey-area">
     <div class="content-header" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="row">
-        <input
-          style="width: 100%;"
-          class="title" 
-          type="text"
-          (keyup)="typingStoped($event)"
-          (keydown)="typingStarted()"
-          [(ngModel)]="groupingTitle"
-          placeholder="Untitled Grouping"
-          [disabled]='!editingTitle'>
-        <img class="edit" src="/assets/img/grouping/edit-pen.svg" (click)="editTitle()">
+      <div fxLayout="row" class="title">
+        <div 
+          *ngIf="!editingGroupingTitle"
+          (click)="editGroupingTitle()"
+          class="not-editing">
+          {{ groupingTitle }}
+        </div>
+        <!-- <div *ngIf="editingGroupingTitle" class="editing"> -->
+        <div *ngIf="editingGroupingTitle" class="editing">
+          <input
+            #groupingName
+            style="width: 100%;"
+            type="text"
+            [(ngModel)]="groupingTitle" 
+            (blur)="saveEditedGroupingTitle()"
+            (keyup.enter)="saveEditedGroupingTitle()">
+        </div>
       </div>
     </div>
     <div fxLayout="column" fxLayoutAlign="start start" class="settings">
-      <div fxLayout="column">
+      <div fxLayout="column" class="setting">
         <div class="header">Group Access</div>
         <div fxLayout="row" fxLayoutAlign="space-between center" class="toggler">
           <div class="option" 
@@ -31,7 +37,7 @@
         </div>
         <div class="subheader">Host needs to assign participants to groups.</div>
       </div>
-      <div fxLayout="column">
+      <div fxLayout="column" class="setting">
         <div class="header">Number of groups</div>
         <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
           <div 
@@ -49,12 +55,14 @@
           </div>
         </div>
       </div>
-      <!-- <div fxLayout="column">
+      <!--
+      <div fxLayout="column" class="setting activities">
         <div class="header">Activities</div>
         <div>
           <ng-select
             [items]="lessonRunActivities"
             [multiple]="true"
+            [clearable]="false"
             bindLabel="name"
             [closeOnSelect]="false"
             bindValue="id"
@@ -159,13 +167,16 @@
                 <div fxLayout="column" class="group-title">
                   <div 
                     *ngIf="!editingName[group.id]"
-                    (click)="editGroupName(group)">
+                    (click)="editGroupName(group)"
+                    class="not-editing">
                     {{ group.name }}
                   </div>
-                  <div *ngIf="editingName[group.id]">
+                  <div *ngIf="editingName[group.id]" class="editing">
+                    <!-- <input 
+                      #groupName -->
                     <input 
-                      type="text" 
-                      style="width: 125px;" 
+                      #groupNam
+                      type="text"
                       [(ngModel)]="groupName" 
                       (blur)="saveEditedGroupName(group)"
                       (keyup.enter)="saveEditedGroupName(group)">

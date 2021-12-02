@@ -46,22 +46,31 @@ benji-ms-brainstorming-activity {
           margin: 10px;
           min-height: 40px;
           font-size: 24px;
+          .grey-bg {
+            background: #f3f4f7;
+            border-radius: 8px;
+          }
           .column-name {
             text-transform: capitalize;
             //padding-right: 22px;
             font-size: 16px;
             font-weight: 600;
             color: #37352f;
-            background: #f3f4f7;
             border-radius: 8px;
             padding: 12px;
+            outline: 4px solid #fff;
           }
           input {
+            border: 1px solid #828282;
             border-radius: 8px;
-            border: #dfe5e7 1px solid;
-            box-sizing: border-box;
-            padding-left: 5px;
-            width: 100%;
+            padding: 8px;
+            outline: 4px solid #F3F4F7;
+            width: 314px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #37352f;
+            height: 21px;
+            margin: 4px;
             &:focus {
               outline: none;
             }
