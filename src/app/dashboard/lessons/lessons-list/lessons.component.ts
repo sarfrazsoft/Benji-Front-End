@@ -16,8 +16,6 @@ export interface PeriodicElement {
   endDate: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [];
-
 @Component({
   selector: 'benji-lessons-list',
   templateUrl: './lessons.component.html',
@@ -30,7 +28,7 @@ export class LessonsComponent implements OnInit {
   eventsSubject: Subject<void> = new Subject<void>();
 
   displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'endDate', 'options'];
-  dataSource = ELEMENT_DATA;
+  dataSource: PeriodicElement[] = [];
 
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
@@ -69,19 +67,7 @@ export class LessonsComponent implements OnInit {
     if (this.lessons.length) {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
-
-    const slicedArray = this.lessonRuns.slice(0, 5);
-    slicedArray.forEach((val: any) => {
-      let startDate = new Date(val.start_time);
-      let endDate = new Date(val.end_time);
-      this.dataSource.push(
-        { title: val.lesson.lesson_name, 
-          host:  val.host.first_name + ' ' + val.host.last_name, 
-          participants: val.participant_set.length, 
-          startDate: this.months[startDate.getMonth()] +' '+ startDate.getDate().toString() +', '+ startDate.getFullYear(),
-          endDate: this.months[endDate.getMonth()] +' '+ endDate.getDate().toString() +', '+ endDate.getFullYear(),
-        })
-    });
+    this.getActiveSessions();
   }
 
   openDetails(lesson: Lesson) {
@@ -105,6 +91,22 @@ export class LessonsComponent implements OnInit {
       } else {
         this.lessons = lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
       }
+    });
+  }
+
+  getActiveSessions() {
+    this.dataSource = [];
+    const slicedArray = this.lessonRuns.slice(0, 5);
+    slicedArray.forEach((val: any) => {
+      let startDate = new Date(val.start_time);
+      let endDate = new Date(val.end_time);
+      this.dataSource.push(
+        { title: val.lesson.lesson_name, 
+          host:  val.host.first_name + ' ' + val.host.last_name, 
+          participants: val.participant_set.length, 
+          startDate: this.months[startDate.getMonth()] +' '+ startDate.getDate().toString() +', '+ startDate.getFullYear(),
+          endDate: this.months[endDate.getMonth()] +' '+ endDate.getDate().toString() +', '+ endDate.getFullYear(),
+        })
     });
   }
 }

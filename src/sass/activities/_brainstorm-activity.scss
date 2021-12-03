@@ -338,10 +338,13 @@ benji-ms-brainstorming-activity {
     .user-feed {
       margin-bottom: 8px;
       position: relative;
-      .dp {
+      .initials {
         width: 16px;
         height: 16px;
-        border-radius: 50%;
+        border-radius: 50%;    
+        font-size: 6px;
+        color: #fff;
+        line-height: normal;
       }
       .name {
         font-size: 10px;

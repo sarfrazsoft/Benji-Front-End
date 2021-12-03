@@ -58,9 +58,18 @@
         <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
       </div>
     </div>
-    <ng-container *ngFor="let comment of item.comments">
+    <ng-container *ngFor="let comment of item.comments; let i = index;">
       <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
-        <img class="dp" src="/assets/img/placeholder.png"> 
+        <!-- <img class="dp" src="/assets/img/placeholder.png"> -->
+        <div 
+          class="initials {{ 'color' + ( i % 10 ) }}" 
+          fxLayout="column" 
+          fxLayoutAlign="center center"
+          >
+          <div>
+            {{ getInitials(getParticipantName(comment.participant)) }}
+          </div>
+        </div> 
         <div fxLayout="column" fxLayoutAlign="start start">
           <div class="name">{{ getParticipantName(comment.participant) }}</div>
           <div class="comment">{{ comment.comment }}</div>

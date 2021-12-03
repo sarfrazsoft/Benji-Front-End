@@ -54,7 +54,7 @@
                 fxLayoutAlign="start center">
                 <!-- <img src="{{participant.photo}}" /> -->
                 <div 
-                  class="initials {{'color' + getRemainder(i)}}" 
+                  class="initials {{'color' + (i % 10)}}" 
                   fxLayout="column" 
                   fxLayoutAlign="center center">
                   {{ getInitials(participant) }}
@@ -74,7 +74,13 @@
                 class="participant" 
                 fxLayoutAlign="start center">
                 <!-- <img src="{{participant.photo}}" /> -->
-                <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant.display_name)}}</div>
+                <div 
+                  class="initials {{'color' + (i % 10)}}" 
+                  fxLayout="column" 
+                  fxLayoutAlign="center center"
+                  >
+                    {{getInitials(participant.display_name)}}
+                </div>
                 <div class="name"> {{participant.display_name}} </div>
               </div>
             </div>
