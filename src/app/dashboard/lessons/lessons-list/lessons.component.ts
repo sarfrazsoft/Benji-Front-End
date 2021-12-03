@@ -7,8 +7,10 @@ import { AdminService } from '../../admin-panel/services';
 import { orderBy, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { Subject } from 'rxjs/Subject';
+import { UtilsService } from 'src/app/services/utils.service';
 
 export interface PeriodicElement {
+  lessonRunCode: number;
   title: string;
   host: string;
   participants: number;
@@ -49,6 +51,8 @@ export class LessonsComponent implements OnInit {
 
   selectedCategory = 'Open';
 
+  hostname = window.location.host + '/participant/join?link=';
+
   edit(lesson, $event) {
     if (!this.isTemplates) {
       this.eventsSubject.next(lesson);
@@ -59,6 +63,7 @@ export class LessonsComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private router: Router,
+    private utilsService: UtilsService,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService
   ) {}
@@ -101,12 +106,22 @@ export class LessonsComponent implements OnInit {
       let startDate = new Date(val.start_time);
       let endDate = new Date(val.end_time);
       this.dataSource.push(
-        { title: val.lesson.lesson_name, 
+        {
+          lessonRunCode: val.lessonrun_code, 
+          title: val.lesson.lesson_name, 
           host:  val.host.first_name + ' ' + val.host.last_name, 
           participants: val.participant_set.length, 
           startDate: this.months[startDate.getMonth()] +' '+ startDate.getDate().toString() +', '+ startDate.getFullYear(),
           endDate: this.months[endDate.getMonth()] +' '+ endDate.getDate().toString() +', '+ endDate.getFullYear(),
         })
     });
+  }
+
+  navigateToSession(element) {
+    this.router.navigate(['/screen/lesson/' + element.lessonRunCode]);
+  }
+
+  copyLink(val) {
+    this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
   }
 }
