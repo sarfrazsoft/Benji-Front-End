@@ -158,9 +158,6 @@
       <div class="content-wrapper">
         <div class="sub-title"> Groups </div>
         <div class="groups">
-          <div class="add-group" fxLayout="column" fxLayoutAlign="center center" (click)="addGroup()">
-            + Add Group
-          </div>
           <div *ngFor="let group of breakoutRooms">
             <div class="group" [ngClass]="{'occupied': 'group.participants'}" fxLayout="column">
               <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -215,6 +212,9 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="add-group" fxLayout="column" fxLayoutAlign="center center" (click)="addGroup()">
+            + Add Group
           </div>
         </div>
       </div>
