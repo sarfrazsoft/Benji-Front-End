@@ -103,16 +103,14 @@ export class LessonsComponent implements OnInit {
     this.dataSource = [];
     const slicedArray = this.lessonRuns.slice(0, 5);
     slicedArray.forEach((val: any) => {
-      let startDate = new Date(val.start_time);
-      let endDate = new Date(val.end_time);
       this.dataSource.push(
         {
           lessonRunCode: val.lessonrun_code, 
           title: val.lesson.lesson_name, 
           host:  val.host.first_name + ' ' + val.host.last_name, 
           participants: val.participant_set.length, 
-          startDate: this.months[startDate.getMonth()] +' '+ startDate.getDate().toString() +', '+ startDate.getFullYear(),
-          endDate: this.months[endDate.getMonth()] +' '+ endDate.getDate().toString() +', '+ endDate.getFullYear(),
+          startDate: moment(val.start_time).format('MMM D, YYYY'),
+          endDate: val.end_time ? moment(val.end_time).format('MMM D, YYYY') : ''
         })
     });
   }

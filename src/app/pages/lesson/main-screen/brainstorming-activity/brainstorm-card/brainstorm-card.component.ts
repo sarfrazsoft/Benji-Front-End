@@ -172,7 +172,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
     });
   }
-  
   getInitials(nameString: string) {
     const fullName = nameString.split(' ');
     let first = fullName[0]? fullName[0].charAt(0) : '';
