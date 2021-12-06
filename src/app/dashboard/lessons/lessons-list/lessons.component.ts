@@ -5,18 +5,7 @@ import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
 
 import { orderBy, sortBy } from 'lodash';
-import * as moment from 'moment';
 import { Subject } from 'rxjs/Subject';
-import { UtilsService } from 'src/app/services/utils.service';
-
-export interface PeriodicElement {
-  lessonRunCode: number;
-  title: string;
-  host: string;
-  participants: number;
-  startDate: string;
-  endDate: string;
-}
 
 @Component({
   selector: 'benji-lessons-list',
@@ -29,30 +18,6 @@ export class LessonsComponent implements OnInit {
 
   eventsSubject: Subject<void> = new Subject<void>();
 
-  displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'endDate', 'options'];
-  dataSource: PeriodicElement[] = [];
-
-  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-  options = [
-    {
-      option: 'Open',
-      icon: '../../../../assets/img/dashboard-active-sessions/open.svg'
-    },
-    {
-      option: 'View only',
-      icon: '../../../../assets/img/dashboard-active-sessions/view-only.svg'
-    },
-    {
-      option: 'Closed',
-      icon: '../../../../assets/img/dashboard-active-sessions/closed.svg'
-    },
-  ]
-
-  selectedCategory = 'Open';
-
-  hostname = window.location.host + '/participant/join?link=';
-
   edit(lesson, $event) {
     if (!this.isTemplates) {
       this.eventsSubject.next(lesson);
@@ -63,7 +28,6 @@ export class LessonsComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private router: Router,
-    private utilsService: UtilsService,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService
   ) {}
@@ -72,7 +36,6 @@ export class LessonsComponent implements OnInit {
     if (this.lessons.length) {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
     }
-    this.getActiveSessions();
   }
 
   openDetails(lesson: Lesson) {
@@ -97,29 +60,5 @@ export class LessonsComponent implements OnInit {
         this.lessons = lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
       }
     });
-  }
-
-  getActiveSessions() {
-    this.dataSource = [];
-    const slicedArray = this.lessonRuns.slice(0, 5);
-    slicedArray.forEach((val: any) => {
-      this.dataSource.push(
-        {
-          lessonRunCode: val.lessonrun_code, 
-          title: val.lesson.lesson_name, 
-          host:  val.host.first_name + ' ' + val.host.last_name, 
-          participants: val.participant_set.length, 
-          startDate: moment(val.start_time).format('MMM D, YYYY'),
-          endDate: val.end_time ? moment(val.end_time).format('MMM D, YYYY') : ''
-        })
-    });
-  }
-
-  navigateToSession(element) {
-    this.router.navigate(['/screen/lesson/' + element.lessonRunCode]);
-  }
-
-  copyLink(val) {
-    this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
   }
 }
