@@ -1,18 +1,19 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Category } from 'src/app/services/backend/schema';
+import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
 })
-export class IdeaCreationDialogComponent {
+export class IdeaCreationDialogComponent implements OnInit {
   showCategoriesDropdown = false;
   categories: Array<Category> = [];
   selectedCategory: Category;
   userIdeaText = '';
-  ideaTitle;
+  ideaTitle = '';
   lessonRunCode;
   imageSelected = false;
 
@@ -20,6 +21,18 @@ export class IdeaCreationDialogComponent {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  @HostListener('window:keyup.esc') onKeyUp() {
+    if (this.userIdeaText.length || this.ideaTitle.length) {
+      this.askUserConfirmation();
+    } else {
+      this.dialogRef.close();
+    }
+  }
+
+  // @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
+  //   console.log('event:', event);
+  //   event.returnValue = false;
+  // }
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -27,10 +40,41 @@ export class IdeaCreationDialogComponent {
     private matDialog: MatDialog
   ) {
     this.showCategoriesDropdown = data.showCategoriesDropdown;
-    this.categories = data.categories;
+    this.categories = data.categories.filter((val) => !val.removed);
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];
     }
+  }
+
+  ngOnInit() {
+    this.dialogRef.disableClose = true;
+
+    this.dialogRef.backdropClick().subscribe((_) => {
+      if (this.userIdeaText.length || this.ideaTitle.length) {
+        this.askUserConfirmation();
+      } else {
+        this.dialogRef.close();
+      }
+    });
+  }
+
+  askUserConfirmation() {
+    this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to close without posting the card',
+          actionButton: 'close',
+        },
+        disableClose: true,
+        panelClass: 'dashboard-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.dialogRef.close();
+        } else {
+        }
+      });
   }
 
   onSubmit() {

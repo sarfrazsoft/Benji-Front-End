@@ -818,3 +818,36 @@ export class CardsShuffleEvent extends ActivityEvent {
     this.extra_args = { deal_number: deal_number };
   }
 }
+export class CardsStartSharingStageEvent extends ActivityEvent {
+  event_name = 'CardsStartSharingStageEvent';
+}
+export class CardsStartSetupStageEvent extends ActivityEvent {
+  event_name = 'CardsStartSetupStageEvent';
+}
+export class CardsSetSharingTime extends ActivityEvent {
+  event_name = 'CardsSetSharingTime';
+  constructor(sharing_time: number) {
+    super();
+    this.extra_args = { sharing_time: sharing_time };
+  }
+}
+export class CardsSetParticipantSkipCardsPermissionEvent extends ActivityEvent {
+  event_name = 'CardsSetParticipantSkipCardsPermissionEvent';
+  constructor(val: boolean) {
+    super();
+    this.extra_args = { val: val };
+  }
+}
+export class CardsAddParticipantToCurrentlySharingEvent extends ActivityEvent {
+  event_name = 'CardsAddParticipantToCurrentlySharingEvent';
+  constructor(val: number) {
+    super();
+    this.extra_args = { val: val };
+  }
+}
+export class CardsParticipantReadyEvent extends ActivityEvent {
+  event_name = 'CardsParticipantReadyEvent';
+}
+export class CardsRestartActivityEvent extends ActivityEvent {
+  event_name = 'CardsRestartActivityEvent';
+}

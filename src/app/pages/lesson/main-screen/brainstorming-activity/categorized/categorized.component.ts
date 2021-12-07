@@ -110,8 +110,17 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   onColumnNameBlur(column) {
-    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, column.category_name));
+    let selectedCat: Category;
+    this.act.brainstormcategory_set.forEach((cat: Category) => {
+      if (column.id === cat.id) {
+        selectedCat = cat;
+      }
+    });
     column.editing = false;
+    if (selectedCat.category_name === column.category_name) {
+      return;
+    }
+    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, column.category_name));
   }
 
   openImage(imageUrl: string) {
@@ -138,7 +147,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   columnHeaderClicked(column) {
+    if (this.) {
     column.editing = true;
+    }
     setTimeout(() => {
       this.colNameElement.nativeElement.focus();
     }, 0);

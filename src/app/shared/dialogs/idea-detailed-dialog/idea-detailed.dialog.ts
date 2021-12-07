@@ -41,7 +41,7 @@ export class IdeaDetailedDialogComponent {
     private matDialog: MatDialog
   ) {
     this.showCategoriesDropdown = data.showCategoriesDropdown;
-    this.categories = data.categories;
+    this.categories = data.categories.filter((val) => !val.removed);
     this.idea = data.item;
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];

@@ -15,6 +15,8 @@ export class MainScreenConvoCardsActivityComponent
   mainTitle = 'Conversation Cards';
   titleText = 'Instructions to be provided by the instructor';
   showShuffleButton = false;
+
+  stage: 'setup_stage' | 'sharing_stage' = 'setup_stage';
   constructor(private activitySettingsService: ActivitySettingsService, private utilsService: UtilsService) {
     super();
   }
