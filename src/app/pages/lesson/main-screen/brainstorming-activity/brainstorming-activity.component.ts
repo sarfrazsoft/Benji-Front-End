@@ -102,7 +102,7 @@ export class MainScreenBrainstormingActivityComponent
   VnSComplete = false;
   categorizeFlag = false;
   showUserName = true;
-  minWidth = 'medium';
+  minWidth = 'small';
   colDeleted = 0;
   joinedUsers = [];
   answeredParticipants = [];
