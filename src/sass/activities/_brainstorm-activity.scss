@@ -132,12 +132,15 @@ benji-ms-brainstorming-activity {
           .add-card {
             margin: 8px;
             width: 96px;
-            background: #F3F4F7;
             padding: 8px;
             color: #616161;
             font-size: 14px;
             font-weight: 500;
             border-radius: 4px;
+            cursor: pointer;
+            &:hover {
+              background: #F3F4F7;
+            }
           }
         }
       }
