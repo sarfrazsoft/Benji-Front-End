@@ -54,11 +54,17 @@
                 fxLayoutAlign="start center">
                 <!-- <img src="{{participant.photo}}" /> -->
                 <div 
-                  class="initials {{'color' + getRemainder(i)}}" 
+                  class="initials {{'color' + (i % 10)}}" 
                   fxLayout="column" 
                   fxLayoutAlign="center center">
                   {{ getInitials(participant) }}
                 </div>
+                <!-- <benji-profile-picture
+                  [imageUrl]=""
+                  [name]=""
+                  [color]=""
+                  [colorIndex]=""
+                > </benji-profile-picture> -->
                 <div class="name"> {{ participant }} </div>
               </div>
             </div>
@@ -74,7 +80,13 @@
                 class="participant" 
                 fxLayoutAlign="start center">
                 <!-- <img src="{{participant.photo}}" /> -->
-                <div class="initials {{'color' + getRemainder(i)}}" fxLayout="column" fxLayoutAlign="center center">{{getInitials(participant.display_name)}}</div>
+                <div 
+                  class="initials {{'color' + (i % 10)}}" 
+                  fxLayout="column" 
+                  fxLayoutAlign="center center"
+                  >
+                    {{getInitials(participant.display_name)}}
+                </div>
                 <div class="name"> {{participant.display_name}} </div>
               </div>
             </div>

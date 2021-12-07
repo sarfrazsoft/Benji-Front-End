@@ -74,8 +74,10 @@
         width: 40px;
         height: 40px;
         border-radius: 8px;
-        background: #F3F4F7;
         cursor: pointer;
+        &:hover {
+          background: #F3F4F7;
+        }
       }
       .select {
         .sessions-options {
@@ -90,6 +92,10 @@
             font-weight: 600;
           }
         }
+      }
+      tr.mat-row:hover {
+        background: #E8E8EB;
+        cursor: pointer;
       }
     }
     table, td, th {

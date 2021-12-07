@@ -27,7 +27,7 @@ benji-ms-brainstorming-activity {
     appearance: none !important;
     overflow: hidden;
     .submitted-ideas {
-      padding: 0 3vw;
+      padding: 0 16px;
       height: 100%;
       overflow-y: auto;
       .delete-icon {
@@ -42,7 +42,7 @@ benji-ms-brainstorming-activity {
         position: relative;
         border-radius: 5px;
         .header {
-          margin: 10px;
+          margin: 16px 8px 8px 8px;
           min-height: 40px;
           font-size: 24px;
           .grey-bg {
@@ -62,7 +62,7 @@ benji-ms-brainstorming-activity {
             border-radius: 8px;
             padding: 8px;
             outline: 4px solid #f3f4f7;
-            width: 314px;
+            width: 238px;
             font-size: 16px;
             font-weight: 600;
             color: #37352f;
@@ -78,9 +78,17 @@ benji-ms-brainstorming-activity {
             height: 23px;
           }
           .add-column {
-            font-size: 20px;
+            font-size: 16px;
             cursor: pointer;
-            font-weight: 600;
+            font-weight: 500;
+            color: #616161;
+            border-radius: 8px;
+            padding: 14px;
+            min-width: 101px;
+            &:hover {
+              background: #F3F4F7;
+              font-weight: 600;
+            }
           }
         }
 
@@ -120,6 +128,19 @@ benji-ms-brainstorming-activity {
               &:focus {
                 outline: none;
               }
+            }
+          }
+          .add-card {
+            margin: 8px;
+            width: 96px;
+            padding: 8px;
+            color: #616161;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            &:hover {
+              background: #F3F4F7;
             }
           }
         }
@@ -282,7 +303,7 @@ benji-ms-brainstorming-activity {
   min-height: 50px;
   background-color: white;
   border: 1px solid #e2e0df;
-  margin: 10px;
+  margin: 8px;
   border-radius: 8px;
   -moz-box-sizing: border-box;
   display: block;
@@ -338,10 +359,13 @@ benji-ms-brainstorming-activity {
     .user-feed {
       margin-bottom: 8px;
       position: relative;
-      .dp {
+      .initials {
         width: 16px;
         height: 16px;
-        border-radius: 50%;
+        border-radius: 50%;    
+        font-size: 6px;
+        color: #fff;
+        line-height: normal;
       }
       .name {
         font-size: 10px;
@@ -538,7 +562,7 @@ benji-ps-brainstorming-activity {
   max-width: 840px;
 }
 .barinstorm-main {
-  margin: 12px 24px 0px 24px;
+  margin: 16px;
   background-color: #fff;
   border-radius: 16px 16px 0px 0px;
   height: 98%;

@@ -151,11 +151,12 @@ export class SessionLobbyLayoutComponent implements OnInit {
 
   getInitials(nameString: string) {
     const fullName = nameString.split(' ');
-    let inits = '';
-    fullName.forEach(name => {
-      inits = inits + name.charAt(0);
-    });
-    return inits.toUpperCase();
+    let first = fullName[0]? fullName[0].charAt(0) : '';
+    if(fullName.length === 1) {
+      return (first).toUpperCase();  
+    }
+    let second = fullName[fullName.length-1]? fullName[fullName.length-1].charAt(0) : '';
+    return (first+second).toUpperCase();
   }
 
   copyLink(val: string) {
@@ -168,10 +169,6 @@ export class SessionLobbyLayoutComponent implements OnInit {
     // } else {
     this.startLessonEvent.emit("startLesson");
     // }
-  }
-
-  getRemainder (num) {
-    return num % 10;
   }
 
 }
