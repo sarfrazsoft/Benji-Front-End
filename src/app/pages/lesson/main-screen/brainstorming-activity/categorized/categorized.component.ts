@@ -42,7 +42,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
   @Input() voteScreen;
   @Input() act: BrainstormActivity;
   @Input() activityState;
-  @Input() minWidth;
+  // @Input() minWidth;
+  minWidth = 296;
   @Input() sendMessage;
   @Input() joinedUsers;
   @Input() showUserName;
