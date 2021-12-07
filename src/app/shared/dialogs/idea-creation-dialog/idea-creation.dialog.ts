@@ -40,6 +40,7 @@ export class IdeaCreationDialogComponent implements OnInit {
     private matDialog: MatDialog
   ) {
     this.showCategoriesDropdown = data.showCategoriesDropdown;
+    console.log(data.categories.filter((val) => !val.removed));
     this.categories = data.categories.filter((val) => !val.removed);
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];

@@ -22,15 +22,17 @@
             >
               <div class="column-name black-color" fxFlex fxLayoutAlign="space-between center">
                 {{ column.category_name }}
-                    
-                <button
-                  [matMenuTriggerFor]="menu"
-                  benji-click-stop-propagation
-                  disableRipple
-                  aria-label="Example icon-button with a menu"
-                >
-                  <mat-icon>more_horiz</mat-icon>
-                </button>
+                
+                <ng-container *ngxPermissionsOnly="'ADMIN'">
+                  <button
+                    [matMenuTriggerFor]="menu"
+                    benji-click-stop-propagation
+                    disableRipple
+                    aria-label="Example icon-button with a menu"
+                  >
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+                </ng-container>
               </div>
               <mat-menu #menu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="deleteCol(column.id)">
@@ -89,14 +91,15 @@
       </div>
     </ng-container>
   </ng-container>
-  <div class="column">
-    <div class="header" fxLayoutAlign="center center">
-      <div
-        class="add-column"
-        (click)="addColumn(act.brainstormcategory_set.length)"
-      >
-        + New Group
+  <ng-container *ngxPermissionsOnly="'ADMIN'">
+    <div class="column">
+      <div class="header" fxLayoutAlign="center center">
+        <div
+          class="add-column"
+          (click)="addColumn(act.brainstormcategory_set.length)">
+          + New Group
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </div>

@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, includes, remove } from 'lodash';
+import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
 import {
@@ -64,7 +65,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private permissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit(): void {}
@@ -148,12 +150,14 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   columnHeaderClicked(column) {
-    if (this.) {
-    column.editing = true;
-    }
-    setTimeout(() => {
-      this.colNameElement.nativeElement.focus();
-    }, 0);
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        column.editing = true;
+        setTimeout(() => {
+          this.colNameElement.nativeElement.focus();
+        }, 0);
+      }
+    });
   }
 
   delete(id) {

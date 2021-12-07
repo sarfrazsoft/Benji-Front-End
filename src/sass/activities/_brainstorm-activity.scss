@@ -86,7 +86,7 @@ benji-ms-brainstorming-activity {
             padding: 14px;
             min-width: 101px;
             &:hover {
-              background: #F3F4F7;
+              background: #f3f4f7;
               font-weight: 600;
             }
           }
@@ -140,7 +140,7 @@ benji-ms-brainstorming-activity {
             border-radius: 4px;
             cursor: pointer;
             &:hover {
-              background: #F3F4F7;
+              background: #f3f4f7;
             }
           }
         }
@@ -311,6 +311,7 @@ benji-ms-brainstorming-activity {
   cursor: pointer;
   position: relative;
   color: #616161;
+  overflow: hidden;
   .delete-icon {
     position: absolute;
     right: 10px;
@@ -362,7 +363,7 @@ benji-ms-brainstorming-activity {
       .initials {
         width: 16px;
         height: 16px;
-        border-radius: 50%;    
+        border-radius: 50%;
         font-size: 6px;
         color: #fff;
         line-height: normal;
