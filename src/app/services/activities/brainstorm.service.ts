@@ -72,15 +72,24 @@ export class BrainstormService {
         existingCategories.forEach((existingCategory) => {
           if (existingCategory.id === category.id) {
             const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-            BEIdeas.forEach((idea, ideaIndex) => {
-              const existingHearts = existingCategory.brainstormidea_set[ideaIndex].hearts;
+            BEIdeas.forEach((newIdea, ideaIndex) => {
+              const existingIdeas: Array<Idea> = existingCategory.brainstormidea_set;
+              let correspondingExistingIdea;
+              for (const existingIdea of existingIdeas) {
+                if (existingIdea.id === newIdea.id) {
+                  correspondingExistingIdea = existingIdea;
+                  break;
+                }
+              }
+
+              const existingHearts = correspondingExistingIdea.hearts;
               const existingHeartsLength = existingHearts.length;
-              const newHeartsLength = idea.hearts.length;
+              const newHeartsLength = newIdea.hearts.length;
               if (existingHeartsLength < newHeartsLength) {
-                const myDifferences = differenceBy(idea.hearts, existingHearts, 'id');
+                const myDifferences = differenceBy(newIdea.hearts, existingHearts, 'id');
                 existingHearts.push(myDifferences[0]);
               } else if (existingHeartsLength > newHeartsLength) {
-                const myDifferences: Array<any> = differenceBy(existingHearts, idea.hearts, 'id');
+                const myDifferences: Array<any> = differenceBy(existingHearts, newIdea.hearts, 'id');
 
                 remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
               }
@@ -98,15 +107,23 @@ export class BrainstormService {
         existingCategories.forEach((existingCategory) => {
           if (existingCategory.id === category.id) {
             const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
-            BEIdeas.forEach((idea, ideaIndex) => {
-              const existingHearts = existingCategory.brainstormidea_set[ideaIndex].comments;
+            BEIdeas.forEach((newIdea, ideaIndex) => {
+              const existingIdeas: Array<Idea> = existingCategory.brainstormidea_set;
+              let correspondingExistingIdea;
+              for (const existingIdea of existingIdeas) {
+                if (existingIdea.id === newIdea.id) {
+                  correspondingExistingIdea = existingIdea;
+                  break;
+                }
+              }
+              const existingHearts = correspondingExistingIdea.comments;
               const existingHeartsLength = existingHearts.length;
-              const newHeartsLength = idea.comments.length;
+              const newHeartsLength = newIdea.comments.length;
               if (existingHeartsLength < newHeartsLength) {
-                const myDifferences = differenceBy(idea.comments, existingHearts, 'id');
+                const myDifferences = differenceBy(newIdea.comments, existingHearts, 'id');
                 existingHearts.push(myDifferences[0]);
               } else if (existingHeartsLength > newHeartsLength) {
-                const myDifferences: Array<any> = differenceBy(existingHearts, idea.comments, 'id');
+                const myDifferences: Array<any> = differenceBy(existingHearts, newIdea.comments, 'id');
 
                 remove(existingHearts, (heart: any) => heart.id === myDifferences[0].id);
               }
@@ -145,12 +162,20 @@ export class BrainstormService {
         const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
         existingCategories.forEach((existingCategory) => {
           if (existingCategory.id === category.id) {
-            BEIdeas.forEach((idea, ideaIndex) => {
-              const existingIdea = existingCategory.brainstormidea_set[ideaIndex];
-              const existingVersionNo = existingIdea.version;
-              const newVersionNo = idea.version;
+            BEIdeas.forEach((newIdea, ideaIndex) => {
+              const existingIdeas: Array<Idea> = existingCategory.brainstormidea_set;
+              let correspondingExistingIdea;
+              for (const existingIdea of existingIdeas) {
+                if (existingIdea.id === newIdea.id) {
+                  correspondingExistingIdea = existingIdea;
+                  break;
+                }
+              }
+
+              const existingVersionNo = correspondingExistingIdea.version;
+              const newVersionNo = newIdea.version;
               if (existingVersionNo < newVersionNo) {
-                existingCategory.brainstormidea_set.splice(ideaIndex, 1, idea);
+                existingCategory.brainstormidea_set.splice(ideaIndex, 1, newIdea);
               }
             });
           }

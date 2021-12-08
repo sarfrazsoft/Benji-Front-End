@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivityTypes } from 'src/app/globals';
 import {
@@ -24,6 +25,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   dialogRef: any;
   constructor(
+    protected deviceDetectorService: DeviceDetectorService,
     protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected activatedRoute: ActivatedRoute,
@@ -37,6 +39,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     protected groupingToolService: GroupingToolService
   ) {
     super(
+      deviceDetectorService,
       utilsService,
       restService,
       activatedRoute,

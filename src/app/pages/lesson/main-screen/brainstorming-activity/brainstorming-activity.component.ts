@@ -36,6 +36,7 @@ import {
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
+  Category,
   Group,
   Idea,
   ResetGroupingEvent,
@@ -495,12 +496,17 @@ export class MainScreenBrainstormingActivityComponent
       .subscribe((res) => {});
   }
 
-  openDialog() {
+  addCardUnderCategory(category: Category) {
+    this.openDialog(category);
+  }
+
+  openDialog(category?: Category) {
     const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
       panelClass: 'idea-dialog',
       data: {
         showCategoriesDropdown: this.categorizeFlag,
         categories: this.activityState.brainstormactivity.brainstormcategory_set,
+        category: category,
       },
     });
 

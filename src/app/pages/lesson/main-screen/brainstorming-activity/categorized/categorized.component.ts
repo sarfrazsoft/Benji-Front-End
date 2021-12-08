@@ -56,6 +56,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
+  @Output() addCardUnderCategory = new EventEmitter<Category>();
 
   columns = [];
   cycle = 'first';
@@ -95,6 +96,10 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.columns = this.brainstormService.populateCategories(this.act, this.columns);
       }
     }
+  }
+
+  addCard(column: Category) {
+    this.addCardUnderCategory.emit(column);
   }
 
   addIdea(column) {

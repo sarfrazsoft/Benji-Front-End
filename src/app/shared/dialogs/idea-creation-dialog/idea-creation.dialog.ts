@@ -36,7 +36,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { showCategoriesDropdown: boolean; categories: Array<Category> },
+    public data: { showCategoriesDropdown: boolean; categories: Array<Category>; category?: Category },
     private matDialog: MatDialog
   ) {
     this.showCategoriesDropdown = data.showCategoriesDropdown;
@@ -44,6 +44,10 @@ export class IdeaCreationDialogComponent implements OnInit {
     this.categories = data.categories.filter((val) => !val.removed);
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];
+    }
+
+    if (data.category) {
+      this.selectedCategory = data.category;
     }
   }
 

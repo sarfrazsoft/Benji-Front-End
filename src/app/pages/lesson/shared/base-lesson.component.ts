@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
@@ -25,6 +26,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   timer;
 
   constructor(
+    protected deviceDetectorService: DeviceDetectorService,
     protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
@@ -58,15 +60,17 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         // don't reset connection participant is
         // about to pick up brainstorm image
       } else {
-        if (document.hidden) {
-          // stop running expensive task
-          this.socket = undefined;
-        } else {
-          // page has focus, begin running task
-          if (!this.isConnected()) {
-            setTimeout(() => {
-              this.initSocket();
-            }, 500);
+        if (this.deviceDetectorService.isMobile()) {
+          if (document.hidden) {
+            // stop running expensive task
+            this.socket = undefined;
+          } else {
+            // page has focus, begin running task
+            if (!this.isConnected()) {
+              setTimeout(() => {
+                this.initSocket();
+              }, 500);
+            }
           }
         }
       }

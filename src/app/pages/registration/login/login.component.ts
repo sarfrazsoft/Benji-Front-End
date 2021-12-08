@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     private builder: FormBuilder,
     private authService: AuthService,
     public router: Router,
-    private deviceService: DeviceDetectorService,
+    private deviceDetectorService: DeviceDetectorService,
     private contextService: ContextService,
     private socialAuthService: SocialAuthService,
     private permissionsService: NgxPermissionsService
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
         if (this.authService.redirectURL.length) {
           window.location.href = this.authService.redirectURL;
         } else {
-          this.deviceService.isMobile()
+          this.deviceDetectorService.isMobile()
             ? this.router.navigate(['/participant/join'])
             : this.router.navigate(['/dashboard']);
         }
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
             if (this.authService.redirectURL.length) {
               window.location.href = this.authService.redirectURL;
             } else {
-              this.deviceService.isMobile()
+              this.deviceDetectorService.isMobile()
                 ? this.router.navigate(['/participant/join'])
                 : this.router.navigate(['/dashboard']);
             }
