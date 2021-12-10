@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -13,7 +13,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   selector: 'benji-session-lobby-layout',
   templateUrl: './session-lobby-layout.component.html',
 })
-export class SessionLobbyLayoutComponent implements OnInit {
+export class SessionLobbyLayoutComponent implements OnInit, OnChanges {
 
   @Input() beforeLessonRunDetails: BeforeLessonRunDetails;
   @Input() participantJoinScreeen;
@@ -69,6 +69,10 @@ export class SessionLobbyLayoutComponent implements OnInit {
       );
     }
     this.shareParticipantLink = this.hostname + this.room_code;
+  }
+
+  ngOnChanges (changes) {
+    console.log(changes);
   }
 
   public validateRoomCode() {
