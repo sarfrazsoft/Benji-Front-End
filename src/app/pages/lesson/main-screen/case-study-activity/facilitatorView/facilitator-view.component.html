@@ -36,8 +36,7 @@
           *ngFor="let group of groupsX; let i = index;">
           <div 
             class="initials {{ 'color' + ( i % 10 ) }}" 
-            fxLayout="column" fxLayoutAlign="center center"
-            >
+            fxLayout="column" fxLayoutAlign="center center">
             {{getInitials(group.title)}}
           </div>
           <div class="group-name" (click)="selectGroup(group)"> {{ group.title }} </div>

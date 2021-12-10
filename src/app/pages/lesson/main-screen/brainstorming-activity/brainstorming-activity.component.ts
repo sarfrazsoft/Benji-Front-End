@@ -72,8 +72,7 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+  implements OnInit, OnChanges, OnDestroy {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;

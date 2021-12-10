@@ -64,9 +64,7 @@
             ></textarea>
           </div>
 
-          <ng-container
-            *ngFor="let item of column.brainstormidea_set; let i = index"
-          >
+          <ng-container *ngFor="let item of column.brainstormidea_set; let i = index">
             <benji-brainstorm-card
               [item]="item"
               [act]="act"
