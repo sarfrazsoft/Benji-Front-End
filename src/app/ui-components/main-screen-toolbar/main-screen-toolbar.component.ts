@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { ActivityTypes, AllowShareActivities } from 'src/app/globals';
+import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
@@ -53,10 +53,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   shareParticipantLink = '';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
+  activitySettingsAllowed = ActivitySettingsAllowed;
 
   openGroupAccess = false;
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
+  @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
@@ -143,6 +145,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.socketMessage.emit($event);
   }
 
+  settingsMenuClicked() {
+    this.settingsMenuTrigger.openMenu();
+  }
+
   groupingMenuClicked() {
     // const activity_type = this.activityState.activity_type.toLowerCase();
     // const state = this.activityState;
@@ -221,5 +227,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  isActivitySettingsAllowed(activityState: UpdateMessage) {
+    if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

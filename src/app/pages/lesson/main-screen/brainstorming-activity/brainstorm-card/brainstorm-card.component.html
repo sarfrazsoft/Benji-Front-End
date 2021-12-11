@@ -9,8 +9,7 @@
     benji-click-stop-propagation
     class="delete-icon"
     [style.opacity]="item.showClose ? 1 : 0"
-    (click)="delete(item.id)"
-  >
+    (click)="delete(item.id)">
     clear
   </mat-icon>
   <div
@@ -35,6 +34,16 @@
     class="content" 
     benji-click-stop-propagation 
     (click)="showDetailedIdea(item)">
+    <div *ngIf="showUserName">
+      <div fxLayout="row">
+        <div>
+          {{ getInitials(getPersonName(item)) }}
+        </div>
+        <div>
+          {{ getPersonName(item) }}
+        </div>
+      </div> 
+    </div>
     <div class="title">{{ item.title }}</div>
     {{ item.idea }} 
   </div>

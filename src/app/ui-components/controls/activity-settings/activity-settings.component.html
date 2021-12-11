@@ -127,12 +127,11 @@
             class="card-size"
             [items]="control.options">
             <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-              <div *ngIf="item.id !== selectedCardSize">{{item.name}}</div>
+              <div *ngIf="item.id !== selectedCardSize">{{ item.name }}</div>
               <div *ngIf="item.id === selectedCardSize"
-                fxLayoutAlign="space-between center"
-              >
+                fxLayoutAlign="space-between center">
                 <span>
-                  {{item.name}}
+                  {{ item.name }}
                 </span>
                 <img src="/assets/img/doneIcon.svg" />
               </div>

@@ -1,5 +1,15 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { difference } from 'lodash';
 import { Observable } from 'rxjs-compat/Observable';
@@ -34,7 +44,7 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: 'grouping-tool.dialog.html',
 })
 export class GroupingToolDialogComponent implements OnInit, OnChanges {
-  groupingTitle = "Untitled Grouping";
+  groupingTitle = 'Untitled Grouping';
   selectedGrouping: GroupingToolGroups;
   unassignedUsers = [];
   breakoutRooms: Array<{ id: number; name: string; participants: Array<any> }> = [];
@@ -163,6 +173,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
     this.initUnassignedParticipants();
 
+    console.log(this.selectedGrouping);
     this.initGroups(this.selectedGrouping);
   }
 
@@ -189,6 +200,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
     if (!selectedgrouping) {
       return;
     }
+    this.groupsCount = selectedgrouping.groups.length;
     for (let i = 0; i < selectedgrouping.groups.length; i++) {
       const groupset = selectedgrouping.groups[i];
       const participants = [];
