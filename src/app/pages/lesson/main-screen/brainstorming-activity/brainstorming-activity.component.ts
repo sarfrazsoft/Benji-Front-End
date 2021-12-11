@@ -36,6 +36,7 @@ import {
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
+  BrainstormToggleParticipantNameEvent,
   Category,
   Group,
   Idea,
@@ -72,7 +73,8 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
@@ -173,7 +175,8 @@ export class MainScreenBrainstormingActivityComponent
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
-        this.showUserName = val.state;
+        // this.showUserName = val.state;
+        this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
       }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
@@ -239,6 +242,7 @@ export class MainScreenBrainstormingActivityComponent
     this.instructions = act.instructions;
 
     this.categorizeFlag = act.categorize_flag;
+    this.showUserName = act.show_participant_name_flag;
     if (this.categorizeFlag) {
     }
 

@@ -306,6 +306,7 @@ export interface BrainstormActivity extends ParentActivity {
   max_participant_submissions: number;
   max_participant_votes: number;
   categorize_flag: boolean;
+  show_participant_name_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
   submission_seconds: number;
