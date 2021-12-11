@@ -409,6 +409,22 @@ benji-ms-brainstorming-activity {
     }
   }
 }
+.user-name {
+  padding: 8px 12px;
+  .initials {
+    color: #fff;
+    font-size: 9px;
+    font-weight: 500;
+    width: 24px;
+    height: 24px;
+    border-radius: 20px;
+  }
+  .name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #37352f;
+  }
+}
 .brainstorm-image {
   text-align: center;
   img {

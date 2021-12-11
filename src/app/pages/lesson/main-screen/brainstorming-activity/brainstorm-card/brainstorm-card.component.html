@@ -12,6 +12,16 @@
     (click)="delete(item.id)">
     clear
   </mat-icon>
+  <div *ngIf="showUserName" class="user-name">
+    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+      <div class="initials" fxLayout="column" fxLayoutAlign="center center">
+        {{ getInitials(getPersonName(item)) }}
+      </div>
+      <div class="name">
+        {{ getPersonName(item) }}
+      </div>
+    </div> 
+  </div>
   <div
     class="brainstorm-image"
     *ngIf="item.idea_image">
@@ -34,16 +44,6 @@
     class="content" 
     benji-click-stop-propagation 
     (click)="showDetailedIdea(item)">
-    <div *ngIf="showUserName">
-      <div fxLayout="row">
-        <div>
-          {{ getInitials(getPersonName(item)) }}
-        </div>
-        <div>
-          {{ getPersonName(item) }}
-        </div>
-      </div> 
-    </div>
     <div class="title">{{ item.title }}</div>
     {{ item.idea }} 
   </div>
