@@ -51,15 +51,16 @@
     <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
       <div>
         <img
-          *ngIf="!isHearted(item)"
+          *ngIf="!hasParticipantHearted(item)"
           (click)="setHeart(item.id)" 
           class="heart" 
           src="/assets/img/grey-heart.svg"> 
         <img
-          *ngIf="isHearted(item)"
+          *ngIf="hasParticipantHearted(item)"
           (click)="removeHeart(item)" 
           class="heart" 
-          src="/assets/img/red-heart.svg"> 
+          src="/assets/img/red-heart.svg">
+        
         <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
       </div>
       <div>

@@ -344,6 +344,12 @@ export interface Idea {
   comments: Array<any>;
   hearts: Array<any>;
   version: number;
+  idea_document: IdeaDocument;
+}
+
+export interface IdeaDocument {
+  id: number;
+  url: string;
 }
 
 export interface ParticipantCode {

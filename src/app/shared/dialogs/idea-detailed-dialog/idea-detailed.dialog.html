@@ -33,13 +33,34 @@
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
           <div class="attachments" fxLayout="row" fxLayoutAlign="center center">
-            <img class="close" src="/assets/img/idea-creation/scenery.svg">   
-            <img class="close" src="/assets/img/idea-creation/video.svg">
-            <img class="close" (click)="openImagePickerDialog()" src="/assets/img/idea-creation/camera.svg">
+            <img class="close" (click)="openImagePickerDialog()" src="/assets/img/idea-creation/scenery.svg">   
+            <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
+            <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
             <img class="close" src="/assets/img/idea-creation/file.svg">
           </div>
         </div>
         <button class="post" (click)="onSubmit()">Update</button>
+      </div>
+      <div fxLayout="column">
+        <div class="discussion-header" fxLayout="row">
+          <img class="thought" src="/assets/img/grey-thought.svg">
+          <div class="header-text"> Discussion </div>
+        </div>
+        <div class="comments-container">
+          <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row">
+            <div class="dp"></div>
+            <div class="" fxLayout="column">
+              <div class="commentor-name"> {{ getParticipantName(comment.participant) }} </div>
+              <div class="comment-text"> {{ comment.comment }} </div>
+            </div>
+          </div>
+        </div>
+        <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
+          <div (click)="submitComment(idea.id, commentInput.value); commentInput.value = null">
+            <img src="/assets/img/submit-vector.svg">
+          </div>
+        </div>
       </div>
     </div>
   </div>

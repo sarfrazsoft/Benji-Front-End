@@ -1,7 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app/services/activities';
-import { Category, Group, Idea, UpdateMessage } from 'src/app/services/backend/schema';
+import {
+  BrainstormSubmitIdeaCommentEvent,
+  Category,
+  Group,
+  Idea,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 
@@ -26,6 +32,7 @@ export class IdeaDetailedDialogComponent {
   imageDialogRef;
   selectedImageUrl;
   hostname = environment.web_protocol + '://' + environment.host;
+  @Output() sendMessage = new EventEmitter<any>();
   constructor(
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
     private activitiesService: ActivitiesService,
@@ -125,5 +132,8 @@ export class IdeaDetailedDialogComponent {
 
   getParticipantName(code: number) {
     return this.activitiesService.getParticipantName(this.activityState, code);
+  }
+  submitComment(ideaId, val) {
+    this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
   }
 }

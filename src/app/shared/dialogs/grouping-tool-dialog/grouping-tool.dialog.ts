@@ -17,6 +17,7 @@ import { ActivityTypes } from 'src/app/globals';
 import { ActivitiesService, BackendRestService } from 'src/app/services';
 import {
   AssignGroupingToActivities,
+  BrainstormSubmitIdeaCommentEvent,
   Category,
   CreateGroupsEvent,
   RemoveParticipantFromGroupEvent,
@@ -36,7 +37,7 @@ import {
   UpdateMessage,
   ViewGroupingEvent,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
+import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -271,6 +272,12 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
         );
       }
     }
+  }
+
+  removeUserFromGroup(participant: Participant, groupId) {
+    this.sendMessage.emit(
+      new RemoveParticipantFromGroupEvent(this.selectedGrouping.id, groupId, participant.participant_code)
+    );
   }
 
   addGroup() {

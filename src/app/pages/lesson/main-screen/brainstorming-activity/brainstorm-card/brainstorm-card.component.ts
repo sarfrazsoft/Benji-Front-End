@@ -122,7 +122,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     return false;
   }
 
-  isHearted(item: Idea) {
+  hasParticipantHearted(item: Idea) {
     let hearted = false;
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
@@ -130,7 +130,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
       // If a trainer hearts an idea the heart object does not have
       // a participant code.
-      if (element.participant === null) {
+      if (element.participant === null && !this.participantCode) {
         hearted = true;
       }
     });
@@ -145,14 +145,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
       // If a trainer hearts an idea the heart object does not have
       // a participant code.
-      if (element.participant === null) {
+      if (element.participant === null && !this.participantCode) {
         hearted = element;
       }
     });
     this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
   }
 
-  setHeart(ideaId) {
+  setHeart(ideaId: number) {
     this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
   }
 
@@ -168,6 +168,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         group: this.myGroup,
         activityState: this.activityState,
       },
+    });
+    const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
+      this.sendMessage.emit(event);
     });
 
     dialogRef.afterClosed().subscribe((result) => {

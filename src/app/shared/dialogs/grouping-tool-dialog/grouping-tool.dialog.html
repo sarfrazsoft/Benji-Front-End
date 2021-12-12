@@ -207,7 +207,9 @@
                     <span>
                       {{ participant.display_name }}
                     </span>
-                    <img class="remove" (click)="removeUser()" src="/assets/img/idea-creation/close_big.svg">
+                    <img class="remove" 
+                      (click)="removeUserFromGroup(participant, group.id)" 
+                      src="/assets/img/idea-creation/close_big.svg">
                   </div>
                 </div>
               </div>
