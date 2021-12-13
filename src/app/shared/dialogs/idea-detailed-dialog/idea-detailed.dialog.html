@@ -42,13 +42,20 @@
         <button class="post" (click)="onSubmit()">Update</button>
       </div>
       <div fxLayout="column">
-        <div class="discussion-header" fxLayout="row">
-          <img class="thought" src="/assets/img/grey-thought.svg">
+        <div class="discussion-header" fxLayout="row" fxLayoutGap="4px">
+          <img class="thought" src="/assets/img/idea-creation/grey-thought.svg">
           <div class="header-text"> Discussion </div>
         </div>
-        <div class="comments-container">
-          <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row">
-            <div class="dp"></div>
+        <div class="comments-container" >
+          <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row" fxLayoutGap="8px">
+            <div class="dp">
+              <div 
+                class="initials" 
+                fxLayout="column" 
+                fxLayoutAlign="center center">
+                {{ getInitials(getParticipantName(comment.participant)) }}
+              </div>
+            </div>
             <div class="" fxLayout="column">
               <div class="commentor-name"> {{ getParticipantName(comment.participant) }} </div>
               <div class="comment-text"> {{ comment.comment }} </div>
@@ -97,7 +104,7 @@
       <div class="menu-like like">LIKES ({{ idea?.hearts.length }})</div>
       <ng-container *ngIf="idea?.hearts.length">
         <div class="person" *ngFor="let heart of idea.hearts">
-          <div class="dp"></div>
+          <div class="dp" fxLayoutAlign="center center">{{ getInitials(getParticipantName(heart.participant)) }}</div>
           <div class="name">{{ getParticipantName(heart.participant) }}</div>
         </div>
       </ng-container>

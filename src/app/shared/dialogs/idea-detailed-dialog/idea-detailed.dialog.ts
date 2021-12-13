@@ -133,7 +133,18 @@ export class IdeaDetailedDialogComponent {
   getParticipantName(code: number) {
     return this.activitiesService.getParticipantName(this.activityState, code);
   }
+  
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+  }
+
+  getInitials(nameString: string) {
+    const fullName = nameString.split(' ');
+    let first = fullName[0]? fullName[0].charAt(0) : '';
+    if(fullName.length === 1) {
+      return (first).toUpperCase();  
+    }
+    let second = fullName[fullName.length-1]? fullName[fullName.length-1].charAt(0) : '';
+    return (first+second).toUpperCase();
   }
 }
