@@ -64,8 +64,14 @@
         </div>
         <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
           <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
-          <div (click)="submitComment(idea.id, commentInput.value); commentInput.value = null">
-            <img src="/assets/img/submit-vector.svg">
+          <div 
+            class="send-comment" 
+            *ngIf="commentInput.value.length" 
+            (click)="submitComment(idea.id, commentInput.value); commentInput.value = null"
+            [@fadeInOnEnter] [@fadeOutOnLeave]
+            >
+            <!-- <img src="/assets/img/submit-vector.svg"> -->
+            Post
           </div>
         </div>
       </div>

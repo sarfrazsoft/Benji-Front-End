@@ -11,6 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 import { differenceBy, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
@@ -38,6 +39,10 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
 @Component({
   selector: 'benji-brainstorm-card',
   templateUrl: './brainstorm-card.component.html',
+  animations: [
+    fadeInOnEnterAnimation({ duration: 200 }),
+    fadeOutOnLeaveAnimation({ duration: 200 }),
+  ]
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() item;

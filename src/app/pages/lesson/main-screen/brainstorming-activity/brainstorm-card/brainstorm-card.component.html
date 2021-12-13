@@ -80,7 +80,7 @@
             {{ getInitials(getParticipantName(comment.participant)) }}
           </div>
         </div> 
-        <div fxLayout="column" fxLayoutAlign="start start">
+        <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
           <div class="name">{{ getParticipantName(comment.participant) }}</div>
           <div class="comment">{{ comment.comment }}</div>
         </div>
@@ -92,10 +92,19 @@
         </mat-icon>
       </div>
     </ng-container>
-    <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+    <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+      <div class="initials" fxLayout="column" fxLayoutAlign="center center">
+        {{ getInitials(getParticipantName(participantCode)) }}
+      </div>
       <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
-      <div (click)="submitComment(item.id, commentInput.value); commentInput.value = null">
-        <img src="/assets/img/submit-vector.svg">
+      <div 
+        class="send-comment" 
+        *ngIf="commentInput.value.length" 
+        (click)="submitComment(item.id, commentInput.value); commentInput.value = null"
+        [@fadeInOnEnter] [@fadeOutOnLeave]
+        >
+        <!-- <img src="/assets/img/submit-vector.svg"> -->
+        Send
       </div>
     </div>
   </div>
