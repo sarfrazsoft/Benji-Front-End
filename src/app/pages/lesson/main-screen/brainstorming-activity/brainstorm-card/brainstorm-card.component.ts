@@ -11,7 +11,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 import { differenceBy, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
@@ -40,8 +47,21 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   selector: 'benji-brainstorm-card',
   templateUrl: './brainstorm-card.component.html',
   animations: [
-    fadeInOnEnterAnimation({ duration: 200 }),
-    fadeOutOnLeaveAnimation({ duration: 200 }),
+    trigger('enableDisable', [
+      // ...
+      state('enabled', style({
+        opacity: 1,
+      })),
+      state('disabled', style({
+        opacity: 0,
+      })),
+      transition('enabled => disabled', [
+        animate('0.5s')
+      ]),
+      transition('disabled => enabled', [
+        animate('0.5s')
+      ]),
+    ])
   ]
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
@@ -184,10 +204,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
     });
   }
+
   getInitials(nameString: string) {
     const fullName = nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';
     const second = fullName[1] ? fullName[1].charAt(0) : '';
     return (first + second).toUpperCase();
   }
+
 }

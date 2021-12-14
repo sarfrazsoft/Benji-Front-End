@@ -1,8 +1,12 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import {
-  fadeInOnEnterAnimation,
-  fadeOutOnLeaveAnimation,
-} from 'angular-animations';
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
@@ -19,8 +23,21 @@ import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.
   selector: 'benji-idea-detailed-dialog',
   templateUrl: 'idea-detailed.dialog.html',
   animations: [
-    fadeInOnEnterAnimation({ duration: 200 }),
-    fadeOutOnLeaveAnimation({ duration: 200 }),
+    trigger('enableDisable', [
+      // ...
+      state('enabled', style({
+        opacity: 1,
+      })),
+      state('disabled', style({
+        opacity: 0,
+      })),
+      transition('enabled => disabled', [
+        animate('0.5s')
+      ]),
+      transition('disabled => enabled', [
+        animate('0.5s')
+      ]),
+    ])
   ]
 })
 export class IdeaDetailedDialogComponent {

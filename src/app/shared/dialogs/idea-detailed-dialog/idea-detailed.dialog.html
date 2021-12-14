@@ -66,11 +66,11 @@
           <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
           <div 
             class="send-comment" 
-            *ngIf="commentInput.value.length" 
+            [@enableDisable]="commentInput.value.length ? 'enabled' : 'disabled'"
             (click)="submitComment(idea.id, commentInput.value); commentInput.value = null"
-            [@fadeInOnEnter] [@fadeOutOnLeave]
+            
             >
-            <!-- <img src="/assets/img/submit-vector.svg"> -->
+            <!-- <img src="/assets/img/submit-vector.svg">[@fadeInOnEnter] [@fadeOutOnLeave] -->
             Post
           </div>
         </div>
