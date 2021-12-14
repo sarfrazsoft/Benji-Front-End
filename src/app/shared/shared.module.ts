@@ -100,11 +100,16 @@ const SHARED_MODULES = [
   NgxPermissionsModule,
 ];
 
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
 @NgModule({
   imports: [
     NgxEditorModule,
     CommonModule,
     RouterModule,
+    NgxExtendedPdfViewerModule,
+    PdfJsViewerModule,
     ...SHARED_MODULES,
     NgxPermissionsModule.forRoot(),
     DeviceDetectorModule.forRoot(),

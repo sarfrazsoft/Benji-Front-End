@@ -34,6 +34,7 @@ import {
   BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
   BrainstormSubmissionCompleteInternalEvent,
+  BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
   BrainstormToggleParticipantNameEvent,
@@ -73,8 +74,7 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+  implements OnInit, OnChanges, OnDestroy {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
@@ -509,6 +509,7 @@ export class MainScreenBrainstormingActivityComponent
       data: {
         showCategoriesDropdown: this.categorizeFlag,
         categories: this.activityState.brainstormactivity.brainstormcategory_set,
+        lessonID: this.activityState.lesson_run.lessonrun_code,
         category: category,
       },
     });
@@ -537,8 +538,11 @@ export class MainScreenBrainstormingActivityComponent
     // if (!idea.editing) {
     //   return;
     // }
-    if (idea.imagesList || idea.selectedImageUrl) {
+    if (idea.imagesList || idea.selectedThirdPartyImageUrl) {
+      console.log('inside imageslist');
       this.submitImageNIdea(idea);
+    } else if (idea.selectedpdfDoc) {
+      this.submitDocumentNIdea(idea);
     } else {
       this.submitWithoutImg(idea);
     }
@@ -565,6 +569,7 @@ export class MainScreenBrainstormingActivityComponent
 
     const participant_code = this.getParticipantCode().toString();
     const fileList: FileList = idea.imagesList;
+    console.log();
     if (fileList && fileList.length > 0) {
       const file: File = fileList[0];
       this.utilsService
@@ -600,18 +605,54 @@ export class MainScreenBrainstormingActivityComponent
           console.error(err);
         });
     } else {
-      if (idea.selectedImageUrl) {
+      if (idea.selectedThirdPartyImageUrl) {
         this.sendMessage.emit(
           new BrainstormImageSubmitEvent(
             idea.text,
             idea.title,
             idea.category.id,
             idea.groupId,
-            idea.selectedImageUrl
+            idea.selectedThirdPartyImageUrl
           )
         );
       }
     }
+  }
+
+  submitDocumentNIdea(idea) {
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
+
+    const participant_code = this.getParticipantCode().toString();
+    const file: File = idea.selectedpdfDoc;
+    if (file) {
+      const formData: FormData = new FormData();
+      formData.append('document', file, file.name);
+      formData.append('participant_code', participant_code);
+      const headers = new HttpHeaders();
+      headers.set('Content-Type', null);
+      headers.set('Accept', 'multipart/form-data');
+      const params = new HttpParams();
+      this.httpClient
+        .post(url, formData, { params, headers })
+        .map((res: any) => {
+          // we will get ID of document and that will be attached
+          // with the idea
+          this.sendMessage.emit(
+            new BrainstormSubmitDocumentEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
+          );
+        })
+        .subscribe(
+          (data) => {},
+          (error) => console.log(error)
+        );
+    }
+    // uploadFile(file: File, lessonId): Observable<any[]> {
+    //   const formData: FormData = new FormData();
+    //   formData.append('document', file);
+    //   formData.append('lesson_id', lessonId);
+    //   return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData);
+    // }
   }
 
   // changeStage(state) {

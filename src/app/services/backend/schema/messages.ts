@@ -411,7 +411,6 @@ export class BrainstormSubmitEvent extends ActivityEvent {
   ) {
     super();
     this.extra_args = { idea: text, title: title, category: category, group_id: groupId };
-
     if (idea_image) {
       this.extra_args = {
         ...this.extra_args,
@@ -419,6 +418,20 @@ export class BrainstormSubmitEvent extends ActivityEvent {
         image_path: image_path,
       };
     }
+  }
+}
+export class BrainstormSubmitDocumentEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitEvent';
+
+  constructor(text: string, title: string, category: number, groupId: number, documentId: number) {
+    super();
+    this.extra_args = {
+      idea: text,
+      title: title,
+      category: category,
+      group_id: groupId,
+      idea_document: documentId,
+    };
   }
 }
 export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {

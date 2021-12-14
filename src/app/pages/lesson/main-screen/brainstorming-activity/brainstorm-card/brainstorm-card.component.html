@@ -40,6 +40,15 @@
     </ng-template>
   </div>
 
+  <div *ngIf="item.idea_document">
+    <div  style="width: 220px;">
+      <ngx-extended-pdf-viewer [src]="hostname + item.idea_document.document" 
+        useBrowserLocale="true" 
+        [height]="'300px'">
+      </ngx-extended-pdf-viewer>
+    </div>
+  </div>
+
   <div 
     class="content" 
     benji-click-stop-propagation 

@@ -12,7 +12,14 @@
       </textarea>
       <div class="preview-image" *ngIf="imageSelected" fxLayoutAlign="center center">
         <img *ngIf="imageSrc" [src]="imageSrc" alt="">
-        <img *ngIf="selectedImageUrl" [src]="selectedImageUrl" alt="">
+        <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
+        <div  style="width: 400px;">
+          <ngx-extended-pdf-viewer [src]="pdfSrc" 
+            useBrowserLocale="true" 
+            [height]="'350px'">
+          </ngx-extended-pdf-viewer>
+        </div>
+        
         <button class="remove-button" (click)="removeImage()">
           Remove
         </button>
@@ -20,10 +27,14 @@
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
           <div class="attachments" fxLayout="row" fxLayoutAlign="center center">
-            <img class="close" src="/assets/img/idea-creation/scenery.svg">   
-            <img class="close" src="/assets/img/idea-creation/video.svg">
-            <img class="close" (click)="openImagePickerDialog()" src="/assets/img/idea-creation/camera.svg">
-            <img class="close" src="/assets/img/idea-creation/file.svg">
+            <img class="close"  (click)="openImagePickerDialog()" src="/assets/img/idea-creation/scenery.svg">   
+            <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
+            <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
+            <div class="upbutton" (click)="uploader.click()">
+              <!-- <button mat-raised-button color="primary">Choose File</button> -->
+              <img class="close" src="/assets/img/idea-creation/file.svg">
+              <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
+            </div>
           </div>
           <div class="divider"></div>
           <div class="option" fxLayout="row" fxLayoutAlign="center center">

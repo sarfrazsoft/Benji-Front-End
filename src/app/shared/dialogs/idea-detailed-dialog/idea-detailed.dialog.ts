@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import {
-  trigger,
+  animate,
   state,
   style,
-  animate,
   transition,
+  trigger,
   // ...
 } from '@angular/animations';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
@@ -25,20 +25,22 @@ import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.
   animations: [
     trigger('enableDisable', [
       // ...
-      state('enabled', style({
-        opacity: 1,
-      })),
-      state('disabled', style({
-        opacity: 0,
-      })),
-      transition('enabled => disabled', [
-        animate('0.5s')
-      ]),
-      transition('disabled => enabled', [
-        animate('0.5s')
-      ]),
-    ])
-  ]
+      state(
+        'enabled',
+        style({
+          opacity: 1,
+        })
+      ),
+      state(
+        'disabled',
+        style({
+          opacity: 0,
+        })
+      ),
+      transition('enabled => disabled', [animate('0.5s')]),
+      transition('disabled => enabled', [animate('0.5s')]),
+    ]),
+  ],
 })
 export class IdeaDetailedDialogComponent {
   showCategoriesDropdown = false;
@@ -56,6 +58,7 @@ export class IdeaDetailedDialogComponent {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  docSelected;
   hostname = environment.web_protocol + '://' + environment.host;
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
@@ -83,6 +86,9 @@ export class IdeaDetailedDialogComponent {
     if (data.item.idea_image) {
       this.imageSelected = true;
       this.imageSrc = data.item.idea_image.img;
+    }
+    if (data.item.idea_document) {
+      this.docSelected = true;
     }
     if (data.category) {
       this.selectedCategory = data.category;
@@ -158,18 +164,18 @@ export class IdeaDetailedDialogComponent {
   getParticipantName(code: number) {
     return this.activitiesService.getParticipantName(this.activityState, code);
   }
-  
+
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
   }
 
   getInitials(nameString: string) {
     const fullName = nameString.split(' ');
-    let first = fullName[0]? fullName[0].charAt(0) : '';
-    if(fullName.length === 1) {
-      return (first).toUpperCase();  
+    const first = fullName[0] ? fullName[0].charAt(0) : '';
+    if (fullName.length === 1) {
+      return first.toUpperCase();
     }
-    let second = fullName[fullName.length-1]? fullName[fullName.length-1].charAt(0) : '';
-    return (first+second).toUpperCase();
+    const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
+    return (first + second).toUpperCase();
   }
 }

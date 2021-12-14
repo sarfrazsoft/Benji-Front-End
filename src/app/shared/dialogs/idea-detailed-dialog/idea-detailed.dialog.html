@@ -7,7 +7,7 @@
         class="description"
         placeholder="Description..."
         [ngClass]="{
-          'image-selected': imageSelected
+          'image-selected': imageSelected || docSelected
         }">
       </textarea>
       <div class="preview-image" *ngIf="imageSelected" fxLayoutAlign="center center">
@@ -30,6 +30,17 @@
           Remove
         </button>
       </div>
+      <ng-container *ngIf="idea">
+        <div *ngIf="idea.idea_document">
+          <div  style="width: 400px;">
+            <ng2-pdfjs-viewer [pdfSrc]="hostname + idea.idea_document.document"></ng2-pdfjs-viewer>
+            <!-- <ngx-extended-pdf-viewer [src]="" 
+              useBrowserLocale="true" 
+              [height]="'350px'">
+            </ngx-extended-pdf-viewer> -->
+          </div>
+        </div>
+      </ng-container>
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
           <div class="attachments" fxLayout="row" fxLayoutAlign="center center">
