@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, map } from 'rxjs/operators';
 import { Category } from 'src/app/services/backend/schema';
@@ -26,6 +26,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   selectedpdfDoc;
   pdfSrc;
   lessonID;
+  @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.userIdeaText.length || this.ideaTitle.length) {
       this.askUserConfirmation();
@@ -156,13 +157,14 @@ export class IdeaCreationDialogComponent implements OnInit {
     if (fileList.length === 0) {
       this.imagesList = null;
     } else {
-      const file = fileList[0];
-      const reader = new FileReader();
-      reader.onload = (e) => (this.pdfSrc = reader.result);
-      reader.readAsDataURL(file);
-      this.selectedpdfDoc = file;
       this.pdfSelected = true;
       this.imageSelected = true;
+      const file = fileList[0];
+      this.selectedpdfDoc = file;
+      setTimeout(() => {
+        this.pdfViewerAutoLoad.pdfSrc = file;
+        this.pdfViewerAutoLoad.refresh();
+      }, 0);
     }
   }
 }
