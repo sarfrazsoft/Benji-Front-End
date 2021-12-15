@@ -56,10 +56,10 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
         opacity: 0,
       })),
       transition('enabled => disabled', [
-        animate('0.5s')
+        animate('0.1s')
       ]),
       transition('disabled => enabled', [
-        animate('0.5s')
+        animate('0.1s')
       ]),
     ])
   ]
