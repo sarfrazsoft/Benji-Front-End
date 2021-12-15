@@ -1,5 +1,5 @@
 <div fxLayout="column" class="barinstorm-main">
-  <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" >
+  <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-sm="column">
     <div fxLayout="column" class="instructions">
       <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
         <div>
@@ -23,7 +23,7 @@
         </ng-container>
       </div>
     </div>
-    <div fxLayout="row" fxLayoutGap="16px">
+    <div class="options-buttons" fxLayout="row" fxLayoutGap="16px">
       <ng-container *ngxPermissionsOnly="'ADMIN'">
         <div *ngIf="classificationTypes && participantGroups?.length">
           <ng-select
