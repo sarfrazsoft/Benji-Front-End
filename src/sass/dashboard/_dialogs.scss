@@ -292,10 +292,10 @@
               cursor: pointer;
             }
           }
-          .divider {
-            height: 32px;
-            border-left: 1px solid #f3f4f7;
-          }
+          // .divider {
+          //   height: 32px;
+          //   border-left: 1px solid #f3f4f7;
+          // }
           .post {
             // margin: 8px 0px 15px 0px;
             // float: right;
@@ -438,10 +438,16 @@
         border: 1px solid transparent;
         min-height: 20px;
         align-items: center;
-        max-height: 20px;
-        height: 20px;
+        background: #F3F4F7;
+        border-radius: 46px;
+        max-height: 32px;
+        height: 32px;
         .ng-value-container .ng-input {
           top: 0px;
+          left: unset;
+          position: unset;
+          width: unset;
+          padding-right: unset;
         }
       }
     }
