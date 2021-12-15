@@ -41,7 +41,7 @@ export class ImportSlidesDialogComponent {
         )
         .subscribe((res) => {
           this.uploading = false;
-          this.dialogRef.close('success');
+          this.dialogRef.close(res);
         });
     }
     const url = '';

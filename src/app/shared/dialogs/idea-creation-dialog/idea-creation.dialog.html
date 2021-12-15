@@ -34,8 +34,11 @@
               <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
             </div>
           </div>
-          <div class="divider"></div>
-          <div class="option" fxLayout="row" fxLayoutAlign="center center">
+          <div class="divider" *ngIf="showCategoriesDropdown"></div>
+          <div *ngIf="showCategoriesDropdown"
+            class="option"
+            fxLayout="row" 
+            fxLayoutAlign="center center">
             <div class="dropdown-controls-container">
               <ng-select
                 class="ps-brainstorm-dropdown-controls"

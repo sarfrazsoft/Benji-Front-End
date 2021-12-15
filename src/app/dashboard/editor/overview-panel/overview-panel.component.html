@@ -11,7 +11,8 @@
     class="secondary-button black-color import-button">
       <div fxLayoutAlign="center center" fxLayoutGap="8px" fxLayout="row">
         <img src="/assets/img/import.svg"/>
-        <div>Import</div>
+        <div *ngIf="!importingSlides">Import</div>
+        <div *ngIf="importingSlides">Importing</div>
       </div>
   </button>
   <div
