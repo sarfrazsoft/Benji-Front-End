@@ -83,7 +83,10 @@
       >
         {{ control.label }}
         <label class="switch">
-          <input type="checkbox" checked (change)="toggleChange($event, control.name)">
+          <input 
+            type="checkbox" 
+            [checked]="control.default" 
+            (change)="toggleChange($event, control.name)">
           <span class="slider round"></span>
         </label>
       </div>

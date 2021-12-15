@@ -265,6 +265,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.hide = true;
                 } else if (mapSource.field_name === 'title_image_id') {
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'created_by') {
+                  mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.brainStorm) {
                 if (mapSource.internal_type === 'BrainstormActivitySerializer') {

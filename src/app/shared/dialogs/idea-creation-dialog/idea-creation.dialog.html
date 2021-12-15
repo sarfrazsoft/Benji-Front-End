@@ -14,10 +14,8 @@
         <img *ngIf="imageSrc" [src]="imageSrc" alt="">
         <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
         <div  style="width: 400px;">
-          <ngx-extended-pdf-viewer [src]="pdfSrc" 
-            useBrowserLocale="true" 
-            [height]="'350px'">
-          </ngx-extended-pdf-viewer>
+          <ng2-pdfjs-viewer #pdfViewerAutoLoad>
+          </ng2-pdfjs-viewer>
         </div>
         
         <button class="remove-button" (click)="removeImage()">
@@ -36,8 +34,11 @@
               <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
             </div>
           </div>
-          <!-- <div class="divider"></div> -->
-          <div class="option" fxLayout="row" fxLayoutAlign="center center">
+          <div class="divider" *ngIf="showCategoriesDropdown"></div>
+          <div *ngIf="showCategoriesDropdown"
+            class="option"
+            fxLayout="row" 
+            fxLayoutAlign="center center">
             <div class="dropdown-controls-container">
               <ng-select
                 class="ps-brainstorm-dropdown-controls"

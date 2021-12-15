@@ -159,6 +159,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     // this.store.dispatch(new fromStore.RemovePlaceholderActivity());
   }
   ngOnDestroy() {
+    this.store.dispatch(new fromStore.ResetStore());
+    console.log('destroyed');
     this.layoutService.hideSidebar = false;
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
