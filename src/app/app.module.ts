@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IntercomModule } from 'ng-intercom';
@@ -67,6 +68,7 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
         ],
       } as SocialAuthServiceConfig,
     },
+    { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
