@@ -100,6 +100,7 @@ const SHARED_MODULES = [
   NgxPermissionsModule,
 ];
 
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
@@ -114,6 +115,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     NgxPermissionsModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
+    PdfViewerModule,
   ],
   declarations: Components,
   entryComponents: [...EntryComponents],

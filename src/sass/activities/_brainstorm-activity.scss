@@ -330,6 +330,10 @@ benji-ms-brainstorming-activity {
     margin-top: 16px;
     font-size: 12px;
   }
+  pdf-viewer {
+    height: 100%;
+    width: 100%;
+  }
   img.title {
     width: 100%;
   }
@@ -363,7 +367,7 @@ benji-ms-brainstorming-activity {
       margin-bottom: 8px;
       position: relative;
       .grey-bg {
-        background: #F3F4F7;
+        background: #f3f4f7;
         border-radius: 8px;
         padding: 8px;
         .name {
@@ -409,7 +413,7 @@ benji-ms-brainstorming-activity {
       .send-comment {
         font-weight: 600;
         font-size: 12px;
-        color: #555BEA;
+        color: #555bea;
         margin-left: -48px;
       }
     }

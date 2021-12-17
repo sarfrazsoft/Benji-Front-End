@@ -157,14 +157,21 @@ export class IdeaCreationDialogComponent implements OnInit {
     if (fileList.length === 0) {
       this.imagesList = null;
     } else {
+      const file = fileList[0];
+      const reader = new FileReader();
+      reader.onload = (e) => (this.pdfSrc = reader.result);
+      reader.readAsDataURL(file);
+      this.selectedpdfDoc = file;
       this.pdfSelected = true;
       this.imageSelected = true;
-      const file = fileList[0];
-      this.selectedpdfDoc = file;
-      setTimeout(() => {
-        this.pdfViewerAutoLoad.pdfSrc = file;
-        this.pdfViewerAutoLoad.refresh();
-      }, 0);
+      // this.pdfSelected = true;
+      // this.imageSelected = true;
+      // const file = fileList[0];
+      // this.selectedpdfDoc = file;
+      // setTimeout(() => {
+      //   this.pdfViewerAutoLoad.pdfSrc = file;
+      //   this.pdfViewerAutoLoad.refresh();
+      // }, 0);
     }
   }
 }
