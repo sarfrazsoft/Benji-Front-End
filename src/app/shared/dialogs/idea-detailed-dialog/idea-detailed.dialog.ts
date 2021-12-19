@@ -61,6 +61,7 @@ export class IdeaDetailedDialogComponent {
   docSelected;
   hostname = environment.web_protocol + '://' + environment.host;
   @Output() sendMessage = new EventEmitter<any>();
+  @Output() deleteIdea = new EventEmitter<any>();
   constructor(
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
     private activitiesService: ActivitiesService,
@@ -177,5 +178,9 @@ export class IdeaDetailedDialogComponent {
     }
     const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
     return (first + second).toUpperCase();
+  }
+
+  delete() {
+    this.deleteIdea.emit(this.idea.id);
   }
 }

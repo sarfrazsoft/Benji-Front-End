@@ -96,14 +96,21 @@
       class="setting"
       benji-click-stop-propagation
       fxLayout="row"
-      fxLayoutAlign="space-between"
-    >
-      {{ control.label }}
-      <label class="switch">
-        <span (click)="buttonClick($event, control.name)">
-          button
+      fxLayoutAlign="space-between center">
+        {{ control.label }}
+      <!-- <label class="switch">
+        <span >
+          {{ control.buttonLabel }}
         </span>
-      </label>
+      </label> -->
+      <button
+        (click)="buttonClick($event, control.name)"
+        class="secondary-button black-color"
+        style="padding: 4px 16px;">
+          <div>
+            {{ control.buttonLabel }}
+          </div>
+      </button>
     </div>
 
       <div class="setting"

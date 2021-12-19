@@ -34,6 +34,7 @@ export const SETTINGS = {
         { id: 3, name: 'large' },
       ],
     },
+    { type: 'button', name: 'resetGrouping', label: 'Reset Grouping', buttonLabel: 'Reset' },
     // { type: 'toggle', label: 'Show vote tally' },
   ],
   convocards: [

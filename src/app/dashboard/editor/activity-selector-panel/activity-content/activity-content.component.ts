@@ -342,6 +342,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'grouping') {
                   mappedField.hide = true;
                   mappedField.defaultValue = null;
+                } else if (mapSource.field_name === 'show_participant_name_flag') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = true;
                 }
               } else if (act.activity_type === this.at.slides) {
                 if (mapSource.internal_type === 'GoogleSlidesActivitySerializer') {

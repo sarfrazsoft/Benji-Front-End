@@ -1,3 +1,11 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+  // ...
+} from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
@@ -11,14 +19,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  // ...
-} from '@angular/animations';
 import { differenceBy, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
@@ -49,20 +49,22 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   animations: [
     trigger('enableDisable', [
       // ...
-      state('enabled', style({
-        opacity: 1,
-      })),
-      state('disabled', style({
-        opacity: 0,
-      })),
-      transition('enabled => disabled', [
-        animate('0.5s')
-      ]),
-      transition('disabled => enabled', [
-        animate('0.5s')
-      ]),
-    ])
-  ]
+      state(
+        'enabled',
+        style({
+          opacity: 1,
+        })
+      ),
+      state(
+        'disabled',
+        style({
+          opacity: 0,
+        })
+      ),
+      transition('enabled => disabled', [animate('0.5s')]),
+      transition('disabled => enabled', [animate('0.5s')]),
+    ]),
+  ],
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() item;
@@ -198,6 +200,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.sendMessage.emit(event);
     });
 
+    dialogRef.componentInstance.deleteIdea.subscribe((event) => {
+      this.deleteIdea.emit(event);
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
@@ -211,5 +217,4 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     const second = fullName[1] ? fullName[1].charAt(0) : '';
     return (first + second).toUpperCase();
   }
-
 }

@@ -181,6 +181,12 @@ export class MainScreenBrainstormingActivityComponent
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
+      if (val && val.controlName === 'resetGrouping') {
+        if (this.act.grouping) {
+          const groupingID = this.act.grouping.id;
+          this.sendMessage.emit(new ResetGroupingEvent(groupingID));
+        }
+      }
       if (val && val.controlName === 'cardSize') {
         this.minWidth = val.state.name;
       }
