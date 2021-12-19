@@ -687,6 +687,7 @@ ng-dropdown-panel.brainstorm-groups {
 ng-dropdown-panel {
   &.ps-brainstorm-dropdown-controls {
     width: auto !important;
+    min-width: auto !important;
   }
 }
 

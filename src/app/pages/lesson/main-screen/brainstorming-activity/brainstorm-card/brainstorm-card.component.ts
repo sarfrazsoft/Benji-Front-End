@@ -183,8 +183,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   showDetailedIdea(idea: Idea) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
-      width: '621px',
-      panelClass: 'idea-dialog',
+      panelClass: 'idea-detailed-dialog',
       data: {
         showCategoriesDropdown: this.categorizeFlag,
         categories: this.activityState.brainstormactivity.brainstormcategory_set,
