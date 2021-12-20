@@ -424,6 +424,19 @@
           box-sizing: border-box;
           border-radius: 8px;
           height: 100%;
+          .options {
+            width: 48px;
+            height: 48px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            &:hover {
+              box-shadow: 0px 1px 2px #E7E7E7;
+              img {              
+                opacity: 0.8;
+              }
+            }
+          }
         }
         .add-to-post {
           margin-top: 16px;
@@ -533,7 +546,7 @@
       }
       .idea-creation-controls {
         margin-bottom: 16px;
-        .attachments {
+        .settings {
           .options {
             width: 40px;
             height: 40px;
@@ -614,6 +627,24 @@
         font-size: 14px;
         border-radius: 50%;
         line-height: normal;
+      }
+    }
+    .slide-arrow {
+      position: absolute;
+      top: 350px;
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      &.left { 
+        left: 6%;
+      }
+      &.right {
+        right: 6%;
+      }
+      &:hover {
+        background: #BDBDBD;
       }
     }
   }
