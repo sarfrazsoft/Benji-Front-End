@@ -285,9 +285,19 @@
           padding-top: 16px;
           height: 32px;
           .attachments {
-            img {
-              margin-right: 16px;
+            margin-right: 8px;
+            .options {
+              width: 32px;
+              height: 32px;
+              background: #F3F4F7;
+              border-radius: 50%;
               cursor: pointer;
+              &:hover {
+                box-shadow: 0px 1px 2px #E7E7E7;
+                img {              
+                  opacity: 0.8;
+                }
+              }
             }
           }
           .post {

@@ -28,13 +28,18 @@
       </div>
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
-          <div class="attachments" fxLayout="row" fxLayoutAlign="center center">
-            <img class="close"  (click)="openImagePickerDialog()" src="/assets/img/idea-creation/scenery.svg">   
+          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <div 
+              class="options" 
+              fxLayoutAlign="center center"
+              >
+              <img (click)="openImagePickerDialog()" src="/assets/img/idea-creation/scenery.svg">
+            </div>   
             <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
             <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
-            <div class="upbutton" (click)="uploader.click()">
+            <div class="options" fxLayoutAlign="center center" (click)="uploader.click()">
               <!-- <button mat-raised-button color="primary">Choose File</button> -->
-              <img class="close" src="/assets/img/idea-creation/file.svg">
+              <img src="/assets/img/idea-creation/file.svg">
               <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
             </div>
           </div>
