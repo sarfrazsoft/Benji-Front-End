@@ -43,7 +43,7 @@
       </div>
       <button class="post" (click)="onSubmit()">Update</button>
     </div>
-    <input class="title" type="text" placeholder="Title" [(ngModel)]="ideaTitle">
+    <textarea class="title" placeholder="Title" [(ngModel)]="ideaTitle"></textarea>
     <textarea
       cdkTextareaAutosize
       [(ngModel)]="userIdeaText" 
