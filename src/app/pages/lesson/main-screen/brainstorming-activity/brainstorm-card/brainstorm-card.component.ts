@@ -202,6 +202,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
     dialogRef.componentInstance.deleteIdea.subscribe((event) => {
       this.deleteIdea.emit(event);
+      dialogRef.close();
     });
 
     dialogRef.afterClosed().subscribe((result) => {
