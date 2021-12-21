@@ -244,7 +244,6 @@
         .description {
           border: unset;
           width: 100%;
-          height: 230px;
           resize: none;
           font-size: 14px;
           color: #616161;
@@ -319,12 +318,12 @@
     }
     .idea-creation-select {
       .ng-select-container {
-        background: #F3F4F7;
+        background: #f3f4f7;
         max-height: 32px;
         height: 32px;
         font-size: 14px;
         font-weight: 400;
-        color: #37352F;
+        color: #37352f;
         border-radius: 17px;
         width: auto;
       }
@@ -335,11 +334,12 @@
 .ps-brainstorm-dropdown-controls {
   &.ng-select-bottom {
     .ng-dropdown-panel-items {
-      border: 1px solid #F3F4F7;
+      border: 1px solid #f3f4f7;
       box-shadow: 0px 1px 2px #e7e7e7;
       border-radius: 4px;
-      .ng-option.ng-option-selected, .ng-option.ng-option-selected.ng-option-marked {
-        background-color: #F3F4F7;
+      .ng-option.ng-option-selected,
+      .ng-option.ng-option-selected.ng-option-marked {
+        background-color: #f3f4f7;
       }
     }
   }
@@ -415,12 +415,12 @@
       .select-image {
         width: 448px;
         height: 400px;
-        background: #F1F2F4;
+        background: #f1f2f4;
         border-radius: 16px;
         margin: 40px;
         padding: 24px;
         .attachments {
-          border: 2px dashed #D4D4D4;
+          border: 2px dashed #d4d4d4;
           box-sizing: border-box;
           border-radius: 8px;
           height: 100%;
@@ -431,8 +431,8 @@
             border-radius: 50%;
             cursor: pointer;
             &:hover {
-              box-shadow: 0px 1px 2px #E7E7E7;
-              img {              
+              box-shadow: 0px 1px 2px #e7e7e7;
+              img {
                 opacity: 0.8;
               }
             }
@@ -489,7 +489,7 @@
         resize: none;
         font-size: 16px;
         line-height: 24px;
-        color: #37352F;
+        color: #37352f;
         font-weight: 400;
         margin-bottom: 16px;
         &:focus {
@@ -524,7 +524,8 @@
         margin-bottom: 24px;
       }
       .discussion-tabs {
-        .mat-tab-nav-bar, .mat-tab-header {
+        .mat-tab-nav-bar,
+        .mat-tab-header {
           border-bottom: unset;
         }
         .mat-tab-label {
@@ -535,13 +536,13 @@
           min-width: unset;
           font-size: 16px;
           font-weight: 600;
-          color: #37352F !important;
+          color: #37352f !important;
           margin-right: 16px;
           height: 32px;
           opacity: 1;
         }
         .mat-ink-bar {
-          background-color: #37352F;
+          background-color: #37352f;
         }
       }
       .idea-creation-controls {
@@ -579,7 +580,7 @@
         .comment {
           margin-bottom: 8px;
           .comment-bg {
-            background: #F6F7F9;
+            background: #f6f7f9;
             border-radius: 8px;
             padding: 8px;
             .commentor-name {
@@ -599,26 +600,26 @@
       }
       .add-comment-container {
         .input-comment {
-            height: 40px;
-            background: #F6F7F9;
-            border-radius: 20px;
-            border: unset;
-            color: #37352f;
-            font-weight: 400;
-            font-size: 16px;
-            padding: 0px 14px;
-            width: 80%;
-            &:focus-visible {
-              outline: none;
-            }
+          height: 40px;
+          background: #f6f7f9;
+          border-radius: 20px;
+          border: unset;
+          color: #37352f;
+          font-weight: 400;
+          font-size: 16px;
+          padding: 0px 14px;
+          width: 80%;
+          &:focus-visible {
+            outline: none;
           }
-          .send-comment {
-            font-weight: 600;
-            font-size: 16px;
-            color: #555BEA;
-            margin-left: -60px;
-            cursor: pointer;
-          }
+        }
+        .send-comment {
+          font-weight: 600;
+          font-size: 16px;
+          color: #555bea;
+          margin-left: -60px;
+          cursor: pointer;
+        }
       }
       .initials {
         width: 40px;
@@ -637,7 +638,7 @@
       background: #fff;
       border-radius: 50%;
       cursor: pointer;
-      &.left { 
+      &.left {
         left: 6%;
       }
       &.right {
