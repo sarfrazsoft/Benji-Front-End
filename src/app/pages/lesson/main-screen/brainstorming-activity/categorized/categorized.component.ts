@@ -116,7 +116,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormRemoveCategoryEvent(categoryId, true));
   }
 
-  onColumnNameBlur(column) {
+  onColumnNameBlur(column, event) {
+    console.log(event)
     let selectedCat: Category;
     this.act.brainstormcategory_set.forEach((cat: Category) => {
       if (column.id === cat.id) {
@@ -124,10 +125,12 @@ export class CategorizedComponent implements OnInit, OnChanges {
       }
     });
     column.editing = false;
-    if (selectedCat.category_name === column.category_name) {
+    
+    if (selectedCat.category_name ===  event.target.value) {
       return;
     }
-    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, column.category_name));
+    column.category_name = event.target.value;
+    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, event.target.value));
   }
 
   openImage(imageUrl: string) {

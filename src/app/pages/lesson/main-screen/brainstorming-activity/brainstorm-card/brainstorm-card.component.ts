@@ -61,8 +61,8 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
           opacity: 0,
         })
       ),
-      transition('enabled => disabled', [animate('0.5s')]),
-      transition('disabled => enabled', [animate('0.5s')]),
+      transition('enabled => disabled', [animate('0.1s')]),
+      transition('disabled => enabled', [animate('0.1s')]),
     ]),
   ],
 })
@@ -185,8 +185,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   showDetailedIdea(idea: Idea) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
-      width: '621px',
-      panelClass: 'idea-dialog',
+      panelClass: 'idea-detailed-dialog',
       data: {
         showCategoriesDropdown: this.categorizeFlag,
         categories: this.activityState.brainstormactivity.brainstormcategory_set,

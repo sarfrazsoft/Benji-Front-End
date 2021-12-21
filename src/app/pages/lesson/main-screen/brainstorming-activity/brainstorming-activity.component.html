@@ -1,5 +1,5 @@
 <div fxLayout="column" class="barinstorm-main">
-  <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" >
+  <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-sm="column">
     <div fxLayout="column" class="instructions">
       <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
         <div>
@@ -23,50 +23,52 @@
         </ng-container>
       </div>
     </div>
-    <div fxLayout="row" fxLayoutGap="16px">
+    <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
       <ng-container *ngxPermissionsOnly="'ADMIN'">
-        <div *ngIf="classificationTypes && participantGroups?.length">
-          <ng-select
-            class="brainstorm-groups menus"
-            [items]="classificationTypes"
-            bindLabel="title"
-            placeholder="Groups"
-            (change)="classificationTypeChanged(selectedClassificationType)"
-            [(ngModel)]="selectedClassificationType"
-            appendTo="body"
-            [searchable]="false"
-            [clearable]="false">
-            <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                <img src="{{item.imgUrl}}" />
-                <div fxLayout="column">
-                  <div class="title">{{ item.title }}</div>
-                  <div class="description">{{ item.description }}</div>
+        <div fxLayout="row-reverse" fxLayout.lt-sm="row" fxLayoutGap="8px">
+          <div *ngIf="classificationTypes && participantGroups?.length">
+            <ng-select
+              class="brainstorm-groups menus"
+              [items]="classificationTypes"
+              bindLabel="title"
+              placeholder="Groups"
+              (change)="classificationTypeChanged(selectedClassificationType)"
+              [(ngModel)]="selectedClassificationType"
+              appendTo="body"
+              [searchable]="false"
+              [clearable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                  <img src="{{item.imgUrl}}" />
+                  <div fxLayout="column">
+                    <div class="title">{{ item.title }}</div>
+                    <div class="description">{{ item.description }}</div>
+                  </div>
                 </div>
-              </div>
-          </ng-template>
-          </ng-select>
-        </div>
-        <div *ngIf="showParticipantsGroupsDropdown">
-          <ng-select
-            class="menus"
-            [items]="participantGroups"
-            bindLabel="title"
-            placeholder="Groups"
-            (change)="ParticipantGroupChanged(selectedParticipantGroup)"
-            [(ngModel)]="selectedParticipantGroup"
-            appendTo="body"
-            [searchable]="false"
-            [clearable]="false">
-            <ng-template ng-option-tmp let-item="item" let-index="index">
-              <div>{{ item.title }}</div>
             </ng-template>
-          </ng-select>
+            </ng-select>
+          </div>
+          <div *ngIf="showParticipantsGroupsDropdown">
+            <ng-select
+              class="menus"
+              [items]="participantGroups"
+              bindLabel="title"
+              placeholder="Groups"
+              (change)="ParticipantGroupChanged(selectedParticipantGroup)"
+              [(ngModel)]="selectedParticipantGroup"
+              appendTo="body"
+              [searchable]="false"
+              [clearable]="false">
+              <ng-template ng-option-tmp let-item="item" let-index="index">
+                <div>{{ item.title }}</div>
+              </ng-template>
+            </ng-select>
+          </div>
         </div>
       </ng-container>
       <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px" class="import-button bg-primary-color" (click)="openDialog()">
         <div class="plus">+</div>
-        <div>Submit idea</div>
+        <div>Post idea</div>
       </div>
     </div>
   </div>

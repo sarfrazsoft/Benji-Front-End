@@ -49,8 +49,8 @@
               <input
                 #colName
                 type="text"
-                (blur)="onColumnNameBlur(column)"
-                [(ngModel)]="column.category_name"
+                (blur)="onColumnNameBlur(column, $event)"
+                value="{{ column.category_name }}"
               />
             </ng-container>
           </div>

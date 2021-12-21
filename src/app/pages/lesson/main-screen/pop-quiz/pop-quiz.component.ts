@@ -241,8 +241,9 @@ export class MainScreenPopQuizComponent
 
     this.participantRanks = [];
     let obj = this.activityState.mcqactivity.participant_ranks;
+    console.log (this.activityState.mcqactivity.participant_ranks);
     let entries = Object.entries (obj);
-    let sorted = entries.sort((a: any, b: any) => a[1] - b[1]);
+    let sorted = entries.sort((a: any, b: any) => b[1] - a[1]);
     
     sorted.forEach((value) => {
       this.participantRanks.push(

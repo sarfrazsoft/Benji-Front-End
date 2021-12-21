@@ -37,8 +37,8 @@ import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.
           opacity: 0,
         })
       ),
-      transition('enabled => disabled', [animate('0.5s')]),
-      transition('disabled => enabled', [animate('0.5s')]),
+      transition('enabled => disabled', [animate('0.1s')]),
+      transition('disabled => enabled', [animate('0.1s')]),
     ]),
   ],
 })

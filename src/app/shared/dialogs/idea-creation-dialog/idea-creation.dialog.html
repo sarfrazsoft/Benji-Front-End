@@ -1,4 +1,4 @@
-<div class="idea-dialog" fxLayout="row">
+<div class="idea-creation-dialog" fxLayout="row">
   <div class="white-area">
     <div class="white-content">
       <input class="title" type="text" placeholder="Title" [(ngModel)]="ideaTitle">
@@ -43,7 +43,7 @@
             class="option"
             fxLayout="row" 
             fxLayoutAlign="center center">
-            <div class="dropdown-controls-container">
+            <div class="dropdown-controls-container idea-creation-select">
               <ng-select
                 class="ps-brainstorm-dropdown-controls"
                 [items]="categories"

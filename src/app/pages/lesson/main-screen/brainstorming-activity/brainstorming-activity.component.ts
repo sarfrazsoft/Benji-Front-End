@@ -511,7 +511,7 @@ export class MainScreenBrainstormingActivityComponent
 
   openDialog(category?: Category) {
     const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
-      panelClass: 'idea-dialog',
+      panelClass: 'idea-creation-dialog',
       data: {
         showCategoriesDropdown: this.categorizeFlag,
         categories: this.activityState.brainstormactivity.brainstormcategory_set,
