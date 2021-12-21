@@ -10,17 +10,21 @@
           'image-selected': imageSelected
         }">
       </textarea>
-      <div class="preview-image" *ngIf="imageSelected" fxLayoutAlign="center center">
-        <img *ngIf="imageSrc" [src]="imageSrc" alt="">
-        <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
-        <div  style="width: 400px;">
-          <ngx-extended-pdf-viewer [src]="pdfSrc" 
-            useBrowserLocale="true" 
-            [height]="'350px'">
-          </ngx-extended-pdf-viewer>
-          <!-- <ng2-pdfjs-viewer #pdfViewerAutoLoad>
-          </ng2-pdfjs-viewer> -->
-        </div>
+      <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+        <ng-container *ngIf="imageSelected">
+          <img *ngIf="imageSrc" [src]="imageSrc" alt="">
+          <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
+        </ng-container>
+        <ng-container *ngIf="pdfSelected">
+          <div style="width: 400px;">
+            <ngx-extended-pdf-viewer [src]="pdfSrc" 
+              useBrowserLocale="true" 
+              [height]="'350px'">
+            </ngx-extended-pdf-viewer>
+            <!-- <ng2-pdfjs-viewer #pdfViewerAutoLoad>
+            </ng2-pdfjs-viewer> -->
+          </div>
+        </ng-container>
         
         <button class="remove-button" (click)="removeImage()">
           Remove

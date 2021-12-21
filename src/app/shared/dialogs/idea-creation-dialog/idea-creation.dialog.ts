@@ -165,7 +165,6 @@ export class IdeaCreationDialogComponent implements OnInit {
       this.pdfSelected = true;
       this.imageSelected = true;
       // this.pdfSelected = true;
-      // this.imageSelected = true;
       // const file = fileList[0];
       // this.selectedpdfDoc = file;
       // setTimeout(() => {
