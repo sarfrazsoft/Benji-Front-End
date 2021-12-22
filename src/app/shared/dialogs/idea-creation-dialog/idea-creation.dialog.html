@@ -1,8 +1,15 @@
 <div class="idea-creation-dialog" fxLayout="row">
   <div class="white-area">
     <div class="white-content">
-      <input class="title" type="text" placeholder="Title" [(ngModel)]="ideaTitle">
       <textarea
+        cdkTextareaAutosize
+        class="title" 
+        type="text" 
+        placeholder="Title" 
+        [(ngModel)]="ideaTitle">
+      </textarea>
+      <textarea
+        cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description"
         placeholder="Description..."
@@ -10,19 +17,21 @@
           'image-selected': imageSelected
         }">
       </textarea>
-      <div class="preview-image" *ngIf="imageSelected" fxLayoutAlign="center center">
-        <img *ngIf="imageSrc" [src]="imageSrc" alt="">
-        <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
-        <div  style="width: 400px;">
-          <ngx-extended-pdf-viewer [src]="pdfSrc" 
-            useBrowserLocale="true" 
-            [height]="'350px'">
-          </ngx-extended-pdf-viewer>
-          <!-- <ng2-pdfjs-viewer #pdfViewerAutoLoad>
-          </ng2-pdfjs-viewer> -->
-        </div>
+      <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+        <ng-container *ngIf="imageSelected">
+          <img *ngIf="imageSrc" [src]="imageSrc" alt="">
+          <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
+        </ng-container>
+        <ng-container *ngIf="pdfSelected">
+          <div style="width: 400px;">
+            <ngx-extended-pdf-viewer [src]="pdfSrc" 
+              useBrowserLocale="true" 
+              [height]="'350px'">
+            </ngx-extended-pdf-viewer>
+          </div>
+        </ng-container>
         
-        <button class="remove-button" (click)="removeImage()">
+        <button class="remove-button" (click)="remove()">
           Remove
         </button>
       </div>
@@ -40,7 +49,12 @@
             <div class="options" fxLayoutAlign="center center" (click)="uploader.click()">
               <!-- <button mat-raised-button color="primary">Choose File</button> -->
               <img src="/assets/img/idea-creation/file.svg">
-              <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
+              <input 
+                #uploader 
+                (change)="uploadFile($event)" 
+                type='file'
+                accept="application/pdf"
+                style="display:none"/> 
             </div>
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>

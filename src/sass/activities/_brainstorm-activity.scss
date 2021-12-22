@@ -396,25 +396,30 @@ benji-ms-brainstorming-activity {
       }
     }
     .post-comment {
-      .input-comment {
-        height: 32px;
-        background: #f3f4f7;
-        border-radius: 20px;
-        border: unset;
-        color: #777777;
-        font-weight: 400;
-        font-size: 12px;
-        padding: 0px 50px 0px 12px;
-        width: 56%;
-        &:focus-visible {
-          outline: none;
+      .comment-input-container {
+        box-sizing: border-box;
+        flex-grow: 1;
+        .input-comment {
+          height: 32px;
+          background: #f3f4f7;
+          border-radius: 20px;
+          border: unset;
+          color: #777777;
+          font-weight: 400;
+          font-size: 12px;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 0px 50px 0px 12px;
+          &:focus-visible {
+            outline: none;
+          }
         }
-      }
-      .send-comment {
-        font-weight: 600;
-        font-size: 12px;
-        color: #555bea;
-        margin-left: -48px;
+        .send-comment {
+          font-weight: 600;
+          font-size: 12px;
+          color: #555bea;
+          margin-left: -48px;
+        }
       }
     }
     .initials {
@@ -424,6 +429,7 @@ benji-ms-brainstorming-activity {
       font-size: 12px;
       color: #fff;
       line-height: normal;
+      flex-shrink: 0;
     }
   }
 }
@@ -700,7 +706,8 @@ ng-dropdown-panel {
     .barinstorm-header {
       place-content: start !important;
       align-items: start !important;
-      .brainstorm-h2, .sub-header {
+      .brainstorm-h2,
+      .sub-header {
         margin-left: 0px;
       }
       .options-buttons {
@@ -708,11 +715,11 @@ ng-dropdown-panel {
       }
     }
   }
-  .mainscreen-toolbar{
+  .mainscreen-toolbar {
     &.bg-white {
       box-shadow: 0 1px 3px #e7e7e7;
     }
-  } 
+  }
   benji-ms-brainstorming-activity .brainstorm-container {
     .submitted-ideas {
       padding: 0 8px;

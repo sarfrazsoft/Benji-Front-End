@@ -1,3 +1,11 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+  // ...
+} from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
@@ -11,15 +19,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  // ...
-} from '@angular/animations';
 import { differenceBy, includes, remove } from 'lodash';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
@@ -49,20 +50,22 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   animations: [
     trigger('enableDisable', [
       // ...
-      state('enabled', style({
-        opacity: 1,
-      })),
-      state('disabled', style({
-        opacity: 0,
-      })),
-      transition('enabled => disabled', [
-        animate('0.1s')
-      ]),
-      transition('disabled => enabled', [
-        animate('0.1s')
-      ]),
-    ])
-  ]
+      state(
+        'enabled',
+        style({
+          opacity: 1,
+        })
+      ),
+      state(
+        'disabled',
+        style({
+          opacity: 0,
+        })
+      ),
+      transition('enabled => disabled', [animate('0.1s')]),
+      transition('disabled => enabled', [animate('0.1s')]),
+    ]),
+  ],
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() item;
@@ -93,7 +96,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private activitiesService: ActivitiesService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private deviceService: DeviceDetectorService
   ) {
     // super();
   }
@@ -182,6 +186,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   showDetailedIdea(idea: Idea) {
+    this.openMobileDialog(idea);
+    if (this.deviceService.isMobile()) {
+      // this.ideaDetailedView = true;
+    } else {
+      // this.openDialog(idea);
+    }
+  }
+
+  openMobileDialog(idea) {}
+
+  openDialog(idea: Idea) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
       panelClass: 'idea-detailed-dialog',
       data: {
@@ -197,6 +212,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.sendMessage.emit(event);
     });
 
+    dialogRef.componentInstance.deleteIdea.subscribe((event) => {
+      this.deleteIdea.emit(event);
+      dialogRef.close();
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
@@ -210,5 +230,4 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     const second = fullName[1] ? fullName[1].charAt(0) : '';
     return (first + second).toUpperCase();
   }
-
 }

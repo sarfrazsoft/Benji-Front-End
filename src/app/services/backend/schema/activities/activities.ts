@@ -349,7 +349,7 @@ export interface Idea {
 
 export interface IdeaDocument {
   id: number;
-  url: string;
+  document: string;
 }
 
 export interface ParticipantCode {

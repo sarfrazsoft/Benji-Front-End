@@ -117,7 +117,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   onColumnNameBlur(column, event) {
-    console.log(event)
     let selectedCat: Category;
     this.act.brainstormcategory_set.forEach((cat: Category) => {
       if (column.id === cat.id) {
@@ -125,8 +124,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
       }
     });
     column.editing = false;
-    
-    if (selectedCat.category_name ===  event.target.value) {
+
+    if (selectedCat.category_name === event.target.value) {
       return;
     }
     column.category_name = event.target.value;

@@ -109,13 +109,6 @@ export class IdeaCreationDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  removeImage() {
-    this.imageSelected = false;
-    this.imagesList = null;
-    this.imageSrc = null;
-    this.selectedThirdPartyImageUrl = null;
-  }
-
   openImagePickerDialog() {
     const code = this.lessonRunCode;
     this.imageDialogRef = this.matDialog
@@ -129,6 +122,8 @@ export class IdeaCreationDialogComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
+          this.clearPDF();
+          this.removeImage();
           if (res.type === 'upload') {
             this.imageSelected = true;
             this.imagesList = res.data;
@@ -151,9 +146,9 @@ export class IdeaCreationDialogComponent implements OnInit {
   }
 
   uploadFile(event) {
-    // console.log($event.target.files[0]); // outputs the first file
-    // const file = $event.target.files[0];
     const fileList: FileList = event.target.files;
+    this.clearPDF();
+    this.removeImage();
     if (fileList.length === 0) {
       this.imagesList = null;
     } else {
@@ -163,15 +158,27 @@ export class IdeaCreationDialogComponent implements OnInit {
       reader.readAsDataURL(file);
       this.selectedpdfDoc = file;
       this.pdfSelected = true;
-      this.imageSelected = true;
-      // this.pdfSelected = true;
-      // this.imageSelected = true;
-      // const file = fileList[0];
-      // this.selectedpdfDoc = file;
-      // setTimeout(() => {
-      //   this.pdfViewerAutoLoad.pdfSrc = file;
-      //   this.pdfViewerAutoLoad.refresh();
-      // }, 0);
     }
+  }
+
+  remove() {
+    if (this.pdfSelected) {
+      this.clearPDF();
+    } else {
+      this.removeImage();
+    }
+  }
+
+  removeImage() {
+    this.imageSelected = false;
+    this.imagesList = null;
+    this.imageSrc = null;
+    this.selectedThirdPartyImageUrl = null;
+  }
+
+  clearPDF() {
+    this.selectedpdfDoc = null;
+    this.pdfSelected = false;
+    this.pdfSrc = null;
   }
 }
