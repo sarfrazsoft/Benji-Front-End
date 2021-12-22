@@ -1,11 +1,17 @@
 <div fxLayout="row" class="mobile-panel">
   <div class="image-area">
-    <div class="select-image" *ngIf="!imageSelected && !pdfSelected">
+    <div class="select-image" *ngIf="!imageSelected && !pdfSelected && !uploadPanelExpanded">
       <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
         <div fxLayout="row" fxLayoutGap="16px">
           <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
           <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
-          <div class="options" fxLayoutAlign="center center"><img (click)="openImagePickerDialog()" src="/assets/img/idea-creation/image-icon.svg"></div>
+          <div 
+            class="options" 
+            fxLayoutAlign="center center"
+            (click)="openImagePickerDialog()"
+            >
+              <img src="/assets/img/idea-creation/image-icon.svg">
+          </div>
           <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
         </div>
         <div class="add-to-post">Add to your post</div>
@@ -53,7 +59,6 @@
       class="back-text" 
       fxLayoutAlign="start center"
       fxLayoutGap="9px"
-      *ngIf="!(imageSelected || pdfSelected)"
       (click)="closeDialog()" 
       >
       <img src="/assets/img/idea-creation/arrow-left.svg"> 
@@ -62,13 +67,19 @@
     <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="row">
         <div class="settings" fxLayout="row"fxLayoutGap="12px">
-          <div class="options" fxLayoutAlign="center center"><img (click)="openImagePickerDialog()" src="/assets/img/idea-creation/three-dots.svg"></div>
+          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div>
           <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/pin-icon.svg"></div>
           <div
             (click)="delete()"
             class="options" 
             fxLayoutAlign="center center">
             <img src="/assets/img/idea-creation/dust-bin.svg">
+          </div>
+          <div
+            (click)="toggle()"
+            class="options" 
+            fxLayoutAlign="center center">
+            <img src="/assets/img/idea-creation/upload-toggle.svg">
           </div>
         </div>
       </div>
@@ -78,7 +89,10 @@
       class="title" 
       placeholder="Title" 
       [(ngModel)]="ideaTitle"
-      cdktextareaautosize>
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="5">
     </textarea>
     <textarea
       cdkTextareaAutosize

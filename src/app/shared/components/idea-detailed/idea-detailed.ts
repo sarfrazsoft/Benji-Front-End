@@ -40,6 +40,11 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
       transition('enabled => disabled', [animate('0.1s')]),
       transition('disabled => enabled', [animate('0.1s')]),
     ]),
+    trigger('openClose', [
+      state('true', style({ height: '*' })),
+      state('false', style({ height: '0px' })),
+      transition('false <=> true', animate(500))
+    ])
   ],
 })
 export class IdeaDetailedComponent implements OnInit {
@@ -53,6 +58,7 @@ export class IdeaDetailedComponent implements OnInit {
   ideaTitle;
   lessonRunCode;
   imageSelected = false;
+  uploadPanelExpanded: boolean;
 
   imagesList: FileList;
   imageSrc;
@@ -131,6 +137,7 @@ export class IdeaDetailedComponent implements OnInit {
     this.imageSelected = false;
     this.imagesList = null;
     this.imageSrc = null;
+    this.selectedImageUrl = null;
   }
 
   clearPDF() {
@@ -151,20 +158,21 @@ export class IdeaDetailedComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
+        console.log(res);
         if (res) {
           if (res.type === 'upload') {
             this.imageSelected = true;
-            this.imagesList = res.this.data;
-            const fileList: FileList = res.this.data;
+            this.imagesList = res.data;
+            const fileList: FileList = res.data;
             const file = fileList[0];
             const reader = new FileReader();
             reader.onload = (e) => (this.imageSrc = reader.result);
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
-            this.selectedImageUrl = res.this.data;
+            this.selectedImageUrl = res.data;
             this.imageSelected = true;
           } else if (res.type === 'giphy') {
-            this.selectedImageUrl = res.this.data;
+            this.selectedImageUrl = res.data;
             this.imageSelected = true;
           }
         }
@@ -200,4 +208,9 @@ export class IdeaDetailedComponent implements OnInit {
   delete() {
     this.deleteIdea.emit(this.idea.id);
   }
+
+  toggle() {
+      this.uploadPanelExpanded = !this.uploadPanelExpanded;
+  }
+
 }
