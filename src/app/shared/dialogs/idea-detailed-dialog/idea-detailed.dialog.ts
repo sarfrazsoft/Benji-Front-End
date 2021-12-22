@@ -58,7 +58,9 @@ export class IdeaDetailedDialogComponent {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
-  docSelected;
+  pdfSelected;
+  selectedpdfDoc;
+  pdfSrc;
   hostname = environment.web_protocol + '://' + environment.host;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
@@ -76,38 +78,34 @@ export class IdeaDetailedDialogComponent {
     },
     private matDialog: MatDialog
   ) {
-    this.showCategoriesDropdown = data.showCategoriesDropdown;
-    this.categories = data.categories.filter((val) => !val.removed);
-    this.idea = data.item;
-    if (this.categories.length) {
-      this.selectedCategory = this.categories[0];
-    }
-    this.ideaTitle = data.item.title;
-    this.userIdeaText = data.item.idea;
-    if (data.item.idea_image) {
-      this.imageSelected = true;
-      this.imageSrc = data.item.idea_image.img;
-    }
-    if (data.item.idea_document) {
-      this.docSelected = true;
-    }
-    if (data.category) {
-      this.selectedCategory = data.category;
-    }
-    if (data.myGroup) {
-      this.group = data.myGroup;
-    }
-    this.activityState = data.activityState;
+    // this.showCategoriesDropdown = data.showCategoriesDropdown;
+    // this.categories = data.categories.filter((val) => !val.removed);
+    // this.idea = data.item;
+    // if (this.categories.length) {
+    //   this.selectedCategory = this.categories[0];
+    // }
+    // this.ideaTitle = data.item.title;
+    // this.userIdeaText = data.item.idea;
+    // if (data.item.idea_image) {
+    //   this.imageSelected = true;
+    //   this.imageSrc = data.item.idea_image.img;
+    // }
+    // if (data.item.idea_document) {
+    //   this.pdfSelected = true;
+    //   this.pdfSrc = this.hostname + data.item.idea_document.document;
+    // }
+    // if (data.category) {
+    //   this.selectedCategory = data.category;
+    // }
+    // if (data.myGroup) {
+    //   this.group = data.myGroup;
+    // }
+    // this.activityState = data.activityState;
   }
 
-  onSubmit() {
+  onSubmit(event) {
     this.dialogRef.close({
-      ...this.idea,
-      text: this.userIdeaText,
-      title: this.ideaTitle,
-      category: this.selectedCategory,
-      imagesList: this.imagesList,
-      selectedImageUrl: this.selectedImageUrl,
+      ...event,
     });
   }
 
@@ -115,72 +113,89 @@ export class IdeaDetailedDialogComponent {
     this.dialogRef.close();
   }
 
-  removeImage() {
-    this.imageSelected = false;
-    this.imagesList = null;
-    this.imageSrc = null;
-    this.selectedImageUrl = null;
+  // remove() {
+  //   if (this.pdfSelected) {
+  //     this.clearPDF();
+  //   } else {
+  //     this.removeImage();
+  //   }
+  // }
+
+  // removeImage() {
+  //   this.imageSelected = false;
+  //   this.imagesList = null;
+  //   this.imageSrc = null;
+  // }
+
+  // clearPDF() {
+  //   this.selectedpdfDoc = null;
+  //   this.pdfSelected = false;
+  //   this.pdfSrc = null;
+  // }
+
+  // openImagePickerDialog() {
+  //   const code = this.lessonRunCode;
+  //   this.imageDialogRef = this.matDialog
+  //     .open(ImagePickerDialogComponent, {
+  //       data: {
+  //         lessonRunCode: code,
+  //       },
+  //       disableClose: false,
+  //       panelClass: ['dashboard-dialog', 'image-picker-dialog'],
+  //     })
+  //     .afterClosed()
+  //     .subscribe((res) => {
+  //       if (res) {
+  //         if (res.type === 'upload') {
+  //           this.imageSelected = true;
+  //           this.imagesList = res.data;
+  //           const fileList: FileList = res.data;
+  //           const file = fileList[0];
+  //           const reader = new FileReader();
+  //           reader.onload = (e) => (this.imageSrc = reader.result);
+  //           reader.readAsDataURL(file);
+  //         } else if (res.type === 'unsplash') {
+  //           this.selectedImageUrl = res.data;
+  //           this.imageSelected = true;
+  //         } else if (res.type === 'giphy') {
+  //           this.selectedImageUrl = res.data;
+  //           this.imageSelected = true;
+  //         }
+  //       }
+  //     });
+  // }
+
+  // isAbsolutePath(imageUrl: string) {
+  //   if (imageUrl.includes('https:')) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // getParticipantName(code: number) {
+  //   return this.activitiesService.getParticipantName(this.activityState, code);
+  // }
+
+  // submitComment(ideaId, val) {
+  //   this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+  // }
+
+  propagate(event) {
+    this.sendMessage.emit(event);
   }
 
-  openImagePickerDialog() {
-    const code = this.lessonRunCode;
-    this.imageDialogRef = this.matDialog
-      .open(ImagePickerDialogComponent, {
-        data: {
-          lessonRunCode: code,
-        },
-        disableClose: false,
-        panelClass: ['dashboard-dialog', 'image-picker-dialog'],
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res) {
-          if (res.type === 'upload') {
-            this.imageSelected = true;
-            this.imagesList = res.data;
-            const fileList: FileList = res.data;
-            const file = fileList[0];
-            const reader = new FileReader();
-            reader.onload = (e) => (this.imageSrc = reader.result);
-            reader.readAsDataURL(file);
-          } else if (res.type === 'unsplash') {
-            this.selectedImageUrl = res.data;
-            this.imageSelected = true;
-          } else if (res.type === 'giphy') {
-            this.selectedImageUrl = res.data;
-            this.imageSelected = true;
-          }
-        }
-      });
-  }
+  // getInitials(nameString: string) {
+  //   const fullName = nameString.split(' ');
+  //   const first = fullName[0] ? fullName[0].charAt(0) : '';
+  //   if (fullName.length === 1) {
+  //     return first.toUpperCase();
+  //   }
+  //   const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
+  //   return (first + second).toUpperCase();
+  // }
 
-  isAbsolutePath(imageUrl: string) {
-    if (imageUrl.includes('https:')) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getParticipantName(code: number) {
-    return this.activitiesService.getParticipantName(this.activityState, code);
-  }
-
-  submitComment(ideaId, val) {
-    this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
-  }
-
-  getInitials(nameString: string) {
-    const fullName = nameString.split(' ');
-    const first = fullName[0] ? fullName[0].charAt(0) : '';
-    if (fullName.length === 1) {
-      return first.toUpperCase();
-    }
-    const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
-    return (first + second).toUpperCase();
-  }
-
-  delete() {
-    this.deleteIdea.emit(this.idea.id);
+  delete(event) {
+    this.deleteIdea.emit(event);
   }
 }

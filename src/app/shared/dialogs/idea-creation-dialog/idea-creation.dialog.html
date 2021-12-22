@@ -1,7 +1,13 @@
 <div class="idea-creation-dialog" fxLayout="row">
   <div class="white-area">
     <div class="white-content">
-      <input class="title" type="text" placeholder="Title" [(ngModel)]="ideaTitle">
+      <textarea
+        cdkTextareaAutosize
+        class="title" 
+        type="text" 
+        placeholder="Title" 
+        [(ngModel)]="ideaTitle">
+      </textarea>
       <textarea
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
@@ -22,12 +28,10 @@
               useBrowserLocale="true" 
               [height]="'350px'">
             </ngx-extended-pdf-viewer>
-            <!-- <ng2-pdfjs-viewer #pdfViewerAutoLoad>
-            </ng2-pdfjs-viewer> -->
           </div>
         </ng-container>
         
-        <button class="remove-button" (click)="removeImage()">
+        <button class="remove-button" (click)="remove()">
           Remove
         </button>
       </div>
@@ -45,7 +49,12 @@
             <div class="options" fxLayoutAlign="center center" (click)="uploader.click()">
               <!-- <button mat-raised-button color="primary">Choose File</button> -->
               <img src="/assets/img/idea-creation/file.svg">
-              <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
+              <input 
+                #uploader 
+                (change)="uploadFile($event)" 
+                type='file'
+                accept="application/pdf"
+                style="display:none"/> 
             </div>
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>

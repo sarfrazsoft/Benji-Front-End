@@ -20,6 +20,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, includes, remove } from 'lodash';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
@@ -95,7 +96,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private activitiesService: ActivitiesService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private deviceService: DeviceDetectorService
   ) {
     // super();
   }
@@ -184,6 +186,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   showDetailedIdea(idea: Idea) {
+    this.openMobileDialog(idea);
+    if (this.deviceService.isMobile()) {
+      // this.ideaDetailedView = true;
+    } else {
+      // this.openDialog(idea);
+    }
+  }
+
+  openMobileDialog(idea) {}
+
+  openDialog(idea: Idea) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
       panelClass: 'idea-detailed-dialog',
       data: {
