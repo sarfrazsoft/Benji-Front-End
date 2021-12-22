@@ -194,7 +194,34 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
-  openMobileDialog(idea) {}
+  openMobileDialog(idea: Idea) {
+    const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
+      hasBackdrop: false,
+      panelClass: 'idea-detailed-mobile-dialog',
+      data: {
+        showCategoriesDropdown: this.categorizeFlag,
+        categories: this.activityState.brainstormactivity.brainstormcategory_set,
+        item: this.item,
+        category: this.category,
+        group: this.myGroup,
+        activityState: this.activityState,
+      },
+    });
+    const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
+      this.sendMessage.emit(event);
+    });
+
+    dialogRef.componentInstance.deleteIdea.subscribe((event) => {
+      this.deleteIdea.emit(event);
+      dialogRef.close();
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.brainstormService.saveIdea$.next(result);
+      }
+    });
+  }
 
   openDialog(idea: Idea) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {

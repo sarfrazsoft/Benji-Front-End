@@ -1,4 +1,4 @@
-<div fxLayout="row">
+<div fxLayout="row" class="mobile-panel">
   <div class="image-area">
     <div class="select-image" *ngIf="!imageSelected && !pdfSelected">
       <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
@@ -35,12 +35,30 @@
           </ngx-extended-pdf-viewer>
         </div>
       </ng-container>
+      <div 
+        class="back-arrow" 
+        fxLayoutAlign="center center"
+        *ngIf="imageSelected || pdfSelected"
+        (click)="closeDialog()" 
+        >
+        <img src="/assets/img/idea-creation/arrow-left.svg">
+      </div>
       <button class="remove-button" (click)="remove()">
         Remove
       </button>
     </div>
   </div>
   <div class="content-area">
+    <div 
+      class="back-text" 
+      fxLayoutAlign="start center"
+      fxLayoutGap="9px"
+      *ngIf="!(imageSelected || pdfSelected)"
+      (click)="closeDialog()" 
+      >
+      <img src="/assets/img/idea-creation/arrow-left.svg"> 
+      <span>Back</span>
+    </div>
     <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="row">
         <div class="settings" fxLayout="row"fxLayoutGap="12px">
@@ -59,7 +77,8 @@
     <textarea 
       class="title" 
       placeholder="Title" 
-      [(ngModel)]="ideaTitle">
+      [(ngModel)]="ideaTitle"
+      cdktextareaautosize>
     </textarea>
     <textarea
       cdkTextareaAutosize
