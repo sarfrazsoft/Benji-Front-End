@@ -186,11 +186,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   showDetailedIdea(idea: Idea) {
-    this.openMobileDialog(idea);
+    // this.openMobileDialog(idea);
     if (this.deviceService.isMobile()) {
       // this.ideaDetailedView = true;
     } else {
-      // this.openDialog(idea);
+      this.openDialog(idea);
     }
   }
 

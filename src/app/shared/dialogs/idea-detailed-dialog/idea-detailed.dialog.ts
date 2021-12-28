@@ -62,8 +62,11 @@ export class IdeaDetailedDialogComponent {
   selectedpdfDoc;
   pdfSrc;
   hostname = environment.web_protocol + '://' + environment.host;
+
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
+  @Output() previousItem = new EventEmitter<any>();
+  @Output() nextItem = new EventEmitter<any>();
   constructor(
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
     private activitiesService: ActivitiesService,
@@ -107,6 +110,29 @@ export class IdeaDetailedDialogComponent {
     this.dialogRef.close({
       ...event,
     });
+  }
+
+  nextItemRequested() {
+    // this.nextItem.emit();
+    console.log(this.data);
+    const currentlySelectedItem = this.data.item;
+    let nextItem;
+    for (let i = 0; i < this.data.category.brainstormidea_set.length; i++) {
+      const idea = this.data.category.brainstormidea_set[i];
+      if (idea.id === currentlySelectedItem.id) {
+        if (this.data.category.brainstormidea_set[i + 1]) {
+          nextItem = this.data.category.brainstormidea_set[i + 1];
+        } else {
+          nextItem = this.data.category.brainstormidea_set[0];
+        }
+      }
+    }
+    this.data.item = nextItem;
+    console.log(this.data.item);
+  }
+
+  previousItemRequested() {
+    // this.previousItem.emit();
   }
 
   closeDialog() {

@@ -96,6 +96,14 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.columns = this.brainstormService.populateCategories(this.act, this.columns);
       }
     }
+    this.sortIdeas(this.columns);
+  }
+
+  sortIdeas(columns) {
+    for (let i = 0; i < columns.length; i++) {
+      const col = columns[i];
+      col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => b.id - a.id);
+    }
   }
 
   addCard(column: Category) {

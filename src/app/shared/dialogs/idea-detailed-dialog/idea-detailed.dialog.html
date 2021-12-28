@@ -5,7 +5,9 @@
       (sendMessage)="propagate($event)" 
       (deleteIdea)="delete($event)"
       (submit)="submit($event)"
-      (closeView)="closeDialog()">
+      (closeView)="closeDialog()"
+      (nextItemRequested)="nextItemRequested()"
+      (previousItemRequested)="previousItemRequested()">
     </benji-idea-detailed>
   </ng-container>
 </div>

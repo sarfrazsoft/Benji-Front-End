@@ -75,6 +75,9 @@ export class IdeaDetailedComponent implements OnInit {
   @Output() submit = new EventEmitter<any>();
   @Output() closeView = new EventEmitter<any>();
 
+  @Output() previousItemRequested = new EventEmitter<any>();
+  @Output() nextItemRequested = new EventEmitter<any>();
+
   constructor(private activitiesService: ActivitiesService, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -130,7 +133,7 @@ export class IdeaDetailedComponent implements OnInit {
   removeImage() {
     this.imageSelected = false;
     this.imagesList = null;
-    this.imageSrc = null;
+    this.selectedImageUrl = null;
   }
 
   clearPDF() {
@@ -154,17 +157,19 @@ export class IdeaDetailedComponent implements OnInit {
         if (res) {
           if (res.type === 'upload') {
             this.imageSelected = true;
-            this.imagesList = res.this.data;
-            const fileList: FileList = res.this.data;
+            this.imagesList = res.data;
+            const fileList: FileList = res.data;
             const file = fileList[0];
             const reader = new FileReader();
             reader.onload = (e) => (this.imageSrc = reader.result);
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
-            this.selectedImageUrl = res.this.data;
+            this.selectedImageUrl = res.data;
+            this.imageSrc = res.data;
             this.imageSelected = true;
           } else if (res.type === 'giphy') {
-            this.selectedImageUrl = res.this.data;
+            this.imageSrc = res.data;
+            this.selectedImageUrl = res.data;
             this.imageSelected = true;
           }
         }
@@ -199,5 +204,13 @@ export class IdeaDetailedComponent implements OnInit {
 
   delete() {
     this.deleteIdea.emit(this.idea.id);
+  }
+
+  previousArrowClicked() {
+    this.previousItemRequested.emit();
+  }
+
+  nextArrowClicked() {
+    this.nextItemRequested.emit();
   }
 }
