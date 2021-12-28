@@ -44,10 +44,10 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
       state('in', style({ transform: 'translateX(0)' })),
       transition('void => *', [
         style({ transform: 'translateX(100%)' }),
-        animate(500)
+        animate('0.5s 0ms cubic-bezier(0.35, 0, 0.25, 1)')
       ]),
       transition('* => void', [
-        animate(500, style({ transform: 'translateX(100%)' }))
+        animate('0.5s 0ms cubic-bezier(0.35, 0, 0.25, 1)', style({ transform: 'translateX(100%)' }))
       ])
     ]),
     trigger('openClose', [
@@ -59,10 +59,10 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
         width: '0px'
       })),
       transition('* => closed', [
-        animate('0.5s')
+        animate('0.5s 0ms cubic-bezier(0.35, 0, 0.25, 1)')
       ]),
       transition('* => open', [
-        animate('0.5s')
+        animate('0.5s 0ms cubic-bezier(0.35, 0, 0.25, 1)')
       ]),
     ]),
   ],
