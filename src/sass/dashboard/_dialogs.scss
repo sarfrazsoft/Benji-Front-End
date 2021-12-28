@@ -288,13 +288,20 @@
             .options {
               width: 32px;
               height: 32px;
-              background: #f3f4f7;
               border-radius: 50%;
               cursor: pointer;
               &:hover {
+                background: #f3f4f7;
                 box-shadow: 0px 1px 2px #e7e7e7;
+              }
+              &.inactive {
+                cursor: unset;
+                &:hover {
+                  background: unset;
+                  box-shadow: unset;
+                }
                 img {
-                  opacity: 0.8;
+                  opacity: 0.6;
                 }
               }
             }

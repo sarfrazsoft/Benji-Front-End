@@ -37,16 +37,22 @@
       </div>
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
-          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
             <div 
               class="options" 
               fxLayoutAlign="center center"
+              (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
+              [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
-              <img (click)="openImagePickerDialog()" src="/assets/img/idea-creation/scenery.svg">
+              <img src="/assets/img/idea-creation/scenery.svg">
             </div>   
             <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
             <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
-            <div class="options" fxLayoutAlign="center center" (click)="uploader.click()">
+            <div 
+              class="options" 
+              fxLayoutAlign="center center" 
+              (click)="imageSelected || pdfSelected ? null : uploader.click()"
+              [ngClass]="{'inactive': imageSelected || pdfSelected}">
               <!-- <button mat-raised-button color="primary">Choose File</button> -->
               <img src="/assets/img/idea-creation/file.svg">
               <input 
