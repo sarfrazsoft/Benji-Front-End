@@ -586,15 +586,18 @@
           }
         }
         .post {
-          background: #bdbdbd;
+          background: #555bea;
           color: #fff;
           font-size: 19px;
           font-weight: 600;
           padding: 0px 16px;
           border-radius: 8px;
           height: 40px;
+          width: 100px;
           &:hover {
-            background: #555bea;
+            color: #555bea;
+            background: #fff;
+            border: 2px solid #555bea;
           }
         }
       }
