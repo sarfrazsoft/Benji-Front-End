@@ -1,20 +1,26 @@
 <div fxLayout="row" class="mobile-panel">
   <div class="image-area">
-    <div class="select-image" *ngIf="!imageSelected && !pdfSelected && !uploadPanelExpanded">
-      <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
-        <div fxLayout="row" fxLayoutGap="16px">
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
-          <div 
-            class="options" 
-            fxLayoutAlign="center center"
-            (click)="openImagePickerDialog()"
-            >
-              <img src="/assets/img/idea-creation/image-icon.svg">
+    <div [@openClose]="uploadPanelExpanded? 'open' : 'closed' ">
+      <div 
+        class="select-image" 
+        [@flyInOut]="uploadPanelExpanded? 'in' : 'out' " 
+        *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded"
+        >
+        <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
+          <div fxLayout="row" fxLayoutGap="16px">
+            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
+            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
+            <div 
+              class="options" 
+              fxLayoutAlign="center center"
+              (click)="openImagePickerDialog()"
+              >
+                <img src="/assets/img/idea-creation/image-icon.svg">
+            </div>
+            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
           </div>
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
+          <div class="add-to-post">Add to your post</div>
         </div>
-        <div class="add-to-post">Add to your post</div>
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">

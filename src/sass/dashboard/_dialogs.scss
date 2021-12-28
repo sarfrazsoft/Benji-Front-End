@@ -424,8 +424,8 @@
     padding: unset;
     .image-area {
       .select-image {
-        width: 448px;
-        height: 400px;
+        width: 385px;
+        height: 324px;
         background: #f1f2f4;
         border-radius: 16px;
         margin: 40px;
@@ -488,7 +488,9 @@
     }
     .content-area {
       padding: 32px;
-      max-width: 448px;
+      width: 448px;
+      background: #fff;
+      z-index: 2;
       .back-text {
         display: none !important;
       }

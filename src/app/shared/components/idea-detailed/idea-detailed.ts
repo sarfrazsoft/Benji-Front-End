@@ -40,11 +40,31 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
       transition('enabled => disabled', [animate('0.1s')]),
       transition('disabled => enabled', [animate('0.1s')]),
     ]),
+    trigger('flyInOut', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition('void => *', [
+        style({ transform: 'translateX(100%)' }),
+        animate(500)
+      ]),
+      transition('* => void', [
+        animate(500, style({ transform: 'translateX(100%)' }))
+      ])
+    ]),
     trigger('openClose', [
-      state('true', style({ height: '*' })),
-      state('false', style({ height: '0px' })),
-      transition('false <=> true', animate(500))
-    ])
+      // ...
+      state('open', style({
+        width: '512px'
+      })),
+      state('closed', style({
+        width: '0px'
+      })),
+      transition('* => closed', [
+        animate('0.5s')
+      ]),
+      transition('* => open', [
+        animate('0.5s')
+      ]),
+    ]),
   ],
 })
 export class IdeaDetailedComponent implements OnInit {
