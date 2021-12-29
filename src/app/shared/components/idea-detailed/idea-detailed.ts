@@ -40,18 +40,7 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
       transition('enabled => disabled', [animate('0.1s')]),
       transition('disabled => enabled', [animate('0.1s')]),
     ]),
-    trigger('flyInOut', [
-      state('in', style({ transform: 'translateX(0)' })),
-      transition('void => *', [
-        style({ transform: 'translateX(100%)' }),
-        animate('0.5s 0ms ease-in-out')
-      ]),
-      transition('* => void', [
-        animate('0.5s 0ms ease-in-out', style({ transform: 'translateX(100%)' }))
-      ])
-    ]),
     trigger('openClose', [
-      // ...
       state('open', style({
         width: '512px'
       })),
@@ -64,6 +53,40 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
       transition('* => open', [
         animate('0.5s 0ms ease-in-out')
       ]),
+    ]),
+    trigger('flyInOut', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition('void => *', [
+        style({ transform: 'translateX(100%)' }),
+        animate('0.5s 0ms ease-in-out')
+      ]),
+      transition('* => void', [
+        animate('0.5s 0ms ease-in-out', style({ transform: 'translateX(100%)' }))
+      ])
+    ]),
+    trigger('openupClosedown', [
+      state('openUp', style({
+        height: '300px'
+      })),
+      state('closeDown', style({
+        height: '0px'
+      })),
+      transition('* => closeDown', [
+        animate('0.5s 0ms ease-in-out')
+      ]),
+      transition('* => openUp', [
+        animate('0.5s 0ms ease-in-out')
+      ]),
+    ]),
+    trigger('flyUpDown', [
+      state('up', style({ transform: 'translateY(0)' })),
+      transition('void => *', [
+        style({ transform: 'translateY(100%)' }),
+        animate('0.5s 0ms ease-in-out')
+      ]),
+      transition('* => void', [
+        animate('0.5s 0ms ease-in-out', style({ transform: 'translateY(100%)' }))
+      ])
     ]),
   ],
 })
@@ -95,6 +118,7 @@ export class IdeaDetailedComponent implements OnInit {
     category: Category;
     myGroup: Group;
     activityState: UpdateMessage;
+    isMobile: boolean;
   };
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
@@ -151,6 +175,7 @@ export class IdeaDetailedComponent implements OnInit {
     } else {
       this.removeImage();
     }
+    this.uploadPanelExpanded = true;
   }
 
   removeImage() {

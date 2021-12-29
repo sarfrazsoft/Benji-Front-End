@@ -191,13 +191,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     // } else {
     //   this.openDialog(idea, "idea-detailed-dialog", true);
     // }
-    //this.openDialog(idea, "idea-detailed-mobile-dialog", false);
-    this.openDialog(idea, "idea-detailed-dialog", true);
+
+    this.openDialog(idea, "idea-detailed-mobile-dialog", false);
+    //this.openDialog(idea, "idea-detailed-dialog", true);
   }
 
-  openDialog(idea: Idea, assignedClass, showBackdrop) {
+  openDialog(idea: Idea, assignedClass, isDesktop) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
-      hasBackdrop: showBackdrop,
+      hasBackdrop: isDesktop,
       panelClass: assignedClass,
       data: {
         showCategoriesDropdown: this.categorizeFlag,
@@ -206,6 +207,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         category: this.category,
         group: this.myGroup,
         activityState: this.activityState,
+        isMobile: !isDesktop,
       },
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {

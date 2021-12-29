@@ -700,13 +700,15 @@
     box-shadow: unset;
     padding: unset;
     .image-area {
+      .opnClose {
+        width: auto !important;
+      }
       .select-image {
-        display: none;
-        width: 448px;
-        height: 400px;
+        width: auto;
+        height: 248px;
         background: #f1f2f4;
         border-radius: 16px;
-        margin: 40px;
+        margin: 16px;
         padding: 24px;
         .attachments {
           border: 2px dashed #d4d4d4;
@@ -754,12 +756,23 @@
           }
         }
         .remove-button {
-          display: none !important;
+          position: absolute;
+          width: 64px;
+          height: 24px;
+          top: 16px;
+          background: #f3f4f7;
+          border-radius: 4px;
+          right: 16px;
+          font-weight: 500;
+          font-size: 12px;
         }
       }
     }
     .content-area {
-      padding: 24px 16px;
+      padding: 16px;
+      background: #fff;
+      z-index: 2;
+      position: relative;
       .back-text {
         color: #828282;
         font-size: 14px;
@@ -848,7 +861,6 @@
         }
       }
       .idea-creation-controls {
-        display: none !important;
         margin-bottom: 16px;
         .settings {
           .options {

@@ -75,6 +75,7 @@ export class IdeaDetailedDialogComponent {
       category: Category;
       myGroup: Group;
       activityState: UpdateMessage;
+      isMobile: boolean;
     },
     private matDialog: MatDialog
   ) {

@@ -1,9 +1,14 @@
-<div fxLayout="row" class="mobile-panel">
+<div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
   <div class="image-area">
-    <div [@openClose]="uploadPanelExpanded? 'open' : 'closed' ">
+    <div 
+      class="opnClose"
+      [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
+      [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
+      >
       <div 
         class="select-image" 
-        [@flyInOut]="uploadPanelExpanded? 'in' : 'out' " 
+        [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
+        [@flyUpDown]="uploadPanelExpanded && data.isMobile ? 'up' : 'down' " 
         *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded"
         >
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
