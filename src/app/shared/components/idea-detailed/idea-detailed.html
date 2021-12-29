@@ -29,19 +29,19 @@
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
-      <ng-container *ngIf="idea.idea_image">
-        <ng-container *ngIf="isAbsolutePath(idea.idea_image.img); else uploadedImage">
+      <ng-container *ngIf="imageSrc">
+        <ng-container *ngIf="isAbsolutePath(imageSrc); else uploadedImage">
           <img 
             benji-click-stop-propagation 
-            (click)="openImage(idea.idea_image.img)" 
-            [src]="idea.idea_image.img" alt="" />
+            (click)="openImage(imageSrc)" 
+            [src]="imageSrc" alt="" />
         </ng-container>
     
         <ng-template #uploadedImage>
           <img 
             benji-click-stop-propagation
-            (click)="openImage(hostname + idea.idea_image.img)" 
-            [src]="hostname + idea.idea_image.img" alt="" />
+            (click)="openImage(hostname + imageSrc)" 
+            [src]="hostname + imageSrc" alt="" />
         </ng-template>
       </ng-container>
       <ng-container *ngIf="pdfSelected">
@@ -193,6 +193,16 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <div class="slide-arrow left" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/arrow-left.svg"></div>
-  <div class="slide-arrow right" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/arrow-right.svg"></div>
+  <div 
+    (click)="previousArrowClicked()"
+    class="slide-arrow left" 
+    fxLayoutAlign="center center">
+    <img src="/assets/img/idea-creation/arrow-left.svg">
+  </div>
+  <div
+    (click)="nextArrowClicked()"
+    class="slide-arrow right" 
+    fxLayoutAlign="center center">
+    <img src="/assets/img/idea-creation/arrow-right.svg">
+  </div>
 </div>

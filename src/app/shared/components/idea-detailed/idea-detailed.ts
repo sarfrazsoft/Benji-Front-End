@@ -125,6 +125,9 @@ export class IdeaDetailedComponent implements OnInit {
   @Output() submit = new EventEmitter<any>();
   @Output() closeView = new EventEmitter<any>();
 
+  @Output() previousItemRequested = new EventEmitter<any>();
+  @Output() nextItemRequested = new EventEmitter<any>();
+
   constructor(private activitiesService: ActivitiesService, private matDialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -215,8 +218,10 @@ export class IdeaDetailedComponent implements OnInit {
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
             this.selectedImageUrl = res.data;
+            this.imageSrc = res.data;
             this.imageSelected = true;
           } else if (res.type === 'giphy') {
+            this.imageSrc = res.data;
             this.selectedImageUrl = res.data;
             this.imageSelected = true;
           }
@@ -258,4 +263,11 @@ export class IdeaDetailedComponent implements OnInit {
       this.uploadPanelExpanded = !this.uploadPanelExpanded;
   }
 
+  previousArrowClicked() {
+    this.previousItemRequested.emit();
+  }
+
+  nextArrowClicked() {
+    this.nextItemRequested.emit();
+  }
 }

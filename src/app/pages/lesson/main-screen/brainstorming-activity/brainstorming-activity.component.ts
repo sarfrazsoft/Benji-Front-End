@@ -545,7 +545,6 @@ export class MainScreenBrainstormingActivityComponent
     //   return;
     // }
     if (idea.imagesList || idea.selectedThirdPartyImageUrl) {
-      console.log('inside imageslist');
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
       this.submitDocumentNIdea(idea);

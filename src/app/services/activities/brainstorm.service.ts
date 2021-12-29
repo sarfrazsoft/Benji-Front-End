@@ -62,6 +62,7 @@ export class BrainstormService {
         // Editor preview panel
       }
     });
+
     columns = act.brainstormcategory_set;
     return columns;
   }
