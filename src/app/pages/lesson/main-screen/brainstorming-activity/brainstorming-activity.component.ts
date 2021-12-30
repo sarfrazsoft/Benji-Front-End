@@ -74,7 +74,8 @@ import { UncategorizedComponent } from './uncategorized/uncategorized.component'
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
@@ -572,7 +573,7 @@ export class MainScreenBrainstormingActivityComponent
     const code = this.activityState.lesson_run.lessonrun_code;
     const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
 
-    const participant_code = this.getParticipantCode().toString();
+    const participant_code = this.getParticipantCode();
     const fileList: FileList = idea.imagesList;
     console.log();
     if (fileList && fileList.length > 0) {
@@ -585,7 +586,7 @@ export class MainScreenBrainstormingActivityComponent
         .then((resizedImage: Blob) => {
           const formData: FormData = new FormData();
           formData.append('img', resizedImage, file.name);
-          formData.append('participant_code', participant_code);
+          formData.append('participant_code', participant_code ? participant_code.toString() : '');
           const headers = new HttpHeaders();
           headers.set('Content-Type', null);
           headers.set('Accept', 'multipart/form-data');

@@ -114,26 +114,34 @@ export class IdeaDetailedDialogComponent {
   }
 
   nextItemRequested() {
-    // this.nextItem.emit();
-    console.log(this.data);
-    const currentlySelectedItem = this.data.item;
-    let nextItem;
-    for (let i = 0; i < this.data.category.brainstormidea_set.length; i++) {
-      const idea = this.data.category.brainstormidea_set[i];
-      if (idea.id === currentlySelectedItem.id) {
-        if (this.data.category.brainstormidea_set[i + 1]) {
-          nextItem = this.data.category.brainstormidea_set[i + 1];
-        } else {
-          nextItem = this.data.category.brainstormidea_set[0];
-        }
-      }
-    }
-    this.data.item = nextItem;
-    console.log(this.data.item);
+    const checkIndex = 1;
+    this.getItemByCheckIndex(checkIndex);
   }
 
   previousItemRequested() {
-    // this.previousItem.emit();
+    const checkIndex = -1;
+    this.getItemByCheckIndex(checkIndex);
+  }
+
+  getItemByCheckIndex(checkIndex) {
+    let newItem;
+    const currentlySelectedItem = this.data.item;
+    const ideas = this.data.category.brainstormidea_set.filter((el) => !el.removed);
+    for (let i = 0; i < ideas.length; i++) {
+      const idea = ideas[i];
+      if (idea.id === currentlySelectedItem.id) {
+        if (ideas[i + checkIndex]) {
+          newItem = ideas[i + checkIndex];
+        } else {
+          if (checkIndex === -1) {
+            newItem = ideas[ideas.length - 1];
+          } else {
+            newItem = ideas[0];
+          }
+        }
+      }
+    }
+    this.data = { ...this.data, item: newItem };
   }
 
   closeDialog() {

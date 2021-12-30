@@ -6,7 +6,7 @@ import {
   trigger,
   // ...
 } from '@angular/animations';
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
@@ -41,56 +41,50 @@ import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/im
       transition('disabled => enabled', [animate('0.1s')]),
     ]),
     trigger('openClose', [
-      state('open', style({
-        width: '512px'
-      })),
-      state('closed', style({
-        width: '0px'
-      })),
-      transition('* => closed', [
-        animate('0.5s 0ms ease-in-out')
-      ]),
-      transition('* => open', [
-        animate('0.5s 0ms ease-in-out')
-      ]),
+      state(
+        'open',
+        style({
+          width: '512px',
+        })
+      ),
+      state(
+        'closed',
+        style({
+          width: '0px',
+        })
+      ),
+      transition('* => closed', [animate('0.5s 0ms ease-in-out')]),
+      transition('* => open', [animate('0.5s 0ms ease-in-out')]),
     ]),
     trigger('flyInOut', [
       state('in', style({ transform: 'translateX(0)' })),
-      transition('void => *', [
-        style({ transform: 'translateX(100%)' }),
-        animate('0.5s 0ms ease-in-out')
-      ]),
-      transition('* => void', [
-        animate('0.5s 0ms ease-in-out', style({ transform: 'translateX(100%)' }))
-      ])
+      transition('void => *', [style({ transform: 'translateX(100%)' }), animate('0.5s 0ms ease-in-out')]),
+      transition('* => void', [animate('0.5s 0ms ease-in-out', style({ transform: 'translateX(100%)' }))]),
     ]),
     trigger('openupClosedown', [
-      state('openUp', style({
-        height: '300px'
-      })),
-      state('closeDown', style({
-        height: '0px'
-      })),
-      transition('* => closeDown', [
-        animate('0.5s 0ms ease-in-out')
-      ]),
-      transition('* => openUp', [
-        animate('0.5s 0ms ease-in-out')
-      ]),
+      state(
+        'openUp',
+        style({
+          height: '300px',
+        })
+      ),
+      state(
+        'closeDown',
+        style({
+          height: '0px',
+        })
+      ),
+      transition('* => closeDown', [animate('0.5s 0ms ease-in-out')]),
+      transition('* => openUp', [animate('0.5s 0ms ease-in-out')]),
     ]),
     trigger('flyUpDown', [
       state('up', style({ transform: 'translateY(0)' })),
-      transition('void => *', [
-        style({ transform: 'translateY(100%)' }),
-        animate('0.5s 0ms ease-in-out')
-      ]),
-      transition('* => void', [
-        animate('0.5s 0ms ease-in-out', style({ transform: 'translateY(100%)' }))
-      ])
+      transition('void => *', [style({ transform: 'translateY(100%)' }), animate('0.5s 0ms ease-in-out')]),
+      transition('* => void', [animate('0.5s 0ms ease-in-out', style({ transform: 'translateY(100%)' }))]),
     ]),
   ],
 })
-export class IdeaDetailedComponent implements OnInit {
+export class IdeaDetailedComponent implements OnInit, OnChanges {
   showCategoriesDropdown = false;
   categories: Array<Category> = [];
   idea: Idea;
@@ -130,7 +124,13 @@ export class IdeaDetailedComponent implements OnInit {
 
   constructor(private activitiesService: ActivitiesService, private matDialog: MatDialog) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngOnChanges() {
+    this.initIdea();
+  }
+
+  initIdea() {
     this.showCategoriesDropdown = this.data.showCategoriesDropdown;
     this.categories = this.data.categories.filter((val) => !val.removed);
     this.idea = this.data.item;
@@ -260,7 +260,7 @@ export class IdeaDetailedComponent implements OnInit {
   }
 
   toggle() {
-      this.uploadPanelExpanded = !this.uploadPanelExpanded;
+    this.uploadPanelExpanded = !this.uploadPanelExpanded;
   }
 
   previousArrowClicked() {
