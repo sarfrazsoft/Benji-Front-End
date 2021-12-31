@@ -111,7 +111,7 @@
       class="description"
       placeholder="Description..."
       [ngClass]="{
-        'image-selected': imageSelected || docSelected
+        'image-selected': imageSelected || pdfSelected
       }">
     </textarea>
     <div
@@ -169,9 +169,9 @@
             </div>
           </div>
           <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-            <div class="initials" fxLayout="column" fxLayoutAlign="center center">
+            <!-- <div class="initials" fxLayout="column" fxLayoutAlign="center center">
               {{ getInitials(getParticipantName(participantCode)) }}
-            </div>
+            </div> -->
             <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
             <div 
               class="send-comment" 
