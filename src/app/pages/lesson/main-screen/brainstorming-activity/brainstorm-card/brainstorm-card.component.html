@@ -144,7 +144,6 @@
             contenteditable
             (mousedown)="$event.stopPropagation()"
             [textContent]="commentModel" (input)="commentModel=$event.target.textContent"
-            oninput="if(this.innerHTML.trim()==='<br>')this.innerHTML=''"
             >
           </div>
           <div 
