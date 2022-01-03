@@ -1,272 +1,283 @@
-<div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
-  <mat-spinner></mat-spinner>
-</div>
+<mat-sidenav-container
+    class="example-container" (backdropClick)="close('backdrop')">
+  <mat-sidenav 
+    #sidenav (keydown.escape)="close('escape')"
+    position="end">
+    
+    <p>
+      <button mat-button (click)="close('toggle button')">Toggle</button>
+    </p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
+      <mat-spinner></mat-spinner>
+    </div>
 
-<div class="ms-fullheight-container">
-  <benji-main-screen-toolbar 
-    [activityState]="serverMessage"
-    *ngIf="isConnected() && serverMessage"
-    [isLastActivity]="!isLastActivity()"
-    [showHeader]="getActivityType() !== at.lobby"
-    [roomCode]="serverMessage.lesson_run.lessonrun_code"
-    [lessonName]="serverMessage.lesson.lesson_name"
-    [isPaused]="isPaused()"
-    [disableControls]="disableControls"
-    [isSharing]="getIsSharing()"
-    [isGrouping]="getIsGrouping()"
-    [participantCode]="getParticipantCode()"
-    [isGroupingShowing]="getIsGroupingShowing()"
-    (socketMessage)="sendSocketMessage($event)"
-  ></benji-main-screen-toolbar>
-
-  <div
-    *ngIf="isConnected() && serverMessage"
-    [ngClass]="
-      getActivityType() === at.lobby
-        ? 'ms-lesson__activity-container ms-lesson__activity-container--lobby'
-        : 'ms-lesson__activity-container'
-    "
-  >
-    <ng-container *ngIf="!getIsSharing()">
-      <benji-ms-brainstorming-activity
-        *ngIf="getActivityType() === at.brainStorm"
+    <div class="ms-fullheight-container">
+      <benji-main-screen-toolbar 
         [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
+        *ngIf="isConnected() && serverMessage"
+        [isLastActivity]="!isLastActivity()"
+        [showHeader]="getActivityType() !== at.lobby"
+        [roomCode]="serverMessage.lesson_run.lessonrun_code"
+        [lessonName]="serverMessage.lesson.lesson_name"
+        [isPaused]="isPaused()"
+        [disableControls]="disableControls"
+        [isSharing]="getIsSharing()"
+        [isGrouping]="getIsGrouping()"
+        [participantCode]="getParticipantCode()"
+        [isGroupingShowing]="getIsGroupingShowing()"
+        (socketMessage)="sendSocketMessage($event)"
+        (sideNavEvent)="openSideNav($event)"
+      ></benji-main-screen-toolbar>
+
+      <div
+        *ngIf="isConnected() && serverMessage"
+        [ngClass]="
+          getActivityType() === at.lobby
+            ? 'ms-lesson__activity-container ms-lesson__activity-container--lobby'
+            : 'ms-lesson__activity-container'
+        "
       >
-      </benji-ms-brainstorming-activity>
+        <ng-container *ngIf="!getIsSharing()">
+          <benji-ms-brainstorming-activity
+            *ngIf="getActivityType() === at.brainStorm"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-brainstorming-activity>
 
-      <benji-ms-image-activity
-        *ngIf="getActivityType() === at.image"
+          <benji-ms-image-activity
+            *ngIf="getActivityType() === at.image"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-image-activity>
+
+          <benji-ms-generate-pitch-activity
+            *ngIf="getActivityType() === at.pitchoMatic"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-generate-pitch-activity>
+
+          <benji-ms-build-pitch-activity
+            *ngIf="getActivityType() === at.buildAPitch"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-build-pitch-activity>
+
+          <benji-ms-lobby
+            *ngIf="getActivityType() === at.lobby"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-lobby>
+
+          <benji-ms-monty-hall
+            *ngIf="getActivityType() === at.montyHall"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-monty-hall>
+
+          <benji-ms-title-activity
+            *ngIf="getActivityType() === at.title"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-title-activity>
+
+          <benji-ms-poll
+            *ngIf="getActivityType() === at.poll"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          ></benji-ms-poll>
+
+          <benji-ms-pop-quiz
+            *ngIf="getActivityType() === at.mcq"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          ></benji-ms-pop-quiz>
+
+          <benji-ms-mcqresult-activity
+            *ngIf="getActivityType() === at.mcqResults || getActivityType() === at.pollResults"
+            [activityState]="serverMessage"
+            (sendMessage)="sendSocketMessage($event)"
+          ></benji-ms-mcqresult-activity>
+
+          <benji-ms-teletrivia-activity
+            *ngIf="getActivityType() === at.teleTrivia"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-teletrivia-activity>
+
+          <benji-ms-either-or-activity
+            *ngIf="getActivityType() === at.whereDoYouStand"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-either-or-activity>
+
+          <benji-ms-activity-video
+            *ngIf="getActivityType() === at.video"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-activity-video>
+
+          <benji-ms-google-slides
+            *ngIf="getActivityType() === at.slides"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-google-slides>
+
+          <benji-ms-pair-grouping-activity
+            *ngIf="getActivityType() === at.pairGrouping"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-pair-grouping-activity>
+
+          <benji-ms-triad-grouping-activity
+            *ngIf="getActivityType() === at.triadGrouping"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-triad-grouping-activity>
+
+          <benji-ms-roleplay-pair-activity
+            *ngIf="getActivityType() === at.rolePlayPair"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-roleplay-pair-activity>
+
+          <benji-ms-generic-roleplay-activity
+            *ngIf="getActivityType() === at.genericRoleplay"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-generic-roleplay-activity>
+
+          <benji-ms-discussion-activity
+            *ngIf="getActivityType() === at.discussion"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-discussion-activity>
+
+          <benji-ms-feedback-activity
+            *ngIf="getActivityType() === at.feedback"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-feedback-activity>
+
+          <benji-ms-hint-activity
+            *ngIf="getActivityType() === at.hintWord"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-hint-activity>
+
+          <benji-ms-external-grouping-activity
+            *ngIf="getActivityType() === at.externalGrouping"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-external-grouping-activity>
+
+          <benji-ms-case-study-activity
+            *ngIf="getActivityType() === at.caseStudy"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-case-study-activity>
+          <!-- <benji-ps-case-study-activity
+            *ngIf="getActivityType() === at.caseStudy"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ps-case-study-activity> -->
+
+          <benji-ms-convo-cards-activity
+            *ngIf="getActivityType() === at.convoCards"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-convo-cards-activity>
+
+          <benji-ms-gather-activity
+            *ngIf="getActivityType() === at.gather"
+            [activityState]="serverMessage"
+            [avgServerTimeOffset]="avgServerTimeOffset"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-gather-activity>
+
+        </ng-container>
+
+        <ng-container *ngIf="getIsSharing()">
+          <benji-ms-sharing-tool
+            [activityState]="serverMessage"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-sharing-tool>
+        </ng-container>
+
+        <!-- old grouping tool commented out -->
+        <!-- <ng-container>
+          <benji-ms-grouping-tool *ngIf="getIsGroupingShowing() || showGroupingOnScreen"
+            [activityState]="serverMessage"
+            (sendMessage)="sendSocketMessage($event)"
+          >
+          </benji-ms-grouping-tool>
+          
+        </ng-container> -->
+      </div>
+      <!-- <benji-main-screen-footer
+        *ngIf="isConnected() && serverMessage"
         [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-image-activity>
-
-      <benji-ms-generate-pitch-activity
-        *ngIf="getActivityType() === at.pitchoMatic"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-generate-pitch-activity>
-
-      <benji-ms-build-pitch-activity
-        *ngIf="getActivityType() === at.buildAPitch"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-build-pitch-activity>
-
-      <benji-ms-lobby
-        *ngIf="getActivityType() === at.lobby"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-lobby>
-
-      <benji-ms-monty-hall
-        *ngIf="getActivityType() === at.montyHall"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-monty-hall>
-
-      <benji-ms-title-activity
-        *ngIf="getActivityType() === at.title"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-title-activity>
-
-      <benji-ms-poll
-        *ngIf="getActivityType() === at.poll"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      ></benji-ms-poll>
-
-      <benji-ms-pop-quiz
-        *ngIf="getActivityType() === at.mcq"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      ></benji-ms-pop-quiz>
-
-      <benji-ms-mcqresult-activity
-        *ngIf="getActivityType() === at.mcqResults || getActivityType() === at.pollResults"
-        [activityState]="serverMessage"
-        (sendMessage)="sendSocketMessage($event)"
-      ></benji-ms-mcqresult-activity>
-
-      <benji-ms-teletrivia-activity
-        *ngIf="getActivityType() === at.teleTrivia"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-teletrivia-activity>
-
-      <benji-ms-either-or-activity
-        *ngIf="getActivityType() === at.whereDoYouStand"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-either-or-activity>
-
-      <benji-ms-activity-video
-        *ngIf="getActivityType() === at.video"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-activity-video>
-
-      <benji-ms-google-slides
-        *ngIf="getActivityType() === at.slides"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-google-slides>
-
-      <benji-ms-pair-grouping-activity
-        *ngIf="getActivityType() === at.pairGrouping"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-pair-grouping-activity>
-
-      <benji-ms-triad-grouping-activity
-        *ngIf="getActivityType() === at.triadGrouping"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-triad-grouping-activity>
-
-      <benji-ms-roleplay-pair-activity
-        *ngIf="getActivityType() === at.rolePlayPair"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-roleplay-pair-activity>
-
-      <benji-ms-generic-roleplay-activity
-        *ngIf="getActivityType() === at.genericRoleplay"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-generic-roleplay-activity>
-
-      <benji-ms-discussion-activity
-        *ngIf="getActivityType() === at.discussion"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-discussion-activity>
-
-      <benji-ms-feedback-activity
-        *ngIf="getActivityType() === at.feedback"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-feedback-activity>
-
-      <benji-ms-hint-activity
-        *ngIf="getActivityType() === at.hintWord"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-hint-activity>
-
-      <benji-ms-external-grouping-activity
-        *ngIf="getActivityType() === at.externalGrouping"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-external-grouping-activity>
-
-      <benji-ms-case-study-activity
-        *ngIf="getActivityType() === at.caseStudy"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-case-study-activity>
-      <!-- <benji-ps-case-study-activity
-        *ngIf="getActivityType() === at.caseStudy"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ps-case-study-activity> -->
-
-      <benji-ms-convo-cards-activity
-        *ngIf="getActivityType() === at.convoCards"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-convo-cards-activity>
-
-      <benji-ms-gather-activity
-        *ngIf="getActivityType() === at.gather"
-        [activityState]="serverMessage"
-        [avgServerTimeOffset]="avgServerTimeOffset"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-gather-activity>
-
-    </ng-container>
-
-    <ng-container *ngIf="getIsSharing()">
-      <benji-ms-sharing-tool
-        [activityState]="serverMessage"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-sharing-tool>
-    </ng-container>
-
-    <!-- old grouping tool commented out -->
-    <!-- <ng-container>
-      <benji-ms-grouping-tool *ngIf="getIsGroupingShowing() || showGroupingOnScreen"
-        [activityState]="serverMessage"
-        (sendMessage)="sendSocketMessage($event)"
-      >
-      </benji-ms-grouping-tool>
-      
-    </ng-container> -->
-  </div>
-  <!-- <benji-main-screen-footer
-    *ngIf="isConnected() && serverMessage"
-    [activityState]="serverMessage"
-    [showFastForward]="fastForwardActivities.indexOf(getActivityType()) > -1"
-    [isLastActivity]="!isLastActivity()"
-    [showFooter]="getActivityType() !== at.lobby"
-    [roomCode]="serverMessage.lesson_run.lessonrun_code"
-    [lessonName]="serverMessage.lesson.lesson_name"
-    [isPaused]="isPaused()"
-    [disableControls]="disableControls"
-    [isSharing]="getIsSharing()"
-    [isGrouping]="getIsGrouping()"
-    [isGroupingShowing]="getIsGroupingShowing()"
-    (socketMessage)="sendSocketMessage($event)"
-  ></benji-main-screen-footer> -->
-</div>
-
-
-
+        [showFastForward]="fastForwardActivities.indexOf(getActivityType()) > -1"
+        [isLastActivity]="!isLastActivity()"
+        [showFooter]="getActivityType() !== at.lobby"
+        [roomCode]="serverMessage.lesson_run.lessonrun_code"
+        [lessonName]="serverMessage.lesson.lesson_name"
+        [isPaused]="isPaused()"
+        [disableControls]="disableControls"
+        [isSharing]="getIsSharing()"
+        [isGrouping]="getIsGrouping()"
+        [isGroupingShowing]="getIsGroupingShowing()"
+        (socketMessage)="sendSocketMessage($event)"
+      ></benji-main-screen-footer> -->
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
