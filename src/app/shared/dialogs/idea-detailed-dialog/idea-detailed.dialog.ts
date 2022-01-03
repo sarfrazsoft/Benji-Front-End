@@ -17,6 +17,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+import { IdeaDetailedInfo } from '../../components/idea-detailed/idea-detailed';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 
 @Component({
@@ -71,15 +72,7 @@ export class IdeaDetailedDialogComponent {
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
     private activitiesService: ActivitiesService,
     @Inject(MAT_DIALOG_DATA)
-    public data: {
-      showCategoriesDropdown: boolean;
-      categories: Array<Category>;
-      item: Idea;
-      category: Category;
-      myGroup: Group;
-      activityState: UpdateMessage;
-      isMobile: boolean;
-    },
+    public data: IdeaDetailedInfo,
     private matDialog: MatDialog
   ) {
     // this.showCategoriesDropdown = data.showCategoriesDropdown;

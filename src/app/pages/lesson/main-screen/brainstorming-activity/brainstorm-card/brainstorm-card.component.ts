@@ -40,6 +40,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
+import { IdeaDetailedInfo } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
@@ -205,10 +206,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         categories: this.activityState.brainstormactivity.brainstormcategory_set,
         item: this.item,
         category: this.category,
-        group: this.myGroup,
+        myGroup: this.myGroup,
         activityState: this.activityState,
         isMobile: !isDesktop,
-      },
+        participantCode: this.participantCode,
+      } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
       this.sendMessage.emit(event);

@@ -485,11 +485,12 @@
           right: 16px;
           font-weight: 500;
           font-size: 12px;
-          visibility: hidden;
+          transition: all 0.2s;
+          opacity: 0;
         }
         &:hover {
           .remove-button {
-            visibility: visible;
+            opacity: 1;
           }
         }
       }
@@ -602,10 +603,11 @@
           border-radius: 8px;
           height: 40px;
           width: 100px;
+          transition: all 0.2s;
+          border: 2px solid #555bea;
           &:hover {
             color: #555bea;
             background: #fff;
-            border: 2px solid #555bea;
           }
         }
       }

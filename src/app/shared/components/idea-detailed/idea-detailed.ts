@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ContextService } from 'src/app/services';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
   BrainstormSubmitIdeaCommentEvent,
@@ -18,7 +19,16 @@ import {
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
-
+export interface IdeaDetailedInfo {
+  showCategoriesDropdown: boolean;
+  categories: Array<Category>;
+  item: Idea;
+  category: Category;
+  myGroup: Group;
+  activityState: UpdateMessage;
+  isMobile: boolean;
+  participantCode: number;
+}
 @Component({
   selector: 'benji-idea-detailed',
   templateUrl: 'idea-detailed.html',
@@ -96,6 +106,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   lessonRunCode;
   imageSelected = false;
   uploadPanelExpanded: boolean;
+  participantCode = null;
+  submitting_participant = null;
 
   imagesList: FileList;
   imageSrc;
@@ -105,15 +117,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   selectedpdfDoc;
   pdfSrc;
   hostname = environment.web_protocol + '://' + environment.host;
-  @Input() data: {
-    showCategoriesDropdown: boolean;
-    categories: Array<Category>;
-    item: Idea;
-    category: Category;
-    myGroup: Group;
-    activityState: UpdateMessage;
-    isMobile: boolean;
-  };
+  @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
   @Output() submit = new EventEmitter<any>();
@@ -122,7 +126,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
 
-  constructor(private activitiesService: ActivitiesService, private matDialog: MatDialog) {}
+  constructor(
+    private activitiesService: ActivitiesService,
+    private matDialog: MatDialog,
+    private contextService: ContextService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -142,6 +150,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     if (this.data.item.idea_image) {
       this.imageSelected = true;
       this.imageSrc = this.data.item.idea_image.img;
+    }
+    if (this.data.item.submitting_participant) {
+      this.submitting_participant = this.data.item.submitting_participant.participant_code;
+    }
+    if (this.data.participantCode) {
+      this.participantCode = this.data.participantCode;
     }
     if (this.data.item.idea_document) {
       this.pdfSelected = true;
