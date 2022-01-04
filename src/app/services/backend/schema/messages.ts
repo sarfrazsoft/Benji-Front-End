@@ -867,3 +867,10 @@ export class CardsParticipantReadyEvent extends ActivityEvent {
 export class CardsRestartActivityEvent extends ActivityEvent {
   event_name = 'CardsRestartActivityEvent';
 }
+export class BrainstormEditInstructionEvent extends ActivityEvent {
+  event_name = 'BrainstormEditInstructionEvent';
+  constructor(title: string) {
+    super();
+    this.extra_args = { instructions: title };
+  }
+}

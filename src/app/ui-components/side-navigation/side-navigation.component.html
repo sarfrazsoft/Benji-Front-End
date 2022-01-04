@@ -1,11 +1,130 @@
-<mat-sidenav-container
-    class="example-container" (backdropClick)="close('backdrop')" *ngIf="sideNavOpen">
-  <mat-sidenav #sidenav (keydown.escape)="close('escape')" disableClose>
-    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
-  </mat-sidenav>
+<div class="side-navigation" fxLayout="column" fxLayoutGap="24px">
 
-  <mat-sidenav-content>
-    <p><button mat-button (click)="sidenav.open()">Open</button></p>
-    <p>Closed due to: {{reason}}</p>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <div class="board-settings" (click)="diplayInfo()">Board Settings</div>
+    <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
+  </div>
+  
+  <div fxLayout="column">
+    <div class="title">Title</div>
+    <div class="edit">
+      <div 
+        *ngIf="!editingInstructions"
+        (click)="editInstructions()"
+        class="not-editing">
+        {{ instructions }}
+      </div>
+      <div *ngIf="editingInstructions" class="editing">
+        <input
+          #title
+          style="width: 100%;"
+          type="text"
+          [(ngModel)]="instructions" 
+          (blur)="saveEditedInstructions()"
+          (keyup.enter)="saveEditedInstructions()">
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column">
+    <div class="title">Instructions</div>
+    <div class="edit">
+      <div 
+        *ngIf="!editingInstructions"
+        (click)="editInstructions()"
+        class="not-editing">
+        {{ instructions }}
+      </div>
+      <div *ngIf="editingInstructions" class="editing">
+        <input
+          #title
+          style="width: 100%;"
+          type="text"
+          [(ngModel)]="instructions" 
+          (blur)="saveEditedInstructions()"
+          (keyup.enter)="saveEditedInstructions()">
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column">
+    <div class="title">Board Status</div>
+    <div class="board-status">
+      <ng-select
+        class="board-status-dropdown"
+        appearance="outline" 
+        placeholder="Status"
+        [clearable]="false"
+        [searchable]="false"
+        [clearable]="false"
+        [items]="statusDropdown"
+        dropdownPosition="bottom">
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+          <span> {{item}} </span>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div fxLayout="column">
+    <div class="title">Posting</div>
+    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+      <div 
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Show authorship on cards</div>
+          <div class="sub-label">Name of the author appears on card</div>
+        </div>
+        <label class="switch">
+          <input 
+            type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div 
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Show Categories</div>
+          <div class="sub-label">Posts can be submittted into categories</div>
+        </div>
+        <label class="switch">
+          <input 
+            type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  <div fxLayout="column">
+    <div class="title">Board Mode</div>
+    <div class="board-mode active" fxLayout="row" fxLayoutGap="12px">
+      <img src="../../../assets/img/side-nav/thread.svg"/>
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="label">Thread</div>
+        <div class="sub-label">Display posts in a single thread like popular social feeds.</div>
+      </div>
+    </div>
+    <div class="board-mode" fxLayout="row" fxLayoutGap="12px">
+      <img src="../../../assets/img/side-nav/grid.svg"/>
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="label">Grid</div>
+        <div class="sub-label">A compact way to show many participant posts.</div>
+      </div>
+    </div>
+    <div class="board-mode" fxLayout="row" fxLayoutGap="12px">
+      <img src="../../../assets/img/side-nav/columns.svg"/>
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="label">Columns</div>
+        <div class="sub-label">Organize submissions into categories.</div>
+      </div>
+    </div>
+  </div>
+</div>

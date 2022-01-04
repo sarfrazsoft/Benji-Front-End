@@ -1,12 +1,15 @@
 <mat-sidenav-container
     class="example-container" (backdropClick)="close('backdrop')">
   <mat-sidenav 
-    #sidenav (keydown.escape)="close('escape')"
+    #sidenav 
+    (keydown.escape)="close('escape')"
     position="end">
-    
-    <p>
-      <button mat-button (click)="close('toggle button')">Toggle</button>
-    </p>
+      <side-navigation
+        [sidenav]="sidenav" 
+        [activityState]="serverMessage"
+        (sendMessage)="sendSocketMessage($event)"
+        >
+      </side-navigation>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
