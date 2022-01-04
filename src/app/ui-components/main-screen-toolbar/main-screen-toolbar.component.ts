@@ -240,14 +240,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   isActivitySettingsAllowed(activityState: UpdateMessage) {
-    if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
+    if(activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
       return true;
     } else {
       return false;
     }
   }
 
-  openSideNav() {
-    this.sideNavEvent.emit('open');
+  openSideNav(type) {
+    this.sideNavEvent.emit(type);
   }
 }

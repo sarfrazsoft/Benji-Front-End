@@ -33,6 +33,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   @ViewChild(MainScreenToolbarComponent) msToolbar: MainScreenToolbarComponent;
+  navType: string;
 
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
@@ -93,8 +94,9 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     return this.serverMessage[activity_type].is_paused;
   }
   
-  openSideNav(msg) {
-    msg === 'open'? this.sidenav.open() :  this.sidenav.close();
+  openSideNav(type) {
+    type? this.sidenav.open() :  this.sidenav.close();
+    type =='boards'? this.navType='boards' : this.navType='board-settings';
   }
 
   close() {

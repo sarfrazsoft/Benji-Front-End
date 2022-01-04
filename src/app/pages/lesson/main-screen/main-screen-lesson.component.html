@@ -6,6 +6,7 @@
     position="end">
       <side-navigation
         [sidenav]="sidenav" 
+        [navType]="navType"
         [activityState]="serverMessage"
         (sendMessage)="sendSocketMessage($event)"
         >
