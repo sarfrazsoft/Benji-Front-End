@@ -13,14 +13,14 @@ export class SideNavigationComponent {
   editingInstructions: boolean;
   @ViewChild('title') InstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
-  instructions = "Group 1’s space Talk about SpriderMan";
+  instructions = "";
 
   statusDropdown = [ "Active", "View Only", "Hidden" ];
 
   participants = [ "Me Pi", "Alex Mat", "Lee Nim", "Sam M" ];
 
   ngOnInit(): void {
-    if(this.activityState) {
+    if(this.activityState && this.activityState.brainstormactivity) {
       this.instructions = this.activityState.brainstormactivity.instructions;
     }
   }
