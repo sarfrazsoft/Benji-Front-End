@@ -303,6 +303,7 @@ export interface WhereDoYouStandActivity {
 export interface BrainstormActivity extends ParentActivity {
   brainstormcategory_set: Array<Category>;
   instructions: string;
+  sub_instructions: string;
   max_participant_submissions: number;
   max_participant_votes: number;
   categorize_flag: boolean;

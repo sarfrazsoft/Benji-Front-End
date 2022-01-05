@@ -97,6 +97,7 @@ export class MainScreenBrainstormingActivityComponent
     super();
   }
   instructions = '';
+  sub_instructions = '';
   timer: Timer;
   act: BrainstormActivity;
 
@@ -247,6 +248,7 @@ export class MainScreenBrainstormingActivityComponent
     this.joinedUsers = this.activityState.lesson_run.participant_set;
 
     this.instructions = act.instructions;
+    this.sub_instructions = act.sub_instructions;
 
     this.categorizeFlag = act.categorize_flag;
     this.showUserName = act.show_participant_name_flag;

@@ -873,3 +873,10 @@ export class BrainstormEditInstructionEvent extends ActivityEvent {
     this.extra_args = { instructions: title };
   }
 }
+export class BrainstormEditSubInstructionEvent extends ActivityEvent {
+  event_name = 'BrainstormEditSubInstructionEvent';
+  constructor(instructions: string) {
+    super();
+    this.extra_args = { sub_instructions: instructions };
+  }
+}

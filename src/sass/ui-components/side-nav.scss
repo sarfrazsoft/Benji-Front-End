@@ -108,7 +108,7 @@
     border: 2px solid #F3F4F7;
     background: #F3F4F7;
     border-radius: 8px;
-    &:hover {
+    &.selected {
       border: 2px solid $primary-color;
     }
     .title {

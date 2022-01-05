@@ -5,7 +5,7 @@
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
 
-  <div fxLayout="column" class="board" fxLayoutGap="8px">
+  <div fxLayout="column" class="board selected" fxLayoutGap="8px">
     <div fxLayout="row" fxLayoutAlign="space-between">
       <div class="title">Icebreakers!</div>
       <button
@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <div class="add-group" fxLayoutAlign="center center">
+  <div *ngxPermissionsOnly="'ADMIN'" class="add-group" fxLayoutAlign="center center">
     <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
   </div>
 
@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <div class="add-group" fxLayoutAlign="center center">
+  <div *ngxPermissionsOnly="'ADMIN'" class="add-group" fxLayoutAlign="center center">
     <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
   </div>
 
@@ -106,19 +106,19 @@
     <div class="title">Instructions</div>
     <div class="edit">
       <div 
-        *ngIf="!editingInstructions"
-        (click)="editInstructions()"
+        *ngIf="!editingSubInstructions"
+        (click)="editSubInstructions()"
         class="not-editing">
-        {{ instructions }}
+        {{ sub_instructions }}
       </div>
-      <div *ngIf="editingInstructions" class="editing">
+      <div *ngIf="editingSubInstructions" class="editing">
         <input
-          #title
+          #instructions
           style="width: 100%;"
           type="text"
-          [(ngModel)]="instructions" 
-          (blur)="saveEditedInstructions()"
-          (keyup.enter)="saveEditedInstructions()">
+          [(ngModel)]="sub_instructions" 
+          (blur)="saveEditedSubInstructions()"
+          (keyup.enter)="saveEditedSubInstructions()">
       </div>
     </div>
   </div>
