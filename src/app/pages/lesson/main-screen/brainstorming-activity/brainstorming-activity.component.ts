@@ -1,49 +1,98 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { uniqBy } from 'lodash';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  expandRightOnEnterAnimation,
+  fadeInOnEnterAnimation,
+  fadeInRightOnEnterAnimation,
+  fadeInUpOnEnterAnimation,
+  fadeOutOnLeaveAnimation,
+  slideInRightOnEnterAnimation,
+  slideInUpOnEnterAnimation,
+  slideOutRightOnLeaveAnimation,
+} from 'angular-animations';
+import { clone, cloneDeep, uniqBy } from 'lodash';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
-import { ActivitySettingsService, ContextService } from 'src/app/services';
+import * as global from 'src/app/globals';
+import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
+import {
+  ActivitySettingsService,
+  BrainstormService,
+  ContextService,
+  SharingToolService,
+} from 'src/app/services';
 import {
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
+  BrainstormEditIdeaSubmitEvent,
+  BrainstormImageSubmitEvent,
   BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormRenameCategoryEvent,
   BrainstormSetCategoryEvent,
   BrainstormSubmissionCompleteInternalEvent,
+  BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
   BrainstormToggleCategoryModeEvent,
+  BrainstormToggleParticipantNameEvent,
+  Category,
+  Group,
   Idea,
+  ResetGroupingEvent,
+  StartBrainstormGroupEvent,
+  StartCaseStudyGroupEvent,
   Timer,
+  UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { BaseActivityComponent } from '../../shared/base-activity.component';
-
-import { MatDialog } from '@angular/material/dialog';
-import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
+import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
+import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
+import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
+import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
+import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { environment } from 'src/environments/environment';
+import { BaseActivityComponent } from '../../shared/base-activity.component';
+import { UncategorizedComponent } from './uncategorized/uncategorized.component';
 
 @Component({
   selector: 'benji-ms-brainstorming-activity',
   templateUrl: './brainstorming-activity.component.html',
   styleUrls: ['./brainstorming-activity.component.scss'],
+  animations: [
+    fadeInOnEnterAnimation({ duration: 200 }),
+    fadeInUpOnEnterAnimation({ duration: 1000, delay: 0, translate: '300px' }),
+    fadeOutOnLeaveAnimation({ duration: 200 }),
+    slideInRightOnEnterAnimation({ duration: 100, translate: '600px' }),
+    slideOutRightOnLeaveAnimation(),
+    fadeInRightOnEnterAnimation(),
+    slideInUpOnEnterAnimation(),
+    expandRightOnEnterAnimation(),
+  ],
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
-  @ViewChild('colName') colNameElement: ElementRef;
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() peakBackState = false;
-  @Input() editor = false;
   @Input() activityStage: Observable<string>;
   peakBackStage = null;
+  showParticipantUI = false;
+  showParticipantsGroupsDropdown = false;
+  participantCode;
   private eventsSubscription: Subscription;
 
   constructor(
     private contextService: ContextService,
-    private dialog: MatDialog,
+    private matDialog: MatDialog,
     private utilsService: UtilsService,
-    private activitySettingsService: ActivitySettingsService
+    private activitySettingsService: ActivitySettingsService,
+    private httpClient: HttpClient,
+    private permissionsService: NgxPermissionsService,
+    private sharingToolService: SharingToolService,
+    private brainstormService: BrainstormService
   ) {
     super();
   }
@@ -56,19 +105,22 @@ export class MainScreenBrainstormingActivityComponent
   VnSComplete = false;
   categorizeFlag = false;
   showUserName = true;
-  minWidth = 'medium';
+  minWidth = 'small';
   colDeleted = 0;
   joinedUsers = [];
   answeredParticipants = [];
   unansweredParticipants = [];
   ideaSubmittedUsersCount = 0;
   voteSubmittedUsersCount = 0;
-  ideas = [];
-  hostname = environment.web_protocol + '://' + environment.host;
-  dialogRef;
+  dialogRef: MatDialogRef<ParticipantGroupingInfoDialogComponent>;
   shownSubmissionCompleteNofitication = false;
 
-  columns = [];
+  // Groupings
+  classificationTypes;
+  participantGroups: Array<Group>;
+  selectedClassificationType;
+  selectedParticipantGroup: Group;
+  myGroup: Group;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -77,26 +129,231 @@ export class MainScreenBrainstormingActivityComponent
   ];
 
   settingsSubscription;
+  saveIdeaSubscription;
+  imagesList: FileList;
+  imageSrc;
+  imageDialogRef;
+  selectedImageUrl;
+
   ngOnInit() {
     super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
-    if (this.peakBackState) {
-      this.eventsSubscription = this.activityStage.subscribe((state) => this.changeStage(state));
-    }
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.participantCode = this.getParticipantCode();
+        if (this.act.grouping && this.act.grouping.groups.length) {
+          this.initParticipantGrouping(this.act);
+        }
+      }
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        if (this.getEventType() === 'AssignGroupingToActivities') {
+        }
+        this.applyGroupingOnActivity(this.activityState);
+        this.classificationTypes = [
+          {
+            type: 'everyone',
+            title: 'Everyone',
+            description: `Display everyone's work`,
+            imgUrl: '/assets/img/brainstorm/everyone.svg',
+          },
+          {
+            type: 'groups',
+            title: 'Groups',
+            description: `Display group's work`,
+            imgUrl: '/assets/img/brainstorm/groups.svg',
+          },
+          // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
+          // imgUrl: '/assets/img/brainstorm/individuals.svg' },
+        ];
+      }
+    });
+
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
-        this.showUserName = val.state;
+        // this.showUserName = val.state;
+        this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
       }
       if (val && val.controlName === 'categorize') {
-        console.log('hurr');
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
+      }
+      if (val && val.controlName === 'resetGrouping') {
+        if (this.act.grouping) {
+          const groupingID = this.act.grouping.id;
+          this.sendMessage.emit(new ResetGroupingEvent(groupingID));
+        }
       }
       if (val && val.controlName === 'cardSize') {
         this.minWidth = val.state.name;
       }
     });
+
+    this.saveIdeaSubscription = this.brainstormService.saveIdea$.subscribe((val) => {
+      if (val) {
+        this.saveIdea(val);
+      }
+    });
+  }
+
+  ngOnChanges() {
+    this.onChanges();
+  }
+
+  onChanges() {
+    this.eventType = this.getEventType();
+    this.loadUsersCounts();
+    const act = this.activityState.brainstormactivity;
+    this.act = cloneDeep(this.activityState.brainstormactivity);
+    // populate groupings dropdown
+    if (this.act.grouping && this.act.grouping.groups.length) {
+      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+        if (val) {
+          this.participantCode = this.getParticipantCode();
+          this.initParticipantGrouping(this.act);
+        }
+      });
+      this.permissionsService.hasPermission('ADMIN').then((val) => {
+        if (val) {
+          this.participantGroups = this.act.grouping.groups;
+        }
+      });
+    } else {
+      // grouping is null in activity
+      if (this.getEventType() === 'AssignGroupingToActivities') {
+        this.applyGroupingOnActivity(this.activityState);
+      }
+    }
+
+    const sm = this.activityState;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+      const gt = sm.running_tools.grouping_tool;
+      this.sharingToolService.updateParticipantGroupingToolDialog(gt);
+    }
+
+    if (this.act.brainstormcategory_set.length) {
+      // check if the categories have ids
+      // if categories don't have ids it means
+      // we're in the preview panel
+      if (this.act.brainstormcategory_set[0].id) {
+        this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
+      } else {
+      }
+    }
+    this.joinedUsers = this.activityState.lesson_run.participant_set;
+
+    this.instructions = act.instructions;
+
+    this.categorizeFlag = act.categorize_flag;
+    this.showUserName = act.show_participant_name_flag;
+    if (this.categorizeFlag) {
+    }
+
+    if (this.peakBackState && this.peakBackStage === null) {
+      this.voteScreen = true;
+      this.submissionScreen = false;
+      this.VnSComplete = false;
+      this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+    } else if (!this.peakBackState) {
+      if (!act.submission_complete) {
+        this.submissionScreen = true;
+        this.voteScreen = false;
+        this.VnSComplete = false;
+        this.timer = act.submission_countdown_timer;
+        this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
+      } else if (act.voting_countdown_timer && !act.voting_complete) {
+        this.voteScreen = true;
+        this.submissionScreen = false;
+        this.VnSComplete = false;
+        this.timer = act.voting_countdown_timer;
+        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+      } else if (act.submission_complete && act.voting_complete) {
+        this.submissionScreen = false;
+        this.voteScreen = false;
+        this.VnSComplete = true;
+        this.timer = this.getNextActStartTimer();
+      }
+
+      // show snackbar when submission is complete
+      if (
+        !this.actEditor &&
+        !act.submission_complete &&
+        !act.voting_complete &&
+        this.isAllSubmissionsComplete(act) &&
+        !this.shownSubmissionCompleteNofitication
+      ) {
+        this.shownSubmissionCompleteNofitication = true;
+        const snackBarRef = this.utilsService.openSuccessNotification('Submission complete', 'Start voting');
+        snackBarRef.onAction().subscribe(($event) => {});
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    this.contextService.destroyActivityTimer();
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
+    if (this.saveIdeaSubscription) {
+      this.saveIdeaSubscription.unsubscribe();
+    }
+    if (this.peakBackState) {
+      this.eventsSubscription.unsubscribe();
+    }
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
+  }
+
+  getParticipantGroup(participantCode, participantGroups) {
+    return this.getMyGroup(participantCode, participantGroups);
+  }
+
+  initParticipantGrouping(act: BrainstormActivity) {
+    // Check if groups are created
+    // if groups are present then check if participant is in the group
+    // if participant is not present in the group then open grouping info dialog
+    this.participantGroups = this.act.grouping.groups;
+    if (this.participantGroups.length > 0) {
+      this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
+      if (this.myGroup === null) {
+        // There are groups in the activity but this participant is not in any groups
+        if (this.dialogRef) {
+          this.sharingToolService.updateParticipantGroupingInfoDialog(
+            this.activityState.running_tools.grouping_tool
+          );
+          // this.dialogRef.close();
+          // this.dialogRef = null;
+        } else if (!this.dialogRef || !this.dialogRef.componentInstance) {
+          this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
+            this.activityState,
+            this.participantCode
+          );
+          // this.dialogRef =
+          // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
+          this.sharingToolService.sendMessage$.subscribe((v) => {
+            if (v) {
+              this.sendMessage.emit(v);
+            }
+          });
+        }
+      } else {
+        // filter ideas on participant screen by the group they are in.
+        this.filterIdeasBasedOnGroup(this.myGroup);
+        if (this.dialogRef) {
+          this.dialogRef.close();
+        }
+      }
+    }
+  }
+
+  resetGrouping() {
+    const activityType = this.getActivityType().toLowerCase();
+    this.sendMessage.emit(new ResetGroupingEvent(this.activityState[activityType].grouping.id));
   }
 
   getPersonName(idea: Idea) {
@@ -111,136 +368,49 @@ export class MainScreenBrainstormingActivityComponent
   getMinWidth() {
     return this.minWidth === 'small' ? 280 : this.minWidth === 'medium' ? 360 : 480;
   }
+  classificationTypeChanged(selectedClassificationType) {
+    // console.log(selectedClassificationType);
+    const sct = selectedClassificationType;
+    if (sct.type === 'everyone') {
+      // this.participantGroups = null;
+      this.selectedParticipantGroup = null;
+      this.showParticipantsGroupsDropdown = false;
 
-  ngOnDestroy() {
-    this.contextService.destroyActivityTimer();
-    if (this.settingsSubscription) {
-      this.settingsSubscription.unsubscribe();
-    }
-    if (this.peakBackState) {
-      this.eventsSubscription.unsubscribe();
-    }
-  }
-  changeStage(state) {
-    this.peakBackStage = state;
-    const act = this.activityState.brainstormactivity;
-    if (state === 'next') {
-    } else {
-      // state === 'previous'
-    }
-
-    if (this.submissionScreen) {
-      if (state === 'next') {
-        this.voteScreen = true;
-        this.submissionScreen = false;
-        this.VnSComplete = false;
-        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-      } else {
-        // state === 'previous'
-        // do nothing
-      }
-    } else if (this.voteScreen) {
-      if (state === 'next') {
-        this.submissionScreen = false;
-        this.voteScreen = false;
-        this.VnSComplete = true;
-      } else {
-        // state === 'previous'
-        this.submissionScreen = true;
-        this.voteScreen = false;
-        this.VnSComplete = false;
-        this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
-      }
-    } else if (this.VnSComplete) {
-      if (state === 'next') {
-        // do nothing
-      } else {
-        // state === 'previous'
-        this.voteScreen = true;
-        this.submissionScreen = false;
-        this.VnSComplete = false;
-        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-      }
+      this.act = cloneDeep(this.activityState.brainstormactivity);
+    } else if (sct.type === 'groups') {
+      this.participantGroups = this.act.grouping.groups;
+      this.showParticipantsGroupsDropdown = true;
+    } else if (sct.type === 'individuals') {
+      this.participantGroups = null;
     }
   }
 
-  onChanges() {
-    this.loadUsersCounts();
-    const act = this.activityState.brainstormactivity;
-    this.act = this.activityState.brainstormactivity;
-    if (this.act.brainstormcategory_set.length) {
-      // check if the categories have ids
-      // if categories don't have ids it means
-      // we're in the preview panel
-      if (this.act.brainstormcategory_set[0].id) {
-        this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
-      } else {
-      }
-    }
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
-    this.ideas = [];
-    act.brainstormcategory_set.forEach((category) => {
-      if (!category.removed && category.brainstormidea_set) {
-        category.brainstormidea_set.forEach((idea: Idea) => {
-          if (!idea.removed) {
-            this.ideas.push({ ...idea, showClose: false });
+  ParticipantGroupChanged(selectedParticipantGroup: Group) {
+    this.filterIdeasBasedOnGroup(selectedParticipantGroup);
+  }
+
+  filterIdeasBasedOnGroup(selectedParticipantGroup: Group) {
+    // console.log(selectedParticipantGroup);
+    // console.log(this.act);
+    const act = cloneDeep(this.activityState.brainstormactivity);
+    for (let i = 0; i < act.brainstormcategory_set.length; i++) {
+      const category = act.brainstormcategory_set[i];
+      if (!category.removed) {
+        for (let j = 0; j < category.brainstormidea_set.length; j++) {
+          const idea = category.brainstormidea_set[j];
+          if (idea.submitting_participant) {
+            if (
+              !selectedParticipantGroup.participants.includes(idea.submitting_participant.participant_code)
+            ) {
+              category.brainstormidea_set.splice(j, 1);
+              j--;
+            }
           }
-        });
-      }
-    });
-    // act.idea_rankings.forEach((idea) => {
-    //   this.ideas.push({ ...idea, showClose: false });
-    // });
-    this.ideas.sort((a, b) => b.num_votes - a.num_votes);
-
-    this.instructions = act.instructions;
-
-    this.categorizeFlag = act.categorize_flag;
-    if (this.categorizeFlag) {
-      this.populateCategories();
-    }
-
-    if (this.peakBackState && this.peakBackStage === null) {
-      this.voteScreen = true;
-      this.submissionScreen = false;
-      this.VnSComplete = false;
-      this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-    } else if (!this.peakBackState) {
-      if (!act.submission_complete) {
-        this.submissionScreen = true;
-        this.voteScreen = false;
-        this.VnSComplete = false;
-        this.timer = act.submission_countdown_timer;
-        // this.contextService.activityTimer = act.submission_countdown_timer;
-        this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
-      } else if (act.voting_countdown_timer && !act.voting_complete) {
-        this.voteScreen = true;
-        this.submissionScreen = false;
-        this.VnSComplete = false;
-        this.timer = act.voting_countdown_timer;
-        // this.contextService.activityTimer = act.voting_countdown_timer;
-        this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-      } else if (act.submission_complete && act.voting_complete) {
-        this.submissionScreen = false;
-        this.voteScreen = false;
-        this.VnSComplete = true;
-        this.timer = this.getNextActStartTimer();
-        // this.contextService.activityTimer = this.timer;
-      }
-
-      // show snackbar when submission is complete
-      if (
-        !this.editor &&
-        !act.submission_complete &&
-        !act.voting_complete &&
-        this.isAllSubmissionsComplete(act) &&
-        !this.shownSubmissionCompleteNofitication
-      ) {
-        this.shownSubmissionCompleteNofitication = true;
-        const snackBarRef = this.utilsService.openSuccessNotification('Submission complete', 'Start voting');
-        snackBarRef.onAction().subscribe(($event) => {});
+        }
       }
     }
+    this.act = act;
+    this.eventType = 'filtered';
   }
 
   loadUsersCounts() {
@@ -296,37 +466,6 @@ export class MainScreenBrainstormingActivityComponent
     return false;
   }
 
-  ngOnChanges() {
-    this.onChanges();
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      this.sendCategorizeEvent(event);
-    }
-  }
-
-  populateCategories() {
-    const act = this.activityState.brainstormactivity;
-    act.brainstormcategory_set.forEach((category) => {
-      if (category.brainstormidea_set) {
-        category.brainstormidea_set.forEach((idea) => {
-          idea = { ...idea, showClose: false, editing: false, addingIdea: false };
-        });
-      } else {
-        // Editor preview panel
-      }
-    });
-  }
-
   getUsersIdeas(act: BrainstormActivity): Array<Idea> {
     let arr: Array<Idea> = [];
     act.brainstormcategory_set.forEach((category) => {
@@ -348,56 +487,16 @@ export class MainScreenBrainstormingActivityComponent
     return act.participant_vote_counts.length;
   }
 
-  sendCategorizeEvent(event) {
-    const id = event.container.data[event.currentIndex].id;
-    let categoryId;
-    this.act.brainstormcategory_set.forEach((cat) => {
-      cat.brainstormidea_set.forEach((idea) => {
-        if (idea.id === id) {
-          categoryId = cat.id;
-        }
-      });
-    });
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryId));
-  }
-
   deleteIdea(id) {
     this.sendMessage.emit(new BrainstormRemoveSubmissionEvent(id));
   }
 
-  columnHeaderClicked(column) {
-    column.editing = true;
-    setTimeout(() => {
-      this.colNameElement.nativeElement.focus();
-    }, 0);
-  }
-
-  addIdea(column) {
-    if (column.id) {
-      column.addingIdea = true;
-    }
-  }
-
-  deleteCol(categoryId) {
-    this.sendMessage.emit(new BrainstormRemoveCategoryEvent(categoryId, true));
-  }
-
-  onColumnNameBlur(column) {
-    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, column.category_name));
-    column.editing = false;
-  }
-
-  saveNewIdea(column, text) {
-    column.addingIdea = false;
-    this.sendMessage.emit(new BrainstormSubmitEvent(text, column.id));
-  }
-
-  addColumn(newCategoryNumber) {
-    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber));
+  sendSocketMessage($event) {
+    this.sendMessage.emit($event);
   }
 
   viewImage(imageUrl: string) {
-    this.dialogRef = this.dialog
+    const dialogRef = this.matDialog
       .open(ImageViewDialogComponent, {
         data: { imageUrl: imageUrl },
         disableClose: false,
@@ -407,183 +506,201 @@ export class MainScreenBrainstormingActivityComponent
       .subscribe((res) => {});
   }
 
-  isAbsolutePath(imageUrl: string) {
-    // console.log(imageUrl);
-    if (imageUrl.includes('https:')) {
-      return true;
+  addCardUnderCategory(category: Category) {
+    this.openDialog(category);
+  }
+
+  openDialog(category?: Category) {
+    const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
+      panelClass: 'idea-creation-dialog',
+      data: {
+        showCategoriesDropdown: this.categorizeFlag,
+        categories: this.activityState.brainstormactivity.brainstormcategory_set,
+        lessonID: this.activityState.lesson_run.lessonrun_code,
+        category: category,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.saveIdea(result);
+      }
+    });
+  }
+
+  saveIdea(result) {
+    if (this.myGroup || this.selectedParticipantGroup) {
+      let groupId = null;
+      if (this.myGroup) {
+        groupId = this.myGroup.id;
+      } else {
+        groupId = this.selectedParticipantGroup.id;
+      }
+      result = { ...result, groupId: groupId };
+    }
+    this.submitIdea(result);
+  }
+
+  submitIdea(idea): void {
+    // if (!idea.editing) {
+    //   return;
+    // }
+    if (idea.imagesList || idea.selectedThirdPartyImageUrl) {
+      this.submitImageNIdea(idea);
+    } else if (idea.selectedpdfDoc) {
+      this.submitDocumentNIdea(idea);
     } else {
-      return false;
+      this.submitWithoutImg(idea);
     }
   }
+
+  submitWithoutImg(idea) {
+    if (idea.text.length === 0) {
+      return;
+    }
+    if (idea.id) {
+      // if there's id in the idea that means we're editing existing idea
+      this.sendMessage.emit(
+        new BrainstormEditIdeaSubmitEvent(idea.id, idea.text, idea.title, idea.category.id, idea.groupId)
+      );
+    } else {
+      // create new idea
+      this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId));
+    }
+  }
+
+  submitImageNIdea(idea) {
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+
+    const participant_code = this.getParticipantCode();
+    const fileList: FileList = idea.imagesList;
+    console.log();
+    if (fileList && fileList.length > 0) {
+      const file: File = fileList[0];
+      this.utilsService
+        .resizeImage({
+          file: file,
+          maxSize: 500,
+        })
+        .then((resizedImage: Blob) => {
+          const formData: FormData = new FormData();
+          formData.append('img', resizedImage, file.name);
+          formData.append('participant_code', participant_code ? participant_code.toString() : '');
+          const headers = new HttpHeaders();
+          headers.set('Content-Type', null);
+          headers.set('Accept', 'multipart/form-data');
+          const params = new HttpParams();
+          this.httpClient
+            .post(url, formData, { params, headers })
+            .map((res: any) => {
+              this.imagesList = null;
+              if (!idea.text) {
+                idea.text = '';
+              }
+              this.sendMessage.emit(
+                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
+              );
+            })
+            .subscribe(
+              (data) => {},
+              (error) => console.log(error)
+            );
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    } else {
+      if (idea.selectedThirdPartyImageUrl) {
+        this.sendMessage.emit(
+          new BrainstormImageSubmitEvent(
+            idea.text,
+            idea.title,
+            idea.category.id,
+            idea.groupId,
+            idea.selectedThirdPartyImageUrl
+          )
+        );
+      }
+    }
+  }
+
+  submitDocumentNIdea(idea) {
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
+
+    const participant_code = this.getParticipantCode().toString();
+    const file: File = idea.selectedpdfDoc;
+    if (file) {
+      const formData: FormData = new FormData();
+      formData.append('document', file, file.name);
+      formData.append('participant_code', participant_code);
+      const headers = new HttpHeaders();
+      headers.set('Content-Type', null);
+      headers.set('Accept', 'multipart/form-data');
+      const params = new HttpParams();
+      this.httpClient
+        .post(url, formData, { params, headers })
+        .map((res: any) => {
+          // we will get ID of document and that will be attached
+          // with the idea
+          this.sendMessage.emit(
+            new BrainstormSubmitDocumentEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
+          );
+        })
+        .subscribe(
+          (data) => {},
+          (error) => console.log(error)
+        );
+    }
+    // uploadFile(file: File, lessonId): Observable<any[]> {
+    //   const formData: FormData = new FormData();
+    //   formData.append('document', file);
+    //   formData.append('lesson_id', lessonId);
+    //   return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData);
+    // }
+  }
+
+  // changeStage(state) {
+  //   this.peakBackStage = state;
+  //   const act = this.activityState.brainstormactivity;
+  //   if (state === 'next') {
+  //   } else {
+  //     // state === 'previous'
+  //   }
+
+  //   if (this.submissionScreen) {
+  //     if (state === 'next') {
+  //       this.voteScreen = true;
+  //       this.submissionScreen = false;
+  //       this.VnSComplete = false;
+  //       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+  //     } else {
+  //       // state === 'previous'
+  //       // do nothing
+  //     }
+  //   } else if (this.voteScreen) {
+  //     if (state === 'next') {
+  //       this.submissionScreen = false;
+  //       this.voteScreen = false;
+  //       this.VnSComplete = true;
+  //     } else {
+  //       // state === 'previous'
+  //       this.submissionScreen = true;
+  //       this.voteScreen = false;
+  //       this.VnSComplete = false;
+  //       this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
+  //     }
+  //   } else if (this.VnSComplete) {
+  //     if (state === 'next') {
+  //       // do nothing
+  //     } else {
+  //       // state === 'previous'
+  //       this.voteScreen = true;
+  //       this.submissionScreen = false;
+  //       this.VnSComplete = false;
+  //       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
+  //     }
+  //   }
+  // }
 }
-
-// categories = [
-//   {
-//     name: 'Category 1',
-//     list: [
-//       'Category 1 task 1',
-//       'Category 1 task 2',
-//       'Category 1 task 3',
-//       'Category 1 task 4'
-//     ]
-//   },
-//   {
-//     name: 'Category 2',
-//     list: [
-//       'Category 2 task 1',
-//       'Category 2 task 2',
-//       'Category 2 task 3',
-//       'Category 2 task 4'
-//     ]
-//   },
-//   {
-//     name: 'Category 3',
-//     list: [
-//       'Category 3 task 1',
-//       'Category 3 task 2',
-//       'Category 3 task 3',
-//       'Category 3 task 4'
-//     ]
-//   },
-//   {
-//     name: 'Category 4',
-//     list: [
-//       'Category 4 task 1',
-//       'Category 4 task 2',
-//       'Category 4 task 3',
-//       'Category 4 task 4'
-//     ]
-//   }
-// ];
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// this.ideas = [
-//   {
-//     id: 1,
-//     text:
-//       'Put away my phone when people are trying to have a conversation with me',
-//     showClose: false
-//   },
-//   {
-//     id: 2,
-//     text: 'Be more mindful of my thoughts while in conversation',
-//     showClose: false
-//   },
-//   {
-//     id: 3,
-//     text:
-//       'Remember not to interrupt people while they’re' +
-//       ' talking and wait till the end to ask questions',
-//     showClose: false
-//   },
-//   { id: 40, text: 'Get rid of distractions', showClose: false },
-//   { id: 41, text: 'Get rid of distractions', showClose: false },
-//   { id: 42, text: 'Get rid of distractions', showClose: false },
-//   { id: 43, text: 'Get rid of distractions', showClose: false },
-//   {
-//     id: 5,
-//     text: 'Remind people to pay attention if they get distracted',
-//     showClose: false
-//   },
-//   {
-//     id: 6,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 7,
-//     text: 'Be more mindful of my thoughts while in conversation',
-//     showClose: false
-//   },
-//   {
-//     id: 8,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 9,
-//     text:
-//       'Summarize and paraphrase what people are saying' +
-//       'Summarize and paraphrase what people are saying' +
-//       'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 10,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 11,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 12,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 15,
-//     text:
-//       'Remember not to interrupt people while they’re' +
-//       'talking and wait till the end to ask questions',
-//     showClose: false
-//   },
-//   {
-//     id: 10,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 11,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 12,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 15,
-//     text:
-//       'Remember not to interrupt people while they’re' +
-//       'talking and wait till the end to ask questions',
-//     showClose: false
-//   },
-//   {
-//     id: 10,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 11,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 12,
-//     text: 'Summarize and paraphrase what people are saying',
-//     showClose: false
-//   },
-//   {
-//     id: 15,
-//     text:
-//       'Remember not to interrupt people while they’re' +
-//       'talking and wait till the end to ask questions',
-//     showClose: false
-//   }
-// ];

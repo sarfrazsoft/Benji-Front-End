@@ -1,0 +1,245 @@
+.lobby-wrapper {
+  height: calc(100vh - 56px);
+  .content-wrapper {
+    padding: 48px 64px;
+    background: #fff;
+    box-shadow: 0px 1px 2px #e7e7e7;
+    border-radius: 16px;
+    .session-details {
+      //min-width: 588px;
+      margin-right: 64px;
+      float: left;
+      width: 588px;
+      &.adminLobby {
+        margin-right: 0px;
+        max-width: unset;
+        width: 70vw;
+      }
+      .session-title {
+        font-size: 40px;
+        font-weight: 700;
+        color: #37352f;
+        margin-bottom: 16px;
+      }
+      .session-start {
+        font-size: 16px;
+        .join-code {
+          color: #616161;
+          font-weight: 500;
+          cursor: pointer;
+          span {
+            font-weight: 700;
+          }
+        }
+        img {
+          background: #f3f4f7;
+          padding: 8px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        .start-button {
+          font-weight: 700;
+          padding: 11px 32px;
+          border-radius: 8px;
+          cursor: pointer;
+          width: 106px;
+        }
+      }
+      .session-host {
+        margin-bottom: 16px;
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+        }
+        .name {
+          font-size: 18px;
+          font-weight: 500;
+          color: #37352f;
+          text-transform: capitalize;
+        }
+        .initials {
+          color: #fff;
+          font-size: 12px;
+          font-weight: 500;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          background: #5e8deb;
+          line-height: 0px;
+        }
+      }
+      .description {
+        color: #000;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        padding-bottom: 28px;
+        margin-bottom: 32px;
+        border-bottom: 2px solid #eaeaea;
+      }
+      .session-participants {
+        font-size: 24px;
+        font-weight: 700;
+        color: #37352f;
+        margin-bottom: 24px;
+        .participant {
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+          }
+          .initials {
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            line-height: 0px;
+          }
+          .name {
+            font-size: 14px;
+            font-weight: 400;
+            color: #000;
+            text-transform: capitalize;
+          }
+        }
+      }
+      .participants-list {
+        max-height: 168px;
+        overflow-y: auto;
+        padding-right: 32px;
+      }
+    }
+    .sub-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #37352f;
+      margin-bottom: 24px;
+    }
+    .join-session {
+      float: right;
+      background: #f3f4f7;
+      border-radius: 16px;
+      padding: 40px 32px;
+      .sub-title {
+        margin-bottom: 24px;
+      }
+      .label {
+        color: #37352f;
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      input {
+        background: #fff;
+        border-radius: 8px;
+        width: 356px;
+        padding: 16px;
+        color: #37352f;
+        font-size: 16px;
+        font-weight: 500;
+        border: 0px;
+        margin-bottom: 24px;
+        &:focus {
+          outline-width: 0;
+        }
+      }
+      .edit-profile {
+        margin-bottom: 24px;
+        cursor: pointer;
+        .initials {
+          color: #fff;
+          font-size: 28px;
+          font-weight: 500;
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          margin-right: 17px;
+        }
+        .edit-pen {
+          width: 16px;
+          height: 16px;
+          margin-right: 8px;
+        }
+        .change-profile {
+          font-size: 16px;
+          font-weight: 500;
+          color: #828282;
+        }
+      }
+      .button {
+        width: max-content;
+        padding: 12px 32px;
+        text-align: center;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 20px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .session-joined {
+        width: 400px;
+        min-height: 330px;
+        font-weight: 600;
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 1250px) {
+  .lobby-wrapper {
+    &.participant-lobby {
+      height: auto;
+      padding: 24px;
+    }
+    .content-wrapper {
+      .session-details {
+        margin-right: 0px;
+        float: none;
+        margin-bottom: 32px;
+        &.adminLobby {
+          .session-title {
+            font-size: 32px;
+          }
+          .sub-title {
+            font-size: 20px;
+          }
+        }
+      }
+      .join-session {
+        float: none;
+        input {
+          width: 94%;
+        }
+        .session-joined {
+          margin: 0px auto;
+          min-height: 180px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) {
+  .lobby-wrapper {
+    .content-wrapper {
+      padding: 32px;
+      .session-details {
+        width: 100%;
+      }
+      .join-session {
+        float: none;
+        input {
+          width: 90%;
+        }
+        .session-joined {
+          width: auto;
+        }
+      }
+    }
+  }
+}

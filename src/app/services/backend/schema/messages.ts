@@ -1,4 +1,4 @@
-import { ConvoCardsActivity } from './activities';
+import { ConvoCardsActivity, GoogleSlidesActivity } from './activities';
 import {
   BaseActivity,
   BrainstormActivity,
@@ -33,9 +33,11 @@ export interface UpdateMessage {
   lesson: Lesson;
   lesson_run: LessonRun;
   running_tools: RunningTools;
+  eventType: string;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;
+  googleslidesactivity?: GoogleSlidesActivity;
   casestudyactivity?: CaseStudyActivity;
   convoactivity?: ConvoCardsActivity;
   externalgroupingactivity?: ExternalGroupingActivity;
@@ -84,6 +86,7 @@ export interface ServerMessage {
   clienterror?: ClientError;
   servererror?: ServerError;
   servernotification?: ServerNotification;
+  eventtype: string;
 }
 
 // export class Ddatemessage implements UpdateMessage {
@@ -333,10 +336,6 @@ export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
   }
 }
 
-export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
-  event_name = 'BrainstormToggleCategoryModeEvent';
-}
-
 export class BeginShareEvent extends ActivityEvent {
   event_name = 'BeginShareEvent';
 }
@@ -384,6 +383,12 @@ export class ParticipantSelectCardEvent extends ActivityEvent {
   }
 }
 
+export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
+  event_name = 'BrainstormToggleCategoryModeEvent';
+}
+export class BrainstormToggleParticipantNameEvent extends ActivityEvent {
+  event_name = 'BrainstormToggleParticipantNameEvent';
+}
 export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormSubmissionCompleteInternalEvent';
 }
@@ -395,17 +400,60 @@ export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number, idea_image?: number, image_path?: string) {
+  constructor(
+    text: string,
+    title: string,
+    category: number,
+    groupId: number,
+    idea_image?: number,
+    image_path?: string
+  ) {
     super();
+    this.extra_args = { idea: text, title: title, category: category, group_id: groupId };
     if (idea_image) {
       this.extra_args = {
-        idea: text,
-        category: category,
+        ...this.extra_args,
         idea_image: idea_image,
         image_path: image_path,
       };
-    } else {
-      this.extra_args = { idea: text, category: category };
+    }
+  }
+}
+export class BrainstormSubmitDocumentEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitEvent';
+
+  constructor(text: string, title: string, category: number, groupId: number, documentId: number) {
+    super();
+    this.extra_args = {
+      idea: text,
+      title: title,
+      category: category,
+      group_id: groupId,
+      idea_document: documentId,
+    };
+  }
+}
+export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
+  event_name = 'BrainstormEditIdeaSubmitEvent';
+
+  constructor(
+    id: number,
+    text: string,
+    title: string,
+    category: number,
+    groupId: number,
+    idea_image?: number,
+    image_path?: string
+  ) {
+    super();
+    this.extra_args = { brainstormidea: id, idea: text, title: title, category: category, group_id: groupId };
+
+    if (idea_image) {
+      this.extra_args = {
+        ...this.extra_args,
+        idea_image: idea_image,
+        image_path: image_path,
+      };
     }
   }
 }
@@ -413,12 +461,61 @@ export class BrainstormSubmitEvent extends ActivityEvent {
 export class BrainstormImageSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, category: number, image_path?: string) {
+  constructor(text: string, title: string, category: number, groupId: number, image_path?: string) {
     super();
     this.extra_args = {
       idea: text,
+      title: title,
       category: category,
+      group_id: groupId,
       image_path: image_path,
+    };
+  }
+}
+
+export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitIdeaCommentEvent';
+
+  constructor(text: string, ideaId: number) {
+    super();
+    this.extra_args = {
+      comment: text,
+      brainstormidea: ideaId,
+    };
+  }
+}
+
+export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveIdeaCommentEvent';
+
+  constructor(commentId: number, ideaId: number) {
+    super();
+    this.extra_args = {
+      comment_id: commentId,
+      brainstormidea: ideaId,
+    };
+  }
+}
+
+export class BrainstormSubmitIdeaHeartEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitIdeaHeartEvent';
+
+  constructor(ideaId: number) {
+    super();
+    this.extra_args = {
+      brainstormidea: ideaId,
+      heart: true,
+    };
+  }
+}
+export class BrainstormRemoveIdeaHeartEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveIdeaHeartEvent';
+
+  constructor(ideaId: number, comment_id: number) {
+    super();
+    this.extra_args = {
+      brainstormidea: ideaId,
+      comment_id: comment_id,
     };
   }
 }
@@ -614,6 +711,13 @@ export class SelectGroupingEvent extends ActivityEvent {
     this.extra_args = { grouping: grouping };
   }
 }
+export class CreateGroupsEvent extends ActivityEvent {
+  event_name = 'CreateGroupsEvent';
+  constructor(grouping: number, groups: number) {
+    super();
+    this.extra_args = { grouping: grouping, groups: groups };
+  }
+}
 
 export class AllowParticipantGroupingEvent extends ActivityEvent {
   event_name = 'AllowParticipantGroupingEvent';
@@ -628,6 +732,13 @@ export class ViewGroupingEvent extends ActivityEvent {
   constructor(permission: boolean) {
     super();
     this.extra_args = { view: permission };
+  }
+}
+export class UpdateGroupingStyleEvent extends ActivityEvent {
+  event_name = 'UpdateGroupingStyleEvent';
+  constructor(grouping: number, permission: string) {
+    super();
+    this.extra_args = { grouping: grouping, style: permission };
   }
 }
 
@@ -646,6 +757,13 @@ export class CreateGroupEvent extends ActivityEvent {
     this.extra_args = { grouping: grouping, title: title };
   }
 }
+export class DeleteGroupingEvent extends ActivityEvent {
+  event_name = 'DeleteGroupingEvent';
+  constructor(grouping: number) {
+    super();
+    this.extra_args = { grouping: grouping };
+  }
+}
 
 export class DeleteGroupingGroupEvent extends ActivityEvent {
   event_name = 'DeleteGroupingGroupEvent';
@@ -657,22 +775,55 @@ export class DeleteGroupingGroupEvent extends ActivityEvent {
 
 export class GroupingAssignParticipantEvent extends ActivityEvent {
   event_name = 'GroupingAssignParticipantEvent';
-  constructor(group: number, participant_code: number) {
+  constructor(grouping: number, group: number, participant_code: number) {
     super();
-    this.extra_args = { group: group, participant_code: participant_code };
+    this.extra_args = { grouping: grouping, group: group, participant_code: participant_code };
+  }
+}
+export class RemoveParticipantFromGroupEvent extends ActivityEvent {
+  event_name = 'RemoveParticipantFromGroupEvent';
+  constructor(grouping: number, group: number, participant_code: number) {
+    super();
+    this.extra_args = { grouping: grouping, group: group, participant_code: participant_code };
   }
 }
 
 export class GroupingParticipantSelfJoinEvent extends ActivityEvent {
   event_name = 'GroupingParticipantSelfJoinEvent';
-  constructor(group: number) {
+  constructor(grouping: number, group: number) {
     super();
-    this.extra_args = { group: group };
+    this.extra_args = { grouping: grouping, group: group };
   }
 }
 
 export class StartCaseStudyGroupEvent extends ActivityEvent {
   event_name = 'StartCaseStudyGroupEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { grouping: id };
+  }
+}
+
+export class StartBrainstormGroupEvent extends ActivityEvent {
+  event_name = 'StartBrainstormGroupEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { grouping: id };
+  }
+}
+export class AssignGroupingToActivities extends ActivityEvent {
+  event_name = 'AssignGroupingToActivities';
+  constructor(id: number, activityIDs: Array<number>) {
+    super();
+    this.extra_args = { grouping: id, activity_ids: activityIDs };
+  }
+}
+export class ResetGroupingEvent extends ActivityEvent {
+  event_name = 'ResetGroupingEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { grouping: id };
+  }
 }
 
 export class CardsShuffleEvent extends ActivityEvent {
@@ -680,5 +831,45 @@ export class CardsShuffleEvent extends ActivityEvent {
   constructor(deal_number: number) {
     super();
     this.extra_args = { deal_number: deal_number };
+  }
+}
+export class CardsStartSharingStageEvent extends ActivityEvent {
+  event_name = 'CardsStartSharingStageEvent';
+}
+export class CardsStartSetupStageEvent extends ActivityEvent {
+  event_name = 'CardsStartSetupStageEvent';
+}
+export class CardsSetSharingTime extends ActivityEvent {
+  event_name = 'CardsSetSharingTime';
+  constructor(sharing_time: number) {
+    super();
+    this.extra_args = { sharing_time: sharing_time };
+  }
+}
+export class CardsSetParticipantSkipCardsPermissionEvent extends ActivityEvent {
+  event_name = 'CardsSetParticipantSkipCardsPermissionEvent';
+  constructor(val: boolean) {
+    super();
+    this.extra_args = { val: val };
+  }
+}
+export class CardsAddParticipantToCurrentlySharingEvent extends ActivityEvent {
+  event_name = 'CardsAddParticipantToCurrentlySharingEvent';
+  constructor(val: number) {
+    super();
+    this.extra_args = { val: val };
+  }
+}
+export class CardsParticipantReadyEvent extends ActivityEvent {
+  event_name = 'CardsParticipantReadyEvent';
+}
+export class CardsRestartActivityEvent extends ActivityEvent {
+  event_name = 'CardsRestartActivityEvent';
+}
+export class BrainstormEditInstructionEvent extends ActivityEvent {
+  event_name = 'BrainstormEditInstructionEvent';
+  constructor(title: string) {
+    super();
+    this.extra_args = { instructions: title };
   }
 }

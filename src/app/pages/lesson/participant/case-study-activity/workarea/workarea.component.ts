@@ -5,7 +5,6 @@ import {
   CaseStudyDefaultWorksheetApplied,
   CaseStudySubmitAnswerEvent,
   Group,
-  GroupingParticipantSelfJoinEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
@@ -26,6 +25,8 @@ export class WorkAreaComponent implements OnInit, OnChanges {
   @Input() documentId;
   @Input() allowVideo;
   @Input() editorDisabled;
+  @Input() showingToFacilitator = false;
+  @Input() facilitatorSelectedGroup: Group;
   act;
   answeredJson;
 
@@ -77,16 +78,19 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     this.lessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     this.jsonDoc = null;
     this.activityId = this.activityState.casestudyactivity.activity_id;
-    if (this.defaultEditorContent) {
-      // default data is set by the participant with the lowest participantCode
-      // and also added to localstorage so that it's not added again
-      const myGroup = this.getMyGroup(this.participantCode);
-      const sortedParticipant = myGroup.participants.sort((a, b) => a - b);
-      if (this.participantCode === sortedParticipant[0] && !myGroup.default_worksheet_applied) {
-        this.jsonDoc = JSON.parse(this.defaultEditorContent);
-        this.sendMessage.emit(new CaseStudyDefaultWorksheetApplied(true));
-      } else {
-        this.jsonDoc = null;
+    if (this.showingToFacilitator) {
+    } else {
+      if (this.defaultEditorContent) {
+        // default data is set by the participant with the lowest participantCode
+        // and also added to localstorage so that it's not added again
+        const myGroup = this.getMyGroup(this.participantCode);
+        const sortedParticipant = myGroup.participants.sort((a, b) => a - b);
+        if (this.participantCode === sortedParticipant[0] && !myGroup.default_worksheet_applied) {
+          this.jsonDoc = JSON.parse(this.defaultEditorContent);
+          this.sendMessage.emit(new CaseStudyDefaultWorksheetApplied(true));
+        } else {
+          this.jsonDoc = null;
+        }
       }
     }
     // console.log(this.jsonDoc);
@@ -94,11 +98,14 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.editorDisabled = false;
 
-      const myGroup = this.getMyGroup(this.participantCode);
+      let myGroup = this.getMyGroup(this.participantCode);
+      if (this.facilitatorSelectedGroup) {
+        myGroup = this.facilitatorSelectedGroup;
+      }
       const selectedGrouping = this.getMyGrouping();
       let moddedGroupId;
       if (myGroup && myGroup.id) {
-        this.groupId = this.getMyGroup(this.participantCode).id.toString();
+        this.groupId = myGroup.id.toString();
         if (selectedGrouping) {
           moddedGroupId = selectedGrouping + this.groupId;
         } else {

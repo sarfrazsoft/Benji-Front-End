@@ -1,91 +1,143 @@
-<ng-container>
-  <div fxLayout="column" class="mainscreen-activity">
-    <div class="lesson-top-banner black-color" fxLayout="row" fxLayoutAlign="space-between center" >
-      <span class="activity-header">
-        {{ activityState.mcqactivity.question.question }}
-      </span>
-      <div>
-        <submitted-counter 
-          [answeredParticipants]="answeredParticipants" 
-          [unansweredParticipants]="unansweredParticipants">
-        </submitted-counter>
+
+<!-- show questions -->
+<ng-container *ngIf="showQuestion">
+  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="24px">
+    <div fxLayout="column" class="mcq-card">
+      <div class="b-flat-card__body">
+        <h3 class="pn-600 primary-color-darkest">
+          {{ activityState.mcqactivity.question.question }}
+        </h3>
+        <div *ngIf="getCorrectChoices().length > 1" class="multi-correct">
+          Select all correct answers
+        </div>
+        <benji-participant-timer
+          [timer]="timer"
+          [endAudio]="'bell.wav'"
+          [timerOffset]="avgServerTimeOffset"
+        ></benji-participant-timer>
       </div>
-    </div>
-    <div class="" fxFlex="1 0 0" fxLayout="row">
-      <div 
-        class="activity-instructions bg-yellow"
-        [fxFlex]="revealAnswers ? '100%' : '75%'"
-        fxLayoutAlign="center center">
-        <div class="content" fxLayout="column"  fxLayoutAlign="center center">
-          <div
-            class="quiz-answers"
-            fxLayout="row wrap"
-            fxLayoutAlign="space-between"
-            fxLayoutAlign.md="center center"
-            *ngIf="!activityState.lesson.single_user_lesson || revealAnswers">
-            <div
-              class="answer-container"
-              fxLayout="row"
-              fxLayoutAlign="center center"
-              *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-              [ngClass]="{'corect-choice': option.is_correct && revealAnswers}"
-              style="min-width: 40%;">
-                <div class="text">{{ option.choice_text }}</div>
-            </div>
-          </div>
-          <div
-            class="quiz-answers single-user"
-            fxLayout="column"
-            fxLayoutGap="0.8vh"
-            *ngIf="activityState.lesson.single_user_lesson && !revealAnswers"
-          >
+      <div class="b-flat-card__action" >
+        <div  fxLayout="column">
+          <div 
+            *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
+            class="mcq-button-container bg-primary-color">
             <button
-              class="b-standard-button unselected main-screen-button"
-              fxLayout="row"
-              *ngFor="let option of activityState.mcqactivity.question.mcqchoice_set; let i = index"
-              (click)="singleUserSubmitAnswer(option)"
+              class="unselected selected-primary-border-only voting-idea-button"
+              [ngClass]="{
+                selected: isSelected(option),
+                inactive: answerSubmitted
+              }"
+              (click)="selectOption(option)"
             >
-              <div>{{ option.choice_text }}</div>
+              {{ option.choice_text }}
             </button>
           </div>
         </div>
-      </div>
-      <div
-        class="bg-yellow"
-        fxFlex="25%"
-        fxLayoutAlign="center center"
-        *ngIf="!showLeaderboard && !revealAnswers"
-      >
-        <div fxLayout="column" fxLayoutGap="40px" fxLayoutAlign="center center">
-          <app-radial-timer
-            [timer]="radialTimer"
-            endStateText="Times Up!"
-            [endAudio]="'bell.wav'"
-            [timerOffset]="avgServerTimeOffset"
-          ></app-radial-timer>
+        <div class="mcq-button-container">
+          <button 
+            class="white-color center-text voting-submit"
+            (click)="submitAnswer()"
+            [ngClass]="{
+              'submit-inactive': answerSubmitted,
+              'bg-primary-color': !answerSubmitted
+            }"
+            [disabled]="answerSubmitted ? 'disabled': null" >
+            {{ answerSubmitted ? 'Submitted' : 'Submit' }}
+          </button>
         </div>
       </div>
-      <div
-        class="bg-yellow"
-        fxFlex="25%"
-        fxLayoutAlign="center start"
-        *ngIf="showLeaderboard"
-      >
-        <div class="">
-          <div class="leaderboard">
-            <p class="header primary-color">Leaderboard</p>
-            <ol>
-              <li class="leader pn-600" *ngFor="let leader of leaderboard | slice: 0:5; let i = index">
-                <div fxLayoutAlign="space-between">
-                  <span class="name black-color">
-                    <span class="leader-rank black-color"> {{ i + 1 }}. </span>
-                    {{ getParticipantName(leader.participant) }}
-                  </span>
-                  <span class="leader-score">{{ leader.score }}</span>
+    </div>
+    <div fxLayout="column" class="participants-counts" *ngxPermissionsOnly="'ADMIN'">
+      <div class="heading" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+        <img src="/assets/img/mcq/player-status.svg">
+        <div class="text">Player Status</div>
+      </div>
+      <div fxLayout="column">
+        <span class="title"> Answered ({{answeredParticipants.length}})</span>
+        <ul>
+          <li *ngFor="let particpant of answeredParticipants">{{particpant}}</li>
+        </ul>
+      </div>
+      <div fxLayout="column">
+        <span class="title"> Not Answered ({{unansweredParticipants.length}})</span>
+        <ul>
+          <li *ngFor="let particpant of unansweredParticipants">{{particpant}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- show result -->
+<ng-container *ngIf="showQuestionsAnswer">
+  <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="24px">
+    <div fxLayout="column" class="mcq-card">
+      <div class="b-flat-card__body">
+        <h3 class="pn-600 primary-color-darkest">
+          {{ activityState.mcqactivity.question.question }}
+        </h3>
+      </div>
+      <div class="b-flat-card__action pop-quiz-results" >
+        <div class="content" fxLayout="column" fxLayout="column" fxLayoutGap="16px">
+          <div class="options-container">
+            <div 
+              *ngFor="let choice of answeredChoices; let i = index"
+              class="mcq-button-container">
+              <div
+                class="options"
+                fxFlex="100%"
+                [ngClass]="{
+                  'correct-choice': choice.is_correct,
+                  'incorrect-choice' : !choice.is_correct,
+                  'selected-choice': choice.responsePercent > 0 ? true : false
+                }">
+              <div class="option">
+                <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+                  <div class="option-detail" fxLayout="row" fxLayoutGap="2vw">
+                    <div class="text">{{ choice.text }}</div>
+                  </div>
+                  <div class="percentage" fxLayoutAlign="end center">
+                    <div class="number">
+                      {{ choice.noOfResponses }} / {{ totalSelections }}
+                    </div>
+                  </div>
                 </div>
-              </li>
-            </ol>
+                <div
+                  id="progressbar"
+                  [ngClass]="{ 'correct-choice': choice.is_correct }"
+                >
+                  <div
+                    class=""
+                    [style.width.%]="choice.responsePercent"
+                    [ngClass]="{
+                      'correct-choice': choice.is_correct,
+                      'correct-selected-choice':
+                        choice.responsePercent > 0 ? true : false
+                    }"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="mcq-leaderboard" fxLayout="column" fxLayoutGap="20px" *ngxPermissionsOnly="'ADMIN'">
+      <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="8px">
+        <div fxLayout="column">
+          <img src="/assets/img/trophy.svg" width="20" height="20">
+        </div>
+        <div class="title" fxLayout="column">
+          Leaderboard
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center"  *ngFor="let item of participantRanks; let i = index">
+        <div class="name" fxLayout="column" >
+          {{ i+1 }}. {{ item.name }}
+        </div>
+        <div class="score" fxLayout="column">
+          {{ item.score*10 }}
         </div>
       </div>
     </div>

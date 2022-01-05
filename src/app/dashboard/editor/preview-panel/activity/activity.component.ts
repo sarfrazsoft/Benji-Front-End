@@ -9,6 +9,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import { Subject } from 'rxjs';
 import { ActivityTypes as Acts } from 'src/app/globals';
 import {
@@ -30,6 +31,7 @@ import {
 } from 'src/app/pages';
 import { MainScreenCaseStudyActivityComponent } from 'src/app/pages/lesson/main-screen/case-study-activity/case-study-activity.component';
 import { MainScreenEitherOrActivityComponent } from 'src/app/pages/lesson/main-screen/either-or-activity/either-or-activity.component';
+import { MainScreenGoogleSlidesActivityComponent } from 'src/app/pages/lesson/main-screen/google-slides-activity/google-slides.component';
 import { MainScreenVideoActivityComponent } from 'src/app/pages/lesson/main-screen/video-activity/video-activity.component';
 import { ParticipantEitherOrActivityComponent } from 'src/app/pages/lesson/participant/either-or-activity/either-or-activity.component';
 import { ParticipantVideoActivityComponent } from 'src/app/pages/lesson/participant/video-activity/video-activity.component';
@@ -104,15 +106,23 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         if (this.data.screenType === 'mainScreen') {
           msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
         } else {
+          // msAct = this.cfr.resolveComponentFactory(MainScreenBrainstormingActivityComponent);
           msAct = this.cfr.resolveComponentFactory(ParticipantBrainstormingActivityComponent);
+          // return;
         }
         this.componentRef = this.entry.createComponent(msAct);
         const categorizeFlag =
           content.brainstormcategory_set && content.brainstormcategory_set.length === 0 ? false : true;
+
         const categoryset =
           content.brainstormcategory_set && content.brainstormcategory_set.length
-            ? content.brainstormcategory_set
+            ? cloneDeep(content.brainstormcategory_set)
             : [];
+        if (categoryset.length) {
+          for (let i = 0; i < categoryset.length; i++) {
+            categoryset[i].brainstormidea_set = [];
+          }
+        }
         const instructions = content.instructions ? content.instructions : 'Enter your question';
 
         this.componentRef.instance.activityState = {
@@ -157,7 +167,7 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
         this.componentRef.instance.peakBackState = false;
         const activityStage: Subject<string> = new Subject<string>();
         this.componentRef.instance.activityStage = activityStage.asObservable();
-        this.componentRef.instance.editor = true;
+        this.componentRef.instance.actEditor = true;
       } else if (this.data.activity_type === Acts.mcq) {
         if (this.componentRef) {
           this.componentRef.destroy();
@@ -669,6 +679,41 @@ export class ActivityComponent implements OnInit, OnChanges, OnDestroy {
             run_number: 0,
             start_time: '2020-11-11T12:30:41.270208-05:00',
             video_url: this.data.content.video_url,
+          },
+        };
+      } else if (this.data.activity_type === Acts.slides) {
+        if (this.componentRef) {
+          this.componentRef.destroy();
+        }
+        let msAct = null;
+        if (this.data.screenType === 'mainScreen') {
+          msAct = this.cfr.resolveComponentFactory(MainScreenGoogleSlidesActivityComponent);
+        } else {
+          msAct = this.cfr.resolveComponentFactory(MainScreenGoogleSlidesActivityComponent);
+        }
+        this.componentRef = this.entry.createComponent(msAct);
+        console.log(this.data);
+        this.componentRef.instance.activityState = {
+          activity_type: this.data.activity_type,
+          lesson: Lesson,
+          lesson_run: Lesson_run,
+          googleslidesactivity: {
+            activity_id: '1605110364952',
+            activity_type: this.data.activity_type,
+            auto_next: true,
+            description: null,
+            end_time: null,
+            facilitation_status: 'running',
+            hide_timer: false,
+            id: 507,
+            is_paused: true,
+            next_activity: 4,
+            next_activity_delay_seconds: null,
+            next_activity_start_timer: null,
+            polymorphic_ctype: 46,
+            run_number: 0,
+            start_time: '2020-11-11T12:30:41.270208-05:00',
+            slide_url: this.data.content.slide_url,
           },
         };
       }

@@ -1,0 +1,23 @@
+<div class="dialog-content">
+  <div class="close">
+    <img (click)="closeImportDialog()" src="/assets/img/close_big.svg"> 
+  </div>
+  <div class="title">Import slides</div>
+  <div class="description">Upload a PDF file up to 50MB or 100 slides</div>
+  <div class="upbutton" (click)="uploader.click()">
+    <button mat-raised-button color="primary">Choose File</button>
+    <input #uploader (change)="uploadFile($event)" type='file' style="display:none"/> 
+  </div>
+  <div class="spinner">
+    <!-- <mat-progress-spinner
+      class="example-margin"
+      [color]="color"
+      [mode]="mode"
+      [value]="value">
+    </mat-progress-spinner> -->
+  </div>
+  <div *ngIf="uploading">
+    <div class="importing">Importing slides</div>
+    <div class="wait">This may take a few minutes.</div>
+  </div>
+</div>

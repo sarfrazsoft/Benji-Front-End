@@ -53,19 +53,45 @@ export interface LessonRun {
 }
 
 export interface RunningTools {
-  share?: { selectedParticipant: number; volunteers: Array<number>; convoCard: { selectedCard: number }; 
-            feedback: {sharing_participant: number, participants: [{participant: number, text: string, reaction: string}]} };
-  grouping_tool?: { selectedGrouping: number; groupings: Array<GroupingToolGroups>; viewGrouping: boolean };
+  share?: {
+    selectedParticipant: number;
+    volunteers: Array<number>;
+    convoCard: { selectedCard: number };
+    feedback: {
+      sharing_participant: number;
+      participants: [{ participant: number; text: string; reaction: string }];
+    };
+  };
+  grouping_tool?: GroupingTool;
   timer_tool?: Timer;
 }
-
+export interface GroupingTool {
+  selectedGrouping: number;
+  groupings: Array<GroupingToolGroups>;
+  viewGrouping: boolean;
+}
 export interface GroupingToolGroups {
   id: number;
   title: string;
   allowParticipantsJoining: boolean;
   allowParticipantsJoiningMidActivity: boolean;
   unassignedParticipants: Array<number>;
-  groups: Array<{ id: number; title: string; description: string; participants: Array<number> }>;
+  groups: Array<Group>;
+  style: 'hostAssigned' | 'selfAssigned';
+  assignedActivities: Array<string>;
+}
+export interface Group {
+  id: number;
+  title: string;
+  description: string;
+  participants: Array<number>;
+}
+
+export interface BeforeLessonRunDetails {
+  host: string;
+  description: string;
+  participants: Array<any>;
+  title: string;
 }
 
 export interface LessonRunDetails {

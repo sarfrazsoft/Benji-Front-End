@@ -79,7 +79,9 @@
 
   <div class="editor-panels" fxLayout="row">
     <div class="overview-panel" fxFlex="176px">
-      <benji-overview-panel></benji-overview-panel>
+      <benji-overview-panel
+        [lessonId]="lessonId"  
+      ></benji-overview-panel>
     </div>
     <div class="preview-panel" fxFlex="100%">
       <benji-preview-panel></benji-preview-panel>

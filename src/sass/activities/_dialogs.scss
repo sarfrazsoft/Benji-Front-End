@@ -43,3 +43,448 @@
     max-width: 100%;
   }
 }
+
+.grouping-tool-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+    padding: 0px;
+    .grey-area {
+      background: #f3f4f7;
+      border-radius: 16px 0px 0px 16px;
+      padding: 28px;
+      width: 245px;
+      float: left;
+      height: 631px;
+      .content-header {
+        margin-bottom: 32px;
+        .title {
+          font-weight: 600;
+          font-size: 20px;
+          color: #37352f;
+          .not-editing {
+            margin: 13px 0px 8px 12px;
+          }
+          .editing {
+            margin-top: 4px;
+            input {
+              font-weight: 600;
+              font-size: 20px;
+              color: #37352f;
+              width: 212px;
+              height: 40px;
+              background: #ffffff;
+              border: 1px solid #828282;
+              box-sizing: border-box;
+              border-radius: 8px;
+              padding: 8px 11px;
+              &:focus-visible {
+                outline: none;
+              }
+            }
+          }
+        }
+      }
+      .settings {
+        margin-left: 12px;
+        .setting {
+          margin-bottom: 24px;
+        }
+        .header {
+          color: #37352f;
+          font-size: 16px;
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+        .subheader {
+          color: #37352f;
+          font-size: 10px;
+          font-weight: 500;
+        }
+        .toggler {
+          border-radius: 8px;
+          font-size: 14px;
+          width: 143px;
+          padding: 4px;
+          background: #fff;
+          margin-bottom: 8px;
+          color: #616161;
+          font-weight: 500;
+          .option {
+            padding: 9px 12px;
+            cursor: pointer;
+            &.active {
+              background: #f3f4f7;
+              border-radius: 8px;
+              color: #37352f;
+              transition: background 0.2s;
+            }
+          }
+        }
+        .plusminus {
+          width: 34px;
+          height: 32px;
+          background: #fff;
+          border: 1px solid #828282;
+          border-radius: 8px;
+          color: #828282;
+          cursor: pointer;
+          &::selection {
+            background: transparent;
+          }
+        }
+        .activities {
+          .ng-select-container {
+            background: #ffffff;
+            border: 1px solid #828282;
+            box-sizing: border-box;
+            border-radius: 8px;
+            padding: 8px;
+            .ng-value-container {
+              padding-top: 0px;
+              padding-left: 0px;
+            }
+          }
+        }
+      }
+      .count {
+        width: 52px;
+        height: 40px;
+        background: #fff;
+        border: 1px solid #828282;
+        border-radius: 8px;
+        color: #37352f;
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+    .white-area {
+      float: right;
+      padding: 24px;
+      .close {
+        float: right;
+        cursor: pointer;
+      }
+      .content-wrapper {
+        padding: 8px;
+      }
+      .sub-title {
+        color: #37352f;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+      .free-users {
+        margin-bottom: 8px;
+        background: #eff1f2;
+        border-radius: 8px;
+        padding: 16px;
+        min-height: 64px;
+      }
+      .groups {
+        width: 650px;
+        height: 400px;
+        overflow-y: auto;
+        .group {
+          padding: 8px 16px 16px 16px;
+          border: 1px solid #e2e0df;
+          border-radius: 8px;
+          height: 192px;
+          width: 280px;
+          float: left;
+          margin: 0px 12px 16px;
+          .group-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #616161;
+            input {
+              width: 66px;
+              border: 1px solid #bdbdbd;
+              border-radius: 4px;
+              padding: 7px 8px;
+              color: #37352f;
+              &:focus-visible {
+                outline: unset;
+              }
+            }
+            .not-editing {
+              margin-left: 9px;
+              margin-top: 8px;
+              margin-bottom: 8px;
+            }
+          }
+          .count {
+            font-size: 14px;
+            font-weight: 600;
+            color: #37352f;
+          }
+          .close {
+            width: 11px;
+            cursor: pointer;
+          }
+          .bg-area {
+            background: #eff1f2;
+            border-radius: 4px;
+            height: 152px;
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 400;
+            text-align: center;
+            font-style: italic;
+            padding: 10px;
+            .users {
+              overflow-y: auto;
+              width: 100%;
+              height: 100%;
+            }
+          }
+          .gtitle {
+            width: 99px;
+          }
+        }
+        .add-group {
+          align-items: center;
+          height: 192px;
+          width: 280px;
+          border: 2px dotted #e2e0df;
+          border-radius: 8px;
+          font-size: 20px;
+          font-weight: 700;
+          color: #616161;
+          cursor: pointer;
+          float: left;
+          margin: 0px 12px 16px;
+        }
+      }
+      .end-buttons {
+        margin-top: 25px;
+        .white-button {
+          border: 1px solid $primary-color;
+          color: $primary-color;
+          padding: 11px 16px;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+        }
+        .blue-button {
+          background: $primary-color;
+          color: white;
+          padding: 11px 16px;
+          border-radius: 4px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+// style for user pill on grouping dialog
+.grouping-pill-user {
+  font-size: 12px;
+  font-weight: 400;
+  color: #616161;
+  padding: 9px 16px;
+  background: #fff;
+  border-radius: 100px;
+  font-style: normal;
+}
+
+@media (max-width: 1280px) {
+  .grouping-tool-dialog .mat-dialog-container .white-area .groups {
+    width: 330px;
+  }
+}
+
+ng-dropdown-panel.groups-controls {
+  width: auto !important;
+  box-shadow: 0px 3px 5px #bdbdbd;
+  border-radius: 8px !important;
+  padding: 8px 0px;
+  background: #fff !important;
+  .ng-option {
+    padding: 12px !important;
+    &.ng-option-selected,
+    &.ng-option-marked {
+      background: #f3f4f7 !important;
+    }
+  }
+  .title {
+    color: #37352f;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .description {
+    color: #818181;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+.participant-grouping-dialog {
+  .mat-dialog-container {
+    border-radius: 8px;
+    padding: 24px 40px 40px 40px;
+    .title {
+      .header {
+        font-weight: 700;
+        font-size: 32px;
+        color: #37352f;
+        margin-bottom: 8px;
+      }
+    }
+    .close {
+      margin-top: -40px;
+      cursor: pointer;
+    }
+    .groups {
+      margin-top: 16px;
+      height: 460px;
+      overflow-y: scroll;
+      .group-container {
+        &.selected {
+          border-radius: 9px;
+          margin-bottom: 16px;
+          .group {
+            margin: 0px;
+            border: 2px solid $primary-color;
+            background: rgba(255, 255, 255, 0.92);
+            display: flex;
+            flex-flow: column;
+          }
+        }
+        .group {
+          margin-bottom: 16px;
+          width: 352px;
+          height: 222px;
+          border: 1px solid #e2e0df;
+          border-radius: 8px;
+          background: #fff;
+          position: relative;
+          display: flex;
+          flex-flow: column;
+          .title-area {
+            flex: 0 1 auto;
+            padding: 16px 16px 0px 16px;
+          }
+          .title {
+            font-weight: 700;
+            color: #000;
+            font-size: 18px;
+            margin: 8px 0px 12px 4px;
+          }
+          .description {
+            font-size: 14px;
+            font-weight: 400;
+            color: #616161;
+            margin: 0px 0px 16px 4px;
+          }
+          .counts {
+            color: #bdbdbd;
+            font-weight: 400;
+            font-size: 14px;
+            margin: 0px 0px 4px 4px;
+          }
+          .users {
+            margin-left: 4px;
+            display: flex;
+            flex-flow: column;
+            flex: 1 1 auto;
+            overflow-y: auto;
+            padding-left: 16px;
+            margin-right: 16px;
+            .circle {
+              width: 32px;
+              height: 32px;
+              font-size: 12px;
+              font-weight: 500;
+              color: #fff;
+              padding: 4px;
+              border-radius: 50%;
+              margin-bottom: 8px;
+              &.purple {
+                background: #b0aef6;
+              }
+              &.blue {
+                background: #aec2f6;
+              }
+              &.pink {
+                background: #f6aee2;
+              }
+              &.orange {
+                background: #f6aeae;
+              }
+            }
+          }
+          .empty {
+            padding: 19px;
+            background: #eff1f2;
+            border-radius: 8px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 400;
+            font-style: italic;
+            margin-top: 4px;
+          }
+          .button {
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            color: #fff;
+            margin: 16px;
+            flex: 0 1 19px;
+            &.grey {
+              color: #37352f;
+              background: #e7e7e7;
+            }
+            &.light-grey {
+              color: #37352f;
+              background: #f3f4f7;
+            }
+          }
+        }
+      }
+    }
+    .bg-area {
+      height: 116px;
+      background: #f7f8f9;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 400;
+      color: #616161;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.grouping-participant-info-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+  }
+  .wrappr {
+    padding: 40px;
+    width: 579px;
+    .message {
+      color: #616161;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .blue-button {
+      background: $primary-color;
+      color: #fff;
+      padding: 13px 102px;
+      border-radius: 8px;
+      font-size: 24px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,12 +1,20 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from 'src/app/shared';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
 import { cloneDeep } from 'lodash';
 import { forkJoin, Observable, Subscription } from 'rxjs';
+import { of } from 'rxjs/observable/of';
+import { timer } from 'rxjs/observable/timer';
+import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { take } from 'rxjs/operators';
+import { ActivityTypes } from 'src/app/globals';
 import { OverviewLessonActivity } from 'src/app/services/backend/schema';
+import { ConfirmationDialogComponent } from 'src/app/shared';
+import { ImportSlidesDialogComponent } from 'src/app/shared/dialogs/import-slides-dialog/import-slides.dialog';
+import { EditorService } from '../services/editor.service';
 import * as fromStore from '../store';
 
 @Component({
@@ -14,9 +22,13 @@ import * as fromStore from '../store';
   templateUrl: './overview-panel.component.html',
 })
 export class OverviewPanelComponent implements OnInit, OnDestroy {
+  color: ThemePalette = 'primary';
+  mode: ProgressSpinnerMode = 'determinate';
+  value = 50;
   lessonActivities$: Observable<OverviewLessonActivity[]>;
   lessonActivitiesSubscription$: Subscription;
   lessonActivitiesLength;
+  @Input() lessonId;
 
   lessonActivitiesErrors$: Observable<any>;
   lessonActivitiesErrors;
@@ -26,7 +38,14 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
   slideToBeCopied: OverviewLessonActivity;
   dialogRef;
 
-  constructor(private store: Store<fromStore.EditorState>, private matDialog: MatDialog) {}
+  importingSlides = false;
+  at: typeof ActivityTypes = ActivityTypes;
+  constructor(
+    private store: Store<fromStore.EditorState>,
+    private matDialog: MatDialog,
+    private editorService: EditorService,
+    private importDialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.lessonActivities$ = this.store.select(fromStore.getAllLessonActivities);
@@ -85,7 +104,6 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .subscribe((res) => {
-        console.log(res);
         if (res) {
           if (this.lessonActivitiesLength > 1) {
             this.store.dispatch(new fromStore.RemoveLessonActivity(activityId));
@@ -108,5 +126,49 @@ export class OverviewPanelComponent implements OnInit, OnDestroy {
     this.slideToBeCopied = activity;
     // this.store.dispatch(new fromStore.AddEmptyLessonActivity());
     this.store.dispatch(new fromStore.AddEmptyLessonActivityAtIndex(activity.order));
+  }
+
+  openImportDialog() {
+    const dialogRef = this.importDialog.open(ImportSlidesDialogComponent, {
+      width: '440px',
+      panelClass: 'import-slides-dialog',
+      data: {
+        lessonID: this.lessonId,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.importingSlides = true;
+        const req = timer(0, 1000).subscribe(() => {
+          this.editorService.getLessonActivities(this.lessonId).subscribe((res: any) => {
+            // Compare length of system created titleactivities in editor_lesson_plan with
+            // lesson_plan_json. if there are more system activities in lesson_plan_json that means
+            // latest upload has been processed
+            if (!res.editor_lesson_plan) {
+              return;
+            }
+            const editorLessonPlan = res.editor_lesson_plan;
+            const editorLessonPlantitleActs = editorLessonPlan.filter(
+              (val) => val.activity_type === this.at.title && val.created_by === 'system'
+            );
+
+            if (!res.lesson_plan_json) {
+              return;
+            }
+            const lessonPlanJson = res.lesson_plan_json;
+            const lessonPlanJsontitleActs = lessonPlanJson.filter(
+              (val) => val.activity_type === this.at.title && val.created_by === 'system'
+            );
+
+            if (lessonPlanJsontitleActs.length > editorLessonPlantitleActs.length) {
+              this.importingSlides = false;
+              req.unsubscribe();
+              this.store.dispatch(new fromStore.LoadLessonActivites(this.lessonId));
+            }
+          });
+        });
+      }
+    });
   }
 }

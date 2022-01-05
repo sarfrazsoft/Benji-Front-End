@@ -1,4 +1,4 @@
-<div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
+<!-- <div class="single-column-activity" fxLayout="column" fxLayoutGap="2.5vh">
   <div class="twemoji-container">
     <img style="width: 100%;" src="/assets/img/activityThumbnails/convocards.svg" alt="">
   </div>
@@ -31,4 +31,128 @@
       <div class="text">Shuffle Cards</div>
     </div>
   </div>
+</div> -->
+
+
+<!-- <div class="cards-wrapper">
+  <div class="title-area" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px"> 
+    <div class="emoji">
+      <img draggable="false" class="emoji" alt="🎉" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f389.svg" />
+    </div>
+    <div class="title">Icebreakers</div>
+  </div>
+  <div class="card-body">
+    <div class="description">
+      When you’re name is called, be ready to share your thoughts.
+    </div>
+    <div class="settings" fxLayout="column" fxLayoutGap="10px">
+      <div class="settings-title">Discussion Settings</div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+        <div class="header">Fixed time per person</div>
+        <label class="switch">
+          <input type="checkbox" 
+            [(ngModel)]="allowParticipantsJoiningMidActivity"
+            [ngModelOptions]="{standalone: true}"
+            (change)="toggleChooseGroupMidActivity($event)">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="header">Time to share</div>   
+        <ng-select
+          class="time-to-share"
+          [items]="times"
+          bindLabel="title"
+          placeholder="45s"
+          [clearable]="false"
+          bindValue="id"
+          (change)="changeGroup($event)"
+          [(ngModel)]="myGroupId"
+          appendTo="body"
+          [searchable]="false"
+        >
+        </ng-select>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="16px">
+        <div class="header">Cards can be skipped</div>
+        <label class="switch">
+          <input type="checkbox" 
+            [(ngModel)]="allowParticipantsJoiningMidActivity"
+            [ngModelOptions]="{standalone: true}"
+            (change)="toggleChooseGroupMidActivity($event)">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+    <button class="start">Start Discussion</button>
+  </div>
+</div> -->
+
+<div class="cards-wrapper more-margin">
+  <div class="title-area" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px"> 
+    <div class="emoji">
+      <img draggable="false" class="emoji" alt="🎉" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f389.svg" />
+    </div>
+    <div class="title">Icebreakers</div>
+  </div>
+  <div class="card-body">
+    <div class="description question">
+      <div class="text">If you could have any super human power, what would it be?</div>
+      <button class="skip-card">Skip card</button>
+    </div>
+    <div class="take-turn" fxLayout="column">
+      <div class="turn-text">
+        <span>Take your turn.</span>
+        <span>Click “Next” when you’re done.</span>
+      </div>
+      <div class="users" fxLayout="column" fxLayoutGap="9px">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+            <div class="initials" fxLayout="row" fxLayoutAlign="center center">MK</div>
+            <div class="name">Mahin Khan</div>
+          </div>
+          <button class="next">Next</button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+            <div class="initials" fxLayout="row" fxLayoutAlign="center center">MP</div>
+            <div class="name">Matt Parson</div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+            <div class="initials" fxLayout="row" fxLayoutAlign="center center">SJ</div>
+            <div class="name">Sarah Jane</div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="12px">
+            <div class="initials" fxLayout="row" fxLayoutAlign="center center">AD</div>
+            <div class="name">Anthony Davis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+      <button class="buttons restart">Restart</button>
+      <button class="buttons end-round">End Round</button>
+    </div>
+  </div>
 </div>
+
+<!-- <div class="centered-wrapper" fxLayout="column" fxLayoutAlign="center center" >
+  <div class="cards-wrapper centered">
+    <div class="title-area" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px"> 
+      <div class="emoji">
+        <img draggable="false" class="emoji" alt="🎉" src="https://twemoji.maxcdn.com/v/13.1.0/svg/1f389.svg" />
+      </div>
+      <div class="title">Icebreakers</div>
+    </div>
+    <div class="card-body">
+      <div class="description another-round">
+        <div class="text">If you could have any super human power, what would it be?</div>
+        <button class="play-again">Play again</button>
+      </div>
+    </div>
+  </div>
+</div> -->

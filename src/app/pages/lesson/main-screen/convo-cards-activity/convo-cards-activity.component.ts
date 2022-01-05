@@ -15,9 +15,13 @@ export class MainScreenConvoCardsActivityComponent
   mainTitle = 'Conversation Cards';
   titleText = 'Instructions to be provided by the instructor';
   showShuffleButton = false;
+
+  stage: 'setup_stage' | 'sharing_stage' = 'setup_stage';
   constructor(private activitySettingsService: ActivitySettingsService, private utilsService: UtilsService) {
     super();
   }
+
+  times = ['30 seconds', '45 seconds', '1 minute', '2 minutes', '3 minutes', '4 minutes', '5 minutes'];
 
   ngOnInit(): void {
     this.mainTitle = this.activityState.convoactivity.main_title;

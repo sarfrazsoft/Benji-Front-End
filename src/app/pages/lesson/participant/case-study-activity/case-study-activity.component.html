@@ -1,30 +1,12 @@
-<!-- <ngx-editor-menu
-  [editor]="editor"
-  [toolbar]="toolbar"
-  [customMenuRef]="customMenu"
-></ngx-editor-menu>
-<ngx-editor [editor]="editor">
-</ngx-editor>
-<ng-template #customMenu>
-  <app-custom-menu [editor]="editor"></app-custom-menu>
-</ng-template> -->
-
-
-
-
-
-
-
-<div class="b-flat-card center-text feedback-card heightAuto">
+<div class="b-flat-card center-text feedback-card">
   <div class="activity-wrapper">
     <div class="b-flat-card__body">
-      <benji-case-study-grouping-container
-        *ngIf="!actEditor"
+      <benji-participant-grouping-container
+        *ngIf="!actEditor && !showingToFacilitator"
         [activityState]="activityState"
         (sendMessage)="propagate($event)"
-        [participantCode]="participantCode"
-      >
-      </benji-case-study-grouping-container>
+        [participantCode]="participantCode">
+      </benji-participant-grouping-container>
       
       <div class="content" fxLayout="column">
         <div class="twemoji-container participant-new-emoji" *ngIf="isEmoji(activityState.casestudyactivity.title_emoji)">
@@ -45,16 +27,6 @@
             [timerOffset]="avgServerTimeOffset"
           ></benji-participant-timer>
         </div>
-        <!-- <div class="your-prompt">
-          <div *ngIf="act.case_study_details" class="your-pitch-label left-text">
-            Details:
-          </div>
-          <div
-            class="case-details bg-off-white"
-            *ngIf="act.case_study_details"
-            innerHTML="{{ act.case_study_details }}"
-          ></div>
-        </div> -->
         <div *ngFor="let question of questions" style="text-align: left;">
           <div class="question-container">
             <div
@@ -77,6 +49,8 @@
                     [documentId]="documentId"
                     [allowVideo]="false"
                     [editorDisabled]="editorDisabled"
+                    [showingToFacilitator]="showingToFacilitator"
+                    [facilitatorSelectedGroup]="facilitatorSelectedGroup"
                     (questionAnswerUpdated)="questionAnswerUpdated($event)"
                     (sendMessage)="propagate($event)"
                   ></benji-case-study-workarea>
@@ -85,16 +59,14 @@
             </div>
           </div>
         </div>
-        <!-- <div class="button-container" fxLayoutAlign="end end">
+        <div class="button-container" fxLayoutAlign="end end">
           <button  
-            class="b-small-squared-button worksheet-button bg-primary-color white-color"
+            class="b-small-squared-button bg-primary-color white-color"
             (click)="saveEditCollab()">
             Done
           </button>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-

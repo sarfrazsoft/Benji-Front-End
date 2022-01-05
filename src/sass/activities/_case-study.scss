@@ -121,19 +121,74 @@ benji-ps-case-study-activity {
       }
     }
   }
-}
 
-@media (max-width: 768px) {
-  benji-ps-case-study-activity {
-    .b-flat-card {
+  .activity-wrapper {
+    max-width: 1186px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin: 0px auto;
+  }
+
+  @media (min-width: 768px) {
+    .activity-wrapper {
+      .b-flat-card__body {
+        max-width: unset;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .activity-wrapper {
+      padding: 0px;
+    }
+    .activity-wrapper {
+      .b-flat-card__body {
+        max-width: unset;
+      }
+    }
+  }
+
+  benji-text-editor {
+    div.NgxEditor {
+      border: 0px;
+      border-radius: 8px;
+      background: #F6F7F9;
+      color: #5E6678;
+      padding: 0px 24px 24px;
+      .NgxEditor__Content {
+        padding: 0px;
+      }
+    }
+    ngx-editor-menu .NgxEditor__MenuBar {
+      row-gap: 24px;
+      background: #F6F7F9;
+      color: #5E6678;
+      border: 0px;
+      padding: 16px 24px;
+    }
+  }
+
+  .NgxEditor__MenuItem {
+    margin: 0px 12px;
+    cursor: pointer;
+    .image-upload-button label {
+      cursor: pointer;
+    }
+  }
+
+  .NgxEditor__Dropdown {
+    margin-right: 16px;
+    .NgxEditor__Dropdown--Text {
       padding: 0px;
     }
   }
+
 }
 
 .worksheet-title {
   color: $black;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 700;
   text-align: left;
   margin-bottom: 16px;
@@ -182,4 +237,92 @@ benji-ps-case-study-activity {
   height: 40px;
   font-size: 20px;
   line-height: 20px;
+}
+
+.case-study-main {
+  margin-top: 24px !important;
+  max-width: 1044px;
+  border-radius: 16px;
+  margin: 0px auto;
+  background: #fff;
+  height: 100%;
+  .title-bar {
+    padding: 24px 32px;
+    border-bottom: 1px solid #E7E7E7;
+    .emoji {
+      width: 40px;
+      height: 40px;
+    }
+    .title {
+      color: #37352F;
+      font-weight: bold;
+      font-size: 32px;
+    }
+    .inbox {
+      padding: 10px 12px  10px  16px;
+      background: #F3F4F7;
+      margin-right: 25px;
+      border-radius: 8px;
+    }
+    .count {
+      color: #37352F;
+      font-weight: 500;
+      font-size: 24px;
+    }
+    .sub-title {
+      color: #828282;
+      font-weight: 500;
+      font-size: 12px;
+    }
+    .border-left {
+      border-left: 1px solid #BDBDBD;
+      margin: 0px 16px;
+      height: 40px;
+    }
+  }
+  benji-ps-case-study-activity {
+    .activity-wrapper {
+      border-radius: 0px;
+    }
+  } .b-flat-card {
+    padding: 0px;
+    box-shadow: unset;
+    min-height: unset;
+  }
+  .feedback-card, .groups-list {
+    overflow-y: auto;
+  }
+  .activity-wrapper {
+    height: calc(100vh - 250px);
+    overflow: auto;
+  }
+  .groups-list {
+    width: 244px;
+    border-right: 1px solid #E7E7E7;
+    height: calc(100vh - 200px);
+    .groups-type {
+      margin: 20px 32px 8px 32px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #616161;
+    }
+    .group-container {
+      cursor: pointer;
+      height: 56px;
+      border-bottom: 1px solid #E7E7E7;
+      .group-name {
+        //margin-left: 32px;
+      }
+      .initials {
+        color: #fff;
+        font-size: 12px;
+        font-weight: 500;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        line-height: 0px;
+        margin-left: 32px;
+      }
+    }
+  }
 }

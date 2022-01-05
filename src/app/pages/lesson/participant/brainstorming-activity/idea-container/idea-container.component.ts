@@ -27,7 +27,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   maxSubmissions = 1;
 
   showCategoriesDropdown = false;
-  // categories = [];
   selectedCategory: Category;
 
   imagesList: FileList;
@@ -35,7 +34,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
   imageDialogRef;
   selectedImageUrl;
   constructor(
-    private dialog: MatDialog,
+    private matDialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService
   ) {}
@@ -73,7 +72,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     if (this.userIdeaText.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id));
+    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, '', this.selectedCategory.id, null));
     this.idea.editing = false;
   }
 
@@ -87,7 +86,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
       name = this.imagesList[0].name;
     }
     return name;
-    // return this.selectedImageUrl;
   }
 
   submitImageNIdea() {
@@ -117,9 +115,9 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
               if (!this.userIdeaText) {
                 this.userIdeaText = '';
               }
-              this.sendMessage.emit(
-                new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
-              );
+              // this.sendMessage.emit(
+              //   new BrainstormSubmitEvent(this.userIdeaText, this.selectedCategory.id, res.id)
+              // );
               // this.userIdeaText = '';
             })
             .subscribe(
@@ -133,7 +131,12 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     } else {
       if (this.selectedImageUrl) {
         this.sendMessage.emit(
-          new BrainstormImageSubmitEvent(this.userIdeaText, this.selectedCategory.id, this.selectedImageUrl)
+          new BrainstormImageSubmitEvent(
+            this.userIdeaText,
+            '',
+            this.selectedCategory.id,
+            this.selectedImageUrl
+          )
         );
       }
     }
@@ -141,7 +144,7 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
 
   openImagePickerDialog() {
     const code = this.activityState.lesson_run.lessonrun_code;
-    this.imageDialogRef = this.dialog
+    this.imageDialogRef = this.matDialog
       .open(ImagePickerDialogComponent, {
         data: {
           lessonRunCode: code,

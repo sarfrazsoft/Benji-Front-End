@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivityTypes } from 'src/app/globals';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
@@ -19,16 +21,19 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
     event.returnValue = false;
   }
   constructor(
+    protected deviceDetectorService: DeviceDetectorService,
     protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
     protected ref: ChangeDetectorRef,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected contextService: ContextService,
     protected matSnackBar: MatSnackBar
   ) {
     super(
+      deviceDetectorService,
       utilsService,
       restService,
       route,
@@ -36,6 +41,7 @@ export class ParticipantLessonComponent extends BaseLessonComponent {
       'participant',
       contextService,
       authService,
+      permissionsService,
       ref,
       matSnackBar
     );

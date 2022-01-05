@@ -42,6 +42,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
@@ -96,16 +97,25 @@ const SHARED_MODULES = [
   NgSelectModule,
   MatButtonToggleModule,
   FormlyModule,
+  NgxPermissionsModule,
 ];
+
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   imports: [
     NgxEditorModule,
     CommonModule,
     RouterModule,
+    NgxExtendedPdfViewerModule,
+    PdfJsViewerModule,
     ...SHARED_MODULES,
+    NgxPermissionsModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
+    PdfViewerModule,
   ],
   declarations: Components,
   entryComponents: [...EntryComponents],

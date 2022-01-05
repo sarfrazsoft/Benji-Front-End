@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
@@ -12,7 +14,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   roomCode: number;
   lessonRun: LessonRun;
   user: User;
-  clientType: string;
+  clientType: 'screen' | 'participant';
   disableControls: boolean;
   participantDetails: Participant;
 
@@ -24,13 +26,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   timer;
 
   constructor(
+    protected deviceDetectorService: DeviceDetectorService,
     protected utilsService: UtilsService,
     protected restService: BackendRestService,
     protected route: ActivatedRoute,
     protected socketService: BackendSocketService,
-    clientType: string,
+    clientType: 'screen' | 'participant',
     protected contextService: ContextService,
     protected authService: AuthService,
+    protected permissionsService: NgxPermissionsService,
     protected ref?: ChangeDetectorRef,
     protected _snackBar?: MatSnackBar
   ) {
@@ -42,6 +46,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('participant')) {
+      this.permissionsService.loadPermissions(['PARTICIPANT']);
+      this.clientType = 'participant';
+    } else if (localStorage.getItem('benji_facilitator')) {
+      this.permissionsService.loadPermissions(['ADMIN']);
+    }
     this.initSocket();
 
     document.addEventListener('visibilitychange', () => {
@@ -50,15 +60,17 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         // don't reset connection participant is
         // about to pick up brainstorm image
       } else {
-        if (document.hidden) {
-          // stop running expensive task
-          this.socket = undefined;
-        } else {
-          // page has focus, begin running task
-          if (!this.isConnected()) {
-            setTimeout(() => {
-              this.initSocket();
-            }, 500);
+        if (this.deviceDetectorService.isMobile()) {
+          if (document.hidden) {
+            // stop running expensive task
+            this.socket = undefined;
+          } else {
+            // page has focus, begin running task
+            if (!this.isConnected()) {
+              setTimeout(() => {
+                this.initSocket();
+              }, 500);
+            }
           }
         }
       }
@@ -99,7 +111,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         } else {
           // create a single user and store it in local storage so that we don't
           // sign in again and again
-          this.restService
+          this.authService
             .createParticipant(lessonRun.host.first_name, lessonRun.lessonrun_code)
             .subscribe((participant: Participant) => {
               if (participant) {
@@ -157,8 +169,9 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       }
       this.facilitatorConnected = true;
       this.serverMessage = msg.updatemessage;
+      this.serverMessage.eventType = msg.eventtype;
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
-      console.log(msg);
+      // console.log(msg);
       const obj = msg.clienterror.error_detail;
       if (typeof obj === 'string') {
       } else {
@@ -231,6 +244,20 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  getIsGroupingAppliedToActivity() {
+    const sm = this.serverMessage;
+    if (
+      sm &&
+      sm.running_tools &&
+      sm.running_tools.grouping_tool &&
+      sm.running_tools.grouping_tool.selectedGrouping
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getIsGroupingShowing() {
     const sm = this.serverMessage;
     if (
@@ -254,5 +281,17 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
 
   public sendSocketMessage(evt: ActivityEvent) {
     this.socket.next(evt.toMessage());
+  }
+
+  getEventType() {
+    // console.log(this.serverMessage);
+  }
+
+  public getParticipantCode(): number {
+    let details: Participant;
+    if (localStorage.getItem('participant')) {
+      details = JSON.parse(localStorage.getItem('participant'));
+      return details.participant_code;
+    }
   }
 }

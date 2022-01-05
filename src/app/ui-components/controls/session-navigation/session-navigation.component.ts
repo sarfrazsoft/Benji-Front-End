@@ -20,6 +20,7 @@ export class SessionNavigationComponent implements OnInit {
   votingStarted = true;
   activities = [];
   @Output() navigate = new EventEmitter<any>();
+  @Output() setActivityIndex = new EventEmitter<any>();
 
   constructor(private backendRestService: BackendRestService) {}
 
@@ -39,7 +40,9 @@ export class SessionNavigationComponent implements OnInit {
               this.activities.push(activity);
             }
           });
+
           this.activities = this.activities.sort((a, b) => a.id - b.id);
+          this.setActivityIndex.emit(this.activities);
         });
     }
   }

@@ -13,7 +13,7 @@ import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-
 })
 export class LayoutImagePickerTypeComponent extends FieldType implements OnInit, OnChanges {
   imagesList: FileList;
-  imageSrc;
+  imageSrc = null;
   imageDialogRef;
   selectedImageUrl;
   imgSrc;
@@ -32,15 +32,32 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
-    this.imgSrc = '/assets/img/slideImageUploadIcon.svg';
-    this.imgUploaded = false;
+    if (this.form.value) {
+      if (this.form.value.title_image_id) {
+        this.imgId = this.form.value.title_image_id;
+      }
+    }
+    if (this.formControl.value) {
+      this.imgUploaded = true;
+      const imgUrl = this.formControl.value;
+      if (imgUrl.search('mybenji') !== -1) {
+        this.imageSrc = imgUrl;
+        this.selectedImageUrl = null;
+      } else {
+        this.selectedImageUrl = imgUrl;
+        this.imgSrc = null;
+      }
+    } else {
+      this.imgSrc = '/assets/img/slideImageUploadIcon.svg';
+      this.imgUploaded = false;
+    }
     this.activatedRoute.paramMap.subscribe((paramMap) => {
       this.lessonId = paramMap.get('lessonId');
     });
   }
 
   removeImage() {
-    if(this.imageSrc !== null) {
+    if (this.imageSrc !== null) {
       const url = global.apiRoot + '/course_details/lesson/' + this.lessonId + '/delete/png/image/';
       const headers = new HttpHeaders();
       headers.set('Content-Type', 'application/json');
@@ -56,12 +73,11 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
           (data) => {},
           (error) => console.log(error)
         );
-    } else if(this.selectedImageUrl !== null) {
+    } else if (this.selectedImageUrl !== null) {
       this.selectedImageUrl = null;
       this.imgUploaded = false;
       this.formControl.setValue(null);
     }
-    
   }
 
   openImagePickerDialog() {
@@ -96,15 +112,16 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
                   const params = new HttpParams();
                   this.httpClient
                     .post(url, formData, { params, headers })
-                    .map((res: any) => {
-                      this.imgId = res.id;
+                    .map((uploadResponse: any) => {
+                      this.imgId = uploadResponse.id;
                       this.imagesList = null;
-                      this.formControl.setValue(res.img);
+                      this.form.controls['title_image_id'].setValue(uploadResponse.id);
+                      this.formControl.setValue(uploadResponse.img);
                     })
                     .subscribe(
                       (data) => {
                         this.imgUploaded = true;
-                        this.selectedImageUrl = null;
+                        // this.selectedImageUrl = null;
                       },
                       (error) => console.log(error)
                     );
@@ -117,7 +134,6 @@ export class LayoutImagePickerTypeComponent extends FieldType implements OnInit,
               reader.readAsDataURL(file);
             }
           } else if (res.type === 'unsplash') {
-            console.log(res);
             this.selectedImageUrl = res.data;
             this.formControl.setValue(res.data);
             this.imgUploaded = true;

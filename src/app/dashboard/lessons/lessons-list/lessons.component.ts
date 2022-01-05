@@ -5,7 +5,6 @@ import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
 
 import { orderBy, sortBy } from 'lodash';
-import * as moment from 'moment';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
@@ -14,6 +13,7 @@ import { Subject } from 'rxjs/Subject';
 })
 export class LessonsComponent implements OnInit {
   @Input() lessons: Array<Lesson> = [];
+  @Input() lessonRuns: Array<Lesson> = [];
   @Input() isTemplates = false;
 
   eventsSubject: Subject<void> = new Subject<void>();
@@ -39,9 +39,6 @@ export class LessonsComponent implements OnInit {
   }
 
   openDetails(lesson: Lesson) {
-    // this.router.navigate(['lesson', lesson.id], {
-    //   relativeTo: this.activatedRoute,
-    // });
     this.adminService.getLessonDetails(lesson.id).subscribe((res: Lesson) => {
       if (res.lesson_details) {
         this.contextService.lesson = res;

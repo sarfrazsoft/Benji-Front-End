@@ -36,7 +36,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       );
       localStorage.setItem('token', res.token);
       this.contextService.user = res.user;
-      localStorage.setItem('benji_user', JSON.stringify(res.user));
+      localStorage.setItem('benji_facilitator', JSON.stringify(res.user));
 
       return true;
     } else if (this.authService.isLoggedIn()) {

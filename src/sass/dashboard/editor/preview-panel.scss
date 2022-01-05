@@ -112,6 +112,7 @@ benji-preview-panel {
               color: #6c6c6c;
             }
           }
+          
         }
 
         // radial timer text size on preview panel
@@ -281,6 +282,12 @@ benji-preview-panel {
           .activity-description {
             font-size: 1.88vw;
           }
+        }
+      }
+
+      .google-slides {
+        iframe {
+          min-height: 318px;
         }
       }
 

@@ -2,6 +2,7 @@
 import { MainScreenBuildPitchActivityComponent } from './build-pitch-activity/build-pitch-activity.component';
 import { MainScreenCaseStudyActivityComponent } from './case-study-activity/case-study-activity.component';
 import { CaseStudyGroupComponent } from './case-study-activity/case-study-group/case-study-group.component';
+import { CaseStudyFacilitatorViewComponent } from './case-study-activity/facilitatorView/facilitator-view.component';
 import { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/convo-cards-activity.component';
 import { MainScreenDiscussionActivityComponent } from './discussion-activity/discussion-activity.component';
 import { MainScreenEitherOrActivityComponent } from './either-or-activity/either-or-activity.component';
@@ -10,6 +11,7 @@ import { MainScreenExternalGroupingActivityComponent } from './external-grouping
 import { MainScreenGatherActivityComponent } from './gather-activity/gather-activity.component';
 import { MainScreenGeneratePitchActivityComponent } from './generate-pitch-activity/generate-pitch-activity.component';
 import { MainScreenGenericRoleplayActivityComponent } from './generic-roleplay-activity/generic-roleplay-activity.component';
+import { MainScreenGoogleSlidesActivityComponent } from './google-slides-activity/google-slides.component';
 import { MainScreenHintActivityComponent } from './hint-activity/hint-activity.component';
 import { MainScreenImageActivityComponent } from './image-activity/image-activity.component';
 import { MainScreenLobbyComponent } from './lobby-activity/lobby.component';
@@ -34,13 +36,14 @@ export { MainScreenConvoCardsActivityComponent } from './convo-cards-activity/co
 export { MainScreenPopQuizComponent } from './pop-quiz/pop-quiz.component';
 export { MainScreenPollComponent } from './poll-activity/poll-activity.component';
 export { MainScreenFeedbackActivityComponent } from './feedback-activity/feedback-activity.component';
-export { MainScreenLessonComponent };
+export { MainScreenLessonComponent, CaseStudyFacilitatorViewComponent };
 
 export const MainScreenComponents = [
   // MainScreenBuildPitchActivityComponent,
   // ...ParticipantBrainStormComponents,
   ...SharedMainScreenComponents,
   MainScreenCaseStudyActivityComponent,
+  CaseStudyFacilitatorViewComponent,
   CaseStudyGroupComponent,
   MainScreenDiscussionActivityComponent,
   MainScreenEitherOrActivityComponent,
@@ -61,6 +64,7 @@ export const MainScreenComponents = [
   MainScreenGenericRoleplayActivityComponent,
   MainScreenExternalGroupingActivityComponent,
   MainScreenVideoActivityComponent,
+  MainScreenGoogleSlidesActivityComponent,
   MainScreenGatherActivityComponent,
   MainScreenImageActivityComponent,
 ];

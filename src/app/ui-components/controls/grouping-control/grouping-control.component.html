@@ -1,50 +1,61 @@
-<div class="menu-heading">
-  Grouping
-</div>
-<div class="activity-settings" fxLayout="column" fxLayoutGap="16px">
-  <div class="setting controls-form small-width" benji-click-stop-propagation fxLayout="column">
-    <mat-radio-group [(ngModel)]="groupingType">
-      <div fxLayout="column" fxLayoutGap="16px">
-        <div>
-          <mat-radio-button  [value]="'new'">
-            Create New Grouping
-          </mat-radio-button>
-          <div *ngIf="groupingType === 'new'">
-            <div style="margin-top: 8px;">
-              <input
-              placeholder="Group name"
-              class="form-control dash-input" 
-              type="text" 
-              [(ngModel)]="newGroupingTitle" >
-            </div>
+<div>
+  <div class="title"> Collaborate </div>
+
+  <div class="bg-area" fxLayout="row" fxLayoutAlign="center center" >
+    Make boards, docs, and cards collaborative with groups.
+  </div>
+
+  <div class="activities">
+    <ng-container *ngFor="let grouping of existingGroupings">
+      <div class="activity" 
+        [ngClass]="{ 
+          selected: currentlyAppliedGrouping === grouping.id,
+          'selected-primary-border-only': currentlyAppliedGrouping === grouping.id
+        }">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="title">
+            {{ grouping.title }}
+          </div>
+          <img 
+            class="edit" 
+            src="/assets/img/grouping/three-dots.svg" 
+            [matMenuTriggerFor]="menu"
+            benji-click-stop-propagation
+            disableRipple>
+          </div>
+          <mat-menu class="edit-delete" #menu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="deleteGroup(grouping)">
+              <span>Delete</span>
+            </button>
+            <button mat-menu-item (click)="editGrouping(grouping)">
+              <span>Edit</span>
+            </button>
+          </mat-menu>
+        <div class="counts" fxLayout="row" fxLayoutAlign="space-between center">
+          <div >
+            {{ grouping.groups.length }} Groups
+          </div>
+          <div>
+            {{ grouping.allowParticipantsJoining ? 'Self Assigned' : 'Host Assigned' }}
           </div>
         </div>
-        <mat-radio-button  [value]="'existing'">
-          Use Existing Grouping
-        </mat-radio-button>
-        <div *ngIf="groupingType === 'existing'">
-          <ng-select
-            class="external-grouping-controls"
-            [items]="existingGroupings"
-            bindLabel="title"
-            placeholder="Unassigned"
-            [clearable]="false"
-            bindValue="id"
-            (change)="selectGrouping($event)"
-            [(ngModel)]="selectedGrouping"
-            appendTo="body"
-            [searchable]="false"
-          >
-          </ng-select>
-        </div>
+        <ng-container>
+          <div class="start" 
+            *ngIf="currentlyAppliedGrouping !== grouping.id"
+            (click)="startGrouping(grouping)">
+            Start Grouping
+          </div>
+          <div class="start" 
+            *ngIf="currentlyAppliedGrouping === grouping.id"
+            (click)="editGrouping(grouping)">
+            Edit Live Grouping
+          </div>
+        </ng-container>
       </div>
-    </mat-radio-group>
+    </ng-container>
   </div>
-</div>
-<div class="reset-settings">
-  <button 
-    class="dashboard-secondary-button bg-primary-color white-color"
-    (click)="start($event)">
-    Start Grouping
-  </button>
+
+  <div class="blue-button" (click)="addNewGrouping()">
+    + New Grouping
+  </div>
 </div>

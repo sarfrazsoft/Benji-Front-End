@@ -1,0 +1,162 @@
+<ng-container *ngIf="item">
+  <div
+    *ngIf="!item.removed"
+    class="brainstorm-idea"
+    [class.show-user] = ""
+    cdkDrag
+    (mouseenter)="item.showClose = true"
+    (mouseleave)="item.showClose = false">
+    <mat-icon
+      benji-click-stop-propagation
+      class="delete-icon"
+      [style.opacity]="item.showClose ? 1 : 0"
+      (click)="delete(item.id)">
+      clear
+    </mat-icon>
+    <div *ngIf="showUserName" class="user-name">
+      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+        <div class="initials" fxLayout="column" fxLayoutAlign="center center">
+          {{ getInitials(getPersonName(item)) }}
+        </div>
+        <div class="name">
+          {{ getPersonName(item) }}
+        </div>
+      </div> 
+    </div>
+    <div
+      class="brainstorm-image"
+      *ngIf="item.idea_image">
+      <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
+        <img 
+          benji-click-stop-propagation 
+          (click)="openImage(item.idea_image.img)" 
+          [src]="item.idea_image.img" alt="" />
+      </ng-container>
+  
+      <ng-template #uploadedImage>
+        <img 
+          benji-click-stop-propagation
+          (click)="openImage(hostname + item.idea_image.img)" 
+          [src]="hostname + item.idea_image.img" alt="" />
+      </ng-template>
+    </div>
+  
+    <div *ngIf="item.idea_document">
+       <div  style="width: 260px;height: 200px;">
+        <!-- <ngx-extended-pdf-viewer [src]="hostname + item.idea_document.document" 
+          useBrowserLocale="true" 
+          [height]="'200px'">
+        </ngx-extended-pdf-viewer> -->
+        <pdf-viewer
+          (click)="showDetailedIdea(item)"
+          [src]="hostname + item.idea_document.document"
+          [rotation]="0"
+          [original-size]="false"
+          [show-all]="false"
+          [fit-to-page]="true"
+          [zoom]="1"
+          [zoom-scale]="'page-width'"
+          [stick-to-page]="true"
+          [render-text]="false"
+          [external-link-target]="'blank'"
+          [autoresize]="true"
+          [show-borders]="false"
+          ></pdf-viewer>
+      </div> 
+      <!-- <div class="" style="width: 260px;height: 240px;position: relative;" > -->
+        <!-- <ng2-pdfjs-viewer  [pdfSrc]="hostname + item.idea_document.document"></ng2-pdfjs-viewer> -->
+        <!-- <iframe [src]="hostname + item.idea_document.document | safe" width="100%" height="500px">
+        </iframe> -->
+        <!-- <iframe [src]="'/assets/1.pdf' | safe" width="100%" height="300px">
+          [src]="hostname + item.idea_document.document"
+        </iframe> -->
+        <!-- <div class="overlay"></div> -->
+        <!-- <embed 
+          width="100%" 
+          height="100%"
+          style="overflow: hidden"
+          name="plugin" 
+          [src]="'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf' | safe" 
+          type="application/pdf"> -->
+      <!-- </div> -->
+    </div>
+  
+    <div 
+      class="content" 
+      benji-click-stop-propagation 
+      (click)="showDetailedIdea(item)">
+      <div class="title">{{ item.title }}</div>
+      {{ item.idea }} 
+    </div>
+    <div class="feedback">
+      <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
+        <div>
+          <img
+            *ngIf="!hasParticipantHearted(item)"
+            (click)="setHeart(item.id)" 
+            class="heart" 
+            src="/assets/img/grey-heart.svg"> 
+          <img
+            *ngIf="hasParticipantHearted(item)"
+            (click)="removeHeart(item)" 
+            class="heart" 
+            src="/assets/img/red-heart.svg">
+          
+          <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
+        </div>
+        <div>
+          <img class="thought" src="/assets/img/grey-thought.svg"> 
+          <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
+        </div>
+      </div>
+      <ng-container *ngFor="let comment of item.comments; let i = index;">
+        <div class="user-feed" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start start">
+          <!-- <img class="dp" src="/assets/img/placeholder.png"> -->
+          <div 
+            class="initials {{ 'color' + ( i % 10 ) }}" 
+            fxLayout="column" 
+            fxLayoutAlign="center center"
+            >
+            <div>
+              {{ getInitials(getParticipantName(comment.participant)) }}
+            </div>
+          </div> 
+          <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
+            <div class="name">{{ getParticipantName(comment.participant) }}</div>
+            <div class="comment">{{ comment.comment }}</div>
+          </div>
+          <mat-icon
+            *ngIf="isUserTheCommentor(comment.participant)"
+            class="delete-icon"
+            (click)="removeComment(comment.id, item.id)">
+            clear
+          </mat-icon>
+        </div>
+      </ng-container>
+      <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+        <div class="initials" fxLayout="column" fxLayoutAlign="center center">
+          {{ getInitials(getParticipantName(participantCode)) }}
+        </div>
+        <div class="comment-input-container" fxLayoutAlign="start center">
+          <div
+            class="input-comment" 
+            data-placeholder="Add a comment"
+            contenteditable
+            (mousedown)="$event.stopPropagation()"
+            [textContent]="commentModel" (input)="commentModel=$event.target.textContent"
+            >
+          </div>
+          <div 
+            class="send-comment" 
+            (click)="submitComment(item.id, commentModel); commentModel = ''"
+            [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'"
+            fxLayoutAlign="end end"
+            >
+            <!-- <img src="/assets/img/submit-vector.svg"> -->
+            Send
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

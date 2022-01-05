@@ -115,6 +115,7 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 mappedField.hide = true;
                 mappedField.templateOptions.readonly = true;
               }
+
               // for MCQ activity
               if (act.activity_type === this.at.mcq) {
                 if (mapSource.internal_type === 'MCQActivitySerializer') {
@@ -262,6 +263,10 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'auto_next') {
                   mappedField.templateOptions.label = 'Auto forward after timer';
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'title_image_id') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'created_by') {
+                  mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.brainStorm) {
                 if (mapSource.internal_type === 'BrainstormActivitySerializer') {
@@ -334,6 +339,24 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
                   mappedField.defaultValue = true;
+                } else if (mapSource.field_name === 'grouping') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = null;
+                } else if (mapSource.field_name === 'show_participant_name_flag') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = true;
+                }
+              } else if (act.activity_type === this.at.slides) {
+                if (mapSource.internal_type === 'GoogleSlidesActivitySerializer') {
+                  mappedField.templateOptions.label = '';
+                } else if (mapSource.field_name === 'next_activity_delay_seconds') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'slide_url') {
+                  delete mappedField.templateOptions.maxLength;
+                  mappedField.templateOptions['helpText'] = 'Add google slides url';
+                } else if (mapSource.field_name === 'slide_name') {
+                } else if (mapSource.field_name === 'auto_next') {
+                  mappedField.hide = true;
                 }
               } else if (act.activity_type === this.at.video) {
                 if (mapSource.internal_type === 'VideoActivitySerializer') {
@@ -410,6 +433,9 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.defaultValue = true;
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'grouping') {
+                  mappedField.hide = true;
+                  mappedField.defaultValue = null;
                 }
               } else if (act.activity_type === this.at.feedback) {
                 if (mapSource.internal_type === 'FeedbackActivitySerializer') {
@@ -658,6 +684,18 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
                   mappedField.templateOptions.label = '';
                 } else if (mapSource.field_name === 'hide_timer') {
                   mappedField.hide = true;
+                } else if (mapSource.field_name === 'stage') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'sharing_time') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'sharing_timer') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'allow_skip_cards') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'sharing_timer') {
+                  mappedField.hide = true;
+                } else if (mapSource.field_name === 'allow_skip_cards') {
+                  mappedField.hide = true;
                 } else if (mapSource.field_name === 'next_activity_delay_seconds') {
                   mappedField.hide = true;
                   mappedField.defaultValue = 10000;
@@ -839,6 +877,8 @@ export class ActivityContentComponent implements OnInit, OnDestroy {
         }
       } else if (b.activity_type === this.at.video) {
         b.activity_overview_text = 'x';
+      } else if (b.activity_type === this.at.slides) {
+        b.activity_overview_text = ActivityTitles[this.at.slides];
       }
       this.store.dispatch(new fromStore.AddActivityContent(b));
     });
@@ -896,6 +936,7 @@ export const OrderForActivities = {
     'next_activity_delay_seconds',
     'submission_seconds',
   ],
+  GoogleSlidesActivity: ['slide_url', 'slide_name'],
   MCQActivity: ['titlecomponent', 'title', 'question', 'question_seconds', 'mcqchoice_set', 'quiz_label'],
   VideoActivity: ['video_url', 'auto_next', 'next_activity_delay_seconds'],
   CaseStudyActivity: [

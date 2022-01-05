@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
-import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
-import { UtilsService } from 'src/app/services/utils.service';
+import { HttpClient } from '@angular/common/http';
+import * as global from 'src/app/globals';
+import { BackendRestService } from 'src/app/services';
+import { BeforeLessonRunDetails, LessonRunDetails } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-participant-join',
@@ -15,44 +16,38 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class ParticipantJoinComponent implements OnInit {
   public isRoomCodeValid = true;
   public userName: string;
-  public loginError;
-  public isInformationValid = false;
-  public typingTimer;
-  public lessonRunDetails: LessonRunDetails;
+  public beforeLessonRunDetails: BeforeLessonRunDetails;
 
   tokenCleared = false;
+  joinLinkExists = false;
+  hostname = window.location.host + '/participant/join?link=';
 
   public roomCode = new FormControl(null, [Validators.required, Validators.min(4)]);
-  public username = new FormControl(null, [Validators.required]);
 
   constructor(
-    private route: ActivatedRoute,
     public router: Router,
-    private backend: BackendRestService,
-    private socket: BackendSocketService,
-    private authService: AuthService,
-    private utilsService: UtilsService
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private backend: BackendRestService
   ) {}
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe((val: any) => {
+      console.log(this.route.snapshot.queryParams['link']);
+      if (this.route.snapshot.queryParams['link']) {
+        this.joinLinkExists = true;
+        this.roomCode.setValue(this.route.snapshot.queryParams['link']);
+        this.updateBeforeLessonRunDetails();
+        this.validateRoomCode();
+      } else {
+        this.joinLinkExists = false;
+      }
+    });
     if (this.route.snapshot.queryParams['link']) {
-      //alert(this.route.snapshot.queryParams['link']);
-      this.roomCode.setValue(this.route.snapshot.queryParams['link']);
-      //alert(this.roomCode.value);
-      this.validateRoomCode();
+    } else {
+      this.joinLinkExists = false;
     }
-    this.username.disable();
-    if (!this.userName) {
-      this.backend.get_own_identity().subscribe(
-        (res) => {
-          // console.log(res);
-          this.userName = res.first_name;
-        },
-        (err) => {
-          // this.router.navigate([`/login`]);
-        }
-      );
-    }
+    // this.updateBeforeLessonRunDetails();
   }
 
   public validateRoomCode() {
@@ -62,7 +57,12 @@ export class ParticipantJoinComponent implements OnInit {
         const lessonrun_code = res.lessonrun_code;
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
-        this.username.enable();
+        // take the user to next screen where they will input their name
+        // const linkToNavigateTo = this.hostname + this.roomCode.value;
+        // localhost:4200/participant/join?link=39622
+        // this.router.navigate([''], { queryParams: { link: this.roomCode.value } });
+        this.router.navigateByUrl('/participant/join?link=' + this.roomCode.value);
+        // this.router.navigate([linkToNavigateTo]);
       },
       (err) => {
         console.error(`Unable to join: ${err.error.error}`);
@@ -77,69 +77,18 @@ export class ParticipantJoinComponent implements OnInit {
     );
   }
 
-  isNameValid() {
-    if (this.username.valid) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public createUser() {
-    if (localStorage.getItem('lessonRunDetails')) {
-      this.lessonRunDetails = JSON.parse(localStorage.getItem('lessonRunDetails'));
-    } else {
-      return false;
-    }
-    if (this.authService.isLoggedIn()) {
-      this.authService.logout();
-    }
-
-    if (!isNaN(this.username.value)) {
-      this.loginError = true;
-      return false;
-    }
-
-    this.backend.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
-      (res: Participant) => {
-        this.loginError = false;
-        if (res.lessonrun_code) {
-          localStorage.setItem('participant', JSON.stringify(res));
-          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
-        } else {
-          this.loginError = true;
-        }
-      },
-      (err) => {
-        console.log(err);
-        if (err && err.error && err.error.non_field_errors) {
-          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-            console.log('err');
-            this.utilsService.openWarningNotification(
-              'A participant with that name has already joined. Try a different name.',
-              ''
-            );
-          }
-        }
-      }
-    );
-  }
-
-  typingStoped(event) {
-    // clearTimeout(this.typingTimer);
-    // this.typingTimer = setTimeout(() => {
-    //   this.doneTyping();
-    // }, 1000);
-  }
-  typingStarted() {
-    // clearTimeout(this.typingTimer);
-  }
-
-  doneTyping() {
+  onRoomCodeChange(roomCode: string): void {
     this.validateRoomCode();
   }
 
-  onSearchChange(searchValue: string): void {
-    this.validateRoomCode();
+  getBeforeLessonRunDetails(lessonrun_code) {
+    const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';
+    return this.http.post(request, {});
+  }
+
+  updateBeforeLessonRunDetails() {
+    this.getBeforeLessonRunDetails(this.roomCode.value).subscribe((res: BeforeLessonRunDetails) => {
+      this.beforeLessonRunDetails = res;
+    });
   }
 }

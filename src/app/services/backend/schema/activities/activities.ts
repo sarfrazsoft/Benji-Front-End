@@ -1,4 +1,4 @@
-import { Participant } from '../course_details';
+import { GroupingToolGroups, Participant } from '../course_details';
 import { User } from '../user';
 import {
   BuildAPitchBlank,
@@ -61,6 +61,7 @@ export interface MCQActivity extends ParentActivity {
   question_seconds: number;
   question_timer: Timer;
   answered_participants: Array<ParticipantCode>;
+  choice_answers: Array<{ choice_id: number; selections: number }>;
   all_participant_answered: boolean;
   titlecomponent: TitleComponent;
   quiz_leaderboard: Array<LeaderBoard>;
@@ -91,6 +92,10 @@ export interface MCQResultsActivity {
 
 export interface VideoActivity {
   video_url: string;
+}
+export interface GoogleSlidesActivity {
+  slide_url: string;
+  slide_name: string;
 }
 
 export interface LeaderBoardItem {
@@ -301,6 +306,7 @@ export interface BrainstormActivity extends ParentActivity {
   max_participant_submissions: number;
   max_participant_votes: number;
   categorize_flag: boolean;
+  show_participant_name_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
   submission_seconds: number;
@@ -314,6 +320,7 @@ export interface BrainstormActivity extends ParentActivity {
   all_participants_voted: boolean;
   hide_timer: boolean;
   voted_participants: Array<any>;
+  grouping: GroupingToolGroups;
 }
 
 export interface Category {
@@ -327,12 +334,22 @@ export interface Idea {
   id: number;
   num_votes: number;
   idea: string;
+  title: string;
   removed: boolean;
   submitting_participant: ParticipantCode;
   idea_image: Image;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
+  comments: Array<any>;
+  hearts: Array<any>;
+  version: number;
+  idea_document: IdeaDocument;
+}
+
+export interface IdeaDocument {
+  id: number;
+  document: string;
 }
 
 export interface ParticipantCode {
@@ -455,7 +472,7 @@ export interface RoleplayUser {
 export interface Group {
   group_num?: number;
   participantgroupstatus_set?: Array<ParticipantGroupStatus>;
-  answer: any;
+  answer?: any;
 
   description?: string;
   id?: number;
@@ -475,6 +492,7 @@ export interface CaseStudyActivity extends ParentActivity {
   activity_title: string;
   activity_seconds: number;
   activity_countdown_timer: Timer;
+  grouping: GroupingToolGroups;
   groups: Array<Group>;
   casestudyparticipant_set: Array<CaseStudyParticipantSet>;
   casestudyquestion_set: Array<{

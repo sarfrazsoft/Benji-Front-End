@@ -68,7 +68,8 @@ export class PreviewPanelComponent implements OnInit {
               act_type === Acts.convoCards ||
               act_type === Acts.poll ||
               act_type === Acts.whereDoYouStand ||
-              act_type === Acts.video
+              act_type === Acts.video ||
+              act_type === Acts.slides
             ) {
               this.previewTemplate = true;
               this.activityData = {

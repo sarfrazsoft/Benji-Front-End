@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import { Observable, of } from 'rxjs';
@@ -30,5 +30,12 @@ export class EditorService {
 
   updateLesson(lesson: Lesson, id): Observable<any[]> {
     return this.httpClient.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
+  }
+
+  uploadFile(file: File, lessonId): Observable<any[]> {
+    const formData: FormData = new FormData();
+    formData.append('document', file);
+    formData.append('lesson_id', lessonId);
+    return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData);
   }
 }

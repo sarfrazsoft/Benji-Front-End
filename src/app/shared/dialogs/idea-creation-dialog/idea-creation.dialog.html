@@ -1,0 +1,90 @@
+<div class="idea-creation-dialog" fxLayout="row">
+  <div class="white-area">
+    <div class="white-content">
+      <textarea
+        cdkTextareaAutosize
+        class="title" 
+        type="text" 
+        placeholder="Title" 
+        [(ngModel)]="ideaTitle">
+      </textarea>
+      <textarea
+        cdkTextareaAutosize
+        [(ngModel)]="userIdeaText" 
+        class="description"
+        placeholder="Description..."
+        [ngClass]="{
+          'image-selected': imageSelected
+        }">
+      </textarea>
+      <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+        <ng-container *ngIf="imageSelected">
+          <img *ngIf="imageSrc" [src]="imageSrc" alt="">
+          <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
+        </ng-container>
+        <ng-container *ngIf="pdfSelected">
+          <div style="width: 400px;">
+            <ngx-extended-pdf-viewer [src]="pdfSrc" 
+              useBrowserLocale="true" 
+              [height]="'350px'">
+            </ngx-extended-pdf-viewer>
+          </div>
+        </ng-container>
+        
+        <button class="remove-button" (click)="remove()">
+          Remove
+        </button>
+      </div>
+      <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
+        <div fxLayout="row">
+          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
+            <div 
+              class="options" 
+              fxLayoutAlign="center center"
+              (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
+              [ngClass]="{'inactive': imageSelected || pdfSelected}"
+              >
+              <img src="/assets/img/idea-creation/scenery.svg">
+            </div>   
+            <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
+            <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
+            <div 
+              class="options" 
+              fxLayoutAlign="center center" 
+              (click)="imageSelected || pdfSelected ? null : uploader.click()"
+              [ngClass]="{'inactive': imageSelected || pdfSelected}">
+              <!-- <button mat-raised-button color="primary">Choose File</button> -->
+              <img src="/assets/img/idea-creation/file.svg">
+              <input 
+                #uploader 
+                (change)="uploadFile($event)" 
+                type='file'
+                accept="application/pdf"
+                style="display:none"/> 
+            </div>
+          </div>
+          <div class="divider" *ngIf="showCategoriesDropdown"></div>
+          <div *ngIf="showCategoriesDropdown"
+            class="option"
+            fxLayout="row" 
+            fxLayoutAlign="center center">
+            <div class="dropdown-controls-container idea-creation-select">
+              <ng-select
+                class="ps-brainstorm-dropdown-controls"
+                [items]="categories"
+                bindLabel="category_name"
+                placeholder="Categories..."
+                [(ngModel)]="selectedCategory"
+                appendTo="body"
+                [searchable]="false"
+                [clearable]="false"
+              >
+              </ng-select>
+            </div>
+          </div>
+        </div>
+        <button class="post" (click)="onSubmit()">Post</button>
+      </div>
+    </div>
+  </div>
+</div>

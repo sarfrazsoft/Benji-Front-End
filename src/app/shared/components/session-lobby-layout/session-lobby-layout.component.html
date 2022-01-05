@@ -1,0 +1,126 @@
+<div 
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  class="lobby-wrapper"
+  [ngClass]="{'participant-lobby': !adminLobbyScreeen}"> 
+  <div class="content-wrapper" *ngIf="beforeLessonRunDetails">
+    <div class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
+      <div>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="session-title">
+            {{beforeLessonRunDetails.title}} 
+          </div>
+          <div 
+            *ngIf="adminLobbyScreeen" 
+            class="session-start" 
+            fxLayout="row" 
+            fxLayoutAlign="start center"
+            fxLayoutGap="16px">
+            <div class="join-code" (click)="copyLink(room_code)">
+              Join Code: <span class="primary-color">{{ room_code }}</span>
+            </div>
+            <img
+              matTooltip="Copy lesson link"
+              [matTooltipPosition]="'below'"
+              show-delay="100"
+              src="../../../assets/img/sessionLobby/copy-link.svg" 
+              (click)="copyLink(shareParticipantLink)">
+            <div
+              class="start-button bg-primary-color white-color"
+              (click)="kickOffLesson()">
+              Start Session
+            </div>
+          </div>
+        </div>
+        <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+          <!-- <img src="{{session_host.photo}}" alt/> -->
+          <div class="initials" fxLayout="column" fxLayoutAlign="center center">{{getInitials(beforeLessonRunDetails.host)}}</div>
+          <div class="name"> {{beforeLessonRunDetails.host}} </div>
+        </div>
+        <div class="description">
+          {{beforeLessonRunDetails.description}} 
+        </div>
+      </div>
+      <div>
+        <div class="sub-title"> Participants </div>
+        <div *ngIf="!latestParticipants">
+          <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
+            <div 
+              class="session-participants" 
+              *ngFor="let participant of beforeLessonRunDetails.participants; let i = index;">
+              <div
+                fxLayoutGap="8px"
+                class="participant" 
+                fxLayoutAlign="start center">
+                <!-- <img src="{{participant.photo}}" /> -->
+                <div 
+                  class="initials {{'color' + (i % 10)}}" 
+                  fxLayout="column" 
+                  fxLayoutAlign="center center">
+                  {{ getInitials(participant) }}
+                </div>
+                <!-- <benji-profile-picture
+                  [imageUrl]=""
+                  [name]=""
+                  [color]=""
+                  [colorIndex]=""
+                > </benji-profile-picture> -->
+                <div class="name"> {{ participant }} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="latestParticipants">
+          <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
+            <div 
+              class="session-participants" 
+              *ngFor="let participant of latestParticipants; let i = index;">
+              <div
+                fxLayoutGap="8px"
+                class="participant" 
+                fxLayoutAlign="start center">
+                <!-- <img src="{{participant.photo}}" /> -->
+                <div 
+                  class="initials {{'color' + (i % 10)}}" 
+                  fxLayout="column" 
+                  fxLayoutAlign="center center"
+                  >
+                    {{getInitials(participant.display_name)}}
+                </div>
+                <div class="name"> {{participant.display_name}} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="join-session" *ngIf="!adminLobbyScreeen">
+      <div *ngIf="participantJoinScreeen">
+        <div class="sub-title"> Join Session </div>
+        <div class="label"> Enter your name </div>
+        <p class="warning-color" *ngIf="loginError">
+          Oops! What should we call you? Drop in your name.<br />
+        </p>
+        <input type="text"
+          [formControl]="username">
+        <!-- <div class="label"> Choose your avatar </div>
+        <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
+          <img src="">
+          <div class="initials" fxLayout="column" fxLayoutAlign="center center">MK</div>
+          <img class="edit-pen" src="/assets/img/edit-pen.svg">
+          <div class="change-profile">Change profile</div>
+        </div> -->
+        <div class="bg-primary-color button"
+          (click)="createUser()"
+          [ngClass]="{
+            active: isNameValid(),
+            inactive: !isNameValid()
+          }">Join
+        </div>
+      </div>
+      <div *ngIf="participantLobbyScreeen" class="session-joined" fxLayout="column" fxLayoutAlign="center center">
+        Wait for your host to start the session.
+      </div>
+    </div>
+  </div>
+</div>

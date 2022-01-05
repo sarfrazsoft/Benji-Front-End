@@ -4,7 +4,7 @@ import { GroupingParticipantSelfJoinEvent, UpdateMessage } from 'src/app/service
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 
 @Component({
-  selector: 'benji-case-study-grouping-container',
+  selector: 'benji-participant-grouping-container',
   templateUrl: './grouping.component.html',
 })
 export class GroupingComponent implements OnInit, OnChanges {
@@ -21,12 +21,12 @@ export class GroupingComponent implements OnInit, OnChanges {
   @Output() sendMessage = new EventEmitter<any>();
 
   ngOnInit(): void {
-    this.initSelectedGroup(this.activityState);
+    // this.initSelectedGroup(this.activityState);
   }
   ngOnChanges() {
     // check if group changed
     // then call initseelctedgroup
-    this.initSelectedGroup(this.activityState);
+    // this.initSelectedGroup(this.activityState);
   }
 
   initSelectedGroup(act) {
@@ -40,8 +40,9 @@ export class GroupingComponent implements OnInit, OnChanges {
           this.selfGroupingAllowed = g.allowParticipantsJoining;
           this.midActivityGroupingAllowed = g.allowParticipantsJoiningMidActivity;
           const participantCode = parseInt(this.participantCode, 10);
+          const activity_type = this.activityState.activity_type.toLowerCase();
 
-          const group = this.getMyGroup(participantCode);
+          const group = this.getMyGroup(participantCode, this.activityState[activity_type].groups);
           this.myGroupId = group ? group.id : null;
 
           this.userGroupAssigned = !g.unassignedParticipants.includes(participantCode);
@@ -50,12 +51,12 @@ export class GroupingComponent implements OnInit, OnChanges {
     }
   }
   changeGroup(event) {
-    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(event.id));
+    // this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(event.id));
   }
 
-  getMyGroup(userId) {
-    for (let i = 0; i < this.activityState.casestudyactivity.groups.length; i++) {
-      const group = this.activityState.casestudyactivity.groups[i];
+  getMyGroup(userId, groups) {
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
       const groupParticipants = group.participants;
       if (groupParticipants.includes(userId)) {
         return group;

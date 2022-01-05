@@ -83,7 +83,10 @@
       >
         {{ control.label }}
         <label class="switch">
-          <input type="checkbox" checked (change)="toggleChange($event, control.name)">
+          <input 
+            type="checkbox" 
+            [checked]="control.default" 
+            (change)="toggleChange($event, control.name)">
           <span class="slider round"></span>
         </label>
       </div>
@@ -93,14 +96,21 @@
       class="setting"
       benji-click-stop-propagation
       fxLayout="row"
-      fxLayoutAlign="space-between"
-    >
-      {{ control.label }}
-      <label class="switch">
-        <span (click)="buttonClick($event, control.name)">
-          button
+      fxLayoutAlign="space-between center">
+        {{ control.label }}
+      <!-- <label class="switch">
+        <span >
+          {{ control.buttonLabel }}
         </span>
-      </label>
+      </label> -->
+      <button
+        (click)="buttonClick($event, control.name)"
+        class="secondary-button black-color"
+        style="padding: 4px 16px;">
+          <div>
+            {{ control.buttonLabel }}
+          </div>
+      </button>
     </div>
 
       <div class="setting"
@@ -127,12 +137,11 @@
             class="card-size"
             [items]="control.options">
             <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-              <div *ngIf="item.id !== selectedCardSize">{{item.name}}</div>
+              <div *ngIf="item.id !== selectedCardSize">{{ item.name }}</div>
               <div *ngIf="item.id === selectedCardSize"
-                fxLayoutAlign="space-between center"
-              >
+                fxLayoutAlign="space-between center">
                 <span>
-                  {{item.name}}
+                  {{ item.name }}
                 </span>
                 <img src="/assets/img/doneIcon.svg" />
               </div>

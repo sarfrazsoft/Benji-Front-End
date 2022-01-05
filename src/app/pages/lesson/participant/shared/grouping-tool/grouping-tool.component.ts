@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import {
   // GroupingParticipantJoinEvent,
-  GroupingParticipantSelfJoinEvent,
   ParticipantOptInEvent,
   ParticipantOptOutEvent,
   UpdateMessage,
@@ -61,6 +60,6 @@ export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
   }
 
   joinGroup() {
-    this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedChoice.id));
+    // this.sendMessage.emit(new GroupingParticipantSelfJoinEvent(this.selectedChoice.id));
   }
 }

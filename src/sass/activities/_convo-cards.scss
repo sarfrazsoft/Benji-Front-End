@@ -235,3 +235,212 @@ benji-ms-sharing-tool {
     }
   }
 }
+
+.centered-wrapper {
+  height: 100%;
+}
+.cards-wrapper {
+  width: 320px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  margin: 0px auto;
+  margin-top: 50px;
+  &.more-margin {
+    margin-top: 84px;
+  }
+  &.centered {
+    margin-top: unset;
+  }
+  .title-area {
+    padding: 16px;
+    border-bottom: 1px solid #E2E0DF;
+    .emoji {
+      img {
+        width: 26px;
+      }
+    }
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #37352f;
+    }
+  }
+  .card-body {
+    padding: 24px;
+    .description {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      text-align: center;
+      color: #37352F;
+      background: #F6F7F9;
+      box-shadow: 0px 1px 2px #E7E7E7;
+      border-radius: 8px;
+      padding: 40px 24px;
+      margin-bottom: 24px;
+      &.question {
+        padding: 16px 24px;
+        box-shadow: unset;
+        line-height: 24px;
+        margin-bottom: 33px;
+        .skip-card {
+          background: #fff;
+          border: 1px solid #555bea;
+          border-radius: 33px;
+          color: #555bea;
+          margin-top: 16px !important;
+          font-size: 12px;
+          font-weight: 600;
+          display: block;
+          padding: 8px;
+          width: 151px;
+          text-align: center;
+          margin: 0px auto;
+        }
+      }
+      &.another-round {
+        padding: 32px 24px 24px 24px;
+        box-shadow: unset;
+        line-height: 24px;
+        margin-bottom: 0px;
+        .play-again {
+          background: $primary-color;
+          color: #fff;
+          margin-top: 12px !important;
+          font-size: 14px;
+          font-weight: 600;
+          display: block;
+          padding: 8px;
+          width: 151px;
+          text-align: center;
+          margin: 0px auto;
+          border-radius: 33px;
+        }
+      }
+    }
+    .settings {
+      .settings-title {
+        font-weight: 600;
+        font-size: 16px;
+        text-align: center;
+        color: #616161;
+        margin-bottom: 16px;
+      }
+      .header {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+        color: #616161;
+      }
+      .ng-select {
+        font-weight: 500;
+        font-size: 14px;
+        color: #828282;
+        .ng-select-container {
+          font-weight: 500;
+          font-size: 14px;
+          color: #828282;
+          height: 19px;
+          min-height: 0px;
+          border: unset;
+          border-radius: unset;
+          cursor: pointer;
+          &:hover {
+            box-shadow:unset
+          }
+        }
+        .ng-arrow-wrapper {
+          width: 20px;
+          padding-right: unset;
+          .ng-arrow:hover {
+            border-color: unset;
+          }
+        }
+      }
+    }
+    .take-turn {
+      font-weight: 600;
+      text-align: center;
+      color: #616161;
+      margin-bottom: 16px;
+      font-size: 14px;
+      line-height: 20px;
+      .turn-text {
+        margin-bottom: 16px;
+        span {
+          display: block;
+        }
+      }
+      .users {
+        margin-bottom: 16px;
+        .initials {
+          color: #fff;
+          font-size: 12px;
+          font-weight: 500;
+          width: 32px;
+          height: 32px;
+          border-radius: 20px;
+        }
+        .name {
+          font-size: 14px;
+          font-weight: 600;
+          color: #37352f;
+        }
+        .next {
+          font-size: 14px;
+          font-weight: 600;
+          color: #fff;
+          background: $primary-color;
+          padding: 8px 16px;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+  .buttons {
+    width: 128px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    &.restart {
+      color: $primary-color;
+      border: 1px solid $primary-color;
+      background: #fff;
+    }
+    &.end-round {
+      color: #fff;
+      background: $primary-color;
+    }
+  }
+  button.start {
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    color: #FFFFFF;
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 16px;
+    background: $primary-color;
+  }
+}
+ng-dropdown-panel.time-to-share {
+  width: 181px !important;
+  background: #FFFFFF;
+  box-shadow: 0px 3px 5px #bdbdbd;
+  border-radius: 8px !important;
+  .ng-dropdown-panel-items {
+    border-radius: 8px;
+    .ng-option.ng-option-selected, .ng-option.ng-option-selected.ng-option-marked {
+      background-color: #F3F4F7;
+    }
+    .ng-option {
+      padding: 8px 24px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #37352F !important;
+    }
+  } 
+}

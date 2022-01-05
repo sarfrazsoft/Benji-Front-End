@@ -1,0 +1,192 @@
+
+
+<!-- <ng-container>
+  <div class="b-flat-card center-text mc-card grouping-tool">
+    <div class="b-flat-card__body">
+      <h1 class="pn-600 black">
+        Join your group
+      </h1>
+    </div>
+    <div class="b-flat-card__action">
+      <button *ngFor="let option of groups; let i = index"
+        class="unselected selected-primary-border group"
+        [ngClass]="{
+          selected: option.id === selectedGroup.id,
+          inactive: answerSubmitted
+        }"
+        (click)="selectOption(option)">
+          {{ option.title }}
+      </button>
+
+      <button 
+        class="b-standard-button white-color bg-primary-color center-text"
+        (click)="joinGroup()">
+          Join
+      </button>
+    </div>
+  </div>
+</ng-container> -->
+
+
+<div>
+  <div class="title" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="header">Join a group</div>
+    <img fxLayout="column" class="close" (click)="closeDialog()" src="/assets/img/idea-creation/close_bigrey.svg">
+  </div>
+  
+  <div class="groups" fxLayout="row wrap" fxLayoutGap="16px">
+    <ng-container *ngFor="let group of groups; let i = index">
+      <div class="group-container" 
+        [ngClass]="{ selected: group.id === selectedGroup?.id }">
+        <div class="group">
+          <div class="title-area">
+            <div class="title">{{ group.title }}</div>
+            <div class="counts">Participants ({{group.participants.length}})</div>
+          </div>
+          <div class="users">
+            <div fxLayout="row wrap" fxLayoutGap="8px">
+              <div class="circle purple"
+                fxLayout="column" fxLayoutAlign="center center"
+                *ngFor="let participant of group.participants">
+                {{ getInitials(participant) }}
+              </div>
+            </div>
+          </div>
+          <div class="grey button" (click)="selectOption(group)">
+            Join Group
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- <div class="group-container" [ngClass]="{
+    selected: option.id === selectedGroup.id,
+    inactive: answerSubmitted
+  }">
+  <div class="group" fxLayout="column">
+    <div class="title-area">
+      <div class="title">Group 2</div>
+      <div class="counts">Participants (4)</div>
+    </div>
+    <div class="users">
+      <div fxLayout="row wrap" fxLayoutGap="8px">
+        <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
+      </div>
+    </div>
+    <div class="bg-primary-color button" fxLayout="column" fxLayoutAlign="end center">
+      You are here
+    </div>
+  </div>
+</div>
+<div class="group" fxLayout="column">
+  <div class="title-area">
+    <div class="title">Group 3</div>
+    <div class="counts">Participants (1)</div>
+  </div>
+  <div class="users">
+    <div class="empty">
+      Nobody has joined this group yet
+    </div>
+  </div>
+  <div class="light-grey button" fxLayout="row" fxLayoutAlign="center end">
+    Join Group
+  </div>
+</div>
+<div class="group" fxLayout="column">
+  <div class="title-area">
+    <div class="title">Group 1</div>
+    <div class="description">Here is a description - not necessary, but nice. </div>
+    <div class="counts">Participants (4)</div>
+  </div>
+  <div class="users">
+    <div fxLayout="row wrap" fxLayoutGap="8px">
+      <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
+      <div class="circle blue" fxLayout="column" fxLayoutAlign="center center"> AK </div>
+      <div class="circle pink" fxLayout="column" fxLayoutAlign="center center"> ST </div>
+      <div class="circle orange" fxLayout="column" fxLayoutAlign="center center"> YZ </div>
+    </div>
+  </div>
+  <div class="grey button" fxLayout="row" fxLayoutAlign="center end">
+    Join Group on hover
+  </div>
+</div>
+<div class="colored bg-primary-color">
+  <div class="group" fxLayout="column">
+    <div class="title-area">
+      <div class="title">Group 2</div>
+      <div class="counts">Participants (4)</div>
+    </div>
+    <div class="users">
+      <div fxLayout="row wrap" fxLayoutGap="8px">
+        <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
+      </div>
+    </div>
+    <div class="bg-primary-color button" fxLayout="column" fxLayoutAlign="end center">
+      You are here
+    </div>
+  </div>
+</div>
+<div class="group" fxLayout="column">
+  <div class="title-area">
+    <div class="title">Group 3</div>
+    <div class="counts">Participants (1)</div>
+  </div>
+  <div class="users">
+    <div class="empty">
+      Nobody has joined this group yet
+    </div>
+  </div>
+  <div class="light-grey button" fxLayout="row" fxLayoutAlign="center end">
+    Join Group
+  </div>
+</div>
+<div class="group" fxLayout="column">
+  <div class="title-area">
+    <div class="title">Group 1</div>
+    <div class="description">Here is a description - not necessary, but nice. </div>
+    <div class="counts">Participants (4)</div>
+  </div>
+  <div class="users">
+    <div fxLayout="row wrap" fxLayoutGap="8px">
+      <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
+      <div class="circle blue" fxLayout="column" fxLayoutAlign="center center"> AK </div>
+      <div class="circle pink" fxLayout="column" fxLayoutAlign="center center"> ST </div>
+      <div class="circle orange" fxLayout="column" fxLayoutAlign="center center"> YZ </div>
+    </div>
+  </div>
+  <div class="grey button" fxLayout="row" fxLayoutAlign="center end">
+    Join Group on hover
+  </div>
+</div>
+<div class="colored bg-primary-color">
+  <div class="group" fxLayout="column">
+    <div class="title-area">
+      <div class="title">Group 2</div>
+      <div class="counts">Participants (4)</div>
+    </div>
+    <div class="users">
+      <div fxLayout="row wrap" fxLayoutGap="8px">
+        <div class="circle purple" fxLayout="column" fxLayoutAlign="center center"> MP </div>
+      </div>
+    </div>
+    <div class="bg-primary-color button" fxLayout="column" fxLayoutAlign="end center">
+      You are here
+    </div>
+  </div>
+</div>
+<div class="group" fxLayout="column">
+  <div class="title-area">
+    <div class="title">Group 3</div>
+    <div class="counts">Participants (1)</div>
+  </div>
+  <div class="users">
+    <div class="empty">
+      Nobody has joined this group yet
+    </div>
+  </div>
+  <div class="light-grey button" fxLayout="row" fxLayoutAlign="center end">
+    Join Group
+  </div>
+</div> -->
