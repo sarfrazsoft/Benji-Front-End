@@ -21,9 +21,11 @@
       font-size: 16px;
       font-weight: 400;
       color: #616161;
-      padding: 16px;
+      padding: 14px;
       background: #F3F4F7;
       border-radius: 8px;
+      border: 2px solid #F3F4F7;
+      min-height: 16px;
     }
     .editing {
       input {
@@ -34,7 +36,7 @@
         color: #37352F;
         font-size: 16px;
         font-weight: normal;
-        padding: 16px;
+        padding: 14px;
         &:focus {
           outline: none;
         }
