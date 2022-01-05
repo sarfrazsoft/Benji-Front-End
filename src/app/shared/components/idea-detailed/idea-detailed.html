@@ -60,7 +60,7 @@
         >
         <img src="/assets/img/idea-creation/arrow-left.svg">
       </div>
-      <button class="remove-button" (click)="remove()">
+      <button *ngIf="userRole === 'owner'" class="remove-button" (click)="remove()">
         Remove
       </button>
     </div>
@@ -75,11 +75,15 @@
       <img src="/assets/img/idea-creation/arrow-left.svg"> 
       <span>Back</span>
     </div>
-    <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
+    <div 
+      class="idea-creation-controls" 
+      fxLayout="row" 
+      fxLayoutAlign="space-between center"
+      *ngIf="userRole === 'owner'">
       <div fxLayout="row">
         <div class="settings" fxLayout="row"fxLayoutGap="12px">
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div>
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/pin-icon.svg"></div>
+          <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div> -->
+          <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/pin-icon.svg"></div> -->
           <div
             (click)="delete()"
             class="options" 
@@ -94,7 +98,7 @@
           </div>
         </div>
       </div>
-      <button class="post" (click)="onSubmit()">Update</button>
+      <button  class="post" (click)="onSubmit()">Update</button>
     </div>
     <textarea 
       class="title" 
