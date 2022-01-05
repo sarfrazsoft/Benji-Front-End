@@ -336,13 +336,6 @@ export class PitchoMaticSubmitFeedbackEvent extends ActivityEvent {
   }
 }
 
-export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
-  event_name = 'BrainstormToggleCategoryModeEvent';
-}
-export class BrainstormToggleParticipantNameEvent extends ActivityEvent {
-  event_name = 'BrainstormToggleParticipantNameEvent';
-}
-
 export class BeginShareEvent extends ActivityEvent {
   event_name = 'BeginShareEvent';
 }
@@ -390,6 +383,12 @@ export class ParticipantSelectCardEvent extends ActivityEvent {
   }
 }
 
+export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
+  event_name = 'BrainstormToggleCategoryModeEvent';
+}
+export class BrainstormToggleParticipantNameEvent extends ActivityEvent {
+  event_name = 'BrainstormToggleParticipantNameEvent';
+}
 export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormSubmissionCompleteInternalEvent';
 }
