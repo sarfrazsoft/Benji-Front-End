@@ -6,21 +6,22 @@ import { UpdateMessage, BrainstormEditInstructionEvent } from 'src/app/services/
   selector: 'side-navigation',
   templateUrl: 'side-navigation.component.html',
 })
-export class SideNavigationComponent {
+export class SideNavigationComponent implements OnInit {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
   editingInstructions: boolean;
   @ViewChild('title') InstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
-  instructions = "Group 1’s space Talk about SpriderMan";
+  instructions = "";
 
   statusDropdown = [ "Active", "View Only", "Hidden" ];
 
   participants = [ "Me Pi", "Alex Mat", "Lee Nim", "Sam M" ];
 
   ngOnInit(): void {
-    if(this.activityState) {
+    console.log(this.activityState);
+    if(this.activityState && this.activityState.brainstormactivity) {
       this.instructions = this.activityState.brainstormactivity.instructions;
     }
   }

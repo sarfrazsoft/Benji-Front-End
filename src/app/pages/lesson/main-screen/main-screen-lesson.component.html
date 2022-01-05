@@ -1,10 +1,10 @@
 <mat-sidenav-container
-    class="example-container" (backdropClick)="close('backdrop')">
+    class="example-container" (backdropClick)="close()">
   <mat-sidenav 
     #sidenav 
-    (keydown.escape)="close('escape')"
+    (keydown.escape)="close()"
     position="end">
-      <side-navigation
+      <side-navigation *ngIf="serverMessage"
         [sidenav]="sidenav" 
         [navType]="navType"
         [activityState]="serverMessage"

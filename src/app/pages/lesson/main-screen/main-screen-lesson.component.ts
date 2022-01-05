@@ -95,6 +95,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
   }
   
   openSideNav(type) {
+    console.log(this.serverMessage);
     type? this.sidenav.open() :  this.sidenav.close();
     type =='boards'? this.navType='boards' : this.navType='board-settings';
   }

@@ -8,8 +8,25 @@
   <div fxLayout="column" class="board" fxLayoutGap="8px">
     <div fxLayout="row" fxLayoutAlign="space-between">
       <div class="title">Icebreakers!</div>
-      <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+      <button
+        [matMenuTriggerFor]="menu"
+        benji-click-stop-propagation
+        disableRipple
+        aria-label="Example icon-button with a menu"
+      >
+        <img class="dots" src="../../../assets/img/side-nav/three-dots.svg" />
+      </button>
     </div>
+    <mat-menu #menu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="deleteCol(column.id)">
+        <mat-icon>delete</mat-icon>
+        <span>Delete</span>
+      </button>
+      <button mat-menu-item (click)="columnHeaderClicked(column)">
+        <mat-icon>create</mat-icon>
+        <span>Rename</span>
+      </button>
+    </mat-menu>
     <div class="sub-title">
       Here is a description - not necessary, but nice. 
     </div>
