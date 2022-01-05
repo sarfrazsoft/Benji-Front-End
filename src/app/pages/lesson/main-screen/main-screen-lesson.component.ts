@@ -1,5 +1,7 @@
-import { ChangeDetectorRef, Component, OnChanges, OnInit } from '@angular/core';
+import { viewClassName } from '@angular/compiler';
+import { ChangeDetectorRef, Component, OnChanges, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -16,6 +18,7 @@ import {
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
+import { MainScreenToolbarComponent } from 'src/app/ui-components/main-screen-toolbar/main-screen-toolbar.component';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 
 @Component({
@@ -24,6 +27,14 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   dialogRef: any;
+  
+  // Side-Navigation variables
+  sideNavOpen: boolean;
+  @ViewChild('sidenav') sidenav: MatSidenav;
+
+  @ViewChild(MainScreenToolbarComponent) msToolbar: MainScreenToolbarComponent;
+  navType: string;
+
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
     protected utilsService: UtilsService,
@@ -82,4 +93,14 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     const activity_type = this.serverMessage.activity_type.toLowerCase();
     return this.serverMessage[activity_type].is_paused;
   }
+  
+  openSideNav(type) {
+    type? this.sidenav.open() :  this.sidenav.close();
+    type =='boards'? this.navType='boards' : this.navType='board-settings';
+  }
+
+  close() {
+    this.sidenav.close();
+  }
+
 }

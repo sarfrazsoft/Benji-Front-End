@@ -16,6 +16,8 @@ import { ControlComponents } from './controls';
 
 import { SubmittedCounterComponent } from './submitted-counter/submitted-counter.component';
 
+import { SideNavigationComponent } from './side-navigation/side-navigation.component'
+
 export const UIComponents = [
   DynamicTimerComponent,
   ParticipantToolbarComponent,
@@ -31,4 +33,5 @@ export const UIComponents = [
   SnackBarComponent,
   ...ControlComponents,
   SubmittedCounterComponent,
+  SideNavigationComponent,
 ];

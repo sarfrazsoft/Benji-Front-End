@@ -313,7 +313,6 @@ benji-ms-brainstorming-activity {
   position: relative;
   color: #616161;
   overflow: hidden;
-  max-width: 264px;
   .delete-icon {
     position: absolute;
     right: 10px;
@@ -399,17 +398,22 @@ benji-ms-brainstorming-activity {
       .comment-input-container {
         box-sizing: border-box;
         flex-grow: 1;
+        position: relative;
         .input-comment {
-          height: 32px;
+          min-height: 32px;
           background: #f3f4f7;
           border-radius: 20px;
           border: unset;
-          color: #777777;
+          color: #37352f;
           font-weight: 400;
           font-size: 12px;
           width: 100%;
           box-sizing: border-box;
-          padding: 0px 50px 0px 12px;
+          padding: 10px 50px 10px 8px;
+          &:empty:before {
+            content: attr(data-placeholder);
+            color: #777777;
+          }
           &:focus-visible {
             outline: none;
           }
@@ -418,7 +422,10 @@ benji-ms-brainstorming-activity {
           font-weight: 600;
           font-size: 12px;
           color: #555bea;
-          margin-left: -48px;
+          margin-left: -38px;
+          position: absolute;
+          right: 8px;
+          bottom: 10px;
         }
       }
     }

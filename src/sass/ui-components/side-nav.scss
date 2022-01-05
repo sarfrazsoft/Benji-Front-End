@@ -1,0 +1,142 @@
+.board-settings-navigation {
+  padding: 24px;
+  width: 376px;
+  .board-settings {
+    font-size: 24px;
+    font-weight: 600;
+    color: #37352F;
+    margin-bottom: 8px;
+  }
+  .close {
+    cursor: pointer;
+  }
+  .title {
+    color: #37352F;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .edit {
+    .not-editing {
+      font-size: 16px;
+      font-weight: 400;
+      color: #616161;
+      padding: 16px;
+      background: #F3F4F7;
+      border-radius: 8px;
+    }
+    .editing {
+      input {
+        background: #FFFFFF;
+        border: 2px solid #555BEA;
+        box-sizing: border-box;
+        border-radius: 8px;
+        color: #37352F;
+        font-size: 16px;
+        font-weight: normal;
+        padding: 16px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .board-status-dropdown {
+    .ng-select-container {
+      background: #F3F4F7;
+      border-radius: 8px;
+      height: 48px;
+      border: unset;
+      padding: 6px;
+      &:focus, &:active {
+        outline: none;
+      }
+      .ng-placeholder {
+        font-size: 16px;
+        color: #616161;
+        font-weight: 400;
+      }
+    }
+  }
+  .posting-settings {
+    background: #F3F4F7;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .label {
+    color: #37352F;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .sub-label {
+    color: #616161;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .board-mode {
+    background: #fff;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    padding: 16px;
+    .sub-label {
+      line-height: 16px;
+    }
+    &.active {
+      background: #F3F4F7;
+      border: 1px solid #E7E7E7;
+    }
+  }
+}
+
+.boards-navigation {
+  padding: 24px;
+  width: 376px;
+  .boards {
+    font-size: 24px;
+    font-weight: 600;
+    color: #37352F;
+    margin-bottom: 8px;
+  }
+  .close {
+    cursor: pointer;
+  }
+  .board {
+    padding: 16px;
+    background: #F3F4F7;
+    border-radius: 8px;
+    .title {
+      color: #37352F;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .dots {
+      cursor: pointer;
+      margin-right: -8px;
+      margin-top: -5px;
+    }
+    .sub-title {
+      font-size: 14px;
+      line-height: 18px;
+      color: #616161;
+    }
+    .persons {
+      opacity: 0.7;
+      .initials {
+        width: 32px;
+        height: 32px;
+        color: #fff;
+        font-weight: 500;
+        font-size: 12px;
+        border-radius: 50%;
+        &.color0, &.color1, &.color2, &.color3, &.color4, &.color5, &.color6, &.color7, &.color8 {
+          margin-right: -4px;
+          position: relative;
+        }
+      }
+    }
+  }
+  .add-group .plus {
+    cursor: pointer;
+  }
+}

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MatSidenav } from '@angular/material/sidenav';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
@@ -23,6 +24,9 @@ import {
   ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
+
+import { SideNavigationComponent } from '../side-navigation/side-navigation.component'
+
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -56,6 +60,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   activitySettingsAllowed = ActivitySettingsAllowed;
 
   openGroupAccess = false;
+
+  @ViewChild('sidenav') sidenav: MatSidenav;
+
+  reason = '';
+
+  @Output() sideNavEvent = new EventEmitter<string>();
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
@@ -230,10 +240,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   isActivitySettingsAllowed(activityState: UpdateMessage) {
-    if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
+    if(activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
       return true;
     } else {
       return false;
     }
+  }
+
+  openSideNav(type) {
+    this.sideNavEvent.emit(type);
   }
 }
