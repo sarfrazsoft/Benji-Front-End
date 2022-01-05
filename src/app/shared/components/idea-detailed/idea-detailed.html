@@ -111,7 +111,7 @@
       class="description"
       placeholder="Description..."
       [ngClass]="{
-        'image-selected': imageSelected || docSelected
+        'image-selected': imageSelected || pdfSelected
       }">
     </textarea>
     <div
@@ -122,9 +122,9 @@
         class="initials" 
         fxLayout="column" 
         fxLayoutAlign="center center">
-        TC
+        {{ getInitials(getParticipantName(submitting_participant)) }}
       </div>
-      <div class="name"> Tessa Chassen </div>
+      <div class="name"> {{ getParticipantName(submitting_participant) }} </div>
     </div>
     <!-- <img class="close" (click)="closeDialog()" src="/assets/img/idea-creation/close_big.svg">  -->
     <ng-container *ngIf="showCategoriesDropdown">

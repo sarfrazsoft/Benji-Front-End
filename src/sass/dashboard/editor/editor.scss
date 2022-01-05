@@ -171,6 +171,11 @@ benji-editor {
     > div {
       padding-bottom: 16px;
     }
+    &.ratings {
+      > div {
+        padding-bottom: 0px;
+      }
+    }
     .mat-slide-toggle-thumb {
       height: 12px;
       width: 12px;

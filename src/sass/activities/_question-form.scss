@@ -147,6 +147,17 @@ textarea:focus:-ms-input-placeholder {
 }
 .trigger-icon {
   font-size: 24px !important;
+  height: unset !important;
+  width: unset !important;
+  &.tri-star {
+    color: #F69F41;
+  }
+  &.tri-thumb-up, &.tri-emoticon {
+    color: #7B87F0;
+  }
+  &.tri-favorite {
+    color: #F05656;
+  }
 }
 .fav-tip {
   margin-bottom: -14px !important;
