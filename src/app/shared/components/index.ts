@@ -1,5 +1,6 @@
 import { AssessmentBarComponent } from './assessment-bar/assessment-bar.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { BenjiProfilePicturesComponent } from './benji-profile-pictures/benji-profile-pictures.component'
 import { FeedbackGraphComponent } from './feedback-graph/feedback-graph.component';
 import { ReportMCQComponent } from './feedback-graph/mcq/report-mcq.component';
 import { QuestionComponent } from './feedback-graph/question/question.component';
@@ -20,6 +21,7 @@ export const CmpComponents = [
   ReportMCQComponent,
   AvatarComponent,
   AssessmentBarComponent,
+  BenjiProfilePicturesComponent,
   FeedbackGraphComponent,
   ResponsePercentBarsComponent,
   PercentPollBarsComponent,
@@ -33,6 +35,7 @@ export const CmpComponents = [
 
 export const CmpEntryComponents = [
   AssessmentBarComponent,
+  BenjiProfilePicturesComponent,
   FeedbackGraphComponent,
   ResponsePercentBarsComponent,
   PercentPollBarsComponent,

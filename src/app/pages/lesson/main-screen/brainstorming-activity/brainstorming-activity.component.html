@@ -11,7 +11,7 @@
           >
             {{ instructions }}
           </div>
-          <div class="sub-header">Here are the secondary instructions that can go onto a brainstorm board. </div>
+          <div class="sub-header">{{ sub_instructions }}</div>
         </div>
         <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
           <benji-participant-grouping-container

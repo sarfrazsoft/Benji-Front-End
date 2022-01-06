@@ -25,8 +25,6 @@ import {
 } from '../../services/backend/schema/messages';
 import { LayoutService } from '../../services/layout.service';
 
-import { SideNavigationComponent } from '../side-navigation/side-navigation.component'
-
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
@@ -60,6 +58,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   activitySettingsAllowed = ActivitySettingsAllowed;
 
   openGroupAccess = false;
+
+  participantCodes = [];
 
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -99,6 +99,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
+
+    console.log(this.activityState);
   }
 
   showParticipantGroupingButton() {
@@ -250,4 +252,5 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   openSideNav(type) {
     this.sideNavEvent.emit(type);
   }
+
 }

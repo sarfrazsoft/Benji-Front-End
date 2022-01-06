@@ -30,7 +30,7 @@
     .editing {
       input {
         background: #FFFFFF;
-        border: 2px solid #555BEA;
+        border: 2px solid $primary-color;
         box-sizing: border-box;
         border-radius: 8px;
         color: #37352F;
@@ -104,9 +104,13 @@
     cursor: pointer;
   }
   .board {
-    padding: 16px;
+    padding: 14px;
+    border: 2px solid #F3F4F7;
     background: #F3F4F7;
     border-radius: 8px;
+    &.selected {
+      border: 2px solid $primary-color;
+    }
     .title {
       color: #37352F;
       font-weight: 600;
@@ -142,3 +146,14 @@
     cursor: pointer;
   }
 }
+
+.board-duplicate-delete {
+  border-radius: 8px;
+  .mat-menu-item {
+    height: 32px;
+    &:hover {
+      background: #F3F4F7;
+    }
+  }
+}
+
