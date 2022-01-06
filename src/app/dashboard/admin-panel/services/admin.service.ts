@@ -74,4 +74,37 @@ export class AdminService {
         })
       );
   }
+
+  createNewBoard() {
+    const data = {
+      lesson_name: 'Dummy lesson name',
+      lesson_description: 'Dummy lesson description',
+      activities: [
+        {
+          activity_type: 'BrainstormActivity',
+          instructions: 'Dummy Instructions',
+          submission_seconds: 300,
+          voting_seconds: 120,
+          boards: [
+            {
+              name: 'test1',
+              order: 1,
+              remove: false,
+              categorized: false,
+              board_activity: {
+                categorized: false,
+                instructions: 'Dummy Instructions',
+                sub_instructions: 'test',
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return this.http.post(global.apiRoot + `/course_details/lesson/asyn_session/`, data).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
 }

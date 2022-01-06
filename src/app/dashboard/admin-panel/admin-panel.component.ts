@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Intercom } from 'ng-intercom';
 import { AuthService, ContextService } from 'src/app/services';
 import { TeamUser, User } from 'src/app/services/backend/schema';
@@ -45,7 +45,8 @@ export class AdminPanelComponent implements OnInit {
     private adminService: AdminService,
     private contextService: ContextService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {
     this.activatedRoute.data.forEach((data: any) => {
       this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
@@ -72,6 +73,12 @@ export class AdminPanelComponent implements OnInit {
     localStorage.removeItem('single_user_participant');
 
     this.authService.startIntercom();
+  }
+
+  createNewBoard() {
+    this.adminService.createNewBoard().subscribe((res: any) => {
+      this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+    });
   }
 }
 
