@@ -1,11 +1,16 @@
 <div class="mainscreen-toolbar bg-white">
-  <div class="flexer--space-between">
-    <div class="benji-logo-container">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <div class="benji-logo-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
       <img [src]="darkLogo" alt="Benji Logo" class="benji-logo"/>
+      <div class="session-title">{{ lessonName }}</div>
     </div>
     <ng-container *ngIf="!isEditor && (activityState && activityState.activity_type !== 'LobbyActivity')">
       <div>
         <div fxLayout="row" fxLayoutGap="8px">
+          <!-- circles with their initials-->
+          <benji-profile-pictures
+            [participantCodes]=""
+          > </benji-profile-pictures>
           <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >
             <div class="time-info" fxLayoutAlign="center center">

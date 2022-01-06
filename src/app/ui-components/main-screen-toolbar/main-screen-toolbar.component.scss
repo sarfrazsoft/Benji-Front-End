@@ -1,20 +1,32 @@
 .mainscreen-toolbar {
-  padding: 12px 16px;
+  padding: 8px 16px;
   position: sticky;
   position: -webkit-sticky;
   top: 0; /* required */
   z-index: 1;
+  filter: drop-shadow(0px 1px 3px #D5D9DE);
   .benji-logo-container {
-    height: 32px;
+    height: 24px;
     img {
       height: 100%;
+      border-right: 1px solid #E7E7E7;
+      padding-right: 16px;
+    }
+    .session-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #37352F;
+      &:hover {
+        color: #555bea;
+        cursor: pointer;
+      }
     }
   }
   .flexer--space-between {
     align-items: center;
     .option {
-      height: 34px;
-      width: 34px;
+      height: 24px;
+      width: 24px;
       padding: 8px;
       border-radius: 8px;
       cursor: pointer;
