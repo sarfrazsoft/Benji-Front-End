@@ -29,6 +29,7 @@ export interface IdeaDetailedInfo {
   isMobile: boolean;
   participantCode: number;
 }
+export type IdeaUserRole = 'owner' | 'viewer';
 @Component({
   selector: 'benji-idea-detailed',
   templateUrl: 'idea-detailed.html',
@@ -117,6 +118,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   selectedpdfDoc;
   pdfSrc;
   hostname = environment.web_protocol + '://' + environment.host;
+  userRole: IdeaUserRole;
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
@@ -151,12 +153,23 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.imageSelected = true;
       this.imageSrc = this.data.item.idea_image.img;
     }
-    if (this.data.item.submitting_participant) {
-      this.submitting_participant = this.data.item.submitting_participant.participant_code;
-    }
     if (this.data.participantCode) {
       this.participantCode = this.data.participantCode;
+      this.userRole = 'viewer';
+    } else {
+      // viewing user is the host
+      this.userRole = 'owner';
     }
+
+    if (this.data.item.submitting_participant && this.userRole !== 'owner') {
+      this.submitting_participant = this.data.item.submitting_participant.participant_code;
+      if (this.submitting_participant === this.participantCode) {
+        this.userRole = 'owner';
+      } else {
+        this.userRole = 'viewer';
+      }
+    }
+    console.log(this.userRole);
     if (this.data.item.idea_document) {
       this.pdfSelected = true;
       this.pdfSrc = this.hostname + this.data.item.idea_document.document;
@@ -284,4 +297,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   nextArrowClicked() {
     this.nextItemRequested.emit();
   }
+
+  participantIsOwner() {}
 }

@@ -557,9 +557,9 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   submitWithoutImg(idea) {
-    if (idea.text.length === 0) {
-      return;
-    }
+    // if (idea.text.length === 0) {
+    //   return;
+    // }
     if (idea.id) {
       // if there's id in the idea that means we're editing existing idea
       this.sendMessage.emit(
