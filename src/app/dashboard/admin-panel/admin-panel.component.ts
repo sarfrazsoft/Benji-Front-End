@@ -17,6 +17,7 @@ import { EditorView } from 'prosemirror-view';
 import { Validators } from 'ngx-editor';
 
 import doc from './../../shared/ngx-editor/doc';
+import { CreateSessionDialogComponent } from 'src/app/shared/dialogs/create-session-dialog/create-session.dialog';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -27,6 +28,8 @@ export class AdminPanelComponent implements OnInit {
   lessons: Array<any> = [];
   lessonRuns: Array<any> = [];
   editorView: EditorView;
+
+  adminName = "";
 
   form = new FormGroup({
     editorContent: new FormControl(doc, Validators.required()),
@@ -71,13 +74,24 @@ export class AdminPanelComponent implements OnInit {
 
   ngOnInit() {
     localStorage.removeItem('single_user_participant');
-
+    
     this.authService.startIntercom();
+
+    this.adminName = this.contextService.user.first_name;
   }
 
   createNewBoard() {
     this.adminService.createNewBoard().subscribe((res: any) => {
       this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+    });
+  }
+  openCreateSession() {
+    this.dialog.open(CreateSessionDialogComponent, {
+      panelClass: 'create-session-dialog'
+    })
+    .afterClosed()
+    .subscribe(res => {
+      console.log(res);
     });
   }
 }

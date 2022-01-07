@@ -2,20 +2,20 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="dashboard-heading">
-      <h1>Dashboard</h1>
+      <h1>{{adminName}}’s Boards</h1>
     </div>
-    <div>
+    <!-- <div>
       <button 
       class="dashboard-secondary-button bg-primary-color white-color padding0-24" 
       routerLink="editor">
         New Session
       </button>
-    </div>
+    </div> -->
     <div>
       <button 
       class="dashboard-secondary-button bg-primary-color white-color padding0-24" 
       (click)="createNewBoard()">
-        New Board
+        + New Board
       </button>
     </div>
   </div>
