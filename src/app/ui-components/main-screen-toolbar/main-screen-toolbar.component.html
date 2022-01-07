@@ -9,7 +9,8 @@
         <div fxLayout="row" fxLayoutGap="8px">
           <!-- circles with their initials-->
           <benji-profile-pictures
-            [participantCodes]=""
+            [activityState]="activityState"
+            [participantCodes]="participantCodes"
           > </benji-profile-pictures>
           <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >

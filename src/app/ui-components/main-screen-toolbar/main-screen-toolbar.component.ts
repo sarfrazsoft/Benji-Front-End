@@ -5,7 +5,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
+import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
@@ -99,8 +99,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
-
-    console.log(this.activityState);
+    this.loadParticipantCodes();
   }
 
   showParticipantGroupingButton() {
@@ -251,6 +250,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   openSideNav(type) {
     this.sideNavEvent.emit(type);
+  }
+
+  loadParticipantCodes() {
+    this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      this.participantCodes.push(participant.participant_code);
+    });
   }
 
 }
