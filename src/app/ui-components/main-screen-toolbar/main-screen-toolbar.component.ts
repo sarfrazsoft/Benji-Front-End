@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -29,6 +29,7 @@ import { LayoutService } from '../../services/layout.service';
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
   styleUrls: ['./main-screen-toolbar.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenToolbarComponent implements OnInit, OnChanges {
   darkLogo = '';
