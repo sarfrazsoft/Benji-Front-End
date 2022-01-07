@@ -54,6 +54,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
 
   shareParticipantLink = '';
+  hostname = window.location.host + '/participant/join?link=';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
   activitySettingsAllowed = ActivitySettingsAllowed;
@@ -70,6 +71,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
+
+  
+
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
@@ -82,7 +86,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    this.shareParticipantLink = window.location.href + '?share=participant';
+    //this.shareParticipantLink = window.location.href + '?share=participant';
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
 
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -101,6 +105,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
     this.showParticipantGroupingButton();
     this.loadParticipantCodes();
+    
+    this.shareParticipantLink = this.hostname + this.roomCode;
   }
 
   showParticipantGroupingButton() {
@@ -257,6 +263,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
       this.participantCodes.push(participant.participant_code);
     });
+  }
+
+  copyLink(val: string) {
+    this.utilsService.copyToClipboard(val);
   }
 
 }

@@ -14,6 +14,13 @@
               [participantCodes]="participantCodes"
             > </benji-profile-pictures>
           </div>
+          <!--Share-->
+            <div 
+              class="share-link" 
+              fxLayoutAlign="center center"
+              (click)="copyLink(shareParticipantLink)">
+              Share
+            </div>
           <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >
             <div class="option" fxLayoutAlign="center center"
