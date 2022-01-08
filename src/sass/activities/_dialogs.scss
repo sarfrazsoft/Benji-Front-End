@@ -492,6 +492,7 @@ ng-dropdown-panel.groups-controls {
 .create-session-dialog {
   .mat-dialog-container {
     border-radius: 16px;
+    padding: 40px;
   }
   .create-session {
     .heading {
@@ -548,6 +549,42 @@ ng-dropdown-panel.groups-controls {
         color: #616161;
         background: #F3F4F7;
       }
+    }
+  }
+}
+
+
+.delete-board-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+    padding: 40px;
+    width: 310px;
+  }
+  .heading {
+    color: #37352f;
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .warning {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #37352F;
+  }
+  .controls-container {
+    button {
+      font-size: 16px;
+      font-weight: 600;
+      padding: 12px 16px;
+      border-radius: 4px;
+    }
+    .delete-button {
+      color: #fff;
+      background: #EF151B;
+    }
+    .cancel-button {
+      color: #616161;
+      background: #F3F4F7;
     }
   }
 }
