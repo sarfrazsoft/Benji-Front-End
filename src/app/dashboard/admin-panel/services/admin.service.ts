@@ -78,7 +78,7 @@ export class AdminService {
   createNewBoard(res) {
     const data = {
       lesson_name: res.title,
-      lesson_description: res,
+      lesson_description: res.description,
       activities: [
         {
           activity_type: 'BrainstormActivity',
