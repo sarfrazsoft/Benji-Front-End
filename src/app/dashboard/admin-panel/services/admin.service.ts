@@ -75,10 +75,10 @@ export class AdminService {
       );
   }
 
-  createNewBoard() {
+  createNewBoard(res) {
     const data = {
-      lesson_name: 'Dummy lesson name',
-      lesson_description: 'Dummy lesson description',
+      lesson_name: res.title,
+      lesson_description: res,
       activities: [
         {
           activity_type: 'BrainstormActivity',

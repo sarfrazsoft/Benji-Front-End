@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,8 +9,10 @@ import { Router } from '@angular/router';
 export class CreateSessionDialogComponent implements OnInit {
 
   roomCode;
-  title = "Give your session a name";
-  description = "This is where the instructions go...";
+  placeholderTitle = "Give your session a name";
+  placeholderDescription = "This is where the instructions go...";
+  sessionTitle = "";
+  sessionDescription = "";
   editingTitle: boolean;
   editingDescription: boolean;
   @ViewChild('title') TitleElement: ElementRef;
@@ -18,7 +20,11 @@ export class CreateSessionDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<CreateSessionDialogComponent>,
-    private router: Router
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      title: string;
+      description: string;
+    },
   ) {}
 
   ngOnInit() {}
@@ -53,6 +59,13 @@ export class CreateSessionDialogComponent implements OnInit {
   saveEditedDescription() {
     this.editingDescription = false;
     //this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions));
+  }
+
+  onSubmit() {
+    this.dialogRef.close({
+      title: this.sessionTitle,
+      description: this.sessionDescription
+    });
   }
 
 }

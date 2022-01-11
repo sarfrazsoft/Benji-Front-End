@@ -1,8 +1,6 @@
 // TODO use variables for border color to keep it consistent across all panels
 .admin-panel {
-  padding: 60px 30px;
-  padding-top: 64px;
-  padding-left: 40px;
+  padding: 64px 64px 64px 56px;
 
   .dashboard-header {
     margin-bottom: 36px;
@@ -12,6 +10,9 @@
         font-size: 48px;
         margin: 0px;
       }
+    }
+    .dashboard-secondary-button {
+      margin: 0px 8px;
     }
   }
 

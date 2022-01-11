@@ -80,20 +80,18 @@ export class AdminPanelComponent implements OnInit {
     this.adminName = this.contextService.user.first_name;
   }
 
-  createNewBoard() {
-    this.adminService.createNewBoard().subscribe((res: any) => {
-      this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
-    });
-  }
   openCreateSession() {
     this.dialog.open(CreateSessionDialogComponent, {
       panelClass: 'create-session-dialog'
     })
     .afterClosed()
-    .subscribe(res => {
-      console.log(res);
+    .subscribe(data => {
+      this.adminService.createNewBoard(data).subscribe((res: any) => {
+        this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+      });
     });
   }
+
 }
 
 // {

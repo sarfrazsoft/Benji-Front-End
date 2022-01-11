@@ -9,7 +9,7 @@
             *ngIf="!editingTitle"
             (click)="editTitle()"
             class="not-editing">
-            {{ title }}
+            {{ sessionTitle? sessionTitle : placeholderTitle }}
           </div>
           <div *ngIf="editingTitle" class="editing">
             <input
@@ -29,7 +29,7 @@
             *ngIf="!editingDescription"
             (click)="editDescription()"
             class="not-editing">
-            {{ description }}
+            {{ sessionDescription? sessionDescription : placeholderDescription }}
           </div>
           <div *ngIf="editingDescription" class="editing">
             <input
@@ -45,7 +45,7 @@
       <div class="controls-container" fxLayout="row" fxLayoutGap="8px">
         <button
           class="launch-button bg-primary-color"
-          (click)="createSession()"
+          (click)="onSubmit()"
         >
           Create Session
         </button>
