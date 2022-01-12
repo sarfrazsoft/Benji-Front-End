@@ -9,8 +9,10 @@
     //height: 24px;
     img {
       height: 24px;
-      border-right: 1px solid #E7E7E7;
       padding-right: 16px;
+      &.has-name {
+        border-right: 1px solid #E7E7E7;
+      }
     }
     .session-title {
       font-size: 16px;
