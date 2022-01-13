@@ -15,6 +15,17 @@ export class BrainstormService {
   }
   constructor() {}
 
+  getMyGroup(userId, groups) {
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
+      const groupParticipants = group.participants;
+      if (groupParticipants.includes(userId)) {
+        return group;
+      }
+    }
+    return null;
+  }
+
   getUserIdeas(userID: number, act: BrainstormActivity): Array<Idea> {
     const arr: Array<Idea> = [];
     act.brainstormcategory_set.forEach((category) => {

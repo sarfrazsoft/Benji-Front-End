@@ -126,17 +126,6 @@ export abstract class BaseActivityComponent implements OnInit {
     return this.activityState.eventType;
   }
 
-  getMyGroup(userId, groups) {
-    for (let i = 0; i < groups.length; i++) {
-      const group = groups[i];
-      const groupParticipants = group.participants;
-      if (groupParticipants.includes(userId)) {
-        return group;
-      }
-    }
-    return null;
-  }
-
   applyGroupingOnActivity(state: UpdateMessage) {
     const activityType = this.getActivityType().toLowerCase();
     if (state[activityType].grouping !== null) {

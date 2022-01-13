@@ -301,12 +301,24 @@ export interface WhereDoYouStandActivity {
 }
 
 export interface BrainstormActivity extends ParentActivity {
+  boards: Array<Board>;
+}
+
+export interface Board {
+  board_activity: BoardInfo;
+  id: number;
+  name: string;
+  order: number;
+  removed: boolean;
   brainstormcategory_set: Array<Category>;
+}
+
+export interface BoardInfo {
+  categorize_flag: boolean;
   instructions: string;
   sub_instructions: string;
   max_participant_submissions: number;
   max_participant_votes: number;
-  categorize_flag: boolean;
   show_participant_name_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
