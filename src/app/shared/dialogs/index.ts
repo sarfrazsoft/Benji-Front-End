@@ -14,10 +14,13 @@ export * from './import-slides-dialog/import-slides.dialog';
 export * from './participant-grouping-dialog/participant-grouping.dialog';
 export * from './participant-grouping-info-dialog/participant-grouping-info.dialog';
 export * from './create-session-dialog/create-session.dialog';
-export * from './delete-board-dialog/delete-board.dialog'
+export * from './delete-board-dialog/delete-board.dialog';
+export * from './session-summary-dialog/session-summary.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
+import { CreateSessionDialogComponent } from './create-session-dialog/create-session.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
+import { DeleteBoardDialogComponent } from './delete-board-dialog/delete-board.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
@@ -34,18 +37,20 @@ import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-s
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { ParticipantGroupingDialogComponent } from './participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from './participant-grouping-info-dialog/participant-grouping-info.dialog';
+import { SessionSummaryDialogComponent } from './session-summary-dialog/session-summary.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
-import { CreateSessionDialogComponent } from './create-session-dialog/create-session.dialog';
-import { DeleteBoardDialogComponent } from './delete-board-dialog/delete-board.dialog';
 
 export const Dialogs = [
   AddVideoDialogComponent,
+  CreateSessionDialogComponent,
   ConfirmationDialogComponent,
+  DeleteBoardDialogComponent,
   ErrorMessageDialogComponent,
   ImagePickerDialogComponent,
   ImportSlidesDialogComponent,
   UnsplashComponent,
   GiphyComponent,
+  IdeaDetailedDialogComponent,
   UploadImageComponent,
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
@@ -57,7 +62,5 @@ export const Dialogs = [
   GroupingToolDialogComponent,
   ParticipantGroupingDialogComponent,
   ParticipantGroupingInfoDialogComponent,
-  IdeaDetailedDialogComponent,
-  CreateSessionDialogComponent,
-  DeleteBoardDialogComponent,
+  SessionSummaryDialogComponent,
 ];

@@ -2,7 +2,12 @@
   <div fxLayout="row" fxLayoutAlign="space-between">
     <div class="benji-logo-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
       <img [src]="darkLogo" alt="Benji Logo" [ngClass]="{'has-name': lessonName}" class="benji-logo"/>
-      <div class="session-title">{{ lessonName }}</div>
+      <div 
+        class="session-title"
+        (click)="openSessionSummary()"
+        >
+          {{ lessonName }}
+      </div>
     </div>
     <ng-container *ngIf="!isEditor && (activityState && activityState.activity_type !== 'LobbyActivity')">
       <div>
