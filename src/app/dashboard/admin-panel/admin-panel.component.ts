@@ -17,6 +17,7 @@ import { EditorView } from 'prosemirror-view';
 import { Validators } from 'ngx-editor';
 
 import doc from './../../shared/ngx-editor/doc';
+import { CreateSessionDialogComponent } from 'src/app/shared/dialogs/create-session-dialog/create-session.dialog';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -27,6 +28,8 @@ export class AdminPanelComponent implements OnInit {
   lessons: Array<any> = [];
   lessonRuns: Array<any> = [];
   editorView: EditorView;
+
+  adminName = "";
 
   form = new FormGroup({
     editorContent: new FormControl(doc, Validators.required()),
@@ -52,69 +55,27 @@ export class AdminPanelComponent implements OnInit {
       this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
 
       this.lessonRuns = data.dashData.lessonRuns;
-      // if (!data.dashData.user.job_title) {
-      //   this.dialog
-      //     .open(JobInfoDialogComponent, {
-      //       data: {
-      //         name: data.dashData.user.first_name
-      //       },
-      //       disableClose: true,
-      //       panelClass: 'dashboard-dialog'
-      //     })
-      //     .afterClosed()
-      //     .subscribe(res => {
-      //       console.log(res);
-      //     });
-      // }
     });
   }
 
   ngOnInit() {
     localStorage.removeItem('single_user_participant');
-
+    
     this.authService.startIntercom();
+
+    this.adminName = this.contextService.user.first_name;
   }
 
-  createNewBoard() {
-    this.adminService.createNewBoard().subscribe((res: any) => {
-      this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+  openCreateSession() {
+    this.dialog.open(CreateSessionDialogComponent, {
+      panelClass: 'create-session-dialog'
+    })
+    .afterClosed()
+    .subscribe(data => {
+      this.adminService.createNewBoard(data).subscribe((res: any) => {
+        this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+      });
     });
   }
-}
 
-// {
-//   "titleactivity": {
-//     "id": 1253,
-//     "next_activity_start_timer": {
-//       "id": 549,
-//       "status": "running",
-//       "start_time": "2021-03-08T13:04:26.229653-05:00",
-//       "end_time": "2021-03-08T15:51:06.229653-05:00",
-//       "total_seconds": 10000,
-//       "remaining_seconds": 9999.859045
-//     },
-//     "facilitation_status": "running",
-//     "auto_next": true,
-//     "next_activity_delay_seconds": 10000,
-//     "title_image": "emoji://1F642",
-//     "main_title": "mainscreen heading text",
-//     "title_text": "mainscreen detailed text",
-//     "cards": [
-//       {
-//         "title_image": "emoji://1F642",
-//         "main_title": "mainscreen heading text",
-//         "title_text": "mainscreen detailed text"
-//       }
-//     ],
-//     "hide_timer": true,
-//     "activity_id": "1612207589964",
-//     "description": null,
-//     "start_time": "2021-03-08T13:04:26.225409-05:00",
-//     "end_time": null,
-//     "is_paused": false,
-//     "run_number": 0,
-//     "polymorphic_ctype": 46,
-//     "next_activity": 1254,
-//     "activity_type": "TitleActivity"
-//   }
-// }
+}

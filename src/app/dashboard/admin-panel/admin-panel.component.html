@@ -2,20 +2,26 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="dashboard-heading">
-      <h1>Dashboard</h1>
+      <h1>{{adminName}}’s Boards</h1>
     </div>
-    <div>
+    <div fxLayout="row" fxLayoutGap="24px">
+      <ng-select
+        class="sessions-type"
+        [items]="times"
+        bindLabel="title"
+        placeholder="All Sessions"
+        [clearable]="false"
+        bindValue="id"
+        (change)="changeGroup($event)"
+        [(ngModel)]="myGroupId"
+        appendTo="body"
+        [searchable]="false"
+      >
+      </ng-select>
       <button 
       class="dashboard-secondary-button bg-primary-color white-color padding0-24" 
-      routerLink="editor">
-        New Session
-      </button>
-    </div>
-    <div>
-      <button 
-      class="dashboard-secondary-button bg-primary-color white-color padding0-24" 
-      (click)="createNewBoard()">
-        New Board
+      (click)="openCreateSession()">
+        + New Board
       </button>
     </div>
   </div>

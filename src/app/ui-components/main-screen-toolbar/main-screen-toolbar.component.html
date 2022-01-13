@@ -1,29 +1,27 @@
 <div class="mainscreen-toolbar bg-white">
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <div class="benji-logo-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
-      <img [src]="darkLogo" alt="Benji Logo" class="benji-logo"/>
+    <div class="benji-logo-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+      <img [src]="darkLogo" alt="Benji Logo" [ngClass]="{'has-name': lessonName}" class="benji-logo"/>
       <div class="session-title">{{ lessonName }}</div>
     </div>
     <ng-container *ngIf="!isEditor && (activityState && activityState.activity_type !== 'LobbyActivity')">
       <div>
-        <div fxLayout="row" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutGap="16px">
           <!-- circles with their initials-->
-          <benji-profile-pictures
-            [participantCodes]=""
-          > </benji-profile-pictures>
-          <!-- Timer control -->
-          <ng-container *ngxPermissionsOnly="'ADMIN'" >
-            <div class="time-info" fxLayoutAlign="center center">
-              <div class="ms-header-timer" *ngIf="showTimer" 
-                [matMenuTriggerFor]="timerMenu">
-                <benji-number-timer
-                  [timer]="timer"
-                  endStateText="Times Up!"
-                ></benji-number-timer>
-              </div>
+          <div class="toolbar-initials-circles" fxLayoutAlign="center center">
+            <benji-profile-pictures
+              [activityState]="activityState"
+              [participantCodes]="participantCodes"
+            > </benji-profile-pictures>
+          </div>
+          <!--Share-->
+            <div 
+              class="share-link" 
+              fxLayoutAlign="center center"
+              (click)="copyLink(shareParticipantLink)">
+              Share
             </div>
-          </ng-container>
-                
+          <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >
             <div class="option" fxLayoutAlign="center center"
               [matMenuTriggerFor]="timerMenu"
@@ -31,6 +29,15 @@
               matTooltip="Timer"
               show-delay="100">
                 <img src="/assets/img/dark_alarm.svg"/>
+                <div class="time-info" fxLayoutAlign="center center">
+                  <div class="ms-header-timer" *ngIf="showTimer" 
+                    [matMenuTriggerFor]="timerMenu">
+                    <benji-number-timer
+                      [timer]="timer"
+                      endStateText="Times Up!"
+                    ></benji-number-timer>
+                  </div>
+                </div>
                 <mat-menu 
                   #timerMenu="matMenu" 
                   class="dynamic-timer-menu" 
@@ -47,11 +54,6 @@
 
           <!-- Grouping control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <button
-              [matMenuTriggerFor]="groupingMenu"
-              #groupingMenuTrigger="matMenuTrigger"
-              style="width: 0px;">
-            </button>
             <div class="option" 
               fxLayoutAlign="center center"
               *ngIf="activityState && 
@@ -62,18 +64,23 @@
               matTooltip="Groups"
               [matTooltipPosition]="'below'"
               show-delay="100">
-              <img src="/assets/img/grouping.svg"/> 
+              <img src="/assets/img/side-nav/grouping.svg"/> 
+              <button
+                [matMenuTriggerFor]="groupingMenu"
+                #groupingMenuTrigger="matMenuTrigger"
+                style="width: 0px;">
+              </button>
+              <mat-menu 
+                #groupingMenu="matMenu" 
+                class="activity-settings-menu "  
+                [overlapTrigger]="false" 
+                xPosition="before">
+                <benji-grouping-control
+                  [activityState]="activityState"
+                  (socketMessage)="propagate($event)">
+                </benji-grouping-control>
+              </mat-menu>
             </div>
-            <mat-menu 
-              #groupingMenu="matMenu" 
-              class="activity-settings-menu "  
-              [overlapTrigger]="false" 
-              xPosition="before">
-              <benji-grouping-control
-                [activityState]="activityState"
-                (socketMessage)="propagate($event)">
-              </benji-grouping-control>
-            </mat-menu>
           </ng-container>
 
           <!-- Grouping Participant Dialog" -->
@@ -85,56 +92,24 @@
             </div>
           </ng-container>
 
-          <!-- Vote control -->
-          <!-- <div class="option" 
-            fxLayoutAlign="center center"
-            *ngIf="activityState && activityState.activity_type === 'BrainstormActivity'"
-            [matMenuTriggerFor]="voteMenu"
-            matTooltip="Vote"
-            [matTooltipPosition]="'below'"
-            show-delay="100">
-              <img src="/assets/img/thumb.svg"/> 
-              <mat-menu 
-                #voteMenu="matMenu" 
-                class="activity-settings-menu "  
-                [overlapTrigger]="false" 
-                xPosition="before">
-                <benji-vote-control
-                  (socketMessage)="brainstormSubmissionComplete($event)">
-                </benji-vote-control>
-              </mat-menu>
-          </div> -->
-
-          <!-- Share control -->
-          <!-- <div class="option" 
-            fxLayoutAlign="center center"
-            *ngIf="isSharingAllowed(activityState)"
-            [ngClass]="{ active: isSharing }"
-            (click)="startSharingTool()"
-            matTooltip="Vote"
-            [matTooltipPosition]="'below'"
-            show-delay="100">
-              <img src="/assets/img/shareIcon.svg"/>
-          </div> -->
-
-          <!-- Activity Settings -->
+          <!-- Activity board settings -->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <button
+            <!-- <button
               [matMenuTriggerFor]="activitySettingsMenu"
               #activitySettingsMenuTrigger="matMenuTrigger"
               style="width: 0px;"> 
-            </button>
+            </button> -->
             <div 
               *ngIf="isActivitySettingsAllowed(activityState)"
               class="option" 
-              (click)="settingsMenuClicked()"
+              (click)="openSideNav('board-settings')"
               fxLayoutAlign="center center"
-              matTooltip="Settings"
+              matTooltip="Board Settings"
               [matTooltipPosition]="'below'"
               show-delay="100">
-                <img src="/assets/img/dark_dial.svg" /> 
+                <img src="/assets/img/side-nav/settings.svg" /> 
             </div>
-            <mat-menu 
+            <!-- <mat-menu 
               class="activity-settings-menu" 
               #activitySettingsMenu="matMenu" 
               yPosition="above"
@@ -143,7 +118,33 @@
                 [activityState]="activityState"
                 (controlClicked)="controlClicked($event)">
               </benji-activity-settings>
-            </mat-menu>
+            </mat-menu> -->
+          </ng-container>
+
+          <!-- Activity board navigation -->
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
+            <div 
+              *ngIf="isActivitySettingsAllowed(activityState)"
+              class="option" 
+              (click)="openSideNav('boards')"
+              fxLayoutAlign="center center"
+              matTooltip="Boards Navigation"
+              [matTooltipPosition]="'below'"
+              show-delay="100">
+                <img src="/assets/img/side-nav/navigation.svg" /> 
+            </div>
+          </ng-container>
+
+          <!-- Board navigation back -->
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
+            <div 
+              class="back-next"
+              fxLayout="row" 
+              fxLayoutGap="6px"
+              fxLayoutAlign="center center">
+                <mat-icon>arrow_back</mat-icon>
+                <span>back</span>
+            </div>
           </ng-container>
 
           <!-- Activities Navigation -->
@@ -176,18 +177,18 @@
             </div>
           </ng-container>
 
-          <button
-            mat-button 
-            (click)="openSideNav('boards')">
-            Borads
-          </button>
-          <button
-            *ngxPermissionsOnly="'ADMIN'"
-            mat-button 
-            (click)="openSideNav('board-settings')">
-            Borad Settings
-          </button>
-          
+          <!-- Board navigation next -->
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
+            <div 
+              class="back-next"
+              fxLayout="row" 
+              fxLayoutGap="6px"
+              fxLayoutAlign="center center">
+                <span>next</span>
+                <mat-icon>arrow_forward</mat-icon>
+            </div>
+          </ng-container>
+
         </div>
 
         <ng-container *ngxPermissionsOnly="'PARTICIPANT'">

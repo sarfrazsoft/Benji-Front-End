@@ -7,23 +7,10 @@
   [routerLinkActiveOptions]="{ exact: true }"
   [routerLinkActive]="sidenavItem.disabled ? 'inactive' : 'active'"
   (click)="itemClicked(sidenavItem.navName)"
-  (mouseenter) ="mouseEnter() "  
-  (mouseleave) ="mouseLeave()"
   >
-  <div class="item-icon">
-    <div 
-      class="icon normal" 
-      [ngStyle]="{'background-image': 'url(' + sidenavItem.icon + ')'}">
-    </div>
-    <div 
-      class="icon hover" 
-      [ngStyle]="{'background-image': 'url(' + sidenavItem.hoverIcon + ')'}">
-    </div>
-    <div 
-      class="icon active" 
-      [ngStyle]="{'background-image': 'url(' + sidenavItem.activeIcon + ')'}">
-    </div>
-    <!-- <img [src]="icon + '.svg'" alt="" /> -->
+  <div 
+    class="item-icon"
+    [ngStyle]="{'background-image': 'url(' + icon + ')'}">
   </div>
   <div class="item-name">{{ sidenavItem.navName }}</div>
 </div>

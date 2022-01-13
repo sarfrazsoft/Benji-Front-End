@@ -37,11 +37,4 @@ export class SidenavItemComponent implements OnInit {
     this.authService.signOut();
   }
 
-  mouseEnter() {
-    this.icon = this.sidenavItem.hoverIcon;
-  }
-
-  mouseLeave() {
-    this.icon = this.sidenavItem.icon;
-  }
 }

@@ -119,11 +119,6 @@ export class AppComponent implements OnInit {
           border-bottom-color: ${info.parameters.primary};
         }
 
-        .item.active .item-name {
-          color: ${info.parameters.primary} !important;
-
-        }
-
         .dashboard-secondary-button {
           border: 2px solid ${info.parameters.primary};
         }

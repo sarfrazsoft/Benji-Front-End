@@ -1,8 +1,6 @@
 // TODO use variables for border color to keep it consistent across all panels
 .admin-panel {
-  padding: 60px 30px;
-  padding-top: 64px;
-  padding-left: 40px;
+  padding: 64px 64px 64px 56px;
 
   .dashboard-header {
     margin-bottom: 36px;
@@ -12,6 +10,10 @@
         font-size: 48px;
         margin: 0px;
       }
+    }
+    .dashboard-secondary-button {
+      height: 40px;
+      margin: 0px 8px;
     }
   }
 
@@ -102,5 +104,24 @@
       color: #37352F;
       line-height: unset;
     }
+  }
+  .sessions-type {
+    .ng-select-container {
+      width: 160px;
+      height: 40px;
+      border-radius: 8px;
+      border: 0px;
+      .ng-value-container .ng-placeholder {
+        color: #37352F;
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+ng-dropdown-panel {
+  &.sessions-type {
+    margin-top: 8px;
   }
 }

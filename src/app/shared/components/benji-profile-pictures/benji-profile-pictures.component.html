@@ -1,0 +1,16 @@
+<div 
+  class="session-participants" 
+  fxLayout="row"
+  fxLayoutAlign="start center">
+  <div 
+    class="participant" 
+    fxLayout="column"
+    *ngFor="let code of participantCodes">
+    <div 
+      class="initials {{'color' + getColorIndex(code)}}" 
+      fxLayout="column" 
+      fxLayoutAlign="center center">
+      {{ getInitials(code) }}
+    </div>
+  </div>
+</div>

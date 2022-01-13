@@ -25,7 +25,7 @@
       background: #F3F4F7;
       border-radius: 8px;
       border: 2px solid #F3F4F7;
-      min-height: 16px;
+      min-height: 19px;
     }
     .editing {
       input {
@@ -64,6 +64,14 @@
     background: #F3F4F7;
     border-radius: 8px;
     padding: 16px;
+    .option {
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      &.clear-board {
+        color: #EF151B;
+      }
+    }
   }
   .label {
     color: #37352F;
@@ -88,6 +96,16 @@
       background: #F3F4F7;
       border: 1px solid #E7E7E7;
     }
+  }
+  .delete-button {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    background: #EF151B;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
   }
 }
 

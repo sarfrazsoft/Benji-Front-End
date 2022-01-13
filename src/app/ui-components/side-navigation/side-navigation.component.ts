@@ -1,12 +1,15 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { UpdateMessage, BrainstormEditInstructionEvent, BrainstormEditSubInstructionEvent } from 'src/app/services/backend/schema';
+import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'side-navigation',
   templateUrl: 'side-navigation.component.html',
 })
 export class SideNavigationComponent implements OnInit {
+
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -17,10 +20,12 @@ export class SideNavigationComponent implements OnInit {
   @Output() sendMessage = new EventEmitter<any>();
   instructions = "";
   sub_instructions = "";
-
   statusDropdown = [ "Active", "View Only", "Hidden" ];
-
   participants = [ "Me Pi", "Alex Mat", "Lee Nim", "Sam M" ];
+
+  constructor(
+    private dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     if(this.activityState && this.activityState.brainstormactivity) {
@@ -66,6 +71,16 @@ export class SideNavigationComponent implements OnInit {
     const first = fullName[0] ? fullName[0].charAt(0) : '';
     const second = fullName[1] ? fullName[1].charAt(0) : '';
     return (first + second).toUpperCase();
+  }
+
+  openDeleteDialog() {
+    this.dialog.open(DeleteBoardDialogComponent, {
+      panelClass: 'delete-board-dialog'
+    })
+    .afterClosed()
+    .subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

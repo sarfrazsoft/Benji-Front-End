@@ -22,7 +22,7 @@
         <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
         <span>Duplicate</span>
       </button>
-      <button mat-menu-item (click)="deleteBoard(column)" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+      <button mat-menu-item (click)="openDeleteDialog()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
         <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
         <span>Delete</span>
       </button>
@@ -143,7 +143,7 @@
   </div>
 
   <div fxLayout="column">
-    <div class="title">Posting</div>
+    <div class="title">Post</div>
     <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
       <div 
         class="setting"
@@ -181,6 +181,25 @@
   </div>
   
   <div fxLayout="column">
+    <div class="title">Posts Order</div>
+    <div class="board-status">
+      <ng-select
+        class="board-status-dropdown"
+        appearance="outline" 
+        placeholder="Status"
+        [clearable]="false"
+        [searchable]="false"
+        [clearable]="false"
+        [items]="statusDropdown"
+        dropdownPosition="bottom">
+        <ng-template ng-option-tmp let-item="item" let-index="index">
+          <span> {{item}} </span>
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div fxLayout="column">
     <div class="title">Board Mode</div>
     <div class="board-mode active" fxLayout="row" fxLayoutGap="12px">
       <img src="../../../assets/img/side-nav/thread.svg"/>
@@ -204,5 +223,41 @@
       </div>
     </div>
   </div>
+
+  <div fxLayout="column">
+    <div class="title">Admin</div>
+    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+      <div 
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Share Board</div>
+          <div class="sub-label">Share board link to invite participants</div>
+        </div>
+        <div class="option primary-color">
+          Copy link
+        </div>
+      </div>
+      <div 
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Clear Board</div>
+          <div class="sub-label">Delete all posts on the board</div>
+        </div>
+        <div class="option clear-board">
+          Clear board
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="delete-button">Delete Board</div>
 
 </div>

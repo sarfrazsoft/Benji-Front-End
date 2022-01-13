@@ -6,11 +6,13 @@
   z-index: 1;
   filter: drop-shadow(0px 1px 3px #D5D9DE);
   .benji-logo-container {
-    height: 24px;
+    //height: 24px;
     img {
-      height: 100%;
-      border-right: 1px solid #E7E7E7;
+      height: 24px;
       padding-right: 16px;
+      &.has-name {
+        border-right: 1px solid #E7E7E7;
+      }
     }
     .session-title {
       font-size: 16px;
@@ -36,12 +38,51 @@
       }
     }
   }
+  .share-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #616161;
+    cursor: pointer;
+  }
+  .toolbar-initials-circles {
+    opacity: 0.7;
+    .initials {
+      width: 24px;
+      height: 24px;
+      border: 1px solid #fff;
+      font-size: 10px;
+      font-weight: 500;
+      line-height: normal;
+      margin-left: -4px;
+    }
+  }
   .time-info {
     .number-text {
       color: #616161;
     }
     .ms-header-timer {
       margin-right: 24px;
+    }
+  }
+  .back-next {
+    border: 1px solid #E7E7E7;
+    border-radius: 4px;
+    color: #bdbdbd;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    .mat-icon {
+      height: 15px;
+      width: 15px;
+      font-size: 16px;
+    }
+    &:hover {
+      color: #616161;
+      cursor: pointer;
+    }
+    &.active {
+      color: #616161;
+      cursor: pointer;
     }
   }
 }

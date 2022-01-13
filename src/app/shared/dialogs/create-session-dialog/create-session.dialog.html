@@ -1,0 +1,61 @@
+<div class="build-session-dialog">
+  <mat-dialog-content class="create-session">
+    <div fxLayout="column" fxLayoutGap="24px">
+      <h2 class="heading">Create new session</h2>
+      <div>
+        <div class="title">Title</div>
+        <div class="edit">
+          <div 
+            *ngIf="!editingTitle"
+            (click)="editTitle()"
+            class="not-editing">
+            {{ sessionTitle? sessionTitle : placeholderTitle }}
+          </div>
+          <div *ngIf="editingTitle" class="editing">
+            <input
+              #title
+              style="width: 100%;"
+              type="text"
+              [(ngModel)]="sessionTitle" 
+              (blur)="saveEditedTitle()"
+              (keyup.enter)="saveEditedTitle()">
+          </div>
+        </div>
+      </div>
+      <div fxLayout="column">
+        <div class="title">Description</div>
+        <div class="edit">
+          <div 
+            *ngIf="!editingDescription"
+            (click)="editDescription()"
+            class="not-editing">
+            {{ sessionDescription? sessionDescription : placeholderDescription }}
+          </div>
+          <div *ngIf="editingDescription" class="editing">
+            <input
+              #description
+              style="width: 100%;"
+              type="text"
+              [(ngModel)]="sessionDescription" 
+              (blur)="saveEditedDescription()"
+              (keyup.enter)="saveEditedDescription()">
+          </div>
+        </div>
+      </div>
+      <div class="controls-container" fxLayout="row" fxLayoutGap="8px">
+        <button
+          class="launch-button bg-primary-color"
+          (click)="onSubmit()"
+        >
+          Create Session
+        </button>
+        <button
+          class="cancel-button"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>

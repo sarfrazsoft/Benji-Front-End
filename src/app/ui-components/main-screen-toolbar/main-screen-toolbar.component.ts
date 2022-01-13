@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
+import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
@@ -29,6 +29,7 @@ import { LayoutService } from '../../services/layout.service';
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
   styleUrls: ['./main-screen-toolbar.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenToolbarComponent implements OnInit, OnChanges {
   darkLogo = '';
@@ -53,6 +54,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
 
   shareParticipantLink = '';
+  hostname = window.location.host + '/participant/join?link=';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
   activitySettingsAllowed = ActivitySettingsAllowed;
@@ -69,6 +71,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
+
+  
+
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
@@ -81,7 +86,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    this.shareParticipantLink = window.location.href + '?share=participant';
+    //this.shareParticipantLink = window.location.href + '?share=participant';
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
 
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -99,8 +104,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
-
-    console.log(this.activityState);
+    this.loadParticipantCodes();
+    
+    this.shareParticipantLink = this.hostname + this.roomCode;
   }
 
   showParticipantGroupingButton() {
@@ -251,6 +257,16 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   openSideNav(type) {
     this.sideNavEvent.emit(type);
+  }
+
+  loadParticipantCodes() {
+    this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      this.participantCodes.push(participant.participant_code);
+    });
+  }
+
+  copyLink(val: string) {
+    this.utilsService.copyToClipboard(val);
   }
 
 }
