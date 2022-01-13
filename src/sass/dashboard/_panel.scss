@@ -12,6 +12,7 @@
       }
     }
     .dashboard-secondary-button {
+      height: 40px;
       margin: 0px 8px;
     }
   }
@@ -103,5 +104,24 @@
       color: #37352F;
       line-height: unset;
     }
+  }
+  .sessions-type {
+    .ng-select-container {
+      width: 160px;
+      height: 40px;
+      border-radius: 8px;
+      border: 0px;
+      .ng-value-container .ng-placeholder {
+        color: #37352F;
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+ng-dropdown-panel {
+  &.sessions-type {
+    margin-top: 8px;
   }
 }
