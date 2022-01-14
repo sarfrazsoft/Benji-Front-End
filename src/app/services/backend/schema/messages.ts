@@ -867,16 +867,16 @@ export class CardsRestartActivityEvent extends ActivityEvent {
   event_name = 'CardsRestartActivityEvent';
 }
 export class BrainstormEditInstructionEvent extends ActivityEvent {
-  event_name = 'BrainstormEditInstructionEvent';
-  constructor(title: string) {
+  event_name = 'BrainstormEditBoardInstruction';
+  constructor(title: string, board: number) {
     super();
-    this.extra_args = { instructions: title };
+    this.extra_args = { instructions: title, board: board };
   }
 }
 export class BrainstormEditSubInstructionEvent extends ActivityEvent {
-  event_name = 'BrainstormEditSubInstructionEvent';
-  constructor(instructions: string) {
+  event_name = 'BrainstormEditSubInstruction';
+  constructor(instructions: string, board: number) {
     super();
-    this.extra_args = { sub_instructions: instructions };
+    this.extra_args = { sub_instructions: instructions, board: board };
   }
 }

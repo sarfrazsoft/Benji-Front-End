@@ -203,9 +203,14 @@ export class MainScreenBrainstormingActivityComponent
 
   onChanges() {
     this.eventType = this.getEventType();
-    // this.loadUsersCounts();
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
+    if (
+      this.eventType === 'BrainstormEditBoardInstruction' ||
+      this.eventType === 'BrainstormEditSubInstruction'
+    ) {
+      this.selectedBoard = this.activityState.brainstormactivity.boards[this.selectedBoardIndex];
+    }
     // populate groupings dropdown
     // if (this.act.grouping && this.act.grouping.groups.length) {
     //   this.permissionsService.hasPermission('PARTICIPANT').then((val) => {

@@ -64,7 +64,7 @@ export class SideNavigationComponent implements OnInit {
 
   saveEditedInstructions() {
     this.editingInstructions = false;
-    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions));
+    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.board.id));
   }
 
   editSubInstructions() {
@@ -76,7 +76,7 @@ export class SideNavigationComponent implements OnInit {
 
   saveEditedSubInstructions() {
     this.editingSubInstructions = false;
-    this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions));
+    this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.board.id));
   }
 
   getInitials(nameString: string) {
