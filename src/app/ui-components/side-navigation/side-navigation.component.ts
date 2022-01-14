@@ -29,6 +29,7 @@ export class SideNavigationComponent implements OnInit {
   participants = ['Me Pi', 'Alex Mat', 'Lee Nim', 'Sam M'];
 
   board: Board;
+  boardMode: string;
 
   constructor(private dialog: MatDialog, private brainstormService: BrainstormService) {}
 
@@ -95,5 +96,9 @@ export class SideNavigationComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
       });
+  }
+
+  setBoardMode(mode: string) {
+    this.boardMode = mode;
   }
 }
