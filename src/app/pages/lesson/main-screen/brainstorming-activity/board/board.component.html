@@ -75,6 +75,7 @@
   <div class="brainstorm-container">
     <ng-container *ngIf="categorizeFlag">
       <benji-categorized-ideas
+        [board]="board"
         [submissionScreen]="submissionScreen"
         [voteScreen]="voteScreen"
         [act]="act"
@@ -96,6 +97,7 @@
 
     <ng-container *ngIf="!categorizeFlag">
       <benji-uncategorized-ideas
+        [board]="board"
         [submissionScreen]="submissionScreen"
         [voteScreen]="voteScreen"
         [act]="act"

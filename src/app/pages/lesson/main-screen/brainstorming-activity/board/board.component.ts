@@ -25,7 +25,6 @@ import {
 import { clone, cloneDeep, uniqBy } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
-import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
 import * as global from 'src/app/globals';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import {
@@ -78,7 +77,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   @Input() eventType;
 
   showParticipantsGroupsDropdown = false;
-  participantCode;
+  @Input() participantCode;
 
   instructions = '';
   sub_instructions = '';
@@ -195,6 +194,35 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.saveIdea(val);
       }
     });
+  }
+
+  applyGroupingOnActivity(state: UpdateMessage) {
+    // const activityType = this.getActivityType().toLowerCase();
+    if (this.board.board_activity.grouping !== null) {
+      // if grouping is already applied return
+      return;
+    }
+    // if grouping is not applied check if grouping tool has
+    // information if grouping should be applied on this activity or not
+    const sm = state;
+    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+      const gt = sm.running_tools.grouping_tool;
+      for (const grouping of gt.groupings) {
+        // if (
+        //   grouping.assignedActivities &&
+        //   grouping.assignedActivities.includes(state[activityType].activity_id)
+        // ) {
+        // const assignedActivities = ['1637726964645'];
+        // if (assignedActivities.includes(state[activityType].activity_id)) {
+        // if (activityType === 'brainstormactivity') {
+        this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id, this.board.id));
+        // } else if (activityType === 'casestudyactivity') {
+        //   this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
+        // }
+        break;
+        // }
+      }
+    }
   }
 
   ngOnChanges() {

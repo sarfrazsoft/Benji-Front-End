@@ -126,7 +126,7 @@ export class MainScreenBrainstormingActivityComponent
   imageDialogRef;
   selectedImageUrl;
 
-  selectedBoardIndex = 1;
+  selectedBoardIndex = 0;
   selectedBoard: Board;
 
   ngOnInit() {
@@ -134,6 +134,7 @@ export class MainScreenBrainstormingActivityComponent
     this.participantCode = this.getParticipantCode();
     this.act = this.activityState.brainstormactivity;
     this.selectedBoard = this.activityState.brainstormactivity.boards[this.selectedBoardIndex];
+    this.brainstormService.selectedBoard = this.selectedBoard;
     this.eventType = this.getEventType();
 
     // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
@@ -461,15 +462,15 @@ export class MainScreenBrainstormingActivityComponent
 
   getUsersIdeas(act: BrainstormActivity): Array<Idea> {
     let arr: Array<Idea> = [];
-    act.brainstormcategory_set.forEach((category) => {
-      if (!category.removed) {
-        category.brainstormidea_set.forEach((idea) => {
-          if (!idea.removed) {
-            arr.push(idea);
-          }
-        });
-      }
-    });
+    // act.brainstormcategory_set.forEach((category) => {
+    //   if (!category.removed) {
+    //     category.brainstormidea_set.forEach((idea) => {
+    //       if (!idea.removed) {
+    //         arr.push(idea);
+    //       }
+    //     });
+    //   }
+    // });
     arr = arr.filter(
       (v, i, s) => i === s.findIndex((t) => t.submitting_participant === v.submitting_participant)
     );

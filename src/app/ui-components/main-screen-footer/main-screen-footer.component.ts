@@ -146,13 +146,13 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     } else if (eventType === 'fastForward') {
       if (this.activityState.activity_type === this.at.brainStorm) {
         const act = this.activityState.brainstormactivity;
-        if (!act.submission_complete) {
-          this.socketMessage.emit(new BrainstormSubmissionCompleteInternalEvent());
-        } else if (!act.voting_complete) {
-          this.socketMessage.emit(new BrainstormVotingCompleteInternalEvent());
-        } else {
-          this.socketMessage.emit(new FastForwardEvent());
-        }
+        // if (!act.submission_complete) {
+        //   this.socketMessage.emit(new BrainstormSubmissionCompleteInternalEvent());
+        // } else if (!act.voting_complete) {
+        //   this.socketMessage.emit(new BrainstormVotingCompleteInternalEvent());
+        // } else {
+        //   this.socketMessage.emit(new FastForwardEvent());
+        // }
       } else {
         this.socketMessage.emit(new FastForwardEvent());
       }

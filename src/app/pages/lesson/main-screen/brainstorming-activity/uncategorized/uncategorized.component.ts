@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
-import { BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
+import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './uncategorized.component.html',
 })
 export class UncategorizedComponent implements OnInit, OnChanges {
+  @Input() board: Board;
   @Input() submissionScreen;
   @Input() voteScreen;
   @Input() act;
@@ -45,9 +46,10 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
+    console.log(this.board);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
-      this.ideas = this.populateIdeas(this.act);
+      this.ideas = this.populateIdeas(this.board);
       this.cycle = 'second';
     } else {
       // let eventType;
@@ -73,9 +75,9 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     }
   }
 
-  populateIdeas(act) {
+  populateIdeas(board) {
     const ideas = [];
-    act.brainstormcategory_set.forEach((category) => {
+    board.brainstormcategory_set.forEach((category) => {
       if (!category.removed && category.brainstormidea_set) {
         category.brainstormidea_set.forEach((idea: Idea) => {
           if (!idea.removed) {

@@ -125,33 +125,4 @@ export abstract class BaseActivityComponent implements OnInit {
   public get getterEventType(): string {
     return this.activityState.eventType;
   }
-
-  applyGroupingOnActivity(state: UpdateMessage) {
-    const activityType = this.getActivityType().toLowerCase();
-    if (state[activityType].grouping !== null) {
-      // if grouping is already applied return
-      return;
-    }
-    // if grouping is not applied check if grouping tool has
-    // information if grouping should be applied on this activity or not
-    const sm = state;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      for (const grouping of gt.groupings) {
-        if (
-          grouping.assignedActivities &&
-          grouping.assignedActivities.includes(state[activityType].activity_id)
-        ) {
-          // const assignedActivities = ['1637726964645'];
-          // if (assignedActivities.includes(state[activityType].activity_id)) {
-          if (activityType === 'brainstormactivity') {
-            this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id));
-          } else if (activityType === 'casestudyactivity') {
-            this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
-          }
-          break;
-        }
-      }
-    }
-  }
 }

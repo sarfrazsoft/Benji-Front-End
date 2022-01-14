@@ -806,9 +806,9 @@ export class StartCaseStudyGroupEvent extends ActivityEvent {
 
 export class StartBrainstormGroupEvent extends ActivityEvent {
   event_name = 'StartBrainstormGroupEvent';
-  constructor(id: number) {
+  constructor(id: number, board: number) {
     super();
-    this.extra_args = { grouping: id };
+    this.extra_args = { grouping: id, board: id };
   }
 }
 export class AssignGroupingToActivities extends ActivityEvent {

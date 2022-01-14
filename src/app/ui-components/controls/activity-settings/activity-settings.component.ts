@@ -41,9 +41,9 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
         for (let i = 0; i < this.settings.length; i++) {
           const element = this.settings[i];
           if (element.name === 'categorize') {
-            element.default = as.brainstormactivity.categorize_flag;
+            // element.default = as.brainstormactivity.categorize_flag;
           } else if (element.name === 'participantNames') {
-            element.default = as.brainstormactivity.show_participant_name_flag;
+            // element.default = as.brainstormactivity.show_participant_name_flag;
           }
         }
       } else if (as.activity_type === this.at.convoCards) {

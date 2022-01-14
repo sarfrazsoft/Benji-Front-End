@@ -16,6 +16,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
 import {
+  Board,
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
   BrainstormRemoveCategoryEvent,
@@ -41,6 +42,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
 export class CategorizedComponent implements OnInit, OnChanges {
   @Input() submissionScreen;
   @Input() voteScreen;
+  @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
   @Input() minWidth;
@@ -73,27 +75,27 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
-      this.columns = this.brainstormService.populateCategories(this.act, this.columns);
+      this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {
-        this.brainstormService.addIdeaToCategory(this.act, this.columns);
+        this.brainstormService.addIdeaToCategory(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.act, this.columns);
+        this.brainstormService.ideaCommented(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.act, this.columns);
+        this.brainstormService.ideaCommented(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
-        this.brainstormService.ideaHearted(this.act, this.columns);
+        this.brainstormService.ideaHearted(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
-        this.brainstormService.ideaHearted(this.act, this.columns);
+        this.brainstormService.ideaHearted(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
-        this.brainstormService.ideaRemoved(this.act, this.columns);
+        this.brainstormService.ideaRemoved(this.board, this.columns);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
-        this.brainstormService.ideaEdited(this.act, this.columns);
+        this.brainstormService.ideaEdited(this.board, this.columns);
       } else if (this.eventType === 'BrainstormCreateCategoryEvent') {
-        this.columns = this.brainstormService.populateCategories(this.act, this.columns);
+        this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveCategoryEvent') {
-        this.columns = this.brainstormService.populateCategories(this.act, this.columns);
+        this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       }
     }
     this.sortIdeas(this.columns);
@@ -126,7 +128,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   onColumnNameBlur(column, event) {
     let selectedCat: Category;
-    this.act.brainstormcategory_set.forEach((cat: Category) => {
+    this.board.brainstormcategory_set.forEach((cat: Category) => {
       if (column.id === cat.id) {
         selectedCat = cat;
       }
@@ -195,7 +197,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   sendCategorizeEvent(event) {
     const id = event.container.data[event.currentIndex].id;
     let categoryId;
-    this.act.brainstormcategory_set.forEach((cat) => {
+    this.board.brainstormcategory_set.forEach((cat) => {
       cat.brainstormidea_set.forEach((idea) => {
         if (idea.id === id) {
           categoryId = cat.id;
