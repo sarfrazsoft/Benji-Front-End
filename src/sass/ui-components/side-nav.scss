@@ -86,7 +86,6 @@
   }
   .board-mode {
     background: #fff;
-    border: 1px solid #fff;
     border-radius: 8px;
     padding: 16px 12px 16px 16px;
     cursor: pointer;
@@ -95,7 +94,6 @@
     }
     &:hover {
       background: #F3F4F7;
-      border: 1px solid #E7E7E7;
     }
     .selected {
       display: none;
