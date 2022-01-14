@@ -162,7 +162,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
       if (activityType === 'casestudyactivity') {
         this.socketMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
       } else if (activityType === 'brainstormactivity') {
-        this.socketMessage.emit(new StartBrainstormGroupEvent(grouping.id));
+        // this.socketMessage.emit(new StartBrainstormGroupEvent(grouping.id));
       }
       // this.socketMessage.emit(new ViewGroupingEvent(false));
     } else {

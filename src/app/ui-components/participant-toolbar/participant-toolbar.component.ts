@@ -56,11 +56,11 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
             this.showTimer = true;
           }
         } else if (as.activity_type === this.at.brainStorm) {
-          if (as.brainstormactivity.hide_timer) {
-            this.showTimer = false;
-          } else {
-            this.showTimer = true;
-          }
+          // if (as.brainstormactivity.hide_timer) {
+          //   this.showTimer = false;
+          // } else {
+          //   this.showTimer = true;
+          // }
         }
       } else {
         this.showTimer = false;

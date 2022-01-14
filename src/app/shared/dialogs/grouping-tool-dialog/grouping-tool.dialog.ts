@@ -297,7 +297,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
       if (activityType === 'casestudyactivity') {
         this.sendMessage.emit(new StartCaseStudyGroupEvent(this.selectedGrouping.id));
       } else if (activityType === 'brainstormactivity') {
-        this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
+        // this.sendMessage.emit(new StartBrainstormGroupEvent(this.selectedGrouping.id));
       }
       // this.showStartGroupingButton = false;
       // this.sendMessage.emit(new ViewGroupingEvent(false));

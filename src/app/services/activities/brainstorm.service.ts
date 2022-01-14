@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { differenceBy, remove } from 'lodash';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { BrainstormActivity, Category, Idea } from '../backend/schema';
+import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
@@ -13,9 +13,29 @@ export class BrainstormService {
   get saveIdea(): any {
     return this.saveIdea$.getValue();
   }
+
+  selectedBoard$ = new BehaviorSubject<any>(null);
+
+  set selectedBoard(l: any) {
+    this.selectedBoard$.next(l);
+  }
+  get selectedBoard(): any {
+    return this.selectedBoard$.getValue();
+  }
   constructor() {}
 
-  getUserIdeas(userID: number, act: BrainstormActivity): Array<Idea> {
+  getMyGroup(userId, groups) {
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
+      const groupParticipants = group.participants;
+      if (groupParticipants.includes(userId)) {
+        return group;
+      }
+    }
+    return null;
+  }
+
+  getUserIdeas(userID: number, act: Board): Array<Idea> {
     const arr: Array<Idea> = [];
     act.brainstormcategory_set.forEach((category) => {
       if (!category.removed) {
@@ -35,7 +55,7 @@ export class BrainstormService {
     return arr;
   }
 
-  addIdeaToCategory(act, existingCategories) {
+  addIdeaToCategory(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category, index) => {
       existingCategories.forEach((existingCategory) => {
         if (existingCategory.id === category.id) {
@@ -67,7 +87,7 @@ export class BrainstormService {
     return columns;
   }
 
-  ideaHearted(act, existingCategories) {
+  ideaHearted(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -102,7 +122,7 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  ideaCommented(act: BrainstormActivity, existingCategories) {
+  ideaCommented(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -136,7 +156,7 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  ideaRemoved(act: BrainstormActivity, existingCategories) {
+  ideaRemoved(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category, index) => {
       existingCategories.forEach((existingCategory) => {
         if (existingCategory.id === category.id) {
@@ -157,7 +177,7 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  ideaEdited(act: BrainstormActivity, existingCategories) {
+  ideaEdited(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category: Category, categoryIndex) => {
       if (category.brainstormidea_set) {
         const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);

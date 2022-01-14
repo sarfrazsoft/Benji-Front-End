@@ -1,15 +1,20 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { UpdateMessage, BrainstormEditInstructionEvent, BrainstormEditSubInstructionEvent } from 'src/app/services/backend/schema';
-import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
+import { BrainstormService } from 'src/app';
+import {
+  Board,
+  BrainstormEditInstructionEvent,
+  BrainstormEditSubInstructionEvent,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
+import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
 
 @Component({
   selector: 'side-navigation',
   templateUrl: 'side-navigation.component.html',
 })
 export class SideNavigationComponent implements OnInit {
-
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -18,26 +23,34 @@ export class SideNavigationComponent implements OnInit {
   editingSubInstructions: boolean;
   @ViewChild('instructions') SubInstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
-  instructions = "";
-  sub_instructions = "";
-  statusDropdown = [ "Active", "View Only", "Hidden" ];
-  participants = [ "Me Pi", "Alex Mat", "Lee Nim", "Sam M" ];
+  instructions = '';
+  sub_instructions = '';
+  statusDropdown = ['Active', 'View Only', 'Hidden'];
+  participants = ['Me Pi', 'Alex Mat', 'Lee Nim', 'Sam M'];
 
-  constructor(
-    private dialog: MatDialog,
-  ) {}
+  board: Board;
+
+  constructor(private dialog: MatDialog, private brainstormService: BrainstormService) {}
 
   ngOnInit(): void {
-    if(this.activityState && this.activityState.brainstormactivity) {
-      this.instructions = this.activityState.brainstormactivity.instructions;
-      this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
-    }
+    // if (this.activityState && this.activityState.brainstormactivity) {
+    //   this.instructions = this.activityState.brainstormactivity.instructions;
+    //   this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
+    // }
+
+    this.brainstormService.selectedBoard$.subscribe((board: Board) => {
+      if (board) {
+        this.board = board;
+        this.instructions = board.board_activity.instructions;
+        this.sub_instructions = board.board_activity.sub_instructions;
+      }
+    });
   }
 
   diplayInfo() {
     console.log(this.activityState);
   }
-  
+
   closeNav() {
     this.sidenav.close();
   }
@@ -51,9 +64,9 @@ export class SideNavigationComponent implements OnInit {
 
   saveEditedInstructions() {
     this.editingInstructions = false;
-    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions));
+    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.board.id));
   }
-  
+
   editSubInstructions() {
     this.editingSubInstructions = true;
     setTimeout(() => {
@@ -63,7 +76,7 @@ export class SideNavigationComponent implements OnInit {
 
   saveEditedSubInstructions() {
     this.editingSubInstructions = false;
-    this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions));
+    this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.board.id));
   }
 
   getInitials(nameString: string) {
@@ -74,13 +87,13 @@ export class SideNavigationComponent implements OnInit {
   }
 
   openDeleteDialog() {
-    this.dialog.open(DeleteBoardDialogComponent, {
-      panelClass: 'delete-board-dialog'
-    })
-    .afterClosed()
-    .subscribe(res => {
-      console.log(res);
-    });
+    this.dialog
+      .open(DeleteBoardDialogComponent, {
+        panelClass: 'delete-board-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
-
 }

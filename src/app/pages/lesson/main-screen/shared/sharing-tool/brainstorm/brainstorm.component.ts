@@ -20,7 +20,7 @@ export class BrainstormComponent implements OnInit, OnChanges {
   ngOnChanges() {}
 
   update() {
-    this.ideas = this.brainstormService.getUserIdeas(this.currentSpeaker.id, this.data.brainstormactivity);
+    // this.ideas = this.brainstormService.getUserIdeas(this.currentSpeaker.id, this.data.brainstormactivity);
     // console.log(this.currentSpeaker)
     // console.log(this.data)
   }

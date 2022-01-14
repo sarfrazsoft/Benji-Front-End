@@ -806,9 +806,9 @@ export class StartCaseStudyGroupEvent extends ActivityEvent {
 
 export class StartBrainstormGroupEvent extends ActivityEvent {
   event_name = 'StartBrainstormGroupEvent';
-  constructor(id: number) {
+  constructor(id: number, board: number) {
     super();
-    this.extra_args = { grouping: id };
+    this.extra_args = { grouping: id, board: id };
   }
 }
 export class AssignGroupingToActivities extends ActivityEvent {
@@ -867,16 +867,16 @@ export class CardsRestartActivityEvent extends ActivityEvent {
   event_name = 'CardsRestartActivityEvent';
 }
 export class BrainstormEditInstructionEvent extends ActivityEvent {
-  event_name = 'BrainstormEditInstructionEvent';
-  constructor(title: string) {
+  event_name = 'BrainstormEditBoardInstruction';
+  constructor(title: string, board: number) {
     super();
-    this.extra_args = { instructions: title };
+    this.extra_args = { instructions: title, board: board };
   }
 }
 export class BrainstormEditSubInstructionEvent extends ActivityEvent {
-  event_name = 'BrainstormEditSubInstructionEvent';
-  constructor(instructions: string) {
+  event_name = 'BrainstormEditSubInstruction';
+  constructor(instructions: string, board: number) {
     super();
-    this.extra_args = { sub_instructions: instructions };
+    this.extra_args = { sub_instructions: instructions, board: board };
   }
 }

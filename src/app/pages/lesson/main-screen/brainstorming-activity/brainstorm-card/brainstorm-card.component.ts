@@ -24,6 +24,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  Board,
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
   BrainstormRemoveCategoryEvent,
@@ -69,6 +70,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   ],
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
+  @Input() board: Board;
   @Input() item;
   @Input() category;
   @Input() submissionScreen;
@@ -89,7 +91,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
 
-  commentModel = "";
+  commentModel = '';
   // columns = [];
   // cycle = 'first';
 
@@ -204,7 +206,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       panelClass: assignedClass,
       data: {
         showCategoriesDropdown: this.categorizeFlag,
-        categories: this.activityState.brainstormactivity.brainstormcategory_set,
+        categories: this.board.brainstormcategory_set,
         item: this.item,
         category: this.category,
         myGroup: this.myGroup,

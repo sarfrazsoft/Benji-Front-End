@@ -1,11 +1,4 @@
-<benji-ideas-board
-  [board]="selectedBoard"
-  [activityState]="activityState"
-  [participantCode]="participantCode"
-  [eventType]="eventType"
-  (sendMessage)="sendSocketMessage($event)">
-</benji-ideas-board>
-<!-- <div fxLayout="column" class="barinstorm-main">
+<div fxLayout="column" class="barinstorm-main">
   <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-sm="column">
     <div fxLayout="column" class="instructions">
       <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
@@ -82,6 +75,7 @@
   <div class="brainstorm-container">
     <ng-container *ngIf="categorizeFlag">
       <benji-categorized-ideas
+        [board]="board"
         [submissionScreen]="submissionScreen"
         [voteScreen]="voteScreen"
         [act]="act"
@@ -103,6 +97,7 @@
 
     <ng-container *ngIf="!categorizeFlag">
       <benji-uncategorized-ideas
+        [board]="board"
         [submissionScreen]="submissionScreen"
         [voteScreen]="voteScreen"
         [act]="act"
@@ -121,4 +116,4 @@
       </benji-uncategorized-ideas>
     </ng-container>
   </div>
-</div> -->
+</div>
