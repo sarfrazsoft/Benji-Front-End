@@ -880,3 +880,10 @@ export class BrainstormEditSubInstructionEvent extends ActivityEvent {
     this.extra_args = { sub_instructions: instructions, board: board };
   }
 }
+export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
+  event_name = 'BrainstormAddBoardEventBaseEvent';
+  constructor(name: string, order: number) {
+    super();
+    this.extra_args = { name: name, order: order };
+  }
+}

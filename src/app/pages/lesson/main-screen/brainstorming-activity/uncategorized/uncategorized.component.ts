@@ -46,7 +46,6 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
-    console.log(this.board);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.ideas = this.populateIdeas(this.board);

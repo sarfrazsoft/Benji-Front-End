@@ -1,4 +1,4 @@
-<!-- <div class="courses" fxLayoutGap="40px" fxLayout="row wrap">
+<div class="courses" fxLayoutGap="40px" fxLayout="row wrap">
    <div (click)="openDetails(lesson)" *ngFor="let lesson of lessons"> 
   <div (click)="edit(lesson, $event)" *ngFor="let lesson of lessons">
     <benji-lesson-tile 
@@ -8,7 +8,7 @@
       [events]="eventsSubject.asObservable(lesson)"
       ></benji-lesson-tile>
   </div>
-</div> -->
+</div>
 
 <benji-active-lessons
   [lessonRuns]="lessonRuns"

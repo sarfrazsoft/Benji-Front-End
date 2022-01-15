@@ -1,78 +1,98 @@
-<div *ngIf="navType=='boards'" class="boards-navigation" fxLayout="column" fxLayoutGap="12px">
+<div 
+  *ngIf="navType=='boards'" 
+  class="boards-navigation" 
+  fxLayout="column" 
+  fxLayoutGap="24px">
 
-  <div fxLayout="row" fxLayoutAlign="space-between">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
     <div class="boards" (click)="diplayInfo()">Boards</div>
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
 
-  <div fxLayout="column" class="board selected" fxLayoutGap="8px">
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <div class="title">Icebreakers!</div>
-      <button
-        [matMenuTriggerFor]="menu"
-        benji-click-stop-propagation
-        disableRipple
-        aria-label="Example icon-button with a menu"
-      >
+  <div fxLayout="column" fxLayoutGap="12px">
+    <ng-container *ngFor="let board of boards; let j = index">
+      <div 
+        fxLayout="column" 
+        class="board" 
+        fxLayoutGap="8px"
+        [ngClass]="{
+          selected: selectedBoard.id === board.id
+        }">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div class="title">
+            {{ board.board_activity.instructions }}
+          </div>
+          <button
+            [matMenuTriggerFor]="menu"
+            benji-click-stop-propagation
+            disableRipple>
+            <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+          </button>
+        </div>
+        <div class="sub-title">
+          {{ board.board_activity.sub_instructions }}
+        </div>
+        <div fxLayout="row" class="persons">
+          <div *ngFor="let name of participants; let i = index;">
+            <div 
+              class="initials {{ 'color' + ( i % 10 ) }}" 
+              fxLayout="column" fxLayoutAlign="center center">
+              {{ getInitials(name) }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-container *ngxPermissionsOnly="'ADMIN'" >
+        <div
+          (click)="addBoard(j)"
+          class="add-group" 
+          fxLayoutAlign="center center">
+          <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
+        </div>
+      </ng-container>
+    </ng-container>
+  
+<!--   
+    <div fxLayout="column" class="board" fxLayoutGap="8px">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div class="title">Share your pitch with the rest of the group</div>
         <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-      </button>
-    </div>
-    <mat-menu #menu="matMenu" class="board-duplicate-delete" xPosition="before">
-      <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
-        <span>Duplicate</span>
-      </button>
-      <button mat-menu-item (click)="openDeleteDialog()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
-        <span>Delete</span>
-      </button>
-    </mat-menu>
-    <div class="sub-title">
-      Here is a description - not necessary, but nice. 
-    </div>
-    <div fxLayout="row" class="persons">
-      <div *ngFor="let name of participants; let i = index;">
-        <div 
-          class="initials {{ 'color' + ( i % 10 ) }}" 
-          fxLayout="column" fxLayoutAlign="center center">
-          {{getInitials(name)}}
-        </div>
       </div>
     </div>
-  </div>
-
-  <div *ngxPermissionsOnly="'ADMIN'" class="add-group" fxLayoutAlign="center center">
-    <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
-  </div>
-
-  <div fxLayout="column" class="board" fxLayoutGap="8px">
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <div class="title">Share your pitch with the rest of the group</div>
-      <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+  
+    <div *ngxPermissionsOnly="'ADMIN'" class="add-group" fxLayoutAlign="center center">
+      <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
     </div>
-  </div>
-
-  <div *ngxPermissionsOnly="'ADMIN'" class="add-group" fxLayoutAlign="center center">
-    <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
-  </div>
-
-  <div fxLayout="column" class="board" fxLayoutGap="8px">
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <div class="title">Did you like today’s session?</div>
-      <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-    </div>
-    <div fxLayout="row" class="persons">
-      <div *ngFor="let name of participants; let i = index;">
-        <div 
-          class="initials {{ 'color' + ( i % 10 ) }}" 
-          fxLayout="column" fxLayoutAlign="center center">
-          {{getInitials(name)}}
+  
+    <div fxLayout="column" class="board" fxLayoutGap="8px">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div class="title">Did you like today’s session?</div>
+        <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+      </div>
+      <div fxLayout="row" class="persons">
+        <div *ngFor="let name of participants; let i = index;">
+          <div 
+            class="initials {{ 'color' + ( i % 10 ) }}" 
+            fxLayout="column" fxLayoutAlign="center center">
+            {{getInitials(name)}}
+          </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
-
 </div>
+
+<mat-menu #menu="matMenu" class="board-duplicate-delete" xPosition="before">
+  <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+    <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
+    <span>Duplicate</span>
+  </button>
+  <button mat-menu-item (click)="openDeleteDialog()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+    <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+    <span>Delete</span>
+  </button>
+</mat-menu>
 
 <div  *ngIf="navType=='board-settings'" class="board-settings-navigation" fxLayout="column" fxLayoutGap="24px">
 

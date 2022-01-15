@@ -35,7 +35,6 @@ export class LessonsComponent implements OnInit {
   ngOnInit() {
     if (this.lessons.length) {
       this.lessons = orderBy(this.lessons, (lesson) => new Date(lesson.last_edited), 'desc');
-      //this.lessons = this.lessons.slice(0, 3);
     }
   }
 
