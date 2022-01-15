@@ -1,9 +1,21 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BrainstormService } from 'src/app';
 import {
   Board,
+  BrainstormAddBoardEvent,
+  BrainstormAddBoardEventBaseEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   UpdateMessage,
@@ -14,7 +26,7 @@ import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-
   selector: 'side-navigation',
   templateUrl: 'side-navigation.component.html',
 })
-export class SideNavigationComponent implements OnInit {
+export class SideNavigationComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -26,9 +38,10 @@ export class SideNavigationComponent implements OnInit {
   instructions = '';
   sub_instructions = '';
   statusDropdown = ['Active', 'View Only', 'Hidden'];
-  participants = ['Me Pi', 'Alex Mat', 'Lee Nim', 'Sam M'];
+  participants = [];
 
-  board: Board;
+  selectedBoard: Board;
+  boards: Array<Board> = [];
 
   constructor(private dialog: MatDialog, private brainstormService: BrainstormService) {}
 
@@ -38,13 +51,27 @@ export class SideNavigationComponent implements OnInit {
     //   this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
     // }
 
+    if (this.navType === 'boards') {
+      this.boards = this.activityState.brainstormactivity.boards;
+    } else if (this.navType === 'board-settings') {
+    }
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
-        this.board = board;
+        this.selectedBoard = board;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
       }
     });
+  }
+
+  ngOnChanges(): void {
+    if (this.navType === 'boards') {
+      this.boards = this.activityState.brainstormactivity.boards;
+    }
+
+    if (this.selectedBoard) {
+      console.log(this.activityState.brainstormactivity.participants[this.selectedBoard.id]);
+    }
   }
 
   diplayInfo() {
@@ -53,6 +80,10 @@ export class SideNavigationComponent implements OnInit {
 
   closeNav() {
     this.sidenav.close();
+  }
+
+  addBoard(boardIndex: number) {
+    this.sendMessage.emit(new BrainstormAddBoardEventBaseEvent('Board', boardIndex));
   }
 
   editInstructions() {
@@ -64,7 +95,7 @@ export class SideNavigationComponent implements OnInit {
 
   saveEditedInstructions() {
     this.editingInstructions = false;
-    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.board.id));
+    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
   }
 
   editSubInstructions() {
@@ -76,7 +107,9 @@ export class SideNavigationComponent implements OnInit {
 
   saveEditedSubInstructions() {
     this.editingSubInstructions = false;
-    this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.board.id));
+    this.sendMessage.emit(
+      new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
+    );
   }
 
   getInitials(nameString: string) {

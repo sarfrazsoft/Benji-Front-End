@@ -4,14 +4,14 @@
   .board-settings {
     font-size: 24px;
     font-weight: 600;
-    color: #37352F;
+    color: #37352f;
     margin-bottom: 8px;
   }
   .close {
     cursor: pointer;
   }
   .title {
-    color: #37352F;
+    color: #37352f;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 8px;
@@ -22,18 +22,18 @@
       font-weight: 400;
       color: #616161;
       padding: 14px;
-      background: #F3F4F7;
+      background: #f3f4f7;
       border-radius: 8px;
-      border: 2px solid #F3F4F7;
+      border: 2px solid #f3f4f7;
       min-height: 19px;
     }
     .editing {
       input {
-        background: #FFFFFF;
+        background: #ffffff;
         border: 2px solid $primary-color;
         box-sizing: border-box;
         border-radius: 8px;
-        color: #37352F;
+        color: #37352f;
         font-size: 16px;
         font-weight: normal;
         padding: 14px;
@@ -45,12 +45,13 @@
   }
   .board-status-dropdown {
     .ng-select-container {
-      background: #F3F4F7;
+      background: #f3f4f7;
       border-radius: 8px;
       height: 48px;
       border: unset;
       padding: 6px;
-      &:focus, &:active {
+      &:focus,
+      &:active {
         outline: none;
       }
       .ng-placeholder {
@@ -61,7 +62,7 @@
     }
   }
   .posting-settings {
-    background: #F3F4F7;
+    background: #f3f4f7;
     border-radius: 8px;
     padding: 16px;
     .option {
@@ -69,12 +70,12 @@
       font-weight: 500;
       cursor: pointer;
       &.clear-board {
-        color: #EF151B;
+        color: #ef151b;
       }
     }
   }
   .label {
-    color: #37352F;
+    color: #37352f;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 4px;
@@ -93,8 +94,8 @@
       line-height: 16px;
     }
     &.active {
-      background: #F3F4F7;
-      border: 1px solid #E7E7E7;
+      background: #f3f4f7;
+      border: 1px solid #e7e7e7;
     }
   }
   .delete-button {
@@ -102,7 +103,7 @@
     font-size: 16px;
     font-weight: 600;
     padding: 12px;
-    background: #EF151B;
+    background: #ef151b;
     text-align: center;
     border-radius: 8px;
     cursor: pointer;
@@ -115,22 +116,21 @@
   .boards {
     font-size: 24px;
     font-weight: 600;
-    color: #37352F;
-    margin-bottom: 8px;
+    color: #37352f;
   }
   .close {
     cursor: pointer;
   }
   .board {
     padding: 14px;
-    border: 2px solid #F3F4F7;
-    background: #F3F4F7;
+    border: 2px solid #f3f4f7;
+    background: #f3f4f7;
     border-radius: 8px;
     &.selected {
       border: 2px solid $primary-color;
     }
     .title {
-      color: #37352F;
+      color: #37352f;
       font-weight: 600;
       font-size: 16px;
     }
@@ -153,7 +153,15 @@
         font-weight: 500;
         font-size: 12px;
         border-radius: 50%;
-        &.color0, &.color1, &.color2, &.color3, &.color4, &.color5, &.color6, &.color7, &.color8 {
+        &.color0,
+        &.color1,
+        &.color2,
+        &.color3,
+        &.color4,
+        &.color5,
+        &.color6,
+        &.color7,
+        &.color8 {
           margin-right: -4px;
           position: relative;
         }
@@ -170,8 +178,7 @@
   .mat-menu-item {
     height: 32px;
     &:hover {
-      background: #F3F4F7;
+      background: #f3f4f7;
     }
   }
 }
-

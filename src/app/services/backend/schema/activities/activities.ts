@@ -302,6 +302,7 @@ export interface WhereDoYouStandActivity {
 
 export interface BrainstormActivity extends ParentActivity {
   boards: Array<Board>;
+  participants: BoardParticipants;
 }
 
 export interface Board {
@@ -311,6 +312,10 @@ export interface Board {
   order: number;
   removed: boolean;
   brainstormcategory_set: Array<Category>;
+}
+
+export interface BoardParticipants {
+  [boardID: string]: Array<number>;
 }
 
 export interface BoardInfo {
