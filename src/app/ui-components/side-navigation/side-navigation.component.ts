@@ -14,7 +14,6 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BrainstormService } from 'src/app';
 import {
   Board,
-  BrainstormAddBoardEvent,
   BrainstormAddBoardEventBaseEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
