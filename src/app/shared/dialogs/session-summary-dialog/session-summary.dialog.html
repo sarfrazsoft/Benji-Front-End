@@ -1,80 +1,115 @@
-<div class="build-session-dialog">
+<!-- <div class="build-session-dialog">
   <mat-dialog-content class="create-session">
     <div fxLayout="column" fxLayoutGap="24px">
       <h2 class="heading">Session Summary</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
+
+      </form>
       <div>
         <div class="title">Title</div>
         <div class="edit">
-          <div 
-            *ngIf="!editingTitle"
-            (click)="editTitle()"
-            class="not-editing">
-            {{ sessionTitle? sessionTitle : placeholderTitle }}
-          </div>
           <div *ngIf="editingTitle" class="editing">
             <input
-              #title
+
               style="width: 100%;"
               type="text"
               [(ngModel)]="sessionTitle" 
               (blur)="saveEditedTitle()"
-              (keyup.enter)="saveEditedTitle()">
+              (keyup.enter)="saveEditedTitle()"
+              placeholder="Give your session a name">
           </div>
         </div>
       </div>
       <div fxLayout="column">
         <div class="title">Description</div>
         <div class="edit">
-          <div 
-            *ngIf="!editingDescription"
-            (click)="editDescription()"
-            class="not-editing">
-            {{ sessionDescription? sessionDescription : placeholderDescription }}
-          </div>
           <div *ngIf="editingDescription" class="editing">
             <textarea
-              #description
               class="border-color-primary"
               style="width: 100%;"
               type="text"
               [(ngModel)]="sessionDescription" 
               (blur)="saveEditedDescription()"
-              (keyup.enter)="saveEditedDescription()"></textarea>
+              (keyup.enter)="saveEditedDescription()"
+              placeholder="This is where the instructions go..."></textarea>
           </div>
-        </div>
-      </div>
-      <div fxLayout="column">
-        <div class="title">Board Status</div>
-        <div class="edit">
-          <ng-select
-            class="board-status"
-            [items]="times"
-            bindLabel="title"
-            placeholder="All Sessions"
-            [clearable]="false"
-            bindValue="id"
-            (change)="changeGroup($event)"
-            [(ngModel)]="myGroupId"
-            appendTo="body"
-            [searchable]="false"
-          >
-          </ng-select>
         </div>
       </div>
       <div class="controls-container" fxLayout="row" fxLayoutGap="8px">
         <button
           class="launch-button bg-primary-color"
-          (click)="onSubmit()"
+          type="submit"
         >
           Save
         </button>
         <button
           class="cancel-button"
-          (click)="cancel()"
+          matDialogClose
         >
           Cancel
         </button>
       </div>
     </div>
+  </mat-dialog-content>
+</div> -->
+
+<div class="build-session-dialog" fxLayout="column">
+  <mat-dialog-content class="create-session">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="24px">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <h2 class="heading">
+          Session Summary
+        </h2>
+        <button class="close-button" matDialogClose>
+          <!-- <mat-icon class="icon-white">clear</mat-icon> -->
+        </button>
+      </div>
+      <div class="edit">
+        <div class="title">Title</div>
+        <input
+          id="title"
+          #titleInput
+          class="not-editing"
+          (focus)="focusTitle = true"
+          (blur)="focusTitle = false"
+          [ngClass]="{'border-color-primary': focusTitle}"
+          required
+          type="text"
+          formControlName="title"
+          placeholder="Give your session a title"
+        >
+      </div>
+      <div class="edit">
+        <div class="title">Description</div>
+        <textarea
+          id="description"
+          class="not-editing"
+          (focus)="focusDescription = true"
+          (blur)="focusDescription = false"
+          [ngClass]="{'border-color-primary': focusDescription}"
+          required
+          type="text"
+          rows="2"
+          formControlName="description"
+          placeholder="This is where the instructions go..."
+        ></textarea>
+      </div>
+      <div 
+        benji-click-stop-propagation 
+        class="controls-container" 
+        fxLayout="row" 
+        fxLayoutAlign="start" 
+        fxLayoutGap="8px">
+        <button
+          class="dialog-controls bg-primary-color white-color start-resume-buttons"
+          type="submit"
+        >
+          Save
+        </button>
+        <button class="dialog-controls primary-color bg-sky" matDialogClose>
+          Cancel
+        </button>
+      </div>
+    </form>
   </mat-dialog-content>
 </div>

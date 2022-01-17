@@ -600,6 +600,11 @@ ng-dropdown-panel.groups-controls {
       font-size: 24px;
       font-weight: 500;
     }
+    .close-button {
+      .mat-icon {
+        color: #6c6c6c;
+      }
+    }
     .title {
       color: #37352F;
       font-size: 14px;
@@ -617,47 +622,10 @@ ng-dropdown-panel.groups-controls {
         border: 2px solid #F3F4F7;
         min-height: 19px;
         width: 400px;
-      }
-      .editing {
-        input {
-          background: #FFFFFF;
-          border: 2px solid $primary-color;
-          box-sizing: border-box;
-          border-radius: 8px;
+        &:focus {
+          outline: none;
+          background: #fff;
           color: #37352F;
-          font-size: 16px;
-          font-weight: normal;
-          padding: 14px;
-          width: 400px;
-          &:focus {
-            outline: none;
-          }
-        }
-        textarea {
-          min-height: 56px;
-          border: 2px solid;
-          border-radius: 8px;
-          padding: 16px;
-          max-width: 400px;
-          &:focus {
-            outline: none;
-          }
-        }
-      }
-      .board-status {
-        .ng-select-container {
-          width: 200px;
-          height: 48px;
-          border-radius: 8px;
-          border: 0px;
-          background: #F3F4F7;
-          padding-left: 16px;
-          .ng-value-container .ng-placeholder {
-            color: #37352F;
-            font-size: 16px;
-            font-weight: 400;
-            line-height: normal;
-          }
         }
       }
     }

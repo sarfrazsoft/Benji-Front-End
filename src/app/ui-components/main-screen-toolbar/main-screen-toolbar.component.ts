@@ -43,7 +43,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isGroupingShowing: boolean;
   @Input() isLastActivity: boolean;
   @Input() showHeader: boolean;
-  @Input() lessonName: string;
+  @Input() lesson;
   @Input() roomCode: string;
   @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
@@ -72,8 +72,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
+  lessonName: string;
 
-  
 
   constructor(
     private layoutService: LayoutService,
@@ -130,6 +130,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
   }
 
@@ -272,6 +273,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   openSessionSummary() {
     this.matDialog.open(SessionSummaryDialogComponent, {
+      data: {
+        id: this.lesson.id,
+        title: this.lesson.lesson_name,
+        description: this.lesson.lesson_description,
+      },
       panelClass: 'session-summary-dialog'
     })
     .afterClosed()
