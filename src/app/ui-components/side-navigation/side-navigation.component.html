@@ -38,15 +38,6 @@
             [participantCodes]="participantCodes"
           ></benji-profile-pictures>
         </div>
-        <!-- <div fxLayout="row" class="persons">
-          <div *ngFor="let name of participants; let i = index;">
-            <div 
-              class="initials {{ 'color' + ( i % 10 ) }}" 
-              fxLayout="column" fxLayoutAlign="center center">
-              {{ getInitials(name) }}
-            </div>
-          </div>
-        </div> -->
       </div>
 
       <ng-container *ngxPermissionsOnly="'ADMIN'" >
