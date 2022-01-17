@@ -43,6 +43,7 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   boardMode: string;
   selectedBoard: Board;
   boards: Array<Board> = [];
+  participantCodes: number[];
 
   constructor(private dialog: MatDialog, private brainstormService: BrainstormService) {}
 
@@ -72,6 +73,7 @@ export class SideNavigationComponent implements OnInit, OnChanges {
 
     if (this.selectedBoard) {
       console.log(this.activityState.brainstormactivity.participants[this.selectedBoard.id]);
+      this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
     }
   }
 

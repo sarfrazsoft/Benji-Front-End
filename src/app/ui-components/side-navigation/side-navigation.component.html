@@ -32,7 +32,13 @@
         <div class="sub-title">
           {{ board.board_activity.sub_instructions }}
         </div>
-        <div fxLayout="row" class="persons">
+        <div class="persons">
+          <benji-profile-pictures
+            [activityState]="activityState"
+            [participantCodes]="participantCodes"
+          ></benji-profile-pictures>
+        </div>
+        <!-- <div fxLayout="row" class="persons">
           <div *ngFor="let name of participants; let i = index;">
             <div 
               class="initials {{ 'color' + ( i % 10 ) }}" 
@@ -40,7 +46,7 @@
               {{ getInitials(name) }}
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <ng-container *ngxPermissionsOnly="'ADMIN'" >
