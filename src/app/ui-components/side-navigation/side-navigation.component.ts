@@ -15,6 +15,7 @@ import { BrainstormService } from 'src/app';
 import {
   Board,
   BrainstormAddBoardEventBaseEvent,
+  BrainstormChangeBoardStatusEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   UpdateMessage,
@@ -36,11 +37,12 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   @Output() sendMessage = new EventEmitter<any>();
   instructions = '';
   sub_instructions = '';
-  statusDropdown = ['Active', 'View Only', 'Hidden'];
+  statusDropdown = ['Open', 'View Only', 'Closed'];
   participants = [];
 
   board: Board;
   boardMode: string;
+  boardStatus: string;
   selectedBoard: Board;
   boards: Array<Board> = [];
   participantCodes: number[];
@@ -62,6 +64,7 @@ export class SideNavigationComponent implements OnInit, OnChanges {
         this.selectedBoard = board;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
+        this.boardStatus = board.status === "open"? "Open" : board.status === "view_only"? "View Only" : "Closed";
       }
     });
   }
@@ -72,7 +75,6 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     }
 
     if (this.selectedBoard) {
-      console.log(this.activityState.brainstormactivity.participants[this.selectedBoard.id]);
       this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
     }
   }
@@ -135,5 +137,13 @@ export class SideNavigationComponent implements OnInit, OnChanges {
 
   setBoardMode(mode: string) {
     this.boardMode = mode;
+  }
+
+  setBoardStatus() {
+    let selected = this.boardStatus;
+    let status = selected === "Open"? "open" : selected === "View Only"? "view_only" : "closed";
+    this.sendMessage.emit(
+      new BrainstormChangeBoardStatusEvent(status, this.selectedBoard.id)
+    );
   }
 }

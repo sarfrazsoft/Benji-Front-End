@@ -311,6 +311,7 @@ export interface Board {
   name: string;
   order: number;
   removed: boolean;
+  status: string;
   brainstormcategory_set: Array<Category>;
 }
 
@@ -342,6 +343,7 @@ export interface BoardInfo {
 }
 
 export interface Category {
+  status: string;
   id: number;
   brainstormidea_set: Array<Idea>;
   category_name: string;

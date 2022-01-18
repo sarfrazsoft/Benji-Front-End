@@ -887,3 +887,10 @@ export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
     this.extra_args = { name: name, order: order };
   }
 }
+export class BrainstormChangeBoardStatusEvent extends ActivityEvent {
+  event_name = 'BrainstormChangeBoardStatusEvent';
+  constructor(status: string, board: number) {
+    super();
+    this.extra_args = { status: status, board: board };
+  }
+}

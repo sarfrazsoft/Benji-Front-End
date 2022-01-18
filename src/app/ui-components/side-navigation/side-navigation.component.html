@@ -147,10 +147,11 @@
         class="board-status-dropdown"
         appearance="outline" 
         placeholder="Status"
-        [clearable]="false"
         [searchable]="false"
         [clearable]="false"
         [items]="statusDropdown"
+        [(ngModel)]="boardStatus"
+        (change)="setBoardStatus()"
         dropdownPosition="bottom">
         <ng-template ng-option-tmp let-item="item" let-index="index">
           <span> {{item}} </span>
