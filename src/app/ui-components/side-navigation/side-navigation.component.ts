@@ -11,12 +11,15 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
   Board,
   BrainstormAddBoardEventBaseEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  HostChangeBoardEvent,
+  ParticipantChangeBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
@@ -42,7 +45,11 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   selectedBoard: Board;
   boards: Array<Board> = [];
 
-  constructor(private dialog: MatDialog, private brainstormService: BrainstormService) {}
+  constructor(
+    private dialog: MatDialog,
+    private brainstormService: BrainstormService,
+    private permissionsService: NgxPermissionsService
+  ) {}
 
   ngOnInit(): void {
     // if (this.activityState && this.activityState.brainstormactivity) {
@@ -82,7 +89,14 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   }
 
   addBoard(boardIndex: number) {
-    this.sendMessage.emit(new BrainstormAddBoardEventBaseEvent('Board', boardIndex));
+    this.sendMessage.emit(
+      new BrainstormAddBoardEventBaseEvent(
+        'Board',
+        boardIndex,
+        'Untitled ' + (boardIndex + 1),
+        'Sub Instructions'
+      )
+    );
   }
 
   editInstructions() {
@@ -127,5 +141,19 @@ export class SideNavigationComponent implements OnInit, OnChanges {
       .subscribe((res) => {
         console.log(res);
       });
+  }
+
+  navigateToBoard(board: Board) {
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
+      }
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new HostChangeBoardEvent(board.id));
+      }
+    });
   }
 }

@@ -873,6 +873,20 @@ export class BrainstormEditInstructionEvent extends ActivityEvent {
     this.extra_args = { instructions: title, board: board };
   }
 }
+export class HostChangeBoardEvent extends ActivityEvent {
+  event_name = 'HostChangeBoardEvent';
+  constructor(board: number) {
+    super();
+    this.extra_args = { board: board };
+  }
+}
+export class ParticipantChangeBoardEvent extends ActivityEvent {
+  event_name = 'ParticipantChangeBoardEvent';
+  constructor(board: number) {
+    super();
+    this.extra_args = { board: board };
+  }
+}
 export class BrainstormEditSubInstructionEvent extends ActivityEvent {
   event_name = 'BrainstormEditSubInstruction';
   constructor(instructions: string, board: number) {
@@ -882,8 +896,13 @@ export class BrainstormEditSubInstructionEvent extends ActivityEvent {
 }
 export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
   event_name = 'BrainstormAddBoardEventBaseEvent';
-  constructor(name: string, order: number) {
+  constructor(name: string, order: number, instructions: string, sub_instructions: string) {
     super();
-    this.extra_args = { name: name, order: order };
+    this.extra_args = {
+      name: name,
+      order: order,
+      instructions: instructions,
+      sub_instructions: sub_instructions,
+    };
   }
 }

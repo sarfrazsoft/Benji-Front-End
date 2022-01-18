@@ -11,13 +11,14 @@
 
   <div fxLayout="column" fxLayoutGap="12px">
     <ng-container *ngFor="let board of boards; let j = index">
-      <div 
+      <div
         fxLayout="column" 
         class="board" 
         fxLayoutGap="8px"
         [ngClass]="{
           selected: selectedBoard.id === board.id
-        }">
+        }"
+        (click)="navigateToBoard(board)">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div class="title">
             {{ board.board_activity.instructions }}
