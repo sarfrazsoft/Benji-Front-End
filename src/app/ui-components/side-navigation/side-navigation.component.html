@@ -9,6 +9,45 @@
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
 
+
+  <div fxLayout="column">
+    <div class="title">Post</div>
+    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+      <div 
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Show authorship on cards</div>
+          <div class="sub-label">Name of the author appears on card</div>
+        </div>
+        <label class="switch">
+          <input 
+            type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div 
+        class="setting"
+        benji-click-stop-propagation
+        fxLayout="row"
+        fxLayoutAlign="space-between"
+      >
+        <div>
+          <div class="label">Large Cards</div>
+          <div class="sub-label">When more space is needed</div>
+        </div>
+        <label class="switch">
+          <input 
+            type="checkbox">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
   <div fxLayout="column" fxLayoutGap="12px">
     <ng-container *ngFor="let board of boards; let j = index">
       <div
@@ -33,14 +72,11 @@
         <div class="sub-title">
           {{ board.board_activity.sub_instructions }}
         </div>
-        <div fxLayout="row" class="persons">
-          <div *ngFor="let name of participants; let i = index;">
-            <div 
-              class="initials {{ 'color' + ( i % 10 ) }}" 
-              fxLayout="column" fxLayoutAlign="center center">
-              {{ getInitials(name) }}
-            </div>
-          </div>
+        <div class="persons">
+          <benji-profile-pictures
+            [activityState]="activityState"
+            [participantCodes]="participantCodes"
+          ></benji-profile-pictures>
         </div>
       </div>
 
@@ -151,10 +187,11 @@
         class="board-status-dropdown"
         appearance="outline" 
         placeholder="Status"
-        [clearable]="false"
         [searchable]="false"
         [clearable]="false"
         [items]="statusDropdown"
+        [(ngModel)]="boardStatus"
+        (change)="setBoardStatus()"
         dropdownPosition="bottom">
         <ng-template ng-option-tmp let-item="item" let-index="index">
           <span> {{item}} </span>
@@ -222,26 +259,50 @@
 
   <div fxLayout="column">
     <div class="title">Board Mode</div>
-    <div class="board-mode active" fxLayout="row" fxLayoutGap="12px">
+    <div 
+      class="board-mode" 
+      fxLayout="row" 
+      fxLayoutGap="12px"
+      (click)="setBoardMode('thread')">
       <img src="../../../assets/img/side-nav/thread.svg"/>
       <div fxLayout="column" fxLayoutAlign="center start">
         <div class="label">Thread</div>
         <div class="sub-label">Display posts in a single thread like popular social feeds.</div>
       </div>
+      <img
+        class="selected" 
+        [ngClass]="{'active': boardMode==='thread'}" 
+        src="../../../assets/img/side-nav/selected.svg"/>
     </div>
-    <div class="board-mode" fxLayout="row" fxLayoutGap="12px">
+    <div 
+      class="board-mode" 
+      fxLayout="row" 
+      fxLayoutGap="12px"
+      (click)="setBoardMode('grid')">
       <img src="../../../assets/img/side-nav/grid.svg"/>
       <div fxLayout="column" fxLayoutAlign="center start">
         <div class="label">Grid</div>
         <div class="sub-label">A compact way to show many participant posts.</div>
       </div>
+      <img
+        class="selected" 
+        [ngClass]="{'active': boardMode==='grid'}" 
+        src="../../../assets/img/side-nav/selected.svg"/>
     </div>
-    <div class="board-mode" fxLayout="row" fxLayoutGap="12px">
+    <div 
+      class="board-mode" 
+      fxLayout="row" 
+      fxLayoutGap="12px"
+      (click)="setBoardMode('columns')">
       <img src="../../../assets/img/side-nav/columns.svg"/>
       <div fxLayout="column" fxLayoutAlign="center start">
         <div class="label">Columns</div>
         <div class="sub-label">Organize submissions into categories.</div>
       </div>
+      <img 
+        class="selected"
+        [ngClass]="{'active': boardMode==='columns'}" 
+        src="../../../assets/img/side-nav/selected.svg"/>
     </div>
   </div>
 

@@ -588,3 +588,61 @@ ng-dropdown-panel.groups-controls {
     }
   }
 }
+
+.session-summary-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+    padding: 40px;
+  }
+  .create-session {
+    .heading {
+      color: #37352f;
+      font-size: 24px;
+      font-weight: 500;
+    }
+    .close-button {
+      .mat-icon {
+        color: #6c6c6c;
+      }
+    }
+    .title {
+      color: #37352F;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .edit {
+      .not-editing {
+        font-size: 16px;
+        font-weight: 400;
+        color: #616161;
+        padding: 14px;
+        background: #F3F4F7;
+        border-radius: 8px;
+        border: 2px solid #F3F4F7;
+        min-height: 19px;
+        width: 400px;
+        &:focus {
+          outline: none;
+          background: #fff;
+          color: #37352F;
+        }
+      }
+    }
+    .controls-container {
+      button {
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px 16px;
+        border-radius: 4px;
+      }
+      .launch-button {
+        color: #fff;
+      }
+      .cancel-button {
+        color: #616161;
+        background: #F3F4F7;
+      }
+    }
+  }
+}

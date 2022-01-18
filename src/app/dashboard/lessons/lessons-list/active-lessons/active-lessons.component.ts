@@ -56,7 +56,8 @@ export class ActiveLessonsComponent implements OnInit {
 
   getActiveSessions() {
     this.dataSource = [];
-    const slicedArray = this.lessonRuns.slice(0, 5);
+    console.log(this.lessonRuns);
+    const slicedArray = this.lessonRuns;
     slicedArray.forEach((val: any) => {
       this.dataSource.push(
         {

@@ -9,6 +9,7 @@ import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
+import { SessionSummaryDialogComponent } from 'src/app/shared/dialogs/session-summary-dialog/session-summary.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -42,7 +43,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isGroupingShowing: boolean;
   @Input() isLastActivity: boolean;
   @Input() showHeader: boolean;
-  @Input() lessonName: string;
+  @Input() lesson;
   @Input() roomCode: string;
   @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
@@ -71,8 +72,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
+  lessonName: string;
 
-  
 
   constructor(
     private layoutService: LayoutService,
@@ -129,6 +130,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
   }
 
@@ -267,6 +269,20 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   copyLink(val: string) {
     this.utilsService.copyToClipboard(val);
+  }
+
+  openSessionSummary() {
+    this.matDialog.open(SessionSummaryDialogComponent, {
+      data: {
+        id: this.lesson.id,
+        title: this.lesson.lesson_name,
+        description: this.lesson.lesson_description,
+      },
+      panelClass: 'session-summary-dialog'
+    })
+    .afterClosed()
+    .subscribe(data => {
+    });
   }
 
 }
