@@ -894,3 +894,10 @@ export class BrainstormChangeBoardStatusEvent extends ActivityEvent {
     this.extra_args = { status: status, board: board };
   }
 }
+export class BrainstormRemoveBoardEvent extends ActivityEvent {
+  event_name = 'BrainstormRemoveBoardEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { board: id };
+  }
+}

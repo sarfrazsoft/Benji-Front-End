@@ -18,6 +18,7 @@ import {
   BrainstormChangeBoardStatusEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  BrainstormRemoveBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
@@ -131,7 +132,11 @@ export class SideNavigationComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
-        console.log(res);
+        if(res.delete===true) {
+          this.sendMessage.emit(
+            new BrainstormRemoveBoardEvent(this.selectedBoard.id)
+          );
+        }
       });
   }
 
