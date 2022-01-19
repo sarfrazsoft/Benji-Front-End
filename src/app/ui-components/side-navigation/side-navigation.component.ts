@@ -25,6 +25,7 @@ import {
   ParticipantChangeBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
 @Component({
@@ -52,10 +53,13 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   boards: Array<Board> = [];
   participantCodes: number[];
 
+  hostname = window.location.host + '/participant/join?link=';
+
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private utilsService: UtilsService,
   ) {}
 
   ngOnInit(): void {
@@ -183,4 +187,8 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
   }
 
+  copyLink() {
+    this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
+  }
+  
 }
