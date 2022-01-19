@@ -7,13 +7,10 @@
     <div fxLayout="row" fxLayoutGap="24px">
       <ng-select
         class="sessions-type"
-        [items]="times"
         bindLabel="title"
         placeholder="All Sessions"
         [clearable]="false"
         bindValue="id"
-        (change)="changeGroup($event)"
-        [(ngModel)]="myGroupId"
         appendTo="body"
         [searchable]="false"
       >

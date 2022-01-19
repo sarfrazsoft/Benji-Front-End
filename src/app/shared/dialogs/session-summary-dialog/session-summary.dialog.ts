@@ -1,17 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Lesson } from 'src/app/services/backend/schema/course_details';
-import { HttpClient } from '@angular/common/http';
 import * as global from 'src/app/globals';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
 @Component({
   selector: 'benji-session-summary-dialog',
-  templateUrl: 'session-summary.dialog.html'
+  templateUrl: 'session-summary.dialog.html',
 })
 export class SessionSummaryDialogComponent implements OnInit {
-
   form: FormGroup;
   emailErr = false;
   emailErrMsg = '';
@@ -19,6 +18,8 @@ export class SessionSummaryDialogComponent implements OnInit {
   userId: number;
   orgId: number;
   eventsSubject: Subject<void> = new Subject<void>();
+  focusTitle;
+  focusDescription;
   constructor(
     private httpClient: HttpClient,
     private dialogRef: MatDialogRef<SessionSummaryDialogComponent>,
@@ -49,7 +50,7 @@ export class SessionSummaryDialogComponent implements OnInit {
     console.log(lesson);
     return this.httpClient.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
   }
-  
+
   onSubmit(): void {
     if (this.form.valid) {
       const val = this.form.value;
@@ -68,7 +69,6 @@ export class SessionSummaryDialogComponent implements OnInit {
     }
   }
 }
-
 
 // import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 // import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -108,7 +108,7 @@ export class SessionSummaryDialogComponent implements OnInit {
 //   public cancel() {
 //     this.dialogRef.close();
 //   }
-  
+
 //   editTitle() {
 //     this.editingTitle = true;
 //     setTimeout(() => {
@@ -119,7 +119,7 @@ export class SessionSummaryDialogComponent implements OnInit {
 //   saveEditedTitle() {
 //     this.editingTitle = false;
 //   }
-  
+
 //   editDescription() {
 //     this.editingDescription = true;
 //     setTimeout(() => {

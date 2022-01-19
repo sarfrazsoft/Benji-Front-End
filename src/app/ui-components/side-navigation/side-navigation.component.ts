@@ -105,8 +105,8 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     this.sendMessage.emit(
       new BrainstormAddBoardEventBaseEvent(
         'Board',
-        boardIndex,
-        'Untitled ' + (boardIndex + 1),
+        boardIndex + 1,
+        'Untitled Board' + this.boards.length,
         'Sub Instructions'
       )
     );
@@ -176,6 +176,8 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   setBoardMode(mode: string) {
     this.boardMode = mode;
   }
+
+  duplicateBoard() {}
 
   setBoardStatus() {
     const selected = this.boardStatus;
