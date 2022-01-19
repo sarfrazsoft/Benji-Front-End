@@ -920,3 +920,10 @@ export class BrainstormRemoveBoardEvent extends ActivityEvent {
     this.extra_args = { board: id };
   }
 }
+export class BrainstormToggleMeetingMode extends ActivityEvent {
+  event_name = 'BrainstormToggleMeetingMode';
+  constructor(val: boolean) {
+    super();
+    this.extra_args = { meeting_mode: val };
+  }
+}

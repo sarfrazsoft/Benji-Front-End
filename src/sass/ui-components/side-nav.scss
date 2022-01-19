@@ -118,6 +118,27 @@
 .boards-navigation {
   padding: 24px;
   width: 376px;
+  .posting-settings {
+    background: #f3f4f7;
+    border-radius: 8px;
+    padding: 16px;
+    .label {
+      color: #37352f;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .sub-label {
+      color: #616161;
+      font-size: 12px;
+      font-weight: 400;
+    }
+    .option {
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  }
   .boards {
     font-size: 24px;
     font-weight: 600;

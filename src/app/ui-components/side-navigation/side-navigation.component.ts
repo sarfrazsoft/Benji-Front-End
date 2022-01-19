@@ -20,11 +20,12 @@ import {
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   BrainstormRemoveBoardEvent,
+  BrainstormToggleMeetingMode,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
 @Component({
   selector: 'side-navigation',
@@ -142,7 +143,9 @@ export class SideNavigationComponent implements OnInit, OnChanges {
 
   openDeleteDialog() {
     this.dialog
-      .open(DeleteBoardDialogComponent, {
+      .open(ConfirmationDialogComponent, {data: {
+          confirmationMessage: "You are about to delete this board. This can’t be undone.",
+        },
         panelClass: 'delete-board-dialog',
       })
       .afterClosed()
@@ -175,4 +178,9 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     const status = selected === 'Open' ? 'open' : selected === 'View Only' ? 'view_only' : 'closed';
     this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(status, this.selectedBoard.id));
   }
+  
+  toggleMeetingMode($event) {
+    this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
 }
