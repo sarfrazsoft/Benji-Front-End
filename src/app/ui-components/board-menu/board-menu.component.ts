@@ -29,10 +29,10 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
 @Component({
-  selector: 'side-navigation',
-  templateUrl: 'side-navigation.component.html',
+  selector: 'benji-board-menu',
+  templateUrl: 'board-menu.component.html',
 })
-export class SideNavigationComponent implements OnInit, OnChanges {
+export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;

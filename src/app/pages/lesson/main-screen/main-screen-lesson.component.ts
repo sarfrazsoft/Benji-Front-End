@@ -28,7 +28,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   dialogRef: any;
   
-  // Side-Navigation variables
+  // board-menu variables
   sideNavOpen: boolean;
   @ViewChild('sidenav') sidenav: MatSidenav;
 
