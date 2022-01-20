@@ -109,7 +109,15 @@
     <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
     <span>Duplicate</span>
   </button>
-  <button mat-menu-item (click)="openDeleteDialog()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+  <button 
+    mat-menu-item 
+    [disabled]="boardsCount==1 ? 'disabled': null"
+    [ngClass]="{'disabled': boardsCount==1}"
+    (click)="openDeleteDialog()" 
+    fxLayout="row" 
+    fxLayoutGap="8px" 
+    fxLayoutAlign="start center"
+  >
     <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
     <span>Delete</span>
   </button>
@@ -324,6 +332,13 @@
     </div>
   </div>
   
-  <div (click)="openDeleteDialog()" class="delete-button">Delete Board</div>
+  <button 
+    (click)="openDeleteDialog()"
+    class="delete-button"
+    [ngClass]="{'disabled': boardsCount==1}"
+    [disabled]="boardsCount==1 ? 'disabled': null"
+  >
+    Delete Board
+  </button>
 
 </div>

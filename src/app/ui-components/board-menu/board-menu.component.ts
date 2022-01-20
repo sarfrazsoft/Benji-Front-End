@@ -54,6 +54,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   participantCodes: number[];
 
   hostname = window.location.host + '/participant/join?link=';
+  boardsCount: number;
 
   constructor(
     private dialog: MatDialog,
@@ -68,10 +69,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     //   this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
     // }
 
-    if (this.navType === 'boards') {
-      this.boards = this.activityState.brainstormactivity.boards;
-    } else if (this.navType === 'board-settings') {
-    }
+    this.boards = this.activityState.brainstormactivity.boards;
+    this.boardsCount = this.boards.length;
+  
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoard = board;
@@ -91,6 +91,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     if (this.selectedBoard) {
       this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
     }
+
+    this.resetBoards();
+    
   }
 
   diplayInfo() {
@@ -154,7 +157,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
-        if (res.delete === true) {
+        if (res === true) {
           this.sendMessage.emit(new BrainstormRemoveBoardEvent(this.selectedBoard.id));
         }
       });
@@ -191,6 +194,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   copyLink() {
     this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
+  }
+
+  resetBoards() {
+    this.boardsCount = 0;
+    this.boards = this.boards.filter(board => board.removed==false);
+    this.boardsCount = this.boards.length;
   }
   
 }

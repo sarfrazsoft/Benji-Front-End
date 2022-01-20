@@ -112,6 +112,9 @@
     text-align: center;
     border-radius: 8px;
     cursor: pointer;
+    &.disabled {
+      background: #bdbdbd;
+    }
   }
 }
 
@@ -206,6 +209,11 @@
     height: 32px;
     &:hover {
       background: #f3f4f7;
+    }
+    &.disabled {
+      img {
+        opacity: 0.4;
+      }
     }
   }
 }
