@@ -17,6 +17,7 @@ import {
   Board,
   BrainstormAddBoardEventBaseEvent,
   BrainstormChangeBoardStatusEvent,
+  BrainstormChangeModeEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   BrainstormRemoveBoardEvent,
@@ -176,8 +177,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     });
   }
+
   setBoardMode(mode: string) {
     this.boardMode = mode;
+    this.sendMessage.emit(new BrainstormChangeModeEvent(this.boardMode, this.selectedBoard.id));
   }
 
   duplicateBoard() {}
@@ -201,5 +204,5 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.boards = this.boards.filter(board => board.removed==false);
     this.boardsCount = this.boards.length;
   }
-  
+
 }

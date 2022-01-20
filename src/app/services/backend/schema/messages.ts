@@ -927,3 +927,10 @@ export class BrainstormToggleMeetingMode extends ActivityEvent {
     this.extra_args = { meeting_mode: val };
   }
 }
+export class BrainstormChangeModeEvent extends ActivityEvent {
+  event_name = 'BrainstormChangeModeEvent';
+  constructor(val: string, id: number) {
+    super();
+    this.extra_args = { mode: val, board: id };
+  }
+}
