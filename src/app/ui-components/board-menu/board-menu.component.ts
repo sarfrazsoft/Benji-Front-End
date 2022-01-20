@@ -56,6 +56,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   hostname = window.location.host + '/participant/join?link=';
   boardsCount: number;
+  menuBoard: any;
 
   constructor(
     private dialog: MatDialog,
@@ -159,7 +160,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((res) => {
         if (res === true) {
-          this.sendMessage.emit(new BrainstormRemoveBoardEvent(this.selectedBoard.id));
+          this.sendMessage.emit(new BrainstormRemoveBoardEvent(this.menuBoard));
         }
       });
   }
@@ -203,6 +204,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.boardsCount = 0;
     this.boards = this.boards.filter(board => board.removed==false);
     this.boardsCount = this.boards.length;
+  }
+
+  setMenuBoard(board: Board) {
+    this.menuBoard = board.id;
   }
 
 }

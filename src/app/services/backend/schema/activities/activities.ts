@@ -325,6 +325,7 @@ export interface BoardInfo {
   sub_instructions: string;
   max_participant_submissions: number;
   max_participant_votes: number;
+  mode: string;
   show_participant_name_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
