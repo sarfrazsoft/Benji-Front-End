@@ -9,7 +9,7 @@ import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
-import { SessionSummaryDialogComponent } from 'src/app/shared/dialogs/session-summary-dialog/session-summary.dialog';
+import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -276,14 +276,15 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.utilsService.copyToClipboard(val);
   }
 
-  openSessionSummary() {
-    this.matDialog.open(SessionSummaryDialogComponent, {
+  openSessionSettings() {
+    this.matDialog.open(SessionSettingsDialogComponent, {
       data: {
         id: this.lesson.id,
         title: this.lesson.lesson_name,
         description: this.lesson.lesson_description,
+        Create: false
       },
-      panelClass: 'session-summary-dialog'
+      panelClass: 'session-settings-dialog'
     })
     .afterClosed()
     .subscribe(data => {
