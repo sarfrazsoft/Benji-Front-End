@@ -595,7 +595,6 @@
           }
         }
         .post {
-          background: #555bea;
           color: #fff;
           font-size: 19px;
           font-weight: 600;
@@ -604,7 +603,7 @@
           height: 40px;
           width: 100px;
           transition: all 0.2s;
-          border: 2px solid #555bea;
+          border: 2px solid;
           &:hover {
             color: #555bea;
             background: #fff;
@@ -950,6 +949,14 @@
     }
     .slide-arrow {
       display: none !important;
+    }
+  }
+}
+
+.delete-board-dialog {
+  .confirmation-dialog {
+    .close-button {
+      display: none;
     }
   }
 }

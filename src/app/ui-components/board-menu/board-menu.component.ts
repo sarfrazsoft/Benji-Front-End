@@ -17,20 +17,23 @@ import {
   Board,
   BrainstormAddBoardEventBaseEvent,
   BrainstormChangeBoardStatusEvent,
+  BrainstormChangeModeEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   BrainstormRemoveBoardEvent,
+  BrainstormToggleMeetingMode,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { DeleteBoardDialogComponent } from 'src/app/shared/dialogs/delete-board-dialog/delete-board.dialog';
+import { UtilsService } from 'src/app/services/utils.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
 @Component({
-  selector: 'side-navigation',
-  templateUrl: 'side-navigation.component.html',
+  selector: 'benji-board-menu',
+  templateUrl: 'board-menu.component.html',
 })
-export class SideNavigationComponent implements OnInit, OnChanges {
+export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -51,10 +54,15 @@ export class SideNavigationComponent implements OnInit, OnChanges {
   boards: Array<Board> = [];
   participantCodes: number[];
 
+  hostname = window.location.host + '/participant/join?link=';
+  boardsCount: number;
+  menuBoard: any;
+
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private utilsService: UtilsService,
   ) {}
 
   ngOnInit(): void {
@@ -63,10 +71,9 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     //   this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
     // }
 
-    if (this.navType === 'boards') {
-      this.boards = this.activityState.brainstormactivity.boards;
-    } else if (this.navType === 'board-settings') {
-    }
+    this.boards = this.activityState.brainstormactivity.boards;
+    this.boardsCount = this.boards.length;
+  
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoard = board;
@@ -86,6 +93,9 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     if (this.selectedBoard) {
       this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
     }
+
+    this.resetBoards();
+    
   }
 
   diplayInfo() {
@@ -142,13 +152,15 @@ export class SideNavigationComponent implements OnInit, OnChanges {
 
   openDeleteDialog() {
     this.dialog
-      .open(DeleteBoardDialogComponent, {
+      .open(ConfirmationDialogComponent, {data: {
+          confirmationMessage: "You are about to delete this board. This can’t be undone.",
+        },
         panelClass: 'delete-board-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
-        if (res.delete === true) {
-          this.sendMessage.emit(new BrainstormRemoveBoardEvent(this.selectedBoard.id));
+        if (res === true) {
+          this.sendMessage.emit(new BrainstormRemoveBoardEvent(this.menuBoard));
         }
       });
   }
@@ -166,8 +178,10 @@ export class SideNavigationComponent implements OnInit, OnChanges {
       }
     });
   }
+
   setBoardMode(mode: string) {
     this.boardMode = mode;
+    this.sendMessage.emit(new BrainstormChangeModeEvent(this.boardMode, this.selectedBoard.id));
   }
 
   duplicateBoard() {}
@@ -177,4 +191,23 @@ export class SideNavigationComponent implements OnInit, OnChanges {
     const status = selected === 'Open' ? 'open' : selected === 'View Only' ? 'view_only' : 'closed';
     this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(status, this.selectedBoard.id));
   }
+  
+  toggleMeetingMode($event) {
+    this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
+  copyLink() {
+    this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
+  }
+
+  resetBoards() {
+    this.boardsCount = 0;
+    this.boards = this.boards.filter(board => board.removed==false);
+    this.boardsCount = this.boards.length;
+  }
+
+  setMenuBoard(board: Board) {
+    this.menuBoard = board.id;
+  }
+
 }

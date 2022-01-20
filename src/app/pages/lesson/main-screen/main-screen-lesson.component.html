@@ -4,12 +4,12 @@
     #sidenav 
     (keydown.escape)="close()"
     position="end">
-      <side-navigation *ngIf="serverMessage"
+      <benji-board-menu *ngIf="serverMessage"
         [sidenav]="sidenav" 
         [navType]="navType"
         [activityState]="serverMessage"
         (sendMessage)="sendSocketMessage($event)">
-      </side-navigation>
+      </benji-board-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">

@@ -11,37 +11,21 @@
 
 
   <div fxLayout="column">
-    <div class="title">Post</div>
     <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
       <div 
         class="setting"
         benji-click-stop-propagation
         fxLayout="row"
-        fxLayoutAlign="space-between"
-      >
+        fxLayoutAlign="space-between">
         <div>
-          <div class="label">Show authorship on cards</div>
-          <div class="sub-label">Name of the author appears on card</div>
+          <div class="label">Meeting Mode</div>
+          <div class="sub-label">Participants follow the host to their board</div>
         </div>
         <label class="switch">
           <input 
-            type="checkbox">
-          <span class="slider round"></span>
-        </label>
-      </div>
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between"
-      >
-        <div>
-          <div class="label">Large Cards</div>
-          <div class="sub-label">When more space is needed</div>
-        </div>
-        <label class="switch">
-          <input 
-            type="checkbox">
+            type="checkbox" 
+            checked 
+            (change)="toggleMeetingMode($event)">
           <span class="slider round"></span>
         </label>
       </div>
@@ -65,7 +49,8 @@
           <button
             [matMenuTriggerFor]="menu"
             benji-click-stop-propagation
-            disableRipple>
+            disableRipple
+            (click)="setMenuBoard(board)">
             <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
           </button>
         </div>
@@ -125,7 +110,15 @@
     <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
     <span>Duplicate</span>
   </button>
-  <button mat-menu-item (click)="openDeleteDialog()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+  <button 
+    mat-menu-item 
+    [disabled]="boardsCount==1 ? 'disabled': null"
+    [ngClass]="{'disabled': boardsCount==1}"
+    (click)="openDeleteDialog()" 
+    fxLayout="row" 
+    fxLayoutGap="8px" 
+    fxLayoutAlign="start center"
+  >
     <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
     <span>Delete</span>
   </button>
@@ -319,7 +312,7 @@
           <div class="label">Share Board</div>
           <div class="sub-label">Share board link to invite participants</div>
         </div>
-        <div class="option primary-color">
+        <div class="option primary-color" (click)="copyLink()">
           Copy link
         </div>
       </div>
@@ -340,6 +333,13 @@
     </div>
   </div>
   
-  <div class="delete-button">Delete Board</div>
+  <button 
+    (click)="openDeleteDialog()"
+    class="delete-button"
+    [ngClass]="{'disabled': boardsCount==1}"
+    [disabled]="boardsCount==1 ? 'disabled': null"
+  >
+    Delete Board
+  </button>
 
 </div>
