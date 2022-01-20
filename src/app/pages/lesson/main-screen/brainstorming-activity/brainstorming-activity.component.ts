@@ -133,7 +133,14 @@ export class MainScreenBrainstormingActivityComponent
     super.ngOnInit();
     this.participantCode = this.getParticipantCode();
     this.act = this.activityState.brainstormactivity;
-    this.selectedBoard = this.activityState.brainstormactivity.boards[this.selectedBoardIndex];
+    const hostBoardID = this.act.host_board;
+    if (hostBoardID) {
+      this.act.boards.forEach((v) => {
+        if (hostBoardID === v.id) {
+          this.selectedBoard = v;
+        }
+      });
+    }
     this.brainstormService.selectedBoard = this.selectedBoard;
     this.eventType = this.getEventType();
 
@@ -207,9 +214,17 @@ export class MainScreenBrainstormingActivityComponent
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (
       this.eventType === 'BrainstormEditBoardInstruction' ||
-      this.eventType === 'BrainstormEditSubInstruction'
+      this.eventType === 'BrainstormEditSubInstruction' ||
+      this.eventType === 'HostChangeBoardEvent'
     ) {
-      this.selectedBoard = this.activityState.brainstormactivity.boards[this.selectedBoardIndex];
+      const hostBoardID = this.act.host_board;
+      if (hostBoardID) {
+        this.act.boards.forEach((v) => {
+          if (hostBoardID === v.id) {
+            this.selectedBoard = v;
+          }
+        });
+      }
     }
     // populate groupings dropdown
     // if (this.act.grouping && this.act.grouping.groups.length) {

@@ -877,7 +877,7 @@ export class HostChangeBoardEvent extends ActivityEvent {
   event_name = 'HostChangeBoardEvent';
   constructor(board: number) {
     super();
-    this.extra_args = { board: board };
+    this.extra_args = { host_board: board };
   }
 }
 export class ParticipantChangeBoardEvent extends ActivityEvent {
