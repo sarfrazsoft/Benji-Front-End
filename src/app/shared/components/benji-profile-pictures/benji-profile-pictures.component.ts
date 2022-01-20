@@ -7,19 +7,24 @@ import { UpdateMessage } from 'src/app/services/backend/schema';
   templateUrl: './benji-profile-pictures.component.html',
 })
 export class BenjiProfilePicturesComponent implements OnInit {
-  @Input() participantCodes: [];
+  @Input() participantCodes: number [];
   @Input() activityState: UpdateMessage;
-
-  // initials: string [];
-  // colorIndexes: number [];
+  @Input() counterAfter: number;
+  
+  remainingCount = 0;
+  displayCodes: [];
 
   constructor(private activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
-    // this.participantCodes.forEach(code => {
-    //   this.initials.push(this.getInitials(code));
-    //   this.colorIndexes.push(this.getColorIndex(code));
-    // });
+  }
+
+  ngOnChanges(): void {
+    if (this.participantCodes.length > this.counterAfter) {
+      this.remainingCount = this.participantCodes.length - this.counterAfter;
+      this.participantCodes = this.participantCodes.slice(0, this.counterAfter);
+    }
+    console.log(this.remainingCount);
   }
 
   getInitials(code: number) {

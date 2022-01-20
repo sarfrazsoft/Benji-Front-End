@@ -67,6 +67,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   reason = '';
+  counterAfter = 4;
 
   @Output() sideNavEvent = new EventEmitter<string>();
 
@@ -105,7 +106,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
-    this.loadParticipantCodes();
     
     this.shareParticipantLink = this.hostname + this.roomCode;
   }
@@ -132,6 +132,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
+    this.loadParticipantCodes();
+    console.log(this.participantCodes.length);
   }
 
   controlClicked(eventType) {
@@ -262,9 +264,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   loadParticipantCodes() {
+    this.participantCodes.length = 0;
+    const p = [];
     this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-      this.participantCodes.push(participant.participant_code);
+      p.push(participant.participant_code);
     });
+    this.participantCodes = p;
   }
 
   copyLink(val: string) {
