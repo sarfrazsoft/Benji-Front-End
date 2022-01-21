@@ -38,7 +38,6 @@ export class SessionSettingsDialogComponent implements OnInit {
     });
     this.form.setValue({ title: this.data.title, description: this.data.description });
     this.createSession = this.data.createSession;
-    console.log(this.createSession);
   }
 
   get title(): AbstractControl {
@@ -50,7 +49,6 @@ export class SessionSettingsDialogComponent implements OnInit {
   }
 
   updateLesson(lesson: Lesson, id): Observable<any[]> {
-    console.log(lesson);
     return this.httpClient.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
   }
 

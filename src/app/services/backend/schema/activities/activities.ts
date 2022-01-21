@@ -320,7 +320,6 @@ export interface BoardParticipants {
 }
 
 export interface BoardInfo {
-  categorize_flag: boolean;
   instructions: string;
   sub_instructions: string;
   max_participant_submissions: number;

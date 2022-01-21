@@ -26,6 +26,17 @@ benji-ms-brainstorming-activity {
     height: 100% !important;
     appearance: none !important;
     overflow: hidden;
+    &.thread-mode {
+      margin: 0px auto;
+      .submitted-ideas {
+        ul li {
+          margin-right: 0px;
+        }
+        .brainstorm-idea {
+          min-width: 544px;
+        }
+      }
+    }
     .submitted-ideas {
       padding: 0 16px;
       height: 100%;
