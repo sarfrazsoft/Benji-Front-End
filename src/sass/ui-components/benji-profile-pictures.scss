@@ -3,6 +3,10 @@
   background: #5e8deb;
   border-radius: 50%;
   color: #fff;
+  &.counter {
+    background: #f3f4f7;
+    color: #616161;
+  }
   &.color0 {
     background: #ab446f;
   }

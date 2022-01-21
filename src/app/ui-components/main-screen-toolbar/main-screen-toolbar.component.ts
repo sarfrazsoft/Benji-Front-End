@@ -9,7 +9,7 @@ import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
-import { SessionSummaryDialogComponent } from 'src/app/shared/dialogs/session-summary-dialog/session-summary.dialog';
+import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
@@ -67,6 +67,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   reason = '';
+  counterAfter = 4;
 
   @Output() sideNavEvent = new EventEmitter<string>();
 
@@ -105,7 +106,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
-    this.loadParticipantCodes();
     
     this.shareParticipantLink = this.hostname + this.roomCode;
   }
@@ -132,6 +132,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
+    this.loadParticipantCodes();
+    console.log(this.participantCodes.length);
   }
 
   controlClicked(eventType) {
@@ -262,23 +264,27 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   loadParticipantCodes() {
+    this.participantCodes.length = 0;
+    const p = [];
     this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-      this.participantCodes.push(participant.participant_code);
+      p.push(participant.participant_code);
     });
+    this.participantCodes = p;
   }
 
   copyLink(val: string) {
     this.utilsService.copyToClipboard(val);
   }
 
-  openSessionSummary() {
-    this.matDialog.open(SessionSummaryDialogComponent, {
+  openSessionSettings() {
+    this.matDialog.open(SessionSettingsDialogComponent, {
       data: {
         id: this.lesson.id,
         title: this.lesson.lesson_name,
         description: this.lesson.lesson_description,
+        Create: false
       },
-      panelClass: 'session-summary-dialog'
+      panelClass: 'session-settings-dialog'
     })
     .afterClosed()
     .subscribe(data => {

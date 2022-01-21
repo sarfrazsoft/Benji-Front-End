@@ -8,6 +8,7 @@ import {
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
   LaunchSessionDialogComponent,
+  SessionSettingsDialogComponent,
 } from '../../shared';
 import { AdminService } from './services/admin.service';
 
@@ -17,7 +18,6 @@ import { EditorView } from 'prosemirror-view';
 import { Validators } from 'ngx-editor';
 
 import doc from './../../shared/ngx-editor/doc';
-import { CreateSessionDialogComponent } from 'src/app/shared/dialogs/create-session-dialog/create-session.dialog';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -67,8 +67,13 @@ export class AdminPanelComponent implements OnInit {
   }
 
   openCreateSession() {
-    this.dialog.open(CreateSessionDialogComponent, {
-      panelClass: 'create-session-dialog'
+    this.dialog.open(SessionSettingsDialogComponent, {
+      data: {
+        createSession: true,
+        title: "",
+        description: ""
+      },
+      panelClass: 'session-settings-dialog'
     })
     .afterClosed()
     .subscribe(data => {

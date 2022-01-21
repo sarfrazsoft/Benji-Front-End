@@ -4,7 +4,7 @@
       <img [src]="darkLogo" alt="Benji Logo" [ngClass]="{'has-name': lessonName}" class="benji-logo"/>
       <div 
         class="session-title"
-        (click)="openSessionSummary()"
+        (click)="openSessionSettings()"
         >
           {{ lessonName }}
       </div>
@@ -17,6 +17,7 @@
             <benji-profile-pictures
               [activityState]="activityState"
               [participantCodes]="participantCodes"
+              [counterAfter]="counterAfter"
             > </benji-profile-pictures>
           </div>
           <!--Share-->

@@ -13,4 +13,11 @@
       {{ getInitials(code) }}
     </div>
   </div>
+  <div 
+    *ngIf="remainingCount > 0"
+    class="initials counter" 
+    fxLayout="column" 
+    fxLayoutAlign="center center">
+    {{ "+" + remainingCount }}
+  </div>
 </div>

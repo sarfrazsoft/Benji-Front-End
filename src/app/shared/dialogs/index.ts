@@ -13,11 +13,9 @@ export * from './idea-detailed-dialog/idea-detailed.dialog';
 export * from './import-slides-dialog/import-slides.dialog';
 export * from './participant-grouping-dialog/participant-grouping.dialog';
 export * from './participant-grouping-info-dialog/participant-grouping-info.dialog';
-export * from './create-session-dialog/create-session.dialog';
-export * from './session-summary-dialog/session-summary.dialog';
+export * from './session-settings-dialog/session-settings.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
-import { CreateSessionDialogComponent } from './create-session-dialog/create-session.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
@@ -35,12 +33,11 @@ import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-s
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { ParticipantGroupingDialogComponent } from './participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from './participant-grouping-info-dialog/participant-grouping-info.dialog';
-import { SessionSummaryDialogComponent } from './session-summary-dialog/session-summary.dialog';
+import { SessionSettingsDialogComponent } from './session-settings-dialog/session-settings.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 
 export const Dialogs = [
   AddVideoDialogComponent,
-  CreateSessionDialogComponent,
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
   ImagePickerDialogComponent,
@@ -59,5 +56,5 @@ export const Dialogs = [
   GroupingToolDialogComponent,
   ParticipantGroupingDialogComponent,
   ParticipantGroupingInfoDialogComponent,
-  SessionSummaryDialogComponent,
+  SessionSettingsDialogComponent,
 ];
