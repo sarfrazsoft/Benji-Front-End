@@ -303,6 +303,8 @@ export interface WhereDoYouStandActivity {
 export interface BrainstormActivity extends ParentActivity {
   boards: Array<Board>;
   participants: BoardParticipants;
+  meeting_mode: boolean;
+  host_board: number;
 }
 
 export interface Board {

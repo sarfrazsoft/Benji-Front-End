@@ -62,7 +62,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
-    private utilsService: UtilsService,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -71,9 +71,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     //   this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
     // }
 
-    this.boards = this.activityState.brainstormactivity.boards;
-    this.boardsCount = this.boards.length;
-  
+    // this.resetBoards();
+    // this.boardsCount = this.boards.length;
+
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoard = board;
@@ -84,19 +84,28 @@ export class BoardMenuComponent implements OnInit, OnChanges {
           board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
       }
     });
+
+    // const boards = this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
+    // this.boards = boards.sort((a, b) => b.order - a.order);
   }
 
   ngOnChanges(): void {
-    if (this.navType === 'boards') {
-      this.boards = this.activityState.brainstormactivity.boards;
+    if (this.activityState.eventType === 'BrainstormRemoveBoardEvent') {
+      this.resetBoards();
     }
-
     if (this.selectedBoard) {
       this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
     }
 
-    this.resetBoards();
-    
+    if (this.navType === 'boards') {
+      if (this.activityState.eventType === 'HostChangeBoardEvent') {
+      } else {
+        const boards = this.activityState.brainstormactivity.boards.filter(
+          (board) => board.removed === false
+        );
+        this.boards = boards.sort((a, b) => a.order - b.order);
+      }
+    }
   }
 
   diplayInfo() {
@@ -110,9 +119,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   addBoard(boardIndex: number) {
     this.sendMessage.emit(
       new BrainstormAddBoardEventBaseEvent(
-        'Board',
+        'Board ' + this.boards.length,
         boardIndex + 1,
-        'Untitled Board' + this.boards.length,
+        'Untitled Board ' + this.boards.length,
         'Sub Instructions'
       )
     );
@@ -153,8 +162,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   openDeleteDialog() {
     this.dialog
-      .open(ConfirmationDialogComponent, {data: {
-          confirmationMessage: "You are about to delete this board. This can’t be undone.",
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'You are about to delete this board. This can’t be undone.',
         },
         panelClass: 'delete-board-dialog',
       })
@@ -192,7 +202,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     const status = selected === 'Open' ? 'open' : selected === 'View Only' ? 'view_only' : 'closed';
     this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(status, this.selectedBoard.id));
   }
-  
+
   toggleMeetingMode($event) {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
   }
@@ -203,12 +213,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   resetBoards() {
     this.boardsCount = 0;
-    this.boards = this.boards.filter(board => board.removed==false);
+    this.boards = this.boards.filter((board) => board.removed === false);
     this.boardsCount = this.boards.length;
   }
 
   setMenuBoard(board: Board) {
     this.menuBoard = board.id;
   }
-
 }
