@@ -222,6 +222,7 @@ export class MainScreenBrainstormingActivityComponent
         this.act.boards.forEach((v) => {
           if (hostBoardID === v.id) {
             this.selectedBoard = v;
+            this.brainstormService.selectedBoard = this.selectedBoard;
           }
         });
       }
