@@ -934,3 +934,11 @@ export class BrainstormChangeModeEvent extends ActivityEvent {
     this.extra_args = { mode: val, board: id };
   }
 }
+export class BrainstormClearBoardIdeaEvent extends ActivityEvent {
+  event_name = 'BrainstormClearBoardIdeaEvent';
+  constructor(id: number) {
+    super();
+    this.extra_args = { board: id };
+  }
+}
+

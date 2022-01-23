@@ -46,6 +46,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
+    console.log(this.board)
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.ideas = this.populateIdeas(this.board);
@@ -57,7 +58,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       // eventType = 'removeIdea';
       // console.log(this.eventType);
       if (this.eventType === 'BrainstormSubmitEvent') {
-        this.addIdea(this.act, this.ideas);
+        this.addIdea(this.board, this.ideas);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
         this.ideaCommented(this.act, this.ideas);
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
@@ -66,8 +67,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.ideaHearted(this.act, this.ideas);
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
         this.ideaHearted(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
-        this.ideaRemoved(this.act, this.ideas);
+      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent' || this.eventType === 'BrainstormClearBoardIdeaEvent' ) {
+        this.ideaRemoved(this.board, this.ideas);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.ideaEdited(this.act, this.ideas);
       }
@@ -88,8 +89,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     return ideas;
   }
 
-  addIdea(act, existingIdeas) {
-    const newIdeas = this.populateIdeas(act);
+  addIdea(board, existingIdeas) {
+    const newIdeas = this.populateIdeas(board);
     if (newIdeas.length === existingIdeas.length) {
     } else {
       const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
@@ -97,8 +98,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     }
   }
 
-  ideaRemoved(act, existingIdeas) {
-    const newIdeas = this.populateIdeas(act);
+  ideaRemoved(board, existingIdeas) {
+    const newIdeas = this.populateIdeas(board);
     if (newIdeas.length === existingIdeas.length) {
     } else {
       const myDifferences: any = differenceBy(existingIdeas, newIdeas, 'id');

@@ -61,7 +61,7 @@ export class ThreadModeComponent implements OnInit, OnChanges {
         this.ideaHearted(this.act, this.ideas);
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
         this.ideaHearted(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
+      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent' || this.eventType === 'BrainstormClearBoardIdeaEvent' ) {
         this.ideaRemoved(this.act, this.ideas);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.ideaEdited(this.act, this.ideas);

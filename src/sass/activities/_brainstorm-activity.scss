@@ -29,11 +29,14 @@ benji-ms-brainstorming-activity {
     &.thread-mode {
       margin: 0px auto;
       .submitted-ideas {
-        ul li {
-          margin-right: 0px;
-        }
-        .brainstorm-idea {
-          min-width: 544px;
+        ul {
+          display: block;
+          li {
+            margin-right: 0px;
+          }
+          .brainstorm-idea {
+            min-width: 544px;
+          }
         }
       }
     }

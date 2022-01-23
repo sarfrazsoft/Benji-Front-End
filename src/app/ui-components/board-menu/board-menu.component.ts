@@ -18,6 +18,7 @@ import {
   BrainstormAddBoardEventBaseEvent,
   BrainstormChangeBoardStatusEvent,
   BrainstormChangeModeEvent,
+  BrainstormClearBoardIdeaEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   BrainstormRemoveBoardEvent,
@@ -227,5 +228,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   setMenuBoard(board: Board) {
     this.menuBoard = board.id;
+  }
+  
+  clearBoard() {
+    this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
   }
 }
