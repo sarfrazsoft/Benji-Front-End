@@ -77,6 +77,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoard = board;
+        this.boardMode = this.selectedBoard.board_activity.mode;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =

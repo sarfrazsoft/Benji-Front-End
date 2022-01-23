@@ -1,0 +1,23 @@
+<div class="submitted-ideas">
+  <ul>
+    <li
+      *ngFor="let idea of ideas"
+      (mouseenter)="idea.showClose = true"
+      (mouseleave)="idea.showClose = false"
+      cdkDrag
+    >
+    <benji-brainstorm-card
+      [item]="idea"
+      [act]="act"
+      [activityState]="activityState"
+      [showUserName]="showUserName"
+      [participantCode]="participantCode"
+      (deleteIdea)="delete($event)"
+      [sendMessage]="sendMessage"
+      [categorizeFlag]="categorizeFlag"
+      [myGroup]="myGroup"
+    >
+    </benji-brainstorm-card>
+    </li>
+  </ul>
+</div>

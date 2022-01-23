@@ -215,7 +215,8 @@ export class MainScreenBrainstormingActivityComponent
     if (
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction' ||
-      this.eventType === 'HostChangeBoardEvent'
+      this.eventType === 'HostChangeBoardEvent' ||
+      this.eventType === 'BrainstormChangeModeEvent'
     ) {
       const hostBoardID = this.act.host_board;
       if (hostBoardID) {
@@ -227,6 +228,9 @@ export class MainScreenBrainstormingActivityComponent
         });
       }
     }
+
+    console.log( this.activityState.brainstormactivity);
+
     // populate groupings dropdown
     // if (this.act.grouping && this.act.grouping.groups.length) {
     //   this.permissionsService.hasPermission('PARTICIPANT').then((val) => {

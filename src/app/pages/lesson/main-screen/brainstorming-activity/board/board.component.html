@@ -72,8 +72,8 @@
       </div>
     </div>
   </div>
-  <div class="brainstorm-container">
-    <ng-container *ngIf="categorizeFlag">
+  <div class="brainstorm-container" [ngClass]="{'thread-mode': boardMode=='thread'}">
+    <ng-container *ngIf="boardMode=='columns'">
       <benji-categorized-ideas
         [board]="board"
         [submissionScreen]="submissionScreen"
@@ -86,7 +86,7 @@
         [showUserName]="showUserName"
         [participantCode]="participantCode"
         [eventType]="eventType"
-        [categorizeFlag]="categorizeFlag"
+        [categorizeFlag]="true"
         [myGroup]="myGroup"
         (addCardUnderCategory)="addCardUnderCategory($event)"
         (viewImage)="viewImage($event)"
@@ -95,7 +95,7 @@
       </benji-categorized-ideas>
     </ng-container>
 
-    <ng-container *ngIf="!categorizeFlag">
+    <ng-container *ngIf="boardMode=='grid'">
       <benji-uncategorized-ideas
         [board]="board"
         [submissionScreen]="submissionScreen"
@@ -115,5 +115,26 @@
 
       </benji-uncategorized-ideas>
     </ng-container>
+
+    <ng-container *ngIf="boardMode=='thread'">
+      <benji-thread-mode-ideas
+        [board]="board"
+        [submissionScreen]="submissionScreen"
+        [voteScreen]="voteScreen"
+        [act]="act"
+        [activityState]="activityState"
+        [sendMessage]="sendMessage"
+        [joinedUsers]="joinedUsers"
+        [showUserName]="showUserName"
+        [participantCode]="participantCode"
+        [eventType]="eventType"
+        [categorizeFlag]="categorizeFlag"
+        [myGroup]="myGroup"
+        (viewImage)="viewImage($event)"
+        (deleteIdea)="deleteIdea($event)">
+
+      </benji-thread-mode-ideas>
+    </ng-container>
+
   </div>
 </div>

@@ -133,7 +133,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
     this.loadParticipantCodes();
-    console.log(this.participantCodes.length);
   }
 
   controlClicked(eventType) {

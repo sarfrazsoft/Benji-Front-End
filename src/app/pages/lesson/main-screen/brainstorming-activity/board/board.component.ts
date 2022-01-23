@@ -87,7 +87,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   submissionScreen = false;
   voteScreen = false;
   VnSComplete = false;
-  categorizeFlag = false;
+  boardMode: string;
   showUserName = true;
   minWidth = 'small';
   colDeleted = 0;
@@ -257,62 +257,14 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.sharingToolService.updateParticipantGroupingToolDialog(gt);
     }
 
-    // if (this.act.brainstormcategory_set.length) {
-    //   // check if the categories have ids
-    //   // if categories don't have ids it means
-    //   // we're in the preview panel
-    //   if (this.act.brainstormcategory_set[0].id) {
-    //     this.act.brainstormcategory_set = this.act.brainstormcategory_set.sort((a, b) => a.id - b.id);
-    //   } else {
-    //   }
-    // }
     this.joinedUsers = this.activityState.lesson_run.participant_set;
 
     this.instructions = this.board.board_activity.instructions;
     this.sub_instructions = this.board.board_activity.sub_instructions;
 
-    this.categorizeFlag = this.board.board_activity.categorize_flag;
+    this.boardMode = this.board.board_activity.mode;
+    console.log(this.boardMode);
     this.showUserName = this.board.board_activity.show_participant_name_flag;
-
-    // if (this.peakBackState && this.peakBackStage === null) {
-    //   this.voteScreen = true;
-    //   this.submissionScreen = false;
-    //   this.VnSComplete = false;
-    //   this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-    // } else if (!this.peakBackState) {
-    // if (!act.submission_complete) {
-    //   this.submissionScreen = true;
-    //   this.voteScreen = false;
-    //   this.VnSComplete = false;
-    //   this.timer = act.submission_countdown_timer;
-    //   this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
-    // } else if (act.voting_countdown_timer && !act.voting_complete) {
-    //   this.voteScreen = true;
-    //   this.submissionScreen = false;
-    //   this.VnSComplete = false;
-    //   this.timer = act.voting_countdown_timer;
-    //   this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-    // } else if (act.submission_complete && act.voting_complete) {
-    //   this.submissionScreen = false;
-    //   this.voteScreen = false;
-    //   this.VnSComplete = true;
-    //   this.timer = this.getNextActStartTimer();
-    // }
-
-    // show snackbar when submission is complete
-    // if (
-    //   !this.actEditor &&
-    //   !act.submission_complete &&
-    //   !act.voting_complete &&
-    //   this.isAllSubmissionsComplete(act) &&
-    //   !this.shownSubmissionCompleteNofitication
-    // ) {
-    //   this.shownSubmissionCompleteNofitication = true;
-    //   const snackBarRef = this.utilsService.openSuccessNotification
-    // ('Submission complete', 'Start voting');
-    //   snackBarRef.onAction().subscribe(($event) => {});
-    // }
-    // }
   }
 
   ngOnDestroy() {
@@ -532,7 +484,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
       panelClass: 'idea-creation-dialog',
       data: {
-        showCategoriesDropdown: this.categorizeFlag,
+        showCategoriesDropdown: this.boardMode,
         categories: this.board.brainstormcategory_set,
         lessonID: this.activityState.lesson_run.lessonrun_code,
         category: category,
@@ -671,54 +623,5 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
           (error) => console.log(error)
         );
     }
-    // uploadFile(file: File, lessonId): Observable<any[]> {
-    //   const formData: FormData = new FormData();
-    //   formData.append('document', file);
-    //   formData.append('lesson_id', lessonId);
-    //   return this.httpClient.post<any[]>(global.apiRoot + '/course_details/upload-document/', formData);
-    // }
   }
-
-  // changeStage(state) {
-  //   this.peakBackStage = state;
-  //   const act = this.activityState.brainstormactivity;
-  //   if (state === 'next') {
-  //   } else {
-  //     // state === 'previous'
-  //   }
-
-  //   if (this.submissionScreen) {
-  //     if (state === 'next') {
-  //       this.voteScreen = true;
-  //       this.submissionScreen = false;
-  //       this.VnSComplete = false;
-  //       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-  //     } else {
-  //       // state === 'previous'
-  //       // do nothing
-  //     }
-  //   } else if (this.voteScreen) {
-  //     if (state === 'next') {
-  //       this.submissionScreen = false;
-  //       this.voteScreen = false;
-  //       this.VnSComplete = true;
-  //     } else {
-  //       // state === 'previous'
-  //       this.submissionScreen = true;
-  //       this.voteScreen = false;
-  //       this.VnSComplete = false;
-  //       this.ideaSubmittedUsersCount = this.act.submitted_participants.length;
-  //     }
-  //   } else if (this.VnSComplete) {
-  //     if (state === 'next') {
-  //       // do nothing
-  //     } else {
-  //       // state === 'previous'
-  //       this.voteScreen = true;
-  //       this.submissionScreen = false;
-  //       this.VnSComplete = false;
-  //       this.voteSubmittedUsersCount = this.getVoteSubmittedUsersCount(act);
-  //     }
-  //   }
-  // }
 }
