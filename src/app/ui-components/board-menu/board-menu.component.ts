@@ -52,7 +52,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   boardStatus: string;
   selectedBoard: Board;
   boards: Array<Board> = [];
-  participantCodes: number[];
+  // participantCodes: number[];
 
   hostname = window.location.host + '/participant/join?link=';
   boardsCount: number;
@@ -92,12 +92,15 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     if (this.activityState.eventType === 'BrainstormRemoveBoardEvent') {
       this.resetBoards();
     }
-    if (this.selectedBoard) {
-      this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
-    }
+    // if (this.selectedBoard) {
+    //   this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
+    // }
 
     if (this.navType === 'boards') {
-      if (this.activityState.eventType === 'HostChangeBoardEvent') {
+      if (
+        this.activityState.eventType === 'HostChangeBoardEvent' ||
+        this.activityState.eventType === 'BrainstormToggleMeetingMode'
+      ) {
       } else {
         const boards = this.activityState.brainstormactivity.boards.filter(
           (board) => board.removed === false
@@ -105,6 +108,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.boards = boards.sort((a, b) => a.order - b.order);
       }
     }
+  }
+
+  getBoardParticipantCodes(board: Board) {
+    console.log(this.activityState.brainstormactivity.participants[board.id]);
+    return this.activityState.brainstormactivity.participants[board.id];
   }
 
   diplayInfo() {

@@ -94,7 +94,7 @@
       line-height: 16px;
     }
     &:hover {
-      background: #F3F4F7;
+      background: #f3f4f7;
     }
     .selected {
       display: none;
@@ -156,6 +156,7 @@
     border: 2px solid #f3f4f7;
     background: #f3f4f7;
     border-radius: 8px;
+    transition: all 0.2s;
     &.selected {
       border: 2px solid $primary-color;
     }
