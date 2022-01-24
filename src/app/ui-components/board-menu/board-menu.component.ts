@@ -113,12 +113,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   getBoardParticipantCodes(board: Board) {
-    console.log(this.activityState.brainstormactivity.participants[board.id]);
+    //console.log(this.activityState.brainstormactivity.participants[board.id]);
     return this.activityState.brainstormactivity.participants[board.id];
-  }
-
-  diplayInfo() {
-    console.log(this.activityState);
   }
 
   closeNav() {

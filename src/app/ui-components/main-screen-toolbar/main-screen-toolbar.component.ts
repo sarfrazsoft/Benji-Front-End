@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
+import { BrainstormService, ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
 import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
@@ -16,6 +16,7 @@ import {
   BrainstormVotingCompleteInternalEvent,
   EndShareEvent,
   FastForwardEvent,
+  HostChangeBoardEvent,
   JumpEvent,
   NextInternalEvent,
   PauseActivityEvent,
@@ -82,7 +83,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private sharingToolService: SharingToolService,
     private groupingToolService: GroupingToolService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private brainstormService: BrainstormService,
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -171,35 +173,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   groupingMenuClicked() {
-    // const activity_type = this.activityState.activity_type.toLowerCase();
-    // const state = this.activityState;
-    // const activityID = state[activity_type].activity_id;
-    // const code = activityID + state.lesson_run.lessonrun_code;
-
-    // if (this.isGroupingShowing) {
-    //   if (localStorage.getItem('isGroupingCreated') === code) {
-    //     // grouping ui is showing but grouping has been created for this activity
-    //     // go back to activity screen
-    //     // this.groupingToolService.showGroupingToolMainScreen = false;
-    //   } else {
-    //     // the grouping UI is showing but grouping has not been created
-    //     // for this activity
-    //     // hide grouping UI
-    //     this.socketMessage.emit(new ViewGroupingEvent(false));
-    //   }
-    // } else {
-    // if (localStorage.getItem('isGroupingCreated') === code) {
-    //   // grouping ui is not showing but grouping has been created for this activity
-    //   // only show UI on mainscreen
-    //   this.groupingToolService.showGroupingToolMainScreen =
-    //     !this.groupingToolService.showGroupingToolMainScreen;
-    // } else {
-    // the grouping UI is not showing and the grouping hasn't been created
-    // for this activity
-    // open menu
     this.groupingMenuTrigger.openMenu();
-    // }
-    // }
   }
 
   isSharingAllowed(activityState: UpdateMessage) {
@@ -290,4 +264,30 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
   }
 
+  // nextBoard() {
+  //   this.brainstormService.nextBoard(this.activityState.brainstormactivity);
+  // }
+
+  // previousBoard() {
+  //   this.brainstormService.previousBoard(this.activityState.brainstormactivity);
+  // }
+  // nextBoard(act: BrainstormActivity) {
+  //   let currentBoard: Board = this.selectedBoard$.getValue();
+  //   const shownBoards = act.boards.filter((board) => !board.removed);
+  //   shownBoards.forEach((brd: Board, index) =>{
+  //     if (currentBoard.id === brd.id) {
+  //       shownBoards[index+1]? this.selectedBoard$.next(shownBoards[index+1]) : this.selectedBoard$.next(shownBoards[index]);
+  //     }
+  //   });
+  // }
+
+  // previousBoard(act: BrainstormActivity) {
+  //   let currentBoard: Board = this.selectedBoard$.getValue();
+  //   const shownBoards = act.boards.filter((board) => !board.removed);
+  //   shownBoards.forEach((brd: Board, index) =>{
+  //     if (currentBoard.id === brd.id) {
+  //       shownBoards[index+1]? this.selectedBoard$.next(shownBoards[index-1]) : this.selectedBoard$.next(shownBoards[index]);
+  //     }
+  //   });
+  // }
 }
