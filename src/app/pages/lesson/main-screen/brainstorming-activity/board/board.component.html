@@ -76,8 +76,6 @@
     <ng-container *ngIf="boardMode=='columns'">
       <benji-categorized-ideas
         [board]="board"
-        [submissionScreen]="submissionScreen"
-        [voteScreen]="voteScreen"
         [act]="act"
         [activityState]="activityState"
         [minWidth]="getMinWidth()"
@@ -98,8 +96,6 @@
     <ng-container *ngIf="boardMode=='grid'">
       <benji-uncategorized-ideas
         [board]="board"
-        [submissionScreen]="submissionScreen"
-        [voteScreen]="voteScreen"
         [act]="act"
         [activityState]="activityState"
         [minWidth]="getMinWidth()"
@@ -119,8 +115,6 @@
     <ng-container *ngIf="boardMode=='thread'">
       <benji-thread-mode-ideas
         [board]="board"
-        [submissionScreen]="submissionScreen"
-        [voteScreen]="voteScreen"
         [act]="act"
         [activityState]="activityState"
         [sendMessage]="sendMessage"

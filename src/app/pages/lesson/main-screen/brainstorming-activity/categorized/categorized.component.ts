@@ -40,8 +40,6 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   templateUrl: './categorized.component.html',
 })
 export class CategorizedComponent implements OnInit, OnChanges {
-  @Input() submissionScreen;
-  @Input() voteScreen;
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
@@ -74,6 +72,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
+    console.log(this.board);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';
@@ -88,8 +87,11 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.ideaHearted(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
         this.brainstormService.ideaHearted(this.board, this.columns);
-      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent' || this.eventType === 'BrainstormClearBoardIdeaEvent' ) {
-        this.brainstormService.ideaRemoved(this.board, this.columns);
+      } else if (
+        this.eventType === 'BrainstormRemoveSubmissionEvent' ||
+        this.eventType === 'BrainstormClearBoardIdeaEvent'
+      ) {
+        this.brainstormService.ideasRemoved(this.board, this.columns);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.ideaEdited(this.board, this.columns);
       } else if (this.eventType === 'BrainstormCreateCategoryEvent') {
@@ -119,7 +121,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   addColumn(newCategoryNumber) {
-    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber));
+    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber, this.board.id));
   }
 
   deleteCol(categoryId) {

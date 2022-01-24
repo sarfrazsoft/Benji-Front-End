@@ -541,9 +541,9 @@ export class BrainstormRenameCategoryEvent extends ActivityEvent {
 export class BrainstormCreateCategoryEvent extends ActivityEvent {
   event_name = 'BrainstormCreateCategoryEvent';
 
-  constructor(category: string) {
+  constructor(category: string, board: number) {
     super();
-    this.extra_args = { category_name: category };
+    this.extra_args = { category_name: category, board: board };
   }
 }
 
@@ -941,4 +941,3 @@ export class BrainstormClearBoardIdeaEvent extends ActivityEvent {
     this.extra_args = { board: id };
   }
 }
-

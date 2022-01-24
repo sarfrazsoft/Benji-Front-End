@@ -29,7 +29,7 @@ export class AdminPanelComponent implements OnInit {
   lessonRuns: Array<any> = [];
   editorView: EditorView;
 
-  adminName = "";
+  adminName = '';
 
   form = new FormGroup({
     editorContent: new FormControl(doc, Validators.required()),
@@ -60,27 +60,27 @@ export class AdminPanelComponent implements OnInit {
 
   ngOnInit() {
     localStorage.removeItem('single_user_participant');
-    
+
     this.authService.startIntercom();
 
     this.adminName = this.contextService.user.first_name;
   }
 
   openCreateSession() {
-    this.dialog.open(SessionSettingsDialogComponent, {
-      data: {
-        createSession: true,
-        title: "",
-        description: ""
-      },
-      panelClass: 'session-settings-dialog'
-    })
-    .afterClosed()
-    .subscribe(data => {
-      this.adminService.createNewBoard(data).subscribe((res: any) => {
-        this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+    this.dialog
+      .open(SessionSettingsDialogComponent, {
+        data: {
+          createSession: true,
+          title: '',
+          description: '',
+        },
+        panelClass: 'session-settings-dialog',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        this.adminService.createNewBoard(data).subscribe((res: any) => {
+          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+        });
       });
-    });
   }
-
 }

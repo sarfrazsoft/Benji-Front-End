@@ -15,8 +15,6 @@ import { environment } from 'src/environments/environment';
 })
 export class UncategorizedComponent implements OnInit, OnChanges {
   @Input() board: Board;
-  @Input() submissionScreen;
-  @Input() voteScreen;
   @Input() act;
   @Input() activityState;
   @Input() minWidth;
@@ -46,103 +44,32 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
-    console.log(this.board)
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
-      this.ideas = this.populateIdeas(this.board);
+      this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.cycle = 'second';
     } else {
-      // let eventType;
-      // eventType = 'AddedIdea';
-      // eventType = 'heartedIdea';
-      // eventType = 'removeIdea';
-      // console.log(this.eventType);
       if (this.eventType === 'BrainstormSubmitEvent') {
-        this.addIdea(this.board, this.ideas);
-      } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.ideaCommented(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-        this.ideaCommented(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
-        this.ideaHearted(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
-        this.ideaHearted(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent' || this.eventType === 'BrainstormClearBoardIdeaEvent' ) {
-        this.ideaRemoved(this.board, this.ideas);
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+      } else if (
+        this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaCommentEvent'
+      ) {
+        this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
+      } else if (
+        this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaHeartEvent'
+      ) {
+        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas);
+      } else if (
+        this.eventType === 'BrainstormRemoveSubmissionEvent' ||
+        this.eventType === 'BrainstormClearBoardIdeaEvent'
+      ) {
+        this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
-        this.ideaEdited(this.act, this.ideas);
+        this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
       }
     }
-  }
-
-  populateIdeas(board) {
-    const ideas = [];
-    board.brainstormcategory_set.forEach((category) => {
-      if (!category.removed && category.brainstormidea_set) {
-        category.brainstormidea_set.forEach((idea: Idea) => {
-          if (!idea.removed) {
-            ideas.push({ ...idea, showClose: false });
-          }
-        });
-      }
-    });
-    return ideas;
-  }
-
-  addIdea(board, existingIdeas) {
-    const newIdeas = this.populateIdeas(board);
-    if (newIdeas.length === existingIdeas.length) {
-    } else {
-      const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
-      existingIdeas.push(myDifferences[0]);
-    }
-  }
-
-  ideaRemoved(board, existingIdeas) {
-    const newIdeas = this.populateIdeas(board);
-    if (newIdeas.length === existingIdeas.length) {
-    } else {
-      const myDifferences: any = differenceBy(existingIdeas, newIdeas, 'id');
-      remove(existingIdeas, (idea: any) => idea.id === myDifferences[0].id);
-    }
-  }
-
-  ideaCommented(act, existingIdeas: Array<Idea>) {
-    const newIdeas = this.populateIdeas(act);
-    newIdeas.forEach((newIdea: Idea) => {
-      const existingIdea = find(existingIdeas, { id: newIdea.id });
-      if (existingIdea.comments.length < newIdea.comments.length) {
-        const myDifferences = differenceBy(newIdea.comments, existingIdea.comments, 'id');
-        existingIdea.comments.push(myDifferences[0]);
-      } else if (existingIdea.comments.length > newIdea.comments.length) {
-        const myDifferences: Array<any> = differenceBy(existingIdea.comments, newIdea.comments, 'id');
-        remove(existingIdea.comments, (idea: any) => idea.id === myDifferences[0].id);
-      }
-    });
-  }
-
-  ideaHearted(act, existingIdeas: Array<Idea>) {
-    const newIdeas = this.populateIdeas(act);
-    newIdeas.forEach((newIdea: Idea) => {
-      const existingIdea = find(existingIdeas, { id: newIdea.id });
-      if (existingIdea.hearts.length < newIdea.hearts.length) {
-        const myDifferences = differenceBy(newIdea.hearts, existingIdea.hearts, 'id');
-        existingIdea.hearts.push(myDifferences[0]);
-      } else if (existingIdea.hearts.length > newIdea.hearts.length) {
-        const myDifferences: Array<any> = differenceBy(existingIdea.hearts, newIdea.hearts, 'id');
-        remove(existingIdea.hearts, (idea: any) => idea.id === myDifferences[0].id);
-      }
-    });
-  }
-
-  ideaEdited(act, existingIdeas: Array<Idea>) {
-    const newIdeas = this.populateIdeas(act);
-    newIdeas.forEach((newIdea: Idea, index) => {
-      const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
-      if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
-        existingIdeas.splice(existingIdeaIndex, 1, newIdea);
-      }
-    });
   }
 
   isAbsolutePath(imageUrl: string) {

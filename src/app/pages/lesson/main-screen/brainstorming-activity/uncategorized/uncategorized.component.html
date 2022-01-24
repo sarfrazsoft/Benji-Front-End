@@ -7,6 +7,7 @@
       cdkDrag
     >
     <benji-brainstorm-card
+      [board]="board"
       [item]="idea"
       [act]="act"
       [activityState]="activityState"
@@ -15,8 +16,7 @@
       (deleteIdea)="delete($event)"
       [sendMessage]="sendMessage"
       [categorizeFlag]="categorizeFlag"
-      [myGroup]="myGroup"
-    >
+      [myGroup]="myGroup">
     </benji-brainstorm-card>
       <!-- <div class="idea">
         <mat-icon
