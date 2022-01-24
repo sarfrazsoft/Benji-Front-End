@@ -57,10 +57,9 @@ export class SessionSettingsDialogComponent implements OnInit {
       const val = this.form.value;
       this.dialogRef.close({
         title: val.title,
-        description: val.description
+        description: val.description,
       });
-    }
-    if (this.form.valid) {
+    } else if (this.form.valid) {
       const val = this.form.value;
       const l: Lesson = {
         lesson_name: val.title,

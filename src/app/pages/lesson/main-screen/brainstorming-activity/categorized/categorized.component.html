@@ -1,6 +1,5 @@
 <div
   class="submitted-ideas"
-  *ngIf="submissionScreen || voteScreen"
   fxLayout="row"
   fxLayoutGap="8px"
   cdkDropListGroup>
@@ -66,6 +65,7 @@
 
           <ng-container *ngFor="let item of column.brainstormidea_set; let i = index">
             <benji-brainstorm-card
+              [board]="board"
               [item]="item"
               [act]="act"
               [activityState]="activityState"
@@ -93,7 +93,7 @@
       <div class="header" fxLayoutAlign="center center">
         <div
           class="add-column"
-          (click)="addColumn(act.brainstormcategory_set.length)">
+          (click)="addColumn(board.brainstormcategory_set.length)">
           + New Group
         </div>
       </div>

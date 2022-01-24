@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { differenceBy, remove } from 'lodash';
+import { differenceBy, find, findIndex, includes, remove } from 'lodash';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
 
@@ -156,7 +156,7 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  ideaRemoved(act: Board, existingCategories) {
+  ideasRemoved(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category, index) => {
       existingCategories.forEach((existingCategory) => {
         if (existingCategory.id === category.id) {
@@ -168,8 +168,10 @@ export class BrainstormService {
               BEIdeas,
               'id'
             );
-
-            remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === myDifferences[0].id);
+            for (let i = 0; i < myDifferences.length; i++) {
+              const element = myDifferences[i];
+              remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === element.id);
+            }
           }
         }
       });
@@ -204,5 +206,80 @@ export class BrainstormService {
       }
     });
     return existingCategories;
+  }
+
+  // Uncategorized
+
+  uncategorizedIdeasRemoved(board, existingIdeas) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    if (newIdeas.length === existingIdeas.length) {
+    } else {
+      const myDifferences: any = differenceBy(existingIdeas, newIdeas, 'id');
+      for (let i = 0; i < myDifferences.length; i++) {
+        const element = myDifferences[i];
+        remove(existingIdeas, (idea: any) => idea.id === element.id);
+      }
+    }
+  }
+
+  uncategorizedPopulateIdeas(board) {
+    const ideas = [];
+    board.brainstormcategory_set.forEach((category) => {
+      if (!category.removed && category.brainstormidea_set) {
+        category.brainstormidea_set.forEach((idea: Idea) => {
+          if (!idea.removed) {
+            ideas.push({ ...idea, showClose: false });
+          }
+        });
+      }
+    });
+    return ideas;
+  }
+
+  uncategorizedAddIdea(board, existingIdeas) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    if (newIdeas.length === existingIdeas.length) {
+    } else {
+      const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
+      existingIdeas.push(myDifferences[0]);
+    }
+  }
+
+  uncategorizedIdeaCommented(board, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    newIdeas.forEach((newIdea: Idea) => {
+      const existingIdea = find(existingIdeas, { id: newIdea.id });
+      if (existingIdea.comments.length < newIdea.comments.length) {
+        const myDifferences = differenceBy(newIdea.comments, existingIdea.comments, 'id');
+        existingIdea.comments.push(myDifferences[0]);
+      } else if (existingIdea.comments.length > newIdea.comments.length) {
+        const myDifferences: Array<any> = differenceBy(existingIdea.comments, newIdea.comments, 'id');
+        remove(existingIdea.comments, (idea: any) => idea.id === myDifferences[0].id);
+      }
+    });
+  }
+
+  uncategorizedIdeaHearted(board, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    newIdeas.forEach((newIdea: Idea) => {
+      const existingIdea = find(existingIdeas, { id: newIdea.id });
+      if (existingIdea.hearts.length < newIdea.hearts.length) {
+        const myDifferences = differenceBy(newIdea.hearts, existingIdea.hearts, 'id');
+        existingIdea.hearts.push(myDifferences[0]);
+      } else if (existingIdea.hearts.length > newIdea.hearts.length) {
+        const myDifferences: Array<any> = differenceBy(existingIdea.hearts, newIdea.hearts, 'id');
+        remove(existingIdea.hearts, (idea: any) => idea.id === myDifferences[0].id);
+      }
+    });
+  }
+
+  uncategorizedIdeaEdited(board, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    newIdeas.forEach((newIdea: Idea, index) => {
+      const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
+      if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
+        existingIdeas.splice(existingIdeaIndex, 1, newIdea);
+      }
+    });
   }
 }

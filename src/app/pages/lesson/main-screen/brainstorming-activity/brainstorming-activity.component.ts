@@ -218,18 +218,18 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'HostChangeBoardEvent' ||
       this.eventType === 'BrainstormChangeModeEvent'
     ) {
-      const hostBoardID = this.act.host_board;
-      if (hostBoardID) {
-        this.act.boards.forEach((v) => {
-          if (hostBoardID === v.id) {
-            this.selectedBoard = v;
-            this.brainstormService.selectedBoard = this.selectedBoard;
-          }
-        });
-      }
+    }
+    const hostBoardID = this.act.host_board;
+    if (hostBoardID) {
+      this.act.boards.forEach((v) => {
+        if (hostBoardID === v.id) {
+          this.selectedBoard = v;
+          this.brainstormService.selectedBoard = this.selectedBoard;
+        }
+      });
     }
 
-    console.log( this.activityState.brainstormactivity);
+    console.log(this.activityState.brainstormactivity);
 
     // populate groupings dropdown
     // if (this.act.grouping && this.act.grouping.groups.length) {
