@@ -532,9 +532,9 @@ export class BrainstormRemoveSubmissionEvent extends ActivityEvent {
 export class BrainstormRenameCategoryEvent extends ActivityEvent {
   event_name = 'BrainstormRenameCategoryEvent';
 
-  constructor(category: number, name: string) {
+  constructor(category: number, name: string, board: number) {
     super();
-    this.extra_args = { category: category, category_name: name };
+    this.extra_args = { category: category, category_name: name, board: board };
   }
 }
 
@@ -947,4 +947,7 @@ export class BrainstormBoardSortOrderEvent extends ActivityEvent {
     super();
     this.extra_args = { sort: sort };
   }
+}
+export class GetUpdatedLessonDetailEvent extends ActivityEvent {
+  event_name = 'GetUpdatedLessonDetailEvent';
 }
