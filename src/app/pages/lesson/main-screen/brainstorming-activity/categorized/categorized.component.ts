@@ -72,7 +72,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
-    console.log(this.board);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';
@@ -141,7 +140,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
       return;
     }
     column.category_name = event.target.value;
-    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, event.target.value));
+    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, event.target.value, this.board.id));
   }
 
   openImage(imageUrl: string) {

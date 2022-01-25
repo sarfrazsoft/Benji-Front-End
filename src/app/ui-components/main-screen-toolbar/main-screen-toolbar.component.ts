@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -16,6 +25,7 @@ import {
   BrainstormVotingCompleteInternalEvent,
   EndShareEvent,
   FastForwardEvent,
+  GetUpdatedLessonDetailEvent,
   JumpEvent,
   NextInternalEvent,
   PauseActivityEvent,
@@ -75,7 +85,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
   lessonName: string;
 
-
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
@@ -88,7 +97,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    //this.shareParticipantLink = window.location.href + '?share=participant';
+    // this.shareParticipantLink = window.location.href + '?share=participant';
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
 
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -106,7 +115,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
-    
+
     this.shareParticipantLink = this.hostname + this.roomCode;
   }
 
@@ -251,7 +260,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   isActivitySettingsAllowed(activityState: UpdateMessage) {
-    if(activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
+    if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
       return true;
     } else {
       return false;
@@ -276,18 +285,19 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   openSessionSettings() {
-    this.matDialog.open(SessionSettingsDialogComponent, {
-      data: {
-        id: this.lesson.id,
-        title: this.lesson.lesson_name,
-        description: this.lesson.lesson_description,
-        Create: false
-      },
-      panelClass: 'session-settings-dialog'
-    })
-    .afterClosed()
-    .subscribe(data => {
-    });
+    this.matDialog
+      .open(SessionSettingsDialogComponent, {
+        data: {
+          id: this.lesson.id,
+          title: this.lesson.lesson_name,
+          description: this.lesson.lesson_description,
+          Create: false,
+        },
+        panelClass: 'session-settings-dialog',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
+      });
   }
-
 }
