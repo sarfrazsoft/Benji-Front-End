@@ -67,10 +67,12 @@
 
       <ng-container *ngxPermissionsOnly="'ADMIN'" >
         <div
-          (click)="addBoard(j)"
           class="add-group" 
           fxLayoutAlign="center center">
-          <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
+          <img
+            (click)="addBoard(j)" 
+            class="plus" 
+            src="../../../assets/img/side-nav/plus.svg"/>
         </div>
       </ng-container>
     </ng-container>
@@ -134,16 +136,8 @@
   <div fxLayout="column">
     <div class="title">Title</div>
     <div class="edit">
-      <div 
-        *ngIf="!editingInstructions"
-        (click)="editInstructions()"
-        class="not-editing">
-        {{ instructions }}
-      </div>
-      <div *ngIf="editingInstructions" class="editing">
+      <div class="editing">
         <input
-          #title
-          style="width: 100%;"
           type="text"
           [(ngModel)]="instructions" 
           (blur)="saveEditedInstructions()"
@@ -155,16 +149,8 @@
   <div fxLayout="column">
     <div class="title">Instructions</div>
     <div class="edit">
-      <div 
-        *ngIf="!editingSubInstructions"
-        (click)="editSubInstructions()"
-        class="not-editing">
-        {{ sub_instructions }}
-      </div>
-      <div *ngIf="editingSubInstructions" class="editing">
+      <div class="editing">
         <input
-          #instructions
-          style="width: 100%;"
           type="text"
           [(ngModel)]="sub_instructions" 
           (blur)="saveEditedSubInstructions()"

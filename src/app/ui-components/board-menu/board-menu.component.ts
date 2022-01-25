@@ -39,9 +39,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
-  editingInstructions: boolean;
+  //editingInstructions: boolean;
   @ViewChild('title') InstructionsElement: ElementRef;
-  editingSubInstructions: boolean;
+  //editingSubInstructions: boolean;
   @ViewChild('instructions') SubInstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
   instructions = '';
@@ -78,13 +78,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    // if (this.activityState && this.activityState.brainstormactivity) {
-    //   this.instructions = this.activityState.brainstormactivity.instructions;
-    //   this.sub_instructions = this.activityState.brainstormactivity.sub_instructions;
-    // }
-
-    // this.resetBoards();
-    // this.boardsCount = this.boards.length;
 
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
@@ -97,18 +90,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     });
 
-    // const boards = this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-    // this.boards = boards.sort((a, b) => b.order - a.order);
   }
 
   ngOnChanges(): void {
     if (this.activityState.eventType === 'BrainstormRemoveBoardEvent') {
       this.resetBoards();
     }
-    // if (this.selectedBoard) {
-    //   this.participantCodes = this.activityState.brainstormactivity.participants[this.selectedBoard.id];
-    // }
-
     if (this.navType === 'boards') {
       if (
         this.activityState.eventType === 'HostChangeBoardEvent' ||
@@ -144,26 +131,26 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   editInstructions() {
-    this.editingInstructions = true;
+    //this.editingInstructions = true;
     setTimeout(() => {
       this.InstructionsElement.nativeElement.focus();
     }, 0);
   }
 
   saveEditedInstructions() {
-    this.editingInstructions = false;
+    //this.editingInstructions = false;
     this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
   }
 
   editSubInstructions() {
-    this.editingSubInstructions = true;
+    //this.editingSubInstructions = true;
     setTimeout(() => {
       this.SubInstructionsElement.nativeElement.focus();
     }, 0);
   }
 
   saveEditedSubInstructions() {
-    this.editingSubInstructions = false;
+    //this.editingSubInstructions = false;
     this.sendMessage.emit(
       new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
     );
