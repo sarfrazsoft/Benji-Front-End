@@ -173,7 +173,7 @@
     </div>
   </div>
 
-  <div fxLayout="column">
+  <!-- <div fxLayout="column">
     <div class="title">Board Status</div>
     <div class="board-status">
       <ng-select
@@ -191,9 +191,9 @@
         </ng-template>
       </ng-select>
     </div>
-  </div>
+  </div> -->
 
-  <div fxLayout="column">
+  <!-- <div fxLayout="column">
     <div class="title">Post</div>
     <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
       <div 
@@ -229,9 +229,9 @@
         </label>
       </div>
     </div>
-  </div>
+  </div> -->
   
-  <div fxLayout="column">
+  <!-- <div fxLayout="column">
     <div class="title">Posts Order</div>
     <div class="board-status">
       <ng-select
@@ -241,14 +241,17 @@
         [clearable]="false"
         [searchable]="false"
         [clearable]="false"
-        [items]="statusDropdown"
-        dropdownPosition="bottom">
+        [items]="postOrderDropdown"
+        bindValue="value"
+        bindLabel="name"
+        dropdownPosition="bottom"
+        (change)="changeOrder($event)">
         <ng-template ng-option-tmp let-item="item" let-index="index">
-          <span> {{item}} </span>
+          <span> {{ item.name }} </span>
         </ng-template>
       </ng-select>
     </div>
-  </div>
+  </div> -->
 
   <div fxLayout="column">
     <div class="title">Board Mode</div>

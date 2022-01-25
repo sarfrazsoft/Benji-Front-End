@@ -262,7 +262,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.sub_instructions = this.board.board_activity.sub_instructions;
 
     this.boardMode = this.board.board_activity.mode;
-    console.log(this.boardMode);
     this.showUserName = this.board.board_activity.show_participant_name_flag;
   }
 

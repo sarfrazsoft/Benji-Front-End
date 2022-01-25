@@ -108,9 +108,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
-    console.log(this.board);
-  }
+  ngOnChanges() {}
 
   delete(id) {
     this.deleteIdea.emit(id);

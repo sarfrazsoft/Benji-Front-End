@@ -47,6 +47,7 @@ export class ThreadModeComponent implements OnInit, OnChanges {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+      this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {

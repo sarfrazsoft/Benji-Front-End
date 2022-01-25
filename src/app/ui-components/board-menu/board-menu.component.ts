@@ -16,6 +16,7 @@ import { BrainstormService } from 'src/app';
 import {
   Board,
   BrainstormAddBoardEventBaseEvent,
+  BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
   BrainstormChangeModeEvent,
   BrainstormClearBoardIdeaEvent,
@@ -46,6 +47,16 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   instructions = '';
   sub_instructions = '';
   statusDropdown = ['Open', 'View Only', 'Closed'];
+  postOrderDropdown = [
+    {
+      value: 'newest_to_oldest',
+      name: 'Newest to oldest',
+    },
+    {
+      value: 'oldest_to_newest',
+      name: 'Oldest to newest',
+    },
+  ];
   participants = [];
 
   board: Board;
@@ -229,8 +240,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   setMenuBoard(board: Board) {
     this.menuBoard = board.id;
   }
-  
+
   clearBoard() {
     this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+  }
+
+  changeOrder(order) {
+    this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value));
   }
 }
