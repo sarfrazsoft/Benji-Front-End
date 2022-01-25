@@ -148,7 +148,7 @@
               fxLayout="row" 
               fxLayoutGap="6px"
               fxLayoutAlign="center center"
-              (click)="previousBoard()">
+              (click)="changeBoard('previous')">
                 <mat-icon>arrow_back</mat-icon>
                 <span>back</span>
             </div>
@@ -191,7 +191,7 @@
               fxLayout="row" 
               fxLayoutGap="6px"
               fxLayoutAlign="center center"
-              (click)="nextBoard()">
+              (click)="changeBoard('next')">
                 <span>next</span>
                 <mat-icon>arrow_forward</mat-icon>
             </div>
