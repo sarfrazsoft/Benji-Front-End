@@ -5,6 +5,8 @@ import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
+  uncategorizedIdeas;
+
   saveIdea$ = new BehaviorSubject<any>(null);
 
   set saveIdea(l: any) {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
 import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
@@ -47,6 +47,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+      this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {

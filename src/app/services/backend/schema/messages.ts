@@ -941,3 +941,10 @@ export class BrainstormClearBoardIdeaEvent extends ActivityEvent {
     this.extra_args = { board: id };
   }
 }
+export class BrainstormBoardSortOrderEvent extends ActivityEvent {
+  event_name = 'BrainstormBoardSortOrderEvent';
+  constructor(sort: string) {
+    super();
+    this.extra_args = { sort: sort };
+  }
+}

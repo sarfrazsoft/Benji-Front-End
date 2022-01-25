@@ -8,7 +8,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivitiesService } from 'src/app/services/activities';
+import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   BrainstormSubmitIdeaCommentEvent,
   Category,
@@ -73,7 +73,8 @@ export class IdeaDetailedDialogComponent {
     private activitiesService: ActivitiesService,
     @Inject(MAT_DIALOG_DATA)
     public data: IdeaDetailedInfo,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private brainstormService: BrainstormService
   ) {
     // this.showCategoriesDropdown = data.showCategoriesDropdown;
     // this.categories = data.categories.filter((val) => !val.removed);
@@ -119,7 +120,20 @@ export class IdeaDetailedDialogComponent {
   getItemByCheckIndex(checkIndex) {
     let newItem;
     const currentlySelectedItem = this.data.item;
-    const ideas = this.data.category.brainstormidea_set.filter((el) => !el.removed);
+    let ideas = [];
+    if (this.data.category) {
+      // this is in categories view
+      ideas = this.data.category.brainstormidea_set.filter((el) => !el.removed);
+    } else {
+      // this is in uncategorized view
+      ideas = this.brainstormService.uncategorizedIdeas;
+    }
+    newItem = this.getNewItem(ideas, currentlySelectedItem, checkIndex);
+    this.data = { ...this.data, item: newItem };
+  }
+
+  getNewItem(ideas, currentlySelectedItem, checkIndex) {
+    let newItem;
     for (let i = 0; i < ideas.length; i++) {
       const idea = ideas[i];
       if (idea.id === currentlySelectedItem.id) {
@@ -134,7 +148,7 @@ export class IdeaDetailedDialogComponent {
         }
       }
     }
-    this.data = { ...this.data, item: newItem };
+    return newItem;
   }
 
   closeDialog() {
