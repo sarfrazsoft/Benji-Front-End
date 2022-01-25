@@ -15,9 +15,10 @@
     </mat-icon>
     <div *ngIf="showUserName" class="user-name">
       <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <div class="initials" fxLayout="column" fxLayoutAlign="center center">
-          {{ getInitials(getPersonName(item)) }}
-        </div>
+        <benji-profile-pictures
+          [activityState]="activityState"
+          [participantCodes]="[item]"
+        ></benji-profile-pictures>
         <div class="name">
           {{ getPersonName(item) }}
         </div>
@@ -118,7 +119,10 @@
             fxLayoutAlign="center center"
             >
             <div>
-              {{ getInitials(getParticipantName(comment.participant)) }}
+              <benji-profile-pictures
+                [activityState]="activityState"
+                [participantCodes]="[comment.participant]"
+              ></benji-profile-pictures>
             </div>
           </div> 
           <div class="grey-bg" fxLayout="column" fxLayoutAlign="start start">
@@ -135,7 +139,10 @@
       </ng-container>
       <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
         <div class="initials" fxLayout="column" fxLayoutAlign="center center">
-          {{ getInitials(getParticipantName(participantCode)) }}
+          <benji-profile-pictures
+            [activityState]="activityState"
+            [participantCodes]="[participantCode]"
+          ></benji-profile-pictures>
         </div>
         <div class="comment-input-container" fxLayoutAlign="start center">
           <div
