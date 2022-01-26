@@ -18,7 +18,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
-import { ConfirmationDialogComponent } from '../..';
+import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 export interface IdeaDetailedInfo {
   showCategoriesDropdown: boolean;
@@ -300,7 +300,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
-        if(res) this.deleteIdea.emit(this.idea.id);
+        if (res) { this.deleteIdea.emit(this.idea.id); }
       });
   }
 
