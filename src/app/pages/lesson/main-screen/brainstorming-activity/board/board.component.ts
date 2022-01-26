@@ -513,6 +513,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     // if (!idea.editing) {
     //   return;
     // }
+    console.log(idea);
     if (idea.imagesList || idea.selectedThirdPartyImageUrl) {
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
@@ -523,13 +524,21 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   submitWithoutImg(idea) {
-    // if (idea.text.length === 0) {
-    //   return;
-    // }
+    if (idea.text.length === 0 && idea.title.length === 0) {
+      return;
+    }
     if (idea.id) {
       // if there's id in the idea that means we're editing existing idea
       this.sendMessage.emit(
-        new BrainstormEditIdeaSubmitEvent(idea.id, idea.text, idea.title, idea.category.id, idea.groupId)
+        new BrainstormEditIdeaSubmitEvent(
+          idea.id,
+          idea.text,
+          idea.title,
+          idea.category.id,
+          idea.groupId,
+          idea.idea_image ? (idea.idea_image.id ? idea.idea_image.id : null) : null,
+          idea.selectedThirdPartyImageUrl
+        )
       );
     } else {
       // create new idea
@@ -538,12 +547,15 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   submitImageNIdea(idea) {
+    if (idea.id) {
+      // update the idea with an image
+      this.updateIdeaWithImage(idea);
+    }
     const code = this.activityState.lesson_run.lessonrun_code;
     const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
 
     const participant_code = this.participantCode;
     const fileList: FileList = idea.imagesList;
-    console.log();
     if (fileList && fileList.length > 0) {
       const file: File = fileList[0];
       this.utilsService
@@ -590,6 +602,26 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
           )
         );
       }
+    }
+  }
+
+  updateIdeaWithImage(idea) {
+    if (idea.selectedThirdPartyImageUrl) {
+      // updated with third party image
+      this.sendMessage.emit(
+        new BrainstormEditIdeaSubmitEvent(
+          idea.id,
+          idea.text,
+          idea.title,
+          idea.category.id,
+          idea.groupId,
+          undefined,
+          idea.selectedThirdPartyImageUrl
+        )
+      );
+    } else {
+      // updated with computer uploaded image
+      console.log(idea);
     }
   }
 

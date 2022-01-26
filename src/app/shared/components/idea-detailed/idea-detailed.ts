@@ -114,6 +114,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  selectedThirdPartyImageUrl;
   pdfSelected;
   selectedpdfDoc;
   pdfSrc;
@@ -169,7 +170,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         this.userRole = 'viewer';
       }
     }
-    console.log(this.userRole);
     if (this.data.item.idea_document) {
       this.pdfSelected = true;
       this.pdfSrc = this.hostname + this.data.item.idea_document.document;
@@ -191,6 +191,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       category: this.selectedCategory,
       imagesList: this.imagesList,
       selectedImageUrl: this.selectedImageUrl,
+      selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
     });
   }
 
@@ -213,6 +214,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.imagesList = null;
     this.imageSrc = null;
     this.selectedImageUrl = null;
+    this.selectedThirdPartyImageUrl = null;
+    this.idea.idea_image = null;
   }
 
   clearPDF() {
@@ -233,7 +236,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
-        console.log(res);
         if (res) {
           if (res.type === 'upload') {
             this.imageSelected = true;
@@ -247,7 +249,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.selectedThirdPartyImageUrl = res.data;
           } else if (res.type === 'giphy') {
+            this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.selectedImageUrl = res.data;
             this.imageSelected = true;

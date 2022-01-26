@@ -446,15 +446,28 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
     image_path?: string
   ) {
     super();
-    this.extra_args = { brainstormidea: id, idea: text, title: title, category: category, group_id: groupId };
+    this.extra_args = {
+      brainstormidea: id,
+      idea: text,
+      title: title,
+      category: category,
+      group_id: groupId,
+      idea_image: idea_image,
+      image_path: image_path,
+    };
 
-    if (idea_image) {
-      this.extra_args = {
-        ...this.extra_args,
-        idea_image: idea_image,
-        image_path: image_path,
-      };
-    }
+    // if (idea_image) {
+    //   this.extra_args = {
+    //     ...this.extra_args,
+    //     idea_image: idea_image,
+    //   };
+    // }
+    // if (image_path) {
+    //   this.extra_args = {
+    //     ...this.extra_args,
+    //     image_path: image_path,
+    //   };
+    // }
   }
 }
 
