@@ -18,6 +18,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+import { ConfirmationDialogComponent } from '../..';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 export interface IdeaDetailedInfo {
   showCategoriesDropdown: boolean;
@@ -132,6 +133,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
+    private deleteDialog: MatDialog,
     private contextService: ContextService
   ) {}
 
@@ -287,7 +289,19 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   delete() {
-    this.deleteIdea.emit(this.idea.id);
+    this.deleteDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete this idea?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'idea-delte-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if(res) this.deleteIdea.emit(this.idea.id);
+      });
   }
 
   toggle() {

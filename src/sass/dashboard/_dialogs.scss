@@ -251,7 +251,7 @@
           font-size: 14px;
           color: #616161;
           font-weight: 400;
-          margin-bottom: 12px;
+          padding-bottom: 12px;
           &:focus {
             outline: none;
           }
@@ -503,6 +503,7 @@
       width: 448px;
       background: #fff;
       z-index: 2;
+      min-height: 385px;
       .back-text {
         display: none !important;
       }
@@ -540,8 +541,9 @@
           height: auto;
         }
       }
-      .participant {
+      .participants {
         margin-bottom: 16px;
+        padding: 0px;
         .initials {
           width: 32px;
           height: 32px;
@@ -581,6 +583,9 @@
         }
         .mat-ink-bar {
           background-color: #37352f;
+        }
+        .likes-area {
+          margin-top: 16px;
         }
       }
       .idea-creation-controls {
@@ -956,7 +961,8 @@
   }
 }
 
-.delete-board-dialog {
+.delete-board-dialog,
+.idea-delte-dialog {
   .confirmation-dialog {
     .close-button {
       display: none;

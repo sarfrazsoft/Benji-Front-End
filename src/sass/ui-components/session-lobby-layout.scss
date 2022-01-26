@@ -198,7 +198,6 @@
       .session-details {
         margin-right: 0px;
         float: none;
-        margin-bottom: 32px;
         &.adminLobby {
           .session-title {
             font-size: 32px;
@@ -225,7 +224,6 @@
 @media (max-width: 750px) {
   .lobby-wrapper {
     .content-wrapper {
-      padding: 32px;
       .session-details {
         width: 100%;
       }

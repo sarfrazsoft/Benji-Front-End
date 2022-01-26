@@ -11,9 +11,10 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
-import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import { BrainstormService, ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
+import { Board, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -25,9 +26,11 @@ import {
   BrainstormVotingCompleteInternalEvent,
   EndShareEvent,
   FastForwardEvent,
+  HostChangeBoardEvent,
   GetUpdatedLessonDetailEvent,
   JumpEvent,
   NextInternalEvent,
+  ParticipantChangeBoardEvent,
   PauseActivityEvent,
   PreviousEvent,
   ResetEvent,
@@ -85,13 +88,17 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
   lessonName: string;
 
+  selectedBoard: Board;
+
   constructor(
     private layoutService: LayoutService,
     public contextService: ContextService,
     private utilsService: UtilsService,
     private sharingToolService: SharingToolService,
     private groupingToolService: GroupingToolService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private brainstormService: BrainstormService,
+    private permissionsService: NgxPermissionsService,
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -180,35 +187,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   groupingMenuClicked() {
-    // const activity_type = this.activityState.activity_type.toLowerCase();
-    // const state = this.activityState;
-    // const activityID = state[activity_type].activity_id;
-    // const code = activityID + state.lesson_run.lessonrun_code;
-
-    // if (this.isGroupingShowing) {
-    //   if (localStorage.getItem('isGroupingCreated') === code) {
-    //     // grouping ui is showing but grouping has been created for this activity
-    //     // go back to activity screen
-    //     // this.groupingToolService.showGroupingToolMainScreen = false;
-    //   } else {
-    //     // the grouping UI is showing but grouping has not been created
-    //     // for this activity
-    //     // hide grouping UI
-    //     this.socketMessage.emit(new ViewGroupingEvent(false));
-    //   }
-    // } else {
-    // if (localStorage.getItem('isGroupingCreated') === code) {
-    //   // grouping ui is not showing but grouping has been created for this activity
-    //   // only show UI on mainscreen
-    //   this.groupingToolService.showGroupingToolMainScreen =
-    //     !this.groupingToolService.showGroupingToolMainScreen;
-    // } else {
-    // the grouping UI is not showing and the grouping hasn't been created
-    // for this activity
-    // open menu
     this.groupingMenuTrigger.openMenu();
-    // }
-    // }
   }
 
   isSharingAllowed(activityState: UpdateMessage) {
@@ -300,4 +279,36 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
       });
   }
+
+  changeBoard(move: string) {
+    const shownBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let hostBoardOrder;
+    shownBoards.forEach((brd: Board) =>{
+      if (this.activityState.brainstormactivity.host_board === brd.id) {
+        hostBoardOrder = brd.order;
+      }
+    });
+    shownBoards.forEach((brd: Board) =>{
+      if (hostBoardOrder+1 === brd.order && move === "next") {
+        this.navigateToBoard(brd)
+      } else if (hostBoardOrder-1 === brd.order && move === "previous") {
+        this.navigateToBoard(brd)
+      }
+    });
+  }
+
+  navigateToBoard(board: Board) {
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
+      }
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.socketMessage.emit(new HostChangeBoardEvent(board.id));
+      }
+    });
+  }
+
 }

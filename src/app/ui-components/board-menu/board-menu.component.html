@@ -5,7 +5,7 @@
   fxLayoutGap="24px">
 
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="boards" (click)="diplayInfo()">Boards</div>
+    <div class="boards">Boards</div>
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
 
@@ -67,10 +67,12 @@
 
       <ng-container *ngxPermissionsOnly="'ADMIN'" >
         <div
-          (click)="addBoard(j)"
           class="add-group" 
           fxLayoutAlign="center center">
-          <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
+          <img
+            (click)="addBoard(j)" 
+            class="plus" 
+            src="../../../assets/img/side-nav/plus.svg"/>
         </div>
       </ng-container>
     </ng-container>
@@ -127,23 +129,15 @@
 <div  *ngIf="navType=='board-settings'" class="board-settings-navigation" fxLayout="column" fxLayoutGap="24px">
 
   <div fxLayout="row" fxLayoutAlign="space-between">
-    <div class="board-settings" (click)="diplayInfo()">Board Settings</div>
+    <div class="board-settings">Board Settings</div>
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
   
   <div fxLayout="column">
     <div class="title">Title</div>
     <div class="edit">
-      <div 
-        *ngIf="!editingInstructions"
-        (click)="editInstructions()"
-        class="not-editing">
-        {{ instructions }}
-      </div>
-      <div *ngIf="editingInstructions" class="editing">
+      <div class="editing">
         <input
-          #title
-          style="width: 100%;"
           type="text"
           [(ngModel)]="instructions" 
           (blur)="saveEditedInstructions()"
@@ -155,16 +149,8 @@
   <div fxLayout="column">
     <div class="title">Instructions</div>
     <div class="edit">
-      <div 
-        *ngIf="!editingSubInstructions"
-        (click)="editSubInstructions()"
-        class="not-editing">
-        {{ sub_instructions }}
-      </div>
-      <div *ngIf="editingSubInstructions" class="editing">
+      <div class="editing">
         <input
-          #instructions
-          style="width: 100%;"
           type="text"
           [(ngModel)]="sub_instructions" 
           (blur)="saveEditedSubInstructions()"

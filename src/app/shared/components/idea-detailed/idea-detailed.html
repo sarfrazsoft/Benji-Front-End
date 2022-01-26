@@ -13,15 +13,13 @@
         >
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
           <div fxLayout="row" fxLayoutGap="16px">
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
             <div 
               class="options" 
               fxLayoutAlign="center center"
               (click)="openImagePickerDialog()"
-              >
-                <img src="/assets/img/idea-creation/image-icon.svg">
-            </div>
+              ><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
+            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
+            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div>
             <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
           </div>
           <div class="add-to-post">Add to your post</div>
@@ -120,14 +118,13 @@
     </textarea>
     <div
       fxLayoutGap="13px"
-      class="participant" 
+      fxLayout="row"
+      class="participants" 
       fxLayoutAlign="start center">
-      <div 
-        class="initials" 
-        fxLayout="column" 
-        fxLayoutAlign="center center">
-        {{ getInitials(getParticipantName(submitting_participant)) }}
-      </div>
+        <benji-profile-pictures
+          [activityState]="activityState"
+          [participantCodes]="[submitting_participant]"
+        ></benji-profile-pictures>
       <div class="name"> {{ getParticipantName(submitting_participant) }} </div>
     </div>
     <!-- <img class="close" (click)="closeDialog()" src="/assets/img/idea-creation/close_big.svg">  -->
@@ -159,12 +156,10 @@
           <div class="comments-container" >
             <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row" fxLayoutGap="8px">
               <div class="dp">
-                <div 
-                  class="initials" 
-                  fxLayout="column" 
-                  fxLayoutAlign="center center">
-                  {{ getInitials(getParticipantName(comment.participant)) }}
-                </div>
+                <benji-profile-pictures
+                  [activityState]="activityState"
+                  [participantCodes]="[submitting_participant]"
+                ></benji-profile-pictures>
               </div>
               <div class="comment-bg" fxLayout="column">
                 <div class="commentor-name"> {{ getParticipantName(comment.participant) }} </div>
@@ -173,9 +168,10 @@
             </div>
           </div>
           <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-            <div class="initials" fxLayout="column" fxLayoutAlign="center center">
-              {{ getInitials(getParticipantName(participantCode)) }}
-            </div>
+            <benji-profile-pictures
+              [activityState]="activityState"
+              [participantCodes]="[submitting_participant]"
+            ></benji-profile-pictures>
             <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
             <div 
               class="send-comment" 
@@ -189,9 +185,19 @@
       </mat-tab>
       <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
         <ng-container *ngIf="idea?.hearts.length">
-          <div class="person" *ngFor="let heart of idea.hearts">
-            <div class="dp" fxLayoutAlign="center center">{{ getInitials(getParticipantName(heart.participant)) }}</div>
-            <div class="name">{{ getParticipantName(heart.participant) }}</div>
+          <div class="likes-area">
+            <div 
+              fxLayout="row"
+              fxLayoutGap="8px"
+              fxLayoutAlign="start center"
+              class="person" 
+              *ngFor="let heart of idea.hearts">
+              <benji-profile-pictures
+                [activityState]="activityState"
+                [participantCodes]="[submitting_participant]"
+              ></benji-profile-pictures>
+              <div class="name">{{ getParticipantName(heart.participant) }}</div>
+            </div>
           </div>
         </ng-container>
       </mat-tab>

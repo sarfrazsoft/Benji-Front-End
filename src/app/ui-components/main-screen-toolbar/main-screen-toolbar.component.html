@@ -1,5 +1,5 @@
 <div class="mainscreen-toolbar bg-white">
-  <div fxLayout="row" fxLayoutAlign="space-between">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
     <div class="benji-logo-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
       <img [src]="darkLogo" alt="Benji Logo" [ngClass]="{'has-name': lessonName}" class="benji-logo"/>
       <div 
@@ -147,14 +147,15 @@
               class="back-next"
               fxLayout="row" 
               fxLayoutGap="6px"
-              fxLayoutAlign="center center">
+              fxLayoutAlign="center center"
+              (click)="changeBoard('previous')">
                 <mat-icon>arrow_back</mat-icon>
                 <span>back</span>
             </div>
           </ng-container>
 
           <!-- Activities Navigation -->
-          <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
             <div class="option arrow" fxLayoutAlign="center center" (click)="controlClicked('previous')">
               <img src="/assets/img/chevron_left.svg"/> 
             </div>
@@ -181,7 +182,7 @@
             <div class="option arrow" fxLayoutAlign="center center" (click)="controlClicked('next')" *ngIf="isLastActivity">
               <img src="/assets/img/chevron_right.svg" /> 
             </div>
-          </ng-container>
+          </ng-container> -->
 
           <!-- Board navigation next -->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
@@ -189,7 +190,8 @@
               class="back-next"
               fxLayout="row" 
               fxLayoutGap="6px"
-              fxLayoutAlign="center center">
+              fxLayoutAlign="center center"
+              (click)="changeBoard('next')">
                 <span>next</span>
                 <mat-icon>arrow_forward</mat-icon>
             </div>

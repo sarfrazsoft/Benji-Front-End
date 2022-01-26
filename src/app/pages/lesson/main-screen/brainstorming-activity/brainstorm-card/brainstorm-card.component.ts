@@ -42,6 +42,7 @@ import {
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaDetailedInfo } from 'src/app/shared/components/idea-detailed/idea-detailed';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
@@ -97,6 +98,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   constructor(
     private dialog: MatDialog,
+    private matDialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private activitiesService: ActivitiesService,
@@ -113,7 +115,19 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   delete(id) {
-    this.deleteIdea.emit(id);
+    this.matDialog
+    .open(ConfirmationDialogComponent, {
+      data: {
+        confirmationMessage: 'Are you sure you want to delete this idea?',
+        actionButton: 'Delete',
+      },
+      disableClose: true,
+      panelClass: 'idea-delte-dialog',
+    })
+    .afterClosed()
+    .subscribe((res) => {
+      if(res) this.deleteIdea.emit(id);
+    });
   }
 
   isAbsolutePath(imageUrl: string) {
@@ -231,12 +245,5 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.brainstormService.saveIdea$.next(result);
       }
     });
-  }
-
-  getInitials(nameString: string) {
-    const fullName = nameString.split(' ');
-    const first = fullName[0] ? fullName[0].charAt(0) : '';
-    const second = fullName[1] ? fullName[1].charAt(0) : '';
-    return (first + second).toUpperCase();
   }
 }
