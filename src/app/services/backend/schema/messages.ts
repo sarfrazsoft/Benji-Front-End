@@ -943,9 +943,9 @@ export class BrainstormClearBoardIdeaEvent extends ActivityEvent {
 }
 export class BrainstormBoardSortOrderEvent extends ActivityEvent {
   event_name = 'BrainstormBoardSortOrderEvent';
-  constructor(sort: string) {
+  constructor(sort: string, board: number) {
     super();
-    this.extra_args = { sort: sort };
+    this.extra_args = { sort: sort, board: board };
   }
 }
 export class GetUpdatedLessonDetailEvent extends ActivityEvent {

@@ -57,6 +57,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       name: 'Oldest to newest',
     },
   ];
+  defaultSort = 'newest_to_oldest';
   participants = [];
 
   board: Board;
@@ -94,6 +95,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
           board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
+        if (board.sort) {
+          this.defaultSort = board.sort;
+        }
       }
     });
 
@@ -124,13 +128,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   getBoardParticipantCodes(board: Board) {
-    console.log(this.activityState.brainstormactivity.participants[board.id]);
     return this.activityState.brainstormactivity.participants[board.id];
   }
 
-  diplayInfo() {
-    console.log(this.activityState);
-  }
+  diplayInfo() {}
 
   closeNav() {
     this.sidenav.close();
@@ -246,6 +247,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   changeOrder(order) {
-    this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value));
+    this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
   }
 }

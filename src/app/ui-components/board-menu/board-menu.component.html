@@ -231,7 +231,7 @@
     </div>
   </div> -->
   
-  <!-- <div fxLayout="column">
+  <div fxLayout="column">
     <div class="title">Posts Order</div>
     <div class="board-status">
       <ng-select
@@ -245,13 +245,14 @@
         bindValue="value"
         bindLabel="name"
         dropdownPosition="bottom"
-        (change)="changeOrder($event)">
+        (change)="changeOrder($event)"
+        [(ngModel)]="defaultSort">
         <ng-template ng-option-tmp let-item="item" let-index="index">
           <span> {{ item.name }} </span>
         </ng-template>
       </ng-select>
     </div>
-  </div> -->
+  </div>
 
   <div fxLayout="column">
     <div class="title">Board Mode</div>

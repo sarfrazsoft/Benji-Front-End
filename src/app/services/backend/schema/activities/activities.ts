@@ -314,6 +314,7 @@ export interface Board {
   order: number;
   removed: boolean;
   status: string;
+  sort: 'newest_to_oldest' | 'oldest_to_newest';
   brainstormcategory_set: Array<Category>;
 }
 
@@ -366,6 +367,7 @@ export interface Idea {
   comments: Array<any>;
   hearts: Array<any>;
   version: number;
+  time: string;
   idea_document: IdeaDocument;
 }
 

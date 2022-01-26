@@ -229,7 +229,7 @@ export class MainScreenBrainstormingActivityComponent
       });
     }
 
-    console.log(this.activityState.brainstormactivity);
+    // console.log(this.activityState.brainstormactivity);
 
     // populate groupings dropdown
     // if (this.act.grouping && this.act.grouping.groups.length) {

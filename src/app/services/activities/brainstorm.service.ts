@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
 
@@ -281,6 +282,18 @@ export class BrainstormService {
       const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
       if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
         existingIdeas.splice(existingIdeaIndex, 1, newIdea);
+      }
+    });
+  }
+
+  uncategorizedSortIdeas(board, existingIdeas: Array<Idea>) {
+    existingIdeas = existingIdeas.sort((a, b) => {
+      if (board.sort === 'newest_to_oldest') {
+        return Number(moment(b.time)) - Number(moment(a.time));
+      } else if (board.sort === 'oldest_to_newest') {
+        return Number(moment(a.time)) - Number(moment(b.time));
+      } else {
+        return Number(moment(a.time)) - Number(moment(b.time));
       }
     });
   }

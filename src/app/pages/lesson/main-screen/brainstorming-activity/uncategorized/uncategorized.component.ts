@@ -71,6 +71,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
       }
     }
+    this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
   }
 
   isAbsolutePath(imageUrl: string) {

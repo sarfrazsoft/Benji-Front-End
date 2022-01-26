@@ -26,9 +26,7 @@ export class SessionSettingsDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<SessionSettingsDialogComponent>,
     private builder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    console.log(data);
-  }
+  ) {}
   selectedSession;
 
   ngOnInit() {

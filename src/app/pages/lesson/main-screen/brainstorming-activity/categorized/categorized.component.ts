@@ -11,7 +11,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, includes, remove } from 'lodash';
+import { differenceBy, includes, orderBy, remove } from 'lodash';
+import * as moment from 'moment';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
@@ -97,6 +98,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveCategoryEvent') {
         this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+      } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
+        this.sortIdeas(this.columns);
       }
     }
     this.sortIdeas(this.columns);
@@ -105,7 +108,15 @@ export class CategorizedComponent implements OnInit, OnChanges {
   sortIdeas(columns) {
     for (let i = 0; i < columns.length; i++) {
       const col = columns[i];
-      col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => b.id - a.id);
+      col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => {
+        if (this.board.sort === 'newest_to_oldest') {
+          return Number(moment(b.time)) - Number(moment(a.time));
+        } else if (this.board.sort === 'oldest_to_newest') {
+          return Number(moment(a.time)) - Number(moment(b.time));
+        } else {
+          return Number(moment(a.time)) - Number(moment(b.time));
+        }
+      });
     }
   }
 
