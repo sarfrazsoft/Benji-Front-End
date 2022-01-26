@@ -4,6 +4,7 @@
     class="brainstorm-idea"
     [class.show-user] = ""
     cdkDrag
+    [cdkDragDisabled]="!categorizeFlag"
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false">
     <mat-icon

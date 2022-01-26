@@ -3,9 +3,7 @@
     <li
       *ngFor="let idea of ideas"
       (mouseenter)="idea.showClose = true"
-      (mouseleave)="idea.showClose = false"
-      cdkDrag
-    >
+      (mouseleave)="idea.showClose = false">
     <benji-brainstorm-card
       [board]="board"
       [item]="idea"

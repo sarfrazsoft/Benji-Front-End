@@ -83,8 +83,9 @@ export class AdminService {
         {
           activity_type: 'BrainstormActivity',
           instructions: 'Dummy Instructions',
-          submission_seconds: 300,
-          voting_seconds: 120,
+          max_participant_submissions: 999,
+          submission_seconds: 30000,
+          voting_seconds: 12000,
           boards: [
             {
               name: 'test1',
