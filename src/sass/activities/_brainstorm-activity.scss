@@ -60,7 +60,7 @@ benji-ms-brainstorming-activity {
           min-height: 40px;
           font-size: 24px;
           .grey-bg {
-            background: #f3f4f7;
+            background: #fff;
             border-radius: 8px;
           }
           .column-name {
@@ -69,7 +69,7 @@ benji-ms-brainstorming-activity {
             color: #37352f;
             border-radius: 8px;
             padding: 12px;
-            outline: 4px solid #fff;
+            //outline: 4px solid #fff;
           }
           input {
             border: 1px solid #828282;
@@ -327,6 +327,9 @@ benji-ms-brainstorming-activity {
   position: relative;
   color: #616161;
   overflow: hidden;
+  width: 264px;
+  max-width: 264px;
+  overflow-x: auto;
   .delete-icon {
     position: absolute;
     right: 10px;
@@ -460,8 +463,8 @@ benji-ms-brainstorming-activity {
     color: #fff;
     font-size: 9px;
     font-weight: 500;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     border-radius: 20px;
   }
   .name {
@@ -627,13 +630,14 @@ benji-ps-brainstorming-activity {
   max-width: 840px;
 }
 .barinstorm-main {
-  margin: 13px 24px 33px 24px;
-  background-color: #fff;
-  border-radius: 16px 16px 0px 0px;
-  height: 98%;
+  // margin: 13px 24px 33px 24px;
+  // background-color: #fff;
+  // border-radius: 16px 16px 0px 0px;
+  // height: 98%;
   .barinstorm-header {
-    padding: 16px;
+    padding: 16px 64px 16px 32px;
     border-bottom: 1px solid #e7e7e7;
+    background: #fff;
     .brainstorm-h2 {
       font-weight: 700;
       font-size: 24px;
@@ -665,7 +669,7 @@ benji-ps-brainstorming-activity {
       cursor: pointer;
       color: #fff;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 600;
       padding: 12px 16px;
       border-radius: 8px;
       height: 40px;
@@ -720,10 +724,10 @@ ng-dropdown-panel {
 
 @media (max-width: 600px) {
   .barinstorm-main {
-    margin: 0px;
-    background-color: #fff;
-    border-radius: 0px;
-    height: 100%;
+    // margin: 0px;
+    // background-color: #fff;
+    // border-radius: 0px;
+    // height: 100%;
     .barinstorm-header {
       place-content: start !important;
       align-items: start !important;

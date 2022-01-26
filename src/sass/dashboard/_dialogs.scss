@@ -248,7 +248,7 @@
           font-size: 14px;
           color: #616161;
           font-weight: 400;
-          margin-bottom: 12px;
+          padding-bottom: 12px;
           &:focus {
             outline: none;
           }
@@ -580,6 +580,9 @@
         }
         .mat-ink-bar {
           background-color: #37352f;
+        }
+        .likes-area {
+          margin-top: 16px;
         }
       }
       .idea-creation-controls {

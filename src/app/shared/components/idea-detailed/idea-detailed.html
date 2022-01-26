@@ -185,12 +185,19 @@
       </mat-tab>
       <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
         <ng-container *ngIf="idea?.hearts.length">
-          <div class="person" *ngFor="let heart of idea.hearts">
-            <benji-profile-pictures
-              [activityState]="activityState"
-              [participantCodes]="[submitting_participant]"
-            ></benji-profile-pictures>
-            <div class="name">{{ getParticipantName(heart.participant) }}</div>
+          <div class="likes-area">
+            <div 
+              fxLayout="row"
+              fxLayoutGap="8px"
+              fxLayoutAlign="start center"
+              class="person" 
+              *ngFor="let heart of idea.hearts">
+              <benji-profile-pictures
+                [activityState]="activityState"
+                [participantCodes]="[submitting_participant]"
+              ></benji-profile-pictures>
+              <div class="name">{{ getParticipantName(heart.participant) }}</div>
+            </div>
           </div>
         </ng-container>
       </mat-tab>
