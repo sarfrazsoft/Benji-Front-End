@@ -955,10 +955,11 @@
   }
 }
 
-.delete-board-dialog {
+.delete-board-dialog, .idea-delte-dialog {
   .confirmation-dialog {
     .close-button {
       display: none;
     }
   }
 }
+
