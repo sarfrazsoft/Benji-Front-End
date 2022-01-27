@@ -251,8 +251,8 @@
         <div class="sub-label">Display posts in a single thread like popular social feeds.</div>
       </div>
       <img
-        class="selected" 
-        [ngClass]="{'active': getboardMode() =='thread'}" 
+        class="selected"
+        [ngClass]="{'active': getboardMode() === 'thread'}" 
         src="../../../assets/img/side-nav/selected.svg"/>
     </div>
     <div 
@@ -267,7 +267,7 @@
       </div>
       <img
         class="selected" 
-        [ngClass]="{'active': getboardMode() =='grid'}" 
+        [ngClass]="{'active': getboardMode() === 'grid'}" 
         src="../../../assets/img/side-nav/selected.svg"/>
     </div>
     <div 
@@ -282,7 +282,7 @@
       </div>
       <img 
         class="selected"
-        [ngClass]="{'active': getboardMode() =='columns'}" 
+        [ngClass]="{'active': getboardMode() === 'columns'}" 
         src="../../../assets/img/side-nav/selected.svg"/>
     </div>
   </div>
