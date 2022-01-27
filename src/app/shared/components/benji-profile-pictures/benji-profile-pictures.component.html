@@ -9,7 +9,8 @@
     <div 
       class="initials {{'color' + getColorIndex(code)}}" 
       fxLayout="column" 
-      fxLayoutAlign="center center">
+      fxLayoutAlign="center center"
+      matTooltip="{{getName(code)}}">
       {{ getInitials(code) }}
     </div>
   </div>

@@ -62,6 +62,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   board: Board;
   boardMode: string;
+  gridMode: boolean;
+  threadMode: boolean;
+  columnsMode: boolean;
   boardStatus: string;
   selectedBoard: Board;
   boards: Array<Board> = [];
@@ -198,10 +201,19 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   setBoardMode(mode: string) {
     this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
-  }
-
-  getboardMode() {
-    return this.boardMode;
+    if (mode === 'grid') {
+      this.gridMode = true;
+      this.threadMode = false;
+      this.columnsMode = false;
+    } else if (mode === 'thread') {
+      this.gridMode = false;
+      this.threadMode = true;
+      this.columnsMode = false;
+    } else if (mode === 'columns') {
+      this.gridMode = false;
+      this.threadMode = false;
+      this.columnsMode = true;
+    }
   }
 
   duplicateBoard() {}
@@ -231,7 +243,19 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   clearBoard() {
-    this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete all posts? This action can not be undone?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'clear-board-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) { this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id)); }
+      });
   }
 
   changeOrder(order) {

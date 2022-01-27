@@ -11,6 +11,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { BrainstormService, ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
@@ -99,6 +100,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private matDialog: MatDialog,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
+    private router: Router,
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -307,6 +309,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.socketMessage.emit(new HostChangeBoardEvent(board.id));
+      }
+    });
+  }
+
+  logoClicked(){
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.router.navigate(['/dashboard/']);
       }
     });
   }
