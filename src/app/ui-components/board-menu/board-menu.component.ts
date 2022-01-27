@@ -95,6 +95,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         }
       }
     });
+    this.initializeBoards();
   }
 
   ngOnChanges(): void {
@@ -107,12 +108,16 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.activityState.eventType === 'BrainstormToggleMeetingMode'
       ) {
       } else {
-        const boards = this.activityState.brainstormactivity.boards.filter(
-          (board) => board.removed === false
-        );
-        this.boards = boards.sort((a, b) => a.order - b.order);
+        this.initializeBoards();
       }
     }
+  }
+
+  initializeBoards() {
+    const boards = this.activityState.brainstormactivity.boards.filter(
+      (board) => board.removed === false
+    );
+    this.boards = boards.sort((a, b) => a.order - b.order);
   }
 
   getBoardParticipantCodes(board: Board) {
