@@ -254,7 +254,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
-        if (res) { this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id)); }
+        if (res) {
+          this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+        }
       });
   }
 

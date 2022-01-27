@@ -380,6 +380,7 @@ export interface IdeaDocument {
 
 export interface ParticipantCode {
   participant_code: number;
+  display_name: string;
 }
 
 export interface Image {

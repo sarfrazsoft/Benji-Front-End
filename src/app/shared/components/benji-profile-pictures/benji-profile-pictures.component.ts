@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { toInteger } from 'lodash';
 import { ActivitiesService } from 'src/app/services/activities';
 import { UpdateMessage } from 'src/app/services/backend/schema';
@@ -6,18 +6,17 @@ import { UpdateMessage } from 'src/app/services/backend/schema';
   selector: 'benji-profile-pictures',
   templateUrl: './benji-profile-pictures.component.html',
 })
-export class BenjiProfilePicturesComponent implements OnInit {
-  @Input() participantCodes: number [];
+export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
+  @Input() participantCodes: number[];
   @Input() activityState: UpdateMessage;
   @Input() counterAfter: number;
-  
+  @Input() showTooltip = true;
   remainingCount = 0;
   displayCodes: [];
 
   constructor(private activitiesService: ActivitiesService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {
     if (this.participantCodes.length > this.counterAfter) {

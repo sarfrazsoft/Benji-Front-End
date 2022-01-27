@@ -18,7 +18,8 @@
       <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
         <benji-profile-pictures
           [activityState]="activityState"
-          [participantCodes]="[item]"
+          [participantCodes]="[submittingUser]"
+          [showTooltip]="false"
         ></benji-profile-pictures>
         <div class="name">
           {{ getPersonName(item) }}
@@ -123,6 +124,7 @@
               <benji-profile-pictures
                 [activityState]="activityState"
                 [participantCodes]="[comment.participant]"
+                [showTooltip]="false"
               ></benji-profile-pictures>
             </div>
           </div> 
@@ -143,10 +145,11 @@
           <benji-profile-pictures
             [activityState]="activityState"
             [participantCodes]="[participantCode]"
+            [showTooltip]="false"
           ></benji-profile-pictures>
         </div>
         <div class="comment-input-container" fxLayoutAlign="start center">
-          <textarea class="input-comment" name="" id="" cols="30" rows="2"
+          <textarea class="input-comment" name="" id="" cols="30" rows="1"
             [(ngModel)]="commentModel">
           </textarea>
           <!-- <div

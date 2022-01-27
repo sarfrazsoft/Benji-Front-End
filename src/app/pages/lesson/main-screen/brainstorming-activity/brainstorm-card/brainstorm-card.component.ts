@@ -72,7 +72,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() board: Board;
-  @Input() item;
+  @Input() item: Idea;
   @Input() category;
   @Input() submissionScreen;
   @Input() voteScreen;
@@ -93,6 +93,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Output() deleteIdea = new EventEmitter<Idea>();
 
   commentModel = '';
+  submittingUser;
   // columns = [];
   // cycle = 'first';
 
@@ -108,7 +109,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     // super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.item && this.item.submitting_participant) {
+      this.submittingUser = this.item.submitting_participant.participant_code;
+    }
+  }
 
   ngOnChanges() {}
 
@@ -207,9 +212,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   showDetailedIdea(idea: Idea) {
     if (this.deviceService.isMobile()) {
-      this.openDialog(idea, "idea-detailed-mobile-dialog", false);
+      this.openDialog(idea, 'idea-detailed-mobile-dialog', false);
     } else {
-      this.openDialog(idea, "idea-detailed-dialog", true);
+      this.openDialog(idea, 'idea-detailed-dialog', true);
     }
 
     // this.openDialog(idea, 'idea-detailed-mobile-dialog', false);

@@ -3,14 +3,17 @@
   fxLayout="row"
   fxLayoutAlign="start center">
   <div 
-    class="participant" 
+    class="participant"
     fxLayout="column"
     *ngFor="let code of participantCodes">
     <div 
-      class="initials {{'color' + getColorIndex(code)}}" 
+      class="initials {{ 'color' + getColorIndex(code) }}" 
       fxLayout="column" 
       fxLayoutAlign="center center"
-      matTooltip="{{getName(code)}}">
+      matTooltip="{{ getName(code) }}"
+      [matTooltipPosition]="'below'"
+      [matTooltipDisabled]="!showTooltip"
+      show-delay="100">
       {{ getInitials(code) }}
     </div>
   </div>
