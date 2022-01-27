@@ -417,6 +417,7 @@ benji-ms-brainstorming-activity {
         flex-grow: 1;
         position: relative;
         .input-comment {
+          resize: none;
           min-height: 32px;
           background: #f3f4f7;
           border-radius: 20px;

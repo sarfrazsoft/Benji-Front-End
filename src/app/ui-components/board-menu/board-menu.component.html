@@ -38,7 +38,9 @@
         fxLayout="column" 
         class="board" 
         fxLayoutGap="8px"
-        
+        [ngClass]="{
+          selected: selectedBoard.id === board.id
+        }"
         (click)="navigateToBoard(board)">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div class="title">
