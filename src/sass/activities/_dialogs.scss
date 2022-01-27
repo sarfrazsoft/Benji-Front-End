@@ -562,6 +562,9 @@ ng-dropdown-panel.groups-controls {
           background: #fff;
           color: #37352F;
         }
+        &::placeholder {
+          color: #616161;
+        }
       }
     }
     .controls-container {

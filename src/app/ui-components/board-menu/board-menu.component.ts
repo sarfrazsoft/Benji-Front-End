@@ -228,7 +228,19 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   clearBoard() {
-    this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+    this.dialog
+    .open(ConfirmationDialogComponent, {
+      data: {
+        confirmationMessage: 'Are you sure you want to delete all posts? This action can not be undone?',
+        actionButton: 'Delete',
+      },
+      disableClose: true,
+      panelClass: 'clear-board-dialog',
+    })
+    .afterClosed()
+    .subscribe((res) => {
+      if(res) this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+    });
   }
 
   changeOrder(order) {

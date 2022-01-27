@@ -23,7 +23,7 @@
       </div>
       <div class="edit">
         <div class="title">Description</div>
-        <input
+        <textarea
           id="description"
           class="not-editing"
           (focus)="focusDescription = true"
@@ -34,7 +34,7 @@
           rows="2"
           formControlName="description"
           placeholder="This is where the instructions go..."
-        >
+        ></textarea>
       </div>
       <div 
         benji-click-stop-propagation 

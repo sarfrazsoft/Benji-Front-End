@@ -200,7 +200,8 @@
 }
 
 .board-duplicate-delete {
-  border-radius: 8px;
+  min-height: unset !important;
+  border-radius: 8px !important;
   .mat-menu-item {
     height: 32px;
     &:hover {

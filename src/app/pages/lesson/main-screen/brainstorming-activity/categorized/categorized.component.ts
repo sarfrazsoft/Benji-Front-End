@@ -193,18 +193,21 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    // if admin do below code
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      this.sendCategorizeEvent(event);
-    }
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        if (event.previousContainer === event.container) {
+          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+          transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+          );
+          this.sendCategorizeEvent(event);
+        }
+      }
+    });
   }
 
   sendCategorizeEvent(event) {

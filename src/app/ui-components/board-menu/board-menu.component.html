@@ -9,27 +9,28 @@
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
 
-
   <div fxLayout="column">
-    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between">
-        <div>
-          <div class="label">Meeting Mode</div>
-          <div class="sub-label">Participants follow the host to their board</div>
+    <ng-container *ngxPermissionsOnly="'ADMIN'">
+      <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+        <div 
+          class="setting"
+          benji-click-stop-propagation
+          fxLayout="row"
+          fxLayoutAlign="space-between">
+          <div>
+            <div class="label">Meeting Mode</div>
+            <div class="sub-label">Participants follow the host to their board</div>
+          </div>
+          <label class="switch">
+            <input 
+              type="checkbox" 
+              checked 
+              (change)="toggleMeetingMode($event)">
+            <span class="slider round"></span>
+          </label>
         </div>
-        <label class="switch">
-          <input 
-            type="checkbox" 
-            checked 
-            (change)="toggleMeetingMode($event)">
-          <span class="slider round"></span>
-        </label>
       </div>
-    </div>
+    </ng-container>
   </div>
 
   <div fxLayout="column" fxLayoutGap="12px">
@@ -76,42 +77,14 @@
         </div>
       </ng-container>
     </ng-container>
-  
-<!--   
-    <div fxLayout="column" class="board" fxLayoutGap="8px">
-      <div fxLayout="row" fxLayoutAlign="space-between">
-        <div class="title">Share your pitch with the rest of the group</div>
-        <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-      </div>
-    </div>
-  
-    <div *ngxPermissionsOnly="'ADMIN'" class="add-group" fxLayoutAlign="center center">
-      <img class="plus" src="../../../assets/img/side-nav/plus.svg"/>
-    </div>
-  
-    <div fxLayout="column" class="board" fxLayoutGap="8px">
-      <div fxLayout="row" fxLayoutAlign="space-between">
-        <div class="title">Did you like today’s session?</div>
-        <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-      </div>
-      <div fxLayout="row" class="persons">
-        <div *ngFor="let name of participants; let i = index;">
-          <div 
-            class="initials {{ 'color' + ( i % 10 ) }}" 
-            fxLayout="column" fxLayoutAlign="center center">
-            {{getInitials(name)}}
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </div>
 
 <mat-menu #menu="matMenu" class="board-duplicate-delete" xPosition="before">
-  <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+  <!-- <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
     <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
     <span>Duplicate</span>
-  </button>
+  </button> -->
   <button 
     mat-menu-item 
     [disabled]="boardsCount==1 ? 'disabled': null"
