@@ -42,7 +42,7 @@ benji-ms-brainstorming-activity {
     }
     .submitted-ideas {
       padding: 0 16px;
-      height: 100%;
+      height: calc(100vh - 150px);
       overflow-y: auto;
       .delete-icon {
         position: absolute;

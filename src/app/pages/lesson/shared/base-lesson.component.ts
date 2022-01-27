@@ -60,19 +60,19 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         // don't reset connection participant is
         // about to pick up brainstorm image
       } else {
-        if (this.deviceDetectorService.isMobile()) {
-          if (document.hidden) {
-            // stop running expensive task
-            this.socket = undefined;
-          } else {
-            // page has focus, begin running task
-            if (!this.isConnected()) {
-              setTimeout(() => {
-                this.initSocket();
-              }, 500);
-            }
+        // if (this.deviceDetectorService.isMobile()) {
+        if (document.hidden) {
+          // stop running expensive task
+          this.socket = undefined;
+        } else {
+          // page has focus, begin running task
+          if (!this.isConnected()) {
+            setTimeout(() => {
+              this.initSocket();
+            }, 500);
           }
         }
+        // }
       }
     });
 

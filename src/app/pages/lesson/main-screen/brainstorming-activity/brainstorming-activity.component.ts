@@ -50,7 +50,6 @@ import {
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
@@ -527,24 +526,6 @@ export class MainScreenBrainstormingActivityComponent
 
   // addCardUnderCategory(category: Category) {
   //   this.openDialog(category);
-  // }
-
-  // openDialog(category?: Category) {
-  //   const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
-  //     panelClass: 'idea-creation-dialog',
-  //     data: {
-  //       showCategoriesDropdown: this.categorizeFlag,
-  //       categories: this.activityState.brainstormactivity.brainstormcategory_set,
-  //       lessonID: this.activityState.lesson_run.lessonrun_code,
-  //       category: category,
-  //     },
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       this.saveIdea(result);
-  //     }
-  //   });
   // }
 
   // saveIdea(result) {

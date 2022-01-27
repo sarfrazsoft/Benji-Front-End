@@ -35,6 +35,7 @@ import {
 } from 'src/app/services';
 import {
   Board,
+  BoardMode,
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
   BrainstormEditIdeaSubmitEvent,
@@ -86,7 +87,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   voteScreen = false;
   VnSComplete = false;
-  boardMode: string;
+  boardMode: BoardMode;
   showUserName = true;
   minWidth = 'small';
   colDeleted = 0;
@@ -482,7 +483,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     const dialogRef = this.matDialog.open(IdeaCreationDialogComponent, {
       panelClass: 'idea-creation-dialog',
       data: {
-        showCategoriesDropdown: this.boardMode,
+        showCategoriesDropdown: this.boardMode === 'columns',
         categories: this.board.brainstormcategory_set,
         lessonID: this.activityState.lesson_run.lessonrun_code,
         category: category,

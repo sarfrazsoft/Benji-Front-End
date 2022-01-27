@@ -44,7 +44,11 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges() {
-    if (this.cycle === 'first' || this.eventType === 'filtered') {
+    if (
+      this.cycle === 'first' ||
+      this.eventType === 'filtered' ||
+      this.eventType === 'HostChangeBoardEvent'
+    ) {
       this.ideas = [];
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.brainstormService.uncategorizedIdeas = this.ideas;

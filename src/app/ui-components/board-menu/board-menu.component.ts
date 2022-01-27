@@ -81,6 +81,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
+        console.log(board);
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
         this.instructions = board.board_activity.instructions;
@@ -197,8 +198,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   setBoardMode(mode: string) {
-    this.boardMode = mode;
-    this.sendMessage.emit(new BrainstormChangeModeEvent(this.boardMode, this.selectedBoard.id));
+    this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
+  }
+
+  getboardMode() {
+    return this.boardMode;
   }
 
   duplicateBoard() {}

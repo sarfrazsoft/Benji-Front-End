@@ -110,24 +110,24 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
-    console.log(this.categorizeFlag);
-  }
+  ngOnChanges() {}
 
   delete(id) {
     this.matDialog
-    .open(ConfirmationDialogComponent, {
-      data: {
-        confirmationMessage: 'Are you sure you want to delete this idea?',
-        actionButton: 'Delete',
-      },
-      disableClose: true,
-      panelClass: 'idea-delte-dialog',
-    })
-    .afterClosed()
-    .subscribe((res) => {
-      if(res) this.deleteIdea.emit(id);
-    });
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete this idea?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'idea-delte-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.deleteIdea.emit(id);
+        }
+      });
   }
 
   isAbsolutePath(imageUrl: string) {
