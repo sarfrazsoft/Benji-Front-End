@@ -1,6 +1,7 @@
+//import { CookieService } from 'ngx-cookie-service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import {
   expandRightOnEnterAnimation,
@@ -67,6 +68,7 @@ export class MainScreenBrainstormingActivityComponent
   implements OnInit, OnChanges, OnDestroy {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
+  @Output() firstLaunchEvent = new EventEmitter<string>();
   peakBackStage = null;
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
@@ -143,64 +145,17 @@ export class MainScreenBrainstormingActivityComponent
     this.brainstormService.selectedBoard = this.selectedBoard;
     this.eventType = this.getEventType();
 
-    // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-    //   if (val) {
-    //     if (this.act.grouping && this.act.grouping.groups.length) {
-    //       this.initParticipantGrouping(this.act);
-    //     }
-    //   }
-    // });
-
-    // this.permissionsService.hasPermission('ADMIN').then((val) => {
-    //   if (val) {
-    //     if (this.getEventType() === 'AssignGroupingToActivities') {
-    //     }
-    //     this.applyGroupingOnActivity(this.activityState);
-    //     this.classificationTypes = [
-    //       {
-    //         type: 'everyone',
-    //         title: 'Everyone',
-    //         description: `Display everyone's work`,
-    //         imgUrl: '/assets/img/brainstorm/everyone.svg',
-    //       },
-    //       {
-    //         type: 'groups',
-    //         title: 'Groups',
-    //         description: `Display group's work`,
-    //         imgUrl: '/assets/img/brainstorm/groups.svg',
-    //       },
-    //       // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
-    //       // imgUrl: '/assets/img/brainstorm/individuals.svg' },
-    //     ];
-    //   }
-    // });
-
     this.onChanges();
 
-    // this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
-    //   if (val && val.controlName === 'participantNames') {
-    //     // this.showUserName = val.state;
-    //     this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
-    //   }
-    //   if (val && val.controlName === 'categorize') {
-    //     this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
-    //   }
-    //   if (val && val.controlName === 'resetGrouping') {
-    //     if (this.act.grouping) {
-    //       const groupingID = this.act.grouping.id;
-    //       this.sendMessage.emit(new ResetGroupingEvent(groupingID));
-    //     }
-    //   }
-    //   if (val && val.controlName === 'cardSize') {
-    //     this.minWidth = val.state.name;
-    //   }
-    // });
+  }
 
-    // this.saveIdeaSubscription = this.brainstormService.saveIdea$.subscribe((val) => {
-    //   if (val) {
-    //     this.saveIdea(val);
-    //   }
-    // });
+  ngAfterViewInit(): void {
+    const currentLessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
+    if (localStorage.getItem('currentLessonRunCode') !== currentLessonRunCode) {
+      this.firstLaunchEvent.emit();
+      localStorage.setItem('currentLessonRunCode',  currentLessonRunCode);
+    }
+    
   }
 
   ngOnChanges() {

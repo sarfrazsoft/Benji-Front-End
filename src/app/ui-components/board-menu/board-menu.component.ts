@@ -86,6 +86,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
+        this.decideBoardMode(this.boardMode);
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
@@ -206,6 +207,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   setBoardMode(mode: string) {
     this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
+    this.decideBoardMode(mode);
+  }
+
+  decideBoardMode(mode: string) {
     if (mode === 'grid') {
       this.gridMode = true;
       this.threadMode = false;
