@@ -138,14 +138,13 @@
           <ng-select
             class="ps-brainstorm-dropdown-controls"
             [items]="categories"
-            [clearable]="false"
+            [disabled]="true"
             bindLabel="category_name"
             placeholder="Categories..."
             [(ngModel)]="selectedCategory"
             appendTo="body"
             [searchable]="false"
-            [clearable]="false"
-          >
+            [clearable]="false">
           </ng-select>
         </div>
       </div>

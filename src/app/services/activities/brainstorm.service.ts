@@ -90,6 +90,14 @@ export class BrainstormService {
     return columns;
   }
 
+  categoryChangedForIdea(board: Board, columns) {
+    // const c = this.ideasRemoved(board, columns);
+    // return c;
+    // columns = this.addIdeaToCategory(board, c);
+    // return columns;
+    return this.populateCategories(board, columns);
+  }
+
   ideaHearted(act: Board, existingCategories) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {

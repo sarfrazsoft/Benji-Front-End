@@ -630,12 +630,12 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     const code = this.activityState.lesson_run.lessonrun_code;
     const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
 
-    const participant_code = this.participantCode.toString();
+    const participant_code = this.participantCode;
     const file: File = idea.selectedpdfDoc;
     if (file) {
       const formData: FormData = new FormData();
       formData.append('document', file, file.name);
-      formData.append('participant_code', participant_code);
+      formData.append('participant_code', participant_code ? participant_code.toString() : '');
       const headers = new HttpHeaders();
       headers.set('Content-Type', null);
       headers.set('Accept', 'multipart/form-data');

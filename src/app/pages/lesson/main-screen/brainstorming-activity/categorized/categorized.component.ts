@@ -104,6 +104,13 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
         this.sortIdeas(this.columns);
+      } else if (this.eventType === 'BrainstormSetCategoryEvent') {
+        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+          if (val) {
+            this.columns = this.brainstormService.categoryChangedForIdea(this.board, this.columns);
+            this.sortIdeas(this.columns);
+          }
+        });
       }
     }
     this.sortIdeas(this.columns);
@@ -200,14 +207,14 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         if (event.previousContainer === event.container) {
-          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+          // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
-          transferArrayItem(
-            event.previousContainer.data,
-            event.container.data,
-            event.previousIndex,
-            event.currentIndex
-          );
+          // transferArrayItem(
+          //   event.previousContainer.data,
+          //   event.container.data,
+          //   event.previousIndex,
+          //   event.currentIndex
+          // );
           this.sendCategorizeEvent(event);
         }
       }
@@ -215,6 +222,12 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   sendCategorizeEvent(event) {
+    transferArrayItem(
+      event.previousContainer.data,
+      event.container.data,
+      event.previousIndex,
+      event.currentIndex
+    );
     const id = event.container.data[event.currentIndex].id;
     let categoryId;
     this.board.brainstormcategory_set.forEach((cat) => {
