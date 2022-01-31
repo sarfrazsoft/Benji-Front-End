@@ -14,7 +14,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { BrainstormService, ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
+import { ContextService, SharingToolService } from 'src/app/services';
 import { Board, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
@@ -24,9 +24,7 @@ import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-s
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
-  BrainstormVotingCompleteInternalEvent,
   EndShareEvent,
-  FastForwardEvent,
   HostChangeBoardEvent,
   GetUpdatedLessonDetailEvent,
   JumpEvent,
@@ -36,9 +34,7 @@ import {
   PreviousEvent,
   ResetEvent,
   ResumeActivityEvent,
-  ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
-import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'benji-main-screen-toolbar',
@@ -92,13 +88,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   selectedBoard: Board;
 
   constructor(
-    private layoutService: LayoutService,
     public contextService: ContextService,
     private utilsService: UtilsService,
     private sharingToolService: SharingToolService,
-    private groupingToolService: GroupingToolService,
     private matDialog: MatDialog,
-    private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
     private router: Router,
   ) {}
@@ -106,7 +99,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    // this.shareParticipantLink = window.location.href + '?share=participant';
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
 
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -124,7 +116,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
-
     this.shareParticipantLink = this.hostname + this.roomCode;
   }
 
@@ -290,7 +281,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         minBoardOrder = brd.order;
       }
     });
-    //if (minBoardOrder == this.getHostBoardOrder()) {console.log("First")};
     return minBoardOrder == this.getHostBoardOrder();
   }
 
@@ -302,7 +292,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         maxBoardOrder = brd.order;
       }
     });
-    //if (maxBoardOrder == this.getHostBoardOrder()) {console.log("Last")};
     return maxBoardOrder == this.getHostBoardOrder();
   }
 
@@ -319,9 +308,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   changeBoard(move: string) {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    console.log(visibleBoards);
     const hostBoardOrder = this.getHostBoardOrder();
-    console.log(hostBoardOrder);
     visibleBoards.forEach((brd: Board) =>{
       if (hostBoardOrder+1 === brd.order && move === "next") {
         this.navigateToBoard(brd)

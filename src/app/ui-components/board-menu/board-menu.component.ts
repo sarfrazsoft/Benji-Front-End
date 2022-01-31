@@ -68,11 +68,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   boardStatus: string;
   selectedBoard: Board;
   boards: Array<Board> = [];
-  // participantCodes: number[];
 
   hostname = window.location.host + '/participant/join?link=';
   boardsCount: number;
   menuBoard: any;
+  hostBoard: number;
 
   constructor(
     private dialog: MatDialog,
@@ -97,6 +97,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     });
     this.initializeBoards();
+    this.hostBoard = this.activityState.brainstormactivity.host_board;
   }
 
   ngOnChanges(): void {
@@ -112,6 +113,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.initializeBoards();
       }
     }
+    this.hostBoard = this.activityState.brainstormactivity.host_board;
   }
 
   initializeBoards() {
@@ -124,8 +126,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   getBoardParticipantCodes(board: Board) {
     return this.activityState.brainstormactivity.participants[board.id];
   }
-
-  diplayInfo() {}
 
   closeNav() {
     this.sidenav.close();
@@ -143,26 +143,22 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   editInstructions() {
-    // this.editingInstructions = true;
     setTimeout(() => {
       this.InstructionsElement.nativeElement.focus();
     }, 0);
   }
 
   saveEditedInstructions() {
-    // this.editingInstructions = false;
     this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
   }
 
   editSubInstructions() {
-    // this.editingSubInstructions = true;
     setTimeout(() => {
       this.SubInstructionsElement.nativeElement.focus();
     }, 0);
   }
 
   saveEditedSubInstructions() {
-    // this.editingSubInstructions = false;
     this.sendMessage.emit(
       new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
     );
