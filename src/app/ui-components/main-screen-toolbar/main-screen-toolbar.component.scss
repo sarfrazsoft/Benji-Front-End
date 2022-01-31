@@ -71,22 +71,19 @@
   .back-next {
     border: 1px solid #E7E7E7;
     border-radius: 4px;
-    color: #bdbdbd;
+    color: #616161;
     font-size: 12px;
     font-weight: 500;
     padding: 8px 16px;
+    cursor: pointer;
     .mat-icon {
       height: 15px;
       width: 15px;
       font-size: 16px;
     }
-    &:hover {
-      color: #616161;
-      cursor: pointer;
-    }
-    &.active {
-      color: #616161;
-      cursor: pointer;
+    &.is-last, &.is-first {
+      color: #bdbdbd;
+      cursor: unset;
     }
   }
 }

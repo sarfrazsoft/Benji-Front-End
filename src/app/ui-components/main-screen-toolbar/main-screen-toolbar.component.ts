@@ -282,15 +282,47 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       });
   }
 
-  changeBoard(move: string) {
-    const shownBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+  isFirstBoard() {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let minBoardOrder = 0;
+    visibleBoards.forEach((brd: Board) =>{
+      if (brd.order < minBoardOrder) {
+        minBoardOrder = brd.order;
+      }
+    });
+    //if (minBoardOrder == this.getHostBoardOrder()) {console.log("First")};
+    return minBoardOrder == this.getHostBoardOrder();
+  }
+
+  isLastBoard() {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let maxBoardOrder = 0;
+    visibleBoards.forEach((brd: Board) =>{
+      if (brd.order > maxBoardOrder) {
+        maxBoardOrder = brd.order;
+      }
+    });
+    //if (maxBoardOrder == this.getHostBoardOrder()) {console.log("Last")};
+    return maxBoardOrder == this.getHostBoardOrder();
+  }
+
+  getHostBoardOrder() {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
     let hostBoardOrder;
-    shownBoards.forEach((brd: Board) =>{
+    visibleBoards.forEach((brd: Board) =>{
       if (this.activityState.brainstormactivity.host_board === brd.id) {
         hostBoardOrder = brd.order;
       }
     });
-    shownBoards.forEach((brd: Board) =>{
+    return hostBoardOrder;
+  }
+
+  changeBoard(move: string) {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    console.log(visibleBoards);
+    const hostBoardOrder = this.getHostBoardOrder();
+    console.log(hostBoardOrder);
+    visibleBoards.forEach((brd: Board) =>{
       if (hostBoardOrder+1 === brd.order && move === "next") {
         this.navigateToBoard(brd)
       } else if (hostBoardOrder-1 === brd.order && move === "previous") {
