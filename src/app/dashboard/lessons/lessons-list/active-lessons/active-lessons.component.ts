@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
+import { GetUpdatedLessonDetailEvent } from 'src/app/services/backend/schema';
+import { ActivityEvent } from 'src/app/services/backend/schema';
 
 export interface PeriodicElement {
   lessonRunCode: number;
@@ -49,6 +53,7 @@ export class ActiveLessonsComponent implements OnInit {
   constructor(
     private router: Router,
     private utilsService: UtilsService,
+    private matDialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -80,20 +85,20 @@ export class ActiveLessonsComponent implements OnInit {
     this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
   }
 
-  openSessionSettings(val ) {}
-  //   this.matDialog
-  //     .open(SessionSettingsDialogComponent, {
-  //       data: {
-  //         id: this.lesson.id,
-  //         title: this.lesson.lesson_name,
-  //         description: this.lesson.lesson_description,
-  //         Create: false,
-  //       },
-  //       panelClass: 'session-settings-dialog',
-  //     })
-  //     .afterClosed()
-  //     .subscribe((data) => {
-  //       this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
-  //     });
-  // }
+  openSessionSettings(val) {
+    this.matDialog
+      .open(SessionSettingsDialogComponent, {
+        data: {
+          id: val.id,
+          title: val.lesson_name,
+          description: val.lesson_description,
+          Create: false,
+        },
+        panelClass: 'session-settings-dialog',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        //this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
+      });
+  }
 }
