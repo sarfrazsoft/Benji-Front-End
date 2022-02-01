@@ -18,7 +18,6 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
 };
 
 import { NgxEditorModule } from 'ngx-editor';
-import { NgxTiptapModule } from 'ngx-tiptap';
 
 @NgModule({
   imports: [
@@ -28,7 +27,6 @@ import { NgxTiptapModule } from 'ngx-tiptap';
     ReactiveFormsModule,
     SharedModule,
     TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
-    NgxTiptapModule,
     NgxEditorModule,
   ],
   exports: [RouterModule],

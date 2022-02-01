@@ -1,6 +1,5 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Hammer } from 'hammerjs';
 import * as moment from 'moment';
 import { Timer } from '../../services/backend/schema';
 
