@@ -69,11 +69,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   boardStatus: string;
   selectedBoard: Board;
   boards: Array<Board> = [];
-  // participantCodes: number[];
 
   hostname = window.location.host + '/participant/join?link=';
   boardsCount: number;
   menuBoard: any;
+  hostBoard: number;
 
   constructor(
     private dialog: MatDialog,
@@ -87,6 +87,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
+        this.decideBoardMode(this.boardMode);
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
@@ -98,6 +99,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     });
 
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
+    this.initializeBoards();
+    this.hostBoard = this.activityState.brainstormactivity.host_board;
   }
 
   ngOnChanges(): void {
@@ -109,19 +112,20 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
         this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
       } else {
-        const boards = this.activityState.brainstormactivity.boards.filter(
-          (board) => board.removed === false
-        );
-        this.boards = boards.sort((a, b) => a.order - b.order);
+        this.initializeBoards();
       }
     }
+    this.hostBoard = this.activityState.brainstormactivity.host_board;
+  }
+
+  initializeBoards() {
+    const boards = this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
+    this.boards = boards.sort((a, b) => a.order - b.order);
   }
 
   getBoardParticipantCodes(board: Board) {
     return this.activityState.brainstormactivity.participants[board.id];
   }
-
-  diplayInfo() {}
 
   closeNav() {
     this.sidenav.close();
@@ -139,26 +143,22 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   editInstructions() {
-    // this.editingInstructions = true;
     setTimeout(() => {
       this.InstructionsElement.nativeElement.focus();
     }, 0);
   }
 
   saveEditedInstructions() {
-    // this.editingInstructions = false;
     this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
   }
 
   editSubInstructions() {
-    // this.editingSubInstructions = true;
     setTimeout(() => {
       this.SubInstructionsElement.nativeElement.focus();
     }, 0);
   }
 
   saveEditedSubInstructions() {
-    // this.editingSubInstructions = false;
     this.sendMessage.emit(
       new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
     );
@@ -203,6 +203,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   setBoardMode(mode: string) {
     this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
+    this.decideBoardMode(mode);
+  }
+
+  decideBoardMode(mode: string) {
     if (mode === 'grid') {
       this.gridMode = true;
       this.threadMode = false;

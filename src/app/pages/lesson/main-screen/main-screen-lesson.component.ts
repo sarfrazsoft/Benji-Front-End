@@ -99,6 +99,10 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     type =='boards'? this.navType='boards' : this.navType='board-settings';
   }
 
+  openBoardSettings() {
+    this.openSideNav("board-settings");
+  }
+
   close() {
     this.sidenav.close();
   }

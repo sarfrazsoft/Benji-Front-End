@@ -5,6 +5,7 @@
     (keydown.escape)="close()"
     position="end">
       <benji-board-menu *ngIf="serverMessage"
+        #boardMenu
         [sidenav]="sidenav" 
         [navType]="navType"
         [activityState]="serverMessage"
@@ -48,6 +49,7 @@
             [activityState]="serverMessage"
             [avgServerTimeOffset]="avgServerTimeOffset"
             (sendMessage)="sendSocketMessage($event)"
+            (firstLaunchEvent)="openBoardSettings()"
           >
           </benji-ms-brainstorming-activity>
 

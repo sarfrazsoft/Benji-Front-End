@@ -107,11 +107,6 @@
 
           <!-- Activity board settings -->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <!-- <button
-              [matMenuTriggerFor]="activitySettingsMenu"
-              #activitySettingsMenuTrigger="matMenuTrigger"
-              style="width: 0px;"> 
-            </button> -->
             <div 
               *ngIf="isActivitySettingsAllowed(activityState)"
               class="option" 
@@ -122,16 +117,6 @@
               show-delay="100">
                 <img src="/assets/img/side-nav/settings.svg" /> 
             </div>
-            <!-- <mat-menu 
-              class="activity-settings-menu" 
-              #activitySettingsMenu="matMenu" 
-              yPosition="above"
-              [overlapTrigger]="false">
-              <benji-activity-settings 
-                [activityState]="activityState"
-                (controlClicked)="controlClicked($event)">
-              </benji-activity-settings>
-            </mat-menu> -->
           </ng-container>
 
           <!-- Activity board navigation -->
@@ -149,9 +134,10 @@
           </ng-container>
 
           <!-- Board navigation back -->
-          <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
             <div 
               class="back-next"
+              [ngClass]="{'is-first': isFirstBoard()}"
               fxLayout="row" 
               fxLayoutGap="6px"
               fxLayoutAlign="center center"
@@ -159,42 +145,13 @@
                 <mat-icon>arrow_back</mat-icon>
                 <span>back</span>
             </div>
-          </ng-container> -->
-
-          <!-- Activities Navigation -->
-          <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <div class="option arrow" fxLayoutAlign="center center" (click)="controlClicked('previous')">
-              <img src="/assets/img/chevron_left.svg"/> 
-            </div>
-            <div class="option" fxLayoutAlign="center center"
-              [matMenuTriggerFor]="navigationMenu"
-              [matTooltipPosition]="'below'"
-              matTooltip="Activities"
-              show-delay="100">
-                <span>{{ currentActivityIndex }}</span>
-                <mat-menu 
-                  #navigationMenu="matMenu" 
-                  class="activity-settings-menu activity-session-menu"  
-                  [overlapTrigger]="false" 
-                  xPosition="before">
-                  <benji-session-navigation 
-                    [activityState]="activityState"
-                    [disableControls]="disableControls"
-                    (navigate)="navigateToActivity($event)"
-                    (setActivityIndex)="setCurrentActivityIndex($event)">
-                  </benji-session-navigation>
-                </mat-menu>
-            </div>
-
-            <div class="option arrow" fxLayoutAlign="center center" (click)="controlClicked('next')" *ngIf="isLastActivity">
-              <img src="/assets/img/chevron_right.svg" /> 
-            </div>
-          </ng-container> -->
+          </ng-container>
 
           <!-- Board navigation next -->
-          <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
             <div 
               class="back-next"
+              [ngClass]="{'is-last': isLastBoard()}"
               fxLayout="row" 
               fxLayoutGap="6px"
               fxLayoutAlign="center center"
@@ -202,7 +159,7 @@
                 <span>next</span>
                 <mat-icon>arrow_forward</mat-icon>
             </div>
-          </ng-container> -->
+          </ng-container>
 
         </div>
 
