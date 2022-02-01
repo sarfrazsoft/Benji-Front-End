@@ -152,10 +152,24 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.ideaTitle = this.data.item.title;
     this.userIdeaText = this.data.item.idea;
+
+    // initialize idea image
     if (this.data.item.idea_image) {
       this.imageSelected = true;
       this.imageSrc = this.data.item.idea_image.img;
+    } else {
+      this.removeImage();
     }
+
+    // check if idea has document and reset if
+    // document isn't present
+    if (this.data.item.idea_document) {
+      this.pdfSelected = true;
+      this.pdfSrc = this.hostname + this.data.item.idea_document.document;
+    } else {
+      this.clearPDF();
+    }
+
     if (this.data.participantCode) {
       this.participantCode = this.data.participantCode;
       this.userRole = 'viewer';
@@ -172,10 +186,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         this.userRole = 'viewer';
       }
     }
-    if (this.data.item.idea_document) {
-      this.pdfSelected = true;
-      this.pdfSrc = this.hostname + this.data.item.idea_document.document;
-    }
+
     if (this.data.category) {
       this.selectedCategory = this.data.category;
     }
@@ -300,7 +311,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
-        if (res) { this.deleteIdea.emit(this.idea.id); }
+        if (res) {
+          this.deleteIdea.emit(this.idea.id);
+        }
       });
   }
 

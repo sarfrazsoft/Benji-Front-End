@@ -24,7 +24,7 @@
           <label class="switch">
             <input 
               type="checkbox" 
-              checked 
+              [checked]="meetingMode"
               (change)="toggleMeetingMode($event)">
             <span class="slider round"></span>
           </label>

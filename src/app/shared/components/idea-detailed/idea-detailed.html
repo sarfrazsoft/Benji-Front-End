@@ -98,24 +98,28 @@
       </div>
       <button  class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
     </div>
-    <textarea 
-      class="title" 
-      placeholder="Title" 
-      [(ngModel)]="ideaTitle"
-      cdkTextareaAutosize
-      #autosize="cdkTextareaAutosize"
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="5">
-    </textarea>
-    <textarea
-      cdkTextareaAutosize
-      [(ngModel)]="userIdeaText" 
-      class="description"
-      placeholder="Description..."
-      [ngClass]="{
-        'image-selected': imageSelected || pdfSelected
-      }">
-    </textarea>
+    <ng-container *ngIf="userRole === 'owner' || ideaTitle">
+      <textarea 
+        class="title" 
+        placeholder="Title" 
+        [(ngModel)]="ideaTitle"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5">
+      </textarea>
+    </ng-container>
+    <ng-container *ngIf="userRole === 'owner' || userIdeaText">
+      <textarea
+        cdkTextareaAutosize
+        [(ngModel)]="userIdeaText" 
+        class="description"
+        placeholder="Description..."
+        [ngClass]="{
+          'image-selected': imageSelected || pdfSelected
+        }">
+      </textarea>
+    </ng-container>
     <div
       fxLayoutGap="13px"
       fxLayout="row"

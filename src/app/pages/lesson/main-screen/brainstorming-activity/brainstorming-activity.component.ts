@@ -12,7 +12,7 @@ import {
   slideInUpOnEnterAnimation,
   slideOutRightOnLeaveAnimation,
 } from 'angular-animations';
-import { clone, cloneDeep, uniqBy } from 'lodash';
+import { clone, cloneDeep, forOwn, uniqBy } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
 import { BrainStormComponent } from 'src/app/dashboard/past-sessions/reports';
@@ -132,48 +132,10 @@ export class MainScreenBrainstormingActivityComponent
     super.ngOnInit();
     this.participantCode = this.getParticipantCode();
     this.act = this.activityState.brainstormactivity;
-    const hostBoardID = this.act.host_board;
-    if (hostBoardID) {
-      this.act.boards.forEach((v) => {
-        if (hostBoardID === v.id) {
-          this.selectedBoard = v;
-        }
-      });
-    }
-    this.brainstormService.selectedBoard = this.selectedBoard;
+
     this.eventType = this.getEventType();
 
-    // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-    //   if (val) {
-    //     if (this.act.grouping && this.act.grouping.groups.length) {
-    //       this.initParticipantGrouping(this.act);
-    //     }
-    //   }
-    // });
-
-    // this.permissionsService.hasPermission('ADMIN').then((val) => {
-    //   if (val) {
-    //     if (this.getEventType() === 'AssignGroupingToActivities') {
-    //     }
-    //     this.applyGroupingOnActivity(this.activityState);
-    //     this.classificationTypes = [
-    //       {
-    //         type: 'everyone',
-    //         title: 'Everyone',
-    //         description: `Display everyone's work`,
-    //         imgUrl: '/assets/img/brainstorm/everyone.svg',
-    //       },
-    //       {
-    //         type: 'groups',
-    //         title: 'Groups',
-    //         description: `Display group's work`,
-    //         imgUrl: '/assets/img/brainstorm/groups.svg',
-    //       },
-    //       // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
-    //       // imgUrl: '/assets/img/brainstorm/individuals.svg' },
-    //     ];
-    //   }
-    // });
+    this.selectUsersBoard();
 
     this.onChanges();
 
@@ -218,15 +180,7 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'BrainstormChangeModeEvent'
     ) {
     }
-    const hostBoardID = this.act.host_board;
-    if (hostBoardID) {
-      this.act.boards.forEach((v) => {
-        if (hostBoardID === v.id) {
-          this.selectedBoard = v;
-          this.brainstormService.selectedBoard = this.selectedBoard;
-        }
-      });
-    }
+    this.selectUsersBoard();
 
     // console.log(this.activityState.brainstormactivity);
 
@@ -325,6 +279,43 @@ export class MainScreenBrainstormingActivityComponent
     if (this.dialogRef) {
       this.dialogRef.close();
     }
+  }
+
+  selectUsersBoard() {
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const boardParticipants = this.act.participants;
+        if (boardParticipants) {
+          forOwn(boardParticipants, (boardParticipantArray, participantsBoardId) => {
+            for (let i = 0; i < boardParticipantArray.length; i++) {
+              const participantCode = boardParticipantArray[i];
+              if (participantCode === this.participantCode) {
+                this.act.boards.forEach((board) => {
+                  if (Number(participantsBoardId) === board.id) {
+                    this.selectedBoard = board;
+                  }
+                });
+              }
+            }
+          });
+        }
+        this.brainstormService.selectedBoard = this.selectedBoard;
+      }
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const hostBoardID = this.act.host_board;
+        if (hostBoardID) {
+          this.act.boards.forEach((v) => {
+            if (hostBoardID === v.id) {
+              this.selectedBoard = v;
+            }
+          });
+        }
+        this.brainstormService.selectedBoard = this.selectedBoard;
+      }
+    });
   }
 
   // getParticipantGroup(participantCode, participantGroups) {

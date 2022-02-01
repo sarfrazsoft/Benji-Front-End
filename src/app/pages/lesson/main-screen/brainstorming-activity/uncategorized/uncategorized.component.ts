@@ -47,7 +47,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     if (
       this.cycle === 'first' ||
       this.eventType === 'filtered' ||
-      this.eventType === 'HostChangeBoardEvent'
+      this.eventType === 'HostChangeBoardEvent' ||
+      this.eventType === 'ParticipantChangeBoardEvent'
     ) {
       this.ideas = [];
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);

@@ -233,7 +233,11 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     // populate groupings dropdown
-    if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
+    if (
+      this.board &&
+      this.board.board_activity.grouping &&
+      this.board.board_activity.grouping.groups.length
+    ) {
       this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
         if (val) {
           this.initParticipantGrouping(this.act);

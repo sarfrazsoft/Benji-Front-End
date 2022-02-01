@@ -60,6 +60,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   defaultSort = 'newest_to_oldest';
   participants = [];
 
+  meetingMode: boolean;
   board: Board;
   boardMode: string;
   gridMode: boolean;
@@ -95,6 +96,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         }
       }
     });
+
+    this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
   }
 
   ngOnChanges(): void {
@@ -102,10 +105,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       this.resetBoards();
     }
     if (this.navType === 'boards') {
-      if (
-        this.activityState.eventType === 'HostChangeBoardEvent' ||
-        this.activityState.eventType === 'BrainstormToggleMeetingMode'
-      ) {
+      if (this.activityState.eventType === 'HostChangeBoardEvent') {
+      } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
+        this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
       } else {
         const boards = this.activityState.brainstormactivity.boards.filter(
           (board) => board.removed === false
