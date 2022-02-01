@@ -128,6 +128,7 @@
         <benji-profile-pictures
           [activityState]="activityState"
           [participantCodes]="[submitting_participant]"
+          [showTooltip]="false"
         ></benji-profile-pictures>
       <div class="name"> {{ getParticipantName(submitting_participant) }} </div>
     </div>
@@ -173,7 +174,7 @@
           <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
             <benji-profile-pictures
               [activityState]="activityState"
-              [participantCodes]="[submitting_participant]"
+              [participantCodes]="[participantCode]"
             ></benji-profile-pictures>
             <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
             <div 
