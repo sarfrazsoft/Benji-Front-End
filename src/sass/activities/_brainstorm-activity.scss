@@ -26,9 +26,10 @@ benji-ms-brainstorming-activity {
     height: 100% !important;
     appearance: none !important;
     overflow: hidden;
-    &.thread-mode {
+    .thread-mode {
       margin: 0px auto;
       .submitted-ideas {
+        padding: 0px;
         ul {
           display: block;
           li {
@@ -36,6 +37,18 @@ benji-ms-brainstorming-activity {
           }
           .brainstorm-idea {
             min-width: 544px;
+            margin: 0px auto;
+            margin-bottom: 16px;
+            .comment {
+              font-size: 14px;
+            }
+            .initials {
+              width: 32px;
+              height: 32px;
+            }
+            .heart, .thought {
+              width: 16px;
+            }
           }
         }
       }
@@ -757,6 +770,22 @@ ng-dropdown-panel {
           }
         }
         display: unset !important;
+      }
+    }
+  }
+}
+
+.active-lesson-menu {
+  min-height: unset !important;
+  border-radius: 8px !important;
+  .mat-menu-item {
+    height: 32px;
+    &:hover {
+      background: #f3f4f7;
+    }
+    &.disabled {
+      img {
+        opacity: 0.4;
       }
     }
   }

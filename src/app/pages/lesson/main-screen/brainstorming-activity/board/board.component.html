@@ -72,7 +72,7 @@
       </div>
     </div>
   </div>
-  <div class="brainstorm-container" [ngClass]="{'thread-mode': boardMode=='thread'}">
+  <div class="brainstorm-container">
     <ng-container *ngIf="boardMode=='columns'">
       <benji-categorized-ideas
         [board]="board"
@@ -114,6 +114,7 @@
 
     <ng-container *ngIf="boardMode=='thread'">
       <benji-thread-mode-ideas
+        [ngClass]="{'thread-mode': boardMode=='thread'}"
         [board]="board"
         [act]="act"
         [activityState]="activityState"
@@ -126,7 +127,6 @@
         [myGroup]="myGroup"
         (viewImage)="viewImage($event)"
         (deleteIdea)="deleteIdea($event)">
-
       </benji-thread-mode-ideas>
     </ng-container>
 

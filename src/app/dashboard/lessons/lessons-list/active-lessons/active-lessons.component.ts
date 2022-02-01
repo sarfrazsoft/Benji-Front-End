@@ -10,7 +10,7 @@ export interface PeriodicElement {
   host: string;
   participants: number;
   startDate: string;
-  endDate: string;
+  //endDate: string;
 }
 
 @Component({
@@ -21,7 +21,8 @@ export class ActiveLessonsComponent implements OnInit {
 
   @Input() lessonRuns: Array<Lesson> = [];
 
-  displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'endDate', 'options'];
+  //displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'endDate', 'options'];
+  displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'options'];
   dataSource: PeriodicElement[] = [];
 
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -66,7 +67,7 @@ export class ActiveLessonsComponent implements OnInit {
           host:  val.host.first_name + ' ' + val.host.last_name, 
           participants: val.participant_set.length, 
           startDate: moment(val.start_time).format('MMM D, YYYY'),
-          endDate: val.end_time ? moment(val.end_time).format('MMM D, YYYY') : ''
+         // endDate: val.end_time ? moment(val.end_time).format('MMM D, YYYY') : ''
         })
     });
   }
@@ -78,4 +79,21 @@ export class ActiveLessonsComponent implements OnInit {
   copyLink(val) {
     this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
   }
+
+  openSessionSettings(val ) {}
+  //   this.matDialog
+  //     .open(SessionSettingsDialogComponent, {
+  //       data: {
+  //         id: this.lesson.id,
+  //         title: this.lesson.lesson_name,
+  //         description: this.lesson.lesson_description,
+  //         Create: false,
+  //       },
+  //       panelClass: 'session-settings-dialog',
+  //     })
+  //     .afterClosed()
+  //     .subscribe((data) => {
+  //       this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
+  //     });
+  // }
 }
