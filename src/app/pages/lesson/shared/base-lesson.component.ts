@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit, Directive } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -10,6 +10,7 @@ import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/ap
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
+@Directive()
 export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   roomCode: number;
   lessonRun: LessonRun;
