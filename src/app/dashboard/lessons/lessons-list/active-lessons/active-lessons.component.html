@@ -5,7 +5,7 @@
 
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef> Session Title </th>
-        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.title}} </td>
+        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.lesson_title}} </td>
       </ng-container>
     
       <ng-container matColumnDef="host">

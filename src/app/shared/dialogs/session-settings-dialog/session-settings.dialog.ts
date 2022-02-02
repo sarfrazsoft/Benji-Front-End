@@ -59,9 +59,10 @@ export class SessionSettingsDialogComponent implements OnInit {
       });
     } else if (this.form.valid) {
       const val = this.form.value;
-      const l: Lesson = {
+      const l: any = {
         lesson_name: val.title,
         lesson_description: val.description,
+        index: this.data.index,
       };
       this.updateLesson(l, this.data.id)
         .pipe(

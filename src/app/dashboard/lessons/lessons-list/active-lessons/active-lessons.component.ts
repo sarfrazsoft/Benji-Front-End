@@ -1,18 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Lesson } from 'src/app/services/backend/schema/course_details';
-import * as moment from 'moment';
-import { UtilsService } from 'src/app/services/utils.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
 
-export interface PeriodicElement {
+export interface TableRowInformation {
+  index: number;
   lessonRunCode: number;
-  title: string;
+  lesson_title: string;
   host: string;
+  lesson_description: string;
   participants: number;
   startDate: string;
-  //endDate: string;
+  lessonId: number;
 }
 
 @Component({
@@ -20,39 +22,33 @@ export interface PeriodicElement {
   templateUrl: './active-lessons.component.html',
 })
 export class ActiveLessonsComponent implements OnInit {
-
   @Input() lessonRuns: Array<Lesson> = [];
 
-  //displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'endDate', 'options'];
   displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'options'];
-  dataSource: PeriodicElement[] = [];
+  dataSource: TableRowInformation[] = [];
 
-  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   options = [
     {
       option: 'Open',
-      icon: '../../../../assets/img/dashboard-active-sessions/open.svg'
+      icon: '../../../../assets/img/dashboard-active-sessions/open.svg',
     },
     {
       option: 'View only',
-      icon: '../../../../assets/img/dashboard-active-sessions/view-only.svg'
+      icon: '../../../../assets/img/dashboard-active-sessions/view-only.svg',
     },
     {
       option: 'Closed',
-      icon: '../../../../assets/img/dashboard-active-sessions/closed.svg'
+      icon: '../../../../assets/img/dashboard-active-sessions/closed.svg',
     },
-  ]
+  ];
 
   selectedCategory = 'Open';
 
   hostname = window.location.host + '/participant/join?link=';
 
-  constructor(
-    private router: Router,
-    private utilsService: UtilsService,
-    private matDialog: MatDialog,
-  ) {}
+  constructor(private router: Router, private utilsService: UtilsService, private matDialog: MatDialog) {}
 
   ngOnInit() {
     this.getActiveSessions();
@@ -60,18 +56,18 @@ export class ActiveLessonsComponent implements OnInit {
 
   getActiveSessions() {
     this.dataSource = [];
-    console.log(this.lessonRuns);
     const slicedArray = this.lessonRuns;
-    slicedArray.forEach((val: any) => {
-      this.dataSource.push(
-        {
-          lessonRunCode: val.lessonrun_code, 
-          title: val.lesson.lesson_name, 
-          host:  val.host.first_name + ' ' + val.host.last_name, 
-          participants: val.participant_set.length, 
-          startDate: moment(val.start_time).format('MMM D, YYYY'),
-         // endDate: val.end_time ? moment(val.end_time).format('MMM D, YYYY') : ''
-        })
+    slicedArray.forEach((val: any, index: number) => {
+      this.dataSource.push({
+        index: index,
+        lessonRunCode: val.lessonrun_code,
+        lessonId: val.lesson.id,
+        lesson_title: val.lesson.lesson_name,
+        lesson_description: val.lesson.lesson_description,
+        host: val.host.first_name + ' ' + val.host.last_name,
+        participants: val.participant_set.length,
+        startDate: moment(val.start_time).format('MMM D, YYYY'),
+      });
     });
   }
 
@@ -83,22 +79,21 @@ export class ActiveLessonsComponent implements OnInit {
     this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
   }
 
-  openSessionSettings(val) {
-    console.log(val);
-    
+  openSessionSettings(val: TableRowInformation) {
     this.matDialog
       .open(SessionSettingsDialogComponent, {
         data: {
-          id: val.id,
-          title: val.lesson_name,
+          index: val.index,
+          id: val.lessonId,
+          title: val.lesson_title,
           description: val.lesson_description,
-          Create: false,
+          createSession: false,
         },
         panelClass: 'session-settings-dialog',
       })
       .afterClosed()
       .subscribe((data) => {
-        //this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
+        this.dataSource[data.index].lesson_title = data.lesson_name;
       });
   }
 }
