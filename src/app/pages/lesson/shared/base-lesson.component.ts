@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit, Directive } from '@angular/core';
+import { ChangeDetectorRef, Directive, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -132,14 +132,14 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   connectAndSubscribe() {
     this.socket = this.socketService.connectLessonSocket(
       this.clientType,
-      this.lessonRun.lessonrun_code,
+      this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-
+    console.log(this.socket);
     this.socket.subscribe(
       (msg: ServerMessage) => {
         this.handleServerMessage(msg);
-        // console.log(msg);
+        console.log(msg);
       },
       (err) => console.log(err),
       () => {
