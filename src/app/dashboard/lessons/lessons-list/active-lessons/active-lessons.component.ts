@@ -5,8 +5,6 @@ import * as moment from 'moment';
 import { UtilsService } from 'src/app/services/utils.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
-import { GetUpdatedLessonDetailEvent } from 'src/app/services/backend/schema';
-import { ActivityEvent } from 'src/app/services/backend/schema';
 
 export interface PeriodicElement {
   lessonRunCode: number;
@@ -86,6 +84,8 @@ export class ActiveLessonsComponent implements OnInit {
   }
 
   openSessionSettings(val) {
+    console.log(val);
+    
     this.matDialog
       .open(SessionSettingsDialogComponent, {
         data: {
