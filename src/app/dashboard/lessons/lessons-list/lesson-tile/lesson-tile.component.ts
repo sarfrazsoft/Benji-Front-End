@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { EditorService } from 'src/app/dashboard/editor/services';
+// import { EditorService } from 'src/app/dashboard/editor/services';
 import * as global from 'src/app/globals';
 import { BackendRestService, ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -44,8 +44,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
-    private utilsService: UtilsService,
-    private editorService: EditorService
+    private utilsService: UtilsService
   ) {}
 
   openDialog(lesson: Lesson) {
@@ -204,7 +203,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
       lesson_name: this.lesson.lesson_name,
       lesson_description: this.description,
     };
-    this.editorService
+    this.adminService
       .updateLesson(l, this.lesson.id)
       .pipe(
         map((res) => res),

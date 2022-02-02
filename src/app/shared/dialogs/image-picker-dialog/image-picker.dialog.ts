@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { EditorService } from 'src/app/dashboard/editor/services';
+// import { EditorService } from 'src/app/dashboard/editor/services';
 import * as global from 'src/app/globals';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';

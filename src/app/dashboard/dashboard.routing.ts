@@ -54,10 +54,10 @@ const routes: Routes = [
         path: 'account',
         component: AccountComponent,
       },
-      {
-        path: 'editor',
-        loadChildren: () => import('src/app/dashboard/editor/editor.module').then((m) => m.EditorModule),
-      },
+      // {
+      //   path: 'editor',
+      //   loadChildren: () => import('src/app/dashboard/editor/editor.module').then((m) => m.EditorModule),
+      // },
       {
         path: 'pages',
         loadChildren: () =>

@@ -108,4 +108,8 @@ export class AdminService {
       })
     );
   }
+
+  updateLesson(lesson: Lesson, id): Observable<any[]> {
+    return this.http.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
+  }
 }

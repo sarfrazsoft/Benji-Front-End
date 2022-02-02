@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as Chart from 'chart.js';
-import { ImageSelectorComponent } from 'src/app/dashboard/editor/services';
+// import { ImageSelectorComponent } from 'src/app/dashboard/editor/services';
 import { PastSessionsService } from 'src/app/services';
 import { FeedbackGraphQuestion, User } from 'src/app/services/backend/schema';
 
