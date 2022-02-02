@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "^11.2.14",
     "@angular/router": "^11.2.14",
     "@ctrl/ngx-emoji-mart": "1.0.6",
-    "@ng-select/ng-select": "5.0.11",
+    "@ng-select/ng-select": "6.0.0",
     "@ngx-formly/bootstrap": "^5.0.0",
     "@ngx-formly/core": "^5.0.0",
     "@ngx-formly/schematics": "^5.10.1",
