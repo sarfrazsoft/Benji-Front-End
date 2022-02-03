@@ -100,7 +100,11 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
   }
 
   openBoardSettings() {
-    this.openSideNav("board-settings");
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.openSideNav("board-settings");
+      }
+    });
   }
 
   close() {

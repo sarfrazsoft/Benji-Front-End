@@ -49,6 +49,9 @@ benji-ms-brainstorming-activity {
             .heart, .thought {
               width: 16px;
             }
+            .brainstorm-image img {
+              max-height: unset;
+            }
           }
         }
       }
@@ -72,6 +75,7 @@ benji-ms-brainstorming-activity {
           margin: 16px 8px;
           min-height: 40px;
           font-size: 24px;
+          max-width: 264px;
           .grey-bg {
             background: #fff;
             border-radius: 8px;
@@ -82,7 +86,17 @@ benji-ms-brainstorming-activity {
             color: #37352f;
             border-radius: 8px;
             padding: 12px;
-            //outline: 4px solid #fff;
+            button {
+              background: transparent;
+              color: #828282;
+              height: 23px;
+              opacity: 0;
+            }
+            &:hover {
+              button {
+                opacity: 1;
+              }
+            }
           }
           input {
             border: 1px solid #828282;
@@ -98,11 +112,6 @@ benji-ms-brainstorming-activity {
             &:focus {
               outline: none;
             }
-          }
-          button {
-            background: transparent;
-            color: #828282;
-            height: 23px;
           }
           .add-column {
             font-size: 16px;
@@ -657,7 +666,7 @@ benji-ps-brainstorming-activity {
       margin: 2px 0px 6px 8px;
     }
     .sub-header {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 400;
       color: #828282;
       margin-left: 8px;

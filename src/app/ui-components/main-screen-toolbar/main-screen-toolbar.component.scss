@@ -21,8 +21,10 @@
       color: #37352F;
       line-height: normal;
       &:hover {
-        color: #555bea;
-        cursor: pointer;
+        &.admin {
+          color: #555bea;
+          cursor: pointer;
+        }
       }
     }
   }
