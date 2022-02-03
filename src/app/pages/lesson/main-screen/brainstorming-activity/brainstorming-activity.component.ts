@@ -105,10 +105,14 @@ export class MainScreenBrainstormingActivityComponent
 
   ngAfterViewInit(): void {
     const currentLessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
-    if (localStorage.getItem('currentLessonRunCode') !== currentLessonRunCode) {
-      this.firstLaunchEvent.emit();
-      localStorage.setItem('currentLessonRunCode', currentLessonRunCode);
-    }
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        if (localStorage.getItem('currentLessonRunCode') !== currentLessonRunCode) {
+          this.firstLaunchEvent.emit();
+          localStorage.setItem('currentLessonRunCode', currentLessonRunCode);
+        }
+      }
+    });
   }
 
   ngOnChanges() {

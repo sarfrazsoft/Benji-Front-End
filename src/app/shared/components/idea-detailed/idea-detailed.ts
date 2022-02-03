@@ -29,6 +29,7 @@ export interface IdeaDetailedInfo {
   activityState: UpdateMessage;
   isMobile: boolean;
   participantCode: number;
+  userRole: IdeaUserRole;
 }
 export type IdeaUserRole = 'owner' | 'viewer';
 @Component({
@@ -170,21 +171,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.clearPDF();
     }
 
+    this.userRole = this.data.userRole;
+
     if (this.data.participantCode) {
       this.participantCode = this.data.participantCode;
-      this.userRole = 'viewer';
     } else {
       // viewing user is the host
-      this.userRole = 'owner';
-    }
-
-    if (this.data.item.submitting_participant && this.userRole !== 'owner') {
-      this.submitting_participant = this.data.item.submitting_participant.participant_code;
-      if (this.submitting_participant === this.participantCode) {
-        this.userRole = 'owner';
-      } else {
-        this.userRole = 'viewer';
-      }
     }
 
     if (this.data.category) {

@@ -61,12 +61,11 @@
             <div
               [matMenuTriggerFor]="menu" 
               class="grey-bg" 
-              fxLayoutAlign="center center"
-            >
+              fxLayoutAlign="center center">
               <img src="../../../../assets/img/dashboard-active-sessions/hori-dots.svg" alt="">
             </div>
             <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
-              <button mat-menu-item (click)="edit(lesson, $event)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <button mat-menu-item (click)="edit(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                 <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
                 <span>Edit</span>
               </button>
@@ -74,10 +73,10 @@
                 <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
                 <span>Duplicate</span>
               </button> -->
-              <button mat-menu-item (click)="delete($event, lesson)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <!-- <button mat-menu-item (click)="delete(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
                 <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
                 <span>Delete</span>
-              </button>
+              </button> -->
             </mat-menu>
           </div>
         </td>

@@ -41,7 +41,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
-import { IdeaDetailedInfo } from 'src/app/shared/components/idea-detailed/idea-detailed';
+import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { environment } from 'src/environments/environment';
@@ -94,6 +94,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   commentModel = '';
   submittingUser;
+  submitting_participant;
+  userRole: IdeaUserRole;
   // columns = [];
   // cycle = 'first';
 
@@ -112,6 +114,22 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
+    }
+
+    if (this.participantCode) {
+      this.userRole = 'viewer';
+    } else {
+      // viewing user is the host
+      this.userRole = 'owner';
+    }
+
+    if (this.item.submitting_participant && this.userRole !== 'owner') {
+      this.submittingUser = this.item.submitting_participant.participant_code;
+      if (this.submittingUser === this.participantCode) {
+        this.userRole = 'owner';
+      } else {
+        this.userRole = 'viewer';
+      }
     }
   }
 
@@ -234,6 +252,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         activityState: this.activityState,
         isMobile: !isDesktop,
         participantCode: this.participantCode,
+        userRole: this.userRole,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {

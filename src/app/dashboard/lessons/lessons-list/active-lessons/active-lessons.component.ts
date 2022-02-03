@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
+import { ConfirmationDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
 
 export interface TableRowInformation {
   index: number;
@@ -77,6 +77,45 @@ export class ActiveLessonsComponent implements OnInit {
 
   copyLink(val) {
     this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
+  }
+
+  edit(val: TableRowInformation) {
+    this.openSessionSettings(val);
+  }
+
+  delete(val: TableRowInformation) {
+    // if (lesson.effective_permission === 'admin') {
+    //   const msg = 'Are you sure you want to delete ' + lesson.lesson_name + '?';
+    //   const dialogRef = this.matDialog
+    //     .open(ConfirmationDialogComponent, {
+    //       data: {
+    //         confirmationMessage: msg,
+    //       },
+    //       disableClose: true,
+    //       panelClass: 'dashboard-dialog',
+    //     })
+    //     .afterClosed()
+    //     .subscribe((res) => {
+    //       if (res) {
+    //         this.adminService.deleteLesson(lesson.id).subscribe(
+    //           (delRes) => {
+    //             if (delRes.success) {
+    //               this.updateLessons.emit();
+    //               this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
+    //             }
+    //           },
+    //           (error) => {
+    //             this.utilsService.openWarningNotification('Something went wrong.', '');
+    //           }
+    //         );
+    //       }
+    //     });
+    // } else {
+    //   this.utilsService.openWarningNotification(
+    //     `You don't have sufficient permission to perform this action.`,
+    //     ''
+    //   );
+    // }
   }
 
   openSessionSettings(val: TableRowInformation) {

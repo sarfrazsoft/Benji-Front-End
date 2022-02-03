@@ -6,6 +6,7 @@
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false">
     <mat-icon
+      *ngIf="userRole === 'owner'"
       benji-click-stop-propagation
       class="delete-icon"
       [style.opacity]="item.showClose ? 1 : 0"
