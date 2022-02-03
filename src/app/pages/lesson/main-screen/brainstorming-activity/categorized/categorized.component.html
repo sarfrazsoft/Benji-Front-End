@@ -18,15 +18,17 @@
               fxLayoutAlign="space-between center"
               *ngIf="!column.editing"
             >
-              <div class="column-name black-color" fxFlex fxLayoutAlign="space-between center">
-                {{ column.category_name }}
-                
+              <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
+                <div fxLayoutAlign="start center">
+                  {{ column.category_name }}
+                </div>
                 <ng-container *ngxPermissionsOnly="'ADMIN'">
                   <button
                     [matMenuTriggerFor]="menu"
                     benji-click-stop-propagation
                     disableRipple
                     aria-label="Example icon-button with a menu"
+                    fxLayoutAlign="start start"
                   >
                     <mat-icon>more_horiz</mat-icon>
                   </button>
