@@ -656,6 +656,8 @@
           font-size: 16px;
           padding: 0px 14px;
           width: 80%;
+          padding-right: 60px;
+          box-sizing: border-box;
           &:focus-visible {
             outline: none;
           }
