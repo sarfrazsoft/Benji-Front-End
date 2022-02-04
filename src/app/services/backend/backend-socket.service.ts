@@ -26,19 +26,16 @@ export class BackendSocketService {
     const webSocketSubjectConfig: WebSocketSubjectConfig<any> = {
       url: uri,
       deserializer: ({ data }) => {
-        console.log(data);
         clearTimeout(this.typingTimer);
         return JSON.parse(data);
       },
       openObserver: {
         next: (val: any) => {
           this.typingTimer = setTimeout(() => {
-            // this.doneTyping();
-            console.log('its been 3 seconds since websocket connected and no message');
             this.httpClient
               .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRun.id}/restart_lesson/`)
               .subscribe((v) => {
-                console.log(v);
+                // console.log(v);
               });
           }, 3000);
           console.log('opened');

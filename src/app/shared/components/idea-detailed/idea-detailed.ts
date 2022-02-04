@@ -122,6 +122,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pdfSrc;
   hostname = environment.web_protocol + '://' + environment.host;
   userRole: IdeaUserRole;
+  commentModel = '';
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();

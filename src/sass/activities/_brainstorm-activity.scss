@@ -46,7 +46,8 @@ benji-ms-brainstorming-activity {
               width: 32px;
               height: 32px;
             }
-            .heart, .thought {
+            .heart,
+            .thought {
               width: 16px;
             }
             .brainstorm-image img {
@@ -456,6 +457,9 @@ benji-ms-brainstorming-activity {
           }
           &:focus-visible {
             outline: none;
+          }
+          &::placeholder {
+            color: $secondary-color;
           }
         }
         .send-comment {

@@ -26,24 +26,21 @@
       </div> 
     </div>
     <div
+      (click)="showDetailedIdea(item)"
       class="brainstorm-image"
       *ngIf="item.idea_image">
       <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
-        <img 
-          benji-click-stop-propagation 
-          (click)="openImage(item.idea_image.img)" 
-          [src]="item.idea_image.img" alt="" />
+        <img [src]="item.idea_image.img" alt="" />
       </ng-container>
   
       <ng-template #uploadedImage>
-        <img 
-          benji-click-stop-propagation
-          (click)="openImage(hostname + item.idea_image.img)" 
-          [src]="hostname + item.idea_image.img" alt="" />
+        <img [src]="hostname + item.idea_image.img" alt="" />
       </ng-template>
     </div>
   
-    <div *ngIf="item.idea_document">
+    <div
+      (click)="showDetailedIdea(item)"
+      *ngIf="item.idea_document">
        <div  style="width: 260px;height: 200px;">
         <!-- <ngx-extended-pdf-viewer [src]="hostname + item.idea_document.document" 
           useBrowserLocale="true" 
@@ -117,8 +114,7 @@
           <div 
             class="initials {{ 'color' + ( i % 10 ) }}" 
             fxLayout="column" 
-            fxLayoutAlign="center center"
-            >
+            fxLayoutAlign="center center">
             <div>
               <benji-profile-pictures
                 [activityState]="activityState"
@@ -148,7 +144,9 @@
           ></benji-profile-pictures>
         </div>
         <div class="comment-input-container" fxLayoutAlign="start center">
-          <textarea class="input-comment" name="" id="" cols="30" rows="1"
+          <textarea 
+            placeholder="Add a comment"  
+            class="input-comment" name="" id="" cols="30" rows="1"
             [(ngModel)]="commentModel">
           </textarea>
           <!-- <div
