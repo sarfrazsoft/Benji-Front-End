@@ -96,6 +96,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   submittingUser;
   submitting_participant;
   userRole: IdeaUserRole;
+  deactivateHearting = false;
   // columns = [];
   // cycle = 'first';
 
@@ -199,11 +200,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
         hearted = true;
+        this.deactivateHearting = false;
       }
       // If a trainer hearts an idea the heart object does not have
       // a participant code.
       if (element.participant === null && !this.participantCode) {
         hearted = true;
+        this.deactivateHearting = false;
       }
     });
     return hearted;
@@ -221,11 +224,16 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         hearted = element;
       }
     });
-    this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    if (hearted) {
+      this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    }
   }
 
-  setHeart(ideaId: number) {
-    this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
+  setHeart(idea: Idea) {
+    if (!this.deactivateHearting) {
+      this.deactivateHearting = true;
+      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    }
   }
 
   showDetailedIdea(idea: Idea) {

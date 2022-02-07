@@ -91,12 +91,12 @@
       <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
         <div>
           <img
-            *ngIf="!hasParticipantHearted(item)"
-            (click)="setHeart(item.id)" 
+            *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
+            (click)="setHeart(item)" 
             class="heart" 
             src="/assets/img/grey-heart.svg"> 
           <img
-            *ngIf="hasParticipantHearted(item)"
+            *ngIf="hasParticipantHearted(item) || deactivateHearting"
             (click)="removeHeart(item)" 
             class="heart" 
             src="/assets/img/red-heart.svg">

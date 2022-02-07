@@ -366,8 +366,8 @@ export interface Idea {
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
-  comments: Array<any>;
-  hearts: Array<any>;
+  comments: Array<{ id: number; participant: number; comment: string }>;
+  hearts: Array<{ id: number; participant: number }>;
   version: number;
   time: string;
   idea_document: IdeaDocument;
