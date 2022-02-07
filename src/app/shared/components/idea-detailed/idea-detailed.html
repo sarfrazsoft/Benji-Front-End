@@ -139,18 +139,20 @@
         <span>{{ group.title }}</span>
       </div>
       <div class="option">
-        <div class="dropdown-controls-container">
-          <ng-select
+        <div class="dropdown-controls-container" 
+          style="margin-top: 16px;margin-bottom: 16px;color: #0f0f0f;">
+          {{ selectedCategory.category_name }}
+          <!-- <ng-select
             class="ps-brainstorm-dropdown-controls"
             [items]="categories"
             [disabled]="true"
             bindLabel="category_name"
             placeholder="Categories..."
-            [(ngModel)]="selectedCategory"
+            [(ngModel)]="selectedCategory"#f3f4f7
             appendTo="body"
             [searchable]="false"
             [clearable]="false">
-          </ng-select>
+          </ng-select> -->
         </div>
       </div>
     </ng-container>
@@ -162,7 +164,8 @@
               <div class="dp">
                 <benji-profile-pictures
                   [activityState]="activityState"
-                  [participantCodes]="[submitting_participant]"
+                  [participantCodes]="[comment.participant]"
+                  [showTooltip]="false"
                 ></benji-profile-pictures>
               </div>
               <div class="comment-bg" fxLayout="column">
@@ -203,7 +206,7 @@
       </mat-tab>
       <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
         <ng-container *ngIf="idea?.hearts.length">
-          <div class="likes-area">
+          <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
             <div 
               fxLayout="row"
               fxLayoutGap="8px"
@@ -212,7 +215,8 @@
               *ngFor="let heart of idea.hearts">
               <benji-profile-pictures
                 [activityState]="activityState"
-                [participantCodes]="[submitting_participant]"
+                [participantCodes]="[heart.participant]"
+                [showTooltip]="false"
               ></benji-profile-pictures>
               <div class="name">{{ getParticipantName(heart.participant) }}</div>
             </div>

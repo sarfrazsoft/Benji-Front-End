@@ -45,7 +45,7 @@
         (click)="navigateToBoard(board)">
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div class="title">
-            {{ board.board_activity.instructions }}
+            {{ board?.board_activity.instructions }}
           </div>
           <button
             [matMenuTriggerFor]="menu"

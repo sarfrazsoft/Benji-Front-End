@@ -76,6 +76,10 @@ export class BrainstormService {
 
   populateCategories(act, columns) {
     columns = [];
+    act.brainstormcategory_set.sort((a, b) => {
+      return a.id - b.id;
+      // return b.id - a.id;
+    });
     act.brainstormcategory_set.forEach((category) => {
       if (category.brainstormidea_set) {
         category.brainstormidea_set.forEach((idea) => {
