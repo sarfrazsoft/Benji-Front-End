@@ -27,6 +27,7 @@ import { environment } from './../environments/environment';
 
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { UppyAngularModule } from 'uppy-angular';
 
 // export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
@@ -41,6 +42,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
+    UppyAngularModule,
     // StoreModule.forRoot({}, { metaReducers }),
     // EffectsModule.forRoot([]),
     IntercomModule.forRoot({
