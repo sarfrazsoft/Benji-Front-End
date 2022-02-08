@@ -2,8 +2,10 @@
   .initials {
     background: #5e8deb;
     border-radius: 50%;
-    color: #000;
-    opacity: 0.64;
+    span {
+      opacity: 0.64;
+      color: #000;
+    }
     &.counter {
       background: #f3f4f7;
       color: #000;
