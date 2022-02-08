@@ -48,14 +48,6 @@ import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
 import schema from './ngx-editor/schema';
 
-import { TooltipModule } from 'ng2-tooltip-directive';
-import { TooltipOptions } from 'ng2-tooltip-directive';
-
-export const MyDefaultTooltipOptions: TooltipOptions = {
-  'show-delay': 4000,
-  'tooltip-class': 'benji-editor-tooltip',
-};
-
 const SHARED_MODULES = [
   PickerModule,
   EmojiModule,
@@ -114,7 +106,6 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     ...SHARED_MODULES,
     NgxPermissionsModule.forRoot(),
     DeviceDetectorModule.forRoot(),
-    TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
     PdfViewerModule,
   ],
   declarations: Components,
