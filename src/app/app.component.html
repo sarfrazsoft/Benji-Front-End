@@ -1,4 +1,8 @@
 <!-- <router-outlet></router-outlet> -->
 
 hello
-<ng-uppy [config]="settings" (onFileUpload)="onFileUpload($event)"></ng-uppy>
+<!-- <ng-uppy [config]="settings" (onFileUpload)="onFileUpload($event)"></ng-uppy> -->
+
+<uppy-dashboard
+  [uppy]='uppy'>
+</uppy-dashboard>

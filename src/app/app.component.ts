@@ -2,7 +2,8 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { UppyConfig } from 'uppy-angular/uppy-angular';
+// import { UppyConfig } from 'uppy-angular/uppy-angular';
+import { Uppy } from '@uppy/core';
 import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
 import { PartnerInfo } from './services/backend/schema/whitelabel_info';
@@ -17,28 +18,30 @@ import { LayoutService } from './services/layout.service';
 export class AppComponent implements OnInit {
   apiUrl = 'test';
 
-  settings: any = {
-    uploadAPI: {
-      endpoint: this.apiUrl + 'files/Upload',
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('userToken'),
-      },
-    },
-    plugins: {
-      Webcam: true,
-      GoogleDrive: false,
-      Instagram: false,
-      Facebook: false,
-      Dropbox: false,
-      ScreenCapture: false,
-    },
-    restrictions: {
-      // maxFileSize: 1000000,
-      maxNumberOfFiles: 10,
-      // minNumberOfFiles: 1,
-      // allowedFileTypes: ['image/*','pdf/*', 'docs/*']
-    },
-  };
+  uppy: Uppy = new Uppy({ debug: true, autoProceed: true });
+
+  // settings: any = {
+  //   uploadAPI: {
+  //     endpoint: this.apiUrl + 'files/Upload',
+  //     headers: {
+  //       Authorization: 'Bearer ' + localStorage.getItem('userToken'),
+  //     },
+  //   },
+  //   plugins: {
+  //     Webcam: true,
+  //     GoogleDrive: false,
+  //     Instagram: false,
+  //     Facebook: false,
+  //     Dropbox: false,
+  //     ScreenCapture: false,
+  //   },
+  //   restrictions: {
+  //     // maxFileSize: 1000000,
+  //     maxNumberOfFiles: 10,
+  //     // minNumberOfFiles: 1,
+  //     // allowedFileTypes: ['image/*','pdf/*', 'docs/*']
+  //   },
+  // };
   constructor(
     private layoutService: LayoutService,
     private contextService: ContextService,

@@ -25,9 +25,10 @@ import { AppComponent } from './app.component';
 // import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from './../environments/environment';
 
+// import { UppyAngularModule } from 'uppy-angular';
+import { UppyAngularDashboardModule } from '@uppy/angular';
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { UppyAngularModule } from 'uppy-angular';
 
 // export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
@@ -42,7 +43,7 @@ import { UppyAngularModule } from 'uppy-angular';
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
-    UppyAngularModule,
+    UppyAngularDashboardModule,
     // StoreModule.forRoot({}, { metaReducers }),
     // EffectsModule.forRoot([]),
     IntercomModule.forRoot({
