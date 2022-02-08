@@ -471,7 +471,7 @@
         width: 512px;
         height: 512px;
         background: #000;
-        .back-arrow {
+        .back-circle {
           display: none !important;
         }
         img {
@@ -505,7 +505,14 @@
       z-index: 2;
       min-height: 385px;
       .back-text {
-        display: none !important;
+        color: #828282;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        img {
+          width: 7px;
+          opacity: 0.66;
+        }
       }
       .title {
         font-size: 24px;
@@ -709,7 +716,7 @@
     display: block !important;
   }
   mat-dialog-container {
-    border-radius: 16px;
+    border-radius: 0px;
     box-shadow: unset;
     padding: unset;
     .image-area {
@@ -755,7 +762,7 @@
         img {
           width: 100%;
         }
-        .back-arrow {
+        .back-circle {
           background: #fff;
           width: 56px;
           height: 56px;
@@ -787,14 +794,7 @@
       z-index: 2;
       position: relative;
       .back-text {
-        color: #828282;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 8px;
-        img {
-          width: 7px;
-          opacity: 0.66;
-        }
+        display: none !important;
       }
       .title {
         font-size: 24px;

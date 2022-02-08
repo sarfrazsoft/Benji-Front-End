@@ -27,7 +27,6 @@ export interface IdeaDetailedInfo {
   category: Category;
   myGroup: Group;
   activityState: UpdateMessage;
-  isMobile: boolean;
   participantCode: number;
   userRole: IdeaUserRole;
 }
@@ -136,7 +135,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
     private deleteDialog: MatDialog,
-    private contextService: ContextService
   ) {}
 
   ngOnInit(): void {}

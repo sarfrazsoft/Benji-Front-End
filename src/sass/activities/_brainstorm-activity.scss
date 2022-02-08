@@ -441,16 +441,16 @@ benji-ms-brainstorming-activity {
         position: relative;
         .input-comment {
           resize: none;
-          min-height: 32px;
+          height: 32px;
           background: #f3f4f7;
           border-radius: 8px;
           border: unset;
           color: #37352f;
           font-weight: 400;
-          font-size: 12px;
+          font-size: 14px;
           width: 100%;
           box-sizing: border-box;
-          padding: 10px 50px 10px 8px;
+          padding: 8px 50px 8px 8px;
           &:empty:before {
             content: attr(data-placeholder);
             color: #777777;
@@ -778,6 +778,8 @@ ng-dropdown-panel {
         li {
           margin-right: 0px;
           .brainstorm-idea {
+            width: unset !important;
+            min-width: unset !important;
             max-width: 100% !important;
             margin: 16px 8px 0px 8px !important;
           }
