@@ -27,6 +27,7 @@ export interface IdeaDetailedInfo {
   category: Category;
   myGroup: Group;
   activityState: UpdateMessage;
+  isMobile: boolean;
   participantCode: number;
   userRole: IdeaUserRole;
 }

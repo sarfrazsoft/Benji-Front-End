@@ -89,3 +89,11 @@
     }
   }
 }
+
+@media (max-width: 750px) { 
+  .mainscreen-toolbar {
+    .share-link, .back-next, .timer, .groups, .toolbar-initials-circles {
+      display: none !important;
+    }
+  }
+}

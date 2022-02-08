@@ -45,7 +45,7 @@
           </ng-container>
           <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >
-            <div class="option" fxLayoutAlign="center center"
+            <div class="option timer" fxLayoutAlign="center center"
               [matMenuTriggerFor]="timerMenu"
               [matTooltipPosition]="'below'"
               matTooltip="Timer"
@@ -76,7 +76,7 @@
 
           <!-- Grouping control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <div class="option" 
+            <div class="option groups" 
               fxLayoutAlign="center center"
               *ngIf="activityState && 
                 (activityState.activity_type === 'CaseStudyActivity' || 
