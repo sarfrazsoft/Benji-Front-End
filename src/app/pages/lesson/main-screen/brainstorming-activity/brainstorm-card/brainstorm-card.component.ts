@@ -7,12 +7,14 @@ import {
   // ...
 } from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnInit,
   Output,
@@ -21,6 +23,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, includes, remove } from 'lodash';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { take } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
@@ -100,6 +103,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   // columns = [];
   // cycle = 'first';
 
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
   constructor(
     private dialog: MatDialog,
     private matDialog: MatDialog,
@@ -107,7 +112,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private _ngZone: NgZone
   ) {
     // super();
   }
@@ -132,6 +138,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.userRole = 'viewer';
       }
     }
+  }
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   ngOnChanges() {}

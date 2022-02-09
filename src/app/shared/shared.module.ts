@@ -38,7 +38,6 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
-import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
@@ -91,6 +90,13 @@ const SHARED_MODULES = [
   FormlyModule,
   NgxPermissionsModule,
 ];
+import {
+  UppyAngularDashboardModalModule,
+  UppyAngularDashboardModule,
+  UppyAngularDragDropModule,
+  UppyAngularProgressBarModule,
+  UppyAngularStatusBarModule,
+} from '@uppy/angular';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
@@ -105,8 +111,12 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     PdfJsViewerModule,
     ...SHARED_MODULES,
     NgxPermissionsModule.forRoot(),
-    DeviceDetectorModule.forRoot(),
     PdfViewerModule,
+    UppyAngularDashboardModule,
+    UppyAngularStatusBarModule,
+    UppyAngularDragDropModule,
+    UppyAngularProgressBarModule,
+    UppyAngularDashboardModalModule,
   ],
   declarations: Components,
   entryComponents: [...EntryComponents],

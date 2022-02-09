@@ -8,6 +8,12 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+// import { UppyConfig } from 'uppy-angular/uppy-angular';
+// import { Uppy } from '@uppy/core';
+import { Uppy } from '@uppy/core';
+import GoogleDrive from '@uppy/google-drive';
+import Tus from '@uppy/tus';
+import Webcam from '@uppy/webcam';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
@@ -123,6 +129,24 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   hostname = environment.web_protocol + '://' + environment.host;
   userRole: IdeaUserRole;
   commentModel = '';
+
+  showInline = false;
+
+  showModal = false;
+
+  dashboardProps = {
+    plugins: ['Webcam', 'GoogleDrive'],
+  };
+
+  dashboardModalProps = {
+    target: document.body,
+    onRequestCloseModal: (): void => {
+      this.showModal = false;
+    },
+  };
+
+  uppy: Uppy = new Uppy({ debug: true, autoProceed: true });
+
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
@@ -139,7 +163,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private contextService: ContextService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uppy
+      .use(Webcam)
+      .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' });
+  }
 
   ngOnChanges() {
     this.initIdea();
