@@ -160,7 +160,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
     private deleteDialog: MatDialog,
-    private contextService: ContextService
   ) {}
 
   ngOnInit(): void {

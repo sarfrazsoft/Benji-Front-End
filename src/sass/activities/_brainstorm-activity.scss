@@ -447,7 +447,7 @@ benji-ms-brainstorming-activity {
           background-color: transparent;
           color: #37352f;
           font-weight: 400;
-          font-size: 12px;
+          font-size: 14px;
           width: 100%;
           padding: 10px 8px 10px 8px;
           overflow: hidden;
@@ -774,6 +774,8 @@ ng-dropdown-panel {
         li {
           margin-right: 0px;
           .brainstorm-idea {
+            width: unset !important;
+            min-width: unset !important;
             max-width: 100% !important;
             margin: 16px 8px 0px 8px !important;
           }

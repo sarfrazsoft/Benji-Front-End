@@ -1,9 +1,14 @@
 <div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
-  <div class="image-area">
-    <div 
+  <div class="image-area" fxLayoutAlign="center center">
+    <!-- <div 
       class="opnClose"
       [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
       [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
+      > -->
+    <div 
+      class="opnClose"
+      [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
+      [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : '' "
       >
       <div 
         class="select-image" 
@@ -67,7 +72,7 @@
         </div>
       </ng-container>
       <div 
-        class="back-arrow" 
+        class="back-circle" 
         fxLayoutAlign="center center"
         *ngIf="imageSelected || pdfSelected"
         (click)="closeDialog()" 
