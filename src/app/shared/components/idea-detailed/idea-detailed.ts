@@ -14,6 +14,7 @@ import { Uppy } from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
+import XHRUpload from '@uppy/xhr-upload';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
@@ -159,14 +160,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
-    private deleteDialog: MatDialog,
+    private deleteDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.uppy
-      .use(Webcam)
-      .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
-      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' });
+      .use(Webcam, { countdown: 5 })
+      // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
+      .use(XHRUpload, {
+        endpoint: 'http://my-website.org/upload',
+      });
   }
 
   ngOnChanges() {
