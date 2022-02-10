@@ -242,6 +242,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
+          this.uploadPanelExpanded = false;
           if (res.type === 'upload') {
             this.imageSelected = true;
             this.imagesList = res.data;
@@ -310,7 +311,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   toggle() {
-    this.uploadPanelExpanded = !this.uploadPanelExpanded;
+    if(!this.imageSelected && !this.pdfSelected) {
+      this.uploadPanelExpanded = !this.uploadPanelExpanded;
+    }
   }
 
   previousArrowClicked() {

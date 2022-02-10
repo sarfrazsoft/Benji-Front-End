@@ -338,6 +338,16 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.router.navigate(['/dashboard/']);
       }
     });
+    
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+          if (participant.participant_code === this.participantCode && participant.email) {
+            this.router.navigate(['/dashboard/']);
+          }
+        });
+      }
+    });
   }
 
 }
