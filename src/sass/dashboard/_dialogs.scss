@@ -248,7 +248,7 @@
           border: unset;
           width: 100%;
           resize: none;
-          font-size: 14px;
+          font-size: 16px;
           color: #616161;
           font-weight: 400;
           padding-bottom: 12px;
@@ -505,14 +505,7 @@
       z-index: 2;
       min-height: 385px;
       .back-text {
-        color: #828282;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 8px;
-        img {
-          width: 7px;
-          opacity: 0.66;
-        }
+        display: none !important;
       }
       .title {
         font-size: 24px;
@@ -794,7 +787,14 @@
       z-index: 2;
       position: relative;
       .back-text {
-        display: none !important;
+        color: #828282;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 8px;
+        img {
+          width: 7px;
+          opacity: 0.66;
+        }
       }
       .title {
         font-size: 24px;

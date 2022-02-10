@@ -1,32 +1,34 @@
-<benji-main-screen-toolbar></benji-main-screen-toolbar>
+<div class="join-screen">
+  <benji-main-screen-toolbar></benji-main-screen-toolbar>
 
-<ng-container *ngIf="!joinLinkExists">
-  <div class="participant-start" fxLayout="row" fxLayoutAlign="center center">
-    <div class="container">
-      <div class="title">Learn Together</div>
-      <div class="about">The workspace that invites everyone to share, connect, and learn more. </div>
-      <button class="blue-buttton" (click)="router.navigate(['/login'])">Host Sign In</button>
-      <div class="or">or</div>
-      <div class="have-code">Have a session code?</div>
-      <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
-        Invalid Room Code
-      </p>
-      <input 
-        class="enter-code"
-        placeholder="Enter Session Code"
-        type="number"
-        pattern="[0-9]*"
-        [formControl]="roomCode"
-        (input)="onRoomCodeChange($event.target.value)"
-      />
+  <ng-container *ngIf="!joinLinkExists">
+    <div class="participant-start" fxLayout="row" fxLayoutAlign="center center">
+      <div class="container">
+        <div class="title">Learn Together</div>
+        <div class="about">The workspace that invites everyone to share, connect, and learn more. </div>
+        <button class="blue-buttton" (click)="router.navigate(['/login'])">Host Sign In</button>
+        <div class="or">or</div>
+        <div class="have-code">Have a session code?</div>
+        <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
+          Invalid Room Code
+        </p>
+        <input 
+          class="enter-code"
+          placeholder="Enter Session Code"
+          type="number"
+          pattern="[0-9]*"
+          [formControl]="roomCode"
+          (input)="onRoomCodeChange($event.target.value)"
+        />
+      </div>
     </div>
-  </div>
-</ng-container>  
-
-<ng-container *ngIf="joinLinkExists">
-  <benji-session-lobby-layout
-    [beforeLessonRunDetails]="beforeLessonRunDetails"
-    [participantJoinScreeen]="true">
-  </benji-session-lobby-layout>
-</ng-container>
-
+  </ng-container>  
+  
+  <ng-container *ngIf="joinLinkExists">
+    <benji-session-lobby-layout
+      [beforeLessonRunDetails]="beforeLessonRunDetails"
+      [participantJoinScreeen]="true">
+    </benji-session-lobby-layout>
+  </ng-container>
+  
+</div>

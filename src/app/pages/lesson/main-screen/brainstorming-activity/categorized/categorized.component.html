@@ -1,5 +1,5 @@
 <div
-  class="submitted-ideas"
+  class="submitted-ideas categorized"
   fxLayout="row"
   cdkDropListGroup>
   <ng-container *ngFor="let column of columns; let i = index">
@@ -55,7 +55,8 @@
             </ng-container>
           </div>
         </div>
-        <div class="ideas" [ngStyle]="{'min-width.px': minWidth}">
+        <!-- <div class="ideas" [ngStyle]="{'min-width.px': minWidth}"> -->
+        <div class="ideas">
           <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
             <textarea
               #textInput
