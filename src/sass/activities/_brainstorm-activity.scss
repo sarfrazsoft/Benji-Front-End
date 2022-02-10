@@ -394,15 +394,15 @@ benji-ms-brainstorming-activity {
       margin-bottom: 12px;
     }
     .heart {
-      width: 13.33px;
+      width: 16px;
       margin-right: 4px;
     }
     .thought {
-      width: 12px;
+      width: 15px;
       margin-right: 4px;
     }
     span {
-      font-size: 14px;
+      //font-size: 16px;
       color: #bdbdbd;
     }
     .user-feed {
@@ -507,7 +507,7 @@ benji-ms-brainstorming-activity {
   text-align: center;
   img {
     max-height: 300px;
-    max-width: 100%;
+    width: 100%;
   }
 }
 
@@ -760,6 +760,7 @@ ng-dropdown-panel {
     .barinstorm-header {
       place-content: start !important;
       align-items: start !important;
+      padding: 16px !important;
       .brainstorm-h2,
       .sub-header {
         margin-left: 0px;

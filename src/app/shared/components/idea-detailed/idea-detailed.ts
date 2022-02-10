@@ -84,7 +84,7 @@ export type IdeaUserRole = 'owner' | 'viewer';
       state(
         'closeDown',
         style({
-          height: '0px',
+          //height: '0px',
         })
       ),
       transition('* => closeDown', [animate('0.5s 0ms ease-in-out')]),
@@ -299,7 +299,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'idea-delte-dialog',
+        panelClass: 'idea-delete-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

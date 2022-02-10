@@ -160,10 +160,14 @@
       font-weight: 600;
       font-size: 16px;
     }
-    .dots {
-      cursor: pointer;
-      margin-right: -8px;
-      margin-top: -5px;
+    button.three-dots {
+      padding: 0px 4px;
+      background: unset;
+      .dots {
+        cursor: pointer;
+        margin-top: -5px;
+        margin-right: -4px;
+      }
     }
     .sub-title {
       font-size: 14px;

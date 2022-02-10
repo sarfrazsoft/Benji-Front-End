@@ -70,6 +70,7 @@
   </div>
   <div class="content-area">
     <div 
+      *ngIf="!imageSelected && !pdfSelected" 
       class="back-text" 
       fxLayoutAlign="start center"
       fxLayoutGap="9px"
@@ -234,12 +235,12 @@
     (click)="previousArrowClicked()"
     class="slide-arrow left" 
     fxLayoutAlign="center center">
-    <img src="/assets/img/idea-creation/arrow-left.svg">
+    <img src="/assets/img/idea-creation/slide-arrow.svg">
   </div>
   <div
     (click)="nextArrowClicked()"
     class="slide-arrow right" 
     fxLayoutAlign="center center">
-    <img src="/assets/img/idea-creation/arrow-right.svg">
+    <img src="/assets/img/idea-creation/slide-arrow.svg">
   </div>
 </div>
