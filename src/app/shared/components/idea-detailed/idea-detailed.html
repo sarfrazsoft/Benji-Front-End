@@ -1,4 +1,14 @@
 <div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
+  <div 
+    *ngIf="!imageSelected && !pdfSelected" 
+    class="back-text" 
+    fxLayoutAlign="start center"
+    fxLayoutGap="8px"
+    (click)="closeDialog()" 
+    >
+    <img src="/assets/img/idea-creation/arrow-left.svg"> 
+    <span>Back</span>
+  </div>
   <div class="image-area" fxLayoutAlign="center center">
     <div 
       class="opnClose"
@@ -64,16 +74,6 @@
     </div>
   </div>
   <div class="content-area">
-    <div 
-      *ngIf="!imageSelected && !pdfSelected" 
-      class="back-text" 
-      fxLayoutAlign="start center"
-      fxLayoutGap="9px"
-      (click)="closeDialog()" 
-      >
-      <img src="/assets/img/idea-creation/arrow-left.svg"> 
-      <span>Back</span>
-    </div>
     <div 
       class="idea-creation-controls" 
       fxLayout="row" 
