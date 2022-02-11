@@ -1,5 +1,18 @@
 <div class="idea-creation-dialog" fxLayout="row">
   <div class="white-area">
+    <div class="post-cancel" fxLayout="row" fxLayoutAlign="space-between">
+      <div class="cancel" matDialogClose>
+        Cancel
+      </div>
+      <button 
+        class="post" 
+        (click)="onSubmit()"
+        [ngClass]="{
+          'active': userIdeaText
+        }">
+          Post
+      </button>
+    </div>
     <div class="white-content">
       <div fxLayoutAlign="space-between"> 
         <textarea

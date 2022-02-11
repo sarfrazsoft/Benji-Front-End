@@ -11,6 +11,7 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() counterAfter: number;
   @Input() showTooltip = true;
+  @Input() size: string;
   remainingCount = 0;
   displayCodes: [];
 
