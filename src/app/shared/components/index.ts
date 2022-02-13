@@ -1,6 +1,6 @@
 import { AssessmentBarComponent } from './assessment-bar/assessment-bar.component';
 import { AvatarComponent } from './avatar/avatar.component';
-import { BenjiProfilePicturesComponent } from './benji-profile-pictures/benji-profile-pictures.component'
+import { BenjiProfilePicturesComponent } from './benji-profile-pictures/benji-profile-pictures.component';
 import { FeedbackGraphComponent } from './feedback-graph/feedback-graph.component';
 import { ReportMCQComponent } from './feedback-graph/mcq/report-mcq.component';
 import { QuestionComponent } from './feedback-graph/question/question.component';
@@ -13,6 +13,7 @@ import { ResponsePercentBarsComponent } from './response-percent-bars/response-p
 import { ResponseTagsPercentBarsComponent } from './response-tags-percent-bars/response-tags-percent-bars.component';
 import { SessionLobbyLayoutComponent } from './session-lobby-layout/session-lobby-layout.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { UppyDashboardComponent } from './uppy-dashboard/uppy-dashboard.component';
 export { AvatarComponent };
 
 export const CmpComponents = [
@@ -31,6 +32,7 @@ export const CmpComponents = [
   SessionLobbyLayoutComponent,
   TextEditorComponent,
   IdeaDetailedComponent,
+  UppyDashboardComponent,
 ];
 
 export const CmpEntryComponents = [

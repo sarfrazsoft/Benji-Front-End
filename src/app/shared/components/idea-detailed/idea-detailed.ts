@@ -146,7 +146,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     },
   };
 
-  uppy: Uppy = new Uppy({ debug: true, autoProceed: true });
+  uppy: Uppy = new Uppy({ id: 'idea-detailed', debug: true, autoProceed: false });
 
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();

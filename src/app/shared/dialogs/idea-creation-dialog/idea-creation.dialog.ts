@@ -1,6 +1,12 @@
 import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Uppy from '@uppy/core';
+import GoogleDrive from '@uppy/google-drive';
+import Tus from '@uppy/tus';
+import Webcam from '@uppy/webcam';
+import XHRUpload from '@uppy/xhr-upload';
 import { catchError, map } from 'rxjs/operators';
+import * as global from 'src/app/globals';
 import { Category } from 'src/app/services/backend/schema';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
@@ -26,6 +32,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   selectedpdfDoc;
   pdfSrc;
   lessonID;
+
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.userIdeaText.length || this.ideaTitle.length) {
@@ -39,6 +46,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   //   console.log('event:', event);
   //   event.returnValue = false;
   // }
+
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
     @Inject(MAT_DIALOG_DATA)

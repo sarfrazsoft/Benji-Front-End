@@ -15,24 +15,7 @@
         [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
         [@flyUpDown]="uploadPanelExpanded && data.isMobile ? 'up' : 'down' " 
         *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded">
-        hello
-          <h1>Uppy Angular Example!</h1>
-          <h2>Inline dashboard</h2>
-          <uppy-dashboard [uppy]='uppy' [props]='dashboardProps' *ngIf="true"></uppy-dashboard>
-          <h2>Modal Dashboard</h2>
-          <div>
-            <uppy-dashboard-modal [uppy]='uppy' [open]='showModal' [props]='dashboardModalProps'></uppy-dashboard-modal>
-            <button (click)="showModal = !showModal" >
-              {{ showModal ? 'Close dashboard' : 'Open dashboard' }}
-            </button>
-          </div>
-          <!-- <h2>
-            Drag Drop Area
-          </h2> -->
-          <!-- <uppy-drag-drop [uppy]='uppy' [props]='null'></uppy-drag-drop> -->
-          <!-- <h2>Progress Bar</h2> -->
-          <!-- <uppy-progress-bar [uppy]='uppy' [props]='{ hideAfterFinish: false }'></uppy-progress-bar> -->
-        <!-- <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
+        <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
           <div fxLayout="row" fxLayoutGap="16px">
             <div 
               class="options" 
@@ -44,7 +27,7 @@
             <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
           </div>
           <div class="add-to-post">Add to your post</div>
-        </div> -->
+        </div>
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">

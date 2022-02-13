@@ -42,12 +42,11 @@
               class="options" 
               fxLayoutAlign="center center"
               (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
-              [ngClass]="{'inactive': imageSelected || pdfSelected}"
-              >
+              [ngClass]="{'inactive': imageSelected || pdfSelected}">
               <img src="/assets/img/idea-creation/scenery.svg">
             </div>   
-            <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
-            <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
+            <!-- <img class="close" src="/assets/img/idea-creation/video.svg"> -->
+            <benji-uppy-dashboard></benji-uppy-dashboard>
             <div 
               class="options" 
               fxLayoutAlign="center center" 
