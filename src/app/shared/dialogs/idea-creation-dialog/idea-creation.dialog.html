@@ -59,9 +59,11 @@
             <div 
               fxLayoutAlign="center center"
               (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
-              [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
-              <img src="/assets/img/idea-creation/scenery.svg">
+              <img 
+                src="/assets/img/idea-creation/scenery.svg"
+                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+              >
             </div>   
             <div
               fxLayoutAlign="center center" >
@@ -73,10 +75,12 @@
             </div>
             <div 
               fxLayoutAlign="center center" 
-              (click)="imageSelected || pdfSelected ? null : uploader.click()"
-              [ngClass]="{'inactive': imageSelected || pdfSelected}">
+              (click)="imageSelected || pdfSelected ? null : uploader.click()">
               <!-- <button mat-raised-button color="primary">Choose File</button> -->
-              <img src="/assets/img/idea-creation/file.svg">
+              <img 
+                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+                src="/assets/img/idea-creation/file.svg"
+              >
               <input 
                 #uploader 
                 (change)="uploadFile($event)" 

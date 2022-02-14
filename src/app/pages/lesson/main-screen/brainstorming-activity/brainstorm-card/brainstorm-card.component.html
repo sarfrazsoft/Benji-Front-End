@@ -85,8 +85,10 @@
       class="content" 
       benji-click-stop-propagation 
       (click)="showDetailedIdea(item)">
-      <div class="title">{{ item.title }}</div>
-      {{ item.idea }} 
+      <div *ngIf="item.title || item.idea" class="title-description">
+        <div *ngIf="item.title" class="title">{{ item.title }}</div>
+        {{ item.idea }} 
+      </div>
     </div>
     <div class="feedback">
       <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 

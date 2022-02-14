@@ -380,11 +380,14 @@ benji-ms-brainstorming-activity {
     width: 100%;
   }
   .content {
-    padding: 12px;
-    .title {
-      font-weight: 600;
-      font-size: 16px;
-      margin-bottom: 8px;
+    padding: 8px;
+    .title-description {
+      padding: 4px;
+      .title {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
     }
   }
   .feedback {
@@ -505,6 +508,7 @@ benji-ms-brainstorming-activity {
 }
 .brainstorm-image {
   text-align: center;
+  line-height: 0;
   img {
     max-height: 300px;
     width: 100%;
