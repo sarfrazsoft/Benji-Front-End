@@ -57,23 +57,21 @@
         <div fxLayout="row">
           <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
             <div 
-              class="options" 
               fxLayoutAlign="center center"
               (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
               [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
               <img src="/assets/img/idea-creation/scenery.svg">
             </div>   
-            <div class="options"
+            <div
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/video.svg">
             </div> 
-            <div class="options" 
+            <div 
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/camera.svg">
             </div>
             <div 
-              class="options" 
               fxLayoutAlign="center center" 
               (click)="imageSelected || pdfSelected ? null : uploader.click()"
               [ngClass]="{'inactive': imageSelected || pdfSelected}">

@@ -19,6 +19,7 @@
           [activityState]="activityState"
           [participantCodes]="[submittingUser]"
           [showTooltip]="false"
+          [size]="avatarSize"
         ></benji-profile-pictures>
         <div class="name">
           {{ getPersonName(item) }}
@@ -120,6 +121,7 @@
                 [activityState]="activityState"
                 [participantCodes]="[comment.participant]"
                 [showTooltip]="false"
+                [size]="avatarSize"
               ></benji-profile-pictures>
             </div>
           </div> 
@@ -141,6 +143,7 @@
             [activityState]="activityState"
             [participantCodes]="[participantCode]"
             [showTooltip]="false"
+            [size]="avatarSize"
           ></benji-profile-pictures>
         </div>
         <div class="comment-input-container" fxLayoutAlign="start center">
