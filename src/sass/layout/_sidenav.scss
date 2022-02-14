@@ -72,6 +72,9 @@ mat-sidenav-container.mat-sidenav-container {
       }
     }
   }
+  &.dashboard {
+    background-color: unset;
+  }
 }
 .mat-drawer-container {
   color: $black;

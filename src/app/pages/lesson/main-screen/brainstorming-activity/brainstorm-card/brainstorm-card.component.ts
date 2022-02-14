@@ -155,7 +155,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'idea-delte-dialog',
+        panelClass: 'idea-delete-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

@@ -1,14 +1,19 @@
 <div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
+  <div 
+    *ngIf="!imageSelected && !pdfSelected" 
+    class="back-text" 
+    fxLayoutAlign="start center"
+    fxLayoutGap="8px"
+    (click)="closeDialog()" 
+    >
+    <img src="/assets/img/idea-creation/arrow-left.svg"> 
+    <span>Back</span>
+  </div>
   <div class="image-area" fxLayoutAlign="center center">
-    <!-- <div 
-      class="opnClose"
-      [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
-      [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
-      > -->
     <div 
       class="opnClose"
       [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
-      [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : '' "
+      [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
       >
       <div 
         class="select-image" 
@@ -68,15 +73,6 @@
     </div>
   </div>
   <div class="content-area">
-    <div 
-      class="back-text" 
-      fxLayoutAlign="start center"
-      fxLayoutGap="9px"
-      (click)="closeDialog()" 
-      >
-      <img src="/assets/img/idea-creation/arrow-left.svg"> 
-      <span>Back</span>
-    </div>
     <div 
       class="idea-creation-controls" 
       fxLayout="row" 
@@ -233,12 +229,12 @@
     (click)="previousArrowClicked()"
     class="slide-arrow left" 
     fxLayoutAlign="center center">
-    <img src="/assets/img/idea-creation/arrow-left.svg">
+    <img src="/assets/img/idea-creation/slide-arrow.svg">
   </div>
   <div
     (click)="nextArrowClicked()"
     class="slide-arrow right" 
     fxLayoutAlign="center center">
-    <img src="/assets/img/idea-creation/arrow-right.svg">
+    <img src="/assets/img/idea-creation/slide-arrow.svg">
   </div>
 </div>

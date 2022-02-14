@@ -38,7 +38,7 @@ benji-ms-brainstorming-activity {
           .brainstorm-idea {
             min-width: 544px;
             margin: 0px auto;
-            margin-bottom: 16px;
+           // margin-bottom: 16px;
             .comment {
               font-size: 14px;
             }
@@ -73,7 +73,7 @@ benji-ms-brainstorming-activity {
         position: relative;
         border-radius: 5px;
         .header {
-          margin: 16px 8px;
+          margin: 16px 0px;
           min-height: 40px;
           font-size: 24px;
           max-width: 264px;
@@ -135,6 +135,9 @@ benji-ms-brainstorming-activity {
           //min-width: 400px;
           position: absolute;
           height: calc(100% - 70px);
+          .brainstorm-idea {
+            margin-bottom: 16px;
+          }
           .add-idea-button {
             min-height: 35px;
             font-weight: 600px;
@@ -197,7 +200,7 @@ benji-ms-brainstorming-activity {
         li {
           position: relative;
           overflow: auto;
-          margin-right: 16px;
+          margin: 0px 16px 16px 0px;
           .idea {
             position: relative;
             list-style: none;
@@ -341,7 +344,7 @@ benji-ms-brainstorming-activity {
   min-height: 50px;
   background-color: white;
   border: 1px solid #e2e0df;
-  margin: 0px 8px 16px 8px;
+  //margin: 0px 8px 16px 8px;
   border-radius: 8px;
   -moz-box-sizing: border-box;
   display: block;
@@ -391,15 +394,15 @@ benji-ms-brainstorming-activity {
       margin-bottom: 12px;
     }
     .heart {
-      width: 13.33px;
+      width: 16px;
       margin-right: 4px;
     }
     .thought {
-      width: 12px;
+      width: 15px;
       margin-right: 4px;
     }
     span {
-      font-size: 13px;
+      //font-size: 16px;
       color: #bdbdbd;
     }
     .user-feed {
@@ -502,7 +505,7 @@ benji-ms-brainstorming-activity {
   text-align: center;
   img {
     max-height: 300px;
-    max-width: 100%;
+    width: 100%;
   }
 }
 
@@ -755,6 +758,7 @@ ng-dropdown-panel {
     .barinstorm-header {
       place-content: start !important;
       align-items: start !important;
+      padding: 16px !important;
       .brainstorm-h2,
       .sub-header {
         margin-left: 0px;

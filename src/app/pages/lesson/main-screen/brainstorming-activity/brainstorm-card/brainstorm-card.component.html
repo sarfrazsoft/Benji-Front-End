@@ -89,7 +89,7 @@
     </div>
     <div class="feedback">
       <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
-        <div>
+        <div fxLayoutAlign="start center">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
             (click)="setHeart(item)" 
@@ -103,7 +103,7 @@
           
           <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
         </div>
-        <div>
+        <div fxLayoutAlign="start center">
           <img class="thought" src="/assets/img/grey-thought.svg"> 
           <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
         </div>

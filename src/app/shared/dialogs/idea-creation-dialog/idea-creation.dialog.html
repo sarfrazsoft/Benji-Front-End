@@ -1,13 +1,31 @@
 <div class="idea-creation-dialog" fxLayout="row">
   <div class="white-area">
+    <div class="post-cancel" fxLayout="row" fxLayoutAlign="space-between">
+      <div class="cancel" matDialogClose>
+        Cancel
+      </div>
+      <button 
+        class="post" 
+        (click)="onSubmit()"
+        [ngClass]="{
+          'active': userIdeaText
+        }">
+          Post
+      </button>
+    </div>
     <div class="white-content">
-      <textarea
-        cdkTextareaAutosize
-        class="title" 
-        placeholder="Title" 
-        [(ngModel)]="ideaTitle"
-      >
-      </textarea>
+      <div fxLayoutAlign="space-between"> 
+        <textarea
+          cdkTextareaAutosize
+          class="title" 
+          placeholder="Title (optional)" 
+          [(ngModel)]="ideaTitle"
+        >
+        </textarea>
+        <div class="close-button" fxLayoutAlign="end start">
+          <img src="/assets/img/idea-creation/circular-cross.svg" matDialogClose>
+        </div>
+      </div>
       <textarea
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
@@ -37,7 +55,7 @@
       </div>
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
-          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
+          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
             <div 
               class="options" 
               fxLayoutAlign="center center"
@@ -45,8 +63,15 @@
               [ngClass]="{'inactive': imageSelected || pdfSelected}">
               <img src="/assets/img/idea-creation/scenery.svg">
             </div>   
-            <!-- <img class="close" src="/assets/img/idea-creation/video.svg"> -->
             <benji-uppy-dashboard></benji-uppy-dashboard>
+            <div class="options"
+              fxLayoutAlign="center center" >
+              <img class="close" src="/assets/img/idea-creation/video.svg">
+            </div> 
+            <div class="options" 
+              fxLayoutAlign="center center" >
+              <img class="close" src="/assets/img/idea-creation/camera.svg">
+            </div>
             <div 
               class="options" 
               fxLayoutAlign="center center" 
@@ -81,7 +106,14 @@
             </div>
           </div>
         </div>
-        <button class="post" (click)="onSubmit()">Post</button>
+        <button 
+          class="post" 
+          (click)="onSubmit()"
+          [ngClass]="{
+            'active': userIdeaText
+          }">
+            Post
+        </button>
       </div>
     </div>
   </div>

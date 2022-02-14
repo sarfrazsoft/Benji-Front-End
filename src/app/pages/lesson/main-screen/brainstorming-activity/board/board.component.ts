@@ -339,7 +339,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getMinWidth() {
-    return this.minWidth === 'small' ? 280 : this.minWidth === 'medium' ? 360 : 480;
+    return this.minWidth === 'small' ? 288 : this.minWidth === 'medium' ? 360 : 480;
   }
   classificationTypeChanged(selectedClassificationType) {
     // console.log(selectedClassificationType);
