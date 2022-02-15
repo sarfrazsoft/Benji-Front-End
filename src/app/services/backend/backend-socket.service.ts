@@ -38,7 +38,7 @@ export class BackendSocketService {
                 // console.log(v);
               });
           }, 3000);
-          console.log('opened');
+          // console.log('opened');
         },
       },
     };

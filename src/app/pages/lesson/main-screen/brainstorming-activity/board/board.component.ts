@@ -519,13 +519,14 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     // if (!idea.editing) {
     //   return;
     // }
-    console.log(idea);
     if (idea.imagesList || idea.selectedThirdPartyImageUrl) {
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
       this.submitDocumentNIdea(idea);
     } else if (idea.video_id) {
       this.submitWithVideo(idea);
+    } else {
+      this.submitWithoutImg(idea);
     }
   }
 
@@ -573,9 +574,10 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     if (idea.id) {
       // update the idea with an image
       this.updateIdeaWithImage(idea);
+      return;
     }
     const code = this.activityState.lesson_run.lessonrun_code;
-    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_image/';
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
 
     const participant_code = this.participantCode;
     const fileList: FileList = idea.imagesList;
@@ -588,7 +590,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         })
         .then((resizedImage: Blob) => {
           const formData: FormData = new FormData();
-          formData.append('img', resizedImage, file.name);
+          formData.append('document', resizedImage, file.name);
           formData.append('participant_code', participant_code ? participant_code.toString() : '');
           const headers = new HttpHeaders();
           headers.set('Content-Type', null);
@@ -597,6 +599,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
           this.httpClient
             .post(url, formData, { params, headers })
             .map((res: any) => {
+              console.log(res);
               this.imagesList = null;
               if (!idea.text) {
                 idea.text = '';

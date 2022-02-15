@@ -524,6 +524,16 @@ export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {
     };
   }
 }
+export class RemoveIdeaDocumentEvent extends ActivityEvent {
+  event_name = 'RemoveIdeaDocumentEvent';
+
+  constructor(ideaId: number) {
+    super();
+    this.extra_args = {
+      brainstormidea: ideaId,
+    };
+  }
+}
 
 export class BrainstormSubmitIdeaHeartEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitIdeaHeartEvent';

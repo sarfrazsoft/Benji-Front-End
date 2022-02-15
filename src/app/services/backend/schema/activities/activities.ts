@@ -362,7 +362,7 @@ export interface Idea {
   title: string;
   removed: boolean;
   submitting_participant: ParticipantCode;
-  idea_image: Image;
+  idea_image: IdeaDocument;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;

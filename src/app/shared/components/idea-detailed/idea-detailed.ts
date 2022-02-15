@@ -22,6 +22,7 @@ import {
   Category,
   Group,
   Idea,
+  RemoveIdeaDocumentEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
@@ -192,7 +193,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // initialize idea image
     if (this.data.item.idea_image) {
       this.imageSelected = true;
-      this.imageSrc = this.data.item.idea_image.img;
+      this.imageSrc = this.data.item.idea_image.document;
     } else {
       this.removeImage();
     }
@@ -256,6 +257,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     } else {
       this.removeImage();
     }
+    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
   }
 
