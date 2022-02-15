@@ -225,7 +225,7 @@
     box-shadow: unset;
     padding: unset;
     .white-area {
-      width: 416px;
+      width: 480px;
       float: left;
       .post-cancel {
         display: none !important;
@@ -297,25 +297,16 @@
           padding-top: 22px;
           height: 32px;
           .attachments {
-            margin-right: 8px;
-            .options {
-              width: 40px;
-              height: 40px;
-              border-radius: 50%;
-              cursor: pointer;
+            margin-right: 20px;
+            img {
+              opacity: 0.73;
               &:hover {
-                background: #f3f4f7;
-                box-shadow: 0px 1px 2px #e7e7e7;
+                opacity: 1;
+                cursor: pointer;
               }
               &.inactive {
+                opacity: 0.38;
                 cursor: unset;
-                &:hover {
-                  background: unset;
-                  box-shadow: unset;
-                }
-                img {
-                  opacity: 0.6;
-                }
               }
             }
           }

@@ -21,7 +21,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, includes, remove } from 'lodash';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { take } from 'rxjs/operators';
 import * as global from 'src/app/globals';
@@ -29,26 +28,17 @@ import { ActivitiesService, BrainstormService } from 'src/app/services/activitie
 import {
   Board,
   BrainstormActivity,
-  BrainstormCreateCategoryEvent,
-  BrainstormRemoveCategoryEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
-  BrainstormRenameCategoryEvent,
-  BrainstormSetCategoryEvent,
-  BrainstormSubmitEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
-  Category,
-  Group,
   Idea,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { environment } from 'src/environments/environment';
-import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -89,6 +79,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() eventType;
   @Input() categorizeFlag;
   @Input() myGroup;
+  @Input() avatarSize;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -108,8 +99,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   constructor(
     private dialog: MatDialog,
     private matDialog: MatDialog,
-    private httpClient: HttpClient,
-    private utilsService: UtilsService,
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,

@@ -136,6 +136,7 @@
           [activityState]="activityState"
           [participantCodes]="[submitting_participant]"
           [showTooltip]="false"
+          [size]="'medium'"
         ></benji-profile-pictures>
       <div class="name"> {{ getParticipantName(submitting_participant) }} </div>
     </div>
@@ -173,6 +174,7 @@
                   [activityState]="activityState"
                   [participantCodes]="[comment.participant]"
                   [showTooltip]="false"
+                  [size]="'medium'"
                 ></benji-profile-pictures>
               </div>
               <div class="comment-bg" fxLayout="column">
@@ -185,6 +187,7 @@
             <benji-profile-pictures
               [activityState]="activityState"
               [participantCodes]="[participantCode]"
+              [size]="'medium'"
             ></benji-profile-pictures>
             <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
             <!-- <textarea
@@ -224,6 +227,7 @@
                 [activityState]="activityState"
                 [participantCodes]="[heart.participant]"
                 [showTooltip]="false"
+                [size]="'medium'"
               ></benji-profile-pictures>
               <div class="name">{{ getParticipantName(heart.participant) }}</div>
             </div>

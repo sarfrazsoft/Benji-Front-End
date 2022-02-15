@@ -17,7 +17,9 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
 
   constructor(private activitiesService: ActivitiesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.size);
+  }
 
   ngOnChanges(): void {
     if (this.participantCodes.length > this.counterAfter) {
