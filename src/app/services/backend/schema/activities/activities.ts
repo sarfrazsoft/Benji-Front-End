@@ -371,11 +371,12 @@ export interface Idea {
   version: number;
   time: string;
   idea_document: IdeaDocument;
+  idea_video: IdeaDocument;
 }
-
 export interface IdeaDocument {
   id: number;
   document: string;
+  document_type: 'video' | 'document';
 }
 
 export interface ParticipantCode {

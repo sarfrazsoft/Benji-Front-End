@@ -10,7 +10,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } fro
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 // import { UppyConfig } from 'uppy-angular/uppy-angular';
 // import { Uppy } from '@uppy/core';
-import { Uppy } from '@uppy/core';
+import { SuccessResponse, Uppy } from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
@@ -23,30 +23,23 @@ import {
   Category,
   Group,
   Idea,
+  IdeaDocument,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
-export interface IdeaDetailedInfo {
-  showCategoriesDropdown: boolean;
-  categories: Array<Category>;
-  item: Idea;
-  category: Category;
-  myGroup: Group;
-  activityState: UpdateMessage;
-  isMobile: boolean;
-  participantCode: number;
-  userRole: IdeaUserRole;
-}
+
 export type IdeaUserRole = 'owner' | 'viewer';
+
 @Component({
   selector: 'benji-uppy-dashboard',
-  templateUrl: 'uppy-dashboard.html',
+  templateUrl: 'uppy-dashboard.component.html',
 })
 export class UppyDashboardComponent implements OnInit, OnChanges {
-  @Input() lessonID;
+  @Input() lessonRunCode;
   showUppyModal = false;
+  @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
   uppy: Uppy = new Uppy({
     id: 'idea-detailed',
     debug: true,
@@ -76,11 +69,13 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
       .use(XHRUpload, {
         fieldName: 'document',
         // metaFields: [{ document_type: 'video' }],
-        endpoint: global.apiRoot + `/course_details/lesson_run/${this.lessonID}/upload_document/`,
-        getResponseData: (res) => {
-          this.showUppyModal = false;
-          // this.videoUploadResponse = res;
-        },
+        endpoint: global.apiRoot + `/course_details/lesson_run/${this.lessonRunCode}/upload_document/`,
+        // getResponseData: (res) => {
+        //   this.showUppyModal = false;
+        //   return res;
+        //   // this.videoUploadResponse = res;
+        //   // this.mediaUploaded.emit(res);
+        // },
       })
       .on('file-added', (file) => {
         this.uppy.setFileMeta(file.id, {
@@ -88,13 +83,19 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
         });
       })
       .on('dashboard:modal-open', () => {
-        console.log('Modal is open');
+        // modal is opened
+        // click on camera icon to trigger webcam automatically
         const hh: HTMLElement = document.querySelectorAll<HTMLElement>(
           '[aria-controls="uppy-DashboardContent-panel--Webcam"]'
         )[0];
-        console.log(hh);
-        // const ch: HTMLElement = hh.children[0];
         hh.click();
+      })
+      .on('upload-error', (file, error, response) => {
+        console.log(file, error, response);
+      })
+      .on('upload-success', (file, response: SuccessResponse) => {
+        this.showUppyModal = false;
+        this.mediaUploaded.emit(response.body as IdeaDocument);
       });
   }
 

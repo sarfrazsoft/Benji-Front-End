@@ -6,6 +6,14 @@
   <img class="close" src="/assets/img/idea-creation/camera.svg">
 </div>
 
+<div class="uppy-dashboard-modal-container">
+  <uppy-dashboard-modal 
+    [uppy]='uppy'
+    [open]='showUppyModal' 
+    [props]='dashboardModalProps'>
+  </uppy-dashboard-modal>
+</div>
+
 <!-- hello -->
 <!-- <h1 (click)="showModal = true">Uppy Angular Example!</h1> -->
 <!-- <h2>Inline dashboard</h2> -->
@@ -14,10 +22,3 @@
 [props]='dashboardModalProps'>
 </uppy-dashboard> -->
 <!-- <h2>Modal Dashboard</h2> -->
-<div class="uppy-dashboard-modal-container">
-<uppy-dashboard-modal 
-  [uppy]='uppy'
-  [open]='showUppyModal' 
-  [props]='dashboardModalProps'>
-</uppy-dashboard-modal>
-</div>

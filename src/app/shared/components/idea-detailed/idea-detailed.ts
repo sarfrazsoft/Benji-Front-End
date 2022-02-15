@@ -91,7 +91,7 @@ export type IdeaUserRole = 'owner' | 'viewer';
       state(
         'closeDown',
         style({
-          //height: '0px',
+          // height: '0px',
         })
       ),
       transition('* => closeDown', [animate('0.5s 0ms ease-in-out')]),
@@ -127,6 +127,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pdfSelected;
   selectedpdfDoc;
   pdfSrc;
+  video = false;
+  videoURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
   userRole: IdeaUserRole;
   commentModel = '';
@@ -204,6 +206,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.clearPDF();
     }
 
+    // check if idea has video and reset if not
+    if (this.data.item.idea_video) {
+      this.video = true;
+      this.videoURL = this.data.item.idea_video.document;
+    } else {
+      this.removeVideo();
+    }
+
     this.userRole = this.data.userRole;
 
     if (this.data.participantCode) {
@@ -241,6 +251,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
+    } else if (this.video) {
+      this.removeVideo();
     } else {
       this.removeImage();
     }
@@ -260,6 +272,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.selectedpdfDoc = null;
     this.pdfSelected = false;
     this.pdfSrc = null;
+  }
+
+  removeVideo() {
+    this.video = false;
+    this.videoURL = null;
   }
 
   openImagePickerDialog() {
@@ -344,7 +361,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   toggle() {
-    if(!this.imageSelected && !this.pdfSelected) {
+    if (!this.imageSelected && !this.pdfSelected) {
       this.uploadPanelExpanded = !this.uploadPanelExpanded;
     }
   }

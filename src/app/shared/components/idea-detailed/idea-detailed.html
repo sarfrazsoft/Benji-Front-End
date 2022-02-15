@@ -35,7 +35,7 @@
         </div>
       </div>
     </div>
-    <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video" fxLayoutAlign="center center">
       <ng-container *ngIf="imageSrc">
         <ng-container *ngIf="isAbsolutePath(imageSrc); else uploadedImage">
           <img 
@@ -57,6 +57,13 @@
             useBrowserLocale="true" 
             [height]="'512px'">
           </ngx-extended-pdf-viewer>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="video">
+        <div *ngIf="videoURL">
+          <video style="margin: 0 auto;" width="100%" controls>
+            <source [src]="hostname + videoURL" type="video/mp4" />
+          </video>
         </div>
       </ng-container>
       <div 

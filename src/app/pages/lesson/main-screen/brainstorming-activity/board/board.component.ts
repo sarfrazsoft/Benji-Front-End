@@ -47,6 +47,7 @@ import {
   BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
+  BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
   BrainstormToggleParticipantNameEvent,
   Category,
@@ -523,8 +524,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
       this.submitDocumentNIdea(idea);
-    } else {
-      this.submitWithoutImg(idea);
+    } else if (idea.video_id) {
+      this.submitWithVideo(idea);
     }
   }
 
@@ -548,6 +549,23 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       // create new idea
       this.sendMessage.emit(new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId));
+    }
+  }
+
+  submitWithVideo(idea) {
+    console.log(idea);
+    if (idea.id) {
+      // update video
+    } else {
+      // create idea with uploaded video
+      this.sendMessage.emit(
+        new BrainstormSubmitVideoEvent({
+          text: idea.text,
+          title: idea.title,
+          category: idea.category.id,
+          idea_video: idea.video_id,
+        })
+      );
     }
   }
 
