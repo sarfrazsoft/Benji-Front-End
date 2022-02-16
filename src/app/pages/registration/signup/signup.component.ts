@@ -70,10 +70,10 @@ export class SignupComponent implements OnInit {
         // lastName: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-        confirmPassword: new FormControl('', [Validators.required]),
+       // confirmPassword: new FormControl('', [Validators.required]),
       },
       {
-        validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
+       // validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
       }
     );
 
@@ -120,9 +120,9 @@ export class SignupComponent implements OnInit {
     return this.form.get('password');
   }
 
-  get confirmPassword(): AbstractControl {
-    return this.form.get('confirmPassword');
-  }
+  // get confirmPassword(): AbstractControl {
+  //   return this.form.get('confirmPassword');
+  // }
 
   emailChanged() {
     this.emailErr = false;

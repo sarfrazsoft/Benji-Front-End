@@ -1,21 +1,9 @@
-<div class="sign-up-section">
+<div class="sign-up-section" fxLayout="column">
+  <img [src]="logo" class="sign-in-logo" loading="lazy" alt="" >
   <div class="log-in-card">
     <div class="div-block-183">
-      <img [src]="logo" class="sign-in-logo" loading="lazy" alt="" >
+      <div class="title">Welcome Back</div>
       <div class="log-in-form w-form">
-        <!-- <div (click)="signInWithGoogle()"  class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
-          <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
-          <div class="google-text">Sign in with Google</div>
-        </div>
-        <div class="or"><span>or</span></div> -->
-        <!-- <div class="navbar-nav ml-auto" *ngIf="user">
-          <span class="navbar-text">
-           {{ user.email }}
-          </span>	
-            <li class="nav-item">
-              <a class="nav-link" (click)="signOut()">Logout</a>
-            </li>
-          </div> -->
         <form [formGroup]="form" (ngSubmit)="onSubmit()" id="email-form" no-shadow="input[type=text] {        -webkit-appearance: none;     -moz-appearance: none;     appearance: none; }" class="form-9">
           <div class="email-control">
             <input 
@@ -73,7 +61,7 @@
         class="small-form-text already-member"
         (click)="router.navigate(['/sign-up'])">
         Don’t have an account yet?
-        <br><div class="bold-text-7 primary-color">Sign up</div>
+        <br><div class="bold-text-7 sign-up primary-color">Sign up</div>
       </div>
     </div>
   </div>
