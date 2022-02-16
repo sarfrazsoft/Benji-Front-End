@@ -10,16 +10,19 @@
     <span>Back</span>
   </div>
   <div class="image-area" fxLayoutAlign="center center">
-    <div 
+    <!-- <div 
       class="opnClose"
       [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
       [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
-      >
-      <div 
+      > -->
+    <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
+      <!-- <div 
         class="select-image" 
         [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
         [@flyUpDown]="uploadPanelExpanded && data.isMobile ? 'up' : 'down' " 
         *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
+        > -->
+      <div class="select-image">
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
           <div fxLayout="row" fxLayoutGap="16px">
             <div 
