@@ -8,7 +8,7 @@
         class="post" 
         (click)="onSubmit()"
         [ngClass]="{
-          'active': userIdeaText
+          'active': userIdeaText || ideaTitle || imageSelected || pdfSelected
         }">
           Post
       </button>
@@ -112,7 +112,7 @@
           class="post" 
           (click)="onSubmit()"
           [ngClass]="{
-            'active': userIdeaText
+            'active': userIdeaText || ideaTitle || imageSelected || pdfSelected
           }">
             Post
         </button>
