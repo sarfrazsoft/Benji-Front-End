@@ -67,13 +67,13 @@ export class SignupComponent implements OnInit {
     this.form = this.builder.group(
       {
         name: new FormControl('', [Validators.required]),
-        // lastName: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
+        lastName: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-       // confirmPassword: new FormControl('', [Validators.required]),
+        // confirmPassword: new FormControl('', [Validators.required]),
       },
       {
-       // validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
+        // validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
       }
     );
 
@@ -112,9 +112,9 @@ export class SignupComponent implements OnInit {
     return this.form.get('name');
   }
 
-  // get lastName(): AbstractControl {
-  //   return this.form.get('lastName');
-  // }
+  get last_name(): AbstractControl {
+    return this.form.get('lastName');
+  }
 
   get password(): AbstractControl {
     return this.form.get('password');
@@ -135,49 +135,52 @@ export class SignupComponent implements OnInit {
       const val = this.form.value;
       const myArr = val.name.split(' ');
       this.firstName = myArr[0];
-      myArr[1] ? (this.lastName = myArr[1]) : (this.lastName = ' ');
-      if (myArr[2]) {
-        this.lastName += ' ' + myArr[2];
-      }
+      this.lastName = val.lastName;
+      // myArr[1] ? (this.lastName = myArr[1]) : (this.lastName = ' ');
+      // if (myArr[2]) {
+      //   this.lastName += ' ' + myArr[2];
+      // }
       console.log('First Name: ' + this.firstName);
       console.log('Last Name: ' + this.lastName);
-      this.authService.register(val.email.toLowerCase(), val.password, this.firstName, null).subscribe(
-        (res) => {
-          if (res.token) {
-            this.isSubmitted = true;
-            this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
-              (signInRes) => {
-                if (res.token) {
-                  // if (this.authService.redirectURL.length) {
-                  // window.location.href = this.authService.redirectURL;
-                  // } else {
-                  this.deviceService.isMobile()
-                    ? this.router.navigate(['/participant/join'])
-                    : this.router.navigate(['/dashboard']);
-                  // }
-                } else {
+      this.authService
+        .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName)
+        .subscribe(
+          (res) => {
+            if (res.token) {
+              this.isSubmitted = true;
+              this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
+                (signInRes) => {
+                  if (res.token) {
+                    // if (this.authService.redirectURL.length) {
+                    // window.location.href = this.authService.redirectURL;
+                    // } else {
+                    this.deviceService.isMobile()
+                      ? this.router.navigate(['/participant/join'])
+                      : this.router.navigate(['/dashboard']);
+                    // }
+                  } else {
+                  }
+                },
+                (err) => {
+                  console.log(err);
                 }
-              },
-              (err) => {
-                console.log(err);
-              }
-            );
-            return;
-          }
+              );
+              return;
+            }
 
-          if (res.password1) {
-            this.passwordMinLenErr = true;
-          }
+            if (res.password1) {
+              this.passwordMinLenErr = true;
+            }
 
-          if (res.email) {
-            this.emailErr = true;
-            this.emailErrMsg = res.email[0];
+            if (res.email) {
+              this.emailErr = true;
+              this.emailErrMsg = res.email[0];
+            }
+          },
+          (err) => {
+            console.log(err);
           }
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        );
     }
   }
 

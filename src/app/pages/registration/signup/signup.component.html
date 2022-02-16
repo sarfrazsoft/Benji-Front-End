@@ -9,8 +9,7 @@
           <div class="google-text">Sign up with Google</div>
         </div>
         <div class="or"><span>or</span></div> -->
-        <form [formGroup]="form"
-        (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div>
           <input 
           class="sign-up-field w-input"
@@ -19,7 +18,7 @@
           required
           type="text"
           formControlName="name"
-          placeholder="Name"/>
+          placeholder="First Name"/>
           <mat-error
             *ngIf="
               name.invalid &&
@@ -30,6 +29,28 @@
           >
             <div *ngIf="name.errors.required">
               Name is required.
+            </div>
+          </mat-error>
+        </div>
+        <div>
+          <input 
+          class="sign-up-field w-input"
+          maxlength="256"
+          id="lastName"
+          required
+          type="text"
+          formControlName="lastName"
+          placeholder="Last Name"/>
+          <mat-error
+            *ngIf="
+            last_name.invalid &&
+              (last_name.dirty || last_name.touched) &&
+              isSignupClicked
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="last_name.errors.required">
+              Last name is required.
             </div>
           </mat-error>
         </div>
