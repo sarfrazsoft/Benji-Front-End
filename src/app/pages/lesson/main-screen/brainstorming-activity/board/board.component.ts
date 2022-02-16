@@ -525,13 +525,30 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.submitDocumentNIdea(idea);
     } else if (idea.video_id) {
       this.submitWithVideo(idea);
+    } else if (idea.webcamImageId) {
+      this.submitWithWebcamImage(idea);
     } else {
       this.submitWithoutImg(idea);
     }
   }
 
+  submitWithWebcamImage(idea) {
+    if (idea.id) {
+      // idea exists
+      // image has been added using webcam
+      // TODO(mahin)
+    } else {
+      this.sendMessage.emit(
+        new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, idea.webcamImageId)
+      );
+    }
+  }
+
   submitWithoutImg(idea) {
-    if (idea.text.length === 0 && idea.title.length === 0) {
+    if (!idea.text && !idea.title) {
+      return;
+    }
+    if (idea.text && idea.text.length === 0 && idea.title && idea.title.length === 0) {
       return;
     }
     if (idea.id) {
@@ -557,10 +574,20 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     console.log(idea);
     if (idea.id) {
       // update video
+      this.sendMessage.emit(
+        new BrainstormSubmitVideoEvent({
+          id: idea.id,
+          text: idea.text,
+          title: idea.title,
+          category: idea.category.id,
+          idea_video: idea.video_id,
+        })
+      );
     } else {
       // create idea with uploaded video
       this.sendMessage.emit(
         new BrainstormSubmitVideoEvent({
+          id: null,
           text: idea.text,
           title: idea.title,
           category: idea.category.id,

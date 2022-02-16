@@ -1,8 +1,7 @@
 <div 
   class="options" 
   fxLayoutAlign="center center"
-  (click)="openUppyModal()"
-  [ngClass]="{'inactive': imageSelected || pdfSelected}">
+  (click)="openUppyModal()">
   <img class="close" src="/assets/img/idea-creation/camera.svg">
 </div>
 
@@ -12,7 +11,7 @@
     [open]='showUppyModal' 
     [props]='dashboardModalProps'>
   </uppy-dashboard-modal>
-</div>
+</div> 
 
 <!-- hello -->
 <!-- <h1 (click)="showModal = true">Uppy Angular Example!</h1> -->

@@ -376,7 +376,7 @@ export interface Idea {
 export interface IdeaDocument {
   id: number;
   document: string;
-  document_type: 'video' | 'document';
+  document_type: 'video' | 'document' | 'image';
 }
 
 export interface ParticipantCode {

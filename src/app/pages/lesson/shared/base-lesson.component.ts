@@ -135,7 +135,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-    console.log(this.socket);
+    // console.log(this.socket);
     this.socket.subscribe(
       (msg: ServerMessage) => {
         this.handleServerMessage(msg);

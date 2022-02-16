@@ -42,7 +42,7 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
   @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
   uppy: Uppy = new Uppy({
     id: 'idea-detailed',
-    debug: true,
+    debug: false,
     autoProceed: false,
     restrictions: {
       maxNumberOfFiles: 1,
@@ -78,9 +78,16 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
         // },
       })
       .on('file-added', (file) => {
-        this.uppy.setFileMeta(file.id, {
-          document_type: 'video',
-        });
+        console.log(file);
+        if (file.type === 'image/jpeg') {
+          this.uppy.setFileMeta(file.id, {
+            document_type: 'image',
+          });
+        } else {
+          this.uppy.setFileMeta(file.id, {
+            document_type: 'video',
+          });
+        }
       })
       .on('dashboard:modal-open', () => {
         // modal is opened

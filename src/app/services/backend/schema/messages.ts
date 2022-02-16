@@ -423,9 +423,10 @@ export class BrainstormSubmitEvent extends ActivityEvent {
 export class BrainstormSubmitVideoEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(idea: { text: string; title: string; category: number; idea_video: number }) {
+  constructor(idea: { id: number; text: string; title: string; category: number; idea_video: number }) {
     super();
     this.extra_args = {
+      id: idea.id,
       idea: idea.text,
       title: idea.title,
       category: idea.category,

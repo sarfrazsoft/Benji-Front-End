@@ -116,9 +116,9 @@ export class MainScreenBrainstormingActivityComponent
     const currentLessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        if (localStorage.getItem('currentLessonRunCode') !== currentLessonRunCode) {
+        if (localStorage.getItem('currentLessonRunCode' + currentLessonRunCode) !== currentLessonRunCode) {
           this.firstLaunchEvent.emit();
-          localStorage.setItem('currentLessonRunCode', currentLessonRunCode);
+          localStorage.setItem('currentLessonRunCode' + currentLessonRunCode, currentLessonRunCode);
         }
       }
     });

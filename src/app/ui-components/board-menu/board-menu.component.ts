@@ -104,7 +104,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.activityState.eventType === 'BrainstormRemoveBoardEvent') {
+    if (
+      this.activityState.eventType === 'BrainstormRemoveBoardEvent' ||
+      this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
+    ) {
       this.resetBoards();
     }
     if (this.navType === 'boards') {
@@ -171,7 +174,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     return (first + second).toUpperCase();
   }
 
-  openDeleteDialog() {
+  openDeleteDialog(boardID?: number) {
     this.dialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -182,7 +185,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       .afterClosed()
       .subscribe((res) => {
         if (res === true) {
-          this.sendMessage.emit(new BrainstormRemoveBoardEvent(this.menuBoard));
+          const id = boardID ? boardID : this.menuBoard;
+
+          // if (id === this.selectedBoard.id) {
+          //   this.sendMessage.emit(new HostChangeBoardEvent());
+          // }
+          this.sendMessage.emit(new BrainstormRemoveBoardEvent(id));
         }
       });
   }

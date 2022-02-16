@@ -141,45 +141,43 @@ export class SignupComponent implements OnInit {
       }
       console.log('First Name: ' + this.firstName);
       console.log('Last Name: ' + this.lastName);
-      this.authService
-        .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName)
-        .subscribe(
-          (res) => {
-            if (res.token) {
-              this.isSubmitted = true;
-              this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
-                (signInRes) => {
-                  if (res.token) {
-                    // if (this.authService.redirectURL.length) {
-                    // window.location.href = this.authService.redirectURL;
-                    // } else {
-                    this.deviceService.isMobile()
-                      ? this.router.navigate(['/participant/join'])
-                      : this.router.navigate(['/dashboard']);
-                    // }
-                  } else {
-                  }
-                },
-                (err) => {
-                  console.log(err);
+      this.authService.register(val.email.toLowerCase(), val.password, this.firstName, null).subscribe(
+        (res) => {
+          if (res.token) {
+            this.isSubmitted = true;
+            this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
+              (signInRes) => {
+                if (res.token) {
+                  // if (this.authService.redirectURL.length) {
+                  // window.location.href = this.authService.redirectURL;
+                  // } else {
+                  this.deviceService.isMobile()
+                    ? this.router.navigate(['/participant/join'])
+                    : this.router.navigate(['/dashboard']);
+                  // }
+                } else {
                 }
-              );
-              return;
-            }
-
-            if (res.password1) {
-              this.passwordMinLenErr = true;
-            }
-
-            if (res.email) {
-              this.emailErr = true;
-              this.emailErrMsg = res.email[0];
-            }
-          },
-          (err) => {
-            console.log(err);
+              },
+              (err) => {
+                console.log(err);
+              }
+            );
+            return;
           }
-        );
+
+          if (res.password1) {
+            this.passwordMinLenErr = true;
+          }
+
+          if (res.email) {
+            this.emailErr = true;
+            this.emailErrMsg = res.email[0];
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
   }
 

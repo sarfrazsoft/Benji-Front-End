@@ -35,7 +35,7 @@
           'image-selected': imageSelected
         }">
       </textarea>
-      <div class="preview-image" *ngIf="imageSelected || pdfSelected || video" fxLayoutAlign="center center">
+      <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
         <ng-container *ngIf="imageSelected">
           <img *ngIf="imageSrc" [src]="imageSrc" alt="">
           <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
@@ -55,6 +55,11 @@
             </video>
           </div>          
         </ng-container>
+        <ng-container *ngIf="webcamImage">
+          <img 
+              benji-click-stop-propagation
+              [src]="hostname + webcamImageURL" alt="" />
+        </ng-container>
         
         <button class="remove-button" (click)="remove()">
           Remove
@@ -72,10 +77,10 @@
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div>   
-            <div
+            <!-- <div
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/video.svg">
-            </div> 
+            </div>  -->
             <benji-uppy-dashboard
              [lessonRunCode]="lessonID"
              (mediaUploaded)="mediaUploaded($event)">

@@ -37,6 +37,10 @@ export class IdeaCreationDialogComponent implements OnInit {
   videoURL: string;
   video = false;
   video_id: number;
+
+  webcamImageId: number;
+  webcamImage = false;
+  webcamImageURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -117,6 +121,7 @@ export class IdeaCreationDialogComponent implements OnInit {
       selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
       selectedpdfDoc: this.selectedpdfDoc,
       video_id: this.video_id,
+      webcamImageId: this.webcamImageId,
     });
   }
 
@@ -197,11 +202,21 @@ export class IdeaCreationDialogComponent implements OnInit {
     this.pdfSrc = null;
   }
 
+  removeWebcamImage() {
+    this.webcamImage = false;
+    this.webcamImageId = null;
+    this.webcamImageURL = null;
+  }
+
   mediaUploaded(res: IdeaDocument) {
     if (res.document_type === 'video') {
       this.videoURL = res.document;
       this.video = true;
       this.video_id = res.id;
+    } else if (res.document_type === 'image') {
+      this.webcamImageId = res.id;
+      this.webcamImageURL = res.document;
+      this.webcamImage = true;
     }
   }
 }

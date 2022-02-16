@@ -22,6 +22,7 @@ import {
   Category,
   Group,
   Idea,
+  IdeaDocument,
   RemoveIdeaDocumentEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -128,11 +129,18 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pdfSelected;
   selectedpdfDoc;
   pdfSrc;
-  video = false;
-  videoURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
   userRole: IdeaUserRole;
   commentModel = '';
+
+  // video variables
+  videoURL: string;
+  video = false;
+  video_id: number;
+
+  webcamImageId: number;
+  webcamImage = false;
+  webcamImageURL: string;
 
   showInline = false;
 
@@ -230,6 +238,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.group = this.data.myGroup;
     }
     this.activityState = this.data.activityState;
+
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
   }
 
   onSubmit() {
@@ -241,6 +251,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       imagesList: this.imagesList,
       selectedImageUrl: this.selectedImageUrl,
       selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
+      video_id: this.video_id,
+      webcamImageId: this.webcamImageId,
     });
   }
 
@@ -279,15 +291,18 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   removeVideo() {
     this.video = false;
     this.videoURL = null;
+    this.video_id = null;
+  }
+
+  removeWebcamImage() {
+    this.webcamImage = false;
+    this.webcamImageId = null;
+    this.webcamImageURL = null;
   }
 
   openImagePickerDialog() {
-    const code = this.lessonRunCode;
     this.imageDialogRef = this.matDialog
       .open(ImagePickerDialogComponent, {
-        data: {
-          lessonRunCode: code,
-        },
         disableClose: false,
         panelClass: ['dashboard-dialog', 'image-picker-dialog'],
       })
@@ -377,4 +392,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   participantIsOwner() {}
+
+  mediaUploaded(res: IdeaDocument) {
+    this.uploadPanelExpanded = false;
+    if (res.document_type === 'video') {
+      this.videoURL = res.document;
+      this.video = true;
+      this.video_id = res.id;
+    } else if (res.document_type === 'image') {
+      this.webcamImageId = res.id;
+      this.webcamImageURL = res.document;
+      this.webcamImage = true;
+    }
+  }
 }
