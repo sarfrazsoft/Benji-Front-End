@@ -761,6 +761,7 @@
 
 .idea-detailed-mobile-dialog {
   max-width: 100vw !important;
+  width: 100vw;
   overflow-y: auto;
   height: 100%;
   .mobile-panel {
@@ -781,8 +782,9 @@
       }
     }
     .image-area {
+      margin-bottom: 16px;
       .opnClose {
-        width: 100% !important;
+        width: 100%;
       }
       .select-image {
         width: 100%;

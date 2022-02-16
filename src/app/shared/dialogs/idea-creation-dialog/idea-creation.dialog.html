@@ -61,7 +61,7 @@
               (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
               >
               <img 
-                src="/assets/img/idea-creation/scenery.svg"
+                src="/assets/img/idea-creation/image-upload.svg"
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div>   
@@ -79,7 +79,7 @@
               <!-- <button mat-raised-button color="primary">Choose File</button> -->
               <img 
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
-                src="/assets/img/idea-creation/file.svg"
+                src="/assets/img/idea-creation/file-upload.svg"
               >
               <input 
                 #uploader 
