@@ -362,20 +362,21 @@ export interface Idea {
   title: string;
   removed: boolean;
   submitting_participant: ParticipantCode;
-  idea_image: Image;
+  idea_image: IdeaDocument;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
-  comments: Array<any>;
-  hearts: Array<any>;
+  comments: Array<{ id: number; participant: number; comment: string }>;
+  hearts: Array<{ id: number; participant: number }>;
   version: number;
   time: string;
   idea_document: IdeaDocument;
+  idea_video: IdeaDocument;
 }
-
 export interface IdeaDocument {
   id: number;
   document: string;
+  document_type: 'video' | 'document' | 'image';
 }
 
 export interface ParticipantCode {

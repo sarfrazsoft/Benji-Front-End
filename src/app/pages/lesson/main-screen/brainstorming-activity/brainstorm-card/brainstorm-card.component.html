@@ -26,61 +26,49 @@
         </div>
       </div> 
     </div>
-    <div
-      (click)="showDetailedIdea(item)"
-      class="brainstorm-image"
-      *ngIf="item.idea_image">
-      <ng-container *ngIf="isAbsolutePath(item.idea_image.img); else uploadedImage">
-        <img [src]="item.idea_image.img" alt="" />
-      </ng-container>
-  
-      <ng-template #uploadedImage>
-        <img [src]="hostname + item.idea_image.img" alt="" />
-      </ng-template>
-    </div>
-  
-    <div
-      (click)="showDetailedIdea(item)"
-      *ngIf="item.idea_document">
-       <div  style="width: 260px;height: 200px;">
-        <!-- <ngx-extended-pdf-viewer [src]="hostname + item.idea_document.document" 
-          useBrowserLocale="true" 
-          [height]="'200px'">
-        </ngx-extended-pdf-viewer> -->
-        <pdf-viewer
-          (click)="showDetailedIdea(item)"
-          [src]="hostname + item.idea_document.document"
-          [rotation]="0"
-          [original-size]="false"
-          [show-all]="false"
-          [fit-to-page]="true"
-          [zoom]="1"
-          [zoom-scale]="'page-width'"
-          [stick-to-page]="true"
-          [render-text]="false"
-          [external-link-target]="'blank'"
-          [autoresize]="true"
-          [show-borders]="false"
-          ></pdf-viewer>
-      </div> 
-      <!-- <div class="" style="width: 260px;height: 240px;position: relative;" > -->
-        <!-- <ng2-pdfjs-viewer  [pdfSrc]="hostname + item.idea_document.document"></ng2-pdfjs-viewer> -->
-        <!-- <iframe [src]="hostname + item.idea_document.document | safe" width="100%" height="500px">
-        </iframe> -->
-        <!-- <iframe [src]="'/assets/1.pdf' | safe" width="100%" height="300px">
-          [src]="hostname + item.idea_document.document"
-        </iframe> -->
-        <!-- <div class="overlay"></div> -->
-        <!-- <embed 
-          width="100%" 
-          height="100%"
-          style="overflow: hidden"
-          name="plugin" 
-          [src]="'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf' | safe" 
-          type="application/pdf"> -->
-      <!-- </div> -->
-    </div>
-  
+    <!-- brainstorm card media -->
+    <ng-container>
+      <div
+        (click)="showDetailedIdea(item)"
+        class="brainstorm-image"
+        *ngIf="item.idea_image">
+        <ng-container *ngIf="isAbsolutePath(item.idea_image.document); else uploadedImage">
+          <img [src]="item.idea_image.document" alt="" />
+        </ng-container>
+    
+        <ng-template #uploadedImage>
+          <img [src]="hostname + item.idea_image.document" alt="" />
+        </ng-template>
+      </div>
+    
+      <div
+        (click)="showDetailedIdea(item)"
+        *ngIf="item.idea_document">
+        <div  style="width: 260px;height: 200px;">
+          <pdf-viewer
+            (click)="showDetailedIdea(item)"
+            [src]="hostname + item.idea_document.document"
+            [rotation]="0"
+            [original-size]="false"
+            [show-all]="false"
+            [fit-to-page]="true"
+            [zoom]="1"
+            [zoom-scale]="'page-width'"
+            [stick-to-page]="true"
+            [render-text]="false"
+            [external-link-target]="'blank'"
+            [autoresize]="true"
+            [show-borders]="false"
+            ></pdf-viewer>
+        </div> 
+      </div>
+
+      <div *ngIf="item.idea_video">
+        <video style="margin: 0 auto;" width="100%" #player controls>
+          <source [src]="hostname + item.idea_video.document" type="video/mp4" />
+        </video>
+      </div>
+    </ng-container>
     <div 
       class="content" 
       benji-click-stop-propagation 
@@ -94,12 +82,12 @@
       <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
         <div fxLayoutAlign="start center">
           <img
-            *ngIf="!hasParticipantHearted(item)"
-            (click)="setHeart(item.id)" 
+            *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
+            (click)="setHeart(item)" 
             class="heart" 
             src="/assets/img/grey-heart.svg"> 
           <img
-            *ngIf="hasParticipantHearted(item)"
+            *ngIf="hasParticipantHearted(item) || deactivateHearting"
             (click)="removeHeart(item)" 
             class="heart" 
             src="/assets/img/red-heart.svg">
@@ -148,10 +136,18 @@
             [size]="avatarSize"
           ></benji-profile-pictures>
         </div>
-        <div class="comment-input-container" fxLayoutAlign="start center">
-          <textarea 
+        <div 
+          class="comment-input-container" 
+          fxFlex="row" 
+          fxLayoutAlign="start center">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="5"
             placeholder="Add a comment"  
-            class="input-comment" name="" id="" cols="30" rows="1"
+            class="input-comment"
             [(ngModel)]="commentModel">
           </textarea>
           <!-- <div

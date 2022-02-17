@@ -67,13 +67,13 @@ export class SignupComponent implements OnInit {
     this.form = this.builder.group(
       {
         name: new FormControl('', [Validators.required]),
-        // lastName: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
+        lastName: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-       // confirmPassword: new FormControl('', [Validators.required]),
+        // confirmPassword: new FormControl('', [Validators.required]),
       },
       {
-       // validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
+        // validator: this.checkIfMatchingPasswords('password', 'confirmPassword'),
       }
     );
 
@@ -112,9 +112,9 @@ export class SignupComponent implements OnInit {
     return this.form.get('name');
   }
 
-  // get lastName(): AbstractControl {
-  //   return this.form.get('lastName');
-  // }
+  get last_name(): AbstractControl {
+    return this.form.get('lastName');
+  }
 
   get password(): AbstractControl {
     return this.form.get('password');
@@ -135,10 +135,11 @@ export class SignupComponent implements OnInit {
       const val = this.form.value;
       const myArr = val.name.split(' ');
       this.firstName = myArr[0];
-      myArr[1] ? (this.lastName = myArr[1]) : (this.lastName = ' ');
-      if (myArr[2]) {
-        this.lastName += ' ' + myArr[2];
-      }
+      this.lastName = val.lastName;
+      // myArr[1] ? (this.lastName = myArr[1]) : (this.lastName = ' ');
+      // if (myArr[2]) {
+      //   this.lastName += ' ' + myArr[2];
+      // }
       console.log('First Name: ' + this.firstName);
       console.log('Last Name: ' + this.lastName);
       this.authService

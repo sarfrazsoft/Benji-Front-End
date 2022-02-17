@@ -1,10 +1,16 @@
 import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Uppy from '@uppy/core';
+import GoogleDrive from '@uppy/google-drive';
+import Tus from '@uppy/tus';
+import Webcam from '@uppy/webcam';
+import XHRUpload from '@uppy/xhr-upload';
 import { catchError, map } from 'rxjs/operators';
-import { Category } from 'src/app/services/backend/schema';
+import * as global from 'src/app/globals';
+import { Category, IdeaDocument } from 'src/app/services/backend/schema';
+import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
-
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
@@ -26,6 +32,17 @@ export class IdeaCreationDialogComponent implements OnInit {
   selectedpdfDoc;
   pdfSrc;
   lessonID;
+
+  // video variables
+  videoURL: string;
+  video = false;
+  video_id: number;
+
+  webcamImageId: number;
+  webcamImage = false;
+  webcamImageURL: string;
+  hostname = environment.web_protocol + '://' + environment.host;
+
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.userIdeaText.length || this.ideaTitle.length) {
@@ -39,6 +56,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   //   console.log('event:', event);
   //   event.returnValue = false;
   // }
+
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -102,6 +120,8 @@ export class IdeaCreationDialogComponent implements OnInit {
       imagesList: this.imagesList,
       selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
       selectedpdfDoc: this.selectedpdfDoc,
+      video_id: this.video_id,
+      webcamImageId: this.webcamImageId,
     });
   }
 
@@ -180,5 +200,23 @@ export class IdeaCreationDialogComponent implements OnInit {
     this.selectedpdfDoc = null;
     this.pdfSelected = false;
     this.pdfSrc = null;
+  }
+
+  removeWebcamImage() {
+    this.webcamImage = false;
+    this.webcamImageId = null;
+    this.webcamImageURL = null;
+  }
+
+  mediaUploaded(res: IdeaDocument) {
+    if (res.document_type === 'video') {
+      this.videoURL = res.document;
+      this.video = true;
+      this.video_id = res.id;
+    } else if (res.document_type === 'image') {
+      this.webcamImageId = res.id;
+      this.webcamImageURL = res.document;
+      this.webcamImage = true;
+    }
   }
 }

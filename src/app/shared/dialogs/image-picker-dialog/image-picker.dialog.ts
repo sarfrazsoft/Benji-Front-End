@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 // import { EditorService } from 'src/app/dashboard/editor/services';
@@ -30,11 +30,8 @@ export class ImagePickerDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<ImagePickerDialogComponent>,
     private builder: FormBuilder,
     private utilsService: UtilsService,
-    private httpClient: HttpClient,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    console.log(data);
-  }
+    private httpClient: HttpClient
+  ) {}
   selectedSession;
 
   ngOnInit() {

@@ -35,7 +35,7 @@
           'image-selected': imageSelected
         }">
       </textarea>
-      <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+      <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
         <ng-container *ngIf="imageSelected">
           <img *ngIf="imageSrc" [src]="imageSrc" alt="">
           <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
@@ -47,6 +47,18 @@
               [height]="'350px'">
             </ngx-extended-pdf-viewer>
           </div>
+        </ng-container>
+        <ng-container *ngIf="video">
+          <div>
+            <video style="margin: 0 auto;" width="100%" controls>
+              <source [src]="hostname + videoURL" type="video/mp4" />
+            </video>
+          </div>          
+        </ng-container>
+        <ng-container *ngIf="webcamImage">
+          <img 
+              benji-click-stop-propagation
+              [src]="hostname + webcamImageURL" alt="" />
         </ng-container>
         
         <button class="remove-button" (click)="remove()">
@@ -65,14 +77,18 @@
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div>   
-            <div
+            <!-- <div
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/video.svg">
-            </div> 
-            <div 
+            </div>  -->
+            <benji-uppy-dashboard
+             [lessonRunCode]="lessonID"
+             (mediaUploaded)="mediaUploaded($event)">
+            </benji-uppy-dashboard>
+            <!-- <div class="options" 
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/camera.svg">
-            </div>
+            </div> -->
             <div 
               fxLayoutAlign="center center" 
               (click)="imageSelected || pdfSelected ? null : uploader.click()">

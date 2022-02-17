@@ -419,6 +419,22 @@ export class BrainstormSubmitEvent extends ActivityEvent {
     }
   }
 }
+
+export class BrainstormSubmitVideoEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitEvent';
+
+  constructor(idea: { id: number; text: string; title: string; category: number; idea_video: number }) {
+    super();
+    this.extra_args = {
+      id: idea.id,
+      idea: idea.text,
+      title: idea.title,
+      category: idea.category,
+      idea_video: idea.idea_video,
+    };
+  }
+}
+
 export class BrainstormSubmitDocumentEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
@@ -505,6 +521,16 @@ export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {
     super();
     this.extra_args = {
       comment_id: commentId,
+      brainstormidea: ideaId,
+    };
+  }
+}
+export class RemoveIdeaDocumentEvent extends ActivityEvent {
+  event_name = 'RemoveIdeaDocumentEvent';
+
+  constructor(ideaId: number) {
+    super();
+    this.extra_args = {
       brainstormidea: ideaId,
     };
   }

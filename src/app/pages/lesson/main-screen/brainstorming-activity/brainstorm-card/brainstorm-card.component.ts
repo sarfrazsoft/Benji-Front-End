@@ -6,11 +6,15 @@ import {
   trigger,
   // ...
 } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnInit,
   Output,
@@ -18,6 +22,8 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { take } from 'rxjs/operators';
+import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
@@ -84,15 +90,19 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   submittingUser;
   submitting_participant;
   userRole: IdeaUserRole;
+  deactivateHearting = false;
   // columns = [];
   // cycle = 'first';
+
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private dialog: MatDialog,
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private _ngZone: NgZone
   ) {
     // super();
   }
@@ -109,7 +119,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.userRole = 'owner';
     }
 
-    if (this.item.submitting_participant && this.userRole !== 'owner') {
+    if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
       this.submittingUser = this.item.submitting_participant.participant_code;
       if (this.submittingUser === this.participantCode) {
         this.userRole = 'owner';
@@ -117,6 +127,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.userRole = 'viewer';
       }
     }
+  }
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   ngOnChanges() {}
@@ -185,11 +200,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
         hearted = true;
+        this.deactivateHearting = false;
       }
       // If a trainer hearts an idea the heart object does not have
       // a participant code.
       if (element.participant === null && !this.participantCode) {
         hearted = true;
+        this.deactivateHearting = false;
       }
     });
     return hearted;
@@ -207,11 +224,16 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         hearted = element;
       }
     });
-    this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    if (hearted) {
+      this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    }
   }
 
-  setHeart(ideaId: number) {
-    this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
+  setHeart(idea: Idea) {
+    if (!this.deactivateHearting) {
+      this.deactivateHearting = true;
+      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    }
   }
 
   showDetailedIdea(idea: Idea) {

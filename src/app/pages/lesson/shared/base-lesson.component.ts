@@ -55,27 +55,27 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
     this.initSocket();
 
-    document.addEventListener('visibilitychange', () => {
-      const resetConnection = localStorage.getItem('resetConnection');
-      if (resetConnection === 'false') {
-        // don't reset connection participant is
-        // about to pick up brainstorm image
-      } else {
-        // if (this.deviceDetectorService.isMobile()) {
-        if (document.hidden) {
-          // stop running expensive task
-          this.socket = undefined;
-        } else {
-          // page has focus, begin running task
-          if (!this.isConnected()) {
-            setTimeout(() => {
-              this.initSocket();
-            }, 500);
-          }
-        }
-        // }
-      }
-    });
+    // document.addEventListener('visibilitychange', () => {
+    //   const resetConnection = localStorage.getItem('resetConnection');
+    //   if (resetConnection === 'false') {
+    //     // don't reset connection participant is
+    //     // about to pick up brainstorm image
+    //   } else {
+    //     // if (this.deviceDetectorService.isMobile()) {
+    //     if (document.hidden) {
+    //       // stop running expensive task
+    //       this.socket = undefined;
+    //     } else {
+    //       // page has focus, begin running task
+    //       if (!this.isConnected()) {
+    //         setTimeout(() => {
+    //           this.initSocket();
+    //         }, 500);
+    //       }
+    //     }
+    //     // }
+    //   }
+    // });
 
     this.route.queryParams.subscribe((params) => {
       if (params['share'] === 'participant') {
@@ -135,11 +135,11 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-    console.log(this.socket);
+    // console.log(this.socket);
     this.socket.subscribe(
       (msg: ServerMessage) => {
         this.handleServerMessage(msg);
-        console.log(msg);
+        // console.log(msg);
       },
       (err) => console.log(err),
       () => {

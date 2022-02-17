@@ -22,7 +22,7 @@ export class BackendSocketService {
     } else if (clientType === 'participant') {
       uri = `${global.wsRoot}/ws/activityflow/code/${lessonRun.lessonrun_code}/participant/${userID}/`;
     }
-    console.log('connecting to: ' + uri);
+    // console.log('connecting to: ' + uri);
     const webSocketSubjectConfig: WebSocketSubjectConfig<any> = {
       url: uri,
       deserializer: ({ data }) => {
@@ -38,7 +38,7 @@ export class BackendSocketService {
                 // console.log(v);
               });
           }, 3000);
-          console.log('opened');
+          // console.log('opened');
         },
       },
     };

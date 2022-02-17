@@ -19,7 +19,14 @@ import {
   ContextService,
   SharingToolService,
 } from 'src/app/services';
-import { Board, BrainstormActivity, Group, Idea, Timer } from 'src/app/services/backend/schema';
+import {
+  Board,
+  BrainstormActivity,
+  Group,
+  Idea,
+  Timer,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -91,6 +98,8 @@ export class MainScreenBrainstormingActivityComponent
   selectedBoardIndex = 0;
   selectedBoard: Board;
 
+  participant_set = [];
+
   ngOnInit() {
     super.ngOnInit();
     this.participantCode = this.getParticipantCode();
@@ -107,9 +116,9 @@ export class MainScreenBrainstormingActivityComponent
     const currentLessonRunCode = this.activityState.lesson_run.lessonrun_code.toString();
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        if (localStorage.getItem('currentLessonRunCode') !== currentLessonRunCode) {
+        if (localStorage.getItem('currentLessonRunCode' + currentLessonRunCode) !== currentLessonRunCode) {
           this.firstLaunchEvent.emit();
-          localStorage.setItem('currentLessonRunCode', currentLessonRunCode);
+          localStorage.setItem('currentLessonRunCode' + currentLessonRunCode, currentLessonRunCode);
         }
       }
     });
@@ -129,6 +138,8 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'HostChangeBoardEvent' ||
       this.eventType === 'BrainstormChangeModeEvent'
     ) {
+    } else if (this.eventType === 'JoinEvent') {
+      this.detectNewParticipantJoined(this.activityState);
     }
     this.selectUsersBoard();
 
@@ -187,6 +198,14 @@ export class MainScreenBrainstormingActivityComponent
         this.brainstormService.selectedBoard = this.selectedBoard;
       }
     });
+  }
+
+  detectNewParticipantJoined(act: UpdateMessage) {
+    if (this.participant_set.length === act.lesson_run.participant_set.length) {
+      return;
+    } else {
+      this.participant_set = act.lesson_run.participant_set;
+    }
   }
 
   // getParticipantGroup(participantCode, participantGroups) {

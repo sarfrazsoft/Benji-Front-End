@@ -8,6 +8,13 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+// import { UppyConfig } from 'uppy-angular/uppy-angular';
+// import { Uppy } from '@uppy/core';
+import { Uppy } from '@uppy/core';
+import GoogleDrive from '@uppy/google-drive';
+import Tus from '@uppy/tus';
+import Webcam from '@uppy/webcam';
+import XHRUpload from '@uppy/xhr-upload';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
@@ -15,6 +22,8 @@ import {
   Category,
   Group,
   Idea,
+  IdeaDocument,
+  RemoveIdeaDocumentEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
@@ -84,7 +93,7 @@ export type IdeaUserRole = 'owner' | 'viewer';
       state(
         'closeDown',
         style({
-          //height: '0px',
+          // height: '0px',
         })
       ),
       transition('* => closeDown', [animate('0.5s 0ms ease-in-out')]),
@@ -123,6 +132,33 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   hostname = environment.web_protocol + '://' + environment.host;
   userRole: IdeaUserRole;
   commentModel = '';
+
+  // video variables
+  videoURL: string;
+  video = false;
+  video_id: number;
+
+  webcamImageId: number;
+  webcamImage = false;
+  webcamImageURL: string;
+
+  showInline = false;
+
+  showModal = false;
+
+  dashboardProps = {
+    plugins: ['Webcam', 'GoogleDrive'],
+  };
+
+  dashboardModalProps = {
+    target: document.body,
+    onRequestCloseModal: (): void => {
+      this.showModal = false;
+    },
+  };
+
+  uppy: Uppy = new Uppy({ id: 'idea-detailed', debug: true, autoProceed: false });
+
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
@@ -135,10 +171,18 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
-    private deleteDialog: MatDialog,
+    private deleteDialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uppy
+      .use(Webcam, { countdown: 5 })
+      // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
+      .use(XHRUpload, {
+        endpoint: 'http://my-website.org/upload',
+      });
+  }
 
   ngOnChanges() {
     this.initIdea();
@@ -157,7 +201,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // initialize idea image
     if (this.data.item.idea_image) {
       this.imageSelected = true;
-      this.imageSrc = this.data.item.idea_image.img;
+      this.imageSrc = this.data.item.idea_image.document;
     } else {
       this.removeImage();
     }
@@ -169,6 +213,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.pdfSrc = this.hostname + this.data.item.idea_document.document;
     } else {
       this.clearPDF();
+    }
+
+    // check if idea has video and reset if not
+    if (this.data.item.idea_video) {
+      this.video = true;
+      this.videoURL = this.data.item.idea_video.document;
+    } else {
+      this.removeVideo();
     }
 
     this.userRole = this.data.userRole;
@@ -186,6 +238,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.group = this.data.myGroup;
     }
     this.activityState = this.data.activityState;
+
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
   }
 
   onSubmit() {
@@ -197,6 +251,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       imagesList: this.imagesList,
       selectedImageUrl: this.selectedImageUrl,
       selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
+      video_id: this.video_id,
+      webcamImageId: this.webcamImageId,
     });
   }
 
@@ -208,9 +264,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
+    } else if (this.video) {
+      this.removeVideo();
     } else {
       this.removeImage();
     }
+    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
   }
 
@@ -229,13 +288,21 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.pdfSrc = null;
   }
 
+  removeVideo() {
+    this.video = false;
+    this.videoURL = null;
+    this.video_id = null;
+  }
+
+  removeWebcamImage() {
+    this.webcamImage = false;
+    this.webcamImageId = null;
+    this.webcamImageURL = null;
+  }
+
   openImagePickerDialog() {
-    const code = this.lessonRunCode;
     this.imageDialogRef = this.matDialog
       .open(ImagePickerDialogComponent, {
-        data: {
-          lessonRunCode: code,
-        },
         disableClose: false,
         panelClass: ['dashboard-dialog', 'image-picker-dialog'],
       })
@@ -311,7 +378,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   toggle() {
-    if(!this.imageSelected && !this.pdfSelected) {
+    if (!this.imageSelected && !this.pdfSelected) {
       this.uploadPanelExpanded = !this.uploadPanelExpanded;
     }
   }
@@ -325,4 +392,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   participantIsOwner() {}
+
+  mediaUploaded(res: IdeaDocument) {
+    this.uploadPanelExpanded = false;
+    if (res.document_type === 'video') {
+      this.videoURL = res.document;
+      this.video = true;
+      this.video_id = res.id;
+    } else if (res.document_type === 'image') {
+      this.webcamImageId = res.id;
+      this.webcamImageURL = res.document;
+      this.webcamImage = true;
+    }
+  }
 }

@@ -15,12 +15,12 @@
       [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
       [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
       > -->
-    <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded">
+    <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
       <!-- <div 
         class="select-image" 
         [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
         [@flyUpDown]="uploadPanelExpanded && data.isMobile ? 'up' : 'down' " 
-        *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded"
+        *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
         > -->
       <div class="select-image">
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
@@ -28,17 +28,24 @@
             <div 
               class="options" 
               fxLayoutAlign="center center"
-              (click)="openImagePickerDialog()"
-              ><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div>
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
+              (click)="openImagePickerDialog()">
+              <img src="/assets/img/idea-creation/scenery-upload.svg">
+            </div>
+            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
+            
+            
+            <benji-uppy-dashboard
+              [lessonRunCode]="lessonRunCode"
+              (mediaUploaded)="mediaUploaded($event)">
+            </benji-uppy-dashboard>
+            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
+            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div> -->
           </div>
           <div class="add-to-post">Add to your post</div>
         </div>
       </div>
     </div>
-    <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
       <ng-container *ngIf="imageSrc">
         <ng-container *ngIf="isAbsolutePath(imageSrc); else uploadedImage">
           <img 
@@ -61,6 +68,18 @@
             [height]="'512px'">
           </ngx-extended-pdf-viewer>
         </div>
+      </ng-container>
+      <ng-container *ngIf="video">
+        <div *ngIf="videoURL">
+          <video style="margin: 0 auto;" width="100%" controls>
+            <source [src]="hostname + videoURL" type="video/mp4" />
+          </video>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="webcamImage">
+        <img 
+            benji-click-stop-propagation
+            [src]="hostname + webcamImageURL" alt="" />
       </ng-container>
       <div 
         class="back-circle" 

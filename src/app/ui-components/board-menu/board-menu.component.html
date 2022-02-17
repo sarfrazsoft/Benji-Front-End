@@ -47,14 +47,14 @@
           <div class="title">
             {{ board?.board_activity.instructions }}
           </div>
-          <button
+          <!-- <button
             [matMenuTriggerFor]="menu"
             benji-click-stop-propagation
             disableRipple
             (click)="setMenuBoard(board)"
             class="three-dots">
             <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-          </button>
+          </button> -->
         </div>
         <div class="sub-title">
           {{ board.board_activity.sub_instructions }}
@@ -300,13 +300,13 @@
     </div>
   </div>
   
-  <button 
-    (click)="openDeleteDialog()"
+  <!-- <button 
+    (click)="openDeleteDialog(selectedBoard.id)"
     class="delete-button"
     [ngClass]="{'disabled': boardsCount==1}"
     [disabled]="boardsCount==1 ? 'disabled': null"
   >
     Delete Board
-  </button>
+  </button> -->
 
 </div>

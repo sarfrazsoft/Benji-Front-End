@@ -41,6 +41,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
+    // UppyAngularDashboardModule,
     // StoreModule.forRoot({}, { metaReducers }),
     // EffectsModule.forRoot([]),
     IntercomModule.forRoot({
