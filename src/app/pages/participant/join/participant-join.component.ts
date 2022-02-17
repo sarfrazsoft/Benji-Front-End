@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as global from 'src/app/globals';
 import { BackendRestService } from 'src/app/services';
+import { ContextService, SharingToolService } from 'src/app/services';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BeforeLessonRunDetails, LessonRunDetails } from 'src/app/services/backend/schema/course_details';
 
 @Component({
@@ -23,11 +25,13 @@ export class ParticipantJoinComponent implements OnInit {
   hostname = window.location.host + '/participant/join?link=';
 
   public roomCode = new FormControl(null, [Validators.required, Validators.min(4)]);
+  darkLogo: string;
 
   constructor(
     public router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
+    public contextService: ContextService,
     private backend: BackendRestService
   ) {}
 
@@ -48,6 +52,11 @@ export class ParticipantJoinComponent implements OnInit {
       this.joinLinkExists = false;
     }
     // this.updateBeforeLessonRunDetails();
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.darkLogo = info.parameters.darkLogo;
+      }
+    });
   }
 
   public validateRoomCode() {
