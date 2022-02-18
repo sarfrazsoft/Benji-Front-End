@@ -175,6 +175,10 @@
       color: #616161;
     }
     .persons {
+      .session-participants .initials.counter {
+        background: #fff;
+        z-index: 1;
+      }
       .participant {
         margin-right: -4px;
         z-index: 1;

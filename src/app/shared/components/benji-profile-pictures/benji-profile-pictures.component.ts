@@ -18,7 +18,6 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   constructor(private activitiesService: ActivitiesService) {}
 
   ngOnInit(): void {
-    console.log(this.size);
   }
 
   ngOnChanges(): void {
