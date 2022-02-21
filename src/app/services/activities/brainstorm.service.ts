@@ -94,12 +94,38 @@ export class BrainstormService {
     return columns;
   }
 
-  categoryChangedForIdea(board: Board, columns) {
+  categoryChangedForIdea(board: Board, existingCategories) {
+    const newAffectedCategories: Array<Category> = [];
+    const oldAffectedCategories: Array<Category> = [];
+    for (let i = 0; i < board.brainstormcategory_set.length; i++) {
+      const BECategory = board.brainstormcategory_set[i];
+      for (let j = 0; j < existingCategories.length; j++) {
+        const existingCategory = existingCategories[j];
+        if (BECategory.id === existingCategory.id) {
+          if (BECategory.brainstormidea_set.length !== existingCategory.brainstormidea_set.length) {
+            // if the number of ideas are different in the categories that means
+            // these was one of the affected category
+            newAffectedCategories.push(BECategory);
+            oldAffectedCategories.push(existingCategory);
+          }
+        }
+      }
+    }
+    // console.log(newAffectedCategories, oldAffectedCategories);
+
+    console.log(
+      differenceBy(
+        newAffectedCategories[0].brainstormidea_set,
+        newAffectedCategories[1].brainstormidea_set,
+        'id'
+      )
+    );
+    return existingCategories;
     // const c = this.ideasRemoved(board, columns);
     // return c;
     // columns = this.addIdeaToCategory(board, c);
     // return columns;
-    return this.populateCategories(board, columns);
+    // return this.populateCategories(board, columns);
   }
 
   ideaHearted(act: Board, existingCategories) {

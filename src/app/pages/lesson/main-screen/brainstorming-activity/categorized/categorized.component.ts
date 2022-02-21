@@ -204,41 +204,28 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.deleteIdea.emit(id);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<Idea[]>) {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         if (event.previousContainer === event.container) {
-          // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
-          // transferArrayItem(
-          //   event.previousContainer.data,
-          //   event.container.data,
-          //   event.previousIndex,
-          //   event.currentIndex
-          // );
+          transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+          );
           this.sendCategorizeEvent(event);
         }
       }
     });
   }
 
-  sendCategorizeEvent(event) {
-    transferArrayItem(
-      event.previousContainer.data,
-      event.container.data,
-      event.previousIndex,
-      event.currentIndex
-    );
+  sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {
+    const categoryID = event.container.element.nativeElement.getAttribute('columnID');
     const id = event.container.data[event.currentIndex].id;
-    let categoryId;
-    this.board.brainstormcategory_set.forEach((cat) => {
-      cat.brainstormidea_set.forEach((idea) => {
-        if (idea.id === id) {
-          categoryId = cat.id;
-        }
-      });
-    });
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryId));
+    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryID));
   }
 
   submitComment(ideaId, val) {

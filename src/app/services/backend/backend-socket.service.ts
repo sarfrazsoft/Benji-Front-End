@@ -3,6 +3,7 @@ import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSoc
 
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { retryWhen, tap } from 'rxjs/operators';
 import * as global from '../../globals';
 import { ServerMessage } from './schema/messages';
 
@@ -43,6 +44,16 @@ export class BackendSocketService {
       },
     };
     const w = webSocket(webSocketSubjectConfig);
+    // .pipe(
+    //   retryWhen(errors =>
+    //     errors.pipe(
+    //       tap(err => {
+    //         console.error('Got error', err);
+    //       }),
+
+    //     )
+    //   )
+    // );
     return w;
   }
 

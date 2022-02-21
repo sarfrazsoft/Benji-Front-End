@@ -10,6 +10,7 @@
         [cdkDropListData]="column.brainstormidea_set"
         (cdkDropListDropped)="drop($event)"
         [ngStyle]="{'min-width.px': minWidth}"
+        [attr.columnID]="column.id"
       >
         <div class="header" (click)="columnHeaderClicked(column)">
           <div class="grey-bg">

@@ -162,20 +162,20 @@
         <span>{{ group.title }}</span>
       </div>
       <div class="option">
-        <div class="dropdown-controls-container" 
-          style="margin-top: 16px;margin-bottom: 16px;color: #0f0f0f;">
-          {{ selectedCategory.category_name }}
-          <!-- <ng-select
+        <!-- <div class="dropdown-controls-container" 
+          style="margin-top: 16px;margin-bottom: 16px;color: #0f0f0f;"> -->
+        <div class="dropdown-controls-container">
+          <!-- {{ selectedCategory.category_name }} -->
+          <ng-select
             class="ps-brainstorm-dropdown-controls"
             [items]="categories"
-            [disabled]="true"
             bindLabel="category_name"
             placeholder="Categories..."
-            [(ngModel)]="selectedCategory"#f3f4f7
+            [(ngModel)]="selectedCategory"
             appendTo="body"
             [searchable]="false"
             [clearable]="false">
-          </ng-select> -->
+          </ng-select>
         </div>
       </div>
     </ng-container>

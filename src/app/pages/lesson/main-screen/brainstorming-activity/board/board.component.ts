@@ -537,6 +537,16 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       // idea exists
       // image has been added using webcam
       // TODO(mahin)
+      this.sendMessage.emit(
+        new BrainstormEditIdeaSubmitEvent(
+          idea.id,
+          idea.text,
+          idea.title,
+          idea.category.id,
+          idea.groupId,
+          idea.webcamImageId
+        )
+      );
     } else {
       this.sendMessage.emit(
         new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, idea.webcamImageId)
