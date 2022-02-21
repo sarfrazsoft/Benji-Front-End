@@ -61,6 +61,12 @@ benji-ms-brainstorming-activity {
       padding: 0 0 0 16px;
       height: calc(100vh - 136px);
       overflow-y: auto;
+      .uncategorized {
+        margin-bottom: 16px;
+      }
+      .uncategorized-idea {
+        margin-top: 16px;
+      }
       .delete-icon {
         position: absolute;
         right: 10px;

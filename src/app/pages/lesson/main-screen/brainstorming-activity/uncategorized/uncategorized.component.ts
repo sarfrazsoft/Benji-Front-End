@@ -8,6 +8,7 @@ import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/b
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
+import { NgxMasonryOptions } from 'ngx-masonry';
 
 @Component({
   selector: 'benji-uncategorized-ideas',
@@ -33,6 +34,11 @@ export class UncategorizedComponent implements OnInit, OnChanges {
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
+  
+  public masonryOptions: NgxMasonryOptions = {
+    gutter: 16,
+    horizontalOrder: true,
+  };
 
   constructor(
     private dialog: MatDialog,
@@ -77,6 +83,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       }
     }
     this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+    console.log(this.ideas);
   }
 
   isAbsolutePath(imageUrl: string) {

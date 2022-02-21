@@ -42,6 +42,7 @@ import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
@@ -89,6 +90,7 @@ const SHARED_MODULES = [
   MatButtonToggleModule,
   FormlyModule,
   NgxPermissionsModule,
+  NgxMasonryModule,
 ];
 import {
   UppyAngularDashboardModalModule,

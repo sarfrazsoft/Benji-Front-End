@@ -28,6 +28,7 @@ import { environment } from './../environments/environment';
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 
+import { NgxMasonryModule } from 'ngx-masonry';
 // export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
 @NgModule({
@@ -38,6 +39,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    NgxMasonryModule,
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
@@ -50,7 +52,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
       updateOnRouterChange: true,
     }),
     // !environment.production ? StoreDevtoolsModule.instrument() : [],
-    SocialLoginModule,
+    SocialLoginModule
   ],
   providers: [
     ...ServicesProviders,
