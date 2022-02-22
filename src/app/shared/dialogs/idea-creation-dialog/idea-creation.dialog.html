@@ -89,10 +89,9 @@
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/camera.svg">
             </div> -->
-            <div 
+            <!-- <div 
               fxLayoutAlign="center center" 
               (click)="imageSelected || pdfSelected ? null : uploader.click()">
-              <!-- <button mat-raised-button color="primary">Choose File</button> -->
               <img 
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
                 src="/assets/img/idea-creation/file-upload.svg"
@@ -103,7 +102,7 @@
                 type='file'
                 accept="application/pdf"
                 style="display:none"/> 
-            </div>
+            </div> -->
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
           <div *ngIf="showCategoriesDropdown"
