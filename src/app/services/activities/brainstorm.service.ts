@@ -95,37 +95,33 @@ export class BrainstormService {
   }
 
   categoryChangedForIdea(board: Board, existingCategories) {
-    const newAffectedCategories: Array<Category> = [];
-    const oldAffectedCategories: Array<Category> = [];
     for (let i = 0; i < board.brainstormcategory_set.length; i++) {
       const BECategory = board.brainstormcategory_set[i];
       for (let j = 0; j < existingCategories.length; j++) {
         const existingCategory = existingCategories[j];
         if (BECategory.id === existingCategory.id) {
-          if (BECategory.brainstormidea_set.length !== existingCategory.brainstormidea_set.length) {
-            // if the number of ideas are different in the categories that means
-            // these was one of the affected category
-            newAffectedCategories.push(BECategory);
-            oldAffectedCategories.push(existingCategory);
+          if (BECategory.brainstormidea_set.length > existingCategory.brainstormidea_set.length) {
+            // if the number of ideas are  greater in the BE category
+            // then the idea was added here
+            const diff = differenceBy(
+              BECategory.brainstormidea_set,
+              existingCategory.brainstormidea_set,
+              'id'
+            );
+            existingCategory.brainstormidea_set.push(diff[0]);
+          } else if (BECategory.brainstormidea_set.length < existingCategory.brainstormidea_set.length) {
+            const diff: any = differenceBy(
+              existingCategory.brainstormidea_set,
+              BECategory.brainstormidea_set,
+              'id'
+            );
+            const ideaIndex = findIndex(existingCategory.brainstormidea_set, { id: diff[0].id });
+            existingCategory.brainstormidea_set.splice(ideaIndex, 1);
           }
         }
       }
     }
-    // console.log(newAffectedCategories, oldAffectedCategories);
-
-    console.log(
-      differenceBy(
-        newAffectedCategories[0].brainstormidea_set,
-        newAffectedCategories[1].brainstormidea_set,
-        'id'
-      )
-    );
     return existingCategories;
-    // const c = this.ideasRemoved(board, columns);
-    // return c;
-    // columns = this.addIdeaToCategory(board, c);
-    // return columns;
-    // return this.populateCategories(board, columns);
   }
 
   ideaHearted(act: Board, existingCategories) {
