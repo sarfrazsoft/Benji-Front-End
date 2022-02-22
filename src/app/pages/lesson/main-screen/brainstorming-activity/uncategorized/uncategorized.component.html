@@ -1,6 +1,6 @@
 <div class="submitted-ideas">
   <div class="uncategorized">
-    <ngx-masonry [options]="masonryOptions">
+    <ngx-masonry #masonry [options]="masonryOptions" [updateLayout]="updateMasonryLayout" [ordered] ="true">
       <div
         ngxMasonryItem 
         class="uncategorized-idea"

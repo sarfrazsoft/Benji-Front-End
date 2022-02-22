@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
@@ -8,7 +8,7 @@ import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/b
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
-import { NgxMasonryOptions } from 'ngx-masonry';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 
 @Component({
   selector: 'benji-uncategorized-ideas',
@@ -38,18 +38,25 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   public masonryOptions: NgxMasonryOptions = {
     gutter: 16,
     horizontalOrder: true,
+    initLayout: true,
   };
 
+  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
+  
   constructor(
-    private dialog: MatDialog,
-    private httpClient: HttpClient,
-    private utilsService: UtilsService,
     private brainstormService: BrainstormService
   ) {}
 
   ngOnInit(): void {}
 
   ngOnChanges() {
+    if (
+      this.eventType === 'HostChangeBoardEvent' ||
+      this.eventType === 'ParticipantChangeBoardEvent'
+    ) {
+      this.masonry.reloadItems();
+      this.masonry.layout();
+    }
     if (
       this.cycle === 'first' ||
       this.eventType === 'filtered' ||
@@ -83,7 +90,6 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       }
     }
     this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-    console.log(this.ideas);
   }
 
   isAbsolutePath(imageUrl: string) {

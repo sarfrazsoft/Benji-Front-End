@@ -17,19 +17,10 @@ import { LayoutModule } from './layout/layout.module';
 // App Pages
 import { AppComponent } from './app.component';
 
-// Ngrx store
-// import { EffectsModule } from '@ngrx/effects';
-// import { MetaReducer, StoreModule } from '@ngrx/store';
-// not used in production
-// import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-// import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from './../environments/environment';
 
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-
-import { NgxMasonryModule } from 'ngx-masonry';
-// export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
 @NgModule({
   declarations: [AppComponent, ...EntryComponents],
@@ -39,7 +30,6 @@ import { NgxMasonryModule } from 'ngx-masonry';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
-    NgxMasonryModule,
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,

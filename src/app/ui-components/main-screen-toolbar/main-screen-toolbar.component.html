@@ -144,7 +144,7 @@
           </ng-container>
 
           <!-- Board navigation back -->
-          <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <ng-container>
             <div 
               class="back-next"
               [ngClass]="{'is-first': isFirstBoard()}"
@@ -158,7 +158,7 @@
           </ng-container>
 
           <!-- Board navigation next -->
-          <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <ng-container>
             <div 
               class="back-next"
               [ngClass]="{'is-last': isLastBoard()}"
