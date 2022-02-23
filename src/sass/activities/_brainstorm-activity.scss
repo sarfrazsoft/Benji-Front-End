@@ -32,13 +32,14 @@ benji-ms-brainstorming-activity {
         padding: 0px;
         ul {
           display: block;
+          // position: relative;
           li {
             margin-right: 0px;
           }
           .brainstorm-idea {
             min-width: 544px;
             margin: 0px auto;
-           // margin-bottom: 16px;
+            // margin-bottom: 16px;
             .comment {
               font-size: 14px;
             }
@@ -817,4 +818,8 @@ ng-dropdown-panel {
       }
     }
   }
+}
+
+.column.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 1250ms cubic-bezier(0, 0, 0.2, 1);
 }

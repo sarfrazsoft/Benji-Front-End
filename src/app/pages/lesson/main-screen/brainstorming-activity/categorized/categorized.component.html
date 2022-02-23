@@ -65,23 +65,24 @@
               (keyup.enter)="saveNewIdea(column, textInput.value)"
             ></textarea>
           </div>
-
-          <ng-container *ngFor="let item of column.brainstormidea_set; let i = index">
-            <benji-brainstorm-card
-              [board]="board"
-              [item]="item"
-              [act]="act"
-              [activityState]="activityState"
-              [showUserName]="showUserName"
-              [participantCode]="participantCode"
-              (deleteIdea)="delete($event)"
-              [sendMessage]="sendMessage"
-              [categorizeFlag]="categorizeFlag"
-              [category]="column"
-              [myGroup]="myGroup"
-              [avatarSize]="'small'">
-            </benji-brainstorm-card>
-          </ng-container>
+          <div class="ideas-list-container">
+            <ng-container *ngFor="let item of column.brainstormidea_set; let i = index">
+              <benji-brainstorm-card
+                [board]="board"
+                [item]="item"
+                [act]="act"
+                [activityState]="activityState"
+                [showUserName]="showUserName"
+                [participantCode]="participantCode"
+                (deleteIdea)="delete($event)"
+                [sendMessage]="sendMessage"
+                [categorizeFlag]="categorizeFlag"
+                [category]="column"
+                [myGroup]="myGroup"
+                [avatarSize]="'small'">
+              </benji-brainstorm-card>
+            </ng-container>
+          </div>
           <div
             class="add-card"
             (click)="addCard(column)"

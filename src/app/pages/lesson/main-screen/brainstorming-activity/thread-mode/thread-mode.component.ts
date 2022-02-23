@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import * as Isotope from 'isotope-layout';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
@@ -8,12 +9,12 @@ import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/b
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
-
+// declare var Isotope: any;
 @Component({
   selector: 'benji-thread-mode-ideas',
   templateUrl: './thread-mode.component.html',
 })
-export class ThreadModeComponent implements OnInit, OnChanges {
+export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() act;
   @Input() activityState;
@@ -29,6 +30,8 @@ export class ThreadModeComponent implements OnInit, OnChanges {
   ideas = [];
   cycle = 'first';
 
+  isotope: Isotope;
+
   hostname = environment.web_protocol + '://' + environment.host;
 
   @Output() viewImage = new EventEmitter<string>();
@@ -42,6 +45,33 @@ export class ThreadModeComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    // const elem: HTMLElement = document.querySelector('.ideas-list-container');
+    // this.isotope = new Isotope(elem, {
+    //   // options
+    //   itemSelector: '.brainstorm-idea-li',
+    //   layoutMode: 'vertical',
+    //   sortAscending: false,
+    //   getSortData: {
+    //     category: '[data-likes]',
+    //   },
+    // });
+    // data-likes
+    // var iso = new Isotope( elem, {
+    //   // options
+    //   itemSelector: '.grid-item',
+    //   layoutMode: 'fitRows'
+    // });
+  }
+
+  meow() {
+    // this.isotope({ sortBy: 'category' });
+    this.isotope.arrange({ sortBy: 'category' });
+    // this.isotope.reloadItems();
+  }
+
+  noMeow() {}
 
   ngOnChanges() {
     if (
