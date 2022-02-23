@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
 import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
-import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 
 @Component({
   selector: 'benji-uncategorized-ideas',
@@ -34,7 +34,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
-  
+
   public masonryOptions: NgxMasonryOptions = {
     gutter: 16,
     horizontalOrder: true,
@@ -42,17 +42,17 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   };
 
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
-  
-  constructor(
-    private brainstormService: BrainstormService
-  ) {}
+
+  constructor(private brainstormService: BrainstormService) {}
 
   ngOnInit(): void {}
 
   ngOnChanges() {
     if (
       this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'ParticipantChangeBoardEvent'
+      this.eventType === 'ParticipantChangeBoardEvent' ||
+      this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
+      this.eventType === 'BrainstormRemoveIdeaCommentEvent'
     ) {
       this.masonry.reloadItems();
       this.masonry.layout();
