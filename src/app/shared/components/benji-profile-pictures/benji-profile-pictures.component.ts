@@ -25,6 +25,9 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       this.remainingCount = this.participantCodes.length - this.counterAfter;
       this.participantCodes = this.participantCodes.slice(0, this.counterAfter);
     }
+    else {
+      this.remainingCount = 0;
+    }
   }
 
   getName(code: number) {
