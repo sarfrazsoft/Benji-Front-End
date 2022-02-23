@@ -5,7 +5,8 @@ import * as moment from 'moment';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
-
+import { HttpClient } from '@angular/common/http';
+import * as global from 'src/app/globals';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -48,7 +49,13 @@ export class ActiveLessonsComponent implements OnInit {
 
   hostname = window.location.host + '/participant/join?link=';
 
-  constructor(private router: Router, private utilsService: UtilsService, private matDialog: MatDialog) {}
+  constructor(
+    private router: Router, 
+    private utilsService: UtilsService, 
+    private matDialog: MatDialog,
+    private http: HttpClient,
+    ) 
+  {}
 
   ngOnInit() {
     this.getActiveSessions();
@@ -84,6 +91,29 @@ export class ActiveLessonsComponent implements OnInit {
   }
 
   delete(val: TableRowInformation) {
+    const msg = 'Are you sure you want to delete ' + val.lesson_title + '?';
+    const dialogRef = this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: msg,
+        },
+        disableClose: true,
+        panelClass: 'dashboard-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
+          this.http.delete(request, {}).subscribe(response => console.log(response) );
+          this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
+          this.dataSource = this.dataSource.filter((value)=>{
+            return value.lessonRunCode != val.lessonRunCode;
+          });
+        } else {
+          this.utilsService.openWarningNotification('Something went wrong.', '');
+        }
+      });
+  
     // if (lesson.effective_permission === 'admin') {
     //   const msg = 'Are you sure you want to delete ' + lesson.lesson_name + '?';
     //   const dialogRef = this.matDialog
