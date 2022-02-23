@@ -230,6 +230,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     } else {
       // viewing user is the host
     }
+    if (this.data.item.submitting_participant) {
+      this.submitting_participant = this.data.item.submitting_participant.participant_code;
+    }
 
     if (this.data.category) {
       this.selectedCategory = this.data.category;
