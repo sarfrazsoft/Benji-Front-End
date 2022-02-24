@@ -251,6 +251,9 @@
           img {
             cursor: pointer;
             margin: -8px -8px 0px 0px;
+            padding: 8px;
+            background: #f3f4f7;
+            border-radius: 50%;
           }
         }
         .description {
@@ -370,7 +373,8 @@
           display: flex !important;
         }
         .white-content {
-          height: calc(100vh - 244px) !important;
+          //height: calc(100vh - 244px) !important;
+          min-height: 150px;
           padding-top: 0px;
           .close-button {
             display: none !important;
@@ -1068,5 +1072,13 @@
         // }
       }
     } 
+    .uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload {
+      // width: 100%;
+      // padding: 15px 10px;
+      // color: #fff;
+      // font-size: 14px;
+      // line-height: 1;
+      // background-color: #1bb240;
+    }
   }
 }
