@@ -25,8 +25,8 @@ import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
   EndShareEvent,
-  HostChangeBoardEvent,
   GetUpdatedLessonDetailEvent,
+  HostChangeBoardEvent,
   JumpEvent,
   NextInternalEvent,
   ParticipantChangeBoardEvent,
@@ -93,7 +93,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private sharingToolService: SharingToolService,
     private matDialog: MatDialog,
     private permissionsService: NgxPermissionsService,
-    private router: Router,
+    private router: Router
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -276,29 +276,29 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   isFirstBoard() {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
     let minBoardOrder = 0;
-    visibleBoards.forEach((brd: Board) =>{
+    visibleBoards.forEach((brd: Board) => {
       if (brd.order < minBoardOrder) {
         minBoardOrder = brd.order;
       }
     });
-    return minBoardOrder == this.getHostBoardOrder();
+    return minBoardOrder === this.getHostBoardOrder();
   }
 
   isLastBoard() {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
     let maxBoardOrder = 0;
-    visibleBoards.forEach((brd: Board) =>{
+    visibleBoards.forEach((brd: Board) => {
       if (brd.order > maxBoardOrder) {
         maxBoardOrder = brd.order;
       }
     });
-    return maxBoardOrder == this.getHostBoardOrder();
+    return maxBoardOrder === this.getHostBoardOrder();
   }
 
   getHostBoardOrder() {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
     let hostBoardOrder;
-    visibleBoards.forEach((brd: Board) =>{
+    visibleBoards.forEach((brd: Board) => {
       if (this.activityState.brainstormactivity.host_board === brd.id) {
         hostBoardOrder = brd.order;
       }
@@ -309,11 +309,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   changeBoard(move: string) {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
     const hostBoardOrder = this.getHostBoardOrder();
-    visibleBoards.forEach((brd: Board) =>{
-      if (hostBoardOrder+1 === brd.order && move === "next") {
-        this.navigateToBoard(brd)
-      } else if (hostBoardOrder-1 === brd.order && move === "previous") {
-        this.navigateToBoard(brd)
+    visibleBoards.forEach((brd: Board) => {
+      if (hostBoardOrder + 1 === brd.order && move === 'next') {
+        this.navigateToBoard(brd);
+      } else if (hostBoardOrder - 1 === brd.order && move === 'previous') {
+        this.navigateToBoard(brd);
       }
     });
   }
@@ -332,13 +332,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
   }
 
-  logoClicked(){
+  logoClicked() {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.router.navigate(['/dashboard/']);
       }
     });
-    
+
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
@@ -349,5 +349,4 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     });
   }
-
 }

@@ -196,11 +196,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   navigateToBoard(board: Board) {
-    // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-    //   if (val) {
-    //     this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
-    //   }
-    // });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
+      }
+    });
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
