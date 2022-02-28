@@ -38,6 +38,7 @@ import {
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
+import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -50,12 +51,14 @@ import { environment } from 'src/environments/environment';
         'enabled',
         style({
           opacity: 1,
+          display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
+          display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),

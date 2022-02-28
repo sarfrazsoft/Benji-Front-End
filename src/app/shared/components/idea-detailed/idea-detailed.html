@@ -204,27 +204,27 @@
               [participantCodes]="[participantCode]"
               [size]="'medium'"
             ></benji-profile-pictures>
-            <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
-            <!-- <textarea
-              class="input-comment" 
-              name="" 
-              id="" 
-              cols="30" 
-              rows="1"
-              placeholder="Add a comment"
-              [(ngModel)]="commentModel">
-            </textarea> -->
-            <!-- <div 
-              class="send-comment" 
-              (click)="submitComment(item.id, commentModel); commentModel = ''"
-              [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
-              Send
-            </div> -->
             <div 
-              class="send-comment" 
-              [@enableDisable]="commentInput.value.length ? 'enabled' : 'disabled'"
-              (click)="submitComment(idea.id, commentInput.value); commentInput.value = null">
-              Post
+              class="comment-input-container" 
+              fxFlex="row" 
+              fxLayoutAlign="end end">
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                placeholder="Add a comment"  
+                class="input-comment detailed"
+                [(ngModel)]="commentModel"
+                [ngClass]="{'active': commentModel.length}">
+              </textarea>
+              <div  
+                class="send-comment detailed" 
+                (click)="submitComment(idea.id, commentModel); commentModel = ''"
+                [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
+                Post
+              </div>
             </div>
           </div>
         </div>

@@ -141,7 +141,7 @@
         <div 
           class="comment-input-container" 
           fxFlex="row" 
-          fxLayoutAlign="start center">
+          fxLayoutAlign="end end">
           <textarea
             matInput
             cdkTextareaAutosize
@@ -150,16 +150,10 @@
             cdkAutosizeMaxRows="5"
             placeholder="Add a comment"  
             class="input-comment"
-            [(ngModel)]="commentModel">
+            [(ngModel)]="commentModel"
+            [ngClass]="{'active': commentModel.length}">
           </textarea>
-          <!-- <div
-            class="input-comment" 
-            data-placeholder="Add a comment"
-            contenteditable
-            (mousedown)="$event.stopPropagation()"
-            [textContent]="commentModel" (input)="commentModel=$event.target.textContent">
-          </div> -->
-          <div 
+          <div  
             class="send-comment" 
             (click)="submitComment(item.id, commentModel); commentModel = ''"
             [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">

@@ -51,12 +51,14 @@ export type IdeaUserRole = 'owner' | 'viewer';
         'enabled',
         style({
           opacity: 1,
+          display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
+          display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),
