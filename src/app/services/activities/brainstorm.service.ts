@@ -329,6 +329,14 @@ export class BrainstormService {
       } else {
         return Number(moment(a.time)) - Number(moment(b.time));
       }
+      // if (board.sort === 'oldest_to_newest') {
+      //   return Number(moment(b.time)) - Number(moment(a.time));
+      // } else if (board.sort === 'newest_to_oldest') {
+      //   return Number(moment(a.time)) - Number(moment(b.time));
+      // } else {
+      //   return Number(moment(a.time)) - Number(moment(b.time));
+      // }
     });
+    console.log(existingIdeas);
   }
 }

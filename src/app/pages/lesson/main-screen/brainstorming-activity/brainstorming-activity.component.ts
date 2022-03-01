@@ -38,7 +38,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -107,7 +108,7 @@ export class MainScreenBrainstormingActivityComponent
 
     this.eventType = this.getEventType();
 
-    this.selectUsersBoard();
+    this.selectUserBoard();
 
     this.onChanges();
   }
@@ -134,20 +135,26 @@ export class MainScreenBrainstormingActivityComponent
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (
       this.eventType === 'BrainstormEditBoardInstruction' ||
-      this.eventType === 'BrainstormEditSubInstruction' ||
-      this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'BrainstormChangeModeEvent'
+      this.eventType === 'BrainstormEditSubInstruction'
     ) {
     } else if (this.eventType === 'JoinEvent') {
       this.detectNewParticipantJoined(this.activityState);
+      this.selectUserBoard();
+    } else if (this.eventType === 'HostChangeBoardEvent') {
+      this.hostChangedBoard();
+    } else if (this.eventType === 'ParticipantChangeBoardEvent') {
+      this.participantChangedBoard();
+    } else if (this.eventType === 'BrainstormChangeModeEvent') {
+      // this.selectUserBoard();
+    } else {
+      this.selectUserBoard();
     }
-    this.selectUsersBoard();
 
-    const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      this.sharingToolService.updateParticipantGroupingToolDialog(gt);
-    }
+    // const sm = this.activityState;
+    // if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+    //   const gt = sm.running_tools.grouping_tool;
+    //   this.sharingToolService.updateParticipantGroupingToolDialog(gt);
+    // }
   }
 
   ngOnDestroy() {
@@ -163,41 +170,67 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
-  selectUsersBoard() {
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        const boardParticipants = this.act.participants;
-        if (boardParticipants) {
-          forOwn(boardParticipants, (boardParticipantArray, participantsBoardId) => {
-            for (let i = 0; i < boardParticipantArray.length; i++) {
-              const participantCode = boardParticipantArray[i];
-              if (participantCode === this.participantCode) {
-                this.act.boards.forEach((board) => {
-                  if (Number(participantsBoardId) === board.id) {
-                    this.selectedBoard = board;
-                  }
-                });
-              }
-            }
-          });
-        }
-        this.brainstormService.selectedBoard = this.selectedBoard;
-      }
-    });
-
+  hostChangedBoard() {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        const hostBoardID = this.act.host_board;
-        if (hostBoardID) {
-          this.act.boards.forEach((v) => {
-            if (hostBoardID === v.id) {
-              this.selectedBoard = v;
-            }
-          });
-        }
-        this.brainstormService.selectedBoard = this.selectedBoard;
+        this.selectAdminBoard();
       }
     });
+    if (this.act.meeting_mode) {
+      this.selectParticipantBoard();
+    }
+  }
+
+  participantChangedBoard() {
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.selectParticipantBoard();
+      }
+    });
+  }
+
+  selectUserBoard() {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.selectAdminBoard();
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.selectParticipantBoard();
+      }
+    });
+  }
+
+  selectParticipantBoard() {
+    const boardParticipants = this.act.participants;
+    if (boardParticipants) {
+      forOwn(boardParticipants, (boardParticipantArray, participantsBoardId) => {
+        for (let i = 0; i < boardParticipantArray.length; i++) {
+          const participantCode = boardParticipantArray[i];
+          if (participantCode === this.participantCode) {
+            this.act.boards.forEach((board) => {
+              if (Number(participantsBoardId) === board.id) {
+                this.selectedBoard = board;
+              }
+            });
+          }
+        }
+      });
+    }
+    this.brainstormService.selectedBoard = this.selectedBoard;
+  }
+
+  selectAdminBoard() {
+    const hostBoardID = this.act.host_board;
+    if (hostBoardID) {
+      this.act.boards.forEach((v) => {
+        if (hostBoardID === v.id) {
+          this.selectedBoard = v;
+        }
+      });
+    }
+    this.brainstormService.selectedBoard = this.selectedBoard;
   }
 
   detectNewParticipantJoined(act: UpdateMessage) {

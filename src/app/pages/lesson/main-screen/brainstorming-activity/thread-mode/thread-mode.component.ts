@@ -1,5 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as Isotope from 'isotope-layout';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
@@ -67,19 +76,15 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
 
   meow() {
     // this.isotope({ sortBy: 'category' });
-    this.isotope.arrange({ sortBy: 'category' });
+    // this.isotope.arrange({ sortBy: 'category' });
+    // this.isotope.appended(this.ideas);
     // this.isotope.reloadItems();
   }
 
   noMeow() {}
 
-  ngOnChanges() {
-    if (
-      this.cycle === 'first' ||
-      this.eventType === 'filtered' ||
-      this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'ParticipantChangeBoardEvent'
-    ) {
+  ngOnChanges($event: SimpleChanges) {
+    if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.brainstormService.uncategorizedIdeas = this.ideas;
@@ -87,6 +92,13 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {
         this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+        // setTimeout(() => {
+        //   // this.isotope.insert(this.ideas);
+        //   // thailsi.icseotoperos.eappended(this.ideas);
+        //   console.log(this.ideas);
+        //   this.isotope.reloadItems();
+        //   this.ynisotopeirow.layoutell();
+        // });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
@@ -104,6 +116,18 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
+      } else if (
+        this.eventType === 'HostChangeBoardEvent' ||
+        this.eventType === 'ParticipantChangeBoardEvent'
+      ) {
+        if ($event.board) {
+          if ($event.board.currentValue.id === $event.board.previousValue.id) {
+          } else {
+            this.ideas = [];
+            this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+            this.brainstormService.uncategorizedIdeas = this.ideas;
+          }
+        }
       }
     }
     this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);

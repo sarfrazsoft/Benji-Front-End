@@ -9,6 +9,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -73,13 +74,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
-    if (
-      this.cycle === 'first' ||
-      this.eventType === 'filtered' ||
-      this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'ParticipantChangeBoardEvent'
-    ) {
+  ngOnChanges($event: SimpleChanges) {
+    console.log($event);
+    if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';
     } else {
@@ -113,6 +110,16 @@ export class CategorizedComponent implements OnInit, OnChanges {
             this.sortIdeas(this.columns);
           }
         });
+      } else if (
+        this.eventType === 'HostChangeBoardEvent' ||
+        this.eventType === 'ParticipantChangeBoardEvent'
+      ) {
+        if ($event.board) {
+          if ($event.board.currentValue.id === $event.board.previousValue.id) {
+          } else {
+            this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+          }
+        }
       }
     }
     this.sortIdeas(this.columns);

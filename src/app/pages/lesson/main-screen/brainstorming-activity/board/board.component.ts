@@ -267,6 +267,9 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.instructions = this.board.board_activity.instructions;
     this.sub_instructions = this.board.board_activity.sub_instructions;
 
+    if (this.eventType === 'BrainstormChangeModeEvent') {
+      // this.selectUserBoard();
+    }
     this.boardMode = this.board.board_activity.mode;
     this.showUserName = this.board.board_activity.show_participant_name_flag;
   }
