@@ -174,7 +174,8 @@ var BrainstormCardComponent = /** @class */ (function () {
                 activityState: this.activityState,
                 isMobile: !isDesktop,
                 participantCode: this.participantCode,
-                userRole: this.userRole
+                userRole: this.userRole,
+                showUserName: this.showUserName
             }
         });
         var sub = dialogRef.componentInstance.sendMessage.subscribe(function (event) {

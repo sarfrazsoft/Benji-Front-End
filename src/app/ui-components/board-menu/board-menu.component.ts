@@ -26,6 +26,7 @@ import {
   BrainstormEditSubInstructionEvent,
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
+  BrainstormToggleParticipantNameEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
@@ -63,6 +64,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   participants = [];
 
   meetingMode: boolean;
+  showAuthorship: boolean;
   board: Board;
   boardMode: string;
   gridMode: boolean;
@@ -89,6 +91,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
+        this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
@@ -245,6 +248,10 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
 
   toggleMeetingMode($event) {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
+  toggleShowAuthorship() {
+    this.sendMessage.emit(new BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
   }
 
   copyLink() {

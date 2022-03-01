@@ -41,6 +41,7 @@ var BoardMenuComponent = /** @class */ (function () {
             if (board) {
                 _this.selectedBoard = board;
                 _this.boardMode = _this.selectedBoard.board_activity.mode;
+                _this.showAuthorship = _this.selectedBoard.board_activity.show_participant_name_flag;
                 _this.instructions = board.board_activity.instructions;
                 _this.sub_instructions = board.board_activity.sub_instructions;
                 _this.boardStatus =
@@ -172,6 +173,9 @@ var BoardMenuComponent = /** @class */ (function () {
     };
     BoardMenuComponent.prototype.toggleMeetingMode = function ($event) {
         this.sendMessage.emit(new schema_1.BrainstormToggleMeetingMode($event.currentTarget.checked));
+    };
+    BoardMenuComponent.prototype.toggleShowAuthorship = function () {
+        this.sendMessage.emit(new schema_1.BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
     };
     BoardMenuComponent.prototype.copyLink = function () {
         this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);

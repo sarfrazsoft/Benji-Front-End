@@ -264,6 +264,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         isMobile: !isDesktop,
         participantCode: this.participantCode,
         userRole: this.userRole,
+        showUserName: this.showUserName,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
