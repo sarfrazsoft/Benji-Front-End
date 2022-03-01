@@ -449,43 +449,6 @@ benji-ms-brainstorming-activity {
         }
       }
     }
-    .post-comment {
-      .comment-input-container {
-        box-sizing: border-box;
-        flex-grow: 1;
-        position: relative;
-        background: #f3f4f7;
-        border-radius: 8px;
-        .input-comment {
-          min-height: 32px;
-          border: 0px;
-          background-color: transparent;
-          color: #37352f;
-          font-weight: 400;
-          font-size: 14px;
-          width: 100%;
-          padding: 8px 8px 8px 8px;
-          overflow: hidden;
-          // box-sizing: border-box;
-          &:empty:before {
-            content: attr(data-placeholder);
-            color: #777777;
-          }
-          &:focus-visible {
-            outline: none;
-          }
-          &::placeholder {
-            color: $secondary-color;
-          }
-        }
-        .send-comment {
-          margin-right: 8px;
-          font-weight: 600;
-          font-size: 12px;
-          color: #555bea;
-        }
-      }
-    }
     .initials {
       width: 24px;
       height: 24px;
@@ -496,6 +459,63 @@ benji-ms-brainstorming-activity {
     }
   }
 }
+
+.comment-input-container {
+  box-sizing: border-box;
+  flex-grow: 1;
+  position: relative;
+  background: #f3f4f7;
+  border-radius: 8px;
+  .input-comment {
+    &.detailed {
+      min-height: 17px;
+      overflow: hidden;
+      font-size: 14px;
+      &::placeholder {
+        font-size: 16px;
+      }
+    }
+    border: 0px;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #37352f;
+    font-weight: 400;
+    font-size: 12px;
+    width: 100%;
+    padding: 8px 8px 8px 8px;
+    //overflow: hidden;
+    &:empty:before {
+      content: attr(data-placeholder);
+      color: #777777;
+    }
+    &:focus-visible {
+      outline: none;
+      background: #f3f4f7;
+    }
+    &.active {
+      background: #f3f4f7;
+    }
+    &::placeholder {
+      color: $secondary-color;
+    }
+    &:focus {
+      &::placeholder {
+        color: transparent;
+      }
+    } 
+  }
+  .send-comment {
+    margin: 0px 8px 8px 0px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #555bea;
+    cursor: pointer;
+    &.detailed {
+      font-size: 15px;
+    }
+  }
+}
+
 .user-name {
   padding: 8px 12px;
   .initials {

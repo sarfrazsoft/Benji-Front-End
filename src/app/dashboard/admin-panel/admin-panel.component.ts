@@ -78,9 +78,11 @@ export class AdminPanelComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((data) => {
-        this.adminService.createNewBoard(data).subscribe((res: any) => {
-          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
-        });
+        if (data) {
+          this.adminService.createNewBoard(data).subscribe((res: any) => {
+            this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          });
+        }
       });
   }
 }

@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -35,7 +36,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation
   selector: 'benji-board-menu',
   templateUrl: 'board-menu.component.html',
 })
-export class BoardMenuComponent implements OnInit, OnChanges {
+export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -87,7 +88,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
-        this.decideBoardMode(this.boardMode);
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
@@ -119,6 +119,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     }
     this.hostBoard = this.activityState.brainstormactivity.host_board;
+  }
+
+  ngAfterViewInit(): void {
+    this.decideBoardMode(this.boardMode);
   }
 
   initializeBoards() {
@@ -215,18 +219,21 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   decideBoardMode(mode: string) {
-    if (mode === 'grid') {
-      this.gridMode = true;
-      this.threadMode = false;
-      this.columnsMode = false;
-    } else if (mode === 'thread') {
-      this.gridMode = false;
-      this.threadMode = true;
-      this.columnsMode = false;
-    } else if (mode === 'columns') {
-      this.gridMode = false;
-      this.threadMode = false;
-      this.columnsMode = true;
+    switch(mode) {
+      case 'grid':
+        this.gridMode = true;
+        this.threadMode = false;
+        this.columnsMode = false;
+        break;
+      case 'thread':
+        this.gridMode = false;
+        this.threadMode = true;
+        this.columnsMode = false;
+        break;
+      default:
+        this.gridMode = false;
+        this.threadMode = false;
+        this.columnsMode = true;
     }
   }
 

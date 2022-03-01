@@ -32,7 +32,7 @@ export class SessionSettingsDialogComponent implements OnInit {
   ngOnInit() {
     this.form = this.builder.group({
       title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      description: new FormControl(''),
     });
     this.form.setValue({ title: this.data.title, description: this.data.description });
     this.createSession = this.data.createSession;
