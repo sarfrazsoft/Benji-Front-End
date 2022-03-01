@@ -259,13 +259,13 @@ var BrainstormCardComponent = /** @class */ (function () {
                 animations_1.trigger('enableDisable', [
                     // ...
                     animations_1.state('enabled', animations_1.style({
-                        opacity: 1,
-                        display: 'block'
+                        opacity: 1
                     })),
                     animations_1.state('disabled', animations_1.style({
-                        opacity: 0,
-                        display: 'none'
+                        opacity: 0
                     })),
+                    animations_1.transition('enabled => disabled', [animations_1.animate('0.1s')]),
+                    animations_1.transition('disabled => enabled', [animations_1.animate('0.1s')]),
                 ]),
             ]
         })
