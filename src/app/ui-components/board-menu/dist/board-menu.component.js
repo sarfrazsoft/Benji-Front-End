@@ -124,9 +124,6 @@ var BoardMenuComponent = /** @class */ (function () {
             .subscribe(function (res) {
             if (res === true) {
                 var id = boardID ? boardID : _this.menuBoard;
-                // if (id === this.selectedBoard.id) {
-                //   this.sendMessage.emit(new HostChangeBoardEvent());
-                // }
                 _this.sendMessage.emit(new schema_1.BrainstormRemoveBoardEvent(id));
             }
         });
@@ -149,13 +146,14 @@ var BoardMenuComponent = /** @class */ (function () {
         this.decideBoardMode(mode);
     };
     BoardMenuComponent.prototype.decideBoardMode = function (mode) {
+        console.log(mode);
         switch (mode) {
-            case 'grid':
+            case "grid":
                 this.gridMode = true;
                 this.threadMode = false;
                 this.columnsMode = false;
                 break;
-            case 'thread':
+            case "thread":
                 this.gridMode = false;
                 this.threadMode = true;
                 this.columnsMode = false;

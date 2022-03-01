@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   ElementRef,
@@ -122,7 +123,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.decideBoardMode(this.boardMode);
+      this.decideBoardMode(this.boardMode);
   }
 
   initializeBoards() {
@@ -190,10 +191,6 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       .subscribe((res) => {
         if (res === true) {
           const id = boardID ? boardID : this.menuBoard;
-
-          // if (id === this.selectedBoard.id) {
-          //   this.sendMessage.emit(new HostChangeBoardEvent());
-          // }
           this.sendMessage.emit(new BrainstormRemoveBoardEvent(id));
         }
       });
@@ -219,13 +216,14 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   decideBoardMode(mode: string) {
+    console.log(mode);
     switch(mode) {
-      case 'grid':
+      case "grid":
         this.gridMode = true;
         this.threadMode = false;
         this.columnsMode = false;
         break;
-      case 'thread':
+      case "thread":
         this.gridMode = false;
         this.threadMode = true;
         this.columnsMode = false;

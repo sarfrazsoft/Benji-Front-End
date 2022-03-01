@@ -466,6 +466,9 @@ benji-ms-brainstorming-activity {
   position: relative;
   background: #f3f4f7;
   border-radius: 8px;
+  &.detailed {
+    margin-right: 16px;
+  }
   .input-comment {
     &.detailed {
       min-height: 17px;
@@ -493,7 +496,7 @@ benji-ms-brainstorming-activity {
       background: #f3f4f7;
     }
     &.active {
-      background: #f3f4f7;
+      background: transparent;
     }
     &::placeholder {
       color: $secondary-color;

@@ -61,8 +61,8 @@ import { environment } from 'src/environments/environment';
           display: 'none',
         })
       ),
-      transition('enabled => disabled', [animate('0.1s')]),
-      transition('disabled => enabled', [animate('0.1s')]),
+      // transition('enabled => disabled', [animate('0.1s')]),
+      // transition('disabled => enabled', [animate('0.1s')]),
     ]),
   ],
 })
