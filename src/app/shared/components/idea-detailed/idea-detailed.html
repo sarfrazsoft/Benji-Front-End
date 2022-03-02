@@ -199,7 +199,7 @@
               </div>
             </div>
           </div>
-          <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
             <benji-profile-pictures
               [activityState]="activityState"
               [participantCodes]="[participantCode]"
@@ -208,17 +208,19 @@
             <div 
               class="comment-input-container detailed" 
               fxFlex="row" 
-              fxLayoutAlign="end end">
+              fxLayoutAlign="start center"
+              [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
               <textarea
                 matInput
                 cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
                 cdkAutosizeMinRows="1"
                 cdkAutosizeMaxRows="5"
                 placeholder="Add a comment"  
                 class="input-comment detailed"
                 [(ngModel)]="commentModel"
-                [ngClass]="{'active': commentModel.length}">
+                [ngClass]="{'active': commentModel.length}"
+                (focus)="onCommentFocus()"
+                (blur)="onCommentBlur()">
               </textarea>
               <div  
                 class="send-comment detailed" 

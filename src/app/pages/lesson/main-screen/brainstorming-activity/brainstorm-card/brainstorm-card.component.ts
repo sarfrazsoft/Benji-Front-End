@@ -51,14 +51,14 @@ import { environment } from 'src/environments/environment';
         'enabled',
         style({
           opacity: 1,
-        //  display: 'block',
+          display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
-        //  display: 'none',
+          display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),
@@ -94,10 +94,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   submitting_participant;
   userRole: IdeaUserRole;
   deactivateHearting = false;
+  classGrey: boolean;
+  classWhite: boolean;
   // columns = [];
   // cycle = 'first';
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private dialog: MatDialog,
@@ -132,10 +134,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
-  }
+  // triggerResize() {
+  //   // Wait for changes to be applied, then trigger textarea resize.
+  //   this._ngZone.onStable.pipe(take(1)).subscribe(() => {
+  //     console.log("Anonymous triggerResize");
+  //     this.autosize.resizeToFitContent(true);
+  //   }); 
+  //   console.log("triggerResize");
+  // }
 
   ngOnChanges() {}
 
@@ -281,5 +287,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.brainstormService.saveIdea$.next(result);
       }
     });
+  }
+
+  onCommentFocus () {
+    this.classGrey = true;
+  }
+  onCommentBlur () {
+    this.classGrey = false;
   }
 }

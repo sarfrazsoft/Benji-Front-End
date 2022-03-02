@@ -605,14 +605,6 @@
       .participants {
         margin-bottom: 16px;
         padding: 0px;
-        .initials {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          font-size: 12px;
-          color: #fff;
-          line-height: normal;
-        }
         .name {
           font-size: 14px;
           font-weight: 500;
@@ -731,14 +723,6 @@
       //     cursor: pointer;
       //   }
       // }
-      .initials {
-        width: 32px;
-        height: 32px;
-        color: #fff;
-        font-size: 14px;
-        border-radius: 50%;
-        line-height: normal;
-      }
     }
     .slide-arrow {
       position: absolute;
@@ -1002,14 +986,6 @@
       //     cursor: pointer;
       //   }
       // }
-      .initials {
-        width: 40px;
-        height: 40px;
-        color: #fff;
-        font-size: 14px;
-        border-radius: 50%;
-        line-height: normal;
-      }
     }
     .slide-arrow {
       display: none !important;
