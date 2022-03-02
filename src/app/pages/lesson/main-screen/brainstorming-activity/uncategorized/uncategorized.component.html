@@ -1,8 +1,9 @@
 <div class="submitted-ideas">
   <div class="uncategorized">
-    <ngx-masonry #masonry [options]="masonryOptions" [ordered] ="true">
+    <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true">
       <div
-        ngxMasonryItem 
+        ngxMasonryItem
+        [prepend]="masonryPrepend"
         class="uncategorized-idea"
         *ngFor="let idea of ideas"
         (mouseenter)="idea.showClose = true"
