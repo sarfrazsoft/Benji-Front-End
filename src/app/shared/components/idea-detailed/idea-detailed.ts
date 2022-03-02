@@ -39,6 +39,7 @@ export interface IdeaDetailedInfo {
   isMobile: boolean;
   participantCode: number;
   userRole: IdeaUserRole;
+  showUserName: boolean;
 }
 export type IdeaUserRole = 'owner' | 'viewer';
 @Component({

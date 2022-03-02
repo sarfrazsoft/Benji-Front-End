@@ -41,6 +41,7 @@ var BoardMenuComponent = /** @class */ (function () {
             if (board) {
                 _this.selectedBoard = board;
                 _this.boardMode = _this.selectedBoard.board_activity.mode;
+                _this.showAuthorship = _this.selectedBoard.board_activity.show_participant_name_flag;
                 _this.instructions = board.board_activity.instructions;
                 _this.sub_instructions = board.board_activity.sub_instructions;
                 _this.boardStatus =
@@ -124,9 +125,6 @@ var BoardMenuComponent = /** @class */ (function () {
             .subscribe(function (res) {
             if (res === true) {
                 var id = boardID ? boardID : _this.menuBoard;
-                // if (id === this.selectedBoard.id) {
-                //   this.sendMessage.emit(new HostChangeBoardEvent());
-                // }
                 _this.sendMessage.emit(new schema_1.BrainstormRemoveBoardEvent(id));
             }
         });
@@ -149,13 +147,14 @@ var BoardMenuComponent = /** @class */ (function () {
         this.decideBoardMode(mode);
     };
     BoardMenuComponent.prototype.decideBoardMode = function (mode) {
+        console.log(mode);
         switch (mode) {
-            case 'grid':
+            case "grid":
                 this.gridMode = true;
                 this.threadMode = false;
                 this.columnsMode = false;
                 break;
-            case 'thread':
+            case "thread":
                 this.gridMode = false;
                 this.threadMode = true;
                 this.columnsMode = false;
@@ -174,6 +173,9 @@ var BoardMenuComponent = /** @class */ (function () {
     };
     BoardMenuComponent.prototype.toggleMeetingMode = function ($event) {
         this.sendMessage.emit(new schema_1.BrainstormToggleMeetingMode($event.currentTarget.checked));
+    };
+    BoardMenuComponent.prototype.toggleShowAuthorship = function () {
+        this.sendMessage.emit(new schema_1.BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
     };
     BoardMenuComponent.prototype.copyLink = function () {
         this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);

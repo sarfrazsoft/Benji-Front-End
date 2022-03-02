@@ -388,6 +388,10 @@ export class BrainstormToggleCategoryModeEvent extends ActivityEvent {
 }
 export class BrainstormToggleParticipantNameEvent extends ActivityEvent {
   event_name = 'BrainstormToggleParticipantNameEvent';
+  constructor(board: number) {
+    super();
+    this.extra_args = { board: board };
+  }
 }
 export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormSubmissionCompleteInternalEvent';

@@ -51,14 +51,14 @@ import { environment } from 'src/environments/environment';
         'enabled',
         style({
           opacity: 1,
-          display: 'block',
+        //  display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
-          display: 'none',
+        //  display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),
@@ -264,6 +264,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         isMobile: !isDesktop,
         participantCode: this.participantCode,
         userRole: this.userRole,
+        showUserName: this.showUserName,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {

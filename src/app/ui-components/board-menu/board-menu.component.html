@@ -155,43 +155,51 @@
     </div>
   </div> -->
 
-  <!-- <div fxLayout="column">
-    <div class="title">Post</div>
-    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between"
-      >
-        <div>
-          <div class="label">Show authorship on cards</div>
-          <div class="sub-label">Name of the author appears on card</div>
+  <div fxLayout="column">
+    <ng-container *ngxPermissionsOnly="'ADMIN'">
+      <div class="title">Post</div>
+      <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+        <div 
+          class="setting"
+          benji-click-stop-propagation
+          fxLayout="row"
+          fxLayoutAlign="space-between"
+        >
+          <div>
+            <div class="label">Show authorship on cards</div>
+            <div class="sub-label">Name of the author appears on card</div>
+          </div>
+          <label class="switch">
+            <input 
+              type="checkbox"
+              [checked]="showAuthorship"
+              (change)="toggleShowAuthorship()">
+            <span class="slider round"></span>
+          </label>
         </div>
-        <label class="switch">
-          <input 
-            type="checkbox">
-          <span class="slider round"></span>
-        </label>
+        <!-- <div 
+                      <input 
+              type="checkbox" 
+              [checked]="meetingMode"
+              (change)="toggleMeetingMode($event)">
+          class="setting"
+          benji-click-stop-propagation
+          fxLayout="row"
+          fxLayoutAlign="space-between"
+        >
+          <div>
+            <div class="label">Large Cards</div>
+            <div class="sub-label">When more space is needed</div>
+          </div>
+          <label class="switch">
+            <input 
+              type="checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div> -->
       </div>
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between"
-      >
-        <div>
-          <div class="label">Large Cards</div>
-          <div class="sub-label">When more space is needed</div>
-        </div>
-        <label class="switch">
-          <input 
-            type="checkbox">
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-  </div> -->
+    </ng-container>
+  </div>
   
   <div fxLayout="column">
     <div class="title">Posts Order</div>

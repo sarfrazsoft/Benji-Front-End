@@ -143,6 +143,7 @@
       </textarea>
     </ng-container>
     <div
+      *ngIf="data.showUserName" 
       fxLayoutGap="13px"
       fxLayout="row"
       class="participants" 
@@ -205,7 +206,7 @@
               [size]="'medium'"
             ></benji-profile-pictures>
             <div 
-              class="comment-input-container" 
+              class="comment-input-container detailed" 
               fxFlex="row" 
               fxLayoutAlign="end end">
               <textarea

@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   ElementRef,
@@ -25,6 +26,7 @@ import {
   BrainstormEditSubInstructionEvent,
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
+  BrainstormToggleParticipantNameEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
@@ -62,6 +64,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   participants = [];
 
   meetingMode: boolean;
+  showAuthorship: boolean;
   board: Board;
   boardMode: string;
   gridMode: boolean;
@@ -88,6 +91,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
+        this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
@@ -122,7 +126,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.decideBoardMode(this.boardMode);
+      this.decideBoardMode(this.boardMode);
   }
 
   initializeBoards() {
@@ -190,10 +194,6 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       .subscribe((res) => {
         if (res === true) {
           const id = boardID ? boardID : this.menuBoard;
-
-          // if (id === this.selectedBoard.id) {
-          //   this.sendMessage.emit(new HostChangeBoardEvent());
-          // }
           this.sendMessage.emit(new BrainstormRemoveBoardEvent(id));
         }
       });
@@ -219,13 +219,14 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   decideBoardMode(mode: string) {
+    console.log(mode);
     switch(mode) {
-      case 'grid':
+      case "grid":
         this.gridMode = true;
         this.threadMode = false;
         this.columnsMode = false;
         break;
-      case 'thread':
+      case "thread":
         this.gridMode = false;
         this.threadMode = true;
         this.columnsMode = false;
@@ -247,6 +248,10 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
 
   toggleMeetingMode($event) {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
+  toggleShowAuthorship() {
+    this.sendMessage.emit(new BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
   }
 
   copyLink() {
