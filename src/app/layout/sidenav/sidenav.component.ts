@@ -77,7 +77,6 @@ export class SidenavComponent implements OnInit {
     ],
   };
 
-
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
@@ -126,8 +125,8 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavSections = [
         this.dashboard,
-        this.templatesSection,
-        this.helpCenter,
+        // this.templatesSection,
+        // this.helpCenter,
         this.accountSection,
         this.authSection,
       ];

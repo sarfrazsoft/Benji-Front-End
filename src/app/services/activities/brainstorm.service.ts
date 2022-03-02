@@ -337,6 +337,5 @@ export class BrainstormService {
       //   return Number(moment(a.time)) - Number(moment(b.time));
       // }
     });
-    console.log(existingIdeas);
   }
 }

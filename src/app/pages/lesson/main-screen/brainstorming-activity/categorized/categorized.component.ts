@@ -75,7 +75,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges($event: SimpleChanges) {
-    console.log($event);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';

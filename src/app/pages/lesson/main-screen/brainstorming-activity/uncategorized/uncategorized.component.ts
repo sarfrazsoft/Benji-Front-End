@@ -65,7 +65,6 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges($event: SimpleChanges) {
-    console.log($event);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
@@ -124,12 +123,6 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     // }
     // this.resetMasonry();
     // }
-    if (
-      this.eventType === 'ParticipantChangeBoardEvent' ||
-      this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
-      this.eventType === 'BrainstormRemoveIdeaCommentEvent'
-    ) {
-    }
   }
 
   resetMasonry() {
