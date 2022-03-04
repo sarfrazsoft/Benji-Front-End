@@ -10,6 +10,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -96,6 +97,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   deactivateHearting = false;
   classGrey: boolean;
   classWhite: boolean;
+  commentKey: string;
   // columns = [];
   // cycle = 'first';
 
@@ -115,6 +117,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
+      this.commentKey = 'comment_' + this.item.id + this.submittingUser;
     }
 
     if (this.participantCode) {
@@ -122,6 +125,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     } else {
       // viewing user is the host
       this.userRole = 'owner';
+      this.commentKey = 'comment_' + this.item.id + 'host';
     }
 
     if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
@@ -132,6 +136,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.userRole = 'viewer';
       }
     }
+
+    const draftComment = this.brainstormService.getDraftComment(this.commentKey);
+    if (draftComment) {
+      this.commentModel = draftComment;
+    }
   }
 
   // triggerResize() {
@@ -139,7 +148,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   //   this._ngZone.onStable.pipe(take(1)).subscribe(() => {
   //     console.log("Anonymous triggerResize");
   //     this.autosize.resizeToFitContent(true);
-  //   }); 
+  //   });
   //   console.log("triggerResize");
   // }
 
@@ -191,6 +200,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+    this.brainstormService.removeDraftComment(this.commentKey);
   }
 
   removeComment(commentId, ideaId) {
@@ -289,10 +299,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
   }
 
-  onCommentFocus () {
+  onCommentFocus() {
     this.classGrey = true;
   }
-  onCommentBlur () {
+  onCommentBlur() {
     this.classGrey = false;
+  }
+
+  commentTyped() {
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 }

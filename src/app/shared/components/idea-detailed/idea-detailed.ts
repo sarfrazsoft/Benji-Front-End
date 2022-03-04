@@ -16,7 +16,7 @@ import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
 import XHRUpload from '@uppy/xhr-upload';
 import { ContextService } from 'src/app/services';
-import { ActivitiesService } from 'src/app/services/activities';
+import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   BrainstormSubmitIdeaCommentEvent,
   Category,
@@ -171,11 +171,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
   classGrey: boolean;
+  commentKey: string;
 
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
-    private deleteDialog: MatDialog
+    private deleteDialog: MatDialog,
+    private brainstormService: BrainstormService
   ) {}
 
   ngOnInit(): void {
@@ -233,9 +235,16 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.participantCode = this.data.participantCode;
     } else {
       // viewing user is the host
+      this.commentKey = 'comment_' + this.data.item.id + 'host';
     }
     if (this.data.item.submitting_participant) {
       this.submitting_participant = this.data.item.submitting_participant.participant_code;
+      this.commentKey = 'comment_' + this.data.item.id + this.submitting_participant;
+    }
+
+    const draftComment = this.brainstormService.getDraftComment(this.commentKey);
+    if (draftComment) {
+      this.commentModel = draftComment;
     }
 
     if (this.data.category) {
@@ -413,11 +422,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
   }
 
-  onCommentFocus () {
+  onCommentFocus() {
     this.classGrey = true;
   }
-  onCommentBlur () {
+  onCommentBlur() {
     this.classGrey = false;
   }
-  
+  commentTyped() {
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+  }
 }

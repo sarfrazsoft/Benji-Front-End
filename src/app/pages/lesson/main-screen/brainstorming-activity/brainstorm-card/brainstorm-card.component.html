@@ -149,6 +149,7 @@
             placeholder="Add a comment"  
             class="input-comment"
             [(ngModel)]="commentModel"
+            (ngModelChange)="commentTyped()"
             [ngClass]="{'active': commentModel.length}"
             (focus)="onCommentFocus()"
             (blur)="onCommentBlur()">
