@@ -170,6 +170,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
+  classGrey: boolean;
 
   constructor(
     private activitiesService: ActivitiesService,
@@ -411,4 +412,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = true;
     }
   }
+
+  onCommentFocus () {
+    this.classGrey = true;
+  }
+  onCommentBlur () {
+    this.classGrey = false;
+  }
+  
 }

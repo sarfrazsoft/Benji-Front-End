@@ -43,10 +43,6 @@ benji-ms-brainstorming-activity {
             .comment {
               font-size: 14px;
             }
-            .initials {
-              width: 32px;
-              height: 32px;
-            }
             .heart,
             .thought {
               width: 16px;
@@ -449,14 +445,6 @@ benji-ms-brainstorming-activity {
         }
       }
     }
-    .initials {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      font-size: 9px;
-      color: #000;
-      line-height: normal;
-    }
   }
 }
 
@@ -464,30 +452,31 @@ benji-ms-brainstorming-activity {
   box-sizing: border-box;
   flex-grow: 1;
   position: relative;
-  background: #f3f4f7;
+  background: #fff;
   border-radius: 8px;
+  padding: 6px 8px;
   &.detailed {
-    margin-right: 16px;
+    padding: 8px;
+  }
+  &.grey, &.greyed {
+    background: #f3f4f7;
   }
   .input-comment {
     &.detailed {
-      min-height: 17px;
       overflow: hidden;
       font-size: 14px;
+      width: 90%;
       &::placeholder {
         font-size: 16px;
       }
     }
     border: 0px;
-    border-radius: 8px;
-    background-color: #fff;
+    background-color: transparent;
     color: #37352f;
     font-weight: 400;
     font-size: 12px;
-    width: 100%;
-    padding: 8px 26px 8px 8px;
-    padding-right: 50px;
-    //overflow: hidden;
+    width: 160px;
+    overflow: hidden;
     &:empty:before {
       content: attr(data-placeholder);
       color: #777777;
@@ -509,12 +498,14 @@ benji-ms-brainstorming-activity {
     } 
   }
   .send-comment {
-    margin: 0px 8px 8px 0px;
+    //margin: 0px 8px 8px 0px;
     font-weight: 600;
     font-size: 12px;
     color: #555bea;
     cursor: pointer;
     position: absolute;
+    bottom: 6px;
+    right: 8px;
     &.detailed {
       font-size: 15px;
     }
@@ -523,14 +514,6 @@ benji-ms-brainstorming-activity {
 
 .user-name {
   padding: 8px 12px;
-  .initials {
-    color: #000;
-    font-size: 9px;
-    font-weight: 500;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-  }
   .name {
     font-size: 14px;
     font-weight: 600;
@@ -729,7 +712,6 @@ benji-ps-brainstorming-activity {
         top: 155px;
       }
     }
-
     .import-button {
       cursor: pointer;
       color: #fff;
@@ -825,6 +807,13 @@ ng-dropdown-panel {
           }
         }
         display: unset !important;
+      }
+    }
+  }
+  .comment-input-container {
+    .input-comment {
+      &.detailed {
+        width: 70%;
       }
     }
   }

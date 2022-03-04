@@ -40,7 +40,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation
   selector: 'benji-board-menu',
   templateUrl: 'board-menu.component.html',
 })
-export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
+export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -97,6 +97,8 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
+        console.log(this.boardMode);
+        this.decideBoardMode(this.boardMode);
         this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
@@ -129,10 +131,6 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       }
     }
     this.hostBoard = this.activityState.brainstormactivity.host_board;
-  }
-
-  ngAfterViewInit(): void {
-    this.decideBoardMode(this.boardMode);
   }
 
   initializeBoards() {
@@ -225,7 +223,8 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   decideBoardMode(mode: string) {
-    console.log(mode);
+    // console.log(mode);
+    // decideboardModeCalled = true;
     switch (mode) {
       case 'grid':
         this.gridMode = true;
