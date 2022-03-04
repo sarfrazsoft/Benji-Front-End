@@ -314,9 +314,11 @@ export interface Board {
   order: number;
   removed: boolean;
   status: string;
-  sort: 'newest_to_oldest' | 'oldest_to_newest';
+  sort: BoardSort;
   brainstormcategory_set: Array<Category>;
 }
+
+export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes';
 
 export interface BoardParticipants {
   [boardID: string]: Array<number>;

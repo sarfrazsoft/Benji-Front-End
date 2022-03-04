@@ -296,8 +296,9 @@ export class BrainstormService {
     });
   }
 
-  uncategorizedIdeaHearted(board, existingIdeas: Array<Idea>) {
+  uncategorizedIdeaHearted(board, existingIdeas: Array<Idea>, callback) {
     const newIdeas = this.uncategorizedPopulateIdeas(board);
+    // return newIdeas;
     newIdeas.forEach((newIdea: Idea) => {
       const existingIdea = find(existingIdeas, { id: newIdea.id });
       if (existingIdea.hearts.length < newIdea.hearts.length) {
@@ -308,6 +309,7 @@ export class BrainstormService {
         remove(existingIdea.hearts, (idea: any) => idea.id === myDifferences[0].id);
       }
     });
+    // callback(newIdeas);
   }
 
   uncategorizedIdeaEdited(board, existingIdeas: Array<Idea>) {
@@ -320,22 +322,17 @@ export class BrainstormService {
     });
   }
 
-  uncategorizedSortIdeas(board, existingIdeas: Array<Idea>) {
+  uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
     existingIdeas = existingIdeas.sort((a, b) => {
       if (board.sort === 'newest_to_oldest') {
         return Number(moment(b.time)) - Number(moment(a.time));
       } else if (board.sort === 'oldest_to_newest') {
         return Number(moment(a.time)) - Number(moment(b.time));
+      } else if (board.sort === 'likes') {
+        return b.hearts.length - a.hearts.length;
       } else {
         return Number(moment(a.time)) - Number(moment(b.time));
       }
-      // if (board.sort === 'oldest_to_newest') {
-      //   return Number(moment(b.time)) - Number(moment(a.time));
-      // } else if (board.sort === 'newest_to_oldest') {
-      //   return Number(moment(a.time)) - Number(moment(b.time));
-      // } else {
-      //   return Number(moment(a.time)) - Number(moment(b.time));
-      // }
     });
   }
 }

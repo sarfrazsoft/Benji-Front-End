@@ -13,10 +13,12 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { SortOrder } from 'isotope-layout';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
   Board,
+  BoardSort,
   BrainstormAddBoardEventBaseEvent,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
@@ -50,7 +52,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   instructions = '';
   sub_instructions = '';
   statusDropdown = ['Open', 'View Only', 'Closed'];
-  postOrderDropdown = [
+  postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
       value: 'newest_to_oldest',
       name: 'Newest to oldest',
@@ -58,6 +60,10 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
     {
       value: 'oldest_to_newest',
       name: 'Oldest to newest',
+    },
+    {
+      value: 'likes',
+      name: 'Likes',
     },
   ];
   defaultSort = 'newest_to_oldest';
@@ -126,7 +132,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-      this.decideBoardMode(this.boardMode);
+    this.decideBoardMode(this.boardMode);
   }
 
   initializeBoards() {
@@ -220,13 +226,13 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
 
   decideBoardMode(mode: string) {
     console.log(mode);
-    switch(mode) {
-      case "grid":
+    switch (mode) {
+      case 'grid':
         this.gridMode = true;
         this.threadMode = false;
         this.columnsMode = false;
         break;
-      case "thread":
+      case 'thread':
         this.gridMode = false;
         this.threadMode = true;
         this.columnsMode = false;
@@ -286,7 +292,7 @@ export class BoardMenuComponent implements OnInit, OnChanges, AfterViewInit {
       });
   }
 
-  changeOrder(order) {
+  changeOrder(order: { value: BoardSort; name: string }) {
     this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
   }
 }

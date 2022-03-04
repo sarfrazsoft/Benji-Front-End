@@ -101,12 +101,12 @@ export class CategorizedComponent implements OnInit, OnChanges {
       } else if (this.eventType === 'BrainstormRemoveCategoryEvent') {
         this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
-        this.sortIdeas(this.columns);
+        this.sortIdeas(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSetCategoryEvent') {
         this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
           if (val) {
             this.columns = this.brainstormService.categoryChangedForIdea(this.board, this.columns);
-            this.sortIdeas(this.columns);
+            this.sortIdeas(this.board, this.columns);
           }
         });
       } else if (
@@ -121,17 +121,19 @@ export class CategorizedComponent implements OnInit, OnChanges {
         }
       }
     }
-    this.sortIdeas(this.columns);
+    this.sortIdeas(this.board, this.columns);
   }
 
-  sortIdeas(columns) {
+  sortIdeas(board: Board, columns) {
     for (let i = 0; i < columns.length; i++) {
       const col = columns[i];
       col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => {
-        if (this.board.sort === 'newest_to_oldest') {
+        if (board.sort === 'newest_to_oldest') {
           return Number(moment(b.time)) - Number(moment(a.time));
-        } else if (this.board.sort === 'oldest_to_newest') {
+        } else if (board.sort === 'oldest_to_newest') {
           return Number(moment(a.time)) - Number(moment(b.time));
+        } else if (board.sort === 'likes') {
+          return b.hearts.length - a.hearts.length;
         } else {
           return Number(moment(a.time)) - Number(moment(b.time));
         }

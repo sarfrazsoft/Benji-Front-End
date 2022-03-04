@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -13,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as Isotope from 'isotope-layout';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
 import * as global from 'src/app/globals';
+import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
 import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -22,6 +24,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'benji-thread-mode-ideas',
   templateUrl: './thread-mode.component.html',
+  animations: [fadeAnimation, listAnimation],
 })
 export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
@@ -65,6 +68,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     //   getSortData: {
     //     category: '[data-likes]',
     //   },
+    //   sortBy: 'category',
     // });
     // data-likes
     // var iso = new Isotope( elem, {
@@ -76,12 +80,26 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
 
   meow() {
     // this.isotope({ sortBy: 'category' });
+    // this.isotope.updateSortData(this.ideas);
     // this.isotope.arrange({ sortBy: 'category' });
     // this.isotope.appended(this.ideas);
-    // this.isotope.reloadItems();
+    // const temp = this.ideas;
+    // this.ideas = [];
+    // setTimeout(() => {
+    //   this.ideas = temp;
+    //   this.isotope.reloadItems();
+    // }, 0);
   }
 
-  noMeow() {}
+  // hur() {
+  // this.ideas = this.ideas.length
+  //   ? []
+  //   : this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {
+  //       // this.isotope.arrange({ sortBy: 'category' });
+  //       // this.isotope.updateSortData(this.ideas);
+  //       // this.isotope.reloadItems();
+  //     });
+  // }
 
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
@@ -108,7 +126,21 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
       ) {
-        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas);
+        // const temp = this.ideas;
+        // this.ideas = [];
+        // setTimeout(() => {
+        //   const temp = this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {
+        //     // this.isotope.arrange({ sortBy: 'category' });
+        //     // this.isotope.updateSortData(this.ideas);
+        //     // this.isotope.reloadItems();
+        //     this.ideas = temp;
+        //   });
+        // }, 2000);
+        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {
+          // this.isotope.arrange({ sortBy: 'category' });
+          // this.isotope.updateSortData(this.ideas);
+          // this.isotope.reloadItems();
+        });
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'

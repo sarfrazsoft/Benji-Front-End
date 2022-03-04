@@ -84,7 +84,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
       ) {
-        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas);
+        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, () => {});
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'
@@ -121,13 +121,13 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     // if (this.eventType === 'BrainstormBoardSortOrderEvent') {
     //   this.masonry.reloadItems();
     // }
-    // this.resetMasonry();
+    this.resetMasonry();
     // }
   }
 
   resetMasonry() {
     if (this.masonry) {
-      // this.masonry.reloadItems();
+      this.masonry.reloadItems();
       this.masonry.layout();
     }
   }
