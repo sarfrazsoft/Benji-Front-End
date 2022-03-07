@@ -1,0 +1,9 @@
+<div class="image" fxLayout="column">
+  <div class="header" fxLayout="row" fxLayoutAlign="space-between">
+    <img src="./assets/img/idea-creation/giphy-powered-by.svg" alt="">
+    <button class="close-button" matDialogClose>
+      <mat-icon class="">clear</mat-icon>
+    </button> 
+  </div>
+  <benji-giphy-picker (imageSelected)="giphyImageSelected($event)"></benji-giphy-picker>
+</div>

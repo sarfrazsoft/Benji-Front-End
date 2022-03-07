@@ -76,14 +76,23 @@
                 src="/assets/img/idea-creation/image-upload.svg"
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
+            </div> 
+            <div 
+              fxLayoutAlign="center center"
+              (click)="imageSelected || pdfSelected ? null : openGiphyPickerDialog()"
+              >
+              <img 
+                src="/assets/img/idea-creation/giphy.svg"
+                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+              >
             </div>   
             <!-- <div
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/video.svg">
             </div>  -->
             <benji-uppy-dashboard
-             [lessonRunCode]="lessonID"
-             (mediaUploaded)="mediaUploaded($event)">
+              [lessonRunCode]="lessonID"
+              (mediaUploaded)="mediaUploaded($event)">
             </benji-uppy-dashboard>
             <!-- <div class="options" 
               fxLayoutAlign="center center" >

@@ -21,7 +21,8 @@ import { ErrorMessageDialogComponent } from './error-message/error-message.dialo
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
 import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
-import { GiphyComponent } from './image-picker-dialog/giphy/giphy.component';
+import { GiphyComponent } from './giphy-picker-dialog/giphy/giphy.component';
+import { GiphyPickerDialogComponent } from './giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
 import { UnsplashComponent } from './image-picker-dialog/unsplash/unsplash.component';
 import { UploadImageComponent } from './image-picker-dialog/upload-image/upload-image.component';
@@ -40,6 +41,7 @@ export const Dialogs = [
   AddVideoDialogComponent,
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
+  GiphyPickerDialogComponent,
   ImagePickerDialogComponent,
   ImportSlidesDialogComponent,
   UnsplashComponent,
