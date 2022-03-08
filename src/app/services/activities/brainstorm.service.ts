@@ -6,18 +6,12 @@ import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
-  uncategorizedIdeas;
-
-  saveIdea$ = new BehaviorSubject<any>(null);
-
   set saveIdea(l: any) {
     this.saveIdea$.next(l);
   }
   get saveIdea(): any {
     return this.saveIdea$.getValue();
   }
-
-  selectedBoard$ = new BehaviorSubject<any>(null);
 
   set selectedBoard(l: any) {
     this.selectedBoard$.next(l);
@@ -26,6 +20,13 @@ export class BrainstormService {
     return this.selectedBoard$.getValue();
   }
   constructor() {}
+  uncategorizedIdeas;
+
+  saveIdea$ = new BehaviorSubject<any>(null);
+
+  selectedBoard$ = new BehaviorSubject<any>(null);
+
+  getDraftC;
 
   getMyGroup(userId, groups) {
     for (let i = 0; i < groups.length; i++) {
@@ -74,13 +75,13 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  populateCategories(act, columns) {
+  populateCategories(board: Board, columns) {
     columns = [];
-    act.brainstormcategory_set.sort((a, b) => {
+    board.brainstormcategory_set.sort((a, b) => {
       return a.id - b.id;
       // return b.id - a.id;
     });
-    act.brainstormcategory_set.forEach((category) => {
+    board.brainstormcategory_set.forEach((category) => {
       if (category.brainstormidea_set) {
         category.brainstormidea_set.forEach((idea) => {
           idea = { ...idea, showClose: false, editing: false, addingIdea: false };
@@ -90,7 +91,26 @@ export class BrainstormService {
       }
     });
 
-    columns = act.brainstormcategory_set;
+    columns = board.brainstormcategory_set;
+
+    return this.sortIdeas(board, columns);
+  }
+
+  sortIdeas(board: Board, columns) {
+    for (let i = 0; i < columns.length; i++) {
+      const col = columns[i];
+      col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => {
+        if (board.sort === 'newest_to_oldest') {
+          return Number(moment(b.time)) - Number(moment(a.time));
+        } else if (board.sort === 'oldest_to_newest') {
+          return Number(moment(a.time)) - Number(moment(b.time));
+        } else if (board.sort === 'likes') {
+          return b.hearts.length - a.hearts.length;
+        } else {
+          return Number(moment(a.time)) - Number(moment(b.time));
+        }
+      });
+    }
     return columns;
   }
 
@@ -124,7 +144,7 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  ideaHearted(act: Board, existingCategories) {
+  ideaHearted(act: Board, existingCategories, callback) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -156,7 +176,7 @@ export class BrainstormService {
         });
       }
     });
-    return existingCategories;
+    callback(existingCategories);
   }
 
   ideaCommented(act: Board, existingCategories) {
@@ -270,7 +290,7 @@ export class BrainstormService {
         });
       }
     });
-    return ideas;
+    return this.uncategorizedSortIdeas(board, ideas);
   }
 
   uncategorizedAddIdea(board, existingIdeas) {
@@ -334,5 +354,22 @@ export class BrainstormService {
         return Number(moment(a.time)) - Number(moment(b.time));
       }
     });
+    return existingIdeas;
+  }
+
+  saveDraftComment(commentKey: string, commentText: string) {
+    localStorage.setItem(commentKey, commentText);
+  }
+
+  getDraftComment(commentKey: string) {
+    if (localStorage.getItem(commentKey)) {
+      return localStorage.getItem(commentKey);
+    }
+  }
+
+  removeDraftComment(commentKey) {
+    if (localStorage.getItem(commentKey)) {
+      return localStorage.removeItem(commentKey);
+    }
   }
 }

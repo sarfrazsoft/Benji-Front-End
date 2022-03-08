@@ -141,7 +141,10 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         this.handleServerMessage(msg);
         // console.log(msg);
       },
-      (err) => console.log(err),
+      (err) => {
+        console.log(err);
+        this.connectAndSubscribe();
+      },
       () => {
         console.log('complete');
       }
