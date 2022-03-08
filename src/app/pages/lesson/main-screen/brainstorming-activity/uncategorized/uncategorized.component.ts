@@ -119,6 +119,13 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     }
   }
 
+  resetMasonry() {
+    if (this.masonry) {
+      this.masonry.reloadItems();
+      this.masonry.layout();
+    }
+  }
+
   isAbsolutePath(imageUrl: string) {
     if (imageUrl.includes('https:')) {
       return true;
