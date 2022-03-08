@@ -12,13 +12,13 @@
     </div>
     <div 
       fxLayout="row wrap" 
-      fxLayoutGap="16px" 
+      fxLayoutGap="8px" 
       class="images-container">
       <div 
         *ngFor="let image of images"
         fxLayout="column"
         fxLayoutGap="4px"
-        style="margin-bottom: 16px;"
+        style="margin-bottom: 8px;"
         class="image">
         <img [src]="image.thumb_url" alt=""
           (click)="setImage(image)">

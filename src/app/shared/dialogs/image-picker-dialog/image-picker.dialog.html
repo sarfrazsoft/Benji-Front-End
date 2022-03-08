@@ -13,7 +13,7 @@
         <benji-unsplash-picker (imageSelected)="unsplashImageSelected($event)"></benji-unsplash-picker>
       </mat-tab>
       <mat-tab label="Giphy">
-        <ng-template mat-tab-label class="cotent-label">
+        <ng-template (click)="tabChanged('giphy')" mat-tab-label class="cotent-label">
           <div fxLayout="row" fxLayoutGap="8px">
             <img src="./assets/img/giphyLogo.svg" alt="">
             <div>

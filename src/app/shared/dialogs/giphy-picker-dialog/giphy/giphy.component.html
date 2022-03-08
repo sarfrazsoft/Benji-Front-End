@@ -1,0 +1,16 @@
+<mat-dialog-content class="giphy-selector-container">
+  <div fxLayout="column" fxLayoutGap="15px">
+    <div>
+      <input
+        class="dash-input search-query"
+        type="text"
+        #query
+        placeholder="Search Giphy"
+        (keyup)="typingStoped(query.value)"
+        (keydown)="typingStarted()"
+      >
+    </div>
+    <div class="grid"></div>
+  </div>
+</mat-dialog-content>
+      

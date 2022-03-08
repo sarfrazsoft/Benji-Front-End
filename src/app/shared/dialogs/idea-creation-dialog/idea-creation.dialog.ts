@@ -11,6 +11,7 @@ import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
+import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
@@ -158,6 +159,29 @@ export class IdeaCreationDialogComponent implements OnInit {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSelected = true;
           } else if (res.type === 'giphy') {
+            this.selectedThirdPartyImageUrl = res.data;
+            this.imageSelected = true;
+          }
+        }
+      });
+  }
+
+  openGiphyPickerDialog() {
+    const code = this.lessonRunCode;
+    this.imageDialogRef = this.matDialog
+      .open(GiphyPickerDialogComponent, {
+        data: {
+          lessonRunCode: code,
+        },
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'giphy-picker-dialog'],
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.clearPDF();
+          this.removeImage();
+          if (res.type === 'giphy') {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSelected = true;
           }
