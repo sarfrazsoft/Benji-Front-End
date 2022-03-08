@@ -9,10 +9,11 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import * as Isotope from 'isotope-layout';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import * as global from 'src/app/globals';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
@@ -20,7 +21,7 @@ import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/b
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
-// declare var Isotope: any;
+
 @Component({
   selector: 'benji-thread-mode-ideas',
   templateUrl: './thread-mode.component.html',
@@ -42,8 +43,6 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   ideas = [];
   cycle = 'first';
 
-  isotope: Isotope;
-
   hostname = environment.web_protocol + '://' + environment.host;
 
   @Output() viewImage = new EventEmitter<string>();
@@ -56,50 +55,18 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     private brainstormService: BrainstormService
   ) {}
 
+  public masonryOptions: NgxMasonryOptions = {
+    gutter: 16,
+    horizontalOrder: false,
+    initLayout: true,
+  };
+
+  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
+  masonryPrepend: boolean;
+
   ngOnInit(): void {}
 
-  ngAfterViewInit() {
-    // const elem: HTMLElement = document.querySelector('.ideas-list-container');
-    // this.isotope = new Isotope(elem, {
-    //   // options
-    //   itemSelector: '.brainstorm-idea-li',
-    //   layoutMode: 'vertical',
-    //   sortAscending: false,
-    //   getSortData: {
-    //     category: '[data-likes]',
-    //   },
-    //   sortBy: 'category',
-    // });
-    // data-likes
-    // var iso = new Isotope( elem, {
-    //   // options
-    //   itemSelector: '.grid-item',
-    //   layoutMode: 'fitRows'
-    // });
-  }
-
-  meow() {
-    // this.isotope({ sortBy: 'category' });
-    // this.isotope.updateSortData(this.ideas);
-    // this.isotope.arrange({ sortBy: 'category' });
-    // this.isotope.appended(this.ideas);
-    // const temp = this.ideas;
-    // this.ideas = [];
-    // setTimeout(() => {
-    //   this.ideas = temp;
-    //   this.isotope.reloadItems();
-    // }, 0);
-  }
-
-  // hur() {
-  // this.ideas = this.ideas.length
-  //   ? []
-  //   : this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {
-  //       // this.isotope.arrange({ sortBy: 'category' });
-  //       // this.isotope.updateSortData(this.ideas);
-  //       // this.isotope.reloadItems();
-  //     });
-  // }
+  ngAfterViewInit() {}
 
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
@@ -109,14 +76,12 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
       this.cycle = 'second';
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {
+        if (this.board.sort === 'newest_to_oldest') {
+          this.masonryPrepend = true;
+        } else {
+          this.masonryPrepend = false;
+        }
         this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
-        // setTimeout(() => {
-        //   // this.isotope.insert(this.ideas);
-        //   // thailsi.icseotoperos.eappended(this.ideas);
-        //   console.log(this.ideas);
-        //   this.isotope.reloadItems();
-        //   this.ynisotopeirow.layoutell();
-        // });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
@@ -126,21 +91,10 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
       ) {
-        // const temp = this.ideas;
-        // this.ideas = [];
-        // setTimeout(() => {
-        //   const temp = this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {
-        //     // this.isotope.arrange({ sortBy: 'category' });
-        //     // this.isotope.updateSortData(this.ideas);
-        //     // this.isotope.reloadItems();
-        //     this.ideas = temp;
-        //   });
-        // }, 2000);
-        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {
-          // this.isotope.arrange({ sortBy: 'category' });
-          // this.isotope.updateSortData(this.ideas);
-          // this.isotope.reloadItems();
-        });
+        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {});
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+        this.masonry?.reloadItems();
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'
@@ -162,7 +116,6 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         }
       }
     }
-    this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
   }
 
   isAbsolutePath(imageUrl: string) {

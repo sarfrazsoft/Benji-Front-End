@@ -30,10 +30,13 @@ benji-ms-brainstorming-activity {
       margin: 0px auto;
       .submitted-ideas {
         padding: 0px;
-        ul {
+        .ideas-list-container {
           display: block;
+          min-width: 544px;
+          width: 544px;
+          margin: 0 auto;
           // position: relative;
-          li {
+          .brainstorm-idea-item {
             margin-right: 0px;
           }
           .brainstorm-idea {
@@ -342,6 +345,12 @@ benji-ms-brainstorming-activity {
 // .cdk-drag-animating {
 //   transition: transform 190000ms cubic-bezier(0, 0, 0.2, 1);
 // }
+benji-categorized-ideas {
+  .ideas-list-container {
+    width: 264px;
+    max-width: 264px;
+  }
+}
 .cdk-drag-preview.brainstorm-idea,
 .cdk-drag-dragging.brainstorm-idea,
 .brainstorm-idea {
@@ -458,7 +467,8 @@ benji-ms-brainstorming-activity {
   &.detailed {
     padding: 8px;
   }
-  &.grey, &.greyed {
+  &.grey,
+  &.greyed {
     background: #f3f4f7;
   }
   .input-comment {
@@ -495,7 +505,7 @@ benji-ms-brainstorming-activity {
       &::placeholder {
         color: transparent;
       }
-    } 
+    }
   }
   .send-comment {
     //margin: 0px 8px 8px 0px;
@@ -836,5 +846,9 @@ ng-dropdown-panel {
 }
 
 .column.cdk-drop-list-dragging .cdk-drag {
-  transition: transform 1250ms cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 500ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.masonry-item {
+  transition: top 0.4s ease-in-out, left 0.4s ease-in-out;
 }

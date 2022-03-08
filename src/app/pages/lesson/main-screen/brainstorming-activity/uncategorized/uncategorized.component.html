@@ -4,7 +4,7 @@
       <div
         ngxMasonryItem
         [prepend]="masonryPrepend"
-        class="uncategorized-idea"
+        class="uncategorized-idea masonry-item"
         *ngFor="let idea of ideas"
         (mouseenter)="idea.showClose = true"
         (mouseleave)="idea.showClose = false">
@@ -16,6 +16,7 @@
           [showUserName]="showUserName"
           [participantCode]="participantCode"
           (deleteIdea)="delete($event)"
+          (commentEdited)="resetMasonry()"
           [sendMessage]="sendMessage"
           [categorizeFlag]="categorizeFlag"
           [myGroup]="myGroup"

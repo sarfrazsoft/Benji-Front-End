@@ -89,6 +89,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
+  @Output() commentEdited = new EventEmitter<any>();
 
   commentModel = '';
   submittingUser;
@@ -307,6 +308,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   commentTyped() {
+    this.commentEdited.emit();
     this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 }

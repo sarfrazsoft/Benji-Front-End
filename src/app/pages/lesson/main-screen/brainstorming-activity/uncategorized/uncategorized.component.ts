@@ -70,11 +70,14 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
-      this.resetMasonry();
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {
+        if (this.board.sort === 'newest_to_oldest') {
+          this.masonryPrepend = true;
+        } else {
+          this.masonryPrepend = false;
+        }
         this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
-        // this.resetMasonry();
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
@@ -85,6 +88,9 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
       ) {
         this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, () => {});
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+        this.masonry?.reloadItems();
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'
@@ -105,30 +111,11 @@ export class UncategorizedComponent implements OnInit, OnChanges {
             this.brainstormService.uncategorizedIdeas = this.ideas;
           }
         }
+      } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
       }
-    }
-    // this.masonryPrepend = this.board.sort === 'newest_to_oldest' ? true : null;
-
-    //
-    // only adding an idea is broken now. when we add an idea it is adding to the end
-    // when newest to oldest is selected
-    // 1 - try reloadItems
-    // 2 - try prepend
-    // 3- try reload and prepend
-    this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-    // console.log(this.ideas);
-    // if (this.masonryPrepend) {
-    // if (this.eventType === 'BrainstormBoardSortOrderEvent') {
-    //   this.masonry.reloadItems();
-    // }
-    this.resetMasonry();
-    // }
-  }
-
-  resetMasonry() {
-    if (this.masonry) {
-      this.masonry.reloadItems();
-      this.masonry.layout();
     }
   }
 
