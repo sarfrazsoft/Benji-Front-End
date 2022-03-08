@@ -6,6 +6,7 @@ import { throttle } from 'throttle-debounce';
 import { renderGrid } from '@giphy/js-components';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { IGif } from '@giphy/js-types';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 // create a GiphyFetch with your api key
 // apply for a new Web SDK key. Use a separate key for every platform (Android, iOS, Web)
@@ -15,21 +16,19 @@ const gf = new GiphyFetch('Xa971PzzeVPnuZ8fqr6d5CgZ5WN4wPtd')
   selector: 'benji-giphy-picker',
   templateUrl: 'giphy.component.html',
 })
-export class GiphyComponent implements OnInit, AfterViewInit {
+export class GiphyComponent implements OnInit {
   images;
   typingTimer;
   @Output() imageSelected = new EventEmitter<any>();
 
   query: string = "";
   grid;
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private deviceService: DeviceDetectorService) {}
 
   ngOnInit() {
     this.grid = this.makeGrid(document.querySelector('.grid'));
-   // this.getGiphyImages('nature');
-  }
-
-  ngAfterViewInit(): void {
   }
 
   typingStoped(query) {
@@ -54,7 +53,6 @@ export class GiphyComponent implements OnInit, AfterViewInit {
     
   makeGrid(targetEl: HTMLElement) {
     const render = () => {
-        // here is the @giphy/js-components import
         return renderGrid(
             {
                 width: 528,
@@ -63,12 +61,13 @@ export class GiphyComponent implements OnInit, AfterViewInit {
                     return gf.search(this.query);
                   }  else { return gf.trending(); };
                 },
-                columns: 3,
+                columns:  this.deviceService.isMobile() ? 2 : 3,
                 gutter: 8,
                 onGifClick:(gif: IGif, e: Event) => {
                   e.preventDefault();
                   this.setImage(gif.images.original.url);
-                }
+                },
+                hideAttribution: true,
             },
             targetEl
         )
