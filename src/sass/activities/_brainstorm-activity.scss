@@ -29,7 +29,8 @@ benji-ms-brainstorming-activity {
     .thread-mode {
       margin: 0px auto;
       .submitted-ideas {
-        padding: 0px;
+        padding-top: 16px;
+        height: calc(100vh - 152px);
         .ideas-list-container {
           display: block;
           min-width: 544px;
@@ -780,6 +781,11 @@ ng-dropdown-panel {
 }
 
 @media (max-width: 600px) {
+  .mat-drawer-content {
+    &.mat-sidenav-content {
+      overflow: hidden;
+    }
+  }
   .barinstorm-main {
     // margin: 0px;
     // background-color: #fff;
@@ -804,13 +810,34 @@ ng-dropdown-panel {
     }
   }
   benji-ms-brainstorming-activity .brainstorm-container {
-    .submitted-ideas {
-      padding: 0 8px;
+    benji-uncategorized-ideas {
+      .submitted-ideas {
+        padding: 0 8px;
+        height: calc(100vh - 192px);
+        .uncategorized {
+          .uncategorized-idea {
+            width: 100%;
+            .brainstorm-idea {
+              width: 100%;
+              max-width: unset;
+            }
+          }
+        }
+      }
+    }
+    .thread-mode .submitted-ideas {
+      padding: 16px 8px 0px 8px;
+      height: calc(100vh - 206px);
+      overflow-x: hidden;
+      .ideas-list-container .brainstorm-idea {
+        min-width: calc(100vw - 32px);
+        max-width: 100%;
+      }
       ul {
         li {
           margin-right: 0px;
           .brainstorm-idea {
-            width: unset !important;
+            width: 100% !important;
             min-width: unset !important;
             max-width: 100% !important;
             margin: 16px 8px 0px 8px !important;
