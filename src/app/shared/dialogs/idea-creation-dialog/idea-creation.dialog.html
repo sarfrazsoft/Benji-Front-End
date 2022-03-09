@@ -27,13 +27,20 @@
         </div>
       </div>
       <textarea
+        *ngIf="!imageSelected"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description"
         placeholder="Description..."
-        [ngClass]="{
-          'image-selected': imageSelected
-        }">
+        >
+      </textarea>
+      <textarea
+        *ngIf="imageSelected"
+        cdkTextareaAutosize
+        [(ngModel)]="userIdeaText" 
+        class="description image-selected"
+        placeholder="Description..."
+        >
       </textarea>
       <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
         <ng-container *ngIf="imageSelected">

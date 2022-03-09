@@ -55,13 +55,13 @@ export class GiphyComponent implements OnInit {
     const render = () => {
         return renderGrid(
             {
-                width: 528,
+                width: this.deviceService.isMobile() ? (innerWidth -32) : 528,
                 fetchGifs: (offset: number) => { 
                   if(this.query !="") {
                     return gf.search(this.query);
                   }  else { return gf.trending(); };
                 },
-                columns:  this.deviceService.isMobile() ? 2 : 3,
+                columns: this.deviceService.isMobile() ? 2 : 3,
                 gutter: 8,
                 onGifClick:(gif: IGif, e: Event) => {
                   e.preventDefault();
