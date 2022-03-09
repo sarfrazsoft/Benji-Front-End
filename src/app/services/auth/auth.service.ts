@@ -158,6 +158,10 @@ export class AuthService {
     }
   }
 
+  navigateToParticipantJoin() {
+    this.router.navigate(['/participant/join']);
+  }
+
   isLoggedOut() {
     return !this.isLoggedIn();
   }
