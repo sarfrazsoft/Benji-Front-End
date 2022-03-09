@@ -96,7 +96,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       if (board) {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
-        console.log(this.boardMode);
         this.decideBoardMode(this.boardMode);
         this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
         this.instructions = board.board_activity.instructions;

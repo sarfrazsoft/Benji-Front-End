@@ -53,6 +53,16 @@
           height: 32px;
           border-radius: 50%;
         }
+        .initials {
+          color: #fff;
+          font-size: 14px;
+          font-weight: 600;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #5e8deb;
+          line-height: 0px;
+        }
         .name {
           font-size: 18px;
           font-weight: 500;
@@ -192,7 +202,7 @@
       .join-session {
         float: none;
         input {
-          width: 94%;
+          width: calc(100% - 30px);
         }
         .session-joined {
           margin: 0px auto;
@@ -219,10 +229,10 @@
         width: 100%;
         float: none;
         padding: 24px;
-        background: #A7A7A9;
+        background: #f9f9fb;
         border-radius: 0px 0px 16px 16px;
         input {
-          width: 90%;
+          width: calc(100% - 32px);
           background: #fff;
         }
         .session-joined {
