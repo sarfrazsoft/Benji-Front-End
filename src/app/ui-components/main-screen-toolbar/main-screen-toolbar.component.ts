@@ -114,7 +114,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     });
-
+// This
     this.showParticipantGroupingButton();
     this.shareParticipantLink = this.hostname + this.roomCode;
   }
