@@ -8,8 +8,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AdminService } from 'src/app/dashboard';
 import * as global from 'src/app/globals';

@@ -5,7 +5,7 @@ import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
 
 import { orderBy, sortBy } from 'lodash';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'benji-lessons-list',

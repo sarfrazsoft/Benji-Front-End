@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { retryWhen, tap } from 'rxjs/operators';
 import * as global from '../../globals';
 import { ServerMessage } from './schema/messages';
 
@@ -10,16 +12,49 @@ export class BackendSocketService {
   public subject: WebSocketSubject<any>;
   private sessionrunID;
   public socketData;
+  typingTimer;
 
-  connectLessonSocket(clientType, roomCode, userID?): Observable<ServerMessage> {
+  constructor(private httpClient: HttpClient) {}
+
+  connectLessonSocket(clientType, lessonRun, userID?): Observable<ServerMessage> {
     let uri = null;
     if (clientType === 'screen') {
-      uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/screen/0/`;
+      uri = `${global.wsRoot}/ws/activityflow/code/${lessonRun.lessonrun_code}/screen/0/`;
     } else if (clientType === 'participant') {
-      uri = `${global.wsRoot}/ws/activityflow/code/${roomCode}/participant/${userID}/`;
+      uri = `${global.wsRoot}/ws/activityflow/code/${lessonRun.lessonrun_code}/participant/${userID}/`;
     }
-    console.log('connecting to: ' + uri);
-    return webSocket(uri);
+    // console.log('connecting to: ' + uri);
+    const webSocketSubjectConfig: WebSocketSubjectConfig<any> = {
+      url: uri,
+      deserializer: ({ data }) => {
+        clearTimeout(this.typingTimer);
+        return JSON.parse(data);
+      },
+      openObserver: {
+        next: (val: any) => {
+          this.typingTimer = setTimeout(() => {
+            this.httpClient
+              .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRun.id}/restart_lesson/`)
+              .subscribe((v) => {
+                // console.log(v);
+              });
+          }, 3000);
+          // console.log('opened');
+        },
+      },
+    };
+    const w = webSocket(webSocketSubjectConfig);
+    // .pipe(
+    //   retryWhen(errors =>
+    //     errors.pipe(
+    //       tap(err => {
+    //         console.error('Got error', err);
+    //       }),
+
+    //     )
+    //   )
+    // );
+    return w;
   }
 
   connect(sessionrunID) {

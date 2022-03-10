@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { orderBy, sortBy } from 'lodash';
 import * as moment from 'moment';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';

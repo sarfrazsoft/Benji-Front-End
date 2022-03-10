@@ -4,38 +4,34 @@
   .board-settings {
     font-size: 24px;
     font-weight: 600;
-    color: #37352F;
+    color: #37352f;
     margin-bottom: 8px;
   }
   .close {
     cursor: pointer;
   }
   .title {
-    color: #37352F;
+    color: #37352f;
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 8px;
   }
   .edit {
-    .not-editing {
-      font-size: 16px;
-      font-weight: 400;
-      color: #616161;
-      padding: 16px;
-      background: #F3F4F7;
-      border-radius: 8px;
-    }
     .editing {
       input {
-        background: #FFFFFF;
-        border: 2px solid #555BEA;
-        box-sizing: border-box;
-        border-radius: 8px;
-        color: #37352F;
         font-size: 16px;
-        font-weight: normal;
-        padding: 16px;
+        font-weight: 400;
+        color: #616161;
+        padding: 14px;
+        background: #f3f4f7;
+        border-radius: 8px;
+        border: 2px solid #f3f4f7;
+        width: 328px;
+        box-sizing: border-box;
         &:focus {
+          background: #ffffff;
+          border: 2px solid $primary-color;
+          color: #37352f;
           outline: none;
         }
       }
@@ -43,12 +39,13 @@
   }
   .board-status-dropdown {
     .ng-select-container {
-      background: #F3F4F7;
+      background: #f3f4f7;
       border-radius: 8px;
       height: 48px;
       border: unset;
       padding: 6px;
-      &:focus, &:active {
+      &:focus,
+      &:active {
         outline: none;
       }
       .ng-placeholder {
@@ -59,12 +56,20 @@
     }
   }
   .posting-settings {
-    background: #F3F4F7;
+    background: #f3f4f7;
     border-radius: 8px;
     padding: 16px;
+    .option {
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      &.clear-board {
+        color: #ef151b;
+      }
+    }
   }
   .label {
-    color: #37352F;
+    color: #37352f;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 4px;
@@ -76,15 +81,35 @@
   }
   .board-mode {
     background: #fff;
-    border: 1px solid #fff;
     border-radius: 8px;
-    padding: 16px;
+    padding: 16px 12px 16px 16px;
+    cursor: pointer;
     .sub-label {
       line-height: 16px;
+      max-width: 198px;
     }
-    &.active {
-      background: #F3F4F7;
-      border: 1px solid #E7E7E7;
+    &:hover {
+      background: #f3f4f7;
+    }
+    .selected {
+      display: none;
+      &.active {
+        display: block;
+        margin-left: 12px;
+      }
+    }
+  }
+  .delete-button {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    background: #ef151b;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+    &.disabled {
+      background: #bdbdbd;
     }
   }
 }
@@ -92,28 +117,58 @@
 .boards-navigation {
   padding: 24px;
   width: 376px;
+  .posting-settings {
+    background: #f3f4f7;
+    border-radius: 8px;
+    padding: 16px;
+    .label {
+      color: #37352f;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .sub-label {
+      color: #616161;
+      font-size: 12px;
+      font-weight: 400;
+    }
+    .option {
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  }
   .boards {
     font-size: 24px;
     font-weight: 600;
-    color: #37352F;
-    margin-bottom: 8px;
+    color: #37352f;
   }
   .close {
     cursor: pointer;
   }
   .board {
-    padding: 16px;
-    background: #F3F4F7;
+    cursor: pointer;
+    padding: 14px;
+    border: 2px solid #f3f4f7;
+    background: #f3f4f7;
     border-radius: 8px;
+    transition: all 0.2s;
+    &.selected {
+      border: 2px solid $primary-color;
+    }
     .title {
-      color: #37352F;
+      color: #37352f;
       font-weight: 600;
       font-size: 16px;
     }
-    .dots {
-      cursor: pointer;
-      margin-right: -8px;
-      margin-top: -5px;
+    button.three-dots {
+      padding: 0px 4px;
+      background: unset;
+      .dots {
+        cursor: pointer;
+        margin-top: -5px;
+        margin-right: -4px;
+      }
     }
     .sub-title {
       font-size: 14px;
@@ -121,22 +176,33 @@
       color: #616161;
     }
     .persons {
-      opacity: 0.7;
-      .initials {
-        width: 32px;
-        height: 32px;
-        color: #fff;
-        font-weight: 500;
-        font-size: 12px;
-        border-radius: 50%;
-        &.color0, &.color1, &.color2, &.color3, &.color4, &.color5, &.color6, &.color7, &.color8 {
-          margin-right: -4px;
-          position: relative;
-        }
+      .session-participants .initials.counter {
+        background: #fff;
+        z-index: 1;
+      }
+      .participant {
+        margin-right: -4px;
+        z-index: 1;
       }
     }
   }
   .add-group .plus {
     cursor: pointer;
+  }
+}
+
+.board-duplicate-delete {
+  min-height: unset !important;
+  border-radius: 8px !important;
+  .mat-menu-item {
+    height: 32px;
+    &:hover {
+      background: #f3f4f7;
+    }
+    &.disabled {
+      img {
+        opacity: 0.4;
+      }
+    }
   }
 }

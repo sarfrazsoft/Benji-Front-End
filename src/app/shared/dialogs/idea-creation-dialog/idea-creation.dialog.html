@@ -1,23 +1,48 @@
 <div class="idea-creation-dialog" fxLayout="row">
   <div class="white-area">
+    <div class="post-cancel" fxLayout="row" fxLayoutAlign="space-between">
+      <div class="cancel" matDialogClose>
+        Cancel
+      </div>
+      <button 
+        class="post" 
+        (click)="onSubmit()"
+        [ngClass]="{
+          'active': userIdeaText || ideaTitle || imageSelected || pdfSelected
+        }">
+          Post
+      </button>
+    </div>
     <div class="white-content">
+      <div fxLayoutAlign="space-between"> 
+        <textarea
+          cdkTextareaAutosize
+          class="title" 
+          placeholder="Title (optional)" 
+          [(ngModel)]="ideaTitle"
+        >
+        </textarea>
+        <div class="close-button" fxLayoutAlign="end start">
+          <img src="/assets/img/idea-creation/cross.svg" matDialogClose>
+        </div>
+      </div>
       <textarea
-        cdkTextareaAutosize
-        class="title" 
-        type="text" 
-        placeholder="Title" 
-        [(ngModel)]="ideaTitle">
-      </textarea>
-      <textarea
+        *ngIf="!imageSelected"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description"
         placeholder="Description..."
-        [ngClass]="{
-          'image-selected': imageSelected
-        }">
+        >
       </textarea>
-      <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+      <textarea
+        *ngIf="imageSelected"
+        cdkTextareaAutosize
+        [(ngModel)]="userIdeaText" 
+        class="description image-selected"
+        placeholder="Description..."
+        >
+      </textarea>
+      <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
         <ng-container *ngIf="imageSelected">
           <img *ngIf="imageSrc" [src]="imageSrc" alt="">
           <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
@@ -30,6 +55,18 @@
             </ngx-extended-pdf-viewer>
           </div>
         </ng-container>
+        <ng-container *ngIf="video">
+          <div>
+            <video style="margin: 0 auto;" width="100%" controls>
+              <source [src]="hostname + videoURL" type="video/mp4" />
+            </video>
+          </div>          
+        </ng-container>
+        <ng-container *ngIf="webcamImage">
+          <img 
+              benji-click-stop-propagation
+              [src]="hostname + webcamImageURL" alt="" />
+        </ng-container>
         
         <button class="remove-button" (click)="remove()">
           Remove
@@ -37,31 +74,51 @@
       </div>
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
-          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="4px">
+          <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
             <div 
-              class="options" 
               fxLayoutAlign="center center"
               (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
-              [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
-              <img src="/assets/img/idea-creation/scenery.svg">
-            </div>   
-            <!-- <img class="close" src="/assets/img/idea-creation/video.svg">
-            <img class="close" src="/assets/img/idea-creation/camera.svg"> -->
+              <img 
+                src="/assets/img/idea-creation/image-upload.svg"
+                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+              >
+            </div> 
             <div 
-              class="options" 
+              fxLayoutAlign="center center"
+              (click)="imageSelected || pdfSelected ? null : openGiphyPickerDialog()"
+              >
+              <img 
+                src="/assets/img/idea-creation/giphy.svg"
+                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+              >
+            </div>   
+            <!-- <div
+              fxLayoutAlign="center center" >
+              <img class="close" src="/assets/img/idea-creation/video.svg">
+            </div>  -->
+            <benji-uppy-dashboard
+              [lessonRunCode]="lessonID"
+              (mediaUploaded)="mediaUploaded($event)">
+            </benji-uppy-dashboard>
+            <!-- <div class="options" 
+              fxLayoutAlign="center center" >
+              <img class="close" src="/assets/img/idea-creation/camera.svg">
+            </div> -->
+            <!-- <div 
               fxLayoutAlign="center center" 
-              (click)="imageSelected || pdfSelected ? null : uploader.click()"
-              [ngClass]="{'inactive': imageSelected || pdfSelected}">
-              <!-- <button mat-raised-button color="primary">Choose File</button> -->
-              <img src="/assets/img/idea-creation/file.svg">
+              (click)="imageSelected || pdfSelected ? null : uploader.click()">
+              <img 
+                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+                src="/assets/img/idea-creation/file-upload.svg"
+              >
               <input 
                 #uploader 
                 (change)="uploadFile($event)" 
                 type='file'
                 accept="application/pdf"
                 style="display:none"/> 
-            </div>
+            </div> -->
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
           <div *ngIf="showCategoriesDropdown"
@@ -77,13 +134,19 @@
                 [(ngModel)]="selectedCategory"
                 appendTo="body"
                 [searchable]="false"
-                [clearable]="false"
-              >
+                [clearable]="false">
               </ng-select>
             </div>
           </div>
         </div>
-        <button class="post" (click)="onSubmit()">Post</button>
+        <button 
+          class="post" 
+          (click)="onSubmit()"
+          [ngClass]="{
+            'active': userIdeaText || ideaTitle || imageSelected || pdfSelected
+          }">
+            Post
+        </button>
       </div>
     </div>
   </div>

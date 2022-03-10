@@ -17,18 +17,10 @@ import { LayoutModule } from './layout/layout.module';
 // App Pages
 import { AppComponent } from './app.component';
 
-// Ngrx store
-import { EffectsModule } from '@ngrx/effects';
-import { MetaReducer, StoreModule } from '@ngrx/store';
-// not used in production
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { storeFreeze } from 'ngrx-store-freeze';
 import { environment } from './../environments/environment';
 
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-
-export const metaReducers: MetaReducer<any>[] = !environment.production ? [storeFreeze] : [];
 
 @NgModule({
   declarations: [AppComponent, ...EntryComponents],
@@ -41,15 +33,16 @@ export const metaReducers: MetaReducer<any>[] = !environment.production ? [store
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
-    StoreModule.forRoot({}, { metaReducers }),
-    EffectsModule.forRoot([]),
+    // UppyAngularDashboardModule,
+    // StoreModule.forRoot({}, { metaReducers }),
+    // EffectsModule.forRoot([]),
     IntercomModule.forRoot({
       appId: 'bddh2r9q', // from your Intercom config
       // will automatically run `update` on router event changes. Default: `false`
       updateOnRouterChange: true,
     }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    SocialLoginModule,
+    // !environment.production ? StoreDevtoolsModule.instrument() : [],
+    SocialLoginModule
   ],
   providers: [
     ...ServicesProviders,

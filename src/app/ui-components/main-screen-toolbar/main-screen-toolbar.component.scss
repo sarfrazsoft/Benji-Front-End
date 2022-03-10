@@ -1,20 +1,38 @@
 .mainscreen-toolbar {
-  padding: 12px 16px;
+  padding: 8px 16px;
   position: sticky;
   position: -webkit-sticky;
   top: 0; /* required */
   z-index: 1;
+  filter: drop-shadow(0px 1px 1px #D5D9DE);
   .benji-logo-container {
-    height: 32px;
+    //height: 24px;
     img {
-      height: 100%;
+      height: 24px;
+      padding-right: 16px;
+      cursor: pointer;
+      &.has-name {
+        border-right: 1px solid #E7E7E7;
+      }
+    }
+    .session-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #37352F;
+      line-height: normal;
+      &:hover {
+        &.admin {
+          color: #555bea;
+          cursor: pointer;
+        }
+      }
     }
   }
   .flexer--space-between {
     align-items: center;
     .option {
-      height: 34px;
-      width: 34px;
+      height: 24px;
+      width: 24px;
       padding: 8px;
       border-radius: 8px;
       cursor: pointer;
@@ -24,12 +42,59 @@
       }
     }
   }
+  .share-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #616161;
+    cursor: pointer;
+  }
+  .toolbar-initials-circles {
+    .initials {
+      margin-left: -4px;
+    }
+  }
   .time-info {
     .number-text {
       color: #616161;
+      font-size: 16px;
+      width: 44px;
     }
     .ms-header-timer {
-      margin-right: 24px;
+      margin-left: 8px;
+    }
+  }
+  .back-next {
+    border: 1px solid #E7E7E7;
+    border-radius: 4px;
+    color: #616161;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    cursor: pointer;
+    .mat-icon {
+      height: 15px;
+      width: 15px;
+      font-size: 16px;
+    }
+    &.is-last, &.is-first {
+      color: #bdbdbd;
+      cursor: unset;
+    }
+  }
+}
+
+@media (max-width: 750px) { 
+  .mainscreen-toolbar {
+    .share-link, .timer, .groups, .toolbar-initials-circles {
+      display: none !important;
+    }
+    .back-next {
+      span {
+        display: none;
+      }
+      padding: 0px;
+      width: 32px;
+      height: 32px;
     }
   }
 }

@@ -1,16 +1,16 @@
 <mat-sidenav-container
-    class="example-container" (backdropClick)="close('backdrop')">
+    class="example-container" (backdropClick)="close()">
   <mat-sidenav 
     #sidenav 
-    (keydown.escape)="close('escape')"
+    (keydown.escape)="close()"
     position="end">
-      <side-navigation
+      <benji-board-menu *ngIf="serverMessage"
+        #boardMenu
         [sidenav]="sidenav" 
         [navType]="navType"
         [activityState]="serverMessage"
-        (sendMessage)="sendSocketMessage($event)"
-        >
-      </side-navigation>
+        (sendMessage)="sendSocketMessage($event)">
+      </benji-board-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
@@ -24,7 +24,7 @@
         [isLastActivity]="!isLastActivity()"
         [showHeader]="getActivityType() !== at.lobby"
         [roomCode]="serverMessage.lesson_run.lessonrun_code"
-        [lessonName]="serverMessage.lesson.lesson_name"
+        [lesson]="serverMessage.lesson"
         [isPaused]="isPaused()"
         [disableControls]="disableControls"
         [isSharing]="getIsSharing()"
@@ -49,6 +49,7 @@
             [activityState]="serverMessage"
             [avgServerTimeOffset]="avgServerTimeOffset"
             (sendMessage)="sendSocketMessage($event)"
+            (firstLaunchEvent)="openBoardSettings()"
           >
           </benji-ms-brainstorming-activity>
 

@@ -1,8 +1,6 @@
 <div
-  class="submitted-ideas"
-  *ngIf="submissionScreen || voteScreen"
+  class="submitted-ideas categorized"
   fxLayout="row"
-  fxLayoutGap="8px"
   cdkDropListGroup>
   <ng-container *ngFor="let column of columns; let i = index">
     <ng-container *ngIf="!column.removed">
@@ -12,6 +10,7 @@
         [cdkDropListData]="column.brainstormidea_set"
         (cdkDropListDropped)="drop($event)"
         [ngStyle]="{'min-width.px': minWidth}"
+        [attr.columnID]="column.id"
       >
         <div class="header" (click)="columnHeaderClicked(column)">
           <div class="grey-bg">
@@ -20,15 +19,17 @@
               fxLayoutAlign="space-between center"
               *ngIf="!column.editing"
             >
-              <div class="column-name black-color" fxFlex fxLayoutAlign="space-between center">
-                {{ column.category_name }}
-                
+              <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
+                <div fxLayoutAlign="start center">
+                  {{ column.category_name }}
+                </div>
                 <ng-container *ngxPermissionsOnly="'ADMIN'">
                   <button
                     [matMenuTriggerFor]="menu"
                     benji-click-stop-propagation
                     disableRipple
                     aria-label="Example icon-button with a menu"
+                    fxLayoutAlign="start start"
                   >
                     <mat-icon>more_horiz</mat-icon>
                   </button>
@@ -55,7 +56,8 @@
             </ng-container>
           </div>
         </div>
-        <div class="ideas" [ngStyle]="{'min-width.px': minWidth}">
+        <!-- <div class="ideas" [ngStyle]="{'min-width.px': minWidth}"> -->
+        <div class="ideas">
           <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
             <textarea
               #textInput
@@ -63,25 +65,32 @@
               (keyup.enter)="saveNewIdea(column, textInput.value)"
             ></textarea>
           </div>
-
-          <ng-container *ngFor="let item of column.brainstormidea_set; let i = index">
-            <benji-brainstorm-card
-              [item]="item"
-              [act]="act"
-              [activityState]="activityState"
-              [showUserName]="showUserName"
-              [participantCode]="participantCode"
-              (deleteIdea)="delete($event)"
-              [sendMessage]="sendMessage"
-              [categorizeFlag]="categorizeFlag"
-              [category]="column"
-              [myGroup]="myGroup">
-            </benji-brainstorm-card>
-          </ng-container>
+          <div class="ideas-list-container">
+            <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true">
+              <div 
+                *ngFor="let item of column.brainstormidea_set; let i = index" 
+                ngxMasonryItem
+                class="masonry-item">
+                <benji-brainstorm-card
+                  [board]="board"
+                  [item]="item"
+                  [act]="act"
+                  [activityState]="activityState"
+                  [showUserName]="showUserName"
+                  [participantCode]="participantCode"
+                  (deleteIdea)="delete($event)"
+                  [sendMessage]="sendMessage"
+                  [categorizeFlag]="categorizeFlag"
+                  [category]="column"
+                  [myGroup]="myGroup"
+                  [avatarSize]="'small'">
+                </benji-brainstorm-card>
+              </div>
+            </ngx-masonry>
+          </div>
           <div
             class="add-card"
-            (click)="addCard(column)"
-          >
+            (click)="addCard(column)">
             + New Card
           </div>
         </div>
@@ -93,7 +102,7 @@
       <div class="header" fxLayoutAlign="center center">
         <div
           class="add-column"
-          (click)="addColumn(act.brainstormcategory_set.length)">
+          (click)="addColumn(board.brainstormcategory_set.length)">
           + New Group
         </div>
       </div>

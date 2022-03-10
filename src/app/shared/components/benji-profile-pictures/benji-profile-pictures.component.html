@@ -1,0 +1,27 @@
+<div 
+  class="session-participants" 
+  fxLayout="row"
+  fxLayoutAlign="start center">
+  <div 
+    class="participant"
+    fxLayout="column"
+    *ngFor="let code of participantCodes">
+    <div 
+      class="initials {{size}} {{ 'color' + getColorIndex(code) }}" 
+      fxLayout="column" 
+      fxLayoutAlign="center center"
+      matTooltip="{{ getName(code) }}"
+      [matTooltipPosition]="'below'"
+      [matTooltipDisabled]="!showTooltip"
+      show-delay="100">
+      <span> {{ getInitials(code) }} </span>
+    </div>
+  </div>
+  <div 
+    *ngIf="remainingCount > 0"
+    class="initials counter {{size}}" 
+    fxLayout="column" 
+    fxLayoutAlign="center center">
+    <span> {{ "+" + remainingCount }} </span>
+  </div>
+</div>

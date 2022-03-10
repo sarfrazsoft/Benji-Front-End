@@ -1,0 +1,86 @@
+.session-participants {
+  .initials {
+    background: #5e8deb;
+    border-radius: 50%;
+    font-weight: 500;
+    span {
+      opacity: 0.6;
+      color: #000;
+      line-height: normal;
+    }
+    &.small {
+      width: 24px;
+      height: 24px;
+      font-size: 9px;
+    }
+    &.medium {
+      width: 32px;
+      height: 32px;
+      font-size: 12px;
+    }
+    &.large {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+    }
+    &.counter {
+      background: #f3f4f7;
+      color: #000;
+    }
+    &.color0 {
+      background: #f3abe7;
+    }
+    &.color1 {
+      background: #ae9fe9;
+    }
+    &.color2 {
+      background: #9fa9e9;
+    }
+    &.color3 {
+      background: #97bde7;
+    }
+    &.color4 {
+      background: #82c6e3;
+    }
+    &.color5 {
+      background: #82dbe3;
+    }
+    &.color6 {
+      background: #86e4cc;
+    }
+    &.color7 {
+      background: #7edda6;
+    }
+    &.color8 {
+      background: #ace7a6;
+    }
+    &.color9 {
+      background: #c2f292;
+    }
+    &.color10 {
+      background: #ecfd96;
+    }
+    &.color11 {
+      background: #fbf189;
+    }
+    &.color12 {
+      background: #ffe085;
+    }
+    &.color13 {
+      background: #ffc885;
+    }
+    &.color14 {
+      background: #ffa385;
+    }
+    &.color15 {
+      background: #ff8585;
+    }
+    &.color16 {
+      background: #ff8fab;
+    }
+    &.color17 {
+      background: #efa9d2;
+    }
+    //Unused colors: cfcfcf DEAFEF
+  }
+}

@@ -1,11 +1,11 @@
 <div class="active-sessions-wrapper">
-  <div class="title">Active Sessions</div>
+  <!-- <div class="title">Active Sessions</div> -->
   <div class="active-sessions-table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef> Session Title </th>
-        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.title}} </td>
+        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.lesson_title}} </td>
       </ng-container>
     
       <ng-container matColumnDef="host">
@@ -19,31 +19,31 @@
       </ng-container>
     
       <ng-container matColumnDef="startDate">
-        <th mat-header-cell *matHeaderCellDef> Start Date </th>
+        <th mat-header-cell *matHeaderCellDef> Created </th>
         <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.startDate}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="endDate">
+      <!-- <ng-container matColumnDef="endDate">
         <th mat-header-cell *matHeaderCellDef> Latest Activity </th>
         <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.endDate}} </td>
-      </ng-container>
+      </ng-container> -->
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-          <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center center">
+          <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
             <div class="grey-bg" fxLayoutAlign="center center">
               <img
                 matTooltip="Copy lesson link"
                 (click)="copyLink(element)" 
                 src="../../../../assets/img/dashboard-active-sessions/copy-link.svg">
             </div>
-            <div class="grey-bg" fxLayoutAlign="center center">
+            <div (click)="openSessionSettings(element)" class="grey-bg" fxLayoutAlign="center center">
               <img src="../../../../assets/img/dashboard-active-sessions/edit-pen.svg" alt="">
             </div>
-            <div class="select">
+            <!-- <div class="select">
               <ng-select
                 class="sessions-options"
-                [items]="options"
+                [items]="options" 
                 bindLabel="option"
                 [(ngModel)]="selectedCategory"
                 appendTo="body"
@@ -57,10 +57,27 @@
                   </div>
                 </ng-template>
               </ng-select>
-            </div>
-            <div class="grey-bg" fxLayoutAlign="center center">
+            </div> -->
+            <div
+              [matMenuTriggerFor]="menu" 
+              class="grey-bg" 
+              fxLayoutAlign="center center">
               <img src="../../../../assets/img/dashboard-active-sessions/hori-dots.svg" alt="">
             </div>
+            <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+              <button mat-menu-item (click)="edit(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
+                <span>Edit</span>
+              </button>
+              <!-- <button mat-menu-item (click)="duplicate(lesson, $event)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
+                <span>Duplicate</span>
+              </button> -->
+              <button mat-menu-item (click)="delete(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+                <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
           </div>
         </td>
       </ng-container>

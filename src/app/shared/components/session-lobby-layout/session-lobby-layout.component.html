@@ -1,10 +1,14 @@
-<div 
+<div
   fxLayout="row"
   fxLayoutAlign="center center"
   class="lobby-wrapper"
   [ngClass]="{'participant-lobby': !adminLobbyScreeen}"> 
-  <div class="content-wrapper" *ngIf="beforeLessonRunDetails">
-    <div class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    class="content-wrapper" 
+    *ngIf="beforeLessonRunDetails">
+    <div fxLayout="column" class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
       <div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <div class="session-title">
@@ -32,16 +36,19 @@
             </div>
           </div>
         </div>
-        <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+        <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="9px">
           <!-- <img src="{{session_host.photo}}" alt/> -->
           <div class="initials" fxLayout="column" fxLayoutAlign="center center">{{getInitials(beforeLessonRunDetails.host)}}</div>
-          <div class="name"> {{beforeLessonRunDetails.host}} </div>
+          <div fxLayout="column">
+            <div class="name"> {{beforeLessonRunDetails.host}} </div>
+            <div class="is-admin">Host</div>
+          </div>
         </div>
         <div class="description">
           {{beforeLessonRunDetails.description}} 
         </div>
       </div>
-      <div>
+      <!-- <div>
         <div class="sub-title"> Participants </div>
         <div *ngIf="!latestParticipants">
           <div class="participants-list" fxLayout="row wrap" fxLayoutGap="32px">
@@ -52,19 +59,19 @@
                 fxLayoutGap="8px"
                 class="participant" 
                 fxLayoutAlign="start center">
-                <!-- <img src="{{participant.photo}}" /> -->
+                <img src="{{participant.photo}}" />
                 <div 
                   class="initials {{'color' + (i % 10)}}" 
                   fxLayout="column" 
                   fxLayoutAlign="center center">
                   {{ getInitials(participant) }}
                 </div>
-                <!-- <benji-profile-picture
+                <benji-profile-picture
                   [imageUrl]=""
-                  [name]=""
+                  [participant_codes]=""
                   [color]=""
                   [colorIndex]=""
-                > </benji-profile-picture> -->
+                > </benji-profile-picture>
                 <div class="name"> {{ participant }} </div>
               </div>
             </div>
@@ -79,7 +86,7 @@
                 fxLayoutGap="8px"
                 class="participant" 
                 fxLayoutAlign="start center">
-                <!-- <img src="{{participant.photo}}" /> -->
+                <img src="{{participant.photo}}" />
                 <div 
                   class="initials {{'color' + (i % 10)}}" 
                   fxLayout="column" 
@@ -92,12 +99,12 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="join-session" *ngIf="!adminLobbyScreeen">
+    <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen">
       <div *ngIf="participantJoinScreeen">
         <div class="sub-title"> Join Session </div>
-        <div class="label"> Enter your name </div>
+        <div class="label"> Name </div>
         <p class="warning-color" *ngIf="loginError">
           Oops! What should we call you? Drop in your name.<br />
         </p>

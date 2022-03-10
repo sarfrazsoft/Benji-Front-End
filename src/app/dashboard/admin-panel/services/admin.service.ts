@@ -74,4 +74,42 @@ export class AdminService {
         })
       );
   }
+
+  createNewBoard(res) {
+    const data = {
+      lesson_name: res.title,
+      lesson_description: res.description,
+      activities: [
+        {
+          activity_type: 'BrainstormActivity',
+          instructions: 'Dummy Instructions',
+          max_participant_submissions: 999,
+          submission_seconds: 30000,
+          voting_seconds: 12000,
+          boards: [
+            {
+              name: 'test1',
+              order: 0,
+              remove: false,
+              categorized: false,
+              board_activity: {
+                categorized: false,
+                instructions: 'Dummy Instructions',
+                sub_instructions: 'test',
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return this.http.post(global.apiRoot + `/course_details/lesson/asyn_session/`, data).pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
+  updateLesson(lesson: Lesson, id): Observable<any[]> {
+    return this.http.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
+  }
 }

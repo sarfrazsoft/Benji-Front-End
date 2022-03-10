@@ -1,5 +1,5 @@
 import { viewClassName } from '@angular/compiler';
-import { ChangeDetectorRef, Component, OnChanges, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,8 +27,8 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
 })
 export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
   dialogRef: any;
-  
-  // Side-Navigation variables
+
+  // board-menu variables
   sideNavOpen: boolean;
   @ViewChild('sidenav') sidenav: MatSidenav;
 
@@ -93,14 +93,17 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     const activity_type = this.serverMessage.activity_type.toLowerCase();
     return this.serverMessage[activity_type].is_paused;
   }
-  
+
   openSideNav(type) {
-    type? this.sidenav.open() :  this.sidenav.close();
-    type =='boards'? this.navType='boards' : this.navType='board-settings';
+    type ? this.sidenav.open() : this.sidenav.close();
+    type === 'boards' ? (this.navType = 'boards') : (this.navType = 'board-settings');
+  }
+
+  openBoardSettings() {
+    this.openSideNav('board-settings');
   }
 
   close() {
     this.sidenav.close();
   }
-
 }

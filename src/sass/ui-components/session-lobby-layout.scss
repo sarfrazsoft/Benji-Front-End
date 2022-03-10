@@ -1,25 +1,26 @@
 .lobby-wrapper {
   height: calc(100vh - 56px);
+  //margin-top: 52px;
   .content-wrapper {
-    padding: 48px 64px;
-    background: #fff;
+    max-width: 960px;
     box-shadow: 0px 1px 2px #e7e7e7;
     border-radius: 16px;
+    background: #fff;
     .session-details {
-      //min-width: 588px;
-      margin-right: 64px;
-      float: left;
-      width: 588px;
+      background: #F9F9FB;
+      padding: 40px;
+      border-radius: 16px 0px 0px 16px;
+      min-height: 280px;
       &.adminLobby {
         margin-right: 0px;
         max-width: unset;
         width: 70vw;
       }
       .session-title {
-        font-size: 40px;
+        font-size: 32px;
         font-weight: 700;
         color: #37352f;
-        margin-bottom: 16px;
+        margin-bottom: 24px;
       }
       .session-start {
         font-size: 16px;
@@ -52,21 +53,27 @@
           height: 32px;
           border-radius: 50%;
         }
+        .initials {
+          color: #fff;
+          font-size: 14px;
+          font-weight: 600;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: #5e8deb;
+          line-height: 0px;
+        }
         .name {
           font-size: 18px;
           font-weight: 500;
           color: #37352f;
           text-transform: capitalize;
+          margin-bottom: 4px;
         }
-        .initials {
-          color: #fff;
-          font-size: 12px;
+        .is-admin {
+          color: #999;
+          font-size: 14px;
           font-weight: 500;
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-          background: #5e8deb;
-          line-height: 0px;
         }
       }
       .description {
@@ -74,43 +81,34 @@
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
-        padding-bottom: 28px;
-        margin-bottom: 32px;
-        border-bottom: 2px solid #eaeaea;
+        // padding-bottom: 28px;
+        // margin-bottom: 32px;
+        // border-bottom: 2px solid #eaeaea;
+        width: 400px;
       }
-      .session-participants {
-        font-size: 24px;
-        font-weight: 700;
-        color: #37352f;
-        margin-bottom: 24px;
-        .participant {
-          img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-          }
-          .initials {
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            line-height: 0px;
-          }
-          .name {
-            font-size: 14px;
-            font-weight: 400;
-            color: #000;
-            text-transform: capitalize;
-          }
-        }
-      }
-      .participants-list {
-        max-height: 168px;
-        overflow-y: auto;
-        padding-right: 32px;
-      }
+      // .session-participants {
+      //   font-size: 24px;
+      //   font-weight: 700;
+      //   color: #37352f;
+      //   margin-bottom: 24px;
+      //   .participant {
+      //     img {
+      //       width: 40px;
+      //       height: 40px;
+      //       border-radius: 50%;
+      //     }
+      //     .name {
+      //       font-size: 14px;
+      //       font-weight: 400;
+      //       color: #000;
+      //       text-transform: capitalize;
+      //     }
+      //   }
+      // }
+      // .participants-list {
+      //   max-height: 168px;
+      //   overflow-y: auto;
+      // }
     }
     .sub-title {
       font-size: 24px;
@@ -119,10 +117,8 @@
       margin-bottom: 24px;
     }
     .join-session {
-      float: right;
-      background: #f3f4f7;
-      border-radius: 16px;
-      padding: 40px 32px;
+      padding: 40px;
+      border-radius: 0px 16px 16px 0px;
       .sub-title {
         margin-bottom: 24px;
       }
@@ -133,15 +129,15 @@
         margin-bottom: 8px;
       }
       input {
-        background: #fff;
         border-radius: 8px;
-        width: 356px;
+        width: 368px;
         padding: 16px;
         color: #37352f;
         font-size: 16px;
         font-weight: 500;
         border: 0px;
         margin-bottom: 24px;
+        background: #F3F4F7;
         &:focus {
           outline-width: 0;
         }
@@ -149,15 +145,6 @@
       .edit-profile {
         margin-bottom: 24px;
         cursor: pointer;
-        .initials {
-          color: #fff;
-          font-size: 28px;
-          font-weight: 500;
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          margin-right: 17px;
-        }
         .edit-pen {
           width: 16px;
           height: 16px;
@@ -193,14 +180,13 @@
 @media (max-width: 1250px) {
   .lobby-wrapper {
     &.participant-lobby {
-      height: auto;
-      padding: 24px;
+      //height: auto;
+      padding: 16px;
     }
     .content-wrapper {
       .session-details {
         margin-right: 0px;
         float: none;
-        margin-bottom: 32px;
         &.adminLobby {
           .session-title {
             font-size: 32px;
@@ -209,11 +195,14 @@
             font-size: 20px;
           }
         }
+        .description {
+          width: 250px;
+        }
       }
       .join-session {
         float: none;
         input {
-          width: 94%;
+          width: calc(100% - 30px);
         }
         .session-joined {
           margin: 0px auto;
@@ -227,17 +216,30 @@
 @media (max-width: 750px) {
   .lobby-wrapper {
     .content-wrapper {
-      padding: 32px;
+      display: block !important;
+      width: 100%;
       .session-details {
+        min-height: unset;
         width: 100%;
+        background: #fff;
+        border-radius: 16px 16px 0px 0px;
+        padding: 32px 24px 24px 24px;
       }
       .join-session {
+        width: 100%;
         float: none;
+        padding: 24px;
+        background: #f9f9fb;
+        border-radius: 0px 0px 16px 16px;
         input {
-          width: 90%;
+          width: calc(100% - 32px);
+          background: #fff;
         }
         .session-joined {
           width: auto;
+        }
+        .sub-title {
+          font-size: 20px;
         }
       }
     }

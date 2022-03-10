@@ -4,7 +4,8 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { EditorService } from 'src/app/dashboard/editor/services';
+import { AdminService } from 'src/app/dashboard/admin-panel/services/admin.service';
+// import { EditorService } from 'src/app/dashboard/editor/services';
 import * as global from 'src/app/globals';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -28,7 +29,8 @@ export class LessonSettingsDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<LessonSettingsDialogComponent>,
     private builder: FormBuilder,
-    private editorService: EditorService,
+    // private editorService: EditorService,
+    private adminService: AdminService,
     private utilsService: UtilsService,
     private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -110,7 +112,7 @@ export class LessonSettingsDialogComponent implements OnInit {
         lesson_name: val.title,
         lesson_description: val.description,
       };
-      this.editorService
+      this.adminService
         .updateLesson(l, this.data.id)
         .pipe(
           map((res) => res),

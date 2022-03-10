@@ -11,9 +11,17 @@ import { LayoutService } from './services/layout.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: [
+    './app.component.scss',
+    // '../../node_modules/@uppy/core/dist/style.min.css',
+    // '../../node_modules/@uppy/drag-drop/dist/style.min.css',
+    // '../../node_modules/@uppy/progress-bar/dist/style.min.css',
+    // '../../node_modules/@uppy/dashboard/dist/style.min.css',
+  ],
 })
 export class AppComponent implements OnInit {
+  apiUrl = 'test';
+
   constructor(
     private layoutService: LayoutService,
     private contextService: ContextService,
@@ -117,11 +125,6 @@ export class AppComponent implements OnInit {
 
         .overview-button:hover span {
           border-bottom-color: ${info.parameters.primary};
-        }
-
-        .item.active .item-name {
-          color: ${info.parameters.primary} !important;
-
         }
 
         .dashboard-secondary-button {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Directive, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -10,6 +10,7 @@ import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/ap
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
+@Directive()
 export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   roomCode: number;
   lessonRun: LessonRun;
@@ -51,30 +52,36 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.clientType = 'participant';
     } else if (localStorage.getItem('benji_facilitator')) {
       this.permissionsService.loadPermissions(['ADMIN']);
+    } else {
+      console.log('no localstorage item');
+      if (!this.authService.isLoggedIn()) {
+        // this.authService.loginUser();
+        this.authService.navigateToParticipantJoin();
+      }
     }
     this.initSocket();
 
-    document.addEventListener('visibilitychange', () => {
-      const resetConnection = localStorage.getItem('resetConnection');
-      if (resetConnection === 'false') {
-        // don't reset connection participant is
-        // about to pick up brainstorm image
-      } else {
-        if (this.deviceDetectorService.isMobile()) {
-          if (document.hidden) {
-            // stop running expensive task
-            this.socket = undefined;
-          } else {
-            // page has focus, begin running task
-            if (!this.isConnected()) {
-              setTimeout(() => {
-                this.initSocket();
-              }, 500);
-            }
-          }
-        }
-      }
-    });
+    // document.addEventListener('visibilitychange', () => {
+    //   const resetConnection = localStorage.getItem('resetConnection');
+    //   if (resetConnection === 'false') {
+    //     // don't reset connection participant is
+    //     // about to pick up brainstorm image
+    //   } else {
+    //     // if (this.deviceDetectorService.isMobile()) {
+    //     if (document.hidden) {
+    //       // stop running expensive task
+    //       this.socket = undefined;
+    //     } else {
+    //       // page has focus, begin running task
+    //       if (!this.isConnected()) {
+    //         setTimeout(() => {
+    //           this.initSocket();
+    //         }, 500);
+    //       }
+    //     }
+    //     // }
+    //   }
+    // });
 
     this.route.queryParams.subscribe((params) => {
       if (params['share'] === 'participant') {
@@ -131,16 +138,19 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   connectAndSubscribe() {
     this.socket = this.socketService.connectLessonSocket(
       this.clientType,
-      this.lessonRun.lessonrun_code,
+      this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-
+    // console.log(this.socket);
     this.socket.subscribe(
       (msg: ServerMessage) => {
         this.handleServerMessage(msg);
         // console.log(msg);
       },
-      (err) => console.log(err),
+      (err) => {
+        console.log(err);
+        this.connectAndSubscribe();
+      },
       () => {
         console.log('complete');
       }

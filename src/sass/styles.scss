@@ -1,5 +1,8 @@
 /* ng select */
 @import '~@ng-select/ng-select/themes/default.theme.css';
+@import '@uppy/core/dist/style.css';
+@import '@uppy/dashboard/dist/style.css';
+@import '@uppy/webcam/dist/style.css';
 
 /*
  Benji Sass Partial Imports
@@ -84,7 +87,7 @@
 @import './ui-components/snack-bar';
 @import './ui-components/grouping';
 @import './ui-components/session-lobby-layout.scss';
-@import './ui-components/benji-profile-picture.scss';
+@import './ui-components/benji-profile-pictures.scss';
 @import './ui-components/side-nav.scss';
 
 /*
@@ -246,7 +249,8 @@
 
 // this style is being used
 .body {
-  background-color: $yellow;
+  //background-color: $yellow;
+  background-color: #f3f4f7;
   color: $black;
 }
 
@@ -1439,4 +1443,20 @@ input[type='number'] {
   padding-left: 2px;
   padding-right: 2px;
   white-space: nowrap;
+}
+
+benji-main-screen-lesson {
+  .mat-drawer-container {
+    background-color: #f3f4f7;
+  }
+}
+
+benji-participant-join {
+  .join-screen {
+    height: 100vh;
+    background: #A7A7A9;
+    .bg-white {
+      z-index: -1;
+    }
+  }
 }

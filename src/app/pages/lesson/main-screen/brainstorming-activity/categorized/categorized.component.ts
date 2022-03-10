@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -8,14 +9,20 @@ import {
   OnChanges,
   OnInit,
   Output,
+  QueryList,
+  SimpleChanges,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, includes, remove } from 'lodash';
+import { differenceBy, includes, orderBy, remove } from 'lodash';
+import * as moment from 'moment';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
 import {
+  Board,
   BrainstormActivity,
   BrainstormCreateCategoryEvent,
   BrainstormRemoveCategoryEvent,
@@ -39,8 +46,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   templateUrl: './categorized.component.html',
 })
 export class CategorizedComponent implements OnInit, OnChanges {
-  @Input() submissionScreen;
-  @Input() voteScreen;
+  @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
   @Input() minWidth;
@@ -61,6 +67,15 @@ export class CategorizedComponent implements OnInit, OnChanges {
   columns = [];
   cycle = 'first';
 
+  public masonryOptions: NgxMasonryOptions = {
+    gutter: 16,
+    horizontalOrder: false,
+    initLayout: true,
+  };
+
+  @ViewChildren(NgxMasonryComponent) masonryComponents: QueryList<NgxMasonryComponent>;
+  masonryPrepend: boolean;
+
   constructor(
     private dialog: MatDialog,
     private httpClient: HttpClient,
@@ -71,38 +86,66 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
+  ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
-      this.columns = this.brainstormService.populateCategories(this.act, this.columns);
+      this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';
     } else {
       if (this.eventType === 'BrainstormSubmitEvent') {
-        this.brainstormService.addIdeaToCategory(this.act, this.columns);
+        this.brainstormService.addIdeaToCategory(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.act, this.columns);
+        this.brainstormService.ideaCommented(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.act, this.columns);
+        this.brainstormService.ideaCommented(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
-        this.brainstormService.ideaHearted(this.act, this.columns);
+        this.brainstormService.ideaHearted(this.board, this.columns, () => {
+          this.sortAndResetMasonry();
+        });
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
-        this.brainstormService.ideaHearted(this.act, this.columns);
-      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
-        this.brainstormService.ideaRemoved(this.act, this.columns);
+        this.brainstormService.ideaHearted(this.board, this.columns, () => {
+          this.sortAndResetMasonry();
+        });
+      } else if (
+        this.eventType === 'BrainstormRemoveSubmissionEvent' ||
+        this.eventType === 'BrainstormClearBoardIdeaEvent'
+      ) {
+        this.brainstormService.ideasRemoved(this.board, this.columns);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
-        this.brainstormService.ideaEdited(this.act, this.columns);
+        this.brainstormService.ideaEdited(this.board, this.columns);
       } else if (this.eventType === 'BrainstormCreateCategoryEvent') {
-        this.columns = this.brainstormService.populateCategories(this.act, this.columns);
+        this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveCategoryEvent') {
-        this.columns = this.brainstormService.populateCategories(this.act, this.columns);
+        this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+      } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
+        this.brainstormService.sortIdeas(this.board, this.columns);
+      } else if (this.eventType === 'BrainstormSetCategoryEvent') {
+        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+          if (val) {
+            this.columns = this.brainstormService.categoryChangedForIdea(this.board, this.columns);
+          }
+          this.brainstormService.sortIdeas(this.board, this.columns);
+          this.sortAndResetMasonry();
+        });
+      } else if (
+        this.eventType === 'HostChangeBoardEvent' ||
+        this.eventType === 'ParticipantChangeBoardEvent'
+      ) {
+        if ($event.board) {
+          if ($event.board.currentValue.id === $event.board.previousValue.id) {
+          } else {
+            this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+          }
+        }
       }
     }
-    this.sortIdeas(this.columns);
   }
 
-  sortIdeas(columns) {
-    for (let i = 0; i < columns.length; i++) {
-      const col = columns[i];
-      col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => b.id - a.id);
+  sortAndResetMasonry() {
+    this.brainstormService.sortIdeas(this.board, this.columns);
+    for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
+      const element = this.masonryComponents.toArray()[i];
+      element.layout();
+      element.reloadItems();
     }
   }
 
@@ -117,7 +160,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   addColumn(newCategoryNumber) {
-    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber));
+    this.sendMessage.emit(new BrainstormCreateCategoryEvent('Category ' + newCategoryNumber, this.board.id));
   }
 
   deleteCol(categoryId) {
@@ -126,7 +169,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   onColumnNameBlur(column, event) {
     let selectedCat: Category;
-    this.act.brainstormcategory_set.forEach((cat: Category) => {
+    this.board.brainstormcategory_set.forEach((cat: Category) => {
       if (column.id === cat.id) {
         selectedCat = cat;
       }
@@ -137,7 +180,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
       return;
     }
     column.category_name = event.target.value;
-    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, event.target.value));
+    this.sendMessage.emit(new BrainstormRenameCategoryEvent(column.id, event.target.value, this.board.id));
   }
 
   openImage(imageUrl: string) {
@@ -178,31 +221,28 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.deleteIdea.emit(id);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      this.sendCategorizeEvent(event);
-    }
+  drop(event: CdkDragDrop<Idea[]>) {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        if (event.previousContainer === event.container) {
+          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        } else {
+          transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+          );
+          this.sendCategorizeEvent(event);
+        }
+      }
+    });
   }
 
-  sendCategorizeEvent(event) {
+  sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {
+    const categoryID = event.container.element.nativeElement.getAttribute('columnID');
     const id = event.container.data[event.currentIndex].id;
-    let categoryId;
-    this.act.brainstormcategory_set.forEach((cat) => {
-      cat.brainstormidea_set.forEach((idea) => {
-        if (idea.id === id) {
-          categoryId = cat.id;
-        }
-      });
-    });
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryId));
+    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryID));
   }
 
   submitComment(ideaId, val) {

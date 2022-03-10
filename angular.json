@@ -10,7 +10,7 @@
       "prefix": "benji",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss",
+          "style": "scss",
           "skipTests": true
         }
       },
@@ -47,7 +47,14 @@
             "scripts": [
               "node_modules/dashjs/dist/dash.all.min.js",
               "node_modules/hls.js/dist/hls.min.js"
-            ]
+            ],
+            "aot": false,
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -142,7 +149,8 @@
               "vendorChunk": false,
               "buildOptimizer": true
             }
-          }
+          },
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

@@ -7,43 +7,40 @@ import {
   // ...
 } from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, includes, remove } from 'lodash';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { take } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  Board,
   BrainstormActivity,
-  BrainstormCreateCategoryEvent,
-  BrainstormRemoveCategoryEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
-  BrainstormRenameCategoryEvent,
-  BrainstormSetCategoryEvent,
-  BrainstormSubmitEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
-  Category,
-  Group,
   Idea,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { UtilsService } from 'src/app/services/utils.service';
-import { IdeaDetailedInfo } from 'src/app/shared/components/idea-detailed/idea-detailed';
+import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
+import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
-import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -55,12 +52,14 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
         'enabled',
         style({
           opacity: 1,
+          display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
+          display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),
@@ -69,7 +68,8 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
   ],
 })
 export class BrainstormCardComponent implements OnInit, OnChanges {
-  @Input() item;
+  @Input() board: Board;
+  @Input() item: Idea;
   @Input() category;
   @Input() submissionScreen;
   @Input() voteScreen;
@@ -83,33 +83,94 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() eventType;
   @Input() categorizeFlag;
   @Input() myGroup;
+  @Input() avatarSize;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
+  @Output() commentEdited = new EventEmitter<any>();
 
-  commentModel = "";
+  commentModel = '';
+  submittingUser;
+  submitting_participant;
+  userRole: IdeaUserRole;
+  deactivateHearting = false;
+  classGrey: boolean;
+  classWhite: boolean;
+  commentKey: string;
   // columns = [];
   // cycle = 'first';
 
+  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
   constructor(
     private dialog: MatDialog,
-    private httpClient: HttpClient,
-    private utilsService: UtilsService,
+    private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    private _ngZone: NgZone
   ) {
     // super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.item && this.item.submitting_participant) {
+      this.submittingUser = this.item.submitting_participant.participant_code;
+      this.commentKey = 'comment_' + this.item.id + this.submittingUser;
+    }
+
+    if (this.participantCode) {
+      this.userRole = 'viewer';
+    } else {
+      // viewing user is the host
+      this.userRole = 'owner';
+      this.commentKey = 'comment_' + this.item.id + 'host';
+    }
+
+    if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
+      this.submittingUser = this.item.submitting_participant.participant_code;
+      if (this.submittingUser === this.participantCode) {
+        this.userRole = 'owner';
+      } else {
+        this.userRole = 'viewer';
+      }
+    }
+
+    const draftComment = this.brainstormService.getDraftComment(this.commentKey);
+    if (draftComment) {
+      this.commentModel = draftComment;
+    }
+  }
+
+  // triggerResize() {
+  //   // Wait for changes to be applied, then trigger textarea resize.
+  //   this._ngZone.onStable.pipe(take(1)).subscribe(() => {
+  //     console.log("Anonymous triggerResize");
+  //     this.autosize.resizeToFitContent(true);
+  //   });
+  //   console.log("triggerResize");
+  // }
 
   ngOnChanges() {}
 
   delete(id) {
-    this.deleteIdea.emit(id);
+    this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete this idea?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'idea-delete-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.deleteIdea.emit(id);
+        }
+      });
   }
 
   isAbsolutePath(imageUrl: string) {
@@ -140,6 +201,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+    this.brainstormService.removeDraftComment(this.commentKey);
   }
 
   removeComment(commentId, ideaId) {
@@ -158,11 +220,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
         hearted = true;
+        this.deactivateHearting = false;
       }
       // If a trainer hearts an idea the heart object does not have
       // a participant code.
       if (element.participant === null && !this.participantCode) {
         hearted = true;
+        this.deactivateHearting = false;
       }
     });
     return hearted;
@@ -180,22 +244,27 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         hearted = element;
       }
     });
-    this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    if (hearted) {
+      this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
+    }
   }
 
-  setHeart(ideaId: number) {
-    this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
+  setHeart(idea: Idea) {
+    if (!this.deactivateHearting) {
+      this.deactivateHearting = true;
+      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    }
   }
 
   showDetailedIdea(idea: Idea) {
-    // if (this.deviceService.isMobile()) {
-    //   this.openDialog(idea, "idea-detailed-mobile-dialog", false);
-    // } else {
-    //   this.openDialog(idea, "idea-detailed-dialog", true);
-    // }
+    if (this.deviceService.isMobile()) {
+      this.openDialog(idea, 'idea-detailed-mobile-dialog', false);
+    } else {
+      this.openDialog(idea, 'idea-detailed-dialog', true);
+    }
 
     // this.openDialog(idea, 'idea-detailed-mobile-dialog', false);
-    this.openDialog(idea, 'idea-detailed-dialog', true);
+    // this.openDialog(idea, 'idea-detailed-dialog', true);
   }
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
@@ -204,13 +273,15 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       panelClass: assignedClass,
       data: {
         showCategoriesDropdown: this.categorizeFlag,
-        categories: this.activityState.brainstormactivity.brainstormcategory_set,
+        categories: this.board.brainstormcategory_set,
         item: this.item,
         category: this.category,
         myGroup: this.myGroup,
         activityState: this.activityState,
         isMobile: !isDesktop,
         participantCode: this.participantCode,
+        userRole: this.userRole,
+        showUserName: this.showUserName,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
@@ -229,10 +300,15 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
   }
 
-  getInitials(nameString: string) {
-    const fullName = nameString.split(' ');
-    const first = fullName[0] ? fullName[0].charAt(0) : '';
-    const second = fullName[1] ? fullName[1].charAt(0) : '';
-    return (first + second).toUpperCase();
+  onCommentFocus() {
+    this.classGrey = true;
+  }
+  onCommentBlur() {
+    this.classGrey = false;
+  }
+
+  commentTyped() {
+    this.commentEdited.emit();
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 }

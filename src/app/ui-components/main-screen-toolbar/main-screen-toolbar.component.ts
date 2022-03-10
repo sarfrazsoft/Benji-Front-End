@@ -1,36 +1,46 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { ContextService, GroupingToolService, SharingToolService } from 'src/app/services';
-import { Timer, UpdateMessage } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
+import { ContextService, SharingToolService } from 'src/app/services';
+import { Board, BoardParticipants, Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
+import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
-  BrainstormVotingCompleteInternalEvent,
   EndShareEvent,
-  FastForwardEvent,
+  GetUpdatedLessonDetailEvent,
+  HostChangeBoardEvent,
   JumpEvent,
   NextInternalEvent,
+  ParticipantChangeBoardEvent,
   PauseActivityEvent,
   PreviousEvent,
   ResetEvent,
   ResumeActivityEvent,
-  ViewGroupingEvent,
 } from '../../services/backend/schema/messages';
-import { LayoutService } from '../../services/layout.service';
-
-import { SideNavigationComponent } from '../side-navigation/side-navigation.component'
 
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
   styleUrls: ['./main-screen-toolbar.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenToolbarComponent implements OnInit, OnChanges {
   darkLogo = '';
@@ -43,7 +53,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isGroupingShowing: boolean;
   @Input() isLastActivity: boolean;
   @Input() showHeader: boolean;
-  @Input() lessonName: string;
+  @Input() lesson;
   @Input() roomCode: string;
   @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
@@ -55,33 +65,42 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   at: typeof ActivityTypes = ActivityTypes;
 
   shareParticipantLink = '';
+  hostname = window.location.host + '/participant/join?link=';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
   activitySettingsAllowed = ActivitySettingsAllowed;
 
   openGroupAccess = false;
 
+  participantCodes = [];
+
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   reason = '';
+  counterAfter = 4;
 
   @Output() sideNavEvent = new EventEmitter<string>();
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
+  lessonName: string;
+
+  selectedBoard: Board;
+  isHost: boolean;
+  isParticipant: boolean;
+
   constructor(
-    private layoutService: LayoutService,
     public contextService: ContextService,
     private utilsService: UtilsService,
     private sharingToolService: SharingToolService,
-    private groupingToolService: GroupingToolService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private permissionsService: NgxPermissionsService,
+    private router: Router
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
-    this.shareParticipantLink = window.location.href + '?share=participant';
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
 
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
@@ -99,6 +118,15 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
+    this.shareParticipantLink = this.hostname + this.roomCode;
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      val? this.isParticipant = true : this.isParticipant = false;
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      val? this.isHost = true : this.isHost = false;
+    });
   }
 
   showParticipantGroupingButton() {
@@ -121,7 +149,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
+    this.loadParticipantCodes();
   }
 
   controlClicked(eventType) {
@@ -160,35 +190,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   groupingMenuClicked() {
-    // const activity_type = this.activityState.activity_type.toLowerCase();
-    // const state = this.activityState;
-    // const activityID = state[activity_type].activity_id;
-    // const code = activityID + state.lesson_run.lessonrun_code;
-
-    // if (this.isGroupingShowing) {
-    //   if (localStorage.getItem('isGroupingCreated') === code) {
-    //     // grouping ui is showing but grouping has been created for this activity
-    //     // go back to activity screen
-    //     // this.groupingToolService.showGroupingToolMainScreen = false;
-    //   } else {
-    //     // the grouping UI is showing but grouping has not been created
-    //     // for this activity
-    //     // hide grouping UI
-    //     this.socketMessage.emit(new ViewGroupingEvent(false));
-    //   }
-    // } else {
-    // if (localStorage.getItem('isGroupingCreated') === code) {
-    //   // grouping ui is not showing but grouping has been created for this activity
-    //   // only show UI on mainscreen
-    //   this.groupingToolService.showGroupingToolMainScreen =
-    //     !this.groupingToolService.showGroupingToolMainScreen;
-    // } else {
-    // the grouping UI is not showing and the grouping hasn't been created
-    // for this activity
-    // open menu
     this.groupingMenuTrigger.openMenu();
-    // }
-    // }
   }
 
   isSharingAllowed(activityState: UpdateMessage) {
@@ -240,7 +242,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   isActivitySettingsAllowed(activityState: UpdateMessage) {
-    if(activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
+    if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
       return true;
     } else {
       return false;
@@ -249,5 +251,117 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   openSideNav(type) {
     this.sideNavEvent.emit(type);
+  }
+
+  loadParticipantCodes() {
+    this.participantCodes.length = 0;
+    const p = [];
+    this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      p.push(participant.participant_code);
+    });
+    this.participantCodes = p;
+  }
+
+  copyLink(val: string) {
+    this.utilsService.copyToClipboard(val);
+  }
+
+  openSessionSettings() {
+    this.matDialog
+      .open(SessionSettingsDialogComponent, {
+        data: {
+          id: this.lesson.id,
+          title: this.lesson.lesson_name,
+          description: this.lesson.lesson_description,
+          Create: false,
+        },
+        panelClass: 'session-settings-dialog',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
+      });
+  }
+
+  isFirstBoard() {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let minBoardOrder = 0;
+    visibleBoards.forEach((brd: Board) => {
+      if (brd.order < minBoardOrder) {
+        minBoardOrder = brd.order;
+      }
+    });
+    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder(); 
+    return minBoardOrder === currenttBoardOrder;
+  }
+
+  isLastBoard() {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let maxBoardOrder = 0;
+    visibleBoards.forEach((brd: Board) => {
+      if (brd.order > maxBoardOrder) {
+        maxBoardOrder = brd.order;
+      }
+    });
+    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder();
+    return maxBoardOrder === currenttBoardOrder;
+  }
+
+  getHostBoardOrder() {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let hostBoardOrder;
+    visibleBoards.forEach((brd: Board) => {
+      if (this.activityState.brainstormactivity.host_board === brd.id) {
+        hostBoardOrder = brd.order;
+      }
+    });
+    return hostBoardOrder;
+  }
+
+  getParticipantBoardOrder() {
+    let participants:BoardParticipants = this.activityState.brainstormactivity.participants;
+    let participantBoardId;
+    for (var brdId in participants) {
+      participants[brdId].forEach((code) => {
+        if(code==this.participantCode) {
+          participantBoardId = brdId;
+        }
+      });
+    }
+    const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let participantBoardOrder;
+    visibleBrds.forEach((brd: Board) => {
+      if(brd.id == participantBoardId) { participantBoardOrder = brd.order }
+    });
+    return participantBoardOrder;
+  }
+
+  changeBoard(move: string) {
+    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder();
+    visibleBoards.forEach((brd: Board) => {
+      if (currenttBoardOrder + 1 === brd.order && move === 'next') {
+        this.navigateToBoard(brd);
+      } else if (currenttBoardOrder - 1 === brd.order && move === 'previous') {
+        this.navigateToBoard(brd);
+      }
+    });
+  }
+
+  navigateToBoard(board: Board) {
+    this.isHost? this.socketMessage.emit(new HostChangeBoardEvent(board.id)) : this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
+  }
+
+  logoClicked() {
+    if (this.isHost) {
+      this.router.navigate(['/dashboard/']);
+    }
+    else if (this.isParticipant) {
+      this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+        if (participant.participant_code === this.participantCode && participant.email) {
+          this.router.navigate(['/dashboard/']);
+        }
+      });
+    }
   }
 }

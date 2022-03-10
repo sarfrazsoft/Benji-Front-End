@@ -8,16 +8,26 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+// import { UppyConfig } from 'uppy-angular/uppy-angular';
+// import { Uppy } from '@uppy/core';
+import { Uppy } from '@uppy/core';
+import GoogleDrive from '@uppy/google-drive';
+import Tus from '@uppy/tus';
+import Webcam from '@uppy/webcam';
+import XHRUpload from '@uppy/xhr-upload';
 import { ContextService } from 'src/app/services';
-import { ActivitiesService } from 'src/app/services/activities';
+import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   BrainstormSubmitIdeaCommentEvent,
   Category,
   Group,
   Idea,
+  IdeaDocument,
+  RemoveIdeaDocumentEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 export interface IdeaDetailedInfo {
   showCategoriesDropdown: boolean;
@@ -28,7 +38,10 @@ export interface IdeaDetailedInfo {
   activityState: UpdateMessage;
   isMobile: boolean;
   participantCode: number;
+  userRole: IdeaUserRole;
+  showUserName: boolean;
 }
+export type IdeaUserRole = 'owner' | 'viewer';
 @Component({
   selector: 'benji-idea-detailed',
   templateUrl: 'idea-detailed.html',
@@ -39,12 +52,14 @@ export interface IdeaDetailedInfo {
         'enabled',
         style({
           opacity: 1,
+          display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
+          display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),
@@ -81,7 +96,7 @@ export interface IdeaDetailedInfo {
       state(
         'closeDown',
         style({
-          height: '0px',
+          // height: '0px',
         })
       ),
       transition('* => closeDown', [animate('0.5s 0ms ease-in-out')]),
@@ -113,10 +128,40 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  selectedThirdPartyImageUrl;
   pdfSelected;
   selectedpdfDoc;
   pdfSrc;
   hostname = environment.web_protocol + '://' + environment.host;
+  userRole: IdeaUserRole;
+  commentModel = '';
+
+  // video variables
+  videoURL: string;
+  video = false;
+  video_id: number;
+
+  webcamImageId: number;
+  webcamImage = false;
+  webcamImageURL: string;
+
+  showInline = false;
+
+  showModal = false;
+
+  dashboardProps = {
+    plugins: ['Webcam', 'GoogleDrive'],
+  };
+
+  dashboardModalProps = {
+    target: document.body,
+    onRequestCloseModal: (): void => {
+      this.showModal = false;
+    },
+  };
+
+  uppy: Uppy = new Uppy({ id: 'idea-detailed', debug: true, autoProceed: false });
+
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
   @Output() deleteIdea = new EventEmitter<any>();
@@ -125,14 +170,25 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
+  classGrey: boolean;
+  commentKey: string;
 
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
-    private contextService: ContextService
+    private deleteDialog: MatDialog,
+    private brainstormService: BrainstormService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.uppy
+      .use(Webcam, { countdown: 5 })
+      // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
+      .use(XHRUpload, {
+        endpoint: 'http://my-website.org/upload',
+      });
+  }
 
   ngOnChanges() {
     this.initIdea();
@@ -147,20 +203,50 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.ideaTitle = this.data.item.title;
     this.userIdeaText = this.data.item.idea;
+
+    // initialize idea image
     if (this.data.item.idea_image) {
       this.imageSelected = true;
-      this.imageSrc = this.data.item.idea_image.img;
+      this.imageSrc = this.data.item.idea_image.document;
+    } else {
+      this.removeImage();
     }
-    if (this.data.item.submitting_participant) {
-      this.submitting_participant = this.data.item.submitting_participant.participant_code;
-    }
-    if (this.data.participantCode) {
-      this.participantCode = this.data.participantCode;
-    }
+
+    // check if idea has document and reset if
+    // document isn't present
     if (this.data.item.idea_document) {
       this.pdfSelected = true;
       this.pdfSrc = this.hostname + this.data.item.idea_document.document;
+    } else {
+      this.clearPDF();
     }
+
+    // check if idea has video and reset if not
+    if (this.data.item.idea_video) {
+      this.video = true;
+      this.videoURL = this.data.item.idea_video.document;
+    } else {
+      this.removeVideo();
+    }
+
+    this.userRole = this.data.userRole;
+
+    if (this.data.participantCode) {
+      this.participantCode = this.data.participantCode;
+    } else {
+      // viewing user is the host
+      this.commentKey = 'comment_' + this.data.item.id + 'host';
+    }
+    if (this.data.item.submitting_participant) {
+      this.submitting_participant = this.data.item.submitting_participant.participant_code;
+      this.commentKey = 'comment_' + this.data.item.id + this.submitting_participant;
+    }
+
+    const draftComment = this.brainstormService.getDraftComment(this.commentKey);
+    if (draftComment) {
+      this.commentModel = draftComment;
+    }
+
     if (this.data.category) {
       this.selectedCategory = this.data.category;
     }
@@ -168,6 +254,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.group = this.data.myGroup;
     }
     this.activityState = this.data.activityState;
+
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
   }
 
   onSubmit() {
@@ -178,6 +266,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       category: this.selectedCategory,
       imagesList: this.imagesList,
       selectedImageUrl: this.selectedImageUrl,
+      selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
+      video_id: this.video_id,
+      webcamImageId: this.webcamImageId,
     });
   }
 
@@ -189,9 +280,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
+    } else if (this.video) {
+      this.removeVideo();
     } else {
       this.removeImage();
     }
+    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
   }
 
@@ -200,6 +294,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.imagesList = null;
     this.imageSrc = null;
     this.selectedImageUrl = null;
+    this.selectedThirdPartyImageUrl = null;
+    this.idea.idea_image = null;
   }
 
   clearPDF() {
@@ -208,20 +304,28 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.pdfSrc = null;
   }
 
+  removeVideo() {
+    this.video = false;
+    this.videoURL = null;
+    this.video_id = null;
+  }
+
+  removeWebcamImage() {
+    this.webcamImage = false;
+    this.webcamImageId = null;
+    this.webcamImageURL = null;
+  }
+
   openImagePickerDialog() {
-    const code = this.lessonRunCode;
     this.imageDialogRef = this.matDialog
       .open(ImagePickerDialogComponent, {
-        data: {
-          lessonRunCode: code,
-        },
         disableClose: false,
         panelClass: ['dashboard-dialog', 'image-picker-dialog'],
       })
       .afterClosed()
       .subscribe((res) => {
-        console.log(res);
         if (res) {
+          this.uploadPanelExpanded = false;
           if (res.type === 'upload') {
             this.imageSelected = true;
             this.imagesList = res.data;
@@ -234,7 +338,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.selectedThirdPartyImageUrl = res.data;
           } else if (res.type === 'giphy') {
+            this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.selectedImageUrl = res.data;
             this.imageSelected = true;
@@ -270,11 +376,27 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   delete() {
-    this.deleteIdea.emit(this.idea.id);
+    this.deleteDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete this idea?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'idea-delete-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.deleteIdea.emit(this.idea.id);
+        }
+      });
   }
 
   toggle() {
-    this.uploadPanelExpanded = !this.uploadPanelExpanded;
+    if (!this.imageSelected && !this.pdfSelected) {
+      this.uploadPanelExpanded = !this.uploadPanelExpanded;
+    }
   }
 
   previousArrowClicked() {
@@ -283,5 +405,30 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   nextArrowClicked() {
     this.nextItemRequested.emit();
+  }
+
+  participantIsOwner() {}
+
+  mediaUploaded(res: IdeaDocument) {
+    this.uploadPanelExpanded = false;
+    if (res.document_type === 'video') {
+      this.videoURL = res.document;
+      this.video = true;
+      this.video_id = res.id;
+    } else if (res.document_type === 'image') {
+      this.webcamImageId = res.id;
+      this.webcamImageURL = res.document;
+      this.webcamImage = true;
+    }
+  }
+
+  onCommentFocus() {
+    this.classGrey = true;
+  }
+  onCommentBlur() {
+    this.classGrey = false;
+  }
+  commentTyped() {
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 }

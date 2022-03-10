@@ -38,23 +38,15 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
-import { DeviceDetectorModule } from 'ngx-device-detector';
 import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
 import schema from './ngx-editor/schema';
-
-import { TooltipModule } from 'ng2-tooltip-directive';
-import { TooltipOptions } from 'ng2-tooltip-directive';
-
-export const MyDefaultTooltipOptions: TooltipOptions = {
-  'show-delay': 4000,
-  'tooltip-class': 'benji-editor-tooltip',
-};
 
 const SHARED_MODULES = [
   PickerModule,
@@ -98,7 +90,15 @@ const SHARED_MODULES = [
   MatButtonToggleModule,
   FormlyModule,
   NgxPermissionsModule,
+  NgxMasonryModule,
 ];
+import {
+  UppyAngularDashboardModalModule,
+  UppyAngularDashboardModule,
+  UppyAngularDragDropModule,
+  UppyAngularProgressBarModule,
+  UppyAngularStatusBarModule,
+} from '@uppy/angular';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
@@ -113,9 +113,12 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     PdfJsViewerModule,
     ...SHARED_MODULES,
     NgxPermissionsModule.forRoot(),
-    DeviceDetectorModule.forRoot(),
-    TooltipModule.forRoot(MyDefaultTooltipOptions as TooltipOptions),
     PdfViewerModule,
+    UppyAngularDashboardModule,
+    UppyAngularStatusBarModule,
+    UppyAngularDragDropModule,
+    UppyAngularProgressBarModule,
+    UppyAngularDashboardModalModule,
   ],
   declarations: Components,
   entryComponents: [...EntryComponents],

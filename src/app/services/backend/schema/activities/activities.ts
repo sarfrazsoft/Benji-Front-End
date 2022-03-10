@@ -301,11 +301,35 @@ export interface WhereDoYouStandActivity {
 }
 
 export interface BrainstormActivity extends ParentActivity {
+  boards: Array<Board>;
+  participants: BoardParticipants;
+  meeting_mode: boolean;
+  host_board: number;
+}
+
+export interface Board {
+  board_activity: BoardInfo;
+  id: number;
+  name: string;
+  order: number;
+  removed: boolean;
+  status: string;
+  sort: BoardSort;
   brainstormcategory_set: Array<Category>;
+}
+
+export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes';
+
+export interface BoardParticipants {
+  [boardID: string]: Array<number>;
+}
+
+export interface BoardInfo {
   instructions: string;
+  sub_instructions: string;
   max_participant_submissions: number;
   max_participant_votes: number;
-  categorize_flag: boolean;
+  mode: BoardMode;
   show_participant_name_flag: boolean;
   submission_complete: boolean;
   submission_countdown_timer: Timer;
@@ -323,7 +347,10 @@ export interface BrainstormActivity extends ParentActivity {
   grouping: GroupingToolGroups;
 }
 
+export type BoardMode = 'columns' | 'thread' | 'grid';
+
 export interface Category {
+  status: string;
   id: number;
   brainstormidea_set: Array<Idea>;
   category_name: string;
@@ -337,23 +364,26 @@ export interface Idea {
   title: string;
   removed: boolean;
   submitting_participant: ParticipantCode;
-  idea_image: Image;
+  idea_image: IdeaDocument;
   showClose?: boolean;
   editing?: boolean;
   addingIdea?: boolean;
-  comments: Array<any>;
-  hearts: Array<any>;
+  comments: Array<{ id: number; participant: number; comment: string }>;
+  hearts: Array<{ id: number; participant: number }>;
   version: number;
+  time: string;
   idea_document: IdeaDocument;
+  idea_video: IdeaDocument;
 }
-
 export interface IdeaDocument {
   id: number;
   document: string;
+  document_type: 'video' | 'document' | 'image';
 }
 
 export interface ParticipantCode {
   participant_code: number;
+  display_name: string;
 }
 
 export interface Image {

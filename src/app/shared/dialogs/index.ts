@@ -13,6 +13,7 @@ export * from './idea-detailed-dialog/idea-detailed.dialog';
 export * from './import-slides-dialog/import-slides.dialog';
 export * from './participant-grouping-dialog/participant-grouping.dialog';
 export * from './participant-grouping-info-dialog/participant-grouping-info.dialog';
+export * from './session-settings-dialog/session-settings.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
@@ -20,7 +21,8 @@ import { ErrorMessageDialogComponent } from './error-message/error-message.dialo
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
 import { IdeaDetailedDialogComponent } from './idea-detailed-dialog/idea-detailed.dialog';
-import { GiphyComponent } from './image-picker-dialog/giphy/giphy.component';
+import { GiphyComponent } from './giphy-picker-dialog/giphy/giphy.component';
+import { GiphyPickerDialogComponent } from './giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from './image-picker-dialog/image-picker.dialog';
 import { UnsplashComponent } from './image-picker-dialog/unsplash/unsplash.component';
 import { UploadImageComponent } from './image-picker-dialog/upload-image/upload-image.component';
@@ -32,17 +34,19 @@ import { LessonSettingsDialogComponent } from './lesson-settings-dialog/lesson-s
 import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { ParticipantGroupingDialogComponent } from './participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from './participant-grouping-info-dialog/participant-grouping-info.dialog';
-
+import { SessionSettingsDialogComponent } from './session-settings-dialog/session-settings.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 
 export const Dialogs = [
   AddVideoDialogComponent,
   ConfirmationDialogComponent,
   ErrorMessageDialogComponent,
+  GiphyPickerDialogComponent,
   ImagePickerDialogComponent,
   ImportSlidesDialogComponent,
   UnsplashComponent,
   GiphyComponent,
+  IdeaDetailedDialogComponent,
   UploadImageComponent,
   JobInfoDialogComponent,
   JoinSessionDialogComponent,
@@ -54,5 +58,5 @@ export const Dialogs = [
   GroupingToolDialogComponent,
   ParticipantGroupingDialogComponent,
   ParticipantGroupingInfoDialogComponent,
-  IdeaDetailedDialogComponent,
+  SessionSettingsDialogComponent,
 ];

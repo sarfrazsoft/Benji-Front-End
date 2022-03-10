@@ -1,10 +1,27 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChange,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
-import { BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
+import {
+  Board,
+  BrainstormActivity,
+  BrainstormSubmitEvent,
+  Category,
+  Idea,
+} from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
@@ -14,9 +31,8 @@ import { environment } from 'src/environments/environment';
   templateUrl: './uncategorized.component.html',
 })
 export class UncategorizedComponent implements OnInit, OnChanges {
-  @Input() submissionScreen;
-  @Input() voteScreen;
-  @Input() act;
+  @Input() board: Board;
+  @Input() act: BrainstormActivity;
   @Input() activityState;
   @Input() minWidth;
   @Input() sendMessage;
@@ -35,112 +51,79 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
 
-  constructor(
-    private dialog: MatDialog,
-    private httpClient: HttpClient,
-    private utilsService: UtilsService,
-    private brainstormService: BrainstormService
-  ) {}
+  public masonryOptions: NgxMasonryOptions = {
+    gutter: 16,
+    horizontalOrder: true,
+    initLayout: true,
+  };
+
+  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
+  masonryPrepend: boolean;
+
+  constructor(private brainstormService: BrainstormService) {}
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
+  ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
-      this.ideas = this.populateIdeas(this.act);
+      this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+      this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
-      // let eventType;
-      // eventType = 'AddedIdea';
-      // eventType = 'heartedIdea';
-      // eventType = 'removeIdea';
-      // console.log(this.eventType);
       if (this.eventType === 'BrainstormSubmitEvent') {
-        this.addIdea(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.ideaCommented(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-        this.ideaCommented(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
-        this.ideaHearted(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
-        this.ideaHearted(this.act, this.ideas);
-      } else if (this.eventType === 'BrainstormRemoveSubmissionEvent') {
-        this.ideaRemoved(this.act, this.ideas);
+        if (this.board.sort === 'newest_to_oldest') {
+          this.masonryPrepend = true;
+        } else {
+          this.masonryPrepend = false;
+        }
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+      } else if (
+        this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaCommentEvent'
+      ) {
+        this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
+      } else if (
+        this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaHeartEvent'
+      ) {
+        this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, () => {});
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+        this.masonry?.reloadItems();
+      } else if (
+        this.eventType === 'BrainstormRemoveSubmissionEvent' ||
+        this.eventType === 'BrainstormClearBoardIdeaEvent'
+      ) {
+        this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
+        // this.resetMasonry();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
-        this.ideaEdited(this.act, this.ideas);
-      }
-    }
-  }
-
-  populateIdeas(act) {
-    const ideas = [];
-    act.brainstormcategory_set.forEach((category) => {
-      if (!category.removed && category.brainstormidea_set) {
-        category.brainstormidea_set.forEach((idea: Idea) => {
-          if (!idea.removed) {
-            ideas.push({ ...idea, showClose: false });
+        this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
+      } else if (
+        this.eventType === 'HostChangeBoardEvent' ||
+        this.eventType === 'ParticipantChangeBoardEvent'
+      ) {
+        if ($event.board) {
+          if ($event.board.currentValue.id === $event.board.previousValue.id) {
+          } else {
+            this.ideas = [];
+            this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+            this.brainstormService.uncategorizedIdeas = this.ideas;
           }
-        });
+        }
+      } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
       }
-    });
-    return ideas;
-  }
-
-  addIdea(act, existingIdeas) {
-    const newIdeas = this.populateIdeas(act);
-    if (newIdeas.length === existingIdeas.length) {
-    } else {
-      const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
-      existingIdeas.push(myDifferences[0]);
     }
   }
 
-  ideaRemoved(act, existingIdeas) {
-    const newIdeas = this.populateIdeas(act);
-    if (newIdeas.length === existingIdeas.length) {
-    } else {
-      const myDifferences: any = differenceBy(existingIdeas, newIdeas, 'id');
-      remove(existingIdeas, (idea: any) => idea.id === myDifferences[0].id);
+  resetMasonry() {
+    if (this.masonry) {
+      this.masonry.reloadItems();
+      this.masonry.layout();
     }
-  }
-
-  ideaCommented(act, existingIdeas: Array<Idea>) {
-    const newIdeas = this.populateIdeas(act);
-    newIdeas.forEach((newIdea: Idea) => {
-      const existingIdea = find(existingIdeas, { id: newIdea.id });
-      if (existingIdea.comments.length < newIdea.comments.length) {
-        const myDifferences = differenceBy(newIdea.comments, existingIdea.comments, 'id');
-        existingIdea.comments.push(myDifferences[0]);
-      } else if (existingIdea.comments.length > newIdea.comments.length) {
-        const myDifferences: Array<any> = differenceBy(existingIdea.comments, newIdea.comments, 'id');
-        remove(existingIdea.comments, (idea: any) => idea.id === myDifferences[0].id);
-      }
-    });
-  }
-
-  ideaHearted(act, existingIdeas: Array<Idea>) {
-    const newIdeas = this.populateIdeas(act);
-    newIdeas.forEach((newIdea: Idea) => {
-      const existingIdea = find(existingIdeas, { id: newIdea.id });
-      if (existingIdea.hearts.length < newIdea.hearts.length) {
-        const myDifferences = differenceBy(newIdea.hearts, existingIdea.hearts, 'id');
-        existingIdea.hearts.push(myDifferences[0]);
-      } else if (existingIdea.hearts.length > newIdea.hearts.length) {
-        const myDifferences: Array<any> = differenceBy(existingIdea.hearts, newIdea.hearts, 'id');
-        remove(existingIdea.hearts, (idea: any) => idea.id === myDifferences[0].id);
-      }
-    });
-  }
-
-  ideaEdited(act, existingIdeas: Array<Idea>) {
-    const newIdeas = this.populateIdeas(act);
-    newIdeas.forEach((newIdea: Idea, index) => {
-      const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
-      if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
-        existingIdeas.splice(existingIdeaIndex, 1, newIdea);
-      }
-    });
   }
 
   isAbsolutePath(imageUrl: string) {

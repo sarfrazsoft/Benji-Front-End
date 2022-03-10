@@ -25,72 +25,10 @@ export class SidenavComponent implements OnInit {
     section: 1,
     items: [
       {
-        navName: 'My Sessions',
+        navName: 'Sessions',
         navRoute: './',
         permission: '',
-        icon: '/assets/img/navigation/mySessions.svg',
-        hoverIcon: '/assets/img/navigation/mySessionsHover.svg',
-        activeIcon: '/assets/img/navigation/mySessionsActive.svg',
-      },
-      // {
-      //   navName: 'Groups',
-      //   navRoute: './groups'
-      // },
-      // {
-      //   navName: 'Past Sessions',
-      //   navRoute: './pastsessions'
-      // }
-    ],
-  };
-
-  adminSection = {
-    section: 1,
-    items: [
-      {
-        navName: 'Teams',
-        navRoute: './learners',
-        permission: 'admin',
-        disabled: true,
-        icon: null,
-      },
-      // {
-      //   navName: 'Groups',
-      //   navRoute: './groups'
-      // },
-      // {
-      //   navName: 'Past Sessions',
-      //   navRoute: './pastsessions'
-      // }
-    ],
-  };
-  pagesSection = {
-    section: 1,
-    items: [
-      {
-        navName: 'Workshop Pages',
-        navRoute: './pages',
-        permission: 'admin',
-        disabled: false,
-        icon: null,
-      },
-      // {
-      //   navName: 'Groups',
-      //   navRoute: './groups'
-      // },
-      // {
-      //   navName: 'Past Sessions',
-      //   navRoute: './pastsessions'
-      // }
-    ],
-  };
-
-  groupsSection = {
-    section: 2,
-    items: [
-      {
-        navName: 'Participants',
-        navRoute: './participants',
-        icon: '../../../../assets/img/participantIcon.svg',
+        icon: '/assets/img/navigation/user.svg',
       },
     ],
   };
@@ -102,84 +40,6 @@ export class SidenavComponent implements OnInit {
         navName: 'Templates',
         navRoute: './templates',
         icon: '/assets/img/navigation/bulb.svg',
-        hoverIcon: '/assets/img/navigation/bulbHover.svg',
-        activeIcon: '/assets/img/navigation/bulbActive.svg',
-      },
-    ],
-  };
-
-  pastSessionSection = {
-    section: 4,
-    items: [
-      // {
-      //   navName: 'Learners',
-      //   navRoute: './learners',
-      //   permission: 'admin'
-      // }
-      // {
-      //   navName: 'Groups',
-      //   navRoute: './groups'
-      // },
-      {
-        navName: 'Reports',
-        navRoute: './pastsessions',
-        icon: '/assets/img/navigation/reports.svg',
-        hoverIcon: '/assets/img/navigation/reportsHover.svg',
-        activeIcon: '/assets/img/navigation/reportsActive.svg',
-      },
-    ],
-  };
-
-  accountSection = {
-    section: 5,
-    items: [
-      {
-        navName: 'Profile',
-        navRoute: 'account',
-        icon: '/assets/img/navigation/user.svg',
-        hoverIcon: '/assets/img/navigation/userHover.svg',
-        activeIcon: '/assets/img/navigation/userActive.svg',
-      },
-      // {
-      //   navName: 'Settings',
-      //   navRoute: 'settings'
-      // },
-      // {
-      //   navName: 'Help',
-      //   navRoute: 'help'
-      // }
-    ],
-  };
-
-  profile = {
-    section: 6,
-    items: [
-      {
-        navName: 'Profile',
-        navRoute: '',
-      },
-    ],
-  };
-
-  authSection = {
-    section: 7,
-    items: [
-      {
-        navName: 'Logout',
-        navRoute: 'logout',
-        icon: '/assets/img/navigation/logOut.svg',
-        hoverIcon: '/assets/img/navigation/logOutHover.svg',
-      },
-    ],
-  };
-
-  editor = {
-    section: 8,
-    items: [
-      {
-        navName: 'Editor',
-        navRoute: 'editor',
-        icon: '../../../../assets/img/editorIcon.png',
       },
     ],
   };
@@ -191,8 +51,28 @@ export class SidenavComponent implements OnInit {
         navName: 'Help Center',
         navRoute: 'https://guides.mybenji.com/',
         icon: '/assets/img/navigation/help.svg',
-        hoverIcon: '/assets/img/navigation/helpHover.svg',
-        activeIcon: '/assets/img/navigation/helpActive.svg',
+      },
+    ],
+  };
+
+  accountSection = {
+    section: 5,
+    items: [
+      {
+        navName: 'Account',
+        navRoute: 'account',
+        icon: '/assets/img/navigation/account.svg',
+      },
+    ],
+  };
+
+  authSection = {
+    section: 7,
+    items: [
+      {
+        navName: 'Logout',
+        navRoute: 'logout',
+        icon: '/assets/img/navigation/logOut.svg',
       },
     ],
   };
@@ -245,23 +125,11 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavSections = [
         this.dashboard,
-        // this.adminSection,
-        // this.groupsSection,
-        // this.editor,
-        this.pastSessionSection,
-        // this.pagesSection,
+        // this.templatesSection,
+        // this.helpCenter,
         this.accountSection,
-        this.templatesSection,
-        this.helpCenter,
         this.authSection,
-        //
       ];
-      /*if (user.local_admin_permission) {
-
-      } else {
-        this.profile.items[0].navRoute = 'learners/' + user.id;
-        this.sidenavSections = [this.profile, this.accountSection, this.authSection];
-      }*/
     });
   }
 }

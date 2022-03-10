@@ -1,34 +1,51 @@
 <div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
-  <div class="image-area">
-    <div 
+  <div 
+    *ngIf="!imageSelected && !pdfSelected" 
+    class="back-text" 
+    fxLayoutAlign="start center"
+    fxLayoutGap="8px"
+    (click)="closeDialog()" 
+    >
+    <img src="/assets/img/idea-creation/arrow-left.svg"> 
+    <span>Back</span>
+  </div>
+  <div class="image-area" fxLayoutAlign="center center">
+    <!-- <div 
       class="opnClose"
       [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
       [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
-      >
-      <div 
+      > -->
+    <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
+      <!-- <div 
         class="select-image" 
         [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
         [@flyUpDown]="uploadPanelExpanded && data.isMobile ? 'up' : 'down' " 
-        *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded"
-        >
+        *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
+        > -->
+      <div class="select-image">
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
           <div fxLayout="row" fxLayoutGap="16px">
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/scenery-upload.svg"></div>
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div>
             <div 
               class="options" 
               fxLayoutAlign="center center"
-              (click)="openImagePickerDialog()"
-              >
-                <img src="/assets/img/idea-creation/image-icon.svg">
+              (click)="openImagePickerDialog()">
+              <img src="/assets/img/idea-creation/scenery-upload.svg">
             </div>
-            <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div>
+            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
+            
+            
+            <benji-uppy-dashboard
+              [lessonRunCode]="lessonRunCode"
+              (mediaUploaded)="mediaUploaded($event)">
+            </benji-uppy-dashboard>
+            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
+            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div> -->
           </div>
           <div class="add-to-post">Add to your post</div>
         </div>
       </div>
     </div>
-    <div class="preview-image" *ngIf="imageSelected || pdfSelected" fxLayoutAlign="center center">
+    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
       <ng-container *ngIf="imageSrc">
         <ng-container *ngIf="isAbsolutePath(imageSrc); else uploadedImage">
           <img 
@@ -45,41 +62,48 @@
         </ng-template>
       </ng-container>
       <ng-container *ngIf="pdfSelected">
-        <div style="width: 400px;">
+        <div style="width: 100%">
           <ngx-extended-pdf-viewer [src]="pdfSrc" 
             useBrowserLocale="true" 
-            [height]="'350px'">
+            [height]="'512px'">
           </ngx-extended-pdf-viewer>
         </div>
       </ng-container>
+      <ng-container *ngIf="video">
+        <div *ngIf="videoURL">
+          <video style="margin: 0 auto;" width="100%" controls>
+            <source [src]="hostname + videoURL" type="video/mp4" />
+          </video>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="webcamImage">
+        <img 
+            benji-click-stop-propagation
+            [src]="hostname + webcamImageURL" alt="" />
+      </ng-container>
       <div 
-        class="back-arrow" 
+        class="back-circle" 
         fxLayoutAlign="center center"
         *ngIf="imageSelected || pdfSelected"
         (click)="closeDialog()" 
         >
         <img src="/assets/img/idea-creation/arrow-left.svg">
       </div>
-      <button class="remove-button" (click)="remove()">
+      <button *ngIf="userRole === 'owner'" class="remove-button" (click)="remove()">
         Remove
       </button>
     </div>
   </div>
   <div class="content-area">
     <div 
-      class="back-text" 
-      fxLayoutAlign="start center"
-      fxLayoutGap="9px"
-      (click)="closeDialog()" 
-      >
-      <img src="/assets/img/idea-creation/arrow-left.svg"> 
-      <span>Back</span>
-    </div>
-    <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
+      class="idea-creation-controls" 
+      fxLayout="row" 
+      fxLayoutAlign="space-between center"
+      *ngIf="userRole === 'owner'">
       <div fxLayout="row">
         <div class="settings" fxLayout="row"fxLayoutGap="12px">
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div>
-          <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/pin-icon.svg"></div>
+          <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div> -->
+          <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/pin-icon.svg"></div> -->
           <div
             (click)="delete()"
             class="options" 
@@ -94,36 +118,42 @@
           </div>
         </div>
       </div>
-      <button class="post" (click)="onSubmit()">Update</button>
+      <button  class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
     </div>
-    <textarea 
-      class="title" 
-      placeholder="Title" 
-      [(ngModel)]="ideaTitle"
-      cdkTextareaAutosize
-      #autosize="cdkTextareaAutosize"
-      cdkAutosizeMinRows="1"
-      cdkAutosizeMaxRows="5">
-    </textarea>
-    <textarea
-      cdkTextareaAutosize
-      [(ngModel)]="userIdeaText" 
-      class="description"
-      placeholder="Description..."
-      [ngClass]="{
-        'image-selected': imageSelected || pdfSelected
-      }">
-    </textarea>
+    <ng-container *ngIf="userRole === 'owner' || ideaTitle">
+      <textarea 
+        class="title" 
+        placeholder="Title" 
+        [(ngModel)]="ideaTitle"
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="5">
+      </textarea>
+    </ng-container>
+    <ng-container *ngIf="userRole === 'owner' || userIdeaText">
+      <textarea
+        cdkTextareaAutosize
+        [(ngModel)]="userIdeaText" 
+        class="description"
+        placeholder="Description..."
+        [ngClass]="{
+          'image-selected': imageSelected || pdfSelected
+        }">
+      </textarea>
+    </ng-container>
     <div
+      *ngIf="data.showUserName" 
       fxLayoutGap="13px"
-      class="participant" 
+      fxLayout="row"
+      class="participants" 
       fxLayoutAlign="start center">
-      <div 
-        class="initials" 
-        fxLayout="column" 
-        fxLayoutAlign="center center">
-        {{ getInitials(getParticipantName(submitting_participant)) }}
-      </div>
+        <benji-profile-pictures
+          [activityState]="activityState"
+          [participantCodes]="[submitting_participant]"
+          [showTooltip]="false"
+          [size]="'medium'"
+        ></benji-profile-pictures>
       <div class="name"> {{ getParticipantName(submitting_participant) }} </div>
     </div>
     <!-- <img class="close" (click)="closeDialog()" src="/assets/img/idea-creation/close_big.svg">  -->
@@ -133,18 +163,19 @@
         <span>{{ group.title }}</span>
       </div>
       <div class="option">
+        <!-- <div class="dropdown-controls-container" 
+          style="margin-top: 16px;margin-bottom: 16px;color: #0f0f0f;"> -->
         <div class="dropdown-controls-container">
+          <!-- {{ selectedCategory.category_name }} -->
           <ng-select
             class="ps-brainstorm-dropdown-controls"
             [items]="categories"
-            [clearable]="false"
             bindLabel="category_name"
             placeholder="Categories..."
             [(ngModel)]="selectedCategory"
             appendTo="body"
             [searchable]="false"
-            [clearable]="false"
-          >
+            [clearable]="false">
           </ng-select>
         </div>
       </div>
@@ -155,12 +186,12 @@
           <div class="comments-container" >
             <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row" fxLayoutGap="8px">
               <div class="dp">
-                <div 
-                  class="initials" 
-                  fxLayout="column" 
-                  fxLayoutAlign="center center">
-                  {{ getInitials(getParticipantName(comment.participant)) }}
-                </div>
+                <benji-profile-pictures
+                  [activityState]="activityState"
+                  [participantCodes]="[comment.participant]"
+                  [showTooltip]="false"
+                  [size]="'medium'"
+                ></benji-profile-pictures>
               </div>
               <div class="comment-bg" fxLayout="column">
                 <div class="commentor-name"> {{ getParticipantName(comment.participant) }} </div>
@@ -168,26 +199,57 @@
               </div>
             </div>
           </div>
-          <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-            <div class="initials" fxLayout="column" fxLayoutAlign="center center">
-              {{ getInitials(getParticipantName(participantCode)) }}
-            </div>
-            <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
+          <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+            <benji-profile-pictures
+              [activityState]="activityState"
+              [participantCodes]="[participantCode]"
+              [size]="'medium'"
+            ></benji-profile-pictures>
             <div 
-              class="send-comment" 
-              [@enableDisable]="commentInput.value.length ? 'enabled' : 'disabled'"
-              (click)="submitComment(idea.id, commentInput.value); commentInput.value = null"
-              >
-              Post
+              class="comment-input-container detailed" 
+              fxFlex="row" 
+              fxLayoutAlign="start center"
+              [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                placeholder="Add a comment"  
+                class="input-comment detailed"
+                [(ngModel)]="commentModel"
+                (ngModelChange)="commentTyped()"
+                [ngClass]="{'active': commentModel.length}"
+                (focus)="onCommentFocus()"
+                (blur)="onCommentBlur()">
+              </textarea>
+              <div  
+                class="send-comment detailed" 
+                (click)="submitComment(idea.id, commentModel); commentModel = ''"
+                [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
+                Post
+              </div>
             </div>
           </div>
         </div>
       </mat-tab>
       <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
         <ng-container *ngIf="idea?.hearts.length">
-          <div class="person" *ngFor="let heart of idea.hearts">
-            <div class="dp" fxLayoutAlign="center center">{{ getInitials(getParticipantName(heart.participant)) }}</div>
-            <div class="name">{{ getParticipantName(heart.participant) }}</div>
+          <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
+            <div 
+              fxLayout="row"
+              fxLayoutGap="8px"
+              fxLayoutAlign="start center"
+              class="person" 
+              *ngFor="let heart of idea.hearts">
+              <benji-profile-pictures
+                [activityState]="activityState"
+                [participantCodes]="[heart.participant]"
+                [showTooltip]="false"
+                [size]="'medium'"
+              ></benji-profile-pictures>
+              <div class="name">{{ getParticipantName(heart.participant) }}</div>
+            </div>
           </div>
         </ng-container>
       </mat-tab>
@@ -197,12 +259,12 @@
     (click)="previousArrowClicked()"
     class="slide-arrow left" 
     fxLayoutAlign="center center">
-    <img src="/assets/img/idea-creation/arrow-left.svg">
+    <img src="/assets/img/idea-creation/slide-arrow.svg">
   </div>
   <div
     (click)="nextArrowClicked()"
     class="slide-arrow right" 
     fxLayoutAlign="center center">
-    <img src="/assets/img/idea-creation/arrow-right.svg">
+    <img src="/assets/img/idea-creation/slide-arrow.svg">
   </div>
 </div>
