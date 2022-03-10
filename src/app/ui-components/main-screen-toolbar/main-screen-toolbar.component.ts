@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -86,6 +86,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   lessonName: string;
 
   selectedBoard: Board;
+  isHost: boolean;
+  isParticipant: boolean;
 
   constructor(
     public contextService: ContextService,
@@ -117,6 +119,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
     this.showParticipantGroupingButton();
     this.shareParticipantLink = this.hostname + this.roomCode;
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      val? this.isParticipant = true : this.isParticipant = false;
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      val? this.isHost = true : this.isHost = false;
+    });
   }
 
   showParticipantGroupingButton() {
@@ -281,7 +291,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         minBoardOrder = brd.order;
       }
     });
-    return minBoardOrder === this.getHostBoardOrder();
+    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder(); 
+    return minBoardOrder === currenttBoardOrder;
   }
 
   isLastBoard() {
@@ -292,7 +303,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         maxBoardOrder = brd.order;
       }
     });
-    return maxBoardOrder === this.getHostBoardOrder();
+    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder();
+    return maxBoardOrder === currenttBoardOrder;
   }
 
   getHostBoardOrder() {
@@ -306,47 +318,50 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     return hostBoardOrder;
   }
 
+  getParticipantBoardOrder() {
+    let participants:BoardParticipants = this.activityState.brainstormactivity.participants;
+    let participantBoardId;
+    for (var brdId in participants) {
+      participants[brdId].forEach((code) => {
+        if(code==this.participantCode) {
+          participantBoardId = brdId;
+        }
+      });
+    }
+    const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let participantBoardOrder;
+    visibleBrds.forEach((brd: Board) => {
+      if(brd.id == participantBoardId) { participantBoardOrder = brd.order }
+    });
+    return participantBoardOrder;
+  }
+
   changeBoard(move: string) {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    const hostBoardOrder = this.getHostBoardOrder();
+    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder();
     visibleBoards.forEach((brd: Board) => {
-      if (hostBoardOrder + 1 === brd.order && move === 'next') {
+      if (currenttBoardOrder + 1 === brd.order && move === 'next') {
         this.navigateToBoard(brd);
-      } else if (hostBoardOrder - 1 === brd.order && move === 'previous') {
+      } else if (currenttBoardOrder - 1 === brd.order && move === 'previous') {
         this.navigateToBoard(brd);
       }
     });
   }
 
   navigateToBoard(board: Board) {
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
-      }
-    });
-
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.socketMessage.emit(new HostChangeBoardEvent(board.id));
-      }
-    });
+    this.isHost? this.socketMessage.emit(new HostChangeBoardEvent(board.id)) : this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
   }
 
   logoClicked() {
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.router.navigate(['/dashboard/']);
-      }
-    });
-
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-          if (participant.participant_code === this.participantCode && participant.email) {
-            this.router.navigate(['/dashboard/']);
-          }
-        });
-      }
-    });
+    if (this.isHost) {
+      this.router.navigate(['/dashboard/']);
+    }
+    else if (this.isParticipant) {
+      this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+        if (participant.participant_code === this.participantCode && participant.email) {
+          this.router.navigate(['/dashboard/']);
+        }
+      });
+    }
   }
 }
