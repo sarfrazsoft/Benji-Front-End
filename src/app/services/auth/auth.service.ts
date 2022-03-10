@@ -241,4 +241,5 @@ export class AuthService {
         catchError((err) => of(err.error))
       );
   }
+  // end
 }
