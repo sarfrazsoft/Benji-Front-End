@@ -343,23 +343,20 @@ export class BrainstormService {
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
-    existingIdeas = existingIdeas
-      .sort((a: Idea, b: Idea) => {
-        if (a.pinned && !b.pinned) {
-          return 0;
-        } else if (board.sort === 'newest_to_oldest') {
-          return Number(moment(b.time)) - Number(moment(a.time));
-        } else if (board.sort === 'oldest_to_newest') {
-          return Number(moment(a.time)) - Number(moment(b.time));
-        } else if (board.sort === 'likes') {
-          return b.hearts.length - a.hearts.length;
-        } else {
-          return Number(moment(a.time)) - Number(moment(b.time));
-        }
-      })
-      .sort((a: Idea, b: Idea) => {
-        return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-      });
+    existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
+      if (board.sort === 'newest_to_oldest') {
+        return Number(moment(b.time)) - Number(moment(a.time));
+      } else if (board.sort === 'oldest_to_newest') {
+        return Number(moment(a.time)) - Number(moment(b.time));
+      } else if (board.sort === 'likes') {
+        return b.hearts.length - a.hearts.length;
+      } else {
+        return Number(moment(a.time)) - Number(moment(b.time));
+      }
+    });
+    existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
+      return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+    });
     return existingIdeas;
   }
 
