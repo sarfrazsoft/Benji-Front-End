@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
@@ -343,18 +343,40 @@ export class BrainstormService {
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
-    existingIdeas = existingIdeas.sort((a, b) => {
-      if (board.sort === 'newest_to_oldest') {
-        return Number(moment(b.time)) - Number(moment(a.time));
-      } else if (board.sort === 'oldest_to_newest') {
-        return Number(moment(a.time)) - Number(moment(b.time));
-      } else if (board.sort === 'likes') {
-        return b.hearts.length - a.hearts.length;
-      } else {
-        return Number(moment(a.time)) - Number(moment(b.time));
+    existingIdeas = existingIdeas
+      .sort((a: Idea, b: Idea) => {
+        if (a.pinned && !b.pinned) {
+          return 0;
+        } else if (board.sort === 'newest_to_oldest') {
+          return Number(moment(b.time)) - Number(moment(a.time));
+        } else if (board.sort === 'oldest_to_newest') {
+          return Number(moment(a.time)) - Number(moment(b.time));
+        } else if (board.sort === 'likes') {
+          return b.hearts.length - a.hearts.length;
+        } else {
+          return Number(moment(a.time)) - Number(moment(b.time));
+        }
+      })
+      .sort((a: Idea, b: Idea) => {
+        return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+      });
+    return existingIdeas;
+  }
+
+  uncategorizedUpdateIdeasPin(board: Board, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    newIdeas.forEach((newIdea: Idea) => {
+      const existingIdea = find(existingIdeas, { id: newIdea.id });
+      if (newIdea.pinned) {
+        if (!existingIdea.pinned) {
+          existingIdea.pinned = true;
+        }
+      } else if (!newIdea.pinned) {
+        if (existingIdea.pinned) {
+          existingIdea.pinned = false;
+        }
       }
     });
-    return existingIdeas;
   }
 
   saveDraftComment(commentKey: string, commentText: string) {

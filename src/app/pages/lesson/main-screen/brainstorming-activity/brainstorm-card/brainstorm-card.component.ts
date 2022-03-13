@@ -29,8 +29,10 @@ import { ActivitiesService, BrainstormService } from 'src/app/services/activitie
 import {
   Board,
   BrainstormActivity,
+  BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
+  BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Idea,
@@ -171,6 +173,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           this.deleteIdea.emit(id);
         }
       });
+  }
+
+  pin(id) {
+    this.sendMessage.emit(new BrainstormAddIdeaPinEvent(id));
+  }
+
+  unpin(id) {
+    this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(id));
   }
 
   isAbsolutePath(imageUrl: string) {

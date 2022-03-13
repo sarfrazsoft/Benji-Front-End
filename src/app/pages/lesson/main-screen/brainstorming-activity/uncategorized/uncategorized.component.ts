@@ -115,6 +115,14 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.masonry?.reloadItems();
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
         this.masonry?.layout();
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
       }
     }
   }

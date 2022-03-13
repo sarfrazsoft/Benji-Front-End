@@ -1,4 +1,6 @@
 <ng-container *ngIf="item">
+  <div *ngIf="!item.pinned" (click)="pin(item.id)">pin me </div>
+  <div *ngIf="item.pinned" (click)="unpin(item.id)">unpin</div>
   <div
     *ngIf="!item.removed"
     class="brainstorm-idea"

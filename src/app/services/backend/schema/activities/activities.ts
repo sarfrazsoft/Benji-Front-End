@@ -366,6 +366,7 @@ export interface Idea {
   submitting_participant: ParticipantCode;
   idea_image: IdeaDocument;
   showClose?: boolean;
+  pinned: boolean;
   editing?: boolean;
   addingIdea?: boolean;
   comments: Array<{ id: number; participant: number; comment: string }>;

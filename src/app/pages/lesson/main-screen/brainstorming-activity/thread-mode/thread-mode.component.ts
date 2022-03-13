@@ -114,6 +114,8 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
             this.brainstormService.uncategorizedIdeas = this.ideas;
           }
         }
+      } else if (this.eventType === 'BrainstormAddIdeaPinEvent') {
+      } else if (this.eventType === 'BrainstormRemoveIdeaPinEvent') {
       }
     }
   }
