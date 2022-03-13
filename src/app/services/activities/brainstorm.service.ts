@@ -110,6 +110,10 @@ export class BrainstormService {
           return Number(moment(a.time)) - Number(moment(b.time));
         }
       });
+
+      col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
+        return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+      });
     }
     return columns;
   }
@@ -263,6 +267,38 @@ export class BrainstormService {
       }
     });
     return existingCategories;
+  }
+
+  updateIdeasPin(act: Board, existingCategories) {
+    act.brainstormcategory_set.forEach((category, categoryIndex) => {
+      if (category.brainstormidea_set) {
+        existingCategories.forEach((existingCategory) => {
+          if (existingCategory.id === category.id) {
+            const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+            BEIdeas.forEach((newIdea, ideaIndex) => {
+              const existingIdeas: Array<Idea> = existingCategory.brainstormidea_set;
+              let correspondingExistingIdea;
+              for (const existingIdea of existingIdeas) {
+                if (existingIdea.id === newIdea.id) {
+                  correspondingExistingIdea = existingIdea;
+                  break;
+                }
+              }
+
+              if (newIdea.pinned) {
+                if (!correspondingExistingIdea.pinned) {
+                  correspondingExistingIdea.pinned = true;
+                }
+              } else if (!newIdea.pinned) {
+                if (correspondingExistingIdea.pinned) {
+                  correspondingExistingIdea.pinned = false;
+                }
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   // Uncategorized

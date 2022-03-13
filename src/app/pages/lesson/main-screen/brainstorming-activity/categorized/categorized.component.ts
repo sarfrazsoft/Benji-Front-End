@@ -136,6 +136,13 @@ export class CategorizedComponent implements OnInit, OnChanges {
             this.columns = this.brainstormService.populateCategories(this.board, this.columns);
           }
         }
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.updateIdeasPin(this.board, this.columns);
+
+        this.sortAndResetMasonry();
       }
     }
   }
