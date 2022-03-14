@@ -109,6 +109,7 @@
           Oops! What should we call you? Drop in your name.<br />
         </p>
         <input type="text"
+          placeholder="Enter your name"
           [formControl]="username">
         <!-- <div class="label"> Choose your avatar </div>
         <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
@@ -117,12 +118,21 @@
           <img class="edit-pen" src="/assets/img/edit-pen.svg">
           <div class="change-profile">Change profile</div>
         </div> -->
-        <div class="bg-primary-color button"
+        <div 
+          class="bg-primary-color button"
+          fxLayoutAlign="center center"
           (click)="createUser()"
           [ngClass]="{
-            active: isNameValid(),
-            inactive: !isNameValid()
-          }">Join
+            active: username.value,
+            inactive: !username.value
+          }">Join as guest
+        </div>
+        <div class="or">or</div>
+        <div 
+          class="bg-primary-color button"
+          fxLayoutAlign="center center"
+          (click)="createUser()"
+          >Join as member
         </div>
       </div>
       <div *ngIf="participantLobbyScreeen" class="session-joined" fxLayout="column" fxLayoutAlign="center center">
