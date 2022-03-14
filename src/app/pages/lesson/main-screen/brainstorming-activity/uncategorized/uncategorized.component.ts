@@ -77,7 +77,14 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         } else {
           this.masonryPrepend = false;
         }
-        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
+          setTimeout(() => {
+            this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+            this.masonry?.reloadItems();
+            console.log('hh');
+            this.masonry?.layout();
+          }, 50);
+        });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'

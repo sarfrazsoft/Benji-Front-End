@@ -329,12 +329,13 @@ export class BrainstormService {
     return this.uncategorizedSortIdeas(board, ideas);
   }
 
-  uncategorizedAddIdea(board, existingIdeas) {
+  uncategorizedAddIdea(board, existingIdeas, callback) {
     const newIdeas = this.uncategorizedPopulateIdeas(board);
     if (newIdeas.length === existingIdeas.length) {
     } else {
       const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
       existingIdeas.push(myDifferences[0]);
+      callback();
     }
   }
 
