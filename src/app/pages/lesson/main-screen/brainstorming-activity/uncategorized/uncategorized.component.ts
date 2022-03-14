@@ -129,6 +129,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.masonry?.reloadItems();
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
         this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
       }
     }
   }

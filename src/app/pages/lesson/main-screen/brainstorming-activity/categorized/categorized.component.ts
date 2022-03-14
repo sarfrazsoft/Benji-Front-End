@@ -141,8 +141,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormRemoveIdeaPinEvent'
       ) {
         this.brainstormService.updateIdeasPin(this.board, this.columns);
-
         this.sortAndResetMasonry();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
       }
     }
   }
@@ -153,6 +154,13 @@ export class CategorizedComponent implements OnInit, OnChanges {
       const element = this.masonryComponents.toArray()[i];
       element.layout();
       element.reloadItems();
+    }
+  }
+
+  refreshMasonryLayout() {
+    for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
+      const element = this.masonryComponents.toArray()[i];
+      element.layout();
     }
   }
 

@@ -122,7 +122,15 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.masonry?.reloadItems();
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
         this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
       }
+    }
+  }
+
+  refreshMasonryLayout() {
+    if (this.masonry) {
+      this.masonry.layout();
     }
   }
 
