@@ -175,10 +175,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       });
   }
 
-  pin(id) {
-    this.sendMessage.emit(new BrainstormAddIdeaPinEvent(id));
-  }
-
   unpin(id) {
     this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(id));
   }

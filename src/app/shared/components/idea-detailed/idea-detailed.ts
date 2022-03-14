@@ -18,6 +18,7 @@ import XHRUpload from '@uppy/xhr-upload';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  BrainstormAddIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   Category,
   Group,
@@ -373,6 +374,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
     return (first + second).toUpperCase();
+  }
+
+  pin() {
+    this.sendMessage.emit(new BrainstormAddIdeaPinEvent(this.idea.id));
   }
 
   delete() {

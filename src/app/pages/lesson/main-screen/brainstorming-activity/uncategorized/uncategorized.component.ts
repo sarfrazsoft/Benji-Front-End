@@ -81,7 +81,6 @@ export class UncategorizedComponent implements OnInit, OnChanges {
           setTimeout(() => {
             this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
             this.masonry?.reloadItems();
-            console.log('hh');
             this.masonry?.layout();
           }, 50);
         });
