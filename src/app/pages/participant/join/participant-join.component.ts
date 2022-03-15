@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import * as global from 'src/app/globals';
 import { BackendRestService } from 'src/app/services';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { BeforeLessonRunDetails, LessonRunDetails } from 'src/app/services/backend/schema/course_details';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-participant-join',
@@ -67,11 +67,7 @@ export class ParticipantJoinComponent implements OnInit {
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
         // take the user to next screen where they will input their name
-        // const linkToNavigateTo = this.hostname + this.roomCode.value;
-        // localhost:4200/participant/join?link=39622
-        // this.router.navigate([''], { queryParams: { link: this.roomCode.value } });
         this.router.navigateByUrl('/participant/join?link=' + this.roomCode.value);
-        // this.router.navigate([linkToNavigateTo]);
       },
       (err) => {
         console.error(`Unable to join: ${err.error.error}`);
