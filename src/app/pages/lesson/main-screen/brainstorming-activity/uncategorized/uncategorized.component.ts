@@ -129,6 +129,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.masonry?.reloadItems();
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
         this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
       }
     }
   }
@@ -136,6 +138,12 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   resetMasonry() {
     if (this.masonry) {
       this.masonry.reloadItems();
+      this.masonry.layout();
+    }
+  }
+
+  refreshMasonryLayout() {
+    if (this.masonry) {
       this.masonry.layout();
     }
   }
