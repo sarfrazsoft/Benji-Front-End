@@ -19,6 +19,7 @@ import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   BrainstormAddIdeaPinEvent,
+  BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   Category,
   Group,
@@ -378,6 +379,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   pin() {
     this.sendMessage.emit(new BrainstormAddIdeaPinEvent(this.idea.id));
+  }
+  
+  unpin() {
+    this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(this.idea.id));
   }
 
   delete() {

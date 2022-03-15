@@ -111,6 +111,14 @@
               fxLayoutAlign="center center">
               <img src="/assets/img/idea-creation/pin-icon.svg">
             </div>
+            <div
+              *ngIf="idea.pinned"
+              [ngClass]="{'pinned': idea.pinned}"
+              class="options"
+              (click)="unpin()"
+              fxLayoutAlign="center center">
+              <img src="/assets/img/idea-creation/pinned.svg">
+            </div>
           </ng-container>
           <div
             (click)="delete()"

@@ -69,9 +69,9 @@ benji-ms-brainstorming-activity {
         margin-top: 16px;
       }
       .delete-icon {
-        position: absolute;
-        right: 10px;
-        top: 10px;
+        // position: absolute;
+        // right: 10px;
+        // top: 10px;
         background: transparent;
         cursor: pointer;
         transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -370,21 +370,36 @@ benji-categorized-ideas {
   width: 264px;
   max-width: 264px;
   overflow-x: auto;
-  .delete-icon {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background: transparent;
-    cursor: pointer;
-    transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  &.show-user {
-    padding-bottom: 8px;
-  }
-  .username {
-    text-align: right;
-    margin-top: 16px;
-    font-size: 12px;
+  .card-header {
+    height: 40px;
+    padding: 0 8px;
+    .delete-icon {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      z-index: 2;
+      background: transparent;
+      cursor: pointer;
+      transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+    &.show-user {
+      padding-bottom: 8px;
+    }
+    &.hidden {
+      height: 0px;
+    }
+    .username {
+      text-align: right;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+    img.pin {
+      margin-right: 4px;
+      transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
+      &.move-left {
+        margin-right: 36px;
+      }
+    }
   }
   pdf-viewer {
     height: 100%;
@@ -524,7 +539,7 @@ benji-categorized-ideas {
 }
 
 .user-name {
-  padding: 8px 12px;
+  //padding: 8px 12px;
   .name {
     font-size: 14px;
     font-weight: 600;

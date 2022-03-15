@@ -716,6 +716,12 @@
             &:hover {
               background: #dedede;
             }
+            &.pinned {
+              background: #555BEA;
+              &:hover {
+                background: #555BEA;
+              }
+            }
           }
         }
         .post {

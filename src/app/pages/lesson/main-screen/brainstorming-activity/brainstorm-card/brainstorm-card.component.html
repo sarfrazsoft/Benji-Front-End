@@ -1,6 +1,4 @@
 <ng-container *ngIf="item">
-  <div *ngIf="!item.pinned">unpinned </div>
-  <div *ngIf="item.pinned" (click)="unpin(item.id)">unpin</div>
   <div
     *ngIf="!item.removed"
     class="brainstorm-idea"
@@ -9,26 +7,46 @@
     [cdkDragDisabled]="!categorizeFlag"
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false">
-    <mat-icon
-      *ngIf="userRole === 'owner'"
-      benji-click-stop-propagation
-      class="delete-icon"
-      [style.opacity]="item.showClose ? 1 : 0"
-      (click)="delete(item.id)">
-      clear
-    </mat-icon>
-    <div *ngIf="showUserName" class="user-name">
-      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <benji-profile-pictures
-          [activityState]="activityState"
-          [participantCodes]="[submittingUser]"
-          [showTooltip]="false"
-          [size]="avatarSize"
-        ></benji-profile-pictures>
-        <div class="name">
-          {{ getPersonName(item) }}
+    <div 
+      class="card-header" 
+      [ngClass]="{'hidden': !item.pinned && !showUserName}" 
+      fxLayoutAlign="space-between center">
+      <div *ngIf="showUserName" class="user-name">
+        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <benji-profile-pictures
+            [activityState]="activityState"
+            [participantCodes]="[submittingUser]"
+            [showTooltip]="false"
+            [size]="avatarSize"
+          ></benji-profile-pictures>
+          <div class="name">
+            {{ getPersonName(item) }}
+          </div>
+        </div> 
+      </div>
+      <div *ngIf="!showUserName && item.pinned">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <img 
+            *ngIf="item.pinned"
+            (click)="unpin(item.id)"
+            src="/assets/img/idea-creation/blue-pin.svg">
+          <span>Pinned by host</span>
         </div>
-      </div> 
+      </div>
+      <img 
+        *ngIf="item.pinned && showUserName"
+        (click)="unpin(item.id)"
+        class="pin" 
+        [ngClass]="{'move-left': item.showClose}"
+        src="/assets/img/idea-creation/blue-pin.svg">
+      <mat-icon
+        *ngIf="userRole === 'owner'"
+        benji-click-stop-propagation
+        class="delete-icon"
+        [style.opacity]="item.showClose ? 1 : 0"
+        (click)="delete(item.id)">
+        clear
+      </mat-icon>
     </div>
     <!-- brainstorm card media -->
     <ng-container>
