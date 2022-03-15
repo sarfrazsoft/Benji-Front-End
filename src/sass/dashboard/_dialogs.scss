@@ -711,6 +711,7 @@
             width: 40px;
             height: 40px;
             cursor: pointer;
+            position: relative;
             border-radius: 12px;
             background: #e7e7e7;
             &:hover {
@@ -720,6 +721,13 @@
               background: #555BEA;
               &:hover {
                 background: #555BEA;
+              }
+            }
+            &.pinned, &.unpinned {
+              img {
+                top: 10px;
+                left: 10px;
+                position: absolute;
               }
             }
           }
