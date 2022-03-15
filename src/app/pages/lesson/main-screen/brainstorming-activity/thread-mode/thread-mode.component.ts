@@ -81,7 +81,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
           this.masonryPrepend = false;
         }
-        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {});
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
@@ -114,7 +114,23 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
             this.brainstormService.uncategorizedIdeas = this.ideas;
           }
         }
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
       }
+    }
+  }
+
+  refreshMasonryLayout() {
+    if (this.masonry) {
+      this.masonry.layout();
     }
   }
 

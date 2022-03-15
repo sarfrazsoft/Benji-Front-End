@@ -36,14 +36,12 @@ benji-ms-brainstorming-activity {
           min-width: 544px;
           width: 544px;
           margin: 0 auto;
-          // position: relative;
           .brainstorm-idea-item {
             margin-right: 0px;
           }
           .brainstorm-idea {
             min-width: 544px;
             margin: 0px auto;
-            // margin-bottom: 16px;
             .comment {
               font-size: 14px;
             }
@@ -71,7 +69,8 @@ benji-ms-brainstorming-activity {
       .delete-icon {
         position: absolute;
         right: 10px;
-        top: 10px;
+        top: 8px;
+        z-index: 2;
         background: transparent;
         cursor: pointer;
         transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
@@ -139,7 +138,6 @@ benji-ms-brainstorming-activity {
 
         .ideas {
           overflow-y: auto;
-          //min-width: 400px;
           position: absolute;
           height: calc(100% - 80px);
           .brainstorm-idea {
@@ -153,11 +151,6 @@ benji-ms-brainstorming-activity {
             &:hover {
               background-color: #f2f2f2;
             }
-            // mat-icon {
-            //   left: 50%;
-            //   top: 50%;
-            //   transform: translate(-50%, -50%);
-            // }
           }
           .add-idea {
             textarea {
@@ -198,12 +191,9 @@ benji-ms-brainstorming-activity {
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;
-        //flex-direction: column;
         flex-direction: row;
         overflow-x: auto;
         padding-left: 0;
-        // height: 100%;
-        //height: 97%;
         padding-top: 16px;
         li {
           position: relative;
@@ -301,13 +291,11 @@ benji-ms-brainstorming-activity {
     border-radius: 5px;
     overflow: auto;
     background-color: #fff;
-    // padding: 32px 24px;
     padding: 8px 16px;
     box-sizing: border-box;
     .participant-view-hide-trigger-container {
       position: relative;
       .participant-view-hide-trigger {
-        // position: absolute;
         right: 24px;
         width: 15px;
         height: 15px;
@@ -343,9 +331,6 @@ benji-ms-brainstorming-activity {
     }
   }
 }
-// .cdk-drag-animating {
-//   transition: transform 190000ms cubic-bezier(0, 0, 0.2, 1);
-// }
 benji-categorized-ideas {
   .ideas-list-container {
     width: 264px;
@@ -358,7 +343,6 @@ benji-categorized-ideas {
   min-height: 50px;
   background-color: white;
   border: 1px solid #e2e0df;
-  //margin: 0px 8px 16px 8px;
   border-radius: 8px;
   -moz-box-sizing: border-box;
   display: block;
@@ -370,21 +354,36 @@ benji-categorized-ideas {
   width: 264px;
   max-width: 264px;
   overflow-x: auto;
-  .delete-icon {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background: transparent;
-    cursor: pointer;
-    transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  &.show-user {
-    padding-bottom: 8px;
-  }
-  .username {
-    text-align: right;
-    margin-top: 16px;
-    font-size: 12px;
+  .card-header {
+    height: 40px;
+    padding: 0 8px;
+    .delete-icon {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      z-index: 2;
+      background: transparent;
+      cursor: pointer;
+      transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+    &.show-user {
+      padding-bottom: 8px;
+    }
+    &.hidden {
+      height: 0px;
+    }
+    .username {
+      text-align: right;
+      margin-top: 16px;
+      font-size: 12px;
+    }
+    img.pin {
+      margin-right: 4px;
+      transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
+      &.move-left {
+        margin-right: 36px;
+      }
+    }
   }
   pdf-viewer {
     height: 100%;
@@ -420,7 +419,6 @@ benji-categorized-ideas {
       margin-right: 4px;
     }
     span {
-      //font-size: 16px;
       color: #bdbdbd;
     }
     .user-feed {
@@ -509,7 +507,6 @@ benji-categorized-ideas {
     }
   }
   .send-comment {
-    //margin: 0px 8px 8px 0px;
     font-weight: 600;
     font-size: 12px;
     color: #555bea;
@@ -524,7 +521,6 @@ benji-categorized-ideas {
 }
 
 .user-name {
-  padding: 8px 12px;
   .name {
     font-size: 14px;
     font-weight: 600;
@@ -689,10 +685,6 @@ benji-ps-brainstorming-activity {
   max-width: 840px;
 }
 .barinstorm-main {
-  // margin: 13px 24px 33px 24px;
-  // background-color: #fff;
-  // border-radius: 16px 16px 0px 0px;
-  // height: 98%;
   .barinstorm-header {
     padding: 16px 64px 16px 32px;
     border-bottom: 1px solid #e7e7e7;
@@ -739,7 +731,6 @@ benji-ps-brainstorming-activity {
 ng-select.brainstorm-groups {
   .ng-select-container {
     background: #f3f4f7;
-    //box-shadow: 1px 1px 1px rgba(213, 217, 222, 0.5);
     border-radius: 8px;
     border: 0px;
     padding: 0px 6px;
@@ -787,10 +778,6 @@ ng-dropdown-panel {
     }
   }
   .barinstorm-main {
-    // margin: 0px;
-    // background-color: #fff;
-    // border-radius: 0px;
-    // height: 100%;
     .barinstorm-header {
       place-content: start !important;
       align-items: start !important;

@@ -174,7 +174,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
         // this.showUserName = val.state;
-       // this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
+        // this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
       }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());

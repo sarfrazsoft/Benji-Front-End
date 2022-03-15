@@ -572,6 +572,14 @@ export class BrainstormRemoveSubmissionEvent extends ActivityEvent {
   }
 }
 
+export class BrainstormAddIdeaPinEvent extends BrainstormRemoveSubmissionEvent {
+  event_name = 'BrainstormAddIdeaPinEvent';
+}
+
+export class BrainstormRemoveIdeaPinEvent extends BrainstormRemoveSubmissionEvent {
+  event_name = 'BrainstormRemoveIdeaPinEvent';
+}
+
 export class BrainstormRenameCategoryEvent extends ActivityEvent {
   event_name = 'BrainstormRenameCategoryEvent';
 
