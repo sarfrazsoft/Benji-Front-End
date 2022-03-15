@@ -23,6 +23,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { take } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
@@ -112,7 +113,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private ngxPermissionsService: NgxPermissionsService
   ) {
     // super();
   }
@@ -176,7 +178,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   unpin(id) {
-    this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(id));
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(id));
+      }
+    });
   }
 
   isAbsolutePath(imageUrl: string) {

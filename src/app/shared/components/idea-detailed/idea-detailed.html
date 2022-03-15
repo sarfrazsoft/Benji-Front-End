@@ -106,10 +106,17 @@
           <ng-container *ngxPermissionsOnly="'ADMIN'">
             <div
               *ngIf="!idea.pinned"
+              [ngClass]="{'unpinned': !idea.pinned}"
               class="options"
-              (click)="pin()"
-              fxLayoutAlign="center center">
+              (click)="pin()">
               <img src="/assets/img/idea-creation/pin-icon.svg">
+            </div>
+            <div
+              *ngIf="idea.pinned"
+              [ngClass]="{'pinned': idea.pinned}"
+              class="options"
+              (click)="unpin()">
+              <img src="/assets/img/idea-creation/pinned.svg">
             </div>
           </ng-container>
           <div
