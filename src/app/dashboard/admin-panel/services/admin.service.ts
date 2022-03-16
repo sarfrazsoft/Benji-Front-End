@@ -89,8 +89,9 @@ export class AdminService {
           boards: [
             {
               name: 'test1',
-              order: 0,
               remove: false,
+              previous_board: null,
+              next_board: null,
               categorized: false,
               board_activity: {
                 categorized: false,

@@ -311,7 +311,8 @@ export interface Board {
   board_activity: BoardInfo;
   id: number;
   name: string;
-  order: number;
+  previous_board: number;
+  next_board: number;
   removed: boolean;
   status: string;
   sort: BoardSort;

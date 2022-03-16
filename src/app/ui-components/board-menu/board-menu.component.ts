@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { find } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
@@ -132,8 +133,29 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   initializeBoards() {
-    const boards = this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-    this.boards = boards.sort((a, b) => a.order - b.order);
+    const unSortedBoards: Array<Board> = this.activityState.brainstormactivity.boards.filter(
+      (board) => board.removed === false
+    );
+    let firstBoard;
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      const board = unSortedBoards[i];
+      if (board.previous_board === null) {
+        firstBoard = board;
+      }
+    }
+    const boards: Array<Board> = [];
+    boards.push(firstBoard);
+    for (let i = 0; i < boards.length; i++) {
+      const sortedBoard = boards[i];
+      for (let j = 0; j < unSortedBoards.length; j++) {
+        const unSortedBoard = unSortedBoards[j];
+        if (sortedBoard.next_board === unSortedBoard.id) {
+          boards.push(unSortedBoard);
+          break;
+        }
+      }
+    }
+    this.boards = boards;
   }
 
   getBoardParticipantCodes(board: Board) {
@@ -144,11 +166,13 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
-  addBoard(boardIndex: number) {
+  addBoard(previousBoard: Board) {
+    console.log(previousBoard);
     this.sendMessage.emit(
       new BrainstormAddBoardEventBaseEvent(
         'Board ' + this.boards.length,
-        boardIndex + 1,
+        previousBoard.id,
+        previousBoard.next_board,
         'Untitled Board ' + this.boards.length,
         'Sub Instructions'
       )

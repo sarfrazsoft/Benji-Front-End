@@ -947,11 +947,18 @@ export class BrainstormEditSubInstructionEvent extends ActivityEvent {
 }
 export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
   event_name = 'BrainstormAddBoardEventBaseEvent';
-  constructor(name: string, order: number, instructions: string, sub_instructions: string) {
+  constructor(
+    name: string,
+    previousBoard: number,
+    nextBoard: number,
+    instructions: string,
+    sub_instructions: string
+  ) {
     super();
     this.extra_args = {
       name: name,
-      order: order,
+      previous_board: previousBoard,
+      next_board: nextBoard,
       instructions: instructions,
       sub_instructions: sub_instructions,
     };

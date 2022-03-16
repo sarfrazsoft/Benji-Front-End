@@ -284,41 +284,28 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   isFirstBoard() {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let minBoardOrder = 0;
-    visibleBoards.forEach((brd: Board) => {
-      if (brd.order < minBoardOrder) {
-        minBoardOrder = brd.order;
-      }
-    });
-    const currenttBoardOrder = this.isHost ? this.getHostBoardOrder() : this.getParticipantBoardOrder();
-    return minBoardOrder === currenttBoardOrder;
+    const currentBoard: Board = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
+
+    return currentBoard ? currentBoard.previous_board === null : false;
   }
 
   isLastBoard() {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let maxBoardOrder = 0;
-    visibleBoards.forEach((brd: Board) => {
-      if (brd.order > maxBoardOrder) {
-        maxBoardOrder = brd.order;
-      }
-    });
-    const currenttBoardOrder = this.isHost ? this.getHostBoardOrder() : this.getParticipantBoardOrder();
-    return maxBoardOrder === currenttBoardOrder;
+    const currentBoard: Board = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
+    return currentBoard ? currentBoard.next_board === null : false;
   }
 
-  getHostBoardOrder() {
+  getHostBoard(): Board {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let hostBoardOrder;
+    let hostBoard;
     visibleBoards.forEach((brd: Board) => {
       if (this.activityState.brainstormactivity.host_board === brd.id) {
-        hostBoardOrder = brd.order;
+        hostBoard = brd;
       }
     });
-    return hostBoardOrder;
+    return hostBoard;
   }
 
-  getParticipantBoardOrder() {
+  getParticipantBoard(): Board {
     const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
     let participantBoardId;
     for (const brdId in participants) {
@@ -329,31 +316,32 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       });
     }
     const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let participantBoardOrder;
+    let participantBoard;
     visibleBrds.forEach((brd: Board) => {
       if (brd.id === participantBoardId) {
-        participantBoardOrder = brd.order;
+        participantBoard = brd;
       }
     });
-    return participantBoardOrder;
+    return participantBoard;
   }
 
-  changeBoard(move: string) {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    const currenttBoardOrder = this.isHost ? this.getHostBoardOrder() : this.getParticipantBoardOrder();
-    visibleBoards.forEach((brd: Board) => {
-      if (currenttBoardOrder + 1 === brd.order && move === 'next') {
-        this.navigateToBoard(brd);
-      } else if (currenttBoardOrder - 1 === brd.order && move === 'previous') {
-        this.navigateToBoard(brd);
+  changeBoard(move: 'next' | 'previous') {
+    const currentBoard = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
+    if (move === 'next') {
+      if (currentBoard.next_board) {
+        this.navigateToBoard(currentBoard.next_board);
       }
-    });
+    } else if (move === 'previous') {
+      if (currentBoard.previous_board) {
+        this.navigateToBoard(currentBoard.previous_board);
+      }
+    }
   }
 
-  navigateToBoard(board: Board) {
+  navigateToBoard(boardId: number) {
     this.isHost
-      ? this.socketMessage.emit(new HostChangeBoardEvent(board.id))
-      : this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
+      ? this.socketMessage.emit(new HostChangeBoardEvent(boardId))
+      : this.socketMessage.emit(new ParticipantChangeBoardEvent(boardId));
   }
 
   logoClicked() {
