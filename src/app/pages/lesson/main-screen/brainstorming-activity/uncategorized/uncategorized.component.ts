@@ -89,6 +89,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
       ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
+        this.refreshMasonryLayout();
       } else if (
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
@@ -102,9 +103,9 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormClearBoardIdeaEvent'
       ) {
         this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
-        // this.resetMasonry();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
+        this.refreshMasonryLayout();
       } else if (
         this.eventType === 'HostChangeBoardEvent' ||
         this.eventType === 'ParticipantChangeBoardEvent'

@@ -259,7 +259,12 @@ export class BrainstormService {
               const existingVersionNo = correspondingExistingIdea.version;
               const newVersionNo = newIdea.version;
               if (existingVersionNo < newVersionNo) {
-                existingCategory.brainstormidea_set.splice(ideaIndex, 1, newIdea);
+                correspondingExistingIdea.version = newIdea.version;
+                correspondingExistingIdea.title = newIdea.title;
+                correspondingExistingIdea.idea = newIdea.idea;
+                correspondingExistingIdea.idea_document = newIdea.idea_document;
+                correspondingExistingIdea.idea_image = newIdea.idea_image;
+                correspondingExistingIdea.idea_video = newIdea.idea_video;
               }
             });
           }
@@ -374,7 +379,12 @@ export class BrainstormService {
     newIdeas.forEach((newIdea: Idea, index) => {
       const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
       if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
-        existingIdeas.splice(existingIdeaIndex, 1, newIdea);
+        existingIdeas[existingIdeaIndex].version = newIdea.version;
+        existingIdeas[existingIdeaIndex].title = newIdea.title;
+        existingIdeas[existingIdeaIndex].idea = newIdea.idea;
+        existingIdeas[existingIdeaIndex].idea_document = newIdea.idea_document;
+        existingIdeas[existingIdeaIndex].idea_image = newIdea.idea_image;
+        existingIdeas[existingIdeaIndex].idea_video = newIdea.idea_video;
       }
     });
   }

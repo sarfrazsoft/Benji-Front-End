@@ -87,6 +87,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
       ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
+        this.masonry?.layout();
       } else if (
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
@@ -100,6 +101,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormClearBoardIdeaEvent'
       ) {
         this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
+        this.masonry?.layout();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
       } else if (
