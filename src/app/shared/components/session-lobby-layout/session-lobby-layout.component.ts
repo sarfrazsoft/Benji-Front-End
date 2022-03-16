@@ -1,12 +1,16 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 
-import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
+import { HttpClient } from '@angular/common/http';
 import * as global from 'src/app/globals';
-import { HttpClient } from "@angular/common/http";
-import { BeforeLessonRunDetails, LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
+import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
+import {
+  BeforeLessonRunDetails,
+  LessonRunDetails,
+  Participant,
+} from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -14,7 +18,6 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: './session-lobby-layout.component.html',
 })
 export class SessionLobbyLayoutComponent implements OnInit {
-
   @Input() beforeLessonRunDetails: BeforeLessonRunDetails;
   @Input() participantJoinScreeen;
   @Input() participantLobbyScreeen;
@@ -45,9 +48,8 @@ export class SessionLobbyLayoutComponent implements OnInit {
     private authService: AuthService,
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
-    private http: HttpClient,
-  ) {
-  }
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     if (this.route.snapshot.queryParams['link']) {
@@ -120,8 +122,8 @@ export class SessionLobbyLayoutComponent implements OnInit {
       (res: Participant) => {
         this.loginError = false;
         if (res.lessonrun_code) {
-          if (localStorage.getItem('benji_facilitator')) {
-            localStorage.removeItem('benji_facilitator');
+          if (localStorage.getItem('user')) {
+            localStorage.removeItem('user');
           }
 
           this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
@@ -151,12 +153,12 @@ export class SessionLobbyLayoutComponent implements OnInit {
 
   getInitials(nameString: string) {
     const fullName = nameString.split(' ');
-    let first = fullName[0]? fullName[0].charAt(0) : '';
-    if(fullName.length === 1) {
-      return (first).toUpperCase();  
+    const first = fullName[0] ? fullName[0].charAt(0) : '';
+    if (fullName.length === 1) {
+      return first.toUpperCase();
     }
-    let second = fullName[fullName.length-1]? fullName[fullName.length-1].charAt(0) : '';
-    return (first+second).toUpperCase();
+    const second = fullName[fullName.length - 1] ? fullName[fullName.length - 1].charAt(0) : '';
+    return (first + second).toUpperCase();
   }
 
   copyLink(val: string) {
@@ -167,8 +169,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     // if (this.activityState.lesson_run.participant_set.length < 2) {
     //   this.openLowAttendanceDialog();
     // } else {
-    this.startLessonEvent.emit("startLesson");
+    this.startLessonEvent.emit('startLesson');
     // }
   }
-
 }

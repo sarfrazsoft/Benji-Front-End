@@ -50,7 +50,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     if (localStorage.getItem('participant')) {
       this.permissionsService.loadPermissions(['PARTICIPANT']);
       this.clientType = 'participant';
-    } else if (localStorage.getItem('benji_facilitator')) {
+    } else if (localStorage.getItem('host_' + this.roomCode)) {
       this.permissionsService.loadPermissions(['ADMIN']);
     } else {
       if (!this.authService.isLoggedIn()) {

@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       console.log(user);
       this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
-        this.authService.setFacilitatorSession(res);
         if (this.authService.redirectURL.length) {
           window.location.href = this.authService.redirectURL;
         } else {
