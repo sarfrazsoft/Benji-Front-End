@@ -80,6 +80,7 @@
                   [participantCode]="participantCode"
                   (deleteIdea)="delete($event)"
                   [sendMessage]="sendMessage"
+                  (commentEdited)="refreshMasonryLayout()"
                   [categorizeFlag]="categorizeFlag"
                   [category]="column"
                   [myGroup]="myGroup"

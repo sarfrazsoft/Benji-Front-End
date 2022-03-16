@@ -75,7 +75,13 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         } else {
           this.masonryPrepend = false;
         }
-        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
+          setTimeout(() => {
+            this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+            this.masonry?.reloadItems();
+            this.masonry?.layout();
+          }, 50);
+        });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
@@ -113,6 +119,16 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.masonry?.reloadItems();
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
         this.masonry?.layout();
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
       }
     }
   }
@@ -120,6 +136,12 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   resetMasonry() {
     if (this.masonry) {
       this.masonry.reloadItems();
+      this.masonry.layout();
+    }
+  }
+
+  refreshMasonryLayout() {
+    if (this.masonry) {
       this.masonry.layout();
     }
   }

@@ -162,6 +162,10 @@ export class AuthService {
     this.router.navigate(['/participant/join']);
   }
 
+  navigateToLessonLobby(roomCode) {
+    this.router.navigateByUrl('/participant/join?link=' + roomCode);
+  }
+
   isLoggedOut() {
     return !this.isLoggedIn();
   }

@@ -121,11 +121,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.shareParticipantLink = this.hostname + this.roomCode;
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      val? this.isParticipant = true : this.isParticipant = false;
+      val ? (this.isParticipant = true) : (this.isParticipant = false);
     });
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
-      val? this.isHost = true : this.isHost = false;
+      val ? (this.isHost = true) : (this.isHost = false);
     });
   }
 
@@ -291,7 +291,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         minBoardOrder = brd.order;
       }
     });
-    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder(); 
+    const currenttBoardOrder = this.isHost ? this.getHostBoardOrder() : this.getParticipantBoardOrder();
     return minBoardOrder === currenttBoardOrder;
   }
 
@@ -303,7 +303,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         maxBoardOrder = brd.order;
       }
     });
-    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder();
+    const currenttBoardOrder = this.isHost ? this.getHostBoardOrder() : this.getParticipantBoardOrder();
     return maxBoardOrder === currenttBoardOrder;
   }
 
@@ -319,11 +319,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   getParticipantBoardOrder() {
-    let participants:BoardParticipants = this.activityState.brainstormactivity.participants;
+    const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
     let participantBoardId;
-    for (var brdId in participants) {
+    for (const brdId in participants) {
       participants[brdId].forEach((code) => {
-        if(code==this.participantCode) {
+        if (code === this.participantCode) {
           participantBoardId = brdId;
         }
       });
@@ -331,14 +331,16 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
     let participantBoardOrder;
     visibleBrds.forEach((brd: Board) => {
-      if(brd.id == participantBoardId) { participantBoardOrder = brd.order }
+      if (brd.id === participantBoardId) {
+        participantBoardOrder = brd.order;
+      }
     });
     return participantBoardOrder;
   }
 
   changeBoard(move: string) {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let currenttBoardOrder = this.isHost? this.getHostBoardOrder() : this.getParticipantBoardOrder();
+    const currenttBoardOrder = this.isHost ? this.getHostBoardOrder() : this.getParticipantBoardOrder();
     visibleBoards.forEach((brd: Board) => {
       if (currenttBoardOrder + 1 === brd.order && move === 'next') {
         this.navigateToBoard(brd);
@@ -349,14 +351,15 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   navigateToBoard(board: Board) {
-    this.isHost? this.socketMessage.emit(new HostChangeBoardEvent(board.id)) : this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
+    this.isHost
+      ? this.socketMessage.emit(new HostChangeBoardEvent(board.id))
+      : this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
   }
 
   logoClicked() {
     if (this.isHost) {
       this.router.navigate(['/dashboard/']);
-    }
-    else if (this.isParticipant) {
+    } else if (this.isParticipant) {
       this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
         if (participant.participant_code === this.participantCode && participant.email) {
           this.router.navigate(['/dashboard/']);
