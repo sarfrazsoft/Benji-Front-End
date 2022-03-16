@@ -95,8 +95,10 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.addIdeaToCategory(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns);
+        this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns);
+        this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
         this.brainstormService.ideaHearted(this.board, this.columns, () => {
           this.sortAndResetMasonry();
@@ -112,6 +114,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.ideasRemoved(this.board, this.columns);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.ideaEdited(this.board, this.columns);
+        this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormCreateCategoryEvent') {
         this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveCategoryEvent') {
