@@ -164,8 +164,6 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
             this.selectedImageUrl = res.data;
-          } else if (res.type === 'giphy') {
-            this.selectedImageUrl = res.data;
           }
         }
       });

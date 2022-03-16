@@ -22,8 +22,6 @@ import {
   Category,
   Idea,
 } from 'src/app/services/backend/schema';
-import { UtilsService } from 'src/app/services/utils.service';
-import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
 
 @Component({

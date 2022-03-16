@@ -29,7 +29,7 @@ benji-ms-brainstorming-activity {
     .thread-mode {
       margin: 0px auto;
       .submitted-ideas {
-        padding-top: 16px;
+        margin-top: 16px;
         height: calc(100vh - 152px);
         .ideas-list-container {
           display: block;
@@ -42,8 +42,32 @@ benji-ms-brainstorming-activity {
           .brainstorm-idea {
             min-width: 544px;
             margin: 0px auto;
-            .comment {
-              font-size: 14px;
+            .title-description {
+              font-size: 16px;
+              line-height: 20px;
+              letter-spacing: -0.01em;
+              .title {
+                font-size: 20px;
+                line-height: 24px;
+                letter-spacing: -0.015em;
+              }
+            }
+            .feedback {
+              .name {
+                font-size: 14px;
+                line-height: 16px;
+                letter-spacing: -0.006em;
+              }
+              .comment {
+                font-size: 14px;
+                line-height: 18px;
+                letter-spacing: -0.006em;
+                word-wrap: break-word;
+                width: 460px;
+              }
+              .comment-input-container .input-comment {
+                width: 420px;
+              }
             }
             .heart,
             .thought {
@@ -58,8 +82,8 @@ benji-ms-brainstorming-activity {
     }
     .submitted-ideas {
       padding: 0 0 0 16px;
-      height: calc(100vh - 136px);
       overflow-y: auto;
+      height: calc(100vh - 136px);
       .uncategorized {
         margin-bottom: 16px;
       }
@@ -194,7 +218,6 @@ benji-ms-brainstorming-activity {
         flex-direction: row;
         overflow-x: auto;
         padding-left: 0;
-        padding-top: 16px;
         li {
           position: relative;
           overflow: auto;
@@ -396,11 +419,18 @@ benji-categorized-ideas {
     padding: 8px;
     .title-description {
       padding: 4px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      letter-spacing: -0.006em;
+      color: #616161;
       .title {
-        font-weight: 600;
         font-size: 16px;
         margin-bottom: 8px;
         color: #37352f;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: -0.011em;
       }
     }
   }
@@ -437,8 +467,11 @@ benji-categorized-ideas {
         }
         .comment {
           font-size: 12px;
+          line-height: 16px;
           color: #37352f;
           font-weight: 400;
+          word-wrap: break-word;
+          width: 190px;
         }
       }
       .delete-icon {
