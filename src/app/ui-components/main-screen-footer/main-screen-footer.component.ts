@@ -219,7 +219,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
   endSession() {
     if (this.activityState && this.activityState.lesson_run) {
       const host = this.activityState.lesson_run.host;
-      const benjiUser = JSON.parse(localStorage.getItem('benji_facilitator'));
+      const benjiUser = JSON.parse(localStorage.getItem('user'));
       if (host.id === benjiUser.id) {
         this.router.navigate(['/dashboard']);
       } else {

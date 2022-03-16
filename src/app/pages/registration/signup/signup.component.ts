@@ -44,7 +44,6 @@ export class SignupComponent implements OnInit {
     this.user = null;
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       this.authService.validateGoogleToken(user.idToken).subscribe((res) => {
-        this.authService.setFacilitatorSession(res);
         if (this.authService.redirectURL.length) {
           window.location.href = this.authService.redirectURL;
         } else {
