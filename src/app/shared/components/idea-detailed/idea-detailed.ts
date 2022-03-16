@@ -339,11 +339,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.imageSrc = res.data;
             this.imageSelected = true;
             this.selectedThirdPartyImageUrl = res.data;
-          } else if (res.type === 'giphy') {
-            this.selectedThirdPartyImageUrl = res.data;
-            this.imageSrc = res.data;
-            this.selectedImageUrl = res.data;
-            this.imageSelected = true;
           }
         }
       });

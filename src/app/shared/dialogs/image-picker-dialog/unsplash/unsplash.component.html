@@ -11,14 +11,10 @@
       >
     </div>
     <div 
-      fxLayout="row wrap" 
-      fxLayoutGap="8px" 
+      fxLayout="row wrap"
       class="images-container">
       <div 
         *ngFor="let image of images"
-        fxLayout="column"
-        fxLayoutGap="4px"
-        style="margin-bottom: 8px;"
         class="image">
         <img [src]="image.thumb_url" alt=""
           (click)="setImage(image)">

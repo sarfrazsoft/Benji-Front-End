@@ -37,37 +37,24 @@ import {
   Board,
   BoardMode,
   BrainstormActivity,
-  BrainstormCreateCategoryEvent,
   BrainstormEditIdeaSubmitEvent,
   BrainstormImageSubmitEvent,
-  BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
-  BrainstormRenameCategoryEvent,
-  BrainstormSetCategoryEvent,
-  BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
   BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
-  BrainstormToggleParticipantNameEvent,
   Category,
   Group,
   Idea,
   ResetGroupingEvent,
   StartBrainstormGroupEvent,
-  StartCaseStudyGroupEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
-import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
-import { environment } from 'src/environments/environment';
-import { BaseActivityComponent } from '../../../shared/base-activity.component';
-import { UncategorizedComponent } from '../uncategorized/uncategorized.component';
 
 @Component({
   selector: 'benji-ideas-board',

@@ -99,7 +99,7 @@ export class IdeaCreationDialogComponent implements OnInit {
       .open(ConfirmationDialogComponent, {
         data: {
           confirmationMessage: 'Are you sure you want to close without posting the card',
-          actionButton: 'close',
+          actionButton: 'Close',
         },
         disableClose: true,
         panelClass: 'dashboard-dialog',
@@ -156,9 +156,6 @@ export class IdeaCreationDialogComponent implements OnInit {
             };
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
-            this.selectedThirdPartyImageUrl = res.data;
-            this.imageSelected = true;
-          } else if (res.type === 'giphy') {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSelected = true;
           }

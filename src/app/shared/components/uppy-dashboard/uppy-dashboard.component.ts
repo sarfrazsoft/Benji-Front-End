@@ -26,9 +26,6 @@ import {
   IdeaDocument,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { environment } from 'src/environments/environment';
-import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
-import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 
 export type IdeaUserRole = 'owner' | 'viewer';
 

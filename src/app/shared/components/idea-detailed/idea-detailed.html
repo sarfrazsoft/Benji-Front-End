@@ -122,6 +122,7 @@
     </div>
     <ng-container *ngIf="userRole === 'owner' || ideaTitle">
       <textarea 
+        [readonly]="userRole !== 'owner'"
         class="title" 
         placeholder="Title" 
         [(ngModel)]="ideaTitle"
@@ -133,6 +134,7 @@
     </ng-container>
     <ng-container *ngIf="userRole === 'owner' || userIdeaText">
       <textarea
+        [readonly]="userRole !== 'owner'"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description"
