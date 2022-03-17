@@ -101,7 +101,7 @@
         </div>
       </div> -->
     </div>
-    <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen">
+    <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen || !loadLogin">
       <div *ngIf="participantJoinScreeen">
         <div class="sub-title"> Join Session </div>
         <div class="label"> Name </div>
@@ -131,7 +131,7 @@
         <div 
           class="bg-primary-color button"
           fxLayoutAlign="center center"
-          (click)="createUser()"
+          (click)="loadLoginComponent()"
           >Join as member
         </div>
       </div>
@@ -139,5 +139,6 @@
         Wait for your host to start the session.
       </div>
     </div>
+    <benji-dashboard-login *ngIf="loadLogin"></benji-dashboard-login>
   </div>
 </div>

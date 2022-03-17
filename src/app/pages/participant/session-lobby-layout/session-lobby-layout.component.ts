@@ -2,12 +2,13 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
-
+export * from '../../registration/index';
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
 import * as global from 'src/app/globals';
 import { HttpClient } from "@angular/common/http";
 import { BeforeLessonRunDetails, LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
+import { LoginComponent } from '../../registration/login/login.component'
 
 @Component({
   selector: 'benji-session-lobby-layout',
@@ -36,6 +37,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
 
   shareParticipantLink = '';
   hostname = window.location.host + '/participant/join?link=';
+  loadLogin: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -169,6 +171,11 @@ export class SessionLobbyLayoutComponent implements OnInit {
     // } else {
     this.startLessonEvent.emit("startLesson");
     // }
+  }
+
+  loadLoginComponent() {
+    this.loadLogin = true;
+    console.log(this.loadLogin);
   }
 
 }
