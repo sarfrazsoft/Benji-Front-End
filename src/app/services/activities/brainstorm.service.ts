@@ -183,7 +183,7 @@ export class BrainstormService {
     callback(existingCategories);
   }
 
-  ideaCommented(act: Board, existingCategories) {
+  ideaCommented(act: Board, existingCategories, callback?) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -214,6 +214,7 @@ export class BrainstormService {
         });
       }
     });
+    callback();
     return existingCategories;
   }
 
