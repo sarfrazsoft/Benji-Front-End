@@ -13,6 +13,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
+import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
 import {
@@ -58,7 +59,10 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
   masonryPrepend: boolean;
 
-  constructor(private brainstormService: BrainstormService) {}
+  constructor(
+    private brainstormService: BrainstormService,
+    private ngxPermissionService: NgxPermissionsService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -130,6 +134,25 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.masonry?.layout();
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
         this.refreshMasonryLayout();
+      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+        if (this.act.meeting_mode) {
+          // host just turned on meeting mode
+          // take all users to new board
+          this.ngxPermissionService.hasPermission('ADMIN').then((val) => {
+            if (val) {
+            }
+          });
+          this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.ideas = [];
+              this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+              this.brainstormService.uncategorizedIdeas = this.ideas;
+            }
+          });
+        } else {
+          // host just turned off meeting mode.
+          // do nothing
+        }
       }
     }
   }

@@ -60,7 +60,7 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.uppy
-      .use(Webcam, { countdown: 3, showRecordingLength: true })
+      .use(Webcam, { countdown: 3, showRecordingLength: true, showVideoSourceDropdown: false })
       // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
       // .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
       .use(XHRUpload, {

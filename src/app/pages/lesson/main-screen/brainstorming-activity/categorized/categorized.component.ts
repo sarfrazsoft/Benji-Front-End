@@ -150,6 +150,23 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.sortAndResetMasonry();
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
         this.refreshMasonryLayout();
+      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+        if (this.act.meeting_mode) {
+          // host just turned on meeting mode
+          // take all users to new board
+          this.permissionsService.hasPermission('ADMIN').then((val) => {
+            if (val) {
+            }
+          });
+          this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+            }
+          });
+        } else {
+          // host just turned off meeting mode.
+          // do nothing
+        }
       }
     }
   }
