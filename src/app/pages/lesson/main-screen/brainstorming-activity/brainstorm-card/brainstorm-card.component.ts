@@ -281,6 +281,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
+      disableClose: true,
       hasBackdrop: isDesktop,
       panelClass: assignedClass,
       data: {
@@ -310,6 +311,25 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.brainstormService.saveIdea$.next(result);
       }
     });
+
+    dialogRef.backdropClick().subscribe(() => {
+      this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'You want to discard your edits?',
+          actionButton: 'Discard',
+        },
+        disableClose: true,
+        panelClass: 'idea-delete-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          dialogRef.close();
+        }
+      });
+    })
+
   }
 
   onCommentFocus() {
