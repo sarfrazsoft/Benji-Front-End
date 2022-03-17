@@ -238,7 +238,8 @@
                 (ngModelChange)="commentTyped()"
                 [ngClass]="{'active': commentModel.length}"
                 (focus)="onCommentFocus()"
-                (blur)="onCommentBlur()">
+                (blur)="onCommentBlur()"
+                (keyup.enter)="submitComment(idea.id, commentModel); commentModel = ''">
               </textarea>
               <div  
                 class="send-comment detailed" 
