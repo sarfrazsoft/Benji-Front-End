@@ -2,6 +2,7 @@
   <ng-container *ngIf="data">
     <benji-idea-detailed
       [data]="data"
+      (ideaEditEvent)="ideaIsEdited($event)"
       (sendMessage)="propagate($event)" 
       (deleteIdea)="delete($event)"
       (submit)="onSubmit($event)"
