@@ -205,8 +205,14 @@ export class IdeaCreationDialogComponent implements OnInit {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
-    } else {
+    } else if (this.imageSelected) {
       this.removeImage();
+    } else if (this.webcamImage) {
+      this.removeWebcamImage();
+    } else if (this.imageSelected) {
+      this.removeImage();
+    } else if (this.video) {
+      this.removeVideo();
     }
   }
 
@@ -227,6 +233,12 @@ export class IdeaCreationDialogComponent implements OnInit {
     this.webcamImage = false;
     this.webcamImageId = null;
     this.webcamImageURL = null;
+  }
+
+  removeVideo() {
+    this.videoURL = null;
+    this.video = false;
+    this.video_id = null;
   }
 
   mediaUploaded(res: IdeaDocument) {

@@ -829,7 +829,7 @@
     }
     .slide-arrow {
       position: absolute;
-      top: 350px;
+      top: 49vh;
       // width: 32px;
       // height: 32px;
       // background: #fff;
@@ -1100,11 +1100,6 @@
 .idea-delete-dialog {
   .mat-dialog-container {
     border-radius: 8px;
-  }
-  .confirmation-dialog {
-    .close-button {
-      display: none;
-    }
   }
 }
 
