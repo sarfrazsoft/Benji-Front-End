@@ -524,7 +524,8 @@ benji-categorized-ideas {
       color: #777777;
     }
     &:focus-visible {
-      outline: none;
+      outline: 0px;
+      outline-color: #f3f4f7;
       background: #f3f4f7;
     }
     &.active {
@@ -869,6 +870,7 @@ ng-dropdown-panel {
   }
   .comment-input-container {
     .input-comment {
+      width: calc(100% - 40px);
       &.detailed {
         width: 70%;
       }
