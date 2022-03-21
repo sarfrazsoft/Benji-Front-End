@@ -1,27 +1,27 @@
-<div class="confirmation-dialog" fxLayout="column">
-  <div fxLayoutAlign="end end">
+<div class="confirmation-dialog-wrapper" fxLayout="column">
+  <!-- <div fxLayoutAlign="end end">
     <button class="close-button" matDialogClose>
       <img src="/assets/img/closeBig.svg" />
     </button>
-  </div>
+  </div> -->
   <mat-dialog-content class="dialog-content">
-    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
-      <h2 class="dialog-heading black-color">Are you sure?</h2>
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+      <h2 class="dialog-heading black-color"> {{ confirmationTitle ? confirmationTitle : 'Are you sure?' }} </h2>
       <div class="dialog-instructions">
-        {{confirmationMessage}}
+        {{ confirmationMessage ? confirmationMessage : 'This can’t be undone and you’ll lose your work. ' }}
       </div>
       <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
-        <button
-          class="cancel-button primary-color dialog-controls"
-          (click)="cancel()"
-        >
-          Cancel
-        </button>
         <button
           class="confirm-button dialog-controls"
           (click)="confirm()"
         >
-          {{ data.actionButton ? data.actionButton : 'Delete' }}
+          {{ actionButton ? actionButton : 'Delete' }}
+        </button>
+        <button
+          class="cancel-button dialog-controls"
+          (click)="cancel()"
+        >
+          {{ cancelButton ? cancelButton : 'Cancel' }}
         </button>
       </div>
     </div>

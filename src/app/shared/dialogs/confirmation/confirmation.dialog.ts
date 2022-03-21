@@ -2,8 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export interface ConfirmationDialogData {
-  confirmationMessage: string;
+  confirmationTitle?: string;
+  confirmationMessage?: string;
   actionButton?: string;
+  cancelButton?: string;
 }
 
 @Component({
@@ -11,12 +13,19 @@ export interface ConfirmationDialogData {
   templateUrl: 'confirmation.dialog.html',
 })
 export class ConfirmationDialogComponent implements OnInit {
+  public confirmationTitle: string;
   public confirmationMessage: string;
+  public actionButton: string;
+  public cancelButton: string;
+
   constructor(
     private dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData
   ) {
+    this.confirmationTitle = data.confirmationTitle;
     this.confirmationMessage = data.confirmationMessage;
+    this.actionButton = data.actionButton;
+    this.cancelButton = data.cancelButton;
   }
   selectedSession;
 
