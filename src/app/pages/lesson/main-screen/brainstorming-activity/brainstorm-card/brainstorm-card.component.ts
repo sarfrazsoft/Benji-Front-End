@@ -102,6 +102,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classGrey: boolean;
   classWhite: boolean;
   commentKey: string;
+  imgSrc='/assets/img/cards/like.svg'
   // columns = [];
   // cycle = 'first';
 
