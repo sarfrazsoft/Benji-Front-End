@@ -33,55 +33,67 @@
     </ng-container>
   </div>
 
-  <div fxLayout="column" fxLayoutGap="12px">
-    <ng-container *ngFor="let board of boards; let j = index">
-      <div
-        fxLayout="column" 
-        class="board" 
-        fxLayoutGap="8px"
-        [ngClass]="{
-          selected: selectedBoard?.id === board?.id
-        }"
-        (click)="navigateToBoard(board)">
-        <div fxLayout="row" fxLayoutAlign="space-between">
-          <div class="title">
-            {{ board?.board_activity.instructions }}
-          </div>
-          <!-- <button
-            [matMenuTriggerFor]="menu"
-            benji-click-stop-propagation
-            disableRipple
-            (click)="setMenuBoard(board)"
-            class="three-dots">
-            <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-          </button> -->
-        </div>
-        <div class="sub-title">
-          {{ board.board_activity.sub_instructions }}
-        </div>
-        <div class="persons">
-          <benji-profile-pictures
-            [activityState]="activityState"
-            [participantCodes]="getBoardParticipantCodes(board)"
-            [size]="'medium'"
-            [counterAfter]="9"
-          ></benji-profile-pictures>
-        </div>
-      </div>
-
-      <ng-container *ngxPermissionsOnly="'ADMIN'" >
+  <div 
+    cdkDropList
+    [cdkDropListData]="boards"
+    (cdkDropListDropped)="drop($event)"
+    class="boards-container"
+    fxLayout="column"
+    fxLayoutGap="12px">
+    <div
+      cdkDrag
+      [cdkDragData]="getDragData(board)"
+      *ngFor="let board of boards; let j = index"
+      class="board-container"
+      fxLayout="column"
+      fxLayoutGap="12px">
         <div
-          class="add-group" 
-          fxLayoutAlign="center center">
-          <img
-            (click)="addBoard(board)"
-            class="plus" 
-            src="../../../assets/img/side-nav/plus.svg"/>
+          fxLayout="column" 
+          class="board" 
+          fxLayoutGap="8px"
+          [ngClass]="{
+            selected: selectedBoard?.id === board?.id
+          }"
+          (click)="navigateToBoard(board)">
+          <div fxLayout="row" fxLayoutAlign="space-between">
+            <div class="title">
+              {{ board?.board_activity.instructions }}
+            </div>
+            <button
+              [matMenuTriggerFor]="menu"
+              benji-click-stop-propagation
+              disableRipple
+              (click)="setMenuBoard(board)"
+              class="three-dots">
+              <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+            </button>
+          </div>
+          <div class="sub-title">
+            {{ board.board_activity.sub_instructions }}
+          </div>
+          <div class="persons">
+            <benji-profile-pictures
+              [activityState]="activityState"
+              [participantCodes]="getBoardParticipantCodes(board)"
+              [size]="'medium'"
+              [counterAfter]="9"
+            ></benji-profile-pictures>
+          </div>
         </div>
-      </ng-container>
-    </ng-container>
+    </div>
   </div>
+  <ng-container *ngxPermissionsOnly="'ADMIN'" >
+    <div
+      class="add-group" 
+      fxLayoutAlign="center center">
+      <img
+      (click)="addBoard(boards[boards.length - 1])"
+      class="plus" 
+      src="../../../assets/img/side-nav/plus.svg"/>
+    </div>
+  </ng-container>
 </div>
+<!-- *ngIf="showBottom" -->
 
 <mat-menu #menu="matMenu" class="board-duplicate-delete" xPosition="before">
   <!-- <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
