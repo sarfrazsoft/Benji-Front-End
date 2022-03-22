@@ -86,11 +86,13 @@ export class IdeaDetailedDialogComponent implements OnInit {
         this.matDialog
         .open(ConfirmationDialogComponent, {
           data: {
-            confirmationMessage: 'You want to discard your edits?',
+            confirmationTitle: 'Discard edits?',
+            confirmationMessage: 'Are you sure you want to discard your edits to your post? This can’t be undone.',
             actionButton: 'Discard',
+            cancelButton: 'Keep working',
           },
           disableClose: true,
-          panelClass: 'idea-delete-dialog',
+          panelClass: 'confirmation-dialog',
         })
         .afterClosed()
         .subscribe((res) => {
@@ -103,7 +105,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
         this.dialogRef.close();
       }
     })
-    
+
   }
 
   ideaIsEdited(event) {

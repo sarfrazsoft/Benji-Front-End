@@ -102,6 +102,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classGrey: boolean;
   classWhite: boolean;
   commentKey: string;
+  imgSrc='/assets/img/cards/like.svg'
   // columns = [];
   // cycle = 'first';
 
@@ -167,7 +168,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'idea-delete-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
