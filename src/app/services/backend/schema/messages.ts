@@ -964,6 +964,17 @@ export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
     };
   }
 }
+export class BrainstormRearrangeBoardEvent extends ActivityEvent {
+  event_name = 'BrainstormRearrangeBoardEvent';
+  constructor(board: number, previousBoard: number, nextBoard: number) {
+    super();
+    this.extra_args = {
+      board: board,
+      previous_board: previousBoard,
+      next_board: nextBoard,
+    };
+  }
+}
 export class BrainstormChangeBoardStatusEvent extends ActivityEvent {
   event_name = 'BrainstormChangeBoardStatusEvent';
   constructor(status: string, board: number) {
