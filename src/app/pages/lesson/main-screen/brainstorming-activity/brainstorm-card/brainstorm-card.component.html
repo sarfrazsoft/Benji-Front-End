@@ -9,7 +9,7 @@
     (mouseleave)="item.showClose = false">
     <div 
       class="card-header" 
-      [ngClass]="{'hidden': !item.pinned && !showUserName}" 
+      [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
       fxLayoutAlign="space-between center">
       <div *ngIf="showUserName" class="user-name">
         <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
@@ -92,11 +92,14 @@
       </div>
     </ng-container>
     <div 
-      class="content" 
+      class="content"
+      [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
+                  'host-pinned': !showUserName && item.pinned }"
+      *ngIf="item.title || item.idea" 
       benji-click-stop-propagation 
       (click)="showDetailedIdea(item)">
       <div *ngIf="item.title || item.idea" class="title-description">
-        <div *ngIf="item.title" class="title">{{ item.title }}</div>
+        <div *ngIf="item.title" class="title" [ngClass]="{'spaced': item.idea }">{{ item.title }}</div>
         {{ item.idea }} 
       </div>
     </div>

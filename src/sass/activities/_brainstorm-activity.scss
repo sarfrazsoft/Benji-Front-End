@@ -42,17 +42,53 @@ benji-ms-brainstorming-activity {
           .brainstorm-idea {
             min-width: 544px;
             margin: 0px auto;
-            .title-description {
-              font-size: 16px;
-              line-height: 20px;
-              letter-spacing: -0.01em;
-              .title {
-                font-size: 20px;
-                line-height: 24px;
-                letter-spacing: -0.015em;
+            .card-header {
+              height: 56px;
+              padding: 0 16px;
+              .delete-icon {
+                right: 12px;
+                top: 16px;
+              }
+              &.hidden {
+                height: 0px;
+              }
+              &.host-pinned {
+                height: 48px;
+                span {
+                  font-weight: 500;
+                  font-size: 16px;
+                  line-height: 24px;
+                  color: #bdbdbd;
+                }
+                .delete-icon {
+                  top: 12px;
+                }
+              }
+            }
+            .content {
+              padding: 16px;
+              .title-description {
+                font-size: 16px;
+                line-height: 20px;
+                letter-spacing: -0.01em;
+                .title {
+                  font-size: 20px;
+                  line-height: 24px;
+                  letter-spacing: -0.015em;
+                  &.spaced {
+                    margin-bottom: 8px;
+                  }
+                }
+              }
+              &.no-image, &.host-pinned {
+                padding: 0px 16px 16px 16px;
               }
             }
             .feedback {
+              padding: 16px 16px 12px 16px;
+              .counts {
+                margin-bottom: 16px;
+              }
               .name {
                 font-size: 14px;
                 line-height: 16px;
@@ -60,13 +96,29 @@ benji-ms-brainstorming-activity {
               }
               .comment {
                 font-size: 14px;
-                line-height: 18px;
+                line-height: 20px;
                 letter-spacing: -0.006em;
                 word-wrap: break-word;
-                max-width: 460px;
+                max-width: 445px;
               }
-              .comment-input-container .input-comment {
-                width: 420px;
+              .comment-input-container {
+                padding: 9px 11px;
+                .input-comment {
+                  width: 410px;
+                  font-size: 14px;
+                  line-height: 16px;
+                }
+                .send-comment {
+                  font-size: 14px;
+                  right: 12px;
+                  bottom: 8px;
+                }
+              }
+              .post-comment .session-participants {
+                margin-top: 3px;
+              }
+              .user-feed .grey-bg {
+                padding: 12px;
               }
             }
             .heart,
@@ -159,7 +211,6 @@ benji-ms-brainstorming-activity {
             }
           }
         }
-
         .ideas {
           overflow-y: auto;
           position: absolute;
@@ -401,10 +452,20 @@ benji-categorized-ideas {
       font-size: 12px;
     }
     img.pin {
-      margin-right: 4px;
       transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
       &.move-left {
         margin-right: 36px;
+      }
+    }
+    &.host-pinned {
+      span {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        color: #bdbdbd;
+      }
+      img.pin {
+        margin-right: 4px;
       }
     }
   }
@@ -416,9 +477,8 @@ benji-categorized-ideas {
     width: 100%;
   }
   .content {
-    padding: 8px;
+    padding: 12px;
     .title-description {
-      padding: 4px;
       font-weight: 400;
       font-size: 14px;
       line-height: 18px;
@@ -426,16 +486,21 @@ benji-categorized-ideas {
       color: #616161;
       .title {
         font-size: 16px;
-        margin-bottom: 8px;
         color: #37352f;
         font-weight: 600;
         line-height: 20px;
         letter-spacing: -0.011em;
+        &.spaced {
+          margin-bottom: 4px;
+        }
       }
+    }
+    &.no-image, &.host-pinned {
+      padding: 4px 12px 12px 12px;
     }
   }
   .feedback {
-    padding: 8px 12px 12px;
+    padding: 12px;
     border-top: 1px solid #e2e0df;
     .counts {
       margin-bottom: 12px;
@@ -486,6 +551,11 @@ benji-categorized-ideas {
         }
       }
     }
+    .post-comment {
+      .session-participants {
+        margin-top: 2px;
+      }
+    }
   }
 }
 
@@ -494,16 +564,25 @@ benji-categorized-ideas {
   flex-grow: 1;
   position: relative;
   background: #fff;
-  border-radius: 8px;
+  border: 1px solid #e7e7e7;
+  border-radius: 17px;
   padding: 6px 8px;
   &.detailed {
     padding: 8px;
   }
   &.grey,
   &.greyed {
+    border: 1px solid #f3f4f7;
     background: #f3f4f7;
   }
   .input-comment {
+    border: 0px;
+    background-color: transparent;
+    color: #37352f;
+    font-weight: 400;
+    font-size: 12px;
+    width: 160px;
+    overflow: hidden;
     &.detailed {
       overflow: hidden;
       font-size: 14px;
@@ -512,13 +591,6 @@ benji-categorized-ideas {
         font-size: 16px;
       }
     }
-    border: 0px;
-    background-color: transparent;
-    color: #37352f;
-    font-weight: 400;
-    font-size: 12px;
-    width: 160px;
-    overflow: hidden;
     &:empty:before {
       content: attr(data-placeholder);
       color: #777777;
