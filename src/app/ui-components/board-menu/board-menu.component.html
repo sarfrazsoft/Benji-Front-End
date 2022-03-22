@@ -83,14 +83,14 @@
     </div>
   </div>
   <ng-container *ngxPermissionsOnly="'ADMIN'" >
-    <div
-      class="add-group" 
-      fxLayoutAlign="center center">
-      <img
+    <button 
       (click)="addBoard(boards[boards.length - 1])"
-      class="plus" 
-      src="../../../assets/img/side-nav/plus.svg"/>
-    </div>
+      class="add-board-button bg-primary-color"
+      [ngClass]="{'disabled': boardsCount==1}"
+      [disabled]="boardsCount==1 ? 'disabled': null"
+    >
+      Add New Board
+    </button>
   </ng-container>
 </div>
 <!-- *ngIf="showBottom" -->
