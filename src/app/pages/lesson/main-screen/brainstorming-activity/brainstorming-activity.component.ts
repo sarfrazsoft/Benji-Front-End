@@ -145,6 +145,7 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
+      this.selectUserBoard();
     } else if (this.eventType === 'JoinEvent') {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();

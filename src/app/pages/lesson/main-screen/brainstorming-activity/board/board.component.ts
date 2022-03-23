@@ -220,41 +220,49 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
-    // populate groupings dropdown
     if (
-      this.board &&
-      this.board.board_activity.grouping &&
-      this.board.board_activity.grouping.groups.length
+      this.eventType === 'BrainstormEditBoardInstruction' ||
+      this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-        if (val) {
-          this.initParticipantGrouping(this.act);
-        }
-      });
-      this.permissionsService.hasPermission('ADMIN').then((val) => {
-        if (val) {
-          this.participantGroups = this.board.board_activity.grouping.groups;
-        }
-      });
+      this.instructions = this.board.board_activity.instructions;
+      this.sub_instructions = this.board.board_activity.sub_instructions;
     } else {
-      // grouping is null in activity
-      if (this.eventType === 'AssignGroupingToActivities') {
-        this.applyGroupingOnActivity(this.activityState);
+      // populate groupings dropdown
+      if (
+        this.board &&
+        this.board.board_activity.grouping &&
+        this.board.board_activity.grouping.groups.length
+      ) {
+        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+          if (val) {
+            this.initParticipantGrouping(this.act);
+          }
+        });
+        this.permissionsService.hasPermission('ADMIN').then((val) => {
+          if (val) {
+            this.participantGroups = this.board.board_activity.grouping.groups;
+          }
+        });
+      } else {
+        // grouping is null in activity
+        if (this.eventType === 'AssignGroupingToActivities') {
+          this.applyGroupingOnActivity(this.activityState);
+        }
       }
+
+      const sm = this.activityState;
+      if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+        const gt = sm.running_tools.grouping_tool;
+        this.sharingToolService.updateParticipantGroupingToolDialog(gt);
+      }
+
+      this.joinedUsers = this.activityState.lesson_run.participant_set;
+
+      this.instructions = this.board.board_activity.instructions;
+      this.sub_instructions = this.board.board_activity.sub_instructions;
+
+      this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
-
-    const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      this.sharingToolService.updateParticipantGroupingToolDialog(gt);
-    }
-
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
-
-    this.instructions = this.board.board_activity.instructions;
-    this.sub_instructions = this.board.board_activity.sub_instructions;
-
-    this.showUserName = this.board.board_activity.show_participant_name_flag;
   }
 
   ngOnDestroy() {
