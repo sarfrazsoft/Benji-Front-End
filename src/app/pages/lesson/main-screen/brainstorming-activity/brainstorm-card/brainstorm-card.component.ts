@@ -102,7 +102,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classGrey: boolean;
   classWhite: boolean;
   commentKey: string;
-  imgSrc='/assets/img/cards/like.svg'
+  imgSrc = '/assets/img/cards/like.svg';
   // columns = [];
   // cycle = 'first';
 
@@ -312,7 +312,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.brainstormService.saveIdea$.next(result);
       }
     });
-    
   }
 
   onCommentFocus() {
@@ -325,5 +324,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentTyped() {
     this.commentEdited.emit();
     this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+  }
+
+  videoLoaded() {
+    this.commentEdited.emit();
   }
 }

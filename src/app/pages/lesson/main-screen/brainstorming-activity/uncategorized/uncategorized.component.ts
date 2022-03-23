@@ -73,7 +73,11 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
-      if (this.eventType === 'BrainstormSubmitEvent') {
+      if (
+        this.eventType === 'BrainstormEditBoardInstruction' ||
+        this.eventType === 'BrainstormEditSubInstruction'
+      ) {
+      } else if (this.eventType === 'BrainstormSubmitEvent') {
         if (this.board.sort === 'newest_to_oldest') {
           this.masonryPrepend = true;
         } else {

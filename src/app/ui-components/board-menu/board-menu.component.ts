@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -26,6 +27,7 @@ import {
   BrainstormClearBoardIdeaEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
@@ -84,6 +86,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   boardsCount: number;
   menuBoard: any;
   hostBoard: number;
+
+  showBottom = true;
 
   constructor(
     private dialog: MatDialog,
@@ -166,8 +170,46 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
+  getDragData(board: Board) {
+    return { boardID: board.id };
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+    const draggedBoardID = event.item.data.boardID;
+    let previous_board;
+    let next_board;
+    for (let i = 0; i < this.boards.length; i++) {
+      const board = this.boards[i];
+      if (board.id === draggedBoardID) {
+        if (i === 0) {
+          previous_board = null;
+          if (this.boards[i + 1]) {
+            next_board = this.boards[i + 1].id;
+          } else {
+            next_board = null;
+          }
+        } else if (i === this.boards.length - 1) {
+          // last board
+          next_board = null;
+          if (this.boards[i - 1]) {
+            previous_board = this.boards[i - 1].id;
+          } else {
+            previous_board = null;
+          }
+        } else {
+          if (this.boards[i + 1]) {
+            next_board = this.boards[i + 1].id;
+            previous_board = this.boards[i - 1].id;
+          }
+        }
+      }
+    }
+
+    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
+  }
+
   addBoard(previousBoard: Board) {
-    console.log(previousBoard);
     this.sendMessage.emit(
       new BrainstormAddBoardEventBaseEvent(
         'Board ' + this.boards.length,

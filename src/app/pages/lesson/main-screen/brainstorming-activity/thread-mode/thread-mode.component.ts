@@ -77,7 +77,11 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
-      if (this.eventType === 'BrainstormSubmitEvent') {
+      if (
+        this.eventType === 'BrainstormEditBoardInstruction' ||
+        this.eventType === 'BrainstormEditSubInstruction'
+      ) {
+      } else if (this.eventType === 'BrainstormSubmitEvent') {
         if (this.board.sort === 'newest_to_oldest') {
           this.masonryPrepend = true;
         } else {
@@ -106,6 +110,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.masonry?.layout();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
+        this.masonry?.layout();
       } else if (
         this.eventType === 'HostChangeBoardEvent' ||
         this.eventType === 'ParticipantChangeBoardEvent'
