@@ -80,6 +80,7 @@
                   [participantCode]="participantCode"
                   (deleteIdea)="delete($event)"
                   [sendMessage]="sendMessage"
+                  (commentEdited)="refreshMasonryLayout()"
                   [categorizeFlag]="categorizeFlag"
                   [category]="column"
                   [myGroup]="myGroup"
@@ -90,8 +91,12 @@
           </div>
           <div
             class="add-card"
-            (click)="addCard(column)">
-            + New Card
+            (click)="addCard(column)"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="5px">
+            <mat-icon>add</mat-icon>
+            <span>New Card</span>
           </div>
         </div>
       </div>

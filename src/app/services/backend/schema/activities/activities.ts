@@ -311,7 +311,8 @@ export interface Board {
   board_activity: BoardInfo;
   id: number;
   name: string;
-  order: number;
+  previous_board: number;
+  next_board: number;
   removed: boolean;
   status: string;
   sort: BoardSort;
@@ -366,6 +367,7 @@ export interface Idea {
   submitting_participant: ParticipantCode;
   idea_image: IdeaDocument;
   showClose?: boolean;
+  pinned: boolean;
   editing?: boolean;
   addingIdea?: boolean;
   comments: Array<{ id: number; participant: number; comment: string }>;

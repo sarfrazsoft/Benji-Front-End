@@ -23,14 +23,17 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { take } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
   BrainstormActivity,
+  BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
+  BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Idea,
@@ -99,6 +102,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classGrey: boolean;
   classWhite: boolean;
   commentKey: string;
+  imgSrc = '/assets/img/cards/like.svg';
   // columns = [];
   // cycle = 'first';
 
@@ -110,7 +114,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private ngxPermissionsService: NgxPermissionsService
   ) {
     // super();
   }
@@ -163,7 +168,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'idea-delete-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
@@ -171,6 +176,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           this.deleteIdea.emit(id);
         }
       });
+  }
+
+  unpin(id) {
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(id));
+      }
+    });
   }
 
   isAbsolutePath(imageUrl: string) {
@@ -232,7 +245,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     return hearted;
   }
 
-  removeHeart(item) {
+  removeHeart(item, event) {
     let hearted;
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
@@ -247,13 +260,16 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     if (hearted) {
       this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
     }
+    this.imgSrc = '/assets/img/cards/like.svg';
+    event.stopPropagation();
   }
 
-  setHeart(idea: Idea) {
+  setHeart(idea: Idea, event) {
     if (!this.deactivateHearting) {
       this.deactivateHearting = true;
       this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
     }
+    event.stopPropagation();
   }
 
   showDetailedIdea(idea: Idea) {
@@ -269,6 +285,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
+      disableClose: true,
       hasBackdrop: isDesktop,
       panelClass: assignedClass,
       data: {
@@ -310,5 +327,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentTyped() {
     this.commentEdited.emit();
     this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+  }
+
+  videoLoaded() {
+    this.commentEdited.emit();
   }
 }

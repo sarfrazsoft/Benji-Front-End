@@ -91,12 +91,21 @@ export class CategorizedComponent implements OnInit, OnChanges {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       this.cycle = 'second';
     } else {
-      if (this.eventType === 'BrainstormSubmitEvent') {
+      if (
+        this.eventType === 'BrainstormEditBoardInstruction' ||
+        this.eventType === 'BrainstormEditSubInstruction'
+      ) {
+      } else if (this.eventType === 'BrainstormSubmitEvent') {
         this.brainstormService.addIdeaToCategory(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.board, this.columns);
+        this.brainstormService.ideaCommented(this.board, this.columns, () => {
+          this.refreshMasonryLayout();
+        });
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.board, this.columns);
+        this.brainstormService.ideaCommented(this.board, this.columns, () => {
+          this.refreshMasonryLayout();
+        });
+        this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
         this.brainstormService.ideaHearted(this.board, this.columns, () => {
           this.sortAndResetMasonry();
@@ -112,6 +121,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.brainstormService.ideasRemoved(this.board, this.columns);
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.ideaEdited(this.board, this.columns);
+        this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormCreateCategoryEvent') {
         this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       } else if (this.eventType === 'BrainstormRemoveCategoryEvent') {
@@ -136,6 +146,31 @@ export class CategorizedComponent implements OnInit, OnChanges {
             this.columns = this.brainstormService.populateCategories(this.board, this.columns);
           }
         }
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.updateIdeasPin(this.board, this.columns);
+        this.sortAndResetMasonry();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
+      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+        if (this.act.meeting_mode) {
+          // host just turned on meeting mode
+          // take all users to new board
+          this.permissionsService.hasPermission('ADMIN').then((val) => {
+            if (val) {
+            }
+          });
+          this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+            }
+          });
+        } else {
+          // host just turned off meeting mode.
+          // do nothing
+        }
       }
     }
   }
@@ -146,6 +181,13 @@ export class CategorizedComponent implements OnInit, OnChanges {
       const element = this.masonryComponents.toArray()[i];
       element.layout();
       element.reloadItems();
+    }
+  }
+
+  refreshMasonryLayout() {
+    for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
+      const element = this.masonryComponents.toArray()[i];
+      element.layout();
     }
   }
 

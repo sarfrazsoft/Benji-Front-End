@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
@@ -110,6 +110,10 @@ export class BrainstormService {
           return Number(moment(a.time)) - Number(moment(b.time));
         }
       });
+
+      col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
+        return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+      });
     }
     return columns;
   }
@@ -179,7 +183,7 @@ export class BrainstormService {
     callback(existingCategories);
   }
 
-  ideaCommented(act: Board, existingCategories) {
+  ideaCommented(act: Board, existingCategories, callback?) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -210,6 +214,7 @@ export class BrainstormService {
         });
       }
     });
+    callback();
     return existingCategories;
   }
 
@@ -255,7 +260,12 @@ export class BrainstormService {
               const existingVersionNo = correspondingExistingIdea.version;
               const newVersionNo = newIdea.version;
               if (existingVersionNo < newVersionNo) {
-                existingCategory.brainstormidea_set.splice(ideaIndex, 1, newIdea);
+                correspondingExistingIdea.version = newIdea.version;
+                correspondingExistingIdea.title = newIdea.title;
+                correspondingExistingIdea.idea = newIdea.idea;
+                correspondingExistingIdea.idea_document = newIdea.idea_document;
+                correspondingExistingIdea.idea_image = newIdea.idea_image;
+                correspondingExistingIdea.idea_video = newIdea.idea_video;
               }
             });
           }
@@ -263,6 +273,38 @@ export class BrainstormService {
       }
     });
     return existingCategories;
+  }
+
+  updateIdeasPin(act: Board, existingCategories) {
+    act.brainstormcategory_set.forEach((category, categoryIndex) => {
+      if (category.brainstormidea_set) {
+        existingCategories.forEach((existingCategory) => {
+          if (existingCategory.id === category.id) {
+            const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
+            BEIdeas.forEach((newIdea, ideaIndex) => {
+              const existingIdeas: Array<Idea> = existingCategory.brainstormidea_set;
+              let correspondingExistingIdea;
+              for (const existingIdea of existingIdeas) {
+                if (existingIdea.id === newIdea.id) {
+                  correspondingExistingIdea = existingIdea;
+                  break;
+                }
+              }
+
+              if (newIdea.pinned) {
+                if (!correspondingExistingIdea.pinned) {
+                  correspondingExistingIdea.pinned = true;
+                }
+              } else if (!newIdea.pinned) {
+                if (correspondingExistingIdea.pinned) {
+                  correspondingExistingIdea.pinned = false;
+                }
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   // Uncategorized
@@ -293,12 +335,13 @@ export class BrainstormService {
     return this.uncategorizedSortIdeas(board, ideas);
   }
 
-  uncategorizedAddIdea(board, existingIdeas) {
+  uncategorizedAddIdea(board, existingIdeas, callback) {
     const newIdeas = this.uncategorizedPopulateIdeas(board);
     if (newIdeas.length === existingIdeas.length) {
     } else {
       const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
       existingIdeas.push(myDifferences[0]);
+      callback();
     }
   }
 
@@ -337,13 +380,18 @@ export class BrainstormService {
     newIdeas.forEach((newIdea: Idea, index) => {
       const existingIdeaIndex = findIndex(existingIdeas, { id: newIdea.id });
       if (existingIdeas[existingIdeaIndex].version < newIdea.version) {
-        existingIdeas.splice(existingIdeaIndex, 1, newIdea);
+        existingIdeas[existingIdeaIndex].version = newIdea.version;
+        existingIdeas[existingIdeaIndex].title = newIdea.title;
+        existingIdeas[existingIdeaIndex].idea = newIdea.idea;
+        existingIdeas[existingIdeaIndex].idea_document = newIdea.idea_document;
+        existingIdeas[existingIdeaIndex].idea_image = newIdea.idea_image;
+        existingIdeas[existingIdeaIndex].idea_video = newIdea.idea_video;
       }
     });
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
-    existingIdeas = existingIdeas.sort((a, b) => {
+    existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
       if (board.sort === 'newest_to_oldest') {
         return Number(moment(b.time)) - Number(moment(a.time));
       } else if (board.sort === 'oldest_to_newest') {
@@ -354,7 +402,26 @@ export class BrainstormService {
         return Number(moment(a.time)) - Number(moment(b.time));
       }
     });
+    existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
+      return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+    });
     return existingIdeas;
+  }
+
+  uncategorizedUpdateIdeasPin(board: Board, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(board);
+    newIdeas.forEach((newIdea: Idea) => {
+      const existingIdea = find(existingIdeas, { id: newIdea.id });
+      if (newIdea.pinned) {
+        if (!existingIdea.pinned) {
+          existingIdea.pinned = true;
+        }
+      } else if (!newIdea.pinned) {
+        if (existingIdea.pinned) {
+          existingIdea.pinned = false;
+        }
+      }
+    });
   }
 
   saveDraftComment(commentKey: string, commentText: string) {

@@ -14,6 +14,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
+import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
@@ -52,7 +53,8 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     private dialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private ngxPermissionsService: NgxPermissionsService
   ) {}
 
   public masonryOptions: NgxMasonryOptions = {
@@ -75,18 +77,23 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
-      if (this.eventType === 'BrainstormSubmitEvent') {
+      if (
+        this.eventType === 'BrainstormEditBoardInstruction' ||
+        this.eventType === 'BrainstormEditSubInstruction'
+      ) {
+      } else if (this.eventType === 'BrainstormSubmitEvent') {
         if (this.board.sort === 'newest_to_oldest') {
           this.masonryPrepend = true;
         } else {
           this.masonryPrepend = false;
         }
-        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {});
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
       ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
+        this.masonry?.layout();
       } else if (
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
@@ -100,8 +107,10 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormClearBoardIdeaEvent'
       ) {
         this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
+        this.masonry?.layout();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
+        this.masonry?.layout();
       } else if (
         this.eventType === 'HostChangeBoardEvent' ||
         this.eventType === 'ParticipantChangeBoardEvent'
@@ -114,7 +123,42 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
             this.brainstormService.uncategorizedIdeas = this.ideas;
           }
         }
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
+      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+        if (this.act.meeting_mode) {
+          // host just turned on meeting mode
+          // take all users to new board
+          this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+            if (val) {
+            }
+          });
+          this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.ideas = [];
+              this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+              this.brainstormService.uncategorizedIdeas = this.ideas;
+            }
+          });
+        } else {
+          // host just turned off meeting mode.
+          // do nothing
+        }
       }
+    }
+  }
+
+  refreshMasonryLayout() {
+    if (this.masonry) {
+      this.masonry.layout();
     }
   }
 

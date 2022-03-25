@@ -18,6 +18,8 @@ import XHRUpload from '@uppy/xhr-upload';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  BrainstormAddIdeaPinEvent,
+  BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   Category,
   Group,
@@ -28,6 +30,7 @@ import {
 } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
+import { GiphyPickerDialogComponent } from '../../dialogs/giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 export interface IdeaDetailedInfo {
   showCategoriesDropdown: boolean;
@@ -167,6 +170,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   @Output() deleteIdea = new EventEmitter<any>();
   @Output() submit = new EventEmitter<any>();
   @Output() closeView = new EventEmitter<any>();
+  @Output() ideaEditEvent = new EventEmitter<boolean>();
 
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
@@ -258,6 +262,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
   }
 
+  ideaIsEdited(event) {
+    if(event) {
+      this.ideaEditEvent.emit(true);
+    }
+  }
+
   onSubmit() {
     this.submit.emit({
       ...this.idea,
@@ -296,6 +306,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.selectedImageUrl = null;
     this.selectedThirdPartyImageUrl = null;
     this.idea.idea_image = null;
+    this.removeWebcamImage();
   }
 
   clearPDF() {
@@ -338,11 +349,31 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            //this.selectedThirdPartyImageUrl = res.data;
+          }
+        }
+      });
+  }
+
+  
+  openGiphyPickerDialog() {
+    const code = this.lessonRunCode;
+    this.imageDialogRef = this.matDialog
+      .open(GiphyPickerDialogComponent, {
+        data: {
+          lessonRunCode: code,
+        },
+        disableClose: false,
+        panelClass: ['dashboard-dialog', 'giphy-picker-dialog'],
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.clearPDF();
+          this.removeImage();
+          if (res.type === 'giphy') {
+            console.log(res);
             this.selectedThirdPartyImageUrl = res.data;
-          } else if (res.type === 'giphy') {
-            this.selectedThirdPartyImageUrl = res.data;
-            this.imageSrc = res.data;
-            this.selectedImageUrl = res.data;
             this.imageSelected = true;
           }
         }
@@ -375,6 +406,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     return (first + second).toUpperCase();
   }
 
+  pin() {
+    this.sendMessage.emit(new BrainstormAddIdeaPinEvent(this.idea.id));
+  }
+  
+  unpin() {
+    this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(this.idea.id));
+  }
+
   delete() {
     this.deleteDialog
       .open(ConfirmationDialogComponent, {
@@ -383,7 +422,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'idea-delete-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

@@ -458,10 +458,10 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
 
   constructor(
     id: number,
-    text: string,
-    title: string,
     category: number,
     groupId: number,
+    text?: string,
+    title?: string,
     idea_image?: number,
     image_path?: string
   ) {
@@ -570,6 +570,14 @@ export class BrainstormRemoveSubmissionEvent extends ActivityEvent {
     super();
     this.extra_args = { brainstormidea: id };
   }
+}
+
+export class BrainstormAddIdeaPinEvent extends BrainstormRemoveSubmissionEvent {
+  event_name = 'BrainstormAddIdeaPinEvent';
+}
+
+export class BrainstormRemoveIdeaPinEvent extends BrainstormRemoveSubmissionEvent {
+  event_name = 'BrainstormRemoveIdeaPinEvent';
 }
 
 export class BrainstormRenameCategoryEvent extends ActivityEvent {
@@ -939,13 +947,31 @@ export class BrainstormEditSubInstructionEvent extends ActivityEvent {
 }
 export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
   event_name = 'BrainstormAddBoardEventBaseEvent';
-  constructor(name: string, order: number, instructions: string, sub_instructions: string) {
+  constructor(
+    name: string,
+    previousBoard: number,
+    nextBoard: number,
+    instructions: string,
+    sub_instructions: string
+  ) {
     super();
     this.extra_args = {
       name: name,
-      order: order,
+      previous_board: previousBoard,
+      next_board: nextBoard,
       instructions: instructions,
       sub_instructions: sub_instructions,
+    };
+  }
+}
+export class BrainstormRearrangeBoardEvent extends ActivityEvent {
+  event_name = 'BrainstormRearrangeBoardEvent';
+  constructor(board: number, previousBoard: number, nextBoard: number) {
+    super();
+    this.extra_args = {
+      board: board,
+      previous_board: previousBoard,
+      next_board: nextBoard,
     };
   }
 }

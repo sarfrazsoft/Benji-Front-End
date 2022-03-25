@@ -1,12 +1,13 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import * as global from 'src/app/globals';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
-import { HttpClient } from '@angular/common/http';
-import * as global from 'src/app/globals';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -16,6 +17,7 @@ export interface TableRowInformation {
   participants: number;
   startDate: string;
   lessonId: number;
+  hostId: number;
 }
 
 @Component({
@@ -50,12 +52,11 @@ export class ActiveLessonsComponent implements OnInit {
   hostname = window.location.host + '/participant/join?link=';
 
   constructor(
-    private router: Router, 
-    private utilsService: UtilsService, 
+    private router: Router,
+    private utilsService: UtilsService,
     private matDialog: MatDialog,
-    private http: HttpClient,
-    ) 
-  {}
+    private http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.getActiveSessions();
@@ -72,13 +73,18 @@ export class ActiveLessonsComponent implements OnInit {
         lesson_title: val.lesson.lesson_name,
         lesson_description: val.lesson.lesson_description,
         host: val.host.first_name + ' ' + val.host.last_name,
+        hostId: val.host.id,
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
       });
     });
   }
 
-  navigateToSession(element) {
+  navigateToSession(element: TableRowInformation) {
+    const user: TeamUser = JSON.parse(localStorage.getItem('user'));
+    if (user.id === element.hostId) {
+      localStorage.setItem('host_' + element.lessonRunCode, JSON.stringify(user));
+    }
     this.router.navigate(['/screen/lesson/' + element.lessonRunCode]);
   }
 
@@ -98,22 +104,23 @@ export class ActiveLessonsComponent implements OnInit {
           confirmationMessage: msg,
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
         if (res) {
           const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
-          this.http.delete(request, {}).subscribe(response => console.log(response) );
+          this.http.delete(request, {}).subscribe((response) => console.log(response));
           this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
-          this.dataSource = this.dataSource.filter((value)=>{
-            return value.lessonRunCode != val.lessonRunCode;
+          this.dataSource = this.dataSource.filter((value) => {
+            return value.lessonRunCode !== val.lessonRunCode;
           });
-        } else {
-          this.utilsService.openWarningNotification('Something went wrong.', '');
-        }
+        } 
+        // else {
+        //   this.utilsService.openWarningNotification('Something went wrong.', '');
+        // }
       });
-  
+
     // if (lesson.effective_permission === 'admin') {
     //   const msg = 'Are you sure you want to delete ' + lesson.lesson_name + '?';
     //   const dialogRef = this.matDialog

@@ -37,37 +37,24 @@ import {
   Board,
   BoardMode,
   BrainstormActivity,
-  BrainstormCreateCategoryEvent,
   BrainstormEditIdeaSubmitEvent,
   BrainstormImageSubmitEvent,
-  BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
-  BrainstormRenameCategoryEvent,
-  BrainstormSetCategoryEvent,
-  BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
   BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
-  BrainstormToggleParticipantNameEvent,
   Category,
   Group,
   Idea,
   ResetGroupingEvent,
   StartBrainstormGroupEvent,
-  StartCaseStudyGroupEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
-import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
-import { environment } from 'src/environments/environment';
-import { BaseActivityComponent } from '../../../shared/base-activity.component';
-import { UncategorizedComponent } from '../uncategorized/uncategorized.component';
 
 @Component({
   selector: 'benji-ideas-board',
@@ -174,7 +161,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
         // this.showUserName = val.state;
-       // this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
+        // this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
       }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
@@ -233,41 +220,49 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
-    // populate groupings dropdown
     if (
-      this.board &&
-      this.board.board_activity.grouping &&
-      this.board.board_activity.grouping.groups.length
+      this.eventType === 'BrainstormEditBoardInstruction' ||
+      this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-        if (val) {
-          this.initParticipantGrouping(this.act);
-        }
-      });
-      this.permissionsService.hasPermission('ADMIN').then((val) => {
-        if (val) {
-          this.participantGroups = this.board.board_activity.grouping.groups;
-        }
-      });
+      this.instructions = this.board.board_activity.instructions;
+      this.sub_instructions = this.board.board_activity.sub_instructions;
     } else {
-      // grouping is null in activity
-      if (this.eventType === 'AssignGroupingToActivities') {
-        this.applyGroupingOnActivity(this.activityState);
+      // populate groupings dropdown
+      if (
+        this.board &&
+        this.board.board_activity.grouping &&
+        this.board.board_activity.grouping.groups.length
+      ) {
+        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+          if (val) {
+            this.initParticipantGrouping(this.act);
+          }
+        });
+        this.permissionsService.hasPermission('ADMIN').then((val) => {
+          if (val) {
+            this.participantGroups = this.board.board_activity.grouping.groups;
+          }
+        });
+      } else {
+        // grouping is null in activity
+        if (this.eventType === 'AssignGroupingToActivities') {
+          this.applyGroupingOnActivity(this.activityState);
+        }
       }
+
+      const sm = this.activityState;
+      if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+        const gt = sm.running_tools.grouping_tool;
+        this.sharingToolService.updateParticipantGroupingToolDialog(gt);
+      }
+
+      this.joinedUsers = this.activityState.lesson_run.participant_set;
+
+      this.instructions = this.board.board_activity.instructions;
+      this.sub_instructions = this.board.board_activity.sub_instructions;
+
+      this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
-
-    const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      this.sharingToolService.updateParticipantGroupingToolDialog(gt);
-    }
-
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
-
-    this.instructions = this.board.board_activity.instructions;
-    this.sub_instructions = this.board.board_activity.sub_instructions;
-
-    this.showUserName = this.board.board_activity.show_participant_name_flag;
   }
 
   ngOnDestroy() {

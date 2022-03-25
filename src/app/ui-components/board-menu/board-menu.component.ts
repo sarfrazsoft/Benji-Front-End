@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -13,6 +14,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { find } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
@@ -25,6 +27,7 @@ import {
   BrainstormClearBoardIdeaEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
@@ -84,6 +87,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   menuBoard: any;
   hostBoard: number;
 
+  showBottom = true;
+
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
@@ -132,23 +137,89 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   initializeBoards() {
-    const boards = this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-    this.boards = boards.sort((a, b) => a.order - b.order);
+    const unSortedBoards: Array<Board> = this.activityState.brainstormactivity.boards.filter(
+      (board) => board.removed === false
+    );
+    let firstBoard;
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      const board = unSortedBoards[i];
+      if (board.previous_board === null) {
+        firstBoard = board;
+      }
+    }
+    const boards: Array<Board> = [];
+    boards.push(firstBoard);
+    for (let i = 0; i < boards.length; i++) {
+      const sortedBoard = boards[i];
+      for (let j = 0; j < unSortedBoards.length; j++) {
+        const unSortedBoard = unSortedBoards[j];
+        if (sortedBoard.next_board === unSortedBoard.id) {
+          boards.push(unSortedBoard);
+          break;
+        }
+      }
+    }
+    this.boards = boards;
   }
 
   getBoardParticipantCodes(board: Board) {
-    return this.activityState.brainstormactivity.participants[board.id];
+    if (this.activityState.brainstormactivity.participants[board.id].length) {
+      return this.activityState.brainstormactivity.participants[board.id];
+    }
+    else {
+      return null;
+    }
   }
 
   closeNav() {
     this.sidenav.close();
   }
 
-  addBoard(boardIndex: number) {
+  getDragData(board: Board) {
+    return { boardID: board.id };
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+    const draggedBoardID = event.item.data.boardID;
+    let previous_board;
+    let next_board;
+    for (let i = 0; i < this.boards.length; i++) {
+      const board = this.boards[i];
+      if (board.id === draggedBoardID) {
+        if (i === 0) {
+          previous_board = null;
+          if (this.boards[i + 1]) {
+            next_board = this.boards[i + 1].id;
+          } else {
+            next_board = null;
+          }
+        } else if (i === this.boards.length - 1) {
+          // last board
+          next_board = null;
+          if (this.boards[i - 1]) {
+            previous_board = this.boards[i - 1].id;
+          } else {
+            previous_board = null;
+          }
+        } else {
+          if (this.boards[i + 1]) {
+            next_board = this.boards[i + 1].id;
+            previous_board = this.boards[i - 1].id;
+          }
+        }
+      }
+    }
+
+    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
+  }
+
+  addBoard(previousBoard: Board) {
     this.sendMessage.emit(
       new BrainstormAddBoardEventBaseEvent(
         'Board ' + this.boards.length,
-        boardIndex + 1,
+        previousBoard.id,
+        previousBoard.next_board,
         'Untitled Board ' + this.boards.length,
         'Sub Instructions'
       )
@@ -279,7 +350,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'clear-board-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

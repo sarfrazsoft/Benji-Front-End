@@ -13,6 +13,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep, differenceBy, find, findIndex, includes, remove } from 'lodash';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
+import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormService } from 'src/app/services';
 import {
@@ -22,8 +23,6 @@ import {
   Category,
   Idea,
 } from 'src/app/services/backend/schema';
-import { UtilsService } from 'src/app/services/utils.service';
-import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -55,12 +54,16 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     gutter: 16,
     horizontalOrder: true,
     initLayout: true,
+    fitWidth: true,
   };
 
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
   masonryPrepend: boolean;
 
-  constructor(private brainstormService: BrainstormService) {}
+  constructor(
+    private brainstormService: BrainstormService,
+    private ngxPermissionService: NgxPermissionsService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -71,18 +74,29 @@ export class UncategorizedComponent implements OnInit, OnChanges {
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
-      if (this.eventType === 'BrainstormSubmitEvent') {
+      if (
+        this.eventType === 'BrainstormEditBoardInstruction' ||
+        this.eventType === 'BrainstormEditSubInstruction'
+      ) {
+      } else if (this.eventType === 'BrainstormSubmitEvent') {
         if (this.board.sort === 'newest_to_oldest') {
           this.masonryPrepend = true;
         } else {
           this.masonryPrepend = false;
         }
-        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas);
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
+          setTimeout(() => {
+            // this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+            // this.masonry?.reloadItems();
+            this.masonry?.layout();
+          }, 50);
+        });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
       ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
+        this.refreshMasonryLayout();
       } else if (
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
@@ -96,9 +110,9 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormClearBoardIdeaEvent'
       ) {
         this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
-        // this.resetMasonry();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
+        this.refreshMasonryLayout();
       } else if (
         this.eventType === 'HostChangeBoardEvent' ||
         this.eventType === 'ParticipantChangeBoardEvent'
@@ -115,6 +129,35 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.masonry?.reloadItems();
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
         this.masonry?.layout();
+      } else if (
+        this.eventType === 'BrainstormAddIdeaPinEvent' ||
+        this.eventType === 'BrainstormRemoveIdeaPinEvent'
+      ) {
+        this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
+        this.masonry?.reloadItems();
+        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+        this.masonry?.layout();
+      } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
+        this.refreshMasonryLayout();
+      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+        if (this.act.meeting_mode) {
+          // host just turned on meeting mode
+          // take all users to new board
+          this.ngxPermissionService.hasPermission('ADMIN').then((val) => {
+            if (val) {
+            }
+          });
+          this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.ideas = [];
+              this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+              this.brainstormService.uncategorizedIdeas = this.ideas;
+            }
+          });
+        } else {
+          // host just turned off meeting mode.
+          // do nothing
+        }
       }
     }
   }
@@ -122,6 +165,12 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   resetMasonry() {
     if (this.masonry) {
       this.masonry.reloadItems();
+      this.masonry.layout();
+    }
+  }
+
+  refreshMasonryLayout() {
+    if (this.masonry) {
       this.masonry.layout();
     }
   }

@@ -50,6 +50,17 @@
       width: 100%;
       box-shadow: unset;
       font-size: 14px;
+      .mat-column-title {
+        width: 37vw;
+        max-width: 37vw;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+        padding-right: 32px;
+      }
+      .mat-column-host, .mat-column-participants, .mat-column-startDate, .mat-column-options {
+        width: 10vw;
+      }
       th.mat-header-cell:first-of-type, 
       td.mat-cell:first-of-type, 
       td.mat-footer-cell:first-of-type {

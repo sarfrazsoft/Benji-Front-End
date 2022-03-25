@@ -99,10 +99,10 @@ export class IdeaCreationDialogComponent implements OnInit {
       .open(ConfirmationDialogComponent, {
         data: {
           confirmationMessage: 'Are you sure you want to close without posting the card',
-          actionButton: 'close',
+          actionButton: 'Close',
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
@@ -158,9 +158,6 @@ export class IdeaCreationDialogComponent implements OnInit {
           } else if (res.type === 'unsplash') {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSelected = true;
-          } else if (res.type === 'giphy') {
-            this.selectedThirdPartyImageUrl = res.data;
-            this.imageSelected = true;
           }
         }
       });
@@ -208,8 +205,14 @@ export class IdeaCreationDialogComponent implements OnInit {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
-    } else {
+    } else if (this.imageSelected) {
       this.removeImage();
+    } else if (this.webcamImage) {
+      this.removeWebcamImage();
+    } else if (this.imageSelected) {
+      this.removeImage();
+    } else if (this.video) {
+      this.removeVideo();
     }
   }
 
@@ -230,6 +233,12 @@ export class IdeaCreationDialogComponent implements OnInit {
     this.webcamImage = false;
     this.webcamImageId = null;
     this.webcamImageURL = null;
+  }
+
+  removeVideo() {
+    this.videoURL = null;
+    this.video = false;
+    this.video_id = null;
   }
 
   mediaUploaded(res: IdeaDocument) {

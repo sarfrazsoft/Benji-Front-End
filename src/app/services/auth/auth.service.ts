@@ -90,7 +90,7 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
-          this.setFacilitatorSession(res);
+          this.setLoggedInUserSession(res);
         }),
         catchError((err) => of(err.error))
       );
@@ -105,11 +105,11 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  setFacilitatorSession(res) {
+  setLoggedInUserSession(res) {
     localStorage.setItem('token', res.token);
     this.contextService.user = res.user;
     this.layoutService.hideSidebar = false;
-    localStorage.setItem('benji_facilitator', JSON.stringify(res.user));
+    localStorage.setItem('user', JSON.stringify(res.user));
   }
 
   createParticipant(username: string, enteredRoomCode: number) {
@@ -162,6 +162,10 @@ export class AuthService {
     this.router.navigate(['/participant/join']);
   }
 
+  navigateToLessonLobby(roomCode) {
+    this.router.navigateByUrl('/participant/join?link=' + roomCode);
+  }
+
   isLoggedOut() {
     return !this.isLoggedIn();
   }
@@ -185,7 +189,7 @@ export class AuthService {
   }
 
   startIntercom() {
-    const user: TeamUser = JSON.parse(localStorage.getItem('benji_facilitator'));
+    const user: TeamUser = JSON.parse(localStorage.getItem('user'));
     this.intercom.boot({
       name: user.first_name + ' ' + user.last_name,
       email: user.email,
