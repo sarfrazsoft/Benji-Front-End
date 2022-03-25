@@ -101,6 +101,14 @@
               [lessonRunCode]="lessonID"
               (mediaUploaded)="mediaUploaded($event)">
             </benji-uppy-dashboard>
+
+            <!-- <ngx-uploadcare-widget
+              images-only="false"
+              public-key="71eac221885fa40dc817">
+            </ngx-uploadcare-widget> -->
+
+            <input #uploadcarewidget type="hidden"
+            name="file"/>
             <!-- <div class="options" 
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/camera.svg">

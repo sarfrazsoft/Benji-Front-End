@@ -1,4 +1,4 @@
-import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Uppy from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
@@ -9,14 +9,15 @@ import { catchError, map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+import uploadcare from 'uploadcare-widget';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
-import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
+import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
 })
-export class IdeaCreationDialogComponent implements OnInit {
+export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   showCategoriesDropdown = false;
   categories: Array<Category> = [];
   selectedCategory: Category;
@@ -45,6 +46,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   hostname = environment.web_protocol + '://' + environment.host;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+  @ViewChild('uploadcarewidget') uploadcarewidget;
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.userIdeaText.length || this.ideaTitle.length) {
       this.askUserConfirmation();
@@ -80,6 +82,10 @@ export class IdeaCreationDialogComponent implements OnInit {
     if (data.category) {
       this.selectedCategory = data.category;
     }
+
+    // document.addEventListener('DOMContentLoaded', () => {
+
+    // });
   }
 
   ngOnInit() {
@@ -92,7 +98,16 @@ export class IdeaCreationDialogComponent implements OnInit {
         this.dialogRef.close();
       }
     });
+    console.log('hello');
+    uploadcare.Widget('[name="file"]', {
+      publicKey: '71eac221885fa40dc817',
+      tabs: 'camera',
+      videoPreferredMimeTypes: ['video/mp4'],
+    });
+    // const widget = uploadcare.Widget(this.uploadcarewidget, { publicKey: '71eac221885fa40dc817' });
   }
+
+  ngAfterViewInit(): void {}
 
   askUserConfirmation() {
     this.matDialog
