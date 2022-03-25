@@ -557,6 +557,7 @@ ng-dropdown-panel.groups-controls {
         border: 2px solid #f3f4f7;
         min-height: 19px;
         width: 400px;
+        resize: vertical;
         &:focus {
           outline: none;
           background: #fff;

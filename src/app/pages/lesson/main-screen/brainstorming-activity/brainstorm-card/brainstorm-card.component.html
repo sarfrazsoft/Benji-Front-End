@@ -9,6 +9,7 @@
     (mouseleave)="item.showClose = false">
     <div 
       class="card-header" 
+      (click)="showDetailedIdea(item)"
       [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
       fxLayoutAlign="space-between center">
       <div *ngIf="showUserName" class="user-name">
@@ -108,14 +109,14 @@
         <div fxLayout="row" fxLayoutAlign="start center">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
-            (click)="setHeart(item)" 
+            (click)="setHeart(item, $event)" 
             class="heart" 
             [src]="imgSrc"
             (mouseout)="imgSrc='/assets/img/cards/like.svg'"
             (mouseover)="imgSrc='/assets/img/cards/liking.svg'"> 
           <img
             *ngIf="hasParticipantHearted(item) || deactivateHearting"
-            (click)="removeHeart(item)" 
+            (click)="removeHeart(item, $event)" 
             class="heart" 
             src="/assets/img/cards/liked.svg">
           <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>

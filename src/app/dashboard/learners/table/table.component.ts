@@ -169,7 +169,7 @@ export class LearnersTableComponent implements AfterViewInit, OnInit {
             confirmationMessage: msg,
           },
           disableClose: true,
-          panelClass: 'dashboard-dialog',
+          panelClass: 'confirmation-dialog',
         })
         .afterClosed()
         .subscribe((res) => {

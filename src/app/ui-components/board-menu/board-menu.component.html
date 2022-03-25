@@ -2,7 +2,7 @@
   *ngIf="navType=='boards'" 
   class="boards-navigation" 
   fxLayout="column" 
-  fxLayoutGap="24px">
+  fxLayoutGap="16px">
 
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div class="boards">Boards</div>
@@ -19,7 +19,7 @@
           fxLayoutAlign="space-between">
           <div>
             <div class="label">Meeting Mode</div>
-            <div class="sub-label">Participants follow the host to their board</div>
+            <div class="sub-label">Participants see the board you’re on.</div>
           </div>
           <label class="switch">
             <input 
@@ -31,6 +31,12 @@
         </div>
       </div>
     </ng-container>
+    <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+      <div class="posting-settings info-card" *ngIf="meetingMode">
+        <div class="label">Meeting Mode is active</div>
+        <div class="sub-label">Your host has activated Meeting Mode. You will see whichever board they are on.</div>
+      </div>
+    </ng-container>
   </div>
 
   <div 
@@ -39,7 +45,7 @@
     (cdkDropListDropped)="drop($event)"
     class="boards-container"
     fxLayout="column"
-    fxLayoutGap="12px">
+    fxLayoutGap="16px">
     <div
       cdkDrag
       [cdkDragData]="getDragData(board)"
@@ -71,7 +77,7 @@
           <div class="sub-title">
             {{ board.board_activity.sub_instructions }}
           </div>
-          <div class="persons">
+          <div class="persons" *ngIf="getBoardParticipantCodes(board)">
             <benji-profile-pictures
               [activityState]="activityState"
               [participantCodes]="getBoardParticipantCodes(board)"
@@ -89,7 +95,7 @@
       [ngClass]="{'disabled': boardsCount==1}"
       [disabled]="boardsCount==1 ? 'disabled': null"
     >
-      Add New Board
+      + Add New Board
     </button>
   </ng-container>
 </div>
@@ -138,11 +144,11 @@
     <div class="title">Instructions</div>
     <div class="edit">
       <div class="editing">
-        <input
+        <textarea
           type="text"
           [(ngModel)]="sub_instructions" 
           (blur)="saveEditedSubInstructions()"
-          (keyup.enter)="saveEditedSubInstructions()">
+          (keyup.enter)="saveEditedSubInstructions()"></textarea>
       </div>
     </div>
   </div>

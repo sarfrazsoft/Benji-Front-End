@@ -245,7 +245,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     return hearted;
   }
 
-  removeHeart(item) {
+  removeHeart(item, event) {
     let hearted;
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
@@ -260,13 +260,16 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     if (hearted) {
       this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
     }
+    this.imgSrc = '/assets/img/cards/like.svg';
+    event.stopPropagation();
   }
 
-  setHeart(idea: Idea) {
+  setHeart(idea: Idea, event) {
     if (!this.deactivateHearting) {
       this.deactivateHearting = true;
       this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
     }
+    event.stopPropagation();
   }
 
   showDetailedIdea(idea: Idea) {

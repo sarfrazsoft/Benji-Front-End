@@ -163,7 +163,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   getBoardParticipantCodes(board: Board) {
-    return this.activityState.brainstormactivity.participants[board.id];
+    if (this.activityState.brainstormactivity.participants[board.id].length) {
+      return this.activityState.brainstormactivity.participants[board.id];
+    }
+    else {
+      return null;
+    }
   }
 
   closeNav() {
@@ -345,7 +350,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'clear-board-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

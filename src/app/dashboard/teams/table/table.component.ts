@@ -148,7 +148,7 @@ export class GroupsTableComponent implements OnInit, AfterViewInit, OnDestroy {
             confirmationMessage: msg,
           },
           disableClose: true,
-          panelClass: 'dashboard-dialog',
+          panelClass: 'confirmation-dialog',
         })
         .afterClosed()
         .subscribe((res) => {
