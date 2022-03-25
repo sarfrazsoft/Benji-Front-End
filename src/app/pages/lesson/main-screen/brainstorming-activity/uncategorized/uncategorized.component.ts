@@ -54,6 +54,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
     gutter: 16,
     horizontalOrder: true,
     initLayout: true,
+    fitWidth: true,
   };
 
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;

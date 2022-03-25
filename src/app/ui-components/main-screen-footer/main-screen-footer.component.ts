@@ -250,7 +250,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
           confirmationMessage: msg,
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

@@ -104,7 +104,7 @@ export class ActiveLessonsComponent implements OnInit {
           confirmationMessage: msg,
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
@@ -115,9 +115,10 @@ export class ActiveLessonsComponent implements OnInit {
           this.dataSource = this.dataSource.filter((value) => {
             return value.lessonRunCode !== val.lessonRunCode;
           });
-        } else {
-          this.utilsService.openWarningNotification('Something went wrong.', '');
-        }
+        } 
+        // else {
+        //   this.utilsService.openWarningNotification('Something went wrong.', '');
+        // }
       });
 
     // if (lesson.effective_permission === 'admin') {

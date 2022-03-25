@@ -102,7 +102,7 @@ export class IdeaCreationDialogComponent implements OnInit {
           actionButton: 'Close',
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

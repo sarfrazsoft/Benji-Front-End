@@ -91,8 +91,12 @@
           </div>
           <div
             class="add-card"
-            (click)="addCard(column)">
-            + New Card
+            (click)="addCard(column)"
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="5px">
+            <mat-icon>add</mat-icon>
+            <span>New Card</span>
           </div>
         </div>
       </div>
