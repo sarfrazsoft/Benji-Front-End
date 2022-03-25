@@ -117,7 +117,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
           actionButton: 'Close',
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

@@ -61,7 +61,7 @@ export class ActivitySettingsComponent implements OnInit, OnChanges {
           actionButton: 'Reset',
         },
         disableClose: true,
-        panelClass: 'dashboard-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {

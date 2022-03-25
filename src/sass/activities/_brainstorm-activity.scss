@@ -49,6 +49,9 @@ benji-ms-brainstorming-activity {
                 right: 12px;
                 top: 16px;
               }
+              .pin {
+                width: 20px;
+              }
               &.hidden {
                 height: 0px;
               }
@@ -90,7 +93,7 @@ benji-ms-brainstorming-activity {
                 margin-bottom: 16px;
               }
               .name {
-                font-size: 14px;
+                font-size: 20px;
                 line-height: 16px;
                 letter-spacing: -0.006em;
               }
@@ -123,7 +126,7 @@ benji-ms-brainstorming-activity {
             }
             .heart,
             .thought {
-              width: 16px;
+              width: 20px;
             }
             .brainstorm-image img {
               max-height: unset;
@@ -138,6 +141,9 @@ benji-ms-brainstorming-activity {
       height: calc(100vh - 136px);
       .uncategorized {
         margin-bottom: 16px;
+        ngx-masonry {
+          margin: 0 auto;
+        }
       }
       .uncategorized-idea {
         margin-top: 16px;
@@ -152,7 +158,6 @@ benji-ms-brainstorming-activity {
         transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
       }
       .column {
-        position: relative;
         border-radius: 5px;
         .header {
           margin: 16px 0px;
@@ -213,7 +218,7 @@ benji-ms-brainstorming-activity {
         }
         .ideas {
           overflow-y: auto;
-          position: absolute;
+          max-width: 282px;
           height: calc(100% - 80px);
           .brainstorm-idea {
             margin-bottom: 16px;
@@ -247,17 +252,26 @@ benji-ms-brainstorming-activity {
             }
           }
           .add-card {
-            margin: 8px;
-            width: 96px;
-            padding: 8px;
-            color: #616161;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 4px;
+            width: 264px;
+            height: 32px;
+            padding: 0px 16px;
+            color: #828282;
+            margin-top: -8px;
+            span {
+              font-size: 14px;
+              line-height: 17px;
+              font-weight: 500;
+            }
+            .mat-icon {
+              width: 20px;
+              height: 20px;
+              font-size: 20px;
+            }
             cursor: pointer;
             transition: all 0.1s;
             &:hover {
-              background: #f3f4f7;
+              background: rgba(0, 0, 0, 0.04);
+              border-radius: 8px;
             }
           }
         }
@@ -409,6 +423,7 @@ benji-categorized-ideas {
   .ideas-list-container {
     width: 264px;
     max-width: 264px;
+    overflow: hidden;
   }
 }
 .cdk-drag-preview.brainstorm-idea,
@@ -792,19 +807,19 @@ benji-ps-brainstorming-activity {
 }
 .barinstorm-main {
   .barinstorm-header {
-    padding: 16px 64px 16px 32px;
+    padding: 16px 32px;
     border-bottom: 1px solid #e7e7e7;
     background: #fff;
     .brainstorm-h2 {
       font-weight: 700;
       font-size: 24px;
-      margin: 2px 0px 6px 8px;
+      line-height: 32px;
+      margin-bottom: 4px;
     }
     .sub-header {
       font-size: 16px;
       font-weight: 400;
       color: #828282;
-      margin-left: 8px;
     }
     .menus {
       .ng-select-container {
@@ -877,12 +892,13 @@ ng-dropdown-panel {
   }
 }
 
-@media (max-width: 600px) {
-  .mat-drawer-content {
-    &.mat-sidenav-content {
-      overflow: hidden;
-    }
+.mat-drawer-content {
+  &.mat-sidenav-content {
+    overflow: hidden;
   }
+}
+
+@media (max-width: 600px) {
   .barinstorm-main {
     .barinstorm-header {
       place-content: start !important;
@@ -913,6 +929,18 @@ ng-dropdown-panel {
             .brainstorm-idea {
               width: 100%;
               max-width: unset;
+              .heart,
+              .thought {
+                width: 20px;
+              }
+              .card-header { 
+                .pin {
+                  width: 20px;
+                }
+                .user-name .name {
+                  font-size: 16px;
+                }
+              }
             }
           }
         }
@@ -934,6 +962,15 @@ ng-dropdown-panel {
             min-width: unset !important;
             max-width: 100% !important;
             margin: 16px 8px 0px 8px !important;
+            .heart,
+            .thought {
+              width: 20px;
+            }
+            .card-header { 
+              .user-name .name {
+                font-size: 16px;
+              }
+            }
           }
         }
         display: unset !important;
@@ -942,7 +979,7 @@ ng-dropdown-panel {
   }
   .comment-input-container {
     .input-comment {
-      width: calc(100% - 40px);
+      width: calc(100% - 40px) !important;
       &.detailed {
         width: 70%;
       }

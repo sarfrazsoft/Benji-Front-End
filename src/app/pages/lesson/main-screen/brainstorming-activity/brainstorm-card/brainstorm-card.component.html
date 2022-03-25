@@ -9,6 +9,7 @@
     (mouseleave)="item.showClose = false">
     <div 
       class="card-header" 
+      (click)="showDetailedIdea(item)"
       [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
       fxLayoutAlign="space-between center">
       <div *ngIf="showUserName" class="user-name">
@@ -94,7 +95,7 @@
     <div 
       class="content"
       [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
-                  'host-pinned': !showUserName && item.pinned }"
+                  'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
       *ngIf="item.title || item.idea" 
       benji-click-stop-propagation 
       (click)="showDetailedIdea(item)">
@@ -108,14 +109,14 @@
         <div fxLayout="row" fxLayoutAlign="start center">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
-            (click)="setHeart(item)" 
+            (click)="setHeart(item, $event)" 
             class="heart" 
             [src]="imgSrc"
             (mouseout)="imgSrc='/assets/img/cards/like.svg'"
             (mouseover)="imgSrc='/assets/img/cards/liking.svg'"> 
           <img
             *ngIf="hasParticipantHearted(item) || deactivateHearting"
-            (click)="removeHeart(item)" 
+            (click)="removeHeart(item, $event)" 
             class="heart" 
             src="/assets/img/cards/liked.svg">
           <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
