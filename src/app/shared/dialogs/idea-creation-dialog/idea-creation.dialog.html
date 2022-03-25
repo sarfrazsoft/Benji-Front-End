@@ -27,7 +27,7 @@
         </div>
       </div>
       <textarea
-        *ngIf="!imageSelected"
+        *ngIf="!imageSelected && !pdfSelected && !video && !webcamImage"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description"
@@ -35,7 +35,7 @@
         >
       </textarea>
       <textarea
-        *ngIf="imageSelected"
+        *ngIf="imageSelected || pdfSelected || video || webcamImage"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description image-selected"

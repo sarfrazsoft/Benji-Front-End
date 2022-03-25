@@ -458,10 +458,10 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
 
   constructor(
     id: number,
-    text: string,
-    title: string,
     category: number,
     groupId: number,
+    text?: string,
+    title?: string,
     idea_image?: number,
     image_path?: string
   ) {

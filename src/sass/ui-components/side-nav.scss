@@ -54,6 +54,21 @@
         font-weight: 400;
       }
     }
+    ng-dropdown-panel {
+      .ng-dropdown-panel-items {
+        border: 2px solid #555BEA;
+        border-radius: 8px;
+        padding: 8px 0px;
+        background: #fff;
+        .ng-option {
+          padding: 8px 16px;
+          line-height: 16px;
+          &.ng-option-selected, &.ng-option-marked {
+            background-color: #e7f4fe;
+          }
+        }
+      }
+    }
   }
   .posting-settings {
     background: #f3f4f7;

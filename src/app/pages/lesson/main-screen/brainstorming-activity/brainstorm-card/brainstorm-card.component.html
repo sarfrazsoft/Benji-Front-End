@@ -94,7 +94,7 @@
     <div 
       class="content"
       [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
-                  'host-pinned': !showUserName && item.pinned }"
+                  'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
       *ngIf="item.title || item.idea" 
       benji-click-stop-propagation 
       (click)="showDetailedIdea(item)">
