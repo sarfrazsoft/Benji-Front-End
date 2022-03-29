@@ -12,7 +12,6 @@ import {
   Participant,
 } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { LoginComponent } from '../../registration/login/login.component'
 
 @Component({
   selector: 'benji-session-lobby-layout',

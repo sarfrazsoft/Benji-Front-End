@@ -37,7 +37,6 @@ export class ParticipantJoinComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParamMap.subscribe((val: any) => {
-      console.log(this.route.snapshot.queryParams['link']);
       if (this.route.snapshot.queryParams['link']) {
         this.joinLinkExists = true;
         this.roomCode.setValue(this.route.snapshot.queryParams['link']);
