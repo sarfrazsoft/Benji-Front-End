@@ -58,14 +58,14 @@
         <ng-container *ngIf="video">
           <div>
             <video style="margin: 0 auto;" width="100%" controls>
-              <source [src]="hostname + videoURL" type="video/mp4" />
+              <source [src]="videoURL" type="video/mp4" />
             </video>
           </div>          
         </ng-container>
         <ng-container *ngIf="webcamImage">
           <img 
               benji-click-stop-propagation
-              [src]="hostname + webcamImageURL" alt="" />
+              [src]="webcamImageURL" alt="" />
         </ng-container>
         
         <button class="remove-button" (click)="remove()">
@@ -97,10 +97,16 @@
               fxLayoutAlign="center center" >
               <img class="close" src="/assets/img/idea-creation/video.svg">
             </div>  -->
-            <benji-uppy-dashboard
+            <!-- <benji-uppy-dashboard
               [lessonRunCode]="lessonID"
               (mediaUploaded)="mediaUploaded($event)">
-            </benji-uppy-dashboard>
+            </benji-uppy-dashboard> -->
+            <div 
+              class="options" 
+              fxLayoutAlign="center center"
+              (click)="openDialog()">
+              <img class="close" src="/assets/img/idea-creation/cam-upload.svg">
+            </div>
 
             <!-- <ngx-uploadcare-widget
               images-only="false"

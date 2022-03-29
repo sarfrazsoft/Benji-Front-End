@@ -45,6 +45,8 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   webcamImageURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
 
+  widgetRef;
+
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @ViewChild('uploadcarewidget') uploadcarewidget;
   @HostListener('window:keyup.esc') onKeyUp() {
@@ -98,13 +100,33 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         this.dialogRef.close();
       }
     });
-    console.log('hello');
-    uploadcare.Widget('[name="file"]', {
+
+    this.widgetRef = uploadcare.Widget('[name="file"]', {
       publicKey: '71eac221885fa40dc817',
       tabs: 'camera',
       videoPreferredMimeTypes: ['video/mp4'],
     });
-    // const widget = uploadcare.Widget(this.uploadcarewidget, { publicKey: '71eac221885fa40dc817' });
+
+    this.widgetRef.onUploadComplete((info) => {
+      // Handle uploaded file info.
+      if (info.isImage) {
+      }
+      if (!info.isImage) {
+        this.videoURL = info.cdnUrl;
+        this.video = true;
+        // this.video_id = res.id;
+      } else if (info.isImage) {
+        // this.webcamImageId = res.id;
+        this.webcamImageURL = info.cdnUrl;
+        this.webcamImage = true;
+      }
+      console.log(info);
+    });
+  }
+
+  openDialog() {
+    // const widgetRef = uploadcare.Widget(this.uploadcarewidget, { publicKey: '71eac221885fa40dc817' });
+    this.widgetRef.openDialog(null, {});
   }
 
   ngAfterViewInit(): void {}
