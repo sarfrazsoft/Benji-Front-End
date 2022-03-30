@@ -13,6 +13,12 @@
           Post
       </button>
     </div>
+    <div class="proseMirror">
+      <div class="durr">
+
+        <div class="text-3xl font-bold underline">fasdfasdf</div>
+      </div>
+    </div>
     <div class="white-content">
       <div fxLayoutAlign="space-between"> 
         <textarea
@@ -42,6 +48,26 @@
         placeholder="Description..."
         >
       </textarea>
+      <tiptap-editor [editor]="editor" [(ngModel)]="value"></tiptap-editor>
+      <tiptap-bubble-menu [editor]="editor">
+        <button
+          (click)="editor.chain().focus().toggleBold().run()"
+          [ngClass]="{'is-active': editor.isActive('bold')}">
+          bold
+        </button>
+        <!-- <button
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          className={editor.isActive('italic') ? 'is-active' : ''}
+        >
+          italic
+        </button>
+        <button
+          onClick={() => editor.chain().focus().toggleStrike().run()}
+          className={editor.isActive('strike') ? 'is-active' : ''}
+        >
+          strike
+        </button> -->
+      </tiptap-bubble-menu>
       <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
         <ng-container *ngIf="imageSelected">
           <img *ngIf="imageSrc" [src]="imageSrc" alt="">

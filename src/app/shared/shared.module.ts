@@ -41,8 +41,8 @@ import { FormlyModule } from '@ngx-formly/core';
 import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
-import { NgxPermissionsModule } from 'ngx-permissions';
 import { NgxMasonryModule } from 'ngx-masonry';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
@@ -103,6 +103,7 @@ import {
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { NgxTiptapModule } from 'ngx-tiptap';
 
 @NgModule({
   imports: [
@@ -119,6 +120,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     UppyAngularDragDropModule,
     UppyAngularProgressBarModule,
     UppyAngularDashboardModalModule,
+    NgxTiptapModule,
   ],
   declarations: Components,
   entryComponents: [...EntryComponents],
