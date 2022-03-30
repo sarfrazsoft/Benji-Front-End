@@ -43,10 +43,10 @@
           </div>
           <div 
             class="forgot-password primary-color"
-            (click)="router.navigate(['/forgot-password'])">
+            (click)="forgotPasswordClicked()">
               Forgot Password?
           </div>
-          <input type="submit" value="Sign in" data-wait="Please wait..."
+          <input type="submit" value="{{joinSession? 'Join session': 'Sign in'}}" data-wait="Please wait..."
             [ngClass]="{'bg-primary-color': (email.value && password.value), 'inactive': !(email.value && password.value)}" 
             class="submit-button-12 w-button">
         </form>
@@ -59,7 +59,7 @@
       </div>
       <div 
         class="small-form-text already-member"
-        (click)="router.navigate(['/sign-up'])">
+        (click)="signUpClick()">
         Don’t have an account yet?
         <br><div class="bold-text-7 sign-up primary-color">Sign up</div>
       </div>

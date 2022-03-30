@@ -101,8 +101,8 @@
         </div>
       </div> -->
     </div>
-    <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen || !loadLogin">
-      <div *ngIf="participantJoinScreeen">
+    <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen">
+      <div *ngIf="participantJoinScreeen && !loadLogin && !loadForgotPassword && !loadSignUp">
         <div class="sub-title"> Join Session </div>
         <div class="label"> Name </div>
         <p class="warning-color" *ngIf="loginError">
@@ -135,10 +135,30 @@
           >Join as member
         </div>
       </div>
+      <div class="participant-login">
+        <ng-container *ngIf="loadLogin">
+          <benji-dashboard-login
+            [joinSession]="true"
+            (forgotPassword)="loadForgotPasswordComponent()"
+            (signUp)="loadSignUpComponent()"   
+          ></benji-dashboard-login>
+        </ng-container>
+        <ng-container *ngIf="loadForgotPassword">
+          <benji-forgot-password
+          [joinSession]="true"
+          (signIn)="loadLoginComponent()"
+          ></benji-forgot-password>
+        </ng-container>
+        <ng-container *ngIf="loadSignUp">
+          <benji-dashboard-signup 
+          [joinSession]="true"
+          (signIn)="loadLoginComponent()"
+          ></benji-dashboard-signup>
+        </ng-container>
+      </div>
       <div *ngIf="participantLobbyScreeen" class="session-joined" fxLayout="column" fxLayoutAlign="center center">
         Wait for your host to start the session.
       </div>
     </div>
-    <benji-dashboard-login *ngIf="loadLogin"></benji-dashboard-login>
   </div>
 </div>

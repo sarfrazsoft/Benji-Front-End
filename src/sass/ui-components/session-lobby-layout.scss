@@ -111,13 +111,15 @@
       // }
     }
     .sub-title {
-      font-size: 24px;
-      font-weight: 700;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 20px;
       color: #37352f;
       margin-bottom: 24px;
     }
     .join-session {
-      padding: 64px 40px;
+      padding: 40px;
+      max-width: 400px;
       border-radius: 0px 16px 16px 0px;
       .sub-title {
         margin-bottom: 24px;
@@ -128,7 +130,7 @@
         font-weight: 500;
         margin-bottom: 8px;
       }
-      input {
+      input:not([type="submit"]) {
         border-radius: 8px;
         width: 288px;
         height: 48px;
@@ -209,6 +211,60 @@
           position: absolute;
           right: 0;
           top: 50%;
+        }
+      }
+      .participant-login {
+        .sign-up-section {
+          height: unset;
+          img {
+            display: none;
+          }
+          .log-in-card, .sign-up-card {
+            margin-top: 0px;
+            width: unset;
+            .div-block-183, .form-block-8 {
+              margin: 0;
+              align-items: flex-start;
+              .title {
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 8px;
+                text-align: left;
+              }
+              .text-block-89 {
+                font-size: 16px;
+                text-align: left;
+                margin-top: 8px;
+              }
+              .small-form-text {
+                width: 100%;
+              }
+              .forgot-form {
+                margin-top: 16px;
+              }
+              .form-block-8 > form {
+                margin-top: 16px;
+                > div {
+                  margin-bottom: 0px;
+                }
+              }
+              .log-in-form {
+                .email-control, .password-control {
+                  margin-bottom: 0px;
+                }
+                input {
+                  font-weight: 400;
+                }
+                input[type=submit] {
+                  height: 40px;
+                  font-weight: 600;
+                }
+              }
+              .already-member {
+                margin-top: 16px;
+              }
+            }
+          }
         }
       }
     }

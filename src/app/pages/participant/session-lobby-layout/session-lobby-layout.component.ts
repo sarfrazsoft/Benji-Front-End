@@ -40,6 +40,8 @@ export class SessionLobbyLayoutComponent implements OnInit {
   shareParticipantLink = '';
   hostname = window.location.host + '/participant/join?link=';
   loadLogin: boolean;
+  loadSignUp: boolean;
+  loadForgotPassword: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -175,8 +177,19 @@ export class SessionLobbyLayoutComponent implements OnInit {
   }
 
   loadLoginComponent() {
+    this.loadSignUp = false;
+    this.loadForgotPassword = false;
     this.loadLogin = true;
-    console.log(this.loadLogin);
+  }
+  loadForgotPasswordComponent() {
+    this.loadSignUp = false;
+    this.loadForgotPassword = true;
+    this.loadLogin = false;
+  }
+  loadSignUpComponent() {
+    this.loadSignUp = true;
+    this.loadForgotPassword = false;
+    this.loadLogin = false;
   }
 
 }
