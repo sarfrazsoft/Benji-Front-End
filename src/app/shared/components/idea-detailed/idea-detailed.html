@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
-      <ng-container *ngIf="imageSrc">
+      <ng-container *ngIf="imageSrc && !selectedThirdPartyImageUrl">
         <ng-container>
           <img 
             benji-click-stop-propagation 
