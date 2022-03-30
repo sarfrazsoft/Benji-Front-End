@@ -11,6 +11,9 @@
       padding: 40px;
       border-radius: 16px 0px 0px 16px;
       min-height: 411px;
+      &.signup {
+        min-height: 551px;
+      }
       &.adminLobby {
         margin-right: 0px;
         max-width: unset;
@@ -222,7 +225,7 @@
           .log-in-card, .sign-up-card {
             margin-top: 0px;
             width: unset;
-            .div-block-183, .form-block-8 {
+            .div-block-183 {
               margin: 0;
               align-items: flex-start;
               .title {
@@ -247,8 +250,11 @@
                 > div {
                   margin-bottom: 0px;
                 }
+                .tos-text {
+                  margin-bottom: 16px;
+                }
               }
-              .log-in-form {
+              .log-in-form, .form-block-8 > form {
                 .email-control, .password-control {
                   margin-bottom: 0px;
                 }
@@ -262,6 +268,9 @@
               }
               .already-member {
                 margin-top: 16px;
+                &.joining {
+                  margin-top: 24px;
+                }
               }
             }
           }
