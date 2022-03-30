@@ -601,53 +601,72 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  uploadImageNCreateEditIdea(idea, action: 'create' | 'edit') {
+    const fileList: FileList = idea.imagesList;
+    const participant_code = this.participantCode;
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
+    const file: File = fileList[0];
+    this.utilsService
+      .resizeImage({
+        file: file,
+        maxSize: 500,
+      })
+      .then((resizedImage: Blob) => {
+        const formData: FormData = new FormData();
+        formData.append('document', resizedImage, file.name);
+        formData.append('participant_code', participant_code ? participant_code.toString() : '');
+        const headers = new HttpHeaders();
+        headers.set('Content-Type', null);
+        headers.set('Accept', 'multipart/form-data');
+        const params = new HttpParams();
+        this.httpClient
+          .post(url, formData, { params, headers })
+          .map((res: any) => {
+            console.log(res);
+            this.imagesList = null;
+            if (!idea.text) {
+              idea.text = '';
+            }
+            if (action === 'create') {
+              this.sendMessage.emit(
+                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
+              );
+            } else if (action === 'edit') {
+              this.sendMessage.emit(
+                new BrainstormEditIdeaSubmitEvent(
+                  idea.id,
+                  idea.text,
+                  idea.title,
+                  idea.category.id,
+                  idea.groupId,
+                  res.id
+                )
+              );
+            }
+          })
+          .subscribe(
+            (data) => {},
+            (error) => console.log(error)
+          );
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
+  }
+
   submitImageNIdea(idea) {
     if (idea.id) {
       // update the idea with an image
       this.updateIdeaWithImage(idea);
       return;
     }
-    const code = this.activityState.lesson_run.lessonrun_code;
-    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
 
-    const participant_code = this.participantCode;
-    const fileList: FileList = idea.imagesList;
-    if (fileList && fileList.length > 0) {
-      const file: File = fileList[0];
-      this.utilsService
-        .resizeImage({
-          file: file,
-          maxSize: 500,
-        })
-        .then((resizedImage: Blob) => {
-          const formData: FormData = new FormData();
-          formData.append('document', resizedImage, file.name);
-          formData.append('participant_code', participant_code ? participant_code.toString() : '');
-          const headers = new HttpHeaders();
-          headers.set('Content-Type', null);
-          headers.set('Accept', 'multipart/form-data');
-          const params = new HttpParams();
-          this.httpClient
-            .post(url, formData, { params, headers })
-            .map((res: any) => {
-              console.log(res);
-              this.imagesList = null;
-              if (!idea.text) {
-                idea.text = '';
-              }
-              this.sendMessage.emit(
-                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
-              );
-            })
-            .subscribe(
-              (data) => {},
-              (error) => console.log(error)
-            );
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
+    if (idea.imagesList && idea.imagesList.length > 0) {
+      // if it is an image to be uploaded
+      this.uploadImageNCreateEditIdea(idea, 'create');
     } else {
+      // if it is a url from third party image service
       if (idea.selectedThirdPartyImageUrl) {
         this.sendMessage.emit(
           new BrainstormImageSubmitEvent(
@@ -677,8 +696,9 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         )
       );
     } else {
-      // updated with computer uploaded image
+      // idea is updated with computer uploaded image
       console.log(idea);
+      this.uploadImageNCreateEditIdea(idea, 'edit');
     }
   }
 

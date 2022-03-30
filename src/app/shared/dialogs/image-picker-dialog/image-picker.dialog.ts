@@ -21,10 +21,7 @@ export class ImagePickerDialogComponent implements OnInit {
   eventsSubject: Subject<void> = new Subject<void>();
   images;
   typingTimer;
-  constructor(
-    private dialogRef: MatDialogRef<ImagePickerDialogComponent>,
-    private builder: FormBuilder
-  ) {}
+  constructor(private dialogRef: MatDialogRef<ImagePickerDialogComponent>, private builder: FormBuilder) {}
   selectedSession;
 
   ngOnInit() {
@@ -55,7 +52,6 @@ export class ImagePickerDialogComponent implements OnInit {
   }
 
   uploadImageSelected($event) {
-    console.log($event);
     this.dialogRef.close({ type: 'upload', data: $event });
   }
 }

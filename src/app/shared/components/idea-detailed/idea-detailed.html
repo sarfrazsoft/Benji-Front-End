@@ -52,8 +52,8 @@
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
-      <ng-container *ngIf="imageSrc">
-        <ng-container *ngIf="isAbsolutePath(imageSrc); else uploadedImage">
+      <ng-container *ngIf="imageSrc">      
+        <ng-container *ngIf="isAbsolutePathOrNewlySelectedImage(imageSrc); else uploadedImage">
           <img 
             benji-click-stop-propagation 
             (click)="openImage(imageSrc)" 
@@ -68,9 +68,9 @@
         </ng-template>
       </ng-container>
 
-      <ng-container *ngIf="selectedThirdPartyImageUrl">
+      <!-- <ng-container *ngIf="selectedThirdPartyImageUrl">
         <img [src]="selectedThirdPartyImageUrl" alt="">
-      </ng-container>
+      </ng-container> -->
       
       <ng-container *ngIf="pdfSelected">
         <div style="width: 100%">
