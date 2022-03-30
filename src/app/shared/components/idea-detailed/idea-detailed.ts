@@ -261,7 +261,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   ideaIsEdited(event) {
-    if(event) {
+    if (event) {
       this.ideaEditEvent.emit(true);
     }
   }
@@ -345,11 +345,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             const reader = new FileReader();
             reader.onload = (e) => {
               this.imageSrc = reader.result;
-            }
+            };
             reader.readAsDataURL(file);
-            console.log('type upload');
           } else if (res.type === 'unsplash') {
             this.selectedImageUrl = res.data;
+            this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
             this.selectedThirdPartyImageUrl = res.data;
@@ -358,7 +358,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       });
   }
 
-  
   openGiphyPickerDialog() {
     const code = this.lessonRunCode;
     this.imageDialogRef = this.matDialog
@@ -375,21 +374,24 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           this.clearPDF();
           this.removeImage();
           if (res.type === 'giphy') {
-            console.log(res);
+            this.selectedImageUrl = res.data;
             this.selectedThirdPartyImageUrl = res.data;
+            this.imageSrc = res.data;
             this.imageSelected = true;
           }
         }
       });
   }
 
-  // isAbsolutePath(imageUrl: string) {
-  //   if (imageUrl.includes('https:')) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  isAbsolutePathOrNewlySelectedImage(imageUrl: string) {
+    if (imageUrl.includes('https:')) {
+      return true;
+    } else if (imageUrl.includes('data:image')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   getParticipantName(code: number) {
     return this.activitiesService.getParticipantName(this.activityState, code);
@@ -412,7 +414,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pin() {
     this.sendMessage.emit(new BrainstormAddIdeaPinEvent(this.idea.id));
   }
-  
+
   unpin() {
     this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(this.idea.id));
   }
