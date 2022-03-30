@@ -155,6 +155,7 @@ export class IdeaCreationDialogComponent implements OnInit {
               this.imageSrc = reader.result;
             };
             reader.readAsDataURL(file);
+            console.log(this.imageSrc);
           } else if (res.type === 'unsplash') {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSelected = true;
