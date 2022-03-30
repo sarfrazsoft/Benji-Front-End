@@ -349,7 +349,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
             this.selectedImageUrl = res.data;
-            this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
             this.selectedThirdPartyImageUrl = res.data;
