@@ -10,8 +10,8 @@ import * as global from 'src/app/globals';
 import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
-import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
+import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',

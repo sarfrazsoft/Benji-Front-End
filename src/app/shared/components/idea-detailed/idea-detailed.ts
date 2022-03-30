@@ -8,8 +8,6 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-// import { UppyConfig } from 'uppy-angular/uppy-angular';
-// import { Uppy } from '@uppy/core';
 import { Uppy } from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
@@ -337,6 +335,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       .subscribe((res) => {
         if (res) {
           this.uploadPanelExpanded = false;
+          this.clearPDF();
+          this.removeImage();
           if (res.type === 'upload') {
             this.imageSelected = true;
             this.imagesList = res.data;
@@ -349,9 +349,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
             this.selectedImageUrl = res.data;
-            this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.selectedThirdPartyImageUrl = res.data;
           }
         }
       });
