@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IntercomModule } from 'ng-intercom';
 import { AppRoutingModule } from './app-routing.module';
 
-import { EntryComponents } from 'src/app/pages';
+//import { EntryComponents } from 'src/app/pages';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ServicesProviders } from './index';
 import { LayoutModule } from './layout/layout.module';
@@ -17,13 +17,11 @@ import { LayoutModule } from './layout/layout.module';
 // App Pages
 import { AppComponent } from './app.component';
 
-import { environment } from './../environments/environment';
-
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 
 @NgModule({
-  declarations: [AppComponent, ...EntryComponents],
+  declarations: [AppComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -33,15 +31,11 @@ import { GoogleLoginProvider } from 'angularx-social-login';
     ReactiveFormsModule,
     SharedModule,
     LayoutModule,
-    // UppyAngularDashboardModule,
-    // StoreModule.forRoot({}, { metaReducers }),
-    // EffectsModule.forRoot([]),
     IntercomModule.forRoot({
       appId: 'bddh2r9q', // from your Intercom config
       // will automatically run `update` on router event changes. Default: `false`
       updateOnRouterChange: true,
     }),
-    // !environment.production ? StoreDevtoolsModule.instrument() : [],
     SocialLoginModule
   ],
   providers: [

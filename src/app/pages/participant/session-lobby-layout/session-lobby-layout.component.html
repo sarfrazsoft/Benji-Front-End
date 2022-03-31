@@ -8,7 +8,7 @@
     fxLayoutAlign="center center"
     class="content-wrapper" 
     *ngIf="beforeLessonRunDetails">
-    <div fxLayout="column" class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen}">
+    <div fxLayout="column" class="session-details" [ngClass]="{'adminLobby': adminLobbyScreeen, 'signup': loadSignUp}">
       <div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <div class="session-title">
@@ -102,13 +102,14 @@
       </div> -->
     </div>
     <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen">
-      <div *ngIf="participantJoinScreeen">
+      <div *ngIf="participantJoinScreeen && !loadLogin && !loadForgotPassword && !loadSignUp">
         <div class="sub-title"> Join Session </div>
         <div class="label"> Name </div>
         <p class="warning-color" *ngIf="loginError">
           Oops! What should we call you? Drop in your name.<br />
         </p>
         <input type="text"
+          placeholder="Enter your name"
           [formControl]="username">
         <!-- <div class="label"> Choose your avatar </div>
         <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
@@ -117,13 +118,43 @@
           <img class="edit-pen" src="/assets/img/edit-pen.svg">
           <div class="change-profile">Change profile</div>
         </div> -->
-        <div class="bg-primary-color button"
+        <div 
+          class="bg-primary-color button"
+          fxLayoutAlign="center center"
           (click)="createUser()"
           [ngClass]="{
-            active: isNameValid(),
-            inactive: !isNameValid()
-          }">Join
+            active: username.value,
+            inactive: !username.value
+          }">Join as guest
         </div>
+        <div class="or">or</div>
+        <div 
+          class="bg-primary-color button"
+          fxLayoutAlign="center center"
+          (click)="loadLoginComponent()"
+          >Join as member
+        </div>
+      </div>
+      <div class="participant-login">
+        <ng-container *ngIf="loadLogin">
+          <benji-dashboard-login
+            [joinSession]="true"
+            (forgotPassword)="loadForgotPasswordComponent()"
+            (signUp)="loadSignUpComponent()"   
+          ></benji-dashboard-login>
+        </ng-container>
+        <ng-container *ngIf="loadForgotPassword">
+          <benji-forgot-password
+          [joinSession]="true"
+          (signIn)="loadLoginComponent()"
+          ></benji-forgot-password>
+        </ng-container>
+        <ng-container *ngIf="loadSignUp">
+          <benji-dashboard-signup 
+          [joinSession]="true"
+          (signIn)="loadLoginComponent()"
+          ></benji-dashboard-signup>
+        </ng-container>
       </div>
       <div *ngIf="participantLobbyScreeen" class="session-joined" fxLayout="column" fxLayoutAlign="center center">
         Wait for your host to start the session.

@@ -39,6 +39,7 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
 import { Components, EntryComponents } from './index';
+import { EntryComponents as RegistrationEntryComponents } from 'src/app/pages';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxPermissionsModule } from 'ngx-permissions';
@@ -120,7 +121,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     UppyAngularProgressBarModule,
     UppyAngularDashboardModalModule,
   ],
-  declarations: Components,
+  declarations: [...Components, ...RegistrationEntryComponents],
   entryComponents: [...EntryComponents],
   exports: [...Components, ...SHARED_MODULES],
 })
