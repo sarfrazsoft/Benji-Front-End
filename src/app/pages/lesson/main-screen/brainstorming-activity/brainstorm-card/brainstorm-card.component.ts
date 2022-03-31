@@ -261,15 +261,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
     }
     this.imgSrc = '/assets/img/cards/like.svg';
-    event.stopPropagation();
   }
 
-  setHeart(idea: Idea, event) {
+  setHeart(idea: Idea) {
     if (!this.deactivateHearting) {
       this.deactivateHearting = true;
       this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
     }
-    event.stopPropagation();
   }
 
   showDetailedIdea(idea: Idea) {

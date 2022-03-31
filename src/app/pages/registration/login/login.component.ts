@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -15,6 +15,9 @@ import { NgxPermissionsService } from 'ngx-permissions';
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
+  @Input() joinSession: boolean;
+  @Output() signUp = new EventEmitter();
+  @Output() forgotPassword = new EventEmitter();
   form: FormGroup;
   isLoginClicked = false;
   emailPasswordError = false;
@@ -110,4 +113,13 @@ export class LoginComponent implements OnInit {
       );
     }
   }
+
+  signUpClick() {
+    this.joinSession? this.signUp.emit() : this.router.navigate(['/sign-up']) ;
+  }
+
+  forgotPasswordClicked() {
+    this.joinSession? this.forgotPassword.emit() : this.router.navigate(['/forgot-password']) ;
+  } 
 }
+

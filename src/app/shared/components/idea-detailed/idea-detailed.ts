@@ -8,8 +8,6 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-// import { UppyConfig } from 'uppy-angular/uppy-angular';
-// import { Uppy } from '@uppy/core';
 import { Uppy } from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
@@ -263,7 +261,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   ideaIsEdited(event) {
-    if(event) {
+    if (event) {
       this.ideaEditEvent.emit(true);
     }
   }
@@ -337,25 +335,28 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       .subscribe((res) => {
         if (res) {
           this.uploadPanelExpanded = false;
+          this.clearPDF();
+          this.removeImage();
           if (res.type === 'upload') {
             this.imageSelected = true;
             this.imagesList = res.data;
             const fileList: FileList = res.data;
             const file = fileList[0];
             const reader = new FileReader();
-            reader.onload = (e) => (this.imageSrc = reader.result);
+            reader.onload = (e) => {
+              this.imageSrc = reader.result;
+            };
             reader.readAsDataURL(file);
           } else if (res.type === 'unsplash') {
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
-            //this.selectedThirdPartyImageUrl = res.data;
+            this.selectedThirdPartyImageUrl = res.data;
           }
         }
       });
   }
 
-  
   openGiphyPickerDialog() {
     const code = this.lessonRunCode;
     this.imageDialogRef = this.matDialog
@@ -372,16 +373,19 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           this.clearPDF();
           this.removeImage();
           if (res.type === 'giphy') {
-            console.log(res);
+            this.selectedImageUrl = res.data;
             this.selectedThirdPartyImageUrl = res.data;
+            this.imageSrc = res.data;
             this.imageSelected = true;
           }
         }
       });
   }
 
-  isAbsolutePath(imageUrl: string) {
+  isAbsolutePathOrNewlySelectedImage(imageUrl: string) {
     if (imageUrl.includes('https:')) {
+      return true;
+    } else if (imageUrl.includes('data:image')) {
       return true;
     } else {
       return false;
@@ -409,7 +413,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pin() {
     this.sendMessage.emit(new BrainstormAddIdeaPinEvent(this.idea.id));
   }
-  
+
   unpin() {
     this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(this.idea.id));
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -14,6 +14,8 @@ import { GoogleLoginProvider } from 'angularx-social-login';
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
+  @Input() joinSession: boolean;
+  @Output() signIn = new EventEmitter();
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
@@ -194,4 +196,8 @@ export class SignupComponent implements OnInit {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
+
+  signInClicked() {
+    this.joinSession? this.signIn.emit() : this.router.navigate(['/login']);
+  } 
 }
