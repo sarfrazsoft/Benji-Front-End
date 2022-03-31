@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
-
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 @Component({

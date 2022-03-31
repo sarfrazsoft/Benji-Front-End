@@ -307,11 +307,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   getParticipantBoard(): Board {
     const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
-    let participantBoardId;
+    let participantBoardId: number ;
     for (const brdId in participants) {
       participants[brdId].forEach((code) => {
         if (code === this.participantCode) {
-          participantBoardId = brdId;
+          participantBoardId = Number(brdId) ;
         }
       });
     }

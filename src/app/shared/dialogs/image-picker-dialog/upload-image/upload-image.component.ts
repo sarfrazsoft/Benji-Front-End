@@ -15,7 +15,6 @@ export class UploadImageComponent implements OnInit {
   ngOnInit() {}
 
   setImage(url) {
-    console.log(url);
     this.imageSelected.emit(url);
   }
 
@@ -30,8 +29,6 @@ export class UploadImageComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e) => (this.imageSrc = reader.result);
       reader.readAsDataURL(file);
-
-      console.log(this.imagesList);
       this.imageSelected.emit(this.imagesList);
     }
   }
