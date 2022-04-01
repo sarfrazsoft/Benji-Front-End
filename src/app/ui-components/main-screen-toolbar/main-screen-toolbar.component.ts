@@ -357,8 +357,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   signUpClicked() {
-    // let path = "/sign-up?link="+this.roomCode;
-    // this.router.navigate([path]);
-    this.router.navigate(['/sign-up'])
+    this.router.navigateByUrl("/sign-up?link=" + this.roomCode);
   }
 }
