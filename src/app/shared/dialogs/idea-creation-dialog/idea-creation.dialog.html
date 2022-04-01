@@ -66,7 +66,7 @@
             </div>
             <ng-template #italic_active><img src="/assets/img/idea-creation/active/italic.svg"></ng-template>
           </button>
-          <button (click)="editor.chain().focus().toggleUnderline().run()">
+          <button (click)="editor.chain().focus().toggleBold().run()">
             <div *ngIf="!editor.isActive('underline');else underline_active">
               <img src="/assets/img/idea-creation/underline.svg">
             </div>
