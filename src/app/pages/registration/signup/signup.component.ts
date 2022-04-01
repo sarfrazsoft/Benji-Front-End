@@ -15,6 +15,7 @@ import { GoogleLoginProvider } from 'angularx-social-login';
 })
 export class SignupComponent implements OnInit {
   @Input() joinSession: boolean;
+  @Input() sllRoomCode: number;
   @Output() signIn = new EventEmitter();
   form: FormGroup;
   isSignupClicked = false;
@@ -164,7 +165,7 @@ export class SignupComponent implements OnInit {
                     // } else {
                     this.deviceService.isMobile()
                       ? this.router.navigate(['/participant/join'])
-                      : this.roomCode? this.router.navigateByUrl("/screen/lesson/"+this.roomCode)
+                      : this.roomCode || this.sllRoomCode? this.router.navigateByUrl("/screen/lesson/"+this.roomCode)
                       : this.router.navigate(['/dashboard']);
                     // }
                   } else {
