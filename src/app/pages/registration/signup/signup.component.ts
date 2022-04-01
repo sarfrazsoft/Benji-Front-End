@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
@@ -29,12 +29,14 @@ export class SignupComponent implements OnInit {
   logo;
 
   user: SocialUser | null;
+  roomCode: any;
 
   constructor(
     private builder: FormBuilder,
     private authService: AuthService,
     private contextService: ContextService,
     private deviceService: DeviceDetectorService,
+    private route: ActivatedRoute,
     public router: Router,
     private socialAuthService: SocialAuthService
   ) {
@@ -90,6 +92,11 @@ export class SignupComponent implements OnInit {
           );
         // this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
       }
+    }
+
+    if (this.route.snapshot.queryParams['link']) {
+      // alert(this.route.snapshot.queryParams['link']);
+      this.roomCode = this.route.snapshot.queryParams['link'];
     }
   }
 
@@ -157,6 +164,7 @@ export class SignupComponent implements OnInit {
                     // } else {
                     this.deviceService.isMobile()
                       ? this.router.navigate(['/participant/join'])
+                      : this.roomCode? this.router.navigateByUrl("/screen/lesson/"+this.roomCode)
                       : this.router.navigate(['/dashboard']);
                     // }
                   } else {
