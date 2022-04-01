@@ -147,6 +147,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     if (draftComment) {
       this.commentModel = draftComment;
     }
+
+    console.log(this.item);
   }
 
   // triggerResize() {
@@ -192,6 +194,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     } else {
       return false;
     }
+  }
+
+  isUploadCare(imageUrl: string) {
+    if (imageUrl.includes('ucarecdn')) {
+      return true;
+    }
+    return false;
   }
 
   openImage(imageUrl: string) {

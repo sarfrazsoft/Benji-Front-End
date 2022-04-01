@@ -38,8 +38,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
-import { Components, EntryComponents } from './index';
 import { EntryComponents as RegistrationEntryComponents } from 'src/app/pages';
+import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxMasonryModule } from 'ngx-masonry';

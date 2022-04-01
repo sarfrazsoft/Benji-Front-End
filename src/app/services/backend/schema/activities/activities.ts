@@ -381,6 +381,7 @@ export interface IdeaDocument {
   id: number;
   document: string;
   document_type: 'video' | 'document' | 'image';
+  document_url: string;
 }
 
 export interface ParticipantCode {

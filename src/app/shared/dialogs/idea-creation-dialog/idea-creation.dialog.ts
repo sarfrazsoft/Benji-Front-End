@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Uppy from '@uppy/core';
@@ -13,6 +14,7 @@ import uploadcare from 'uploadcare-widget';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
+declare var MediaRecorder: any;
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
@@ -47,6 +49,25 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   widgetRef;
 
+  videoTypes = ['webm', 'ogg', 'mp4', 'x-matroska'];
+  codecs = [
+    'vp9',
+    'vp9.0',
+    'vp8',
+    'vp8.0',
+    'avc1',
+    'av1',
+    'h265',
+    'h.265',
+    'h264',
+    'h.264',
+    'opus',
+    'pcm',
+    'aac',
+    'mpeg',
+    'mp4a',
+  ];
+
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
   @ViewChild('uploadcarewidget') uploadcarewidget;
   @HostListener('window:keyup.esc') onKeyUp() {
@@ -64,11 +85,12 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
+    private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       showCategoriesDropdown: boolean;
       categories: Array<Category>;
-      lessonID: number;
+      lessonRunCode: number;
       category?: Category;
     },
     private matDialog: MatDialog
@@ -79,7 +101,8 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];
     }
-    this.lessonID = data.lessonID;
+    this.lessonID = data.lessonRunCode;
+    this.lessonRunCode = data.lessonRunCode;
 
     if (data.category) {
       this.selectedCategory = data.category;
@@ -101,16 +124,17 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       }
     });
 
+    const supportedVideos = this.getSupportedMimeTypes('video', this.videoTypes, this.codecs);
+    console.log('-- Top supported Video : ', supportedVideos[0]);
     this.widgetRef = uploadcare.Widget('[name="file"]', {
       publicKey: '71eac221885fa40dc817',
       tabs: 'camera',
-      videoPreferredMimeTypes: ['video/mp4'],
+      // videoPreferredMimeTypes: 'video/webm;codecs:vp9',
+      videoPreferredMimeTypes: supportedVideos[0],
     });
 
     this.widgetRef.onUploadComplete((info) => {
       // Handle uploaded file info.
-      if (info.isImage) {
-      }
       if (!info.isImage) {
         this.videoURL = info.cdnUrl;
         this.video = true;
@@ -120,8 +144,52 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         this.webcamImageURL = info.cdnUrl;
         this.webcamImage = true;
       }
+      const url = global.apiRoot + '/course_details/lesson_run/' + this.lessonRunCode + '/upload_document/';
       console.log(info);
+      const formData: FormData = new FormData();
+      formData.append('document_type', this.video ? 'video' : 'image');
+      formData.append('document_url', this.video ? this.videoURL : this.webcamImageURL);
+      const headers = new HttpHeaders();
+      headers.set('Content-Type', null);
+      headers.set('Accept', 'multipart/form-data');
+      const params = new HttpParams();
+      this.httpClient.post(url, formData, { params, headers }).subscribe(
+        (data: IdeaDocument) => {
+          console.log(data);
+          if (data.document_type === 'video') {
+            this.video_id = data.id;
+          } else if (data.document_type === 'image') {
+            this.webcamImageId = data.id;
+          }
+        },
+        (error) => console.log(error)
+      );
     });
+  }
+
+  getSupportedMimeTypes(media, types, codecs) {
+    console.log(MediaRecorder);
+    const isSupported = MediaRecorder.isTypeSupported;
+    const supported = [];
+    types.forEach((type) => {
+      const mimeType = `${media}/${type}`;
+      codecs.forEach((codec) =>
+        [
+          `${mimeType};codecs=${codec}`,
+          `${mimeType};codecs:${codec}`,
+          `${mimeType};codecs=${codec.toUpperCase()}`,
+          `${mimeType};codecs:${codec.toUpperCase()}`,
+        ].forEach((variation) => {
+          if (isSupported(variation)) {
+            supported.push(variation);
+          }
+        })
+      );
+      if (isSupported(mimeType)) {
+        supported.push(mimeType);
+      }
+    });
+    return supported;
   }
 
   openDialog() {

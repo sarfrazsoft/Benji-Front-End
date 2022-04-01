@@ -484,7 +484,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       data: {
         showCategoriesDropdown: this.boardMode === 'columns',
         categories: this.board.brainstormcategory_set,
-        lessonID: this.activityState.lesson_run.lessonrun_code,
+        lessonRunCode: this.activityState.lesson_run.lessonrun_code,
         category: category,
       },
     });
