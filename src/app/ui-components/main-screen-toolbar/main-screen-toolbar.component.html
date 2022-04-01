@@ -44,6 +44,15 @@
               Share
             </div>
           </ng-container>
+          <!--A guest can sign-up straight from a session-->
+          <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+            <div 
+              class="share-link" 
+              fxLayoutAlign="center center"
+              (click)="guestSignUp()">
+              Sign-up
+            </div>
+          </ng-container>
           <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >
             <div class="option timer" fxLayoutAlign="center center"

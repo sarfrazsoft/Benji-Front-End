@@ -355,4 +355,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       });
     }
   }
+
+  guestSignUp() {
+    this.router.navigate(['/sign-up/']);
+  }
 }
