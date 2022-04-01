@@ -16,6 +16,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 })
 export class LoginComponent implements OnInit {
   @Input() joinSession: boolean;
+  @Input() sllRoomCode: number;
   @Output() signUp = new EventEmitter();
   @Output() forgotPassword = new EventEmitter();
   form: FormGroup;
@@ -101,8 +102,10 @@ export class LoginComponent implements OnInit {
             if (this.authService.redirectURL.length) {
               window.location.href = this.authService.redirectURL;
             } else {
+              console.log(this.sllRoomCode);
               this.deviceDetectorService.isMobile()
                 ? this.router.navigate(['/participant/join'])
+                : this.sllRoomCode? this.router.navigateByUrl("/screen/lesson/"+this.sllRoomCode)
                 : this.router.navigate(['/dashboard']);
             }
           }

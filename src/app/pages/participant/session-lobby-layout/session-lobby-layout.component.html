@@ -140,7 +140,8 @@
           <benji-dashboard-login
             [joinSession]="true"
             (forgotPassword)="loadForgotPasswordComponent()"
-            (signUp)="loadSignUpComponent()"   
+            (signUp)="loadSignUpComponent()"
+            [sllRoomCode]="roomCode.value"   
           ></benji-dashboard-login>
         </ng-container>
         <ng-container *ngIf="loadForgotPassword">
@@ -153,6 +154,7 @@
           <benji-dashboard-signup 
           [joinSession]="true"
           (signIn)="loadLoginComponent()"
+          [sllRoomCode]="roomCode"
           ></benji-dashboard-signup>
         </ng-container>
       </div>
