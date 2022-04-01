@@ -337,7 +337,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     return this.minWidth === 'small' ? 288 : this.minWidth === 'medium' ? 360 : 480;
   }
   classificationTypeChanged(selectedClassificationType) {
-    // console.log(selectedClassificationType);
     const sct = selectedClassificationType;
     if (sct.type === 'everyone') {
       // this.participantGroups = null;
@@ -358,8 +357,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   filterIdeasBasedOnGroup(selectedParticipantGroup: Group) {
-    // console.log(selectedParticipantGroup);
-    // console.log(this.act);
     const board = cloneDeep(this.board);
     for (let i = 0; i < board.brainstormcategory_set.length; i++) {
       const category = board.brainstormcategory_set[i];
@@ -575,7 +572,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   submitWithVideo(idea) {
-    console.log(idea);
     if (idea.id) {
       // update video
       this.sendMessage.emit(
@@ -623,7 +619,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.httpClient
           .post(url, formData, { params, headers })
           .map((res: any) => {
-            console.log(res);
             this.imagesList = null;
             if (!idea.text) {
               idea.text = '';
@@ -697,7 +692,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       );
     } else {
       // idea is updated with computer uploaded image
-      console.log(idea);
       this.uploadImageNCreateEditIdea(idea, 'edit');
     }
   }

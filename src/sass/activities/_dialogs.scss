@@ -594,8 +594,22 @@ ng-dropdown-panel.groups-controls {
     display: none;
   }
 }
-
+.uploadcare--widget__button.uploadcare--widget__button_type_open {
+  display: none;
+}
+.uploadcare--widget_status_ready .uploadcare--widget__button_type_cancel {
+  display: none;
+}
+.uploadcare--widget_status_ready .uploadcare--widget__button_type_remove {
+  display: none;
+}
+.uploadcare--widget__progress {
+  display: none;
+}
 .uploadcare--dialog {
+  .uploadcare--menu.uploadcare--panel__menu {
+    display: none;
+  }
   .uploadcare--powered-by {
     display: none;
   }

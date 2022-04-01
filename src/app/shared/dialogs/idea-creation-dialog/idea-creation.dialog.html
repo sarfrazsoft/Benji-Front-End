@@ -93,10 +93,6 @@
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div>   
-            <!-- <div
-              fxLayoutAlign="center center" >
-              <img class="close" src="/assets/img/idea-creation/video.svg">
-            </div>  -->
             <!-- <benji-uppy-dashboard
               [lessonRunCode]="lessonID"
               (mediaUploaded)="mediaUploaded($event)">
@@ -108,31 +104,8 @@
               <img class="close" src="/assets/img/idea-creation/cam-upload.svg">
             </div>
 
-            <!-- <ngx-uploadcare-widget
-              images-only="false"
-              public-key="71eac221885fa40dc817">
-            </ngx-uploadcare-widget> -->
-
-            <input #uploadcarewidget type="hidden"
-            name="file"/>
-            <!-- <div class="options" 
-              fxLayoutAlign="center center" >
-              <img class="close" src="/assets/img/idea-creation/camera.svg">
-            </div> -->
-            <!-- <div 
-              fxLayoutAlign="center center" 
-              (click)="imageSelected || pdfSelected ? null : uploader.click()">
-              <img 
-                [ngClass]="{'inactive': imageSelected || pdfSelected}"
-                src="/assets/img/idea-creation/file-upload.svg"
-              >
-              <input 
-                #uploader 
-                (change)="uploadFile($event)" 
-                type='file'
-                accept="application/pdf"
-                style="display:none"/> 
-            </div> -->
+            <!-- used by uploadcare -->
+            <input #uploadcarewidget type="hidden" name="file"/>
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
           <div *ngIf="showCategoriesDropdown"

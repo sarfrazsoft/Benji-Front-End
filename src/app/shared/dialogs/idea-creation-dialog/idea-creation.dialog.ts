@@ -78,11 +78,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
-  //   console.log('event:', event);
-  //   event.returnValue = false;
-  // }
-
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
     private httpClient: HttpClient,
@@ -107,10 +102,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     if (data.category) {
       this.selectedCategory = data.category;
     }
-
-    // document.addEventListener('DOMContentLoaded', () => {
-
-    // });
   }
 
   ngOnInit() {
@@ -125,12 +116,13 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     });
 
     const supportedVideos = this.getSupportedMimeTypes('video', this.videoTypes, this.codecs);
-    console.log('-- Top supported Video : ', supportedVideos[0]);
     this.widgetRef = uploadcare.Widget('[name="file"]', {
       publicKey: '71eac221885fa40dc817',
       tabs: 'camera',
-      // videoPreferredMimeTypes: 'video/webm;codecs:vp9',
       videoPreferredMimeTypes: supportedVideos[0],
+      previewStep: true,
+      imageShrink: '1024x1024',
+      cameraMirrorDefault: false,
     });
 
     this.widgetRef.onUploadComplete((info) => {
@@ -138,9 +130,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       if (!info.isImage) {
         this.videoURL = info.cdnUrl;
         this.video = true;
-        // this.video_id = res.id;
       } else if (info.isImage) {
-        // this.webcamImageId = res.id;
         this.webcamImageURL = info.cdnUrl;
         this.webcamImage = true;
       }
@@ -193,7 +183,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   }
 
   openDialog() {
-    // const widgetRef = uploadcare.Widget(this.uploadcarewidget, { publicKey: '71eac221885fa40dc817' });
     this.widgetRef.openDialog(null, {});
   }
 
