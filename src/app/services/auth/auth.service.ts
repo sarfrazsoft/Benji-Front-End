@@ -117,6 +117,8 @@ export class AuthService {
       .post(global.apiRoot + '/course_details/participant/', {
         lessonrun_code: enteredRoomCode,
         display_name: username,
+        // user: loggedInBenjiUserID
+        // TODO
       })
       .pipe(
         map((res: LoginResponse) => {

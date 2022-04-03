@@ -38,8 +38,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
-import { Components, EntryComponents } from './index';
 import { EntryComponents as RegistrationEntryComponents } from 'src/app/pages';
+import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxMasonryModule } from 'ngx-masonry';
@@ -104,7 +104,7 @@ import {
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
-import { NgxTiptapModule } from 'ngx-tiptap';
+// import { NgxTiptapModule } from 'ngx-tiptap';
 
 @NgModule({
   imports: [
@@ -121,7 +121,7 @@ import { NgxTiptapModule } from 'ngx-tiptap';
     UppyAngularDragDropModule,
     UppyAngularProgressBarModule,
     UppyAngularDashboardModalModule,
-    NgxTiptapModule,
+    // NgxTiptapModule,
   ],
   declarations: [...Components, ...RegistrationEntryComponents],
   entryComponents: [...EntryComponents],

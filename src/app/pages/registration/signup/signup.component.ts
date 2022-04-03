@@ -165,7 +165,8 @@ export class SignupComponent implements OnInit {
                     // } else {
                     this.deviceService.isMobile()
                       ? this.router.navigate(['/participant/join'])
-                      : this.roomCode || this.sllRoomCode? this.router.navigateByUrl("/screen/lesson/"+this.roomCode)
+                      : this.roomCode || this.sllRoomCode
+                      ? this.router.navigateByUrl('/screen/lesson/' + this.roomCode)
                       : this.router.navigate(['/dashboard']);
                     // }
                   } else {
@@ -207,6 +208,6 @@ export class SignupComponent implements OnInit {
   }
 
   signInClicked() {
-    this.joinSession? this.signIn.emit() : this.router.navigate(['/login']);
-  } 
+    this.joinSession ? this.signIn.emit() : this.router.navigate(['/login']);
+  }
 }
