@@ -1,16 +1,19 @@
 .lobby-wrapper {
-  height: calc(100vh - 56px);
+  height: calc(100vh);
   //margin-top: 52px;
   .content-wrapper {
     max-width: 960px;
-    box-shadow: 0px 1px 2px #e7e7e7;
+    box-shadow: 0px 25px 125px rgba(32, 34, 34, 0.05), 0px 16.2037px 73.206px rgba(32, 34, 34, 0.037963), 0px 9.62963px 39.8148px rgba(32, 34, 34, 0.0303704), 0px 5px 20.3125px rgba(32, 34, 34, 0.025), 0px 2.03704px 10.1852px rgba(32, 34, 34, 0.0196296), 0px 0.462963px 4.91898px rgba(32, 34, 34, 0.012037);
     border-radius: 16px;
     background: #fff;
     .session-details {
       background: #F9F9FB;
       padding: 40px;
       border-radius: 16px 0px 0px 16px;
-      min-height: 280px;
+      min-height: 411px;
+      &.signup {
+        min-height: 559px;
+      }
       &.adminLobby {
         margin-right: 0px;
         max-width: unset;
@@ -53,13 +56,6 @@
           height: 32px;
           border-radius: 50%;
         }
-        .name {
-          font-size: 18px;
-          font-weight: 500;
-          color: #37352f;
-          text-transform: capitalize;
-          margin-bottom: 4px;
-        }
         .initials {
           color: #fff;
           font-size: 14px;
@@ -70,21 +66,28 @@
           background: #5e8deb;
           line-height: 0px;
         }
+        .name {
+          font-size: 18px;
+          font-weight: 500;
+          color: #37352f;
+          text-transform: capitalize;
+          margin-bottom: 4px;
+        }
         .is-admin {
-          color: #999;
+          color: #828282;
           font-size: 14px;
           font-weight: 500;
         }
       }
       .description {
-        color: #000;
+        color: #37352f;
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
         // padding-bottom: 28px;
         // margin-bottom: 32px;
         // border-bottom: 2px solid #eaeaea;
-        width: 400px;
+        width: 320px;
       }
       // .session-participants {
       //   font-size: 24px;
@@ -96,15 +99,6 @@
       //       width: 40px;
       //       height: 40px;
       //       border-radius: 50%;
-      //     }
-      //     .initials {
-      //       color: #fff;
-      //       font-size: 16px;
-      //       font-weight: 500;
-      //       width: 40px;
-      //       height: 40px;
-      //       border-radius: 50%;
-      //       line-height: 0px;
       //     }
       //     .name {
       //       font-size: 14px;
@@ -120,49 +114,49 @@
       // }
     }
     .sub-title {
-      font-size: 24px;
-      font-weight: 700;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 20px;
       color: #37352f;
       margin-bottom: 24px;
     }
     .join-session {
       padding: 40px;
+      max-width: 400px;
       border-radius: 0px 16px 16px 0px;
       .sub-title {
         margin-bottom: 24px;
       }
       .label {
         color: #37352f;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 500;
         margin-bottom: 8px;
       }
-      input {
+      input:not([type="submit"]) {
         border-radius: 8px;
-        width: 368px;
-        padding: 16px;
-        color: #37352f;
+        width: 320px;
+        height: 48px;
+        padding: 0px 16px;
         font-size: 16px;
         font-weight: 500;
         border: 0px;
-        margin-bottom: 24px;
+        color: #37352f;
+        margin-bottom: 16px;
         background: #F3F4F7;
         &:focus {
           outline-width: 0;
+          &::placeholder {
+            opacity: 0;
+          }
+        }
+        &::placeholder {
+          color: #828282;
         }
       }
       .edit-profile {
         margin-bottom: 24px;
         cursor: pointer;
-        .initials {
-          color: #fff;
-          font-size: 28px;
-          font-weight: 500;
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          margin-right: 17px;
-        }
         .edit-pen {
           width: 16px;
           height: 16px;
@@ -175,14 +169,16 @@
         }
       }
       .button {
-        width: max-content;
-        padding: 12px 32px;
+        height: 40px;
         text-align: center;
         border-radius: 8px;
         color: #fff;
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 600;
         cursor: pointer;
+        &.inactive {
+          opacity: 0.4;
+        }
       }
       .session-joined {
         width: 400px;
@@ -190,6 +186,95 @@
         font-weight: 600;
         font-size: 24px;
         text-align: center;
+      }
+      .or {
+        font-size: 14px;
+        font-weight: 600;
+        color: #616161;
+        text-align: center;
+        position: relative;
+        margin-bottom: 24px;
+        margin-top: 24px;
+        &:before {
+          content: "";
+          display: block;
+          width: 144px;
+          height: 1px;
+          background: #e7e7e7;
+          position: absolute;
+          left: 0;
+          top: 50%;
+        }
+        &:after {
+          content: "";
+          display: block;
+          width: 144px;
+          height: 1px;
+          background: #e7e7e7;
+          position: absolute;
+          right: 0;
+          top: 50%;
+        }
+      }
+      .participant-login {
+        .sign-up-section {
+          height: unset;
+          img {
+            display: none;
+          }
+          .log-in-card, .sign-up-card {
+            margin-top: 0px;
+            width: unset;
+            .div-block-183 {
+              margin: 0;
+              align-items: flex-start;
+              .title {
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 8px;
+                text-align: left;
+              }
+              .text-block-89 {
+                font-size: 16px;
+                text-align: left;
+                margin-top: 8px;
+              }
+              .small-form-text {
+                width: 100%;
+              }
+              .forgot-form {
+                margin-top: 16px;
+              }
+              .form-block-8 > form {
+                margin-top: 16px;
+                > div {
+                  margin-bottom: 0px;
+                }
+                .tos-text {
+                  margin-bottom: 16px;
+                }
+              }
+              .log-in-form, .form-block-8 > form {
+                .email-control, .password-control {
+                  margin-bottom: 0px;
+                }
+                input {
+                  font-weight: 400;
+                }
+                input[type=submit] {
+                  height: 40px;
+                  font-weight: 600;
+                }
+              }
+              .already-member {
+                margin-top: 16px;
+                &.joining {
+                  margin-top: 24px;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -220,11 +305,16 @@
       .join-session {
         float: none;
         input {
-          width: 94%;
+          width: calc(100% - 30px);
         }
         .session-joined {
           margin: 0px auto;
           min-height: 180px;
+        }
+        .or {
+          &:before, &:after  {
+            width: 44%;
+          }
         }
       }
     }
@@ -247,10 +337,10 @@
         width: 100%;
         float: none;
         padding: 24px;
-        background: #A7A7A9;
+        background: #f9f9fb;
         border-radius: 0px 0px 16px 16px;
         input {
-          width: 90%;
+          width: calc(100% - 32px);
           background: #fff;
         }
         .session-joined {

@@ -26,9 +26,6 @@ import {
   IdeaDocument,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { environment } from 'src/environments/environment';
-import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
-import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 
 export type IdeaUserRole = 'owner' | 'viewer';
 
@@ -46,6 +43,7 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
     autoProceed: false,
     restrictions: {
       maxNumberOfFiles: 1,
+      // allowedFileTypes: ['video/webm'],
     },
   });
   // dashboardModalProps = {};
@@ -63,7 +61,12 @@ export class UppyDashboardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.uppy
-      .use(Webcam, { countdown: 3, showRecordingLength: true })
+      .use(Webcam, {
+        countdown: 3,
+        showRecordingLength: true,
+        showVideoSourceDropdown: true,
+        // preferredVideoMimeType: null,
+      })
       // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
       // .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
       .use(XHRUpload, {

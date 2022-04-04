@@ -162,7 +162,7 @@ export class LessonTileComponent implements OnInit, OnDestroy {
               confirmationMessage: msg,
             },
             disableClose: true,
-            panelClass: 'dashboard-dialog',
+            panelClass: 'confirmation-dialog',
           })
           .afterClosed()
           .subscribe((res) => {

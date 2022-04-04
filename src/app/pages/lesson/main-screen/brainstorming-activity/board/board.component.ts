@@ -37,37 +37,24 @@ import {
   Board,
   BoardMode,
   BrainstormActivity,
-  BrainstormCreateCategoryEvent,
   BrainstormEditIdeaSubmitEvent,
   BrainstormImageSubmitEvent,
-  BrainstormRemoveCategoryEvent,
   BrainstormRemoveSubmissionEvent,
-  BrainstormRenameCategoryEvent,
-  BrainstormSetCategoryEvent,
-  BrainstormSubmissionCompleteInternalEvent,
   BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
   BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
-  BrainstormToggleParticipantNameEvent,
   Category,
   Group,
   Idea,
   ResetGroupingEvent,
   StartBrainstormGroupEvent,
-  StartCaseStudyGroupEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
-import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
-import { environment } from 'src/environments/environment';
-import { BaseActivityComponent } from '../../../shared/base-activity.component';
-import { UncategorizedComponent } from '../uncategorized/uncategorized.component';
 
 @Component({
   selector: 'benji-ideas-board',
@@ -77,6 +64,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   @Input() board: Board;
   @Input() activityState: UpdateMessage;
   @Input() eventType;
+  @Input() boardMode: BoardMode;
 
   showParticipantsGroupsDropdown = false;
   @Input() participantCode;
@@ -88,7 +76,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   voteScreen = false;
   VnSComplete = false;
-  boardMode: BoardMode;
   showUserName = true;
   minWidth = 'small';
   colDeleted = 0;
@@ -174,7 +161,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
         // this.showUserName = val.state;
-        this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
+        // this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
       }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
@@ -233,42 +220,49 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
-    // populate groupings dropdown
     if (
-      this.board &&
-      this.board.board_activity.grouping &&
-      this.board.board_activity.grouping.groups.length
+      this.eventType === 'BrainstormEditBoardInstruction' ||
+      this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-        if (val) {
-          this.initParticipantGrouping(this.act);
-        }
-      });
-      this.permissionsService.hasPermission('ADMIN').then((val) => {
-        if (val) {
-          this.participantGroups = this.board.board_activity.grouping.groups;
-        }
-      });
+      this.instructions = this.board.board_activity.instructions;
+      this.sub_instructions = this.board.board_activity.sub_instructions;
     } else {
-      // grouping is null in activity
-      if (this.eventType === 'AssignGroupingToActivities') {
-        this.applyGroupingOnActivity(this.activityState);
+      // populate groupings dropdown
+      if (
+        this.board &&
+        this.board.board_activity.grouping &&
+        this.board.board_activity.grouping.groups.length
+      ) {
+        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+          if (val) {
+            this.initParticipantGrouping(this.act);
+          }
+        });
+        this.permissionsService.hasPermission('ADMIN').then((val) => {
+          if (val) {
+            this.participantGroups = this.board.board_activity.grouping.groups;
+          }
+        });
+      } else {
+        // grouping is null in activity
+        if (this.eventType === 'AssignGroupingToActivities') {
+          this.applyGroupingOnActivity(this.activityState);
+        }
       }
+
+      const sm = this.activityState;
+      if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
+        const gt = sm.running_tools.grouping_tool;
+        this.sharingToolService.updateParticipantGroupingToolDialog(gt);
+      }
+
+      this.joinedUsers = this.activityState.lesson_run.participant_set;
+
+      this.instructions = this.board.board_activity.instructions;
+      this.sub_instructions = this.board.board_activity.sub_instructions;
+
+      this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
-
-    const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      this.sharingToolService.updateParticipantGroupingToolDialog(gt);
-    }
-
-    this.joinedUsers = this.activityState.lesson_run.participant_set;
-
-    this.instructions = this.board.board_activity.instructions;
-    this.sub_instructions = this.board.board_activity.sub_instructions;
-
-    this.boardMode = this.board.board_activity.mode;
-    this.showUserName = this.board.board_activity.show_participant_name_flag;
   }
 
   ngOnDestroy() {
@@ -607,53 +601,72 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  uploadImageNCreateEditIdea(idea, action: 'create' | 'edit') {
+    const fileList: FileList = idea.imagesList;
+    const participant_code = this.participantCode;
+    const code = this.activityState.lesson_run.lessonrun_code;
+    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
+    const file: File = fileList[0];
+    this.utilsService
+      .resizeImage({
+        file: file,
+        maxSize: 500,
+      })
+      .then((resizedImage: Blob) => {
+        const formData: FormData = new FormData();
+        formData.append('document', resizedImage, file.name);
+        formData.append('participant_code', participant_code ? participant_code.toString() : '');
+        const headers = new HttpHeaders();
+        headers.set('Content-Type', null);
+        headers.set('Accept', 'multipart/form-data');
+        const params = new HttpParams();
+        this.httpClient
+          .post(url, formData, { params, headers })
+          .map((res: any) => {
+            console.log(res);
+            this.imagesList = null;
+            if (!idea.text) {
+              idea.text = '';
+            }
+            if (action === 'create') {
+              this.sendMessage.emit(
+                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
+              );
+            } else if (action === 'edit') {
+              this.sendMessage.emit(
+                new BrainstormEditIdeaSubmitEvent(
+                  idea.id,
+                  idea.text,
+                  idea.title,
+                  idea.category.id,
+                  idea.groupId,
+                  res.id
+                )
+              );
+            }
+          })
+          .subscribe(
+            (data) => {},
+            (error) => console.log(error)
+          );
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
+  }
+
   submitImageNIdea(idea) {
     if (idea.id) {
       // update the idea with an image
       this.updateIdeaWithImage(idea);
       return;
     }
-    const code = this.activityState.lesson_run.lessonrun_code;
-    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
 
-    const participant_code = this.participantCode;
-    const fileList: FileList = idea.imagesList;
-    if (fileList && fileList.length > 0) {
-      const file: File = fileList[0];
-      this.utilsService
-        .resizeImage({
-          file: file,
-          maxSize: 500,
-        })
-        .then((resizedImage: Blob) => {
-          const formData: FormData = new FormData();
-          formData.append('document', resizedImage, file.name);
-          formData.append('participant_code', participant_code ? participant_code.toString() : '');
-          const headers = new HttpHeaders();
-          headers.set('Content-Type', null);
-          headers.set('Accept', 'multipart/form-data');
-          const params = new HttpParams();
-          this.httpClient
-            .post(url, formData, { params, headers })
-            .map((res: any) => {
-              console.log(res);
-              this.imagesList = null;
-              if (!idea.text) {
-                idea.text = '';
-              }
-              this.sendMessage.emit(
-                new BrainstormSubmitEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
-              );
-            })
-            .subscribe(
-              (data) => {},
-              (error) => console.log(error)
-            );
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
+    if (idea.imagesList && idea.imagesList.length > 0) {
+      // if it is an image to be uploaded
+      this.uploadImageNCreateEditIdea(idea, 'create');
     } else {
+      // if it is a url from third party image service
       if (idea.selectedThirdPartyImageUrl) {
         this.sendMessage.emit(
           new BrainstormImageSubmitEvent(
@@ -683,8 +696,9 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         )
       );
     } else {
-      // updated with computer uploaded image
+      // idea is updated with computer uploaded image
       console.log(idea);
+      this.uploadImageNCreateEditIdea(idea, 'edit');
     }
   }
 

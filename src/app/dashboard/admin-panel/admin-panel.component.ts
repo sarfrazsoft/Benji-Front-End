@@ -78,9 +78,16 @@ export class AdminPanelComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((data) => {
-        this.adminService.createNewBoard(data).subscribe((res: any) => {
-          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
-        });
+        if (data) {
+          this.adminService.createNewBoard(data).subscribe((res: any) => {
+            // user object was stored when this user logged in.
+            // Now we need to store it as host so other modules know who is host
+            // for this particular session
+            const user: TeamUser = JSON.parse(localStorage.getItem('user'));
+            localStorage.setItem('host_' + res.lessonrun_code, JSON.stringify(user));
+            this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          });
+        }
       });
   }
 }

@@ -50,8 +50,13 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     if (localStorage.getItem('participant')) {
       this.permissionsService.loadPermissions(['PARTICIPANT']);
       this.clientType = 'participant';
-    } else if (localStorage.getItem('benji_facilitator')) {
+    } else if (localStorage.getItem('host_' + this.roomCode)) {
       this.permissionsService.loadPermissions(['ADMIN']);
+    } else {
+      if (!this.authService.isLoggedIn()) {
+        // navigate to lesson lobby
+        this.authService.navigateToLessonLobby(this.roomCode);
+      }
     }
     this.initSocket();
 
@@ -138,10 +143,13 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     // console.log(this.socket);
     this.socket.subscribe(
       (msg: ServerMessage) => {
+        console.log('handling server message ' + msg);
         this.handleServerMessage(msg);
-        // console.log(msg);
       },
-      (err) => console.log(err),
+      (err) => {
+        console.log('Error subscribing to to socket' + err);
+        // this.connectAndSubscribe();
+      },
       () => {
         console.log('complete');
       }

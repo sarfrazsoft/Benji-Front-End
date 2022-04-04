@@ -1,4 +1,7 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
+  AfterContentInit,
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,10 +14,12 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { find } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
   Board,
+  BoardSort,
   BrainstormAddBoardEventBaseEvent,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
@@ -22,8 +27,10 @@ import {
   BrainstormClearBoardIdeaEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
+  BrainstormToggleParticipantNameEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
@@ -47,7 +54,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   instructions = '';
   sub_instructions = '';
   statusDropdown = ['Open', 'View Only', 'Closed'];
-  postOrderDropdown = [
+  postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
       value: 'newest_to_oldest',
       name: 'Newest to oldest',
@@ -56,11 +63,16 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       value: 'oldest_to_newest',
       name: 'Oldest to newest',
     },
+    {
+      value: 'likes',
+      name: 'Likes',
+    },
   ];
   defaultSort = 'newest_to_oldest';
   participants = [];
 
   meetingMode: boolean;
+  showAuthorship: boolean;
   board: Board;
   boardMode: string;
   gridMode: boolean;
@@ -75,6 +87,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   menuBoard: any;
   hostBoard: number;
 
+  showBottom = true;
+
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
@@ -88,6 +102,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.selectedBoard = board;
         this.boardMode = this.selectedBoard.board_activity.mode;
         this.decideBoardMode(this.boardMode);
+        this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
         this.instructions = board.board_activity.instructions;
         this.sub_instructions = board.board_activity.sub_instructions;
         this.boardStatus =
@@ -122,23 +137,89 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   initializeBoards() {
-    const boards = this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-    this.boards = boards.sort((a, b) => a.order - b.order);
+    const unSortedBoards: Array<Board> = this.activityState.brainstormactivity.boards.filter(
+      (board) => board.removed === false
+    );
+    let firstBoard;
+    for (let i = 0; i < unSortedBoards.length; i++) {
+      const board = unSortedBoards[i];
+      if (board.previous_board === null) {
+        firstBoard = board;
+      }
+    }
+    const boards: Array<Board> = [];
+    boards.push(firstBoard);
+    for (let i = 0; i < boards.length; i++) {
+      const sortedBoard = boards[i];
+      for (let j = 0; j < unSortedBoards.length; j++) {
+        const unSortedBoard = unSortedBoards[j];
+        if (sortedBoard.next_board === unSortedBoard.id) {
+          boards.push(unSortedBoard);
+          break;
+        }
+      }
+    }
+    this.boards = boards;
   }
 
   getBoardParticipantCodes(board: Board) {
-    return this.activityState.brainstormactivity.participants[board.id];
+    if (this.activityState.brainstormactivity.participants[board.id].length) {
+      return this.activityState.brainstormactivity.participants[board.id];
+    }
+    else {
+      return null;
+    }
   }
 
   closeNav() {
     this.sidenav.close();
   }
 
-  addBoard(boardIndex: number) {
+  getDragData(board: Board) {
+    return { boardID: board.id };
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
+    const draggedBoardID = event.item.data.boardID;
+    let previous_board;
+    let next_board;
+    for (let i = 0; i < this.boards.length; i++) {
+      const board = this.boards[i];
+      if (board.id === draggedBoardID) {
+        if (i === 0) {
+          previous_board = null;
+          if (this.boards[i + 1]) {
+            next_board = this.boards[i + 1].id;
+          } else {
+            next_board = null;
+          }
+        } else if (i === this.boards.length - 1) {
+          // last board
+          next_board = null;
+          if (this.boards[i - 1]) {
+            previous_board = this.boards[i - 1].id;
+          } else {
+            previous_board = null;
+          }
+        } else {
+          if (this.boards[i + 1]) {
+            next_board = this.boards[i + 1].id;
+            previous_board = this.boards[i - 1].id;
+          }
+        }
+      }
+    }
+
+    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
+  }
+
+  addBoard(previousBoard: Board) {
     this.sendMessage.emit(
       new BrainstormAddBoardEventBaseEvent(
         'Board ' + this.boards.length,
-        boardIndex + 1,
+        previousBoard.id,
+        previousBoard.next_board,
         'Untitled Board ' + this.boards.length,
         'Sub Instructions'
       )
@@ -186,21 +267,17 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       .subscribe((res) => {
         if (res === true) {
           const id = boardID ? boardID : this.menuBoard;
-
-          // if (id === this.selectedBoard.id) {
-          //   this.sendMessage.emit(new HostChangeBoardEvent());
-          // }
           this.sendMessage.emit(new BrainstormRemoveBoardEvent(id));
         }
       });
   }
 
   navigateToBoard(board: Board) {
-    // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-    //   if (val) {
-    //     this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
-    //   }
-    // });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
+      }
+    });
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
@@ -215,18 +292,23 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   decideBoardMode(mode: string) {
-    if (mode === 'grid') {
-      this.gridMode = true;
-      this.threadMode = false;
-      this.columnsMode = false;
-    } else if (mode === 'thread') {
-      this.gridMode = false;
-      this.threadMode = true;
-      this.columnsMode = false;
-    } else if (mode === 'columns') {
-      this.gridMode = false;
-      this.threadMode = false;
-      this.columnsMode = true;
+    // console.log(mode);
+    // decideboardModeCalled = true;
+    switch (mode) {
+      case 'grid':
+        this.gridMode = true;
+        this.threadMode = false;
+        this.columnsMode = false;
+        break;
+      case 'thread':
+        this.gridMode = false;
+        this.threadMode = true;
+        this.columnsMode = false;
+        break;
+      default:
+        this.gridMode = false;
+        this.threadMode = false;
+        this.columnsMode = true;
     }
   }
 
@@ -240,6 +322,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   toggleMeetingMode($event) {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
+  toggleShowAuthorship() {
+    this.sendMessage.emit(new BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
   }
 
   copyLink() {
@@ -264,7 +350,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'clear-board-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
@@ -274,7 +360,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       });
   }
 
-  changeOrder(order) {
+  changeOrder(order: { value: BoardSort; name: string }) {
     this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
   }
 }

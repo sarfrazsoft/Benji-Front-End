@@ -18,7 +18,7 @@
   }
   .edit {
     .editing {
-      input {
+      input, textarea {
         font-size: 16px;
         font-weight: 400;
         color: #616161;
@@ -34,6 +34,9 @@
           color: #37352f;
           outline: none;
         }
+      }
+      textarea {
+        resize: vertical;
       }
     }
   }
@@ -54,14 +57,29 @@
         font-weight: 400;
       }
     }
+    ng-dropdown-panel {
+      .ng-dropdown-panel-items {
+        border: 2px solid #555BEA;
+        border-radius: 8px;
+        padding: 8px 0px;
+        background: #fff;
+        .ng-option {
+          padding: 8px 16px;
+          line-height: 16px;
+          &.ng-option-selected, &.ng-option-marked {
+            background-color: #e7f4fe;
+          }
+        }
+      }
+    }
   }
   .posting-settings {
     background: #f3f4f7;
     border-radius: 8px;
     padding: 16px;
     .option {
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
       &.clear-board {
         color: #ef151b;
@@ -95,6 +113,7 @@
       display: none;
       &.active {
         display: block;
+        margin-left: 12px;
       }
     }
   }
@@ -122,19 +141,29 @@
     padding: 16px;
     .label {
       color: #37352f;
-      font-size: 14px;
+      font-size: 16px;
+      line-height: 16px;
       font-weight: 500;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
     .sub-label {
+      font-size: 14px;
+      line-height: 18px;
       color: #616161;
-      font-size: 12px;
-      font-weight: 400;
     }
     .option {
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
+    }
+    &.info-card {
+     background: #E9EEFB; 
+     .label {
+       font-weight: 600;
+     }
+     .sub-label {
+       line-height: 20px;
+     }
     }
   }
   .boards {
@@ -145,6 +174,33 @@
   .close {
     cursor: pointer;
   }
+  .add-group .plus {
+    cursor: pointer;
+  }
+  .add-board-button {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+}
+
+// styles for boards list
+.boards-container {
+  &.cdk-drop-list-dragging .cdk-drag {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.board-container {
+  border-radius: 8px;
+  background-color: #fff;
+  &.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
   .board {
     cursor: pointer;
     padding: 14px;
@@ -152,6 +208,17 @@
     background: #f3f4f7;
     border-radius: 8px;
     transition: all 0.2s;
+    .persons {
+      display: none;
+    }
+    &:hover {
+      background: #eaebf1;
+      border-color: #eaebf1;
+      .persons {
+        display: block;
+        margin-top: 8px;
+      }
+    }
     &.selected {
       border: 2px solid $primary-color;
     }
@@ -185,9 +252,21 @@
       }
     }
   }
-  .add-group .plus {
-    cursor: pointer;
-  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.example-box:last-child {
+  border: none;
 }
 
 .board-duplicate-delete {

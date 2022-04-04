@@ -1,9 +1,10 @@
 <div class="submitted-ideas">
   <div class="uncategorized">
-    <ngx-masonry #masonry [options]="masonryOptions" [ordered] ="true">
+    <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true">
       <div
-        ngxMasonryItem 
-        class="uncategorized-idea"
+        ngxMasonryItem
+        [prepend]="masonryPrepend"
+        class="uncategorized-idea masonry-item"
         *ngFor="let idea of ideas"
         (mouseenter)="idea.showClose = true"
         (mouseleave)="idea.showClose = false">
@@ -15,6 +16,7 @@
           [showUserName]="showUserName"
           [participantCode]="participantCode"
           (deleteIdea)="delete($event)"
+          (commentEdited)="refreshMasonryLayout()"
           [sendMessage]="sendMessage"
           [categorizeFlag]="categorizeFlag"
           [myGroup]="myGroup"

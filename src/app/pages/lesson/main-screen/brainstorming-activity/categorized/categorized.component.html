@@ -66,28 +66,37 @@
             ></textarea>
           </div>
           <div class="ideas-list-container">
-            <ng-container *ngFor="let item of column.brainstormidea_set; let i = index">
-              <benji-brainstorm-card
-                [board]="board"
-                [item]="item"
-                [act]="act"
-                [activityState]="activityState"
-                [showUserName]="showUserName"
-                [participantCode]="participantCode"
-                (deleteIdea)="delete($event)"
-                [sendMessage]="sendMessage"
-                [categorizeFlag]="categorizeFlag"
-                [category]="column"
-                [myGroup]="myGroup"
-                [avatarSize]="'small'">
-              </benji-brainstorm-card>
-            </ng-container>
+            <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true">
+              <div 
+                *ngFor="let item of column.brainstormidea_set; let i = index" 
+                ngxMasonryItem
+                class="masonry-item">
+                <benji-brainstorm-card
+                  [board]="board"
+                  [item]="item"
+                  [act]="act"
+                  [activityState]="activityState"
+                  [showUserName]="showUserName"
+                  [participantCode]="participantCode"
+                  (deleteIdea)="delete($event)"
+                  [sendMessage]="sendMessage"
+                  (commentEdited)="refreshMasonryLayout()"
+                  [categorizeFlag]="categorizeFlag"
+                  [category]="column"
+                  [myGroup]="myGroup"
+                  [avatarSize]="'small'">
+                </benji-brainstorm-card>
+              </div>
+            </ngx-masonry>
           </div>
           <div
             class="add-card"
             (click)="addCard(column)"
-          >
-            + New Card
+            fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="5px">
+            <mat-icon>add</mat-icon>
+            <span>New Card</span>
           </div>
         </div>
       </div>

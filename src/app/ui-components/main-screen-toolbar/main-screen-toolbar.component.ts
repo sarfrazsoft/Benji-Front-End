@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -25,8 +25,8 @@ import {
   BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
   EndShareEvent,
-  HostChangeBoardEvent,
   GetUpdatedLessonDetailEvent,
+  HostChangeBoardEvent,
   JumpEvent,
   NextInternalEvent,
   ParticipantChangeBoardEvent,
@@ -86,6 +86,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   lessonName: string;
 
   selectedBoard: Board;
+  isHost: boolean;
+  isParticipant: boolean;
 
   constructor(
     public contextService: ContextService,
@@ -93,7 +95,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private sharingToolService: SharingToolService,
     private matDialog: MatDialog,
     private permissionsService: NgxPermissionsService,
-    private router: Router,
+    private router: Router
   ) {}
 
   @Output() socketMessage = new EventEmitter<any>();
@@ -117,6 +119,14 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
     this.showParticipantGroupingButton();
     this.shareParticipantLink = this.hostname + this.roomCode;
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      val ? (this.isParticipant = true) : (this.isParticipant = false);
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      val ? (this.isHost = true) : (this.isHost = false);
+    });
   }
 
   showParticipantGroupingButton() {
@@ -274,80 +284,79 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   isFirstBoard() {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let minBoardOrder = 0;
-    visibleBoards.forEach((brd: Board) =>{
-      if (brd.order < minBoardOrder) {
-        minBoardOrder = brd.order;
-      }
-    });
-    return minBoardOrder == this.getHostBoardOrder();
+    const currentBoard: Board = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
+
+    return currentBoard ? currentBoard.previous_board === null : false;
   }
 
   isLastBoard() {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let maxBoardOrder = 0;
-    visibleBoards.forEach((brd: Board) =>{
-      if (brd.order > maxBoardOrder) {
-        maxBoardOrder = brd.order;
-      }
-    });
-    return maxBoardOrder == this.getHostBoardOrder();
+    const currentBoard: Board = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
+    return currentBoard ? currentBoard.next_board === null : false;
   }
 
-  getHostBoardOrder() {
+  getHostBoard(): Board {
     const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let hostBoardOrder;
-    visibleBoards.forEach((brd: Board) =>{
+    let hostBoard;
+    visibleBoards.forEach((brd: Board) => {
       if (this.activityState.brainstormactivity.host_board === brd.id) {
-        hostBoardOrder = brd.order;
+        hostBoard = brd;
       }
     });
-    return hostBoardOrder;
+    return hostBoard;
   }
 
-  changeBoard(move: string) {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    const hostBoardOrder = this.getHostBoardOrder();
-    visibleBoards.forEach((brd: Board) =>{
-      if (hostBoardOrder+1 === brd.order && move === "next") {
-        this.navigateToBoard(brd)
-      } else if (hostBoardOrder-1 === brd.order && move === "previous") {
-        this.navigateToBoard(brd)
+  getParticipantBoard(): Board {
+    const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
+    let participantBoardId: number ;
+    for (const brdId in participants) {
+      participants[brdId].forEach((code) => {
+        if (code === this.participantCode) {
+          participantBoardId = Number(brdId) ;
+        }
+      });
+    }
+    const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    let participantBoard;
+    visibleBrds.forEach((brd: Board) => {
+      if (brd.id === participantBoardId) {
+        participantBoard = brd;
       }
     });
+    return participantBoard;
   }
 
-  navigateToBoard(board: Board) {
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.socketMessage.emit(new ParticipantChangeBoardEvent(board.id));
+  changeBoard(move: 'next' | 'previous') {
+    const currentBoard = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
+    if (move === 'next') {
+      if (currentBoard.next_board) {
+        this.navigateToBoard(currentBoard.next_board);
       }
-    });
-
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.socketMessage.emit(new HostChangeBoardEvent(board.id));
+    } else if (move === 'previous') {
+      if (currentBoard.previous_board) {
+        this.navigateToBoard(currentBoard.previous_board);
       }
-    });
+    }
   }
 
-  logoClicked(){
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.router.navigate(['/dashboard/']);
-      }
-    });
-    
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-          if (participant.participant_code === this.participantCode && participant.email) {
-            this.router.navigate(['/dashboard/']);
-          }
-        });
-      }
-    });
+  navigateToBoard(boardId: number) {
+    this.isHost
+      ? this.socketMessage.emit(new HostChangeBoardEvent(boardId))
+      : this.socketMessage.emit(new ParticipantChangeBoardEvent(boardId));
   }
 
+  logoClicked() {
+    if (this.isHost) {
+      this.router.navigate(['/dashboard/']);
+    } else if (this.isParticipant) {
+      this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+        if (participant.participant_code === this.participantCode && participant.email) {
+          this.router.navigate(['/dashboard/']);
+        }
+      });
+    }
+  }
+
+  signUpClicked() {
+    this.router.navigateByUrl("/sign-up?link=" + this.roomCode);
+  }
 }

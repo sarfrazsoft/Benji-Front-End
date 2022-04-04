@@ -1,6 +1,6 @@
 <div class="mainscreen-toolbar bg-white">
   <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="benji-logo-container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
+    <div fxFlex class="benji-logo-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
       <img 
         [src]="darkLogo" 
         alt="Benji Logo" 
@@ -42,6 +42,15 @@
               fxLayoutAlign="center center"
               (click)="copyLink(shareParticipantLink)">
               Share
+            </div>
+          </ng-container>
+          <!--A guest can sign-up straight from a session-->
+          <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+            <div 
+              class="share-link" 
+              fxLayoutAlign="center center"
+              (click)="signUpClicked()">
+              Sign-up
             </div>
           </ng-container>
           <!-- Timer control -->
@@ -143,8 +152,8 @@
             </div>
           </ng-container>
 
-          <!-- Board navigation back -->
-          <!-- <ng-container>
+          <!-- Board navigation -->
+          <div fxLayout="row" fxLayoutGap="8px">
             <div 
               class="back-next"
               [ngClass]="{'is-first': isFirstBoard()}"
@@ -155,10 +164,6 @@
                 <mat-icon>arrow_back</mat-icon>
                 <span>back</span>
             </div>
-          </ng-container> -->
-
-          <!-- Board navigation next -->
-          <!-- <ng-container>
             <div 
               class="back-next"
               [ngClass]="{'is-last': isLastBoard()}"
@@ -169,7 +174,7 @@
                 <span>next</span>
                 <mat-icon>arrow_forward</mat-icon>
             </div>
-          </ng-container> -->
+          </div>
 
         </div>
 

@@ -7,26 +7,47 @@
     [cdkDragDisabled]="!categorizeFlag"
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false">
-    <mat-icon
-      *ngIf="userRole === 'owner'"
-      benji-click-stop-propagation
-      class="delete-icon"
-      [style.opacity]="item.showClose ? 1 : 0"
-      (click)="delete(item.id)">
-      clear
-    </mat-icon>
-    <div *ngIf="showUserName" class="user-name">
-      <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <benji-profile-pictures
-          [activityState]="activityState"
-          [participantCodes]="[submittingUser]"
-          [showTooltip]="false"
-          [size]="avatarSize"
-        ></benji-profile-pictures>
-        <div class="name">
-          {{ getPersonName(item) }}
+    <div 
+      class="card-header" 
+      (click)="showDetailedIdea(item)"
+      [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
+      fxLayoutAlign="space-between center">
+      <div *ngIf="showUserName" class="user-name">
+        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <benji-profile-pictures
+            [activityState]="activityState"
+            [participantCodes]="[submittingUser]"
+            [showTooltip]="false"
+            [size]="avatarSize"
+          ></benji-profile-pictures>
+          <div class="name">
+            {{ getPersonName(item) }}
+          </div>
+        </div> 
+      </div>
+      <div *ngIf="!showUserName && item.pinned">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <img 
+            *ngIf="item.pinned"
+            (click)="unpin(item.id)"
+            src="/assets/img/idea-creation/blue-pin.svg">
+          <span>Pinned by host</span>
         </div>
-      </div> 
+      </div>
+      <img 
+        *ngIf="item.pinned && showUserName"
+        (click)="unpin(item.id)"
+        class="pin" 
+        [ngClass]="{'move-left': item.showClose}"
+        src="/assets/img/idea-creation/blue-pin.svg">
+      <mat-icon
+        *ngIf="userRole === 'owner'"
+        benji-click-stop-propagation
+        class="delete-icon"
+        [style.opacity]="item.showClose ? 1 : 0"
+        (click)="delete(item.id)">
+        clear
+      </mat-icon>
     </div>
     <!-- brainstorm card media -->
     <ng-container>
@@ -66,38 +87,44 @@
       </div>
 
       <div *ngIf="item.idea_video">
-        <video style="margin: 0 auto;" width="100%" #player controls>
+        <video style="margin: 0 auto;" width="100%" #player controls (loadeddata)="videoLoaded()">
           <source [src]="hostname + item.idea_video.document" type="video/mp4" />
         </video>
       </div>
     </ng-container>
     <div 
-      class="content" 
+      class="content"
+      [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
+                  'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
+      *ngIf="item.title || item.idea" 
       benji-click-stop-propagation 
       (click)="showDetailedIdea(item)">
       <div *ngIf="item.title || item.idea" class="title-description">
-        <div *ngIf="item.title" class="title">{{ item.title }}</div>
+        <div *ngIf="item.title" class="title" [ngClass]="{'spaced': item.idea }">{{ item.title }}</div>
         {{ item.idea }} 
       </div>
     </div>
     <div class="feedback">
-      <div class="counts" fxLayout="row" fxLayoutAlign="space-between center"> 
-        <div fxLayoutAlign="start center">
+      <div class="counts" fxLayout="row" fxLayoutAlign="space-between center" (click)="showDetailedIdea(item)"> 
+        <div fxLayout="row" fxLayoutAlign="start center">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"
+            benji-click-stop-propagation
             (click)="setHeart(item)" 
             class="heart" 
-            src="/assets/img/grey-heart.svg"> 
+            [src]="imgSrc"
+            (mouseout)="imgSrc='/assets/img/cards/like.svg'"
+            (mouseover)="imgSrc='/assets/img/cards/liking.svg'"> 
           <img
             *ngIf="hasParticipantHearted(item) || deactivateHearting"
+            benji-click-stop-propagation
             (click)="removeHeart(item)" 
             class="heart" 
-            src="/assets/img/red-heart.svg">
-          
+            src="/assets/img/cards/liked.svg">
           <span>{{ item.hearts.length ? item.hearts.length : '0' }}</span>
         </div>
         <div fxLayoutAlign="start center">
-          <img class="thought" src="/assets/img/grey-thought.svg"> 
+          <img class="thought" src="/assets/img/cards/comments.svg"> 
           <span>{{ item.comments.length ? item.comments.length : '0' }}</span>
         </div>
       </div>
@@ -129,37 +156,33 @@
           </mat-icon>
         </div>
       </ng-container>
-      <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-        <div class="initials" fxLayout="column" fxLayoutAlign="center center">
-          <benji-profile-pictures
-            [activityState]="activityState"
-            [participantCodes]="[participantCode]"
-            [showTooltip]="false"
-            [size]="avatarSize"
-          ></benji-profile-pictures>
-        </div>
+      <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+        <benji-profile-pictures
+          [activityState]="activityState"
+          [participantCodes]="[participantCode]"
+          [showTooltip]="false"
+          [size]="avatarSize"
+        ></benji-profile-pictures>
         <div 
           class="comment-input-container" 
           fxFlex="row" 
-          fxLayoutAlign="start center">
+          fxLayoutAlign="start center"
+          [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
           <textarea
             matInput
             cdkTextareaAutosize
-            #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
             cdkAutosizeMaxRows="5"
             placeholder="Add a comment"  
             class="input-comment"
-            [(ngModel)]="commentModel">
+            [(ngModel)]="commentModel"
+            (ngModelChange)="commentTyped()"
+            [ngClass]="{'active': commentModel.length}"
+            (focus)="onCommentFocus()"
+            (blur)="onCommentBlur()"
+            (keyup.enter)="submitComment(item.id, commentModel); commentModel = ''">
           </textarea>
-          <!-- <div
-            class="input-comment" 
-            data-placeholder="Add a comment"
-            contenteditable
-            (mousedown)="$event.stopPropagation()"
-            [textContent]="commentModel" (input)="commentModel=$event.target.textContent">
-          </div> -->
-          <div 
+          <div  
             class="send-comment" 
             (click)="submitComment(item.id, commentModel); commentModel = ''"
             [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">

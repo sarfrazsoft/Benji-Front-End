@@ -29,7 +29,7 @@
               class="options" 
               fxLayoutAlign="center center"
               (click)="openImagePickerDialog()">
-              <img src="/assets/img/idea-creation/scenery-upload.svg">
+              <img src="/assets/img/idea-creation/img-upload.svg">
             </div>
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
             
@@ -39,6 +39,12 @@
               (mediaUploaded)="mediaUploaded($event)">
             </benji-uppy-dashboard>
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
+            <div 
+              class="options" 
+              fxLayoutAlign="center center"
+              (click)="openGiphyPickerDialog()">
+              <img src="/assets/img/idea-creation/gif-upload.svg">
+            </div>
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div> -->
           </div>
           <div class="add-to-post">Add to your post</div>
@@ -46,8 +52,8 @@
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
-      <ng-container *ngIf="imageSrc">
-        <ng-container *ngIf="isAbsolutePath(imageSrc); else uploadedImage">
+      <ng-container *ngIf="imageSrc">      
+        <ng-container *ngIf="isAbsolutePathOrNewlySelectedImage(imageSrc); else uploadedImage">
           <img 
             benji-click-stop-propagation 
             (click)="openImage(imageSrc)" 
@@ -61,6 +67,11 @@
             [src]="hostname + imageSrc" alt="" />
         </ng-template>
       </ng-container>
+
+      <!-- <ng-container *ngIf="selectedThirdPartyImageUrl">
+        <img [src]="selectedThirdPartyImageUrl" alt="">
+      </ng-container> -->
+      
       <ng-container *ngIf="pdfSelected">
         <div style="width: 100%">
           <ngx-extended-pdf-viewer [src]="pdfSrc" 
@@ -103,7 +114,22 @@
       <div fxLayout="row">
         <div class="settings" fxLayout="row"fxLayoutGap="12px">
           <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div> -->
-          <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/pin-icon.svg"></div> -->
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
+            <div
+              *ngIf="!idea.pinned"
+              [ngClass]="{'unpinned': !idea.pinned}"
+              class="options"
+              (click)="pin()">
+              <img src="/assets/img/idea-creation/pin-icon.svg">
+            </div>
+            <div
+              *ngIf="idea.pinned"
+              [ngClass]="{'pinned': idea.pinned}"
+              class="options"
+              (click)="unpin()">
+              <img src="/assets/img/idea-creation/pinned.svg">
+            </div>
+          </ng-container>
           <div
             (click)="delete()"
             class="options" 
@@ -122,9 +148,11 @@
     </div>
     <ng-container *ngIf="userRole === 'owner' || ideaTitle">
       <textarea 
+        [readonly]="userRole !== 'owner'"
         class="title" 
         placeholder="Title" 
         [(ngModel)]="ideaTitle"
+        (ngModelChange)="ideaIsEdited($event)"
         cdkTextareaAutosize
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="1"
@@ -133,8 +161,10 @@
     </ng-container>
     <ng-container *ngIf="userRole === 'owner' || userIdeaText">
       <textarea
+        [readonly]="userRole !== 'owner'"
         cdkTextareaAutosize
-        [(ngModel)]="userIdeaText" 
+        [(ngModel)]="userIdeaText"
+        (ngModelChange)="ideaIsEdited($event)" 
         class="description"
         placeholder="Description..."
         [ngClass]="{
@@ -143,6 +173,7 @@
       </textarea>
     </ng-container>
     <div
+      *ngIf="data.showUserName" 
       fxLayoutGap="13px"
       fxLayout="row"
       class="participants" 
@@ -198,33 +229,37 @@
               </div>
             </div>
           </div>
-          <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
             <benji-profile-pictures
               [activityState]="activityState"
               [participantCodes]="[participantCode]"
               [size]="'medium'"
             ></benji-profile-pictures>
-            <input #commentInput class="input-comment" type="text" placeholder="Add a comment">
-            <!-- <textarea
-              class="input-comment" 
-              name="" 
-              id="" 
-              cols="30" 
-              rows="1"
-              placeholder="Add a comment"
-              [(ngModel)]="commentModel">
-            </textarea> -->
-            <!-- <div 
-              class="send-comment" 
-              (click)="submitComment(item.id, commentModel); commentModel = ''"
-              [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
-              Send
-            </div> -->
             <div 
-              class="send-comment" 
-              [@enableDisable]="commentInput.value.length ? 'enabled' : 'disabled'"
-              (click)="submitComment(idea.id, commentInput.value); commentInput.value = null">
-              Post
+              class="comment-input-container detailed" 
+              fxFlex="row" 
+              fxLayoutAlign="start center"
+              [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                placeholder="Add a comment"  
+                class="input-comment detailed"
+                [(ngModel)]="commentModel"
+                (ngModelChange)="commentTyped()"
+                [ngClass]="{'active': commentModel.length}"
+                (focus)="onCommentFocus()"
+                (blur)="onCommentBlur()"
+                (keyup.enter)="submitComment(idea.id, commentModel); commentModel = ''">
+              </textarea>
+              <div  
+                class="send-comment detailed" 
+                (click)="submitComment(idea.id, commentModel); commentModel = ''"
+                [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
+                Post
+              </div>
             </div>
           </div>
         </div>

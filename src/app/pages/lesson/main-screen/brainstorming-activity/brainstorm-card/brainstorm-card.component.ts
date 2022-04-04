@@ -10,6 +10,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -22,14 +23,17 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { take } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
   BrainstormActivity,
+  BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
+  BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Idea,
@@ -38,6 +42,7 @@ import {
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
+import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -50,12 +55,14 @@ import { environment } from 'src/environments/environment';
         'enabled',
         style({
           opacity: 1,
+          display: 'block',
         })
       ),
       state(
         'disabled',
         style({
           opacity: 0,
+          display: 'none',
         })
       ),
       transition('enabled => disabled', [animate('0.1s')]),
@@ -85,16 +92,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
+  @Output() commentEdited = new EventEmitter<any>();
 
   commentModel = '';
   submittingUser;
   submitting_participant;
   userRole: IdeaUserRole;
   deactivateHearting = false;
+  classGrey: boolean;
+  classWhite: boolean;
+  commentKey: string;
+  imgSrc = '/assets/img/cards/like.svg';
   // columns = [];
   // cycle = 'first';
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private dialog: MatDialog,
@@ -102,7 +114,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private ngxPermissionsService: NgxPermissionsService
   ) {
     // super();
   }
@@ -110,6 +123,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
+      this.commentKey = 'comment_' + this.item.id + this.submittingUser;
     }
 
     if (this.participantCode) {
@@ -117,6 +131,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     } else {
       // viewing user is the host
       this.userRole = 'owner';
+      this.commentKey = 'comment_' + this.item.id + 'host';
     }
 
     if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
@@ -127,12 +142,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.userRole = 'viewer';
       }
     }
+
+    const draftComment = this.brainstormService.getDraftComment(this.commentKey);
+    if (draftComment) {
+      this.commentModel = draftComment;
+    }
   }
 
-  triggerResize() {
-    // Wait for changes to be applied, then trigger textarea resize.
-    this._ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
-  }
+  // triggerResize() {
+  //   // Wait for changes to be applied, then trigger textarea resize.
+  //   this._ngZone.onStable.pipe(take(1)).subscribe(() => {
+  //     console.log("Anonymous triggerResize");
+  //     this.autosize.resizeToFitContent(true);
+  //   });
+  //   console.log("triggerResize");
+  // }
 
   ngOnChanges() {}
 
@@ -144,7 +168,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           actionButton: 'Delete',
         },
         disableClose: true,
-        panelClass: 'idea-delete-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
@@ -152,6 +176,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           this.deleteIdea.emit(id);
         }
       });
+  }
+
+  unpin(id) {
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.sendMessage.emit(new BrainstormRemoveIdeaPinEvent(id));
+      }
+    });
   }
 
   isAbsolutePath(imageUrl: string) {
@@ -182,6 +214,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+    this.brainstormService.removeDraftComment(this.commentKey);
   }
 
   removeComment(commentId, ideaId) {
@@ -212,7 +245,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     return hearted;
   }
 
-  removeHeart(item) {
+  removeHeart(item, event) {
     let hearted;
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
@@ -227,6 +260,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     if (hearted) {
       this.sendMessage.emit(new BrainstormRemoveIdeaHeartEvent(item.id, hearted.id));
     }
+    this.imgSrc = '/assets/img/cards/like.svg';
   }
 
   setHeart(idea: Idea) {
@@ -249,6 +283,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
+      disableClose: true,
       hasBackdrop: isDesktop,
       panelClass: assignedClass,
       data: {
@@ -261,6 +296,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         isMobile: !isDesktop,
         participantCode: this.participantCode,
         userRole: this.userRole,
+        showUserName: this.showUserName,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
@@ -277,5 +313,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.brainstormService.saveIdea$.next(result);
       }
     });
+  }
+
+  onCommentFocus() {
+    this.classGrey = true;
+  }
+  onCommentBlur() {
+    this.classGrey = false;
+  }
+
+  commentTyped() {
+    this.commentEdited.emit();
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+  }
+
+  videoLoaded() {
+    this.commentEdited.emit();
   }
 }

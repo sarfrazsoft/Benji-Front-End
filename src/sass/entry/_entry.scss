@@ -239,7 +239,7 @@
   font-size: 16px;
   font-weight: 400;
   padding: 0px 16px;
-  width: calc(100% - 32px);
+  width: 100%;
   color: #828282;
   background: #F3F4F7;
   border-radius: 8px;
@@ -383,8 +383,8 @@ figcaption {
 .forgot-password {
   width: 74%;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
 }
 .forgot-form {
   margin-top: 28px;

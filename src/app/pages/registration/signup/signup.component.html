@@ -3,7 +3,7 @@
   <div class="sign-up-card">
     <div class="div-block-183">
       <div class="form-block-8 w-form">
-        <div class="title">Join Benji today!</div>
+        <div class="title"> {{ joinSession? "Join Benji" : "Join Benji today!" }} </div>
         <!-- <div (click)="signInWithGoogle()"  class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
           <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
           <div class="google-text">Sign up with Google</div>
@@ -144,7 +144,7 @@
             </mat-error>
           </div> -->
           <div class="tos-text">
-            By signing up you agree to the <a href="#" class="primary-color">Terms and Conditions</a> and the <a href="#"  class="primary-color">Privacy Policy</a>.
+            By signing up you agree to the <a href="https://guides.mybenji.com/terms-of-use" class="primary-color">Terms and Conditions</a> and the <a href="https://guides.mybenji.com/privacy" class="primary-color">Privacy Policy</a>.
           </div>
 
           <input type="submit" value="Sign up" data-wait="Please wait..." 
@@ -159,7 +159,8 @@
       </div>
       <div 
         class="small-form-text already-member"
-        (click)="router.navigate(['/login'])">
+        [ngClass]="{'joining': joinSession}"
+        (click)="signInClicked()">
         Already have an account?<br><div class="bold-text-7 sign-up primary-color">Sign in</div>
       </div>
     </div>

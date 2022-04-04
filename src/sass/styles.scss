@@ -102,6 +102,16 @@
 //   border-radius: 11px;
 // }
 
+// .proseMirror {
+//   .durr {
+//     background-color: #e5bd4a;
+//   }
+// }
+// @import './tailwind';
+// @import 'tailwindcss/base';
+// @import 'tailwindcss/components';
+// @import 'tailwindcss/utilities';
+
 * {
   padding: 0;
   margin: 0;
@@ -1454,7 +1464,7 @@ benji-main-screen-lesson {
 benji-participant-join {
   .join-screen {
     height: 100vh;
-    //background: rgba(73, 73, 73, 0.45);
+    background: #f3f4f7;
     .bg-white {
       z-index: -1;
     }

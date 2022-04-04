@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -11,6 +11,8 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
+  @Input() joinSession: boolean;
+  @Output() signIn = new EventEmitter();
   form: FormGroup;
   requestSubmitted = false;
   emailPasswordError = false;
@@ -57,4 +59,8 @@ export class ForgotPasswordComponent implements OnInit {
       );
     }
   }
+
+  signInClicked() {
+    this.joinSession? this.signIn.emit() : this.router.navigate(['/login']);
+  } 
 }
