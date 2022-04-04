@@ -2,12 +2,6 @@ export * from './components';
 export * from './directives';
 export * from './dialogs';
 
-import { UIComponents } from '../ui-components';
-import { CmpComponents, CmpEntryComponents } from './components';
-import { Dialogs } from './dialogs';
-import { Directives } from './directives';
-import { CustomMenuComponent } from './ngx-editor/custom-menu/custom-menu.component';
-import { ParticipantLobbyComponents } from 'src/app/pages/participant';
 import {
   MainScreenBrainStormComponents,
   MainScreenBuildPitchActivityComponent,
@@ -17,7 +11,6 @@ import {
   MainScreenPopQuizComponent,
   MainScreenTitleActivityComponent,
 } from 'src/app/pages/lesson/main-screen';
-
 import {
   BuildPitchComponents,
   CaseStudyWorkAreaComponent,
@@ -40,9 +33,13 @@ import {
   VoteIdeaComponent,
   VotePitchComponent,
 } from 'src/app/pages/lesson/participant';
-
 import { ParticipantLobbyComponents } from 'src/app/pages/participant';
 import { SafePipe } from '../services/safe.pipe';
+import { UIComponents } from '../ui-components';
+import { CmpComponents, CmpEntryComponents } from './components';
+import { Dialogs } from './dialogs';
+import { Directives } from './directives';
+import { CustomMenuComponent } from './ngx-editor/custom-menu/custom-menu.component';
 
 const ActivityComponents = [
   ParticipantFeedbackActivityComponent,
