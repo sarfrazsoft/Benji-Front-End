@@ -355,4 +355,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       });
     }
   }
+
+  signUpClicked() {
+    this.router.navigateByUrl("/sign-up?link=" + this.roomCode);
+  }
 }

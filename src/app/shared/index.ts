@@ -7,7 +7,7 @@ import { CmpComponents, CmpEntryComponents } from './components';
 import { Dialogs } from './dialogs';
 import { Directives } from './directives';
 import { CustomMenuComponent } from './ngx-editor/custom-menu/custom-menu.component';
-
+import { ParticipantLobbyComponents } from 'src/app/pages/participant';
 import {
   MainScreenBrainStormComponents,
   MainScreenBuildPitchActivityComponent,
