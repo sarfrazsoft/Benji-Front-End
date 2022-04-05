@@ -172,7 +172,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   isAbsolutePath(imageUrl: string) {
-    if (imageUrl.includes('https:')) {
+    if (imageUrl && imageUrl.includes('https:')) {
       return true;
     } else {
       return false;

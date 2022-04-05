@@ -469,15 +469,22 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   participantIsOwner() {}
 
   mediaUploaded(res: IdeaDocument) {
-    this.uploadPanelExpanded = false;
     if (res.document_type === 'video') {
-      this.videoURL = res.document;
+      if (res.document_url) {
+        this.videoURL = res.document_url;
+      } else if (res.document) {
+        this.videoURL = res.document;
+      }
       this.video = true;
       this.video_id = res.id;
     } else if (res.document_type === 'image') {
-      this.webcamImageId = res.id;
-      this.webcamImageURL = res.document;
+      if (res.document_url) {
+        this.webcamImageURL = res.document_url;
+      } else if (res.document) {
+        this.webcamImageURL = res.document;
+      }
       this.webcamImage = true;
+      this.webcamImageId = res.id;
     }
   }
 
