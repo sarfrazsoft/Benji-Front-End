@@ -143,7 +143,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     // console.log(this.socket);
     this.socket.subscribe(
       (msg: ServerMessage) => {
-        console.log('handling server message ' + msg);
+        // console.log('handling server message ' + msg);
         this.handleServerMessage(msg);
       },
       (err) => {

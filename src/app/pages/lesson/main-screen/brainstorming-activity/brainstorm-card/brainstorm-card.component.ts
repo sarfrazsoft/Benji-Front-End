@@ -180,7 +180,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   isUploadCare(imageUrl: string) {
-    if (imageUrl.includes('ucarecdn')) {
+    if (imageUrl && imageUrl.includes('ucarecdn')) {
       return true;
     }
     return false;
