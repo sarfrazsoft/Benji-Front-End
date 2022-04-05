@@ -28,7 +28,7 @@ export class BackendSocketService {
       url: uri,
       deserializer: ({ data }) => {
         clearTimeout(this.typingTimer);
-        console.log('line 31' + data);
+        // console.log('line 31' + data);
         return JSON.parse(data);
       },
       openObserver: {
@@ -37,7 +37,7 @@ export class BackendSocketService {
             this.httpClient
               .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRun.id}/restart_lesson/`)
               .subscribe((v) => {
-                console.log('line 40' + v);
+                // console.log('line 40' + v);
               });
           }, 3000);
           // console.log('opened');
