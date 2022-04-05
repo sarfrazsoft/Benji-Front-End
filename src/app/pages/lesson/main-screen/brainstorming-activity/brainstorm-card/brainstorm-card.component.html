@@ -62,7 +62,7 @@
           </ng-container>
         </ng-container>
 
-        <ng-container #notUploadCare>
+        <ng-template #notUploadCare>
           <ng-container *ngIf="item.idea_image.document">
             <ng-container *ngIf="isAbsolutePath(item.idea_image.document); else uploadedImage">
               <img [src]="item.idea_image.document" alt="" />
@@ -73,7 +73,7 @@
           <ng-template #uploadedImage>
             <img [src]="hostname + item.idea_image.document" alt="" />
           </ng-template>
-        </ng-container>
+        </ng-template>
       </div>
 
       <div *ngIf="item.idea_video">

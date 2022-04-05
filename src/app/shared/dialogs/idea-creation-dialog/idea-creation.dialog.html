@@ -93,19 +93,11 @@
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div>   
-            <!-- <benji-uppy-dashboard
+            <benji-uploadcare-widget
               [lessonRunCode]="lessonID"
               (mediaUploaded)="mediaUploaded($event)">
-            </benji-uppy-dashboard> -->
-            <div 
-              class="options" 
-              fxLayoutAlign="center center"
-              (click)="openDialog()">
-              <img class="close" src="/assets/img/idea-creation/cam-upload.svg">
-            </div>
+            </benji-uploadcare-widget>
 
-            <!-- used by uploadcare -->
-            <input #uploadcarewidget type="hidden" name="file"/>
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
           <div *ngIf="showCategoriesDropdown"
