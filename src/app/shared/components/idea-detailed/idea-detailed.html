@@ -80,12 +80,17 @@
           </ngx-extended-pdf-viewer>
         </div>
       </ng-container>
-      <ng-container *ngIf="video">
-        <div *ngIf="videoURL">
-          <video style="margin: 0 auto;" width="100%" controls>
+      <ng-container *ngIf="video && videoURL">
+        <ng-container *ngIf="!isUploadCare(videoURL)">
+          <video class="yt" style="margin: 0 auto;" width="100%" controls>
             <source [src]="hostname + videoURL" type="video/mp4" />
           </video>
-        </div>
+        </ng-container>
+        <ng-container *ngIf="isUploadCare(videoURL)">
+          <video style="margin: 0 auto;" width="100%" controls>
+            <source [src]="videoURL" type="video/mp4" />
+          </video>
+        </ng-container>
       </ng-container>
       <ng-container *ngIf="webcamImage">
         <img 

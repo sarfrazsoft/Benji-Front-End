@@ -44,6 +44,7 @@ import { Components, EntryComponents } from './index';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { UcWidgetModule } from 'ngx-uploadcare-widget';
 
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';
@@ -92,6 +93,7 @@ const SHARED_MODULES = [
   FormlyModule,
   NgxPermissionsModule,
   NgxMasonryModule,
+  UcWidgetModule,
 ];
 import {
   UppyAngularDashboardModalModule,

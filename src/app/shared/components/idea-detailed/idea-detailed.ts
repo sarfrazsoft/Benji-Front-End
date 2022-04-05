@@ -196,6 +196,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.initIdea();
   }
 
+  isUploadCare(url: string) {
+    if (url && url.includes('ucarecdn')) {
+      return true;
+    }
+    return false;
+  }
+
   initIdea() {
     this.showCategoriesDropdown = this.data.showCategoriesDropdown;
     this.categories = this.data.categories.filter((val) => !val.removed);
@@ -209,7 +216,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // initialize idea image
     if (this.data.item.idea_image) {
       this.imageSelected = true;
-      this.imageSrc = this.data.item.idea_image.document;
+      if (this.data.item.idea_image.document) {
+        this.imageSrc = this.data.item.idea_image.document;
+      } else if (this.data.item.idea_image.document_url) {
+        this.imageSrc = this.data.item.idea_image.document_url;
+      }
     } else {
       this.removeImage();
     }
@@ -226,7 +237,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // check if idea has video and reset if not
     if (this.data.item.idea_video) {
       this.video = true;
-      this.videoURL = this.data.item.idea_video.document;
+      if (this.data.item.idea_video.document) {
+        this.videoURL = this.data.item.idea_video.document;
+      } else if (this.data.item.idea_video.document_url) {
+        // upload care videos come here
+        this.videoURL = this.data.item.idea_video.document_url;
+      }
     } else {
       this.removeVideo();
     }
