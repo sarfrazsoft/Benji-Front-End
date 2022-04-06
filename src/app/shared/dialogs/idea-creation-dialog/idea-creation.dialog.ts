@@ -1,4 +1,5 @@
-import { Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Editor } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
@@ -14,11 +15,12 @@ import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
+
 @Component({
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
 })
-export class IdeaCreationDialogComponent implements OnInit {
+export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   showCategoriesDropdown = false;
   categories: Array<Category> = [];
   selectedCategory: Category;
@@ -86,6 +88,7 @@ export class IdeaCreationDialogComponent implements OnInit {
   // `;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
+
   @HostListener('window:keyup.esc') onKeyUp() {
     if (this.userIdeaText.length || this.ideaTitle.length) {
       this.askUserConfirmation();
@@ -94,18 +97,14 @@ export class IdeaCreationDialogComponent implements OnInit {
     }
   }
 
-  // @HostListener('window:beforeunload', ['$event']) unloadHandler(event: Event) {
-  //   console.log('event:', event);
-  //   event.returnValue = false;
-  // }
-
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
+    private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       showCategoriesDropdown: boolean;
       categories: Array<Category>;
-      lessonID: number;
+      lessonRunCode: number;
       category?: Category;
     },
     private matDialog: MatDialog
@@ -116,7 +115,8 @@ export class IdeaCreationDialogComponent implements OnInit {
     if (this.categories.length) {
       this.selectedCategory = this.categories[0];
     }
-    this.lessonID = data.lessonID;
+    this.lessonID = data.lessonRunCode;
+    this.lessonRunCode = data.lessonRunCode;
 
     if (data.category) {
       this.selectedCategory = data.category;
@@ -134,6 +134,8 @@ export class IdeaCreationDialogComponent implements OnInit {
       }
     });
   }
+
+  ngAfterViewInit(): void {}
 
   askUserConfirmation() {
     this.matDialog
@@ -284,13 +286,21 @@ export class IdeaCreationDialogComponent implements OnInit {
 
   mediaUploaded(res: IdeaDocument) {
     if (res.document_type === 'video') {
-      this.videoURL = res.document;
+      if (res.document_url) {
+        this.videoURL = res.document_url;
+      } else if (res.document) {
+        this.videoURL = res.document;
+      }
       this.video = true;
       this.video_id = res.id;
     } else if (res.document_type === 'image') {
-      this.webcamImageId = res.id;
-      this.webcamImageURL = res.document;
+      if (res.document_url) {
+        this.webcamImageURL = res.document_url;
+      } else if (res.document) {
+        this.webcamImageURL = res.document;
+      }
       this.webcamImage = true;
+      this.webcamImageId = res.id;
     }
   }
 }

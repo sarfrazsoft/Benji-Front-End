@@ -103,10 +103,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classWhite: boolean;
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
-  // columns = [];
-  // cycle = 'first';
-
-  // @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   constructor(
     private dialog: MatDialog,
@@ -116,9 +112,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService
-  ) {
-    // super();
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.item && this.item.submitting_participant) {
@@ -149,15 +143,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
-  // triggerResize() {
-  //   // Wait for changes to be applied, then trigger textarea resize.
-  //   this._ngZone.onStable.pipe(take(1)).subscribe(() => {
-  //     console.log("Anonymous triggerResize");
-  //     this.autosize.resizeToFitContent(true);
-  //   });
-  //   console.log("triggerResize");
-  // }
-
   ngOnChanges() {}
 
   delete(id) {
@@ -187,11 +172,18 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   isAbsolutePath(imageUrl: string) {
-    if (imageUrl.includes('https:')) {
+    if (imageUrl && imageUrl.includes('https:')) {
       return true;
     } else {
       return false;
     }
+  }
+
+  isUploadCare(imageUrl: string) {
+    if (imageUrl && imageUrl.includes('ucarecdn')) {
+      return true;
+    }
+    return false;
   }
 
   openImage(imageUrl: string) {

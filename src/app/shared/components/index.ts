@@ -12,6 +12,7 @@ import { PercentPollBarsComponent } from './percent-poll-bars/percent-poll-bars.
 import { ResponsePercentBarsComponent } from './response-percent-bars/response-percent-bars.component';
 import { ResponseTagsPercentBarsComponent } from './response-tags-percent-bars/response-tags-percent-bars.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { UploadcareWidgetComponent } from './uploadcare-widget/uploadcare-widget.component';
 import { UppyDashboardComponent } from './uppy-dashboard/uppy-dashboard.component';
 export { AvatarComponent };
 
@@ -31,6 +32,7 @@ export const CmpComponents = [
   TextEditorComponent,
   IdeaDetailedComponent,
   UppyDashboardComponent,
+  UploadcareWidgetComponent,
 ];
 
 export const CmpEntryComponents = [

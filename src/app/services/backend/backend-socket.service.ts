@@ -23,11 +23,12 @@ export class BackendSocketService {
     } else if (clientType === 'participant') {
       uri = `${global.wsRoot}/ws/activityflow/code/${lessonRun.lessonrun_code}/participant/${userID}/`;
     }
-    // console.log('connecting to: ' + uri);
+    console.log('connecting to: ' + uri);
     const webSocketSubjectConfig: WebSocketSubjectConfig<any> = {
       url: uri,
       deserializer: ({ data }) => {
         clearTimeout(this.typingTimer);
+        // console.log('line 31' + data);
         return JSON.parse(data);
       },
       openObserver: {
@@ -36,7 +37,7 @@ export class BackendSocketService {
             this.httpClient
               .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRun.id}/restart_lesson/`)
               .subscribe((v) => {
-                // console.log(v);
+                // console.log('line 40' + v);
               });
           }, 3000);
           // console.log('opened');

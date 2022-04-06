@@ -54,14 +54,40 @@
       <div
         (click)="showDetailedIdea(item)"
         class="brainstorm-image"
-        *ngIf="item.idea_image">
-        <ng-container *ngIf="isAbsolutePath(item.idea_image.document); else uploadedImage">
-          <img [src]="item.idea_image.document" alt="" />
+        *ngIf="item.idea_image !== null">
+        <ng-container *ngIf="item.idea_image.document_url">
+          <ng-container 
+            *ngIf="isUploadCare(item.idea_image.document_url); else notUploadCare">
+            <img [src]="item.idea_image.document_url" alt="" />
+          </ng-container>
         </ng-container>
-    
-        <ng-template #uploadedImage>
-          <img [src]="hostname + item.idea_image.document" alt="" />
+
+        <ng-template #notUploadCare>
+          <ng-container *ngIf="item.idea_image.document">
+            <ng-container *ngIf="isAbsolutePath(item.idea_image.document); else uploadedImage">
+              <img [src]="item.idea_image.document" alt="" />
+            </ng-container>
+          </ng-container>
+  
+      
+          <ng-template #uploadedImage>
+            <img [src]="hostname + item.idea_image.document" alt="" />
+          </ng-template>
         </ng-template>
+      </div>
+
+      <div *ngIf="item.idea_video">
+        <ng-container *ngIf="isUploadCare(item.idea_video.document_url)">
+          <video style="margin: 0 auto;" width="100%" #player controls (loadeddata)="videoLoaded()">
+            <source [src]="item.idea_video.document_url" type="video/mp4" />
+          </video>
+        </ng-container>
+
+        <ng-container *ngIf="!isUploadCare(item.idea_video.document_url)">
+          <video style="margin: 0 auto;" width="100%" #player controls (loadeddata)="videoLoaded()">
+            <source [src]="hostname + item.idea_video.document" type="video/mp4" />
+          </video>
+        </ng-container>
       </div>
     
       <div
@@ -86,11 +112,7 @@
         </div> 
       </div>
 
-      <div *ngIf="item.idea_video">
-        <video style="margin: 0 auto;" width="100%" #player controls (loadeddata)="videoLoaded()">
-          <source [src]="hostname + item.idea_video.document" type="video/mp4" />
-        </video>
-      </div>
+
     </ng-container>
     <div 
       class="content"
