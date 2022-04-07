@@ -1,15 +1,6 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Editor } from '@tiptap/core';
-import StarterKit from '@tiptap/starter-kit';
-import Uppy from '@uppy/core';
-import GoogleDrive from '@uppy/google-drive';
-import Tus from '@uppy/tus';
-import Webcam from '@uppy/webcam';
-import XHRUpload from '@uppy/xhr-upload';
-import { catchError, map } from 'rxjs/operators';
-import * as global from 'src/app/globals';
 import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
@@ -47,45 +38,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   webcamImage = false;
   webcamImageURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
-
-  //   editor = new Editor({
-  //     extensions: [StarterKit],
-  //     editorProps: {
-  //       attributes: {
-  //         class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
-  //       },
-  //     },
-  //   });
-  //   value = `
-  //   <h2>
-  //     Hi there,
-  //   </h2>
-  //   <p>
-  //     this is a basic <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-  //   </p>
-  //   <ul>
-  //     <li>
-  //       That’s a bullet list with one …
-  //     </li>
-  //     <li>
-  //       … or two list items.
-  //     </li>
-  //   </ul>
-  //   <p>
-  //     Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-  //   </p>
-  // <pre><code class="language-css">body {
-  // display: none;
-  // }</code></pre>
-  //   <p>
-  //     I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-  //   </p>
-  //   <blockquote>
-  //     Wow, that’s amazing. Good work, boy! 👏
-  //     <br />
-  //     — Mom
-  //   </blockquote>
-  // `;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
 
@@ -302,5 +254,19 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       this.webcamImage = true;
       this.webcamImageId = res.id;
     }
+  }
+
+  isItemSelected() {
+    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
+      return false;
+    }
+    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
+      return true;
+    }
+    return false;
+  }
+
+  titleTextChanged($event: string) {
+    this.userIdeaText = $event;
   }
 }
