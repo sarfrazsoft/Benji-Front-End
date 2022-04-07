@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./src/**/idea-creation.dialog.html",],
+  // content: ["./src/**/idea-creation.dialog.html",],
   theme: {
     extend: {},
   },
@@ -9,5 +9,5 @@ module.exports = {
       './src/**/*.{html,ts}',
     ]
   },
-  // plugins: [require('@tailwindcss/typography')],
+  plugins: [require('@tailwindcss/typography')],
 }

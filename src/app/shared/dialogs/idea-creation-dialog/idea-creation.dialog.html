@@ -26,7 +26,7 @@
           <img src="/assets/img/idea-creation/cross.svg" matDialogClose>
         </div>
       </div>
-      <textarea
+      <!-- <textarea
         *ngIf="!imageSelected && !pdfSelected && !video && !webcamImage"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
@@ -39,12 +39,14 @@
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText" 
         class="description image-selected"
-        placeholder="Description..."
-        >
-      </textarea>
-      <benji-tiptap-editor>
-        
-      </benji-tiptap-editor>
+        placeholder="Description...">
+      </textarea> -->
+      <div [ngClass]="{ 'image-selected': !isItemSelected() }">
+        <benji-tiptap-editor
+          [defaultValue]="userIdeaText"
+          (textChanged)="titleTextChanged($event)">
+        </benji-tiptap-editor>
+      </div>
       <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
         <ng-container *ngIf="imageSelected">
           <img *ngIf="imageSrc" [src]="imageSrc" alt="">

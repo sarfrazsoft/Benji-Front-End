@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Editor } from '@tiptap/core';
+import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -9,12 +10,22 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: './tiptap-editor.component.html',
 })
 export class TiptapEditorComponent implements OnInit, OnChanges {
+  @Input() defaultValue = '';
+  @Input() editable = true;
+  @Output() textChanged = new EventEmitter<string>();
   editor = new Editor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Underline],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+        class: 'prose prose-sm sm:prose lg:prose xl:prose-lg m-5 focus:outline-none',
       },
+    },
+    onUpdate: (u) => {
+      console.log(u);
+      // this.editor.chain().focus().toggle
+
+      console.log(this.value);
+      this.textChanged.emit(this.value);
     },
   });
   value = `
@@ -50,6 +61,8 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   constructor(private utilsService: UtilsService, private httpClient: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.editor.setEditable(this.editable);
+  }
   ngOnChanges() {}
 }

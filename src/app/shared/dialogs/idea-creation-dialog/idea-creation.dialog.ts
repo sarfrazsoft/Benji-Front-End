@@ -1,13 +1,6 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import Uppy from '@uppy/core';
-import GoogleDrive from '@uppy/google-drive';
-import Tus from '@uppy/tus';
-import Webcam from '@uppy/webcam';
-import XHRUpload from '@uppy/xhr-upload';
-import { catchError, map } from 'rxjs/operators';
-import * as global from 'src/app/globals';
 import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
@@ -261,5 +254,19 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       this.webcamImage = true;
       this.webcamImageId = res.id;
     }
+  }
+
+  isItemSelected() {
+    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
+      return false;
+    }
+    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
+      return true;
+    }
+    return false;
+  }
+
+  titleTextChanged($event: string) {
+    this.userIdeaText = $event;
   }
 }
