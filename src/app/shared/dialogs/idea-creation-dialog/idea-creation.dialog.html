@@ -97,11 +97,13 @@
                 src="/assets/img/idea-creation/giphy.svg"
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
-            </div>   
-            <benji-uploadcare-widget
-              [lessonRunCode]="lessonID"
-              (mediaUploaded)="mediaUploaded($event)">
-            </benji-uploadcare-widget>
+            </div> 
+            <div fxLayoutAlign="center center">
+              <benji-uploadcare-widget
+                [lessonRunCode]="lessonID"
+                (mediaUploaded)="mediaUploaded($event)">
+              </benji-uploadcare-widget>
+            </div>  
 
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
