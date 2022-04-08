@@ -3,6 +3,7 @@ import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } fro
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+import { FileProgress } from '../../components/uploadcare-widget/uploadcare-widget.component';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 import { GiphyPickerDialogComponent } from '../giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
@@ -38,6 +39,8 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   webcamImage = false;
   webcamImageURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
+  mediaUploading = false;
+  fileProgress: FileProgress;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
 
@@ -236,7 +239,13 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     this.video_id = null;
   }
 
+  mediaUploadProgress(fileProgress: FileProgress) {
+    this.fileProgress = fileProgress;
+    this.mediaUploading = true;
+  }
+
   mediaUploaded(res: IdeaDocument) {
+    this.mediaUploading = false;
     if (res.document_type === 'video') {
       if (res.document_url) {
         this.videoURL = res.document_url;

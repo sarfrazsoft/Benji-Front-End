@@ -33,7 +33,9 @@
             (textChanged)="titleTextChanged($event)">
           </benji-tiptap-editor>
         </div>
-        <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
+        <div class="preview-image" 
+          *ngIf="imageSelected || pdfSelected || video || webcamImage || mediaUploading" 
+          fxLayoutAlign="center center">
           <ng-container *ngIf="imageSelected">
             <img *ngIf="imageSrc" [src]="imageSrc" alt="">
             <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
@@ -58,9 +60,15 @@
                 benji-click-stop-propagation
                 [src]="webcamImageURL" alt="" />
           </ng-container>
-          
-          <button class="remove-button" (click)="remove()">
-            Remove
+          <ng-container *ngIf="mediaUploading">
+            <benji-progress-bar
+              [percent]="fileProgress?.progress">
+            </benji-progress-bar>
+          </ng-container>
+          <button 
+            *ngIf="imageSelected || pdfSelected || video || webcamImage"
+            class="remove-button" (click)="remove()">
+              Remove
           </button>
         </div>
       </div>
@@ -85,10 +93,11 @@
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div> 
-            <div fxLayoutAlign="center center">
+            <div class="uploadcare-container" fxLayoutAlign="center center">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
-                (mediaUploaded)="mediaUploaded($event)">
+                (mediaUploaded)="mediaUploaded($event)"
+                (mediaUploading)="mediaUploadProgress($event)">
               </benji-uploadcare-widget>
             </div>  
 
