@@ -1,7 +1,8 @@
 // styles of tiptap editor
 benji-tiptap-editor {
   .ProseMirror {
-    height: 50vh;
+    max-height: 26rem;
+    min-height: 6rem;
     overflow-y: auto;
     outline: none;
     &[contenteditable="false"] {
@@ -19,10 +20,9 @@ benji-idea-detailed {
 
 benji-brainstorm-card {
   .ProseMirror {
-    height: auto;
+    max-height: auto;
   }
 }
-
 
 
 

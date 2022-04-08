@@ -21,11 +21,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       },
     },
     onUpdate: (u) => {
-      console.log(u);
-      // this.editor.chain().focus().toggle
-
-      console.log(this.value);
-      this.textChanged.emit(this.value);
+      this.textChanged.emit(this.defaultValue);
     },
   });
   value = `
