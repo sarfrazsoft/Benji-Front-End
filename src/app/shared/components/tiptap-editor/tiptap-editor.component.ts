@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Editor } from '@tiptap/core';
+import Placeholder from '@tiptap/extension-placeholder';
 import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -10,17 +11,25 @@ import { UtilsService } from 'src/app/services/utils.service';
   templateUrl: './tiptap-editor.component.html',
 })
 export class TiptapEditorComponent implements OnInit, OnChanges {
-  @Input() defaultValue = '';
+  @Input() defaultValue;
   @Input() editable = true;
   @Output() textChanged = new EventEmitter<string>();
   editor = new Editor({
-    extensions: [StarterKit, Underline],
+    extensions: [
+      StarterKit,
+      Underline,
+      Placeholder.configure({
+        emptyEditorClass: 'is-editor-empty',
+        placeholder: 'Description...',
+      }),
+    ],
     editorProps: {
       attributes: {
         class: 'prose prose-sm sm:prose lg:prose xl:prose-lg m-5 focus:outline-none',
       },
     },
     onUpdate: (u) => {
+      console.log(u);
       this.textChanged.emit(this.defaultValue);
     },
   });
