@@ -56,11 +56,18 @@
     padding-left: 40px;
   }
   .uploadcare--camera__video-container {
-    //height: 100%;
     .uploadcare--media__video {
       max-height: unset;
       width: 800px;
       height: auto;
+      border-radius: 8px;
+    }
+    .uploadcare--camera__video {
+      // &::before {
+      //   background-image: url(/assets/img/rec-ico.svg);
+      //   background-position: right bottom;
+      //   background-repeat: no-repeat;
+      // }
     }
   }
   .uploadcare--tab__content {
@@ -107,6 +114,7 @@
   }
   .uploadcare--media__video, .uploadcare--media__image {
     max-height: unset;
+    border-radius: 8px;
   }
   .uploadcare--tab__content {
     padding: 0 64px;
@@ -129,6 +137,7 @@
   }
   .uploadcare--media__video, .uploadcare--media__image {
     max-height: unset;
+    border-radius: 8px;
   }
   .uploadcare--tab__content {
     padding: 0 24px;
