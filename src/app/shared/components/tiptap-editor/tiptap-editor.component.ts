@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Editor } from '@tiptap/core';
+import { wrappingInputRule } from '@tiptap/core';
+import { ListItem } from '@tiptap/extension-list-item';
+import { OrderedList } from '@tiptap/extension-ordered-list';
 import Placeholder from '@tiptap/extension-placeholder';
 import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
@@ -29,7 +32,6 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       },
     },
     onUpdate: (u) => {
-      console.log(u);
       this.textChanged.emit(this.defaultValue);
     },
   });

@@ -9,31 +9,41 @@
       <div *ngIf="!editor.isActive('bold');else bold_active">
         <img src="/assets/img/idea-creation/bold.svg">
       </div>
-      <ng-template #bold_active><img src="/assets/img/idea-creation/active/bold.svg"></ng-template>
+      <ng-template #bold_active>
+        <img src="/assets/img/idea-creation/active/bold.svg">
+      </ng-template>
     </button>
     <button (click)="editor.chain().focus().toggleItalic().run()">
       <div *ngIf="!editor.isActive('italic');else italic_active">
         <img src="/assets/img/idea-creation/italic.svg">
       </div>
-      <ng-template #italic_active><img src="/assets/img/idea-creation/active/italic.svg"></ng-template>
+      <ng-template #italic_active>
+        <img src="/assets/img/idea-creation/active/italic.svg">
+      </ng-template>
     </button>
     <button (click)="editor.chain().focus().toggleUnderline().run()">
       <div *ngIf="!editor.isActive('underline');else underline_active">
         <img src="/assets/img/idea-creation/underline.svg">
       </div>
-      <ng-template #underline_active><img src="/assets/img/idea-creation/active/underline.svg"></ng-template>
+      <ng-template #underline_active>
+        <img src="/assets/img/idea-creation/active/underline.svg">
+      </ng-template>
     </button>
     <button (click)="editor.chain().focus().toggleStrike().run()">
       <div *ngIf="!editor.isActive('strike');else strike_active">
         <img src="/assets/img/idea-creation/strikethrough.svg">
       </div>
-      <ng-template #strike_active><img src="/assets/img/idea-creation/active/strikethrough.svg"></ng-template>
+      <ng-template #strike_active>
+        <img src="/assets/img/idea-creation/active/strikethrough.svg">
+      </ng-template>
     </button>
-    <button (click)="editor.chain().focus().toggleBold().run()">
+    <button (click)="editor.chain().focus().toggleOrderedList().run()">
       <div *ngIf="!editor.isActive('italic');else ol_active">
         <img src="/assets/img/idea-creation/list-ordered.svg">
       </div>
-      <ng-template #ol_active><img src="/assets/img/idea-creation/active/list-ordered.svg"></ng-template>
+      <ng-template #ol_active>
+        <img src="/assets/img/idea-creation/active/list-ordered.svg">
+      </ng-template>
     </button>
     <button (click)="editor.chain().focus().toggleBold().run()">
       <div *ngIf="!editor.isActive('italic');else ul_active">
