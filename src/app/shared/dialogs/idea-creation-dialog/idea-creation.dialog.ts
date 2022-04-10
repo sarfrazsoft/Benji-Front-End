@@ -275,7 +275,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  titleTextChanged($event: string) {
+  descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
   }
 }

@@ -30,7 +30,7 @@
         <div [ngClass]="{ 'image-selected': !isItemSelected() }">
           <benji-tiptap-editor
             [defaultValue]="userIdeaText"
-            (textChanged)="titleTextChanged($event)">
+            (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>
         </div>
         <div class="preview-image" 

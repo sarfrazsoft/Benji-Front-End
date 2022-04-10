@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Editor } from '@tiptap/core';
-import { wrappingInputRule } from '@tiptap/core';
-import { ListItem } from '@tiptap/extension-list-item';
-import { OrderedList } from '@tiptap/extension-ordered-list';
+import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
 import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
@@ -17,6 +15,8 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
   @Input() defaultValue;
   @Input() editable = true;
   @Output() textChanged = new EventEmitter<string>();
+
+  editorContent;
   editor = new Editor({
     extensions: [
       StarterKit,
@@ -25,6 +25,12 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
         emptyEditorClass: 'is-editor-empty',
         placeholder: 'Description...',
       }),
+      Link.configure({
+        HTMLAttributes: {
+          class: 'benji-link-class',
+        },
+        openOnClick: false,
+      }),
     ],
     editorProps: {
       attributes: {
@@ -32,9 +38,15 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       },
     },
     onUpdate: (u) => {
-      this.textChanged.emit(this.defaultValue);
+      this.textChanged.emit(this.editorContent);
     },
   });
+
+  tippyOptions = {
+    // moveTransition: 'transform 0.2s ease-out',
+    duration: 100,
+  };
+
   value = `
     <h2>
       Hi there,
@@ -70,6 +82,27 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.editor.setEditable(this.editable);
+    this.editorContent = this.defaultValue;
   }
   ngOnChanges() {}
+
+  setLink() {
+    const previousUrl = this.editor.getAttributes('link').href;
+    const url = window.prompt('URL', previousUrl);
+
+    // cancelled
+    if (url === null) {
+      return;
+    }
+
+    // empty
+    if (url === '') {
+      this.editor.chain().focus().extendMarkRange('link').unsetLink().run();
+
+      return;
+    }
+
+    // update link
+    this.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  }
 }

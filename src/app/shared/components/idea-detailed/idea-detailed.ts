@@ -497,4 +497,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   commentTyped() {
     this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
+
+  descriptionTextChanged($event: string) {
+    this.userIdeaText = $event;
+  }
 }
