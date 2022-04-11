@@ -1,4 +1,4 @@
-<tiptap-editor [editor]="editor" [(ngModel)]="editorContent"></tiptap-editor>
+<tiptap-editor [editor]="editor" [(ngModel)]="defaultValue"></tiptap-editor>
 <tiptap-bubble-menu [editor]="editor" [tippyOptions]="tippyOptions">
   <div
     class="bubble-menu"
@@ -13,7 +13,6 @@
       </ng-template>
     </button>
     <button (click)="editor.chain().focus().toggleItalic().run()">
-      <!-- {{ !editor.isActive('italic') ? 'i' : 'j' }} -->
       <div>
         <img 
           src="{{ 
@@ -21,9 +20,6 @@
               '/assets/img/idea-creation/active/italic.svg' 
               : '/assets/img/idea-creation/italic.svg'}}">
       </div>
-      <!-- <ng-template #italic_active>
-        <img src="/assets/img/idea-creation/active/italic.svg">
-      </ng-template> -->
     </button>
     <button (click)="editor.chain().focus().toggleUnderline().run()">
       <div>

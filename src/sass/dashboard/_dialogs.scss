@@ -685,6 +685,9 @@
           border: 0px;
           outline: none;
         }
+        &::placeholder {
+          color: #bdbdbd;
+        }
       }
       .description {
         border: unset;

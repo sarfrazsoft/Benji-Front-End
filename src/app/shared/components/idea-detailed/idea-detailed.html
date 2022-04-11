@@ -155,7 +155,7 @@
       <textarea 
         [readonly]="userRole !== 'owner'"
         class="title" 
-        placeholder="Title" 
+        placeholder="Title (optional)" 
         [(ngModel)]="ideaTitle"
         (ngModelChange)="ideaIsEdited($event)"
         cdkTextareaAutosize
