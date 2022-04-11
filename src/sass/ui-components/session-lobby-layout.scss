@@ -187,35 +187,51 @@
         font-size: 24px;
         text-align: center;
       }
-      .or {
-        font-size: 14px;
-        font-weight: 600;
-        color: #616161;
-        text-align: center;
-        position: relative;
-        margin-bottom: 24px;
-        margin-top: 24px;
-        &:before {
-          content: "";
-          display: block;
-          width: 144px;
-          height: 1px;
-          background: #e7e7e7;
-          position: absolute;
-          left: 0;
-          top: 50%;
-        }
-        &:after {
-          content: "";
-          display: block;
-          width: 144px;
-          height: 1px;
-          background: #e7e7e7;
-          position: absolute;
-          right: 0;
-          top: 50%;
+      .member-join {
+        margin-top: 16px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #626262;
+        .actions {
+          font-weight: 500;
+          color: #555BEA;
+          cursor: pointer;
+          span {
+            color: #626262;
+            cursor: none;
+          }
         }
       }
+      // .or {
+      //   font-size: 14px;
+      //   font-weight: 600;
+      //   color: #616161;
+      //   text-align: center;
+      //   position: relative;
+      //   margin-bottom: 24px;
+      //   margin-top: 24px;
+      //   &:before {
+      //     content: "";
+      //     display: block;
+      //     width: 144px;
+      //     height: 1px;
+      //     background: #e7e7e7;
+      //     position: absolute;
+      //     left: 0;
+      //     top: 50%;
+      //   }
+      //   &:after {
+      //     content: "";
+      //     display: block;
+      //     width: 144px;
+      //     height: 1px;
+      //     background: #e7e7e7;
+      //     position: absolute;
+      //     right: 0;
+      //     top: 50%;
+      //   }
+      // }
       .participant-login {
         .sign-up-section {
           height: unset;
@@ -311,11 +327,11 @@
           margin: 0px auto;
           min-height: 180px;
         }
-        .or {
-          &:before, &:after  {
-            width: 44%;
-          }
-        }
+        // .or {
+        //   &:before, &:after  {
+        //     width: 44%;
+        //   }
+        // }
       }
     }
   }
