@@ -68,7 +68,7 @@ export class LessonComponent implements OnInit {
     }
   }
   addTable() {
-    this.editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+    //this.editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
   }
   showdoc() {
     this.editor.getJSON();
