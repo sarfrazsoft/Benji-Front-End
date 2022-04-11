@@ -510,7 +510,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     // if (!idea.editing) {
     //   return;
     // }
-    if (idea.imagesList || idea.selectedThirdPartyImageUrl) {
+    // idea.idea_image when idea is being edited
+    if (idea.imagesList || idea.selectedThirdPartyImageUrl || idea.idea_image) {
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
       this.submitDocumentNIdea(idea);
@@ -677,7 +678,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   updateIdeaWithImage(idea) {
-    if (idea.selectedThirdPartyImageUrl) {
+    // idea.idea_image when idea is being edited
+    if (idea.selectedThirdPartyImageUrl || idea.idea_image) {
       // updated with third party image
       this.sendMessage.emit(
         new BrainstormEditIdeaSubmitEvent(
