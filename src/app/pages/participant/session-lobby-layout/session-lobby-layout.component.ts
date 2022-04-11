@@ -11,6 +11,7 @@ import {
   LessonRunDetails,
   Participant,
 } from 'src/app/services/backend/schema/course_details';
+import { TeamUser, User } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -74,6 +75,44 @@ export class SessionLobbyLayoutComponent implements OnInit {
       );
     }
     this.shareParticipantLink = this.hostname + this.room_code;
+
+    //
+    // check if user is logged in
+    if (this.authService.isLoggedIn()) {
+      if (localStorage.getItem('user')) {
+        const user: TeamUser = JSON.parse(localStorage.getItem('user'));
+        this.joinSessionAsLoggedInUser(user);
+      }
+    }
+  }
+
+  joinSessionAsLoggedInUser(user: TeamUser) {
+    const name = user.first_name + ' ' + user.last_name;
+    const lessonCode = this.roomCode.value;
+    console.log(name, lessonCode);
+
+    this.authService.createParticipant(name, lessonCode, user.id).subscribe(
+      (res: Participant) => {
+        this.loginError = false;
+        if (res.lessonrun_code) {
+          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+        } else {
+          this.loginError = true;
+        }
+      },
+      (err) => {
+        console.log(err);
+        if (err && err.error && err.error.non_field_errors) {
+          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+            console.log('err');
+            this.utilsService.openWarningNotification(
+              'A participant with that name has already joined. Try a different name.',
+              ''
+            );
+          }
+        }
+      }
+    );
   }
 
   public validateRoomCode() {
@@ -191,5 +230,4 @@ export class SessionLobbyLayoutComponent implements OnInit {
     this.loadForgotPassword = false;
     this.loadLogin = false;
   }
-
 }

@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, BackendRestService, ContextService, EmojiLookupService } from 'src/app/services';
-import { LessonRunDetails, Participant } from 'src/app/services/backend/schema/course_details';
-import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -16,13 +12,13 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class ParticipantLoginComponent implements OnInit {
   // username: string;
 
-  public isUserValid: boolean;
-  public userId;
-  public loginError;
-  public welcomeText = '';
+  // public isUserValid: boolean;
+  // public userId;
+  // public loginError;
+  // public welcomeText = '';
 
-  public username = new FormControl(null, [Validators.required]);
-  lessonRunDetails: LessonRunDetails;
+  // public username = new FormControl(null, [Validators.required]);
+  // lessonRunDetails: LessonRunDetails;
 
   emoji2;
   constructor(
@@ -35,17 +31,15 @@ export class ParticipantLoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.auth.logout();
-
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
-      if (info) {
-        this.welcomeText = info.welcome_text;
-      }
-    });
-
-    if (localStorage.getItem('lessonRunDetails')) {
-      this.lessonRunDetails = JSON.parse(localStorage.getItem('lessonRunDetails'));
-    }
+    // this.auth.logout();
+    // this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    //   if (info) {
+    //     this.welcomeText = info.welcome_text;
+    //   }
+    // });
+    // if (localStorage.getItem('lessonRunDetails')) {
+    //   this.lessonRunDetails = JSON.parse(localStorage.getItem('lessonRunDetails'));
+    // }
   }
 
   formSubmit() {
@@ -62,42 +56,39 @@ export class ParticipantLoginComponent implements OnInit {
   }
 
   public createUser() {
-    if (this.auth.isLoggedIn()) {
-      this.auth.logout();
-    }
-
-    if (!isNaN(this.username.value)) {
-      this.loginError = true;
-      return false;
-    }
-
-    this.auth.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
-      (res: Participant) => {
-        this.loginError = false;
-        if (res.lessonrun_code) {
-          localStorage.setItem('participant', JSON.stringify(res));
-          this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
-        } else {
-          this.loginError = true;
-        }
-      },
-      (err) => {
-        console.log(err);
-        if (err && err.error && err.error.non_field_errors) {
-          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-            console.log('err');
-
-            this.utilsService.openWarningNotification(
-              'A participant with that name has already joined. Try a different name.',
-              ''
-            );
-          }
-        }
-      }
-    );
+    //   if (this.auth.isLoggedIn()) {
+    //     this.auth.logout();
+    //   }
+    //   if (!isNaN(this.username.value)) {
+    //     this.loginError = true;
+    //     return false;
+    //   }
+    //   this.auth.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
+    //     (res: Participant) => {
+    //       this.loginError = false;
+    //       if (res.lessonrun_code) {
+    //         localStorage.setItem('participant', JSON.stringify(res));
+    //         this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+    //       } else {
+    //         this.loginError = true;
+    //       }
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //       if (err && err.error && err.error.non_field_errors) {
+    //         if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+    //           console.log('err');
+    //           this.utilsService.openWarningNotification(
+    //             'A participant with that name has already joined. Try a different name.',
+    //             ''
+    //           );
+    //         }
+    //       }
+    //     }
+    //   );
   }
 }
-declare var twemoji: {
-  convert: { fromCodePoint(str: string): string };
-  parse(str: string, options?: { folder: string; ext: string }): string;
-};
+// declare var twemoji: {
+//   convert: { fromCodePoint(str: string): string };
+//   parse(str: string, options?: { folder: string; ext: string }): string;
+// };

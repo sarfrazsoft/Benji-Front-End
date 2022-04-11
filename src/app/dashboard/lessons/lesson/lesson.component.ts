@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Editor } from '@tiptap/core';
 import Placeholder from '@tiptap/extension-placeholder';
-// import Table from '@tiptap/extension-table';
-// import TableCell from '@tiptap/extension-table-cell';
-// import TableHeader from '@tiptap/extension-table-header';
-// import TableRow from '@tiptap/extension-table-row';
 import StarterKit from '@tiptap/starter-kit';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -68,7 +64,8 @@ export class LessonComponent implements OnInit {
     }
   }
   addTable() {
-    // this.editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+    // this.editor.chain().focus().insertTable
+    // ({ rows: 3, cols: 3, withHeaderRow: true }).run();
   }
   showdoc() {
     this.editor.getJSON();

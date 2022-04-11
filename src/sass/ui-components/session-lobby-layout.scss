@@ -135,7 +135,7 @@
       }
       input:not([type="submit"]) {
         border-radius: 8px;
-        width: 320px;
+        width: 288px;
         height: 48px;
         padding: 0px 16px;
         font-size: 16px;
@@ -264,6 +264,7 @@
                 input[type=submit] {
                   height: 40px;
                   font-weight: 600;
+                  width: 100%;
                 }
               }
               .already-member {
@@ -326,7 +327,7 @@
     .content-wrapper {
       display: block !important;
       width: 100%;
-      .session-details {
+      .session-details, .session-details.signup {
         min-height: unset;
         width: 100%;
         background: #fff;
@@ -335,11 +336,12 @@
       }
       .join-session {
         width: 100%;
+        max-width: 100%;
         float: none;
         padding: 24px;
         background: #f9f9fb;
         border-radius: 0px 0px 16px 16px;
-        input {
+        input, input:not([type="submit"]) {
           width: calc(100% - 32px);
           background: #fff;
         }

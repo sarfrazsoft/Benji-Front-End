@@ -31,6 +31,7 @@ export class SignupComponent implements OnInit {
 
   user: SocialUser | null;
   roomCode: any;
+  participantCode: string;
 
   constructor(
     private builder: FormBuilder,
@@ -99,6 +100,10 @@ export class SignupComponent implements OnInit {
       // alert(this.route.snapshot.queryParams['link']);
       this.roomCode = this.route.snapshot.queryParams['link'];
     }
+    if (this.route.snapshot.queryParams['userCode']) {
+      // alert(this.route.snapshot.queryParams['userCode']);
+      this.participantCode = this.route.snapshot.queryParams['userCode'];
+    }
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
@@ -155,6 +160,14 @@ export class SignupComponent implements OnInit {
         .register(val.email.toLowerCase(), val.password, this.firstName, this.lastName)
         .subscribe(
           (res) => {
+            console.log(res.user);
+            if (this.participantCode && res.user.id) {
+              this.authService.patchParticipant(this.participantCode, res.user.id).subscribe(
+                (result) => {
+                  console.log(result);
+                }
+              )
+            }
             if (res.token) {
               this.isSubmitted = true;
               this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
