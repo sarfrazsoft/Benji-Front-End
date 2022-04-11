@@ -43,8 +43,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
   });
 
   tippyOptions = {
-    // moveTransition: 'transform 0.2s ease-out',
-    duration: 100,
+    duration: [100, 250],
   };
 
   value = `
