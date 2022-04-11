@@ -112,17 +112,27 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(res.user));
   }
 
-  createParticipant(username: string, enteredRoomCode: number) {
+  createParticipant(username: string, enteredRoomCode: number, user?: number) {
     return this.http
       .post(global.apiRoot + '/course_details/participant/', {
         lessonrun_code: enteredRoomCode,
         display_name: username,
-        // user: loggedInBenjiUserID
-        // TODO
+        user: user,
       })
       .pipe(
         map((res: LoginResponse) => {
           this.setParticipantSession(res);
+          return res;
+        }),
+        catchError((err) => of(err.error))
+      );
+  }
+
+  patchParticipant(code: string, id: number) {
+    return this.http
+      .patch(global.apiRoot + '/course_details/participant/' + code + '/', {"user": id})
+      .pipe(
+        map((res) => {
           return res;
         }),
         catchError((err) => of(err.error))
@@ -141,6 +151,10 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  getLoggedInUser(): TeamUser {
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   private decodeToken(token) {
