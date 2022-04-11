@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Editor } from '@tiptap/core';
 import Placeholder from '@tiptap/extension-placeholder';
-import Table from '@tiptap/extension-table';
-import TableCell from '@tiptap/extension-table-cell';
-import TableHeader from '@tiptap/extension-table-header';
-import TableRow from '@tiptap/extension-table-row';
 import StarterKit from '@tiptap/starter-kit';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -22,15 +18,15 @@ export class LessonComponent implements OnInit {
     extensions: [
       StarterKit,
       Placeholder,
-      Table.configure({
-        resizable: true,
-      }),
-      TableRow,
-      TableHeader,
+      // Table.configure({
+      //   resizable: true,
+      // }),
+      // TableRow,
+      // TableHeader,
       // Default TableCell
       // TableCell,
       // Custom TableCell with backgroundColor attribute
-      CustomTableCell,
+      // CustomTableCell,
     ],
     editorProps: {
       attributes: {
@@ -68,7 +64,8 @@ export class LessonComponent implements OnInit {
     }
   }
   addTable() {
-    //this.editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+    // this.editor.chain().focus().insertTable
+    // ({ rows: 3, cols: 3, withHeaderRow: true }).run();
   }
   showdoc() {
     this.editor.getJSON();
@@ -83,14 +80,12 @@ const courseDetails = {
     {
       title: 'How to handle an objection',
       description: 'some description of video',
-      link:
-        'https://player.vimeo.com/external/340456701.hd.mp4?s=86908a6f830304253f76b6bbd6f6b07fc8f5f6e6&profile_id=174',
+      link: 'https://player.vimeo.com/external/340456701.hd.mp4?s=86908a6f830304253f76b6bbd6f6b07fc8f5f6e6&profile_id=174',
     },
     {
       title: 'How to handle an objection',
       description: 'some description of video',
-      link:
-        'https://player.vimeo.com/external/340456701.hd.mp4?s=86908a6f830304253f76b6bbd6f6b07fc8f5f6e6&profile_id=174',
+      link: 'https://player.vimeo.com/external/340456701.hd.mp4?s=86908a6f830304253f76b6bbd6f6b07fc8f5f6e6&profile_id=174',
     },
   ],
   resources: [
@@ -129,26 +124,26 @@ const courseDetails = {
   ],
 };
 
-const CustomTableCell = TableCell.extend({
-  addAttributes() {
-    return {
-      // extend the existing attributes …
-      ...this.parent?.(),
-      // and add a new one …
-      backgroundColor: {
-        default: null,
-        parseHTML: (element) => {
-          return {
-            backgroundColor: element.getAttribute('data-background-color'),
-          };
-        },
-        renderHTML: (attributes) => {
-          return {
-            'data-background-color': attributes.backgroundColor,
-            style: `background-color: ${attributes.backgroundColor}`,
-          };
-        },
-      },
-    };
-  },
-});
+// const CustomTableCell = TableCell.extend({
+//   addAttributes() {
+//     return {
+//       // extend the existing attributes …
+//       ...this.parent?.(),
+//       // and add a new one …
+//       backgroundColor: {
+//         default: null,
+//         parseHTML: (element) => {
+//           return {
+//             backgroundColor: element.getAttribute('data-background-color'),
+//           };
+//         },
+//         renderHTML: (attributes) => {
+//           return {
+//             'data-background-color': attributes.backgroundColor,
+//             style: `background-color: ${attributes.backgroundColor}`,
+//           };
+//         },
+//       },
+//     };
+//   },
+// });

@@ -127,13 +127,21 @@
             inactive: !username.value
           }">Join as guest
         </div>
-        <div class="or">or</div>
+        <div class="member-join">
+          <div class="cta">Join session as a member</div>
+          <div class="actions">
+            <a (click)="loadLoginComponent()">Log-in</a>
+            <span> / </span>
+            <a (click)="loadSignUpComponent()">Sign-up</a>
+          </div>
+        </div>
+        <!-- <div class="or">or</div>
         <div 
           class="bg-primary-color button"
           fxLayoutAlign="center center"
           (click)="loadLoginComponent()"
           >Join as member
-        </div>
+        </div> -->
       </div>
       <div class="participant-login">
         <ng-container *ngIf="loadLogin">

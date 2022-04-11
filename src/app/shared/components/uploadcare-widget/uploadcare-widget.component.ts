@@ -7,6 +7,27 @@ import uploadcare from 'uploadcare-widget';
 export type IdeaUserRole = 'owner' | 'viewer';
 declare var MediaRecorder: any;
 
+export interface FileProgress {
+  incompleteFileInfo: IncompleteFileInfo;
+  cdnUrl: string;
+  progress: number;
+  state: 'uploading' | 'uploaded' | 'ready';
+  uploadProgress: number;
+}
+
+export interface IncompleteFileInfo {
+  cdnUrl: string;
+  cdnUrlModifiers: any;
+  isImage: boolean;
+  isStored: boolean;
+  mimeType: any;
+  name: string;
+  originalImageInfo: any;
+  originalUrl: string;
+  size: number;
+  sourceInfo: { source: 'camera'; file: Blob };
+  uuid: any;
+}
 @Component({
   selector: 'benji-uploadcare-widget',
   templateUrl: 'uploadcare-widget.component.html',
@@ -14,6 +35,7 @@ declare var MediaRecorder: any;
 export class UploadcareWidgetComponent implements OnInit, OnChanges {
   @Input() lessonRunCode;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
+  @Output() mediaUploading = new EventEmitter<FileProgress>();
 
   widgetRef;
   videoURL: string;
@@ -84,6 +106,15 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
         },
         (error) => console.log(error)
       );
+    });
+
+    this.widgetRef.onChange((widgetObject) => {
+      if (widgetObject) {
+        widgetObject.promise().progress((info: FileProgress) => {
+          info.progress = info.progress * 100;
+          this.mediaUploading.emit(info);
+        });
+      }
     });
   }
 

@@ -178,7 +178,8 @@
       </textarea> -->
       <benji-tiptap-editor
         [editable]="userRole === 'owner'"
-        [defaultValue]="userIdeaText">
+        [defaultValue]="userIdeaText"
+        (textChanged)="descriptionTextChanged($event)">
       </benji-tiptap-editor>
     </ng-container>
     <div

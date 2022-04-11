@@ -261,7 +261,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         data: {
           confirmationMessage: 'You are about to delete this board. This can’t be undone.',
         },
-        panelClass: 'delete-board-dialog',
+        panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
