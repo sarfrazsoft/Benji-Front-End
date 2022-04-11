@@ -13,8 +13,38 @@
     <!-- <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.2.x/dist/typography.min.css"/> -->
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography/dist/typography.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.4.x/dist/typography.min.css"/>
 
   </head>
+  <script>
+    UPLOADCARE_LOCALE = 'en';
+    UPLOADCARE_LOCALE_TRANSLATIONS = {
+      dialog: {
+        tabs: {
+          camera: {
+            title: `File from web camera </br> 
+              <div class="video-call-warning"> Please make sure you\'re not on a video call. <\div>`,
+            capture: 'Take a photo',
+            mirror: 'Mirror',
+            startRecord: 'Record a video',
+            stopRecord: 'Stop',
+            cancelRecord: 'Cancel',
+            retry: 'Request permissions again',
+            pleaseAllow: {
+              title: 'Please allow access to your camera',
+              text:
+                'You have been prompted to allow camera access from this site.<br>' +
+                'In order to take pictures with your camera you must approve this request.'
+            },
+            notFound: {
+              title: 'No camera detected',
+              text: 'Looks like you have no camera connected to this device.'
+            }
+          },
+        },
+      }
+    };
+  </script>
   <body class="body">
     <app-root></app-root>
     <script src="//twemoji.maxcdn.com/2/twemoji.min.js?11.2"></script>
