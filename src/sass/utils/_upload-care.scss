@@ -62,13 +62,6 @@
       height: auto;
       border-radius: 8px;
     }
-    .uploadcare--camera__video {
-      // &::before {
-      //   background-image: url(/assets/img/rec-ico.svg);
-      //   background-position: right bottom;
-      //   background-repeat: no-repeat;
-      // }
-    }
   }
   .uploadcare--tab__content {
     overflow-y: unset;
@@ -85,6 +78,16 @@
         background-position: 16px 16px;
         background-repeat: no-repeat;
         padding-left: 46px;
+      }
+      .uploadcare--camera__button_type_stop-record {
+        background-image: url(/assets/img/stop-ico.svg);
+        background-position: 10px 10px;
+        padding: 12px;
+        background-repeat: no-repeat;
+        padding-left: 46px;
+        background-color: #fff;
+        border: 2px solid #e84858;
+        color: #e84858;
       }
     }
   }
