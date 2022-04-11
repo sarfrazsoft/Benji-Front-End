@@ -128,6 +128,17 @@ export class AuthService {
       );
   }
 
+  patchParticipant(code: string, id: number) {
+    return this.http
+      .patch(global.apiRoot + '/course_details/participant/' + code + '/', {"user": id})
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError((err) => of(err.error))
+      );
+  }
+
   setParticipantSession(res) {
     localStorage.setItem('participant', JSON.stringify(res));
   }

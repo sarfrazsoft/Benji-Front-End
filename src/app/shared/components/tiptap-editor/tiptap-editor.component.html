@@ -1,0 +1,98 @@
+<tiptap-editor [editor]="editor" [(ngModel)]="editorContent"></tiptap-editor>
+<tiptap-bubble-menu [editor]="editor" [tippyOptions]="tippyOptions">
+  <div
+    class="bubble-menu"
+    fxLayout="row"
+    fxLayoutAlign="start center">
+    <button (click)="editor.chain().focus().toggleBold().run()">
+      <div *ngIf="!editor.isActive('bold');else bold_active">
+        <img src="/assets/img/idea-creation/bold.svg">
+      </div>
+      <ng-template #bold_active>
+        <img src="/assets/img/idea-creation/active/bold.svg">
+      </ng-template>
+    </button>
+    <button (click)="editor.chain().focus().toggleItalic().run()">
+      <!-- {{ !editor.isActive('italic') ? 'i' : 'j' }} -->
+      <div>
+        <img 
+          src="{{ 
+            editor.isActive('italic') ? 
+              '/assets/img/idea-creation/active/italic.svg' 
+              : '/assets/img/idea-creation/italic.svg'}}">
+      </div>
+      <!-- <ng-template #italic_active>
+        <img src="/assets/img/idea-creation/active/italic.svg">
+      </ng-template> -->
+    </button>
+    <button (click)="editor.chain().focus().toggleUnderline().run()">
+      <div *ngIf="!editor.isActive('underline');else underline_active">
+        <img src="/assets/img/idea-creation/underline.svg">
+      </div>
+      <ng-template #underline_active>
+        <img src="/assets/img/idea-creation/active/underline.svg">
+      </ng-template>
+    </button>
+    <button (click)="editor.chain().focus().toggleStrike().run()">
+      <div *ngIf="!editor.isActive('strike');else strike_active">
+        <img src="/assets/img/idea-creation/strikethrough.svg">
+      </div>
+      <ng-template #strike_active>
+        <img src="/assets/img/idea-creation/active/strikethrough.svg">
+      </ng-template>
+    </button>
+    <button (click)="editor.chain().focus().toggleOrderedList().run()">
+      <div *ngIf="!editor.isActive('orderedList');else ol_active">
+        <img src="/assets/img/idea-creation/list-ordered.svg">
+      </div>
+      <ng-template #ol_active>
+        <img src="/assets/img/idea-creation/active/list-ordered.svg">
+      </ng-template>
+    </button>
+    <button (click)="editor.chain().focus().toggleBulletList().run()">
+      <div *ngIf="!editor.isActive('bulletList');else ul_active">
+        <img src="/assets/img/idea-creation/list-check.svg">
+      </div>
+      <ng-template #ul_active>
+        <img src="/assets/img/idea-creation/active/list-check.svg">
+      </ng-template>
+    </button>
+    <button (click)="setLink()">
+      <div *ngIf="!editor.isActive('link');else link_active">
+        <img src="/assets/img/idea-creation/link.svg">
+      </div>
+      <ng-template #link_active>
+        <img src="/assets/img/idea-creation/active/link.svg">
+      </ng-template>
+    </button>
+    <button (click)="editor.chain().focus().toggleBlockquote().run()">
+      <div *ngIf="!editor.isActive('blockquote');else quotes_active">
+        <img src="/assets/img/idea-creation/double-quotes-l.svg">
+      </div>
+      <ng-template #quotes_active>
+        <img src="/assets/img/idea-creation/active/double-quotes-l.svg">
+      </ng-template>
+    </button>
+    <!-- <button (click)="editor.chain().focus().toggleCode().run()">
+      <div *ngIf="!editor.isActive('code');else code_active">
+        <img src="/assets/img/idea-creation/code-view.svg">
+      </div>
+      <ng-template #code_active>
+        <img src="/assets/img/idea-creation/active/code-view.svg">
+      </ng-template>
+    </button> -->
+
+  </div>
+  <!-- <button
+    onClick={() => editor.chain().focus().toggleItalic().run()}
+    className={editor.isActive('italic') ? 'is-active' : ''}
+  >
+    italic
+  </button>
+  <button
+    onClick={() => editor.chain().focus().toggleStrike().run()}
+    className={editor.isActive('strike') ? 'is-active' : ''}
+  >
+    strike
+  </button> -->
+</tiptap-bubble-menu>

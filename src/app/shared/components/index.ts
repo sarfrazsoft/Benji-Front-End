@@ -9,9 +9,11 @@ import { FeedbackGenericGraphComponent } from './generic-feedback-graph/generic-
 import { GroupingComponent as ParticipantGroupingComponent } from './grouping/grouping.component';
 import { IdeaDetailedComponent } from './idea-detailed/idea-detailed';
 import { PercentPollBarsComponent } from './percent-poll-bars/percent-poll-bars.component';
+import { ProgressbarComponent } from './progress-bar/progress-bar.component';
 import { ResponsePercentBarsComponent } from './response-percent-bars/response-percent-bars.component';
 import { ResponseTagsPercentBarsComponent } from './response-tags-percent-bars/response-tags-percent-bars.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { TiptapEditorComponent } from './tiptap-editor/tiptap-editor.component';
 import { UploadcareWidgetComponent } from './uploadcare-widget/uploadcare-widget.component';
 import { UppyDashboardComponent } from './uppy-dashboard/uppy-dashboard.component';
 export { AvatarComponent };
@@ -33,6 +35,8 @@ export const CmpComponents = [
   IdeaDetailedComponent,
   UppyDashboardComponent,
   UploadcareWidgetComponent,
+  TiptapEditorComponent,
+  ProgressbarComponent,
 ];
 
 export const CmpEntryComponents = [

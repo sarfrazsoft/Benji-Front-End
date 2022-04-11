@@ -165,7 +165,7 @@
       </textarea>
     </ng-container>
     <ng-container *ngIf="userRole === 'owner' || userIdeaText">
-      <textarea
+      <!-- <textarea
         [readonly]="userRole !== 'owner'"
         cdkTextareaAutosize
         [(ngModel)]="userIdeaText"
@@ -175,7 +175,12 @@
         [ngClass]="{
           'image-selected': imageSelected || pdfSelected
         }">
-      </textarea>
+      </textarea> -->
+      <benji-tiptap-editor
+        [editable]="userRole === 'owner'"
+        [defaultValue]="userIdeaText"
+        (textChanged)="descriptionTextChanged($event)">
+      </benji-tiptap-editor>
     </ng-container>
     <div
       *ngIf="data.showUserName" 

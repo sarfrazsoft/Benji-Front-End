@@ -1,0 +1,161 @@
+.uploadcare--dialog__container {
+  .uploadcare--tab__header {
+    display: unset; 
+    -ms-flex-align: center;
+    align-items: center;
+    padding-right: unset; 
+    height: unset; 
+  }
+  font-family: 'Inter';
+  font-style: normal;
+  border-radius: 16px;
+  .uploadcare--button {
+    &:focus {
+      outline: 0px;
+      outline-offset: 1px;
+    }
+  }
+  .uploadcare--button_icon {
+    padding: 8px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+  }
+  .uploadcare--button_muted:focus, 
+  .uploadcare--button_muted:hover {
+    color: #555bea;
+  }
+  .uploadcare--button_primary {
+    background: #555bea;
+    color: #fff;
+    border: 0px;
+    border-radius: 8px;
+    height: 48px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 16px;
+    cursor: pointer;
+    &.uploadcare--camera__button {
+      margin: 6px;
+    }
+  }
+  .uploadcare--preview__back, .uploadcare--camera__button_type_cancel-record {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #37352F;
+    padding: 16px;
+    background: #F3F4F7;
+    border-radius: 8px;
+    border: 0px;
+    cursor: pointer;
+    background-image: url(/assets/img/cancel-ico.svg);
+    background-position: 16px 16px;
+    background-repeat: no-repeat;
+    padding-left: 40px;
+  }
+  .uploadcare--camera__video-container {
+    .uploadcare--media__video {
+      max-height: unset;
+      width: 800px;
+      height: auto;
+      border-radius: 8px;
+    }
+  }
+  .uploadcare--tab__content {
+    overflow-y: unset;
+    .uploadcare--camera__controls {
+      margin-bottom: 18px;
+      .uploadcare--camera__button_type_start-record {
+        background-image: url(/assets/img/cam-ico.svg);
+        background-position: 16px 16px;
+        background-repeat: no-repeat;
+        padding-left: 52px;
+      }
+      .uploadcare--camera__button_type_capture {
+        background-image: url(/assets/img/img-ico.svg);
+        background-position: 16px 16px;
+        background-repeat: no-repeat;
+        padding-left: 46px;
+      }
+      .uploadcare--camera__button_type_stop-record {
+        background-image: url(/assets/img/stop-ico.svg);
+        background-position: 10px 10px;
+        padding: 12px;
+        background-repeat: no-repeat;
+        padding-left: 46px;
+        background-color: #fff;
+        border: 2px solid #e84858;
+        color: #e84858;
+      }
+    }
+  }
+  .uploadcare--tab__title {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    color: #37352F;
+    text-transform: capitalize;
+  }
+  .uploadcare--footer {
+    padding: 6px 64px 24px;
+    .uploadcare--footer__button {
+      margin-top: 0px;
+      margin-bottom: 0px; 
+    }
+  }
+}
+
+@media (min-width: 1210px) {
+  .uploadcare--dialog__container {
+    max-width: 928px;
+    height: auto;
+    min-height: 612px;
+  }
+  .uploadcare--media__video, .uploadcare--media__image {
+    max-height: unset;
+    border-radius: 8px;
+  }
+  .uploadcare--tab__content {
+    padding: 0 64px;
+  }
+}
+
+@media (max-width: 1210px) {
+  .uploadcare--dialog__container {
+    max-width: 747px;
+    height: auto;
+    min-height: 555px;
+    .uploadcare--footer {
+      padding: 6px 24px 24px;
+    }
+    .uploadcare--camera__video-container .uploadcare--media__video {
+      max-height: unset;
+      width: 699px;
+      height: 393px;
+    }
+  }
+  .uploadcare--media__video, .uploadcare--media__image {
+    max-height: unset;
+    border-radius: 8px;
+  }
+  .uploadcare--tab__content {
+    padding: 0 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .uploadcare--camera__video-container .uploadcare--media__video {
+    max-height: unset;
+    width: unset;
+    height: unset;
+  }
+  .uploadcare--media__video, .uploadcare--media__image {
+    max-height: unset;
+    width: unset !important;
+    height: unset !important;
+  }
+}

@@ -1,3 +1,67 @@
+// styles of tiptap editor
+benji-tiptap-editor {
+  .ProseMirror {
+    // max-height: 26rem;
+    min-height: 6rem;
+    overflow-y: auto;
+    outline: none;
+    &[contenteditable="false"] {
+      // editor that is not editable styles go here
+
+    }
+    // &[itemSelected]="isItemSelected()"
+  }
+  .ProseMirror {
+    > * + * {
+      margin-top: 0.75em;
+    }
+  
+    code {
+      background-color: rgba(#616161, 0.1);
+      border-radius: 0.25em;
+      box-decoration-break: clone;
+      color: #616161;
+      font-size: 0.9rem;
+      padding: 0.25em;
+      &::after {
+        content: none;
+      }
+      &::before {
+        content: none;
+      }
+    }
+  }
+}
+
+benji-idea-detailed {
+  .ProseMirror {
+  }
+}
+
+benji-brainstorm-card {
+  .ProseMirror {
+    max-height: auto;
+  }
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #bdbdbd;
+  pointer-events: none;
+  height: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
 benji-text-editor {
   ngx-editor-menu {
     .NgxEditor__MenuBar {
@@ -159,3 +223,6 @@ pre.callout-container {
     }
   }
 }
+
+
+

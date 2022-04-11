@@ -130,3 +130,10 @@ body {
     font-size: 22px;
   }
 }
+
+.prose ul>li {
+  list-style-type: none;
+  &::marker {
+    display: none;
+  }
+}
