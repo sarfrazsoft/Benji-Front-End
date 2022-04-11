@@ -594,17 +594,43 @@ ng-dropdown-panel.groups-controls {
     display: none;
   }
 }
-.uploadcare--widget__button.uploadcare--widget__button_type_open {
-  display: none;
-}
-.uploadcare--widget_status_ready .uploadcare--widget__button_type_cancel {
-  display: none;
-}
-.uploadcare--widget_status_ready .uploadcare--widget__button_type_remove {
-  display: none;
-}
-.uploadcare--widget__progress {
-  display: none;
+.uploadcare-container {
+  // position: relative;
+  .uploadcare--widget__button.uploadcare--widget__button_type_open {
+    display: none;
+  }
+  .uploadcare--widget_status_ready .uploadcare--widget__button_type_cancel {
+    display: none;
+  }
+  .uploadcare--widget_status_ready .uploadcare--widget__button_type_remove {
+    display: none;
+  }
+  .uploadcare--widget__button.uploadcare--widget__button_type_cancel {
+    display: none;
+  }
+  // .uploadcare--widget__progress {
+  //   display: none;
+  // }
+  .uploadcare--widget__progress {
+    display: none;
+  }
+  .uploadcare--widget__text {
+    display: none;
+  }
+  // .uploadcare--widget.uploadcare--widget_status_started {
+  //   position: absolute;
+  //   top: -100px;
+  //   height: 100px;
+  // }
+
+  // hide uploaded file name
+  .uploadcare--link.uploadcare--widget__file-name {
+    display: none;
+  }
+  // hide uploaded file size
+  .uploadcare--widget__file-size {
+    display: none;
+  }
 }
 .uploadcare--dialog {
   .uploadcare--menu.uploadcare--panel__menu {
@@ -614,6 +640,4 @@ ng-dropdown-panel.groups-controls {
     display: none;
   }
 }
-.uploadcare--widget__text {
-  display: none;
-}
+

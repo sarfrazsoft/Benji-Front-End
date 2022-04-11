@@ -14,68 +14,63 @@
       </button>
     </div>
     <div class="white-content">
-      <div fxLayoutAlign="space-between"> 
-        <textarea
-          cdkTextareaAutosize
-          class="title" 
-          placeholder="Title (optional)" 
-          [(ngModel)]="ideaTitle"
-        >
-        </textarea>
-        <div class="close-button" fxLayoutAlign="end start">
-          <img src="/assets/img/idea-creation/cross.svg" matDialogClose>
-        </div>
-      </div>
-      <!-- <textarea
-        *ngIf="!imageSelected && !pdfSelected && !video && !webcamImage"
-        cdkTextareaAutosize
-        [(ngModel)]="userIdeaText" 
-        class="description"
-        placeholder="Description..."
-        >
-      </textarea>
-      <textarea
-        *ngIf="imageSelected || pdfSelected || video || webcamImage"
-        cdkTextareaAutosize
-        [(ngModel)]="userIdeaText" 
-        class="description image-selected"
-        placeholder="Description...">
-      </textarea> -->
-      <div [ngClass]="{ 'image-selected': !isItemSelected() }">
-        <benji-tiptap-editor
-          [defaultValue]="userIdeaText"
-          (textChanged)="titleTextChanged($event)">
-        </benji-tiptap-editor>
-      </div>
-      <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
-        <ng-container *ngIf="imageSelected">
-          <img *ngIf="imageSrc" [src]="imageSrc" alt="">
-          <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
-        </ng-container>
-        <ng-container *ngIf="pdfSelected">
-          <div style="width: 400px;">
-            <ngx-extended-pdf-viewer [src]="pdfSrc" 
-              useBrowserLocale="true" 
-              [height]="'350px'">
-            </ngx-extended-pdf-viewer>
+      <div class="idea-editables-content">
+        <div fxLayoutAlign="space-between"> 
+          <textarea
+            cdkTextareaAutosize
+            class="title" 
+            placeholder="Title (optional)" 
+            [(ngModel)]="ideaTitle"
+          >
+          </textarea>
+          <div class="close-button" fxLayoutAlign="end start">
+            <img src="/assets/img/idea-creation/cross.svg" matDialogClose>
           </div>
-        </ng-container>
-        <ng-container *ngIf="video">
-          <div>
-            <video style="margin: 0 auto;" width="100%" controls>
-              <source [src]="videoURL" type="video/mp4" />
-            </video>
-          </div>          
-        </ng-container>
-        <ng-container *ngIf="webcamImage">
-          <img 
-              benji-click-stop-propagation
-              [src]="webcamImageURL" alt="" />
-        </ng-container>
-        
-        <button class="remove-button" (click)="remove()">
-          Remove
-        </button>
+        </div>
+        <div [ngClass]="{ 'image-selected': !isItemSelected() }">
+          <benji-tiptap-editor
+            [defaultValue]="userIdeaText"
+            (textChanged)="descriptionTextChanged($event)">
+          </benji-tiptap-editor>
+        </div>
+        <div class="preview-image" 
+          *ngIf="imageSelected || pdfSelected || video || webcamImage || mediaUploading" 
+          fxLayoutAlign="center center">
+          <ng-container *ngIf="imageSelected">
+            <img *ngIf="imageSrc" [src]="imageSrc" alt="">
+            <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
+          </ng-container>
+          <ng-container *ngIf="pdfSelected">
+            <div style="width: 400px;">
+              <ngx-extended-pdf-viewer [src]="pdfSrc" 
+                useBrowserLocale="true" 
+                [height]="'350px'">
+              </ngx-extended-pdf-viewer>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="video">
+            <div>
+              <video style="margin: 0 auto;" width="100%" controls>
+                <source [src]="videoURL" type="video/mp4" />
+              </video>
+            </div>          
+          </ng-container>
+          <ng-container *ngIf="webcamImage">
+            <img 
+                benji-click-stop-propagation
+                [src]="webcamImageURL" alt="" />
+          </ng-container>
+          <ng-container *ngIf="mediaUploading">
+            <benji-progress-bar
+              [percent]="fileProgress?.progress">
+            </benji-progress-bar>
+          </ng-container>
+          <button 
+            *ngIf="imageSelected || pdfSelected || video || webcamImage"
+            class="remove-button" (click)="remove()">
+              Remove
+          </button>
+        </div>
       </div>
       <div class="idea-creation-controls" fxLayout="row" fxLayoutAlign="space-between center">
         <div fxLayout="row">
@@ -98,10 +93,11 @@
                 [ngClass]="{'inactive': imageSelected || pdfSelected}"
               >
             </div> 
-            <div fxLayoutAlign="center center">
+            <div class="uploadcare-container" fxLayoutAlign="center center">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
-                (mediaUploaded)="mediaUploaded($event)">
+                (mediaUploaded)="mediaUploaded($event)"
+                (mediaUploading)="mediaUploadProgress($event)">
               </benji-uploadcare-widget>
             </div>  
 
