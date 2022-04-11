@@ -56,11 +56,11 @@
     padding-left: 40px;
   }
   .uploadcare--camera__video-container {
-    //height: 100%;
     .uploadcare--media__video {
       max-height: unset;
       width: 800px;
       height: auto;
+      border-radius: 8px;
     }
   }
   .uploadcare--tab__content {
@@ -78,6 +78,16 @@
         background-position: 16px 16px;
         background-repeat: no-repeat;
         padding-left: 46px;
+      }
+      .uploadcare--camera__button_type_stop-record {
+        background-image: url(/assets/img/stop-ico.svg);
+        background-position: 10px 10px;
+        padding: 12px;
+        background-repeat: no-repeat;
+        padding-left: 46px;
+        background-color: #fff;
+        border: 2px solid #e84858;
+        color: #e84858;
       }
     }
   }
@@ -107,6 +117,7 @@
   }
   .uploadcare--media__video, .uploadcare--media__image {
     max-height: unset;
+    border-radius: 8px;
   }
   .uploadcare--tab__content {
     padding: 0 64px;
@@ -129,6 +140,7 @@
   }
   .uploadcare--media__video, .uploadcare--media__image {
     max-height: unset;
+    border-radius: 8px;
   }
   .uploadcare--tab__content {
     padding: 0 24px;
