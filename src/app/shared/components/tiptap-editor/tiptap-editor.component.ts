@@ -34,11 +34,11 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
     ],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose lg:prose xl:prose-lg m-5 focus:outline-none',
+        class: 'prose prose-sm m-5 focus:outline-none',
       },
     },
     onUpdate: (u) => {
-      this.textChanged.emit(this.editorContent);
+      this.textChanged.emit(this.defaultValue);
     },
   });
 
@@ -81,7 +81,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.editor.setEditable(this.editable);
-    this.editorContent = this.defaultValue;
+    console.log(this.defaultValue);
   }
   ngOnChanges() {}
 
