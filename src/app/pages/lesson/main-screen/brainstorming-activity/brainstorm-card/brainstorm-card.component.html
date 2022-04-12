@@ -55,6 +55,12 @@
         (click)="showDetailedIdea(item)"
         class="brainstorm-image"
         *ngIf="item.idea_image !== null">
+        <ng-container [ngSwitch]="typeOfImage(item)">
+          <ng-container *ngSwitchCase="'giphy'">
+            <img [src]="item.idea_image.document" alt="" />
+          </ng-container>
+        </ng-container>
+
         <ng-container *ngIf="item.idea_image.document_url">
           <ng-container 
             *ngIf="isUploadCare(item.idea_image.document_url); else notUploadCare">
@@ -123,11 +129,12 @@
       (click)="showDetailedIdea(item)">
       <div *ngIf="item.title || item.idea" class="title-description">
         <div *ngIf="item.title" class="title" [ngClass]="{'spaced': item.idea }">{{ item.title }}</div>
-        <!-- {{ item.idea }}  -->
-        <benji-tiptap-editor
-          [editable]="false"
-          [defaultValue]="item.idea">
-        </benji-tiptap-editor>
+        <div *ngIf="item.idea">
+            <benji-tiptap-editor
+            [editable]="false"
+            [defaultValue]="item.idea">
+          </benji-tiptap-editor>
+        </div>
       </div>
     </div>
     <div class="feedback">

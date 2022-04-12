@@ -322,4 +322,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   videoLoaded() {
     this.commentEdited.emit();
   }
+
+  typeOfImage(item: Idea) {
+    if (item && item.idea_image) {
+      if (item.idea_image.document) {
+        if (item.idea_image.document.includes('giphy.com')) {
+          return 'giphy';
+        }
+      }
+    }
+  }
 }

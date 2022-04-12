@@ -38,6 +38,7 @@ import {
   BoardMode,
   BrainstormActivity,
   BrainstormEditIdeaSubmitEvent,
+  BrainstormEditIdeaVideoSubmitEvent,
   BrainstormImageSubmitEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormSubmitDocumentEvent,
@@ -547,6 +548,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   submitWithoutImg(idea) {
+    console.log(idea);
     if (!idea.text && !idea.title) {
       return;
     }
@@ -576,7 +578,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     if (idea.id) {
       // update video
       this.sendMessage.emit(
-        new BrainstormSubmitVideoEvent({
+        new BrainstormEditIdeaVideoSubmitEvent({
           id: idea.id,
           text: idea.text,
           title: idea.title,
