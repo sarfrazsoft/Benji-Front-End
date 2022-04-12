@@ -121,22 +121,24 @@ export class AuthService {
       })
       .pipe(
         map((res: LoginResponse) => {
+          console.log(res);
           this.setParticipantSession(res);
           return res;
         }),
-        catchError((err) => of(err.error))
+        catchError((err) => {
+          console.log(err);
+          return of(err.error);
+        })
       );
   }
 
   patchParticipant(code: string, id: number) {
-    return this.http
-      .patch(global.apiRoot + '/course_details/participant/' + code + '/', {"user": id})
-      .pipe(
-        map((res) => {
-          return res;
-        }),
-        catchError((err) => of(err.error))
-      );
+    return this.http.patch(global.apiRoot + '/course_details/participant/' + code + '/', { user: id }).pipe(
+      map((res) => {
+        return res;
+      }),
+      catchError((err) => of(err.error))
+    );
   }
 
   setParticipantSession(res) {

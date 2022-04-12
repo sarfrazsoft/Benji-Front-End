@@ -92,23 +92,24 @@ export class SessionLobbyLayoutComponent implements OnInit {
     console.log(name, lessonCode);
 
     this.authService.createParticipant(name, lessonCode, user.id).subscribe(
-      (res: Participant) => {
+      (res) => {
         this.loginError = false;
         if (res.lessonrun_code) {
           this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+        } else if (res.non_field_errors[0] === 'You are already in this session.') {
         } else {
           this.loginError = true;
         }
       },
       (err) => {
-        console.log(err);
-        if (err && err.error && err.error.non_field_errors) {
-          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-            console.log('err');
-            this.utilsService.openWarningNotification(
-              'A participant with that name has already joined. Try a different name.',
-              ''
-            );
+        if (err && err.error) {
+          if (err.error.non_field_errors) {
+            if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+              this.utilsService.openWarningNotification(
+                'A participant with that name has already joined. Try a different name.',
+                ''
+              );
+            }
           }
         }
       }
