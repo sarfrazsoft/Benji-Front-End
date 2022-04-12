@@ -15,7 +15,7 @@
       [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
       [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
       > -->
-    <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
+    <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video && !webcamImage">
       <!-- <div 
         class="select-image" 
         [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
@@ -33,11 +33,15 @@
             </div>
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
             
-            
-            <benji-uploadcare-widget
-              [lessonRunCode]="lessonRunCode"
-              (mediaUploaded)="mediaUploaded($event)">
-            </benji-uploadcare-widget>
+            <div class="options" fxLayoutAlign="center center">
+              <div class="uploadcare-container">
+                <benji-uploadcare-widget
+                  [lessonRunCode]="lessonRunCode"
+                  (mediaUploaded)="mediaUploaded($event)"
+                  (mediaUploading)="mediaUploadProgress($event)">
+                </benji-uploadcare-widget>
+              </div>
+            </div>
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
             <div 
               class="options" 
@@ -93,9 +97,7 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="webcamImage">
-        <img 
-            benji-click-stop-propagation
-            [src]="hostname + webcamImageURL" alt="" />
+        <img benji-click-stop-propagation [src]="webcamImageURL" alt="" />
       </ng-container>
       <div 
         class="back-circle" 
@@ -155,7 +157,7 @@
       <textarea 
         [readonly]="userRole !== 'owner'"
         class="title" 
-        placeholder="Title" 
+        placeholder="Title (optional)" 
         [(ngModel)]="ideaTitle"
         (ngModelChange)="ideaIsEdited($event)"
         cdkTextareaAutosize

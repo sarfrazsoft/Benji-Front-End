@@ -439,6 +439,21 @@ export class BrainstormSubmitVideoEvent extends ActivityEvent {
   }
 }
 
+export class BrainstormEditIdeaVideoSubmitEvent extends ActivityEvent {
+  event_name = 'BrainstormEditIdeaSubmitEvent';
+
+  constructor(idea: { id: number; text: string; title: string; category: number; idea_video: number }) {
+    super();
+    this.extra_args = {
+      brainstormidea: idea.id,
+      idea: idea.text,
+      title: idea.title,
+      category: idea.category,
+      idea_video: idea.idea_video,
+    };
+  }
+}
+
 export class BrainstormSubmitDocumentEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
@@ -475,19 +490,6 @@ export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
       idea_image: idea_image,
       image_path: image_path,
     };
-
-    // if (idea_image) {
-    //   this.extra_args = {
-    //     ...this.extra_args,
-    //     idea_image: idea_image,
-    //   };
-    // }
-    // if (image_path) {
-    //   this.extra_args = {
-    //     ...this.extra_args,
-    //     image_path: image_path,
-    //   };
-    // }
   }
 }
 
