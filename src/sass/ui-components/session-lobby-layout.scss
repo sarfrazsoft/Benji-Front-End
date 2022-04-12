@@ -153,6 +153,10 @@
         &::placeholder {
           color: #828282;
         }
+        &.name-input {
+          font-weight: 400;
+          margin-bottom: 8px;
+        }
       }
       .edit-profile {
         margin-bottom: 24px;
@@ -179,6 +183,10 @@
         &.inactive {
           //opacity: 0.4;
         }
+        &.guest-button {
+          height: 48px;
+          line-height: 48px;
+        }
       }
       .session-joined {
         width: 400px;
@@ -192,13 +200,13 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #626262;
+        color: #828282;
         .actions {
           font-weight: 500;
           color: #555BEA;
           cursor: pointer;
           span {
-            color: #626262;
+            color: #828282;
             cursor: none;
           }
         }

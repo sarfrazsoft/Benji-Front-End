@@ -104,11 +104,13 @@
     <div fxLayout="column" class="join-session" *ngIf="!adminLobbyScreeen">
       <div *ngIf="participantJoinScreeen && !loadLogin && !loadForgotPassword && !loadSignUp">
         <div class="sub-title"> Join Session </div>
-        <div class="label"> Name </div>
+        <!-- <div class="label"> Name </div> -->
         <p class="warning-color" *ngIf="loginError">
           Oops! What should we call you? Drop in your name.<br />
         </p>
-        <input type="text"
+        <input
+          class="name-input" 
+          type="text"
           placeholder="Enter your name"
           [formControl]="username">
         <!-- <div class="label"> Choose your avatar </div>
@@ -119,7 +121,7 @@
           <div class="change-profile">Change profile</div>
         </div> -->
         <div 
-          class="bg-primary-color button"
+          class="bg-primary-color button guest-button"
           fxLayoutAlign="center center"
           (click)="createUser()"
           [ngClass]="{
