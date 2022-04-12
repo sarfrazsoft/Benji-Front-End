@@ -341,6 +341,61 @@
               // border-radius: 50%;
             }
           }
+          .prose-sm {
+            color: #37352F;
+            p {
+              font-size: 1em;
+              line-height: 1.5em;
+              letter-spacing: -0.011em;
+              a {
+                color: #555BEA;
+              }
+              strong {
+                color: #37352F;
+              }
+            }
+            blockquote {
+              border-left: 3px solid;
+              color: #37352F;
+              padding-left: 12px;
+              p {
+                font-style: normal;
+                font-weight: 400;
+                &::after, &::before {
+                  content: unset !important;
+                }
+              }
+            }
+            ul>li {
+              &::before {
+                background-color: #37352F;
+                left: 9px;
+                width: 6px;
+                height: 6px;
+                top: 12px;
+              }
+            }
+            ol>li {
+              &::before {
+                left: 9px;
+                top: 4px;
+              }
+            }
+            ul>li, ol>li {
+              padding-left: 28px;
+              p, p:first-child, p:last-child {
+                margin-top: 4px;
+                margin-bottom: 4px;
+              }
+            }
+            p, blockquote, ul, ol {
+              margin-bottom: 8px;
+              margin-top: 8px;
+              li {
+                margin: 0px 12px 0px 0px !important;
+              }
+            }
+          }
           .description {
             border: unset;
             width: 100%;
@@ -453,8 +508,16 @@
   button {
     padding: 6px 4px;
     background-color: #fff;
+    height: 100%;
     &:hover {
       background: #F3F4F7;
+    }
+    div {
+      place-content: center;
+      align-items: center;
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
     }
   }
 }
@@ -687,6 +750,61 @@
         }
         &::placeholder {
           color: #bdbdbd;
+        }
+      }
+      .prose-sm {
+        color: #37352F;
+        p {
+          font-size: 1em;
+          line-height: 1.5em;
+          letter-spacing: -0.011em;
+          a {
+            color: #555BEA;
+          }
+          strong {
+            color: #37352F;
+          }
+        }
+        blockquote {
+          border-left: 3px solid;
+          color: #37352F;
+          padding-left: 12px;
+          p {
+            font-style: normal;
+            font-weight: 400;
+            &::after, &::before {
+              content: unset !important;
+            }
+          }
+        }
+        ul>li {
+          &::before {
+            background-color: #37352F;
+            left: 9px;
+            width: 6px;
+            height: 6px;
+            top: 12px;
+          }
+        }
+        ol>li {
+          &::before {
+            left: 9px;
+            top: 4px;
+          }
+        }
+        ul>li, ol>li {
+          padding-left: 28px;
+          p, p:first-child, p:last-child {
+            margin-top: 4px;
+            margin-bottom: 4px;
+          }
+        }
+        p, blockquote, ul, ol {
+          margin-bottom: 8px;
+          margin-top: 8px;
+          li {
+            margin: 0px 12px 0px 0px !important;
+          }
         }
       }
       .description {
