@@ -5,73 +5,74 @@
     fxLayout="row"
     fxLayoutAlign="start center">
     <button (click)="editor.chain().focus().toggleBold().run()">
-      <div *ngIf="!editor.isActive('bold');else bold_active">
-        <img src="/assets/img/idea-creation/bold.svg">
+      <div>
+        <img
+          src="{{
+            editor.isActive('bold') ?
+              '/assets/img/idea-creation/active/bold.svg'
+              : '/assets/img/idea-creation/bold.svg'}}">
       </div>
-      <ng-template #bold_active>
-        <img src="/assets/img/idea-creation/active/bold.svg">
-      </ng-template>
     </button>
     <button (click)="editor.chain().focus().toggleItalic().run()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('italic') ? 
-              '/assets/img/idea-creation/active/italic.svg' 
+        <img
+          src="{{
+            editor.isActive('italic') ?
+              '/assets/img/idea-creation/active/italic.svg'
               : '/assets/img/idea-creation/italic.svg'}}">
       </div>
     </button>
     <button (click)="editor.chain().focus().toggleUnderline().run()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('underline') ? 
-              '/assets/img/idea-creation/active/underline.svg' 
+        <img
+          src="{{
+            editor.isActive('underline') ?
+              '/assets/img/idea-creation/active/underline.svg'
               : '/assets/img/idea-creation/underline.svg'}}">
       </div>
     </button>
     <button (click)="editor.chain().focus().toggleStrike().run()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('strike') ? 
-              '/assets/img/idea-creation/active/strikethrough.svg' 
+        <img
+          src="{{
+            editor.isActive('strike') ?
+              '/assets/img/idea-creation/active/strikethrough.svg'
               : '/assets/img/idea-creation/strikethrough.svg'}}">
       </div>
     </button>
     <button (click)="editor.chain().focus().toggleOrderedList().run()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('orderedList') ? 
-              '/assets/img/idea-creation/active/list-ordered.svg' 
+        <img
+          src="{{
+            editor.isActive('orderedList') ?
+              '/assets/img/idea-creation/active/list-ordered.svg'
               : '/assets/img/idea-creation/list-ordered.svg'}}">
       </div>
     </button>
     <button (click)="editor.chain().focus().toggleBulletList().run()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('bulletList') ? 
-              '/assets/img/idea-creation/active/list-check.svg' 
+        <img
+          src="{{
+            editor.isActive('bulletList') ?
+              '/assets/img/idea-creation/active/list-check.svg'
               : '/assets/img/idea-creation/list-check.svg'}}">
       </div>
     </button>
     <button (click)="setLink()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('link') ? 
-              '/assets/img/idea-creation/active/link.svg' 
+        <img
+          src="{{
+            editor.isActive('link') ?
+              '/assets/img/idea-creation/active/link.svg'
               : '/assets/img/idea-creation/link.svg'}}">
       </div>
     </button>
     <button (click)="editor.chain().focus().toggleBlockquote().run()">
       <div>
-        <img 
-          src="{{ 
-            editor.isActive('blockquote') ? 
-              '/assets/img/idea-creation/active/double-quotes-l.svg' 
+        <img
+          src="{{
+            editor.isActive('blockquote') ?
+              '/assets/img/idea-creation/active/double-quotes-l.svg'
               : '/assets/img/idea-creation/double-quotes-l.svg'}}">
       </div>
     </button>
@@ -83,7 +84,6 @@
         <img src="/assets/img/idea-creation/active/code-view.svg">
       </ng-template>
     </button> -->
-
   </div>
   <!-- <button
     onClick={() => editor.chain().focus().toggleItalic().run()}
