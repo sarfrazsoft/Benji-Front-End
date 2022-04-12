@@ -2,23 +2,14 @@
   class="response-percent-bars"
   fxLayout="column"
   fxLayoutAlign="center center">
-  <div class="content" fxLayout="column" fxLayoutGap="10px">
-    <div class="options-container" fxLayout="column" fxLayoutGap="8px">
-      <div class="options" fxFlex="100%">
-        <div class="option">
-          <div class="info" fxLayout="row" fxLayoutAlign="space-between">
-            <div class="percentage" fxLayoutAlign="end center">
-              <div class="number">
-                {{ percent }}
-              </div>
-            </div>
-          </div>
-          <div id="progressbar">
-            <div class="bg-primary-color-light" [style.width.%]="percent">
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="info" fxLayout="row" fxLayoutAlign="space-between">
+    <div class="upload">Upload</div>
+    <div class="number">
+      {{ percentage + "%" }}
+    </div>
+  </div>
+  <div id="progressbar">
+    <div class="progress" [style.width.%]="percent">
     </div>
   </div>
 </div>
