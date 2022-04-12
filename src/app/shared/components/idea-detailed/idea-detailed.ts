@@ -30,6 +30,7 @@ import { environment } from 'src/environments/environment';
 import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirmation.dialog';
 import { GiphyPickerDialogComponent } from '../../dialogs/giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
+import { FileProgress } from '../uploadcare-widget/uploadcare-widget.component';
 export interface IdeaDetailedInfo {
   showCategoriesDropdown: boolean;
   categories: Array<Category>;
@@ -500,5 +501,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
+  }
+
+  mediaUploadProgress(fileProgress: FileProgress) {
+    // this.fileProgress = fileProgress;
+    // this.mediaUploading = true;
   }
 }
