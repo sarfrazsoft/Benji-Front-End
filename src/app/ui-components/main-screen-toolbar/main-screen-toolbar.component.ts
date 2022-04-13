@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, BoardParticipants, Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -361,5 +361,19 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   signUpClicked() {
     this.router.navigateByUrl('/sign-up?link=' + this.roomCode + '&userCode=' + this.participantCode);
+  }
+
+  participantNotSignedIn() {
+    // get localstorage item 'participant'
+    // if participant does not have user property set then they
+    // are not signedIn using benji team user
+    if (localStorage.getItem('participant')) {
+      const participant: Participant = JSON.parse(localStorage.getItem('participant'));
+      if (participant.user) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 }
