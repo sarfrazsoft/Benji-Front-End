@@ -81,7 +81,6 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.editor.setEditable(this.editable);
-    console.log(this.defaultValue);
   }
   ngOnChanges() {}
 

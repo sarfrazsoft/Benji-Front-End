@@ -118,6 +118,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
 
     this.showParticipantGroupingButton();
+    if (!this.hostname.includes('localhost')) {
+      this.hostname = 'https://' + this.hostname;
+    }
     this.shareParticipantLink = this.hostname + this.roomCode;
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
@@ -307,11 +310,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   getParticipantBoard(): Board {
     const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
-    let participantBoardId: number ;
+    let participantBoardId: number;
     for (const brdId in participants) {
       participants[brdId].forEach((code) => {
         if (code === this.participantCode) {
-          participantBoardId = Number(brdId) ;
+          participantBoardId = Number(brdId);
         }
       });
     }
@@ -357,6 +360,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   signUpClicked() {
-    this.router.navigateByUrl("/sign-up?link=" + this.roomCode + "&userCode=" + this.participantCode);
+    this.router.navigateByUrl('/sign-up?link=' + this.roomCode + '&userCode=' + this.participantCode);
   }
 }
