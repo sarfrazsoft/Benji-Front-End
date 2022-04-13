@@ -344,9 +344,9 @@
           .prose-sm {
             color: #37352F;
             p {
-              font-size: 1em;
-              line-height: 1.5em;
-              letter-spacing: -0.011em;
+              font-size: 1rem;
+              line-height: 1.5rem;
+              letter-spacing: -0.011rem;
               a {
                 color: #555BEA;
               }
@@ -366,23 +366,20 @@
                 }
               }
             }
-            ul>li {
-              &::before {
-                background-color: #37352F;
-                left: 9px;
-                width: 6px;
-                height: 6px;
-                top: 12px;
+            ul{
+              margin-left: 5px;
+              >li {
+                &::before {
+                  background-color: #37352F;
+                  width: 6px;
+                  height: 6px;
+                }
               }
             }
-            ol>li {
-              &::before {
-                left: 9px;
-                top: 4px;
-              }
+            ol {
+              margin-left: 6px;
             }
             ul>li, ol>li {
-              padding-left: 28px;
               p, p:first-child, p:last-child {
                 margin-top: 4px;
                 margin-bottom: 4px;
@@ -455,6 +452,7 @@
             }
           }
           .post {
+            margin: 4px 0px;
             background: #BBBDF7;
             color: #fff;
             font-size: 16px;
@@ -755,9 +753,9 @@
       .prose-sm {
         color: #37352F;
         p {
-          font-size: 1em;
-          line-height: 1.5em;
-          letter-spacing: -0.011em;
+          font-size: 1rem;
+          line-height: 1.5rem;
+          letter-spacing: -0.011rem;
           a {
             color: #555BEA;
           }
@@ -768,7 +766,6 @@
         blockquote {
           border-left: 3px solid;
           color: #37352F;
-          padding-left: 12px;
           p {
             font-style: normal;
             font-weight: 400;
@@ -777,23 +774,20 @@
             }
           }
         }
-        ul>li {
-          &::before {
-            background-color: #37352F;
-            left: 9px;
-            width: 6px;
-            height: 6px;
-            top: 12px;
+        ul{
+          margin-left: 5px;
+          >li {
+            &::before {
+              background-color: #37352F;
+              width: 6px;
+              height: 6px;
+            }
           }
         }
-        ol>li {
-          &::before {
-            left: 9px;
-            top: 4px;
-          }
+        ol {
+          margin-left: 6px;
         }
         ul>li, ol>li {
-          padding-left: 28px;
           p, p:first-child, p:last-child {
             margin-top: 4px;
             margin-bottom: 4px;
@@ -936,40 +930,10 @@
           }
         }
       }
-      // .add-comment-container {
-      //   .input-comment {
-      //     resize: none;
-      //     height: 40px;
-      //     background: #f6f7f9;
-      //     border-radius: 20px;
-      //     border: unset;
-      //     color: #37352f;
-      //     font-weight: 400;
-      //     font-size: 16px;
-      //     padding: 0px 14px;
-      //     width: 80%;
-      //     padding-right: 60px;
-      //     box-sizing: border-box;
-      //     &:focus-visible {
-      //       outline: none;
-      //     }
-      //   }
-      //   .send-comment {
-      //     font-weight: 600;
-      //     font-size: 16px;
-      //     color: #555bea;
-      //     margin-left: -60px;
-      //     cursor: pointer;
-      //   }
-      // }
     }
     .slide-arrow {
       position: absolute;
       top: 49vh;
-      // width: 32px;
-      // height: 32px;
-      // background: #fff;
-      // border-radius: 50%;
       cursor: pointer;
       &.left {
         left: 6%;
@@ -979,8 +943,6 @@
         right: 6%;
       }
       &:hover {
-        //background: #BDBDBD;
-        // background: #e7e7e7;
       }
     }
   }
@@ -1325,4 +1287,12 @@
       // background-color: #1bb240;
     }
   }
+}
+
+benji-uploadcare-widget {
+  place-content: center;
+  align-items: center;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
 }

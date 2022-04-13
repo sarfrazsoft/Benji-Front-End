@@ -21,9 +21,9 @@ benji-ms-brainstorming-activity {
   .prose-sm {
     color: #37352F;
     p {
-      font-size: 1em;
-      line-height: 1.5em;
-      letter-spacing: -0.011em;
+      font-size: 1rem;
+      line-height: 1.5rem;
+      letter-spacing: -0.011rem;
       a {
         color: #555BEA;
       }
@@ -43,23 +43,24 @@ benji-ms-brainstorming-activity {
         }
       }
     }
-    ul>li {
-      &::before {
-        background-color: #37352F;
-        left: 9px;
-        width: 6px;
-        height: 6px;
-        top: 12px;
+    ul{
+      margin-left: 5px;
+      >li {
+        &::before {
+          background-color: #37352F;
+          width: 6px;
+          height: 6px;
+        }
       }
     }
-    ol>li {
-      &::before {
-        left: 9px;
-        top: 4px;
+    ol {
+      margin-left: 6px;
+      >li {
+        &::before {
+        }
       }
     }
     ul>li, ol>li {
-      padding-left: 28px;
       p, p:first-child, p:last-child {
         margin-top: 4px;
         margin-bottom: 4px;
@@ -69,7 +70,7 @@ benji-ms-brainstorming-activity {
       margin-bottom: 8px;
       margin-top: 8px;
       li {
-        margin: 0px 12px 0px 0px !important;
+       margin: 0px 12px 0px 0px !important;
       }
     }
   }
@@ -80,8 +81,8 @@ benji-ms-brainstorming-activity {
         .prose-sm {
           color: #37352F;
           p {
-            font-size: 0.875em;
-            line-height: 1.25em;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
           }
           blockquote {
             p {
@@ -96,45 +97,9 @@ benji-ms-brainstorming-activity {
               height: 4px;
             }
           }
-          ol>li {
-            &::before {
-              left: 9px;
-            }
-          }
-          ul>li, ol>li {
-            padding-left: 24px;
-          }
           p, blockquote, ul, ol {
             margin-bottom: 4px;
             margin-top: 4px;
-          }
-        }
-      }
-      .uncategorized {
-        .prose-sm {
-          ul>li {
-            &::before {
-              top: 6px;
-            }
-          }
-          ol>li {
-            &::before {
-              top: 0px;
-            }
-          }
-        }
-      }
-      &.categorized {
-        .prose-sm {
-          ul>li {
-            &::before {
-              top: 10px;
-            }
-          }
-          ol>li {
-            &::before {
-              top: 4px;
-            }
           }
         }
       }
@@ -409,33 +374,33 @@ benji-ms-brainstorming-activity {
         flex-direction: row;
         overflow-x: auto;
         padding-left: 0;
-        li {
-          position: relative;
-          overflow: auto;
-          margin: 0px 16px 16px 0px;
-          .idea {
-            position: relative;
-            list-style: none;
-            font-size: 16px;
-            padding: 16px;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px 0 rgba(21, 27, 38, 0.15);
-            overflow: auto;
-            margin-bottom: 16px;
-            background: white;
-            &.long-list {
-              font-size: 0.8vh;
-            }
-            mat-icon {
-              position: absolute;
-              background: white;
-              right: 10px;
-              top: 10px;
-              cursor: pointer;
-              transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
-            }
-          }
-        }
+        // li {
+        //   position: relative;
+        //   overflow: auto;
+        //   margin: 0px 16px 16px 0px;
+        //   .idea {
+        //     position: relative;
+        //     list-style: none;
+        //     font-size: 16px;
+        //     padding: 16px;
+        //     border-radius: 4px;
+        //     box-shadow: 0 1px 3px 0 rgba(21, 27, 38, 0.15);
+        //     overflow: auto;
+        //     margin-bottom: 16px;
+        //     background: white;
+        //     &.long-list {
+        //       font-size: 0.8vh;
+        //     }
+        //     mat-icon {
+        //       position: absolute;
+        //       background: white;
+        //       right: 10px;
+        //       top: 10px;
+        //       cursor: pointer;
+        //       transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+        //     }
+        //   }
+        // }
       }
     }
 
@@ -729,8 +694,10 @@ benji-categorized-ideas {
       overflow: hidden;
       font-size: 14px;
       width: 90%;
+      line-height: 20px;
       &::placeholder {
-        font-size: 16px;
+        font-size: 14px;
+        font-weight: 400;
       }
     }
     &:empty:before {
@@ -1123,22 +1090,22 @@ ng-dropdown-panel {
     .uncategorized {
       .prose-sm {
         p {
-          font-size: 1em;
-          line-height: 1.5em;
-          letter-spacing: -0.011em;
+          font-size: 1rem;
+          line-height: 1.5rem;
+          letter-spacing: -0.011rem;
         }
         ul>li {
           &::before {
-            left: 9px;
             width: 6px;
             height: 6px;
-            top: 12px;
+            // top: calc(0.7rem - 0.1785714rem);
+            // left: 0.5042857rem;
           }
         }
         ol>li {
           &::before {
-            left: 9px;
-            top: 4px;
+            top: calc(0.7rem - 0.1785714rem);
+            left: 0.5042857rem;
           }
         }
         ul>li, ol>li {

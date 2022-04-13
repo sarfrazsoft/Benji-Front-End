@@ -88,14 +88,14 @@ benji-progress-bar {
       }
     }
     #progressbar {
-      height: 2px;
+      height: 4px;
       background: #E7E7E7;
-      border-radius: 1px;
+      border-radius: 2px;
       width: 100%;
       .progress {
-        height: 2px;
+        height: 4px;
         background: #555BEA;
-        border-radius: 1px;
+        border-radius: 2px;
       }
     }
   }
