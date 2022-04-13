@@ -46,7 +46,7 @@
     line-height: 16px;
     color: #37352F;
     padding: 16px;
-    background: #F3F4F7;
+    background-color: #F3F4F7;
     border-radius: 8px;
     border: 0px;
     cursor: pointer;
@@ -54,6 +54,9 @@
     background-position: 16px 16px;
     background-repeat: no-repeat;
     padding-left: 40px;
+    &:hover {
+      background-color: #EAEBF1;
+    }
   }
   .uploadcare--camera__video-container {
     .uploadcare--media__video {
@@ -88,6 +91,11 @@
         background-color: #fff;
         border: 2px solid #e84858;
         color: #e84858;
+        &:hover {
+          background-image: url(/assets/img/stop-ico-hov.svg);
+          background-color: #e84858;
+          color: #fff;
+        }
       }
     }
   }

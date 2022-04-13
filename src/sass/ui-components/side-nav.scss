@@ -79,7 +79,7 @@
     padding: 16px;
     .option {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
       cursor: pointer;
       &.clear-board {
         color: #ef151b;
@@ -208,10 +208,8 @@
     background: #f3f4f7;
     border-radius: 8px;
     transition: all 0.2s;
-    margin-top: 8px;
     &:hover {
-      background: #eaebf1;
-      border-color: #eaebf1;
+      border-color: #cfcfcf;
     }
     &.selected {
       border: 2px solid $primary-color;

@@ -34,7 +34,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
     ],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm m-5 focus:outline-none',
+        class: 'prose prose-sm focus:outline-none',
       },
     },
     onUpdate: (u) => {
