@@ -88,6 +88,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   hostBoard: number;
 
   showBottom = true;
+  dragDisabled = false;
 
   constructor(
     private dialog: MatDialog,
@@ -116,6 +117,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
     this.hostBoard = this.activityState.brainstormactivity.host_board;
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.dragDisabled = true;
+      }
+    });
   }
 
   ngOnChanges(): void {
@@ -165,8 +172,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   getBoardParticipantCodes(board: Board) {
     if (this.activityState.brainstormactivity.participants[board.id].length) {
       return this.activityState.brainstormactivity.participants[board.id];
-    }
-    else {
+    } else {
       return null;
     }
   }

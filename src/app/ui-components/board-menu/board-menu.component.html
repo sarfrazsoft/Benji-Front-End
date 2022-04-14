@@ -43,6 +43,7 @@
     cdkDropList
     [cdkDropListData]="boards"
     (cdkDropListDropped)="drop($event)"
+    [cdkDropListDisabled]="dragDisabled"
     class="boards-container"
     fxLayout="column"
     fxLayoutGap="16px">
