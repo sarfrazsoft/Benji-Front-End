@@ -46,12 +46,14 @@
           </ng-container>
           <!--A guest can sign-up straight from a session-->
           <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
-            <div 
-              class="share-link" 
-              fxLayoutAlign="center center"
-              (click)="signUpClicked()">
-              Sign-up
-            </div>
+            <ng-container *ngIf="participantNotSignedIn()">
+              <div 
+                class="share-link" 
+                fxLayoutAlign="center center"
+                (click)="signUpClicked()">
+                Sign-up
+              </div>
+            </ng-container>
           </ng-container>
           <!-- Timer control -->
           <ng-container *ngxPermissionsOnly="'ADMIN'" >
