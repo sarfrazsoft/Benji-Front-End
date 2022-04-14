@@ -86,7 +86,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   setLink() {
     const previousUrl = this.editor.getAttributes('link').href;
-    const url = window.prompt('URL', previousUrl);
+    let url = window.prompt('URL', previousUrl);
 
     // cancelled
     if (url === null) {
@@ -98,6 +98,10 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       this.editor.chain().focus().extendMarkRange('link').unsetLink().run();
 
       return;
+    }
+
+    if (!url.includes('//')) {
+      url = 'https://' + url;
     }
 
     // update link
