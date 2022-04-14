@@ -39,6 +39,9 @@
     &.uploadcare--camera__button {
       margin: 6px;
     }
+    &:hover {
+      opacity: 0.9;
+    }
   }
   .uploadcare--preview__back, .uploadcare--camera__button_type_cancel-record {
     font-weight: 500;
