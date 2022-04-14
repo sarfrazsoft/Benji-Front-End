@@ -98,6 +98,11 @@
       <ng-container *ngIf="webcamImage">
         <img benji-click-stop-propagation [src]="webcamImageURL" alt="" />
       </ng-container>
+      <!-- <ng-container *ngIf="mediaUploading">
+        <benji-progress-bar
+          [percent]="fileProgress?.progress">
+        </benji-progress-bar>
+      </ng-container> -->
       <div 
         class="back-circle" 
         fxLayoutAlign="center center"
