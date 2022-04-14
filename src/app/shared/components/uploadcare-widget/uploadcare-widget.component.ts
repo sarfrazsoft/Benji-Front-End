@@ -109,6 +109,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     });
 
     this.widgetRef.onChange((widgetObject) => {
+      console.log(widgetObject);
       if (widgetObject) {
         widgetObject.promise().progress((info: FileProgress) => {
           info.progress = info.progress * 100;
