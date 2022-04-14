@@ -328,6 +328,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       if (item.idea_image.document) {
         if (item.idea_image.document.includes('giphy.com')) {
           return 'giphy';
+        } else if (item.idea_image.document.includes('unsplash')) {
+          return 'unsplash';
+        } else if (
+          !item.idea_image.document.includes('https:') &&
+          item.idea_image.document_type === 'document'
+        ) {
+          return 'uploaded';
         }
       }
     }
