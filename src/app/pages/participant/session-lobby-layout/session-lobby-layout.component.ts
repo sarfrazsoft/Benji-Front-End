@@ -13,6 +13,7 @@ import {
 } from 'src/app/services/backend/schema/course_details';
 import { TeamUser, User } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'benji-session-lobby-layout',
@@ -52,21 +53,19 @@ export class SessionLobbyLayoutComponent implements OnInit {
     private authService: AuthService,
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
-    private http: HttpClient
+    private http: HttpClient,
+    private deviceService: DeviceDetectorService,
   ) {}
 
   ngOnInit() {
     if (this.route.snapshot.queryParams['link']) {
-      // alert(this.route.snapshot.queryParams['link']);
       this.roomCode.setValue(this.route.snapshot.queryParams['link']);
-      // alert(this.roomCode.value);
       this.validateRoomCode();
     }
     this.username.disable();
     if (!this.userName) {
       this.backend.get_own_identity().subscribe(
         (res) => {
-          // console.log(res);
           this.userName = res.first_name;
         },
         (err) => {
@@ -167,7 +166,6 @@ export class SessionLobbyLayoutComponent implements OnInit {
           if (localStorage.getItem('user')) {
             localStorage.removeItem('user');
           }
-
           this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
           // this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
         } else {
@@ -208,17 +206,21 @@ export class SessionLobbyLayoutComponent implements OnInit {
   }
 
   kickOffLesson() {
-    // if (this.activityState.lesson_run.participant_set.length < 2) {
-    //   this.openLowAttendanceDialog();
-    // } else {
     this.startLessonEvent.emit('startLesson');
-    // }
   }
 
   loadLoginComponent() {
     this.loadSignUp = false;
     this.loadForgotPassword = false;
     this.loadLogin = true;
+    // if (this.deviceService.isMobile()) { 
+    //   this.router.navigateByUrl('/login?link='+this.roomCode.value);
+    // } else {
+    //   this.router.navigateByUrl('/login?link='+this.roomCode.value);
+    //   this.loadSignUp = false;
+    //   this.loadForgotPassword = false;
+    //   this.loadLogin = true;
+    // }
   }
   loadForgotPasswordComponent() {
     this.loadSignUp = false;

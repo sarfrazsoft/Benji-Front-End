@@ -471,6 +471,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   participantIsOwner() {}
 
+  mediaUploadProgress(fileProgress: FileProgress) {
+    this.fileProgress = fileProgress;
+    this.mediaUploading = true;
+  }
+
   mediaUploaded(res: IdeaDocument) {
     this.mediaUploading = false;
     if (res.document_type === 'video') {
@@ -506,8 +511,4 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.userIdeaText = $event;
   }
 
-  mediaUploadProgress(fileProgress: FileProgress) {
-    this.fileProgress = fileProgress;
-    this.mediaUploading = true;
-  }
 }
