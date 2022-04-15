@@ -23,34 +23,41 @@
         > -->
       <div class="select-image">
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
-          <div fxLayout="row" fxLayoutGap="16px">
-            <div 
-              class="options" 
-              fxLayoutAlign="center center"
-              (click)="openImagePickerDialog()">
-              <img src="/assets/img/idea-creation/img-upload.svg">
-            </div>
-            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
-            
-            <div class="options" fxLayoutAlign="center center">
-              <div class="uploadcare-container" fxLayoutAlign="center center">
-                <benji-uploadcare-widget
-                  [lessonRunCode]="lessonRunCode"
-                  (mediaUploaded)="mediaUploaded($event)"
-                  (mediaUploading)="mediaUploadProgress($event)">
-                </benji-uploadcare-widget>
+          <div  *ngIf="!mediaUploading">
+            <div fxLayout="row" fxLayoutGap="16px">
+              <div 
+                class="options" 
+                fxLayoutAlign="center center"
+                (click)="openImagePickerDialog()">
+                <img src="/assets/img/idea-creation/img-upload.svg">
               </div>
+              <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
+              
+              <div class="options" fxLayoutAlign="center center">
+                <div class="uploadcare-container" fxLayoutAlign="center center">
+                  <benji-uploadcare-widget
+                    [lessonRunCode]="lessonRunCode"
+                    (mediaUploaded)="mediaUploaded($event)"
+                    (mediaUploading)="mediaUploadProgress($event)">
+                  </benji-uploadcare-widget>
+                </div>
+              </div>
+              <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
+              <div 
+                class="options" 
+                fxLayoutAlign="center center"
+                (click)="openGiphyPickerDialog()">
+                <img src="/assets/img/idea-creation/gif-upload.svg">
+              </div>
+              <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div> -->
             </div>
-            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
-            <div 
-              class="options" 
-              fxLayoutAlign="center center"
-              (click)="openGiphyPickerDialog()">
-              <img src="/assets/img/idea-creation/gif-upload.svg">
-            </div>
-            <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div> -->
+            <div class="add-to-post">Add to your post</div>
           </div>
-          <div class="add-to-post">Add to your post</div>
+          <ng-container *ngIf="mediaUploading">
+            <benji-progress-bar
+              [percent]="fileProgress?.progress">
+            </benji-progress-bar>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -98,11 +105,6 @@
       <ng-container *ngIf="webcamImage">
         <img benji-click-stop-propagation [src]="webcamImageURL" alt="" />
       </ng-container>
-      <!-- <ng-container *ngIf="mediaUploading">
-        <benji-progress-bar
-          [percent]="fileProgress?.progress">
-        </benji-progress-bar>
-      </ng-container> -->
       <div 
         class="back-circle" 
         fxLayoutAlign="center center"
