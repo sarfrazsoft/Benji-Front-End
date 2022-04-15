@@ -546,6 +546,15 @@
           button.post {
             display: none;
           }
+          .idea-editables-content {
+            max-height: unset;
+            .preview-image {
+              img {
+                max-height: unset;
+                width: 100%;
+              }
+            }
+          }
         }
         .post-cancel {
           padding: 16px;
@@ -1162,6 +1171,13 @@
               font-size: 14px;
               margin-top: 4px;
             }
+          }
+        }
+      }
+      .add-comment-container {
+        .input-comment {
+          &:focus-visible {
+            outline: none;
           }
         }
       }

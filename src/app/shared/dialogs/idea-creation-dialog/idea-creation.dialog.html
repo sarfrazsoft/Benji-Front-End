@@ -97,7 +97,8 @@
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
                 (mediaUploaded)="mediaUploaded($event)"
-                (mediaUploading)="mediaUploadProgress($event)">
+                (mediaUploading)="mediaUploadProgress($event)"
+                [mediaSelected]="imageSelected || pdfSelected">
               </benji-uploadcare-widget>
             </div>  
 

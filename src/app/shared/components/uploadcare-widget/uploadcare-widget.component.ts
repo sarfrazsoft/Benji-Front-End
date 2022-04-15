@@ -34,6 +34,7 @@ export interface IncompleteFileInfo {
 })
 export class UploadcareWidgetComponent implements OnInit, OnChanges {
   @Input() lessonRunCode;
+  @Input() mediaSelected;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
 
