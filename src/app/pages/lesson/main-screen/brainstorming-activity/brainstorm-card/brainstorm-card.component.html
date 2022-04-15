@@ -59,6 +59,12 @@
           <ng-container *ngSwitchCase="'giphy'">
             <img [src]="item.idea_image.document" alt="" />
           </ng-container>
+          <ng-container *ngSwitchCase="'unsplash'">
+            <img [src]="item.idea_image.document" alt="" />
+          </ng-container>
+          <ng-container  *ngSwitchCase="'uploaded'">
+            <img [src]="hostname + item.idea_image.document" alt="" />
+          </ng-container >
         </ng-container>
 
         <ng-container *ngIf="item.idea_image.document_url">
@@ -70,15 +76,13 @@
 
         <ng-template #notUploadCare>
           <ng-container *ngIf="item.idea_image.document">
-            <ng-container *ngIf="isAbsolutePath(item.idea_image.document); else uploadedImage">
+            <ng-container *ngIf="isAbsolutePath(item.idea_image.document)">
               <img [src]="item.idea_image.document" alt="" />
             </ng-container>
           </ng-container>
   
       
-          <ng-template #uploadedImage>
-            <img [src]="hostname + item.idea_image.document" alt="" />
-          </ng-template>
+
         </ng-template>
       </div>
 
