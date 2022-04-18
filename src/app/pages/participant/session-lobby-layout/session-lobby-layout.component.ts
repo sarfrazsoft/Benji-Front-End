@@ -44,6 +44,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   loadLogin: boolean;
   loadSignUp: boolean;
   loadForgotPassword: boolean;
+  mobileParticipantJoin: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -213,14 +214,9 @@ export class SessionLobbyLayoutComponent implements OnInit {
     this.loadSignUp = false;
     this.loadForgotPassword = false;
     this.loadLogin = true;
-    // if (this.deviceService.isMobile()) { 
-    //   this.router.navigateByUrl('/login?link='+this.roomCode.value);
-    // } else {
-    //   this.router.navigateByUrl('/login?link='+this.roomCode.value);
-    //   this.loadSignUp = false;
-    //   this.loadForgotPassword = false;
-    //   this.loadLogin = true;
-    // }
+    if (this.deviceService.isMobile()) { 
+      this.mobileParticipantJoin = true;
+    }
   }
   loadForgotPasswordComponent() {
     this.loadSignUp = false;
@@ -231,5 +227,8 @@ export class SessionLobbyLayoutComponent implements OnInit {
     this.loadSignUp = true;
     this.loadForgotPassword = false;
     this.loadLogin = false;
+    if (this.deviceService.isMobile()) { 
+      this.mobileParticipantJoin = true;
+    }
   }
 }
