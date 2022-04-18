@@ -4,7 +4,7 @@
     class="brainstorm-idea"
     [class.show-user] = ""
     cdkDrag
-    [cdkDragDisabled]="!categorizeFlag || userRole == 'viewer'"
+    [cdkDragDisabled]="!categorizeFlag || !permissionsAdmin"
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false">
     <div 
