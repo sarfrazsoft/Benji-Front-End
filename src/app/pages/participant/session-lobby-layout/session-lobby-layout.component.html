@@ -2,7 +2,8 @@
   fxLayout="row"
   fxLayoutAlign="center center"
   class="lobby-wrapper"
-  [ngClass]="{'participant-lobby': !adminLobbyScreeen}"> 
+  [ngClass]="{'participant-lobby': !adminLobbyScreeen}"
+  *ngIf="!mobileParticipantJoin"> 
   <div
     fxLayout="row"
     class="content-wrapper" 
@@ -172,4 +173,30 @@
       </div>
     </div>
   </div>
+</div>
+
+<div 
+  class="mobile-participant-login"
+  *ngIf="mobileParticipantJoin">
+  <ng-container *ngIf="loadLogin">
+    <benji-dashboard-login
+      [joinSession]="true"
+      (forgotPassword)="loadForgotPasswordComponent()"
+      (signUp)="loadSignUpComponent()"
+      [sllRoomCode]="roomCode.value"   
+    ></benji-dashboard-login>
+  </ng-container>
+  <ng-container *ngIf="loadForgotPassword">
+    <benji-forgot-password
+    [joinSession]="true"
+    (signIn)="loadLoginComponent()"
+    ></benji-forgot-password>
+  </ng-container>
+  <ng-container *ngIf="loadSignUp">
+    <benji-dashboard-signup 
+    [joinSession]="true"
+    (signIn)="loadLoginComponent()"
+    [sllRoomCode]="roomCode"
+    ></benji-dashboard-signup>
+  </ng-container>
 </div>
