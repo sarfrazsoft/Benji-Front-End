@@ -85,10 +85,16 @@
 
         </ng-template>
       </div>
-
       <div *ngIf="item.idea_video">
         <ng-container *ngIf="isUploadCare(item.idea_video.document_url)">
-          <video style="margin: 0 auto;" width="100%" #player controls (loadeddata)="videoLoaded()">
+          <video 
+            style="margin: 0 auto;" width="100%" 
+            #player 
+            controls
+            preload="metadata"
+            (loadeddata)="videoLoaded()">
+            <p>Your browser cannot play the provided video file.</p>
+            <source [src]="item.idea_video.document_url" type="video/webm" />
             <source [src]="item.idea_video.document_url" type="video/mp4" />
           </video>
         </ng-container>
