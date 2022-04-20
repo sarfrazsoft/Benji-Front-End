@@ -201,6 +201,9 @@ benji-ms-brainstorming-activity {
                   width: 410px;
                   font-size: 14px;
                   line-height: 16px;
+                  &:focus {
+                    outline: none;
+                  }
                 }
                 .send-comment {
                   font-size: 14px;
@@ -716,6 +719,7 @@ benji-categorized-ideas {
       color: $secondary-color;
     }
     &:focus {
+      outline: none;
       &::placeholder {
         color: transparent;
       }
@@ -727,7 +731,7 @@ benji-categorized-ideas {
     color: #555bea;
     cursor: pointer;
     position: absolute;
-    bottom: 6px;
+    bottom: 8px;
     right: 8px;
     &.detailed {
       font-size: 15px;
@@ -1123,6 +1127,11 @@ ng-dropdown-panel {
           }
         }
       }
+    }
+  }
+  .brainstorm-image {
+    img {
+      max-height: unset;
     }
   }
 }

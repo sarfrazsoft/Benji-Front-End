@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
@@ -23,12 +23,13 @@ export class LoginComponent implements OnInit {
   isLoginClicked = false;
   emailPasswordError = false;
   isDemoSite = true;
-
+  //roomCode: number;
   logo;
 
   user: SocialUser | null;
 
   constructor(
+    private route: ActivatedRoute,
     private builder: FormBuilder,
     private authService: AuthService,
     public router: Router,
@@ -67,6 +68,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    // if (this.route.snapshot.queryParams['link']) {
+    //   this.roomCode.setValue(this.route.snapshot.queryParams['link']);
+    //   this.validateRoomCode();
+    // }
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.logo = info.parameters.darkLogo;

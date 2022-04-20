@@ -103,6 +103,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classWhite: boolean;
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
+  permissionAdmin: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -140,6 +141,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     const draftComment = this.brainstormService.getDraftComment(this.commentKey);
     if (draftComment) {
       this.commentModel = draftComment;
+    }
+
+    if (this.ngxPermissionsService.hasPermission('ADMIN')) {
+      this.permissionAdmin = true;
     }
   }
 
@@ -328,6 +333,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       if (item.idea_image.document) {
         if (item.idea_image.document.includes('giphy.com')) {
           return 'giphy';
+        } else if (item.idea_image.document.includes('unsplash')) {
+          return 'unsplash';
+        } else if (
+          !item.idea_image.document.includes('https:') &&
+          item.idea_image.document_type === 'document'
+        ) {
+          return 'uploaded';
         }
       }
     }

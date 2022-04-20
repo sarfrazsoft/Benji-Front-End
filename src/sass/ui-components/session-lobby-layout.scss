@@ -10,7 +10,7 @@
       background: #F9F9FB;
       padding: 40px;
       border-radius: 16px 0px 0px 16px;
-      min-height: 411px;
+      align-items: stretch;
       &.signup {
         min-height: 559px;
       }
@@ -377,5 +377,11 @@
         }
       }
     }
+  }
+}
+.mobile-participant-login {
+  .sign-up-section {
+    height: unset;
+    margin-top: 24px;
   }
 }

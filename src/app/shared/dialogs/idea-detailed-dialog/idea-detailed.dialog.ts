@@ -7,14 +7,9 @@ import {
   // ...
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrainstormService } from 'src/app/services/activities';
-import {
-  Category,
-  Group,
-  Idea,
-  UpdateMessage,
-} from 'src/app/services/backend/schema';
+import { Category, Group, Idea, UpdateMessage } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { IdeaDetailedInfo } from '../../components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
@@ -69,43 +64,40 @@ export class IdeaDetailedDialogComponent implements OnInit {
   @Output() nextItem = new EventEmitter<any>();
 
   isEdited: boolean;
-  
+
   constructor(
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
     private matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA)
     public data: IdeaDetailedInfo,
     private brainstormService: BrainstormService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-
     this.dialogRef.backdropClick().subscribe(() => {
-      if(this.isEdited) {
+      if (this.isEdited) {
         this.matDialog
-        .open(ConfirmationDialogComponent, {
-          data: {
-            confirmationTitle: 'Discard edits?',
-            confirmationMessage: 'Are you sure you want to discard your edits to your post? This can’t be undone.',
-            actionButton: 'Discard',
-            cancelButton: 'Keep working',
-          },
-          disableClose: true,
-          panelClass: 'confirmation-dialog',
-        })
-        .afterClosed()
-        .subscribe((res) => {
-          if (res) {
-            this.dialogRef.close();
-          }
-        });
-      }
-      else {
+          .open(ConfirmationDialogComponent, {
+            data: {
+              confirmationTitle: 'Discard edits?',
+              confirmationMessage:
+                'Are you sure you want to discard your edits to your post? This can’t be undone.',
+              actionButton: 'Discard',
+              cancelButton: 'Keep working',
+            },
+            disableClose: true,
+            panelClass: 'confirmation-dialog',
+          })
+          .afterClosed()
+          .subscribe((res) => {
+            if (res) {
+              this.dialogRef.close();
+            }
+          });
+      } else {
         this.dialogRef.close();
       }
-    })
-
+    });
   }
 
   ideaIsEdited(event) {

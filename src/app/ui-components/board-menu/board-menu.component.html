@@ -43,6 +43,7 @@
     cdkDropList
     [cdkDropListData]="boards"
     (cdkDropListDropped)="drop($event)"
+    [cdkDropListDisabled]="dragDisabled"
     class="boards-container"
     fxLayout="column"
     fxLayoutGap="16px">
@@ -65,14 +66,16 @@
             <div class="title">
               {{ board?.board_activity.instructions }}
             </div>
-            <button
-              [matMenuTriggerFor]="menu"
-              benji-click-stop-propagation
-              disableRipple
-              (click)="setMenuBoard(board)"
-              class="three-dots">
-              <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-            </button>
+            <ng-container *ngxPermissionsOnly="'ADMIN'">
+              <button
+                [matMenuTriggerFor]="menu"
+                benji-click-stop-propagation
+                disableRipple
+                (click)="setMenuBoard(board)"
+                class="three-dots">
+                <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+              </button>
+            </ng-container>
           </div>
           <div class="sub-title">
             {{ board.board_activity.sub_instructions }}

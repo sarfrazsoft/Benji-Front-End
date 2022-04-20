@@ -317,9 +317,9 @@
           overflow-x: hidden;
           overflow-y: auto;
           .title {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 600;
-            margin-bottom: 16px;
+            //margin-bottom: 16px;
             border: 0px;
             color: #37352f;
             width: 100%;
@@ -337,6 +337,8 @@
               cursor: pointer;
               margin: -8px -8px 0px 0px;
               padding: 8px;
+              width: 12px;
+              height: 12px;
               // background: #f3f4f7;
               // border-radius: 50%;
             }
@@ -544,6 +546,15 @@
           button.post {
             display: none;
           }
+          .idea-editables-content {
+            max-height: unset;
+            .preview-image {
+              img {
+                max-height: unset;
+                width: 100%;
+              }
+            }
+          }
         }
         .post-cancel {
           padding: 16px;
@@ -671,6 +682,7 @@
           box-sizing: border-box;
           border-radius: 8px;
           height: 100%;
+          padding: 24px;
           .options {
             width: 48px;
             height: 48px;
@@ -693,6 +705,7 @@
           color: #616161;
           font-weight: 600;
           font-size: 16px;
+          text-align: center;
         }
       }
       .preview-image {
@@ -737,7 +750,6 @@
         font-size: 24px;
         line-height: 32px;
         font-weight: 700;
-        margin-bottom: 8px;
         border: 0px;
         color: #37352f;
         width: 100%;
@@ -833,7 +845,7 @@
       .ps-brainstorm-dropdown-controls .ng-select-container {
         height: 32px;
         width: 130px;
-        margin-bottom: 24px;
+        margin-bottom: 16px;
       }
       .discussion-tabs {
         .mat-tab-nav-bar,
@@ -895,7 +907,6 @@
           padding: 0px 16px;
           border-radius: 8px;
           height: 40px;
-          width: 100px;
           transition: all 0.2s;
           border: 2px solid;
           &:hover {
@@ -1161,6 +1172,13 @@
               font-size: 14px;
               margin-top: 4px;
             }
+          }
+        }
+      }
+      .add-comment-container {
+        .input-comment {
+          &:focus-visible {
+            outline: none;
           }
         }
       }
