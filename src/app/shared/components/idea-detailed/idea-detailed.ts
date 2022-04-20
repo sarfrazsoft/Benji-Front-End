@@ -140,6 +140,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   // video variables
   videoURL: string;
+  videoURLConverted: string;
   video = false;
   video_id: number;
 
@@ -244,6 +245,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         this.videoURL = this.data.item.idea_video.document;
       } else if (this.data.item.idea_video.document_url) {
         // upload care videos come here
+        this.videoURLConverted = this.data.item.idea_video.document_url_converted;
         this.videoURL = this.data.item.idea_video.document_url;
       }
     } else {

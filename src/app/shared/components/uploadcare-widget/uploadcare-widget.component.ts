@@ -96,11 +96,10 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
             this.video = true;
             this.convertedVideoURL = data.converted_file;
             this.originalVideoURL = data.original_file;
+            this.checkVideoConversionStatus(data.token, this.uploadDocumentUrlToBenji());
           },
           (error) => console.log(error)
         );
-
-        this.checkVideoConversionStatus(this.uploadDocumentUrlToBenji());
       } else if (info.isImage) {
         this.webcamImageURL = info.cdnUrl;
         this.webcamImage = true;
@@ -130,7 +129,21 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     return this.httpClient.post(url, formData, { params, headers });
   }
 
-  checkVideoConversionStatus(callback) {}
+  checkVideoConversionStatus(token: number, callback) {
+    const url = `${global.apiRoot}/course_details/convert-video/status/${token}`;
+    const intervalId = window.setInterval(function () {
+      /// call your function here
+      this.httpClient.get(url).subscribe(
+        (res) => {
+          if (res && res.message === 'Video is converted successfully.') {
+            clearInterval(intervalId);
+            callback();
+          }
+        },
+        (error) => console.log(error)
+      );
+    }, 5000);
+  }
 
   uploadDocumentUrlToBenji() {
     const url = global.apiRoot + '/course_details/lesson_run/' + this.lessonRunCode + '/upload_document/';

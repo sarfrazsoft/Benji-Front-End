@@ -382,6 +382,7 @@ export interface IdeaDocument {
   document: string;
   document_type: 'video' | 'document' | 'image';
   document_url: string;
+  document_url_converted: string;
 }
 
 export interface ParticipantCode {
