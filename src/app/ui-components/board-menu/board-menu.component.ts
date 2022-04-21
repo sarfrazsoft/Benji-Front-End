@@ -234,7 +234,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   typingStoped(type) {
-    console.log(type);
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
       this.doneTyping(type);
