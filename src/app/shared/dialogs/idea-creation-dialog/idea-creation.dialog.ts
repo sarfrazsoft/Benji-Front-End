@@ -32,6 +32,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   // video variables
   videoURL: string;
+  videoURLConverted: string;
   video = false;
   video_id: number;
 
@@ -235,6 +236,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   removeVideo() {
     this.videoURL = null;
+    this.videoURLConverted = null;
     this.video = false;
     this.video_id = null;
   }
@@ -249,6 +251,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     if (res.document_type === 'video') {
       if (res.document_url) {
         this.videoURL = res.document_url;
+        this.videoURLConverted = res.document_url_converted;
       } else if (res.document) {
         this.videoURL = res.document;
       }
