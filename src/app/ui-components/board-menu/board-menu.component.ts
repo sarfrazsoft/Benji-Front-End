@@ -85,6 +85,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   showBottom = true;
   dragDisabled = false;
+  private typingTimer;
 
   constructor(
     private dialog: MatDialog,
@@ -232,18 +233,25 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     );
   }
 
-  saveEditedInstructions(from: string) {
-    setTimeout(() => {
-      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
+  typingStoped(type) {
+    console.log(type);
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.doneTyping(type);
     }, 1500);
   }
 
-  saveEditedSubInstructions() {
-    setTimeout(() => {
-      this.sendMessage.emit(
-        new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
-      );
-    }, 1500);
+  // on keydown, clear the countdown
+  typingStarted() {
+    clearTimeout(this.typingTimer);
+  }
+
+  doneTyping(type) {
+    if (type == 'title') {
+      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
+    } else if (type == 'instructions') {
+      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id));
+    }
   }
 
   getInitials(nameString: string) {

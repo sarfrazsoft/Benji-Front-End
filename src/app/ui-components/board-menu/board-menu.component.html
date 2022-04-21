@@ -137,7 +137,8 @@
         <input
           type="text"
           [(ngModel)]="instructions"
-          (ngModelChange)="saveEditedInstructions()">
+          (keyup)="typingStoped('title')"
+          (keydown)="typingStarted()">
       </div>
     </div>
   </div>
@@ -149,7 +150,8 @@
         <textarea
           type="text"
           [(ngModel)]="sub_instructions"
-          (ngModelChange)="saveEditedSubInstructions()"></textarea>
+          (keyup)="typingStoped('instructions')"
+          (keydown)="typingStarted()"></textarea>
       </div>
     </div>
   </div>
