@@ -337,6 +337,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   removeVideo() {
     this.video = false;
     this.videoURL = null;
+    this.videoURLConverted = null;
     this.video_id = null;
   }
 
@@ -483,6 +484,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     if (res.document_type === 'video') {
       if (res.document_url) {
         this.videoURL = res.document_url;
+        this.videoURLConverted = res.document_url_converted;
       } else if (res.document) {
         this.videoURL = res.document;
       }
@@ -512,5 +514,4 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
   }
-
 }

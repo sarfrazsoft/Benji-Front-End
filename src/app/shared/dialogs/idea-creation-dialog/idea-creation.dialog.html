@@ -51,7 +51,8 @@
           <ng-container *ngIf="video">
             <div>
               <video style="margin: 0 auto;" width="100%" controls>
-                <source [src]="videoURL" type="video/mp4" />
+                <source [src]="videoURL" type="video/webm" />
+                <source [src]="videoURLConverted" type="video/mp4" />
               </video>
             </div>          
           </ng-container>
