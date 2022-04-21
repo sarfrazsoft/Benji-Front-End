@@ -87,17 +87,18 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     });
 
     this.widgetRef.onUploadComplete((info: IncompleteFileInfo) => {
-      console.log(info);
       // Handle uploaded file info.
       if (!info.isImage) {
         // now we convert the file
         this.convertVideoFormat('mp4', info.uuid).subscribe(
           (data: ConvertedFile) => {
-            console.log(data);
             this.video = true;
             this.convertedVideoURL = data.converted_file;
             this.originalVideoURL = data.original_file;
-            this.checkVideoConversionStatus(data.token, this.uploadDocumentUrlToBenji());
+            this.checkVideoConversionStatus(data.token, (res) => {
+              console.log(res);
+              this.uploadDocumentUrlToBenji();
+            });
           },
           (error) => console.log(error)
         );
@@ -111,7 +112,6 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     this.widgetRef.onChange((widgetObject) => {
       if (widgetObject) {
         widgetObject.promise().progress((info: FileProgress) => {
-          console.log(info);
           info.progress = info.progress * 100;
           this.mediaUploading.emit(info);
         });
@@ -131,19 +131,28 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
   }
 
   checkVideoConversionStatus(token: number, callback) {
-    const url = `${global.apiRoot}/course_details/convert-video/status/${token}`;
-    const intervalId = window.setInterval(function () {
+    const url = `${global.apiRoot}/course_details/convert-video/status/${token}/`;
+    this.httpClient.get(url).subscribe(
+      (res: any) => {
+        if (res && res.message === 'Video is converted successfully.') {
+          clearInterval(intervalId);
+          callback(res);
+        }
+      },
+      (error) => console.log(error)
+    );
+    const intervalId = window.setInterval(() => {
       /// call your function here
       this.httpClient.get(url).subscribe(
-        (res) => {
+        (res: any) => {
           if (res && res.message === 'Video is converted successfully.') {
             clearInterval(intervalId);
-            callback();
+            callback(res);
           }
         },
         (error) => console.log(error)
       );
-    }, 5000);
+    }, 1000);
   }
 
   uploadDocumentUrlToBenji() {
@@ -156,6 +165,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     headers.set('Content-Type', null);
     headers.set('Accept', 'multipart/form-data');
     const params = new HttpParams();
+    console.log('media uploaded');
     this.httpClient.post(url, formData, { params, headers }).subscribe(
       (data: IdeaDocument) => {
         console.log(data);
