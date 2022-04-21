@@ -136,9 +136,8 @@
       <div class="editing">
         <input
           type="text"
-          [(ngModel)]="instructions" 
-          (blur)="saveEditedInstructions()"
-          (keyup.enter)="saveEditedInstructions()">
+          [(ngModel)]="instructions"
+          (ngModelChange)="saveEditedInstructions()">
       </div>
     </div>
   </div>
@@ -149,9 +148,8 @@
       <div class="editing">
         <textarea
           type="text"
-          [(ngModel)]="sub_instructions" 
-          (blur)="saveEditedSubInstructions()"
-          (keyup.enter)="saveEditedSubInstructions()"></textarea>
+          [(ngModel)]="sub_instructions"
+          (ngModelChange)="saveEditedSubInstructions()"></textarea>
       </div>
     </div>
   </div>

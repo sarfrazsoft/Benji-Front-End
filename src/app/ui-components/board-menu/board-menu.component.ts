@@ -1,7 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
-  AfterContentInit,
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -9,12 +7,10 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { find } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
@@ -100,17 +96,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
-        this.selectedBoard = board;
-        this.boardMode = this.selectedBoard.board_activity.mode;
-        this.decideBoardMode(this.boardMode);
-        this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
-        this.instructions = board.board_activity.instructions;
-        this.sub_instructions = board.board_activity.sub_instructions;
-        this.boardStatus =
-          board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
-        if (board.sort) {
-          this.defaultSort = board.sort;
-        }
+        this.selectedBoardChanged(board);
       }
     });
 
@@ -123,6 +109,20 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.dragDisabled = true;
       }
     });
+  }
+
+  selectedBoardChanged(board) {
+    this.selectedBoard = board;
+    this.boardMode = this.selectedBoard.board_activity.mode;
+    this.decideBoardMode(this.boardMode);
+    this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
+    this.instructions = board.board_activity.instructions;
+    this.sub_instructions = board.board_activity.sub_instructions;
+    this.boardStatus =
+      board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
+    if (board.sort) {
+      this.defaultSort = board.sort;
+    }
   }
 
   ngOnChanges(): void {
@@ -232,26 +232,18 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     );
   }
 
-  editInstructions() {
+  saveEditedInstructions(from: string) {
     setTimeout(() => {
-      this.InstructionsElement.nativeElement.focus();
-    }, 0);
-  }
-
-  saveEditedInstructions() {
-    this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
-  }
-
-  editSubInstructions() {
-    setTimeout(() => {
-      this.SubInstructionsElement.nativeElement.focus();
-    }, 0);
+      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
+    }, 1500);
   }
 
   saveEditedSubInstructions() {
-    this.sendMessage.emit(
-      new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
-    );
+    setTimeout(() => {
+      this.sendMessage.emit(
+        new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
+      );
+    }, 1500);
   }
 
   getInitials(nameString: string) {
@@ -298,8 +290,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   decideBoardMode(mode: string) {
-    // console.log(mode);
-    // decideboardModeCalled = true;
+    this.boardMode = mode;
     switch (mode) {
       case 'grid':
         this.gridMode = true;
