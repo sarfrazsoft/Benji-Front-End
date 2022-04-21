@@ -96,7 +96,6 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
             this.convertedVideoURL = data.converted_file;
             this.originalVideoURL = data.original_file;
             this.checkVideoConversionStatus(data.token, (res) => {
-              console.log(res);
               this.uploadDocumentUrlToBenji();
             });
           },
@@ -165,10 +164,8 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     headers.set('Content-Type', null);
     headers.set('Accept', 'multipart/form-data');
     const params = new HttpParams();
-    console.log('media uploaded');
     this.httpClient.post(url, formData, { params, headers }).subscribe(
       (data: IdeaDocument) => {
-        console.log(data);
         this.mediaUploaded.emit(data);
       },
       (error) => console.log(error)
