@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
-
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { Observable, of } from 'rxjs';
 import { retryWhen, tap } from 'rxjs/operators';
+import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import * as global from '../../globals';
 import { ServerMessage } from './schema/messages';
 
@@ -44,7 +44,16 @@ export class BackendSocketService {
         },
       },
     };
-    const w = webSocket(webSocketSubjectConfig);
+    const w: WebSocketSubject<ServerMessage> = webSocket(webSocketSubjectConfig);
+    w.subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => console.log(error, moment()),
+      () => {
+        console.log('complete');
+      }
+    );
     // .pipe(
     //   retryWhen(errors =>
     //     errors.pipe(
