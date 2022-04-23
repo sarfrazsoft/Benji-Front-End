@@ -548,7 +548,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   submitWithoutImg(idea) {
-    console.log(idea);
     if (!idea.text && !idea.title) {
       return;
     }
