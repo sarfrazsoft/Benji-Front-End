@@ -569,7 +569,7 @@ benji-categorized-ideas {
     &.host-pinned {
       span {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 16px;
         color: #bdbdbd;
       }
@@ -586,7 +586,7 @@ benji-categorized-ideas {
     width: 100%;
   }
   .content {
-    padding: 12px;
+    padding: 10px 12px 8px 12px;
     .title-description {
       font-weight: 400;
       font-size: 14px;
@@ -678,7 +678,8 @@ benji-categorized-ideas {
   border-radius: 17px;
   padding: 6px 8px;
   &.detailed {
-    padding: 8px;
+    padding: 7px;
+    border-radius: 20px;
   }
   &.grey,
   &.greyed {
@@ -697,7 +698,8 @@ benji-categorized-ideas {
       overflow: hidden;
       font-size: 14px;
       width: 90%;
-      line-height: 20px;
+      line-height: 19px;
+      margin-left: 4px;
       &::placeholder {
         font-size: 14px;
         font-weight: 400;
@@ -731,10 +733,12 @@ benji-categorized-ideas {
     color: #555bea;
     cursor: pointer;
     position: absolute;
-    bottom: 8px;
+    bottom: 6px;
     right: 8px;
     &.detailed {
-      font-size: 15px;
+      font-size: 14px;
+      bottom: 9px;
+      right: 12px;
     }
   }
 }
