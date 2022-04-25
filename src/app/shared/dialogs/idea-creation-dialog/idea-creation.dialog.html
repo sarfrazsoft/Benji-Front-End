@@ -116,9 +116,9 @@
             class="option"
             fxLayout="row" 
             fxLayoutAlign="center center">
-            <div class="dropdown-controls-container idea-creation-select">
+            <div class="idea-creation-select">
               <ng-select
-                class="ps-brainstorm-dropdown-controls"
+                class="post-idea-categories-dropdown"
                 [items]="categories"
                 bindLabel="category_name"
                 placeholder="Categories..."
@@ -126,6 +126,9 @@
                 appendTo="body"
                 [searchable]="false"
                 [clearable]="false">
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  <span> {{ item.category_name }} </span>
+                </ng-template>
               </ng-select>
             </div>
           </div>
