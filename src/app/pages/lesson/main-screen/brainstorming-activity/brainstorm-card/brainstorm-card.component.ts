@@ -103,7 +103,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classWhite: boolean;
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
-  permissionAdmin: boolean;
+  permissionsAdmin: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -144,7 +144,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
 
     if (this.ngxPermissionsService.hasPermission('ADMIN')) {
-      this.permissionAdmin = true;
+      this.permissionsAdmin = true;
     }
   }
 
