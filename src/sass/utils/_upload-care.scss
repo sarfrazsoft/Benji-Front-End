@@ -142,18 +142,18 @@
     .uploadcare--camera__button_type_retry {
       position: relative;
       overflow: visible;
-      &::before {
-        content: "Wake up Neo... The Matrix has you... Follow the white rabbit🐇";
-        padding: 1em;
-        margin: 2em;
-        background-color: #000;
-        color: #00ff00;
-        border-radius: 5px;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-      }
+      // &::before {
+      //   content: "Wake up Neo... The Matrix has you... Follow the white rabbit🐇";
+      //   padding: 1em;
+      //   margin: 2em;
+      //   background-color: #000;
+      //   color: #00ff00;
+      //   border-radius: 5px;
+      //   position: absolute;
+      //   left: 50%;
+      //   top: 50%;
+      //   transform: translate(-50%,-50%);
+      // }
     }
   }
   .uploadcare--tab__title {
