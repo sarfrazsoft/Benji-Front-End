@@ -1,3 +1,40 @@
+
+.uploadcare-container {
+  .uploadcare--widget__button.uploadcare--widget__button_type_open {
+    display: none;
+  }
+  .uploadcare--widget_status_ready .uploadcare--widget__button_type_cancel {
+    display: none;
+  }
+  .uploadcare--widget_status_ready .uploadcare--widget__button_type_remove {
+    display: none;
+  }
+  .uploadcare--widget__button.uploadcare--widget__button_type_cancel {
+    display: none;
+  }
+  .uploadcare--widget__progress {
+    display: none;
+  }
+  .uploadcare--widget__text {
+    display: none;
+  }
+  // hide uploaded file name
+  .uploadcare--link.uploadcare--widget__file-name {
+    display: none;
+  }
+  // hide uploaded file size
+  .uploadcare--widget__file-size {
+    display: none;
+  }
+}
+.uploadcare--dialog {
+  .uploadcare--menu.uploadcare--panel__menu {
+    display: none;
+  }
+  .uploadcare--powered-by {
+    display: none;
+  }
+}
 .uploadcare--dialog__container {
   .uploadcare--tab__header {
     display: unset; 
@@ -39,6 +76,9 @@
     &.uploadcare--camera__button {
       margin: 6px;
     }
+    &:hover {
+      opacity: 0.9;
+    }
   }
   .uploadcare--preview__back, .uploadcare--camera__button_type_cancel-record {
     font-weight: 500;
@@ -46,7 +86,7 @@
     line-height: 16px;
     color: #37352F;
     padding: 16px;
-    background: #F3F4F7;
+    background-color: #F3F4F7;
     border-radius: 8px;
     border: 0px;
     cursor: pointer;
@@ -54,6 +94,9 @@
     background-position: 16px 16px;
     background-repeat: no-repeat;
     padding-left: 40px;
+    &:hover {
+      background-color: #EAEBF1;
+    }
   }
   .uploadcare--camera__video-container {
     .uploadcare--media__video {
@@ -88,7 +131,29 @@
         background-color: #fff;
         border: 2px solid #e84858;
         color: #e84858;
+        &:hover {
+          background-image: url(/assets/img/stop-ico-hov.svg);
+          background-color: #e84858;
+          color: #fff;
+        }
       }
+    }
+
+    .uploadcare--camera__button_type_retry {
+      position: relative;
+      overflow: visible;
+      // &::before {
+      //   content: "Wake up Neo... The Matrix has you... Follow the white rabbit🐇";
+      //   padding: 1em;
+      //   margin: 2em;
+      //   background-color: #000;
+      //   color: #00ff00;
+      //   border-radius: 5px;
+      //   position: absolute;
+      //   left: 50%;
+      //   top: 50%;
+      //   transform: translate(-50%,-50%);
+      // }
     }
   }
   .uploadcare--tab__title {
@@ -157,5 +222,23 @@
     max-height: unset;
     width: unset !important;
     height: unset !important;
+  }
+  .uploadcare--dialog__container {
+    border-radius: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  .uploadcare--dialog__container {
+    border-radius: 0px;
+    .uploadcare--preview_status_loaded {
+      .uploadcare--footer, .uploadcare--tab__header {
+        flex-grow: 1;
+      }
+      .uploadcare--tab__header {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
   }
 }

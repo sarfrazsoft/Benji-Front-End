@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Directive, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthService, ContextService } from 'src/app/services';
@@ -147,8 +148,10 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         this.handleServerMessage(msg);
       },
       (err) => {
-        console.log('Error subscribing to to socket' + err);
-        // this.connectAndSubscribe();
+        console.log('Error subscribing to to socket');
+        console.log(err);
+        console.log(moment());
+        this.connectAndSubscribe();
       },
       () => {
         console.log('complete');

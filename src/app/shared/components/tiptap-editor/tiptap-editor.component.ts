@@ -34,7 +34,7 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
     ],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm m-5 focus:outline-none',
+        class: 'prose prose-sm focus:outline-none',
       },
     },
     onUpdate: (u) => {
@@ -81,13 +81,12 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.editor.setEditable(this.editable);
-    console.log(this.defaultValue);
   }
   ngOnChanges() {}
 
   setLink() {
     const previousUrl = this.editor.getAttributes('link').href;
-    const url = window.prompt('URL', previousUrl);
+    let url = window.prompt('URL', previousUrl);
 
     // cancelled
     if (url === null) {
@@ -99,6 +98,10 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
       this.editor.chain().focus().extendMarkRange('link').unsetLink().run();
 
       return;
+    }
+
+    if (!url.includes('//')) {
+      url = 'https://' + url;
     }
 
     // update link

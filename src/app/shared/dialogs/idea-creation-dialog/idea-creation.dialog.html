@@ -8,7 +8,7 @@
         class="post" 
         (click)="onSubmit()"
         [ngClass]="{
-          'active': userIdeaText || ideaTitle || imageSelected || pdfSelected
+          'active': userIdeaText || ideaTitle || webcamImage || video || imageSelected || pdfSelected
         }">
           Post
       </button>
@@ -50,9 +50,13 @@
           </ng-container>
           <ng-container *ngIf="video">
             <div>
-              <video style="margin: 0 auto;" width="100%" controls>
-                <source [src]="videoURL" type="video/mp4" />
-              </video>
+              <video 
+              style="margin: 0 auto;" 
+              width="100%" 
+              controls>
+              <source [src]="videoURL" type="video/webm" />
+              <source [src]="videoURLConverted" type="video/mp4" />
+            </video>
             </div>          
           </ng-container>
           <ng-container *ngIf="webcamImage">
@@ -77,30 +81,35 @@
           <div class="attachments" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
             <div 
               fxLayoutAlign="center center"
-              (click)="imageSelected || pdfSelected ? null : openImagePickerDialog()"
+              (click)="imageSelected || pdfSelected || webcamImage || video ? null : openImagePickerDialog()"
               >
               <img 
                 src="/assets/img/idea-creation/image-upload.svg"
-                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+                [ngClass]="{'inactive': imageSelected || pdfSelected || webcamImage || video}"
               >
             </div> 
             <div 
               fxLayoutAlign="center center"
-              (click)="imageSelected || pdfSelected ? null : openGiphyPickerDialog()"
+              (click)="imageSelected || pdfSelected || webcamImage || video ? null : openGiphyPickerDialog()"
               >
               <img 
                 src="/assets/img/idea-creation/giphy.svg"
-                [ngClass]="{'inactive': imageSelected || pdfSelected}"
+                [ngClass]="{'inactive': imageSelected || webcamImage || video || pdfSelected}"
               >
             </div> 
-            <div class="uploadcare-container" fxLayoutAlign="center center">
+            <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="!webcamImage && !video">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
                 (mediaUploaded)="mediaUploaded($event)"
-                (mediaUploading)="mediaUploadProgress($event)">
+                (mediaUploading)="mediaUploadProgress($event)"
+                [mediaSelected]="imageSelected || pdfSelected">
               </benji-uploadcare-widget>
             </div>  
-
+            <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="webcamImage || video">
+              <img 
+                class="inactive" 
+                src="/assets/img/idea-creation/cam-upload.svg">
+            </div>  
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
           <div *ngIf="showCategoriesDropdown"

@@ -17,6 +17,95 @@ benji-ms-brainstorming-activity {
       position: relative;
     }
   }
+  
+  .prose-sm {
+    color: #37352F;
+    p {
+      font-size: 1rem;
+      line-height: 1.5rem;
+      letter-spacing: -0.011rem;
+      a {
+        color: #555BEA;
+      }
+      strong {
+        color: #37352F;
+      }
+    }
+    blockquote {
+      border-left: 3px solid;
+      color: #37352F;
+      padding-left: 12px;
+      p {
+        font-style: normal;
+        font-weight: 400;
+        &::after, &::before {
+          content: unset !important;
+        }
+      }
+    }
+    ul{
+      margin-left: 5px;
+      >li {
+        &::before {
+          background-color: #37352F;
+          width: 6px;
+          height: 6px;
+        }
+      }
+    }
+    ol {
+      margin-left: 6px;
+      >li {
+        &::before {
+        }
+      }
+    }
+    ul>li, ol>li {
+      p, p:first-child, p:last-child {
+        margin-top: 4px;
+        margin-bottom: 4px;
+      }
+    }
+    p, blockquote, ul, ol {
+      margin-bottom: 8px;
+      margin-top: 8px;
+      li {
+       margin: 0px 12px 0px 0px !important;
+      }
+    }
+  }
+
+  .brainstorm-container {
+      .submitted-ideas {
+        &.categorized, .uncategorized {
+        .prose-sm {
+          color: #37352F;
+          p {
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+          }
+          blockquote {
+            p {
+              &::after, &::before {
+                content: unset;
+              }
+            }
+          }
+          ul>li {
+            &::before {
+              width: 4px;
+              height: 4px;
+            }
+          }
+          p, blockquote, ul, ol {
+            margin-bottom: 4px;
+            margin-top: 4px;
+          }
+        }
+      }
+    }
+  }
+
   .brainstorm-container {
     height: 100%;
     background-size: cover;
@@ -112,6 +201,9 @@ benji-ms-brainstorming-activity {
                   width: 410px;
                   font-size: 14px;
                   line-height: 16px;
+                  &:focus {
+                    outline: none;
+                  }
                 }
                 .send-comment {
                   font-size: 14px;
@@ -285,33 +377,33 @@ benji-ms-brainstorming-activity {
         flex-direction: row;
         overflow-x: auto;
         padding-left: 0;
-        li {
-          position: relative;
-          overflow: auto;
-          margin: 0px 16px 16px 0px;
-          .idea {
-            position: relative;
-            list-style: none;
-            font-size: 16px;
-            padding: 16px;
-            border-radius: 4px;
-            box-shadow: 0 1px 3px 0 rgba(21, 27, 38, 0.15);
-            overflow: auto;
-            margin-bottom: 16px;
-            background: white;
-            &.long-list {
-              font-size: 0.8vh;
-            }
-            mat-icon {
-              position: absolute;
-              background: white;
-              right: 10px;
-              top: 10px;
-              cursor: pointer;
-              transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
-            }
-          }
-        }
+        // li {
+        //   position: relative;
+        //   overflow: auto;
+        //   margin: 0px 16px 16px 0px;
+        //   .idea {
+        //     position: relative;
+        //     list-style: none;
+        //     font-size: 16px;
+        //     padding: 16px;
+        //     border-radius: 4px;
+        //     box-shadow: 0 1px 3px 0 rgba(21, 27, 38, 0.15);
+        //     overflow: auto;
+        //     margin-bottom: 16px;
+        //     background: white;
+        //     &.long-list {
+        //       font-size: 0.8vh;
+        //     }
+        //     mat-icon {
+        //       position: absolute;
+        //       background: white;
+        //       right: 10px;
+        //       top: 10px;
+        //       cursor: pointer;
+        //       transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+        //     }
+        //   }
+        // }
       }
     }
 
@@ -477,7 +569,7 @@ benji-categorized-ideas {
     &.host-pinned {
       span {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 16px;
         color: #bdbdbd;
       }
@@ -494,7 +586,7 @@ benji-categorized-ideas {
     width: 100%;
   }
   .content {
-    padding: 12px;
+    padding: 10px 12px 8px 12px;
     .title-description {
       font-weight: 400;
       font-size: 14px;
@@ -586,7 +678,8 @@ benji-categorized-ideas {
   border-radius: 17px;
   padding: 6px 8px;
   &.detailed {
-    padding: 8px;
+    padding: 7px;
+    border-radius: 20px;
   }
   &.grey,
   &.greyed {
@@ -605,8 +698,11 @@ benji-categorized-ideas {
       overflow: hidden;
       font-size: 14px;
       width: 90%;
+      line-height: 19px;
+      margin-left: 4px;
       &::placeholder {
-        font-size: 16px;
+        font-size: 14px;
+        font-weight: 400;
       }
     }
     &:empty:before {
@@ -625,6 +721,7 @@ benji-categorized-ideas {
       color: $secondary-color;
     }
     &:focus {
+      outline: none;
       &::placeholder {
         color: transparent;
       }
@@ -639,7 +736,9 @@ benji-categorized-ideas {
     bottom: 6px;
     right: 8px;
     &.detailed {
-      font-size: 15px;
+      font-size: 14px;
+      bottom: 9px;
+      right: 12px;
     }
   }
 }
@@ -993,6 +1092,50 @@ ng-dropdown-panel {
       &.detailed {
         width: 70%;
       }
+    }
+  }
+  benji-ms-brainstorming-activity .brainstorm-container .submitted-ideas {
+    .uncategorized {
+      .prose-sm {
+        p {
+          font-size: 1rem;
+          line-height: 1.5rem;
+          letter-spacing: -0.011rem;
+        }
+        ul>li {
+          &::before {
+            width: 6px;
+            height: 6px;
+            // top: calc(0.7rem - 0.1785714rem);
+            // left: 0.5042857rem;
+          }
+        }
+        ol>li {
+          &::before {
+            top: calc(0.7rem - 0.1785714rem);
+            left: 0.5042857rem;
+          }
+        }
+        ul>li, ol>li {
+          padding-left: 28px;
+          p, p:first-child, p:last-child {
+            margin-top: 4px;
+            margin-bottom: 4px;
+          }
+        }
+        p, blockquote, ul, ol {
+          margin-bottom: 8px;
+          margin-top: 8px;
+          li {
+            margin: 0px 12px 0px 0px !important;
+          }
+        }
+      }
+    }
+  }
+  .brainstorm-image {
+    img {
+      max-height: unset;
     }
   }
 }

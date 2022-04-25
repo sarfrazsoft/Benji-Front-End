@@ -28,17 +28,26 @@ export interface IncompleteFileInfo {
   sourceInfo: { source: 'camera'; file: Blob };
   uuid: any;
 }
+
+export interface ConvertedFile {
+  converted_file: string;
+  original_file: string;
+  token: number;
+}
+
 @Component({
   selector: 'benji-uploadcare-widget',
   templateUrl: 'uploadcare-widget.component.html',
 })
 export class UploadcareWidgetComponent implements OnInit, OnChanges {
   @Input() lessonRunCode;
+  @Input() mediaSelected;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
 
   widgetRef;
-  videoURL: string;
+  convertedVideoURL: string;
+  originalVideoURL: string;
   video: boolean;
   webcamImageURL: string;
   webcamImage: boolean;
@@ -77,35 +86,26 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
       cameraMirrorDefault: false,
     });
 
-    this.widgetRef.onUploadComplete((info) => {
+    this.widgetRef.onUploadComplete((info: IncompleteFileInfo) => {
       // Handle uploaded file info.
       if (!info.isImage) {
-        this.videoURL = info.cdnUrl;
-        this.video = true;
+        // now we convert the file
+        this.convertVideoFormat('mp4', info.uuid).subscribe(
+          (data: ConvertedFile) => {
+            this.video = true;
+            this.convertedVideoURL = data.converted_file;
+            this.originalVideoURL = data.original_file;
+            this.checkVideoConversionStatus(data.token, (res) => {
+              this.uploadDocumentUrlToBenji();
+            });
+          },
+          (error) => console.log(error)
+        );
       } else if (info.isImage) {
         this.webcamImageURL = info.cdnUrl;
         this.webcamImage = true;
+        this.uploadDocumentUrlToBenji();
       }
-      const url = global.apiRoot + '/course_details/lesson_run/' + this.lessonRunCode + '/upload_document/';
-      const formData: FormData = new FormData();
-      formData.append('document_type', this.video ? 'video' : 'image');
-      formData.append('document_url', this.video ? this.videoURL : this.webcamImageURL);
-      const headers = new HttpHeaders();
-      headers.set('Content-Type', null);
-      headers.set('Accept', 'multipart/form-data');
-      const params = new HttpParams();
-      this.httpClient.post(url, formData, { params, headers }).subscribe(
-        (data: IdeaDocument) => {
-          console.log(data);
-          this.mediaUploaded.emit(data);
-          // if (data.document_type === 'video') {
-          //   this.video_id = data.id;
-          // } else if (data.document_type === 'image') {
-          //   this.webcamImageId = data.id;
-          // }
-        },
-        (error) => console.log(error)
-      );
     });
 
     this.widgetRef.onChange((widgetObject) => {
@@ -118,8 +118,61 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
     });
   }
 
+  convertVideoFormat(format: 'mp4', videoUuid: string) {
+    const url = global.apiRoot + '/course_details/convert-video/';
+    const formData: FormData = new FormData();
+    formData.append('video_id', videoUuid);
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', null);
+    headers.set('Accept', 'multipart/form-data');
+    const params = new HttpParams();
+    return this.httpClient.post(url, formData, { params, headers });
+  }
+
+  checkVideoConversionStatus(token: number, callback) {
+    const url = `${global.apiRoot}/course_details/convert-video/status/${token}/`;
+    this.httpClient.get(url).subscribe(
+      (res: any) => {
+        if (res && res.message === 'Video is converted successfully.') {
+          clearInterval(intervalId);
+          callback(res);
+        }
+      },
+      (error) => console.log(error)
+    );
+    const intervalId = window.setInterval(() => {
+      /// call your function here
+      this.httpClient.get(url).subscribe(
+        (res: any) => {
+          if (res && res.message === 'Video is converted successfully.') {
+            clearInterval(intervalId);
+            callback(res);
+          }
+        },
+        (error) => console.log(error)
+      );
+    }, 1000);
+  }
+
+  uploadDocumentUrlToBenji() {
+    const url = global.apiRoot + '/course_details/lesson_run/' + this.lessonRunCode + '/upload_document/';
+    const formData: FormData = new FormData();
+    formData.append('document_type', this.video ? 'video' : 'image');
+    formData.append('document_url', this.video ? this.originalVideoURL : this.webcamImageURL);
+    formData.append('document_url_converted', this.convertedVideoURL);
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', null);
+    headers.set('Accept', 'multipart/form-data');
+    const params = new HttpParams();
+    this.httpClient.post(url, formData, { params, headers }).subscribe(
+      (data: IdeaDocument) => {
+        this.mediaUploaded.emit(data);
+      },
+      (error) => console.log(error)
+    );
+  }
+
   getSupportedMimeTypes(media, types, codecs) {
-    console.log(MediaRecorder);
     const isSupported = MediaRecorder.isTypeSupported;
     const supported = [];
     types.forEach((type) => {
