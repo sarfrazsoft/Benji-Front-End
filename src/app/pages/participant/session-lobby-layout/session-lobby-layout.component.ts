@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 
 import { HttpClient } from '@angular/common/http';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import * as global from 'src/app/globals';
 import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
 import {
@@ -13,7 +14,6 @@ import {
 } from 'src/app/services/backend/schema/course_details';
 import { TeamUser, User } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'benji-session-lobby-layout',
@@ -55,7 +55,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
     private http: HttpClient,
-    private deviceService: DeviceDetectorService,
+    private deviceService: DeviceDetectorService
   ) {}
 
   ngOnInit() {
@@ -92,27 +92,34 @@ export class SessionLobbyLayoutComponent implements OnInit {
     console.log(name, lessonCode);
 
     this.authService.createParticipant(name, lessonCode, user.id).subscribe(
-      (res: Participant) => {
+      (res) => {
         this.loginError = false;
         if (res.lessonrun_code) {
-          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          this.navigateToLesson(res.lessonrun_code);
+        } else if (res.message === 'You are already in this session.') {
+          this.authService.setParticipantSession(res.participant);
+          this.navigateToLesson(res.participant.lessonrun_code);
         } else {
           this.loginError = true;
         }
       },
       (err) => {
-        console.log(err);
-        if (err && err.error && err.error.non_field_errors) {
-          if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-            console.log('err');
-            this.utilsService.openWarningNotification(
-              'A participant with that name has already joined. Try a different name.',
-              ''
-            );
+        if (err && err.error) {
+          if (err.error.non_field_errors) {
+            if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+              this.utilsService.openWarningNotification(
+                'A participant with that name has already joined. Try a different name.',
+                ''
+              );
+            }
           }
         }
       }
     );
+  }
+
+  navigateToLesson(lessonRunCode) {
+    this.router.navigate(['/screen/lesson/' + lessonRunCode]);
   }
 
   public validateRoomCode() {
@@ -214,7 +221,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     this.loadSignUp = false;
     this.loadForgotPassword = false;
     this.loadLogin = true;
-    if (this.deviceService.isMobile()) { 
+    if (this.deviceService.isMobile()) {
       this.mobileParticipantJoin = true;
     }
   }
@@ -227,7 +234,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     this.loadSignUp = true;
     this.loadForgotPassword = false;
     this.loadLogin = false;
-    if (this.deviceService.isMobile()) { 
+    if (this.deviceService.isMobile()) {
       this.mobileParticipantJoin = true;
     }
   }

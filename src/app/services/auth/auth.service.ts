@@ -8,6 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 import * as global from '../../globals';
 import { TeamUser, UserInvitation } from '../backend/schema';
+import { Participant } from '../backend/schema/course_details';
 import { LayoutService } from '../layout.service';
 
 export interface LoginResponse {
@@ -120,26 +121,28 @@ export class AuthService {
         user: user,
       })
       .pipe(
-        map((res: LoginResponse) => {
+        map((res: Participant) => {
+          console.log(res);
           this.setParticipantSession(res);
           return res;
         }),
-        catchError((err) => of(err.error))
+        catchError((err) => {
+          console.log(err);
+          return of(err.error);
+        })
       );
   }
 
   patchParticipant(code: string, id: number) {
-    return this.http
-      .patch(global.apiRoot + '/course_details/participant/' + code + '/', {"user": id})
-      .pipe(
-        map((res) => {
-          return res;
-        }),
-        catchError((err) => of(err.error))
-      );
+    return this.http.patch(global.apiRoot + '/course_details/participant/' + code + '/', { user: id }).pipe(
+      map((res) => {
+        return res;
+      }),
+      catchError((err) => of(err.error))
+    );
   }
 
-  setParticipantSession(res) {
+  setParticipantSession(res: Participant) {
     localStorage.setItem('participant', JSON.stringify(res));
   }
 
