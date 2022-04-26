@@ -64,7 +64,6 @@ export class MainScreenBrainstormingActivityComponent
   submissionScreen = false;
   voteScreen = false;
   VnSComplete = false;
-  categorizeFlag = false;
   showUserName = true;
   minWidth = 'small';
   colDeleted = 0;
