@@ -110,6 +110,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.dragDisabled = true;
       }
     });
+
+    if (!this.hostname.includes('localhost')) {
+      this.hostname = 'https://' + this.hostname;
+    }
   }
 
   selectedBoardChanged(board) {
@@ -237,7 +241,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
       this.doneTyping(type);
-    }, 1500);
+    }, 500);
   }
 
   // on keydown, clear the countdown

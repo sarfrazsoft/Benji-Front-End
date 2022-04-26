@@ -39,7 +39,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   @Input() showUserName;
   @Input() participantCode;
   @Input() eventType;
-  @Input() categorizeFlag;
+  @Input() isColumnsLayout;
   @Input() myGroup;
 
   ideas = [];

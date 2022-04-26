@@ -84,7 +84,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() showUserName;
   @Input() participantCode;
   @Input() eventType;
-  @Input() categorizeFlag;
+  @Input() isColumnsLayout;
   @Input() myGroup;
   @Input() avatarSize;
   @ViewChild('colName') colNameElement: ElementRef;
@@ -103,7 +103,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   classWhite: boolean;
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
-  permissionsAdmin: boolean;
+  isAdmin: boolean;
 
   constructor(
     private dialog: MatDialog,
@@ -144,7 +144,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
 
     if (this.ngxPermissionsService.hasPermission('ADMIN')) {
-      this.permissionsAdmin = true;
+      this.isAdmin = true;
     }
   }
 
@@ -284,7 +284,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       hasBackdrop: isDesktop,
       panelClass: assignedClass,
       data: {
-        showCategoriesDropdown: this.categorizeFlag,
+        showCategoriesDropdown: this.isColumnsLayout,
         categories: this.board.brainstormcategory_set,
         item: this.item,
         category: this.category,
