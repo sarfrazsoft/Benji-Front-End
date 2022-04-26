@@ -6,6 +6,7 @@ import uploadcare from 'uploadcare-widget';
 
 export type IdeaUserRole = 'owner' | 'viewer';
 declare var MediaRecorder: any;
+declare var navigator: any;
 
 export interface FileProgress {
   incompleteFileInfo: IncompleteFileInfo;
@@ -116,6 +117,25 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
         });
       }
     });
+
+    this.widgetRef.onDialogOpen((dialog) => {
+      dialog.progress((tab) => {
+        if (tab === 'camera') {
+          this.testCamera();
+        }
+      });
+    });
+  }
+
+  onVisible(element, callback) {
+    new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio > 0) {
+          callback(element);
+          observer.disconnect();
+        }
+      });
+    }).observe(element);
   }
 
   convertVideoFormat(format: 'mp4', videoUuid: string) {
@@ -201,4 +221,51 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {}
+
+  testCamera() {
+    navigator.getUserMedia =
+      navigator.getUserMedia ||
+      navigator.webkitGetUserMedia ||
+      navigator.mozGetUserMedia ||
+      navigator.msGetUserMedia;
+    if (!navigator.getUserMedia) {
+      alert('Browser doesnt support camera');
+    }
+    navigator.getUserMedia(
+      {
+        audio: false,
+        video: true,
+      },
+      (stream) => {
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => {
+          track.stop();
+        });
+      },
+      () => {
+        // on camera error add an element before the button
+        const button = document.getElementsByClassName('uploadcare--camera__button_type_retry')[0];
+        const message = document.createElement('div');
+        message.className =
+          message.classList + ' ' + 'camera-not-available uploadcare--text uploadcare--text_size_medium';
+        message.innerHTML =
+          'If you’re using your camera elsewhere, like Zoom, your computer may need you to go off camera before granting us permissions. ';
+        button.insertAdjacentElement('beforebegin', message);
+
+        // change the uploadcare--tab__title title
+        const title = document.getElementsByClassName('uploadcare--tab__title')[0];
+        title.innerHTML = 'Ooops! Are you using your camera elsewhere?';
+
+        // when video container is visible that means camera is working
+        // on camera working hide the error message
+        this.onVisible(document.getElementsByClassName('uploadcare--camera__video-container')[0], () => {
+          if (document.getElementsByClassName('camera-not-available')[0]) {
+            const errorMessage = document.getElementsByClassName('camera-not-available')[0];
+            title.innerHTML = 'Photo Booth';
+            errorMessage.remove();
+          }
+        });
+      }
+    );
+  }
 }
