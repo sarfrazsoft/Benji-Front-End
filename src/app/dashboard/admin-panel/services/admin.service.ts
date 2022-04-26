@@ -36,6 +36,7 @@ export class AdminService {
     const filter = 'hosted';
     if (filter === 'hosted') {
       filterParams = '&hosted=True';
+      filterParams = filterParams + '&participated=True';
     }
     return this.http.get(global.apiRoot + '/course_details/lesson_run/?page=' + page + filterParams).pipe(
       map((res: PaginatedResponse<Lesson>) => {
