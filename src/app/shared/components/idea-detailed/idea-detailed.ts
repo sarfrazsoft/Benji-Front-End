@@ -513,5 +513,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
+    this.ideaEditEvent.emit(true);
   }
 }
