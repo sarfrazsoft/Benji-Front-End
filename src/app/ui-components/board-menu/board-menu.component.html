@@ -94,10 +94,7 @@
   <ng-container *ngxPermissionsOnly="'ADMIN'" >
     <button 
       (click)="addBoard(boards[boards.length - 1])"
-      class="add-board-button bg-primary-color"
-      [ngClass]="{'disabled': boardsCount==1}"
-      [disabled]="boardsCount==1 ? 'disabled': null"
-    >
+      class="add-board-button bg-primary-color">
       + Add New Board
     </button>
   </ng-container>
