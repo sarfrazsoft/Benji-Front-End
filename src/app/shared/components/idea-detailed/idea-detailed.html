@@ -226,6 +226,7 @@
             [items]="categories"
             bindLabel="category_name"
             placeholder="Categories..."
+            (change)="categoryChanged($event)"
             [(ngModel)]="selectedCategory"
             appendTo="body"
             [searchable]="false"

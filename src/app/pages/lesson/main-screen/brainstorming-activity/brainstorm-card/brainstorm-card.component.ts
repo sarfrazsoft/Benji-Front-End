@@ -143,9 +143,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.commentModel = draftComment;
     }
 
-    if (this.ngxPermissionsService.hasPermission('ADMIN')) {
-      this.isAdmin = true;
-    }
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.isAdmin = true;
+      }
+    });
   }
 
   ngOnChanges() {}
@@ -218,7 +220,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormRemoveIdeaCommentEvent(commentId, ideaId));
   }
 
-  isUserTheCommentor(participantCode) {
+  canDeleteComment(participantCode) {
     if (this.participantCode && this.participantCode === participantCode) {
       return true;
     }

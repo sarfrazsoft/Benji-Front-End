@@ -129,13 +129,41 @@ export class CategorizedComponent implements OnInit, OnChanges {
       } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
         this.brainstormService.sortIdeas(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSetCategoryEvent') {
-        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-          if (val) {
-            this.columns = this.brainstormService.categoryChangedForIdea(this.board, this.columns);
-          }
-          this.brainstormService.sortIdeas(this.board, this.columns);
-          this.sortAndResetMasonry();
+        // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+        //   if (val) {
+        this.brainstormService.categoryChangedForIdea(this.board, this.columns, (existingCategories) => {
+          this.columns = existingCategories;
+          setTimeout(() => {
+            this.brainstormService.sortIdeas(this.board, this.columns);
+            setTimeout(() => {
+              this.sortAndResetMasonry();
+            }, 10);
+          }, 10);
         });
+        // } else {
+        // this.brainstormService.sortIdeas(this.board, this.columns);
+        // this.sortAndResetMasonry();
+        //   }
+        // });
+
+        // console.log(this.eventType);
+        // this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+        //   if (val) {
+        // this.columns = this.brainstormService.categoryChangedForIdea(this.board, this.columns);
+        // }
+        // this.brainstormService.sortIdeas(this.board, this.columns);
+        // this.gg();
+        // this.sortAndResetMasonry();
+
+        // this.refreshMasonryLayout();
+        // });
+        // this.permissionsService.hasPermission('ADMIN').then((val) => {
+        //   if (val) {
+        //     this.columns = this.brainstormService.categoryChangedForIdea(this.board, this.columns);
+        //   }
+        //   this.brainstormService.sortIdeas(this.board, this.columns);
+        //   this.sortAndResetMasonry();
+        // });
       } else if (
         this.eventType === 'HostChangeBoardEvent' ||
         this.eventType === 'ParticipantChangeBoardEvent'

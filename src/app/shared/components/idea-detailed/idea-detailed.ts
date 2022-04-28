@@ -18,6 +18,7 @@ import { ActivitiesService, BrainstormService } from 'src/app/services/activitie
 import {
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaPinEvent,
+  BrainstormSetCategoryEvent,
   BrainstormSubmitIdeaCommentEvent,
   Category,
   Group,
@@ -513,5 +514,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
+  }
+
+  categoryChanged(category) {
+    this.sendMessage.emit(new BrainstormSetCategoryEvent(this.data.item.id, category.id));
   }
 }

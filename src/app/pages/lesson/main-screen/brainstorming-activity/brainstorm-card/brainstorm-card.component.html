@@ -189,7 +189,7 @@
             <div class="comment">{{ comment.comment }}</div>
           </div>
           <mat-icon
-            *ngIf="isUserTheCommentor(comment.participant)"
+            *ngIf="canDeleteComment(comment.participant) || isAdmin"
             class="delete-icon"
             (click)="removeComment(comment.id, item.id)">
             clear
