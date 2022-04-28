@@ -230,6 +230,7 @@
                 placeholder="Categories..."
                 [(ngModel)]="selectedCategory"
                 appendTo="body"
+                (change)="categoryChanged($event)"
                 [searchable]="false"
                 [clearable]="false">
               </ng-select>

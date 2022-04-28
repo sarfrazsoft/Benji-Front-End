@@ -118,7 +118,7 @@ export class BrainstormService {
     return columns;
   }
 
-  categoryChangedForIdea(board: Board, existingCategories) {
+  categoryChangedForIdea(board: Board, existingCategories, callback) {
     for (let i = 0; i < board.brainstormcategory_set.length; i++) {
       const BECategory = board.brainstormcategory_set[i];
       for (let j = 0; j < existingCategories.length; j++) {
@@ -145,7 +145,8 @@ export class BrainstormService {
         }
       }
     }
-    return existingCategories;
+    // existingCategories = this.sortIdeas(board, existingCategories);
+    callback(existingCategories);
   }
 
   ideaHearted(act: Board, existingCategories, callback) {
