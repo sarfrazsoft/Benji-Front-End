@@ -81,45 +81,11 @@ export class SessionLobbyLayoutComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       if (localStorage.getItem('user')) {
         const user: TeamUser = JSON.parse(localStorage.getItem('user'));
-        this.joinSessionAsLoggedInUser(user);
+        this.authService.joinSessionAsLoggedInUser(user, this.roomCode.value, (isError) => {
+          this.loginError = isError;
+        });
       }
     }
-  }
-
-  joinSessionAsLoggedInUser(user: TeamUser) {
-    const name = user.first_name + ' ' + user.last_name;
-    const lessonCode = this.roomCode.value;
-    console.log(name, lessonCode);
-
-    this.authService.createParticipant(name, lessonCode, user.id).subscribe(
-      (res) => {
-        this.loginError = false;
-        if (res.lessonrun_code) {
-          this.navigateToLesson(res.lessonrun_code);
-        } else if (res.message === 'You are already in this session.') {
-          this.authService.setParticipantSession(res.participant);
-          this.navigateToLesson(res.participant.lessonrun_code);
-        } else {
-          this.loginError = true;
-        }
-      },
-      (err) => {
-        if (err && err.error) {
-          if (err.error.non_field_errors) {
-            if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-              this.utilsService.openWarningNotification(
-                'A participant with that name has already joined. Try a different name.',
-                ''
-              );
-            }
-          }
-        }
-      }
-    );
-  }
-
-  navigateToLesson(lessonRunCode) {
-    this.router.navigate(['/screen/lesson/' + lessonRunCode]);
   }
 
   public validateRoomCode() {

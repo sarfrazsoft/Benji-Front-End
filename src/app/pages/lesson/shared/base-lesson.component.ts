@@ -7,7 +7,14 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { AuthService, ContextService } from 'src/app/services';
 import { BackendRestService } from 'src/app/services/backend/backend-rest.service';
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
-import { ActivityEvent, ServerMessage, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
+import {
+  ActivityEvent,
+  ServerMessage,
+  TeamUser,
+  Timer,
+  UpdateMessage,
+  User,
+} from 'src/app/services/backend/schema';
 import { Course, Lesson, LessonRun, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -48,16 +55,28 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('participant')) {
-      this.permissionsService.loadPermissions(['PARTICIPANT']);
-      this.clientType = 'participant';
-    } else if (localStorage.getItem('host_' + this.roomCode)) {
+    //
+    // check if user is a host of this session
+    if (localStorage.getItem('host_' + this.roomCode)) {
       this.permissionsService.loadPermissions(['ADMIN']);
-    } else {
-      if (!this.authService.isLoggedIn()) {
-        // navigate to lesson lobby
+    } else if (localStorage.getItem('participant')) {
+      const participant: Participant = JSON.parse(localStorage.getItem('participant'));
+      if (participant.lessonrun_code === this.roomCode) {
+        // participant was created for this lesson
+        this.permissionsService.loadPermissions(['PARTICIPANT']);
+        this.clientType = 'participant';
+      } else {
+        // this participant has been part of some other lesson
         this.authService.navigateToLessonLobby(this.roomCode);
       }
+    } else if (this.authService.isLoggedIn()) {
+      if (localStorage.getItem('user')) {
+        const user: TeamUser = JSON.parse(localStorage.getItem('user'));
+        this.authService.joinSessionAsLoggedInUser(user, this.roomCode);
+      }
+    } else if (!this.authService.isLoggedIn()) {
+      // navigate to lesson lobby
+      this.authService.navigateToLessonLobby(this.roomCode);
     }
     this.initSocket();
 
