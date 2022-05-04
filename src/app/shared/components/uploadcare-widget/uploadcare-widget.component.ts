@@ -96,9 +96,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
             this.video = true;
             this.convertedVideoURL = data.converted_file;
             this.originalVideoURL = data.original_file;
-            this.checkVideoConversionStatus(data.token, (res) => {
-              this.uploadDocumentUrlToBenji();
-            });
+            this.uploadDocumentUrlToBenji();
           },
           (error) => console.log(error)
         );
