@@ -36,6 +36,7 @@ import {
 import {
   Board,
   BoardMode,
+  BoardStatus,
   BrainstormActivity,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
@@ -53,6 +54,7 @@ import {
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
@@ -94,6 +96,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   selectedClassificationType;
   selectedParticipantGroup: Group;
   myGroup: Group;
+  boardStatus: BoardStatus;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -117,7 +120,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     private httpClient: HttpClient,
     private permissionsService: NgxPermissionsService,
     private sharingToolService: SharingToolService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private boardStatusService: BoardStatusService
   ) {}
 
   ngOnInit() {
@@ -183,6 +187,21 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.saveIdea(val);
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+        console.log(this.boardStatus);
+      }
+    });
+  }
+
+  checkBoardStatus() {
+    if (this.boardStatus === 'open') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   applyGroupingOnActivity(state: UpdateMessage) {

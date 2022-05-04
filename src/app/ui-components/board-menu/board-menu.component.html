@@ -153,25 +153,24 @@
     </div>
   </div>
 
-  <!-- <div fxLayout="column">
+  <div fxLayout="column">
     <div class="title">Board Status</div>
     <div class="board-status">
       <ng-select
         class="board-status-dropdown"
         appearance="outline" 
         placeholder="Status"
+        [items]="boardStatusDropdown"
+        bindValue="value"
+        bindLabel="name"
         [searchable]="false"
         [clearable]="false"
-        [items]="statusDropdown"
         [(ngModel)]="boardStatus"
         (change)="setBoardStatus()"
         dropdownPosition="bottom">
-        <ng-template ng-option-tmp let-item="item" let-index="index">
-          <span> {{item}} </span>
-        </ng-template>
       </ng-select>
     </div>
-  </div> -->
+  </div>
 
   <div fxLayout="column">
     <ng-container *ngxPermissionsOnly="'ADMIN'">

@@ -28,6 +28,7 @@ import {
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -52,7 +53,8 @@ export class MainScreenBrainstormingActivityComponent
     private contextService: ContextService,
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private boardStatusService: BoardStatusService
   ) {
     super();
   }
@@ -156,6 +158,8 @@ export class MainScreenBrainstormingActivityComponent
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
       });
+    } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
+      this.changeBoardStatus();
     } else {
       this.selectUserBoard();
     }
@@ -178,6 +182,12 @@ export class MainScreenBrainstormingActivityComponent
     if (this.dialogRef) {
       this.dialogRef.close();
     }
+  }
+
+  changeBoardStatus() {
+    this.selectedBoard = this.getAdminBoard();
+    console.log(this.selectedBoard);
+    this.boardStatusService.boardStatus = this.selectedBoard.status;
   }
 
   hostChangedBoard() {

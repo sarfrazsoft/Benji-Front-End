@@ -16,6 +16,7 @@ import { BrainstormService } from 'src/app';
 import {
   Board,
   BoardSort,
+  BoardStatus,
   BrainstormAddBoardEventBaseEvent,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
@@ -49,7 +50,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Output() sendMessage = new EventEmitter<any>();
   instructions = '';
   sub_instructions = '';
-  statusDropdown = ['Open', 'View Only', 'Closed'];
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
       value: 'newest_to_oldest',
@@ -62,6 +62,20 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     {
       value: 'likes',
       name: 'Likes',
+    },
+  ];
+  boardStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
+    {
+      value: 'open',
+      name: 'Open',
+    },
+    {
+      value: 'closed',
+      name: 'Closed',
+    },
+    {
+      value: 'view_only',
+      name: 'View',
     },
   ];
   defaultSort = 'newest_to_oldest';
@@ -123,8 +137,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.instructions = board.board_activity.instructions;
     this.sub_instructions = board.board_activity.sub_instructions;
-    this.boardStatus =
-      board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
+    this.boardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
     }
@@ -250,10 +263,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   doneTyping(type) {
-    if (type == 'title') {
+    if (type === 'title') {
       this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
-    } else if (type == 'instructions') {
-      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id));
+    } else if (type === 'instructions') {
+      this.sendMessage.emit(
+        new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id)
+      );
     }
   }
 
@@ -324,8 +339,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   setBoardStatus() {
     const selected = this.boardStatus;
-    const status = selected === 'Open' ? 'open' : selected === 'View Only' ? 'view_only' : 'closed';
-    this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(status, this.selectedBoard.id));
+    this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(this.boardStatus, this.selectedBoard.id));
   }
 
   toggleMeetingMode($event) {

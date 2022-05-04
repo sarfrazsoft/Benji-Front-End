@@ -29,6 +29,7 @@ import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
+  BoardStatus,
   BrainstormActivity,
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
@@ -39,6 +40,7 @@ import {
   Idea,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
@@ -104,6 +106,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
   isAdmin: boolean;
+  boardStatus: BoardStatus;
 
   constructor(
     private dialog: MatDialog,
@@ -112,7 +115,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
-    private ngxPermissionsService: NgxPermissionsService
+    private ngxPermissionsService: NgxPermissionsService,
+    private boardStatusService: BoardStatusService
   ) {}
 
   ngOnInit(): void {
@@ -148,6 +152,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.isAdmin = true;
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+        console.log(this.boardStatus);
+      }
+    });
+  }
+
+  checkBoardStatus() {
+    if (this.boardStatus === 'open') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnChanges() {}
