@@ -29,11 +29,12 @@ export class ParticipantSharingToolComponent implements OnInit, OnChanges {
   }
 
   getParticipantCode(): number {
-    let details: Participant;
-    if (localStorage.getItem('participant')) {
-      details = JSON.parse(localStorage.getItem('participant'));
-      return details.participant_code;
-    }
+    // let details: Participant;
+    // if (localStorage.getItem('participant')) {
+    //   details = JSON.parse(localStorage.getItem('participant'));
+    //   return details.participant_code;
+    // }
+    return 123;
   }
 
   optIn() {
@@ -51,5 +52,4 @@ export class ParticipantSharingToolComponent implements OnInit, OnChanges {
   handleComment(comment: string) {
     this.sendMessage.emit(new SubmitSharingParticipantCommentEvent(comment));
   }
-  
 }

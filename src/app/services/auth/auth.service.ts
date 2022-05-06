@@ -143,7 +143,7 @@ export class AuthService {
   }
 
   setParticipantSession(res: Participant) {
-    localStorage.setItem('participant', JSON.stringify(res));
+    localStorage.setItem('participant_' + res.lessonrun_code, JSON.stringify(res));
   }
 
   logout() {

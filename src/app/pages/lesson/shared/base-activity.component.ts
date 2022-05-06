@@ -47,8 +47,9 @@ export abstract class BaseActivityComponent implements OnInit {
 
   public getParticipantCode(): number {
     let details: Participant;
-    if (localStorage.getItem('participant')) {
-      details = JSON.parse(localStorage.getItem('participant'));
+    const lessonRunCode = this.activityState.lesson_run.lessonrun_code;
+    if (localStorage.getItem('participant_' + lessonRunCode)) {
+      details = JSON.parse(localStorage.getItem('participant_' + lessonRunCode));
       return details.participant_code;
     }
   }
