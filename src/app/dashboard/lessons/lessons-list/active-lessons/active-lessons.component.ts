@@ -153,10 +153,10 @@ export class ActiveLessonsComponent implements OnInit {
                 if (sessionCreationResponse.detail) {
                   if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
                   } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
+                    clearInterval(interval);
                     this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
                       this.lessonRuns = lessonsRuns;
                       this.getActiveSessions();
-                      clearInterval(interval);
                       this.utilsService.openSuccessNotification(`Session successfully duplicated.`, `close`);
                     });
                   }
