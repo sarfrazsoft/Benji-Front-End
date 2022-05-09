@@ -7,6 +7,7 @@ import {
   // ...
 } from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
@@ -104,6 +105,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
   isAdmin: boolean;
+  mobileSize = false;
 
   constructor(
     private dialog: MatDialog,
@@ -112,7 +114,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
-    private ngxPermissionsService: NgxPermissionsService
+    private ngxPermissionsService: NgxPermissionsService,
+    private breakpointObserver: BreakpointObserver,
   ) {}
 
   ngOnInit(): void {
@@ -312,6 +315,23 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.brainstormService.saveIdea$.next(result);
       }
     });
+
+    // detect screen size changes
+    this.breakpointObserver.observe([
+      "(max-width: 768px)"
+    ]).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+          // hide stuff
+          this.mobileSize = true;      
+          console.log("Mobile");
+          dialogRef.addPanelClass("mobile");
+      } else {
+          // show stuff
+          this.mobileSize = false;
+          console.log("Not Mobile");
+      }
+    });
+  
   }
 
   onCommentFocus() {
