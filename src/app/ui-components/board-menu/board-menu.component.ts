@@ -241,7 +241,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
       this.doneTyping(type);
-    }, 500);
+    }, 2500);
   }
 
   // on keydown, clear the countdown

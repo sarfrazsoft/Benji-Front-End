@@ -83,7 +83,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     this.dialogRef.disableClose = true;
 
     this.dialogRef.backdropClick().subscribe((_) => {
-      if (this.userIdeaText.length || this.ideaTitle.length) {
+      if (this.userIdeaText.length || this.ideaTitle.length || this.isItemSelected()) {
         this.askUserConfirmation();
       } else {
         this.dialogRef.close();

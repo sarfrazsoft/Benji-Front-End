@@ -667,6 +667,17 @@ ng-dropdown-panel.post-idea-categories-dropdown {
 }
 
 .idea-detailed-dialog {
+  &.participant-screen {
+    .content-area {
+      min-height: unset;
+    }
+    benji-tiptap-editor .ProseMirror {
+      min-height: unset; 
+    }
+  }
+}
+
+.idea-detailed-dialog {
   mat-dialog-container {
     border-radius: 16px;
     box-shadow: unset;
