@@ -295,7 +295,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         category: this.category,
         myGroup: this.myGroup,
         activityState: this.activityState,
-        isMobile: !isDesktop,
         participantCode: this.participantCode,
         userRole: this.userRole,
         showUserName: this.showUserName,
@@ -321,14 +320,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       "(max-width: 768px)"
     ]).subscribe((result: BreakpointState) => {
       if (result.matches) {
-          // hide stuff
-          this.mobileSize = true;      
-          console.log("Mobile");
-          dialogRef.addPanelClass("mobile");
+        dialogRef.addPanelClass("idea-detailed-mobile-dialog");
+        dialogRef.removePanelClass("idea-detailed-dialog");
       } else {
-          // show stuff
-          this.mobileSize = false;
-          console.log("Not Mobile");
+        dialogRef.addPanelClass("idea-detailed-dialog");
+        dialogRef.removePanelClass("idea-detailed-mobile-dialog");
       }
     });
   
