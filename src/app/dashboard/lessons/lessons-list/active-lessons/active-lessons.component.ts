@@ -134,8 +134,8 @@ export class ActiveLessonsComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
-        let duplicateBoardIdeas: Boolean;
-        res ? (duplicateBoardIdeas = true) : (duplicateBoardIdeas = false);
+        let duplicate_board_ideas: Boolean;
+        res ? (duplicate_board_ideas = true) : (duplicate_board_ideas = false);
         let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
         this.http.post(request, {}).subscribe((response: SessionInformation) => {
           if (response) {
@@ -148,7 +148,7 @@ export class ActiveLessonsComponent implements OnInit {
               '/boards/';
             const interval = setInterval(() => {
               // method to be executed;
-              this.http.post(request, { duplicateBoardIdeas }).subscribe((sessionCreationResponse: any) => {
+              this.http.post(request, { duplicate_board_ideas }).subscribe((sessionCreationResponse: any) => {
                 console.log(sessionCreationResponse);
                 if (sessionCreationResponse.detail) {
                   if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
