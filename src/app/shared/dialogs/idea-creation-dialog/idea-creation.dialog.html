@@ -138,7 +138,8 @@
           (click)="onSubmit()"
           [ngClass]="{
             'active': userIdeaText || ideaTitle || imageSelected || pdfSelected || webcamImage || video
-          }">
+          }"
+          [disabled]="mediaUploading ? 'disabled': null">
             Post
         </button>
       </div>
