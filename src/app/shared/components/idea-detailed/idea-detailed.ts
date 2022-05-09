@@ -286,16 +286,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.ideaEditEvent.emit(true);
     }
   }
-  
-  isItemSelected() {
-    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
-      return false;
-    }
-    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
-      return true;
-    }
-    return false;
-  }
 
   onSubmit() {
     this.submit.emit({
