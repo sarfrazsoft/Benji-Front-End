@@ -89,6 +89,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() myGroup;
   @Input() avatarSize;
   @ViewChild('colName') colNameElement: ElementRef;
+  @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
   @Output() viewImage = new EventEmitter<string>();
@@ -278,9 +279,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     } else {
       this.openDialog(idea, 'idea-detailed-dialog', true);
     }
-
     // this.openDialog(idea, 'idea-detailed-mobile-dialog', false);
     // this.openDialog(idea, 'idea-detailed-dialog', true);
+
+    if (this.item.idea_video) {
+      this.player.nativeElement.pause();
+    }
   }
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
