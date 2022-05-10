@@ -392,6 +392,10 @@ export class BrainstormService {
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
+    // sort based on time first and then by the selected filter
+    existingIdeas.sort((a: Idea, b: Idea) => {
+      return Number(moment(b.time)) - Number(moment(a.time));
+    });
     existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
       if (board.sort === 'newest_to_oldest') {
         return Number(moment(b.time)) - Number(moment(a.time));
