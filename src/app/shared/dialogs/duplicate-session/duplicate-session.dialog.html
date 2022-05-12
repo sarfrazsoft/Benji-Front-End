@@ -1,0 +1,33 @@
+<div class="confirmation-dialog-wrapper session-duplication" fxLayout="column">
+  <!-- <div fxLayoutAlign="end end">
+    <button class="close-button" matDialogClose>
+      <img src="/assets/img/closeBig.svg" />
+    </button>
+  </div> -->
+  <mat-dialog-content class="dialog-content">
+    <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
+      <h2 class="dialog-heading black-color"> {{ confirmationTitle }} </h2>
+      <div class="dialog-instructions">
+        {{ confirmationMessage }}
+      </div>
+      <section class="copying-options black-color" fxLayout="column" fxLayoutGap="10px">
+        <mat-checkbox [(ngModel)]="copyBoards">Copy boards</mat-checkbox>
+        <mat-checkbox [(ngModel)]="copyBoardsPosts">Copy boards with host’s posts</mat-checkbox>
+      </section>
+      <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
+        <button
+          class="bg-primary-color duplicate dialog-controls"
+          (click)="confirm()"
+        >
+          {{ actionButton }}
+        </button>
+        <button
+          class="cancel-button dialog-controls"
+          (click)="cancel()"
+        >
+          {{ cancelButton }}
+        </button>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>

@@ -8,7 +8,7 @@ import * as global from 'src/app/globals';
 import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
+import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -121,13 +121,14 @@ export class ActiveLessonsComponent implements OnInit {
   }
 
   duplicateSession(val: TableRowInformation) {
-    const msg = 'Do you want to duplicate board(s) ideas for this session as well?';
+    const msg = 'What would you like to duplicate:';
     const dialogRef = this.matDialog
-      .open(ConfirmationDialogComponent, {
+      .open(DuplicateSessionDialogComponent, {
         data: {
+          confirmationTitle: 'Duplicate Board',
           confirmationMessage: msg,
-          actionButton: 'Yes',
-          cancelButton: 'No',
+          actionButton: 'Duplicate',
+          cancelButton: 'Cancel',
         },
         disableClose: true,
         panelClass: 'confirmation-dialog',
