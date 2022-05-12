@@ -131,11 +131,12 @@
     <div class="title">Title</div>
     <div class="edit">
       <div class="editing">
-        <input
-          type="text"
-          [(ngModel)]="instructions"
-          (keyup)="typingStoped('title')"
-          (keydown)="typingStarted()">
+          <input
+            #title
+            type="text"
+            value="{{ tempTitle }}"
+            (keyup)="typingStoped('title')"
+            (keydown)="typingStarted()">
       </div>
     </div>
   </div>
@@ -145,8 +146,9 @@
     <div class="edit">
       <div class="editing">
         <textarea
+          #instructions
           type="text"
-          [(ngModel)]="sub_instructions"
+          value="{{ tempInstructions }}"
           (keyup)="typingStoped('instructions')"
           (keydown)="typingStarted()"></textarea>
       </div>
