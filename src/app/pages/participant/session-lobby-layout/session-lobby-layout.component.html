@@ -12,7 +12,7 @@
       <div>
         <div fxLayout="row" fxLayoutAlign="space-between center">
           <div class="session-title">
-            {{beforeLessonRunDetails.title}} 
+            {{ beforeLessonRunDetails.title }} 
           </div>
           <div 
             *ngIf="adminLobbyScreeen" 
@@ -108,6 +108,9 @@
         <p class="warning-color" *ngIf="loginError">
           Oops! What should we call you? Drop in your name.<br />
         </p>
+        <p class="warning-color" *ngIf="participantAlreadyExistsError">
+          Someone with that name is already in the session. Try adding your last name or an initial.<br />
+        </p>
         <input
           class="name-input" 
           type="text"
@@ -123,11 +126,12 @@
         <div 
           class="bg-primary-color button guest-button"
           fxLayoutAlign="center center"
-          (click)="createUser()"
+          (click)="joinSessionAsGuestParticipant()"
           [ngClass]="{
             active: username.value,
             inactive: !username.value
-          }">Join as guest
+          }">
+            Join as guest
         </div>
         <div class="member-join">
           <div class="cta">Join session as a member</div>
@@ -149,8 +153,9 @@
         <ng-container *ngIf="loadLogin">
           <benji-dashboard-login
             [joinSession]="true"
-            (forgotPassword)="loadForgotPasswordComponent()"
-            (signUp)="loadSignUpComponent()"
+            (forgotPasswordClicked)="loadForgotPasswordComponent()"
+            (signUpClicked)="loadSignUpComponent()"
+            (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
             [sllRoomCode]="roomCode.value"   
           ></benji-dashboard-login>
         </ng-container>

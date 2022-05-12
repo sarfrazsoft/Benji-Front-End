@@ -30,6 +30,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   public isRoomCodeValid = true;
   public userName: string;
   public loginError;
+  participantAlreadyExistsError = false;
   public isInformationValid = false;
   public typingTimer;
   public lessonRunDetails: LessonRunDetails;
@@ -80,13 +81,13 @@ export class SessionLobbyLayoutComponent implements OnInit {
     // check if user is logged in
     if (this.authService.isLoggedIn()) {
       if (localStorage.getItem('user')) {
-        const user: TeamUser = JSON.parse(localStorage.getItem('user'));
-        this.joinSessionAsLoggedInUser(user);
+        this.joinSessionAsLoggedInUser();
       }
     }
   }
 
-  joinSessionAsLoggedInUser(user: TeamUser) {
+  joinSessionAsLoggedInUser() {
+    const user: TeamUser = JSON.parse(localStorage.getItem('user'));
     const name = user.first_name + ' ' + user.last_name;
     const lessonCode = this.roomCode.value;
     console.log(name, lessonCode);
@@ -152,7 +153,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     }
   }
 
-  public createUser() {
+  public joinSessionAsGuestParticipant() {
     if (localStorage.getItem('lessonRunDetails')) {
       this.lessonRunDetails = JSON.parse(localStorage.getItem('lessonRunDetails'));
     } else {
@@ -168,14 +169,16 @@ export class SessionLobbyLayoutComponent implements OnInit {
     }
 
     this.authService.createParticipant(this.username.value, this.lessonRunDetails.lessonrun_code).subscribe(
-      (res: Participant) => {
+      (res: any) => {
         this.loginError = false;
+        this.participantAlreadyExistsError = false;
         if (res.lessonrun_code) {
           if (localStorage.getItem('user')) {
             localStorage.removeItem('user');
           }
           this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
-          // this.router.navigate([`/participant/lesson/${res.lessonrun_code}`]);
+        } else if (res && res.message === 'A participant with that display name already exists') {
+          this.participantAlreadyExistsError = true;
         } else {
           this.loginError = true;
         }
