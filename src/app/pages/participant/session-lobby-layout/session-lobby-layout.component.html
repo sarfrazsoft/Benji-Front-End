@@ -1,4 +1,4 @@
-<ng-container *ngIf="beforeLessonRunDetails">
+<ng-container *ngIf="isRoomCodeValid">
   <div
     fxLayout="row"
     fxLayoutAlign="center center"
@@ -207,6 +207,6 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!beforeLessonRunDetails">
+<ng-container *ngIf="!isRoomCodeValid">
   the room code you entered is not valid
 </ng-container>
