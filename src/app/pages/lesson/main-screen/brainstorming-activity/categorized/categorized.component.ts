@@ -73,7 +73,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
     initLayout: true,
   };
 
-  @ViewChildren(NgxMasonryComponent) masonryComponents: QueryList<NgxMasonryComponent>;
+  // @ViewChildren(NgxMasonryComponent) masonryComponents: QueryList<NgxMasonryComponent>;
   masonryPrepend: boolean;
 
   constructor(
@@ -108,7 +108,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.refreshMasonryLayout();
       } else if (this.eventType === 'BrainstormSubmitIdeaHeartEvent') {
         this.brainstormService.ideaHearted(this.board, this.columns, () => {
-          this.sortAndResetMasonry();
+          // this.sortAndResetMasonry();
+          this.brainstormService.sortIdeas(this.board, this.columns);
         });
       } else if (this.eventType === 'BrainstormRemoveIdeaHeartEvent') {
         this.brainstormService.ideaHearted(this.board, this.columns, () => {
@@ -204,19 +205,19 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   sortAndResetMasonry() {
-    this.brainstormService.sortIdeas(this.board, this.columns);
-    for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
-      const element = this.masonryComponents.toArray()[i];
-      element.layout();
-      element.reloadItems();
-    }
+    // this.brainstormService.sortIdeas(this.board, this.columns);
+    // for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
+    //   const element = this.masonryComponents.toArray()[i];
+    //   element.layout();
+    //   element.reloadItems();
+    // }
   }
 
   refreshMasonryLayout() {
-    for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
-      const element = this.masonryComponents.toArray()[i];
-      element.layout();
-    }
+    // for (let i = 0; i < this.masonryComponents.toArray().length; i++) {
+    //   const element = this.masonryComponents.toArray()[i];
+    //   element.layout();
+    // }
   }
 
   addCard(column: Category) {
@@ -295,7 +296,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         if (event.previousContainer === event.container) {
-          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+          // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
           transferArrayItem(
             event.previousContainer.data,

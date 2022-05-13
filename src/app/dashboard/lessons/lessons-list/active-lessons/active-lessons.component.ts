@@ -134,8 +134,8 @@ export class ActiveLessonsComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
-        let duplicateBoardIdeas: Boolean;
-        res ? (duplicateBoardIdeas = true) : (duplicateBoardIdeas = false);
+        let duplicateDoardIdeas: Boolean;
+        res ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
         let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
         this.http.post(request, {}).subscribe((response: SessionInformation) => {
           if (response) {
@@ -148,20 +148,25 @@ export class ActiveLessonsComponent implements OnInit {
               '/boards/';
             const interval = setInterval(() => {
               // method to be executed;
-              this.http.post(request, { duplicateBoardIdeas }).subscribe((sessionCreationResponse: any) => {
-                console.log(sessionCreationResponse);
-                if (sessionCreationResponse.detail) {
-                  if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
-                  } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
-                    clearInterval(interval);
-                    this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
-                      this.lessonRuns = lessonsRuns;
-                      this.getActiveSessions();
-                      this.utilsService.openSuccessNotification(`Session successfully duplicated.`, `close`);
-                    });
+              this.http
+                .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
+                .subscribe((sessionCreationResponse: any) => {
+                  console.log(sessionCreationResponse);
+                  if (sessionCreationResponse.detail) {
+                    if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
+                    } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
+                      clearInterval(interval);
+                      this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                        this.lessonRuns = lessonsRuns;
+                        this.getActiveSessions();
+                        this.utilsService.openSuccessNotification(
+                          `Session successfully duplicated.`,
+                          `close`
+                        );
+                      });
+                    }
                   }
-                }
-              });
+                });
             }, 500);
 
             // this.dataSource = this.dataSource.map((value) => value)
