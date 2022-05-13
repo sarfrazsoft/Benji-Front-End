@@ -134,7 +134,7 @@
           <input
             #title
             type="text"
-            value="{{ tempTitle }}"
+            value="{{ title_instructions }}"
             (keyup)="typingStoped('title')"
             (keydown)="typingStarted()">
       </div>
@@ -148,7 +148,7 @@
         <textarea
           #instructions
           type="text"
-          value="{{ tempInstructions }}"
+          value="{{ sub_instructions }}"
           (keyup)="typingStoped('instructions')"
           (keydown)="typingStarted()"></textarea>
       </div>
