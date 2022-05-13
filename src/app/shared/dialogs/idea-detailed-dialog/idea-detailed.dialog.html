@@ -1,4 +1,4 @@
-<div class="idea-detailed-dialog">
+<div class="idea-detailed-dialog" [ngClass]="{'participant-screen': data.participantCode}">
   <ng-container *ngIf="data">
     <benji-idea-detailed
       [data]="data"

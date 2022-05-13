@@ -1,4 +1,4 @@
-<div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
+<div fxLayout="row" class="mobile-panel">
   <div 
     *ngIf="!imageSelected && !pdfSelected" 
     class="back-text" 
@@ -164,7 +164,7 @@
             </div>
           </div>
         </div>
-        <button  class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
+        <button class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
       </div>
       <div class="scrollable-area">
         <ng-container *ngIf="userRole === 'owner' || ideaTitle">
@@ -259,8 +259,8 @@
             </div>
           </mat-tab>
           <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
-            <ng-container *ngIf="idea?.hearts.length">
-              <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
+            <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
+              <ng-container *ngIf="idea?.hearts.length">
                 <div 
                   fxLayout="row"
                   fxLayoutGap="8px"
@@ -275,8 +275,8 @@
                   ></benji-profile-pictures>
                   <div class="name">{{ getParticipantName(heart.participant) }}</div>
                 </div>
-              </div>
-            </ng-container>
+              </ng-container>
+            </div>
           </mat-tab>
         </mat-tab-group>
       </div>

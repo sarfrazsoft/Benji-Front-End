@@ -667,6 +667,23 @@ ng-dropdown-panel.post-idea-categories-dropdown {
 }
 
 .idea-detailed-dialog {
+  // .content-area {
+  //   min-height: unset !important;
+  // }
+  benji-tiptap-editor .ProseMirror {
+    min-height: unset; 
+  }
+  // &.participant-screen {
+  //   .content-area {
+  //     min-height: unset;
+  //   }
+  //   benji-tiptap-editor .ProseMirror {
+  //     min-height: unset; 
+  //   }
+  // }
+}
+
+.idea-detailed-dialog {
   mat-dialog-container {
     border-radius: 16px;
     box-shadow: unset;
@@ -750,7 +767,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       width: 448px;
       background: #fff;
       z-index: 2;
-      min-height: 385px;
+      //min-height: 385px;
       .title {
         font-size: 24px;
         line-height: 32px;
@@ -1144,6 +1161,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         }
         .mat-ink-bar {
           background-color: #37352f;
+        }
+        .likes-area {
+          margin-top: 16px;
         }
       }
       .idea-creation-controls {
