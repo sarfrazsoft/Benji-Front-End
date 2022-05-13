@@ -57,6 +57,7 @@ benji-ms-brainstorming-activity {
       margin-left: 6px;
       >li {
         &::before {
+          color: $black;
         }
       }
     }
@@ -197,6 +198,7 @@ benji-ms-brainstorming-activity {
               }
               .comment-input-container {
                 padding: 9px 11px;
+                border-radius: 18px;
                 .input-comment {
                   width: 410px;
                   font-size: 14px;
@@ -675,11 +677,11 @@ benji-categorized-ideas {
   position: relative;
   background: #fff;
   border: 1px solid #e7e7e7;
-  border-radius: 17px;
+  border-radius: 14px;
   padding: 6px 8px;
   &.detailed {
     padding: 7px;
-    border-radius: 20px;
+    border-radius: 18px;
   }
   &.grey,
   &.greyed {
@@ -1106,12 +1108,14 @@ ng-dropdown-panel {
           &::before {
             width: 6px;
             height: 6px;
+            color: $black;
             // top: calc(0.7rem - 0.1785714rem);
             // left: 0.5042857rem;
           }
         }
         ol>li {
           &::before {
+            color: $black;
             top: calc(0.7rem - 0.1785714rem);
             left: 0.5042857rem;
           }
@@ -1162,4 +1166,7 @@ ng-dropdown-panel {
 
 .masonry-item {
   transition: top 0.4s ease-in-out, left 0.4s ease-in-out;
+}
+.prose ol>li::before {
+  color: $black;
 }

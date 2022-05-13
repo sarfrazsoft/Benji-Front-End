@@ -41,6 +41,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   webcamImageURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
   mediaUploading = false;
+  descriptionIsEmpty = true;
   fileProgress: FileProgress;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -280,5 +281,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
+    $event.length == 7 ? this.descriptionIsEmpty = true : this.descriptionIsEmpty = false;
   }
 }
