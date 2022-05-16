@@ -71,10 +71,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       value: 'open',
       name: 'Open',
     },
-    {
-      value: 'closed',
-      name: 'Closed',
-    },
+    // {
+    //   value: 'closed',
+    //   name: 'Closed',
+    // },
     {
       value: 'view_only',
       name: 'View',

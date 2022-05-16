@@ -22,6 +22,7 @@ import {
 import {
   Board,
   BoardMode,
+  BoardStatus,
   BrainstormActivity,
   Group,
   Idea,
@@ -119,6 +120,7 @@ export class MainScreenBrainstormingActivityComponent
       }
     });
 
+    this.changeBoardStatus();
     this.onChanges();
   }
 
@@ -152,8 +154,10 @@ export class MainScreenBrainstormingActivityComponent
       this.selectUserBoard();
     } else if (this.eventType === 'HostChangeBoardEvent') {
       this.hostChangedBoard();
+      this.changeBoardStatus();
     } else if (this.eventType === 'ParticipantChangeBoardEvent') {
       this.participantChangedBoard();
+      this.changeBoardStatus();
     } else if (this.eventType === 'BrainstormChangeModeEvent') {
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
@@ -185,9 +189,9 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   changeBoardStatus() {
-    this.selectedBoard = this.getAdminBoard();
-    console.log(this.selectedBoard);
-    this.boardStatusService.boardStatus = this.selectedBoard.status;
+    this.getBoardStatus(this.act, (status: BoardStatus) => {
+      this.boardStatusService.boardStatus = status;
+    });
   }
 
   hostChangedBoard() {
@@ -274,6 +278,21 @@ export class MainScreenBrainstormingActivityComponent
         this.selectedBoard = this.getParticipantBoard();
         mode = this.selectedBoard.board_activity.mode;
         onSuccess(mode);
+      }
+    });
+  }
+
+  getBoardStatus(act: BrainstormActivity, onSuccess): void {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const board = this.getAdminBoard();
+        onSuccess(board.status);
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const board = this.getParticipantBoard();
+        onSuccess(board.status);
       }
     });
   }
