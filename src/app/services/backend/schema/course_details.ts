@@ -114,3 +114,17 @@ export interface Participant {
   socket_link: string;
   participant_code: number;
 }
+
+export interface SessionInformation {
+  id: number,
+  lessonrun_code: number,
+  screen_socket: string,
+  theme_label: null,
+  start_time: string,
+  end_time: null,
+  is_facilitator_active: true,
+  lesson: number,
+  host: number,
+  theme: null,
+  current_activity: null
+}

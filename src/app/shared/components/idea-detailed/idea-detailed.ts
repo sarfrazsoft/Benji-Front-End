@@ -39,7 +39,6 @@ export interface IdeaDetailedInfo {
   category: Category;
   myGroup: Group;
   activityState: UpdateMessage;
-  isMobile: boolean;
   participantCode: number;
   userRole: IdeaUserRole;
   showUserName: boolean;
@@ -317,6 +316,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
+    this.ideaEditEvent.emit(true);
   }
 
   removeImage() {
@@ -362,6 +362,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           this.removeImage();
           if (res.type === 'upload') {
             this.imageSelected = true;
+            this.ideaEditEvent.emit(true);
             this.imagesList = res.data;
             const fileList: FileList = res.data;
             const file = fileList[0];
@@ -374,6 +375,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.ideaEditEvent.emit(true);
             this.selectedThirdPartyImageUrl = res.data;
           }
         }
@@ -400,6 +402,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.ideaEditEvent.emit(true);
           }
         }
       });
@@ -500,6 +503,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = true;
       this.webcamImageId = res.id;
     }
+    this.ideaEditEvent.emit(true);
   }
 
   onCommentFocus() {

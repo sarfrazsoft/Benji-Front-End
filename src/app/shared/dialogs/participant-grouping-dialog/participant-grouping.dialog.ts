@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivitiesService } from 'src/app/services/activities';
 import {
   AllowParticipantGroupingMidActivityEvent,
@@ -84,8 +84,9 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
 
   getParticipantCode(): number {
     let details: Participant;
-    if (localStorage.getItem('participant')) {
-      details = JSON.parse(localStorage.getItem('participant'));
+    const lessonRunCode = this.activityState.lesson_run.lessonrun_code;
+    if (localStorage.getItem('participant_' + lessonRunCode)) {
+      details = JSON.parse(localStorage.getItem('participant_' + lessonRunCode));
       return details.participant_code;
     }
   }
@@ -104,8 +105,8 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
   getInitials(participantCode: number) {
     const nameString = this.activitiesService.getParticipantName(this.activityState, participantCode);
     const fullName = nameString.split(' ');
-    let first = fullName[0]? fullName[0].charAt(0) : '';
-    let second = fullName[1]? fullName[1].charAt(0) : '';
-    return (first+second).toUpperCase();
+    const first = fullName[0] ? fullName[0].charAt(0) : '';
+    const second = fullName[1] ? fullName[1].charAt(0) : '';
+    return (first + second).toUpperCase();
   }
 }

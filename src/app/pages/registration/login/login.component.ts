@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -17,13 +17,14 @@ import { NgxPermissionsService } from 'ngx-permissions';
 export class LoginComponent implements OnInit {
   @Input() joinSession: boolean;
   @Input() sllRoomCode: number;
-  @Output() signUp = new EventEmitter();
-  @Output() forgotPassword = new EventEmitter();
+  @Output() signUpClicked = new EventEmitter();
+  @Output() forgotPasswordClicked = new EventEmitter();
+  @Output() userSignedInSuccessfully = new EventEmitter();
   form: FormGroup;
   isLoginClicked = false;
   emailPasswordError = false;
   isDemoSite = true;
-  //roomCode: number;
+  // roomCode: number;
   logo;
 
   user: SocialUser | null;
@@ -98,9 +99,9 @@ export class LoginComponent implements OnInit {
       const val = this.form.value;
       this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
         (res) => {
-          if (localStorage.getItem('participant')) {
-            localStorage.removeItem('participant');
-          }
+          // if (localStorage.getItem('participant')) {
+          //   localStorage.removeItem('participant');
+          // }
           if (res) {
             this.emailPasswordError = true;
           } else {
@@ -110,7 +111,8 @@ export class LoginComponent implements OnInit {
               console.log(this.sllRoomCode);
               this.deviceDetectorService.isMobile()
                 ? this.router.navigate(['/participant/join'])
-                : this.sllRoomCode? this.router.navigateByUrl("/screen/lesson/"+this.sllRoomCode)
+                : this.sllRoomCode
+                ? this.userSignedInSuccessfully.emit()
                 : this.router.navigate(['/dashboard']);
             }
           }
@@ -123,11 +125,10 @@ export class LoginComponent implements OnInit {
   }
 
   signUpClick() {
-    this.joinSession? this.signUp.emit() : this.router.navigate(['/sign-up']) ;
+    this.joinSession ? this.signUpClicked.emit() : this.router.navigate(['/sign-up']);
   }
 
-  forgotPasswordClicked() {
-    this.joinSession? this.forgotPassword.emit() : this.router.navigate(['/forgot-password']) ;
-  } 
+  forgotPasswordClick() {
+    this.joinSession ? this.forgotPasswordClicked.emit() : this.router.navigate(['/forgot-password']);
+  }
 }
-

@@ -55,9 +55,10 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    //
-    // check if user is a host of this session
-    if (localStorage.getItem('host_' + this.roomCode)) {
+    if (localStorage.getItem('participant_' + this.roomCode)) {
+      this.permissionsService.loadPermissions(['PARTICIPANT']);
+      this.clientType = 'participant';
+    } else if (localStorage.getItem('host_' + this.roomCode)) {
       this.permissionsService.loadPermissions(['ADMIN']);
     } else if (localStorage.getItem('participant')) {
       const participant: Participant = JSON.parse(localStorage.getItem('participant'));
@@ -122,8 +123,8 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy() {}
 
   initSocket() {
-    if (localStorage.getItem('participant')) {
-      this.participantDetails = JSON.parse(localStorage.getItem('participant'));
+    if (localStorage.getItem('participant_' + this.roomCode)) {
+      this.participantDetails = JSON.parse(localStorage.getItem('participant_' + this.roomCode));
     }
 
     this.restService.get_lessonrun(this.roomCode).subscribe((lessonRun) => {
@@ -320,8 +321,9 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
 
   public getParticipantCode(): number {
     let details: Participant;
-    if (localStorage.getItem('participant')) {
-      details = JSON.parse(localStorage.getItem('participant'));
+    const lessonRunCode = this.serverMessage.lesson_run.lessonrun_code;
+    if (localStorage.getItem('participant_' + lessonRunCode)) {
+      details = JSON.parse(localStorage.getItem('participant_' + lessonRunCode));
       return details.participant_code;
     }
   }

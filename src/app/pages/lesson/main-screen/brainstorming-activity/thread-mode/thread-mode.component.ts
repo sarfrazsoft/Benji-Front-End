@@ -87,7 +87,12 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
           this.masonryPrepend = false;
         }
-        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {});
+        this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
+          this.ideas = this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+          setTimeout(() => {
+            this.resetMasonry();
+          }, 50);
+        });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
@@ -158,6 +163,13 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
 
   refreshMasonryLayout() {
     if (this.masonry) {
+      this.masonry.layout();
+    }
+  }
+
+  resetMasonry() {
+    if (this.masonry) {
+      this.masonry.reloadItems();
       this.masonry.layout();
     }
   }

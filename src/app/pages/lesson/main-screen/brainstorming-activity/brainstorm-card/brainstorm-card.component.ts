@@ -7,6 +7,7 @@ import {
   // ...
 } from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
@@ -90,6 +91,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() myGroup;
   @Input() avatarSize;
   @ViewChild('colName') colNameElement: ElementRef;
+  @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
   @Output() viewImage = new EventEmitter<string>();
@@ -107,6 +109,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   imgSrc = '/assets/img/cards/like.svg';
   isAdmin: boolean;
   boardStatus: BoardStatus;
+  mobileSize = false;
 
   constructor(
     private dialog: MatDialog,
@@ -116,7 +119,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
-    private boardStatusService: BoardStatusService
+    private boardStatusService: BoardStatusService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -294,9 +298,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     } else {
       this.openDialog(idea, 'idea-detailed-dialog', true);
     }
-
     // this.openDialog(idea, 'idea-detailed-mobile-dialog', false);
     // this.openDialog(idea, 'idea-detailed-dialog', true);
+
+    if (this.item.idea_video) {
+      this.player.nativeElement.pause();
+    }
   }
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
@@ -311,7 +318,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         category: this.category,
         myGroup: this.myGroup,
         activityState: this.activityState,
-        isMobile: !isDesktop,
         participantCode: this.participantCode,
         userRole: this.userRole,
         showUserName: this.showUserName,
@@ -329,6 +335,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
+      }
+    });
+
+    // detect screen size changes
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        dialogRef.addPanelClass('idea-detailed-mobile-dialog');
+        dialogRef.removePanelClass('idea-detailed-dialog');
+      } else {
+        dialogRef.addPanelClass('idea-detailed-dialog');
+        dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
     });
   }
