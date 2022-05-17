@@ -914,16 +914,28 @@ benji-ps-brainstorming-activity {
     padding: 16px 32px;
     border-bottom: 1px solid #e7e7e7;
     background: #fff;
-    .brainstorm-h2 {
+    .brainstorm-h2 input {
       font-weight: 700;
       font-size: 24px;
       line-height: 32px;
       margin-bottom: 4px;
+      border: 0px;
+      &:focus-visible {
+        outline: 0px;
+      }
     }
     .sub-header {
-      font-size: 16px;
-      font-weight: 400;
-      color: #828282;
+      line-height: 0px; 
+      textarea {
+        font-size: 16px;
+        font-weight: 400;
+        color: #828282;
+        border: 0px;
+        resize: none;
+        &:focus-visible {
+          outline: 0px;
+        }
+      }
     }
     .menus {
       .ng-select-container {

@@ -9,9 +9,22 @@
               'long-instructions': instructions.length > 65
             }"
           >
-            {{ instructions }}
+            <input
+              #title
+              type="text"
+              value="{{ title_instructions }}"
+              (keyup)="typingStoped('title')"
+              (keydown)="typingStarted()">
           </div>
-          <div class="sub-header">{{ sub_instructions }}</div>
+          <div class="sub-header">
+            <textarea
+              #instructions
+              type="text"
+              rows="1"
+              value="{{ sub_instructions }}"
+              (keyup)="typingStoped('instructions')"
+              (keydown)="typingStarted()"></textarea>
+          </div>
         </div>
         <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
           <benji-participant-grouping-container

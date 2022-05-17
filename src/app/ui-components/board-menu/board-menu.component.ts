@@ -152,7 +152,13 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
       this.resetBoards();
-    }
+    } 
+    // if (
+    //   this.activityState.eventType === 'BrainstormEditBoardInstruction' ||
+    //   this.activityState.eventType === 'BrainstormEditSubInstruction'
+    // ) {
+    //   this.getBoardInstructions();
+    // }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === 'HostChangeBoardEvent') {
       } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
