@@ -208,5 +208,15 @@
 </ng-container>
 
 <ng-container *ngIf="!isRoomCodeValid">
-  the room code you entered is not valid
+  <div class="sign-up-section" fxLayout="column">
+    <img [src]="logo" loading="lazy" height="32" alt="">
+    <div class="log-in-card">
+      <div class="div-block-183 incorrect-code">
+        <ng-container *ngIf="!requestSubmitted">
+          <div class="title">We can’t find this session</div>
+          <div class="text-block-89">Make sure that you have the correct URL and the session exists. Check with your host.</div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
 </ng-container>

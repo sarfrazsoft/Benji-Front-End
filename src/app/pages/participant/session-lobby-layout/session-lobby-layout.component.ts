@@ -6,7 +6,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { HttpClient } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import * as global from 'src/app/globals';
-import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
+import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
 import {
   BeforeLessonRunDetails,
   LessonRunDetails,
@@ -14,6 +14,7 @@ import {
 } from 'src/app/services/backend/schema/course_details';
 import { TeamUser, User } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-session-lobby-layout',
@@ -46,6 +47,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   loadSignUp: boolean;
   loadForgotPassword: boolean;
   mobileParticipantJoin: boolean;
+  logo: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +58,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
     private http: HttpClient,
+    private contextService: ContextService,
     private deviceService: DeviceDetectorService
   ) {}
 
@@ -76,14 +79,17 @@ export class SessionLobbyLayoutComponent implements OnInit {
       );
     }
     this.shareParticipantLink = this.hostname + this.room_code;
-
-    //
     // check if user is logged in
     if (this.authService.isLoggedIn()) {
       if (localStorage.getItem('user')) {
         this.joinSessionAsLoggedInUser();
       }
     }
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.logo = info.parameters.darkLogo;
+      }
+    });
   }
 
   joinSessionAsLoggedInUser() {
