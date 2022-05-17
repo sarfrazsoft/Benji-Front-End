@@ -311,6 +311,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   getParticipantBoard(): Board {
     const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
     let participantBoardId: number;
+    // tslint:disable-next-line:forin
     for (const brdId in participants) {
       participants[brdId].forEach((code) => {
         if (code === this.participantCode) {
@@ -318,7 +319,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         }
       });
     }
-    const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
+    const visibleBrds = this.activityState.brainstormactivity.boards.filter(
+      (board) => !board.removed && board.status !== 'closed'
+    );
     let participantBoard;
     visibleBrds.forEach((brd: Board) => {
       if (brd.id === participantBoardId) {

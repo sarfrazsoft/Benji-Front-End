@@ -71,10 +71,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       value: 'open',
       name: 'Open',
     },
-    // {
-    //   value: 'closed',
-    //   name: 'Closed',
-    // },
+    {
+      value: 'closed',
+      name: 'Closed',
+    },
     {
       value: 'view_only',
       name: 'View',
@@ -171,9 +171,22 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   initializeBoards() {
-    const unSortedBoards: Array<Board> = this.activityState.brainstormactivity.boards.filter(
-      (board) => board.removed === false
-    );
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const unSortedBoards: Array<Board> = this.getBoardsForAdmin();
+        this.sortBoards(unSortedBoards);
+      }
+    });
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const unSortedBoards: Array<Board> = this.getBoardsForParticipant();
+        this.sortBoards(unSortedBoards);
+      }
+    });
+  }
+
+  sortBoards(unSortedBoards: Array<Board>) {
     let firstBoard;
     for (let i = 0; i < unSortedBoards.length; i++) {
       const board = unSortedBoards[i];
@@ -194,6 +207,16 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     }
     this.boards = boards;
+  }
+
+  getBoardsForAdmin() {
+    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
+  }
+
+  getBoardsForParticipant() {
+    return this.activityState.brainstormactivity.boards.filter(
+      (board) => board.removed === false && board.status !== 'closed'
+    );
   }
 
   getBoardParticipantCodes(board: Board) {
