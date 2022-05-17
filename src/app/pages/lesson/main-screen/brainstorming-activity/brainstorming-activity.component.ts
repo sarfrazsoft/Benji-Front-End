@@ -109,6 +109,8 @@ export class MainScreenBrainstormingActivityComponent
     this.eventType = this.getEventType();
 
     this.selectUserBoard();
+    
+    this.initBoardInstructions();
 
     // get the new boardmode whenever board is changed
     this.brainstormService.selectedBoard$.subscribe((val: Board) => {
@@ -144,7 +146,8 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.selectUserBoard();
+      //this.selectUserBoard();
+      this.initBoardInstructions();
     } else if (this.eventType === 'JoinEvent') {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
@@ -198,6 +201,25 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getParticipantBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+      }
+    });
+  }
+
+  initBoardInstructions () {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.selectedBoard = this.getAdminBoard();
+        this.brainstormService.selectedBoard = this.selectedBoard;
+        this.brainstormService.boardTitle = this.selectedBoard.board_activity.instructions;
+        this.brainstormService.boardInstructions = this.selectedBoard.board_activity.sub_instructions;
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.selectedBoard = this.getParticipantBoard();
+        this.brainstormService.selectedBoard = this.selectedBoard;
+        this.brainstormService.boardTitle = this.selectedBoard.board_activity.instructions;
+        this.brainstormService.boardInstructions = this.selectedBoard.board_activity.sub_instructions;
       }
     });
   }

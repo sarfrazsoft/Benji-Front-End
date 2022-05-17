@@ -103,12 +103,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     });
 
-    // console.log(this.activityState);
-
-    // if (this.selectedBoard) {
-    //   this.tempTitle = this.selectedBoard.board_activity.instructions;
-    //   this.tempInstructions = this.selectedBoard.board_activity.sub_instructions;
-    // }
+    this.getBoardInstructions();
 
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
@@ -125,13 +120,25 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     }
   }
 
+  getBoardInstructions() {
+    this.brainstormService.boardTitle$.subscribe((title: string) => {
+      if (title) {
+        this.title_instructions = title;
+      }
+    });
+    this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
+      if (instructions) {
+        this.sub_instructions = instructions;
+      }
+    });
+  }
+
   selectedBoardChanged(board) {
     this.selectedBoard = board;
     this.boardMode = this.selectedBoard.board_activity.mode;
     this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
-    this.title_instructions = board.board_activity.instructions;
-    this.sub_instructions = board.board_activity.sub_instructions;
+    //this.getBoardInstructions();
     this.boardStatus =
       board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
     if (board.sort) {
@@ -246,7 +253,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     );
   }
 
-  typingStoped(type) {
+  typingStoped(type: string) {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
       this.doneTyping(type);
@@ -258,10 +265,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     clearTimeout(this.typingTimer);
   }
 
-  doneTyping(type) {
-    if (type == 'title') {
+  doneTyping(type: string) {
+    if (type === 'title') {
       this.sendMessage.emit(new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.selectedBoard.id));
-    } else if (type == 'instructions') {
+    } else if (type === 'instructions') {
       this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.selectedBoard.id));
     }
   }
