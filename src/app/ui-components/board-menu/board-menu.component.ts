@@ -42,15 +42,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
-  // editingInstructions: boolean;
-  @ViewChild('title') InstructionsElement: ElementRef;
-  // editingSubInstructions: boolean;
-  @ViewChild('instructions') SubInstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
-  title_instructions = '';
-  sub_instructions = '';
-  tempTitle = "";
-  tempInstructions = "";
   statusDropdown = ['Open', 'View Only', 'Closed'];
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
@@ -103,8 +95,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     });
 
-    this.getBoardInstructions();
-
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
     this.hostBoard = this.activityState.brainstormactivity.host_board;
@@ -120,25 +110,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     }
   }
 
-  getBoardInstructions() {
-    this.brainstormService.boardTitle$.subscribe((title: string) => {
-      if (title) {
-        this.title_instructions = title;
-      }
-    });
-    this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
-      if (instructions) {
-        this.sub_instructions = instructions;
-      }
-    });
-  }
-
   selectedBoardChanged(board) {
     this.selectedBoard = board;
     this.boardMode = this.selectedBoard.board_activity.mode;
     this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
-    //this.getBoardInstructions();
     this.boardStatus =
       board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
     if (board.sort) {
@@ -153,12 +129,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     ) {
       this.resetBoards();
     } 
-    // if (
-    //   this.activityState.eventType === 'BrainstormEditBoardInstruction' ||
-    //   this.activityState.eventType === 'BrainstormEditSubInstruction'
-    // ) {
-    //   this.getBoardInstructions();
-    // }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === 'HostChangeBoardEvent') {
       } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
@@ -257,26 +227,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         'Sub Instructions'
       )
     );
-  }
-
-  typingStoped(type: string) {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.doneTyping(type);
-    }, 500);
-  }
-
-  // on keydown, clear the countdown
-  typingStarted() {
-    clearTimeout(this.typingTimer);
-  }
-
-  doneTyping(type: string) {
-    if (type === 'title') {
-      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.selectedBoard.id));
-    } else if (type === 'instructions') {
-      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.selectedBoard.id));
-    }
   }
 
   getInitials(nameString: string) {
