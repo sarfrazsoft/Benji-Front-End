@@ -7,7 +7,7 @@ export class BoardStatusService {
   /**
    * Setting change
    */
-  boardStatus$ = new BehaviorSubject<any>(null);
+  boardStatus$ = new BehaviorSubject<BoardStatus>(null);
 
   set boardStatus(boardStatus: BoardStatus) {
     this.boardStatus$.next(boardStatus);

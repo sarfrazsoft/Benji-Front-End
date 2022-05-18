@@ -13,9 +13,11 @@ import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
 import XHRUpload from '@uppy/xhr-upload';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  BoardStatus,
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaPinEvent,
   BrainstormSetCategoryEvent,
@@ -42,6 +44,7 @@ export interface IdeaDetailedInfo {
   participantCode: number;
   userRole: IdeaUserRole;
   showUserName: boolean;
+  boardStatus: BoardStatus;
 }
 export type IdeaUserRole = 'owner' | 'viewer';
 @Component({
@@ -125,6 +128,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   uploadPanelExpanded: boolean;
   participantCode = null;
   submitting_participant = null;
+  boardStatus: BoardStatus;
 
   imagesList: FileList;
   imageSrc;
@@ -178,12 +182,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   commentKey: string;
   fileProgress: FileProgress;
   mediaUploading = false;
+  isHost = false;
 
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
     private deleteDialog: MatDialog,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private ngxPermissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit(): void {
@@ -194,6 +200,18 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       .use(XHRUpload, {
         endpoint: 'http://my-website.org/upload',
       });
+
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.isHost = true;
+      }
+    });
+
+    this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.isHost = false;
+      }
+    });
   }
 
   ngOnChanges() {
@@ -216,6 +234,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.ideaTitle = this.data.item.title;
     this.userIdeaText = this.data.item.idea;
+    this.boardStatus = this.data.boardStatus;
 
     // initialize idea image
     if (this.data.item.idea_image) {
@@ -523,5 +542,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   categoryChanged(category) {
     this.sendMessage.emit(new BrainstormSetCategoryEvent(this.data.item.id, category.id));
+  }
+
+  isCommentingAllowed() {
+    if (this.isHost) {
+      return true;
+    } else if (this.boardStatus === 'open') {
+      return false;
+    }
   }
 }

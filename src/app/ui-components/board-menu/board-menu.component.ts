@@ -32,6 +32,7 @@ import {
   ParticipantChangeBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
@@ -90,7 +91,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   gridMode: boolean;
   threadMode: boolean;
   columnsMode: boolean;
-  boardStatus: string;
+  boardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
 
@@ -106,6 +107,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
+    private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
     private utilsService: UtilsService
   ) {}
@@ -114,6 +116,12 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
       if (board) {
         this.selectedBoardChanged(board);
+      }
+    });
+
+    this.boardStatusService.boardStatus$.subscribe((status: BoardStatus) => {
+      if (status) {
+        this.boardStatus = status;
       }
     });
 

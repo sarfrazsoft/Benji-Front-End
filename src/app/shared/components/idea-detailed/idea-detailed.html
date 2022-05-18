@@ -181,17 +181,6 @@
           </textarea>
         </ng-container>
         <ng-container *ngIf="userRole === 'owner' || userIdeaText">
-          <!-- <textarea
-            [readonly]="userRole !== 'owner'"
-            cdkTextareaAutosize
-            [(ngModel)]="userIdeaText"
-            (ngModelChange)="ideaIsEdited($event)" 
-            class="description"
-            placeholder="Description..."
-            [ngClass]="{
-              'image-selected': imageSelected || pdfSelected
-            }">
-          </textarea> -->
           <benji-tiptap-editor
             [editable]="userRole === 'owner'"
             [defaultValue]="userIdeaText"
@@ -281,7 +270,12 @@
         </mat-tab-group>
       </div>
     </div>
-    <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+    <div 
+      class="add-comment-container" 
+      fxLayout="row" 
+      fxLayoutGap="8px" 
+      fxLayoutAlign="center start"
+      *ngIf="isCommentingAllowed()">
       <benji-profile-pictures
         [activityState]="activityState"
         [participantCodes]="[participantCode]"

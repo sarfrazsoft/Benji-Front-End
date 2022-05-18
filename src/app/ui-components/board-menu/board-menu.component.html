@@ -62,32 +62,39 @@
             selected: selectedBoard?.id === board?.id
           }"
           (click)="navigateToBoard(board)">
-          <div fxLayout="row" fxLayoutAlign="space-between">
-            <div class="title">
-              {{ board?.board_activity.instructions }}
+          <ng-container *ngIf="boardStatus === 'closed'">
+            <div>
+              board closed
             </div>
-            <ng-container *ngxPermissionsOnly="'ADMIN'">
-              <button
-                [matMenuTriggerFor]="menu"
-                benji-click-stop-propagation
-                disableRipple
-                (click)="setMenuBoard(board)"
-                class="three-dots">
-                <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-              </button>
-            </ng-container>
-          </div>
-          <div class="sub-title">
-            {{ board.board_activity.sub_instructions }}
-          </div>
-          <div class="persons" *ngIf="getBoardParticipantCodes(board)">
-            <benji-profile-pictures
-              [activityState]="activityState"
-              [participantCodes]="getBoardParticipantCodes(board)"
-              [size]="'medium'"
-              [counterAfter]="9"
-            ></benji-profile-pictures>
-          </div>
+          </ng-container>
+          <ng-container *ngIf="boardStatus !== 'closed'">
+            <div fxLayout="row" fxLayoutAlign="space-between">
+              <div class="title">
+                {{ board?.board_activity.instructions }}
+              </div>
+              <ng-container *ngxPermissionsOnly="'ADMIN'">
+                <button
+                  [matMenuTriggerFor]="menu"
+                  benji-click-stop-propagation
+                  disableRipple
+                  (click)="setMenuBoard(board)"
+                  class="three-dots">
+                  <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+                </button>
+              </ng-container>
+            </div>
+            <div class="sub-title">
+              {{ board.board_activity.sub_instructions }}
+            </div>
+            <div class="persons" *ngIf="getBoardParticipantCodes(board)">
+              <benji-profile-pictures
+                [activityState]="activityState"
+                [participantCodes]="getBoardParticipantCodes(board)"
+                [size]="'medium'"
+                [counterAfter]="9"
+              ></benji-profile-pictures>
+            </div>
+          </ng-container>
         </div>
     </div>
   </div>

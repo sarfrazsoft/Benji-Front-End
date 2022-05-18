@@ -139,7 +139,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
     if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
       this.submittingUser = this.item.submitting_participant.participant_code;
-      if (this.submittingUser === this.participantCode) {
+      if (this.submittingUser === this.participantCode && this.boardStatus === 'open') {
         this.userRole = 'owner';
       } else {
         this.userRole = 'viewer';
@@ -321,6 +321,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         participantCode: this.participantCode,
         userRole: this.userRole,
         showUserName: this.showUserName,
+        boardStatus: this.boardStatus,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
