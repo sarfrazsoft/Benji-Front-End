@@ -13,8 +13,8 @@ import {
   Participant,
 } from 'src/app/services/backend/schema/course_details';
 import { TeamUser, User } from 'src/app/services/backend/schema/user';
-import { UtilsService } from 'src/app/services/utils.service';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-session-lobby-layout',
@@ -28,7 +28,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   @Input() room_code;
   @Input() latestParticipants;
   @Output() startLessonEvent = new EventEmitter<string>();
-  public isRoomCodeValid = true;
+  public isRoomCodeValid;
   public userName: string;
   public loginError;
   participantAlreadyExistsError = false;

@@ -207,7 +207,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!isRoomCodeValid">
+<ng-container *ngIf="isRoomCodeValid === false">
   <div class="sign-up-section" fxLayout="column">
     <img [src]="logo" loading="lazy" height="32" alt="">
     <div class="log-in-card">
