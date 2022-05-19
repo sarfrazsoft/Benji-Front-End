@@ -62,12 +62,12 @@
             selected: selectedBoard?.id === board?.id
           }"
           (click)="navigateToBoard(board)">
-          <ng-container *ngIf="boardStatus === 'closed'">
+          <ng-container *ngIf="board.boardStatus === 'closed'">
             <div>
               board closed
             </div>
           </ng-container>
-          <ng-container *ngIf="boardStatus !== 'closed'">
+          <ng-container *ngIf="board.boardStatus !== 'closed'">
             <div fxLayout="row" fxLayoutAlign="space-between">
               <div class="title">
                 {{ board?.board_activity.instructions }}
@@ -174,7 +174,7 @@
         bindLabel="name"
         [searchable]="false"
         [clearable]="false"
-        [(ngModel)]="boardStatus"
+        [(ngModel)]="currentboardStatus"
         (change)="setBoardStatus()"
         dropdownPosition="bottom">
       </ng-select>

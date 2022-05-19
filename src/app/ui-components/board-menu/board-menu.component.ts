@@ -91,7 +91,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   gridMode: boolean;
   threadMode: boolean;
   columnsMode: boolean;
-  boardStatus: BoardStatus;
+  currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
 
@@ -121,7 +121,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
     this.boardStatusService.boardStatus$.subscribe((status: BoardStatus) => {
       if (status) {
-        this.boardStatus = status;
+        this.currentboardStatus = status;
       }
     });
 
@@ -154,7 +154,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.title_instructions = board.board_activity.instructions;
     this.sub_instructions = board.board_activity.sub_instructions;
-    this.boardStatus = board.status;
+    this.currentboardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
     }
@@ -222,9 +222,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   getBoardsForParticipant() {
-    return this.activityState.brainstormactivity.boards.filter(
-      (board) => board.removed === false && board.status !== 'closed'
-    );
+    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
   }
 
   getBoardParticipantCodes(board: Board) {
@@ -386,8 +384,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   duplicateBoard() {}
 
   setBoardStatus() {
-    const selected = this.boardStatus;
-    this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(this.boardStatus, this.selectedBoard.id));
+    const selected = this.currentboardStatus;
+    this.sendMessage.emit(
+      new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
+    );
   }
 
   toggleMeetingMode($event) {

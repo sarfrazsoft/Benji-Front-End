@@ -286,9 +286,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   setHeart(idea: Idea) {
-    if (!this.deactivateHearting) {
-      this.deactivateHearting = true;
-      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    if (this.boardStatus === 'open' || this.isAdmin) {
+      if (!this.deactivateHearting) {
+        this.deactivateHearting = true;
+        this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+      }
     }
   }
 
