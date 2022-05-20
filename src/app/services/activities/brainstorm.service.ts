@@ -26,6 +26,22 @@ export class BrainstormService {
 
   selectedBoard$ = new BehaviorSubject<any>(null);
 
+  boardTitle$ = new BehaviorSubject<string>(null);  
+  set boardTitle(l: string) {
+    this.boardTitle$.next(l);
+  }
+  get boardTitle(): string {
+    return this.boardTitle$.getValue();
+  }
+
+  boardInstructions$ = new BehaviorSubject<string>(null);
+  set boardInstructions(l: string) {
+    this.boardInstructions$.next(l);
+  }
+  get boardInstructions(): string {
+    return this.boardInstructions$.getValue();
+  }
+
   getDraftC;
 
   getMyGroup(userId, groups) {
