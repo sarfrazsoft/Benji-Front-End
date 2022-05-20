@@ -8,7 +8,7 @@ import * as global from 'src/app/globals';
 import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
+import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -121,59 +121,60 @@ export class ActiveLessonsComponent implements OnInit {
   }
 
   duplicateSession(val: TableRowInformation) {
-    const msg = 'Do you want to duplicate board(s) ideas for this session as well?';
+    const msg = 'What would you like to duplicate:';
     const dialogRef = this.matDialog
-      .open(ConfirmationDialogComponent, {
-        data: {
-          confirmationMessage: msg,
-          actionButton: 'Yes',
-          cancelButton: 'No',
-        },
+      .open(DuplicateSessionDialogComponent, {
         disableClose: true,
         panelClass: 'confirmation-dialog',
       })
       .afterClosed()
       .subscribe((res) => {
-        let duplicateDoardIdeas: Boolean;
-        res ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
-        let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
-        this.http.post(request, {}).subscribe((response: SessionInformation) => {
-          if (response) {
-            request =
-              global.apiRoot +
-              '/course_details/lesson/' +
-              val.lessonId +
-              '/duplicate-session/' +
-              response.id +
-              '/boards/';
-            const interval = setInterval(() => {
-              // method to be executed;
-              this.http
-                .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
-                .subscribe((sessionCreationResponse: any) => {
-                  console.log(sessionCreationResponse);
-                  if (sessionCreationResponse.detail) {
-                    if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
-                    } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
-                      clearInterval(interval);
-                      this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
-                        this.lessonRuns = lessonsRuns;
-                        this.getActiveSessions();
-                        this.utilsService.openSuccessNotification(
-                          `Session successfully duplicated.`,
-                          `close`
-                        );
-                      });
+        if (res[0] || res[1]) {
+          let duplicateDoardIdeas: Boolean;
+          res[1] ? duplicateDoardIdeas = true : duplicateDoardIdeas = false;
+          let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
+          this.http.post(request, {}).subscribe((response: SessionInformation) => {
+            if (response) {
+              request =
+                global.apiRoot +
+                '/course_details/lesson/' +
+                val.lessonId +
+                '/duplicate-session/' +
+                response.id +
+                '/boards/';
+              const interval = setInterval(() => {
+                // method to be executed;
+                this.http
+                  .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
+                  .subscribe((sessionCreationResponse: any) => {
+                    console.log(sessionCreationResponse);
+                    if (sessionCreationResponse.detail) {
+                      if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
+                      } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
+                        clearInterval(interval);
+                        this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                          this.lessonRuns = lessonsRuns;
+                          this.getActiveSessions();
+                          this.utilsService.openSuccessNotification(
+                            `Session successfully duplicated.`,
+                            `close`
+                          );
+                        });
+                      }
                     }
-                  }
-                });
-            }, 500);
+                  });
+              }, 500);
+  
+              // this.dataSource = this.dataSource.map((value) => value)
+            } else {
+              this.utilsService.openWarningNotification('Something went wrong.', '');
+            }
+          });
 
-            // this.dataSource = this.dataSource.map((value) => value)
-          } else {
-            this.utilsService.openWarningNotification('Something went wrong.', '');
-          }
-        });
+        }
+        else {
+          dialogRef.closed;
+        }
       });
   }
 

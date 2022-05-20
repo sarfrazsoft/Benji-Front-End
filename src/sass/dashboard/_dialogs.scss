@@ -1301,6 +1301,55 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           color: #616161;
           background: #f3f4f7;
         }
+        &.duplicate {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .session-duplication {
+    .dialog-heading {
+      margin-bottom: 24px !important;
+    }
+    .dialog-instructions {
+      color: #37352f;
+    }
+    .copying-options {
+      .mat-checkbox-inner-container {
+        margin-right: 12px;
+        width: 20px;
+        height: 20px;
+        .mat-checkbox-frame {
+          color: #bdbdbd;
+          border: 1px solid #BDBDBD;
+          border-radius: 4px;
+        }
+      }
+      .mat-checkbox-label {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+      }
+      .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+        background-color: #555bea;
+        border-radius: 4px;
+      }
+      .mat-checkbox-ripple {
+        display: none;
+      }
+      .mat-checkbox-layout {
+        &:hover {
+          .mat-checkbox-frame {
+            border-color: #555bea;
+          }
+        }
+      }
+    }
+    .controls-container {
+      .dialog-controls {
+        &.duplicate {
+          color: #fff;
+        }
       }
     }
   }
