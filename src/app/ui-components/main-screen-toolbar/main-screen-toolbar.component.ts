@@ -368,8 +368,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     // get localstorage item 'participant'
     // if participant does not have user property set then they
     // are not signedIn using benji team user
-    if (localStorage.getItem('participant')) {
-      const participant: Participant = JSON.parse(localStorage.getItem('participant'));
+    if (localStorage.getItem('participant_' + this.roomCode)) {
+      const participant: Participant = JSON.parse(localStorage.getItem('participant_' + this.roomCode));
       if (participant.user) {
         return false;
       } else {
