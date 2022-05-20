@@ -6,13 +6,14 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { HttpClient } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import * as global from 'src/app/globals';
-import { AuthService, BackendRestService, BackendSocketService } from 'src/app/services';
+import { AuthService, BackendRestService, BackendSocketService, ContextService } from 'src/app/services';
 import {
   BeforeLessonRunDetails,
   LessonRunDetails,
   Participant,
 } from 'src/app/services/backend/schema/course_details';
 import { TeamUser, User } from 'src/app/services/backend/schema/user';
+import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
@@ -27,7 +28,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   @Input() room_code;
   @Input() latestParticipants;
   @Output() startLessonEvent = new EventEmitter<string>();
-  public isRoomCodeValid = true;
+  public isRoomCodeValid;
   public userName: string;
   public loginError;
   participantAlreadyExistsError = false;
@@ -46,6 +47,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
   loadSignUp: boolean;
   loadForgotPassword: boolean;
   mobileParticipantJoin: boolean;
+  logo: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +58,7 @@ export class SessionLobbyLayoutComponent implements OnInit {
     private utilsService: UtilsService,
     private permissionsService: NgxPermissionsService,
     private http: HttpClient,
+    private contextService: ContextService,
     private deviceService: DeviceDetectorService
   ) {}
 
@@ -76,51 +79,20 @@ export class SessionLobbyLayoutComponent implements OnInit {
       );
     }
     this.shareParticipantLink = this.hostname + this.room_code;
-
-    //
     // check if user is logged in
     if (this.authService.isLoggedIn()) {
       if (localStorage.getItem('user')) {
-        this.joinSessionAsLoggedInUser();
+        const user: TeamUser = JSON.parse(localStorage.getItem('user'));
+        this.authService.joinSessionAsLoggedInUser(user, this.roomCode.value, (isError) => {
+          this.loginError = isError;
+        });
       }
     }
-  }
-
-  joinSessionAsLoggedInUser() {
-    const user: TeamUser = JSON.parse(localStorage.getItem('user'));
-    const name = user.first_name + ' ' + user.last_name;
-    const lessonCode = this.roomCode.value;
-    console.log(name, lessonCode);
-
-    this.authService.createParticipant(name, lessonCode, user.id).subscribe(
-      (res) => {
-        this.loginError = false;
-        if (res.lessonrun_code) {
-          this.navigateToLesson(res.lessonrun_code);
-        } else if (res.message === 'You are already in this session.') {
-          this.authService.setParticipantSession(res.participant);
-          this.navigateToLesson(res.participant.lessonrun_code);
-        } else {
-          this.loginError = true;
-        }
-      },
-      (err) => {
-        if (err && err.error) {
-          if (err.error.non_field_errors) {
-            if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
-              this.utilsService.openWarningNotification(
-                'A participant with that name has already joined. Try a different name.',
-                ''
-              );
-            }
-          }
-        }
+    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+      if (info) {
+        this.logo = info.parameters.darkLogo;
       }
-    );
-  }
-
-  navigateToLesson(lessonRunCode) {
-    this.router.navigate(['/screen/lesson/' + lessonRunCode]);
+    });
   }
 
   public validateRoomCode() {

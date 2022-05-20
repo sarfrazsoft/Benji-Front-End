@@ -65,8 +65,17 @@ export class ParticipantJoinComponent implements OnInit {
         const lessonrun_code = res.lessonrun_code;
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));
         this.isRoomCodeValid = true;
-        // take the user to next screen where they will input their name
-        this.router.navigateByUrl('/participant/join?link=' + this.roomCode.value);
+        //
+        // check if current browser has a participant item
+        // in localstorage. If the lessonRunCode matches the
+        // localstorage item then log the guest in
+
+        if (this.checkIfGuestLoggedIn(lessonrun_code)) {
+          this.navigateToLesson(lessonrun_code);
+        } else {
+          // take the user to next screen where they will input their name
+          this.router.navigateByUrl('/participant/join?link=' + this.roomCode.value);
+        }
       },
       (err) => {
         console.error(`Unable to join: ${err.error.error}`);
@@ -81,8 +90,19 @@ export class ParticipantJoinComponent implements OnInit {
     );
   }
 
+  checkIfGuestLoggedIn(lessonRunCode): boolean {
+    if (localStorage.getItem('participant_' + lessonRunCode)) {
+      return true;
+    }
+    return false;
+  }
+
   onRoomCodeChange(roomCode: string): void {
     this.validateRoomCode();
+  }
+
+  navigateToLesson(lessonRunCode) {
+    this.router.navigate(['/screen/lesson/' + lessonRunCode]);
   }
 
   getBeforeLessonRunDetails(lessonrun_code) {

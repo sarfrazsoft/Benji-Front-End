@@ -36,6 +36,7 @@ import {
 import {
   Board,
   BoardMode,
+  BoardStatus,
   BrainstormActivity,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
@@ -55,6 +56,7 @@ import {
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
@@ -100,6 +102,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   selectedClassificationType;
   selectedParticipantGroup: Group;
   myGroup: Group;
+  boardStatus: BoardStatus;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -113,6 +116,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  isHost: boolean;
   private typingTimer;
 
   @Output() sendMessage = new EventEmitter<any>();
@@ -124,7 +128,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     private httpClient: HttpClient,
     private permissionsService: NgxPermissionsService,
     private sharingToolService: SharingToolService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private boardStatusService: BoardStatusService
   ) {}
 
   ngOnInit() {
@@ -134,6 +139,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.participantCode = this.participantCode;
+        this.isHost = false;
         if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
           this.initParticipantGrouping(this.act);
         }
@@ -150,6 +156,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       if (val) {
         if (this.eventType === 'AssignGroupingToActivities') {
         }
+        this.isHost = true;
         this.applyGroupingOnActivity(this.activityState);
         this.classificationTypes = [
           {
@@ -196,9 +203,28 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.saveIdea(val);
       }
     });
-    
-    this.getBoardInstructions();
 
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+        console.log(this.boardStatus);
+      }
+    });
+
+    this.getBoardInstructions();
+  }
+
+  isPostingAllowed() {
+    if (this.isHost) {
+      // if it's a host allow posting without any consideration
+      // to board status
+      return true;
+    } else if (this.boardStatus === 'open') {
+      // is participant
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getBoardInstructions() {
@@ -702,7 +728,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
   }
-  
+
   typingStoped(type: string) {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
@@ -717,10 +743,13 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   doneTyping(type: string) {
     if (type === 'title') {
-      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.board.id));
+      this.sendMessage.emit(
+        new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.board.id)
+      );
     } else if (type === 'instructions') {
-      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.board.id));
+      this.sendMessage.emit(
+        new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.board.id)
+      );
     }
   }
-
 }

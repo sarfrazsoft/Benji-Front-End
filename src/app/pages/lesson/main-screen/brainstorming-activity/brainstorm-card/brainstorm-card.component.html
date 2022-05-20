@@ -196,7 +196,12 @@
           </mat-icon>
         </div>
       </ng-container>
-      <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+      <div
+        *ngIf="checkBoardStatus()"
+        class="post-comment" 
+        fxLayout="row" 
+        fxLayoutGap="8px" 
+        fxLayoutAlign="center start">
         <benji-profile-pictures
           [activityState]="activityState"
           [participantCodes]="[participantCode]"
