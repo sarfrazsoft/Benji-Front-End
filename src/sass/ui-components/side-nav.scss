@@ -214,6 +214,18 @@
     &.selected {
       border: 2px solid $primary-color;
     }
+    &.closed {
+      padding: 24px;
+      img {
+        width: 40px;
+      }
+      span {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+        color: #bdbdbd;
+      }
+    }
     .title {
       color: #37352f;
       font-weight: 600;

@@ -4,6 +4,7 @@ import { TokenInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
 import { BackendRestService } from './backend/backend-rest.service';
 import { BackendSocketService } from './backend/backend-socket.service';
+import { BoardStatusService } from './board-status.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { GroupingToolService } from './grouping-tool.service';
 import { LayoutService } from './layout.service';
@@ -46,5 +47,6 @@ export const ServicesProviders = [
   UtilsService,
   SharingToolService,
   GroupingToolService,
+  BoardStatusService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];

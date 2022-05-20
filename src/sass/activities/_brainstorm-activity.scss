@@ -116,6 +116,16 @@ benji-ms-brainstorming-activity {
     height: 100% !important;
     appearance: none !important;
     overflow: hidden;
+    .empty-board {
+      height: calc(100vh - 135px);
+      span {
+        color: #bdbdbd;
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 40px;
+        text-align: center;
+      }
+    }
     .thread-mode {
       margin: 0px auto;
       .submitted-ideas {
@@ -1031,6 +1041,16 @@ ng-dropdown-panel {
       }
       .options-buttons {
         margin-top: 16px;
+      }
+    }
+    .empty-board {
+      height: calc(100vh - 220px) !important;
+      img {
+        width: 40px;
+        margin-bottom: 16px !important;
+      }
+      span {
+        font-size: 16px !important;
       }
     }
   }

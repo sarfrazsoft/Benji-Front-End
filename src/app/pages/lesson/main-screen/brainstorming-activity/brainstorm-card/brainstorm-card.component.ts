@@ -30,6 +30,7 @@ import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
+  BoardStatus,
   BrainstormActivity,
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
@@ -40,6 +41,7 @@ import {
   Idea,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
@@ -106,6 +108,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
   isAdmin: boolean;
+  boardStatus: BoardStatus;
   mobileSize = false;
 
   constructor(
@@ -116,7 +119,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
-    private breakpointObserver: BreakpointObserver,
+    private boardStatusService: BoardStatusService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -135,7 +139,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
     if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
       this.submittingUser = this.item.submitting_participant.participant_code;
-      if (this.submittingUser === this.participantCode) {
+      if (this.submittingUser === this.participantCode && this.boardStatus === 'open') {
         this.userRole = 'owner';
       } else {
         this.userRole = 'viewer';
@@ -152,6 +156,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.isAdmin = true;
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+        console.log(this.boardStatus);
+      }
+    });
+  }
+
+  checkBoardStatus() {
+    if (this.boardStatus === 'open') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnChanges() {}
@@ -267,9 +286,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   setHeart(idea: Idea) {
-    if (!this.deactivateHearting) {
-      this.deactivateHearting = true;
-      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    if (this.boardStatus === 'open' || this.isAdmin) {
+      if (!this.deactivateHearting) {
+        this.deactivateHearting = true;
+        this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+      }
     }
   }
 
@@ -302,6 +323,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         participantCode: this.participantCode,
         userRole: this.userRole,
         showUserName: this.showUserName,
+        boardStatus: this.boardStatus,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
@@ -320,18 +342,15 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
 
     // detect screen size changes
-    this.breakpointObserver.observe([
-      "(max-width: 768px)"
-    ]).subscribe((result: BreakpointState) => {
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result: BreakpointState) => {
       if (result.matches) {
-        dialogRef.addPanelClass("idea-detailed-mobile-dialog");
-        dialogRef.removePanelClass("idea-detailed-dialog");
+        dialogRef.addPanelClass('idea-detailed-mobile-dialog');
+        dialogRef.removePanelClass('idea-detailed-dialog');
       } else {
-        dialogRef.addPanelClass("idea-detailed-dialog");
-        dialogRef.removePanelClass("idea-detailed-mobile-dialog");
+        dialogRef.addPanelClass('idea-detailed-dialog');
+        dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
     });
-  
   }
 
   onCommentFocus() {

@@ -59,35 +59,43 @@
           class="board" 
           fxLayoutGap="8px"
           [ngClass]="{
-            selected: selectedBoard?.id === board?.id
+            selected: selectedBoard?.id === board?.id, closed: board.status === 'closed'
           }"
           (click)="navigateToBoard(board)">
-          <div fxLayout="row" fxLayoutAlign="space-between">
-            <div class="title">
-              {{ board?.board_activity.instructions }}
+          <ng-container *ngIf="board.status === 'closed'">
+            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <img class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
+              <span>This board is hidden for now</span>
             </div>
-            <ng-container *ngxPermissionsOnly="'ADMIN'">
-              <button
-                [matMenuTriggerFor]="menu"
-                benji-click-stop-propagation
-                disableRipple
-                (click)="setMenuBoard(board)"
-                class="three-dots">
-                <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-              </button>
-            </ng-container>
-          </div>
-          <div class="sub-title">
-            {{ board.board_activity.sub_instructions }}
-          </div>
-          <div class="persons" *ngIf="getBoardParticipantCodes(board)">
-            <benji-profile-pictures
-              [activityState]="activityState"
-              [participantCodes]="getBoardParticipantCodes(board)"
-              [size]="'medium'"
-              [counterAfter]="9"
-            ></benji-profile-pictures>
-          </div>
+          </ng-container>
+          <ng-container *ngIf="board.status !== 'closed'">
+            <div fxLayout="row" fxLayoutAlign="space-between">
+              <div class="title">
+                {{ board?.board_activity.instructions }}
+              </div>
+              <ng-container *ngxPermissionsOnly="'ADMIN'">
+                <button
+                  [matMenuTriggerFor]="menu"
+                  benji-click-stop-propagation
+                  disableRipple
+                  (click)="setMenuBoard(board)"
+                  class="three-dots">
+                  <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+                </button>
+              </ng-container>
+            </div>
+            <div class="sub-title">
+              {{ board.board_activity.sub_instructions }}
+            </div>
+            <div class="persons" *ngIf="getBoardParticipantCodes(board)">
+              <benji-profile-pictures
+                [activityState]="activityState"
+                [participantCodes]="getBoardParticipantCodes(board)"
+                [size]="'medium'"
+                [counterAfter]="9"
+              ></benji-profile-pictures>
+            </div>
+          </ng-container>
         </div>
     </div>
   </div>
@@ -125,6 +133,53 @@
   <div fxLayout="row" fxLayoutAlign="space-between">
     <div class="board-settings">Board Settings</div>
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
+  </div>
+  
+  <div fxLayout="column">
+    <div class="title">Title</div>
+    <div class="edit">
+      <div class="editing">
+          <input
+            #title
+            type="text"
+            value="{{ title_instructions }}"
+            (keyup)="typingStoped('title')"
+            (keydown)="typingStarted()">
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column">
+    <div class="title">Instructions</div>
+    <div class="edit">
+      <div class="editing">
+        <textarea
+          #instructions
+          type="text"
+          value="{{ sub_instructions }}"
+          (keyup)="typingStoped('instructions')"
+          (keydown)="typingStarted()"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div fxLayout="column">
+    <div class="title">Board Status</div>
+    <div class="board-status">
+      <ng-select
+        class="board-status-dropdown"
+        appearance="outline" 
+        placeholder="Status"
+        [items]="boardStatusDropdown"
+        bindValue="value"
+        bindLabel="name"
+        [searchable]="false"
+        [clearable]="false"
+        [(ngModel)]="currentboardStatus"
+        (change)="setBoardStatus()"
+        dropdownPosition="bottom">
+      </ng-select>
+    </div>
   </div>
 
   <div fxLayout="column">
