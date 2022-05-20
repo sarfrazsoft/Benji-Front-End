@@ -303,9 +303,24 @@
                   margin-top: 24px;
                 }
               }
+              &.incorrect-code {
+                padding: 48px 40px;
+              }
             }
           }
         }
+      }
+    }
+  }
+}
+
+.sign-up-section {
+  .div-block-183 {
+    &.incorrect-code {
+      margin: 48px 40px;
+      .title {
+        line-height: 32px;
+        margin-bottom: 24px;
       }
     }
   }
