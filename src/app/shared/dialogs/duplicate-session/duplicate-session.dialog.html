@@ -6,7 +6,7 @@
   </div> -->
   <mat-dialog-content class="dialog-content">
     <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="8px">
-      <h2 class="dialog-heading black-color"> {{ confirmationTitle }} </h2>
+      <h2 class="dialog-heading black-color"> Duplicate Board </h2>
       <div class="dialog-instructions">
         {{ confirmationMessage }}
       </div>
@@ -26,13 +26,13 @@
           (click)="confirm()"
           [disabled]=" !copyBoards && !copyBoth"
         >
-          {{ actionButton }}
+          Duplicate
         </button>
         <button
           class="cancel-button dialog-controls"
           mat-dialog-close
         >
-          {{ cancelButton }}
+          Cancel
         </button>
       </div>
     </div>

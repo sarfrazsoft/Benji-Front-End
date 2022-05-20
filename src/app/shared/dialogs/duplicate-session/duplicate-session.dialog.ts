@@ -1,36 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
-export interface DuplicateSessionDialogData {
-  confirmationTitle?: string;
-  confirmationMessage?: string;
-  actionButton?: string;
-  cancelButton?: string;
-}
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'benji-duplicate-session-dialog',
   templateUrl: 'duplicate-session.dialog.html',
 })
-export class DuplicateSessionDialogComponent implements OnInit {
-  public confirmationTitle: string;
-  public confirmationMessage: string;
-  public actionButton: string;
-  public cancelButton: string;
+
+export class DuplicateSessionDialogComponent {
   copyBoards = false;
   copyBoth = false;
-  constructor(
-    private dialogRef: MatDialogRef<DuplicateSessionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DuplicateSessionDialogData
-  ) {
-    this.confirmationTitle = data.confirmationTitle;
-    this.confirmationMessage = data.confirmationMessage;
-    this.actionButton = data.actionButton;
-    this.cancelButton = data.cancelButton;
+  constructor(private dialogRef: MatDialogRef<DuplicateSessionDialogComponent>) {
   }
-  selectedSession;
-
-  ngOnInit() {}
 
   updateCopyBoth(both: boolean) {
     if (both) {

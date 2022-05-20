@@ -124,12 +124,6 @@ export class ActiveLessonsComponent implements OnInit {
     const msg = 'What would you like to duplicate:';
     const dialogRef = this.matDialog
       .open(DuplicateSessionDialogComponent, {
-        data: {
-          confirmationTitle: 'Duplicate Board',
-          confirmationMessage: msg,
-          actionButton: 'Duplicate',
-          cancelButton: 'Cancel',
-        },
         disableClose: true,
         panelClass: 'confirmation-dialog',
       })
