@@ -44,11 +44,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
-  // editingInstructions: boolean;
-  @ViewChild('title') InstructionsElement: ElementRef;
-  // editingSubInstructions: boolean;
-  @ViewChild('instructions') SubInstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
+
+  @ViewChild('title') InstructionsElement: ElementRef;
+  @ViewChild('instructions') SubInstructionsElement: ElementRef;
+
   title_instructions = '';
   sub_instructions = '';
   tempTitle = '';

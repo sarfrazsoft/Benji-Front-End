@@ -40,6 +40,8 @@ import {
   BrainstormActivity,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
+  BrainstormEditInstructionEvent,
+  BrainstormEditSubInstructionEvent,
   BrainstormImageSubmitEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormSubmitDocumentEvent,
@@ -72,7 +74,10 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   showParticipantsGroupsDropdown = false;
   @Input() participantCode;
 
-  instructions = '';
+  @ViewChild('title') InstructionsElement: ElementRef;
+  @ViewChild('instructions') SubInstructionsElement: ElementRef;
+
+  title_instructions = '';
   sub_instructions = '';
   timer: Timer;
   act: BrainstormActivity;
@@ -111,6 +116,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   imageDialogRef;
   selectedImageUrl;
   isHost: boolean;
+  private typingTimer;
 
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
@@ -197,6 +203,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         console.log(this.boardStatus);
       }
     });
+
+    this.getBoardInstructions();
   }
 
   isPostingAllowed() {
@@ -210,6 +218,19 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       return false;
     }
+  }
+
+  getBoardInstructions() {
+    this.brainstormService.boardTitle$.subscribe((title: string) => {
+      if (title) {
+        this.title_instructions = title;
+      }
+    });
+    this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
+      if (instructions) {
+        this.sub_instructions = instructions;
+      }
+    });
   }
 
   applyGroupingOnActivity(state: UpdateMessage) {
@@ -252,8 +273,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.instructions = this.board.board_activity.instructions;
-      this.sub_instructions = this.board.board_activity.sub_instructions;
+      this.getBoardInstructions();
     } else {
       // populate groupings dropdown
       if (
@@ -286,8 +306,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
       this.joinedUsers = this.activityState.lesson_run.participant_set;
 
-      this.instructions = this.board.board_activity.instructions;
-      this.sub_instructions = this.board.board_activity.sub_instructions;
+      this.getBoardInstructions();
 
       this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
@@ -405,59 +424,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.board = board;
     this.eventType = 'filtered';
   }
-
-  // loadUsersCounts() {
-  //   this.joinedUsers = [];
-  //   this.answeredParticipants = [];
-  //   this.unansweredParticipants = [];
-  //   this.joinedUsers = this.getActiveParticipants();
-
-  //   // participant_vote_counts
-  //   if (!this.voteScreen) {
-  //     this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
-  //       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
-  //     });
-  //   } else if (this.voteScreen) {
-  //     this.activityState.brainstormactivity.participant_vote_counts.forEach((code) => {
-  //       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
-  //     });
-  //   }
-  //   this.unansweredParticipants = this.getUnAnsweredUsers();
-  // }
-
-  // getUnAnsweredUsers() {
-  //   const answered = this.answeredParticipants;
-  //   const active = [];
-  //   for (let index = 0; index < this.joinedUsers.length; index++) {
-  //     active.push(this.joinedUsers[index].display_name);
-  //   }
-  //   return active.filter((name) => !answered.includes(name));
-  // }
-
-  // isAllSubmissionsComplete(act: BrainstormActivity): boolean {
-  //   const maxSubmissions = act.max_participant_submissions;
-
-  //   let submissions = 0;
-  //   act.participant_submission_counts.forEach((element) => {
-  //     submissions = submissions + element.count;
-  //   });
-
-  //   let activeParticipants = 0;
-  //   this.activityState.lesson_run.participant_set.forEach((element) => {
-  //     if (element.is_active) {
-  //       activeParticipants = activeParticipants + 1;
-  //     }
-  //   });
-
-  //   const totalMaxSubmissions = activeParticipants * maxSubmissions;
-  //   const totalCurrentSubmissions = this.getUsersIdeas(act).length;
-
-  //   if (totalMaxSubmissions === totalCurrentSubmissions) {
-  //     return true;
-  //   }
-
-  //   return false;
-  // }
 
   getUsersIdeas(act: BrainstormActivity): Array<Idea> {
     let arr: Array<Idea> = [];
@@ -753,6 +719,30 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
           (data) => {},
           (error) => console.log(error)
         );
+    }
+  }
+
+  typingStoped(type: string) {
+    clearTimeout(this.typingTimer);
+    this.typingTimer = setTimeout(() => {
+      this.doneTyping(type);
+    }, 500);
+  }
+
+  // on keydown, clear the countdown
+  typingStarted() {
+    clearTimeout(this.typingTimer);
+  }
+
+  doneTyping(type: string) {
+    if (type === 'title') {
+      this.sendMessage.emit(
+        new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.board.id)
+      );
+    } else if (type === 'instructions') {
+      this.sendMessage.emit(
+        new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.board.id)
+      );
     }
   }
 }
