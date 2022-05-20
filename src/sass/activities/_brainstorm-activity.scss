@@ -116,6 +116,15 @@ benji-ms-brainstorming-activity {
     height: 100% !important;
     appearance: none !important;
     overflow: hidden;
+    .empty-board {
+      height: calc(100vh - 150px);
+      span {
+        color: #bdbdbd;
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 40px;
+      }
+    }
     .thread-mode {
       margin: 0px auto;
       .submitted-ideas {

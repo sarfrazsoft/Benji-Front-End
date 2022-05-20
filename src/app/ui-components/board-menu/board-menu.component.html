@@ -59,15 +59,16 @@
           class="board" 
           fxLayoutGap="8px"
           [ngClass]="{
-            selected: selectedBoard?.id === board?.id
+            selected: selectedBoard?.id === board?.id, closed: board.status === 'closed'
           }"
           (click)="navigateToBoard(board)">
-          <ng-container *ngIf="board.boardStatus === 'closed'">
-            <div>
-              board closed
+          <ng-container *ngIf="board.status === 'closed'">
+            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
+              <img class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
+              <span>This board is hidden for now</span>
             </div>
           </ng-container>
-          <ng-container *ngIf="board.boardStatus !== 'closed'">
+          <ng-container *ngIf="board.status !== 'closed'">
             <div fxLayout="row" fxLayoutAlign="space-between">
               <div class="title">
                 {{ board?.board_activity.instructions }}

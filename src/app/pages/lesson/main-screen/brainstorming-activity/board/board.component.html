@@ -86,63 +86,70 @@
       </div>
     </div>
     <div class="brainstorm-container">
-      <ng-container *ngIf="boardMode=='columns'">
-        <benji-categorized-ideas
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [minWidth]="getMinWidth()"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="true"
-          [myGroup]="myGroup"
-          (addCardUnderCategory)="addCardUnderCategory($event)"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)"
-        >
-        </benji-categorized-ideas>
+      <ng-container *ngIf="board.status === 'closed'">
+        <div class="empty-board" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="48px">
+          <img class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
+          <span>This board is hidden for now</span>
+        </div>
       </ng-container>
-  
-      <ng-container *ngIf="boardMode=='grid'">
-        <benji-uncategorized-ideas
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [minWidth]="getMinWidth()"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="false"
-          [myGroup]="myGroup"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)">
-  
-        </benji-uncategorized-ideas>
+      <ng-container *ngIf="board.status !== 'closed'">
+        <ng-container *ngIf="boardMode=='columns'">
+          <benji-categorized-ideas
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [minWidth]="getMinWidth()"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="true"
+            [myGroup]="myGroup"
+            (addCardUnderCategory)="addCardUnderCategory($event)"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)"
+          >
+          </benji-categorized-ideas>
+        </ng-container>
+    
+        <ng-container *ngIf="boardMode=='grid'">
+          <benji-uncategorized-ideas
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [minWidth]="getMinWidth()"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="false"
+            [myGroup]="myGroup"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+    
+          </benji-uncategorized-ideas>
+        </ng-container>
+    
+        <ng-container *ngIf="boardMode=='thread'">
+          <benji-thread-mode-ideas
+            [ngClass]="{'thread-mode': boardMode=='thread'}"
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="false"
+            [myGroup]="myGroup"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+          </benji-thread-mode-ideas>
+        </ng-container>
       </ng-container>
-  
-      <ng-container *ngIf="boardMode=='thread'">
-        <benji-thread-mode-ideas
-          [ngClass]="{'thread-mode': boardMode=='thread'}"
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="false"
-          [myGroup]="myGroup"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)">
-        </benji-thread-mode-ideas>
-      </ng-container>
-  
     </div>
   </div>
 </ng-container>
