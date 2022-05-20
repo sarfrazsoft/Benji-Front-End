@@ -4,35 +4,45 @@
     board closed
   </div>
 </ng-container>
-<ng-container *ngIf="boardStatus !== 'closed' || isHost">
 
+
+<ng-container *ngIf="boardStatus !== 'closed' || isHost">
   <div fxLayout="column" class="barinstorm-main">
     <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-sm="column">
-    <div fxLayout="column" class="instructions">
-      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
-        <div>
-          <div
-            class="brainstorm-h2 black-color"
-            [ngClass]="{
-              'long-instructions': instructions.length > 65
-            }"
-          >
-            <input
-              #title
-              type="text"
-              value="{{ title_instructions }}"
-              (keyup)="typingStoped('title')"
-              (keydown)="typingStarted()">
-          </div>
-          <div class="sub-header">
-            <textarea
+      <div fxLayout="column" class="instructions">
+        <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
+          <div>
+            <div
+              class="brainstorm-h2 black-color"
+              [ngClass]="{
+                'long-instructions': instructions.length > 65
+              }"
+            >
+              <input
+                #title
+                type="text"
+                value="{{ title_instructions }}"
+                (keyup)="typingStoped('title')"
+                (keydown)="typingStarted()">
+            </div>
+            <div class="sub-header">
+              <textarea
               #instructions
               type="text"
               rows="1"
               value="{{ sub_instructions }}"
               (keyup)="typingStoped('instructions')"
               (keydown)="typingStarted()"></textarea>
+            </div>
           </div>
+          <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+            <benji-participant-grouping-container
+              *ngIf="!actEditor"
+              [activityState]="activityState"
+              (sendMessage)="sendSocketMessage($event)"
+              [participantCode]="participantCode">
+            </benji-participant-grouping-container>
+          </ng-container>
         </div>
       </div>
       <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
