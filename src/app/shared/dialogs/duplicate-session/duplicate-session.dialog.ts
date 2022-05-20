@@ -42,10 +42,7 @@ export class DuplicateSessionDialogComponent implements OnInit {
   }
 
   confirm() {
-    this.copyBoth? this.dialogRef.close(true) : this.dialogRef.close(true);
+    this.dialogRef.close([this.copyBoards, this.copyBoth]);
   }
 
-  cancel() {
-    this.dialogRef.close(false);
-  }
 }
