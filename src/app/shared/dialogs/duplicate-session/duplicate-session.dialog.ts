@@ -18,7 +18,7 @@ export class DuplicateSessionDialogComponent implements OnInit {
   public actionButton: string;
   public cancelButton: string;
   copyBoards = false;
-  copyBoardsPosts = false;
+  copyBoth = false;
   constructor(
     private dialogRef: MatDialogRef<DuplicateSessionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DuplicateSessionDialogData
@@ -32,8 +32,17 @@ export class DuplicateSessionDialogComponent implements OnInit {
 
   ngOnInit() {}
 
+  updateCopyBoth(both: boolean) {
+    if (both) {
+      this.copyBoards = true;
+      this.copyBoth = true;
+    } else {
+      this.copyBoth = false;
+    }
+  }
+
   confirm() {
-    this.dialogRef.close(true);
+    this.copyBoth? this.dialogRef.close(true) : this.dialogRef.close(true);
   }
 
   cancel() {

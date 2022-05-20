@@ -11,13 +11,20 @@
         {{ confirmationMessage }}
       </div>
       <section class="copying-options black-color" fxLayout="column" fxLayoutGap="10px">
-        <mat-checkbox [(ngModel)]="copyBoards">Copy boards</mat-checkbox>
-        <mat-checkbox [(ngModel)]="copyBoardsPosts">Copy boards with host’s posts</mat-checkbox>
+        <mat-checkbox 
+          [(ngModel)]="copyBoards"
+          [checked]="copyBoth || copyBoards"
+          [disabled]="copyBoth">Copy boards</mat-checkbox>
+        <mat-checkbox 
+          [(ngModel)]="copyBoth"
+          (change)="updateCopyBoth($event.checked)"
+          >Copy boards with host’s posts</mat-checkbox>
       </section>
       <div class="controls-container" fxLayout="row" fxLayoutAlign="end" fxLayoutGap="8px">
         <button
           class="bg-primary-color duplicate dialog-controls"
           (click)="confirm()"
+          [disabled]=" !copyBoards && !copyBoth"
         >
           {{ actionButton }}
         </button>
