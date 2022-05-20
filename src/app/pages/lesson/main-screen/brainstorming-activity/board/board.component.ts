@@ -85,6 +85,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   voteScreen = false;
   VnSComplete = false;
   showUserName = true;
+  isEditable = false;
   minWidth = 'small';
   colDeleted = 0;
   joinedUsers = [];
@@ -142,6 +143,12 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
           this.initParticipantGrouping(this.act);
         }
+      }
+    });
+
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.isEditable = true;
       }
     });
 
