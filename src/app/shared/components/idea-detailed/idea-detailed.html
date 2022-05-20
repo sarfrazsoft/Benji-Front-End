@@ -1,4 +1,4 @@
-<div fxLayout="row" [ngClass]="{'mobile-panel': data.isMobile}">
+<div fxLayout="row" class="mobile-panel">
   <div 
     *ngIf="!imageSelected && !pdfSelected" 
     class="back-text" 
@@ -101,8 +101,8 @@
             style="margin: 0 auto;" 
             width="100%" 
             controls>
-            <source [src]="videoURL" type="video/webm" />
             <source [src]="videoURLConverted" type="video/mp4" />
+            <source [src]="videoURL" type="video/webm" />
           </video>
         </ng-container>
       </ng-container>
@@ -164,7 +164,7 @@
             </div>
           </div>
         </div>
-        <button  class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
+        <button class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
       </div>
       <div class="scrollable-area">
         <ng-container *ngIf="userRole === 'owner' || ideaTitle">
@@ -181,17 +181,6 @@
           </textarea>
         </ng-container>
         <ng-container *ngIf="userRole === 'owner' || userIdeaText">
-          <!-- <textarea
-            [readonly]="userRole !== 'owner'"
-            cdkTextareaAutosize
-            [(ngModel)]="userIdeaText"
-            (ngModelChange)="ideaIsEdited($event)" 
-            class="description"
-            placeholder="Description..."
-            [ngClass]="{
-              'image-selected': imageSelected || pdfSelected
-            }">
-          </textarea> -->
           <benji-tiptap-editor
             [editable]="userRole === 'owner'"
             [defaultValue]="userIdeaText"
@@ -232,7 +221,8 @@
                 appendTo="body"
                 (change)="categoryChanged($event)"
                 [searchable]="false"
-                [clearable]="false">
+                [clearable]="false"
+                [disabled]="userRole === 'owner'">
               </ng-select>
             </div>
           </div>
@@ -259,8 +249,8 @@
             </div>
           </mat-tab>
           <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
-            <ng-container *ngIf="idea?.hearts.length">
-              <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
+            <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
+              <ng-container *ngIf="idea?.hearts.length">
                 <div 
                   fxLayout="row"
                   fxLayoutGap="8px"
@@ -275,13 +265,18 @@
                   ></benji-profile-pictures>
                   <div class="name">{{ getParticipantName(heart.participant) }}</div>
                 </div>
-              </div>
-            </ng-container>
+              </ng-container>
+            </div>
           </mat-tab>
         </mat-tab-group>
       </div>
     </div>
-    <div class="add-comment-container" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+    <div 
+      class="add-comment-container" 
+      fxLayout="row" 
+      fxLayoutGap="8px" 
+      fxLayoutAlign="center start"
+      *ngIf="isCommentingAllowed()">
       <benji-profile-pictures
         [activityState]="activityState"
         [participantCodes]="[participantCode]"

@@ -91,8 +91,8 @@
             preload="metadata"
             (loadeddata)="videoLoaded()">
             <p>Your browser cannot play the provided video file.</p>
-            <source [src]="item.idea_video.document_url" type="video/webm" />
             <source [src]="item.idea_video.document_url_converted " type="video/mp4" />
+            <source [src]="item.idea_video.document_url" type="video/webm" />
           </video>
         </ng-container>
 
@@ -196,7 +196,12 @@
           </mat-icon>
         </div>
       </ng-container>
-      <div class="post-comment" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+      <div
+        *ngIf="checkBoardStatus()"
+        class="post-comment" 
+        fxLayout="row" 
+        fxLayoutGap="8px" 
+        fxLayoutAlign="center start">
         <benji-profile-pictures
           [activityState]="activityState"
           [participantCodes]="[participantCode]"

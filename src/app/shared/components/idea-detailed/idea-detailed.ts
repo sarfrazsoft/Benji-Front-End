@@ -13,9 +13,11 @@ import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
 import XHRUpload from '@uppy/xhr-upload';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  BoardStatus,
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaPinEvent,
   BrainstormSetCategoryEvent,
@@ -39,10 +41,10 @@ export interface IdeaDetailedInfo {
   category: Category;
   myGroup: Group;
   activityState: UpdateMessage;
-  isMobile: boolean;
   participantCode: number;
   userRole: IdeaUserRole;
   showUserName: boolean;
+  boardStatus: BoardStatus;
 }
 export type IdeaUserRole = 'owner' | 'viewer';
 @Component({
@@ -126,6 +128,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   uploadPanelExpanded: boolean;
   participantCode = null;
   submitting_participant = null;
+  boardStatus: BoardStatus;
 
   imagesList: FileList;
   imageSrc;
@@ -179,12 +182,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   commentKey: string;
   fileProgress: FileProgress;
   mediaUploading = false;
+  isHost = false;
 
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
     private deleteDialog: MatDialog,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private ngxPermissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit(): void {
@@ -195,6 +200,18 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       .use(XHRUpload, {
         endpoint: 'http://my-website.org/upload',
       });
+
+    this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.isHost = true;
+      }
+    });
+
+    this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.isHost = false;
+      }
+    });
   }
 
   ngOnChanges() {
@@ -217,6 +234,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.ideaTitle = this.data.item.title;
     this.userIdeaText = this.data.item.idea;
+    this.boardStatus = this.data.boardStatus;
 
     // initialize idea image
     if (this.data.item.idea_image) {
@@ -317,6 +335,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
     this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
+    this.ideaEditEvent.emit(true);
   }
 
   removeImage() {
@@ -362,6 +381,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           this.removeImage();
           if (res.type === 'upload') {
             this.imageSelected = true;
+            this.ideaEditEvent.emit(true);
             this.imagesList = res.data;
             const fileList: FileList = res.data;
             const file = fileList[0];
@@ -374,6 +394,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.ideaEditEvent.emit(true);
             this.selectedThirdPartyImageUrl = res.data;
           }
         }
@@ -400,6 +421,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSrc = res.data;
             this.imageSelected = true;
+            this.ideaEditEvent.emit(true);
           }
         }
       });
@@ -500,6 +522,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = true;
       this.webcamImageId = res.id;
     }
+    this.ideaEditEvent.emit(true);
   }
 
   onCommentFocus() {
@@ -519,5 +542,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   categoryChanged(category) {
     this.sendMessage.emit(new BrainstormSetCategoryEvent(this.data.item.id, category.id));
+  }
+
+  isCommentingAllowed() {
+    if (this.isHost) {
+      return true;
+    } else if (this.boardStatus === 'open') {
+      return false;
+    }
   }
 }

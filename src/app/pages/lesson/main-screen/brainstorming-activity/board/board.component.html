@@ -1,134 +1,170 @@
-<div fxLayout="column" class="barinstorm-main">
-  <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-sm="column">
-    <div fxLayout="column" class="instructions">
-      <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
-        <div>
-          <div
-            class="brainstorm-h2 black-color"
-            [ngClass]="{
-              'long-instructions': instructions.length > 65
-            }"
-          >
-            {{ instructions }}
+
+<ng-container *ngIf="boardStatus === 'closed' && !isHost">
+  <div>
+    board closed
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="boardStatus !== 'closed' || isHost">
+  <div fxLayout="column" class="barinstorm-main">
+    <div class="barinstorm-header" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.lt-sm="column">
+      <div fxLayout="column" class="instructions">
+        <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
+          <div>
+            <div
+              class="brainstorm-h2 black-color"
+              [ngClass]="{
+                'long-instructions': instructions.length > 65
+              }"
+            >
+              <input
+                #title
+                type="text"
+                value="{{ title_instructions }}"
+                (keyup)="typingStoped('title')"
+                (keydown)="typingStarted()">
+            </div>
+            <div class="sub-header">
+              <textarea
+                #instructions
+                type="text"
+                rows="1"
+                value="{{ sub_instructions }}"
+                (keyup)="typingStoped('instructions')"
+                (keydown)="typingStarted()">
+              </textarea>
+            </div>
           </div>
-          <div class="sub-header">{{ sub_instructions }}</div>
+          <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+            <benji-participant-grouping-container
+              *ngIf="!actEditor"
+              [activityState]="activityState"
+              (sendMessage)="sendSocketMessage($event)"
+              [participantCode]="participantCode">
+            </benji-participant-grouping-container>
+          </ng-container>
         </div>
-        <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
-          <benji-participant-grouping-container
-            *ngIf="!actEditor"
-            [activityState]="activityState"
-            (sendMessage)="sendSocketMessage($event)"
-            [participantCode]="participantCode">
-          </benji-participant-grouping-container>
+      </div>
+      <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
+        <ng-container *ngxPermissionsOnly="'ADMIN'">
+          <div fxLayout="row-reverse" fxLayout.lt-sm="row" fxLayoutGap="8px">
+            <div *ngIf="classificationTypes && participantGroups?.length">
+              <ng-select
+                class="brainstorm-groups menus"
+                [items]="classificationTypes"
+                bindLabel="title"
+                placeholder="Groups"
+                (change)="classificationTypeChanged(selectedClassificationType)"
+                [(ngModel)]="selectedClassificationType"
+                appendTo="body"
+                [searchable]="false"
+                [clearable]="false">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                    <img src="{{item.imgUrl}}" />
+                    <div fxLayout="column">
+                      <div class="title">{{ item.title }}</div>
+                      <div class="description">{{ item.description }}</div>
+                    </div>
+                  </div>
+              </ng-template>
+              </ng-select>
+            </div>
+            <div *ngIf="showParticipantsGroupsDropdown">
+              <ng-select
+                class="menus"
+                [items]="participantGroups"
+                bindLabel="title"
+                placeholder="Groups"
+                (change)="ParticipantGroupChanged(selectedParticipantGroup)"
+                [(ngModel)]="selectedParticipantGroup"
+                appendTo="body"
+                [searchable]="false"
+                [clearable]="false">
+                <ng-template ng-option-tmp let-item="item" let-index="index">
+                  <div>{{ item.title }}</div>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
         </ng-container>
+        <div 
+          *ngIf="isPostingAllowed()"
+          fxLayout="row" 
+          fxLayoutAlign="center center" 
+          fxLayoutGap="8px" class="import-button bg-primary-color" (click)="openDialog()">
+          <div class="plus">+</div>
+          <div>Post idea</div>
+        </div>
       </div>
     </div>
-    <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
-      <ng-container *ngxPermissionsOnly="'ADMIN'">
-        <div fxLayout="row-reverse" fxLayout.lt-sm="row" fxLayoutGap="8px">
-          <div *ngIf="classificationTypes && participantGroups?.length">
-            <ng-select
-              class="brainstorm-groups menus"
-              [items]="classificationTypes"
-              bindLabel="title"
-              placeholder="Groups"
-              (change)="classificationTypeChanged(selectedClassificationType)"
-              [(ngModel)]="selectedClassificationType"
-              appendTo="body"
-              [searchable]="false"
-              [clearable]="false">
-              <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                  <img src="{{item.imgUrl}}" />
-                  <div fxLayout="column">
-                    <div class="title">{{ item.title }}</div>
-                    <div class="description">{{ item.description }}</div>
-                  </div>
-                </div>
-            </ng-template>
-            </ng-select>
-          </div>
-          <div *ngIf="showParticipantsGroupsDropdown">
-            <ng-select
-              class="menus"
-              [items]="participantGroups"
-              bindLabel="title"
-              placeholder="Groups"
-              (change)="ParticipantGroupChanged(selectedParticipantGroup)"
-              [(ngModel)]="selectedParticipantGroup"
-              appendTo="body"
-              [searchable]="false"
-              [clearable]="false">
-              <ng-template ng-option-tmp let-item="item" let-index="index">
-                <div>{{ item.title }}</div>
-              </ng-template>
-            </ng-select>
-          </div>
+    <div class="brainstorm-container">
+      <ng-container *ngIf="board.status === 'closed'">
+        <div class="empty-board" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="48px">
+          <img class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
+          <span>This board is hidden for now</span>
         </div>
       </ng-container>
-      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px" class="import-button bg-primary-color" (click)="openDialog()">
-        <div class="plus">+</div>
-        <div>Post idea</div>
-      </div>
+      <ng-container *ngIf="board.status !== 'closed'">
+        <ng-container *ngIf="boardMode=='columns'">
+          <benji-categorized-ideas
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [minWidth]="getMinWidth()"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="true"
+            [myGroup]="myGroup"
+            (addCardUnderCategory)="addCardUnderCategory($event)"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)"
+          >
+          </benji-categorized-ideas>
+        </ng-container>
+    
+        <ng-container *ngIf="boardMode=='grid'">
+          <benji-uncategorized-ideas
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [minWidth]="getMinWidth()"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="false"
+            [myGroup]="myGroup"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+    
+          </benji-uncategorized-ideas>
+        </ng-container>
+    
+        <ng-container *ngIf="boardMode=='thread'">
+          <benji-thread-mode-ideas
+            [ngClass]="{'thread-mode': boardMode=='thread'}"
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="false"
+            [myGroup]="myGroup"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+          </benji-thread-mode-ideas>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
-  <div class="brainstorm-container">
-    <ng-container *ngIf="boardMode=='columns'">
-      <benji-categorized-ideas
-        [board]="board"
-        [act]="act"
-        [activityState]="activityState"
-        [minWidth]="getMinWidth()"
-        [sendMessage]="sendMessage"
-        [joinedUsers]="joinedUsers"
-        [showUserName]="showUserName"
-        [participantCode]="participantCode"
-        [eventType]="eventType"
-        [isColumnsLayout]="true"
-        [myGroup]="myGroup"
-        (addCardUnderCategory)="addCardUnderCategory($event)"
-        (viewImage)="viewImage($event)"
-        (deleteIdea)="deleteIdea($event)"
-      >
-      </benji-categorized-ideas>
-    </ng-container>
+</ng-container>
 
-    <ng-container *ngIf="boardMode=='grid'">
-      <benji-uncategorized-ideas
-        [board]="board"
-        [act]="act"
-        [activityState]="activityState"
-        [minWidth]="getMinWidth()"
-        [sendMessage]="sendMessage"
-        [joinedUsers]="joinedUsers"
-        [showUserName]="showUserName"
-        [participantCode]="participantCode"
-        [eventType]="eventType"
-        [isColumnsLayout]="false"
-        [myGroup]="myGroup"
-        (viewImage)="viewImage($event)"
-        (deleteIdea)="deleteIdea($event)">
-
-      </benji-uncategorized-ideas>
-    </ng-container>
-
-    <ng-container *ngIf="boardMode=='thread'">
-      <benji-thread-mode-ideas
-        [ngClass]="{'thread-mode': boardMode=='thread'}"
-        [board]="board"
-        [act]="act"
-        [activityState]="activityState"
-        [sendMessage]="sendMessage"
-        [joinedUsers]="joinedUsers"
-        [showUserName]="showUserName"
-        [participantCode]="participantCode"
-        [eventType]="eventType"
-        [isColumnsLayout]="false"
-        [myGroup]="myGroup"
-        (viewImage)="viewImage($event)"
-        (deleteIdea)="deleteIdea($event)">
-      </benji-thread-mode-ideas>
-    </ng-container>
-
-  </div>
-</div>

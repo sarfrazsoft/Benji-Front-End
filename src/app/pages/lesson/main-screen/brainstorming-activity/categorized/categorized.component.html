@@ -66,28 +66,25 @@
             ></textarea>
           </div>
           <div class="ideas-list-container">
-            <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true">
-              <div 
-                *ngFor="let item of column.brainstormidea_set; let i = index" 
-                ngxMasonryItem
-                class="masonry-item">
-                <benji-brainstorm-card
-                  [board]="board"
-                  [item]="item"
-                  [act]="act"
-                  [activityState]="activityState"
-                  [showUserName]="showUserName"
-                  [participantCode]="participantCode"
-                  (deleteIdea)="delete($event)"
-                  [sendMessage]="sendMessage"
-                  (commentEdited)="refreshMasonryLayout()"
-                  [isColumnsLayout]="isColumnsLayout"
-                  [category]="column"
-                  [myGroup]="myGroup"
-                  [avatarSize]="'small'">
-                </benji-brainstorm-card>
-              </div>
-            </ngx-masonry>
+            <div 
+              *ngFor="let item of column.brainstormidea_set; let i = index" 
+              class="masonry-item">
+              <benji-brainstorm-card
+                [board]="board"
+                [item]="item"
+                [act]="act"
+                [activityState]="activityState"
+                [showUserName]="showUserName"
+                [participantCode]="participantCode"
+                (deleteIdea)="delete($event)"
+                [sendMessage]="sendMessage"
+                (commentEdited)="refreshMasonryLayout()"
+                [isColumnsLayout]="isColumnsLayout"
+                [category]="column"
+                [myGroup]="myGroup"
+                [avatarSize]="'small'">
+              </benji-brainstorm-card>
+            </div>
           </div>
           <div
             class="add-card"

@@ -16,6 +16,7 @@ import { BrainstormService } from 'src/app';
 import {
   Board,
   BoardSort,
+  BoardStatus,
   BrainstormAddBoardEventBaseEvent,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
@@ -31,6 +32,7 @@ import {
   ParticipantChangeBoardEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
@@ -42,14 +44,15 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
-  // editingInstructions: boolean;
-  @ViewChild('title') InstructionsElement: ElementRef;
-  // editingSubInstructions: boolean;
-  @ViewChild('instructions') SubInstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
-  instructions = '';
+
+  @ViewChild('title') InstructionsElement: ElementRef;
+  @ViewChild('instructions') SubInstructionsElement: ElementRef;
+
+  title_instructions = '';
   sub_instructions = '';
-  statusDropdown = ['Open', 'View Only', 'Closed'];
+  tempTitle = '';
+  tempInstructions = '';
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
       value: 'newest_to_oldest',
@@ -64,6 +67,20 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       name: 'Likes',
     },
   ];
+  boardStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
+    {
+      value: 'open',
+      name: 'Open',
+    },
+    {
+      value: 'closed',
+      name: 'Closed',
+    },
+    {
+      value: 'view_only',
+      name: 'View',
+    },
+  ];
   defaultSort = 'newest_to_oldest';
   participants = [];
 
@@ -74,7 +91,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   gridMode: boolean;
   threadMode: boolean;
   columnsMode: boolean;
-  boardStatus: string;
+  currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
 
@@ -90,6 +107,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
+    private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
     private utilsService: UtilsService
   ) {}
@@ -100,6 +118,19 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.selectedBoardChanged(board);
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((status: BoardStatus) => {
+      if (status) {
+        this.currentboardStatus = status;
+      }
+    });
+
+    // console.log(this.activityState);
+
+    // if (this.selectedBoard) {
+    //   this.tempTitle = this.selectedBoard.board_activity.instructions;
+    //   this.tempInstructions = this.selectedBoard.board_activity.sub_instructions;
+    // }
 
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
@@ -121,10 +152,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.boardMode = this.selectedBoard.board_activity.mode;
     this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
-    this.instructions = board.board_activity.instructions;
+    this.title_instructions = board.board_activity.instructions;
     this.sub_instructions = board.board_activity.sub_instructions;
-    this.boardStatus =
-      board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
+    this.currentboardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
     }
@@ -149,9 +179,22 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   initializeBoards() {
-    const unSortedBoards: Array<Board> = this.activityState.brainstormactivity.boards.filter(
-      (board) => board.removed === false
-    );
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const unSortedBoards: Array<Board> = this.getBoardsForAdmin();
+        this.sortBoards(unSortedBoards);
+      }
+    });
+
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const unSortedBoards: Array<Board> = this.getBoardsForParticipant();
+        this.sortBoards(unSortedBoards);
+      }
+    });
+  }
+
+  sortBoards(unSortedBoards: Array<Board>) {
     let firstBoard;
     for (let i = 0; i < unSortedBoards.length; i++) {
       const board = unSortedBoards[i];
@@ -172,6 +215,14 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     }
     this.boards = boards;
+  }
+
+  getBoardsForAdmin() {
+    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
+  }
+
+  getBoardsForParticipant() {
+    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
   }
 
   getBoardParticipantCodes(board: Board) {
@@ -250,10 +301,20 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   doneTyping(type) {
-    if (type == 'title') {
-      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
-    } else if (type == 'instructions') {
-      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id));
+    if (type === 'title') {
+      this.sendMessage.emit(
+        new BrainstormEditInstructionEvent(
+          this.InstructionsElement.nativeElement.value,
+          this.selectedBoard.id
+        )
+      );
+    } else if (type === 'instructions') {
+      this.sendMessage.emit(
+        new BrainstormEditSubInstructionEvent(
+          this.SubInstructionsElement.nativeElement.value,
+          this.selectedBoard.id
+        )
+      );
     }
   }
 
@@ -323,9 +384,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   duplicateBoard() {}
 
   setBoardStatus() {
-    const selected = this.boardStatus;
-    const status = selected === 'Open' ? 'open' : selected === 'View Only' ? 'view_only' : 'closed';
-    this.sendMessage.emit(new BrainstormChangeBoardStatusEvent(status, this.selectedBoard.id));
+    const selected = this.currentboardStatus;
+    this.sendMessage.emit(
+      new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
+    );
   }
 
   toggleMeetingMode($event) {

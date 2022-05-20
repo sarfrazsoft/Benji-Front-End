@@ -314,10 +314,12 @@ export interface Board {
   previous_board: number;
   next_board: number;
   removed: boolean;
-  status: string;
+  status: BoardStatus;
   sort: BoardSort;
   brainstormcategory_set: Array<Category>;
 }
+
+export type BoardStatus = 'open' | 'view_only' | 'closed';
 
 export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes';
 
