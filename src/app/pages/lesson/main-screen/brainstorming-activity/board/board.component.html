@@ -11,19 +11,20 @@
           >
             <input
               #title
+              [readonly]="!this.isEditable" 
               type="text"
               value="{{ title_instructions }}"
               (keyup)="typingStoped('title')"
               (keydown)="typingStarted()">
           </div>
           <div class="sub-header">
-            <textarea
+            <input
               #instructions
+              [readonly]="!this.isEditable" 
               type="text"
-              rows="1"
               value="{{ sub_instructions }}"
               (keyup)="typingStoped('instructions')"
-              (keydown)="typingStarted()"></textarea>
+              (keydown)="typingStarted()">
           </div>
         </div>
         <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
