@@ -9,7 +9,8 @@
         (click)="onSubmit()"
         [ngClass]="{
           'active': userIdeaText || ideaTitle || webcamImage || video || imageSelected || pdfSelected
-        }">
+        }"
+        [disabled]="mediaUploading || !userIdeaText && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected ? 'disabled': null">
           Post
       </button>
     </div>
@@ -137,8 +138,9 @@
           class="post" 
           (click)="onSubmit()"
           [ngClass]="{
-            'active': userIdeaText || ideaTitle || imageSelected || pdfSelected || webcamImage || video
-          }">
+            'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video
+          }"
+          [disabled]="mediaUploading || descriptionIsEmpty && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected ? 'disabled': null">
             Post
         </button>
       </div>

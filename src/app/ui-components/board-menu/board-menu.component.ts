@@ -47,8 +47,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   // editingSubInstructions: boolean;
   @ViewChild('instructions') SubInstructionsElement: ElementRef;
   @Output() sendMessage = new EventEmitter<any>();
-  instructions = '';
+  title_instructions = '';
   sub_instructions = '';
+  tempTitle = "";
+  tempInstructions = "";
   statusDropdown = ['Open', 'View Only', 'Closed'];
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
@@ -101,6 +103,13 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       }
     });
 
+    // console.log(this.activityState);
+
+    // if (this.selectedBoard) {
+    //   this.tempTitle = this.selectedBoard.board_activity.instructions;
+    //   this.tempInstructions = this.selectedBoard.board_activity.sub_instructions;
+    // }
+
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
     this.hostBoard = this.activityState.brainstormactivity.host_board;
@@ -121,7 +130,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.boardMode = this.selectedBoard.board_activity.mode;
     this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
-    this.instructions = board.board_activity.instructions;
+    this.title_instructions = board.board_activity.instructions;
     this.sub_instructions = board.board_activity.sub_instructions;
     this.boardStatus =
       board.status === 'open' ? 'Open' : board.status === 'view_only' ? 'View Only' : 'Closed';
@@ -251,9 +260,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   doneTyping(type) {
     if (type == 'title') {
-      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.instructions, this.selectedBoard.id));
+      this.sendMessage.emit(new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.selectedBoard.id));
     } else if (type == 'instructions') {
-      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.sub_instructions, this.selectedBoard.id));
+      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.selectedBoard.id));
     }
   }
 
