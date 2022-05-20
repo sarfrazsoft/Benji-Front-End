@@ -232,7 +232,8 @@
                 appendTo="body"
                 (change)="categoryChanged($event)"
                 [searchable]="false"
-                [clearable]="false">
+                [clearable]="false"
+                [disabled]="userRole === 'owner'">
               </ng-select>
             </div>
           </div>
