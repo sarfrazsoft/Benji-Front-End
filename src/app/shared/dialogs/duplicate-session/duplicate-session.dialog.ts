@@ -5,12 +5,11 @@ import { MatDialogRef } from '@angular/material/dialog';
   selector: 'benji-duplicate-session-dialog',
   templateUrl: 'duplicate-session.dialog.html',
 })
-
 export class DuplicateSessionDialogComponent {
   copyBoards = false;
   copyBoth = false;
-  constructor(private dialogRef: MatDialogRef<DuplicateSessionDialogComponent>) {
-  }
+  confirmationMessage = 'What would you like to duplicate:';
+  constructor(private dialogRef: MatDialogRef<DuplicateSessionDialogComponent>) {}
 
   updateCopyBoth(both: boolean) {
     if (both) {
@@ -24,5 +23,4 @@ export class DuplicateSessionDialogComponent {
   confirm() {
     this.dialogRef.close([this.copyBoards, this.copyBoth]);
   }
-
 }

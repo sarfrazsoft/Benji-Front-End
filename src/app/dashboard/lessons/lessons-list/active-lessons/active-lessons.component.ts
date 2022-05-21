@@ -8,7 +8,11 @@ import * as global from 'src/app/globals';
 import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
+import {
+  ConfirmationDialogComponent,
+  DuplicateSessionDialogComponent,
+  SessionSettingsDialogComponent,
+} from 'src/app/shared/dialogs';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -121,7 +125,6 @@ export class ActiveLessonsComponent implements OnInit {
   }
 
   duplicateSession(val: TableRowInformation) {
-    const msg = 'What would you like to duplicate:';
     const dialogRef = this.matDialog
       .open(DuplicateSessionDialogComponent, {
         disableClose: true,
@@ -131,7 +134,7 @@ export class ActiveLessonsComponent implements OnInit {
       .subscribe((res) => {
         if (res[0] || res[1]) {
           let duplicateDoardIdeas: Boolean;
-          res[1] ? duplicateDoardIdeas = true : duplicateDoardIdeas = false;
+          res[1] ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
           let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
           this.http.post(request, {}).subscribe((response: SessionInformation) => {
             if (response) {
@@ -164,15 +167,13 @@ export class ActiveLessonsComponent implements OnInit {
                     }
                   });
               }, 500);
-  
+
               // this.dataSource = this.dataSource.map((value) => value)
             } else {
               this.utilsService.openWarningNotification('Something went wrong.', '');
             }
           });
-
-        }
-        else {
+        } else {
           dialogRef.closed;
         }
       });
