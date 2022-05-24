@@ -1,6 +1,7 @@
 <ng-container *ngIf="boardStatus === 'closed' && !isHost">
-  <div>
-    board closed
+  <div class="empty-board" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="48px">
+    <img class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
+    <span>This board is hidden for now</span>
   </div>
 </ng-container>
 

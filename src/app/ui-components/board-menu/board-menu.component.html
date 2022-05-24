@@ -134,34 +134,6 @@
     <div class="board-settings">Board Settings</div>
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
-  
-  <div fxLayout="column">
-    <div class="title">Title</div>
-    <div class="edit">
-      <div class="editing">
-          <input
-            #title
-            type="text"
-            value="{{ title_instructions }}"
-            (keyup)="typingStoped('title')"
-            (keydown)="typingStarted()">
-      </div>
-    </div>
-  </div>
-
-  <div fxLayout="column">
-    <div class="title">Instructions</div>
-    <div class="edit">
-      <div class="editing">
-        <textarea
-          #instructions
-          type="text"
-          value="{{ sub_instructions }}"
-          (keyup)="typingStoped('instructions')"
-          (keydown)="typingStarted()"></textarea>
-      </div>
-    </div>
-  </div>
 
   <div fxLayout="column">
     <div class="title">Board Status</div>
