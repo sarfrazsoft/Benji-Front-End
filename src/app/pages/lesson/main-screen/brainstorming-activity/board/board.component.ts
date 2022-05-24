@@ -82,6 +82,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   timer: Timer;
   act: BrainstormActivity;
 
+  hasMedia = true;
   voteScreen = false;
   VnSComplete = false;
   showUserName = true;
