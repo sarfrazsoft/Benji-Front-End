@@ -763,7 +763,8 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     }
     .content-area {
       padding: 32px 32px 0px 32px;
-      width: 448px;
+      max-width: 448px;
+      min-width: 336px;
       background: #fff;
       z-index: 2;
       //min-height: 385px;
@@ -993,6 +994,20 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       &:hover {
       }
     }
+  }
+}
+
+@media (max-width: 1140px) and (min-width: 768px) {
+  .idea-detailed-dialog mat-dialog-container .image-area .preview-image {
+    width: unset;
+    max-width: 512px;
+    min-width: 200px;
+  }
+  .idea-detailed-dialog mat-dialog-container .slide-arrow.right {
+    right: 3%;
+  }
+  .idea-detailed-dialog mat-dialog-container .slide-arrow.left {
+    left: 3%;
   }
 }
 
