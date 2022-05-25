@@ -17,13 +17,11 @@
             (keydown)="typingStarted()">
         </div>
         <div class="sub-header">
-            <ng-container>
-              <benji-tiptap-editor
-                [editable]="isHost"
-                [defaultValue]="sub_instructions"
-                (textChanged)="descriptionTextChanged($event)">
-              </benji-tiptap-editor>
-            </ng-container>
+          <benji-tiptap-editor
+            [editable]="isHost"
+            [defaultValue]="sub_instructions"
+            (textChanged)="descriptionTextChanged($event)">
+          </benji-tiptap-editor>
         </div>
         <div
           *ngIf="hasMedia" 

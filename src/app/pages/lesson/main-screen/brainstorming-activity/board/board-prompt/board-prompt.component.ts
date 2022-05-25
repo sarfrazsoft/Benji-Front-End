@@ -13,8 +13,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { from, fromEvent } from 'rxjs';
-import { debounce, debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import {
   ActivitySettingsService,
   BrainstormService,
@@ -55,6 +55,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   hasMedia = true;
   private typingTimer;
+  myObservable = new Subject<string>();
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() postIdeaEventEmitter = new EventEmitter<any>();
@@ -91,6 +92,10 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     this.onChanges();
 
     this.getBoardInstructions();
+
+    this.myObservable.pipe(debounceTime(1000)).subscribe((val: any) => {
+      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(val, this.board.id));
+    });
   }
 
   isPostingAllowed() {
@@ -114,7 +119,6 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     });
     this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
       if (instructions) {
-        console.log(instructions);
         this.sub_instructions = instructions;
       }
     });
@@ -176,11 +180,6 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   descriptionTextChanged($event: string) {
-    const textUpdated$ = from($event);
-
-    textUpdated$.pipe(debounceTime(5000)).subscribe((val) => {
-      console.log('hu');
-      this.sendMessage.emit(new BrainstormEditSubInstructionEvent(val, this.board.id));
-    });
+    this.myObservable.next($event);
   }
 }
