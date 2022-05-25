@@ -118,19 +118,15 @@ benji-ms-brainstorming-activity {
   }
 
   .brainstorm-container {
-    height: 100%;
     background-size: cover;
     box-sizing: border-box;
     background-position: center center !important;
     background-repeat: no-repeat !important;
-    height: 100% !important;
     appearance: none !important;
-    overflow: hidden;
     .thread-mode {
       margin: 0px auto;
       .submitted-ideas {
         margin-top: 16px;
-        height: calc(100vh - 152px);
         .ideas-list-container {
           display: block;
           min-width: 544px;
@@ -244,7 +240,6 @@ benji-ms-brainstorming-activity {
     .submitted-ideas {
       padding: 0 0 0 16px;
       overflow-y: auto;
-      height: calc(100vh - 136px);
       .uncategorized {
         margin-bottom: 16px;
         ngx-masonry {
