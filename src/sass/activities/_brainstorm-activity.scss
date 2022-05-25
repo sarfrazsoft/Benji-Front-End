@@ -1004,7 +1004,7 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 1280px) {
   .barinstorm-main .barinstorm-header {
-    width: unset; 
+    width: calc(100vw - 17px);
     .brainstorm-h2 input {
       margin-bottom: 8px;
     }
@@ -1065,11 +1065,11 @@ benji-ps-brainstorming-activity {
   .barinstorm-main .barinstorm-header {
     .sub-header, .brainstorm-h2 {
       input {
-        width: 100%;
+        width: calc(100vw - 64px) !important;
       }
     }
     &.with-media {
-      width: 100%;
+      width: calc(100vw - 17px);
       .options-buttons {
         width: 100%;
         margin-top: 24px;
