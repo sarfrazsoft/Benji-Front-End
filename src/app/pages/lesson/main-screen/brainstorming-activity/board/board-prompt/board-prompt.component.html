@@ -1,0 +1,54 @@
+<div 
+  class="barinstorm-header" 
+  fxLayout="row" 
+  fxLayoutAlign="space-between start" 
+  fxLayout.lt-sm="column"
+  [ngClass]="{'with-media': hasMedia}">
+  <div fxLayout="column" class="instructions">
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
+      <div>
+        <div class="brainstorm-h2 black-color">
+          <input
+            #title
+            [readonly]="!isHost" 
+            type="text"
+            value="{{ title_instructions }}"
+            (keyup)="typingStoped('title')"
+            (keydown)="typingStarted()">
+        </div>
+        <div class="sub-header">
+            <ng-container>
+              <benji-tiptap-editor
+                [editable]="isHost"
+                [defaultValue]="sub_instructions"
+                (textChanged)="descriptionTextChanged($event)">
+              </benji-tiptap-editor>
+            </ng-container>
+        </div>
+        <div
+          *ngIf="hasMedia" 
+          class="import-button bg-primary-color" 
+          (click)="postIdea()"
+          fxLayoutAlign="center center">
+          <!-- <div class="plus">+</div> -->
+          <div>Post idea</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
+    <ng-container *ngIf="hasMedia">
+      <div class="media">
+        <iframe  src="https://www.youtube.com/embed/CLccl0Z71Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </ng-container>
+    <div
+      *ngIf="!hasMedia" 
+      class="import-button bg-primary-color" 
+      (click)="postIdea()"
+      fxLayoutAlign="center center">
+      <!-- <div class="plus">+</div> -->
+      <div>Post idea</div>
+    </div>
+  </div>
+</div>

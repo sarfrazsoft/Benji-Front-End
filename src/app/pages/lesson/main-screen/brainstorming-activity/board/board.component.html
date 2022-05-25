@@ -8,115 +8,15 @@
 <ng-container *ngIf="boardStatus !== 'closed' || isHost">
   <div fxLayout="column" class="barinstorm-main">
     <div class="head-wrapper" fxLayoutAlign="center start">
-      <div 
-        class="barinstorm-header" 
-        fxLayout="row" 
-        fxLayoutAlign="space-between start" 
-        fxLayout.lt-sm="column"
-        [ngClass]="{'with-media': hasMedia}">
-        <div fxLayout="column" class="instructions">
-          <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
-            <div>
-              <div
-                class="brainstorm-h2 black-color"
-                [ngClass]="{
-                  'long-instructions': instructions.length > 65
-                }"
-              >
-                <input
-                  #title
-                  [readonly]="!this.isEditable" 
-                  type="text"
-                  value="{{ title_instructions }}"
-                  (keyup)="typingStoped('title')"
-                  (keydown)="typingStarted()">
-              </div>
-              <div class="sub-header">
-                <input
-                  #instructions
-                  [readonly]="!this.isEditable" 
-                  type="text"
-                  value="{{ sub_instructions }}"
-                  (keyup)="typingStoped('instructions')"
-                  (keydown)="typingStarted()">
-              </div>
-              <div
-                *ngIf="hasMedia" 
-                class="import-button bg-primary-color" 
-                (click)="openDialog()"
-                fxLayoutAlign="center center">
-                <!-- <div class="plus">+</div> -->
-                <div>Post idea</div>
-              </div>
-            </div>
-            <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
-              <benji-participant-grouping-container
-                *ngIf="!actEditor"
-                [activityState]="activityState"
-                (sendMessage)="sendSocketMessage($event)"
-                [participantCode]="participantCode">
-              </benji-participant-grouping-container>
-            </ng-container>
-          </div>
-        </div>
-        <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
-          <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <div fxLayout="row-reverse" fxLayout.lt-sm="row" fxLayoutGap="8px">
-              <div *ngIf="classificationTypes && participantGroups?.length">
-                <ng-select
-                  class="brainstorm-groups menus"
-                  [items]="classificationTypes"
-                  bindLabel="title"
-                  placeholder="Groups"
-                  (change)="classificationTypeChanged(selectedClassificationType)"
-                  [(ngModel)]="selectedClassificationType"
-                  appendTo="body"
-                  [searchable]="false"
-                  [clearable]="false">
-                  <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                      <img src="{{item.imgUrl}}" />
-                      <div fxLayout="column">
-                        <div class="title">{{ item.title }}</div>
-                        <div class="description">{{ item.description }}</div>
-                      </div>
-                    </div>
-                </ng-template>
-                </ng-select>
-              </div>
-              <div *ngIf="showParticipantsGroupsDropdown">
-                <ng-select
-                  class="menus"
-                  [items]="participantGroups"
-                  bindLabel="title"
-                  placeholder="Groups"
-                  (change)="ParticipantGroupChanged(selectedParticipantGroup)"
-                  [(ngModel)]="selectedParticipantGroup"
-                  appendTo="body"
-                  [searchable]="false"
-                  [clearable]="false">
-                  <ng-template ng-option-tmp let-item="item" let-index="index">
-                    <div>{{ item.title }}</div>
-                  </ng-template>
-                </ng-select>
-              </div>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="hasMedia">
-            <div class="media">
-              <iframe  src="https://www.youtube.com/embed/CLccl0Z71Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-          </ng-container>
-          <div
-            *ngIf="!hasMedia" 
-            class="import-button bg-primary-color" 
-            (click)="openDialog()"
-            fxLayoutAlign="center center">
-            <!-- <div class="plus">+</div> -->
-            <div>Post idea</div>
-          </div>
-        </div>
-      </div>
+      <benji-board-prompt
+        [board]="board"
+        [isHost]="isHost"
+        [activityState]="activityState"
+        [eventType]="eventType"
+        (postIdeaEventEmitter)="postIdeaClickedInChild()"
+        (sendMessage)="sendMessage.emit($event)">
+      </benji-board-prompt>
+      
     </div>
     <div class="brainstorm-container">
       <ng-container *ngIf="boardMode=='columns'">

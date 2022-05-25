@@ -74,19 +74,12 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   showParticipantsGroupsDropdown = false;
   @Input() participantCode;
 
-  @ViewChild('title') InstructionsElement: ElementRef;
-  @ViewChild('instructions') SubInstructionsElement: ElementRef;
-
-  title_instructions = '';
-  sub_instructions = '';
   timer: Timer;
   act: BrainstormActivity;
 
-  hasMedia = true;
   voteScreen = false;
   VnSComplete = false;
   showUserName = true;
-  isEditable = false;
   minWidth = 'small';
   colDeleted = 0;
   joinedUsers = [];
@@ -144,12 +137,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
           this.initParticipantGrouping(this.act);
         }
-      }
-    });
-
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.isEditable = true;
       }
     });
 
@@ -229,16 +216,16 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getBoardInstructions() {
-    this.brainstormService.boardTitle$.subscribe((title: string) => {
-      if (title) {
-        this.title_instructions = title;
-      }
-    });
-    this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
-      if (instructions) {
-        this.sub_instructions = instructions;
-      }
-    });
+    // this.brainstormService.boardTitle$.subscribe((title: string) => {
+    //   if (title) {
+    //     this.title_instructions = title;
+    //   }
+    // });
+    // this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
+    //   if (instructions) {
+    //     this.sub_instructions = instructions;
+    //   }
+    // });
   }
 
   applyGroupingOnActivity(state: UpdateMessage) {
@@ -475,6 +462,10 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   addCardUnderCategory(category: Category) {
     this.openDialog(category);
+  }
+
+  postIdeaClickedInChild() {
+    this.openDialog();
   }
 
   openDialog(category?: Category) {
@@ -727,30 +718,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
           (data) => {},
           (error) => console.log(error)
         );
-    }
-  }
-
-  typingStoped(type: string) {
-    clearTimeout(this.typingTimer);
-    this.typingTimer = setTimeout(() => {
-      this.doneTyping(type);
-    }, 500);
-  }
-
-  // on keydown, clear the countdown
-  typingStarted() {
-    clearTimeout(this.typingTimer);
-  }
-
-  doneTyping(type: string) {
-    if (type === 'title') {
-      this.sendMessage.emit(
-        new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.board.id)
-      );
-    } else if (type === 'instructions') {
-      this.sendMessage.emit(
-        new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.board.id)
-      );
     }
   }
 }

@@ -217,18 +217,16 @@ export class MainScreenBrainstormingActivityComponent
   initBoardInstructions() {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        this.selectedBoard = this.getAdminBoard();
-        this.brainstormService.selectedBoard = this.selectedBoard;
-        this.brainstormService.boardTitle = this.selectedBoard.board_activity.instructions;
-        this.brainstormService.boardInstructions = this.selectedBoard.board_activity.sub_instructions;
+        const board = this.getAdminBoard();
+        this.brainstormService.boardTitle = board.board_activity.instructions;
+        this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
       }
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.getParticipantBoard();
-        this.brainstormService.selectedBoard = this.selectedBoard;
-        this.brainstormService.boardTitle = this.selectedBoard.board_activity.instructions;
-        this.brainstormService.boardInstructions = this.selectedBoard.board_activity.sub_instructions;
+        const board = this.getParticipantBoard();
+        this.brainstormService.boardTitle = board.board_activity.instructions;
+        this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
       }
     });
   }
