@@ -247,7 +247,7 @@
   .drop-container {
     background: #f1f2f4;
     border: 2px dashed #d4d4d4;
-    box-sizing: border-box;
+    padding: 24px;
     border-radius: 8px;
     height: 260px;
     width: 533px;
@@ -631,6 +631,10 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         height: 100% !important;
       }
     }
+  }
+  .image-picker-dialog .drop-container {
+    height: 260px;
+    width: calc(100vw - 50px);
   }
 }
 
