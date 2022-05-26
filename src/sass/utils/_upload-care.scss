@@ -174,6 +174,48 @@
   }
 }
 
+.uploadcare--tab_name_file {
+  font-family: 'Inter';
+  font-style: normal;
+  padding: 40px;
+  .uploadcare--tab__content {
+    background: #f1f2f4;
+    border: 2px dashed #d4d4d4;
+    box-sizing: border-box;
+    border-radius: 8px;
+  }
+  .uploadcare--draganddrop__title  {
+    background-image: url(/assets/img/idea-creation/upload-cloud.svg);
+    background-position: center 0px;
+    background-repeat: no-repeat;
+    padding-top: 48px;
+  }
+  .uploadcare--text_size_extra-large {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: $black;
+    margin-bottom: 8px;
+  }
+  .uploadcare--text_size_small {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #828282;
+    margin-bottom: 16px;
+  }
+  .uploadcare--button_primary {
+    border-radius: 8px;
+    height: 40px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 12px 16px;
+    cursor: pointer;
+  }
+}
+
+
 @media (min-width: 1210px) {
   .uploadcare--dialog__container {
     max-width: 928px;
