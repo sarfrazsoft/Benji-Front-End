@@ -35,11 +35,22 @@
     </div>
   </div>
   <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
-    <ng-container *ngIf="hasMedia">
+    <!-- <ng-container *ngIf="hasMedia">
       <div class="media">
-        <iframe  src="https://www.youtube.com/embed/CLccl0Z71Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe  
+          src="https://www.youtube.com/embed/CLccl0Z71Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       </div>
-    </ng-container>
+    </ng-container> -->
+
+<!-- <div>upload file</div> -->
+    <div class="uploadcare-container" fxLayoutAlign="center center">
+      <benji-uploadcare-widget
+        [tabs]="'file'"
+        [lessonRunCode]="lessonRunCode"
+        (mediaUploaded)="mediaUploaded($event)"
+        (mediaUploading)="mediaUploadProgress($event)">
+      </benji-uploadcare-widget>
+    </div>
     <div
       *ngIf="!hasMedia" 
       class="import-button bg-primary-color" 

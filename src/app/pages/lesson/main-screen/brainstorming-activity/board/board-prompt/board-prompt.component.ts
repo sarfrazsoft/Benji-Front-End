@@ -52,6 +52,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   title_instructions = '';
   sub_instructions = '';
   act: BrainstormActivity;
+  lessonRunCode: number;
 
   hasMedia = true;
   private typingTimer;
@@ -75,6 +76,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     // super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
+    this.lessonRunCode = this.activityState.lesson_run.lessonrun_code;
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {

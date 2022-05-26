@@ -1,5 +1,14 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import * as global from 'src/app/globals';
 import { IdeaDocument } from 'src/app/services/backend/schema';
 import uploadcare from 'uploadcare-widget';
@@ -40,9 +49,10 @@ export interface ConvertedFile {
   selector: 'benji-uploadcare-widget',
   templateUrl: 'uploadcare-widget.component.html',
 })
-export class UploadcareWidgetComponent implements OnInit, OnChanges {
+export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() lessonRunCode;
   @Input() mediaSelected;
+  @Input() tabs: string;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
 
@@ -74,13 +84,16 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges {
   @ViewChild('uploadcarewidget') uploadcarewidget;
   constructor(private httpClient: HttpClient) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
     this.video = false;
     this.webcamImage = false;
+    console.log(this.tabs);
     const supportedVideos = this.getSupportedMimeTypes('video', this.videoTypes, this.codecs);
-    this.widgetRef = uploadcare.Widget('[name="file"]', {
+    this.widgetRef = uploadcare.Widget(`[name="${this.tabs}"]`, {
       publicKey: '71eac221885fa40dc817',
-      tabs: 'camera',
+      tabs: this.tabs,
       videoPreferredMimeTypes: supportedVideos[0],
       previewStep: true,
       imageShrink: '1024x1024',
