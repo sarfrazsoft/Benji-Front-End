@@ -35,22 +35,25 @@
     </div>
   </div>
   <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
-    <!-- <ng-container *ngIf="hasMedia">
-      <div class="media">
-        <iframe  
-          src="https://www.youtube.com/embed/CLccl0Z71Mk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <ng-container *ngIf="hasMedia">
+      <div class="brainstorm-image" *ngIf="image">
+        <img [src]="image.cdnUrl" alt="" />
       </div>
-    </ng-container> -->
+      <div class="prompt-video" *ngIf="video">
+        <video 
+          style="margin: 0 auto;" width="100%" 
+          #player 
+          controls
+          preload="metadata"
+          [src]="convertedUrl" type="video/mp4"
+          (loadeddata)="videoLoaded()">
+          <p>Your browser cannot play the provided video file.</p>
+        </video>
+      </div>
+    </ng-container>
 
 <!-- <div>upload file</div> -->
-    <div class="uploadcare-container" fxLayoutAlign="center center">
-      <benji-uploadcare-widget
-        [tabs]="'file'"
-        [lessonRunCode]="lessonRunCode"
-        (mediaUploaded)="mediaUploaded($event)"
-        (mediaUploading)="mediaUploadProgress($event)">
-      </benji-uploadcare-widget>
-    </div>
+
     <div
       *ngIf="!hasMedia" 
       class="import-button bg-primary-color" 

@@ -9,6 +9,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { timer } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { distinctUntilChanged, skipWhile, switchMap, takeWhile, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { IdeaDocument } from 'src/app/services/backend/schema';
 import uploadcare from 'uploadcare-widget';
@@ -53,7 +56,8 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   @Input() lessonRunCode;
   @Input() mediaSelected;
   @Input() tabs: string;
-  @Output() mediaUploaded = new EventEmitter<IdeaDocument>();
+  @Input() uploadDocumentToBenji = true;
+  @Output() mediaUploaded = new EventEmitter<IdeaDocument | IncompleteFileInfo | any>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
 
   widgetRef;
@@ -94,6 +98,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
     this.widgetRef = uploadcare.Widget(`[name="${this.tabs}"]`, {
       publicKey: '71eac221885fa40dc817',
       tabs: this.tabs,
+      multiple: false,
       videoPreferredMimeTypes: supportedVideos[0],
       previewStep: true,
       imageShrink: '1024x1024',
@@ -109,14 +114,24 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
             this.video = true;
             this.convertedVideoURL = data.converted_file;
             this.originalVideoURL = data.original_file;
-            this.uploadDocumentUrlToBenji();
+            if (this.uploadDocumentToBenji) {
+              this.uploadDocumentUrlToBenji();
+            } else {
+              this.checkVideoConversionStatus(data.token, () => {
+                this.mediaUploaded.emit({ isImage: false, ...data });
+              });
+            }
           },
           (error) => console.log(error)
         );
       } else if (info.isImage) {
         this.webcamImageURL = info.cdnUrl;
         this.webcamImage = true;
-        this.uploadDocumentUrlToBenji();
+        if (this.uploadDocumentToBenji) {
+          this.uploadDocumentUrlToBenji();
+        } else {
+          this.mediaUploaded.emit(info);
+        }
       }
     });
 
@@ -160,29 +175,24 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
     return this.httpClient.post(url, formData, { params, headers });
   }
 
-  checkVideoConversionStatus(token: number, callback) {
+  checkVideoConversionStatus(token: number, callback?) {
     const url = `${global.apiRoot}/course_details/convert-video/status/${token}/`;
-    this.httpClient.get(url).subscribe(
-      (res: any) => {
-        if (res && res.message === 'Video is converted successfully.') {
-          clearInterval(intervalId);
-          callback(res);
+    const timer$ = timer(0, 1000);
+    timer$
+      .pipe(
+        switchMap(() => ajax.getJSON(url)),
+        takeWhile((res: any) => this.isConversionInProgress(res), true),
+        skipWhile((res: any) => this.isConversionInProgress(res))
+      )
+      .subscribe((res) => {
+        if (callback) {
+          callback();
         }
-      },
-      (error) => console.log(error)
-    );
-    const intervalId = window.setInterval(() => {
-      /// call your function here
-      this.httpClient.get(url).subscribe(
-        (res: any) => {
-          if (res && res.message === 'Video is converted successfully.') {
-            clearInterval(intervalId);
-            callback(res);
-          }
-        },
-        (error) => console.log(error)
-      );
-    }, 1000);
+      });
+  }
+
+  isConversionInProgress(res): boolean {
+    return res && res.message === 'We are working on this.';
   }
 
   uploadDocumentUrlToBenji() {

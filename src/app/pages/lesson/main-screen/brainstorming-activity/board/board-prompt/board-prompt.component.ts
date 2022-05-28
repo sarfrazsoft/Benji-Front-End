@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -10,17 +9,11 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import {
-  ActivitySettingsService,
-  BrainstormService,
-  ContextService,
-  SharingToolService,
-} from 'src/app/services';
+import { BrainstormService } from 'src/app/services';
 import {
   Board,
   BoardMode,
@@ -29,8 +22,6 @@ import {
   BrainstormEditSubInstructionEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { BoardStatusService } from 'src/app/services/board-status.service';
-import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-board-prompt',
@@ -57,20 +48,18 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   hasMedia = true;
   private typingTimer;
   myObservable = new Subject<string>();
+  image;
+  video;
+
+  convertedUrl;
+  originalUrl;
 
   @Output() sendMessage = new EventEmitter<any>();
   @Output() postIdeaEventEmitter = new EventEmitter<any>();
 
   constructor(
-    private contextService: ContextService,
-    private matDialog: MatDialog,
-    private utilsService: UtilsService,
-    private activitySettingsService: ActivitySettingsService,
-    private httpClient: HttpClient,
     private permissionsService: NgxPermissionsService,
-    private sharingToolService: SharingToolService,
-    private brainstormService: BrainstormService,
-    private boardStatusService: BoardStatusService
+    private brainstormService: BrainstormService
   ) {}
 
   ngOnInit() {
@@ -131,7 +120,6 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onChanges() {
-    const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (
       this.eventType === 'BrainstormEditBoardInstruction' ||
@@ -140,6 +128,17 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       this.getBoardInstructions();
     } else {
       this.getBoardInstructions();
+    }
+    if (this.board.prompt_video) {
+      if (this.board.prompt_video.isImage) {
+        this.image = this.board.prompt_video;
+        this.video = false;
+      } else {
+        this.image = false;
+        this.video = this.board.prompt_video;
+        this.convertedUrl = this.video.converted_file;
+        this.originalUrl = this.video.original_file;
+      }
     }
   }
 
@@ -184,4 +183,5 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   descriptionTextChanged($event: string) {
     this.myObservable.next($event);
   }
+  videoLoaded() {}
 }

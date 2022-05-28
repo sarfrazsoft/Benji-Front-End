@@ -317,6 +317,7 @@ export interface Board {
   status: BoardStatus;
   sort: BoardSort;
   brainstormcategory_set: Array<Category>;
+  prompt_video: any;
 }
 
 export type BoardStatus = 'open' | 'view_only' | 'closed';
