@@ -909,9 +909,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
               background: #dedede;
             }
             &.pinned {
-              background: #555BEA;
+              //background: #555BEA;
               &:hover {
-                background: #555BEA;
+                //background: #555BEA;
               }
             }
             &.pinned, &.unpinned {
@@ -1346,7 +1346,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         font-weight: 400;
       }
       .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-        background-color: #555bea;
+        //background-color: #555bea;
         border-radius: 4px;
       }
       .mat-checkbox-ripple {
@@ -1355,7 +1355,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       .mat-checkbox-layout {
         &:hover {
           .mat-checkbox-frame {
-            border-color: #555bea;
+            //border-color: #555bea;
           }
         }
       }

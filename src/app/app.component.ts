@@ -38,6 +38,10 @@ export class AppComponent implements OnInit {
         this.title.setTitle(info.parameters.tabTitle);
         this._document.getElementById('appFavicon').setAttribute('href', info.favicon);
 
+        // To test white-labelling
+        //info.parameters.primary = 'red !important';
+        info.parameters.primary = 'red';
+
         const cssCode = `
         * {
           caret-color: ${info.parameters.primary};
@@ -218,6 +222,14 @@ export class AppComponent implements OnInit {
         .dash-input:focus {
           box-shadow: 0px 0px 0pt 0.2pt ${info.parameters.primary};
         }
+        .board-settings-navigation {
+          input:checked + .slider {
+            background-color: ${info.parameters.primary};
+          }
+          .board-status-dropdown ng-dropdown-panel .ng-dropdown-panel-items {
+            border: 2px solid ${info.parameters.primary};
+          }
+        } 
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

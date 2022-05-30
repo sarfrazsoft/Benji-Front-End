@@ -59,7 +59,7 @@
           class="board" 
           fxLayoutGap="8px"
           [ngClass]="{
-            selected: selectedBoard?.id === board?.id, closed: board.status === 'closed'
+            'selected border-primary-color': selectedBoard?.id === board?.id, closed: board.status === 'closed'
           }"
           (click)="navigateToBoard(board)">
           <ng-container *ngIf="board.status === 'closed'">
