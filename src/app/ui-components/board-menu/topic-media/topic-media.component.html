@@ -47,25 +47,25 @@
     <div *ngIf="uploadingTopicMedia">
       uploading
     </div>
-    <div class="uploadcare-container" fxLayoutAlign="center center">
-      File
-      <benji-uploadcare-widget
-        [tabs]="'file'"
-        [uploadDocumentToBenji]="false"
-        [lessonRunCode]="lessonRunCode"
-        (mediaUploaded)="mediaUploaded($event)"
-        (mediaUploading)="mediaUploadProgress($event)">
-      </benji-uploadcare-widget>
-    </div>
-    <div class="uploadcare-container" fxLayoutAlign="center center">
-      camera
-      <benji-uploadcare-widget
-        [tabs]="'camera'"
-        [uploadDocumentToBenji]="false"
-        [lessonRunCode]="lessonRunCode"
-        (mediaUploaded)="mediaUploaded($event)"
-        (mediaUploading)="mediaUploadProgress($event)">
-      </benji-uploadcare-widget>
+    <div class="options" fxLayout="row" fxLayoutGap="9px">
+      <div class="uploadcare-container" fxLayoutAlign="center center">
+        <benji-uploadcare-widget
+          [tabs]="'file'"
+          [uploadDocumentToBenji]="false"
+          [lessonRunCode]="lessonRunCode"
+          (mediaUploaded)="mediaUploaded($event)"
+          (mediaUploading)="mediaUploadProgress($event)">
+        </benji-uploadcare-widget>
+      </div>
+      <div class="uploadcare-container" fxLayoutAlign="center center">
+        <benji-uploadcare-widget
+          [tabs]="'camera'"
+          [uploadDocumentToBenji]="false"
+          [lessonRunCode]="lessonRunCode"
+          (mediaUploaded)="mediaUploaded($event)"
+          (mediaUploading)="mediaUploadProgress($event)">
+        </benji-uploadcare-widget>
+      </div>
     </div>
   </div>
 </div>

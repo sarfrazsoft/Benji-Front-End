@@ -139,13 +139,18 @@
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
   </div>
 
-  <!-- Topic media -->
-  <benji-topic-media
-    [lessonRunCode]="lesssonRunCode"
-    [selectedBoard]="selectedBoard"
-    (sendMessage)="sendMessage.emit($event)">
-  </benji-topic-media>
-  
+  <div fxLayout="column">
+    <div class="title">Topic Media</div>
+    <div class="topic-media">
+      <!-- Topic media -->
+      <benji-topic-media
+        [lessonRunCode]="lesssonRunCode"
+        [selectedBoard]="selectedBoard"
+        (sendMessage)="sendMessage.emit($event)">
+      </benji-topic-media>
+    </div>
+  </div>
+
   <div fxLayout="column">
     <div class="title">Board Status</div>
     <div class="board-status">
