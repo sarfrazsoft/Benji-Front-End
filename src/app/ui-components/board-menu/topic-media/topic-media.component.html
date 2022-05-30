@@ -54,7 +54,8 @@
           [uploadDocumentToBenji]="false"
           [lessonRunCode]="lessonRunCode"
           (mediaUploaded)="mediaUploaded($event)"
-          (mediaUploading)="mediaUploadProgress($event)">
+          (mediaUploading)="mediaUploadProgress($event)"
+          [icon]="'/assets/img/side-nav/image.svg'">
         </benji-uploadcare-widget>
       </div>
       <div class="uploadcare-container" fxLayoutAlign="center center">
@@ -63,7 +64,8 @@
           [uploadDocumentToBenji]="false"
           [lessonRunCode]="lessonRunCode"
           (mediaUploaded)="mediaUploaded($event)"
-          (mediaUploading)="mediaUploadProgress($event)">
+          (mediaUploading)="mediaUploadProgress($event)"
+          [icon]="'/assets/img/side-nav/camera.svg'">
         </benji-uploadcare-widget>
       </div>
     </div>

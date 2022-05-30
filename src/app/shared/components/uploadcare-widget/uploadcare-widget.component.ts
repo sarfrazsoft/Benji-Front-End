@@ -54,6 +54,7 @@ export interface ConvertedFile {
 })
 export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() lessonRunCode;
+  @Input() icon;
   @Input() mediaSelected;
   @Input() tabs: string;
   @Input() uploadDocumentToBenji = true;
@@ -88,7 +89,11 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   @ViewChild('uploadcarewidget') uploadcarewidget;
   constructor(private httpClient: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.icon) {
+      this.icon = '/assets/img/idea-creation/cam-upload.svg';
+    } 
+  }
 
   ngAfterViewInit(): void {
     this.video = false;
