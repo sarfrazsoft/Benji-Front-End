@@ -54,7 +54,7 @@ export interface ConvertedFile {
 })
 export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() lessonRunCode;
-  @Input() icon;
+  @Input() icon: string;
   @Input() mediaSelected;
   @Input() tabs: string;
   @Input() uploadDocumentToBenji = true;
