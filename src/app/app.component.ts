@@ -222,14 +222,42 @@ export class AppComponent implements OnInit {
         .dash-input:focus {
           box-shadow: 0px 0px 0pt 0.2pt ${info.parameters.primary};
         }
-        .board-settings-navigation {
-          input:checked + .slider {
+        .board-settings-navigation input:checked + .slider {
             background-color: ${info.parameters.primary};
-          }
-          .board-status-dropdown ng-dropdown-panel .ng-dropdown-panel-items {
+        }
+        .board-settings-navigation .board-status-dropdown ng-dropdown-panel .ng-dropdown-panel-items {
             border: 2px solid ${info.parameters.primary};
-          }
-        } 
+        }
+        .posting-settings input:checked + .slider {
+          background-color: red;
+        }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color {
+          background: ${info.parameters.primary};
+        }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color:hover {
+          background: ${info.parameters.primary};
+        }
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+          background-color: ${info.parameters.primary};
+        }
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame {
+          border-color: ${info.parameters.primary};
+        }
+        .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+          background-color: ${info.parameters.primary};
+        }
+        .uploadcare--dialog__container .uploadcare--button_muted:focus, .uploadcare--dialog__container .uploadcare--button_muted:hover {
+          color: ${info.parameters.primary};
+        }
+        .uploadcare--dialog__container .uploadcare--button_primary {
+          background: ${info.parameters.primary};
+        }
+        .uploadcare--dialog__container .uploadcare--button_muted:focus, .uploadcare--dialog__container .uploadcare--button_muted:hover {
+          color: ${info.parameters.primary};
+        }
+        benji-ms-brainstorming-activity .prose-sm p a, .idea-detailed-dialog mat-dialog-container .content-area .prose-sm p a {
+          color: ${info.parameters.primary};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

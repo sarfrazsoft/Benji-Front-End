@@ -457,14 +457,14 @@
           }
           .post {
             margin: 4px 0px;
-            background: #BBBDF7;
+            opacity: 0.4;
             color: #fff;
             font-size: 16px;
             font-weight: 500;
             padding: 8px 16px;
             border-radius: 4px;
             &.active {
-              background: #555bea;
+              opacity: 1;
             }
           }
         }
