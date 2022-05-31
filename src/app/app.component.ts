@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
         this._document.getElementById('appFavicon').setAttribute('href', info.favicon);
 
         // To test white-labelling
-        //info.parameters.primary = 'red !important';
-        info.parameters.primary = 'red';
+        // info.parameters.primary = 'red !important';
+        // info.parameters.primary = 'red';
 
         const cssCode = `
         * {
