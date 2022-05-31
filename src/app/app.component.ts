@@ -229,7 +229,7 @@ export class AppComponent implements OnInit {
             border: 2px solid ${info.parameters.primary};
         }
         .posting-settings input:checked + .slider {
-          background-color: red;
+          background-color: ${info.parameters.primary};
         }
         .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color {
           background: ${info.parameters.primary};
