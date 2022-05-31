@@ -910,15 +910,15 @@ benji-ps-brainstorming-activity {
     }
   }
 }
-.preview-panel .barinstorm-main {
+.preview-panel .brainstorm-main {
   max-width: 840px;
 }
-.barinstorm-main {
+.brainstorm-main {
   .head-wrapper {
     border-bottom: 1px solid #e7e7e7;
     background: #fff;
   }
-  .barinstorm-header {
+  .brainstorm-header {
     padding: 24px 32px;
     width: 1200px;
     .brainstorm-h2 input {
@@ -997,7 +997,7 @@ benji-ps-brainstorming-activity {
 }
 
 @media (max-width: 1280px) {
-  .barinstorm-main .barinstorm-header {
+  .brainstorm-main .brainstorm-header {
     width: calc(100vw - 17px);
     .brainstorm-h2 input {
       margin-bottom: 8px;
@@ -1013,7 +1013,7 @@ benji-ps-brainstorming-activity {
 }
 
 @media (max-width: 1012px) {
-  .barinstorm-main .barinstorm-header {
+  .brainstorm-main .brainstorm-header {
     .sub-header, .brainstorm-h2 {
       input {
         width: 480px;
@@ -1036,7 +1036,7 @@ benji-ps-brainstorming-activity {
 }
 
 @media (max-width: 744px) {
-  .barinstorm-main .barinstorm-header {
+  .brainstorm-main .brainstorm-header {
     .sub-header, .brainstorm-h2 {
       input {
         width: 370px;
@@ -1053,10 +1053,10 @@ benji-ps-brainstorming-activity {
 }
 
 @media (max-width: 600px) {
-  .barinstorm-main .barinstorm-header .brainstorm-h2 input {
+  .brainstorm-main .brainstorm-header .brainstorm-h2 input {
     margin-bottom: 16px;
   }
-  .barinstorm-main .barinstorm-header {
+  .brainstorm-main .brainstorm-header {
     .sub-header, .brainstorm-h2 {
       input {
         width: calc(100vw - 64px) !important;
@@ -1079,7 +1079,7 @@ benji-ps-brainstorming-activity {
 }
 
 @media (max-width: 414px) {
-  .barinstorm-main .barinstorm-header {
+  .brainstorm-main .brainstorm-header {
     padding: 24px; 
     .brainstorm-h2 input {
       font-size: 24px;
@@ -1155,8 +1155,8 @@ ng-dropdown-panel {
       height: calc(100% + 2px);
     }
   }
-  .barinstorm-main {
-    .barinstorm-header {
+  .brainstorm-main {
+    .brainstorm-header {
       place-content: start !important;
       align-items: start !important;
       padding: 24px !important;
