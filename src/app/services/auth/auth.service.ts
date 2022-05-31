@@ -13,7 +13,7 @@ import { LayoutService } from '../layout.service';
 import { UtilsService } from '../utils.service';
 
 export interface LoginResponse {
-  user: any;
+  user: TeamUser;
   token: string;
 }
 

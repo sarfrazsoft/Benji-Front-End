@@ -30,6 +30,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
+import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -55,7 +56,8 @@ export class MainScreenBrainstormingActivityComponent
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
-    private boardStatusService: BoardStatusService
+    private boardStatusService: BoardStatusService,
+    private topicMediaService: TopicMediaService
   ) {
     super();
   }
@@ -151,6 +153,8 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
       this.selectUserBoard();
+    } else if (this.eventType === 'UpdatePromptVideoEvent') {
+      this.updatePromptMedia();
     } else if (this.eventType === 'JoinEvent') {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
@@ -210,6 +214,21 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getParticipantBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+      }
+    });
+  }
+
+  updatePromptMedia() {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const board = this.getAdminBoard();
+        this.topicMediaService.topicMedia = board.prompt_video;
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const board = this.getParticipantBoard();
+        this.topicMediaService.topicMedia = board.prompt_video;
       }
     });
   }

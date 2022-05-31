@@ -22,6 +22,7 @@ import {
   BrainstormEditSubInstructionEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { TopicMediaService } from 'src/app/services/topic-media.service';
 
 @Component({
   selector: 'benji-board-prompt',
@@ -59,7 +60,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private permissionsService: NgxPermissionsService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private topicMediaService: TopicMediaService
   ) {}
 
   ngOnInit() {
@@ -87,6 +89,37 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     this.myObservable.pipe(debounceTime(1000)).subscribe((val: any) => {
       this.sendMessage.emit(new BrainstormEditSubInstructionEvent(val, this.board.id));
     });
+
+    if (this.board.prompt_video) {
+      this.getTopicMedia(this.board.prompt_video);
+    }
+
+    this.topicMediaService.topicMedia$.subscribe((val: any) => {
+      if (val) {
+        this.getTopicMedia(val);
+      }
+    });
+  }
+
+  getTopicMedia(val) {
+    if (Object.keys(val).length) {
+      this.hasMedia = true;
+      if (val.isImage) {
+        this.image = val;
+        this.video = false;
+      } else {
+        this.image = false;
+        this.video = val;
+        this.convertedUrl = this.video.converted_file;
+        this.originalUrl = this.video.original_file;
+      }
+    } else {
+      this.hasMedia = false;
+      this.image = false;
+      this.video = false;
+      this.convertedUrl = '';
+      this.originalUrl = '';
+    }
   }
 
   isPostingAllowed() {
@@ -128,17 +161,6 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       this.getBoardInstructions();
     } else {
       this.getBoardInstructions();
-    }
-    if (this.board.prompt_video) {
-      if (this.board.prompt_video.isImage) {
-        this.image = this.board.prompt_video;
-        this.video = false;
-      } else {
-        this.image = false;
-        this.video = this.board.prompt_video;
-        this.convertedUrl = this.video.converted_file;
-        this.originalUrl = this.video.original_file;
-      }
     }
   }
 

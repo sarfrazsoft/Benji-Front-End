@@ -1,73 +1,51 @@
 <div fxLayout="row">
-  <div class="media-container">
-    <div class="preview-image" 
-      *ngIf="imageSelected || video || mediaUploading" 
-      fxLayoutAlign="center center">
-      <ng-container *ngIf="imageSelected">
-        <img *ngIf="imageSrc" [src]="imageSrc" alt="">
-        <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
-      </ng-container>
-      <ng-container *ngIf="pdfSelected">
-        <div style="width: 400px;">
-          <ngx-extended-pdf-viewer [src]="pdfSrc" 
-            useBrowserLocale="true" 
-            [height]="'350px'">
-          </ngx-extended-pdf-viewer>
+  <div class="uploadcare-widgets">
+    <div class="media-container" *ngIf="hasMedia">
+      <div>
+        <div class="brainstorm-image" *ngIf="image">
+          <img [src]="image.cdnUrl" alt="" />
         </div>
-      </ng-container>
-      <ng-container *ngIf="video">
-        <div>
+        <div class="prompt-video" *ngIf="video">
           <video 
-          style="margin: 0 auto;" 
-          width="100%" 
-          controls>
-          <source [src]="videoURLConverted" type="video/mp4" />
-          <source [src]="videoURL" type="video/webm" />
-        </video>
-        </div>          
-      </ng-container>
-      <ng-container *ngIf="webcamImage">
-        <img 
-            benji-click-stop-propagation
-            [src]="webcamImageURL" alt="" />
-      </ng-container>
-      <ng-container *ngIf="mediaUploading">
-        <benji-progress-bar
-          [percent]="fileProgress?.progress">
-        </benji-progress-bar>
-      </ng-container>
-      <button 
-        *ngIf="imageSelected || pdfSelected || video || webcamImage"
-        class="remove-button" (click)="remove()">
-          Remove
+            style="margin: 0 auto;" width="100%" 
+            #player 
+            controls
+            preload="metadata"
+            [src]="convertedUrl" type="video/mp4">
+            <p>Your browser cannot play the provided video file.</p>
+          </video>
+        </div>
+      </div>
+      <button class="remove-button" (click)="removeMedia()">
+        Remove
       </button>
     </div>
-  </div>
-  <div class="uploadcare-widgets">
     <div *ngIf="uploadingTopicMedia">
       uploading
     </div>
-    <div class="options" fxLayout="row" fxLayoutGap="9px">
-      <div class="uploadcare-container" fxLayoutAlign="center center">
-        <benji-uploadcare-widget
-          [tabs]="'file'"
-          [uploadDocumentToBenji]="false"
-          [lessonRunCode]="lessonRunCode"
-          (mediaUploaded)="mediaUploaded($event)"
-          (mediaUploading)="mediaUploadProgress($event)"
-          [icon]="'/assets/img/side-nav/image.svg'">
-        </benji-uploadcare-widget>
+    <ng-container *ngIf="!hasMedia">
+      <div class="options" fxLayout="row" fxLayoutGap="9px">
+        <div class="uploadcare-container" fxLayoutAlign="center center">
+          <benji-uploadcare-widget
+            [tabs]="'file'"
+            [uploadDocumentToBenji]="false"
+            [lessonRunCode]="lessonRunCode"
+            (mediaUploaded)="mediaUploaded($event)"
+            (mediaUploading)="mediaUploadProgress($event)"
+            [icon]="'/assets/img/side-nav/image.svg'">
+          </benji-uploadcare-widget>
+        </div>
+        <div class="uploadcare-container" fxLayoutAlign="center center">
+          <benji-uploadcare-widget
+            [tabs]="'camera'"
+            [uploadDocumentToBenji]="false"
+            [lessonRunCode]="lessonRunCode"
+            (mediaUploaded)="mediaUploaded($event)"
+            (mediaUploading)="mediaUploadProgress($event)"
+            [icon]="'/assets/img/side-nav/camera.svg'">
+          </benji-uploadcare-widget>
+        </div>
       </div>
-      <div class="uploadcare-container" fxLayoutAlign="center center">
-        <benji-uploadcare-widget
-          [tabs]="'camera'"
-          [uploadDocumentToBenji]="false"
-          [lessonRunCode]="lessonRunCode"
-          (mediaUploaded)="mediaUploaded($event)"
-          (mediaUploading)="mediaUploadProgress($event)"
-          [icon]="'/assets/img/side-nav/camera.svg'">
-        </benji-uploadcare-widget>
-      </div>
-    </div>
+    </ng-container>
   </div>
 </div>

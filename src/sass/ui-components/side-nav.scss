@@ -13,6 +13,21 @@
       }
     }
   }
+  benji-topic-media {
+    .media-container {
+      position: relative;
+      .remove-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+    }
+  }
   .board-settings {
     font-size: 24px;
     font-weight: 600;
@@ -141,6 +156,12 @@
     &.disabled {
       background: #bdbdbd;
     }
+  }
+}
+
+.prompt-video {
+  video {
+    border-radius: 8px;
   }
 }
 

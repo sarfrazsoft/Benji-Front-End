@@ -9,14 +9,15 @@ import { SocialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { LoginResponse } from 'src/app/services/auth/auth.service';
+import { TeamUser } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-dashboard-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-  @Input() joinSession: boolean;
-  @Input() sllRoomCode: number;
+  @Input() joinSessionScreen: boolean;
   @Output() signUpClicked = new EventEmitter();
   @Output() forgotPasswordClicked = new EventEmitter();
   @Output() userSignedInSuccessfully = new EventEmitter();
@@ -28,6 +29,9 @@ export class LoginComponent implements OnInit {
   logo;
 
   user: SocialUser | null;
+  roomCode: any;
+  participantCode: any;
+  loginError: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,11 +43,6 @@ export class LoginComponent implements OnInit {
     private socialAuthService: SocialAuthService,
     private permissionsService: NgxPermissionsService
   ) {
-    // demo.mybenji.com
-    if (window.location.href.split('.')[0].includes('demo')) {
-      this.isDemoSite = true;
-    }
-
     this.user = null;
     this.socialAuthService.authState.subscribe((user: SocialUser) => {
       console.log(user);
@@ -83,6 +82,18 @@ export class LoginComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: '',
     });
+
+    if (this.route.snapshot.queryParams['link']) {
+      // alert(this.route.snapshot.queryParams['link']);
+      this.roomCode = this.route.snapshot.queryParams['link'];
+    }
+    if (this.route.snapshot.queryParams['userCode']) {
+      // alert(this.route.snapshot.queryParams['userCode']);
+      this.participantCode = this.route.snapshot.queryParams['userCode'];
+    }
+    if (this.roomCode && this.participantCode) {
+      console.log(this.roomCode, this.participantCode);
+    }
   }
 
   get email(): AbstractControl {
@@ -98,7 +109,7 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       const val = this.form.value;
       this.authService.signIn(val.email.toLowerCase(), val.password).subscribe(
-        (res) => {
+        (res: LoginResponse) => {
           // if (localStorage.getItem('participant')) {
           //   localStorage.removeItem('participant');
           // }
@@ -108,11 +119,10 @@ export class LoginComponent implements OnInit {
             if (this.authService.redirectURL.length) {
               window.location.href = this.authService.redirectURL;
             } else {
-              console.log(this.sllRoomCode);
               this.deviceDetectorService.isMobile()
                 ? this.router.navigate(['/participant/join'])
-                : this.sllRoomCode
-                ? this.userSignedInSuccessfully.emit()
+                : this.joinSessionScreen
+                ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
                 : this.router.navigate(['/dashboard']);
             }
           }
@@ -124,11 +134,24 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  joinSessionAsLoggedInUser(user: TeamUser, roomCode: number) {
+    this.authService.joinSessionAsLoggedInUser(user, roomCode, (isError) => {
+      this.loginError = isError;
+    });
+  }
+
   signUpClick() {
-    this.joinSession ? this.signUpClicked.emit() : this.router.navigate(['/sign-up']);
+    if (this.joinSessionScreen) {
+      this.signUpClicked.emit();
+    } else if (this.roomCode && this.participantCode) {
+      // move to login with roomcode and participantCode
+      this.router.navigateByUrl('/sign-up?link=' + this.roomCode + '&userCode=' + this.participantCode);
+    } else {
+      this.router.navigate(['/sign-up']);
+    }
   }
 
   forgotPasswordClick() {
-    this.joinSession ? this.forgotPasswordClicked.emit() : this.router.navigate(['/forgot-password']);
+    this.joinSessionScreen ? this.forgotPasswordClicked.emit() : this.router.navigate(['/forgot-password']);
   }
 }
