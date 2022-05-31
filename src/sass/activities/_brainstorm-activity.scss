@@ -985,9 +985,8 @@ benji-ps-brainstorming-activity {
           height: auto;
           img, video {
             border-radius: 16px;
-            width: 100%;
-            height: auto;
-            max-height: unset;
+            max-height: 480px;
+            max-width: 400px
           }
         }
       }
