@@ -1,4 +1,10 @@
 
+.uploadcare-widgets {
+  margin: 0px auto;
+  .brainstorm-image img {
+    border-radius: 8px;
+  }
+}
 .uploadcare-container {
   .uploadcare--widget__button.uploadcare--widget__button_type_open {
     display: none;
