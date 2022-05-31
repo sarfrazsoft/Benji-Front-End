@@ -84,9 +84,10 @@
                 </button>
               </ng-container>
             </div>
-            <div class="sub-title">
-              {{ board.board_activity.sub_instructions }}
-            </div>
+            <ng-container *ngIf="board">
+              <div class="sub-title" [innerHTML]="board.board_activity.sub_instructions">
+              </div>
+            </ng-container>
             <div class="persons" *ngIf="getBoardParticipantCodes(board)">
               <benji-profile-pictures
                 [activityState]="activityState"

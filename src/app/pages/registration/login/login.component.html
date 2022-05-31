@@ -46,7 +46,7 @@
             (click)="forgotPasswordClick()">
               Forgot Password?
           </div>
-          <input type="submit" value="{{joinSession? 'Join session': 'Sign in'}}" data-wait="Please wait..."
+          <input type="submit" value="{{ joinSessionScreen ? 'Join session' : 'Sign in'}}" data-wait="Please wait..."
             [ngClass]="{'bg-primary-color': (email.value && password.value), 'inactive': !(email.value && password.value)}" 
             class="submit-button-12 w-button">
         </form>

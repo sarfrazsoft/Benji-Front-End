@@ -3,7 +3,7 @@
   <div class="sign-up-card">
     <div class="div-block-183">
       <div class="form-block-8 w-form">
-        <div class="title"> {{ joinSession? "Join Benji" : "Join Benji today!" }} </div>
+        <div class="title"> {{ joinSessionScreen ? "Join Benji" : "Join Benji today!" }} </div>
         <!-- <div (click)="signInWithGoogle()"  class="google-login" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="16px">
           <img class="google-logo" src="../../../assets/img/gLogo.svg" alt="">
           <div class="google-text">Sign up with Google</div>
@@ -159,7 +159,7 @@
       </div>
       <div 
         class="small-form-text already-member"
-        [ngClass]="{'joining': joinSession}"
+        [ngClass]="{'joining': joinSessionScreen}"
         (click)="openSignInScreen()">
         Already have an account?<br>
         <div class="bold-text-7 sign-up primary-color">Sign in</div>

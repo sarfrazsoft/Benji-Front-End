@@ -11,6 +11,7 @@ export { BrainstormCategorizedComponent };
 export { BrainstormUncategorizedComponent };
 export { BrainstormThreadModeComponent };
 export { MainScreenBrainstormingActivityComponent };
+export { BrainstormBoardPromptComponent };
 
 export const MainScreenBrainStormComponents = [
   BoardComponent,
