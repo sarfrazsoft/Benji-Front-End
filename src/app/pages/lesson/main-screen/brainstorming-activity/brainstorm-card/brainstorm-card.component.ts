@@ -124,6 +124,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
+
+    console.log(this.item.time);
+
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;
@@ -384,5 +387,29 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  calculateTimeStamp() {
+    let post_date = 0;
+    let date_now = 0;
+    var d = Math.abs(post_date - date_now) / 1000;                           // delta
+    var r = {};                                                                // result
+    var s = {                                                                  // structure
+        year: 31536000,
+        month: 2592000,
+        week: 604800, // uncomment row to ignore
+        day: 86400,   // feel free to add your own row
+        hour: 3600,
+        minute: 60,
+        second: 1
+    };
+
+    Object.keys(s).forEach(function(key){
+        r[key] = Math.floor(d / s[key]);
+        d -= r[key] * s[key];
+    });
+
+    // for example: {year:0,month:0,week:1,day:2,hour:34,minute:56,second:7}
+    console.log(r);
   }
 }
