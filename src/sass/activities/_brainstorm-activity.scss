@@ -980,7 +980,7 @@ benji-ps-brainstorming-activity {
     &.with-media {
       padding: 32px;
       .options-buttons {
-        .media {
+        .brainstorm-image, .prompt-video {
           width: 400px;
           height: auto;
           img, video {
@@ -1029,10 +1029,12 @@ benji-ps-brainstorming-activity {
           width: 360px;
         }
       }
-      .options-buttons .media {
-        width: 280px;
-        img, video {
-          height: auto;
+      .options-buttons {
+        .brainstorm-image, .prompt-video {
+          width: 280px;
+          img, video {
+            height: auto;
+          }
         }
       }
     }
@@ -1071,7 +1073,7 @@ benji-ps-brainstorming-activity {
       .options-buttons {
         width: 100%;
         margin-top: 24px;
-        .media {
+        .brainstorm-image, .prompt-video  {
           width: 100%;
           img, video {
             height: auto;
