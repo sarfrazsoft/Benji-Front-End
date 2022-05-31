@@ -1,8 +1,10 @@
 
 .uploadcare-widgets {
-  margin: 0px auto;
-  .brainstorm-image img {
+  width: 100%;
+  .media-container .brainstorm-image img {
     border-radius: 8px;
+    max-width: 100%;
+    width: auto;
   }
 }
 .uploadcare-container {
