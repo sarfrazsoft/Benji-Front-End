@@ -85,9 +85,10 @@
                 </button>
               </ng-container>
             </div>
-            <div class="sub-title">
-              {{ board.board_activity.sub_instructions }}
-            </div>
+            <ng-container *ngIf="board">
+              <div class="sub-title" [innerHTML]="board.board_activity.sub_instructions">
+              </div>
+            </ng-container>
             <div class="persons" *ngIf="getBoardParticipantCodes(board)">
               <benji-profile-pictures
                 [activityState]="activityState"
@@ -129,11 +130,27 @@
   </button>
 </mat-menu>
 
-<div  *ngIf="navType=='board-settings'" class="board-settings-navigation" fxLayout="column" fxLayoutGap="24px">
+<div 
+  *ngIf="navType=='board-settings'"
+  class="board-settings-navigation" 
+  fxLayout="column" 
+  fxLayoutGap="24px">
 
   <div fxLayout="row" fxLayoutAlign="space-between">
     <div class="board-settings">Board Settings</div>
     <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
+  </div>
+
+  <div fxLayout="column">
+    <div class="title">Topic Media</div>
+    <div class="topic-media">
+      <!-- Topic media -->
+      <benji-topic-media
+        [lessonRunCode]="lesssonRunCode"
+        [selectedBoard]="selectedBoard"
+        (sendMessage)="sendMessage.emit($event)">
+      </benji-topic-media>
+    </div>
   </div>
 
   <div fxLayout="column">

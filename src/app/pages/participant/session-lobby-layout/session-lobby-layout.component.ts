@@ -95,6 +95,14 @@ export class SessionLobbyLayoutComponent implements OnInit {
     });
   }
 
+  joinSessionAsLoggedInUser() {
+    const user: TeamUser = JSON.parse(localStorage.getItem('user'));
+    console.log(user);
+    this.authService.joinSessionAsLoggedInUser(user, this.roomCode.value, (isError) => {
+      this.loginError = isError;
+    });
+  }
+
   public validateRoomCode() {
     this.backend.validateRoomCode(this.roomCode.value).subscribe(
       (res: LessonRunDetails) => {

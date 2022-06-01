@@ -36,6 +36,7 @@
               <div class="options" fxLayoutAlign="center center">
                 <div class="uploadcare-container" fxLayoutAlign="center center">
                   <benji-uploadcare-widget
+                    [tabs]="'camera'"
                     [lessonRunCode]="lessonRunCode"
                     (mediaUploaded)="mediaUploaded($event)"
                     (mediaUploading)="mediaUploadProgress($event)">

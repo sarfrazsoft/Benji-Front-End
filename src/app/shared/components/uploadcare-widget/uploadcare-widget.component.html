@@ -2,7 +2,7 @@
   (click)="mediaSelected ? null : openDialog()" 
   [ngClass]="{'inactive': mediaSelected}"
   class="close" 
-  src="/assets/img/idea-creation/cam-upload.svg">
+  src="{{ icon }}">
 
 <!-- used by uploadcare -->
-<input #uploadcarewidget type="hidden" name="file"/>
+<input #uploadcarewidget type="hidden" name="{{ tabs }}"/>

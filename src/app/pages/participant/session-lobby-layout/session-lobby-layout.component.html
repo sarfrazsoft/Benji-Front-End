@@ -152,24 +152,23 @@
         <div class="participant-login">
           <ng-container *ngIf="loadLogin">
             <benji-dashboard-login
-              [joinSession]="true"
+              [joinSessionScreen]="true"
               (forgotPasswordClicked)="loadForgotPasswordComponent()"
               (signUpClicked)="loadSignUpComponent()"
               (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
-              [sllRoomCode]="roomCode.value"   
             ></benji-dashboard-login>
           </ng-container>
           <ng-container *ngIf="loadForgotPassword">
             <benji-forgot-password
-            [joinSession]="true"
-            (signIn)="loadLoginComponent()"
-            ></benji-forgot-password>
+              [joinSession]="true"
+              (signInClicked)="loadLoginComponent()">
+            </benji-forgot-password>
           </ng-container>
           <ng-container *ngIf="loadSignUp">
             <benji-dashboard-signup 
-            [joinSession]="true"
-            (signIn)="loadLoginComponent()"
-            [sllRoomCode]="roomCode"
+              [joinSessionScreen]="true"
+              (signInClicked)="loadLoginComponent()"
+              (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
             ></benji-dashboard-signup>
           </ng-container>
         </div>

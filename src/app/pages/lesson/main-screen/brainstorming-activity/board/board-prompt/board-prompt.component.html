@@ -1,0 +1,67 @@
+<div 
+  class="brainstorm-header" 
+  fxLayout="row" 
+  fxLayoutAlign="space-between start" 
+  fxLayout.lt-sm="column"
+  [ngClass]="{'with-media': hasMedia}">
+  <div fxLayout="column" class="instructions">
+    <div class="level-one" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" >
+      <div class="level-two">
+        <div class="brainstorm-h2 black-color">
+          <textarea
+            #title
+            class="title"
+            [readonly]="!isHost" 
+            type="text"
+            value="{{ title_instructions }}"
+            (keyup)="typingStoped('title')"
+            (keydown)="typingStarted()"></textarea>
+        </div>
+        <div class="sub-header">
+          <benji-tiptap-editor
+            [editable]="isHost"
+            [defaultValue]="sub_instructions"
+            (textChanged)="descriptionTextChanged($event)">
+          </benji-tiptap-editor>
+        </div>
+        <div
+          *ngIf="hasMedia" 
+          class="import-button bg-primary-color" 
+          (click)="postIdea()"
+          fxLayoutAlign="center center">
+          <!-- <div class="plus">+</div> -->
+          <div>Post idea</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="options-buttons" fxLayoutAlign="end start" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
+    <ng-container *ngIf="hasMedia">
+      <div class="brainstorm-image" *ngIf="image">
+        <img [src]="image.cdnUrl" alt="" />
+      </div>
+      <div class="prompt-video" *ngIf="video">
+        <video 
+          style="margin: 0 auto;" width="100%" 
+          #player 
+          controls
+          preload="metadata"
+          [src]="convertedUrl" type="video/mp4"
+          (loadeddata)="videoLoaded()">
+          <p>Your browser cannot play the provided video file.</p>
+        </video>
+      </div>
+    </ng-container>
+
+<!-- <div>upload file</div> -->
+
+    <div
+      *ngIf="!hasMedia" 
+      class="import-button bg-primary-color" 
+      (click)="postIdea()"
+      fxLayoutAlign="center center">
+      <!-- <div class="plus">+</div> -->
+      <div>Post idea</div>
+    </div>
+  </div>
+</div>
