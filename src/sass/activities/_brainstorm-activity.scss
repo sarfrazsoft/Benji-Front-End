@@ -913,6 +913,8 @@ benji-ps-brainstorming-activity {
 .preview-panel .brainstorm-main {
   max-width: 840px;
 }
+
+//New Prompt Header
 .brainstorm-main {
   .head-wrapper {
     border-bottom: 1px solid #e7e7e7;
@@ -936,21 +938,21 @@ benji-ps-brainstorming-activity {
       }
     }
     .sub-header {
-      line-height: 0px; 
-      input {
-        width: 571px;
-        font-size: 16px;
-        line-height: 24px;
-        font-weight: 400;
-        letter-spacing: -0.011em;
-        color: $black;
-        border: 0px;
-        border-radius: 0px;
-        resize: none;
-        &:focus-visible {
-          outline: 0px;
-        }
-      }
+      // line-height: 0px; 
+      // input {
+      //   width: 571px;
+      //   font-size: 16px;
+      //   line-height: 24px;
+      //   font-weight: 400;
+      //   letter-spacing: -0.011em;
+      //   color: $black;
+      //   border: 0px;
+      //   border-radius: 0px;
+      //   resize: none;
+      //   &:focus-visible {
+      //     outline: 0px;
+      //   }
+      // }
     }
     .menus {
       .ng-select-container {
@@ -979,15 +981,23 @@ benji-ps-brainstorming-activity {
     }
     &.with-media {
       padding: 32px;
+      .instructions {
+        width: 50%;
+        input {
+          width: 100%;
+        }
+      }
       .options-buttons {
+        width: 50%;
         .brainstorm-image, .prompt-video {
-          width: 400px;
+          //width: 400px;
+          width: auto;
           height: auto;
           img, video {
             border-radius: 16px;
             max-height: 480px;
             max-width: 400px;
-            width: unset;
+            //width: auto;
           }
         }
       }
@@ -1032,7 +1042,6 @@ benji-ps-brainstorming-activity {
       }
       .options-buttons {
         .brainstorm-image, .prompt-video {
-          width: 280px;
           img, video {
             height: auto;
           }
@@ -1053,6 +1062,11 @@ benji-ps-brainstorming-activity {
       .sub-header, .brainstorm-h2 {
         input {
           width: 240px;
+        }
+      }
+      .options-buttons {
+        .brainstorm-image, .prompt-video {
+          width: 280px;
         }
       }
     }
@@ -1078,6 +1092,8 @@ benji-ps-brainstorming-activity {
           width: 100%;
           img, video {
             height: auto;
+            width: auto;
+            max-width: 100%;
           }
         }
       }
@@ -1091,6 +1107,16 @@ benji-ps-brainstorming-activity {
     .brainstorm-h2 input {
       font-size: 24px;
       line-height: 32px;
+    }
+    &.with-media {
+      .options-buttons {
+        .brainstorm-image, .prompt-video  {
+          img, video {
+            height: 100%;
+            width: 100%;
+          }
+        }
+      }
     }
   }
 }

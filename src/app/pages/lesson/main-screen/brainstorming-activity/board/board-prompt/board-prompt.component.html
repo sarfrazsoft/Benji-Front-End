@@ -5,7 +5,7 @@
   fxLayout.lt-sm="column"
   [ngClass]="{'with-media': hasMedia}">
   <div fxLayout="column" class="instructions">
-    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="center center" >
+    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" >
       <div>
         <div class="brainstorm-h2 black-color">
           <input
@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class="options-buttons" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
+  <div class="options-buttons" fxLayoutAlign="end start" fxLayout="row" fxLayout.lt-sm="row-reverse" fxLayoutGap="8px">
     <ng-container *ngIf="hasMedia">
       <div class="brainstorm-image" *ngIf="image">
         <img [src]="image.cdnUrl" alt="" />
