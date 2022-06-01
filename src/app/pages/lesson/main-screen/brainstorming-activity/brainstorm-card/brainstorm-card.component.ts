@@ -47,6 +47,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -110,6 +111,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   isAdmin: boolean;
   boardStatus: BoardStatus;
   mobileSize = false;
+  timeStamp: string;
 
   constructor(
     private dialog: MatDialog,
@@ -124,8 +126,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-
-    console.log(this.item.time);
 
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
@@ -166,6 +166,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         console.log(this.boardStatus);
       }
     });
+
+    this.calculateTimeStamp();
+    setInterval(() => { 
+      this.calculateTimeStamp();
+    }, 60000);
+
   }
 
   checkBoardStatus() {
@@ -390,26 +396,35 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   calculateTimeStamp() {
-    let post_date = 0;
-    let date_now = 0;
-    var d = Math.abs(post_date - date_now) / 1000;                           // delta
-    var r = {};                                                                // result
-    var s = {                                                                  // structure
-        year: 31536000,
-        month: 2592000,
-        week: 604800, // uncomment row to ignore
-        day: 86400,   // feel free to add your own row
-        hour: 3600,
-        minute: 60,
-        second: 1
-    };
-
-    Object.keys(s).forEach(function(key){
-        r[key] = Math.floor(d / s[key]);
-        d -= r[key] * s[key];
-    });
-
-    // for example: {year:0,month:0,week:1,day:2,hour:34,minute:56,second:7}
-    console.log(r);
+    // Test string
+    //this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    this.timeStamp = moment(this.item.time).fromNow().toString();
+    if(this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
+      this.timeStamp = '1m ago';
+    }
+    else if(this.timeStamp.includes('an hour ago')) {
+      this.timeStamp = '1hr ago'
+    }
+    else if(this.timeStamp.includes('a minute ago')) {
+      this.timeStamp = '1m ago'
+    }
+    else if(this.timeStamp.includes('minutes')) {
+      this.timeStamp = this.timeStamp.replace(/\sminutes/, 'm');
+    }
+    else if(this.timeStamp.includes('hours')) {
+      this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
+    }
+    else if(this.timeStamp.includes('days')) {
+      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    }
+    else if(this.timeStamp.includes('days')) {
+      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    }
+    else if(this.timeStamp.includes('months')) {
+      this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
+    }
+    else if(this.timeStamp.includes('years')) {
+      this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
+    }
   }
 }
