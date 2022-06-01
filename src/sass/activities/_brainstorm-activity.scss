@@ -923,7 +923,7 @@ benji-ps-brainstorming-activity {
   .brainstorm-header {
     padding: 24px 32px;
     width: 1200px;
-    .brainstorm-h2 input {
+    .brainstorm-h2 .title {
       width: 571px;
       font-weight: 700;
       font-size: 32px;
@@ -938,6 +938,7 @@ benji-ps-brainstorming-activity {
       }
     }
     .sub-header {
+      width: 100%;
       // line-height: 0px; 
       // input {
       //   width: 571px;
@@ -983,8 +984,14 @@ benji-ps-brainstorming-activity {
       padding: 32px;
       .instructions {
         width: 60%;
-        input {
+        .title {
           width: 100%;
+        }
+        .level-one {
+          width: 100%;
+          .level-two {
+            width: 100%;
+          }
         }
       }
       .options-buttons {
@@ -1014,12 +1021,12 @@ benji-ps-brainstorming-activity {
 @media (max-width: 1280px) {
   .brainstorm-main .brainstorm-header {
     width: calc(100vw - 17px);
-    .brainstorm-h2 input {
+    .brainstorm-h2 .title {
       margin-bottom: 8px;
     }
     &.with-media {
       .sub-header, .brainstorm-h2 {
-        input {
+        .title {
           width: 516px;
         }
       }
@@ -1030,13 +1037,13 @@ benji-ps-brainstorming-activity {
 @media (max-width: 1012px) {
   .brainstorm-main .brainstorm-header {
     .sub-header, .brainstorm-h2 {
-      input {
+      .title {
         width: 480px;
       }
     }
     &.with-media {
       .sub-header, .brainstorm-h2 {
-        input {
+        .title {
           width: 360px;
         }
       }
@@ -1054,13 +1061,13 @@ benji-ps-brainstorming-activity {
 @media (max-width: 744px) {
   .brainstorm-main .brainstorm-header {
     .sub-header, .brainstorm-h2 {
-      input {
+      .title {
         width: 370px;
       }
     }
     &.with-media {
       .sub-header, .brainstorm-h2 {
-        input {
+        .title {
           width: 240px;
         }
       }
@@ -1079,7 +1086,7 @@ benji-ps-brainstorming-activity {
   }
   .brainstorm-main .brainstorm-header {
     .sub-header, .brainstorm-h2 {
-      input {
+      .title {
         width: calc(100vw - 64px) !important;
       }
     }
@@ -1104,7 +1111,7 @@ benji-ps-brainstorming-activity {
 @media (max-width: 414px) {
   .brainstorm-main .brainstorm-header {
     padding: 24px; 
-    .brainstorm-h2 input {
+    .brainstorm-h2  .title {
       font-size: 24px;
       line-height: 32px;
     }

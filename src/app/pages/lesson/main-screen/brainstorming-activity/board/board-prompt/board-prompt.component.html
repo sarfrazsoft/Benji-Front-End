@@ -5,16 +5,17 @@
   fxLayout.lt-sm="column"
   [ngClass]="{'with-media': hasMedia}">
   <div fxLayout="column" class="instructions">
-    <div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" >
-      <div>
+    <div class="level-one" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" >
+      <div class="level-two">
         <div class="brainstorm-h2 black-color">
-          <input
+          <textarea
             #title
+            class="title"
             [readonly]="!isHost" 
             type="text"
             value="{{ title_instructions }}"
             (keyup)="typingStoped('title')"
-            (keydown)="typingStarted()">
+            (keydown)="typingStarted()"></textarea>
         </div>
         <div class="sub-header">
           <benji-tiptap-editor
