@@ -144,8 +144,6 @@
               <div
                 *ngIf="idea.pinned"
                 [ngClass]="{'pinned bg-primary-color': idea.pinned, color: color}"
-                (mouseover)="changeStyle($event)" 
-                (mouseout)="changeStyle($event)"
                 class="options"
                 (click)="unpin()"
                 fxLayoutAlign="center center">

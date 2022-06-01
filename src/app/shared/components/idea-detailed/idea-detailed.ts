@@ -554,10 +554,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
   }
 
-  changeStyle($event){
-    this.color = $event.type == 'mouseover' ? 'bg-primary-color' : '';
-  }
-
   changeOnHover($event){
     this.hoverColor = $event.type == 'mouseover' ? 'primary-color' : 'white-color';
   }

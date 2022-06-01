@@ -88,20 +88,6 @@
   }
 }
 
-@media (max-width: 1152px) {
-  .participant-start {
-    //height: auto;
-    //margin-top: 64px;
-  }
-}
-
-@media (max-width: 834px) {
-  .participant-start {
-    //height: calc(100vh - 60px);
-    //margin-top: unset;
-  }
-}
-
 @media (max-width: 500px) {
   .participant-start {
     .container {
@@ -112,9 +98,6 @@
         &:before, &:after {
           width: 44%;
         }
-      }
-      .blue-buttton {
-        //padding: 16px 122px;
       }
     }
   }

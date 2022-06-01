@@ -13,10 +13,6 @@ import { LayoutService } from './services/layout.service';
   templateUrl: './app.component.html',
   styleUrls: [
     './app.component.scss',
-    // '../../node_modules/@uppy/core/dist/style.min.css',
-    // '../../node_modules/@uppy/drag-drop/dist/style.min.css',
-    // '../../node_modules/@uppy/progress-bar/dist/style.min.css',
-    // '../../node_modules/@uppy/dashboard/dist/style.min.css',
   ],
 })
 export class AppComponent implements OnInit {
@@ -31,16 +27,11 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.checkWhitelabeling();
-
+    
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.title.setTitle(info.parameters.tabTitle);
         this._document.getElementById('appFavicon').setAttribute('href', info.favicon);
-
-        // To test white-labelling
-        // info.parameters.primary = 'red !important';
-        // info.parameters.primary = 'red';
 
         const cssCode = `
         * {
@@ -283,41 +274,4 @@ export class AppComponent implements OnInit {
     }
   }
 
-  checkWhitelabeling() {
-    // let whitelabelDetailsAvailable = false;
-    // Is there a user present?
-    // this.restService.get_own_identity().subscribe(
-    //   (res: any) => {
-    //     this.contextService.user = res;
-    //   },
-    //   (error: any) => {
-    //     // console.log('no user available');
-    //     // this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-    //   }
-    // );
-    // this.contextService.user$.subscribe(user => {
-    //   if (user && user.organization) {
-    // const orgId =
-    //   typeof user.organization === 'object'
-    //     ? user.organization.id
-    //     : user.organization;
-    // this.restService.get_white_label_details(orgId).subscribe(
-    //   (data: any) => {
-    //     // whitelabelDetailsAvailable = true;
-    //     this.contextService.partnerInfo = data;
-    //   },
-    //   error => {
-    //     this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-    //   }
-    // );
-    // } else {
-    // it's a guest user
-    // if (user !== null) {
-    // console.log('continue as guest user');
-    // whitelabelDetailsAvailable = false;
-    // this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-    // }
-    // }
-    // });
-  }
 }
