@@ -144,7 +144,7 @@
               </div>
               <div
                 *ngIf="idea.pinned"
-                [ngClass]="{'pinned': idea.pinned}"
+                [ngClass]="{'pinned bg-primary-color': idea.pinned, color: color}"
                 class="options"
                 (click)="unpin()"
                 fxLayoutAlign="center center">
@@ -165,7 +165,13 @@
             </div>
           </div>
         </div>
-        <button class="post bg-primary-color border-color-primary" (click)="onSubmit()">Update</button>
+        <button 
+          class="post bg-primary-color border-color-primary" 
+          (click)="onSubmit()"
+          [ngClass]="hoverColor"
+          (mouseover)="changeOnHover($event)" 
+          (mouseout)="changeOnHover($event)"
+          >Update</button>
       </div>
       <div class="scrollable-area">
         <ng-container *ngIf="userRole === 'owner' || ideaTitle">
@@ -303,7 +309,7 @@
           (keyup.enter)="submitComment(idea.id, commentModel); commentModel = ''">
         </textarea>
         <div  
-          class="send-comment detailed" 
+          class="send-comment detailed primary-color" 
           (click)="submitComment(idea.id, commentModel); commentModel = ''"
           [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
           Post

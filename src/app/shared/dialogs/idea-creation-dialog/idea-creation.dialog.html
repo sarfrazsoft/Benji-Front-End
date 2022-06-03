@@ -5,7 +5,7 @@
         Cancel
       </div>
       <button 
-        class="post" 
+        class="post bg-primary-color" 
         (click)="onSubmit()"
         [ngClass]="{
           'active': userIdeaText || ideaTitle || webcamImage || video || imageSelected || pdfSelected
@@ -136,7 +136,7 @@
           </div>
         </div>
         <button 
-          class="post" 
+          class="post bg-primary-color" 
           (click)="onSubmit()"
           [ngClass]="{
             'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video
