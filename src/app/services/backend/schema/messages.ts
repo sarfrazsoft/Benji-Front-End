@@ -1019,6 +1019,14 @@ export class BrainstormBoardSortOrderEvent extends ActivityEvent {
     this.extra_args = { sort: sort, board: board };
   }
 }
+export class UpdatePromptVideoEvent extends ActivityEvent {
+  event_name = 'UpdatePromptVideoEvent';
+  constructor(board: number, prompt_video) {
+    super();
+    this.extra_args = { prompt_video: prompt_video, board: board };
+  }
+}
+
 export class GetUpdatedLessonDetailEvent extends ActivityEvent {
   event_name = 'GetUpdatedLessonDetailEvent';
 }

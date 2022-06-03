@@ -101,6 +101,7 @@
             <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="!webcamImage && !video">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
+                [tabs]="'camera'"
                 (mediaUploaded)="mediaUploaded($event)"
                 (mediaUploading)="mediaUploadProgress($event)"
                 [mediaSelected]="imageSelected || pdfSelected">

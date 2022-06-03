@@ -30,6 +30,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
+import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -55,7 +56,8 @@ export class MainScreenBrainstormingActivityComponent
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
-    private boardStatusService: BoardStatusService
+    private boardStatusService: BoardStatusService,
+    private topicMediaService: TopicMediaService
   ) {
     super();
   }
@@ -151,6 +153,8 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
       this.selectUserBoard();
+    } else if (this.eventType === 'UpdatePromptVideoEvent') {
+      this.updatePromptMedia();
     } else if (this.eventType === 'JoinEvent') {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
@@ -158,10 +162,12 @@ export class MainScreenBrainstormingActivityComponent
       this.hostChangedBoard();
       this.initBoardInstructions();
       this.changeBoardStatus();
+      this.updatePromptMedia();
     } else if (this.eventType === 'ParticipantChangeBoardEvent') {
       this.participantChangedBoard();
       this.initBoardInstructions();
       this.changeBoardStatus();
+      this.updatePromptMedia();
     } else if (this.eventType === 'BrainstormChangeModeEvent') {
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
@@ -214,21 +220,34 @@ export class MainScreenBrainstormingActivityComponent
     });
   }
 
-  initBoardInstructions() {
+  updatePromptMedia() {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        this.selectedBoard = this.getAdminBoard();
-        this.brainstormService.selectedBoard = this.selectedBoard;
-        this.brainstormService.boardTitle = this.selectedBoard.board_activity.instructions;
-        this.brainstormService.boardInstructions = this.selectedBoard.board_activity.sub_instructions;
+        const board = this.getAdminBoard();
+        this.topicMediaService.topicMedia = board.prompt_video;
       }
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.getParticipantBoard();
-        this.brainstormService.selectedBoard = this.selectedBoard;
-        this.brainstormService.boardTitle = this.selectedBoard.board_activity.instructions;
-        this.brainstormService.boardInstructions = this.selectedBoard.board_activity.sub_instructions;
+        const board = this.getParticipantBoard();
+        this.topicMediaService.topicMedia = board.prompt_video;
+      }
+    });
+  }
+
+  initBoardInstructions() {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const board = this.getAdminBoard();
+        this.brainstormService.boardTitle = board.board_activity.instructions;
+        this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const board = this.getParticipantBoard();
+        this.brainstormService.boardTitle = board.board_activity.instructions;
+        this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
       }
     });
   }

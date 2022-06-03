@@ -10,6 +10,7 @@ import { GroupingToolService } from './grouping-tool.service';
 import { LayoutService } from './layout.service';
 import { PastSessionsService } from './past-sessions.service';
 import { SharingToolService } from './sharing-tool.service';
+import { TopicMediaService } from './topic-media.service';
 import { UtilsService } from './utils.service';
 import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
@@ -48,5 +49,6 @@ export const ServicesProviders = [
   SharingToolService,
   GroupingToolService,
   BoardStatusService,
+  TopicMediaService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];
