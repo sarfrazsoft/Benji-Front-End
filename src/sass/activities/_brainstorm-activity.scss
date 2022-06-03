@@ -838,7 +838,19 @@ benji-ps-brainstorming-activity {
   .brainstorm-header {
     padding: 24px 32px;
     width: 1200px;
+    .instructions {
+      width: 100%;
+      .level-one {
+        width: 100%;
+        .level-two {
+          width: 100%;
+        }
+      }
+    }
     .brainstorm-h2 .title {
+      box-shadow: none;
+      // resize: none;
+      // word-break: break-word;
       width: 571px;
       font-weight: 700;
       font-size: 32px;
@@ -850,6 +862,9 @@ benji-ps-brainstorming-activity {
       margin-right: 10px;
       &:focus-visible {
         outline: 0px;
+      }
+      &::placeholder {
+        color: $secondary-color;
       }
     }
     .sub-header {
@@ -939,29 +954,13 @@ benji-ps-brainstorming-activity {
     .brainstorm-h2 .title {
       margin-bottom: 8px;
     }
-    &.with-media {
-      .sub-header, .brainstorm-h2 {
-        .title {
-          width: 516px;
-        }
-      }
-    }
   }
 }
 
 @media (max-width: 1012px) {
   .brainstorm-main .brainstorm-header {
-    .sub-header, .brainstorm-h2 {
-      .title {
-        width: 480px;
-      }
-    }
+
     &.with-media {
-      .sub-header, .brainstorm-h2 {
-        .title {
-          width: 360px;
-        }
-      }
       .options-buttons {
         .brainstorm-image, .prompt-video {
           img, video {
@@ -975,17 +974,7 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 744px) {
   .brainstorm-main .brainstorm-header {
-    .sub-header, .brainstorm-h2 {
-      .title {
-        width: 370px;
-      }
-    }
     &.with-media {
-      .sub-header, .brainstorm-h2 {
-        .title {
-          width: 240px;
-        }
-      }
       .options-buttons {
         .brainstorm-image, .prompt-video {
           width: 280px;

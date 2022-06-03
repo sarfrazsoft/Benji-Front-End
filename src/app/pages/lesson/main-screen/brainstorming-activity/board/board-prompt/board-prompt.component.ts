@@ -187,6 +187,9 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   doneTyping(type: string) {
+    if (!this.isHost) {
+      return;
+    }
     if (type === 'title') {
       this.sendMessage.emit(
         new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.board.id)
