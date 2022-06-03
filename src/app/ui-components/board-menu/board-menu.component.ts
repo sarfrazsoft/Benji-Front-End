@@ -379,4 +379,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   changeOrder(order: { value: BoardSort; name: string }) {
     this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
   }
+
+  mediaUploaded(event) {
+    console.log(event);
+  }
 }

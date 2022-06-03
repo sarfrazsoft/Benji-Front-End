@@ -5,7 +5,7 @@
         Cancel
       </div>
       <button 
-        class="post" 
+        class="post bg-primary-color" 
         (click)="onSubmit()"
         [ngClass]="{
           'active': userIdeaText || ideaTitle || webcamImage || video || imageSelected || pdfSelected
@@ -101,6 +101,7 @@
             <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="!webcamImage && !video">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
+                [tabs]="'camera'"
                 (mediaUploaded)="mediaUploaded($event)"
                 (mediaUploading)="mediaUploadProgress($event)"
                 [mediaSelected]="imageSelected || pdfSelected">
@@ -135,7 +136,7 @@
           </div>
         </div>
         <button 
-          class="post" 
+          class="post bg-primary-color" 
           (click)="onSubmit()"
           [ngClass]="{
             'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video

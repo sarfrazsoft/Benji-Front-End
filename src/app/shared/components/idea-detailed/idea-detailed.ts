@@ -183,6 +183,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   fileProgress: FileProgress;
   mediaUploading = false;
   isHost = false;
+  color = '';
+  hoverColor = '';
 
   constructor(
     private activitiesService: ActivitiesService,
@@ -551,4 +553,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       return false;
     }
   }
+
+  changeOnHover($event){
+    this.hoverColor = $event.type == 'mouseover' ? 'primary-color' : 'white-color';
+  }
+  
 }

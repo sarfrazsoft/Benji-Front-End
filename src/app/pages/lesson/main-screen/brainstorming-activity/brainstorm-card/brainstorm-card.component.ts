@@ -163,7 +163,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
       if (val) {
         this.boardStatus = val;
-        console.log(this.boardStatus);
       }
     });
 

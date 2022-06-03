@@ -229,7 +229,7 @@
             (keyup.enter)="submitComment(item.id, commentModel); commentModel = ''">
           </textarea>
           <div  
-            class="send-comment" 
+            class="send-comment primary-color" 
             (click)="submitComment(item.id, commentModel); commentModel = ''"
             [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
             Send

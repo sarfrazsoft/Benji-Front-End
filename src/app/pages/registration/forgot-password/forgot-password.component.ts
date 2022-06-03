@@ -12,7 +12,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 })
 export class ForgotPasswordComponent implements OnInit {
   @Input() joinSession: boolean;
-  @Output() signIn = new EventEmitter();
+  @Output() signInClicked = new EventEmitter();
   form: FormGroup;
   requestSubmitted = false;
   emailPasswordError = false;
@@ -60,7 +60,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
   }
 
-  signInClicked() {
-    this.joinSession? this.signIn.emit() : this.router.navigate(['/login']);
-  } 
+  openSignInScreen() {
+    this.joinSession ? this.signInClicked.emit() : this.router.navigate(['/login']);
+  }
 }

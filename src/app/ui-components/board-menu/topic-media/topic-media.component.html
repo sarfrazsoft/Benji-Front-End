@@ -1,0 +1,51 @@
+<div fxLayout="row">
+  <div class="uploadcare-widgets">
+    <div class="media-container" *ngIf="hasMedia">
+      <div>
+        <div class="brainstorm-image" *ngIf="image">
+          <img [src]="image.cdnUrl" alt="" />
+        </div>
+        <div class="prompt-video" *ngIf="video">
+          <video 
+            style="margin: 0 auto;" width="100%" 
+            #player 
+            controls
+            preload="metadata"
+            [src]="convertedUrl" type="video/mp4">
+            <p>Your browser cannot play the provided video file.</p>
+          </video>
+        </div>
+      </div>
+      <button class="remove-button" (click)="removeMedia()">
+        Remove
+      </button>
+    </div>
+    <div *ngIf="uploadingTopicMedia">
+      uploading
+    </div>
+    <ng-container *ngIf="!hasMedia">
+      <div class="options" fxLayout="row" fxLayoutGap="9px">
+        <div class="uploadcare-container" fxLayoutAlign="center center">
+          <benji-uploadcare-widget
+            [tabs]="'file'"
+            [uploadDocumentToBenji]="false"
+            [lessonRunCode]="lessonRunCode"
+            (mediaUploaded)="mediaUploaded($event)"
+            (mediaUploading)="mediaUploadProgress($event)"
+            [icon]="'/assets/img/side-nav/image.svg'">
+          </benji-uploadcare-widget>
+        </div>
+        <div class="uploadcare-container" fxLayoutAlign="center center">
+          <benji-uploadcare-widget
+            [tabs]="'camera'"
+            [uploadDocumentToBenji]="false"
+            [lessonRunCode]="lessonRunCode"
+            (mediaUploaded)="mediaUploaded($event)"
+            (mediaUploading)="mediaUploadProgress($event)"
+            [icon]="'/assets/img/side-nav/camera.svg'">
+          </benji-uploadcare-widget>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
