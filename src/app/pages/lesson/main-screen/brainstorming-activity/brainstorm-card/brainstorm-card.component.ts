@@ -47,6 +47,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -110,6 +111,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   isAdmin: boolean;
   boardStatus: BoardStatus;
   mobileSize = false;
+  timeStamp: string;
 
   constructor(
     private dialog: MatDialog,
@@ -124,6 +126,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
+
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;
@@ -162,6 +165,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.boardStatus = val;
       }
     });
+
+    this.calculateTimeStamp();
+    setInterval(() => { 
+      this.calculateTimeStamp();
+    }, 60000);
+
   }
 
   checkBoardStatus() {
@@ -382,6 +391,39 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           return 'uploaded';
         }
       }
+    }
+  }
+
+  calculateTimeStamp() {
+    // Test string
+    //this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    this.timeStamp = moment(this.item.time).fromNow().toString();
+    if(this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
+      this.timeStamp = '1m ago';
+    }
+    else if(this.timeStamp.includes('an hour ago')) {
+      this.timeStamp = '1hr ago'
+    }
+    else if(this.timeStamp.includes('a minute ago')) {
+      this.timeStamp = '1m ago'
+    }
+    else if(this.timeStamp.includes('minutes')) {
+      this.timeStamp = this.timeStamp.replace(/\sminutes/, 'm');
+    }
+    else if(this.timeStamp.includes('hours')) {
+      this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
+    }
+    else if(this.timeStamp.includes('days')) {
+      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    }
+    else if(this.timeStamp.includes('days')) {
+      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    }
+    else if(this.timeStamp.includes('months')) {
+      this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
+    }
+    else if(this.timeStamp.includes('years')) {
+      this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
     }
   }
 }
