@@ -9,13 +9,19 @@
       <div class="level-two">
         <div class="brainstorm-h2 black-color">
           <textarea
+            matInput
+            cdkTextareaAutosize
+            cdkAutosizeMinRows="1"
+            placeholder="Title" 
             #title
             class="title"
+            rows="1"
             [readonly]="!isHost" 
             type="text"
             value="{{ title_instructions }}"
             (keyup)="typingStoped('title')"
-            (keydown)="typingStarted()"></textarea>
+            (keydown)="typingStarted()">
+          </textarea>
         </div>
         <div class="sub-header">
           <benji-tiptap-editor
