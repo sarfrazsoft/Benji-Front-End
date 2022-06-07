@@ -111,11 +111,16 @@
           <span>Pinned by host</span>
         </div>
       </div>
-      <img 
+      <!-- <img 
         *ngIf="item.pinned && showUserName"
         (click)="unpin(item.id)"
         class="pin" 
         [ngClass]="{'move-left': item.showClose && userRole === 'owner' }"
+        src="/assets/img/idea-creation/blue-pin.svg"> -->
+      <img 
+        *ngIf="item.pinned && showUserName"
+        (click)="unpin(item.id)"
+        class="pin" 
         src="/assets/img/idea-creation/blue-pin.svg">
         <div class="delete-icon" fxLayoutAlign="center center" 
         [style.opacity]="item.showClose ? 0.6 : 0">
