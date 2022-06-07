@@ -72,6 +72,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       value: 'view_only',
       name: 'View',
     },
+    {
+      value: 'private',
+      name: 'Private',
+    },
   ];
   defaultSort = 'newest_to_oldest';
   participants = [];

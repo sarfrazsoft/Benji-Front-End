@@ -195,7 +195,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
       if (val) {
         this.boardStatus = val;
-        console.log(this.boardStatus);
       }
     });
 

@@ -354,4 +354,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
   setHeart(ideaId) {
     this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
   }
+
+  getUserRole(item) {
+    this.;
+  }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
@@ -26,7 +27,7 @@ export class BrainstormService {
 
   selectedBoard$ = new BehaviorSubject<any>(null);
 
-  boardTitle$ = new BehaviorSubject<string>(null);  
+  boardTitle$ = new BehaviorSubject<string>(null);
   set boardTitle(l: string) {
     this.boardTitle$.next(l);
   }
@@ -459,5 +460,27 @@ export class BrainstormService {
     if (localStorage.getItem(commentKey)) {
       return localStorage.removeItem(commentKey);
     }
+  }
+
+  getUserRole(participantCode, item, boardStatus): { userRole: IdeaUserRole; submittingUser: number } {
+    let userRole: IdeaUserRole;
+    let submittingUser: any;
+    if (participantCode) {
+      userRole = 'viewer';
+    } else {
+      // viewing user is the host
+      userRole = 'owner';
+    }
+
+    if (item && item.submitting_participant && userRole !== 'owner') {
+      submittingUser = item.submitting_participant.participant_code;
+      if (submittingUser === participantCode && boardStatus === 'open') {
+        userRole = 'owner';
+      } else {
+        userRole = 'viewer';
+      }
+    }
+
+    return { userRole: userRole, submittingUser: submittingUser };
   }
 }
