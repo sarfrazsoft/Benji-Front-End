@@ -7,49 +7,6 @@
     [cdkDragDisabled]="!isColumnsLayout || !isAdmin"
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false">
-    <div 
-      class="card-header" 
-      (click)="showDetailedIdea(item)"
-      [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
-      fxLayoutAlign="space-between center">
-      <div *ngIf="showUserName" class="user-name">
-        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-          <benji-profile-pictures
-            [activityState]="activityState"
-            [participantCodes]="[submittingUser]"
-            [showTooltip]="false"
-            [size]="avatarSize"
-          ></benji-profile-pictures>
-          <div class="name">
-            {{ getPersonName(item) }}
-          </div>
-          <div class="time-stamp" (mouseover)="calculateTimeStamp()">{{ timeStamp }}</div>
-        </div> 
-      </div>
-      <div *ngIf="!showUserName && item.pinned">
-        <div fxLayout="row" fxLayoutGap="8px">
-          <img 
-            *ngIf="item.pinned"
-            (click)="unpin(item.id)"
-            src="/assets/img/idea-creation/blue-pin.svg">
-          <span>Pinned by host</span>
-        </div>
-      </div>
-      <img 
-        *ngIf="item.pinned && showUserName"
-        (click)="unpin(item.id)"
-        class="pin" 
-        [ngClass]="{'move-left': item.showClose && userRole === 'owner' }"
-        src="/assets/img/idea-creation/blue-pin.svg">
-      <mat-icon
-        *ngIf="userRole === 'owner'"
-        benji-click-stop-propagation
-        class="delete-icon"
-        [style.opacity]="item.showClose ? 1 : 0"
-        (click)="delete(item.id)">
-        clear
-      </mat-icon>
-    </div>
     <!-- brainstorm card media -->
     <ng-container>
       <div
@@ -125,9 +82,59 @@
             ></pdf-viewer>
         </div> 
       </div>
-
-
     </ng-container>
+    <div 
+      class="card-header" 
+      (click)="showDetailedIdea(item)"
+      [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
+      fxLayoutAlign="space-between center">
+      <div *ngIf="showUserName" class="user-name">
+        <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+          <benji-profile-pictures
+            [activityState]="activityState"
+            [participantCodes]="[submittingUser]"
+            [showTooltip]="false"
+            [size]="avatarSize"
+          ></benji-profile-pictures>
+          <div class="name">
+            {{ getPersonName(item) }}
+          </div>
+          <div class="time-stamp"><span>&#183;</span>{{timeStamp}}</div>
+        </div> 
+      </div>
+      <div *ngIf="!showUserName && item.pinned">
+        <div fxLayout="row" fxLayoutGap="8px">
+          <img 
+            *ngIf="item.pinned"
+            (click)="unpin(item.id)"
+            src="/assets/img/idea-creation/blue-pin.svg">
+          <span>Pinned by host</span>
+        </div>
+      </div>
+      <img 
+        *ngIf="item.pinned && showUserName"
+        (click)="unpin(item.id)"
+        class="pin" 
+        [ngClass]="{'move-left': item.showClose && userRole === 'owner' }"
+        src="/assets/img/idea-creation/blue-pin.svg">
+        <div class="delete-icon" fxLayoutAlign="center center" 
+        [style.opacity]="item.showClose ? 0.6 : 0">
+          <mat-icon
+            *ngIf="userRole === 'owner'"
+            benji-click-stop-propagation
+            [style.opacity]="1"
+            (click)="delete(item.id)">
+            clear
+          </mat-icon>
+        </div>
+      <!-- <mat-icon
+        *ngIf="userRole === 'owner'"
+        benji-click-stop-propagation
+        class="delete-icon"
+        (click)="delete(item.id)">
+        clear
+      </mat-icon> -->
+    </div>
     <div 
       class="content"
       [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
