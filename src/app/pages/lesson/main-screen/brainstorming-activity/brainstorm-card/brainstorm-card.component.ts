@@ -164,7 +164,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }, 60000);
   }
   areCommentsAllowed() {
-    if (this.boardStatus === 'open') {
+    if (this.boardStatus === 'open' || this.boardStatus === 'private') {
       return true;
     } else {
       return false;

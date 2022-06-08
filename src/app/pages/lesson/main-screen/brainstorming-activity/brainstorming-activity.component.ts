@@ -174,6 +174,7 @@ export class MainScreenBrainstormingActivityComponent
       });
     } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
       this.changeBoardStatus();
+      this.selectUserBoard();
     } else {
       this.selectUserBoard();
     }

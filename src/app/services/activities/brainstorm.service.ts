@@ -3,7 +3,7 @@ import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
-import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
+import { Board, BoardStatus, BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
@@ -462,7 +462,11 @@ export class BrainstormService {
     }
   }
 
-  getUserRole(participantCode, item, boardStatus): { userRole: IdeaUserRole; submittingUser: number } {
+  getUserRole(
+    participantCode,
+    item,
+    boardStatus: BoardStatus
+  ): { userRole: IdeaUserRole; submittingUser: number } {
     let userRole: IdeaUserRole;
     let submittingUser: any;
     if (participantCode) {
@@ -474,7 +478,7 @@ export class BrainstormService {
 
     if (item && item.submitting_participant && userRole !== 'owner') {
       submittingUser = item.submitting_participant.participant_code;
-      if (submittingUser === participantCode && boardStatus === 'open') {
+      if (submittingUser === participantCode) {
         userRole = 'owner';
       } else {
         userRole = 'viewer';

@@ -355,7 +355,17 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(ideaId));
   }
 
-  getUserRole(item) {
-    this.;
+  getUserRole(item: Idea) {
+    const obj = this.brainstormService.getUserRole(this.participantCode, item, this.board.status);
+    return obj.userRole;
+  }
+  canViewIdea(idea: Idea) {
+    console.log(this.board);
+    if (this.board.status === 'private' && this.getUserRole(idea) === 'owner') {
+      return true;
+    } else if (this.board.status === 'open') {
+      return true;
+    }
+    return false;
   }
 }

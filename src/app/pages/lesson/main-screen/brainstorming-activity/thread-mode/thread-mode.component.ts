@@ -198,4 +198,19 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   delete(id) {
     this.deleteIdea.emit(id);
   }
+
+  getUserRole(item: Idea) {
+    const obj = this.brainstormService.getUserRole(this.participantCode, item, this.board.status);
+    return obj.userRole;
+  }
+
+  canViewIdea(idea: Idea) {
+    console.log(this.board);
+    if (this.board.status === 'private' && this.getUserRole(idea) === 'owner') {
+      return true;
+    } else if (this.board.status === 'open') {
+      return true;
+    }
+    return false;
+  }
 }
