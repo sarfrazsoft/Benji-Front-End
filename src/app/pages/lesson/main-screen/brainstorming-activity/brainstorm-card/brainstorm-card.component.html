@@ -122,10 +122,12 @@
         (click)="unpin(item.id)"
         class="pin" 
         src="/assets/img/idea-creation/blue-pin.svg">
-        <div class="delete-icon" fxLayoutAlign="center center" 
-        [style.opacity]="item.showClose ? 0.6 : 0">
+        <div 
+          class="delete-icon" 
+          fxLayoutAlign="center center"
+          *ngIf="userRole === 'owner'" 
+          [style.opacity]="item.showClose ? 0.6 : 0">
           <mat-icon
-            *ngIf="userRole === 'owner'"
             benji-click-stop-propagation
             [style.opacity]="1"
             (click)="delete(item.id)">

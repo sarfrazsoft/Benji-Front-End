@@ -142,7 +142,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
     if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
       this.submittingUser = this.item.submitting_participant.participant_code;
-      if (this.submittingUser === this.participantCode && this.boardStatus === 'open') {
+      if (this.submittingUser === this.participantCode && this.board.status === 'open') {
         this.userRole = 'owner';
       } else {
         this.userRole = 'viewer';
