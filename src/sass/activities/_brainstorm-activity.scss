@@ -551,12 +551,12 @@ benji-categorized-ideas {
       margin-top: 16px;
       font-size: 12px;
     }
-    // img.pin {
-    //   transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
-    //   &.move-left {
-    //     margin-right: 36px;
-    //   }
-    // }
+    img.pin {
+      transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
+      &.move-left {
+        margin-right: 36px;
+      }
+    }
     &.host-pinned {
       span {
         font-weight: 500;

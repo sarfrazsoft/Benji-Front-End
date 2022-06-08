@@ -121,7 +121,8 @@
         *ngIf="item.pinned && showUserName"
         (click)="unpin(item.id)"
         class="pin" 
-        src="/assets/img/idea-creation/blue-pin.svg">
+        src="/assets/img/idea-creation/blue-pin.svg"
+        [ngClass]="{'move-left': item.showClose && userRole === 'owner' && !item.idea_image && !item.idea_video }">
         <div 
           class="delete-icon" 
           fxLayoutAlign="center center"
