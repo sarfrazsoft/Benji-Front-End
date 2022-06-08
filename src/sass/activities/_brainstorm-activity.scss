@@ -139,7 +139,7 @@ benji-ms-brainstorming-activity {
             .card-header {
               height: 56px;
               padding: 0 16px;
-              .delete-icon {
+              .delete-icon mat-icon {
                 right: 12px;
                 top: 16px;
               }
@@ -157,7 +157,7 @@ benji-ms-brainstorming-activity {
                   line-height: 24px;
                   color: #bdbdbd;
                 }
-                .delete-icon {
+                .delete-icon mat-icon {
                   top: 12px;
                 }
               }
@@ -246,16 +246,20 @@ benji-ms-brainstorming-activity {
       }
       .uncategorized-idea {
         margin-top: 16px;
+        .brainstorm-idea {
+          width: 320px;
+          max-width: 320px;
+        }
       }
-      .delete-icon {
-        position: absolute;
-        right: 10px;
-        top: 8px;
-        z-index: 2;
-        background: transparent;
-        cursor: pointer;
-        transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
-      }
+      // .delete-icon mat-icon {
+      //   position: absolute;
+      //   right: 10px;
+      //   top: 8px;
+      //   z-index: 2;
+      //   background: transparent;
+      //   cursor: pointer;
+      //   transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+      // }
       .column {
         border-radius: 5px;
         .header {
@@ -503,7 +507,7 @@ benji-categorized-ideas {
   min-height: 50px;
   background-color: white;
   border: 1px solid #e2e0df;
-  border-radius: 8px;
+  border-radius: 16px;
   -moz-box-sizing: border-box;
   display: block;
   box-sizing: border-box;
@@ -516,15 +520,25 @@ benji-categorized-ideas {
   overflow-x: auto;
   .card-header {
     height: 40px;
-    padding: 0 8px 0 12px;
+    padding: 0 12px;
     .delete-icon {
+      width: 24px;
+      height: 24px;
+      background: #000;
+      border-radius: 8px;
+      color: #fff;
       position: absolute;
-      right: 10px;
-      top: 8px;
-      z-index: 2;
-      background: transparent;
-      cursor: pointer;
-      transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+      right: 12px;
+      top: 12px;
+      mat-icon {
+        width: auto;
+        height: auto;
+        font-size: 16px;
+        z-index: 2;
+        background: transparent;
+        cursor: pointer;
+        transition: all 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
     }
     &.show-user {
       padding-bottom: 8px;
@@ -537,12 +551,12 @@ benji-categorized-ideas {
       margin-top: 16px;
       font-size: 12px;
     }
-    img.pin {
-      transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
-      &.move-left {
-        margin-right: 36px;
-      }
-    }
+    // img.pin {
+    //   transition: all 400ms cubic-bezier(0, 0, 0.2, 1);
+    //   &.move-left {
+    //     margin-right: 36px;
+    //   }
+    // }
     &.host-pinned {
       span {
         font-weight: 500;
@@ -556,9 +570,12 @@ benji-categorized-ideas {
     }
     .time-stamp {
       font-weight: 400;
-      font-size: 14px;
+      font-size: 12px;
       line-height: 16px;
       color: #828282;
+      span {
+        margin-right: 6px;
+      }
     }
   }
   pdf-viewer {
