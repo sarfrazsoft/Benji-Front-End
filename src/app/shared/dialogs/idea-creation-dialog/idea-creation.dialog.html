@@ -5,11 +5,12 @@
         Cancel
       </div>
       <button 
-        class="post" 
+        class="post bg-primary-color" 
         (click)="onSubmit()"
         [ngClass]="{
           'active': userIdeaText || ideaTitle || webcamImage || video || imageSelected || pdfSelected
-        }">
+        }"
+        [disabled]="mediaUploading || !userIdeaText && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected ? 'disabled': null">
           Post
       </button>
     </div>
@@ -54,8 +55,8 @@
               style="margin: 0 auto;" 
               width="100%" 
               controls>
-              <source [src]="videoURL" type="video/webm" />
               <source [src]="videoURLConverted" type="video/mp4" />
+              <source [src]="videoURL" type="video/webm" />
             </video>
             </div>          
           </ng-container>
@@ -100,6 +101,7 @@
             <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="!webcamImage && !video">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
+                [tabs]="'camera'"
                 (mediaUploaded)="mediaUploaded($event)"
                 (mediaUploading)="mediaUploadProgress($event)"
                 [mediaSelected]="imageSelected || pdfSelected">
@@ -134,11 +136,12 @@
           </div>
         </div>
         <button 
-          class="post" 
+          class="post bg-primary-color" 
           (click)="onSubmit()"
           [ngClass]="{
-            'active': userIdeaText || ideaTitle || imageSelected || pdfSelected || webcamImage || video
-          }">
+            'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video
+          }"
+          [disabled]="mediaUploading || descriptionIsEmpty && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected ? 'disabled': null">
             Post
         </button>
       </div>

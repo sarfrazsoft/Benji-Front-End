@@ -22,12 +22,15 @@ import {
 import {
   Board,
   BoardMode,
+  BoardStatus,
   BrainstormActivity,
   Group,
   Idea,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
+import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -52,7 +55,9 @@ export class MainScreenBrainstormingActivityComponent
     private contextService: ContextService,
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    private boardStatusService: BoardStatusService,
+    private topicMediaService: TopicMediaService
   ) {
     super();
   }
@@ -110,6 +115,8 @@ export class MainScreenBrainstormingActivityComponent
 
     this.selectUserBoard();
 
+    this.initBoardInstructions();
+
     // get the new boardmode whenever board is changed
     this.brainstormService.selectedBoard$.subscribe((val: Board) => {
       if (val) {
@@ -117,6 +124,7 @@ export class MainScreenBrainstormingActivityComponent
       }
     });
 
+    this.changeBoardStatus();
     this.onChanges();
   }
 
@@ -145,26 +153,30 @@ export class MainScreenBrainstormingActivityComponent
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
       this.selectUserBoard();
+    } else if (this.eventType === 'UpdatePromptVideoEvent') {
+      this.updatePromptMedia();
     } else if (this.eventType === 'JoinEvent') {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
     } else if (this.eventType === 'HostChangeBoardEvent') {
       this.hostChangedBoard();
+      this.initBoardInstructions();
+      this.changeBoardStatus();
+      this.updatePromptMedia();
     } else if (this.eventType === 'ParticipantChangeBoardEvent') {
       this.participantChangedBoard();
+      this.initBoardInstructions();
+      this.changeBoardStatus();
+      this.updatePromptMedia();
     } else if (this.eventType === 'BrainstormChangeModeEvent') {
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
       });
+    } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
+      this.changeBoardStatus();
     } else {
       this.selectUserBoard();
     }
-
-    // const sm = this.activityState;
-    // if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-    //   const gt = sm.running_tools.grouping_tool;
-    //   this.sharingToolService.updateParticipantGroupingToolDialog(gt);
-    // }
   }
 
   ngOnDestroy() {
@@ -178,6 +190,12 @@ export class MainScreenBrainstormingActivityComponent
     if (this.dialogRef) {
       this.dialogRef.close();
     }
+  }
+
+  changeBoardStatus() {
+    this.getBoardStatus(this.act, (status: BoardStatus) => {
+      this.boardStatusService.boardStatus = status;
+    });
   }
 
   hostChangedBoard() {
@@ -198,6 +216,38 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getParticipantBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+      }
+    });
+  }
+
+  updatePromptMedia() {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const board = this.getAdminBoard();
+        this.topicMediaService.topicMedia = board.prompt_video;
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const board = this.getParticipantBoard();
+        this.topicMediaService.topicMedia = board.prompt_video;
+      }
+    });
+  }
+
+  initBoardInstructions() {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const board = this.getAdminBoard();
+        this.brainstormService.boardTitle = board.board_activity.instructions;
+        this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const board = this.getParticipantBoard();
+        this.brainstormService.boardTitle = board.board_activity.instructions;
+        this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
       }
     });
   }
@@ -268,6 +318,21 @@ export class MainScreenBrainstormingActivityComponent
     });
   }
 
+  getBoardStatus(act: BrainstormActivity, onSuccess): void {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        const board = this.getAdminBoard();
+        onSuccess(board.status);
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const board = this.getParticipantBoard();
+        onSuccess(board.status);
+      }
+    });
+  }
+
   detectNewParticipantJoined(act: UpdateMessage) {
     if (this.participant_set.length === act.lesson_run.participant_set.length) {
       return;
@@ -275,53 +340,6 @@ export class MainScreenBrainstormingActivityComponent
       this.participant_set = act.lesson_run.participant_set;
     }
   }
-
-  // getParticipantGroup(participantCode, participantGroups) {
-  //   return this.brainstormService.getMyGroup(participantCode, participantGroups);
-  // }
-
-  // initParticipantGrouping(act: BrainstormActivity) {
-  //   // Check if groups are created
-  //   // if groups are present then check if participant is in the group
-  //   // if participant is not present in the group then open grouping info dialog
-  //   this.participantGroups = this.act.grouping.groups;
-  //   if (this.participantGroups.length > 0) {
-  //     this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
-  //     if (this.myGroup === null) {
-  //       // There are groups in the activity but this participant is not in any groups
-  //       if (this.dialogRef) {
-  //         this.sharingToolService.updateParticipantGroupingInfoDialog(
-  //           this.activityState.running_tools.grouping_tool
-  //         );
-  //         // this.dialogRef.close();
-  //         // this.dialogRef = null;
-  //       } else if (!this.dialogRef || !this.dialogRef.componentInstance) {
-  //         this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
-  //           this.activityState,
-  //           this.participantCode
-  //         );
-  //         // this.dialogRef =
-  //         // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
-  //         this.sharingToolService.sendMessage$.subscribe((v) => {
-  //           if (v) {
-  //             this.sendMessage.emit(v);
-  //           }
-  //         });
-  //       }
-  //     } else {
-  //       // filter ideas on participant screen by the group they are in.
-  //       this.filterIdeasBasedOnGroup(this.myGroup);
-  //       if (this.dialogRef) {
-  //         this.dialogRef.close();
-  //       }
-  //     }
-  //   }
-  // }
-
-  // resetGrouping() {
-  //   const activityType = this.getActivityType().toLowerCase();
-  //   this.sendMessage.emit(new ResetGroupingEvent(this.activityState[activityType].grouping.id));
-  // }
 
   getPersonName(idea: Idea) {
     if (idea && idea.submitting_participant) {

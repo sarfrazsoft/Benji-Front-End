@@ -2,6 +2,7 @@ export * from './launch-session/launch-session.dialog';
 export * from './join-session/join-session.dialog';
 export * from './job-info/job-info.dialog';
 export * from './confirmation/confirmation.dialog';
+export * from './duplicate-session/duplicate-session.dialog';
 export * from './mcq-feedback/mcq-feedback.dialog';
 export * from './error-message/error-message.dialog';
 export * from './add-video-dialog/add-video.dialog';
@@ -17,6 +18,7 @@ export * from './session-settings-dialog/session-settings.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
+import { DuplicateSessionDialogComponent } from './duplicate-session/duplicate-session.dialog'
 import { ErrorMessageDialogComponent } from './error-message/error-message.dialog';
 import { GroupingToolDialogComponent } from './grouping-tool-dialog/grouping-tool.dialog';
 import { IdeaCreationDialogComponent } from './idea-creation-dialog/idea-creation.dialog';
@@ -40,6 +42,7 @@ import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 export const Dialogs = [
   AddVideoDialogComponent,
   ConfirmationDialogComponent,
+  DuplicateSessionDialogComponent,
   ErrorMessageDialogComponent,
   GiphyPickerDialogComponent,
   ImagePickerDialogComponent,

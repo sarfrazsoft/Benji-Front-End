@@ -4,11 +4,13 @@ import { TokenInterceptor } from './auth/auth.interceptor';
 import { AuthService } from './auth/auth.service';
 import { BackendRestService } from './backend/backend-rest.service';
 import { BackendSocketService } from './backend/backend-socket.service';
+import { BoardStatusService } from './board-status.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { GroupingToolService } from './grouping-tool.service';
 import { LayoutService } from './layout.service';
 import { PastSessionsService } from './past-sessions.service';
 import { SharingToolService } from './sharing-tool.service';
+import { TopicMediaService } from './topic-media.service';
 import { UtilsService } from './utils.service';
 import { VideoStateService } from './video-state.service';
 import { WhiteLabelResolver } from './white-label.resolver';
@@ -46,5 +48,7 @@ export const ServicesProviders = [
   UtilsService,
   SharingToolService,
   GroupingToolService,
+  BoardStatusService,
+  TopicMediaService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];

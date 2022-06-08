@@ -13,10 +13,6 @@ import { LayoutService } from './services/layout.service';
   templateUrl: './app.component.html',
   styleUrls: [
     './app.component.scss',
-    // '../../node_modules/@uppy/core/dist/style.min.css',
-    // '../../node_modules/@uppy/drag-drop/dist/style.min.css',
-    // '../../node_modules/@uppy/progress-bar/dist/style.min.css',
-    // '../../node_modules/@uppy/dashboard/dist/style.min.css',
   ],
 })
 export class AppComponent implements OnInit {
@@ -31,8 +27,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.checkWhitelabeling();
-
+    
     this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
       if (info) {
         this.title.setTitle(info.parameters.tabTitle);
@@ -218,6 +213,42 @@ export class AppComponent implements OnInit {
         .dash-input:focus {
           box-shadow: 0px 0px 0pt 0.2pt ${info.parameters.primary};
         }
+        .board-settings-navigation input:checked + .slider {
+            background-color: ${info.parameters.primary};
+        }
+        .board-settings-navigation .board-status-dropdown ng-dropdown-panel .ng-dropdown-panel-items {
+            border: 2px solid ${info.parameters.primary};
+        }
+        .posting-settings input:checked + .slider {
+          background-color: ${info.parameters.primary};
+        }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color {
+          background: ${info.parameters.primary};
+        }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color:hover {
+          background: ${info.parameters.primary};
+        }
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+          background-color: ${info.parameters.primary};
+        }
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame {
+          border-color: ${info.parameters.primary};
+        }
+        .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+          background-color: ${info.parameters.primary};
+        }
+        .uploadcare--dialog__container .uploadcare--button_muted:focus, .uploadcare--dialog__container .uploadcare--button_muted:hover {
+          color: ${info.parameters.primary};
+        }
+        .uploadcare--dialog__container .uploadcare--button_primary {
+          background: ${info.parameters.primary};
+        }
+        .uploadcare--dialog__container .uploadcare--button_muted:focus, .uploadcare--dialog__container .uploadcare--button_muted:hover {
+          color: ${info.parameters.primary};
+        }
+        benji-ms-brainstorming-activity .prose-sm p a, .idea-detailed-dialog mat-dialog-container .content-area .prose-sm p a {
+          color: ${info.parameters.primary};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');
@@ -243,41 +274,4 @@ export class AppComponent implements OnInit {
     }
   }
 
-  checkWhitelabeling() {
-    // let whitelabelDetailsAvailable = false;
-    // Is there a user present?
-    // this.restService.get_own_identity().subscribe(
-    //   (res: any) => {
-    //     this.contextService.user = res;
-    //   },
-    //   (error: any) => {
-    //     // console.log('no user available');
-    //     // this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-    //   }
-    // );
-    // this.contextService.user$.subscribe(user => {
-    //   if (user && user.organization) {
-    // const orgId =
-    //   typeof user.organization === 'object'
-    //     ? user.organization.id
-    //     : user.organization;
-    // this.restService.get_white_label_details(orgId).subscribe(
-    //   (data: any) => {
-    //     // whitelabelDetailsAvailable = true;
-    //     this.contextService.partnerInfo = data;
-    //   },
-    //   error => {
-    //     this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-    //   }
-    // );
-    // } else {
-    // it's a guest user
-    // if (user !== null) {
-    // console.log('continue as guest user');
-    // whitelabelDetailsAvailable = false;
-    // this.contextService.partnerInfo = DefaultwhiteLabelInfo;
-    // }
-    // }
-    // });
-  }
 }

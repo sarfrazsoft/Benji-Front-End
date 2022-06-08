@@ -10,9 +10,10 @@ import * as global from '../../globals';
 import { TeamUser, UserInvitation } from '../backend/schema';
 import { Participant } from '../backend/schema/course_details';
 import { LayoutService } from '../layout.service';
+import { UtilsService } from '../utils.service';
 
 export interface LoginResponse {
-  user: any;
+  user: TeamUser;
   token: string;
 }
 
@@ -26,7 +27,8 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private contextService: ContextService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private utilsService: UtilsService
   ) {
     // Set user roles. They should  be set on login based on info from backend.
     // admin
@@ -143,7 +145,7 @@ export class AuthService {
   }
 
   setParticipantSession(res: Participant) {
-    localStorage.setItem('participant', JSON.stringify(res));
+    localStorage.setItem('participant_' + res.lessonrun_code, JSON.stringify(res));
   }
 
   logout() {
@@ -264,5 +266,41 @@ export class AuthService {
         catchError((err) => of(err.error))
       );
   }
-  // end
+
+  navigateToScreenLesson(lessonRunCode) {
+    this.router.navigate(['/screen/lesson/' + lessonRunCode]);
+  }
+
+  joinSessionAsLoggedInUser(user: TeamUser, lessonCode, callback?) {
+    const name = user.first_name + ' ' + user.last_name;
+
+    this.createParticipant(name, lessonCode, user.id).subscribe(
+      (res) => {
+        let loginError = false;
+        if (res.lessonrun_code) {
+          this.navigateToScreenLesson(res.lessonrun_code);
+        } else if (res.message === 'You are already in this session.') {
+          this.setParticipantSession(res.participant);
+          this.navigateToScreenLesson(res.participant.lessonrun_code);
+        } else {
+          loginError = true;
+        }
+        if (callback) {
+          callback(loginError);
+        }
+      },
+      (err) => {
+        if (err && err.error) {
+          if (err.error.non_field_errors) {
+            if (err.error.non_field_errors[0] === 'A participant with that display name already exists') {
+              this.utilsService.openWarningNotification(
+                'A participant with that name has already joined. Try a different name.',
+                ''
+              );
+            }
+          }
+        }
+      }
+    );
+  }
 }

@@ -1,13 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
+import { AdminService } from 'src/app/dashboard/admin-panel';
 import * as global from 'src/app/globals';
-import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ConfirmationDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared/dialogs';
+import {
+  ConfirmationDialogComponent,
+  DuplicateSessionDialogComponent,
+  SessionSettingsDialogComponent,
+} from 'src/app/shared/dialogs';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -19,7 +24,6 @@ export interface TableRowInformation {
   lessonId: number;
   hostId: number;
 }
-
 @Component({
   selector: 'benji-active-lessons',
   templateUrl: './active-lessons.component.html',
@@ -55,7 +59,8 @@ export class ActiveLessonsComponent implements OnInit {
     private router: Router,
     private utilsService: UtilsService,
     private matDialog: MatDialog,
-    private http: HttpClient
+    private http: HttpClient,
+    private adminService: AdminService
   ) {}
 
   ngOnInit() {
@@ -115,44 +120,63 @@ export class ActiveLessonsComponent implements OnInit {
           this.dataSource = this.dataSource.filter((value) => {
             return value.lessonRunCode !== val.lessonRunCode;
           });
-        } 
-        // else {
-        //   this.utilsService.openWarningNotification('Something went wrong.', '');
-        // }
+        }
       });
+  }
 
-    // if (lesson.effective_permission === 'admin') {
-    //   const msg = 'Are you sure you want to delete ' + lesson.lesson_name + '?';
-    //   const dialogRef = this.matDialog
-    //     .open(ConfirmationDialogComponent, {
-    //       data: {
-    //         confirmationMessage: msg,
-    //       },
-    //       disableClose: true,
-    //       panelClass: 'dashboard-dialog',
-    //     })
-    //     .afterClosed()
-    //     .subscribe((res) => {
-    //       if (res) {
-    //         this.adminService.deleteLesson(lesson.id).subscribe(
-    //           (delRes) => {
-    //             if (delRes.success) {
-    //               this.updateLessons.emit();
-    //               this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
-    //             }
-    //           },
-    //           (error) => {
-    //             this.utilsService.openWarningNotification('Something went wrong.', '');
-    //           }
-    //         );
-    //       }
-    //     });
-    // } else {
-    //   this.utilsService.openWarningNotification(
-    //     `You don't have sufficient permission to perform this action.`,
-    //     ''
-    //   );
-    // }
+  duplicateSession(val: TableRowInformation) {
+    const dialogRef = this.matDialog
+      .open(DuplicateSessionDialogComponent, {
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res[0] || res[1]) {
+          let duplicateDoardIdeas: Boolean;
+          res[1] ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
+          let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
+          this.http.post(request, {}).subscribe((response: SessionInformation) => {
+            if (response) {
+              request =
+                global.apiRoot +
+                '/course_details/lesson/' +
+                val.lessonId +
+                '/duplicate-session/' +
+                response.id +
+                '/boards/';
+              const interval = setInterval(() => {
+                // method to be executed;
+                this.http
+                  .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
+                  .subscribe((sessionCreationResponse: any) => {
+                    console.log(sessionCreationResponse);
+                    if (sessionCreationResponse.detail) {
+                      if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
+                      } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
+                        clearInterval(interval);
+                        this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                          this.lessonRuns = lessonsRuns;
+                          this.getActiveSessions();
+                          this.utilsService.openSuccessNotification(
+                            `Session successfully duplicated.`,
+                            `close`
+                          );
+                        });
+                      }
+                    }
+                  });
+              }, 500);
+
+              // this.dataSource = this.dataSource.map((value) => value)
+            } else {
+              this.utilsService.openWarningNotification('Something went wrong.', '');
+            }
+          });
+        } else {
+          dialogRef.closed;
+        }
+      });
   }
 
   openSessionSettings(val: TableRowInformation) {

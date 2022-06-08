@@ -36,9 +36,12 @@ import {
 import {
   Board,
   BoardMode,
+  BoardStatus,
   BrainstormActivity,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
+  BrainstormEditInstructionEvent,
+  BrainstormEditSubInstructionEvent,
   BrainstormImageSubmitEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormSubmitDocumentEvent,
@@ -53,6 +56,7 @@ import {
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
@@ -70,8 +74,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   showParticipantsGroupsDropdown = false;
   @Input() participantCode;
 
-  instructions = '';
-  sub_instructions = '';
   timer: Timer;
   act: BrainstormActivity;
 
@@ -94,6 +96,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   selectedClassificationType;
   selectedParticipantGroup: Group;
   myGroup: Group;
+  boardStatus: BoardStatus;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -107,6 +110,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  isHost: boolean;
+  private typingTimer;
 
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
@@ -117,7 +122,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     private httpClient: HttpClient,
     private permissionsService: NgxPermissionsService,
     private sharingToolService: SharingToolService,
-    private brainstormService: BrainstormService
+    private brainstormService: BrainstormService,
+    private boardStatusService: BoardStatusService
   ) {}
 
   ngOnInit() {
@@ -127,6 +133,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.participantCode = this.participantCode;
+        this.isHost = false;
         if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
           this.initParticipantGrouping(this.act);
         }
@@ -137,6 +144,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       if (val) {
         if (this.eventType === 'AssignGroupingToActivities') {
         }
+        this.isHost = true;
         this.applyGroupingOnActivity(this.activityState);
         this.classificationTypes = [
           {
@@ -183,6 +191,41 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.saveIdea(val);
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+        console.log(this.boardStatus);
+      }
+    });
+
+    this.getBoardInstructions();
+  }
+
+  isPostingAllowed() {
+    if (this.isHost) {
+      // if it's a host allow posting without any consideration
+      // to board status
+      return true;
+    } else if (this.boardStatus === 'open') {
+      // is participant
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getBoardInstructions() {
+    // this.brainstormService.boardTitle$.subscribe((title: string) => {
+    //   if (title) {
+    //     this.title_instructions = title;
+    //   }
+    // });
+    // this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
+    //   if (instructions) {
+    //     this.sub_instructions = instructions;
+    //   }
+    // });
   }
 
   applyGroupingOnActivity(state: UpdateMessage) {
@@ -225,8 +268,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.instructions = this.board.board_activity.instructions;
-      this.sub_instructions = this.board.board_activity.sub_instructions;
+      this.getBoardInstructions();
     } else {
       // populate groupings dropdown
       if (
@@ -259,8 +301,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
       this.joinedUsers = this.activityState.lesson_run.participant_set;
 
-      this.instructions = this.board.board_activity.instructions;
-      this.sub_instructions = this.board.board_activity.sub_instructions;
+      this.getBoardInstructions();
 
       this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
@@ -379,59 +420,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.eventType = 'filtered';
   }
 
-  // loadUsersCounts() {
-  //   this.joinedUsers = [];
-  //   this.answeredParticipants = [];
-  //   this.unansweredParticipants = [];
-  //   this.joinedUsers = this.getActiveParticipants();
-
-  //   // participant_vote_counts
-  //   if (!this.voteScreen) {
-  //     this.activityState.brainstormactivity.submitted_participants.forEach((code) => {
-  //       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
-  //     });
-  //   } else if (this.voteScreen) {
-  //     this.activityState.brainstormactivity.participant_vote_counts.forEach((code) => {
-  //       this.answeredParticipants.push(this.getParticipantName(code.participant_code));
-  //     });
-  //   }
-  //   this.unansweredParticipants = this.getUnAnsweredUsers();
-  // }
-
-  // getUnAnsweredUsers() {
-  //   const answered = this.answeredParticipants;
-  //   const active = [];
-  //   for (let index = 0; index < this.joinedUsers.length; index++) {
-  //     active.push(this.joinedUsers[index].display_name);
-  //   }
-  //   return active.filter((name) => !answered.includes(name));
-  // }
-
-  // isAllSubmissionsComplete(act: BrainstormActivity): boolean {
-  //   const maxSubmissions = act.max_participant_submissions;
-
-  //   let submissions = 0;
-  //   act.participant_submission_counts.forEach((element) => {
-  //     submissions = submissions + element.count;
-  //   });
-
-  //   let activeParticipants = 0;
-  //   this.activityState.lesson_run.participant_set.forEach((element) => {
-  //     if (element.is_active) {
-  //       activeParticipants = activeParticipants + 1;
-  //     }
-  //   });
-
-  //   const totalMaxSubmissions = activeParticipants * maxSubmissions;
-  //   const totalCurrentSubmissions = this.getUsersIdeas(act).length;
-
-  //   if (totalMaxSubmissions === totalCurrentSubmissions) {
-  //     return true;
-  //   }
-
-  //   return false;
-  // }
-
   getUsersIdeas(act: BrainstormActivity): Array<Idea> {
     let arr: Array<Idea> = [];
     this.board.brainstormcategory_set.forEach((category) => {
@@ -474,6 +462,10 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   addCardUnderCategory(category: Category) {
     this.openDialog(category);
+  }
+
+  postIdeaClickedInChild() {
+    this.openDialog();
   }
 
   openDialog(category?: Category) {

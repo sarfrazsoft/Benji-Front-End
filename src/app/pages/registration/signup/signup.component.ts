@@ -8,15 +8,16 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { SocialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { TeamUser } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-dashboard-signup',
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
-  @Input() joinSession: boolean;
-  @Input() sllRoomCode: number;
-  @Output() signIn = new EventEmitter();
+  @Input() joinSessionScreen: boolean;
+  @Output() signInClicked = new EventEmitter();
+  @Output() userSignedInSuccessfully = new EventEmitter();
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
@@ -32,6 +33,7 @@ export class SignupComponent implements OnInit {
   user: SocialUser | null;
   roomCode: any;
   participantCode: string;
+  loginError: any;
 
   constructor(
     private builder: FormBuilder,
@@ -104,6 +106,9 @@ export class SignupComponent implements OnInit {
       // alert(this.route.snapshot.queryParams['userCode']);
       this.participantCode = this.route.snapshot.queryParams['userCode'];
     }
+    if (this.roomCode && this.participantCode) {
+      console.log(this.roomCode, this.participantCode);
+    }
   }
 
   checkIfMatchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
@@ -162,11 +167,9 @@ export class SignupComponent implements OnInit {
           (res) => {
             console.log(res.user);
             if (this.participantCode && res.user.id) {
-              this.authService.patchParticipant(this.participantCode, res.user.id).subscribe(
-                (result) => {
-                  console.log(result);
-                }
-              )
+              this.authService.patchParticipant(this.participantCode, res.user.id).subscribe((result) => {
+                console.log(result);
+              });
             }
             if (res.token) {
               this.isSubmitted = true;
@@ -178,8 +181,8 @@ export class SignupComponent implements OnInit {
                     // } else {
                     this.deviceService.isMobile()
                       ? this.router.navigate(['/participant/join'])
-                      : this.roomCode || this.sllRoomCode
-                      ? this.router.navigateByUrl('/screen/lesson/' + this.roomCode)
+                      : this.roomCode
+                      ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
                       : this.router.navigate(['/dashboard']);
                     // }
                   } else {
@@ -208,6 +211,12 @@ export class SignupComponent implements OnInit {
     }
   }
 
+  joinSessionAsLoggedInUser(user: TeamUser, roomCode: number) {
+    this.authService.joinSessionAsLoggedInUser(user, roomCode, (isError) => {
+      this.loginError = isError;
+    });
+  }
+
   signInWithGoogle(): void {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((x: any) => console.log(x));
   }
@@ -220,7 +229,14 @@ export class SignupComponent implements OnInit {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
 
-  signInClicked() {
-    this.joinSession ? this.signIn.emit() : this.router.navigate(['/login']);
+  openSignInScreen() {
+    if (this.joinSessionScreen) {
+      this.signInClicked.emit();
+    } else if (this.roomCode && this.participantCode) {
+      // move to login with roomcode and participantCode
+      this.router.navigateByUrl('/login?link=' + this.roomCode + '&userCode=' + this.participantCode);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }

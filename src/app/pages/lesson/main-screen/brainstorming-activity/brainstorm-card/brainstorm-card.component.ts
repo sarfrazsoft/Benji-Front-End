@@ -7,6 +7,7 @@ import {
   // ...
 } from '@angular/animations';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
@@ -29,6 +30,7 @@ import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
+  BoardStatus,
   BrainstormActivity,
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
@@ -39,11 +41,13 @@ import {
   Idea,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -88,6 +92,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() myGroup;
   @Input() avatarSize;
   @ViewChild('colName') colNameElement: ElementRef;
+  @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
   @Output() viewImage = new EventEmitter<string>();
@@ -104,6 +109,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentKey: string;
   imgSrc = '/assets/img/cards/like.svg';
   isAdmin: boolean;
+  boardStatus: BoardStatus;
+  mobileSize = false;
+  timeStamp: string;
 
   constructor(
     private dialog: MatDialog,
@@ -112,10 +120,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private brainstormService: BrainstormService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
-    private ngxPermissionsService: NgxPermissionsService
+    private ngxPermissionsService: NgxPermissionsService,
+    private boardStatusService: BoardStatusService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
+
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;
@@ -131,7 +142,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
     if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
       this.submittingUser = this.item.submitting_participant.participant_code;
-      if (this.submittingUser === this.participantCode) {
+      if (this.submittingUser === this.participantCode && this.board.status === 'open') {
         this.userRole = 'owner';
       } else {
         this.userRole = 'viewer';
@@ -148,6 +159,26 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.isAdmin = true;
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+      }
+    });
+
+    this.calculateTimeStamp();
+    setInterval(() => { 
+      this.calculateTimeStamp();
+    }, 60000);
+
+  }
+
+  checkBoardStatus() {
+    if (this.boardStatus === 'open') {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   ngOnChanges() {}
@@ -263,9 +294,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   setHeart(idea: Idea) {
-    if (!this.deactivateHearting) {
-      this.deactivateHearting = true;
-      this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+    if (this.boardStatus === 'open' || this.isAdmin) {
+      if (!this.deactivateHearting) {
+        this.deactivateHearting = true;
+        this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
+      }
     }
   }
 
@@ -275,9 +308,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     } else {
       this.openDialog(idea, 'idea-detailed-dialog', true);
     }
-
     // this.openDialog(idea, 'idea-detailed-mobile-dialog', false);
     // this.openDialog(idea, 'idea-detailed-dialog', true);
+
+    if (this.item.idea_video) {
+      this.player.nativeElement.pause();
+    }
   }
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
@@ -292,10 +328,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         category: this.category,
         myGroup: this.myGroup,
         activityState: this.activityState,
-        isMobile: !isDesktop,
         participantCode: this.participantCode,
         userRole: this.userRole,
         showUserName: this.showUserName,
+        boardStatus: this.boardStatus,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
@@ -310,6 +346,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
+      }
+    });
+
+    // detect screen size changes
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result: BreakpointState) => {
+      if (result.matches) {
+        dialogRef.addPanelClass('idea-detailed-mobile-dialog');
+        dialogRef.removePanelClass('idea-detailed-dialog');
+      } else {
+        dialogRef.addPanelClass('idea-detailed-dialog');
+        dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
     });
   }
@@ -344,6 +391,36 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
           return 'uploaded';
         }
       }
+    }
+  }
+
+  calculateTimeStamp() {
+    // Test string
+    //this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    this.timeStamp = moment(this.item.time).fromNow().toString();
+    if(this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
+      this.timeStamp = '1m ago';
+    }
+    else if(this.timeStamp.includes('an hour ago')) {
+      this.timeStamp = '1hr ago'
+    }
+    else if(this.timeStamp.includes('a minute ago')) {
+      this.timeStamp = '1m ago'
+    }
+    else if(this.timeStamp.includes('minutes')) {
+      this.timeStamp = this.timeStamp.replace(/\sminutes/, 'm');
+    }
+    else if(this.timeStamp.includes('hours')) {
+      this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
+    }
+    else if(this.timeStamp.includes('days')) {
+      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    }
+    else if(this.timeStamp.includes('months')) {
+      this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
+    }
+    else if(this.timeStamp.includes('years')) {
+      this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
     }
   }
 }

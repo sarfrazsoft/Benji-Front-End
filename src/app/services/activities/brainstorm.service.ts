@@ -26,6 +26,22 @@ export class BrainstormService {
 
   selectedBoard$ = new BehaviorSubject<any>(null);
 
+  boardTitle$ = new BehaviorSubject<string>(null);  
+  set boardTitle(l: string) {
+    this.boardTitle$.next(l);
+  }
+  get boardTitle(): string {
+    return this.boardTitle$.getValue();
+  }
+
+  boardInstructions$ = new BehaviorSubject<string>(null);
+  set boardInstructions(l: string) {
+    this.boardInstructions$.next(l);
+  }
+  get boardInstructions(): string {
+    return this.boardInstructions$.getValue();
+  }
+
   getDraftC;
 
   getMyGroup(userId, groups) {
@@ -392,6 +408,10 @@ export class BrainstormService {
   }
 
   uncategorizedSortIdeas(board: Board, existingIdeas: Array<Idea>) {
+    // sort based on time first and then by the selected filter
+    existingIdeas.sort((a: Idea, b: Idea) => {
+      return Number(moment(b.time)) - Number(moment(a.time));
+    });
     existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
       if (board.sort === 'newest_to_oldest') {
         return Number(moment(b.time)) - Number(moment(a.time));

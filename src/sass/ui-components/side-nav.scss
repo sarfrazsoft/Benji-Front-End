@@ -1,6 +1,33 @@
 .board-settings-navigation {
   padding: 24px;
   width: 376px;
+  .options {
+    benji-uploadcare-widget {
+      > img {
+        padding: 14px;
+        border-radius: 8px;
+        background: #f3f4f7;
+        &:hover{
+          background: #dedede;
+        }
+      }
+    }
+  }
+  benji-topic-media {
+    .media-container {
+      position: relative;
+      .remove-button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        padding: 4px 8px;
+        border-radius: 4px;
+      }
+    }
+  }
   .board-settings {
     font-size: 24px;
     font-weight: 600;
@@ -59,7 +86,7 @@
     }
     ng-dropdown-panel {
       .ng-dropdown-panel-items {
-        border: 2px solid #555BEA;
+        border: 2px solid $primary-color;
         border-radius: 8px;
         padding: 8px 0px;
         background: #fff;
@@ -129,6 +156,12 @@
     &.disabled {
       background: #bdbdbd;
     }
+  }
+}
+
+.prompt-video {
+  video {
+    border-radius: 8px;
   }
 }
 
@@ -213,6 +246,18 @@
     }
     &.selected {
       border: 2px solid $primary-color;
+    }
+    &.closed {
+      padding: 24px;
+      img {
+        width: 40px;
+      }
+      span {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+        color: #bdbdbd;
+      }
     }
     .title {
       color: #37352f;

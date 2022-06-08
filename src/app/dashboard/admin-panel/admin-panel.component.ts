@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Intercom } from 'ng-intercom';
@@ -24,7 +24,7 @@ import doc from './../../shared/ngx-editor/doc';
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss'],
 })
-export class AdminPanelComponent implements OnInit {
+export class AdminPanelComponent implements OnInit, OnChanges {
   lessons: Array<any> = [];
   lessonRuns: Array<any> = [];
   editorView: EditorView;
@@ -64,6 +64,13 @@ export class AdminPanelComponent implements OnInit {
     this.authService.startIntercom();
 
     this.adminName = this.contextService.user.first_name;
+  }
+
+  ngOnChanges() {
+    this.activatedRoute.data.forEach((data: any) => {
+      this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
+      this.lessonRuns = data.dashData.lessonRuns;
+    });
   }
 
   openCreateSession() {

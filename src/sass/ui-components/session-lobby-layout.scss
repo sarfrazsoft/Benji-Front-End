@@ -133,6 +133,12 @@
         font-weight: 500;
         margin-bottom: 8px;
       }
+      .email-control, .password-control {
+        margin-bottom: 16px !important;
+      }
+      mat-error > div {
+        position: relative;
+      }
       input:not([type="submit"]) {
         border-radius: 8px;
         width: 288px;
@@ -297,9 +303,24 @@
                   margin-top: 24px;
                 }
               }
+              &.incorrect-code {
+                padding: 48px 40px;
+              }
             }
           }
         }
+      }
+    }
+  }
+}
+
+.sign-up-section {
+  .div-block-183 {
+    &.incorrect-code {
+      margin: 48px 40px;
+      .title {
+        line-height: 32px;
+        margin-bottom: 24px;
       }
     }
   }

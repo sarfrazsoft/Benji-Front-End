@@ -10,7 +10,7 @@
       <div class="container">
         <div class="title">Learn Together</div>
         <div class="about">The workspace that invites everyone to share, connect, and learn more. </div>
-        <button class="blue-buttton" fxLayoutAlign="center center" (click)="router.navigate(['/login'])">Host Sign In</button>
+        <button class="blue-buttton bg-primary-color" fxLayoutAlign="center center" (click)="router.navigate(['/login'])">Host Sign In</button>
         <div class="or">or</div>
         <div class="have-code">Have a session code?</div>
         <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">

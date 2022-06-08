@@ -22,7 +22,7 @@
                 class="alert alert-danger"
               >
                 <div *ngIf="email.errors.required">Email is required.</div>
-                <div *ngIf="email.errors.email">{{ email.errors.email }}</div>
+                <!-- <div *ngIf="email.errors.email">{{ email.errors.email }}</div> -->
               </mat-error>
           </div>
           <div class="password-control">
@@ -43,10 +43,10 @@
           </div>
           <div 
             class="forgot-password primary-color"
-            (click)="forgotPasswordClicked()">
+            (click)="forgotPasswordClick()">
               Forgot Password?
           </div>
-          <input type="submit" value="{{joinSession? 'Join session': 'Sign in'}}" data-wait="Please wait..."
+          <input type="submit" value="{{ joinSessionScreen ? 'Join session' : 'Sign in'}}" data-wait="Please wait..."
             [ngClass]="{'bg-primary-color': (email.value && password.value), 'inactive': !(email.value && password.value)}" 
             class="submit-button-12 w-button">
         </form>

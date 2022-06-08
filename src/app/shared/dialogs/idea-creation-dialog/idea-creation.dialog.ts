@@ -41,6 +41,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   webcamImageURL: string;
   hostname = environment.web_protocol + '://' + environment.host;
   mediaUploading = false;
+  descriptionIsEmpty = true;
   fileProgress: FileProgress;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -83,7 +84,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     this.dialogRef.disableClose = true;
 
     this.dialogRef.backdropClick().subscribe((_) => {
-      if (this.userIdeaText.length || this.ideaTitle.length) {
+      if (this.userIdeaText.length || this.ideaTitle.length || this.isItemSelected()) {
         this.askUserConfirmation();
       } else {
         this.dialogRef.close();
@@ -280,5 +281,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
+    $event.length == 7 ? this.descriptionIsEmpty = true : this.descriptionIsEmpty = false;
   }
 }
