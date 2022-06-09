@@ -127,10 +127,9 @@
           class="delete-icon" 
           fxLayoutAlign="center center"
           *ngIf="userRole === 'owner'" 
-          [style.opacity]="item.showClose ? 0.6 : 0">
+          [style.opacity]="item.showClose ? 1 : 0">
           <mat-icon
             benji-click-stop-propagation
-            [style.opacity]="1"
             (click)="delete(item.id)">
             clear
           </mat-icon>
