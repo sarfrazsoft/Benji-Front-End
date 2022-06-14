@@ -396,8 +396,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   calculateTimeStamp() {
     // Test string
-    //this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
-    this.timeStamp = moment(this.item.time).fromNow().toString();
+    this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
+    //this.timeStamp = moment(this.item.time).fromNow().toString();
     if(this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';
     }
@@ -416,11 +416,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     else if(this.timeStamp.includes('days')) {
       this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
     }
-    else if(this.timeStamp.includes('days')) {
-      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    else if(this.timeStamp.includes('a month')) {
+      this.timeStamp = this.timeStamp.replace(/a month/, '1mo');
     }
     else if(this.timeStamp.includes('months')) {
       this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
+    }
+    else if(this.timeStamp.includes('a year')) {
+      this.timeStamp = this.timeStamp.replace(/a year/, '1yr');
     }
     else if(this.timeStamp.includes('years')) {
       this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
