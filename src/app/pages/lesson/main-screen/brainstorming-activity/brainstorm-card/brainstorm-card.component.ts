@@ -411,8 +411,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
     } else if (this.timeStamp.includes('days')) {
       this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
-    } else if (this.timeStamp.includes('days')) {
-      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
     } else if (this.timeStamp.includes('months')) {
       this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
     } else if (this.timeStamp.includes('years')) {
