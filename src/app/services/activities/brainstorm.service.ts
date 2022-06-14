@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { Board, BrainstormActivity, Category, Idea } from '../backend/schema';
+import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
+import { Board, BoardStatus, BrainstormActivity, Category, Idea } from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {
@@ -26,7 +27,7 @@ export class BrainstormService {
 
   selectedBoard$ = new BehaviorSubject<any>(null);
 
-  boardTitle$ = new BehaviorSubject<string>(null);  
+  boardTitle$ = new BehaviorSubject<string>(null);
   set boardTitle(l: string) {
     this.boardTitle$.next(l);
   }
@@ -357,7 +358,7 @@ export class BrainstormService {
     if (newIdeas.length === existingIdeas.length) {
     } else {
       const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
-      existingIdeas.push(myDifferences[0]);
+      existingIdeas.push({ ...myDifferences[0], state: 'active' });
       callback();
     }
   }
@@ -459,5 +460,42 @@ export class BrainstormService {
     if (localStorage.getItem(commentKey)) {
       return localStorage.removeItem(commentKey);
     }
+  }
+
+  getUserRole(
+    participantCode,
+    item,
+    boardStatus: BoardStatus
+  ): { userRole: IdeaUserRole; submittingUser: number } {
+    let userRole: IdeaUserRole;
+    let submittingUser: any;
+    if (participantCode) {
+      userRole = 'viewer';
+    } else {
+      // viewing user is the host
+      userRole = 'owner';
+    }
+
+    if (item && item.submitting_participant && userRole !== 'owner') {
+      submittingUser = item.submitting_participant.participant_code;
+      if (submittingUser === participantCode) {
+        userRole = 'owner';
+      } else {
+        userRole = 'viewer';
+      }
+    }
+
+    return { userRole: userRole, submittingUser: submittingUser };
+  }
+
+  canViewIdea(boardStatus: BoardStatus, userRole: IdeaUserRole, isHost: boolean) {
+    if (boardStatus === 'private' && userRole === 'owner') {
+      return true;
+    } else if (boardStatus === 'open' || boardStatus === 'view_only') {
+      return true;
+    } else if (boardStatus === 'closed' && isHost) {
+      return true;
+    }
+    return false;
   }
 }

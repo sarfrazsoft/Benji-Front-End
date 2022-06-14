@@ -10,6 +10,7 @@ import {
   Output,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { clone, cloneDeep, forOwn, uniqBy } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable, Subscription } from 'rxjs';
@@ -25,7 +26,9 @@ import {
   BoardStatus,
   BrainstormActivity,
   Group,
+  HostChangeBoardEvent,
   Idea,
+  ParticipantChangeBoardEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -52,6 +55,7 @@ export class MainScreenBrainstormingActivityComponent
   participantCode;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
@@ -108,6 +112,11 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
+    const paramBoardId = this.activatedRoute.snapshot.queryParams['board'];
+    if (paramBoardId) {
+      // tslint:disable-next-line:radix
+      this.changeBoardToParamsBoard(parseInt(paramBoardId));
+    }
     this.participantCode = this.getParticipantCode();
     this.act = this.activityState.brainstormactivity;
 
@@ -174,6 +183,7 @@ export class MainScreenBrainstormingActivityComponent
       });
     } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
       this.changeBoardStatus();
+      this.selectUserBoard();
     } else {
       this.selectUserBoard();
     }
@@ -263,6 +273,31 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getParticipantBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+      }
+    });
+  }
+
+  changeBoardToParamsBoard(paramBoardId) {
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.selectedBoard = this.getAdminBoard();
+        if (this.selectedBoard.id === paramBoardId) {
+          // we're on the right board
+        } else {
+          // this.changeAdminBoard(paramBoardId);
+          this.sendMessage.emit(new HostChangeBoardEvent(paramBoardId));
+        }
+      }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        this.selectedBoard = this.getParticipantBoard();
+        if (this.selectedBoard.id === paramBoardId) {
+          // we're on the right board
+        } else {
+          // this.changeParticipantBoard(paramBoardId);
+          this.sendMessage.emit(new ParticipantChangeBoardEvent(paramBoardId));
+        }
       }
     });
   }

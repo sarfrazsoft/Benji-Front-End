@@ -23,6 +23,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { take } from 'rxjs/operators';
@@ -47,7 +49,6 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
-import * as moment from 'moment';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -91,6 +92,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() isColumnsLayout;
   @Input() myGroup;
   @Input() avatarSize;
+  @Input() userRole: IdeaUserRole;
   @ViewChild('colName') colNameElement: ElementRef;
   @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
@@ -102,7 +104,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentModel = '';
   submittingUser;
   submitting_participant;
-  userRole: IdeaUserRole;
+
   deactivateHearting = false;
   classGrey: boolean;
   classWhite: boolean;
@@ -122,10 +124,19 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // get parameters
+    const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
+    if (paramPostId) {
+      // tslint:disable-next-line:radix
+      if (parseInt(paramPostId) === this.item.id) {
+        this.showDetailedIdea(this.item);
+      }
+    }
 
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
@@ -133,20 +144,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
 
     if (this.participantCode) {
-      this.userRole = 'viewer';
     } else {
-      // viewing user is the host
-      this.userRole = 'owner';
       this.commentKey = 'comment_' + this.item.id + 'host';
-    }
-
-    if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
-      this.submittingUser = this.item.submitting_participant.participant_code;
-      if (this.submittingUser === this.participantCode && this.board.status === 'open') {
-        this.userRole = 'owner';
-      } else {
-        this.userRole = 'viewer';
-      }
     }
 
     const draftComment = this.brainstormService.getDraftComment(this.commentKey);
@@ -166,15 +165,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
     });
 
+    const obj = this.brainstormService.getUserRole(this.participantCode, this.item, this.boardStatus);
+    this.submittingUser = obj.submittingUser;
+    this.userRole = obj.userRole;
+
     this.calculateTimeStamp();
-    setInterval(() => { 
+    setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
-
   }
-
-  checkBoardStatus() {
-    if (this.boardStatus === 'open') {
+  areCommentsAllowed() {
+    if (this.boardStatus === 'open' || this.boardStatus === 'private') {
       return true;
     } else {
       return false;
@@ -396,30 +397,23 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   calculateTimeStamp() {
     // Test string
-    //this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
     this.timeStamp = moment(this.item.time).fromNow().toString();
-    if(this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
+    if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';
-    }
-    else if(this.timeStamp.includes('an hour ago')) {
-      this.timeStamp = '1hr ago'
-    }
-    else if(this.timeStamp.includes('a minute ago')) {
-      this.timeStamp = '1m ago'
-    }
-    else if(this.timeStamp.includes('minutes')) {
+    } else if (this.timeStamp.includes('an hour ago')) {
+      this.timeStamp = '1hr ago';
+    } else if (this.timeStamp.includes('a minute ago')) {
+      this.timeStamp = '1m ago';
+    } else if (this.timeStamp.includes('minutes')) {
       this.timeStamp = this.timeStamp.replace(/\sminutes/, 'm');
-    }
-    else if(this.timeStamp.includes('hours')) {
+    } else if (this.timeStamp.includes('hours')) {
       this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
-    }
-    else if(this.timeStamp.includes('days')) {
+    } else if (this.timeStamp.includes('days')) {
       this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
-    }
-    else if(this.timeStamp.includes('months')) {
+    } else if (this.timeStamp.includes('months')) {
       this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
-    }
-    else if(this.timeStamp.includes('years')) {
+    } else if (this.timeStamp.includes('years')) {
       this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
     }
   }

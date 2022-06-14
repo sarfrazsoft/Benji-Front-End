@@ -1,29 +1,32 @@
 <div class="submitted-ideas">
   <div class="ideas-list-container">
-    <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true">
-      <div
-        ngxMasonryItem
-        class="brainstorm-idea-item masonry-item"
-        *ngFor="let idea of ideas"
-        [attr.data-likes]="idea.hearts.length"
-        (mouseenter)="idea.showClose = true"
-        (mouseleave)="idea.showClose = false">
-        <benji-brainstorm-card
-          [board]="board"
-          [item]="idea"
-          [act]="act"
-          [activityState]="activityState"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          (deleteIdea)="delete($event)"
-          (commentEdited)="refreshMasonryLayout()"
-          [sendMessage]="sendMessage"
-          [isColumnsLayout]="isColumnsLayout"
-          [myGroup]="myGroup"
-          [avatarSize]="'medium'">
-        </benji-brainstorm-card>
-        <div class="16px-spacer" style="height: 16px;"></div>
-      </div>
-    </ngx-masonry>
+    <!-- <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true"> -->
+      <ng-container *ngFor="let idea of ideas">
+        <ng-container *ngIf="canViewIdea(idea)">
+          <div
+            class="brainstorm-idea-item masonry-item"
+            [@anim]="idea.state"
+            [attr.data-likes]="idea.hearts.length"
+            (mouseenter)="idea.showClose = true"
+            (mouseleave)="idea.showClose = false">
+              <benji-brainstorm-card
+                [board]="board"
+                [item]="idea"
+                [act]="act"
+                [activityState]="activityState"
+                [showUserName]="showUserName"
+                [participantCode]="participantCode"
+                (deleteIdea)="delete($event)"
+                (commentEdited)="refreshMasonryLayout()"
+                [sendMessage]="sendMessage"
+                [isColumnsLayout]="isColumnsLayout"
+                [myGroup]="myGroup"
+                [avatarSize]="'medium'">
+              </benji-brainstorm-card>
+            <div class="16px-spacer" style="height: 16px;"></div>
+          </div>
+        </ng-container>
+      </ng-container>
+    <!-- </ngx-masonry> -->
   </div>
 </div>

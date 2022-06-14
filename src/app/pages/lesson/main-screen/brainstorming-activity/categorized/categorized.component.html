@@ -69,21 +69,24 @@
             <div 
               *ngFor="let item of column.brainstormidea_set; let i = index" 
               class="masonry-item">
-              <benji-brainstorm-card
-                [board]="board"
-                [item]="item"
-                [act]="act"
-                [activityState]="activityState"
-                [showUserName]="showUserName"
-                [participantCode]="participantCode"
-                (deleteIdea)="delete($event)"
-                [sendMessage]="sendMessage"
-                (commentEdited)="refreshMasonryLayout()"
-                [isColumnsLayout]="isColumnsLayout"
-                [category]="column"
-                [myGroup]="myGroup"
-                [avatarSize]="'small'">
-              </benji-brainstorm-card>
+              <ng-container *ngIf="canViewIdea(item)">
+                <benji-brainstorm-card
+                  [board]="board"
+                  [item]="item"
+                  [act]="act"
+                  [activityState]="activityState"
+                  [showUserName]="showUserName"
+                  [participantCode]="participantCode"
+                  (deleteIdea)="delete($event)"
+                  [sendMessage]="sendMessage"
+                  (commentEdited)="refreshMasonryLayout()"
+                  [isColumnsLayout]="isColumnsLayout"
+                  [category]="column"
+                  [myGroup]="myGroup"
+                  [avatarSize]="'small'"
+                  [userRole]="getUserRole(item)">
+                </benji-brainstorm-card>
+              </ng-container>
             </div>
           </div>
           <div

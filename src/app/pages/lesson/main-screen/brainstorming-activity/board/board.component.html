@@ -31,6 +31,7 @@
           [eventType]="eventType"
           [isColumnsLayout]="true"
           [myGroup]="myGroup"
+          [isHost]="isHost"
           (addCardUnderCategory)="addCardUnderCategory($event)"
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)"
@@ -51,6 +52,7 @@
           [eventType]="eventType"
           [isColumnsLayout]="false"
           [myGroup]="myGroup"
+          [isHost]="isHost"
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)">
 
@@ -70,6 +72,7 @@
           [eventType]="eventType"
           [isColumnsLayout]="false"
           [myGroup]="myGroup"
+          [isHost]="isHost"
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)">
         </benji-thread-mode-ideas>

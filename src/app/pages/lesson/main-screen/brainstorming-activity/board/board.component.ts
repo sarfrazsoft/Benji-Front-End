@@ -12,6 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import {
   expandRightOnEnterAnimation,
   fadeInOnEnterAnimation,
@@ -115,6 +116,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
+    private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
     private matDialog: MatDialog,
     private utilsService: UtilsService,
@@ -127,7 +129,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // super.ngOnInit();
     this.act = this.activityState.brainstormactivity;
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
@@ -195,7 +196,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
       if (val) {
         this.boardStatus = val;
-        console.log(this.boardStatus);
       }
     });
 

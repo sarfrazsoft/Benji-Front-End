@@ -324,7 +324,7 @@ export interface TopicMedia {
   media: any;
 }
 
-export type BoardStatus = 'open' | 'view_only' | 'closed';
+export type BoardStatus = 'open' | 'view_only' | 'closed' | 'private';
 
 export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes';
 

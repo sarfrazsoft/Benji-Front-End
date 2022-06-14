@@ -82,9 +82,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       }
     });
 
-    this.onChanges();
-
-    this.getBoardInstructions();
+    this.getNewBoardInstruction(this.board);
+    this.getNewSubInstruction(this.board);
 
     this.myObservable.pipe(debounceTime(1000)).subscribe((val: any) => {
       this.sendMessage.emit(new BrainstormEditSubInstructionEvent(val, this.board.id));
@@ -135,32 +134,16 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  getBoardInstructions() {
-    this.brainstormService.boardTitle$.subscribe((title: string) => {
-      if (title) {
-        this.title_instructions = title;
-      }
-    });
-    this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
-      if (instructions) {
-        this.sub_instructions = instructions;
-      }
-    });
-  }
-
   ngOnChanges() {
     this.onChanges();
   }
 
   onChanges() {
     this.act = cloneDeep(this.activityState.brainstormactivity);
-    if (
-      this.eventType === 'BrainstormEditBoardInstruction' ||
-      this.eventType === 'BrainstormEditSubInstruction'
-    ) {
-      this.getBoardInstructions();
-    } else {
-      this.getBoardInstructions();
+    if (this.eventType === 'BrainstormEditBoardInstruction') {
+      this.getNewBoardInstruction(this.board);
+    } else if (this.eventType === 'BrainstormEditSubInstruction') {
+      this.getNewSubInstruction(this.board);
     }
   }
 
@@ -168,6 +151,13 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   getParticipantGroup(participantCode, participantGroups) {
     return this.brainstormService.getMyGroup(participantCode, participantGroups);
+  }
+  getNewBoardInstruction(board: Board) {
+    this.title_instructions = board.board_activity.instructions;
+  }
+
+  getNewSubInstruction(board: Board) {
+    this.sub_instructions = board.board_activity.sub_instructions;
   }
 
   sendSocketMessage($event) {
@@ -206,6 +196,9 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   descriptionTextChanged($event: string) {
+    if (!this.isHost) {
+      return;
+    }
     this.myObservable.next($event);
   }
   videoLoaded() {}
