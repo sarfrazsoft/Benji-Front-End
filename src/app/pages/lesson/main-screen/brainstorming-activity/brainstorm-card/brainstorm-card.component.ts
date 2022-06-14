@@ -23,6 +23,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -123,10 +124,20 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // get parameters
+    const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
+    if (paramPostId) {
+      // tslint:disable-next-line:radix
+      if (parseInt(paramPostId) === this.item.id) {
+        this.showDetailedIdea(this.item);
+      }
+    }
+
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;

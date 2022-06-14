@@ -38,7 +38,7 @@ import { environment } from 'src/environments/environment';
         }),
         sequence([
           animate(
-            '.9s ease',
+            '.3s ease',
             style({
               height: '*',
               opacity: '.2',
@@ -47,7 +47,7 @@ import { environment } from 'src/environments/environment';
             })
           ),
           animate(
-            '.9s ease',
+            '.3s ease',
             style({
               height: '0',
               opacity: 0,
@@ -66,7 +66,7 @@ import { environment } from 'src/environments/environment';
         }),
         sequence([
           animate(
-            '.9s ease',
+            '.3s ease',
             style({
               height: '*',
               opacity: '.2',
@@ -75,7 +75,7 @@ import { environment } from 'src/environments/environment';
             })
           ),
           animate(
-            '.9s ease',
+            '.3s ease',
             style({
               height: '*',
               opacity: 1,

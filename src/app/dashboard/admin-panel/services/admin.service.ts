@@ -87,6 +87,7 @@ export class AdminService {
           max_participant_submissions: 999,
           submission_seconds: 30000,
           voting_seconds: 12000,
+          meeting_mode: false,
           boards: [
             {
               name: 'test1',
