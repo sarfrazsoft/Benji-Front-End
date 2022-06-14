@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, sequence, state, style, transition, trigger } from '@angular/animations';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -26,7 +26,67 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'benji-thread-mode-ideas',
   templateUrl: './thread-mode.component.html',
-  animations: [fadeAnimation, listAnimation],
+  // animations: [fadeAnimation, listAnimation],
+  animations: [
+    trigger('anim', [
+      transition('* => void', [
+        style({
+          height: '*',
+          opacity: '1',
+          transform: 'translateY(0)',
+          'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)',
+        }),
+        sequence([
+          animate(
+            '.9s ease',
+            style({
+              height: '*',
+              opacity: '.2',
+              transform: 'translateY(20px)',
+              'box-shadow': 'none',
+            })
+          ),
+          animate(
+            '.9s ease',
+            style({
+              height: '0',
+              opacity: 0,
+              transform: 'translateX(20px)',
+              'box-shadow': 'none',
+            })
+          ),
+        ]),
+      ]),
+      transition('void => active', [
+        style({
+          height: '0',
+          opacity: '0',
+          transform: 'translateY(20px)',
+          'box-shadow': 'none',
+        }),
+        sequence([
+          animate(
+            '.9s ease',
+            style({
+              height: '*',
+              opacity: '.2',
+              transform: 'translateY(20px)',
+              'box-shadow': 'none',
+            })
+          ),
+          animate(
+            '.9s ease',
+            style({
+              height: '*',
+              opacity: 1,
+              transform: 'translateX(0)',
+              'box-shadow': '0 1px 4px 0 rgba(0, 0, 0, 0.3)',
+            })
+          ),
+        ]),
+      ]),
+    ]),
+  ],
 })
 export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
@@ -40,6 +100,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() eventType;
   @Input() isColumnsLayout;
   @Input() myGroup;
+  @Input() isHost;
 
   ideas = [];
   cycle = 'first';
@@ -205,12 +266,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   canViewIdea(idea: Idea) {
-    console.log(this.board);
-    if (this.board.status === 'private' && this.getUserRole(idea) === 'owner') {
-      return true;
-    } else if (this.board.status === 'open') {
-      return true;
-    }
-    return false;
+    const userRole = this.getUserRole(idea);
+    return this.brainstormService.canViewIdea(this.board.status, userRole, this.isHost);
   }
 }

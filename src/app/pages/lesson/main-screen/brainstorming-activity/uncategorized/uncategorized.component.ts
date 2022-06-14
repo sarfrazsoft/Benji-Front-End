@@ -41,6 +41,7 @@ export class UncategorizedComponent implements OnInit, OnChanges {
   @Input() eventType;
   @Input() isColumnsLayout;
   @Input() myGroup;
+  @Input() isHost;
 
   ideas = [];
   cycle = 'first';
@@ -158,6 +159,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
           // host just turned off meeting mode.
           // do nothing
         }
+      } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
+        this.masonry?.layout();
       }
     }
   }
@@ -198,5 +201,14 @@ export class UncategorizedComponent implements OnInit, OnChanges {
 
   delete(id) {
     this.deleteIdea.emit(id);
+  }
+
+  getUserRole(item: Idea) {
+    const obj = this.brainstormService.getUserRole(this.participantCode, item, this.board.status);
+    return obj.userRole;
+  }
+  canViewIdea(idea: Idea) {
+    const userRole = this.getUserRole(idea);
+    return this.brainstormService.canViewIdea(this.board.status, userRole, this.isHost);
   }
 }

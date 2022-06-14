@@ -131,6 +131,8 @@ benji-ms-brainstorming-activity {
           width: 544px;
           margin: 0 auto;
           .brainstorm-idea-item {
+            transition: all;
+            transition-duration: 0.3s;
             margin-right: 0px;
           }
           .brainstorm-idea {

@@ -358,7 +358,7 @@ export class BrainstormService {
     if (newIdeas.length === existingIdeas.length) {
     } else {
       const myDifferences = differenceBy(newIdeas, existingIdeas, 'id');
-      existingIdeas.push(myDifferences[0]);
+      existingIdeas.push({ ...myDifferences[0], state: 'active' });
       callback();
     }
   }
@@ -486,5 +486,16 @@ export class BrainstormService {
     }
 
     return { userRole: userRole, submittingUser: submittingUser };
+  }
+
+  canViewIdea(boardStatus: BoardStatus, userRole: IdeaUserRole, isHost: boolean) {
+    if (boardStatus === 'private' && userRole === 'owner') {
+      return true;
+    } else if (boardStatus === 'open' || boardStatus === 'view_only') {
+      return true;
+    } else if (boardStatus === 'closed' && isHost) {
+      return true;
+    }
+    return false;
   }
 }

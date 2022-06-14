@@ -57,6 +57,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   @Input() eventType;
   @Input() isColumnsLayout;
   @Input() myGroup;
+  @Input() isHost;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -66,6 +67,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   columns = [];
   cycle = 'first';
+  isAdmin = false;
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 16,
@@ -84,7 +86,10 @@ export class CategorizedComponent implements OnInit, OnChanges {
     private permissionsService: NgxPermissionsService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.participantCode) {
+    }
+  }
 
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
@@ -359,13 +364,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
     const obj = this.brainstormService.getUserRole(this.participantCode, item, this.board.status);
     return obj.userRole;
   }
+
   canViewIdea(idea: Idea) {
-    console.log(this.board);
-    if (this.board.status === 'private' && this.getUserRole(idea) === 'owner') {
-      return true;
-    } else if (this.board.status === 'open') {
-      return true;
-    }
-    return false;
+    const userRole = this.getUserRole(idea);
+    return this.brainstormService.canViewIdea(this.board.status, userRole, this.isHost);
   }
 }
