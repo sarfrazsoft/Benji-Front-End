@@ -417,8 +417,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   calculateTimeStamp() {
     // Test string
-    this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
-    // this.timeStamp = moment(this.item.time).fromNow().toString();
+    // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
+    this.timeStamp = moment(this.item.time).fromNow().toString();
     if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';
     } else if (this.timeStamp.includes('an hour ago')) {
