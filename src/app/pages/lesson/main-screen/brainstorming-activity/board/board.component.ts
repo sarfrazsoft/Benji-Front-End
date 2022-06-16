@@ -12,7 +12,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import {
   expandRightOnEnterAnimation,
   fadeInOnEnterAnimation,
@@ -116,7 +115,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
-    private router: Router,
     private contextService: ContextService,
     private matDialog: MatDialog,
     private utilsService: UtilsService,
