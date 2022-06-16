@@ -23,6 +23,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { take } from 'rxjs/operators';
@@ -47,7 +49,6 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
-import * as moment from 'moment';
 
 @Component({
   selector: 'benji-brainstorm-card',
@@ -114,6 +115,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   timeStamp: string;
 
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
@@ -126,7 +129,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;
@@ -167,10 +169,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
 
     this.calculateTimeStamp();
-    setInterval(() => { 
+    setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
-
   }
 
   checkBoardStatus() {
@@ -316,7 +317,26 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
+  public ideaChangingQueryParams(ideaId: number) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { post: ideaId },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  removePostQueryParam() {
+    // Remove query params
+    this.router.navigate([], {
+      queryParams: {
+        post: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   openDialog(idea: Idea, assignedClass, isDesktop) {
+    this.ideaChangingQueryParams(this.item.id);
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
       disableClose: true,
       hasBackdrop: isDesktop,
@@ -347,6 +367,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
       }
+      this.removePostQueryParam();
     });
 
     // detect screen size changes
@@ -397,35 +418,26 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   calculateTimeStamp() {
     // Test string
     this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
-    //this.timeStamp = moment(this.item.time).fromNow().toString();
-    if(this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
+    // this.timeStamp = moment(this.item.time).fromNow().toString();
+    if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';
-    }
-    else if(this.timeStamp.includes('an hour ago')) {
-      this.timeStamp = '1hr ago'
-    }
-    else if(this.timeStamp.includes('a minute ago')) {
-      this.timeStamp = '1m ago'
-    }
-    else if(this.timeStamp.includes('minutes')) {
+    } else if (this.timeStamp.includes('an hour ago')) {
+      this.timeStamp = '1hr ago';
+    } else if (this.timeStamp.includes('a minute ago')) {
+      this.timeStamp = '1m ago';
+    } else if (this.timeStamp.includes('minutes')) {
       this.timeStamp = this.timeStamp.replace(/\sminutes/, 'm');
-    }
-    else if(this.timeStamp.includes('hours')) {
+    } else if (this.timeStamp.includes('hours')) {
       this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
-    }
-    else if(this.timeStamp.includes('days')) {
+    } else if (this.timeStamp.includes('days')) {
       this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
-    }
-    else if(this.timeStamp.includes('a month')) {
+    } else if (this.timeStamp.includes('a month')) {
       this.timeStamp = this.timeStamp.replace(/a month/, '1mo');
-    }
-    else if(this.timeStamp.includes('months')) {
+    } else if (this.timeStamp.includes('months')) {
       this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
-    }
-    else if(this.timeStamp.includes('a year')) {
+    } else if (this.timeStamp.includes('a year')) {
       this.timeStamp = this.timeStamp.replace(/a year/, '1yr');
-    }
-    else if(this.timeStamp.includes('years')) {
+    } else if (this.timeStamp.includes('years')) {
       this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
     }
   }

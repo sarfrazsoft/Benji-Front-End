@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BrainstormService } from 'src/app/services/activities';
 import { Category, Group, Idea, UpdateMessage } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
@@ -66,6 +67,8 @@ export class IdeaDetailedDialogComponent implements OnInit {
   isEdited: boolean;
 
   constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private dialogRef: MatDialogRef<IdeaDetailedDialogComponent>,
     private matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA)
@@ -120,6 +123,14 @@ export class IdeaDetailedDialogComponent implements OnInit {
     this.getItemByCheckIndex(checkIndex);
   }
 
+  public ideaChangingQueryParams(ideaId: number) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { post: ideaId },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   getItemByCheckIndex(checkIndex) {
     let newItem;
     const currentlySelectedItem = this.data.item;
@@ -132,7 +143,9 @@ export class IdeaDetailedDialogComponent implements OnInit {
       ideas = this.brainstormService.uncategorizedIdeas;
     }
     newItem = this.getNewItem(ideas, currentlySelectedItem, checkIndex);
+
     this.data = { ...this.data, item: newItem };
+    this.ideaChangingQueryParams(newItem.id);
   }
 
   getNewItem(ideas, currentlySelectedItem, checkIndex) {
