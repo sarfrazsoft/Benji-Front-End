@@ -77,6 +77,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       }
     } else if (!this.authService.isLoggedIn()) {
       // navigate to lesson lobby
+      this.authService.redirectURL = window.location.href;
       this.authService.navigateToLessonLobby(this.roomCode);
     }
     this.initSocket();

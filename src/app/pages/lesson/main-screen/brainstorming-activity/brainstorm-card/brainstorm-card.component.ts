@@ -1,17 +1,6 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-  // ...
-} from '@angular/animations';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -23,18 +12,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { take } from 'rxjs/operators';
-import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
   BoardStatus,
   BrainstormActivity,
-  BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
   BrainstormRemoveIdeaPinEvent,
@@ -47,7 +33,6 @@ import { BoardStatusService } from 'src/app/services/board-status.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
-import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -116,6 +101,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   timeStamp: string;
 
   constructor(
+    private router: Router,
     private dialog: MatDialog,
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
@@ -317,7 +303,26 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
+  public ideaChangingQueryParams(ideaId: number) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { post: ideaId },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  removePostQueryParam() {
+    // Remove query params
+    this.router.navigate([], {
+      queryParams: {
+        post: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   openDialog(idea: Idea, assignedClass, isDesktop) {
+    this.ideaChangingQueryParams(this.item.id);
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
       disableClose: true,
       hasBackdrop: isDesktop,
@@ -348,6 +353,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
       }
+      this.removePostQueryParam();
     });
 
     // detect screen size changes
@@ -397,6 +403,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   calculateTimeStamp() {
     // Test string
+    // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
     // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
     this.timeStamp = moment(this.item.time).fromNow().toString();
     if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
@@ -411,8 +418,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
     } else if (this.timeStamp.includes('days')) {
       this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
+    } else if (this.timeStamp.includes('a month')) {
+      this.timeStamp = this.timeStamp.replace(/a month/, '1mo');
     } else if (this.timeStamp.includes('months')) {
       this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
+    } else if (this.timeStamp.includes('a year')) {
+      this.timeStamp = this.timeStamp.replace(/a year/, '1yr');
     } else if (this.timeStamp.includes('years')) {
       this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
     }

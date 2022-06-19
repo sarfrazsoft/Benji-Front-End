@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -9,17 +8,12 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { clone, cloneDeep, forOwn, uniqBy } from 'lodash';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { cloneDeep, forOwn } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { Observable, Subscription } from 'rxjs';
-import {
-  ActivitySettingsService,
-  BrainstormService,
-  ContextService,
-  SharingToolService,
-} from 'src/app/services';
+import { Observable } from 'rxjs';
+import { BrainstormService, ContextService, SharingToolService } from 'src/app/services';
 import {
   Board,
   BoardMode,
@@ -34,7 +28,6 @@ import {
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
-import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
 
@@ -55,6 +48,7 @@ export class MainScreenBrainstormingActivityComponent
   participantCode;
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
     private sharingToolService: SharingToolService,
@@ -189,6 +183,14 @@ export class MainScreenBrainstormingActivityComponent
     }
   }
 
+  public boardChangingQueryParams(boardId: number) {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { board: boardId },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   ngOnDestroy() {
     this.contextService.destroyActivityTimer();
     if (this.settingsSubscription) {
@@ -213,11 +215,13 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getAdminBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+        this.boardChangingQueryParams(this.selectedBoard.id);
       }
     });
     if (this.act.meeting_mode) {
       this.selectedBoard = this.getParticipantBoard();
       this.brainstormService.selectedBoard = this.selectedBoard;
+      this.boardChangingQueryParams(this.selectedBoard.id);
     }
   }
 
@@ -267,12 +271,14 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getAdminBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+        this.boardChangingQueryParams(this.selectedBoard.id);
       }
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.selectedBoard = this.getParticipantBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+        this.boardChangingQueryParams(this.selectedBoard.id);
       }
     });
   }
