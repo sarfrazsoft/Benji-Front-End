@@ -156,7 +156,11 @@ export class SessionLobbyLayoutComponent implements OnInit {
           if (localStorage.getItem('user')) {
             localStorage.removeItem('user');
           }
-          this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          if (this.authService.redirectURL.length) {
+            window.location.href = this.authService.redirectURL;
+          } else {
+            this.router.navigate(['/screen/lesson/' + res.lessonrun_code]);
+          }
         } else if (res && res.message === 'A participant with that display name already exists') {
           this.participantAlreadyExistsError = true;
         } else {
