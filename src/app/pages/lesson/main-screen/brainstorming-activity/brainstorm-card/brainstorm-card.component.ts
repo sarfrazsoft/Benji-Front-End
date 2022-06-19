@@ -1,17 +1,6 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-  // ...
-} from '@angular/animations';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -27,14 +16,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { take } from 'rxjs/operators';
-import * as global from 'src/app/globals';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
   BoardStatus,
   BrainstormActivity,
-  BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaCommentEvent,
   BrainstormRemoveIdeaHeartEvent,
   BrainstormRemoveIdeaPinEvent,
@@ -47,7 +33,6 @@ import { BoardStatusService } from 'src/app/services/board-status.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
-import { blockQuoteRule } from 'src/app/shared/ngx-editor/plugins/input-rules';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -92,6 +77,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Input() isColumnsLayout;
   @Input() myGroup;
   @Input() avatarSize;
+  @Input() userRole: IdeaUserRole;
   @ViewChild('colName') colNameElement: ElementRef;
   @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
@@ -103,7 +89,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   commentModel = '';
   submittingUser;
   submitting_participant;
-  userRole: IdeaUserRole;
+
   deactivateHearting = false;
   classGrey: boolean;
   classWhite: boolean;
@@ -116,7 +102,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
@@ -125,30 +110,28 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // get parameters
+    const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
+    if (paramPostId) {
+      // tslint:disable-next-line:radix
+      if (parseInt(paramPostId) === this.item.id) {
+        this.showDetailedIdea(this.item);
+      }
+    }
+
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;
     }
 
     if (this.participantCode) {
-      this.userRole = 'viewer';
     } else {
-      // viewing user is the host
-      this.userRole = 'owner';
       this.commentKey = 'comment_' + this.item.id + 'host';
-    }
-
-    if (this.item && this.item.submitting_participant && this.userRole !== 'owner') {
-      this.submittingUser = this.item.submitting_participant.participant_code;
-      if (this.submittingUser === this.participantCode && this.board.status === 'open') {
-        this.userRole = 'owner';
-      } else {
-        this.userRole = 'viewer';
-      }
     }
 
     const draftComment = this.brainstormService.getDraftComment(this.commentKey);
@@ -168,14 +151,17 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
     });
 
+    const obj = this.brainstormService.getUserRole(this.participantCode, this.item, this.boardStatus);
+    this.submittingUser = obj.submittingUser;
+    this.userRole = obj.userRole;
+
     this.calculateTimeStamp();
     setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
   }
-
-  checkBoardStatus() {
-    if (this.boardStatus === 'open') {
+  areCommentsAllowed() {
+    if (this.boardStatus === 'open' || this.boardStatus === 'private') {
       return true;
     } else {
       return false;
@@ -418,6 +404,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   calculateTimeStamp() {
     // Test string
     // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
+    // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
     this.timeStamp = moment(this.item.time).fromNow().toString();
     if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';

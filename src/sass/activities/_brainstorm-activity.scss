@@ -131,6 +131,8 @@ benji-ms-brainstorming-activity {
           width: 544px;
           margin: 0 auto;
           .brainstorm-idea-item {
+            transition: all;
+            transition-duration: 0.3s;
             margin-right: 0px;
           }
           .brainstorm-idea {
@@ -524,7 +526,7 @@ benji-categorized-ideas {
     .delete-icon {
       width: 24px;
       height: 24px;
-      background: #000;
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 8px;
       color: #fff;
       position: absolute;

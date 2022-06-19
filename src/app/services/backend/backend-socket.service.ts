@@ -46,9 +46,7 @@ export class BackendSocketService {
     };
     const w: WebSocketSubject<ServerMessage> = webSocket(webSocketSubjectConfig);
     w.subscribe(
-      (data) => {
-        console.log(data);
-      },
+      (data) => {},
       (error) => console.log(error, moment()),
       () => {
         console.log('complete');
