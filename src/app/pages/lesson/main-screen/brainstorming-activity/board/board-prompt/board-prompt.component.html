@@ -24,11 +24,20 @@
           </textarea>
         </div>
         <div class="sub-header">
-          <benji-tiptap-editor
-            [editable]="isHost"
-            [defaultValue]="sub_instructions"
-            (textChanged)="descriptionTextChanged($event)">
-          </benji-tiptap-editor>
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
+            <benji-tiptap-editor
+              [editable]="true"
+              [defaultValue]="sub_instructions"
+              (textChanged)="descriptionTextChanged($event)">
+            </benji-tiptap-editor>
+          </ng-container>
+          <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+            <benji-tiptap-editor
+              [editable]="false"
+              [defaultValue]="sub_instructions"
+              (textChanged)="descriptionTextChanged($event)">
+            </benji-tiptap-editor>
+          </ng-container>
         </div>
         <div
           *ngIf="hasMedia" 
