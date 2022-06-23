@@ -144,6 +144,12 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       this.getNewBoardInstruction(this.board);
     } else if (this.eventType === 'BrainstormEditSubInstruction') {
       this.getNewSubInstruction(this.board);
+    } else if (
+      this.eventType === 'HostChangeBoardEvent' ||
+      this.eventType === 'ParticipantChangeBoardEvent'
+    ) {
+      this.getNewBoardInstruction(this.board);
+      this.getNewSubInstruction(this.board);
     }
   }
 

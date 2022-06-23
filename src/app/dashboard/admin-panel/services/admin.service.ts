@@ -97,8 +97,8 @@ export class AdminService {
               categorized: false,
               board_activity: {
                 categorized: false,
-                instructions: 'Dummy Instructions',
-                sub_instructions: 'test',
+                instructions: '',
+                sub_instructions: '',
               },
             },
           ],

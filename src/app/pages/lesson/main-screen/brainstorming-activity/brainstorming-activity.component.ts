@@ -163,12 +163,10 @@ export class MainScreenBrainstormingActivityComponent
       this.selectUserBoard();
     } else if (this.eventType === 'HostChangeBoardEvent') {
       this.hostChangedBoard();
-      this.initBoardInstructions();
       this.changeBoardStatus();
       this.updatePromptMedia();
     } else if (this.eventType === 'ParticipantChangeBoardEvent') {
       this.participantChangedBoard();
-      this.initBoardInstructions();
       this.changeBoardStatus();
       this.updatePromptMedia();
     } else if (this.eventType === 'BrainstormChangeModeEvent') {
