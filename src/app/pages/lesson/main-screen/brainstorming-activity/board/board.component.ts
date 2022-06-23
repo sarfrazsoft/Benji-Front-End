@@ -39,6 +39,7 @@ import {
   BoardMode,
   BoardStatus,
   BrainstormActivity,
+  BrainstormEditDocumentIdeaEvent,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
   BrainstormEditInstructionEvent,
@@ -692,32 +693,31 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   submitDocumentNIdea(idea) {
-    const code = this.activityState.lesson_run.lessonrun_code;
-    const url = global.apiRoot + '/course_details/lesson_run/' + code + '/upload_document/';
-
-    const participant_code = this.participantCode;
-    const file: File = idea.selectedpdfDoc;
-    if (file) {
-      const formData: FormData = new FormData();
-      formData.append('document', file, file.name);
-      formData.append('participant_code', participant_code ? participant_code.toString() : '');
-      const headers = new HttpHeaders();
-      headers.set('Content-Type', null);
-      headers.set('Accept', 'multipart/form-data');
-      const params = new HttpParams();
-      this.httpClient
-        .post(url, formData, { params, headers })
-        .map((res: any) => {
-          // we will get ID of document and that will be attached
-          // with the idea
-          this.sendMessage.emit(
-            new BrainstormSubmitDocumentEvent(idea.text, idea.title, idea.category.id, idea.groupId, res.id)
-          );
-        })
-        .subscribe(
-          (data) => {},
-          (error) => console.log(error)
-        );
+    if (idea.id) {
+      // update the idea with an image
+      this.updateIdeaWithDocument(idea);
+      return;
     }
+    this.sendMessage.emit(
+      new BrainstormSubmitDocumentEvent(
+        idea.text,
+        idea.title,
+        idea.category.id,
+        idea.groupId,
+        idea.selectedpdfDoc
+      )
+    );
+  }
+
+  updateIdeaWithDocument(idea) {
+    this.sendMessage.emit(
+      new BrainstormEditDocumentIdeaEvent(
+        idea.id,
+        idea.text,
+        idea.title,
+        idea.category.id,
+        idea.selectedpdfDoc
+      )
+    );
   }
 }

@@ -27,6 +27,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   selectedThirdPartyImageUrl;
   pdfSelected;
   selectedpdfDoc;
+  selectedpdfDocId;
   pdfSrc;
   lessonID;
 
@@ -120,7 +121,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       category: this.selectedCategory,
       imagesList: this.imagesList,
       selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
-      selectedpdfDoc: this.selectedpdfDoc,
+      selectedpdfDoc: this.selectedpdfDocId,
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
     });
@@ -186,21 +187,21 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       });
   }
 
-  uploadFile(event) {
-    const fileList: FileList = event.target.files;
-    this.clearPDF();
-    this.removeImage();
-    if (fileList.length === 0) {
-      this.imagesList = null;
-    } else {
-      const file = fileList[0];
-      const reader = new FileReader();
-      reader.onload = (e) => (this.pdfSrc = reader.result);
-      reader.readAsDataURL(file);
-      this.selectedpdfDoc = file;
-      this.pdfSelected = true;
-    }
-  }
+  // uploadFile(event) {
+  //   const fileList: FileList = event.target.files;
+  //   this.clearPDF();
+  //   this.removeImage();
+  //   if (fileList.length === 0) {
+  //     this.imagesList = null;
+  //   } else {
+  //     const file = fileList[0];
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => (this.pdfSrc = reader.result);
+  //     reader.readAsDataURL(file);
+  //     this.selectedpdfDoc = file;
+  //     this.pdfSelected = true;
+  //   }
+  // }
 
   remove() {
     if (this.pdfSelected) {
@@ -266,6 +267,17 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       }
       this.webcamImage = true;
       this.webcamImageId = res.id;
+    } else if (res.document_type === 'document') {
+      this.selectedpdfDocId = res.id;
+      if (res.document_url_converted) {
+        this.pdfSrc = res.document_url_converted;
+      } else {
+        this.pdfSrc = res.document_url;
+      }
+      // this.pdfSrc = 'https://ucarecdn.com/7d9330de-a6be-497d-9a4c-3af802a63a2e/';
+      this.webcamImage = false;
+      this.video = false;
+      this.pdfSelected = true;
     }
   }
 
@@ -281,6 +293,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
-    $event.length == 7 ? this.descriptionIsEmpty = true : this.descriptionIsEmpty = false;
+    $event.length === 7 ? (this.descriptionIsEmpty = true) : (this.descriptionIsEmpty = false);
   }
 }

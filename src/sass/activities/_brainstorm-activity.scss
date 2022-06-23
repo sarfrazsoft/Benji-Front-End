@@ -583,6 +583,9 @@ benji-categorized-ideas {
   pdf-viewer {
     height: 100%;
     width: 100%;
+    .ng2-pdf-viewer-container {
+      overflow: hidden;
+    }
   }
   img.title {
     width: 100%;

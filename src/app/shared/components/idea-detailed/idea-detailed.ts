@@ -253,8 +253,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // check if idea has document and reset if
     // document isn't present
     if (this.data.item.idea_document) {
+      this.clearPDF();
+      console.log(this.data.item.idea_document);
+      this.pdfSrc = this.data.item.idea_document.document_url;
       this.pdfSelected = true;
-      this.pdfSrc = this.hostname + this.data.item.idea_document.document;
     } else {
       this.clearPDF();
     }
@@ -319,6 +321,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       selectedThirdPartyImageUrl: this.selectedThirdPartyImageUrl,
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
+      selectedpdfDoc: this.selectedpdfDoc,
     });
   }
 
@@ -523,6 +526,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
       this.webcamImage = true;
       this.webcamImageId = res.id;
+    } else if (res.document_type === 'document') {
+      this.selectedpdfDoc = res.id;
+      if (res.document_url_converted) {
+        this.pdfSrc = res.document_url_converted;
+      } else {
+        this.pdfSrc = res.document_url;
+      }
+      // this.pdfSrc = 'https://ucarecdn.com/7d9330de-a6be-497d-9a4c-3af802a63a2e/';
+      this.webcamImage = false;
+      this.video = false;
+      this.pdfSelected = true;
     }
     this.ideaEditEvent.emit(true);
   }
@@ -554,8 +568,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
   }
 
-  changeOnHover($event){
-    this.hoverColor = $event.type == 'mouseover' ? 'primary-color' : 'white-color';
+  changeOnHover($event) {
+    this.hoverColor = $event.type === 'mouseover' ? 'primary-color' : 'white-color';
   }
-  
 }

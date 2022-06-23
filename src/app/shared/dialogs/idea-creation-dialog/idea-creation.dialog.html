@@ -98,20 +98,36 @@
                 [ngClass]="{'inactive': imageSelected || webcamImage || video || pdfSelected}"
               >
             </div> 
-            <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="!webcamImage && !video">
+            <div 
+              class="uploadcare-container" 
+              fxLayoutAlign="center center" 
+              *ngIf="!webcamImage && !video">
               <benji-uploadcare-widget
                 [lessonRunCode]="lessonID"
-                [tabs]="'camera'"
+                [tabs]="'camera_ideacreation'"
                 (mediaUploaded)="mediaUploaded($event)"
                 (mediaUploading)="mediaUploadProgress($event)"
                 [mediaSelected]="imageSelected || pdfSelected">
               </benji-uploadcare-widget>
             </div>  
-            <div class="uploadcare-container" fxLayoutAlign="center center" *ngIf="webcamImage || video">
+            <div 
+              class="uploadcare-container" 
+              fxLayoutAlign="center center" 
+              *ngIf="webcamImage || video">
               <img 
                 class="inactive" 
                 src="/assets/img/idea-creation/cam-upload.svg">
-            </div>  
+            </div>
+
+            <div class="uploadcare-container" fxLayoutAlign="center center">
+              <benji-uploadcare-widget
+                [tabs]="'file_ideacreation'"
+                [lessonRunCode]="lessonID"
+                (mediaUploaded)="mediaUploaded($event)"
+                (mediaUploading)="mediaUploadProgress($event)"
+                [icon]="'/assets/img/idea-creation/attach.svg'">
+              </benji-uploadcare-widget>
+            </div>
           </div>
           <div class="divider" *ngIf="showCategoriesDropdown"></div>
           <div *ngIf="showCategoriesDropdown"

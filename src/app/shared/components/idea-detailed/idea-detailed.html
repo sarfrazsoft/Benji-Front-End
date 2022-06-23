@@ -31,26 +31,38 @@
                 (click)="openImagePickerDialog()">
                 <img src="/assets/img/idea-creation/img-upload.svg">
               </div>
-              <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/video-icon.svg"></div> -->
               
               <div class="options" fxLayoutAlign="center center">
                 <div class="uploadcare-container" fxLayoutAlign="center center">
                   <benji-uploadcare-widget
-                    [tabs]="'camera'"
+                    [tabs]="'camera_ideadetailed'"
                     [lessonRunCode]="lessonRunCode"
                     (mediaUploaded)="mediaUploaded($event)"
                     (mediaUploading)="mediaUploadProgress($event)">
                   </benji-uploadcare-widget>
                 </div>
               </div>
-              <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/image-icon.svg"></div> -->
+
               <div 
                 class="options" 
                 fxLayoutAlign="center center"
                 (click)="openGiphyPickerDialog()">
                 <img src="/assets/img/idea-creation/gif-upload.svg">
               </div>
-              <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/file-icon.svg"></div> -->
+
+              <div class="options" fxLayoutAlign="center center">
+                <div class="uploadcare-container" fxLayoutAlign="center center">
+                  <benji-uploadcare-widget
+                    [tabs]="'file_ideadetailed'"
+                    [lessonRunCode]="lessonRunCode"
+                    (mediaUploaded)="mediaUploaded($event)"
+                    (mediaUploading)="mediaUploadProgress($event)"
+                    [icon]="'/assets/img/idea-creation/attach.svg'">
+                  </benji-uploadcare-widget>
+                </div>
+              </div>
+
+
             </div>
             <div class="add-to-post">Add to your post</div>
           </div>
@@ -89,6 +101,23 @@
             useBrowserLocale="true" 
             [height]="'512px'">
           </ngx-extended-pdf-viewer>
+          <!-- <div  style="width: 100%;height: 200px">
+            <pdf-viewer
+              (click)="showDetailedIdea(item)"
+              [src]="pdfSrc"
+              [rotation]="0"
+              [original-size]="false"
+              [show-all]="false"
+              [fit-to-page]="true"
+              [zoom]="1"
+              [zoom-scale]="'page-width'"
+              [stick-to-page]="true"
+              [render-text]="false"
+              [external-link-target]="'blank'"
+              [autoresize]="true"
+              [show-borders]="false"
+              ></pdf-viewer>
+          </div>  -->
         </div>
       </ng-container>
       <ng-container *ngIf="video && videoURL">

@@ -58,6 +58,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   @Input() mediaSelected;
   @Input() tabs: string;
   @Input() uploadDocumentToBenji = true;
+  @Input() ucWidgetId;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument | IncompleteFileInfo | any>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
 
@@ -67,6 +68,9 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   video: boolean;
   webcamImageURL: string;
   webcamImage: boolean;
+  document: boolean;
+  fileType: 'document' | 'video' | 'image';
+  fileUrl: string;
 
   videoTypes = ['webm', 'ogg', 'mp4', 'x-matroska'];
   codecs = [
@@ -92,17 +96,16 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   ngOnInit(): void {
     if (!this.icon) {
       this.icon = '/assets/img/idea-creation/cam-upload.svg';
-    } 
+    }
   }
 
   ngAfterViewInit(): void {
     this.video = false;
     this.webcamImage = false;
-    console.log(this.tabs);
     const supportedVideos = this.getSupportedMimeTypes('video', this.videoTypes, this.codecs);
     this.widgetRef = uploadcare.Widget(`[name="${this.tabs}"]`, {
       publicKey: '71eac221885fa40dc817',
-      tabs: this.tabs,
+      tabs: this.tabs.split('_')[0],
       multiple: false,
       videoPreferredMimeTypes: supportedVideos[0],
       previewStep: true,
@@ -112,18 +115,37 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
 
     this.widgetRef.onUploadComplete((info: IncompleteFileInfo) => {
       // Handle uploaded file info.
-      if (!info.isImage) {
+
+      if (this.checkIfDocument(info)) {
+        this.fileType = 'document';
+        if (info.name.split('.')[info.name.split('.').length - 1] === 'pdf') {
+          this.fileUrl = info.originalUrl;
+          this.convertedVideoURL = '';
+          this.uploadDocumentUrlToBenji();
+        } else {
+          const postReq$ = this.convertDocumentFormat(info.uuid);
+          postReq$.subscribe((res) => {
+            this.fileUrl = res.response.original_file;
+            this.convertedVideoURL = res.response.converted_file;
+            this.checkDocumentConversionStatus(res.response.token, 'convert-document', () => {
+              this.uploadDocumentUrlToBenji();
+            });
+          });
+        }
+      } else if (!info.isImage) {
         // now we convert the file
         this.convertVideoFormat('mp4', info.uuid).subscribe(
           (data: ConvertedFile) => {
             this.video = true;
+            this.fileType = 'video';
             this.convertedVideoURL = data.converted_file;
             this.originalVideoURL = data.original_file;
+            this.fileUrl = data.original_file;
             if (this.uploadDocumentToBenji) {
               this.uploadDocumentUrlToBenji();
             } else {
-              this.checkVideoConversionStatus(data.token, () => {
-                this.mediaUploaded.emit({ isImage: false, ...data });
+              this.checkDocumentConversionStatus(data.token, 'convert-video', () => {
+                this.mediaUploaded.emit({ isImage: false, isVideo: true, ...data });
               });
             }
           },
@@ -132,6 +154,8 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
       } else if (info.isImage) {
         this.webcamImageURL = info.cdnUrl;
         this.webcamImage = true;
+        this.fileType = 'image';
+        this.fileUrl = info.cdnUrl;
         if (this.uploadDocumentToBenji) {
           this.uploadDocumentUrlToBenji();
         } else {
@@ -143,8 +167,10 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
     this.widgetRef.onChange((widgetObject) => {
       if (widgetObject) {
         widgetObject.promise().progress((info: FileProgress) => {
-          info.progress = info.progress * 100;
-          this.mediaUploading.emit(info);
+          this.mediaUploading.emit({
+            ...info,
+            progress: info.progress * 100,
+          });
         });
       }
     });
@@ -153,6 +179,11 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
       dialog.progress((tab) => {
         if (tab === 'camera') {
           this.testCamera();
+        } else if (tab === 'file') {
+          const buttons: HTMLCollectionOf<HTMLElement> = document.getElementsByClassName(
+            'uploadcare--tab__action-button'
+          ) as HTMLCollectionOf<HTMLElement>;
+          buttons[0].click();
         }
       });
     });
@@ -180,8 +211,13 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
     return this.httpClient.post(url, formData, { params, headers });
   }
 
-  checkVideoConversionStatus(token: number, callback?) {
-    const url = `${global.apiRoot}/course_details/convert-video/status/${token}/`;
+  convertDocumentFormat(documentId) {
+    const url = global.apiRoot + '/course_details/convert-document/';
+    return ajax.post(url, { document_id: documentId }, { 'Content-Type': 'application/json' });
+  }
+
+  checkDocumentConversionStatus(token: number, check: string, callback?) {
+    const url = `${global.apiRoot}/course_details/${check}/status/${token}/`;
     const timer$ = timer(0, 1000);
     timer$
       .pipe(
@@ -203,8 +239,8 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   uploadDocumentUrlToBenji() {
     const url = global.apiRoot + '/course_details/lesson_run/' + this.lessonRunCode + '/upload_document/';
     const formData: FormData = new FormData();
-    formData.append('document_type', this.video ? 'video' : 'image');
-    formData.append('document_url', this.video ? this.originalVideoURL : this.webcamImageURL);
+    formData.append('document_type', this.fileType);
+    formData.append('document_url', this.fileUrl);
     formData.append('document_url_converted', this.convertedVideoURL);
     const headers = new HttpHeaders();
     headers.set('Content-Type', null);
@@ -293,5 +329,49 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
         });
       }
     );
+  }
+
+  checkIfDocument(info: IncompleteFileInfo): boolean {
+    const name = info.name.split('.');
+    const fileExtension = name[name.length - 1];
+    const extensions = [
+      'doc',
+      'docx',
+      'xls',
+      'xlsx',
+      'pps',
+      'ppsx',
+      'ppt',
+      'pptx',
+      'vsd',
+      'vsdx',
+      'skw',
+      'wpd',
+      'wps',
+      'xlr',
+      'pub',
+      'mpp',
+      'key',
+      'msg',
+      'numbers',
+      'pages',
+      'odt',
+      'ods',
+      'odp',
+      'txt',
+      'rtf',
+      'pdf',
+      'djvu',
+      'eml',
+      'csv',
+      'xps',
+      'ps',
+      'eps',
+      'psd',
+      'ai',
+    ];
+
+    const exists = extensions.some((el) => fileExtension.includes(el));
+    return exists;
   }
 }

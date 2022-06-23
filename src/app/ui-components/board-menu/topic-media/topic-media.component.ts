@@ -6,6 +6,7 @@ import { Board, UpdateMessage, UpdatePromptVideoEvent } from 'src/app/services/b
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { FileProgress } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';
 
 @Component({
   selector: 'benji-topic-media',
@@ -18,6 +19,7 @@ export class TopicMediaComponent implements OnInit {
   uploadingTopicMedia = false;
   @Output() sendMessage = new EventEmitter<any>();
   uploadedTopicMedia: boolean;
+  fileProgress: FileProgress;
 
   image;
   video;
@@ -88,7 +90,8 @@ export class TopicMediaComponent implements OnInit {
     this.sendMessage.emit(new UpdatePromptVideoEvent(this.selectedBoard.id, null));
   }
 
-  mediaUploadProgress() {
+  mediaUploadProgress(fileProgress: FileProgress) {
+    this.fileProgress = fileProgress;
     this.uploadedTopicMedia = false;
     this.uploadingTopicMedia = true;
   }

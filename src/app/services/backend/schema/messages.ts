@@ -468,6 +468,20 @@ export class BrainstormSubmitDocumentEvent extends ActivityEvent {
     };
   }
 }
+export class BrainstormEditDocumentIdeaEvent extends ActivityEvent {
+  event_name = 'BrainstormEditIdeaSubmitEvent';
+
+  constructor(id: string, text: string, title: string, category: number, documentId: number) {
+    super();
+    this.extra_args = {
+      brainstormidea: id,
+      idea: text,
+      title: title,
+      category: category,
+      idea_document: documentId,
+    };
+  }
+}
 export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormEditIdeaSubmitEvent';
 

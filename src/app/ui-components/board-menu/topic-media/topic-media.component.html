@@ -20,14 +20,24 @@
         Remove
       </button>
     </div>
-    <div *ngIf="uploadingTopicMedia">
-      uploading
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <ng-container *ngIf="uploadingTopicMedia">
+        <benji-progress-bar
+          [percent]="fileProgress?.progress">
+        </benji-progress-bar>
+      </ng-container>
     </div>
     <ng-container *ngIf="!hasMedia">
-      <div class="options" fxLayout="row" fxLayoutGap="9px">
+      <div 
+        class="options" 
+        fxLayout="row" 
+        fxLayoutGap="9px" 
+        [ngClass]="{
+          hideAndShrink: uploadingTopicMedia
+        }">
         <div class="uploadcare-container" fxLayoutAlign="center center">
           <benji-uploadcare-widget
-            [tabs]="'file'"
+            [tabs]="'file_topicmedia'"
             [uploadDocumentToBenji]="false"
             [lessonRunCode]="lessonRunCode"
             (mediaUploaded)="mediaUploaded($event)"
@@ -37,7 +47,7 @@
         </div>
         <div class="uploadcare-container" fxLayoutAlign="center center">
           <benji-uploadcare-widget
-            [tabs]="'camera'"
+            [tabs]="'camera_topicmedia'"
             [uploadDocumentToBenji]="false"
             [lessonRunCode]="lessonRunCode"
             (mediaUploaded)="mediaUploaded($event)"
