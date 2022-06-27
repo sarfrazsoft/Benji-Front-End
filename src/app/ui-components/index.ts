@@ -17,7 +17,9 @@ import { ControlComponents } from './controls';
 import { SubmittedCounterComponent } from './submitted-counter/submitted-counter.component';
 
 import { BoardMenuComponent } from './board-menu/board-menu.component';
-import { TopicMediaComponent } from './board-menu/topic-media/topic-media.component';
+import { BoardSettingsComponent } from './board-menu/board-settings/board-settings.component';
+import { TopicMediaComponent } from './board-menu/board-settings/topic-media/topic-media.component';
+import { BoardsNavigatorComponent } from './board-menu/boards-navigator/boards-navigator.component';
 
 export const UIComponents = [
   DynamicTimerComponent,
@@ -36,4 +38,6 @@ export const UIComponents = [
   SubmittedCounterComponent,
   BoardMenuComponent,
   TopicMediaComponent,
+  BoardsNavigatorComponent,
+  BoardSettingsComponent,
 ];

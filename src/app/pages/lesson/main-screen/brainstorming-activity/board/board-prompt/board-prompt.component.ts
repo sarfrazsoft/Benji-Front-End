@@ -17,11 +17,13 @@ import { BrainstormService } from 'src/app/services';
 import {
   Board,
   BoardMode,
+  BoardStatus,
   BrainstormActivity,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
+import { BoardStatusService } from 'src/app/services/board-status.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
 
 @Component({
@@ -34,7 +36,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   @Input() eventType;
   @Input() boardMode: BoardMode;
   @Input() isHost = false;
-  @Input() boardStatus;
+  boardStatus;
 
   showParticipantsGroupsDropdown = false;
   @Input() participantCode;
@@ -61,7 +63,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private permissionsService: NgxPermissionsService,
     private brainstormService: BrainstormService,
-    private topicMediaService: TopicMediaService
+    private topicMediaService: TopicMediaService,
+    private boardStatusService: BoardStatusService
   ) {}
 
   ngOnInit() {
@@ -98,6 +101,25 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
         this.getTopicMedia(val);
       }
     });
+
+    this.boardStatusService.boardStatus$.subscribe((val: BoardStatus) => {
+      if (val) {
+        this.boardStatus = val;
+      }
+    });
+  }
+
+  isPostingAllowed() {
+    if (this.isHost) {
+      // if it's a host allow posting without any consideration
+      // to board status
+      return true;
+    } else if (this.boardStatus === 'open' || this.boardStatus === 'private') {
+      // is participant
+      return true;
+    } else {
+      return false;
+    }
   }
 
   getTopicMedia(val) {
@@ -121,19 +143,6 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  isPostingAllowed() {
-    if (this.isHost) {
-      // if it's a host allow posting without any consideration
-      // to board status
-      return true;
-    } else if (this.boardStatus === 'open') {
-      // is participant
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   ngOnChanges() {
     this.onChanges();
   }
@@ -146,7 +155,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       this.getNewSubInstruction(this.board);
     } else if (
       this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'ParticipantChangeBoardEvent'
+      this.eventType === 'ParticipantChangeBoardEvent' ||
+      this.eventType === 'BrainstormToggleMeetingMode'
     ) {
       this.getNewBoardInstruction(this.board);
       this.getNewSubInstruction(this.board);

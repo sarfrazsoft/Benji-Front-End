@@ -127,7 +127,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
           postReq$.subscribe((res) => {
             this.fileUrl = res.response.original_file;
             this.convertedVideoURL = res.response.converted_file;
-            this.checkDocumentConversionStatus(res.response.token, 'convert-document', () => {
+            this.checkDocumentConversionStatus2(res.response.token, 'convert-document', () => {
               this.uploadDocumentUrlToBenji();
             });
           });
@@ -142,6 +142,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
             this.originalVideoURL = data.original_file;
             this.fileUrl = data.original_file;
             if (this.uploadDocumentToBenji) {
+              // upload to Benji immediately and convert in the background
               this.uploadDocumentUrlToBenji();
             } else {
               this.checkDocumentConversionStatus(data.token, 'convert-video', () => {
@@ -232,8 +233,29 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
       });
   }
 
+  checkDocumentConversionStatus2(token: number, check: string, callback?) {
+    const url = `${global.apiRoot}/course_details/${check}/status/${token}/`;
+    const timer$ = timer(0, 1000);
+    timer$
+      .pipe(
+        switchMap(() => ajax.getJSON(url)),
+        takeWhile((res: any) => this.isConversionInProgress2(res), true),
+        skipWhile((res: any) => this.isConversionInProgress2(res))
+      )
+      .subscribe((res) => {
+        if (callback) {
+          callback();
+        }
+      });
+  }
+
   isConversionInProgress(res): boolean {
     return res && res.message === 'We are working on this.';
+  }
+
+  isConversionInProgress2(res): boolean {
+    console.log(res);
+    return res && (res.status === 'pending' || res.status === 'processing');
   }
 
   uploadDocumentUrlToBenji() {

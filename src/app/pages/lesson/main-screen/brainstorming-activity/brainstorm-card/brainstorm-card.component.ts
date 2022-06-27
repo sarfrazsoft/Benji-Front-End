@@ -160,12 +160,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       this.calculateTimeStamp();
     }, 60000);
   }
+
   areCommentsAllowed() {
-    if (this.boardStatus === 'open' || this.boardStatus === 'private') {
-      return true;
-    } else {
-      return false;
-    }
+    return this.board.allow_comment;
   }
 
   ngOnChanges() {}
@@ -263,6 +260,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   removeHeart(item, event) {
+    if (!this.board.allow_comment) {
+      return;
+    }
     let hearted;
     item.hearts.forEach((element) => {
       if (element.participant === this.participantCode) {
@@ -281,7 +281,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   setHeart(idea: Idea) {
-    if (this.boardStatus === 'open' || this.isAdmin) {
+    if (this.board.allow_comment) {
       if (!this.deactivateHearting) {
         this.deactivateHearting = true;
         this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));

@@ -3,7 +3,7 @@
   <mat-sidenav 
     #sidenav 
     (keydown.escape)="close()"
-    position="end">
+    [position]="sideNavPosition">
       <benji-board-menu *ngIf="serverMessage"
         #boardMenu
         [sidenav]="sidenav" 

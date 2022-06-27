@@ -26,6 +26,7 @@ import {
   BrainstormEditSubInstructionEvent,
   BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
+  BrainstormToggleAllowCommentEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
   HostChangeBoardEvent,
@@ -37,10 +38,10 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
 @Component({
-  selector: 'benji-board-menu',
-  templateUrl: 'board-menu.component.html',
+  selector: 'benji-board-settings',
+  templateUrl: 'board-settings.component.html',
 })
-export class BoardMenuComponent implements OnInit, OnChanges {
+export class BoardSettingsComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
@@ -66,15 +67,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     },
     {
       value: 'closed',
-      name: 'Hidden',
+      name: 'Closed',
     },
     {
       value: 'view_only',
-      name: 'View Only',
-    },
-    {
-      value: 'private',
-      name: 'Private',
+      name: 'View',
     },
   ];
   defaultSort = 'newest_to_oldest';
@@ -82,6 +79,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   meetingMode: boolean;
   showAuthorship: boolean;
+  allowCommenting: boolean;
   board: Board;
   boardMode: string;
   gridMode: boolean;
@@ -139,8 +137,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   selectedBoardChanged(board) {
     this.selectedBoard = board;
     this.boardMode = this.selectedBoard.board_activity.mode;
-    // this.decideBoardMode(this.boardMode);
+    this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
+    this.allowCommenting = this.selectedBoard.allow_comment;
     this.currentboardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
@@ -152,7 +151,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormRemoveBoardEvent' ||
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
-      // this.resetBoards();
+      this.resetBoards();
     }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === 'HostChangeBoardEvent') {
@@ -269,8 +268,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         'Board ' + this.boards.length,
         previousBoard.id,
         previousBoard.next_board,
-        '',
-        ''
+        'Untitled Board ' + this.boards.length,
+        'Sub Instructions'
       )
     );
   }
@@ -304,5 +303,91 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.sendMessage.emit(new HostChangeBoardEvent(board.id));
       }
     });
+  }
+
+  setBoardMode(mode: string) {
+    this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
+    this.decideBoardMode(mode);
+  }
+
+  decideBoardMode(mode: string) {
+    this.boardMode = mode;
+    switch (mode) {
+      case 'grid':
+        this.gridMode = true;
+        this.threadMode = false;
+        this.columnsMode = false;
+        break;
+      case 'thread':
+        this.gridMode = false;
+        this.threadMode = true;
+        this.columnsMode = false;
+        break;
+      default:
+        this.gridMode = false;
+        this.threadMode = false;
+        this.columnsMode = true;
+    }
+  }
+
+  duplicateBoard() {}
+
+  setBoardStatus() {
+    const selected = this.currentboardStatus;
+    this.sendMessage.emit(
+      new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
+    );
+  }
+
+  toggleMeetingMode($event) {
+    this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
+  toggleShowAuthorship() {
+    this.sendMessage.emit(new BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
+  }
+
+  toggleCommenting() {
+    this.sendMessage.emit(new BrainstormToggleAllowCommentEvent(this.selectedBoard.id));
+  }
+
+  copyLink() {
+    this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
+  }
+
+  resetBoards() {
+    this.boardsCount = 0;
+    this.boards = this.boards.filter((board) => board.removed === false);
+    this.boardsCount = this.boards.length;
+  }
+
+  setMenuBoard(board: Board) {
+    this.menuBoard = board.id;
+  }
+
+  clearBoard() {
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete all posts? This action can not be undone?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+        }
+      });
+  }
+
+  changeOrder(order: { value: BoardSort; name: string }) {
+    this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
+  }
+
+  mediaUploaded(event) {
+    console.log(event);
   }
 }

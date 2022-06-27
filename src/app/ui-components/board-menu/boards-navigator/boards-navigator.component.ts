@@ -37,56 +37,18 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
 @Component({
-  selector: 'benji-board-menu',
-  templateUrl: 'board-menu.component.html',
+  selector: 'benji-boards-navigator',
+  templateUrl: 'boards-navigator.component.html',
 })
-export class BoardMenuComponent implements OnInit, OnChanges {
+export class BoardsNavigatorComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
   @Output() sendMessage = new EventEmitter<any>();
-  postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
-    {
-      value: 'newest_to_oldest',
-      name: 'Newest to oldest',
-    },
-    {
-      value: 'oldest_to_newest',
-      name: 'Oldest to newest',
-    },
-    {
-      value: 'likes',
-      name: 'Likes',
-    },
-  ];
-  boardStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
-    {
-      value: 'open',
-      name: 'Open',
-    },
-    {
-      value: 'closed',
-      name: 'Hidden',
-    },
-    {
-      value: 'view_only',
-      name: 'View Only',
-    },
-    {
-      value: 'private',
-      name: 'Private',
-    },
-  ];
-  defaultSort = 'newest_to_oldest';
   participants = [];
 
   meetingMode: boolean;
-  showAuthorship: boolean;
   board: Board;
-  boardMode: string;
-  gridMode: boolean;
-  threadMode: boolean;
-  columnsMode: boolean;
   currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
@@ -98,7 +60,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   showBottom = true;
   dragDisabled = false;
-  private typingTimer;
 
   constructor(
     private dialog: MatDialog,
@@ -138,13 +99,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   selectedBoardChanged(board) {
     this.selectedBoard = board;
-    this.boardMode = this.selectedBoard.board_activity.mode;
-    // this.decideBoardMode(this.boardMode);
-    this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.currentboardStatus = board.status;
-    if (board.sort) {
-      this.defaultSort = board.sort;
-    }
   }
 
   ngOnChanges(): void {
@@ -152,7 +107,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormRemoveBoardEvent' ||
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
-      // this.resetBoards();
+      this.resetBoards();
     }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === 'HostChangeBoardEvent') {
@@ -269,8 +224,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         'Board ' + this.boards.length,
         previousBoard.id,
         previousBoard.next_board,
-        '',
-        ''
+        'Untitled Board ' + this.boards.length,
+        'Sub Instructions'
       )
     );
   }
@@ -304,5 +259,62 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.sendMessage.emit(new HostChangeBoardEvent(board.id));
       }
     });
+  }
+
+  duplicateBoard() {}
+
+  setBoardStatus() {
+    const selected = this.currentboardStatus;
+    this.sendMessage.emit(
+      new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
+    );
+  }
+
+  toggleMeetingMode($event) {
+    this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
+  }
+
+  toggleShowAuthorship() {
+    this.sendMessage.emit(new BrainstormToggleParticipantNameEvent(this.selectedBoard.id));
+  }
+
+  copyLink() {
+    this.utilsService.copyToClipboard(this.hostname + this.activityState.lesson_run.lessonrun_code);
+  }
+
+  resetBoards() {
+    this.boardsCount = 0;
+    this.boards = this.boards.filter((board) => board.removed === false);
+    this.boardsCount = this.boards.length;
+  }
+
+  setMenuBoard(board: Board) {
+    this.menuBoard = board.id;
+  }
+
+  clearBoard() {
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: 'Are you sure you want to delete all posts? This action can not be undone?',
+          actionButton: 'Delete',
+        },
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.sendMessage.emit(new BrainstormClearBoardIdeaEvent(this.selectedBoard.id));
+        }
+      });
+  }
+
+  changeOrder(order: { value: BoardSort; name: string }) {
+    this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
+  }
+
+  mediaUploaded(event) {
+    console.log(event);
   }
 }

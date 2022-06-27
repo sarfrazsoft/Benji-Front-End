@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { timer } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import { distinctUntilChanged, skipWhile, switchMap, takeWhile, tap } from 'rxjs/operators';
 import { Category, IdeaDocument } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { FileProgress } from '../../components/uploadcare-widget/uploadcare-widget.component';
@@ -29,6 +32,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   selectedpdfDoc;
   selectedpdfDocId;
   pdfSrc;
+  pdfExists = false;
   lessonID;
 
   // video variables
@@ -278,6 +282,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       this.webcamImage = false;
       this.video = false;
       this.pdfSelected = true;
+      this.pdfExists = true;
     }
   }
 
@@ -294,5 +299,74 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
     $event.length === 7 ? (this.descriptionIsEmpty = true) : (this.descriptionIsEmpty = false);
+  }
+
+  checkPdfExists(pdfSrc) {
+    const timer$ = timer(0, 1000);
+    timer$.subscribe(() => {
+      const json$ = ajax.getJSON(pdfSrc);
+      json$.subscribe(
+        (res) => {
+          this.pdfExists = true;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    });
+    // const url = `${global.apiRoot}/course_details/${check}/status/${token}/`;
+    // const timer$ = timer(0, 1000);
+    // timer$
+    //   .pipe(
+    //     () => ajax.getJSON(pdfSrc)
+    //     // takeWhile((res: any) => {
+    //     //   return true;
+    //     // }, true)
+    //     // skipWhile((res: any) => this.isConversionInProgress(res))
+    //   )
+    //   .subscribe(
+    //     (res) => {
+    //       console.log(res);
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //     }
+    //   );
+    // console.log('hu');
+    // const timer$ = timer(0, 1000);
+    // timer$
+    //   // .pipe(() => ajax.getJSON(pdfSrc))
+    //   .subscribe(
+    //     (res) => {
+    //       console.log(res);
+    //     },
+    //     (err) => {
+    //       this.pdfExists = false;
+    //     }
+    //   );
+    // const interval;
+    // const pdf$ = ajax.getJSON(pdfSrc);
+    // pdf$.subscribe(
+    //   (v) => {
+    //     this.pdfExists = true;
+    //     console.log(v);
+    //     return v;
+    //   },
+    //   (err) => {
+    //     this.pdfExists = false;
+    //   }
+    // );
+  }
+
+  doesPdfExist(pdfSrc) {
+    // retirm;
+    // pdf$ = ajax.getJSON(pdfSrc);
+    // return pdf$.subscribe(
+    //   (v) => {
+    //     console.log(v);
+    //     return v;
+    //   },
+    //   (err) => {}
+    // );
   }
 }

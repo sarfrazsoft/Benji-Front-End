@@ -34,6 +34,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
 
   @ViewChild(MainScreenToolbarComponent) msToolbar: MainScreenToolbarComponent;
   navType: string;
+  sideNavPosition: 'start' | 'end';
 
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
@@ -94,9 +95,16 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     return this.serverMessage[activity_type].is_paused;
   }
 
-  openSideNav(type) {
+  openSideNav(type: 'board-settings' | 'boards') {
+    if (type === 'board-settings') {
+      this.navType = 'board-settings';
+      this.sideNavPosition = 'end';
+    } else if (type === 'boards') {
+      this.navType = 'boards';
+      // this.sideNavPosition = 'start';
+      this.sideNavPosition = 'end';
+    }
     type ? this.sidenav.open() : this.sidenav.close();
-    type === 'boards' ? (this.navType = 'boards') : (this.navType = 'board-settings');
   }
 
   openBoardSettings() {

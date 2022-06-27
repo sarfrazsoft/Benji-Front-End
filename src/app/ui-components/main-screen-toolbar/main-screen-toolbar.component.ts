@@ -252,7 +252,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
   }
 
-  openSideNav(type) {
+  openSideNav(type: 'board-settings' | 'boards') {
     this.sideNavEvent.emit(type);
   }
 

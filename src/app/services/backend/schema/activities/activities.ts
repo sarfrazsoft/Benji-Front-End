@@ -318,6 +318,8 @@ export interface Board {
   sort: BoardSort;
   brainstormcategory_set: Array<Category>;
   prompt_video: any;
+  allow_comment: boolean;
+  allow_heart: boolean;
 }
 
 export interface TopicMedia {

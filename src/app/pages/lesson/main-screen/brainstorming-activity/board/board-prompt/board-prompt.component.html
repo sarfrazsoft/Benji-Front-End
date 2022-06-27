@@ -40,7 +40,7 @@
           </ng-container>
         </div>
         <div
-          *ngIf="hasMedia" 
+          *ngIf="hasMedia && isPostingAllowed()" 
           class="import-button bg-primary-color" 
           (click)="postIdea()"
           fxLayoutAlign="center center">
@@ -71,7 +71,7 @@
 <!-- <div>upload file</div> -->
 
     <div
-      *ngIf="!hasMedia" 
+      *ngIf="!hasMedia && isPostingAllowed()" 
       class="import-button bg-primary-color" 
       (click)="postIdea()"
       fxLayoutAlign="center center">

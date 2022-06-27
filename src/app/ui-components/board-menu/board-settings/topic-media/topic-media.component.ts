@@ -1,9 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { NgxPermissionsService } from 'ngx-permissions';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BrainstormService } from 'src/app';
 import { Board, UpdateMessage, UpdatePromptVideoEvent } from 'src/app/services/backend/schema';
-import { BoardStatusService } from 'src/app/services/board-status.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { FileProgress } from 'src/app/shared/components/uploadcare-widget/uploadcare-widget.component';

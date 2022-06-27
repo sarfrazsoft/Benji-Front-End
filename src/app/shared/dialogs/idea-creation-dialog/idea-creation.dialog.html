@@ -42,8 +42,9 @@
             <img *ngIf="selectedThirdPartyImageUrl" [src]="selectedThirdPartyImageUrl" alt="">
           </ng-container>
           <ng-container *ngIf="pdfSelected">
-            <div style="width: 400px;">
-              <ngx-extended-pdf-viewer [src]="pdfSrc" 
+            <div style="width: 400px;" *ngIf="pdfExists">
+              <ngx-extended-pdf-viewer 
+                [src]="pdfSrc" 
                 useBrowserLocale="true" 
                 [height]="'350px'">
               </ngx-extended-pdf-viewer>
@@ -71,7 +72,7 @@
             </benji-progress-bar>
           </ng-container>
           <button 
-            *ngIf="imageSelected || pdfSelected || video || webcamImage"
+            *ngIf="imageSelected || (pdfSelected && pdfExists) || video || webcamImage"
             class="remove-button" (click)="remove()">
               Remove
           </button>

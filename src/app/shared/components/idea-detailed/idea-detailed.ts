@@ -560,12 +560,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormSetCategoryEvent(this.data.item.id, category.id));
   }
 
-  isCommentingAllowed() {
-    if (this.isHost) {
-      return true;
-    } else if (this.boardStatus === 'open') {
-      return false;
-    }
+  areCommentsAllowed() {
+    return true;
   }
 
   changeOnHover($event) {

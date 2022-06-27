@@ -203,19 +203,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     this.getBoardInstructions();
   }
 
-  isPostingAllowed() {
-    if (this.isHost) {
-      // if it's a host allow posting without any consideration
-      // to board status
-      return true;
-    } else if (this.boardStatus === 'open') {
-      // is participant
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   getBoardInstructions() {
     // this.brainstormService.boardTitle$.subscribe((title: string) => {
     //   if (title) {

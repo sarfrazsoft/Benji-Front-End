@@ -139,7 +139,7 @@
           </ng-container>
 
           <!-- Activity board navigation -->
-          <ng-container>
+          <ng-container *ngxPermissionsOnly="'ADMIN'">
             <div 
               *ngIf="isActivitySettingsAllowed(activityState)"
               class="option" 
