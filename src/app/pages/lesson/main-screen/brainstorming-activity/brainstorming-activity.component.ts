@@ -216,11 +216,15 @@ export class MainScreenBrainstormingActivityComponent
         this.boardChangingQueryParams(this.selectedBoard.id);
       }
     });
-    if (this.act.meeting_mode) {
-      this.selectedBoard = this.getParticipantBoard();
-      this.brainstormService.selectedBoard = this.selectedBoard;
-      this.boardChangingQueryParams(this.selectedBoard.id);
-    }
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        if (this.act.meeting_mode) {
+          this.selectedBoard = this.getParticipantBoard();
+          this.brainstormService.selectedBoard = this.selectedBoard;
+          this.boardChangingQueryParams(this.selectedBoard.id);
+        }
+      }
+    });
   }
 
   participantChangedBoard() {

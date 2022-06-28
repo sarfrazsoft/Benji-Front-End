@@ -28,6 +28,7 @@ import {
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
+  DuplicateBoardEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
@@ -261,7 +262,9 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     });
   }
 
-  duplicateBoard() {}
+  duplicateBoard(board: Board) {
+    this.sendMessage.emit(new DuplicateBoardEvent(this.menuBoard));
+  }
 
   setBoardStatus() {
     const selected = this.currentboardStatus;

@@ -961,6 +961,13 @@ export class ParticipantChangeBoardEvent extends ActivityEvent {
     this.extra_args = { board: board };
   }
 }
+export class DuplicateBoardEvent extends ActivityEvent {
+  event_name = 'DuplicateBoardEvent';
+  constructor(board: number) {
+    super();
+    this.extra_args = { board: board };
+  }
+}
 export class BrainstormEditSubInstructionEvent extends ActivityEvent {
   event_name = 'BrainstormEditSubInstruction';
   constructor(instructions: string, board: number) {
