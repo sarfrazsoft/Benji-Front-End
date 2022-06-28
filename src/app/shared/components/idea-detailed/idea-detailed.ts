@@ -254,8 +254,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // document isn't present
     if (this.data.item.idea_document) {
       this.clearPDF();
-      console.log(this.data.item.idea_document);
-      this.pdfSrc = this.data.item.idea_document.document_url;
+      const ideaDocument = this.data.item.idea_document;
+      if (ideaDocument.document_url_converted) {
+        this.pdfSrc = this.data.item.idea_document.document_url_converted;
+      } else {
+        this.pdfSrc = this.data.item.idea_document.document_url;
+      }
       this.pdfSelected = true;
     } else {
       this.clearPDF();
