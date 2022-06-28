@@ -67,11 +67,15 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     },
     {
       value: 'closed',
-      name: 'Closed',
+      name: 'Hidden',
     },
     {
       value: 'view_only',
-      name: 'View',
+      name: 'View Only',
+    },
+    {
+      value: 'private',
+      name: 'Private',
     },
   ];
   defaultSort = 'newest_to_oldest';

@@ -401,6 +401,15 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
+  getPdfSrc() {
+    const ideaDocument = this.item.idea_document;
+    if (ideaDocument.document_url_converted) {
+      return ideaDocument.document_url_converted;
+    } else {
+      return ideaDocument.document_url;
+    }
+  }
+
   calculateTimeStamp() {
     // Test string
     // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();

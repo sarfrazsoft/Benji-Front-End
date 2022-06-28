@@ -112,10 +112,10 @@
 <!-- *ngIf="showBottom" -->
 
 <mat-menu #menu="matMenu" class="board-duplicate-delete" xPosition="before">
-  <!-- <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+  <button mat-menu-item (click)="duplicateBoard()" fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
     <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
     <span>Duplicate</span>
-  </button> -->
+  </button>
   <button 
     mat-menu-item 
     [disabled]="boardsCount==1 ? 'disabled': null"
