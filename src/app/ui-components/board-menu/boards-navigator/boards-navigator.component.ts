@@ -262,7 +262,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     });
   }
 
-  duplicateBoard(board: Board) {
+  duplicateBoard() {
     this.sendMessage.emit(new DuplicateBoardEvent(this.menuBoard));
   }
 
