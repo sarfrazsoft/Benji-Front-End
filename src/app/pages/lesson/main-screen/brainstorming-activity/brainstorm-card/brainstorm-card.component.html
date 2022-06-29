@@ -158,7 +158,7 @@
         </div>
       </div>
     </div>
-    <div class="feedback">
+    <div class="feedback" *ngIf="areCommentsAllowed()">
       <div class="counts" fxLayout="row" fxLayoutAlign="space-between center" (click)="showDetailedIdea(item)"> 
         <div fxLayout="row" fxLayoutAlign="start center">
           <img
@@ -211,7 +211,6 @@
         </div>
       </ng-container>
       <div
-        *ngIf="areCommentsAllowed()"
         class="post-comment" 
         fxLayout="row" 
         fxLayoutGap="8px" 
