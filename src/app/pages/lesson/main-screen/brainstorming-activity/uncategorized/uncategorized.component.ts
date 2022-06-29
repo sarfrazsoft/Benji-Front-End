@@ -159,7 +159,10 @@ export class UncategorizedComponent implements OnInit, OnChanges {
           // host just turned off meeting mode.
           // do nothing
         }
-      } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
+      } else if (
+        this.eventType === 'BrainstormChangeBoardStatusEvent' ||
+        this.eventType === 'BrainstormToggleAllowCommentEvent'
+      ) {
         this.masonry?.layout();
       }
     }
