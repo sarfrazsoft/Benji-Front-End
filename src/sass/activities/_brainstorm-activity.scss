@@ -868,10 +868,14 @@ benji-ps-brainstorming-activity {
     width: 1200px;
     .instructions {
       width: 100%;
+      .prose {
+        max-width: unset;
+      }
       .level-one {
         width: 100%;
         .level-two {
           width: 100%;
+          margin-right: 80px;
         }
       }
     }
