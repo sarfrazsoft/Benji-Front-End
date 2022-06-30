@@ -225,8 +225,8 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         'Board ' + this.boards.length,
         previousBoard.id,
         previousBoard.next_board,
-        'Untitled Board ' + this.boards.length,
-        'Sub Instructions'
+        '',
+        ''
       )
     );
   }
