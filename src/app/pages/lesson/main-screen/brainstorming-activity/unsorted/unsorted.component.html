@@ -1,0 +1,58 @@
+<!-- <div class="submitted-ideas">
+  <div class="uncategorized" >
+    <div *ngFor="let idea of ideas">
+      <div *ngIf="canViewIdea(idea)">
+        <div
+          class="uncategorized-idea"
+          (mouseenter)="idea.showClose = true"
+          (mouseleave)="idea.showClose = false">
+          <benji-brainstorm-card
+            [board]="board"
+            [item]="idea"
+            [act]="act"
+            [activityState]="activityState"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            (deleteIdea)="delete($event)"
+            (commentEdited)="refreshMasonryLayout()"
+            [sendMessage]="sendMessage"
+            [isColumnsLayout]="isColumnsLayout"
+            [myGroup]="myGroup"
+            [avatarSize]="'small'">
+          </benji-brainstorm-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="submitted-ideas">
+  <ul>
+    <li
+      *ngFor="let idea of ideas"
+      (mouseenter)="idea.showClose = true"
+      (mouseleave)="idea.showClose = false"
+      cdkDrag
+    >
+    <div
+      class="uncategorized-idea idea"
+      (mouseenter)="idea.showClose = true"
+      (mouseleave)="idea.showClose = false">
+      <benji-brainstorm-card
+        [board]="board"
+        [item]="idea"
+        [act]="act"
+        [activityState]="activityState"
+        [showUserName]="showUserName"
+        [participantCode]="participantCode"
+        (deleteIdea)="delete($event)"
+        (commentEdited)="refreshMasonryLayout()"
+        [sendMessage]="sendMessage"
+        [isColumnsLayout]="isColumnsLayout"
+        [myGroup]="myGroup"
+        [avatarSize]="'small'">
+      </benji-brainstorm-card>
+    </div>
+    </li>
+  </ul>
+</div>

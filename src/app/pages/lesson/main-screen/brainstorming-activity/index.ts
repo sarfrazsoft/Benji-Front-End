@@ -5,10 +5,12 @@ import { MainScreenBrainstormingActivityComponent } from './brainstorming-activi
 import { CategorizedComponent as BrainstormCategorizedComponent } from './categorized/categorized.component';
 import { ThreadModeComponent as BrainstormThreadModeComponent } from './thread-mode/thread-mode.component';
 import { UncategorizedComponent as BrainstormUncategorizedComponent } from './uncategorized/uncategorized.component';
+import { UnsortedComponent as BrainstormUnsortedComponentComponent } from './unsorted/unsorted.component';
 
 export { BrainstormCardComponent, BoardComponent };
 export { BrainstormCategorizedComponent };
 export { BrainstormUncategorizedComponent };
+export { BrainstormUnsortedComponentComponent };
 export { BrainstormThreadModeComponent };
 export { MainScreenBrainstormingActivityComponent };
 export { BrainstormBoardPromptComponent };
@@ -21,4 +23,5 @@ export const MainScreenBrainStormComponents = [
   BrainstormCategorizedComponent,
   BrainstormUncategorizedComponent,
   BrainstormThreadModeComponent,
+  BrainstormUnsortedComponentComponent,
 ];
