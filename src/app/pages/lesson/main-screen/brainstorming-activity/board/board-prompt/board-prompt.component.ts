@@ -149,11 +149,15 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   onChanges() {
     this.act = cloneDeep(this.activityState.brainstormactivity);
-    if (this.eventType === 'BrainstormEditBoardInstruction') {
-      this.getNewBoardInstruction(this.board);
-    } else if (this.eventType === 'BrainstormEditSubInstruction') {
-      this.getNewSubInstruction(this.board);
-    } else if (
+    if (!this.isHost) {
+      // apply new instructions only if the user is not host.
+      if (this.eventType === 'BrainstormEditBoardInstruction') {
+        this.getNewBoardInstruction(this.board);
+      } else if (this.eventType === 'BrainstormEditSubInstruction') {
+        this.getNewSubInstruction(this.board);
+      }
+    }
+    if (
       this.eventType === 'HostChangeBoardEvent' ||
       this.eventType === 'ParticipantChangeBoardEvent' ||
       this.eventType === 'BrainstormToggleMeetingMode'
