@@ -17,6 +17,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
+  Board,
   BoardStatus,
   BrainstormAddIdeaPinEvent,
   BrainstormRemoveIdeaPinEvent,
@@ -45,6 +46,7 @@ export interface IdeaDetailedInfo {
   userRole: IdeaUserRole;
   showUserName: boolean;
   boardStatus: BoardStatus;
+  board: Board;
 }
 export type IdeaUserRole = 'owner' | 'viewer';
 @Component({
@@ -565,7 +567,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   areCommentsAllowed() {
-    return true;
+    return this.data.board.allow_comment;
   }
 
   changeOnHover($event) {

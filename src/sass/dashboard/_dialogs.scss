@@ -1096,7 +1096,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         width: 100%;
         margin-bottom: 16px;
         img {
-          width: 100%;
+          // width: 100%;
+          max-width: 100%;
+          max-height: 700px;
         }
         .back-circle {
           background: #fff;

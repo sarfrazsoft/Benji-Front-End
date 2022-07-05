@@ -338,6 +338,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         userRole: this.userRole,
         showUserName: this.showUserName,
         boardStatus: this.boardStatus,
+        board: this.board,
       } as IdeaDetailedInfo,
     });
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
