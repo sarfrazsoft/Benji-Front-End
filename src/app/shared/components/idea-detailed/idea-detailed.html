@@ -263,7 +263,7 @@
             </div>
           </div>
         </ng-container>
-        <mat-tab-group class="discussion-tabs">
+        <mat-tab-group class="discussion-tabs" *ngIf="areCommentsAllowed()">
           <mat-tab label="Discussion">
             <div class="comments-area" fxLayout="column">
               <div class="comments-container" >

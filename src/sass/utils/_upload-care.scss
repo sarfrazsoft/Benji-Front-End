@@ -289,6 +289,9 @@
         display: flex;
         flex-direction: column-reverse;
       }
+      .uploadcare--tab__content {
+        height: 100%;
+      }
     }
   }
 }

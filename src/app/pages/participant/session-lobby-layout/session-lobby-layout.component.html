@@ -12,7 +12,7 @@
         <div>
           <div fxLayout="row" fxLayoutAlign="space-between center">
             <div class="session-title">
-              {{ beforeLessonRunDetails.title }} 
+              {{ beforeLessonRunDetails?.title }} 
             </div>
             <div 
               *ngIf="adminLobbyScreeen" 
@@ -38,13 +38,14 @@
           </div>
           <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="9px">
             <!-- <img src="{{session_host.photo}}" alt/> -->
-            <div class="initials" fxLayout="column" fxLayoutAlign="center center">{{getInitials(beforeLessonRunDetails.host)}}</div>
-            <div fxLayout="column">
-              <div class="name"> {{beforeLessonRunDetails.host}} </div>
+            <div class="initials" fxLayout="column" fxLayoutAlign="center center"
+              *ngIf="beforeLessonRunDetails">{{getInitials(beforeLessonRunDetails.host)}}</div>
+            <div fxLayout="column" *ngIf="beforeLessonRunDetails">
+              <div class="name"> {{beforeLessonRunDetails?.host}} </div>
               <div class="is-admin">Host</div>
             </div>
           </div>
-          <div class="description">
+          <div class="description" *ngIf="beforeLessonRunDetails">
             {{beforeLessonRunDetails.description}} 
           </div>
         </div>
