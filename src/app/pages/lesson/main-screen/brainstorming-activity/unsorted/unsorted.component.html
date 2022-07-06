@@ -26,8 +26,10 @@
   </div>
 </div> -->
 
-<div class="submitted-ideas">
-  <ul>
+<!-- <div class="submitted-ideas" style="height: 1076px;">
+  <ul 
+    cdkDropList
+    (cdkDropListDropped)="drop($event)">
     <li
       *ngFor="let idea of ideas"
       (mouseenter)="idea.showClose = true"
@@ -55,4 +57,52 @@
     </div>
     </li>
   </ul>
+</div> -->
+
+<!-- <ul class="example-list"><li *ngFor="let item of items">{{ item }}</li></ul>
+
+<div class="example-container" cdkDropListGroup>
+  <div cdkDropList [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped($event)"></div>
+  <div cdkDropList *ngFor="let item of items"
+       [cdkDropListEnterPredicate]="dropListEnterPredicate" (cdkDropListDropped)="dropListDropped($event)">
+    <div cdkDrag class="example-box" (cdkDragMoved)="dragMoved($event);">{{item}}</div>
+  </div>
+</div>  -->
+
+<!-- <ul class="example-list">
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul> -->
+
+<div class="example-container" cdkDropListGroup>
+  <div
+    *ngFor="let idea of ideas; let i = index"
+    cdkDropList
+    [cdkDropListData]="i"
+  >
+    <div
+      cdkDrag
+      [cdkDragData]="i"
+      (cdkDragEntered)="dragEntered($event)"
+      class="example-box">
+      <div
+        class="uncategorized-idea idea"
+        (mouseenter)="idea.showClose = true"
+        (mouseleave)="idea.showClose = false">
+        <benji-brainstorm-card
+          [board]="board"
+          [item]="idea"
+          [act]="act"
+          [activityState]="activityState"
+          [showUserName]="showUserName"
+          [participantCode]="participantCode"
+          (deleteIdea)="delete($event)"
+          (commentEdited)="refreshMasonryLayout()"
+          [sendMessage]="sendMessage"
+          [isColumnsLayout]="isColumnsLayout"
+          [myGroup]="myGroup"
+          [avatarSize]="'small'">
+        </benji-brainstorm-card>
+      </div>
+    </div>
+  </div>
 </div>

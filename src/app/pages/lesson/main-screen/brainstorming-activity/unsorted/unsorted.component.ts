@@ -1,3 +1,4 @@
+import { CdkDragEnter, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   AfterViewInit,
   Component,
@@ -205,5 +206,19 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
   canViewIdea(idea: Idea) {
     const userRole = this.getUserRole(idea);
     return this.brainstormService.canViewIdea(this.board.status, userRole, this.isHost);
+  }
+
+  dragEntered(event: CdkDragEnter<number>) {
+    const drag = event.item;
+    const dropList = event.container;
+    const dragIndex = drag.data;
+    const dropIndex = dropList.data;
+
+    const phContainer = dropList.element.nativeElement;
+    const phElement = phContainer.querySelector('.cdk-drag-placeholder');
+    phContainer.removeChild(phElement);
+    phContainer.parentElement.insertBefore(phElement, phContainer);
+
+    moveItemInArray(this.ideas, dragIndex, dropIndex);
   }
 }
