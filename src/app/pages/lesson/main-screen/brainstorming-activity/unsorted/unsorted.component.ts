@@ -15,6 +15,8 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app/services';
 import { Board, BrainstormActivity, Idea } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
+declare var Packery: any;
+declare var Draggabilly: any;
 
 @Component({
   selector: 'benji-unsorted-ideas',
@@ -159,7 +161,37 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    const elem = document.querySelector('.grid');
+    const pckry = new Packery(elem, {
+      // options
+      itemSelector: '.grid-item',
+      gutter: 10,
+      columnWidth: 300,
+    });
+
+    // if you have multiple .draggable elements
+    // get all draggie elements
+    const draggableElems = document.querySelectorAll('.grid-item');
+    // array of Draggabillies
+    const draggies = [];
+    // init Draggabillies
+    for (let i = 0; i < draggableElems.length; i++) {
+      const draggableElem = draggableElems[i];
+      const draggie = new Draggabilly(draggableElem, {
+        // options...
+      });
+      pckry.bindDraggabillyEvents(draggie);
+      draggies.push(draggie);
+    }
+    setTimeout(() => {
+      pckry.layout();
+    }, 500);
+
+    setTimeout(() => {
+      pckry.layout();
+    }, 500);
+  }
 
   resetMasonry() {
     if (this.masonry) {
