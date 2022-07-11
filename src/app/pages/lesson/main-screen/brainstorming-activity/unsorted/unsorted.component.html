@@ -1,7 +1,7 @@
 <!-- <div class="submitted-ideas"> -->
   <div class="uncategorized grid" style="width: 100%;height: 100%">
-    <div *ngFor="let idea of ideas" class="uncategorized-idea grid-item draggable"
-    style="padding: 20px;">
+    <div *ngFor="let idea of ideas; let i = index" class="uncategorized-idea grid-item draggable"
+    style="padding: 20px;" [order]="i" [id]="idea.id">
       <benji-brainstorm-card
         [board]="board"
         [item]="idea"
@@ -17,6 +17,10 @@
         [avatarSize]="'small'">
       </benji-brainstorm-card>
     </div>
+  </div>
+
+  <div *ngFor="let idea of ideasOrder">
+    {{ idea.id + ' => ' + idea.order }}
   </div>
 <!-- </div> -->
 

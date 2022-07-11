@@ -54,6 +54,23 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
   masonryPrepend: boolean;
 
+  packery;
+  ideasOrder = [];
+
+  ideasSetOrder = [
+    { id: '2651', order: 0 },
+    { id: '2611', order: 1 },
+    { id: '2658', order: 2 },
+    { id: '2650', order: 3 },
+    { id: '2659', order: 4 },
+    { id: '2606', order: 5 },
+    { id: '2660', order: 6 },
+    { id: '2655', order: 7 },
+    { id: '2637', order: 8 },
+    { id: '2609', order: 9 },
+    { id: '2610', order: 10 },
+  ];
+
   constructor(
     private brainstormService: BrainstormService,
     private ngxPermissionService: NgxPermissionsService
@@ -64,7 +81,9 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
-      this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+      const ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+      const sortedIdeas = this.sortOnOrder(ideas, this.ideasSetOrder);
+      this.ideas = sortedIdeas;
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
     } else {
@@ -169,6 +188,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
       gutter: 10,
       columnWidth: 300,
     });
+    this.packery = pckry;
 
     // if you have multiple .draggable elements
     // get all draggie elements
@@ -191,6 +211,37 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       pckry.layout();
     }, 500);
+
+    pckry.on('layoutComplete', () => {
+      pckry.getItemElements().forEach((itemElem: any, i) => {
+        if (this.ideasOrder[i]) {
+        } else {
+          this.ideasOrder.push({ id: itemElem.getAttribute('id'), order: i });
+        }
+      });
+    });
+    this.packery.on('dragItemPositioned', () => {
+      pckry.getItemElements().forEach((itemElem: any, i) => {
+        itemElem.setAttribute('order', i);
+        // console.log(itemElem);
+        if (this.ideasOrder[i]) {
+          this.ideasOrder[i] = { id: itemElem.getAttribute('id'), order: i };
+        }
+      });
+      console.log(JSON.stringify(this.ideasOrder));
+    });
+  }
+
+  sortOnOrder(ideas, sortOrder) {
+    const posts = [];
+    sortOrder.forEach((order) => {
+      ideas.forEach((idea) => {
+        if (Number(idea.id) === Number(order.id)) {
+          posts.push(idea);
+        }
+      });
+    });
+    return posts;
   }
 
   resetMasonry() {
@@ -254,3 +305,11 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
     moveItemInArray(this.ideas, dragIndex, dropIndex);
   }
 }
+
+// function orderItems() {
+//   // console.log(this.ideas);
+//   pckry.getItemElements().forEach((itemElem: any, i) => {
+//     const text = i;
+//     itemElem = { ...itemElem, textContent: itemElem.textContent + i };
+//   });
+// }
