@@ -152,7 +152,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
 
     const obj = this.brainstormService.getUserRole(this.participantCode, this.item, this.boardStatus);
-    this.submittingUser = obj.submittingUser;
     this.userRole = obj.userRole;
 
     this.calculateTimeStamp();
