@@ -87,7 +87,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   @Output() commentEdited = new EventEmitter<any>();
 
   commentModel = '';
-  submittingUser;
+  submittingUser = undefined;
   submitting_participant;
 
   deactivateHearting = false;
