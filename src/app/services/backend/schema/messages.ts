@@ -968,6 +968,13 @@ export class DuplicateBoardEvent extends ActivityEvent {
     this.extra_args = { board: board };
   }
 }
+export class SetMetaDataBoardEvent extends ActivityEvent {
+  event_name = 'SetMetaDataBoardEvent';
+  constructor(board: number, meta: any) {
+    super();
+    this.extra_args = { board: board, meta: meta };
+  }
+}
 export class BrainstormEditSubInstructionEvent extends ActivityEvent {
   event_name = 'BrainstormEditSubInstruction';
   constructor(instructions: string, board: number) {

@@ -13,7 +13,7 @@ import {
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app/services';
-import { Board, BrainstormActivity, Idea } from 'src/app/services/backend/schema';
+import { Board, BrainstormActivity, Idea, SetMetaDataBoardEvent } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 declare var Packery: any;
 declare var Draggabilly: any;
@@ -56,6 +56,8 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
 
   packery;
   ideasOrder = [];
+  draggies;
+  showItems = false;
 
   ideasSetOrder = [
     { id: '2651', order: 0 },
@@ -81,6 +83,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
+      this.showItems = true;
       const ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       const sortedIdeas = this.sortOnOrder(ideas, this.ideasSetOrder);
       this.ideas = sortedIdeas;
@@ -176,11 +179,31 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormToggleAllowCommentEvent'
       ) {
         this.masonry?.layout();
+      } else if (this.eventType === 'SetMetaDataBoardEvent') {
+        if (this.board.meta.updated === 'post_order') {
+          // this.ideas = [];
+          // this.showItems = false;
+          // // setTimeout(() => {
+          // this.showItems = true;
+          // const ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
+          // const sortedIdeas = this.sortOnOrder(ideas, this.board.meta.post_order);
+          // this.ideas = sortedIdeas;
+          // this.brainstormService.uncategorizedIdeas = this.ideas;
+          // setTimeout(() => {
+          //   // this.packery.layout();
+          //   this.setUpPackery();
+          // }, 500);
+          // }, 500);
+        }
       }
     }
   }
 
   ngAfterViewInit(): void {
+    this.setUpPackery();
+  }
+
+  setUpPackery() {
     const elem = document.querySelector('.grid');
     const pckry = new Packery(elem, {
       // options
@@ -204,9 +227,10 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
       pckry.bindDraggabillyEvents(draggie);
       draggies.push(draggie);
     }
-    setTimeout(() => {
-      pckry.layout();
-    }, 500);
+    this.draggies = draggies;
+    // setTimeout(() => {
+    //   pckry.layout();
+    // }, 500);
 
     setTimeout(() => {
       pckry.layout();
@@ -223,11 +247,19 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
     this.packery.on('dragItemPositioned', () => {
       pckry.getItemElements().forEach((itemElem: any, i) => {
         itemElem.setAttribute('order', i);
-        // console.log(itemElem);
         if (this.ideasOrder[i]) {
           this.ideasOrder[i] = { id: itemElem.getAttribute('id'), order: i };
         }
       });
+      setTimeout(() => {
+        console.log(this.draggies);
+      }, 300);
+      this.sendMessage.emit(
+        new SetMetaDataBoardEvent(this.board.id, {
+          updated: 'post_order',
+          post_order: this.ideasOrder,
+        })
+      );
       console.log(JSON.stringify(this.ideasOrder));
     });
   }

@@ -320,6 +320,12 @@ export interface Board {
   prompt_video: any;
   allow_comment: boolean;
   allow_heart: boolean;
+  meta: BoardMetaData;
+}
+
+export interface BoardMetaData {
+  post_order: any;
+  updated: 'post_order';
 }
 
 export interface TopicMedia {
