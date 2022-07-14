@@ -258,7 +258,7 @@
                 (change)="categoryChanged($event)"
                 [searchable]="false"
                 [clearable]="false"
-                [disabled]="userRole === 'owner'">
+                [disabled]="userRole !== 'owner'">
               </ng-select>
             </div>
           </div>

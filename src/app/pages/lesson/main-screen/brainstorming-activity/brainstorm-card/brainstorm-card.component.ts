@@ -116,11 +116,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // get parameters
-    const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
-    if (paramPostId) {
-      // tslint:disable-next-line:radix
-      if (parseInt(paramPostId) === this.item.id) {
-        this.showDetailedIdea(this.item);
+    if (this.eventType !== 'BrainstormSetCategoryEvent') {
+      const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
+      if (paramPostId) {
+        // tslint:disable-next-line:radix
+        if (parseInt(paramPostId) === this.item.id) {
+          this.showDetailedIdea(this.item);
+        }
       }
     }
 
@@ -162,6 +164,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   areCommentsAllowed() {
     return this.board.allow_comment;
+  }
+
+  areHeartsAllowed() {
+    return this.board.allow_heart;
   }
 
   ngOnChanges() {}
@@ -410,10 +416,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
+  canUserDrag() {
+    if (this.userRole === 'owner' && this.isColumnsLayout) {
+      return true;
+    }
+    return false;
+    // !isColumnsLayout && (userRole !== 'owner')
+  }
+
   calculateTimeStamp() {
     // Test string
     // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
     // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    if (!this.item) {
+      return;
+    }
     this.timeStamp = moment(this.item.time).fromNow().toString();
     if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';

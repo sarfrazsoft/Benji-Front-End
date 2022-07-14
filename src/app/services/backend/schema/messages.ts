@@ -400,6 +400,13 @@ export class BrainstormToggleAllowCommentEvent extends ActivityEvent {
     this.extra_args = { board: board };
   }
 }
+export class BrainstormToggleAllowHeartEvent extends ActivityEvent {
+  event_name = 'BrainstormToggleAllowHeartEvent';
+  constructor(board: number) {
+    super();
+    this.extra_args = { board: board };
+  }
+}
 export class BrainstormSubmissionCompleteInternalEvent extends ActivityEvent {
   event_name = 'BrainstormSubmissionCompleteInternalEvent';
 }

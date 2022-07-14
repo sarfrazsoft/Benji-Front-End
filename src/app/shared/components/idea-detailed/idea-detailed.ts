@@ -281,6 +281,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.removeVideo();
     }
 
+    console.log(this.data.userRole);
     this.userRole = this.data.userRole;
 
     if (this.data.participantCode) {
@@ -568,6 +569,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   areCommentsAllowed() {
     return this.data.board.allow_comment;
+  }
+
+  areHeartsAllowed() {
+    return this.data.board.allow_heart;
   }
 
   changeOnHover($event) {
