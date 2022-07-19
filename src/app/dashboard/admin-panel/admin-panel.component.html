@@ -2,23 +2,29 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header" fxLayout="row" fxLayoutAlign="space-between center">
     <div class="dashboard-heading">
-      <h1>{{adminName}}’s Sessions</h1>
+      <h1>{{adminName}}’s Spaces</h1>
     </div>
-    <div fxLayout="row" fxLayoutGap="24px">
-      <!-- <ng-select
-        class="sessions-type"
-        bindLabel="title"
-        placeholder="All Sessions"
-        [clearable]="false"
-        bindValue="id"
-        appendTo="body"
-        [searchable]="false"
-      >
-      </ng-select> -->
+    <div fxLayout="row" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutGap="8px">
+        <div 
+          [ngClass]="{'active': layout === 'tilesLayout'}" 
+          class="layout-icons" 
+          (click)="toggleLayout('tilesLayout')" 
+          fxLayoutAlign="center center">
+          <img class="tiles" src="/assets/img/dashboard/tiles.svg" />
+        </div>
+        <div 
+          [ngClass]="{'active': layout === 'listLayout'}" 
+          (click)="toggleLayout('listLayout')"  
+          class="layout-icons" 
+          fxLayoutAlign="center center">
+          <img class="list" src="/assets/img/dashboard/list.svg" />
+        </div>
+      </div>
       <button 
-      class="dashboard-secondary-button bg-primary-color white-color padding0-24" 
-      (click)="openCreateSession()">
-        + New Session
+        class="dashboard-secondary-button bg-primary-color white-color" 
+        (click)="openCreateSession()">
+        + New Space
       </button>
     </div>
   </div>
@@ -26,7 +32,9 @@
     <benji-lessons-list 
       [lessons]="lessons"
       [lessonRuns]="lessonRuns"
-      [isTemplates]="false">
+      [isTemplates]="false"
+      [layout]="layout"
+      (openCreateSessionEvent)="openCreateSession()">
     </benji-lessons-list>
   </div>
 </div>

@@ -16,6 +16,9 @@ export class AdminService {
     return this.http.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
       map((res: TeamUser) => {
         this.contextService.user = res;
+        if(res.branding) {
+          this.contextService.brandingInfo = res.branding;
+        }
         return res;
       })
     );

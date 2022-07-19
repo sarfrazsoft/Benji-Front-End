@@ -19,6 +19,9 @@ export class ResetPasswordComponent implements OnInit {
   isSubmitted = false;
   passwordChanged = false;
   invalidOldPassword = false;
+  focusOpw: boolean;
+  focusNpw: boolean;
+  focusCnpw: boolean;
 
   constructor(
     private accountService: AccountService,

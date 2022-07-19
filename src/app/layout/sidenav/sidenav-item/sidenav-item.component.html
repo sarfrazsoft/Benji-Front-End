@@ -1,16 +1,16 @@
 <div
   fxFlex
   fxLayout="row"
+  fxLayoutGap="12px"
   fxLayoutAlign="start center"
   class="item"
   [routerLink]="[sidenavItem.navRoute]"
   [routerLinkActiveOptions]="{ exact: true }"
-  [routerLinkActive]="sidenavItem.disabled ? 'inactive' : 'active'"
+  [ngClass]="{'active': rla.isActive}"
+  routerLinkActive 
+  #rla="routerLinkActive"
   (click)="itemClicked(sidenavItem.navName)"
   >
-  <div 
-    class="item-icon"
-    [ngStyle]="{'background-image': 'url(' + icon + ')'}">
-  </div>
+  <img class="item-icon" [src]="icon">
   <div class="item-name">{{ sidenavItem.navName }}</div>
 </div>

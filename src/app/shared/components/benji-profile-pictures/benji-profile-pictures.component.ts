@@ -12,6 +12,8 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   @Input() counterAfter: number;
   @Input() showTooltip = true;
   @Input() size: string;
+  @Input() name: string;
+ 
   remainingCount = 0;
   displayCodes: [];
 
@@ -21,7 +23,7 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.participantCodes.length > this.counterAfter) {
+    if (this.participantCodes && this.participantCodes.length > this.counterAfter) {
       this.remainingCount = this.participantCodes.length - this.counterAfter;
       this.participantCodes = this.participantCodes.slice(0, this.counterAfter);
     }
@@ -35,8 +37,11 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   }
 
   getInitials(code: number) {
-    const nameString = this.activitiesService.getParticipantName(this.activityState, code);
-    const fullName = nameString.split(' ');
+    let nameString = "";
+    if (code) {
+      nameString = this.activitiesService.getParticipantName(this.activityState, code);
+    } 
+    const fullName = this.name ? this.name.split(' ') : nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';
     if (fullName.length === 1) {
       return first.toUpperCase();

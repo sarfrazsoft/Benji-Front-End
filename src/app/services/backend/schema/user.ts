@@ -12,6 +12,15 @@ export interface User {
   orggroup: number;
   local_admin_permission: boolean;
   participant_permission: boolean;
+  branding: Branding;
+}
+
+export interface Branding {
+  id: number;
+  user: number;
+  logo: File;
+  favicon: File;
+  color: string;
 }
 
 export interface TeamUser {
@@ -24,6 +33,7 @@ export interface TeamUser {
   teammembership_set?: Array<{ membership_type: string; team: Team }>;
   username: string;
   verified_email?: boolean;
+  branding: Branding;
 }
 
 export interface Team {

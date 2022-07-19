@@ -15,59 +15,88 @@ mat-sidenav-container.mat-sidenav-container {
   min-height: -moz-calc(100vh) !important;
   min-height: calc(100vh) !important;
   mat-sidenav.mat-sidenav {
-    border-right: solid 1px #eeebdd;
+    //border-right: 1px solid #eeebdd;
+    border-right: 0px;
   }
 
   .nav-container {
+    background: #f1f2f6;
     width: 200px;
-    padding: 24px 0px;
-
+    padding: 24px 0px 33px 0px;
+    height: 100vh;
+    box-sizing: border-box;
+    .top-bottom-sections{
+      height: calc(100vh - 56px);
+      box-sizing: border-box;
+    }
     .logo {
       cursor: pointer;
       outline: none;
       display: flex;
-      margin-bottom: 62px;
+      margin-bottom: 32px;
       text-align: center;
       margin-left: 24px;
       img {
-        max-width: 96px;
+        max-width: 152px;
       }
     }
-
+    .top-sections, .bottom-sections {
+      width: 100%;
+      .folders {
+        margin: 22px 16px 0px 20px;
+        color: #a4a4a4;
+        font-weight: 600;
+        font-size: 12px;
+        .add {
+          padding: 4px;
+          cursor: pointer;
+        }
+        .folder {
+          margin-top: 16px;
+          font-weight: 400;
+          cursor: pointer;
+          &:hover, &.active {
+            color: #37352F;
+            .icon {
+              opacity: 1;
+            }
+          }
+          .icon {
+            opacity: 0.4;
+          }
+        }
+      }
+    }
     .nav-section {
       margin: 0px 0px;
-
       .item {
         cursor: pointer;
-        font-size: 16px;
+        color: #A4A4A4;
+        font-size: 14px;
+        line-height: 16px;
         font-weight: 500;
-        padding: 10px 0px;
+        height: 32px;
         padding-left: 12px;
         margin-bottom: 2px;
         transition: margin-left 0.1s linear;
         -webkit-transition: margin-left 0.1s linear;
         -ms-transition: margin-left 0.1s linear;
         outline: none;
-        margin-right: 12px;
-        margin-left: 12px;
-        border-radius: 8px;
-        &:hover {
-          background-color: #f2f4f7;
-        }
-        &.active {
-          background-color: #f2f4f7;
-          font-weight: 600;
+        margin-right: 8px;
+        margin-left: 8px;
+        border-radius: 4px;
+        &:hover, &.active {
+          color: #37352F;
+          background-color: #fff;
+          .item-icon {
+            opacity: 1;
+          }
         }
         .item-name {
-          color: #616161;
-          line-height: normal;
+         // color: #8F9094;
         }
         .item-icon {
-          margin-right: 12px;
-          height: 18px;
-          width: 18px;
-          display: block;
-          background-repeat: no-repeat;
+          opacity: 0.42;
         }
       }
     }

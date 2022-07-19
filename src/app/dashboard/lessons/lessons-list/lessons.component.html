@@ -1,15 +1,23 @@
-<benji-active-lessons
-  [lessonRuns]="lessonRuns"
-></benji-active-lessons>
-<!-- 
-<div class="courses" fxLayoutGap="40px" fxLayout="row wrap">
-   <div (click)="openDetails(lesson)" *ngFor="let lesson of lessons"> 
-  <div (click)="edit(lesson, $event)" *ngFor="let lesson of lessons">
-    <benji-lesson-tile 
-      [lesson]="lesson"
-      [isTemplates]="isTemplates" 
-      (updateLessons)="updateLessons()" 
-      [events]="eventsSubject.asObservable(lesson)"
-      ></benji-lesson-tile>
+<div *ngIf="layout == 'listLayout'" class="lessons-list">
+  <benji-lesson-list
+    [lessonRuns]="lessonRuns"
+  ></benji-lesson-list>
+</div>
+<div  *ngIf="layout == 'tilesLayout'" class="lessons-tiles">
+  <div class="courses" fxLayoutGap="16px" fxLayout="row wrap">
+     <!-- <div (click)="openDetails(lesson)" *ngFor="let lesson of lessons">  -->
+    <div *ngFor="let lesson of lessonRuns">
+      <benji-lesson-tile 
+        [lesson]="lesson"
+        [isTemplates]="isTemplates" 
+        (updateLessonsRuns)="updateLessonsRuns()" 
+        ></benji-lesson-tile>
+    </div>
+    <div (click)="openCreateSession()" class="new-space" fxLayout="row" fxLayoutAlign="center center">
+      <div class="add-new noselect" fxLayout="row" fxLayoutGap="8px">
+        <img class="icon" src="assets/img/dashboard/new-space.svg" alt="">
+        <div class="text">New Space</div>
+      </div>
+    </div>
   </div>
-</div> -->
+</div>

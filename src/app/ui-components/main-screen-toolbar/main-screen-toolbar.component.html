@@ -83,7 +83,25 @@
                 </mat-menu>
             </div>
           </ng-container>
-
+          <!-- Notifications -->
+          <div class="option notify" fxLayoutAlign="center center"
+            [matMenuTriggerFor]="notifyMenu"
+            [matTooltipPosition]="'below'"
+            matTooltip="Notifications"
+            show-delay="100">
+              <img src="/assets/img/navigation/notifications.svg"/>
+              <span class="count" fxLayoutAlign="center center"> {{count}} </span>
+              <mat-menu 
+                #notifyMenu="matMenu" 
+                class="notify-menu" 
+                [overlapTrigger]="false" 
+                xPosition="before">
+                <benji-notifications-list
+                  [avatarSize]="'medium'"
+                  [isDashboard]="false"
+                ></benji-notifications-list>
+              </mat-menu>
+          </div>
           <!-- Grouping control -->
           <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
             <div class="option groups" 
@@ -152,7 +170,7 @@
             </div>
           </ng-container>
 
-          <!-- Board navigation -->
+          <!-- Board navigation arrows -->
           <div fxLayout="row" fxLayoutGap="8px">
             <div 
               class="back-next"
