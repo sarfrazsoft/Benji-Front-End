@@ -109,6 +109,8 @@ export interface LessonRunDetails {
   screen_socet: string;
   start_time: string;
   branding: Branding;
+  idea_count: number;
+  board_count: number;
 }
 
 export interface Participant {

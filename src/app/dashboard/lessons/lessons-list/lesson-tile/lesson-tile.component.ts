@@ -31,14 +31,8 @@ export class LessonTileComponent implements OnInit {
   @Input() events: Observable<Lesson>;
   @Output() updateLessonsRuns = new EventEmitter();
   private eventsSubscription: Subscription;
-  // launchSessionLabel = '';
-  // rightLaunchArrow = '';
-  // rightCaret = '';
+  showSettings: boolean;
   dialogRef;
-  // imgSrc = '/assets/img/imageUploadIcon.svg';
-
-  // description = '';
-  // showPlaceholder = true;
   settingsDialogRef;
   timeStamp: string;
   participantsCount: number;
@@ -59,15 +53,6 @@ export class LessonTileComponent implements OnInit {
   ngOnInit() {
     console.log(this.lesson);
     this.participantsCount = this.lesson.participant_set.length;
-    //this.eventsSubscription = this.events.subscribe((lesson) => this.edit());
-
-    // this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
-    //   if (info) {
-    //     this.launchSessionLabel = info.parameters.launchSession;
-    //     this.rightCaret = info.parameters.rightCaret;
-    //     this.rightLaunchArrow = info.parameters.rightLaunchArrow;
-    //   }
-    // });
 
     this.calculateTimeStamp();
     setInterval(() => {
@@ -140,9 +125,6 @@ export class LessonTileComponent implements OnInit {
             this.updateLessonsRuns.emit();
           });
           this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
-          // this.dataSource = this.dataSource.filter((value) => {
-          //   return value.lessonRunCode !== val.lessonRunCode;
-          // });
         }
       });
   }
@@ -217,137 +199,5 @@ export class LessonTileComponent implements OnInit {
         this.updateLessonsRuns.emit();
       });
   }
-
-  // showSettingsModal() {
-  //   this.settingsDialogRef = this.dialog
-  //     .open(SessionSettingsDialogComponent, {
-  //       data: {
-  //         id: this.lesson.lesson.id,
-  //         title: this.lesson.lesson.lesson_name,
-  //         description: this.lesson.lesson.lesson_description,
-  //         featureImage: this.lesson.lesson.feature_image,
-  //       },
-  //       disableClose: false,
-  //       panelClass: ['dashboard-dialog', 'editor-lesson-settings-dialog'],
-  //     })
-  //     .afterClosed()
-  //     .subscribe((res) => {
-  //       if (res) {
-  //         this.lesson.lesson.lesson_name = res.lesson_name;
-  //         this.lesson.lesson.lesson_description = res.lesson_description;
-  //         this.lesson.lesson.feature_image = res.feature_image;
-  //       }
-  //     });
-  // }
-
-  // launchSession(event, lesson): void {
-  //   // if it's a single user lesson
-  //   this.restService.start_lesson(lesson.id).subscribe(
-  //     (lessonRun) => {
-  //       if (lesson.single_user_lesson) {
-  //         setTimeout(() => {
-  //           this.router.navigate(['/user/lesson/' + lessonRun.lessonrun_code]);
-  //         }, 1500);
-  //       } else {
-  //         this.router.navigate(['/screen/lesson/' + lessonRun.lessonrun_code]);
-  //       }
-  //     },
-  //     (err) => console.log(err)
-  //   );
-  //   event.stopPropagation();
-  // }
-
-  // edit(lesson: Lesson, $event?) {
-  //   if (lesson.id) {
-  //     if (lesson.effective_permission === 'admin' || lesson.effective_permission === 'edit') {
-  //       this.router.navigate(['editor', lesson.id], {
-  //         relativeTo: this.activatedRoute,
-  //       });
-  //     } else {
-  //       this.utilsService.openWarningNotification(`You don't have sufficient permissions.`, '');
-  //     }
-  //   }
-  //   if ($event) {
-  //     $event.stopPropagation();
-  //   }
-  // }
-
-  // duplicate(lesson: Lesson, $event?) {
-  //   if (lesson.id) {
-  //     this.adminService.duplicateLesson(lesson.id).subscribe(
-  //       (res) => {
-  //         if (res.id) {
-  //           this.updateLessons.emit();
-  //           this.utilsService.openSuccessNotification(`Lesson successfully duplicated.`, `close`);
-  //         }
-  //       },
-  //       (error) => {
-  //         this.utilsService.openWarningNotification('Something went wrong.', '');
-  //       }
-  //     );
-  //   }
-  // }
-
-  // delete($event, lesson: Lesson) {
-  //   if (lesson.id) {
-  //     if (lesson.effective_permission === 'admin') {
-  //       const msg = 'Are you sure you want to delete ' + lesson.lesson_name + '?';
-  //       this.dialogRef = this.dialog
-  //         .open(ConfirmationDialogComponent, {
-  //           data: {
-  //             confirmationMessage: msg,
-  //           },
-  //           disableClose: true,
-  //           panelClass: 'confirmation-dialog',
-  //         })
-  //         .afterClosed()
-  //         .subscribe((res) => {
-  //           if (res) {
-  //             this.adminService.deleteLesson(lesson.id).subscribe(
-  //               (delRes) => {
-  //                 if (delRes.success) {
-  //                   this.updateLessons.emit();
-  //                   this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
-  //                 }
-  //               },
-  //               (error) => {
-  //                 this.utilsService.openWarningNotification('Something went wrong.', '');
-  //               }
-  //             );
-  //           }
-  //         });
-  //     } else {
-  //       this.utilsService.openWarningNotification(
-  //         `You don't have sufficient permission to perform this action.`,
-  //         ''
-  //       );
-  //     }
-  //   }
-  //   $event.stopPropagation();
-  // }
-
-  // editDescription($event, lesson: Lesson) {
-  //   this.description = lesson.lesson_description;
-  // }
-
-  // saveDescription($event) {
-  //   $event.preventDefault();
-  //   $event.stopPropagation();
-
-  //   const l: Lesson = {
-  //     id: this.lesson.id,
-  //     lesson_name: this.lesson.lesson.lesson_name,
-  //     lesson_description: this.description,
-  //   };
-  //   this.adminService
-  //     .updateLesson(l, this.lesson.id)
-  //     .pipe(
-  //       map((res) => res),
-  //       catchError((error) => error)
-  //     )
-  //     .subscribe((res: Lesson) => {
-  //       this.lesson.lesson.lesson_description = res.lesson_description;
-  //     });
-  // }
 
 }
