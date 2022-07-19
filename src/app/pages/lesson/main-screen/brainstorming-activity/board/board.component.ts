@@ -42,12 +42,14 @@ import {
   BrainstormEditDocumentIdeaEvent,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
+  BrainstormEditIframelyEvent,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
   BrainstormImageSubmitEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
+  BrainstormSubmitIframelyEvent,
   BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
   Category,
@@ -500,6 +502,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.submitWithVideo(idea);
     } else if (idea.webcamImageId) {
       this.submitWithWebcamImage(idea);
+    } else if (idea.iframelyData) {
+      this.submitWithIframelyData(idea);
     } else {
       this.submitWithoutImg(idea);
     }
@@ -705,6 +709,28 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         idea.category.id,
         idea.selectedpdfDoc
       )
+    );
+  }
+
+  submitWithIframelyData(idea) {
+    if (idea.id) {
+      this.updateWithIframelyData(idea);
+      return;
+    }
+    const iframe = {
+      iframe: idea.iframelyData,
+    };
+    this.sendMessage.emit(
+      new BrainstormSubmitIframelyEvent(idea.text, idea.title, idea.category.id, idea.groupId, iframe)
+    );
+  }
+
+  updateWithIframelyData(idea) {
+    const iframe = {
+      iframe: idea.iframelyData,
+    };
+    this.sendMessage.emit(
+      new BrainstormEditIframelyEvent(idea.id, idea.text, idea.title, idea.category.id, idea.groupId, iframe)
     );
   }
 }

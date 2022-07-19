@@ -482,6 +482,35 @@ export class BrainstormSubmitDocumentEvent extends ActivityEvent {
     };
   }
 }
+export class BrainstormSubmitIframelyEvent extends ActivityEvent {
+  event_name = 'BrainstormSubmitEvent';
+
+  constructor(text: string, title: string, category: number, groupId: number, meta: any) {
+    super();
+    this.extra_args = {
+      idea: text,
+      title: title,
+      category: category,
+      group_id: groupId,
+      meta: meta,
+    };
+  }
+}
+
+export class BrainstormEditIframelyEvent extends ActivityEvent {
+  event_name = 'BrainstormEditIdeaSubmitEvent';
+
+  constructor(id: number, text: string, title: string, category: number, meta: any) {
+    super();
+    this.extra_args = {
+      brainstormidea: id,
+      idea: text,
+      title: title,
+      category: category,
+      meta: meta,
+    };
+  }
+}
 export class BrainstormEditDocumentIdeaEvent extends ActivityEvent {
   event_name = 'BrainstormEditIdeaSubmitEvent';
 

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { iframely } from '@iframely/embed.js';
 import { cloneDeep, forOwn } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable } from 'rxjs';
@@ -38,8 +39,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -47,6 +47,7 @@ export class MainScreenBrainstormingActivityComponent
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
   participantCode;
+  htmlData2 = `<div class="iframely-embed"><div class="iframely-responsive" style="height: 140px; padding-bottom: 0;"><a href="https://www.shutterstock.com/image-illustration/white-arrow-fall-down-on-background-1323403484" data-iframely-url="//cdn.iframe.ly/qYVUNqp?iframe=card-small"></a></div></div>`;
 
   constructor(
     private router: Router,
@@ -59,6 +60,7 @@ export class MainScreenBrainstormingActivityComponent
     private topicMediaService: TopicMediaService
   ) {
     super();
+    iframely.load();
   }
   instructions = '';
   sub_instructions = '';
@@ -107,6 +109,9 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnInit() {
     super.ngOnInit();
+
+    const el = document.getElementById('rt');
+    iframely.load(el);
     const paramBoardId = this.activatedRoute.snapshot.queryParams['board'];
     if (paramBoardId) {
       // tslint:disable-next-line:radix

@@ -22,7 +22,7 @@
             class="title" 
             placeholder="Title (optional)" 
             [(ngModel)]="ideaTitle"
-          >
+            (ngModelChange)="checkIfLink($event)">
           </textarea>
           <div class="close-button" fxLayoutAlign="end start">
             <img src="/assets/img/idea-creation/cross.svg" matDialogClose>
@@ -33,6 +33,13 @@
             [defaultValue]="userIdeaText"
             (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>
+        </div>
+        <div class="benji-iframely" *ngIf="iframeAvailable">
+          <p bind-innerHTML="iframelyData | safeHtml"></p>
+          <button
+            class="remove-button" (click)="removeIframelyEmbed()">
+            Remove
+          </button>
         </div>
         <div class="preview-image" 
           *ngIf="imageSelected || pdfSelected || video || webcamImage || mediaUploading" 

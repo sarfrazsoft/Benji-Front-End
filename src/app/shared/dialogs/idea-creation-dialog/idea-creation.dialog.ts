@@ -1,5 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  Inject,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
@@ -48,6 +57,9 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   mediaUploading = false;
   descriptionIsEmpty = true;
   fileProgress: FileProgress;
+
+  iframelyData;
+  iframeAvailable = false;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
 
@@ -128,6 +140,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       selectedpdfDoc: this.selectedpdfDocId,
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
+      iframelyData: this.iframelyData,
     });
   }
 
@@ -150,6 +163,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         if (res) {
           this.clearPDF();
           this.removeImage();
+          this.removeIframelyEmbed();
           if (res.type === 'upload') {
             this.imageSelected = true;
             this.imagesList = res.data;
@@ -183,6 +197,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         if (res) {
           this.clearPDF();
           this.removeImage();
+          this.removeIframelyEmbed();
           if (res.type === 'giphy') {
             this.selectedThirdPartyImageUrl = res.data;
             this.imageSelected = true;
@@ -254,6 +269,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   mediaUploaded(res: IdeaDocument) {
     this.mediaUploading = false;
+    this.removeIframelyEmbed();
     if (res.document_type === 'video') {
       if (res.document_url) {
         this.videoURL = res.document_url;
@@ -299,6 +315,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
     $event.length === 7 ? (this.descriptionIsEmpty = true) : (this.descriptionIsEmpty = false);
+    this.checkIfLink(this.userIdeaText);
   }
 
   checkPdfExists(pdfSrc) {
@@ -368,5 +385,41 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     //   },
     //   (err) => {}
     // );
+  }
+
+  checkIfLink(link: string) {
+    if (this.isItemSelected()) {
+      // Don't run if an item is already attached to the post
+      return;
+    }
+    // link can be
+    // https://something.com
+    // abc https://something.com
+    // https://www.canadianstage.com/
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const link2 = link.match(urlRegex);
+    if (link2) {
+      // send to iframely
+      this.httpClient
+        .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
+        .subscribe((res: any) => {
+          this.iframeAvailable = true;
+          console.log(res.html);
+          this.iframelyData = res.html;
+          // iframely.load();
+        });
+    }
+    console.log(link2);
+    // if (link.includes('https://')) {
+    //   link.slice(link.indexOf('https://'), link.substring);
+    //   link = link.trim();
+    //   link = link.split(' ');
+    // }
+    // console.log(link);
+  }
+
+  removeIframelyEmbed() {
+    this.iframeAvailable = false;
+    this.iframelyData = undefined;
   }
 }
