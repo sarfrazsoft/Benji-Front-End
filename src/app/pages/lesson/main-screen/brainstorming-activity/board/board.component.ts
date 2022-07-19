@@ -720,9 +720,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     const iframe = {
       iframe: idea.iframelyData,
     };
-    this.sendMessage.emit(
-      new BrainstormSubmitIframelyEvent(idea.text, idea.title, idea.category.id, idea.groupId, iframe)
-    );
+    this.sendMessage.emit(new BrainstormSubmitIframelyEvent(idea.text, idea.title, idea.category.id, iframe));
   }
 
   updateWithIframelyData(idea) {
@@ -730,7 +728,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       iframe: idea.iframelyData,
     };
     this.sendMessage.emit(
-      new BrainstormEditIframelyEvent(idea.id, idea.text, idea.title, idea.category.id, idea.groupId, iframe)
+      new BrainstormEditIframelyEvent(idea.id, idea.text, idea.title, idea.category.id, iframe)
     );
   }
 }

@@ -154,6 +154,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   webcamImage = false;
   webcamImageURL: string;
 
+  iframeAvailable = false;
+  iframeData: string;
+
   showInline = false;
 
   showModal = false;
@@ -279,6 +282,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
     } else {
       this.removeVideo();
+    }
+
+    // check if idea has and iframe and attach it
+    const meta = this.data.item.meta;
+    console.log(meta);
+    if (meta && meta.iframe && meta.iframe.length > 0) {
+      this.iframeAvailable = true;
+      this.iframeData = meta.iframe;
     }
 
     console.log(this.data.userRole);

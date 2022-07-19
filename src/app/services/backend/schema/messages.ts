@@ -485,13 +485,12 @@ export class BrainstormSubmitDocumentEvent extends ActivityEvent {
 export class BrainstormSubmitIframelyEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, title: string, category: number, groupId: number, meta: any) {
+  constructor(text: string, title: string, category: number, meta: any) {
     super();
     this.extra_args = {
       idea: text,
       title: title,
       category: category,
-      group_id: groupId,
       meta: meta,
     };
   }
