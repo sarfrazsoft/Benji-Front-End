@@ -363,7 +363,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
 
     // detect screen size changes
-    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result: BreakpointState) => {
+    this.breakpointObserver.observe(['(max-width: 848px)']).subscribe((result: BreakpointState) => {
       if (result.matches) {
         dialogRef.addPanelClass('idea-detailed-mobile-dialog');
         dialogRef.removePanelClass('idea-detailed-dialog');
