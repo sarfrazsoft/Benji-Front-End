@@ -591,6 +591,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         maxSize: 500,
       })
       .then((resizedImage: Blob) => {
+        console.log(resizedImage);
         const formData: FormData = new FormData();
         formData.append('document', resizedImage, file.name);
         formData.append('participant_code', participant_code ? participant_code.toString() : '');

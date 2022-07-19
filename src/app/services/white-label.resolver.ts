@@ -76,7 +76,7 @@ export class WhiteLabelResolver implements Resolve<any> {
       } else {
         this.restService.get_own_identity().subscribe(
           (res: any) => {
-            this.contextService.user = res;
+           this.contextService.user = res;
           },
           (error: any) => {
             // console.log('user not found');

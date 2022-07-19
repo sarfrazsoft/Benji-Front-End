@@ -8,7 +8,7 @@ import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { SocialAuthService } from 'angularx-social-login';
 import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { TeamUser } from 'src/app/services/backend/schema';
+import { Branding, TeamUser, User } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-dashboard-signup',
@@ -65,9 +65,10 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.parameters.darkLogo;
+        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
+import { Branding, User } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { JoinSessionDialogComponent, LaunchSessionDialogComponent } from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
@@ -29,6 +30,17 @@ export class SidenavComponent implements OnInit {
         navRoute: './',
         permission: '',
         icon: '/assets/img/navigation/user.svg',
+      },
+    ],
+  };
+
+  notifications = {
+    section: 2,
+    items: [
+      {
+        navName: 'Notifications',
+        navRoute: 'notifications',
+        icon: '/assets/img/navigation/notifications.svg',
       },
     ],
   };
@@ -92,9 +104,9 @@ export class SidenavComponent implements OnInit {
       }
     });
 
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.parameters.darkLogo;
+        this.logo = info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
   }
@@ -125,8 +137,9 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavSections = [
         this.dashboard,
+        this.notifications,
         // this.templatesSection,
-        // this.helpCenter,
+        this.helpCenter,
         this.accountSection,
         this.authSection,
       ];

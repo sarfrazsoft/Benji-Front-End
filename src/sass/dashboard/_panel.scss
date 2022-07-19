@@ -1,6 +1,6 @@
 // TODO use variables for border color to keep it consistent across all panels
 .admin-panel {
-  padding: 64px 64px 64px 56px;
+  padding: 64px;
 
   .dashboard-header {
     margin-bottom: 36px;
@@ -17,7 +17,109 @@
       line-height: normal;
     }
   }
-
+  
+  .settings-wrapper {
+    width: 408px;
+    box-sizing: border-box;
+    padding: 40px;
+    background: #FFFFFF;
+    border-radius: 16px;
+    .heading {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 20px;
+      color: $black;
+      margin-bottom: 24px;
+    }
+    .title {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 14px;
+      color: #37352F;
+    }
+    .edit-settings {
+      font-size: 16px;
+      font-weight: 400;
+      color: #37352F;
+      height: 48px;
+      padding: 0px 16px;
+      background: #f3f4f7;
+      border-radius: 8px;
+      border: 2px solid #f3f4f7;
+      &:focus {
+        outline: none;
+        background-color: #fff;
+      }
+    }
+    .reset-pw {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      cursor: pointer;
+    }
+    .separator {
+      border-bottom: 1px solid #E2E6EC;
+      margin: 32px 0px;
+    }
+    .settings-button {
+      color: #fff;
+      padding: 16px 24px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      border-radius: 8px;
+      &.delete {
+        color: $black;
+        background: #f3f4f7;
+        &:hover {
+          background: #E7E7E7;
+        }
+      }
+      &.color-code {
+        width: 151px;
+      }
+    }
+    .upload-delete {
+      cursor: pointer;
+      width: fit-content;
+      input {
+        display: none;
+      }
+    }
+    .uploaded {
+      .logo {
+        max-height: 48px;
+      }
+      .favicon {
+        max-height: 32px;
+      }
+    }
+    .mat-error {
+      margin-bottom: 8px;
+    }
+    .brand-color {
+      .code {
+        height: 48px;
+        border-radius: 8px;
+        color: transparent;
+        width: 151px;
+        padding: 0px 16px;
+        color: $white;
+        margin-bottom: 0px !important;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .color-picker {
+    .type-policy {
+      display: none;
+    }
+    .hex-text .box {
+      padding: 0 8px 8px 8px;
+    }
+  } 
   .subsection-container {
     padding: 0px $dash-subsection-sides-padding;
   }
@@ -138,3 +240,11 @@ ng-dropdown-panel {
     margin-top: 8px;
   }
 }
+
+.color-picker {
+  bottom: -180px;
+  top: unset !important;
+  .arrow {
+    display: none;
+  }
+} 

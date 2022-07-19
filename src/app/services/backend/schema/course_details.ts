@@ -1,4 +1,4 @@
-import { TeamUser, User } from './user';
+import { Branding, TeamUser, User } from './user';
 import { Timer } from './utils';
 
 export interface PaginatedResponse<T> {
@@ -50,6 +50,7 @@ export interface LessonRun {
   lessonrun_code: number;
   host: any;
   participant_set: Array<Participant>;
+  branding: Branding;
 }
 
 export interface RunningTools {
@@ -103,6 +104,7 @@ export interface LessonRunDetails {
   participant_set: Array<any>;
   screen_socet: string;
   start_time: string;
+  branding: Branding;
 }
 
 export interface Participant {

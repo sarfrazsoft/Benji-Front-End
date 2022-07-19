@@ -18,6 +18,17 @@
     </div>
   </div>
   <div 
+    class="participant"
+    fxLayout="column"
+    *ngIf="name">
+    <div 
+      class="initials {{size}}" 
+      fxLayout="column" 
+      fxLayoutAlign="center center">
+      <span> {{ getInitials() }} </span>
+    </div>
+  </div>
+  <div 
     *ngIf="remainingCount > 0"
     class="initials counter {{size}}" 
     fxLayout="column" 
