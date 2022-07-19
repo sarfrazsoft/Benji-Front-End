@@ -28,7 +28,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   lessons: Array<any> = [];
   lessonRuns: Array<any> = [];
   editorView: EditorView;
-  layout = 'tilesLayout';
+  layout = 'listLayout';
 
   adminName = '';
 

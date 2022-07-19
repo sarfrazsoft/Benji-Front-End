@@ -4,7 +4,7 @@
   min-height: 100vh;
   background: #fff;
   .dashboard-header {
-    margin-bottom: 44px;
+    margin-bottom: 32px;
     .dashboard-heading {
       //padding: 0px $dash-subsection-sides-padding;
       h1 {
@@ -30,9 +30,8 @@
   }
   
   .settings-wrapper {
-    width: 408px;
+    width: 328px;
     box-sizing: border-box;
-    padding: 40px;
     background: #FFFFFF;
     border-radius: 16px;
     .heading {
@@ -164,7 +163,7 @@
       box-shadow: unset;
       font-size: 14px;
       .mat-column-title {
-        width: 37vw;
+        width: 25vw;
         color: #37352F;
         max-width: 37vw;
         white-space: nowrap;

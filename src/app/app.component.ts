@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
         .dashboard-secondary-button:hover {
           border: 2px solid ${color};
           color: ${color};
-          background-color: white;
+          background-color: white !important;
         }
 
         .dashboard-secondary-button.delete:hover {

@@ -1,3 +1,6 @@
+.space-wrapper {
+  border: 1px solid #fff;
+}
 .space {
   width: 240px;
   height: 242px;
@@ -6,15 +9,28 @@
   margin-bottom: 16px;
   position: relative;
   cursor: pointer;
+  //box-sizing: border-box;
+  &:hover {
+    border: 2px solid;
+  }
   .settings {
     width: 24px;
     height: 24px;
-    background: rgba(0, 0, 0, 0.4);
+    background: #fff;
     border-radius: 8px;
-    color: #fff;
+    color: #616161;
     position: absolute;
     right: 8px;
     top: 8px;
+    z-index: 2;
+  }
+  .overlay {
+    background: rgba(55, 53, 47, 0.35);
+    position: absolute;
+    width: 100%;
+    height: 146px;
+    z-index: 1;
+    border-radius: 16px 16px 0px;
   }
   .info {
     padding: 16px 16px 14px 16px;
