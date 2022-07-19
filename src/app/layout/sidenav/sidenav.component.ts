@@ -17,7 +17,8 @@ export interface SidenavSection {
   templateUrl: './sidenav.component.html',
 })
 export class SidenavComponent implements OnInit {
-  sidenavSections: Array<SidenavSection> = [];
+  sidenavTopSections: Array<SidenavSection> = [];
+  sidenavBottomSections: Array<SidenavSection> = [];
   courses;
   launchArrow = '';
   logo = '';
@@ -26,10 +27,10 @@ export class SidenavComponent implements OnInit {
     section: 1,
     items: [
       {
-        navName: 'Sessions',
+        navName: 'Home',
         navRoute: './',
         permission: '',
-        icon: '/assets/img/navigation/user.svg',
+        icon: '/assets/img/dashboard/home.svg',
       },
     ],
   };
@@ -51,7 +52,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Templates',
         navRoute: './templates',
-        icon: '/assets/img/navigation/bulb.svg',
+        icon: '/assets/img/dashboard/templates.svg',
       },
     ],
   };
@@ -62,7 +63,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Help Center',
         navRoute: 'https://guides.mybenji.com/',
-        icon: '/assets/img/navigation/help.svg',
+        icon: '/assets/img/dashboard/help.svg',
       },
     ],
   };
@@ -71,9 +72,9 @@ export class SidenavComponent implements OnInit {
     section: 5,
     items: [
       {
-        navName: 'Account',
+        navName: 'Settings',
         navRoute: 'account',
-        icon: '/assets/img/navigation/account.svg',
+        icon: '/assets/img/dashboard/settings.svg',
       },
     ],
   };
@@ -84,7 +85,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Logout',
         navRoute: 'logout',
-        icon: '/assets/img/navigation/logOut.svg',
+        icon: '/assets/img/dashboard/log-out.svg',
       },
     ],
   };
@@ -106,7 +107,7 @@ export class SidenavComponent implements OnInit {
 
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
   }
@@ -135,12 +136,16 @@ export class SidenavComponent implements OnInit {
 
   initNavigation() {
     this.contextService.user$.subscribe((user) => {
-      this.sidenavSections = [
+      this.sidenavTopSections = [
         this.dashboard,
+        // this.templatesSection,
+      ];
+      this.sidenavBottomSections = [
         this.notifications,
         // this.templatesSection,
         this.helpCenter,
         this.accountSection,
+        this.helpCenter,
         this.authSection,
       ];
     });

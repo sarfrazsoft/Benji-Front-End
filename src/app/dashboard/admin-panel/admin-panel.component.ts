@@ -28,6 +28,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   lessons: Array<any> = [];
   lessonRuns: Array<any> = [];
   editorView: EditorView;
+  layout = 'tilesLayout';
 
   adminName = '';
 
@@ -97,4 +98,9 @@ export class AdminPanelComponent implements OnInit, OnChanges {
         }
       });
   }
+  
+  toggleLayout(type: string) {
+    this.layout = type;
+  }
+
 }

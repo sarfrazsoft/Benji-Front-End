@@ -1,4 +1,55 @@
-<div class="course-tile" fxLayout="column">
+<div 
+  class="space noselect" 
+  (click)="navigateToSession()"
+  (mouseenter)="showSettings = true"
+  (mouseleave)="showSettings = false">
+  <div 
+    class="settings" 
+    fxLayoutAlign="center center"
+    [matMenuTriggerFor]="menu" 
+    [style.opacity]="showSettings ? 1 : 0">
+    <mat-icon>
+      more_horiz
+    </mat-icon>
+  </div>
+  <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+    <button mat-menu-item (click)="edit(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <img class="dots" src="/assets/img/side-nav/edit.svg"/>
+      <span>Edit</span>
+    </button>
+    <button mat-menu-item (click)="duplicateSession(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <img class="dots" src="/assets/img/side-nav/duplicate.svg"/>
+      <span>Duplicate</span>
+    </button>
+    <button mat-menu-item (click)="delete(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <img class="dots" src="/assets/img/side-nav/delete.svg"/>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+  <img class="prompt-image" src="assets/img/temporary/dummy.png">
+  <div class="info" fxLayout="column" fxLayoutGap="16px">
+    <div class="details" fxLayout="column" fxLayoutGap="8px">
+      <div class="name">{{lesson.lesson.lesson_name}}</div>
+      <div class="who" fxLayout="row">
+        <div class="owner">{{ lesson.host.first_name }} {{ lesson.host.last_name }}</div>
+        <div class="time-stamp"><span>&#183;</span><span>&#183;</span>{{timeStamp}}</div>
+      </div>
+    </div>
+    <div class="stats" fxLayout="row" fxLayoutGap="16px">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
+        <img src="assets/img/dashboard/bulb.svg" alt=""><span>{{lesson.idea_count}}</span>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
+        <img src="assets/img/dashboard/boards.svg" alt=""><span>{{lesson.board_count}}</span>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
+        <img src="assets/img/dashboard/participants.svg" alt=""><span>{{participantsCount}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="course-tile" fxLayout="column">
   <div class="thumbnail">
     <div 
       class="image-placeholder" 
@@ -45,12 +96,13 @@
     </mat-menu>
   </div>
   <div class="title" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
-    <h2>{{ lesson.lesson_name }}</h2>
+    <h2>{{ lesson.lesson.lesson_name }}</h2>
   </div>
   <div class="course-detail" fxFlex="1 1 auto">
     <div class="description">
-      {{ lesson.lesson_description }}
+      {{ lesson.host.first_name }} {{ lesson.host.last_name }}
     </div>
+    <div class="time-stamp"><span>&#183;</span>{{timeStamp}}</div>
   </div>
   <div fxLayout="row" fxLayoutGap="8px" *ngIf="!isTemplates; else templateControls">
     <div
@@ -114,4 +166,4 @@
       </div>
     </div>
   </ng-template>
-</div>
+</div> -->

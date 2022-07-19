@@ -1,3 +1,74 @@
+.space {
+  width: 240px;
+  height: 242px;
+  border: 1px solid #E6EBEE;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  cursor: pointer;
+  .settings {
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    color: #fff;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+  }
+  .info {
+    padding: 16px 16px 14px 16px;
+    .details {
+      .name {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: #37352F;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .who {
+        .owner, .time-stamp {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 12px;
+          color: #A4A4A4;
+          span {
+            margin: 4px;
+          }
+        }
+      }
+    }
+    .stats {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      color: #A4A4A4;
+    }
+  }
+}
+
+.new-space {
+  width: 240px;
+  height: 242px;
+  background: #F9F9FB;
+  border: 2px dashed #B7B7B7;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  .add-new {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    color: #B7B7B7;
+    .icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
 benji-lessons-list,
 benji-lesson {
   .courses {

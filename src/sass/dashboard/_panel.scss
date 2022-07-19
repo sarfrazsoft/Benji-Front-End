@@ -1,20 +1,31 @@
 // TODO use variables for border color to keep it consistent across all panels
 .admin-panel {
-  padding: 64px;
-
+  padding: 48px 64px;
+  min-height: 100vh;
+  background: #fff;
   .dashboard-header {
-    margin-bottom: 36px;
+    margin-bottom: 44px;
     .dashboard-heading {
-      padding: 0px $dash-subsection-sides-padding;
+      //padding: 0px $dash-subsection-sides-padding;
       h1 {
-        font-size: 48px;
+        font-size: 32px;
         margin: 0px;
       }
     }
     .dashboard-secondary-button {
       height: 40px;
-      margin: 0px 8px;
       line-height: normal;
+      font-weight: 500;
+      padding: 0 24px;
+    }
+    .layout-icons {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      &:hover, &.active {
+        background: #f2f4f7;
+        cursor: pointer;
+      }
     }
   }
   
@@ -121,7 +132,7 @@
     }
   } 
   .subsection-container {
-    padding: 0px $dash-subsection-sides-padding;
+    //padding: 0px $dash-subsection-sides-padding;
   }
   .sub-heading {
     h2 {
@@ -139,7 +150,7 @@
   }
 
   .active-sessions-wrapper {
-    padding: 32px 0px 12px 0px;
+    padding-bottom: 32px;
     background: #fff;
     border-radius: 8px;
     .title {
@@ -154,15 +165,16 @@
       font-size: 14px;
       .mat-column-title {
         width: 37vw;
+        color: #37352F;
         max-width: 37vw;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
         padding-right: 32px;
       }
-      .mat-column-host, .mat-column-participants, .mat-column-startDate, .mat-column-options {
-        width: 10vw;
-      }
+      // .mat-column-host, .mat-column-participants, .mat-column-startDate, .mat-column-options {
+      //   width: 10vw;
+      // }
       th.mat-header-cell:first-of-type, 
       td.mat-cell:first-of-type, 
       td.mat-footer-cell:first-of-type {
@@ -171,7 +183,7 @@
       }
       tr:last-child {
         td {
-          border-bottom: 0px;
+        //  border-bottom: 0px;
         }
       }
       tr.mat-row, tr.mat-footer-row, tr.mat-header-row {
@@ -210,12 +222,18 @@
         }
       }
       tr.mat-row:hover {
-        background: #E8E8EB;
+        background: #F1F2F6;
         cursor: pointer;
       }
+      th {
+        color: #616161;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+      }
     }
-    table, td, th {
-      color: #37352F;
+    table, td {
+      color: #A4A4A4;
       line-height: unset;
     }
   }

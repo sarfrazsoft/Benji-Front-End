@@ -41,7 +41,11 @@ export class Lesson {
   effective_permission?: EffectivePermission;
   is_valid_lesson?: boolean;
   feature_image?: string;
+  is_deleted?: boolean;
+  is_default?: boolean;
+  status?: string;
 }
+
 
 export interface LessonRun {
   id: number;
