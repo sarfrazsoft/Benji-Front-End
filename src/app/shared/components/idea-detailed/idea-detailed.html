@@ -75,12 +75,6 @@
       </div>
     </div>
     <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage || iframeAvailable" fxLayoutAlign="center center">
-      hello
-      <ng-container *ngIf="iframeAvailable">
-        <div>
-          <p bind-innerHTML="iframeData | safeHtml"></p>
-        </div>
-      </ng-container>
       <ng-container *ngIf="imageSrc">      
         <ng-container *ngIf="isAbsolutePathOrNewlySelectedImage(imageSrc); else uploadedImage">
           <img 
@@ -146,6 +140,11 @@
         <img benji-click-stop-propagation [src]="webcamImageURL" alt="" />
       </ng-container>
 
+      <ng-container>
+        <div style="width: 100%;">
+          <p bind-innerHTML="iframeData | safeHtml"></p>
+        </div>
+      </ng-container>
 
       <div 
         class="back-circle" 

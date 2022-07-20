@@ -88,8 +88,9 @@
 
       <!-- Idea iframe -->
       <div *ngIf="item.meta">
-        <div *ngIf="item.meta.iframe && item.meta.iframe.length > 0">
-          <p bind-innerHTML="item.meta.iframe | safeHtml"></p>
+        <div 
+          *ngIf="item.meta.iframe && item.meta.iframe.iframeHTML && item.meta.iframe.iframeHTML.length > 0">
+          <p bind-innerHTML="item.meta.iframe.iframeHTML | safeHtml"></p>
         </div>
       </div>
     </ng-container>

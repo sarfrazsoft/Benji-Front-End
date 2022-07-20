@@ -8,6 +8,7 @@ import {
 } from '@angular/animations';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { iframely } from '@iframely/embed.js';
 import { Uppy } from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
@@ -287,9 +288,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     // check if idea has and iframe and attach it
     const meta = this.data.item.meta;
     console.log(meta);
-    if (meta && meta.iframe && meta.iframe.length > 0) {
+    if (meta && meta.iframe && meta.iframe && meta.iframe.iframeHTML) {
       this.iframeAvailable = true;
-      this.iframeData = meta.iframe;
+      console.log(meta.iframe);
+      this.iframeData = meta.iframe.iframeHTML;
+      // iframely.load();
     }
 
     console.log(this.data.userRole);

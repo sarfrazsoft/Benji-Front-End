@@ -405,7 +405,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         .subscribe((res: any) => {
           this.iframeAvailable = true;
           console.log(res.html);
-          this.iframelyData = res.html;
+          this.iframelyData = { iframeHTML: res.html, url: res.url };
           // iframely.load();
         });
     }
