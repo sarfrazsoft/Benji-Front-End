@@ -152,10 +152,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   videoURLConverted: string;
   video = false;
   video_id: number;
+  videoCleared = false;
 
   webcamImageId: number;
   webcamImage = false;
   webcamImageURL: string;
+  webcamImageCleared = false;
 
   iframeAvailable = false;
   iframeData: any;
@@ -194,6 +196,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   isHost = false;
   color = '';
   hoverColor = '';
+
+  pdfCleared = false;
 
   constructor(
     private activitiesService: ActivitiesService,
@@ -334,6 +338,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
+    if (this.pdfCleared || this.webcamImageCleared || this.videoCleared) {
+      this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
+    }
     this.submit.emit({
       ...this.idea,
       text: this.userIdeaText,
@@ -364,7 +371,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     } else {
       this.removeImage();
     }
-    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
     this.ideaEditEvent.emit(true);
   }
@@ -375,7 +381,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.imageSrc = null;
     this.selectedImageUrl = null;
     this.selectedThirdPartyImageUrl = null;
-    this.idea.idea_image = null;
+    // this.idea.idea_image = null;
     this.removeWebcamImage();
   }
 
@@ -383,6 +389,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.selectedpdfDoc = null;
     this.pdfSelected = false;
     this.pdfSrc = null;
+
+    this.pdfCleared = true;
   }
 
   removeVideo() {
@@ -390,12 +398,16 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.videoURL = null;
     this.videoURLConverted = null;
     this.video_id = null;
+
+    this.videoCleared = true;
   }
 
   removeWebcamImage() {
     this.webcamImage = false;
     this.webcamImageId = null;
     this.webcamImageURL = null;
+
+    this.webcamImageCleared = true;
   }
 
   removeIframe() {
@@ -519,7 +531,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   toggle() {
-    if (!this.imageSelected && !this.pdfSelected) {
+    if (!this.isItemSelected()) {
       this.uploadPanelExpanded = !this.uploadPanelExpanded;
     }
   }
@@ -550,6 +562,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
       this.video = true;
       this.video_id = res.id;
+      this.videoCleared = false;
     } else if (res.document_type === 'image') {
       if (res.document_url) {
         this.webcamImageURL = res.document_url;
@@ -558,6 +571,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
       this.webcamImage = true;
       this.webcamImageId = res.id;
+
+      this.webcamImageCleared = false;
     } else if (res.document_type === 'document') {
       this.selectedpdfDoc = res.id;
       if (res.document_url_converted) {
@@ -569,6 +584,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = false;
       this.video = false;
       this.pdfSelected = true;
+      this.pdfCleared = false;
     }
     this.ideaEditEvent.emit(true);
   }
@@ -637,12 +653,5 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
           // iframely.load();
         });
     }
-    console.log(link2);
-    // if (link.includes('https://')) {
-    //   link.slice(link.indexOf('https://'), link.substring);
-    //   link = link.trim();
-    //   link = link.split(' ');
-    // }
-    // console.log(link);
   }
 }

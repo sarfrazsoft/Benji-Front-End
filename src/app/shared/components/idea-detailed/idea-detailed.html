@@ -140,7 +140,7 @@
         <img benji-click-stop-propagation [src]="webcamImageURL" alt="" />
       </ng-container>
 
-      <ng-container>
+      <ng-container *ngIf="iframeData">
         <div style="width: 100%;">
           <p bind-innerHTML="iframeData.iframeHTML | safeHtml"></p>
         </div>
@@ -196,7 +196,8 @@
             </div>
             <div
               (click)="toggle()"
-              class="options" 
+              class="options"
+              [ngClass]="{ 'disabled': isItemSelected() }"
               fxLayoutAlign="center center">
               <img src="/assets/img/idea-creation/upload-toggle.svg">
             </div>
