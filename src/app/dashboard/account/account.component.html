@@ -73,7 +73,7 @@
         <h2 class="heading"> Branding </h2>
         <div class="settings" fxLayout="column" fxLayoutGap="16px">
           <div fxLayout="column" fxLayoutGap="8px">
-            <div class="title"> {{ logoSrc? 'Logo (uploaded version)' : 'Logo' }}</div>
+            <div class="title">Logo</div>
             <div class="uploaded" *ngIf="logoSrc">
               <img class="logo" [src]="logoSrc" alt="Logo" />
             </div>
@@ -97,7 +97,7 @@
             </label>
           </div>
           <div fxLayout="column" fxLayoutGap="8px">
-            <div class="title"> {{ favicSrc? 'Favicon (uploaded version)' : 'Favicon' }}</div>
+            <div class="title">Favicon</div>
             <div class="uploaded" *ngIf="favicSrc">
               <img class="favicon" [src]="favicSrc" alt="Logo" />
             </div>

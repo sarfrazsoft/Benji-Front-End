@@ -41,7 +41,7 @@ export class SidenavComponent implements OnInit {
       {
         navName: 'Notifications',
         navRoute: 'notifications',
-        icon: '/assets/img/navigation/notifications.svg',
+        icon: '/assets/img/dashboard/notifications.svg',
       },
     ],
   };
@@ -138,12 +138,10 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavTopSections = [
         this.dashboard,
-        // this.templatesSection,
+        this.templatesSection,
+        //this.notifications,
       ];
       this.sidenavBottomSections = [
-        this.notifications,
-        // this.templatesSection,
-        this.helpCenter,
         this.accountSection,
         this.helpCenter,
         this.authSection,
