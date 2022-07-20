@@ -37,10 +37,7 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   }
 
   getInitials(code: number) {
-    let nameString = "";
-    if (code) {
-      nameString = this.activitiesService.getParticipantName(this.activityState, code);
-    } 
+    let nameString = this.activitiesService.getParticipantName(this.activityState, code);
     const fullName = this.name ? this.name.split(' ') : nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';
     if (fullName.length === 1) {
