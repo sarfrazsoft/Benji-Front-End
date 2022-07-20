@@ -58,7 +58,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   descriptionIsEmpty = true;
   fileProgress: FileProgress;
 
-  iframelyData;
+  iframeData;
   iframeAvailable = false;
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
@@ -140,7 +140,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       selectedpdfDoc: this.selectedpdfDocId,
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
-      iframelyData: this.iframelyData,
+      iframeData: this.iframeData,
     });
   }
 
@@ -405,7 +405,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         .subscribe((res: any) => {
           this.iframeAvailable = true;
           console.log(res.html);
-          this.iframelyData = { iframeHTML: res.html, url: res.url };
+          this.iframeData = { iframeHTML: res.html, url: res.url };
           // iframely.load();
         });
     }
@@ -420,6 +420,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   removeIframelyEmbed() {
     this.iframeAvailable = false;
-    this.iframelyData = undefined;
+    this.iframeData = undefined;
   }
 }

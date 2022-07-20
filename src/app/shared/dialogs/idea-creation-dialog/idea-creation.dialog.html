@@ -35,7 +35,7 @@
           </benji-tiptap-editor>
         </div>
         <div class="benji-iframely" *ngIf="iframeAvailable">
-          <p bind-innerHTML="iframelyData.iframeHTML | safeHtml"></p>
+          <p bind-innerHTML="iframeData.iframeHTML | safeHtml"></p>
           <button
             class="remove-button" (click)="removeIframelyEmbed()">
             Remove

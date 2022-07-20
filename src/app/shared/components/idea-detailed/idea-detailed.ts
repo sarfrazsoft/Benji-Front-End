@@ -6,6 +6,7 @@ import {
   trigger,
   // ...
 } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { iframely } from '@iframely/embed.js';
@@ -14,6 +15,7 @@ import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
 import XHRUpload from '@uppy/xhr-upload';
+import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
@@ -156,7 +158,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   webcamImageURL: string;
 
   iframeAvailable = false;
-  iframeData: string;
+  iframeData: any;
+  meta: any;
 
   showInline = false;
 
@@ -195,6 +198,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
+    private httpClient: HttpClient,
     private deleteDialog: MatDialog,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService
@@ -286,16 +290,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     }
 
     // check if idea has and iframe and attach it
-    const meta = this.data.item.meta;
-    console.log(meta);
-    if (meta && meta.iframe && meta.iframe && meta.iframe.iframeHTML) {
+    this.meta = cloneDeep(this.data.item.meta);
+    if (this.meta && this.meta.iframe && this.meta.iframe && this.meta.iframe.iframeHTML) {
       this.iframeAvailable = true;
-      console.log(meta.iframe);
-      this.iframeData = meta.iframe.iframeHTML;
-      // iframely.load();
+      this.iframeData = this.meta.iframe;
     }
 
-    console.log(this.data.userRole);
     this.userRole = this.data.userRole;
 
     if (this.data.participantCode) {
@@ -329,6 +329,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     if (event) {
       this.ideaEditEvent.emit(true);
     }
+    // check if user entered a link in the titlebox
+    this.checkIfLink(event);
   }
 
   onSubmit() {
@@ -343,6 +345,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
       selectedpdfDoc: this.selectedpdfDoc,
+      iframeData: this.iframeData,
     });
   }
 
@@ -356,6 +359,8 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.clearPDF();
     } else if (this.video) {
       this.removeVideo();
+    } else if (this.iframeAvailable) {
+      this.removeIframe();
     } else {
       this.removeImage();
     }
@@ -391,6 +396,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.webcamImage = false;
     this.webcamImageId = null;
     this.webcamImageURL = null;
+  }
+
+  removeIframe() {
+    this.iframeAvailable = false;
+    this.iframeData = null;
+    this.meta.iframe = null;
   }
 
   openImagePickerDialog() {
@@ -575,6 +586,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
     this.ideaEditEvent.emit(true);
+    this.checkIfLink(this.userIdeaText);
   }
 
   categoryChanged(category) {
@@ -591,5 +603,46 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   changeOnHover($event) {
     this.hoverColor = $event.type === 'mouseover' ? 'primary-color' : 'white-color';
+  }
+
+  isItemSelected() {
+    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
+      return false;
+    }
+    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
+      return true;
+    }
+    return false;
+  }
+
+  checkIfLink(link: string) {
+    if (this.isItemSelected()) {
+      // Don't run if an item is already attached to the post
+      return;
+    }
+    // link can be
+    // https://something.com
+    // abc https://something.com
+    // https://www.canadianstage.com/
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const link2 = link.match(urlRegex);
+    if (link2) {
+      // send to iframely
+      this.httpClient
+        .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
+        .subscribe((res: any) => {
+          this.iframeAvailable = true;
+          console.log(res.html);
+          this.iframeData = { iframeHTML: res.html, url: res.url };
+          // iframely.load();
+        });
+    }
+    console.log(link2);
+    // if (link.includes('https://')) {
+    //   link.slice(link.indexOf('https://'), link.substring);
+    //   link = link.trim();
+    //   link = link.split(' ');
+    // }
+    // console.log(link);
   }
 }

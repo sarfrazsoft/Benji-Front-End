@@ -502,8 +502,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.submitWithVideo(idea);
     } else if (idea.webcamImageId) {
       this.submitWithWebcamImage(idea);
-    } else if (idea.iframelyData) {
-      this.submitWithIframelyData(idea);
+    } else if (idea.iframeData) {
+      this.submitWithIframeData(idea);
     } else {
       this.submitWithoutImg(idea);
     }
@@ -713,20 +713,20 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  submitWithIframelyData(idea) {
+  submitWithIframeData(idea) {
     if (idea.id) {
-      this.updateWithIframelyData(idea);
+      this.updateWithIframeData(idea);
       return;
     }
     const iframe = {
-      iframe: idea.iframelyData,
+      iframe: idea.iframeData,
     };
     this.sendMessage.emit(new BrainstormSubmitIframelyEvent(idea.text, idea.title, idea.category.id, iframe));
   }
 
-  updateWithIframelyData(idea) {
+  updateWithIframeData(idea) {
     const iframe = {
-      iframe: idea.iframelyData,
+      iframe: idea.iframeData,
     };
     this.sendMessage.emit(
       new BrainstormEditIframelyEvent(idea.id, idea.text, idea.title, idea.category.id, iframe)
