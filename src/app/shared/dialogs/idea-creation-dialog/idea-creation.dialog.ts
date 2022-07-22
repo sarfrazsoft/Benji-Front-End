@@ -61,6 +61,8 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   iframeData;
   iframeAvailable = false;
 
+  meta;
+
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
 
   @HostListener('window:keyup.esc') onKeyUp() {
@@ -140,7 +142,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       selectedpdfDoc: this.selectedpdfDocId,
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
-      iframeData: this.iframeData,
+      meta: this.meta,
     });
   }
 
@@ -260,6 +262,12 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     this.videoURLConverted = null;
     this.video = false;
     this.video_id = null;
+  }
+
+  removeIframelyEmbed() {
+    this.iframeAvailable = false;
+    this.iframeData = undefined;
+    this.meta = { ...this.meta, iframe: null };
   }
 
   mediaUploadProgress(fileProgress: FileProgress) {
@@ -406,6 +414,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
           this.iframeAvailable = true;
           console.log(res.html);
           this.iframeData = { iframeHTML: res.html, url: res.url };
+          this.meta = { ...this.meta, iframe: this.iframeData };
           // iframely.load();
         });
     }
@@ -416,10 +425,5 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     //   link = link.split(' ');
     // }
     // console.log(link);
-  }
-
-  removeIframelyEmbed() {
-    this.iframeAvailable = false;
-    this.iframeData = undefined;
   }
 }

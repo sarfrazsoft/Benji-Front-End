@@ -13,4 +13,9 @@
     transition: all 0.2s;
     opacity: 0;
   }
+  &:hover {
+    .remove-button {
+      opacity: 1;
+    }
+  }
 }

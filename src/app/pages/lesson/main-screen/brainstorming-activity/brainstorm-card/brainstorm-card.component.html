@@ -43,7 +43,7 @@
       </div>
 
       <!-- Idea video -->
-      <div *ngIf="item.idea_video">
+      <div *ngIf="item.idea_video && videoAvailable">
         <ng-container *ngIf="isUploadCare(item.idea_video.document_url)">
           <video 
             style="margin: 0 auto;" width="100%" 

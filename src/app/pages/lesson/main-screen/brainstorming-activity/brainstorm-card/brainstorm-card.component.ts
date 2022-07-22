@@ -100,6 +100,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   mobileSize = false;
   timeStamp: string;
 
+  videoAvailable = false;
+  oldVideo;
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -160,6 +163,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
+
+    if (this.item.idea_video) {
+      this.videoAvailable = true;
+      this.oldVideo = this.item.idea_video.id;
+    }
   }
 
   areCommentsAllowed() {
@@ -170,7 +178,20 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     return this.board.allow_heart;
   }
 
-  ngOnChanges() {}
+  ngOnChanges() {
+    if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
+      if (this.item.idea_video && this.videoAvailable) {
+        if (this.oldVideo !== this.item.idea_video.id) {
+          // video was already available and probably changed
+          this.videoAvailable = false;
+          this.oldVideo = this.item.idea_video.id;
+          setTimeout(() => {
+            this.videoAvailable = true;
+          }, 5);
+        }
+      }
+    }
+  }
 
   delete(id) {
     this.matDialog

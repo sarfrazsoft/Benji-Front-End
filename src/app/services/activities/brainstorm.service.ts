@@ -416,6 +416,7 @@ export class BrainstormService {
         existingIdeas[existingIdeaIndex].idea_document = newIdea.idea_document;
         existingIdeas[existingIdeaIndex].idea_image = newIdea.idea_image;
         existingIdeas[existingIdeaIndex].idea_video = newIdea.idea_video;
+        existingIdeas[existingIdeaIndex].meta = newIdea.meta;
       }
     });
   }

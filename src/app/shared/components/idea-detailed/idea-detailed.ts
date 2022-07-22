@@ -162,6 +162,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   iframeAvailable = false;
   iframeData: any;
   meta: any;
+  iframeRemoved = false;
 
   showInline = false;
 
@@ -177,8 +178,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.showModal = false;
     },
   };
-
-  uppy: Uppy = new Uppy({ id: 'idea-detailed', debug: true, autoProceed: false });
 
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
@@ -209,14 +208,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit(): void {
-    this.uppy
-      .use(Webcam, { countdown: 5 })
-      // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
-      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
-      .use(XHRUpload, {
-        endpoint: 'http://my-website.org/upload',
-      });
-
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.isHost = true;
@@ -337,10 +328,15 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.checkIfLink(event);
   }
 
+  removeIdeaDocumentFromBE() {
+    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
+  }
+
   onSubmit() {
     if (this.pdfCleared || this.webcamImageCleared || this.videoCleared) {
-      this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
+      this.removeIdeaDocumentFromBE();
     }
+    console.log(this.iframeData);
     this.submit.emit({
       ...this.idea,
       text: this.userIdeaText,
@@ -352,7 +348,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
       selectedpdfDoc: this.selectedpdfDoc,
-      iframeData: this.iframeData,
+      meta: this.meta,
     });
   }
 
@@ -364,12 +360,16 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
+
+      this.pdfCleared = true;
     } else if (this.video) {
       this.removeVideo();
+      this.videoCleared = true;
     } else if (this.iframeAvailable) {
       this.removeIframe();
     } else {
       this.removeImage();
+      this.webcamImageCleared = true;
     }
     this.uploadPanelExpanded = true;
     this.ideaEditEvent.emit(true);
@@ -389,8 +389,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.selectedpdfDoc = null;
     this.pdfSelected = false;
     this.pdfSrc = null;
-
-    this.pdfCleared = true;
   }
 
   removeVideo() {
@@ -398,22 +396,20 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.videoURL = null;
     this.videoURLConverted = null;
     this.video_id = null;
-
-    this.videoCleared = true;
   }
 
   removeWebcamImage() {
     this.webcamImage = false;
     this.webcamImageId = null;
     this.webcamImageURL = null;
-
-    this.webcamImageCleared = true;
   }
 
   removeIframe() {
     this.iframeAvailable = false;
     this.iframeData = null;
     this.meta.iframe = null;
+
+    this.iframeRemoved = true;
   }
 
   openImagePickerDialog() {
@@ -562,6 +558,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
       this.video = true;
       this.video_id = res.id;
+      if (this.videoCleared) {
+        this.removeIdeaDocumentFromBE();
+      }
       this.videoCleared = false;
     } else if (res.document_type === 'image') {
       if (res.document_url) {
@@ -572,6 +571,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = true;
       this.webcamImageId = res.id;
 
+      if (this.webcamImageCleared) {
+        this.removeIdeaDocumentFromBE();
+      }
       this.webcamImageCleared = false;
     } else if (res.document_type === 'document') {
       this.selectedpdfDoc = res.id;
@@ -584,6 +586,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = false;
       this.video = false;
       this.pdfSelected = true;
+      if (this.pdfCleared) {
+        this.removeIdeaDocumentFromBE();
+      }
       this.pdfCleared = false;
     }
     this.ideaEditEvent.emit(true);
@@ -648,8 +653,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
         .subscribe((res: any) => {
           this.iframeAvailable = true;
-          console.log(res.html);
+          this.iframeRemoved = false;
           this.iframeData = { iframeHTML: res.html, url: res.url };
+          this.meta = { ...this.meta, iframe: this.iframeData };
           // iframely.load();
         });
     }
