@@ -41,51 +41,79 @@
   </div>
 
   <!-- Authorship on cards -->
-  <div fxLayout="column">
-    <div class="title">Post</div>
-    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between">
-        <div>
-          <div class="label">Show authorship on cards</div>
-          <div class="sub-label">Name of the author appears on card</div>
+  <div fxLayout="column" fxLayoutGap="8px">
+    <div>
+      <div class="title">Post</div>
+      <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+        <div 
+          class="setting"
+          benji-click-stop-propagation
+          fxLayout="row"
+          fxLayoutAlign="space-between">
+          <div>
+            <div class="label">Show authorship on cards</div>
+            <div class="sub-label">Name of the author appears on card</div>
+          </div>
+          <label class="switch">
+            <input 
+              type="checkbox"
+              [checked]="showAuthorship"
+              (change)="toggleShowAuthorship()">
+            <span class="slider round"></span>
+          </label>
         </div>
-        <label class="switch">
-          <input 
-            type="checkbox"
-            [checked]="showAuthorship"
-            (change)="toggleShowAuthorship()">
-          <span class="slider round"></span>
-        </label>
       </div>
     </div>
-  </div>
 
-  <!-- Enable or disable commenting -->
-  <div fxLayout="column">
-    <div class="title">
+    <!-- Enable or disable commenting -->
+    <div>
+      <!-- <div class="title">
       Comments
-    </div>
-    <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-      <div 
-        class="setting"
-        benji-click-stop-propagation
-        fxLayout="row"
-        fxLayoutAlign="space-between">
-        <div>
-          <div class="label">Commenting and Hearting</div>
-          <div class="sub-label">Allow commenting and hearting on cards</div>
+      </div> -->
+      <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+        <div 
+          class="setting"
+          benji-click-stop-propagation
+          fxLayout="row"
+          fxLayoutAlign="space-between">
+          <div>
+            <div class="label">Commenting</div>
+            <div class="sub-label">Allow commenting on cards</div>
+          </div>
+          <label class="switch">
+            <input 
+              type="checkbox"
+              [checked]="allowCommenting"
+              (change)="toggleCommenting()">
+            <span class="slider round"></span>
+          </label>
         </div>
-        <label class="switch">
-          <input 
-            type="checkbox"
-            [checked]="allowCommenting"
-            (change)="toggleCommenting()">
-          <span class="slider round"></span>
-        </label>
+      </div>
+    </div>
+
+    <!-- Enable or disable Likes -->
+    <div>
+      <!-- <div class="title">
+        Hearts
+      </div> -->
+      <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+        <div 
+          class="setting"
+          benji-click-stop-propagation
+          fxLayout="row"
+          fxLayoutAlign="space-between">
+          <div>
+            <div class="label">Hearting</div>
+            <div class="sub-label">Allow hearting on cards</div>
+          </div>
+          <label class="switch">
+            <input 
+              type="checkbox"
+              [checked]="allowHearting"
+              (change)="toggleHearting()">
+            <span class="slider round"></span>
+          </label>
+        </div>
       </div>
     </div>
   </div>

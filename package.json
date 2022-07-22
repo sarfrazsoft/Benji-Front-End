@@ -73,6 +73,7 @@
     "ng-intercom": "^8.0.2",
     "ng2-pdf-viewer": "^7.0.2",
     "ng2-pdfjs-viewer": "^6.0.2",
+    "ngx-color-picker": "^12.0.1",
     "ngx-device-detector": "^2.1.0",
     "ngx-editor": "7.0.3",
     "ngx-extended-pdf-viewer": "^8.3.0",

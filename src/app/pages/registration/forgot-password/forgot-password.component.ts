@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AuthService, ContextService } from 'src/app/services';
-import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { Branding, PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
 @Component({
   selector: 'benji-forgot-password',
@@ -29,9 +29,9 @@ export class ForgotPasswordComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.parameters.darkLogo;
+        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 

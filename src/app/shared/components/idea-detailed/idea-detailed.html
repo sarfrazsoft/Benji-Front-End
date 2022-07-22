@@ -1,4 +1,4 @@
-<div fxLayout="row" class="mobile-panel">
+<div fxLayout="row" class="mobile-panel" [ngClass]="{'set-min-height': areCommentsAllowed() || imageSelected || pdfSelected || video || webcamImage}">
   <div 
     *ngIf="!imageSelected && !pdfSelected" 
     class="back-text" 
@@ -153,7 +153,7 @@
     </div>
   </div>
   <div class="content" fxLayout="column" fxLayoutAlign="space-between start">
-    <div class="content-area">
+    <div class="content-area" [ngClass]="{'space-bottom': !areCommentsAllowed()}">
       <div 
         class="idea-creation-controls" 
         fxLayout="row" 
@@ -228,7 +228,8 @@
           fxLayoutGap="13px"
           fxLayout="row"
           class="participants" 
-          fxLayoutAlign="start center">
+          fxLayoutAlign="start center"
+          [ngClass]="{'space-bottom': !areCommentsAllowed()}">
             <benji-profile-pictures
               [activityState]="activityState"
               [participantCodes]="[submitting_participant]"
@@ -258,15 +259,27 @@
                 (change)="categoryChanged($event)"
                 [searchable]="false"
                 [clearable]="false"
-                [disabled]="userRole === 'owner'">
+                [disabled]="userRole !== 'owner'">
               </ng-select>
             </div>
           </div>
         </ng-container>
-        <mat-tab-group class="discussion-tabs" *ngIf="areCommentsAllowed()">
+        <mat-tab-group 
+          class="discussion-tabs" 
+          *ngIf="areCommentsAllowed()"
+          [ngClass]="{'comments-empty': !idea?.comments.length}">
           <mat-tab label="Discussion">
             <div class="comments-area" fxLayout="column">
-              <div class="comments-container" >
+              <div class="comments-container">
+                <div 
+                  *ngIf="!idea.comments.length"
+                  class="no-comments"
+                  fxLayout="column"
+                  fxLayoutAlign="center center"
+                  fxLayoutGap="12px">
+                  <div class="text">No comments yet.</div>
+                  <div class="sub-text">Start the conversation.</div>
+                </div>
                 <div class="comment" *ngFor="let comment of idea.comments" fxLayout="row" fxLayoutGap="8px">
                   <div class="dp">
                     <benji-profile-pictures
@@ -285,6 +298,15 @@
             </div>
           </mat-tab>
           <mat-tab label="Likes ({{ idea?.hearts.length }})"> 
+            <div 
+              *ngIf="!idea?.hearts.length"
+              class="no-likes"
+              fxLayout="column"
+              fxLayoutAlign="center center"
+              fxLayoutGap="12px">
+              <div class="text">No Likes yet.</div>
+              <div class="sub-text">Like an idea.</div>
+            </div>
             <div class="likes-area" fxLayout="column" fxLayoutGap="8px">
               <ng-container *ngIf="idea?.hearts.length">
                 <div 

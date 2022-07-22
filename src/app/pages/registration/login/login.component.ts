@@ -10,7 +10,7 @@ import { SocialUser } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { LoginResponse } from 'src/app/services/auth/auth.service';
-import { TeamUser } from 'src/app/services/backend/schema';
+import { Branding, TeamUser, User } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-dashboard-login',
@@ -72,9 +72,10 @@ export class LoginComponent implements OnInit {
     //   this.roomCode.setValue(this.route.snapshot.queryParams['link']);
     //   this.validateRoomCode();
     // }
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.parameters.darkLogo;
+        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 

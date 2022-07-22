@@ -1,8 +1,27 @@
 <div class="nav-container">
-  <div class="logo" routerLink="/dashboard">
-    <img [src]="logo" alt="Benji Logo" />
-  </div>
-  <div class="nav-section" *ngFor="let section of sidenavSections">
-    <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
+  <div class="top-bottom-sections" fxLayout="column" fxLayoutAlign="space-between start">
+    <div class="top-sections">
+      <div class="logo" routerLink="/dashboard">
+        <img [src]="logo" alt="Benji Logo" />
+      </div>
+      <div class="nav-section" *ngFor="let section of sidenavTopSections">
+        <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
+      </div>
+      <!-- <div class="folders">
+        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
+          <div class="title">Folders</div>
+          <img class="add" src="../../assets/img/dashboard/plus.svg" alt="">
+        </div>
+        <div class="folder" fxLayoutGap="7px" fxLayout="row">
+          <img class="icon" src="../../assets/img/dashboard/folder.svg" alt="">
+          <div class="name">Passport Inc. </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="bottom-sections">
+      <div class="nav-section" *ngFor="let section of sidenavBottomSections">
+        <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
+      </div>
+    </div>
   </div>
 </div>

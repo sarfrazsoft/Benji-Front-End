@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, BoardParticipants, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Branding, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -59,6 +59,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isGrouping: boolean;
   @Input() participantCode: number;
 
+  count = 4;
   showTimer = false;
   currentActivityIndex;
 
@@ -102,10 +103,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
-
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.darkLogo = info.parameters.darkLogo;
+        this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 

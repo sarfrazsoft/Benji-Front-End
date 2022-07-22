@@ -90,7 +90,7 @@
 @import './ui-components/session-lobby-layout.scss';
 @import './ui-components/benji-profile-pictures.scss';
 @import './ui-components/side-nav.scss';
-
+@import './ui-components/notifications.scss';
 /*
   Material Deisgn Theme
 */
@@ -1768,4 +1768,12 @@ ul {
 //   outline-offset: 2px
 // }
 
-
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
