@@ -9,6 +9,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+
 import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Subject } from 'rxjs';
@@ -25,6 +26,8 @@ import {
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
+
+// declare var iframely: any;
 
 @Component({
   selector: 'benji-board-prompt',

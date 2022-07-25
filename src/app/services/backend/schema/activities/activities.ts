@@ -391,6 +391,7 @@ export interface Idea {
   time: string;
   idea_document: IdeaDocument;
   idea_video: IdeaDocument;
+  meta: any;
 }
 export interface IdeaDocument {
   id: number;

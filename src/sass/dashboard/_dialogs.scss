@@ -971,6 +971,10 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             background: #e7e7e7;
             &:hover {
               background: #dedede;
+              &.disabled {
+                opacity: 0.7;
+                background: #e7e7e7;
+              }
             }
             &.pinned, &.unpinned {
               img {
@@ -978,6 +982,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                 left: 10px;
                 position: absolute;
               }
+            }
+            &.disabled {
+              opacity: 0.7;
             }
           }
         }

@@ -9,6 +9,7 @@
     (mouseleave)="item.showClose = false">
     <!-- brainstorm card media -->
     <ng-container>
+      <!-- Idea image -->
       <div
         (click)="showDetailedIdea(item)"
         class="brainstorm-image"
@@ -40,7 +41,9 @@
           </ng-container>
         </ng-template>
       </div>
-      <div *ngIf="item.idea_video">
+
+      <!-- Idea video -->
+      <div *ngIf="item.idea_video && videoAvailable">
         <ng-container *ngIf="isUploadCare(item.idea_video.document_url)">
           <video 
             style="margin: 0 auto;" width="100%" 
@@ -61,6 +64,7 @@
         </ng-container>
       </div>
     
+      <!-- Idea document -->
       <div
         (click)="showDetailedIdea(item)"
         *ngIf="item.idea_document">
@@ -80,6 +84,14 @@
             [show-borders]="false"
             ></pdf-viewer>
         </div> 
+      </div>
+
+      <!-- Idea iframe -->
+      <div *ngIf="item.meta">
+        <div 
+          *ngIf="item.meta.iframe && item.meta.iframe.iframeHTML && item.meta.iframe.iframeHTML.length > 0">
+          <p bind-innerHTML="item.meta.iframe.iframeHTML | safeHtml"></p>
+        </div>
       </div>
     </ng-container>
     <div 
