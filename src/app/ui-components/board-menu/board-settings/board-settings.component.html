@@ -188,6 +188,21 @@
         [ngClass]="{'active': columnsMode}" 
         src="../../../assets/img/side-nav/selected.svg"/>
     </div>
+    <div 
+      class="board-mode" 
+      fxLayout="row" 
+      fxLayoutGap="12px"
+      (click)="setBoardMode('unsorted')">
+      <img src="../../../assets/img/side-nav/columns.svg"/>
+      <div fxLayout="column" fxLayoutAlign="center start">
+        <div class="label">Unsorted</div>
+        <div class="sub-label">Unsorted board.</div>
+      </div>
+      <img 
+        class="selected"
+        [ngClass]="{'active': unsortedMode}" 
+        src="../../../assets/img/side-nav/selected.svg"/>
+    </div>
   </div>
 
   <div fxLayout="column">

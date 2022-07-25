@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
 import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { Board, BoardStatus, BrainstormActivity, Category, Idea } from '../backend/schema';
 
@@ -438,6 +439,16 @@ export class BrainstormService {
     });
     existingIdeas = existingIdeas.sort((a: Idea, b: Idea) => {
       return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+    });
+    return existingIdeas;
+  }
+
+  sortIdeasOnRank(board: Board, existingIdeas: Array<Idea>, ranks: Array<PostOrder>) {
+    // sort based on time first and then by the selected filter
+    existingIdeas.sort((a: Idea, b: Idea) => {
+      const rankA = ranks.find((x) => a.id.toString() === x.ideaId);
+      const rankB = ranks.find((x) => b.id.toString() === x.ideaId);
+      return Number(rankA.order) - Number(rankB.order);
     });
     return existingIdeas;
   }

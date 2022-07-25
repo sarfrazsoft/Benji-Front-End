@@ -62,6 +62,7 @@ import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaCreationDialogComponent } from 'src/app/shared/dialogs/idea-creation-dialog/idea-creation.dialog';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
+import { isSet } from 'src/app/shared/util/value';
 
 @Component({
   selector: 'benji-ideas-board',
@@ -707,5 +708,9 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         idea.selectedpdfDoc
       )
     );
+  }
+
+  isSet(val) {
+    return isSet(val);
   }
 }

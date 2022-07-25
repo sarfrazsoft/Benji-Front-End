@@ -164,6 +164,12 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormToggleAllowCommentEvent'
       ) {
         this.masonry?.layout();
+      } else if (this.eventType === 'SetMetaDataBoardEvent') {
+        if (this.board.meta.updated === 'post_order') {
+          this.brainstormService.sortIdeasOnRank(this.board, this.ideas, this.board.meta.post_order);
+          this.masonry?.layout();
+          this.masonry?.reloadItems();
+        }
       }
     }
   }

@@ -91,6 +91,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   gridMode: boolean;
   threadMode: boolean;
   columnsMode: boolean;
+  unsortedMode: boolean;
   currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
@@ -324,15 +325,24 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
         this.gridMode = true;
         this.threadMode = false;
         this.columnsMode = false;
+        this.unsortedMode = false;
         break;
       case 'thread':
         this.gridMode = false;
         this.threadMode = true;
         this.columnsMode = false;
+        this.unsortedMode = false;
+        break;
+      case 'unsorted':
+        this.gridMode = false;
+        this.threadMode = false;
+        this.unsortedMode = true;
+        this.columnsMode = false;
         break;
       default:
         this.gridMode = false;
         this.threadMode = false;
+        this.unsortedMode = false;
         this.columnsMode = true;
     }
   }
