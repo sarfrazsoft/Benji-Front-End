@@ -163,9 +163,9 @@
           class="post bg-primary-color" 
           (click)="onSubmit()"
           [ngClass]="{
-            'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video
+            'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video || iframeAvailable
           }"
-          [disabled]="mediaUploading || descriptionIsEmpty && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected ? 'disabled': null">
+          [disabled]="mediaUploading || descriptionIsEmpty && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected && !iframeAvailable ? 'disabled': null">
             Post
         </button>
       </div>

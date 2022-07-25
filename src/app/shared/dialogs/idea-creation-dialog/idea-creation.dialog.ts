@@ -411,19 +411,14 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
       this.httpClient
         .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
         .subscribe((res: any) => {
-          this.iframeAvailable = true;
-          console.log(res.html);
-          this.iframeData = { iframeHTML: res.html, url: res.url };
-          this.meta = { ...this.meta, iframe: this.iframeData };
-          // iframely.load();
+          if (res.html) {
+            this.iframeAvailable = true;
+            console.log(res.html);
+            this.iframeData = { iframeHTML: res.html, url: res.url };
+            this.meta = { ...this.meta, iframe: this.iframeData };
+            // iframely.load();
+          }
         });
     }
-    console.log(link2);
-    // if (link.includes('https://')) {
-    //   link.slice(link.indexOf('https://'), link.substring);
-    //   link = link.trim();
-    //   link = link.split(' ');
-    // }
-    // console.log(link);
   }
 }
