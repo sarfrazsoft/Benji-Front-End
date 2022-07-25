@@ -117,7 +117,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
       ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
-        this.refreshMasonryLayout();
+        this.packery.layout();
       } else if (
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
@@ -200,6 +200,9 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
                 setTimeout(() => {
                   // this.packery.layout();
                   this.setUpPackery();
+                  setTimeout(() => {
+                    this.packery.layout();
+                  }, 300);
                 }, 0);
               }, 0);
             }
@@ -222,57 +225,59 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
       columnWidth: 300,
     });
     this.packery = pckry;
-
-    // if you have multiple .draggable elements
-    // get all draggie elements
-    const draggableElems = document.querySelectorAll('.grid-item');
-    // array of Draggabillies
-    const draggies = [];
-    // init Draggabillies
-    for (let i = 0; i < draggableElems.length; i++) {
-      const draggableElem = draggableElems[i];
-      const draggie = new Draggabilly(draggableElem, {
-        // options...
-      });
-      pckry.bindDraggabillyEvents(draggie);
-      draggies.push(draggie);
-    }
-    this.draggies = draggies;
-    // setTimeout(() => {
-    //   pckry.layout();
-    // }, 500);
-
-    // setTimeout(() => {
-    //   pckry.layout();
-    // }, 500);
-
-    pckry.layout();
-    pckry.on('layoutComplete', () => {
-      pckry.getItemElements().forEach((itemElem: any, i) => {
-        if (this.ideasOrder[i]) {
-        } else {
-          this.ideasOrder.push({ ideaId: itemElem.getAttribute('id'), order: i });
-        }
-      });
-    });
-    this.packery.on('dragItemPositioned', () => {
-      pckry.getItemElements().forEach((itemElem: any, i) => {
-        itemElem.setAttribute('order', i);
-        if (this.ideasOrder[i]) {
-          this.ideasOrder[i] = { ideaId: itemElem.getAttribute('id'), order: i };
-        }
-      });
+    if (this.isHost) {
+      // if you have multiple .draggable elements
+      // get all draggie elements
+      const draggableElems = document.querySelectorAll('.grid-item');
+      // array of Draggabillies
+      const draggies = [];
+      // init Draggabillies
+      for (let i = 0; i < draggableElems.length; i++) {
+        const draggableElem = draggableElems[i];
+        const draggie = new Draggabilly(draggableElem, {
+          // options...
+        });
+        pckry.bindDraggabillyEvents(draggie);
+        draggies.push(draggie);
+      }
+      this.draggies = draggies;
       // setTimeout(() => {
-      //   console.log(this.draggies);
-      // }, 300);
-      this.sendMessage.emit(
-        new SetMetaDataBoardEvent(this.board.id, {
-          updated: 'post_order',
-          post_order: this.ideasOrder,
-        })
-      );
-      console.log(JSON.stringify(this.ideasOrder));
-    });
+      //   pckry.layout();
+      // }, 500);
+
+      setTimeout(() => {
+        pckry.layout();
+      }, 300);
+
+      // pckry.layout();
+
+      pckry.on('layoutComplete', () => {
+        pckry.getItemElements().forEach((itemElem: any, i) => {
+          if (this.ideasOrder[i]) {
+          } else {
+            this.ideasOrder.push({ ideaId: itemElem.getAttribute('id'), order: i });
+          }
+        });
+      });
+      this.packery.on('dragItemPositioned', () => {
+        pckry.getItemElements().forEach((itemElem: any, i) => {
+          itemElem.setAttribute('order', i);
+          if (this.ideasOrder[i]) {
+            this.ideasOrder[i] = { ideaId: itemElem.getAttribute('id'), order: i };
+          }
+        });
+        // setTimeout(() => {
+        //   console.log(this.draggies);
+        // }, 300);
+        this.sendMessage.emit(
+          new SetMetaDataBoardEvent(this.board.id, {
+            updated: 'post_order',
+            post_order: this.ideasOrder,
+          })
+        );
+        console.log(JSON.stringify(this.ideasOrder));
+      });
+    }
   }
 
   sortOnOrder(ideas, sortOrder: Array<PostOrder>) {

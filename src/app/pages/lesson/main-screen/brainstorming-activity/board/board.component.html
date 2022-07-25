@@ -78,22 +78,24 @@
       </ng-container> -->
 
       <ng-container *ngIf="boardMode=='thread'">
-        <benji-unsorted-ideas
-          [ngClass]="{'thread-mode': boardMode=='thread'}"
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="false"
-          [myGroup]="myGroup"
-          [isHost]="isHost"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)">
-        </benji-unsorted-ideas>
+        <ng-container *ngIf="isSet(isHost)">
+          <benji-unsorted-ideas
+            [ngClass]="{'thread-mode': boardMode=='thread'}"
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="false"
+            [myGroup]="myGroup"
+            [isHost]="isHost"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+          </benji-unsorted-ideas>
+        </ng-container>
       </ng-container>
     </div>
   </div>
