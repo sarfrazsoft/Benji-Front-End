@@ -504,6 +504,9 @@
               opacity: 1;
             }
           }
+          .idea-creation-select {
+            margin-right: 16px;
+          }
         }
       }
     }
@@ -518,7 +521,7 @@
         border-radius: 17px;
         width: auto;
         border: 0px;
-        max-width: 200px;
+        max-width: 180px;
       }
     }
   }
@@ -636,7 +639,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       border: 1px solid #f3f4f7;
       box-shadow: 0px 1px 2px #e7e7e7;
       border-radius: 4px;
-      width: 140px;
+      width: 200px;
       .ng-option.ng-option-selected,
       .ng-option.ng-option-selected.ng-option-marked {
         background-color: #f3f4f7;
@@ -913,7 +916,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .ps-brainstorm-dropdown-controls .ng-select-container {
         height: 32px;
-        width: 130px;
+        width: 200px;
         margin-bottom: 16px;
       }
       .discussion-tabs {
@@ -946,7 +949,8 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           }
         }
         .no-comments, .no-likes {
-          height: 276px;
+          height: 100%;
+          padding: 40px 0px;
           line-height: 16px;
           color: #37352F;
           .text {
@@ -998,6 +1002,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .comments-container {
         margin-top: 16px;
+        height: 100%;
         .comment {
           margin-bottom: 8px;
           .comment-bg {
@@ -1024,9 +1029,18 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       .scrollable-area {
         width: 100%;
         overflow: auto;
-        max-height: 80vh;
+        height: 490px;
         &::-webkit-scrollbar {
           display: none;
+        }
+        mat-tab-group {
+          flex-grow: 1;
+          .mat-tab-body-wrapper {
+            height: 100%;
+            .comments-area {
+              height: 100%;
+            }
+          }
         }
       }
       .add-comment-container {
