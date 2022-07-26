@@ -727,13 +727,20 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       display: none !important;
     }
     .image-area {
+      .opnClose {
+        border-right: 1px solid #E7E7E7;
+        height: 100%;
+      }
       .select-image {
-        width: 385px;
-        height: 324px;
+        width: 33vw;
+        max-width: 400px;
+        height: calc(100% - 80px);
+        min-height: 400px;
         background: #f1f2f4;
         border-radius: 16px;
         margin: 40px;
         padding: 24px;
+        box-sizing: border-box;
         .attachments {
           border: 2px dashed #d4d4d4;
           box-sizing: border-box;
@@ -776,7 +783,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         }
         img {
           max-width: 100%;
-          max-height: 100%;
+          max-height: 90vh;
         }
         .remove-button {
           position: absolute;
@@ -801,11 +808,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     }
     .content-area {
       padding: 32px 32px 0px 32px;
-      // max-width: 448px;
-      // min-width: 336px;
-      // width: 448px;
-      max-width: 448px;
-      min-width: 336px;
+      box-sizing: border-box;
+      width: 36vw;
+      max-width: 512px;
       background: #fff;
       z-index: 2;
       &.space-bottom {
@@ -1028,10 +1033,13 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
     }
     .content {
+      &.content-blank {
+        display: none !important;
+      }
       .scrollable-area {
         width: 100%;
         overflow: auto;
-        max-height: 80vh;
+        max-height: 70vh;
         &::-webkit-scrollbar {
           display: none;
         }
@@ -1059,11 +1067,17 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   }
 }
 
-@media (max-width: 1140px) and (min-width: 848px) {
+@media (max-width: 1164px) and (min-width: 848px) {
   .idea-detailed-dialog mat-dialog-container .image-area .preview-image {
     width: 40vw;
     max-width: 512px;
     min-width: 40vw;
+  }
+  .idea-detailed-dialog mat-dialog-container .image-area .select-image {
+    margin: 0px;
+    padding: 16px;
+    height: 100%;
+    border-radius: 16px 0px 0px 16px;
   }
   .idea-detailed-dialog mat-dialog-container .content-area {
     min-width: 32vw;
