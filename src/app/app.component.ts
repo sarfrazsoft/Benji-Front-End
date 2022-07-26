@@ -214,6 +214,10 @@ export class AppComponent implements OnInit {
         benji-ms-brainstorming-activity .prose-sm p a, .idea-detailed-dialog mat-dialog-container .content-area .prose-sm p a {
           color: ${color};
         }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .post:hover {
+          color: ${color};
+          background: #fff !important;
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

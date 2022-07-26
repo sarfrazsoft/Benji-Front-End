@@ -360,7 +360,7 @@ benji-ms-brainstorming-activity {
             height: 32px;
             padding: 0px 16px;
             color: #828282;
-            margin-top: -8px;
+            margin-bottom: 16px;
             span {
               font-size: 14px;
               line-height: 17px;
@@ -965,8 +965,8 @@ benji-ps-brainstorming-activity {
           height: auto;
           img, video {
             border-radius: 16px;
-            max-height: 480px;
-            max-width: 400px;
+            max-height: 680px;
+            max-width: 600px;
             //width: auto;
           }
         }
