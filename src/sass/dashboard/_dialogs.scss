@@ -807,6 +807,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             opacity: 1;
           }
         }
+        .pdf-wrapper {
+          width: 44vw;
+        }
       }
     }
     .content-area {
@@ -1196,6 +1199,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           right: 16px;
           font-weight: 500;
           font-size: 12px;
+        }
+        .pdf-wrapper {
+          width: 100%;
         }
       }
     }

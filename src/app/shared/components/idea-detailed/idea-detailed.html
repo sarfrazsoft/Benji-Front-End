@@ -96,10 +96,10 @@
       </ng-container> -->
       
       <ng-container *ngIf="pdfSelected">
-        <div style="width: 100%">
+        <div class="pdf-wrapper">
           <ngx-extended-pdf-viewer [src]="pdfSrc" 
             useBrowserLocale="true" 
-            [height]="'512px'">
+            [height]="'70vh'">
           </ngx-extended-pdf-viewer>
           <!-- <div  style="width: 100%;height: 200px">
             <pdf-viewer
