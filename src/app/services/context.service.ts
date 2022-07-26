@@ -19,6 +19,13 @@ export class ContextService {
     return this.user$.getValue();
   }
 
+  set brandingInfo(brandingInfo: any) {
+    this.brandingInfo$.next(brandingInfo);
+  }
+  get brandingInfo(): any {
+    return this.brandingInfo$.getValue();
+  }
+
   set lessons(lessons: any) {
     this.lessons$.next(lessons);
   }
@@ -64,6 +71,11 @@ export class ContextService {
    * Current User
    */
   user$ = new BehaviorSubject<any>(null);
+
+  /**
+   * Branding Info
+   */
+  brandingInfo$ = new BehaviorSubject<any>(null);
 
   /**
    * Courses

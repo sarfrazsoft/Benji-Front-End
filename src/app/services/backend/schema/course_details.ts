@@ -1,4 +1,4 @@
-import { TeamUser, User } from './user';
+import { Branding, TeamUser, User } from './user';
 import { Timer } from './utils';
 
 export interface PaginatedResponse<T> {
@@ -41,7 +41,11 @@ export class Lesson {
   effective_permission?: EffectivePermission;
   is_valid_lesson?: boolean;
   feature_image?: string;
+  is_deleted?: boolean;
+  is_default?: boolean;
+  status?: string;
 }
+
 
 export interface LessonRun {
   id: number;
@@ -50,6 +54,7 @@ export interface LessonRun {
   lessonrun_code: number;
   host: any;
   participant_set: Array<Participant>;
+  branding: Branding;
 }
 
 export interface RunningTools {
@@ -103,6 +108,9 @@ export interface LessonRunDetails {
   participant_set: Array<any>;
   screen_socet: string;
   start_time: string;
+  branding: Branding;
+  idea_count: number;
+  board_count: number;
 }
 
 export interface Participant {

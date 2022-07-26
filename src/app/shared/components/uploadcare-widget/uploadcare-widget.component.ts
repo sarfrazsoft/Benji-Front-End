@@ -133,7 +133,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
           });
         }
       } else if (!info.isImage) {
-        // now we convert the file
+        // if it's a video
         this.convertVideoFormat('mp4', info.uuid).subscribe(
           (data: ConvertedFile) => {
             this.video = true;

@@ -34,6 +34,7 @@ import {
   VotePitchComponent,
 } from 'src/app/pages/lesson/participant';
 import { ParticipantLobbyComponents } from 'src/app/pages/participant';
+import { SafeHtmlPipe } from '../services/safe-html.pipe';
 import { SafePipe } from '../services/safe.pipe';
 import { UIComponents } from '../ui-components';
 import { CmpComponents, CmpEntryComponents } from './components';
@@ -82,6 +83,7 @@ export const Components = [
   ...UIComponents,
   ...ParticipantLobbyComponents,
   SafePipe,
+  SafeHtmlPipe,
 ];
 
 export const EntryComponents = [...Dialogs, ...CmpEntryComponents, ...ActivityComponents];

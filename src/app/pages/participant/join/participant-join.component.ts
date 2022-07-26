@@ -8,6 +8,7 @@ import { BackendRestService } from 'src/app/services';
 import { ContextService, SharingToolService } from 'src/app/services';
 import { BeforeLessonRunDetails, LessonRunDetails } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { Branding, User } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-participant-join',
@@ -50,10 +51,9 @@ export class ParticipantJoinComponent implements OnInit {
     } else {
       this.joinLinkExists = false;
     }
-    // this.updateBeforeLessonRunDetails();
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.darkLogo = info.parameters.darkLogo;
+        this.darkLogo = info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
   }
@@ -61,6 +61,7 @@ export class ParticipantJoinComponent implements OnInit {
   public validateRoomCode() {
     this.backend.validateRoomCode(this.roomCode.value).subscribe(
       (res: LessonRunDetails) => {
+        this.contextService.brandingInfo = res.branding;
         this.backend.userEnteredroomCode = this.roomCode.value;
         const lessonrun_code = res.lessonrun_code;
         localStorage.setItem('lessonRunDetails', JSON.stringify(res));

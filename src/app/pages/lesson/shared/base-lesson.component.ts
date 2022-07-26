@@ -130,6 +130,8 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
 
     this.restService.get_lessonrun(this.roomCode).subscribe((lessonRun) => {
       this.lessonRun = lessonRun;
+      console.log(lessonRun);
+      this.contextService.brandingInfo = lessonRun.branding;
       if (lessonRun.lesson.single_user_lesson) {
         if (localStorage.getItem('single_user_participant')) {
           // single user participant info is already stored

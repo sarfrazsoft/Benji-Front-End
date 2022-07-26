@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
@@ -15,6 +15,8 @@ export class LessonsComponent implements OnInit {
   @Input() lessons: Array<Lesson> = [];
   @Input() lessonRuns: Array<Lesson> = [];
   @Input() isTemplates = false;
+  @Input() layout;
+  @Output() openCreateSessionEvent = new EventEmitter();
 
   eventsSubject: Subject<void> = new Subject<void>();
 
@@ -61,4 +63,15 @@ export class LessonsComponent implements OnInit {
       }
     });
   }
+
+  updateLessonsRuns() {
+    this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+      this.lessonRuns = lessonsRuns;
+    });
+  }
+
+  openCreateSession() {
+    this.openCreateSessionEvent.emit();
+  }
+  
 }

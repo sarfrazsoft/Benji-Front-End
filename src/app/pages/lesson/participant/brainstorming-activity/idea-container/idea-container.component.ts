@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import * as global from 'src/app/globals';
-import { BrainstormImageSubmitEvent, BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
+import { BrainstormSubmitEvent, Category } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { DraftIdea } from '../brainstorming-activity.component';
@@ -72,7 +72,8 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
     if (this.userIdeaText.length === 0) {
       return;
     }
-    this.sendMessage.emit(new BrainstormSubmitEvent(this.userIdeaText, '', this.selectedCategory.id, null));
+    // this.sendMessage.emit(new BrainstormSubmitEvent(thi
+    // s.userIdeaText, '', this.selectedCategory.id, null));
     this.idea.editing = false;
   }
 
@@ -130,14 +131,14 @@ export class IdeaContainerComponent implements OnInit, OnChanges {
         });
     } else {
       if (this.selectedImageUrl) {
-        this.sendMessage.emit(
-          new BrainstormImageSubmitEvent(
-            this.userIdeaText,
-            '',
-            this.selectedCategory.id,
-            this.selectedImageUrl
-          )
-        );
+        // this.sendMessage.emit(
+        //   new BrainstormImageSubmitEvent(
+        //     this.userIdeaText,
+        //     '',
+        //     this.selectedCategory.id,
+        //     this.selectedImageUrl
+        //   )
+        // );
       }
     }
   }

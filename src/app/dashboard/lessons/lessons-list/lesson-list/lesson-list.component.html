@@ -4,18 +4,23 @@
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef> Session Title </th>
+        <th mat-header-cell *matHeaderCellDef> Title </th>
         <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.lesson_title}} </td>
       </ng-container>
     
       <ng-container matColumnDef="host">
-        <th mat-header-cell *matHeaderCellDef> Host </th>
+        <th mat-header-cell *matHeaderCellDef> Owner </th>
         <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.host}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="boards">
+        <th mat-header-cell *matHeaderCellDef> Boards </th>
+        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.boards}} </td>
       </ng-container>
     
       <ng-container matColumnDef="participants">
-        <th mat-header-cell *matHeaderCellDef> Participants </th>
-        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element" style="padding-left: 40px;"> {{element.participants}} </td>
+        <th mat-header-cell *matHeaderCellDef> Collaborators </th>
+        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.participants}} </td>
       </ng-container>
     
       <ng-container matColumnDef="startDate">
@@ -31,17 +36,17 @@
               <img
                 matTooltip="Copy lesson link"
                 (click)="copyLink(element)" 
-                src="../../../../assets/img/dashboard-active-sessions/copy-link.svg">
+                src="../../../../assets/img/dashboard/copy-link.svg">
             </div>
             <div (click)="openSessionSettings(element)" class="grey-bg" fxLayoutAlign="center center">
-              <img src="../../../../assets/img/dashboard-active-sessions/edit-pen.svg" alt="">
+              <img src="../../../../assets/img/dashboard/edit-pen.svg" alt="">
             </div>
 
             <div
               [matMenuTriggerFor]="menu" 
               class="grey-bg" 
               fxLayoutAlign="center center">
-              <img src="../../../../assets/img/dashboard-active-sessions/hori-dots.svg" alt="">
+              <img src="../../../../assets/img/dashboard/hori-dots.svg" alt="">
             </div>
           </div>
           <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">

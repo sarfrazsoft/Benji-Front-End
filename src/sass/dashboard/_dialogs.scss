@@ -971,6 +971,10 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             background: #e7e7e7;
             &:hover {
               background: #dedede;
+              &.disabled {
+                opacity: 0.7;
+                background: #e7e7e7;
+              }
             }
             &.pinned, &.unpinned {
               img {
@@ -978,6 +982,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                 left: 10px;
                 position: absolute;
               }
+            }
+            &.disabled {
+              opacity: 0.7;
             }
           }
         }
@@ -1054,12 +1061,18 @@ ng-dropdown-panel.post-idea-categories-dropdown {
 
 @media (max-width: 1140px) and (min-width: 848px) {
   .idea-detailed-dialog mat-dialog-container .image-area .preview-image {
-    width: unset;
+    width: 40vw;
     max-width: 512px;
     min-width: 40vw;
   }
   .idea-detailed-dialog mat-dialog-container .content-area {
     min-width: 32vw;
+<<<<<<< HEAD
+=======
+  }
+  .idea-detailed-dialog mat-dialog-container .content-area {
+    min-width: unset;
+>>>>>>> staging
   }
   .idea-detailed-dialog mat-dialog-container .slide-arrow.right {
     right: 3%;

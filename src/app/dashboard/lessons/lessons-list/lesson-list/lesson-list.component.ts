@@ -19,19 +19,20 @@ export interface TableRowInformation {
   lesson_title: string;
   host: string;
   lesson_description: string;
+  boards: number;
   participants: number;
   startDate: string;
   lessonId: number;
   hostId: number;
 }
 @Component({
-  selector: 'benji-active-lessons',
-  templateUrl: './active-lessons.component.html',
+  selector: 'benji-lesson-list',
+  templateUrl: './lesson-list.component.html',
 })
-export class ActiveLessonsComponent implements OnInit {
+export class LessonListComponent implements OnInit {
   @Input() lessonRuns: Array<Lesson> = [];
 
-  displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'options'];
+  displayedColumns: string[] = ['title', 'host', 'boards', 'participants', 'startDate', 'options'];
   dataSource: TableRowInformation[] = [];
 
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -39,15 +40,15 @@ export class ActiveLessonsComponent implements OnInit {
   options = [
     {
       option: 'Open',
-      icon: '../../../../assets/img/dashboard-active-sessions/open.svg',
+      icon: '../../../../assets/img/dashboard/open.svg',
     },
     {
       option: 'View only',
-      icon: '../../../../assets/img/dashboard-active-sessions/view-only.svg',
+      icon: '../../../../assets/img/dashboard/view-only.svg',
     },
     {
       option: 'Closed',
-      icon: '../../../../assets/img/dashboard-active-sessions/closed.svg',
+      icon: '../../../../assets/img/dashboard/closed.svg',
     },
   ];
 
@@ -79,6 +80,7 @@ export class ActiveLessonsComponent implements OnInit {
         lesson_description: val.lesson.lesson_description,
         host: val.host.first_name + ' ' + val.host.last_name,
         hostId: val.host.id,
+        boards: 4,
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
       });

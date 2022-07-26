@@ -74,7 +74,7 @@
         </div>
       </div>
     </div>
-    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage" fxLayoutAlign="center center">
+    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage || iframeAvailable" fxLayoutAlign="center center">
       <ng-container *ngIf="imageSrc">      
         <ng-container *ngIf="isAbsolutePathOrNewlySelectedImage(imageSrc); else uploadedImage">
           <img 
@@ -139,6 +139,13 @@
       <ng-container *ngIf="webcamImage">
         <img benji-click-stop-propagation [src]="webcamImageURL" alt="" />
       </ng-container>
+
+      <ng-container *ngIf="iframeData">
+        <div style="width: 100%;">
+          <p bind-innerHTML="iframeData.iframeHTML | safeHtml"></p>
+        </div>
+      </ng-container>
+
       <div 
         class="back-circle" 
         fxLayoutAlign="center center"
@@ -152,6 +159,7 @@
       </button>
     </div>
   </div>
+
   <div class="content" fxLayout="column" fxLayoutAlign="space-between start">
     <div class="content-area" [ngClass]="{'space-bottom': !areCommentsAllowed()}">
       <div 
@@ -188,7 +196,8 @@
             </div>
             <div
               (click)="toggle()"
-              class="options" 
+              class="options"
+              [ngClass]="{ 'disabled': isItemSelected() }"
               fxLayoutAlign="center center">
               <img src="/assets/img/idea-creation/upload-toggle.svg">
             </div>

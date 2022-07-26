@@ -3,10 +3,12 @@ import { Router } from '@angular/router';
 import { ActivityTypes } from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import {
+  Branding,
   ParticipantOptInEvent,
   ParticipantOptOutEvent,
   Timer,
   UpdateMessage,
+  User,
 } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 
@@ -28,9 +30,10 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
   constructor(private contextService: ContextService, private router: Router) {}
 
   ngOnInit() {
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.parameters.lightLogo;
+        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 

@@ -1,25 +1,137 @@
 // TODO use variables for border color to keep it consistent across all panels
 .admin-panel {
-  padding: 64px 64px 64px 56px;
-
+  padding: 48px 64px;
+  min-height: 100vh;
+  background: #fff;
   .dashboard-header {
-    margin-bottom: 36px;
+    margin-bottom: 32px;
     .dashboard-heading {
-      padding: 0px $dash-subsection-sides-padding;
+      //padding: 0px $dash-subsection-sides-padding;
       h1 {
-        font-size: 48px;
+        font-size: 32px;
         margin: 0px;
       }
     }
     .dashboard-secondary-button {
       height: 40px;
-      margin: 0px 8px;
       line-height: normal;
+      font-weight: 500;
+      padding: 0 24px;
+    }
+    .layout-icons {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      &:hover, &.active {
+        background: #f2f4f7;
+        cursor: pointer;
+      }
     }
   }
-
+  
+  .settings-wrapper {
+    width: 328px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    border-radius: 16px;
+    .heading {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 20px;
+      color: $black;
+      margin-bottom: 24px;
+    }
+    .title {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 14px;
+      color: #37352F;
+    }
+    .edit-settings {
+      font-size: 16px;
+      font-weight: 400;
+      color: #37352F;
+      height: 48px;
+      padding: 0px 16px;
+      background: #f3f4f7;
+      border-radius: 8px;
+      border: 2px solid #f3f4f7;
+      &:focus {
+        outline: none;
+        background-color: #fff;
+      }
+    }
+    .reset-pw {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      cursor: pointer;
+    }
+    .separator {
+      border-bottom: 1px solid #E2E6EC;
+      margin: 32px 0px;
+    }
+    .settings-button {
+      color: #fff;
+      padding: 16px 24px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      border-radius: 8px;
+      &.delete {
+        color: $black;
+        background: #f3f4f7;
+        &:hover {
+          background: #E7E7E7;
+        }
+      }
+      &.color-code {
+        width: 151px;
+      }
+    }
+    .upload-delete {
+      cursor: pointer;
+      width: fit-content;
+      input {
+        display: none;
+      }
+    }
+    .uploaded {
+      .logo {
+        max-height: 48px;
+      }
+      .favicon {
+        max-height: 32px;
+      }
+    }
+    .mat-error {
+      margin-bottom: 8px;
+    }
+    .brand-color {
+      .code {
+        height: 48px;
+        border-radius: 8px;
+        color: transparent;
+        width: 151px;
+        padding: 0px 16px;
+        color: $white;
+        margin-bottom: 0px !important;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .color-picker {
+    .type-policy {
+      display: none;
+    }
+    .hex-text .box {
+      padding: 0 8px 8px 8px;
+    }
+  } 
   .subsection-container {
-    padding: 0px $dash-subsection-sides-padding;
+    //padding: 0px $dash-subsection-sides-padding;
   }
   .sub-heading {
     h2 {
@@ -37,7 +149,7 @@
   }
 
   .active-sessions-wrapper {
-    padding: 32px 0px 12px 0px;
+    padding-bottom: 32px;
     background: #fff;
     border-radius: 8px;
     .title {
@@ -51,16 +163,17 @@
       box-shadow: unset;
       font-size: 14px;
       .mat-column-title {
-        width: 37vw;
+        width: 25vw;
+        color: #37352F;
         max-width: 37vw;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
         padding-right: 32px;
       }
-      .mat-column-host, .mat-column-participants, .mat-column-startDate, .mat-column-options {
-        width: 10vw;
-      }
+      // .mat-column-host, .mat-column-participants, .mat-column-startDate, .mat-column-options {
+      //   width: 10vw;
+      // }
       th.mat-header-cell:first-of-type, 
       td.mat-cell:first-of-type, 
       td.mat-footer-cell:first-of-type {
@@ -69,7 +182,7 @@
       }
       tr:last-child {
         td {
-          border-bottom: 0px;
+        //  border-bottom: 0px;
         }
       }
       tr.mat-row, tr.mat-footer-row, tr.mat-header-row {
@@ -108,12 +221,18 @@
         }
       }
       tr.mat-row:hover {
-        background: #E8E8EB;
+        background: #F1F2F6;
         cursor: pointer;
       }
+      th {
+        color: #616161;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+      }
     }
-    table, td, th {
-      color: #37352F;
+    table, td {
+      color: #A4A4A4;
       line-height: unset;
     }
   }
@@ -138,3 +257,11 @@ ng-dropdown-panel {
     margin-top: 8px;
   }
 }
+
+.color-picker {
+  bottom: -180px;
+  top: unset !important;
+  .arrow {
+    display: none;
+  }
+} 

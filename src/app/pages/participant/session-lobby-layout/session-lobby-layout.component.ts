@@ -12,7 +12,7 @@ import {
   LessonRunDetails,
   Participant,
 } from 'src/app/services/backend/schema/course_details';
-import { TeamUser, User } from 'src/app/services/backend/schema/user';
+import { Branding, TeamUser, User } from 'src/app/services/backend/schema/user';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -88,9 +88,9 @@ export class SessionLobbyLayoutComponent implements OnInit {
         });
       }
     }
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo = info.parameters.darkLogo;
+        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
   }

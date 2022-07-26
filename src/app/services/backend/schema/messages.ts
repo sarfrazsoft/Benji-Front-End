@@ -418,23 +418,27 @@ export class BrainstormVotingCompleteInternalEvent extends ActivityEvent {
 export class BrainstormSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitEvent';
 
-  constructor(
-    text: string,
-    title: string,
-    category: number,
-    groupId: number,
-    idea_image?: number,
-    image_path?: string
-  ) {
+  constructor(idea: {
+    id: number;
+    text: string;
+    title: string;
+    category: number;
+    groupId: number;
+    idea_image: number;
+    image_path?: string;
+    idea_video: number;
+    meta: any;
+  }) {
     super();
-    this.extra_args = { idea: text, title: title, category: category, group_id: groupId };
-    if (idea_image) {
-      this.extra_args = {
-        ...this.extra_args,
-        idea_image: idea_image,
-        image_path: image_path,
-      };
-    }
+    this.extra_args = {
+      idea: idea.text,
+      title: idea.title,
+      category: idea.category,
+      group_id: idea.groupId,
+      idea_image: idea.idea_image,
+      image_path: idea.image_path,
+      meta: idea.meta,
+    };
   }
 }
 
@@ -482,6 +486,34 @@ export class BrainstormSubmitDocumentEvent extends ActivityEvent {
     };
   }
 }
+// export class BrainstormSubmitIframelyEvent extends ActivityEvent {
+//   event_name = 'BrainstormSubmitEvent';
+
+//   constructor(text: string, title: string, category: number, meta: any) {
+//     super();
+//     this.extra_args = {
+//       idea: text,
+//       title: title,
+//       category: category,
+//       meta: meta,
+//     };
+//   }
+// }
+
+// export class BrainstormEditIframelyEvent extends ActivityEvent {
+//   event_name = 'BrainstormEditIdeaSubmitEvent';
+
+//   constructor(id: number, text: string, title: string, category: number, meta: any) {
+//     super();
+//     this.extra_args = {
+//       brainstormidea: id,
+//       idea: text,
+//       title: title,
+//       category: category,
+//       meta: meta,
+//     };
+//   }
+// }
 export class BrainstormEditDocumentIdeaEvent extends ActivityEvent {
   event_name = 'BrainstormEditIdeaSubmitEvent';
 
@@ -499,42 +531,44 @@ export class BrainstormEditDocumentIdeaEvent extends ActivityEvent {
 export class BrainstormEditIdeaSubmitEvent extends ActivityEvent {
   event_name = 'BrainstormEditIdeaSubmitEvent';
 
-  constructor(
-    id: number,
-    text: string,
-    title: string,
-    category: number,
-    groupId: number,
-    idea_image?: number,
-    image_path?: string
-  ) {
+  constructor(idea: {
+    id: number;
+    text: string;
+    title: string;
+    category: number;
+    groupId: number;
+    idea_image?: number;
+    image_path?: string;
+    meta?: any;
+  }) {
     super();
     this.extra_args = {
-      brainstormidea: id,
-      idea: text,
-      title: title,
-      category: category,
-      group_id: groupId,
-      idea_image: idea_image,
-      image_path: image_path,
+      brainstormidea: idea.id,
+      idea: idea.text,
+      title: idea.title,
+      category: idea.category,
+      group_id: idea.groupId,
+      idea_image: idea.idea_image,
+      image_path: idea.image_path,
+      meta: idea.meta,
     };
   }
 }
 
-export class BrainstormImageSubmitEvent extends ActivityEvent {
-  event_name = 'BrainstormSubmitEvent';
+// export class BrainstormImageSubmitEvent extends ActivityEvent {
+//   event_name = 'BrainstormSubmitEvent';
 
-  constructor(text: string, title: string, category: number, groupId: number, image_path?: string) {
-    super();
-    this.extra_args = {
-      idea: text,
-      title: title,
-      category: category,
-      group_id: groupId,
-      image_path: image_path,
-    };
-  }
-}
+//   constructor(text: string, title: string, category: number, groupId: number, image_path?: string) {
+//     super();
+//     this.extra_args = {
+//       idea: text,
+//       title: title,
+//       category: category,
+//       group_id: groupId,
+//       image_path: image_path,
+//     };
+//   }
+// }
 
 export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
   event_name = 'BrainstormSubmitIdeaCommentEvent';
