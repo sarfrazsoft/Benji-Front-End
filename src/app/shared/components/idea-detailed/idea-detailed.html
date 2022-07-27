@@ -1,4 +1,7 @@
-<div fxLayout="row" class="mobile-panel" [ngClass]="{'set-min-height': areCommentsAllowed() || imageSelected || pdfSelected || video || webcamImage}">
+<div 
+  fxLayout="row" 
+  class="mobile-panel" 
+  [ngClass]="{'set-min-height': areCommentsAllowed() || imageSelected || pdfSelected || video || webcamImage}">
   <div 
     *ngIf="!imageSelected && !pdfSelected" 
     class="back-text" 
@@ -74,7 +77,11 @@
         </div>
       </div>
     </div>
-    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage || iframeAvailable" fxLayoutAlign="center center">
+    <div 
+      class="preview-image" 
+      *ngIf="imageSelected || pdfSelected || video || webcamImage || iframeAvailable" 
+      fxLayoutAlign="center center"
+      [ngClass]="{'only-area': !areCommentsAllowed() && !isHost && !ideaTitle.length && emptyUserIdeaText}">
       <ng-container *ngIf="imageSrc">      
         <ng-container *ngIf="isAbsolutePathOrNewlySelectedImage(imageSrc); else uploadedImage">
           <img 
@@ -164,7 +171,8 @@
     class="content" 
     fxLayout="column" 
     fxLayoutAlign="space-between start" 
-    [ngClass]="{'content-blank': !areCommentsAllowed() && !isHost && !ideaTitle && !userIdeaText}">
+    [ngClass]="{'content-blank': !areCommentsAllowed() && !isHost && !ideaTitle.length && emptyUserIdeaText ,
+                'only-area': !imageSelected && !pdfSelected && !uploadPanelExpanded && !video && !webcamImage}">
     <div class="content-area" [ngClass]="{'space-bottom': !areCommentsAllowed()}">
       <div 
         class="idea-creation-controls" 

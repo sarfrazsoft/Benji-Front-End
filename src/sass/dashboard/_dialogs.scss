@@ -1044,6 +1044,12 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       &.content-blank {
         display: none !important;
       }
+      &.only-area {
+        min-width: 512px;
+        .content-area {
+          width: 100%;
+        }
+      }
       .scrollable-area {
         width: 100%;
         overflow: auto;
@@ -1091,6 +1097,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     width: 40vw;
     max-width: 512px;
     min-width: 40vw;
+    &.only-area {
+      min-width: 512px;
+    }
   }
   .idea-detailed-dialog mat-dialog-container .image-area .select-image {
     margin: 0px;

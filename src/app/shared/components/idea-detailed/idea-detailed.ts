@@ -197,6 +197,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   hoverColor = '';
 
   pdfCleared = false;
+  emptyUserIdeaText: boolean;
 
   constructor(
     private activitiesService: ActivitiesService,
@@ -219,6 +220,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         this.isHost = false;
       }
     });
+
+    if (!this.userIdeaText || this.userIdeaText?.length < 7) {
+      this.emptyUserIdeaText = true;
+    } else {
+      this.emptyUserIdeaText = false;
+    }
+
+    console.log(!this.areCommentsAllowed());
+    console.log(!this.isHost);
+    console.log(!this.ideaTitle.length);
+    console.log(this.emptyUserIdeaText);
   }
 
   ngOnChanges() {
