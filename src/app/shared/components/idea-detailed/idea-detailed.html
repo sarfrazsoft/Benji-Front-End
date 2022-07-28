@@ -211,7 +211,7 @@
           (mouseout)="changeOnHover($event)"
           >Update</button>
       </div>
-      <div class="scrollable-area">
+      <div class="scrollable-area" fxLayout="column">
         <ng-container *ngIf="userRole === 'owner' || ideaTitle">
           <textarea 
             [readonly]="userRole !== 'owner'"

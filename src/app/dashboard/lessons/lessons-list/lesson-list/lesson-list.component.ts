@@ -80,7 +80,7 @@ export class LessonListComponent implements OnInit {
         lesson_description: val.lesson.lesson_description,
         host: val.host.first_name + ' ' + val.host.last_name,
         hostId: val.host.id,
-        boards: 4,
+        boards: val.board_count,
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
       });
