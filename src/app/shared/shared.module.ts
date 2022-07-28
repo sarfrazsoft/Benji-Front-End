@@ -102,6 +102,7 @@ import {
   UppyAngularProgressBarModule,
   UppyAngularStatusBarModule,
 } from '@uppy/angular';
+import { MuuriModule } from 'muuri-angular';
 
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
@@ -116,6 +117,7 @@ import { NgxTiptapModule } from 'ngx-tiptap';
     NgxExtendedPdfViewerModule,
     PdfJsViewerModule,
     ...SHARED_MODULES,
+    MuuriModule,
     NgxPermissionsModule.forRoot(),
     PdfViewerModule,
     UppyAngularDashboardModule,

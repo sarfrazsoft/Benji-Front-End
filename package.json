@@ -71,6 +71,8 @@
     "masonry-layout": "^4.2.2",
     "material-design-icons": "^3.0.1",
     "moment": "^2.24.0",
+    "muuri": "^0.9.5",
+    "muuri-angular": "^0.3.4",
     "ng-intercom": "^8.0.2",
     "ng2-pdf-viewer": "^7.0.2",
     "ng2-pdfjs-viewer": "^6.0.2",

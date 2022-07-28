@@ -39,7 +39,7 @@
         </benji-categorized-ideas>
       </ng-container>
 
-      <ng-container *ngIf="boardMode=='grid'">
+      <!-- <ng-container *ngIf="boardMode=='grid'">
         <benji-uncategorized-ideas
           [board]="board"
           [act]="act"
@@ -56,9 +56,31 @@
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)">
         </benji-uncategorized-ideas>
+      </ng-container> -->
+
+      <ng-container *ngIf="boardMode=='grid'">
+        <ng-container *ngIf="isSet(isHost)">
+          <benji-grid-ideas
+            [ngClass]="{'thread-mode': boardMode=='thread'}"
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
+            [minWidth]="getMinWidth()"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="false"
+            [myGroup]="myGroup"
+            [isHost]="isHost"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+          </benji-grid-ideas>
+        </ng-container>
       </ng-container>
 
-      <!-- <ng-container *ngIf="boardMode=='thread'">
+      <ng-container *ngIf="boardMode=='thread'">
         <benji-thread-mode-ideas
           [ngClass]="{'thread-mode': boardMode=='thread'}"
           [board]="board"
@@ -75,27 +97,6 @@
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)">
         </benji-thread-mode-ideas>
-      </ng-container> -->
-
-      <ng-container *ngIf="boardMode=='thread'">
-        <ng-container *ngIf="isSet(isHost)">
-          <benji-unsorted-ideas
-            [ngClass]="{'thread-mode': boardMode=='thread'}"
-            [board]="board"
-            [act]="act"
-            [activityState]="activityState"
-            [sendMessage]="sendMessage"
-            [joinedUsers]="joinedUsers"
-            [showUserName]="showUserName"
-            [participantCode]="participantCode"
-            [eventType]="eventType"
-            [isColumnsLayout]="false"
-            [myGroup]="myGroup"
-            [isHost]="isHost"
-            (viewImage)="viewImage($event)"
-            (deleteIdea)="deleteIdea($event)">
-          </benji-unsorted-ideas>
-        </ng-container>
       </ng-container>
     </div>
   </div>

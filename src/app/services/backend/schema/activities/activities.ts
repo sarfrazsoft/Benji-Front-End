@@ -334,7 +334,7 @@ export interface TopicMedia {
 
 export type BoardStatus = 'open' | 'view_only' | 'closed' | 'private';
 
-export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes';
+export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes' | 'unsorted';
 
 export interface BoardParticipants {
   [boardID: string]: Array<number>;

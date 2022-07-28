@@ -9,6 +9,7 @@ import { EmojiLookupService } from './emoji-lookup.service';
 import { GroupingToolService } from './grouping-tool.service';
 import { LayoutService } from './layout.service';
 import { PastSessionsService } from './past-sessions.service';
+import { PostLayoutService } from './post-layout.service';
 import { SharingToolService } from './sharing-tool.service';
 import { TopicMediaService } from './topic-media.service';
 import { UtilsService } from './utils.service';
@@ -32,6 +33,7 @@ export {
   PastSessionsService,
   SharingToolService,
   GroupingToolService,
+  PostLayoutService,
 };
 
 export const ServicesProviders = [
@@ -50,5 +52,6 @@ export const ServicesProviders = [
   GroupingToolService,
   BoardStatusService,
   TopicMediaService,
+  PostLayoutService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];
