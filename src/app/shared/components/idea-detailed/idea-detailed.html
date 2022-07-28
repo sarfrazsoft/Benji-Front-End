@@ -1,4 +1,7 @@
-<div fxLayout="row" class="mobile-panel" [ngClass]="{'set-min-height': areCommentsAllowed() || imageSelected || pdfSelected || video || webcamImage}">
+<div 
+  fxLayout="row" 
+  class="mobile-panel" 
+  [ngClass]="{'set-min-height': areCommentsAllowed() || imageSelected || pdfSelected || video || webcamImage}">
   <div 
     *ngIf="!imageSelected && !pdfSelected" 
     class="back-text" 
@@ -74,7 +77,11 @@
         </div>
       </div>
     </div>
-    <div class="preview-image" *ngIf="imageSelected || pdfSelected || video || webcamImage || iframeAvailable" fxLayoutAlign="center center">
+    <div 
+      class="preview-image" 
+      *ngIf="imageSelected || pdfSelected || video || webcamImage || iframeAvailable" 
+      fxLayoutAlign="center center"
+      [ngClass]="{'only-area': !areCommentsAllowed() && !isHost && !ideaTitle.length && emptyUserIdeaText}">
       <ng-container *ngIf="imageSrc">      
         <ng-container *ngIf="isAbsolutePathOrNewlySelectedImage(imageSrc); else uploadedImage">
           <img 
@@ -96,10 +103,10 @@
       </ng-container> -->
       
       <ng-container *ngIf="pdfSelected">
-        <div style="width: 100%">
+        <div class="pdf-wrapper">
           <ngx-extended-pdf-viewer [src]="pdfSrc" 
             useBrowserLocale="true" 
-            [height]="'512px'">
+            [height]="'540px'">
           </ngx-extended-pdf-viewer>
           <!-- <div  style="width: 100%;height: 200px">
             <pdf-viewer
@@ -160,7 +167,12 @@
     </div>
   </div>
 
-  <div class="content" fxLayout="column" fxLayoutAlign="space-between start">
+  <div 
+    class="content" 
+    fxLayout="column" 
+    fxLayoutAlign="space-between start" 
+    [ngClass]="{'content-blank': !areCommentsAllowed() && !isHost && !ideaTitle.length && emptyUserIdeaText ,
+                'only-area': !imageSelected && !pdfSelected && !uploadPanelExpanded && !video && !webcamImage}">
     <div class="content-area" [ngClass]="{'space-bottom': !areCommentsAllowed()}">
       <div 
         class="idea-creation-controls" 
