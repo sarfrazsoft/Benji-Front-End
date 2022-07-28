@@ -1,18 +1,17 @@
 .space-wrapper {
-  border: 1px solid #fff;
+  box-shadow: 0 0 0 1px #fff;
+  &:hover {
+    box-shadow: none;
+  }
 }
 .space {
   width: 240px;
   height: 242px;
-  border: 1px solid #E6EBEE;
+  box-shadow: 0 0 0 1px #E6EBEE;
   border-radius: 16px;
   margin-bottom: 16px;
   position: relative;
   cursor: pointer;
-  //box-sizing: border-box;
-  &:hover {
-    border: 2px solid;
-  }
   .settings {
     width: 24px;
     height: 24px;
@@ -99,8 +98,6 @@ benji-lesson {
       position: relative;
 
       &:hover {
-        // border: 2px solid $secondary-color-light;
-        // border-color: #eeebdd;
         .menu-button {
           display: block !important;
         }

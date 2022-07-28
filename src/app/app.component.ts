@@ -218,6 +218,15 @@ export class AppComponent implements OnInit {
           color: ${color};
           background: #fff !important;
         }
+        .primary-box-shadow {
+          box-shadow: 0 0 0 2px ${color};
+        }
+        .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
+          color: ${color};
+        }
+        .board-settings-navigation .close:hover, .boards-navigation .close:hover, .close-button:hover {
+          color: ${color};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

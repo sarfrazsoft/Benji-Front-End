@@ -6,7 +6,7 @@
 
   <div fxLayout="row" fxLayoutAlign="space-between">
     <div class="board-settings">Board Settings</div>
-    <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
+    <mat-icon class="close" (click)="closeNav()">clear</mat-icon>
   </div>
 
   <div fxLayout="column">
@@ -77,8 +77,8 @@
           fxLayout="row"
           fxLayoutAlign="space-between">
           <div>
-            <div class="label">Commenting</div>
-            <div class="sub-label">Allow commenting on cards</div>
+            <div class="label">Comments</div>
+            <div class="sub-label">Participants can comment on posts</div>
           </div>
           <label class="switch">
             <input 
@@ -103,8 +103,8 @@
           fxLayout="row"
           fxLayoutAlign="space-between">
           <div>
-            <div class="label">Hearting</div>
-            <div class="sub-label">Allow hearting on cards</div>
+            <div class="label">Likes</div>
+            <div class="sub-label">Participants can like posts</div>
           </div>
           <label class="switch">
             <input 

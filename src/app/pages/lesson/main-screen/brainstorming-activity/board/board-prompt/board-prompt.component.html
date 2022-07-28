@@ -3,7 +3,7 @@
   fxLayout="row" 
   fxLayoutAlign="space-between start"
   fxLayout.lt-sm="column"
-  [ngClass]="{'with-media': hasMedia}">
+  [ngClass]="{'with-media': hasMedia, 'without-sub-header': !sub_instructions}">
   <div fxLayout="column" class="instructions">
     <div class="level-one" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" >
       <div class="level-two">
@@ -23,7 +23,7 @@
             (keydown)="typingStarted()">
           </textarea>
         </div>
-        <div class="sub-header">
+        <div class="sub-header" *ngIf="sub_instructions">
           <ng-container *ngxPermissionsOnly="'ADMIN'">
             <benji-tiptap-editor
               [editable]="true"
