@@ -24,7 +24,7 @@ export class PostLayoutService {
         // gridSort = 'order';
         break;
     }
-    if (gridSort) {
+    if (gridSort && grid) {
       setTimeout(() => {
         grid.sort('pin' + ' ' + gridSort);
         grid.refreshSortData();

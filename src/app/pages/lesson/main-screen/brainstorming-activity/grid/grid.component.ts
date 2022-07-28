@@ -11,7 +11,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import * as moment from 'moment';
-import Grid, { GridOptions } from 'muuri';
+import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app/services';
@@ -321,6 +321,9 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
       console.log(items);
     });
 
+    grid.on('dragEnd', (item: Item, event: DraggerEndEvent | DraggerCancelEvent) => {
+      console.log(this.grid.getItems());
+    });
     // grid.on('');
   }
 
