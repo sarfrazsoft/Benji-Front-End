@@ -227,12 +227,9 @@ export class AppComponent implements OnInit {
         .board-settings-navigation .close:hover, .boards-navigation .close:hover, .close-button:hover {
           color: ${color};
         }
-<<<<<<< HEAD
         ng-dropdown-panel.post-idea-categories-dropdown .ng-dropdown-panel-items {
           border: 2px solid ${color};
         }
-=======
->>>>>>> staging
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');
