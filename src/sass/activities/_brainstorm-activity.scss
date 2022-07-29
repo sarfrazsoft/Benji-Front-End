@@ -251,6 +251,12 @@ benji-ms-brainstorming-activity {
         .brainstorm-idea {
           width: 320px;
           max-width: 320px;
+          .feedback .user-feed .grey-bg .comment {
+            max-width: 220px;
+          }
+          .comment-input-container .input-comment {
+            width: 200px;
+          }
         }
       }
       // .delete-icon mat-icon {
@@ -360,7 +366,7 @@ benji-ms-brainstorming-activity {
             height: 32px;
             padding: 0px 16px;
             color: #828282;
-            margin-top: -8px;
+            margin-bottom: 16px;
             span {
               font-size: 14px;
               line-height: 17px;
@@ -883,13 +889,13 @@ benji-ps-brainstorming-activity {
       }
     }
     .brainstorm-h2 .title {
+      color: #37352F;
       box-shadow: none;
       width: 100%;
       font-weight: 700;
       font-size: 32px;
       line-height: 40px;
       letter-spacing: -0.02em;
-      margin-bottom: 16px;
       border: 0px;
       border-radius: 0px;
       margin-right: 10px;
@@ -902,6 +908,7 @@ benji-ps-brainstorming-activity {
     }
     .sub-header {
       width: 100%;
+      margin-top: 16px;
       // line-height: 0px; 
       // input {
       //   width: 571px;
@@ -965,8 +972,8 @@ benji-ps-brainstorming-activity {
           height: auto;
           img, video {
             border-radius: 16px;
-            max-height: 480px;
-            max-width: 400px;
+            max-height: 680px;
+            max-width: 600px;
             //width: auto;
           }
         }
@@ -974,6 +981,9 @@ benji-ps-brainstorming-activity {
       .import-button {
         margin-top: 24px;
       }
+    }
+    &.without-sub-header {
+      place-content: center space-between !important;
     }
     benji-tiptap-editor .ProseMirror {
       min-height: unset;
@@ -984,8 +994,8 @@ benji-ps-brainstorming-activity {
 @media (max-width: 1280px) {
   .brainstorm-main .brainstorm-header {
     width: calc(100vw - 17px);
-    .brainstorm-h2 .title {
-      margin-bottom: 8px;
+    .sub-header {
+      margin-top: 8px;
     }
   }
 }

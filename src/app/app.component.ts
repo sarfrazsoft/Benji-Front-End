@@ -214,6 +214,19 @@ export class AppComponent implements OnInit {
         benji-ms-brainstorming-activity .prose-sm p a, .idea-detailed-dialog mat-dialog-container .content-area .prose-sm p a {
           color: ${color};
         }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .post:hover {
+          color: ${color};
+          background: #fff !important;
+        }
+        .primary-box-shadow {
+          box-shadow: 0 0 0 2px ${color};
+        }
+        .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
+          color: ${color};
+        }
+        .board-settings-navigation .close:hover, .boards-navigation .close:hover, .close-button:hover {
+          color: ${color};
+        }
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');

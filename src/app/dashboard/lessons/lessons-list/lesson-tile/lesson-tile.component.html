@@ -4,7 +4,7 @@
     (click)="navigateToSession()"
     (mouseenter)="showSettings = true"
     (mouseleave)="showSettings = false"
-    [ngClass]="{'border-color-primary': showSettings}">
+    [ngClass]="{'primary-box-shadow': showSettings}">
     <div 
       class="settings" 
       fxLayoutAlign="center center"
@@ -38,7 +38,7 @@
         <div class="name">{{lesson.lesson.lesson_name}}</div>
         <div class="who" fxLayout="row">
           <div class="owner">{{ lesson.host.first_name }} {{ lesson.host.last_name }}</div>
-          <div class="time-stamp"><span>&#183;</span><span>&#183;</span>{{timeStamp}}</div>
+          <div class="time-stamp"><span>&#183;</span>{{timeStamp}}</div>
         </div>
       </div>
       <div class="stats" fxLayout="row" fxLayoutGap="16px">

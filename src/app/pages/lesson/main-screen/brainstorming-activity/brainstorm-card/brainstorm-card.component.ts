@@ -11,7 +11,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -392,6 +392,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         dialogRef.addPanelClass('idea-detailed-dialog');
         dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
+    });
+
+    dialogRef.keydownEvents().subscribe(event => {
+        if (event.key === "Escape") {
+          dialogRef.close();
+        }
     });
   }
 
