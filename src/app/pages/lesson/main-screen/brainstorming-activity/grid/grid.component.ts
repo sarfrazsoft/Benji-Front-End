@@ -221,11 +221,9 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
 
     grid.on('dragEnd', (item: Item, event: DraggerEndEvent | DraggerCancelEvent) => {
       const gridItems: Item[] = this.grid.getItems();
-      console.log(gridItems);
       const ideasOrder = [];
       gridItems.forEach((itemElem: Item, i) => {
         const el = itemElem.getElement();
-
         ideasOrder.push({
           ideaId: el.getAttribute('id'),
           order: i.toString(),
@@ -238,7 +236,10 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
         })
       );
     });
-    // grid.on('');
+  }
+
+  refreshGridLayout() {
+    this.postLayoutService.refreshGridLayout(this.grid, false);
   }
 
   isAbsolutePath(imageUrl: string) {
