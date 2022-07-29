@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
@@ -58,19 +59,6 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
 
-  public masonryOptions: NgxMasonryOptions = {
-    gutter: 16,
-    horizontalOrder: true,
-    initLayout: true,
-    fitWidth: true,
-  };
-
-  @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
-  masonryPrepend: boolean;
-
-  packery;
-  ideasOrder: Array<PostOrder> = [];
-  draggies;
   showItems = false;
 
   // Add any options you'd like to set here
@@ -116,19 +104,9 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormEditSubInstruction'
       ) {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
-        console.log(this.grid.getItems());
         this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
           this.ideas = this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-          setTimeout(() => {
-            // this.postLayoutService.sortGrid((itemA, itemB) => {
-            //   return (
-            //     Number(moment(itemB.getElement().getAttribute('time'))) -
-            //     Number(moment(itemA.getElement().getAttribute('time')))
-            //   );
-            // });
-
-            this.postLayoutService.sortGrid(this.board.sort, this.grid);
-          });
+          this.postLayoutService.refreshGridLayout(this.grid, false);
         });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
@@ -164,7 +142,6 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
         }
       } else if (this.eventType === 'BrainstormBoardSortOrderEvent') {
         this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (
         this.eventType === 'BrainstormAddIdeaPinEvent' ||
@@ -173,7 +150,7 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
         this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
-        this.refreshMasonryLayout();
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === 'BrainstormToggleMeetingMode') {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
@@ -197,27 +174,23 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormChangeBoardStatusEvent' ||
         this.eventType === 'BrainstormToggleAllowCommentEvent'
       ) {
-        this.masonry?.layout();
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === 'SetMetaDataBoardEvent') {
         this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
           if (val) {
             if (this.board.meta.updated === 'post_order') {
-              this.ideas = [];
-              // this.showItems = false;
-              setTimeout(() => {
-                // this.showItems = true;
-                const ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
-                const sortedIdeas = this.sortOnOrder(ideas, this.board.meta.post_order);
-                this.ideas = sortedIdeas;
-                this.brainstormService.uncategorizedIdeas = this.ideas;
-                setTimeout(() => {
-                  // this.packery.layout();
-                  this.setUpPackery();
-                  setTimeout(() => {
-                    this.packery.layout();
-                  }, 300);
-                }, 0);
-              }, 0);
+              const unsortedGridItems = this.grid.getItems();
+              const sortOrder: Array<PostOrder> = this.board.meta.post_order;
+              console.log(unsortedGridItems, sortOrder);
+              const sortedArray = [];
+              sortOrder.forEach((orderItem) => {
+                unsortedGridItems.forEach((item) => {
+                  if (orderItem.ideaId === item.getElement().getAttribute('id')) {
+                    sortedArray.push(item);
+                  }
+                });
+              });
+              this.grid.sort(sortedArray);
             }
           }
         });
@@ -226,84 +199,9 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.setUpPackery();
     setTimeout(() => {
       this.grid.refreshItems().layout(true);
-
-      // Sort the grid by foo and bar.
-      // this.postLayoutService.sortGrid('newest_to_oldest', this.grid);
-
-      // this.postLayoutService.sortGrid((itemA, itemB) => {
-      //   return (
-      //     Number(moment(itemB.getElement().getAttribute('time'))) -
-      //     Number(moment(itemA.getElement().getAttribute('time')))
-      //   );
-      // });
     }, 1000);
-  }
-
-  setUpPackery() {
-    const elem = document.querySelector('.grid');
-    const pckry = new Packery(elem, {
-      // options
-      itemSelector: '.grid-item',
-      gutter: 10,
-      columnWidth: 300,
-    });
-    this.packery = pckry;
-    if (this.isHost) {
-      // if you have multiple .draggable elements
-      // get all draggie elements
-      const draggableElems = document.querySelectorAll('.grid-item');
-      // array of Draggabillies
-      const draggies = [];
-      // init Draggabillies
-      for (let i = 0; i < draggableElems.length; i++) {
-        const draggableElem = draggableElems[i];
-        const draggie = new Draggabilly(draggableElem, {
-          // options...
-        });
-        pckry.bindDraggabillyEvents(draggie);
-        draggies.push(draggie);
-      }
-      this.draggies = draggies;
-      // setTimeout(() => {
-      //   pckry.layout();
-      // }, 500);
-
-      setTimeout(() => {
-        pckry.layout();
-      }, 300);
-
-      // pckry.layout();
-
-      pckry.on('layoutComplete', () => {
-        pckry.getItemElements().forEach((itemElem: any, i) => {
-          if (this.ideasOrder[i]) {
-          } else {
-            this.ideasOrder.push({ ideaId: itemElem.getAttribute('id'), order: i });
-          }
-        });
-      });
-      this.packery.on('dragItemPositioned', () => {
-        pckry.getItemElements().forEach((itemElem: any, i) => {
-          itemElem.setAttribute('order', i);
-          if (this.ideasOrder[i]) {
-            this.ideasOrder[i] = { ideaId: itemElem.getAttribute('id'), order: i };
-          }
-        });
-        // setTimeout(() => {
-        //   console.log(this.draggies);
-        // }, 300);
-        this.sendMessage.emit(
-          new SetMetaDataBoardEvent(this.board.id, {
-            updated: 'post_order',
-            post_order: this.ideasOrder,
-          })
-        );
-        console.log(JSON.stringify(this.ideasOrder));
-      });
-    }
   }
 
   onGridCreated(grid: Grid) {
@@ -314,7 +212,7 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
      * like subcribing to Muuri's events
      */
     grid.on('add', function (items) {
-      console.log(items);
+      // console.log(items);
     });
 
     grid.on('remove', (items) => {
@@ -322,34 +220,25 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
     grid.on('dragEnd', (item: Item, event: DraggerEndEvent | DraggerCancelEvent) => {
-      console.log(this.grid.getItems());
+      const gridItems: Item[] = this.grid.getItems();
+      console.log(gridItems);
+      const ideasOrder = [];
+      gridItems.forEach((itemElem: Item, i) => {
+        const el = itemElem.getElement();
+
+        ideasOrder.push({
+          ideaId: el.getAttribute('id'),
+          order: i.toString(),
+        });
+      });
+      this.sendMessage.emit(
+        new SetMetaDataBoardEvent(this.board.id, {
+          updated: 'post_order',
+          post_order: ideasOrder,
+        })
+      );
     });
     // grid.on('');
-  }
-
-  sortOnOrder(ideas, sortOrder: Array<PostOrder>) {
-    const posts = [];
-    sortOrder.forEach((order) => {
-      ideas.forEach((idea) => {
-        if (Number(idea.id) === Number(order.ideaId)) {
-          posts.push(idea);
-        }
-      });
-    });
-    return posts;
-  }
-
-  resetMasonry() {
-    if (this.masonry) {
-      this.masonry.reloadItems();
-      this.masonry.layout();
-    }
-  }
-
-  refreshMasonryLayout() {
-    if (this.masonry) {
-      this.masonry.layout();
-    }
   }
 
   isAbsolutePath(imageUrl: string) {

@@ -226,11 +226,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     } else {
       this.emptyUserIdeaText = false;
     }
-
-    console.log(!this.areCommentsAllowed());
-    console.log(!this.isHost);
-    console.log(!this.ideaTitle.length);
-    console.log(this.emptyUserIdeaText);
   }
 
   ngOnChanges() {

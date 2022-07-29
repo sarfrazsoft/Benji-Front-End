@@ -115,7 +115,7 @@
         </div> 
       </div>
       <div *ngIf="!showUserName && item.pinned">
-        <div fxLayout="row" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutGap="8px" benji-click-stop-propagation>
           <img 
             *ngIf="item.pinned"
             (click)="unpin(item.id)"
@@ -131,6 +131,7 @@
         src="/assets/img/idea-creation/blue-pin.svg"> -->
       <img 
         *ngIf="item.pinned && showUserName"
+        benji-click-stop-propagation
         (click)="unpin(item.id)"
         class="pin" 
         src="/assets/img/idea-creation/blue-pin.svg"
