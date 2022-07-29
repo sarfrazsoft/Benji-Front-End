@@ -80,7 +80,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
 
   constructor(
     private brainstormService: BrainstormService,
-    private ngxPermissionService: NgxPermissionsService
+    private ngxPermissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit(): void {}
@@ -165,11 +165,11 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
           // take all users to new board
-          this.ngxPermissionService.hasPermission('ADMIN').then((val) => {
+          this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
             if (val) {
             }
           });
-          this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
+          this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
             if (val) {
               this.ideas = [];
               this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
@@ -186,7 +186,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
       ) {
         this.masonry?.layout();
       } else if (this.eventType === 'SetMetaDataBoardEvent') {
-        this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
+        this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
           if (val) {
             if (this.board.meta.updated === 'post_order') {
               this.ideas = [];

@@ -1,34 +1,43 @@
 <div class="submitted-ideas">
-  <div class="ideas-list-container">
-    <!-- <ngx-masonry #masonry [options]="masonryOptions" [ordered]="true"> -->
-      <ng-container *ngFor="let idea of ideas">
-        <ng-container *ngIf="canViewIdea(idea)">
-          <div
-            class="brainstorm-idea-item masonry-item"
-            [@anim]="idea.state"
-            [attr.data-likes]="idea.hearts.length"
-            (mouseenter)="idea.showClose = true"
-            (mouseleave)="idea.showClose = false">
-              <benji-brainstorm-card
-                [board]="board"
-                [item]="idea"
-                [act]="act"
-                [activityState]="activityState"
-                [showUserName]="showUserName"
-                [participantCode]="participantCode"
-                (deleteIdea)="delete($event)"
-                (commentEdited)="refreshMasonryLayout()"
-                [sendMessage]="sendMessage"
-                [isColumnsLayout]="isColumnsLayout"
-                [myGroup]="myGroup"
-                [avatarSize]="'medium'"
-                [eventType]="eventType"
-                [userRole]="getUserRole(item)">
-              </benji-brainstorm-card>
-            <div class="16px-spacer" style="height: 16px;"></div>
-          </div>
-        </ng-container>
-      </ng-container>
-    <!-- </ngx-masonry> -->
+  <div 
+    class="ideas-list-container grid"
+    muuriGrid
+    (gridCreated)="onGridCreated($event)"
+    [config]="layoutConfig"
+    style=" position: relative;">
+    <ng-container *ngFor="let idea of ideas; let i = index">
+      <!-- <ng-container *ngIf="canViewIdea(idea)"> -->
+        <div
+          muuriGridItem
+          class="brainstorm-idea-item grid-item"
+          [attr.data-likes]="idea.hearts.length"
+          (mouseenter)="idea.showClose = true"
+          (mouseleave)="idea.showClose = false"
+          style="padding: 20px;position: absolute;" 
+          [attr.order]="i" 
+          [id]="idea.id"
+          [attr.time]="idea.time"
+          [attr.hearts]="idea.hearts.length"
+          [attr.pin]="idea.pinned ? '0' : '1'">
+            <benji-brainstorm-card
+              [board]="board"
+              [item]="idea"
+              [act]="act"
+              [activityState]="activityState"
+              [showUserName]="showUserName"
+              [participantCode]="participantCode"
+              (deleteIdea)="delete($event)"
+              (commentEdited)="refreshMasonryLayout()"
+              [sendMessage]="sendMessage"
+              [isColumnsLayout]="isColumnsLayout"
+              [myGroup]="myGroup"
+              [avatarSize]="'medium'"
+              [eventType]="eventType"
+              [userRole]="getUserRole(item)">
+            </benji-brainstorm-card>
+          <div class="16px-spacer" style="height: 16px;"></div>
+        </div>
+      <!-- </ng-container> -->
+    </ng-container>
   </div>
 </div>

@@ -13,15 +13,18 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { differenceBy, find, findIndex, includes, remove } from 'lodash';
+import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
 import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
+import { PostLayoutService } from 'src/app/services/post-layout.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
+import { PostOrder } from '../grid/grid.component';
 
 @Component({
   selector: 'benji-thread-mode-ideas',
@@ -110,13 +113,31 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
 
+  public layoutConfig: GridOptions = {
+    items: this.ideas,
+    layoutOnInit: false,
+    dragEnabled: true,
+    layout: {
+      fillGaps: false,
+      horizontal: false,
+      alignRight: false,
+      alignBottom: false,
+      rounding: true,
+    },
+  };
+  grid: Grid;
+
   constructor(
     private dialog: MatDialog,
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private brainstormService: BrainstormService,
-    private ngxPermissionsService: NgxPermissionsService
-  ) {}
+    private ngxPermissionsService: NgxPermissionsService,
+    private postLayoutService: PostLayoutService
+  ) {
+    const sortDataPreset = this.postLayoutService.getSortPresetsData();
+    this.layoutConfig.sortData = sortDataPreset;
+  }
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 16,
@@ -127,9 +148,13 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(NgxMasonryComponent) masonry: NgxMasonryComponent;
   masonryPrepend: boolean;
 
-  ngOnInit(): void {}
-
-  ngAfterViewInit() {}
+  ngOnInit(): void {
+    this.postLayoutService.sendMessage$.subscribe((v) => {
+      if (v) {
+        this.sendMessage.emit(v);
+      }
+    });
+  }
 
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
@@ -137,46 +162,37 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
+      this.postLayoutService.sortGrid(this.board.sort, this.grid);
     } else {
       if (
         this.eventType === 'BrainstormEditBoardInstruction' ||
         this.eventType === 'BrainstormEditSubInstruction'
       ) {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
-        if (this.board.sort === 'newest_to_oldest') {
-          this.masonryPrepend = true;
-        } else {
-          this.masonryPrepend = false;
-        }
         this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
           this.ideas = this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-          setTimeout(() => {
-            this.resetMasonry();
-          }, 50);
+          this.postLayoutService.refreshGridLayout(this.grid, false);
         });
       } else if (
         this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
         this.eventType === 'BrainstormRemoveIdeaCommentEvent'
       ) {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
-        this.masonry?.layout();
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
         this.eventType === 'BrainstormSubmitIdeaHeartEvent' ||
         this.eventType === 'BrainstormRemoveIdeaHeartEvent'
       ) {
         this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {});
-        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-        this.masonry?.layout();
-        this.masonry?.reloadItems();
+        this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'
       ) {
         this.brainstormService.uncategorizedIdeasRemoved(this.board, this.ideas);
-        this.masonry?.layout();
       } else if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
-        this.masonry?.layout();
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
         this.eventType === 'HostChangeBoardEvent' ||
         this.eventType === 'ParticipantChangeBoardEvent'
@@ -194,11 +210,9 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormRemoveIdeaPinEvent'
       ) {
         this.brainstormService.uncategorizedUpdateIdeasPin(this.board, this.ideas);
-        this.masonry?.reloadItems();
-        this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
-        this.masonry?.layout();
+        this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
-        this.refreshMasonryLayout();
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === 'BrainstormToggleMeetingMode') {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
@@ -218,8 +232,39 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
           // host just turned off meeting mode.
           // do nothing
         }
+      } else if (
+        this.eventType === 'BrainstormChangeBoardStatusEvent' ||
+        this.eventType === 'BrainstormToggleAllowCommentEvent'
+      ) {
+        this.postLayoutService.refreshGridLayout(this.grid, false);
+      } else if (this.eventType === 'SetMetaDataBoardEvent') {
+        if (this.board.meta.updated === 'post_order') {
+          this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.postLayoutService.itemMovedByTheHost(
+                this.grid,
+                this.board.meta.post_order as Array<PostOrder>
+              );
+            }
+          });
+        }
       }
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 1000);
+  }
+
+  onGridCreated(grid: Grid) {
+    this.grid = grid;
+    this.postLayoutService.onGridCreated(grid, this.board.id);
+  }
+
+  refreshGridLayout() {
+    this.postLayoutService.refreshGridLayout(this.grid, false);
   }
 
   refreshMasonryLayout() {

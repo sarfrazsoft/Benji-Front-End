@@ -13,7 +13,6 @@ import {
 import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
-import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app/services';
 import {
@@ -79,21 +78,25 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
 
   constructor(
     private brainstormService: BrainstormService,
-    private ngxPermissionService: NgxPermissionsService,
+    private ngxPermissionsService: NgxPermissionsService,
     private postLayoutService: PostLayoutService
   ) {
     const sortDataPreset = this.postLayoutService.getSortPresetsData();
     this.layoutConfig.sortData = sortDataPreset;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.postLayoutService.sendMessage$.subscribe((v) => {
+      if (v) {
+        this.sendMessage.emit(v);
+      }
+    });
+  }
 
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.ideas = [];
       this.showItems = true;
-      // const ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
-      // const sortedIdeas = this.sortOnOrder(ideas, this.ideasSetOrder);
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
@@ -155,11 +158,11 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
           // take all users to new board
-          this.ngxPermissionService.hasPermission('ADMIN').then((val) => {
+          this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
             if (val) {
             }
           });
-          this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
+          this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
             if (val) {
               this.ideas = [];
               this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
@@ -176,66 +179,29 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
       ) {
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === 'SetMetaDataBoardEvent') {
-        this.ngxPermissionService.hasPermission('PARTICIPANT').then((val) => {
-          if (val) {
-            if (this.board.meta.updated === 'post_order') {
-              const unsortedGridItems = this.grid.getItems();
-              const sortOrder: Array<PostOrder> = this.board.meta.post_order;
-              console.log(unsortedGridItems, sortOrder);
-              const sortedArray = [];
-              sortOrder.forEach((orderItem) => {
-                unsortedGridItems.forEach((item) => {
-                  if (orderItem.ideaId === item.getElement().getAttribute('id')) {
-                    sortedArray.push(item);
-                  }
-                });
-              });
-              this.grid.sort(sortedArray);
+        if (this.board.meta.updated === 'post_order') {
+          this.ngxPermissionsService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              this.postLayoutService.itemMovedByTheHost(
+                this.grid,
+                this.board.meta.post_order as Array<PostOrder>
+              );
             }
-          }
-        });
+          });
+        }
       }
     }
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.grid.refreshItems().layout(true);
+      this.postLayoutService.refreshGridLayout(this.grid, true);
     }, 1000);
   }
 
   onGridCreated(grid: Grid) {
     this.grid = grid;
-    console.log('grid created');
-    /**
-     * Now you can do everything you want with the Grid object,
-     * like subcribing to Muuri's events
-     */
-    grid.on('add', function (items) {
-      // console.log(items);
-    });
-
-    grid.on('remove', (items) => {
-      console.log(items);
-    });
-
-    grid.on('dragEnd', (item: Item, event: DraggerEndEvent | DraggerCancelEvent) => {
-      const gridItems: Item[] = this.grid.getItems();
-      const ideasOrder = [];
-      gridItems.forEach((itemElem: Item, i) => {
-        const el = itemElem.getElement();
-        ideasOrder.push({
-          ideaId: el.getAttribute('id'),
-          order: i.toString(),
-        });
-      });
-      this.sendMessage.emit(
-        new SetMetaDataBoardEvent(this.board.id, {
-          updated: 'post_order',
-          post_order: ideasOrder,
-        })
-      );
-    });
+    this.postLayoutService.onGridCreated(grid, this.board.id);
   }
 
   refreshGridLayout() {
