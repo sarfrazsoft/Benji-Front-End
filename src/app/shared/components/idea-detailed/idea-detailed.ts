@@ -7,7 +7,7 @@ import {
   // ...
 } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { iframely } from '@iframely/embed.js';
 import { Uppy } from '@uppy/core';
@@ -118,6 +118,9 @@ export type IdeaUserRole = 'owner' | 'viewer';
       transition('* => void', [animate('0.5s 0ms ease-in-out', style({ transform: 'translateY(100%)' }))]),
     ]),
   ],
+  host: {
+    '(document:keydown)': 'handleKeyboardEvent($event)'
+  }
 })
 export class IdeaDetailedComponent implements OnInit, OnChanges {
   showCategoriesDropdown = false;
@@ -226,15 +229,19 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     } else {
       this.emptyUserIdeaText = false;
     }
-
-    console.log(!this.areCommentsAllowed());
-    console.log(!this.isHost);
-    console.log(!this.ideaTitle.length);
-    console.log(this.emptyUserIdeaText);
   }
 
   ngOnChanges() {
     this.initIdea();
+  }
+
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      this.nextArrowClicked()
+    }
+    if (event.key === 'ArrowLeft') {
+      this.previousArrowClicked()
+    }
   }
 
   isUploadCare(url: string) {

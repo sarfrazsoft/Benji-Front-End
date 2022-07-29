@@ -79,28 +79,42 @@ export class IdeaDetailedDialogComponent implements OnInit {
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
       if (this.isEdited) {
-        this.matDialog
-          .open(ConfirmationDialogComponent, {
-            data: {
-              confirmationTitle: 'Discard edits?',
-              confirmationMessage:
-                'Are you sure you want to discard your edits to your post? This can’t be undone.',
-              actionButton: 'Discard',
-              cancelButton: 'Keep working',
-            },
-            disableClose: true,
-            panelClass: 'confirmation-dialog',
-          })
-          .afterClosed()
-          .subscribe((res) => {
-            if (res) {
-              this.dialogRef.close();
-            }
-          });
+        this.openConfirmationDialog();
       } else {
         this.dialogRef.close();
       }
     });
+    
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if (event.key === "Escape") {
+        if (this.isEdited) {
+          this.openConfirmationDialog();
+        } else {
+          this.dialogRef.close();
+        }
+      }
+    });
+  }
+
+  openConfirmationDialog() {
+    this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationTitle: 'Discard edits?',
+          confirmationMessage:
+            'Are you sure you want to discard your edits to your post? This can’t be undone.',
+          actionButton: 'Discard',
+          cancelButton: 'Keep working',
+        },
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.dialogRef.close();
+        }
+      });
   }
 
   ideaIsEdited(event) {

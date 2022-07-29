@@ -65,10 +65,6 @@ const routes: Routes = [
         path: 'account/password',
         component: ResetPasswordComponent,
       },
-      {
-        path: 'account',
-        component: AccountComponent,
-      },
     ],
   },
 ];
@@ -80,7 +76,11 @@ const routesWithoutResolve: Routes = [
       {
         path: 'notifications',
         component: NotificationsComponent,
-      }
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+      },
     ],
   },
 ];

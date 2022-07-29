@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       if (branding) {
         color = branding.color ? branding.color : '#555BEA';
         favicon = branding.favicon ? branding.favicon : '/assets/img/favicon.ico';
-        this._document.getElementById('appFavicon').setAttribute('href', favicon);
+        this._document.getElementById('appFavicon').setAttribute('href', favicon.replace(/https|http/g,'https'));
       }
         const cssCode = `
         * {
@@ -227,6 +227,12 @@ export class AppComponent implements OnInit {
         .board-settings-navigation .close:hover, .boards-navigation .close:hover, .close-button:hover {
           color: ${color};
         }
+<<<<<<< HEAD
+        ng-dropdown-panel.post-idea-categories-dropdown .ng-dropdown-panel-items {
+          border: 2px solid ${color};
+        }
+=======
+>>>>>>> staging
         `;
 
         let additionalCssStyle = document.getElementById('additionalCss');
