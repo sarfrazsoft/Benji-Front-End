@@ -111,6 +111,7 @@ export interface LessonRunDetails {
   branding: Branding;
   idea_count: number;
   board_count: number;
+  lessonrun_images:  Array<any>;
 }
 
 export interface Participant {

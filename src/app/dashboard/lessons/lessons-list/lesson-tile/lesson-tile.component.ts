@@ -36,8 +36,11 @@ export class LessonTileComponent implements OnInit {
   settingsDialogRef;
   timeStamp: string;
   participantsCount: number;
+  coverPhoto: string;
 
+  hostLocation = 'https://staging.mybenji.com' // window.location.host;
   hostname = window.location.host + '/participant/join?link=';
+  maxIdIndex: number;
 
   constructor(
     private matDialog: MatDialog,
@@ -51,13 +54,25 @@ export class LessonTileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.lesson);
     this.participantsCount = this.lesson.participant_set.length;
-
+    this.setCoverPhoto();
     this.calculateTimeStamp();
     setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
+  }
+
+  setCoverPhoto() {
+    if (this.lesson.lessonrun_images.length > 0) { 
+      const ids = this.lesson.lessonrun_images.map(object => object.id);
+      const max = Math.max(...ids);
+      this.maxIdIndex = this.lesson.lessonrun_images.findIndex(x => x.id === max);
+      this.coverPhoto = this.lesson.lessonrun_images[this.maxIdIndex]?.image_url ? 
+      this.lesson.lessonrun_images[this.maxIdIndex]?.image_url :
+      this.hostLocation + this.lesson.lessonrun_images[this.maxIdIndex]?.img; 
+    } else {
+      this.coverPhoto = 'assets/img/temporary/dummy.png';
+    }
   }
 
   calculateTimeStamp() {
@@ -190,13 +205,29 @@ export class LessonTileComponent implements OnInit {
           id: this.lesson.lesson.id,
           title: this.lesson.lesson.lesson_name,
           description: this.lesson.lesson.lesson_description,
+          lessonImage: this.lesson.lessonrun_images[this.maxIdIndex].img,
+          imageUrl: this.lesson.lessonrun_images[this.maxIdIndex].image_url,
           createSession: false,
         },
         panelClass: 'session-settings-dialog',
       })
       .afterClosed()
       .subscribe((data) => {
-        this.updateLessonsRuns.emit();
+        if (data?.lesson_image || data?.image_url) {
+          this.adminService.updateLessonRunImage(
+            this.lesson.lessonrun_code, 
+            data.lesson_image, 
+            data.lesson_image_name, 
+            data.image_url, 
+            this.lesson.lessonrun_images[this.maxIdIndex].lesson_image_id)
+            .subscribe(
+              (data) => {
+                console.log(data);
+                this.updateLessonsRuns.emit();
+              },
+              (error) => console.log(error)
+            );
+        }
       });
   }
 

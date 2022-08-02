@@ -1,6 +1,7 @@
 <div *ngIf="layout == 'listLayout'" class="lessons-list">
   <benji-lesson-list
     [lessonRuns]="lessonRuns"
+    (updateLessonsRuns)="updateLessonsRuns()"
   ></benji-lesson-list>
 </div>
 <div  *ngIf="layout == 'tilesLayout'" class="lessons-tiles">

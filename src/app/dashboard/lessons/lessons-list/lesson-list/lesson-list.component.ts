@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -24,6 +24,9 @@ export interface TableRowInformation {
   startDate: string;
   lessonId: number;
   hostId: number;
+  lesson_image_id?: number;
+  lesson_image?: string;
+  image_url?: string;
 }
 @Component({
   selector: 'benji-lesson-list',
@@ -31,6 +34,7 @@ export interface TableRowInformation {
 })
 export class LessonListComponent implements OnInit {
   @Input() lessonRuns: Array<Lesson> = [];
+  @Output() updateLessonsRuns = new EventEmitter();
 
   displayedColumns: string[] = ['title', 'host', 'boards', 'participants', 'startDate', 'options'];
   dataSource: TableRowInformation[] = [];
@@ -55,6 +59,7 @@ export class LessonListComponent implements OnInit {
   selectedCategory = 'Open';
 
   hostname = window.location.host + '/participant/join?link=';
+  maxIdIndex: any;
 
   constructor(
     private router: Router,
@@ -72,6 +77,13 @@ export class LessonListComponent implements OnInit {
     this.dataSource = [];
     const slicedArray = this.lessonRuns;
     slicedArray.forEach((val: any, index: number) => {
+      
+      const ids = val.lessonrun_images.map(object => {
+        return object.id;
+      });
+      const max = Math.max(...ids);
+      this.maxIdIndex  = val.lessonrun_images.findIndex(x => x.id === max);
+      
       this.dataSource.push({
         index: index,
         lessonRunCode: val.lessonrun_code,
@@ -83,6 +95,9 @@ export class LessonListComponent implements OnInit {
         boards: val.board_count,
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
+        lesson_image_id: val.lessonrun_images[this.maxIdIndex ]?.id,
+        lesson_image: val.lessonrun_images[this.maxIdIndex ]?.img,
+        image_url: val.lessonrun_images[this.maxIdIndex ]?.image_url,
       });
     });
   }
@@ -117,7 +132,10 @@ export class LessonListComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
-          this.http.delete(request, {}).subscribe((response) => console.log(response));
+          this.http.delete(request, {}).subscribe((response) => {
+            console.log(response)
+            this.updateLessonsRuns.emit();
+          });
           this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
           this.dataSource = this.dataSource.filter((value) => {
             return value.lessonRunCode !== val.lessonRunCode;
@@ -160,6 +178,7 @@ export class LessonListComponent implements OnInit {
                         this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
                           this.lessonRuns = lessonsRuns;
                           this.getActiveSessions();
+                          this.updateLessonsRuns.emit();
                           this.utilsService.openSuccessNotification(
                             `Session successfully duplicated.`,
                             `close`
@@ -189,13 +208,28 @@ export class LessonListComponent implements OnInit {
           id: val.lessonId,
           title: val.lesson_title,
           description: val.lesson_description,
+          lessonImage: val.lesson_image,
+          imageUrl: val.image_url,
           createSession: false,
         },
         panelClass: 'session-settings-dialog',
       })
       .afterClosed()
       .subscribe((data) => {
-        this.dataSource[data.index].lesson_title = data.lesson_name;
+        this.dataSource[data.index].lesson_title = data?.lesson_name;
+        if (data?.lesson_image || data?.image_url) {
+          this.adminService.updateLessonRunImage(val.lessonRunCode, data.lesson_image, data.lesson_image_name, data.image_url, val.lesson_image_id)
+          .subscribe(
+            (data) => {
+              this.updateLessonsRuns.emit();
+              this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                this.lessonRuns = lessonsRuns;
+                this.getActiveSessions();
+              });
+            },
+            (error) => console.log(error)
+          );
+        }
       });
   }
 }
