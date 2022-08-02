@@ -1,12 +1,11 @@
 <div class="submitted-ideas">
   <div 
-    class="ideas-list-container grid"
+    class="ideas-list-container benji-muuri-grid"
     muuriGrid
     (gridCreated)="onGridCreated($event)"
-    [config]="layoutConfig"
-    style=" position: relative;">
+    [config]="layoutConfig">
     <ng-container *ngFor="let idea of ideas; let i = index">
-      <!-- <ng-container *ngIf="canViewIdea(idea)"> -->
+      <ng-container *ngIf="canViewIdea(idea)">
         <div
           muuriGridItem
           class="brainstorm-idea-item grid-item"
@@ -37,7 +36,7 @@
             </benji-brainstorm-card>
           <div class="16px-spacer" style="height: 16px;"></div>
         </div>
-      <!-- </ng-container> -->
+      </ng-container>
     </ng-container>
   </div>
 </div>

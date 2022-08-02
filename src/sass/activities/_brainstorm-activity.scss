@@ -132,7 +132,6 @@ benji-ms-brainstorming-activity {
           margin: 0 auto;
           .brainstorm-idea-item {
             transition: all;
-            transition-duration: 0.3s;
             margin-right: 0px;
           }
           .brainstorm-idea {
@@ -1509,4 +1508,10 @@ benji-unsorted-ideas {
 }
 pdf-bookmark {
   display: none;
+}
+
+
+.benji-muuri-grid {
+  // muuri grid needs relative position
+  position: relative;
 }
