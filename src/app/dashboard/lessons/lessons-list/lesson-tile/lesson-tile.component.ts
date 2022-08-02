@@ -38,7 +38,7 @@ export class LessonTileComponent implements OnInit {
   participantsCount: number;
   coverPhoto: string;
 
-  hostLocation = 'https://staging.mybenji.com' // window.location.host;
+  hostLocation = window.location.host;
   hostname = window.location.host + '/participant/join?link=';
   maxIdIndex: number;
 

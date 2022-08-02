@@ -31,7 +31,7 @@ export class SessionSettingsDialogComponent implements OnInit {
   imageUrl: string;
   selectedImageName: string;
   
-  hostLocation = 'https://staging.mybenji.com' // window.location.host;
+  hostLocation = window.location.host;
 
   constructor(
     private httpClient: HttpClient,
