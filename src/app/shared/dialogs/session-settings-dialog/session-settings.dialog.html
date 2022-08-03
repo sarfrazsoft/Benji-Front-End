@@ -55,9 +55,10 @@
           class="cover-photo" 
           fxLayoutAlign="center end"
           (mouseenter)="showEdit = true"
-          (mouseleave)="showEdit = false"> 
-          <!-- [ngStyle]="{'background-image': 'url(' + selectedImage + ')'}" -->
-          <img [src]="coverPhoto" alt="">
+          (mouseleave)="showEdit = false"
+          [ngStyle]="{'background-image': 'url(' + coverPhoto + ')'}"> 
+          <!--  -->
+          <!-- <img [src]="coverPhoto" alt=""> -->
           <div 
             class="edit-photo"
             fxLayoutAlign="center center"
