@@ -19,7 +19,7 @@
     </div>
     <div class="brainstorm-container">
       <ng-container *ngIf="boardMode=='columns'">
-        <benji-categorized-ideas
+        <!-- <benji-categorized-ideas
           [board]="board"
           [act]="act"
           [activityState]="activityState"
@@ -36,7 +36,25 @@
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)"
         >
-        </benji-categorized-ideas>
+        </benji-categorized-ideas> -->
+        <benji-columns-ideas
+          [board]="board"
+          [act]="act"
+          [activityState]="activityState"
+          [minWidth]="getMinWidth()"
+          [sendMessage]="sendMessage"
+          [joinedUsers]="joinedUsers"
+          [showUserName]="showUserName"
+          [participantCode]="participantCode"
+          [eventType]="eventType"
+          [isColumnsLayout]="true"
+          [myGroup]="myGroup"
+          [isHost]="isHost"
+          (addCardUnderCategory)="addCardUnderCategory($event)"
+          (viewImage)="viewImage($event)"
+          (deleteIdea)="deleteIdea($event)"
+        >
+        </benji-columns-ideas>
       </ng-container>
 
       <!-- <ng-container *ngIf="boardMode=='grid'">
