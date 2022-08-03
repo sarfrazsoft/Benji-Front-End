@@ -6,8 +6,12 @@
   z-index: 1;
   filter: drop-shadow(0px 1px 1px #D5D9DE);
   .benji-logo-container {
-    //height: 24px;
-    img {
+    .boards-nav {
+      img {
+        margin-right: 8px;
+      }
+    }
+    .logo {
       height: 24px;
       padding-right: 16px;
       cursor: pointer;

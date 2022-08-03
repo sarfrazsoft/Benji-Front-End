@@ -53,12 +53,12 @@
         <div 
           *ngIf="coverPhoto" 
           class="cover-photo" 
-          fxLayoutAlign="center end"
+          fxLayoutAlign="center center"
           (mouseenter)="showEdit = true"
           (mouseleave)="showEdit = false"
-          [ngStyle]="{'background-image': 'url(' + coverPhoto + ')'}"> 
-          <!--  -->
-          <!-- <img [src]="coverPhoto" alt=""> -->
+          > 
+          <!-- [ngStyle]="{'background-image': 'url(' + coverPhoto + ')'}" -->
+          <img [src]="coverPhoto" alt="">
           <div 
             class="edit-photo"
             fxLayoutAlign="center center"

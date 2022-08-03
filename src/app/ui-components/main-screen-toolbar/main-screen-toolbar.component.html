@@ -1,11 +1,24 @@
 <div class="mainscreen-toolbar bg-white">
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div fxFlex class="benji-logo-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+      <!-- Activity board navigation -->
+      <ng-container *ngIf="!isEditor && (activityState && activityState.activity_type !== 'LobbyActivity')">
+        <div 
+          *ngIf="isActivitySettingsAllowed(activityState)"
+          class="boards-nav" 
+          (click)="openSideNav('boards')"
+          fxLayoutAlign="center center"
+          matTooltip="Boards Navigation"
+          [matTooltipPosition]="'below'"
+          show-delay="100">
+            <img src="/assets/img/side-nav/navigation.svg" /> 
+        </div>
+      </ng-container>
       <img 
         [src]="darkLogo" 
         alt="Benji Logo" 
         [ngClass]="{'has-name': lessonName}" 
-        class="benji-logo"
+        class="logo"
         (click)="logoClicked()"/>
       <ng-container *ngxPermissionsOnly="'ADMIN'">
         <div 
@@ -153,20 +166,6 @@
               [matTooltipPosition]="'below'"
               show-delay="100">
                 <img src="/assets/img/side-nav/settings.svg" /> 
-            </div>
-          </ng-container>
-
-          <!-- Activity board navigation -->
-          <ng-container>
-            <div 
-              *ngIf="isActivitySettingsAllowed(activityState)"
-              class="option" 
-              (click)="openSideNav('boards')"
-              fxLayoutAlign="center center"
-              matTooltip="Boards Navigation"
-              [matTooltipPosition]="'below'"
-              show-delay="100">
-                <img src="/assets/img/side-nav/navigation.svg" /> 
             </div>
           </ng-container>
 

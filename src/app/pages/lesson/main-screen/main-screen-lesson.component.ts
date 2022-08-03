@@ -101,8 +101,8 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       this.sideNavPosition = 'end';
     } else if (type === 'boards') {
       this.navType = 'boards';
-      // this.sideNavPosition = 'start';
-      this.sideNavPosition = 'end';
+      this.sideNavPosition = 'start';
+      //this.sideNavPosition = 'end';
     }
     type ? this.sidenav.open() : this.sidenav.close();
   }

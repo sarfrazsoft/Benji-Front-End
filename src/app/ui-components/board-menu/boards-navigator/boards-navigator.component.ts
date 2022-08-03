@@ -12,7 +12,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { BrainstormService } from 'src/app';
+import { BrainstormService, ContextService } from 'src/app';
 import {
   Board,
   BoardSort,
@@ -28,6 +28,7 @@ import {
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
+  Branding,
   DuplicateBoardEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
@@ -61,13 +62,15 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
   showBottom = true;
   dragDisabled = false;
+  darkLogo: string;
 
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
     private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    public contextService: ContextService
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +99,12 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
     }
+
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
+      if (info) {
+        this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+      }
+    });
   }
 
   selectedBoardChanged(board) {
