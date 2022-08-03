@@ -394,11 +394,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       }
     });
 
-    dialogRef.keydownEvents().subscribe(event => {
-        if (event.key === "Escape") {
-          dialogRef.close();
-        }
-    });
   }
 
   onCommentFocus() {

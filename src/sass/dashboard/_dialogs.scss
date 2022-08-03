@@ -165,6 +165,7 @@
             margin-right: 24px;
             &.mat-tab-label-active {
               background-color: unset;
+              border-bottom: 3px solid;
             }
           }
         }
@@ -530,7 +531,6 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   width: auto !important;
   border-radius: 8px !important;
   .ng-dropdown-panel-items {
-    border: 2px solid #555BEA;
     border-radius: 8px;
     padding: 8px 0px;
     background: #fff;

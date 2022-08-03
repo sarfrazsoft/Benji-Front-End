@@ -81,6 +81,8 @@ export class AdminPanelComponent implements OnInit, OnChanges {
           createSession: true,
           title: '',
           description: '',
+          lessonImage: '',
+          imageUrl: ''
         },
         panelClass: 'session-settings-dialog',
       })
@@ -88,6 +90,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
       .subscribe((data) => {
         if (data) {
           this.adminService.createNewBoard(data).subscribe((res: any) => {
+            this.adminService.addLessonRunImage(res.lessonrun_code, data.selectedImage, data.selectedImageName, data.imageUrl);
             // user object was stored when this user logged in.
             // Now we need to store it as host so other modules know who is host
             // for this particular session

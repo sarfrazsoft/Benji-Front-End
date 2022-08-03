@@ -109,6 +109,15 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
         this.dialogRef.close();
       }
     });
+    this.dialogRef.keydownEvents().subscribe(event => {
+      if (event.key === "Escape") {
+        if (this.userIdeaText.length || this.ideaTitle.length || this.isItemSelected()) {
+          this.askUserConfirmation();
+        } else {
+          this.dialogRef.close();
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {}
