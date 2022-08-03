@@ -139,17 +139,11 @@ export class AdminService {
     headers.set('Content-Type', null);
     headers.set('Accept', 'multipart/form-data');
     const params = new HttpParams();
-    this.httpClient
+    return this.httpClient
       .post(url, formData, { params, headers })
       .map((res: any) => {
         return res;
       })
-      .subscribe(
-        (data) => {
-          console.log(data);
-        },
-        (error) => console.log(error)
-      );
   }
 
   updateLessonRunImage(lessonrunCode: number, lessonImage: Blob, lessonImageName: string, imageUrl: string, imageId: number) {

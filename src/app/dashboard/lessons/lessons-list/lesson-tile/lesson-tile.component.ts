@@ -205,8 +205,8 @@ export class LessonTileComponent implements OnInit {
           id: this.lesson.lesson.id,
           title: this.lesson.lesson.lesson_name,
           description: this.lesson.lesson.lesson_description,
-          lessonImage: this.lesson.lessonrun_images[this.maxIdIndex].img,
-          imageUrl: this.lesson.lessonrun_images[this.maxIdIndex].image_url,
+          lessonImage: this.lesson.lessonrun_images[this.maxIdIndex]?.img,
+          imageUrl: this.lesson.lessonrun_images[this.maxIdIndex]?.image_url,
           createSession: false,
         },
         panelClass: 'session-settings-dialog',
@@ -214,19 +214,33 @@ export class LessonTileComponent implements OnInit {
       .afterClosed()
       .subscribe((data) => {
         if (data?.lesson_image || data?.image_url) {
-          this.adminService.updateLessonRunImage(
-            this.lesson.lessonrun_code, 
-            data.lesson_image, 
-            data.lesson_image_name, 
-            data.image_url, 
-            this.lesson.lessonrun_images[this.maxIdIndex].lesson_image_id)
-            .subscribe(
-              (data) => {
-                console.log(data);
-                this.updateLessonsRuns.emit();
-              },
-              (error) => console.log(error)
-            );
+          if (this.lesson.lessonrun_images[this.maxIdIndex]?.lesson_image_id) {
+            this.adminService.updateLessonRunImage(
+              this.lesson.lessonrun_code, 
+              data.lesson_image, 
+              data.lesson_image_name, 
+              data.image_url, 
+              this.lesson.lessonrun_images[this.maxIdIndex])
+              .subscribe(
+                (data) => {
+                  console.log(data);
+                  this.updateLessonsRuns.emit();
+                },
+                (error) => console.log(error)
+              );
+          } else {
+            this.adminService.addLessonRunImage(
+              this.lesson.lessonrun_code, data.lesson_image, 
+              data.lesson_image_name, 
+              data.image_url)
+              .subscribe(
+                (data) => {
+                  console.log(data);
+                  this.updateLessonsRuns.emit();
+                },
+                (error) => console.log(error)
+              );
+          }
         }
       });
   }
