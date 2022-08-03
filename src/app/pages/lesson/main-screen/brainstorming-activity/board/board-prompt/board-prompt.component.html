@@ -23,7 +23,7 @@
             (keydown)="typingStarted()">
           </textarea>
         </div>
-        <div class="sub-header" *ngIf="sub_instructions">
+        <div class="sub-header" [ngClass]="{'no-sub-instructions': !sub_instructions && !isHost}">
           <ng-container *ngxPermissionsOnly="'ADMIN'">
             <benji-tiptap-editor
               [editable]="true"
