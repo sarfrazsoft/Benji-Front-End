@@ -499,10 +499,8 @@ ng-dropdown-panel.groups-controls {
       .cover-photo {
         position: relative;
         height: 200px;
-        background-position: center center;
-        background-size: cover;
-        border-radius: 8px;
         overflow: hidden;
+        border-radius: 8px;
         .edit-photo {
           font-weight: 600;
           font-size: 14px;
@@ -512,14 +510,12 @@ ng-dropdown-panel.groups-controls {
           border-radius: 8px;
           width: 102px;
           height: 32px;
-          margin-bottom: 16px;
+          bottom: 16px;
           position: absolute;
           cursor: pointer;
         }
         img {
           width: 100%;
-          height: 200px;
-          border-radius: 8px;
         }
       }
     }
