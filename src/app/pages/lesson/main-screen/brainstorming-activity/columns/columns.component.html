@@ -1,6 +1,7 @@
 <div *ngIf="showGrids"> 
   <div
     class="submitted-ideas categorized benji-muuri-grid"
+    fxLayout="row"
     muuriGrid
     (gridCreated)="onGridCreated($event)"
     [config]="layoutConfig" 
@@ -10,20 +11,19 @@
         muuriGridItem
         class="grid-item"
         style="position: absolute;">
-        <div>kund</div>
-        <!-- <div *ngIf="!column.removed">
+        <div>
           <div
             class="column"
             [ngStyle]="{'min-width.px': minWidth}"
             [attr.columnID]="column.id">
-            <div class="header" (click)="columnHeaderClicked(column)">
+            <div class="header board-column-title" (click)="columnHeaderClicked(column)">
               <div class="grey-bg">
                 <div
                   fxLayout="row"
                   fxLayoutAlign="space-between center"
                   *ngIf="!column.editing"
                 >
-                  <div class="column-name black-color board-column-title" fxFlex fxLayoutAlign="space-between">
+                  <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
                     <div fxLayoutAlign="start center">
                       {{ column.category_name }}
                     </div>
@@ -104,7 +104,7 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
       <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
         <div class="column">

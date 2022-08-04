@@ -109,7 +109,7 @@ export class BrainstormService {
       }
     });
 
-    columns = board.brainstormcategory_set;
+    columns = board.brainstormcategory_set.filter((cat) => !cat.removed);
 
     return this.sortIdeas(board, columns);
   }

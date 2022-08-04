@@ -48,7 +48,7 @@ import * as Muuri from 'muuri';
   selector: 'benji-columns-ideas',
   templateUrl: './columns.component.html',
 })
-export class ColumnsComponent implements OnInit, OnChanges {
+export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
@@ -80,7 +80,7 @@ export class ColumnsComponent implements OnInit, OnChanges {
   masonryPrepend: boolean;
 
   showGrids = false;
-  boardGrid;
+  boardGrid: Grid;
   public colDragCounter = 0;
   boardContainer: HTMLElement = document.querySelector('.board-container');
   muuriKanbanBoard: HTMLElement = document.querySelector('.muuri-kanban-board');
@@ -100,22 +100,22 @@ export class ColumnsComponent implements OnInit, OnChanges {
     // },
     layout: {
       fillGaps: false,
-      horizontal: true,
+      horizontal: false,
       alignRight: false,
       alignBottom: false,
       rounding: true,
     },
     dragEnabled: true,
-    // dragAxis: 'x',
-    // dragSortHeuristics: {
-    //   sortInterval: 0,
-    // },
-    // dragHandle: '.board-column-title',
-    // dragRelease: {
-    //   duration: 300,
-    //   easing: 'cubic-bezier(0.625, 0.225, 0.100, 0.890)',
-    //   useDragContainer: false,
-    // },
+    dragAxis: 'x',
+    dragSortHeuristics: {
+      sortInterval: 0,
+    },
+    dragHandle: '.board-column-title',
+    dragRelease: {
+      duration: 300,
+      easing: 'cubic-bezier(0.625, 0.225, 0.100, 0.890)',
+      useDragContainer: false,
+    },
     // dragAutoScroll: {
     //   targets: [{ element: this.boardContainer, axis: Muuri.AutoScroller.AXIS_X }],
     // },
@@ -252,6 +252,13 @@ export class ColumnsComponent implements OnInit, OnChanges {
         }
       }
     }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.boardGrid.refreshItems().layout(true);
+      // this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 1000);
   }
 
   onGridCreated(grid: Grid) {
