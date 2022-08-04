@@ -61,8 +61,11 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   hostBoard: number;
 
   showBottom = true;
-  dragDisabled = false;
+  isParticipant = false;
   darkLogo: string;
+  lessonName: string;
+  lessonDescription: string;
+  boardHovered = false;
 
   constructor(
     private dialog: MatDialog,
@@ -92,7 +95,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.dragDisabled = true;
+        this.isParticipant = true;
       }
     });
 
@@ -105,6 +108,9 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
+
+    this.lessonName = this.activityState.lesson.lesson_name;
+    this.lessonDescription = this.activityState.lesson.lesson_description;
   }
 
   selectedBoardChanged(board) {

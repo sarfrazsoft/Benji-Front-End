@@ -1,6 +1,7 @@
 .board-settings-navigation {
   padding: 24px;
   width: 376px;
+  height: 100%;
   .options {
     benji-uploadcare-widget {
       > img {
@@ -169,49 +170,52 @@
 }
 
 .boards-navigation {
-  padding: 24px;
+  padding: 16px;
   width: 376px;
-  .posting-settings {
-    background: #f3f4f7;
-    border-radius: 8px;
-    padding: 16px;
-    .label {
-      color: #37352f;
-      font-size: 16px;
-      line-height: 16px;
-      font-weight: 500;
-      margin-bottom: 8px;
+  height: 100%;
+  .header-area {
+    .close {
+      transform: rotate(180deg);
     }
-    .sub-label {
+    .logo {
+      height: 24px;
+    }
+    .space-title {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: #37352F;
+    }
+    .space-description {
+      font-weight: 400;
       font-size: 14px;
-      line-height: 18px;
+      line-height: 20px;
       color: #616161;
-    }
-    .option {
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-    }
-    &.info-card {
-     background: #E9EEFB; 
-     .label {
-       font-weight: 600;
-     }
-     .sub-label {
-       line-height: 20px;
-     }
+      margin-bottom: 12px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #E2E6EC;
     }
   }
-  .boards {
-    font-size: 24px;
-    font-weight: 600;
-    color: #37352f;
-  }
-  .close {
-    cursor: pointer;
-    font-size: 28px;
-    height: 28px;
-    width: 28px;
+  .meeting-mode {
+    margin-bottom: 16px;
+    .posting-settings {
+      background: #f3f4f7;
+      border-radius: 8px;
+      padding: 16px;
+      .label {
+        color: #37352f;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 14px;
+        margin-bottom: 8px;
+      }
+      .sub-label {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+        color: #616161;
+      }
+    }
   }
   .add-group .plus {
     cursor: pointer;
@@ -220,10 +224,16 @@
     color: #fff;
     font-size: 16px;
     font-weight: 600;
-    padding: 12px;
     text-align: center;
     border-radius: 8px;
     cursor: pointer;
+    margin-top: 4px;
+    width: 100%;
+    height: 40px;
+  }
+  .bottom-area {
+    border-top: 1px solid #E2E6EC;
+    padding-top: 24px;
   }
 }
 
@@ -242,63 +252,54 @@
   }
   .board {
     cursor: pointer;
-    padding: 14px;
-    border: 2px solid #f3f4f7;
-    background: #f3f4f7;
-    border-radius: 8px;
+    padding: 8px;
+    height: 40px;
+    border-radius: 4px;
     transition: all 0.2s;
-    &:hover {
-      border-color: #cfcfcf;
-    }
-    &.selected {
-      border: 2px solid $primary-color;
+    width: 100%;
+    &:hover, &.selected {
+      background: #F3F4F7;
+      button.three-dots {
+        display: flex !important;
+      }
     }
     &.closed {
-      padding: 24px;
-      img {
-        width: 40px;
+      &.selected, &:hover {
+        .closed-eye {
+          display: none;
+        }
       }
-      span {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 16px;
-        color: #bdbdbd;
+      &:hover {
+        button.three-dots {
+          display: flex !important;
+        }
       }
     }
     .title {
-      color: #37352f;
-      font-weight: 600;
-      font-size: 16px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #37352F;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-right: 4px;
     }
     button.three-dots {
       padding: 0px 4px;
       background: unset;
       .dots {
         cursor: pointer;
-        margin-top: -5px;
-        margin-right: -4px;
+      }
+      display: none !important;
+    }
+    &:hover {
+      .closed {
+        display: none !important;
       }
     }
-    .sub-title {
-      font-size: 14px;
-      line-height: 18px;
-      color: #616161;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 3; /* number of lines to show */
-              line-clamp: 3; 
-      -webkit-box-orient: vertical;
-    }
-    .persons {
-      .session-participants .initials.counter {
-        background: #fff;
-        z-index: 1;
-      }
-      .participant {
-        margin-right: -4px;
-        z-index: 1;
-      }
+    &.hidden {
+      display: none !important;
     }
   }
 }
