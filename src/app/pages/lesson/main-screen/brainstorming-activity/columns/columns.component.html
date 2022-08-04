@@ -1,3 +1,4 @@
+<div class="drag-container"></div>
 <div *ngIf="showGrids"> 
   <div
     class="submitted-ideas categorized benji-muuri-grid"
@@ -11,102 +12,109 @@
         muuriGridItem
         class="grid-item"
         style="position: absolute;">
-        <div>
-          <div
-            class="column"
-            [ngStyle]="{'min-width.px': minWidth}"
-            [attr.columnID]="column.id">
-            <div class="header board-column-title" (click)="columnHeaderClicked(column)">
-              <div class="grey-bg">
-                <div
-                  fxLayout="row"
-                  fxLayoutAlign="space-between center"
-                  *ngIf="!column.editing"
-                >
-                  <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
-                    <div fxLayoutAlign="start center">
-                      {{ column.category_name }}
-                    </div>
-                    <ng-container *ngxPermissionsOnly="'ADMIN'">
-                      <button
-                        [matMenuTriggerFor]="menu"
-                        benji-click-stop-propagation
-                        disableRipple
-                        aria-label="Example icon-button with a menu"
-                        fxLayoutAlign="start start"
-                      >
-                        <mat-icon>more_horiz</mat-icon>
-                      </button>
-                    </ng-container>
+        <div
+          class="column"
+          [ngStyle]="{'min-width.px': minWidth}"
+          [attr.columnID]="column.id">
+          <div class="header board-column-title" (click)="columnHeaderClicked(column)">
+            <div class="grey-bg">
+              <div
+                fxLayout="row"
+                fxLayoutAlign="space-between center"
+                *ngIf="!column.editing"
+              >
+                <div class="column-name black-color" fxFlex fxLayoutAlign="space-between">
+                  <div fxLayoutAlign="start center">
+                    {{ column.category_name }}
                   </div>
-                  <mat-menu #menu="matMenu" xPosition="before">
-                    <button mat-menu-item (click)="deleteCol(column.id)">
-                      <mat-icon>delete</mat-icon>
-                      <span>Delete</span>
+                  <ng-container *ngxPermissionsOnly="'ADMIN'">
+                    <button
+                      [matMenuTriggerFor]="menu"
+                      benji-click-stop-propagation
+                      disableRipple
+                      aria-label="Example icon-button with a menu"
+                      fxLayoutAlign="start start"
+                    >
+                      <mat-icon>more_horiz</mat-icon>
                     </button>
-                    <button mat-menu-item (click)="columnHeaderClicked(column)">
-                      <mat-icon>create</mat-icon>
-                      <span>Rename</span>
-                    </button>
-                  </mat-menu>
-                </div>
-                <ng-container *ngIf="column.editing">
-                  <input
-                    #colName
-                    type="text"
-                    (blur)="onColumnNameBlur(column, $event)"
-                    value="{{ column.category_name }}"
-                  />
-                </ng-container>
-              </div>
-            </div>
-            <div class="ideas">
-              <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
-                <textarea
-                  #textInput
-                  (blur)="saveNewIdea(column, textInput.value)"
-                  (keyup.enter)="saveNewIdea(column, textInput.value)"
-                ></textarea>
-              </div>
-              <div class="ideas-list-container">
-                <div 
-                  *ngFor="let item of column.brainstormidea_set; let i = index" 
-                  class="masonry-item">
-                  <ng-container *ngIf="canViewIdea(item)">
-                    <benji-brainstorm-card
-                      [board]="board"
-                      [item]="item"
-                      [act]="act"
-                      [activityState]="activityState"
-                      [showUserName]="showUserName"
-                      [participantCode]="participantCode"
-                      (deleteIdea)="delete($event)"
-                      [sendMessage]="sendMessage"
-                      (commentEdited)="refreshMasonryLayout()"
-                      [isColumnsLayout]="isColumnsLayout"
-                      [category]="column"
-                      [myGroup]="myGroup"
-                      [avatarSize]="'small'"
-                      [userRole]="getUserRole(item)"
-                      [eventType]="eventType">
-                    </benji-brainstorm-card>
                   </ng-container>
                 </div>
+                <mat-menu #menu="matMenu" xPosition="before">
+                  <button mat-menu-item (click)="deleteCol(column.id)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                  </button>
+                  <button mat-menu-item (click)="columnHeaderClicked(column)">
+                    <mat-icon>create</mat-icon>
+                    <span>Rename</span>
+                  </button>
+                </mat-menu>
               </div>
+              <ng-container *ngIf="column.editing">
+                <input
+                  #colName
+                  type="text"
+                  (blur)="onColumnNameBlur(column, $event)"
+                  value="{{ column.category_name }}"
+                />
+              </ng-container>
+            </div>
+          </div>
+          <div class="ideas">
+            <div *ngIf="column.addingIdea" class="brainstorm-idea add-idea">
+              <textarea
+                #textInput
+                (blur)="saveNewIdea(column, textInput.value)"
+                (keyup.enter)="saveNewIdea(column, textInput.value)"
+              ></textarea>
+            </div>
+            <div
+              muuriGrid
+              (gridCreated)="onGridCreatedIdeas($event)"
+              [config]="layoutConfigIdeas"
+              [attr.columnId]="column.id"
+              style="position: relative;"
+              class="ideas-list-container">
               <div
-                class="add-card"
-                (click)="addCard(column)"
-                fxLayout="row"
-                fxLayoutAlign="start center"
-                fxLayoutGap="5px">
-                <mat-icon>add</mat-icon>
-                <span>New Card</span>
+                muuriGridItem
+                class="grid-item"
+                style="position: absolute;"
+                *ngFor="let item of column.brainstormidea_set; let i = index"
+                [attr.ideaId]="item.id" >
+                <!-- <ng-container *ngIf="canViewIdea(item)"> -->
+                  <benji-brainstorm-card
+                    [board]="board"
+                    [item]="item"
+                    [act]="act"
+                    [activityState]="activityState"
+                    [showUserName]="showUserName"
+                    [participantCode]="participantCode"
+                    (deleteIdea)="delete($event)"
+                    [sendMessage]="sendMessage"
+                    (commentEdited)="refreshMasonryLayout()"
+                    [isColumnsLayout]="isColumnsLayout"
+                    [category]="column"
+                    [myGroup]="myGroup"
+                    [avatarSize]="'small'"
+                    [userRole]="getUserRole(item)"
+                    [eventType]="eventType">
+                  </benji-brainstorm-card>
+                <!-- </ng-container> -->
               </div>
+            </div>
+            <div
+              class="add-card"
+              (click)="addCard(column)"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+              fxLayoutGap="5px">
+              <mat-icon>add</mat-icon>
+              <span>New Card</span>
             </div>
           </div>
         </div>
       </div>
-      <!-- <ng-container *ngxPermissionsOnly="'ADMIN'">
+      <ng-container *ngxPermissionsOnly="'ADMIN'">
         <div class="column">
           <div class="header" fxLayoutAlign="center center">
             <div
@@ -116,6 +124,6 @@
             </div>
           </div>
         </div>
-      </ng-container> -->
+      </ng-container>
   </div>
 </div>

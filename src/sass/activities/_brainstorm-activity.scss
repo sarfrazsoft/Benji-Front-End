@@ -327,7 +327,6 @@ benji-ms-brainstorming-activity {
           }
         }
         .ideas {
-          overflow-y: auto;
           max-width: 282px;
           .brainstorm-idea {
             margin-bottom: 16px;
@@ -391,6 +390,7 @@ benji-ms-brainstorming-activity {
         align-content: flex-start;
         flex-direction: row;
         padding-left: 0;
+        min-height: 40px;
       }
     }
 

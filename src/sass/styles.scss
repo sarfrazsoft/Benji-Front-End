@@ -1778,3 +1778,7 @@ ul {
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+.muuri-item-dragging {
+  z-index: 100000;
+}

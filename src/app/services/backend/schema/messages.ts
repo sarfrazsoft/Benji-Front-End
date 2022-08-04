@@ -683,7 +683,7 @@ export class BrainstormVoteEvent extends ActivityEvent {
 export class BrainstormSetCategoryEvent extends ActivityEvent {
   event_name = 'BrainstormSetCategoryEvent';
 
-  constructor(id: number, category: string) {
+  constructor(id: string, category: string) {
     super();
     this.extra_args = { brainstormidea: id, category: category };
   }

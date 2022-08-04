@@ -83,7 +83,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   boardGrid: Grid;
   public colDragCounter = 0;
   boardContainer: HTMLElement = document.querySelector('.board-container');
-  muuriKanbanBoard: HTMLElement = document.querySelector('.muuri-kanban-board');
+  muuriKanbanBoard: HTMLElement = document.querySelector('.drag-container');
 
   public layoutConfig: GridOptions = {
     items: this.columns,
@@ -111,6 +111,44 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
       sortInterval: 0,
     },
     dragHandle: '.board-column-title',
+    dragRelease: {
+      duration: 300,
+      easing: 'cubic-bezier(0.625, 0.225, 0.100, 0.890)',
+      useDragContainer: false,
+    },
+    // dragAutoScroll: {
+    //   targets: [{ element: this.boardContainer, axis: Muuri.AutoScroller.AXIS_X }],
+    // },
+  };
+
+  colGrids: Array<Grid> = [];
+  public layoutConfigIdeas: GridOptions = {
+    layoutDuration: 300,
+    layoutOnInit: false,
+    layoutEasing: 'cubic-bezier(0.625, 0.225, 0.100, 0.890)',
+    // layout: (grid, layoutId, items, width, height, callback) => {
+    //   const packer = new Muuri.Packer();
+    //   packer.setOptions({ horizontal: true });
+    //   return packer.createLayout(grid, layoutId, items, width, height, (layoutData) => {
+    //     delete layoutData.styles;
+    //     callback(layoutData);
+    //   });
+    // },
+    layout: {
+      fillGaps: false,
+      horizontal: false,
+      alignRight: false,
+      alignBottom: false,
+      rounding: true,
+    },
+    dragEnabled: true,
+    dragSort: () => this.colGrids,
+    dragContainer: this.muuriKanbanBoard,
+    // dragAxis: 'y',
+    // dragSortHeuristics: {
+    //   sortInterval: 0,
+    // },
+    // dragHandle: '.board-column-title',
     dragRelease: {
       duration: 300,
       easing: 'cubic-bezier(0.625, 0.225, 0.100, 0.890)',
@@ -257,12 +295,23 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.boardGrid.refreshItems().layout(true);
-      // this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 1000);
+
+    setTimeout(() => {
+      console.log(this.colGrids);
+      this.colGrids.forEach((grid) => {
+        grid.refreshItems().layout(true);
+      });
     }, 1000);
   }
 
   onGridCreated(grid: Grid) {
     this.boardGrid = grid;
+    this.gridCreated(grid, this.board.id);
+  }
+  onGridCreatedIdeas(grid: Grid) {
+    console.log(grid);
+    this.colGrids.push(grid);
     this.gridCreated(grid, this.board.id);
   }
 
@@ -274,7 +323,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
      * like subcribing to Muuri's events
      */
     grid.on('add', function (items) {
-      // console.log(items);
+      console.log(items);
     });
 
     grid.on('remove', (items) => {
@@ -282,6 +331,9 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
     });
 
     grid.on('dragEnd', (item: Item, event: DraggerEndEvent | DraggerCancelEvent) => {
+      const colId = item.getGrid().getElement().getAttribute('columnId');
+      const ideaId = item.getElement().getAttribute('ideaId');
+      this.sendMessage.emit(new BrainstormSetCategoryEvent(ideaId, colId));
       // const elemGrid = item.getGrid();
       // const gridItems: Item[] = elemGrid.getItems();
       // const ideasOrder = [];
