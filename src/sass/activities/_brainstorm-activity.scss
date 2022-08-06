@@ -874,7 +874,7 @@ benji-ps-brainstorming-activity {
   }
   .brainstorm-header {
     padding: 24px 32px;
-    width: 1200px;
+    max-width: 1200px;
     .instructions {
       width: 100%;
       .prose {
@@ -981,7 +981,7 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 1280px) {
   .brainstorm-main .brainstorm-header {
-    width: calc(100vw - 17px);
+    width: 100vw;
     .sub-header {
       margin-top: 8px;
     }
@@ -1023,7 +1023,7 @@ benji-ps-brainstorming-activity {
     // .sub-header, .brainstorm-h2 {
     // }
     &.with-media {
-      width: calc(100vw - 17px);
+      width: 100vw;
       .options-buttons {
         width: 100%;
         margin-top: 24px;
@@ -1138,6 +1138,12 @@ ng-dropdown-panel {
       }
       .options-buttons {
         margin-top: 16px;
+      }
+      &.with-media .instructions {
+        width: 100%;
+        .level-one .level-two {
+          margin-right: 0px;
+        }
       }
     }
   }

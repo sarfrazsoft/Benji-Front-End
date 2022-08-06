@@ -170,7 +170,7 @@
 }
 
 .boards-navigation {
-  padding: 16px;
+  padding: 16px 16px 0px 16px;
   width: 376px;
   height: 100%;
   .header-area {
@@ -233,7 +233,8 @@
   }
   .bottom-area {
     border-top: 1px solid #E2E6EC;
-    padding-top: 24px;
+    padding: 24px 0px;
+    margin-top: 12px;
   }
 }
 
