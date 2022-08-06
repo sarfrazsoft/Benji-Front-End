@@ -176,7 +176,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       console.log(this.columns);
-      this.showGrids = true;
+      // this.showGrids = true;
       this.cycle = 'second';
     } else {
       if (
@@ -295,6 +295,8 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.boardGrid.refreshItems().layout(true);
+      console.log(this.boardGrid.getElement().childElementCount);
+      console.log((this.boardGrid.getElement().childElementCount - 1) * 288);
     }, 1000);
 
     setTimeout(() => {
@@ -481,7 +483,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {
     const categoryID = event.container.element.nativeElement.getAttribute('columnID');
     const id = event.container.data[event.currentIndex].id;
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(id, categoryID));
+    this.sendMessage.emit(new BrainstormSetCategoryEvent(id.toString(), categoryID));
   }
 
   submitComment(ideaId, val) {
