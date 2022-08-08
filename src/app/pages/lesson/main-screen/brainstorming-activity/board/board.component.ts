@@ -115,6 +115,9 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   isHost: boolean;
   private typingTimer;
 
+  @ViewChild('brainstormHeadWrapper') elementView: ElementRef;
+  headWrapperHeight;
+
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -252,11 +255,17 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
+    if (this.elementView && this.elementView.nativeElement) {
+      this.headWrapperHeight = this.elementView.nativeElement.offsetHeight + 49;
+    }
     if (
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
       this.getBoardInstructions();
+
+      console.log(this.elementView.nativeElement.offsetHeight);
+      // this.headWrapperHeight = this.elementView.nativeElement.offsetHeight;
     } else {
       // populate groupings dropdown
       if (

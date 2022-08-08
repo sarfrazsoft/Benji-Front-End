@@ -238,7 +238,11 @@ benji-ms-brainstorming-activity {
     }
     .submitted-ideas {
       padding: 0 0 0 16px;
-      //overflow-y: auto;
+      // overflow-y: auto;
+      width: 100vw;
+      max-width: 100vw;
+      // height: calc(100vh - 269px);
+      overflow: auto;
       .uncategorized {
         margin-bottom: 16px;
         ngx-masonry {
@@ -1514,4 +1518,12 @@ pdf-bookmark {
 .benji-muuri-grid {
   // muuri grid needs relative position
   position: relative;
+  
+}
+
+benji-columns-ideas {
+  .benji-muuri-column {
+    // min-height: 100%;
+    height: 100%;
+  }
 }

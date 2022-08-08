@@ -43,6 +43,7 @@ import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import * as Muuri from 'muuri';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'benji-columns-ideas',
@@ -61,6 +62,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() isColumnsLayout;
   @Input() myGroup;
   @Input() isHost;
+  @Input() headWrapperHeight = 100;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -100,7 +102,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
     // },
     layout: {
       fillGaps: false,
-      horizontal: false,
+      horizontal: true,
       alignRight: false,
       alignBottom: false,
       rounding: true,
@@ -122,6 +124,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   };
 
   colGrids: Array<Grid> = [];
+  newColLeftPx;
   public layoutConfigIdeas: GridOptions = {
     layoutDuration: 300,
     layoutOnInit: false,
@@ -164,7 +167,8 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
     private httpClient: HttpClient,
     private utilsService: UtilsService,
     private brainstormService: BrainstormService,
-    private permissionsService: NgxPermissionsService
+    private permissionsService: NgxPermissionsService,
+    public sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -296,7 +300,8 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       this.boardGrid.refreshItems().layout(true);
       console.log(this.boardGrid.getElement().childElementCount);
-      console.log((this.boardGrid.getElement().childElementCount - 1) * 288);
+      this.newColLeftPx = (this.boardGrid.getElement().childElementCount - 1) * 288 + 'px';
+      console.log(this.newColLeftPx);
     }, 1000);
 
     setTimeout(() => {

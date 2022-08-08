@@ -7,7 +7,7 @@
 
 <ng-container *ngIf="boardStatus !== 'closed' || isHost">
   <div fxLayout="column" class="brainstorm-main">
-    <div class="head-wrapper" fxLayoutAlign="center start">
+    <div #brainstormHeadWrapper id="brainstorm-head-wrapper" class="head-wrapper" fxLayoutAlign="center start">
       <benji-board-prompt
         [board]="board"
         [isHost]="isHost"
@@ -50,6 +50,7 @@
           [isColumnsLayout]="true"
           [myGroup]="myGroup"
           [isHost]="isHost"
+          [headWrapperHeight]="headWrapperHeight"
           (addCardUnderCategory)="addCardUnderCategory($event)"
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)"

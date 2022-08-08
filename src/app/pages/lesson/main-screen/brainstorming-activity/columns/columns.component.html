@@ -1,5 +1,7 @@
 
 
+<div>
+
 
 <div class="drag-container"></div>
 
@@ -8,12 +10,14 @@
   fxLayout="row"
   muuriGrid
   (gridCreated)="onGridCreated($event)"
-  [config]="layoutConfig" 
-  style="position: relative;">
+  [config]="layoutConfig"
+  [ngStyle]="{'height': 'calc(100vh - 269px)'}">
+  <!-- [style.height]=`sanitizer.bypassSecurityTrustStyle('calc(100vh - ${headw })')`> -->
+  <!--  -->
     <div 
       *ngFor="let column of columns; let i = index"
       muuriGridItem
-      class="grid-item"
+      class="grid-item benji-muuri-column"
       style="position: absolute;">
       <div
         class="column"
@@ -118,7 +122,11 @@
       </div>
     </div>
     <div *ngxPermissionsOnly="'ADMIN'">
-      <div class="column" style="position: absolute; left">
+      <div 
+        class="column"
+        style="position: absolute;"
+        [style.left.px]="newColLeftPx"
+        [ngStyle]='{ left : newColLeftPx }'>
         <div class="header" fxLayoutAlign="center center">
           <div
             class="add-column"
@@ -128,4 +136,6 @@
         </div>
       </div>
     </div>
+</div>
+
 </div>
