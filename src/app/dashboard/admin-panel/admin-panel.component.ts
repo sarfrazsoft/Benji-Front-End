@@ -90,7 +90,17 @@ export class AdminPanelComponent implements OnInit, OnChanges {
       .subscribe((data) => {
         if (data) {
           this.adminService.createNewBoard(data).subscribe((res: any) => {
-            this.adminService.addLessonRunImage(res.lessonrun_code, data.selectedImage, data.selectedImageName, data.imageUrl);
+            this.adminService.addLessonRunImage(
+              res.lessonrun_code, 
+              data.selectedImage, 
+              data.selectedImageName, 
+              data.imageUrl)
+              .subscribe(
+                (data) => {
+                  console.log(data);
+                },
+                (error) => console.log(error)
+              );;
             // user object was stored when this user logged in.
             // Now we need to store it as host so other modules know who is host
             // for this particular session

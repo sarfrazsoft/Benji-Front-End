@@ -12,7 +12,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { BrainstormService } from 'src/app';
+import { BrainstormService, ContextService } from 'src/app';
 import {
   Board,
   BoardSort,
@@ -28,6 +28,7 @@ import {
   BrainstormRemoveBoardEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
+  Branding,
   DuplicateBoardEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
@@ -60,14 +61,19 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   hostBoard: number;
 
   showBottom = true;
-  dragDisabled = false;
+  isParticipant = false;
+  darkLogo: string;
+  lessonName: string;
+  lessonDescription: string;
+  boardHovered = false;
 
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
     private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    public contextService: ContextService
   ) {}
 
   ngOnInit(): void {
@@ -89,13 +95,22 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.dragDisabled = true;
+        this.isParticipant = true;
       }
     });
 
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
     }
+
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
+      if (info) {
+        this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+      }
+    });
+
+    this.lessonName = this.activityState.lesson.lesson_name;
+    this.lessonDescription = this.activityState.lesson.lesson_description;
   }
 
   selectedBoardChanged(board) {

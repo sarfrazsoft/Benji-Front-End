@@ -1,7 +1,8 @@
 <mat-sidenav-container
     class="example-container" (backdropClick)="close()">
   <mat-sidenav 
-    #sidenav 
+    #sidenav
+    [mode]="sideNavMode" 
     (keydown.escape)="close()"
     [position]="sideNavPosition">
       <benji-board-menu *ngIf="serverMessage"
@@ -224,13 +225,6 @@
             (sendMessage)="sendSocketMessage($event)"
           >
           </benji-ms-case-study-activity>
-          <!-- <benji-ps-case-study-activity
-            *ngIf="getActivityType() === at.caseStudy"
-            [activityState]="serverMessage"
-            [avgServerTimeOffset]="avgServerTimeOffset"
-            (sendMessage)="sendSocketMessage($event)"
-          >
-          </benji-ps-case-study-activity> -->
 
           <benji-ms-convo-cards-activity
             *ngIf="getActivityType() === at.convoCards"
@@ -257,32 +251,7 @@
           >
           </benji-ms-sharing-tool>
         </ng-container>
-
-        <!-- old grouping tool commented out -->
-        <!-- <ng-container>
-          <benji-ms-grouping-tool *ngIf="getIsGroupingShowing() || showGroupingOnScreen"
-            [activityState]="serverMessage"
-            (sendMessage)="sendSocketMessage($event)"
-          >
-          </benji-ms-grouping-tool>
-          
-        </ng-container> -->
       </div>
-      <!-- <benji-main-screen-footer
-        *ngIf="isConnected() && serverMessage"
-        [activityState]="serverMessage"
-        [showFastForward]="fastForwardActivities.indexOf(getActivityType()) > -1"
-        [isLastActivity]="!isLastActivity()"
-        [showFooter]="getActivityType() !== at.lobby"
-        [roomCode]="serverMessage.lesson_run.lessonrun_code"
-        [lessonName]="serverMessage.lesson.lesson_name"
-        [isPaused]="isPaused()"
-        [disableControls]="disableControls"
-        [isSharing]="getIsSharing()"
-        [isGrouping]="getIsGrouping()"
-        [isGroupingShowing]="getIsGroupingShowing()"
-        (socketMessage)="sendSocketMessage($event)"
-      ></benji-main-screen-footer> -->
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

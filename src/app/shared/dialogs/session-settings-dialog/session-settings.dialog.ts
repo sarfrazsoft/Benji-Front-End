@@ -125,6 +125,7 @@ export class SessionSettingsDialogComponent implements OnInit {
             .then((resizedImage: Blob) => {
               this.selectedImage = resizedImage;
               this.selectedImageName = file.name;
+              this.imageUrl = null;
             })
             .catch(function (err) {
               console.error(err);
@@ -132,6 +133,8 @@ export class SessionSettingsDialogComponent implements OnInit {
           } else if (res.type === 'unsplash') {
             this.coverPhoto = res.data;
             this.imageUrl = res.data;
+            this.selectedImage = null;
+            this.selectedImageName = null;
           }
         }
       });
