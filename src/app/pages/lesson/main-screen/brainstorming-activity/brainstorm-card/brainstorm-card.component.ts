@@ -136,7 +136,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
     if (this.participantCode) {
     } else {
-      this.commentKey = 'comment_' + this.item.id + 'host';
+      this.commentKey = 'comment_' + this.item?.id + 'host';
     }
 
     const draftComment = this.brainstormService.getDraftComment(this.commentKey);
@@ -393,7 +393,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
     });
-
   }
 
   onCommentFocus() {

@@ -103,9 +103,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
         this.brainstormService.addIdeaToCategory(this.board, this.columns);
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        // this.brainstormService.ideaCommented(this.board, this.columns, () => {
-        //   this.refreshMasonryLayout();
-        // });
+        this.brainstormService.ideaCommented(this.board, this.columns, () => {
+          // this.refreshMasonryLayout();
+        });
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           this.refreshMasonryLayout();

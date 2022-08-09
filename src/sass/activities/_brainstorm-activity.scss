@@ -238,11 +238,11 @@ benji-ms-brainstorming-activity {
     }
     .submitted-ideas {
       padding: 0 0 0 16px;
-      // overflow-y: auto;
       width: 100vw;
       max-width: 100vw;
-      // height: calc(100vh - 269px);
-      overflow: auto;
+      min-width: 99vw;
+      height: calc(100vh - 300px);
+      overflow-y: auto;
       .uncategorized {
         margin-bottom: 16px;
         ngx-masonry {
