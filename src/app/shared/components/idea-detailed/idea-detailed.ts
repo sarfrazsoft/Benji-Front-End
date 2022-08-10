@@ -7,7 +7,16 @@ import {
   // ...
 } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, HostListener, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { iframely } from '@iframely/embed.js';
 import { Uppy } from '@uppy/core';
@@ -119,8 +128,8 @@ export type IdeaUserRole = 'owner' | 'viewer';
     ]),
   ],
   host: {
-    '(document:keydown)': 'handleKeyboardEvent($event)'
-  }
+    '(document:keydown)': 'handleKeyboardEvent($event)',
+  },
 })
 export class IdeaDetailedComponent implements OnInit, OnChanges {
   showCategoriesDropdown = false;
@@ -237,10 +246,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'ArrowRight') {
-      this.nextArrowClicked()
+      this.nextArrowClicked();
     }
     if (event.key === 'ArrowLeft') {
-      this.previousArrowClicked()
+      this.previousArrowClicked();
     }
   }
 
@@ -305,9 +314,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
     // check if idea has and iframe and attach it
     this.meta = cloneDeep(this.data.item.meta);
-    if (this.meta && this.meta.iframe && this.meta.iframe && this.meta.iframe.iframeHTML) {
-      this.iframeAvailable = true;
-      this.iframeData = this.meta.iframe;
+    if (this.meta && this.meta.iframe) {
+      if (this.meta.iframe && this.meta.iframe.iframeHTML) {
+        this.iframeAvailable = true;
+        this.iframeData = this.meta.iframe;
+      }
+    } else {
+      this.removeIframe();
     }
 
     this.userRole = this.data.userRole;
