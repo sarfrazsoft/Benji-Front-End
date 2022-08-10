@@ -36,10 +36,18 @@ import {
   Category,
   Group,
   Idea,
+  SetMetaDataBoardEvent,
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
+import { PostOrder } from '../grid/grid.component';
+
+export interface ColsIdeaOrderInfo {
+  container: string;
+  previousIndex: number;
+  currentIndex: number;
+}
 
 @Component({
   selector: 'benji-categorized-ideas',
@@ -68,6 +76,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   columns = [];
   cycle = 'first';
   isAdmin = false;
+  secondRunAllowed = true;
 
   public masonryOptions: NgxMasonryOptions = {
     gutter: 16,
@@ -94,6 +103,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   ngOnChanges($event: SimpleChanges) {
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
+      console.log(this.columns);
       this.cycle = 'second';
     } else {
       if (
@@ -101,7 +111,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
         this.eventType === 'BrainstormEditSubInstruction'
       ) {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
-        this.brainstormService.addIdeaToCategory(this.board, this.columns);
+        this.brainstormService.addIdeaToCategory(this.board, this.columns, (changedCategory: Category) => {
+          console.log(changedCategory);
+        });
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           // this.refreshMasonryLayout();
@@ -205,6 +217,33 @@ export class CategorizedComponent implements OnInit, OnChanges {
           // host just turned off meeting mode.
           // do nothing
         }
+      } else if (this.eventType === 'SetMetaDataBoardEvent' && this.secondRunAllowed) {
+        if (this.board.meta.updated === 'post_order') {
+          this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+            if (val) {
+              const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.post_order;
+              this.columns.forEach((column: Category) => {
+                if (column.id.toString() === colsIdeaOrderInfo.container) {
+                  console.log(column);
+                  moveItemInArray(
+                    column.brainstormidea_set,
+                    colsIdeaOrderInfo.previousIndex,
+                    colsIdeaOrderInfo.currentIndex
+                  );
+                  console.log(column);
+                  this.secondRunAllowed = false;
+                  setTimeout(() => {
+                    this.secondRunAllowed = true;
+                  }, 1000);
+                }
+              });
+              // this.postLayoutService.itemMovedByTheHost(
+              //   this.grid,
+              //   this.board.meta.post_order as Array<PostOrder>
+              // );
+            }
+          });
+        }
       }
     }
   }
@@ -301,7 +340,24 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         if (event.previousContainer === event.container) {
-          // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+          const category = event.container.element.nativeElement.getAttribute('columnId');
+          console.log(category);
+          const item = event.item.element.nativeElement.getAttribute('ideaId');
+          // this.board.meta.updated === 'post_order'
+          console.log(event, 'item moved in array');
+
+          const ideasOrder: ColsIdeaOrderInfo = {
+            container: category,
+            previousIndex: event.previousIndex,
+            currentIndex: event.currentIndex,
+          };
+          this.sendMessage.emit(
+            new SetMetaDataBoardEvent(this.board.id, {
+              updated: 'post_order',
+              post_order: ideasOrder,
+            })
+          );
+          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
           transferArrayItem(
             event.previousContainer.data,

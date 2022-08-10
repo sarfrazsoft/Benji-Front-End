@@ -11,6 +11,7 @@
   muuriGrid
   (gridCreated)="onGridCreated($event)"
   [config]="layoutConfig">
+  <!-- [ngStyle]="{'height.px': remainingHeight}"> -->
   <!-- [ngStyle]="{'height': 'calc(100vh - 269px)'}"> -->
   <!-- [style.height]=`sanitizer.bypassSecurityTrustStyle('calc(100vh - ${headw })')`> -->
   <!--  -->
@@ -87,7 +88,8 @@
               class="grid-item"
               style="position: absolute;"
               *ngFor="let item of column.brainstormidea_set; let i = index"
-              [attr.ideaId]="item.id" >
+              [attr.ideaId]="item?.id"
+              [style.height.px]="height">
               <!-- <ng-container *ngIf="canViewIdea(item)"> -->
                 <benji-brainstorm-card
                   [board]="board"

@@ -4,7 +4,9 @@
     class="brainstorm-idea"
     [class.show-user] = ""
     (mouseenter)="item.showClose = true"
-    (mouseleave)="item.showClose = false">
+    (mouseleave)="item.showClose = false"
+    cdkDrag
+    [cdkDragDisabled]="!canUserDrag()">
     <!-- brainstorm card media -->
     <ng-container>
       <!-- Idea image -->

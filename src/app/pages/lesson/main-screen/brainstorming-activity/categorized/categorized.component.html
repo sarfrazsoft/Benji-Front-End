@@ -68,7 +68,8 @@
           <div class="ideas-list-container">
             <div 
               *ngFor="let item of column.brainstormidea_set; let i = index" 
-              class="masonry-item">
+              class="masonry-item"
+              [attr.ideaId]="item.id">
               <ng-container *ngIf="canViewIdea(item)">
                 <benji-brainstorm-card
                   [board]="board"

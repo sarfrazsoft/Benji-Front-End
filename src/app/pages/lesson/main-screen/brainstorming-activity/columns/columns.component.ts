@@ -41,9 +41,10 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
+import { DomSanitizer } from '@angular/platform-browser';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import * as Muuri from 'muuri';
-import { DomSanitizer } from '@angular/platform-browser';
+import { PostLayoutService } from 'src/app/services';
 
 @Component({
   selector: 'benji-columns-ideas',
@@ -62,7 +63,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() isColumnsLayout;
   @Input() myGroup;
   @Input() isHost;
-  @Input() headWrapperHeight = 100;
+  @Input() headWrapperHeight = 0;
   @ViewChild('colName') colNameElement: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
 
@@ -81,6 +82,7 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   };
   masonryPrepend: boolean;
 
+  remainingHeight;
   showGrids = false;
   boardGrid: Grid;
   public colDragCounter = 0;
@@ -168,15 +170,20 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
     private utilsService: UtilsService,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private postLayoutService: PostLayoutService
   ) {}
 
   ngOnInit(): void {
+    console.log(window.innerHeight);
+
     if (!this.participantCode) {
     }
   }
 
   ngOnChanges($event: SimpleChanges) {
+    this.remainingHeight = window.innerHeight - (this.headWrapperHeight + 49);
+
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       console.log(this.columns);
@@ -188,7 +195,17 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
         this.eventType === 'BrainstormEditSubInstruction'
       ) {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
-        this.brainstormService.addIdeaToCategory(this.board, this.columns);
+        this.brainstormService.addIdeaToCategory(this.board, this.columns, (changedCategory: Category) => {
+          this.colGrids.forEach((grid: Grid) => {
+            const gridId = grid.getElement().getAttribute('columnId');
+            if (gridId === changedCategory.id.toString()) {
+              setTimeout(() => {
+                this.postLayoutService.refreshGridLayout(grid, false);
+              }, 10);
+            }
+          });
+          console.log(changedCategory, this.colGrids);
+        });
       } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           this.refreshMasonryLayout();

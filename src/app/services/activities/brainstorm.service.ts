@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
+import { cloneDeep, differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
@@ -77,8 +77,9 @@ export class BrainstormService {
     return arr;
   }
 
-  addIdeaToCategory(act: Board, existingCategories) {
-    act.brainstormcategory_set.forEach((category, index) => {
+  addIdeaToCategory(act: Board, existingCategories, callback) {
+    let changedCategory: Category;
+    act.brainstormcategory_set.forEach((category: Category, index) => {
       existingCategories.forEach((existingCategory) => {
         if (existingCategory.id === category.id) {
           const BEIdeas = category.brainstormidea_set.filter((idea) => !idea.removed);
@@ -86,11 +87,12 @@ export class BrainstormService {
           } else {
             const myDifferences = differenceBy(BEIdeas, existingCategory.brainstormidea_set, 'id');
             existingCategory.brainstormidea_set.push(myDifferences[0]);
+            changedCategory = cloneDeep(existingCategory);
           }
         }
       });
     });
-    return existingCategories;
+    callback(changedCategory);
   }
 
   populateCategories(board: Board, columns) {
