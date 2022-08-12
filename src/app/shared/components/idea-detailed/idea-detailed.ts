@@ -314,9 +314,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
     // check if idea has and iframe and attach it
     this.meta = cloneDeep(this.data.item.meta);
-    if (this.meta && this.meta.iframe && this.meta.iframe && this.meta.iframe.iframeHTML) {
-      this.iframeAvailable = true;
-      this.iframeData = this.meta.iframe;
+    if (this.meta && this.meta.iframe) {
+      if (this.meta.iframe && this.meta.iframe.iframeHTML) {
+        this.iframeAvailable = true;
+        this.iframeData = this.meta.iframe;
+      }
+    } else {
+      this.removeIframe();
     }
 
     this.userRole = this.data.userRole;

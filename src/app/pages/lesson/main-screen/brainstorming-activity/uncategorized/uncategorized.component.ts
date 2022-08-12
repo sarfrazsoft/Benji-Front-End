@@ -166,7 +166,8 @@ export class UncategorizedComponent implements OnInit, OnChanges {
         }
       } else if (
         this.eventType === 'BrainstormChangeBoardStatusEvent' ||
-        this.eventType === 'BrainstormToggleAllowCommentEvent'
+        this.eventType === 'BrainstormToggleAllowCommentEvent' ||
+        this.eventType === 'BrainstormToggleAllowHeartEvent'
       ) {
         this.masonry?.layout();
       } else if (this.eventType === 'SetMetaDataBoardEvent') {

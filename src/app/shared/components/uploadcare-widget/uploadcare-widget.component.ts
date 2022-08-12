@@ -181,10 +181,6 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
         if (tab === 'camera') {
           this.testCamera();
         } else if (tab === 'file') {
-          const buttons: HTMLCollectionOf<HTMLElement> = document.getElementsByClassName(
-            'uploadcare--tab__action-button'
-          ) as HTMLCollectionOf<HTMLElement>;
-          buttons[0].click();
         }
       });
     });
