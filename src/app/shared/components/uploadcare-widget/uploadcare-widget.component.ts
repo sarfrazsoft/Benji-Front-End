@@ -322,11 +322,14 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
           track.stop();
         });
 
-        this.onVisible(document.getElementsByClassName('uploadcare--camera__device-select')[0], () => {
-          const elem = document.getElementsByClassName('uploadcare--camera__device-select')[0];
+        const deviceSelector = document.getElementsByClassName('uploadcare--camera__device-select')[0];
+        this.onVisible(deviceSelector, () => {
+          const elem = deviceSelector;
           const elCount = elem.childElementCount;
-          if (elCount === 1) {
-            // elem.remove();
+          elem.remove();
+          if (elCount > 1) {
+            const container = document.getElementsByClassName('uploadcare--camera__video-container')[0];
+            container.appendChild(elem);
           }
         });
       },
