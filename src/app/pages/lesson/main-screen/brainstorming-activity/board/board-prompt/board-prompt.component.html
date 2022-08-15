@@ -11,15 +11,15 @@
           <textarea
             matInput
             cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            placeholder="What will you discuss?" 
-            #title
+            placeholder="What will you discuss?"
             class="title"
             rows="1"
             [readonly]="!isHost" 
             type="text"
-            value="{{ title_instructions }}"
-            (keyup)="typingStoped('title')"
+            [value]="title_instructions"
+            (keyup)="typingStoped('title', $event)"
             (keydown)="typingStarted()">
           </textarea>
         </div>
