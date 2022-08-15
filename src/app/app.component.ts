@@ -6,16 +6,14 @@ import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
 import { Branding, User } from './services/backend/schema';
 import { PartnerInfo } from './services/backend/schema/whitelabel_info';
-//import { Branding } from './services/backend/schema/whitelabel_info';
+// import { Branding } from './services/backend/schema/whitelabel_info';
 import { ContextService } from './services/context.service';
 import { LayoutService } from './services/layout.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [
-    './app.component.scss',
-  ],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   apiUrl = 'test';
@@ -29,7 +27,6 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
     let color = '#555BEA';
     let favicon;
 
@@ -37,9 +34,11 @@ export class AppComponent implements OnInit {
       if (branding) {
         color = branding.color ? branding.color : '#555BEA';
         favicon = branding.favicon ? branding.favicon : '/assets/img/favicon.ico';
-        this._document.getElementById('appFavicon').setAttribute('href', favicon.replace(/https|http/g,'https'));
+        this._document
+          .getElementById('appFavicon')
+          .setAttribute('href', favicon.replace(/https|http/g, 'https'));
       }
-        const cssCode = `
+      const cssCode = `
         * {
           caret-color: ${color};
         }
@@ -232,21 +231,26 @@ export class AppComponent implements OnInit {
         }
         `;
 
-        let additionalCssStyle = document.getElementById('additionalCss');
-        if (!additionalCssStyle) {
-          additionalCssStyle = document.createElement('style');
-          additionalCssStyle.id = 'additionalCss';
-          document.head.appendChild(additionalCssStyle);
-        }
-        additionalCssStyle.innerText = cssCode;
-      
+      let additionalCssStyle = document.getElementById('additionalCss');
+      if (!additionalCssStyle) {
+        additionalCssStyle = document.createElement('style');
+        additionalCssStyle.id = 'additionalCss';
+        document.head.appendChild(additionalCssStyle);
+      }
+      additionalCssStyle.innerText = cssCode;
     });
 
-    this.contextService.brandingInfo = {
-      color: '#555BEA',
-      logo: '/assets/img/Benji_logo.svg',
-      favicon: '/assets/img/favicon.ico',
-    } 
+    if (localStorage.getItem('benji_branding')) {
+      const savedBrandingInfo = JSON.parse(localStorage.getItem('benji_branding'));
+      console.log(savedBrandingInfo);
+      this.contextService.brandingInfo = savedBrandingInfo;
+    } else {
+      this.contextService.brandingInfo = {
+        color: '#555BEA',
+        logo: '/assets/img/Benji_logo.svg',
+        favicon: '/assets/img/favicon.ico',
+      };
+    }
   }
 
   hexToRGB(hex, alpha) {
@@ -260,5 +264,4 @@ export class AppComponent implements OnInit {
       return 'rgb(' + r + ', ' + g + ', ' + b + ')';
     }
   }
-
 }

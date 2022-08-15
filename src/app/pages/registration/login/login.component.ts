@@ -72,10 +72,10 @@ export class LoginComponent implements OnInit {
     //   this.roomCode.setValue(this.route.snapshot.queryParams['link']);
     //   this.validateRoomCode();
     // }
-    
+
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
 
