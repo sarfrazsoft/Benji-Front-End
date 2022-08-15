@@ -239,7 +239,7 @@ benji-ms-brainstorming-activity {
     }
     .submitted-ideas {
       padding: 0 0 0 16px;
-      //overflow-y: auto;
+      overflow-y: auto;
       .uncategorized {
         margin-bottom: 16px;
         ngx-masonry {
@@ -875,6 +875,7 @@ benji-ps-brainstorming-activity {
   }
   .brainstorm-header {
     padding: 24px 32px;
+    width: 100vw;
     max-width: 1200px;
     .instructions {
       width: 100%;

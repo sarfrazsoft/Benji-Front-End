@@ -37,6 +37,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   sideNavPosition: 'start' | 'end';
   sideNavMode: 'side' | 'over';
   public innerWidth: any;
+  boardsMenuClosed = true;
 
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
@@ -101,23 +102,16 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
     return this.serverMessage[activity_type].is_paused;
   }
 
-  openSideNav(type: 'board-settings' | 'boards') {
-    if (type === 'board-settings') {
+  openSettingsMenu() {
       this.navType = 'board-settings';
       this.sideNavPosition = 'end';
       this.sideNavMode = 'over';
-    } else if (type === 'boards') {
-      this.navType = 'boards';
-      this.sideNavPosition = 'start';
-      this.innerWidth < 848 ?
-        this.sideNavMode = 'over' :
-        this.sideNavMode = 'side';
-    }
-    type ? this.sidenav.open() : this.close();
+      this.sidenav.open();
+      this.boardsMenuClosed = true;
   }
 
   openBoardSettings() {
-    this.openSideNav('board-settings');
+    this.openSettingsMenu();
   }
 
   close() {
@@ -126,4 +120,16 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
     this.navType = null;
     this.sideNavPosition = null;
   }
+
+  toggleBoardsMenu() {
+    this.navType = 'boards';
+    this.sideNavPosition = 'start';
+    this.innerWidth < 848 ?
+      this.sideNavMode = 'over' :
+      this.sideNavMode = 'side';
+    const result = this.sidenav.toggle().then(val => {
+      this.boardsMenuClosed = val == 'open' ? false : true;
+    });
+  }
+
 }
