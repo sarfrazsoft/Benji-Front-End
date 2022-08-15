@@ -16,11 +16,31 @@ export class PostLayoutService {
     return this.sendMessage$.getValue();
   }
 
+  public layoutConfig: GridOptions = {
+    items: null,
+    layoutOnInit: false,
+    dragEnabled: true,
+    layout: {
+      fillGaps: false,
+      horizontal: false,
+      alignRight: false,
+      alignBottom: false,
+      rounding: true,
+    },
+    dragStartPredicate: {
+      distance: 10,
+      delay: 100,
+    },
+  };
+
   constructor() {}
+
+  getLayoutConfig() {
+    return this.layoutConfig;
+  }
 
   onGridCreated(grid: Grid, boardId: number) {
     const board_id = boardId;
-    console.log('grid created');
     /**
      * Now you can do everything you want with the Grid object,
      * like subcribing to Muuri's events

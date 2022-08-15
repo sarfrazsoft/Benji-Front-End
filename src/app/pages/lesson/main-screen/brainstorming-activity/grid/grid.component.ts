@@ -60,20 +60,7 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
 
   showItems = false;
 
-  // Add any options you'd like to set here
-  public layoutConfig: GridOptions = {
-    items: this.ideas,
-    layoutOnInit: false,
-    dragEnabled: true,
-    layout: {
-      fillGaps: false,
-      horizontal: false,
-      alignRight: false,
-      alignBottom: false,
-      rounding: true,
-    },
-  };
-
+  public layoutConfig: GridOptions = null;
   grid: Grid;
 
   constructor(
@@ -81,6 +68,8 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
     private ngxPermissionsService: NgxPermissionsService,
     private postLayoutService: PostLayoutService
   ) {
+    this.layoutConfig = this.postLayoutService.getLayoutConfig();
+    this.layoutConfig.items = this.ideas;
     const sortDataPreset = this.postLayoutService.getSortPresetsData();
     this.layoutConfig.sortData = sortDataPreset;
   }

@@ -10,8 +10,8 @@
     <!-- brainstorm card media -->
     <ng-container>
       <!-- Idea image -->
+      <!-- (click)="showDetailedIdea(item)" -->
       <div
-        (click)="showDetailedIdea(item)"
         class="brainstorm-image"
         *ngIf="item.idea_image !== null">
         <ng-container [ngSwitch]="typeOfImage(item)">
@@ -65,8 +65,8 @@
       </div>
     
       <!-- Idea document -->
+      <!-- (click)="showDetailedIdea(item)" -->
       <div
-        (click)="showDetailedIdea(item)"
         *ngIf="item.idea_document">
         <div  style="width: 100%;height: 200px">
           <pdf-viewer
@@ -95,7 +95,8 @@
       </div>
     </ng-container>
     <div 
-      class="card-header" 
+      class="card-header"
+      benji-click-stop-propagation
       (click)="showDetailedIdea(item)"
       [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
       fxLayoutAlign="space-between center">
@@ -160,8 +161,8 @@
       [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
                   'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
       *ngIf="item.title || item.idea" 
-      benji-click-stop-propagation 
-      (click)="showDetailedIdea(item)">
+      benji-click-stop-propagation>
+      <!-- (click)="showDetailedIdea(item)"> -->
       <div *ngIf="item.title || item.idea" class="title-description">
         <div *ngIf="item.title" class="title" [ngClass]="{'spaced': item.idea }">{{ item.title }}</div>
         <div *ngIf="item.idea">
@@ -176,8 +177,8 @@
       <div 
         class="counts" 
         fxLayout="row" 
-        fxLayoutAlign="space-between center" 
-        (click)="showDetailedIdea(item)"> 
+        fxLayoutAlign="space-between center">
+        <!-- (click)="showDetailedIdea(item)">  -->
         <div fxLayout="row" fxLayoutAlign="start center" *ngIf="areHeartsAllowed()">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"

@@ -3,8 +3,9 @@ import { ClickOutsideDirective } from './clicked-outside/clicked-outside.directi
 import { HasPermissionDirective } from './has-permission/has-permission.directive';
 import { HoverClassDirective } from './hover-class/hover-class';
 import { InfiniteScrollerDirective } from './infinite-scroller/infinite-scroller.directive';
+import { PreventDragClickDirective } from './prevent-drag-click/prevent-drag-click.directive';
 
-export { ClickStopPropagationDirective, InfiniteScrollerDirective };
+export { ClickStopPropagationDirective, InfiniteScrollerDirective, PreventDragClickDirective };
 
 export const Directives = [
   ClickStopPropagationDirective,
@@ -12,4 +13,5 @@ export const Directives = [
   InfiniteScrollerDirective,
   HoverClassDirective,
   ClickOutsideDirective,
+  PreventDragClickDirective,
 ];
