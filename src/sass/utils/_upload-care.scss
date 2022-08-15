@@ -7,6 +7,9 @@
     width: auto;
   }
 }
+.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options {
+  position: absolute;
+}
 .uploadcare-container {
   .uploadcare--widget__button.uploadcare--widget__button_type_open {
     display: none;
