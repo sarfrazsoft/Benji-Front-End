@@ -116,26 +116,31 @@ export class BrainstormService {
     return this.sortIdeas(board, columns);
   }
 
-  sortIdeas(board: Board, columns) {
-    for (let i = 0; i < columns.length; i++) {
-      const col = columns[i];
-      col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => {
-        if (board.sort === 'newest_to_oldest') {
-          return Number(moment(b.time)) - Number(moment(a.time));
-        } else if (board.sort === 'oldest_to_newest') {
-          return Number(moment(a.time)) - Number(moment(b.time));
-        } else if (board.sort === 'likes') {
-          return b.hearts.length - a.hearts.length;
-        } else {
-          return Number(moment(a.time)) - Number(moment(b.time));
-        }
-      });
+  sortIdeas678*(board: Board, columns) {
+    if (board.sort === 'unsorted') {
+      // do nothing
+      return columns;
+    } else {
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        col.brainstormidea_set = col.brainstormidea_set.sort((a, b) => {
+          if (board.sort === 'newest_to_oldest') {
+            return Number(moment(b.time)) - Number(moment(a.time));
+          } else if (board.sort === 'oldest_to_newest') {
+            return Number(moment(a.time)) - Number(moment(b.time));
+          } else if (board.sort === 'likes') {
+            return b.hearts.length - a.hearts.length;
+          } else {
+            return Number(moment(a.time)) - Number(moment(b.time));
+          }
+        });
 
-      col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
-        return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
-      });
+        col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
+          return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+        });
+      }
+      return columns;
     }
-    return columns;
   }
 
   categoryChangedForIdea(board: Board, existingCategories, callback) {

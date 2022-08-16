@@ -6,13 +6,15 @@
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false"
     cdkDrag
-    [cdkDragDisabled]="!canUserDrag()">
+    [cdkDragDisabled]="!canUserDrag()"
+    [attr.ideaId]="item.id">
     <!-- brainstorm card media -->
     <ng-container>
       <!-- Idea image -->
-      <!-- (click)="showDetailedIdea(item)" -->
       <div
         class="brainstorm-image"
+        (mousedown)="mouseDownEvent($event)"
+        (mouseup)="mouseUpEvent($event, item)"
         *ngIf="item.idea_image !== null">
         <ng-container [ngSwitch]="typeOfImage(item)">
           <ng-container *ngSwitchCase="'giphy'">
@@ -65,9 +67,10 @@
       </div>
     
       <!-- Idea document -->
-      <!-- (click)="showDetailedIdea(item)" -->
       <div
-        *ngIf="item.idea_document">
+        *ngIf="item.idea_document"
+        (mousedown)="mouseDownEvent($event)"
+        (mouseup)="mouseUpEvent($event, item)">
         <div  style="width: 100%;height: 200px">
           <pdf-viewer
             [src]="getPdfSrc()"
@@ -96,8 +99,8 @@
     </ng-container>
     <div 
       class="card-header"
-      benji-click-stop-propagation
-      (click)="showDetailedIdea(item)"
+      (mousedown)="mouseDownEvent($event)"
+      (mouseup)="mouseUpEvent($event, item)"
       [ngClass]="{'hidden': !item.pinned && !showUserName , 'host-pinned': !showUserName && item.pinned}" 
       fxLayoutAlign="space-between center">
       <div *ngIf="showUserName" class="user-name">
@@ -161,8 +164,9 @@
       [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
                   'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
       *ngIf="item.title || item.idea" 
-      benji-click-stop-propagation>
-      <!-- (click)="showDetailedIdea(item)"> -->
+      benji-click-stop-propagation
+      (mousedown)="mouseDownEvent($event)"
+      (mouseup)="mouseUpEvent($event, item)">
       <div *ngIf="item.title || item.idea" class="title-description">
         <div *ngIf="item.title" class="title" [ngClass]="{'spaced': item.idea }">{{ item.title }}</div>
         <div *ngIf="item.idea">
@@ -177,8 +181,9 @@
       <div 
         class="counts" 
         fxLayout="row" 
-        fxLayoutAlign="space-between center">
-        <!-- (click)="showDetailedIdea(item)">  -->
+        fxLayoutAlign="space-between center"
+        (mousedown)="mouseDownEvent($event)"
+        (mouseup)="mouseUpEvent($event, item)"> 
         <div fxLayout="row" fxLayoutAlign="start center" *ngIf="areHeartsAllowed()">
           <img
             *ngIf="!hasParticipantHearted(item) && !deactivateHearting"

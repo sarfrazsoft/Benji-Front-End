@@ -153,9 +153,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
           this.columns = existingCategories;
           setTimeout(() => {
             this.brainstormService.sortIdeas(this.board, this.columns);
-            setTimeout(() => {
-              this.sortAndResetMasonry();
-            }, 10);
           }, 10);
         });
         // } else {
@@ -340,24 +337,22 @@ export class CategorizedComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         if (event.previousContainer === event.container) {
-          const category = event.container.element.nativeElement.getAttribute('columnId');
-          console.log(category);
-          const item = event.item.element.nativeElement.getAttribute('ideaId');
-          // this.board.meta.updated === 'post_order'
-          console.log(event, 'item moved in array');
-
-          const ideasOrder: ColsIdeaOrderInfo = {
-            container: category,
-            previousIndex: event.previousIndex,
-            currentIndex: event.currentIndex,
-          };
-          this.sendMessage.emit(
-            new SetMetaDataBoardEvent(this.board.id, {
-              updated: 'post_order',
-              post_order: ideasOrder,
-            })
-          );
-          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+          // if (event.previousIndex === event.currentIndex) {
+          //   return;
+          // }
+          // const category = event.container.element.nativeElement.getAttribute('columnId');
+          // const ideasOrder: ColsIdeaOrderInfo = {
+          //   container: category,
+          //   previousIndex: event.previousIndex,
+          //   currentIndex: event.currentIndex,
+          // };
+          // this.sendMessage.emit(
+          //   new SetMetaDataBoardEvent(this.board.id, {
+          //     updated: 'post_order',
+          //     post_order: ideasOrder,
+          //   })
+          // );
+          // moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
           transferArrayItem(
             event.previousContainer.data,
@@ -373,8 +368,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {
     const categoryID = event.container.element.nativeElement.getAttribute('columnID');
-    const id = event.container.data[event.currentIndex].id;
-    this.sendMessage.emit(new BrainstormSetCategoryEvent(id.toString(), categoryID));
+    const ideaID = event.item.element.nativeElement.getAttribute('ideaId');
+    this.sendMessage.emit(new BrainstormSetCategoryEvent(ideaID, categoryID));
   }
 
   submitComment(ideaId, val) {

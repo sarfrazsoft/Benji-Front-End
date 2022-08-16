@@ -103,6 +103,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   videoAvailable = false;
   oldVideo;
 
+  delta = 6;
+  startX;
+  startY;
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -313,6 +317,25 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         this.sendMessage.emit(new BrainstormSubmitIdeaHeartEvent(idea.id));
       }
     }
+  }
+
+  mouseDownEvent(event) {
+    this.startX = event.pageX;
+    this.startY = event.pageY;
+  }
+
+  mouseUpEvent(event, idea: Idea) {
+    const diffX = Math.abs(event.pageX - this.startX);
+    const diffY = Math.abs(event.pageY - this.startY);
+
+    if (diffX < this.delta && diffY < this.delta) {
+      // Click!
+      this.showDetailedIdea(idea);
+    }
+  }
+
+  checkIfIdeaDragged(): boolean {
+    return false;
   }
 
   showDetailedIdea(idea: Idea) {

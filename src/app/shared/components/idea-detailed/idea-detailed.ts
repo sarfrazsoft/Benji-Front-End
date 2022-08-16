@@ -1,11 +1,4 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-  // ...
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
@@ -18,12 +11,6 @@ import {
   Output,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { iframely } from '@iframely/embed.js';
-import { Uppy } from '@uppy/core';
-import GoogleDrive from '@uppy/google-drive';
-import Tus from '@uppy/tus';
-import Webcam from '@uppy/webcam';
-import XHRUpload from '@uppy/xhr-upload';
 import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
