@@ -201,6 +201,7 @@ export class LessonListComponent implements OnInit {
   }
 
   openSessionSettings(val: TableRowInformation) {
+    console.log(val);
     this.matDialog
       .open(SessionSettingsDialogComponent, {
         data: {
@@ -216,8 +217,8 @@ export class LessonListComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((data) => {
-        this.dataSource[data.index].lesson_title = data?.lesson_name;
-        if (data?.lesson_image || data?.image_url) {
+        if (data) {
+          this.dataSource[data.index].lesson_title = data?.lesson_name;
           this.adminService.updateLessonRunImage(val.lessonRunCode, data.lesson_image, data.lesson_image_name, data.image_url, val.lesson_image_id)
           .subscribe(
             (data) => {
