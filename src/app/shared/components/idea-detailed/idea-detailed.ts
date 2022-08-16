@@ -520,6 +520,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+    this.brainstormService.removeDraftComment(this.commentKey);
   }
 
   getInitials(nameString: string) {

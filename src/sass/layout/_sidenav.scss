@@ -7,13 +7,13 @@
 }
 
 mat-sidenav-container.mat-sidenav-container {
-  height: -webkit-calc(100vh) !important;
-  height: -moz-calc(100vh) !important;
-  height: calc(100vh) !important;
+  // height: -webkit-calc(100vh) !important;
+  // height: -moz-calc(100vh) !important;
+  // height: calc(100vh) !important;
 
-  min-height: -webkit-calc(100vh) !important;
-  min-height: -moz-calc(100vh) !important;
-  min-height: calc(100vh) !important;
+  // min-height: -webkit-calc(100vh) !important;
+  // min-height: -moz-calc(100vh) !important;
+  // min-height: calc(100vh) !important;
   mat-sidenav.mat-sidenav {
     //border-right: 1px solid #eeebdd;
     border-right: 0px;
