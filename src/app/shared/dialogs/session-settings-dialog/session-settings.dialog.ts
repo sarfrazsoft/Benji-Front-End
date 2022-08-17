@@ -139,4 +139,14 @@ export class SessionSettingsDialogComponent implements OnInit {
         }
       });
   }
+
+  deleteCoverPhoto() {
+    this.coverPhoto = null;
+    this.selectedImage = null;
+    this.selectedImageName = null;
+    this.imageUrl = null;
+    this.data.lessonImage = null;
+    this.data.imageUrl = null;
+  }
+
 }

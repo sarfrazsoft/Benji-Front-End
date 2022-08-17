@@ -60,9 +60,9 @@
           <div 
             class="edit-photo"
             fxLayoutAlign="center center"
-            (click)="openImagePickerDialog()" 
             [style.opacity]="showEdit ? 1 : 0">
-            Edit Photo
+            <img src="/assets/img/dashboard/edit-photo.svg" (click)="openImagePickerDialog()"/>
+            <img src="/assets/img/dashboard/delete-photo.svg" (click)="deleteCoverPhoto()"/>
           </div>
         </div>
       </div>

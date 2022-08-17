@@ -96,6 +96,7 @@ export class AccountService {
           .put(url, formData, { params, headers })
           .map((res: Branding) => {
               this.contextService.brandingInfo = res;
+              localStorage.setItem('benji_branding', JSON.stringify(res));
               return res;
             })
           .subscribe(
@@ -116,6 +117,7 @@ export class AccountService {
             .put(url, formData, { params, headers })
             .map((res: Branding) => {
                 this.contextService.brandingInfo = res;
+                localStorage.setItem('benji_branding', JSON.stringify(res));
                 return res;
               })
             .subscribe(
@@ -133,6 +135,7 @@ export class AccountService {
           .put(url, formData, { params, headers })
           .map((res: Branding) => {
             this.contextService.brandingInfo = res;
+            localStorage.setItem('benji_branding', JSON.stringify(res));
             return res;
           })
           .subscribe(
@@ -148,6 +151,7 @@ export class AccountService {
           .put(url, formData, { params, headers })
           .map((res: Branding) => {
               this.contextService.brandingInfo = res;
+              localStorage.setItem('benji_branding', JSON.stringify(res));
               return res;
             })
           .subscribe(
@@ -167,6 +171,7 @@ export class AccountService {
             .put(url, formData, { params, headers })
             .map((res: Branding) => {
               this.contextService.brandingInfo = res;
+              localStorage.setItem('benji_branding', JSON.stringify(res));
               return res;
             })
             .subscribe(
@@ -184,6 +189,7 @@ export class AccountService {
           .put(url, formData, { params, headers })
           .map((res: Branding) => {
             this.contextService.brandingInfo = res;
+            localStorage.setItem('benji_branding', JSON.stringify(res));
             return res;
           })
           .subscribe(
@@ -198,6 +204,7 @@ export class AccountService {
         .put(url, formData, { params, headers })
         .map((res: Branding) => {
           this.contextService.brandingInfo = res;
+          localStorage.setItem('benji_branding', JSON.stringify(res));
           return res;
         })
         .subscribe(

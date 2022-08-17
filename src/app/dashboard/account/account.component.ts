@@ -56,7 +56,9 @@ export class AccountComponent implements OnInit {
     this.accontInfo = this.contextService.user;
     this.form.patchValue(this.accontInfo);
 
-    this.brandingInfo = this.accontInfo.branding;
+    if (this.contextService.brandingInfo) {
+      this.brandingInfo = this.contextService.brandingInfo;
+    }
     this.brandForm.patchValue(this.brandingInfo);
 
     if (this.brandingInfo) {
@@ -177,6 +179,7 @@ export class AccountComponent implements OnInit {
             (res: Branding) => {
               this.contextService.brandingInfo = res;
               this.brandingInfo = this.contextService.brandingInfo;
+              localStorage.setItem('benji_branding', JSON.stringify(this.brandingInfo));
             },
             (err) => {
               console.log(err);
@@ -199,6 +202,7 @@ export class AccountComponent implements OnInit {
             (res: Branding) => {
               this.contextService.brandingInfo = res;
               this.brandingInfo = this.contextService.brandingInfo;
+              localStorage.setItem('benji_branding', JSON.stringify(this.brandingInfo));
             },
             (err) => {
               console.log(err);
@@ -215,6 +219,7 @@ export class AccountComponent implements OnInit {
         (res: Branding) => {
           this.contextService.brandingInfo = res;
           this.brandingInfo = this.contextService.brandingInfo;
+          localStorage.setItem('benji_branding', JSON.stringify(this.brandingInfo));
         },
         (err) => {
           console.log(err);

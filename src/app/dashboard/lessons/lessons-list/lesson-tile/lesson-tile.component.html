@@ -30,8 +30,12 @@
         <span>Delete</span>
       </button>
     </mat-menu>
-    <div class="prompt-image">
-      <img [src]="coverPhoto">
+    <div class="prompt-image"
+      fxLayoutAlign="center center">
+      <div 
+        class="background-img" 
+        [style.backgroundImage]="'url(' + coverPhoto + ')'">
+      </div>
     </div>
     <div class="info" fxLayout="column" fxLayoutGap="16px">
       <div class="details" fxLayout="column" fxLayoutGap="8px">
