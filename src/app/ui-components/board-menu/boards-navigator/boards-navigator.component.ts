@@ -105,12 +105,11 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.darkLogo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
 
-    this.lessonName = this.activityState.lesson.lesson_name;
-    this.lessonDescription = this.activityState.lesson.lesson_description;
+    this.updateLessonInfo();
   }
 
   selectedBoardChanged(board) {
@@ -124,6 +123,8 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
       this.resetBoards();
+    } else if (this.activityState.eventType === 'GetUpdatedLessonDetailEvent') {
+      this.updateLessonInfo();
     }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === 'HostChangeBoardEvent') {
@@ -134,6 +135,11 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     }
     this.hostBoard = this.activityState.brainstormactivity.host_board;
+  }
+
+  updateLessonInfo() {
+    this.lessonName = this.activityState.lesson.lesson_name;
+    this.lessonDescription = this.activityState.lesson.lesson_description;
   }
 
   initializeBoards() {

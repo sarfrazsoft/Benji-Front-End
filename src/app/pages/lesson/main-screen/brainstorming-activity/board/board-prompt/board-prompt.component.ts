@@ -181,6 +181,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   getNewBoardInstruction(board: Board) {
+    this.title_instructions = board.board_activity.instructions;
     this._ngZone.onStable.pipe(take(1)).subscribe(() => {
       setTimeout(() => {
         this.title_instructions = board.board_activity.instructions;
