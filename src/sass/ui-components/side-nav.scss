@@ -197,7 +197,6 @@
     }
   }
   .meeting-mode {
-    margin-bottom: 16px;
     .posting-settings {
       background: #f3f4f7;
       border-radius: 8px;
@@ -215,6 +214,9 @@
         line-height: 16px;
         color: #616161;
       }
+    }
+    &.admin-mode {
+      margin-bottom: 16px;
     }
   }
   .add-group .plus {

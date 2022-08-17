@@ -7,8 +7,35 @@
     width: auto;
   }
 }
-.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options {
+.uploadcare--camera__button_type_mirror {
   position: absolute;
+  top: 24px;
+  left: 40%;
+  margin: 0;
+  transform: translateX(-50%);
+}
+.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options,
+.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options option {
+  cursor: pointer;
+  position: absolute;
+  color: #fff;
+  margin: 0px;
+  right: 24px;
+  top: 24px;
+  padding: 8px 50px 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  font-family: 'Inter';
+  font-style: normal;
+  border: 0px;
+  background-color: rgba(27, 24, 24, 0.6);
+  border-radius: 8px;
+  background-image: linear-gradient(45deg,transparent 50%,#fff 0),linear-gradient(135deg,#fff 50%,transparent 0),linear-gradient(90deg,#ccc,#ccc);
+  &:focus {
+    outline: 0px;
+    outline-offset: 0px;
+  }
 }
 .uploadcare-container {
   .uploadcare--widget__button.uploadcare--widget__button_type_open {
