@@ -33,9 +33,15 @@
   }
   .prompt-image {
     height: 145px;
-    border-radius: 16px 16px 0px 0px;
-    overflow: hidden;
-    img {
+    
+    // overflow: hidden;
+    
+    .background-img {
+      border-radius: 16px 16px 0px 0px;
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
       width: 100%;
     }
   }

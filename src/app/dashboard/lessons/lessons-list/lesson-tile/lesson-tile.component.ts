@@ -1,12 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 // import { EditorService } from 'src/app/dashboard/editor/services';
 import * as global from 'src/app/globals';
 import { BackendRestService, ContextService } from 'src/app/services';
+import { TeamUser } from 'src/app/services/backend/schema';
 import { Lesson, LessonRunDetails, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -17,9 +20,6 @@ import {
   TemplatesDialogComponent,
 } from 'src/app/shared';
 import { AdminService } from '../../../admin-panel/services';
-import * as moment from 'moment';
-import { TeamUser } from 'src/app/services/backend/schema';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'benji-lesson-tile',
@@ -63,23 +63,34 @@ export class LessonTileComponent implements OnInit {
   }
 
   setCoverPhoto() {
-    if (this.lesson.lessonrun_images.length > 0) { 
-      const ids = this.lesson.lessonrun_images.map(object => object.id);
+    if (this.lesson.lessonrun_images.length > 0) {
+      const ids = this.lesson.lessonrun_images.map((object) => object.id);
       const max = Math.max(...ids);
-      this.maxIdIndex = this.lesson.lessonrun_images.findIndex(x => x.id === max);
-      this.coverPhoto = this.lesson.lessonrun_images[this.maxIdIndex]?.image_url ? 
-      this.lesson.lessonrun_images[this.maxIdIndex]?.image_url :
-      this.hostLocation + this.lesson.lessonrun_images[this.maxIdIndex]?.img; 
+      this.maxIdIndex = this.lesson.lessonrun_images.findIndex((x) => x.id === max);
+
+      const image_url = this.lesson.lessonrun_images[this.maxIdIndex]?.image_url;
+      const img = this.lesson.lessonrun_images[this.maxIdIndex]?.img;
+
+      if (!image_url && !img) {
+        this.setDefaultCoverPhoto();
+        return;
+      }
+
+      this.coverPhoto = image_url ?? this.hostLocation + img;
     } else {
-      this.coverPhoto = 'assets/img/temporary/dummy.png';
+      this.setDefaultCoverPhoto();
     }
+  }
+
+  setDefaultCoverPhoto() {
+    this.coverPhoto = 'assets/img/temporary/dummy.png';
   }
 
   calculateTimeStamp() {
     // Test string
     // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
     // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
-    //console.log(this.lesson.lesson.creation_time);
+    // console.log(this.lesson.lesson.creation_time);
     this.timeStamp = moment(this.lesson.lesson.creation_time).fromNow().toString();
     if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';
@@ -112,7 +123,6 @@ export class LessonTileComponent implements OnInit {
     this.router.navigate(['/screen/lesson/' + this.lesson.lessonrun_code]);
   }
 
-
   copyLink(val) {
     this.utilsService.copyToClipboard(this.hostname + val.lessonRunCode);
   }
@@ -136,7 +146,7 @@ export class LessonTileComponent implements OnInit {
         if (res) {
           const request = global.apiRoot + '/course_details/lesson_run/' + this.lesson.lessonrun_code + '/';
           this.http.delete(request, {}).subscribe((response) => {
-            console.log(response)
+            console.log(response);
             this.updateLessonsRuns.emit();
           });
           this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
@@ -155,7 +165,8 @@ export class LessonTileComponent implements OnInit {
         if (res[0] || res[1]) {
           let duplicateDoardIdeas: Boolean;
           res[1] ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
-          let request = global.apiRoot + '/course_details/lesson/' + this.lesson.lesson.id + '/duplicate-session/';
+          let request =
+            global.apiRoot + '/course_details/lesson/' + this.lesson.lesson.id + '/duplicate-session/';
           this.http.post(request, {}).subscribe((response: SessionInformation) => {
             if (response) {
               request =
@@ -215,12 +226,14 @@ export class LessonTileComponent implements OnInit {
       .subscribe((data) => {
         if (data?.lesson_image || data?.image_url) {
           if (this.lesson.lessonrun_images[this.maxIdIndex]?.lesson_image_id) {
-            this.adminService.updateLessonRunImage(
-              this.lesson.lessonrun_code, 
-              data.lesson_image, 
-              data.lesson_image_name, 
-              data.image_url, 
-              this.lesson.lessonrun_images[this.maxIdIndex])
+            this.adminService
+              .updateLessonRunImage(
+                this.lesson.lessonrun_code,
+                data.lesson_image,
+                data.lesson_image_name,
+                data.image_url,
+                this.lesson.lessonrun_images[this.maxIdIndex]
+              )
               .subscribe(
                 (data) => {
                   console.log(data);
@@ -229,10 +242,13 @@ export class LessonTileComponent implements OnInit {
                 (error) => console.log(error)
               );
           } else {
-            this.adminService.addLessonRunImage(
-              this.lesson.lessonrun_code, data.lesson_image, 
-              data.lesson_image_name, 
-              data.image_url)
+            this.adminService
+              .addLessonRunImage(
+                this.lesson.lessonrun_code,
+                data.lesson_image,
+                data.lesson_image_name,
+                data.image_url
+              )
               .subscribe(
                 (data) => {
                   console.log(data);
@@ -244,5 +260,4 @@ export class LessonTileComponent implements OnInit {
         }
       });
   }
-
 }
