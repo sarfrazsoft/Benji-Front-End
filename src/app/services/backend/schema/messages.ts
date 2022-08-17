@@ -1011,7 +1011,7 @@ export class DuplicateBoardEvent extends ActivityEvent {
 }
 export class SetMetaDataBoardEvent extends ActivityEvent {
   event_name = 'SetMetaDataBoardEvent';
-  constructor(board: number, meta: any) {
+  constructor(board: number, meta: { updated: 'post_order' | 'category_changed'; post_order: any }) {
     super();
     this.extra_args = { board: board, meta: meta };
   }

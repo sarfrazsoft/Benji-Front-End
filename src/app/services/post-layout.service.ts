@@ -4,7 +4,14 @@ import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'mu
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { PostOrder } from '../pages/lesson/main-screen/brainstorming-activity/grid/grid.component';
-import { BoardSort, BoardStatus, SetMetaDataBoardEvent, TopicMedia, UpdateMessage } from './backend/schema';
+import {
+  Board,
+  BoardSort,
+  BoardStatus,
+  SetMetaDataBoardEvent,
+  TopicMedia,
+  UpdateMessage,
+} from './backend/schema';
 @Injectable()
 export class PostLayoutService {
   sendMessage$ = new BehaviorSubject<any>(null);
@@ -39,8 +46,8 @@ export class PostLayoutService {
     return this.layoutConfig;
   }
 
-  onGridCreated(grid: Grid, boardId: number) {
-    const board_id = boardId;
+  onGridCreated(grid: Grid, board: Board) {
+    const board_id = board.id;
     /**
      * Now you can do everything you want with the Grid object,
      * like subcribing to Muuri's events
@@ -66,6 +73,7 @@ export class PostLayoutService {
       });
       this.sendMessage$.next(
         new SetMetaDataBoardEvent(board_id, {
+          ...board.meta,
           updated: 'post_order',
           post_order: ideasOrder,
         })

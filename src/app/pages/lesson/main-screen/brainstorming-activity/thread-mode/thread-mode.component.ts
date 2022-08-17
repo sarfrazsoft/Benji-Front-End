@@ -251,7 +251,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
 
   onGridCreated(grid: Grid) {
     this.grid = grid;
-    this.postLayoutService.onGridCreated(grid, this.board.id);
+    this.postLayoutService.onGridCreated(grid, this.board);
   }
 
   refreshGridLayout() {

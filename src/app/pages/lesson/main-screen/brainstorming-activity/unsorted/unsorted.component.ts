@@ -271,6 +271,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
         // }, 300);
         this.sendMessage.emit(
           new SetMetaDataBoardEvent(this.board.id, {
+            ...this.board.meta,
             updated: 'post_order',
             post_order: this.ideasOrder,
           })

@@ -106,6 +106,7 @@ export class BrainstormService {
         category.brainstormidea_set.forEach((idea) => {
           idea = { ...idea, showClose: false, editing: false, addingIdea: false };
         });
+        category.brainstormidea_set.filter((idea) => !idea.removed);
       } else {
         // Editor preview panel
       }
@@ -116,7 +117,7 @@ export class BrainstormService {
     return this.sortIdeas(board, columns);
   }
 
-  sortIdeas678*(board: Board, columns) {
+  sortIdeas(board: Board, columns) {
     if (board.sort === 'unsorted') {
       // do nothing
       return columns;
