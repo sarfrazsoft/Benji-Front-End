@@ -1187,9 +1187,13 @@ ng-dropdown-panel {
       padding: 16px 8px 0px 8px;
       height: calc(100vh - 206px);
       overflow-x: hidden;
-      .ideas-list-container .brainstorm-idea {
-        min-width: calc(100vw - 32px);
-        max-width: 100%;
+      .ideas-list-container {
+        width: unset;
+        min-width: unset;
+        .brainstorm-idea {
+          min-width: calc(100vw - 32px);
+          max-width: 100%;
+        }
       }
       ul {
         li {

@@ -10,28 +10,32 @@
 .uploadcare--camera__button_type_mirror {
   position: absolute;
   top: 24px;
-  left: 40%;
+  left: 50%;
   margin: 0;
   transform: translateX(-50%);
 }
-.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options,
-.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options option {
+.uploadcare--camera_status_recording .uploadcare--camera__device-select.uploadcare--camera__device-select_has-options {
+  display: none;
+}
+.uploadcare--camera__device-select.uploadcare--camera__device-select_has-options {
   cursor: pointer;
   position: absolute;
   color: #fff;
   margin: 0px;
   right: 24px;
   top: 24px;
-  padding: 8px 50px 8px 14px;
+  padding: 8px 28px 8px 12px;
+  text-overflow: ellipsis;
+  width: 160px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 16px;
   font-family: 'Inter';
   font-style: normal;
   border: 0px;
-  background-color: rgba(27, 24, 24, 0.6);
+  background-color: rgba(53, 54, 53, 0.5);
   border-radius: 8px;
-  background-image: linear-gradient(45deg,transparent 50%,#fff 0),linear-gradient(135deg,#fff 50%,transparent 0),linear-gradient(90deg,#ccc,#ccc);
+  background-image: linear-gradient(45deg,transparent 50%,#fff 0),linear-gradient(135deg,#fff 50%,transparent 0);
   &:focus {
     outline: 0px;
     outline-offset: 0px;
@@ -139,7 +143,6 @@
   .uploadcare--camera__video-container {
     .uploadcare--media__video {
       max-height: unset;
-      width: 800px;
       height: auto;
       border-radius: 8px;
     }
