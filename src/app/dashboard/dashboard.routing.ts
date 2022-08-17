@@ -1,5 +1,7 @@
+import { NONE_TYPE } from '@angular/compiler';
 import { RouterModule, Routes } from '@angular/router';
 import { IsAdminGuard } from 'src/app/services/auth/is-admin.guard';
+import { NotificationsComponent } from '../ui-components/notifications/notifications.component';
 import {
   AccountComponent,
   AdminPanelComponent,
@@ -50,10 +52,6 @@ const routes: Routes = [
         path: 'teams',
         loadChildren: () => import('src/app/dashboard/teams/teams.module').then((m) => m.TeamsModule),
       },
-      {
-        path: 'account',
-        component: AccountComponent,
-      },
       // {
       //   path: 'editor',
       //   loadChildren: () => import('src/app/dashboard/editor/editor.module').then((m) => m.EditorModule),
@@ -71,4 +69,23 @@ const routes: Routes = [
   },
 ];
 
+const routesWithoutResolve: Routes = [
+  {
+    path: '',
+    children: [
+      {
+        path: 'notifications',
+        component: NotificationsComponent,
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+      },
+    ],
+  },
+];
+
+
 export const DashboardRoutes = RouterModule.forChild(routes);
+
+export const DashboardRoutesWithoutResolve = RouterModule.forChild(routesWithoutResolve);

@@ -1,64 +1,145 @@
 <div class="admin-panel" fxLayout="column">
   <div class="dashboard-header">
     <div class="dashboard-heading">
-      <h1>Account</h1>
+      <h1>Settings</h1>
     </div>
   </div>
-  
-  <div class="dashboard-form">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
-      <div class="field">
-        <div class="label">First name</div>
-        <input
-          id="first_name"
-          class="dash-input"
-          required
-          type="text"
-          formControlName="first_name"
-          placeholder="First name"
-        />
-        <mat-error
-          *ngIf="first_name.invalid && (first_name.dirty || first_name.touched) && isSignupClicked"
-          class="alert alert-danger"
-        >
-          <div *ngIf="first_name.errors.required">First name is required.</div>
-        </mat-error>
+  <div class="settings-wrapper">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <h2 class="heading"> Profile </h2>
+        <div class="settings" fxLayout="column" fxLayoutGap="16px">
+          <div class="edit" fxLayout="column" fxLayoutGap="8px">
+            <div class="title">First Name</div>
+            <input
+              id="first_name"
+              formControlName="first_name"
+              class="edit-settings"
+              (focus)="focusFn = true"
+              (blur)="focusFn = false"
+              [ngClass]="{'border-color-primary': focusFn}"
+              required
+              type="text">
+              <mat-error
+                *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="first_name.errors.required">First name is required.</div>
+              </mat-error>
+          </div>
+          <div class="edit" fxLayout="column" fxLayoutGap="8px">
+            <div class="title">Last Name</div>
+            <input
+              id="last_name"
+              formControlName="last_name"
+              class="edit-settings"
+              (focus)="focusLn = true"
+              (blur)="focusLn = false"
+              [ngClass]="{'border-color-primary': focusLn}"
+              required
+              type="text">
+              <mat-error
+                *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="last_name.errors.required">Last name is required.</div>
+              </mat-error>
+          </div>
+          <div class="edit" fxLayout="column" fxLayoutGap="8px">
+            <div class="title">Email</div>
+            <input
+              id="email"
+              formControlName="email"
+              class="edit-settings"
+              (focus)="focusEm = true"
+              (blur)="focusEm = false"
+              [ngClass]="{'border-color-primary': focusEm}"
+              required
+              type="email">
+              <mat-error
+                *ngIf="email.invalid && (email.dirty || email.touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="email.errors.required">Brand colour is required.</div>
+              </mat-error>
+          </div>
+          <p class="reset-pw primary-color" (click)="passwordPage()">Reset Password</p>
+        </div>
       </div>
-
-      <div class="field">
-        <div class="label">Last name</div>
-        <input
-          id="last_name"
-          class="dash-input"
-          required
-          type="text"
-          formControlName="last_name"
-          placeholder="Last name"
-        />
-        <mat-error
-          *ngIf="last_name.invalid && (last_name.dirty || last_name.touched) && isSignupClicked"
-          class="alert alert-danger"
-        >
-          <div *ngIf="last_name.errors.required">Last name is required.</div>
-        </mat-error>
+    </form>
+    <div class="separator"></div>
+    <form [formGroup]="brandForm">
+      <div>
+        <h2 class="heading"> Branding </h2>
+        <div class="settings" fxLayout="column" fxLayoutGap="16px">
+          <div fxLayout="column" fxLayoutGap="8px">
+            <div class="title">Logo</div>
+            <div class="uploaded" *ngIf="logoSrc">
+              <img class="logo" [src]="logoSrc" alt="Logo" />
+            </div>
+            <label class="upload-delete" fxLayout="row">
+              <input 
+                #logo
+                *ngIf="!logoSrc" 
+                type="file" 
+                formControlName="logo"
+                accept="image/*" 
+                onclick="this.value = null" 
+                (change)="onFileSelect($event, 'logo')" />
+              <div *ngIf="!logoSrc" class="settings-button upload bg-primary-color">
+                Upload Logo
+              </div>
+            </label>
+            <label class="upload-delete">
+              <div (click)="removeFile('logo'); logo.value = null;" *ngIf="logoSrc" class="settings-button delete">
+                Delete Logo
+              </div>
+            </label>
+          </div>
+          <div fxLayout="column" fxLayoutGap="8px">
+            <div class="title">Favicon</div>
+            <div class="uploaded" *ngIf="favicSrc">
+              <img class="favicon" [src]="favicSrc" alt="Logo" />
+            </div>
+            <label class="upload-delete" fxLayout="row">
+              <input 
+                #favicon
+                *ngIf="!favicSrc" 
+                type="file" 
+                formControlName="favicon"
+                accept="image/*" 
+                onclick="this.value = null" 
+                (change)="onFileSelect($event, 'favicon')" />
+              <div *ngIf="!favicSrc" class="settings-button upload bg-primary-color" fxLayoutAlign="center center">
+                Upload Favicon
+              </div>
+            </label>
+            <label class="upload-delete">
+              <div (click)="removeFile('favicon'); favicon.value = null;" *ngIf="favicSrc" class="settings-button delete" fxLayoutAlign="center center">
+                Delete Favicon
+              </div>
+            </label>
+          </div>
+          <div class="brand-color" fxLayout="column" fxLayoutGap="12px">
+            <div class="title">Brand Colour</div>
+              <input 
+                formControlName="color"
+                class="code" 
+                [cpOutputFormat]="'hex'"
+                [(colorPicker)]="brandColor" 
+                [style.background]="brandColor"
+                [cpAlphaChannel]="'disabled'"
+                [(ngModel)]="brandColor"
+                [value]="brandColor"/>
+                <mat-error
+                  *ngIf="color.invalid && (color.dirty || color.touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="color.errors.required">Brand colour is required.</div>
+                </mat-error>
+          </div>
+        </div>
       </div>
-
-      <div class="link primary-color">
-        <span (click)="passwordPage()">Reset password</span>
-      </div>
-
-      <div *ngIf="isSubmitted" class="success-message">Information updated</div>
-
-      <button
-        type="submit"
-        class="dashboard-button bg-primary-color"
-        [ngClass]="{
-          active: form.valid,
-          inactive: !form.valid
-        }"
-      >
-        Save changes
-      </button>
     </form>
   </div>
 </div>

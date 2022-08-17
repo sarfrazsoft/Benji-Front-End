@@ -11,7 +11,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -100,6 +100,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   mobileSize = false;
   timeStamp: string;
 
+  videoAvailable = false;
+  oldVideo;
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -116,11 +119,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // get parameters
-    const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
-    if (paramPostId) {
-      // tslint:disable-next-line:radix
-      if (parseInt(paramPostId) === this.item.id) {
-        this.showDetailedIdea(this.item);
+    if (this.eventType !== 'BrainstormSetCategoryEvent') {
+      const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
+      if (paramPostId) {
+        // tslint:disable-next-line:radix
+        if (parseInt(paramPostId) === this.item.id) {
+          this.showDetailedIdea(this.item);
+        }
       }
     }
 
@@ -158,13 +163,35 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
+
+    if (this.item.idea_video) {
+      this.videoAvailable = true;
+      this.oldVideo = this.item.idea_video.id;
+    }
   }
 
   areCommentsAllowed() {
     return this.board.allow_comment;
   }
 
-  ngOnChanges() {}
+  areHeartsAllowed() {
+    return this.board.allow_heart;
+  }
+
+  ngOnChanges() {
+    if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
+      if (this.item.idea_video && this.videoAvailable) {
+        if (this.oldVideo !== this.item.idea_video.id) {
+          // video was already available and probably changed
+          this.videoAvailable = false;
+          this.oldVideo = this.item.idea_video.id;
+          setTimeout(() => {
+            this.videoAvailable = true;
+          }, 5);
+        }
+      }
+    }
+  }
 
   delete(id) {
     this.matDialog
@@ -357,7 +384,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     });
 
     // detect screen size changes
-    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe((result: BreakpointState) => {
+    this.breakpointObserver.observe(['(max-width: 848px)']).subscribe((result: BreakpointState) => {
       if (result.matches) {
         dialogRef.addPanelClass('idea-detailed-mobile-dialog');
         dialogRef.removePanelClass('idea-detailed-dialog');
@@ -366,6 +393,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
     });
+
   }
 
   onCommentFocus() {
@@ -410,10 +438,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
+  canUserDrag() {
+    if (this.userRole === 'owner' && this.isColumnsLayout) {
+      return true;
+    }
+    return false;
+    // !isColumnsLayout && (userRole !== 'owner')
+  }
+
   calculateTimeStamp() {
     // Test string
     // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
     // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    if (!this.item) {
+      return;
+    }
     this.timeStamp = moment(this.item.time).fromNow().toString();
     if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
       this.timeStamp = '1m ago';

@@ -1,7 +1,29 @@
+
+      
+  <benji-main-screen-toolbar 
+    [activityState]="serverMessage"
+    *ngIf="isConnected() && serverMessage && navType==='boards'"
+    [isLastActivity]="!isLastActivity()"
+    [showHeader]="getActivityType() !== at.lobby"
+    [roomCode]="serverMessage.lesson_run.lessonrun_code"
+    [lesson]="serverMessage.lesson"
+    [isPaused]="isPaused()"
+    [disableControls]="disableControls"
+    [isSharing]="getIsSharing()"
+    [isGrouping]="getIsGrouping()"
+    [participantCode]="getParticipantCode()"
+    [isGroupingShowing]="getIsGroupingShowing()"
+    (socketMessage)="sendSocketMessage($event)"
+    (openSettingsMenuEvent)="openSettingsMenu()"
+    (toggleBoardsMenuEvent)="toggleBoardsMenu()"
+    [boardsMenuClosed]="boardsMenuClosed"
+  ></benji-main-screen-toolbar>
+
 <mat-sidenav-container
     class="example-container" (backdropClick)="close()">
   <mat-sidenav 
-    #sidenav 
+    #sidenav
+    [mode]="sideNavMode" 
     (keydown.escape)="close()"
     [position]="sideNavPosition">
       <benji-board-menu *ngIf="serverMessage"
@@ -12,15 +34,17 @@
         (sendMessage)="sendSocketMessage($event)">
       </benji-board-menu>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <div class="ms-preloader flexer align-center" *ngIf="!isConnected() || !isFacilitatorConnected()">
       <mat-spinner></mat-spinner>
     </div>
 
-    <div class="ms-fullheight-container">
+    <div class="ms-fullheight-container" [ngClass]="{'boards-menu-opened': !boardsMenuClosed}">
+
       <benji-main-screen-toolbar 
         [activityState]="serverMessage"
-        *ngIf="isConnected() && serverMessage"
+        *ngIf="isConnected() && serverMessage && navType!=='boards'"
         [isLastActivity]="!isLastActivity()"
         [showHeader]="getActivityType() !== at.lobby"
         [roomCode]="serverMessage.lesson_run.lessonrun_code"
@@ -32,7 +56,9 @@
         [participantCode]="getParticipantCode()"
         [isGroupingShowing]="getIsGroupingShowing()"
         (socketMessage)="sendSocketMessage($event)"
-        (sideNavEvent)="openSideNav($event)"
+        (openSettingsMenuEvent)="openSettingsMenu()"
+        (toggleBoardsMenuEvent)="toggleBoardsMenu()"
+        [boardsMenuClosed]="boardsMenuClosed"
       ></benji-main-screen-toolbar>
 
       <div
@@ -224,13 +250,6 @@
             (sendMessage)="sendSocketMessage($event)"
           >
           </benji-ms-case-study-activity>
-          <!-- <benji-ps-case-study-activity
-            *ngIf="getActivityType() === at.caseStudy"
-            [activityState]="serverMessage"
-            [avgServerTimeOffset]="avgServerTimeOffset"
-            (sendMessage)="sendSocketMessage($event)"
-          >
-          </benji-ps-case-study-activity> -->
 
           <benji-ms-convo-cards-activity
             *ngIf="getActivityType() === at.convoCards"
@@ -257,32 +276,7 @@
           >
           </benji-ms-sharing-tool>
         </ng-container>
-
-        <!-- old grouping tool commented out -->
-        <!-- <ng-container>
-          <benji-ms-grouping-tool *ngIf="getIsGroupingShowing() || showGroupingOnScreen"
-            [activityState]="serverMessage"
-            (sendMessage)="sendSocketMessage($event)"
-          >
-          </benji-ms-grouping-tool>
-          
-        </ng-container> -->
       </div>
-      <!-- <benji-main-screen-footer
-        *ngIf="isConnected() && serverMessage"
-        [activityState]="serverMessage"
-        [showFastForward]="fastForwardActivities.indexOf(getActivityType()) > -1"
-        [isLastActivity]="!isLastActivity()"
-        [showFooter]="getActivityType() !== at.lobby"
-        [roomCode]="serverMessage.lesson_run.lessonrun_code"
-        [lessonName]="serverMessage.lesson.lesson_name"
-        [isPaused]="isPaused()"
-        [disableControls]="disableControls"
-        [isSharing]="getIsSharing()"
-        [isGrouping]="getIsGrouping()"
-        [isGroupingShowing]="getIsGroupingShowing()"
-        (socketMessage)="sendSocketMessage($event)"
-      ></benji-main-screen-footer> -->
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

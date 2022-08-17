@@ -27,3 +27,10 @@ export interface PartnerInfo {
     footerBackgroundColor?: string;
   };
 }
+export interface Branding {
+  id: number;
+  user: number;
+  logo: string;
+  favicon: string;
+  color: string;
+}

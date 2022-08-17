@@ -147,8 +147,13 @@
             By signing up you agree to the <a href="https://guides.mybenji.com/terms-of-use" class="primary-color">Terms and Conditions</a> and the <a href="https://guides.mybenji.com/privacy" class="primary-color">Privacy Policy</a>.
           </div>
 
-          <input type="submit" value="Sign up" data-wait="Please wait..." 
-            [style.background-color]="(name.value && email.value && password.value) ? '#555BEA' : '#BDBDBD'" class="submit-button-12 w-button">
+          <input 
+            type="submit" 
+            value="Sign up" 
+            data-wait="Please wait..." 
+            [ngClass]="{'bg-primary-color': name.value && email.value && password.value}"
+            [style.background]="'#BDBDBD'" 
+            class="submit-button-12 w-button">
         </form>
         <div class="w-form-done">
           <div>Thank you! Your submission has been received!</div>

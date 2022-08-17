@@ -27,6 +27,7 @@ import {
   BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
   BrainstormToggleAllowCommentEvent,
+  BrainstormToggleAllowHeartEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
   HostChangeBoardEvent,
@@ -84,6 +85,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   meetingMode: boolean;
   showAuthorship: boolean;
   allowCommenting: boolean;
+  allowHearting: boolean;
   board: Board;
   boardMode: string;
   gridMode: boolean;
@@ -144,6 +146,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.allowCommenting = this.selectedBoard.allow_comment;
+    this.allowHearting = this.selectedBoard.allow_heart;
     this.currentboardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
@@ -353,6 +356,10 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   toggleCommenting() {
     this.sendMessage.emit(new BrainstormToggleAllowCommentEvent(this.selectedBoard.id));
+  }
+
+  toggleHearting() {
+    this.sendMessage.emit(new BrainstormToggleAllowHeartEvent(this.selectedBoard.id));
   }
 
   copyLink() {

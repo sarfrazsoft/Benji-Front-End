@@ -3,7 +3,7 @@
   fxLayout="row" 
   fxLayoutAlign="space-between start"
   fxLayout.lt-sm="column"
-  [ngClass]="{'with-media': hasMedia}">
+  [ngClass]="{'with-media': hasMedia, 'without-sub-header': !sub_instructions}">
   <div fxLayout="column" class="instructions">
     <div class="level-one" fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center" >
       <div class="level-two">
@@ -11,19 +11,19 @@
           <textarea
             matInput
             cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
-            placeholder="What will you discuss?" 
-            #title
+            placeholder="What will you discuss?"
             class="title"
             rows="1"
             [readonly]="!isHost" 
             type="text"
-            value="{{ title_instructions }}"
-            (keyup)="typingStoped('title')"
+            [value]="title_instructions"
+            (keyup)="typingStoped('title', $event)"
             (keydown)="typingStarted()">
           </textarea>
         </div>
-        <div class="sub-header">
+        <div class="sub-header" [ngClass]="{'no-sub-instructions': !sub_instructions && !isHost}">
           <ng-container *ngxPermissionsOnly="'ADMIN'">
             <benji-tiptap-editor
               [editable]="true"

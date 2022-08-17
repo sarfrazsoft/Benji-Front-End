@@ -9,6 +9,7 @@ import { NumberTimerComponent } from '../ui-components/number-timer/number-timer
 import { ParticipantTimerComponent } from '../ui-components/participant-timer/participant-timer.component';
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
+import { NotificationsComponent } from '../ui-components/notifications/notifications.component';
 
 import { SnackBarComponent } from './snack-bar-component/snack-bar.component';
 
@@ -33,6 +34,7 @@ export const UIComponents = [
   NumberTimerComponent,
   ParticipantTimerComponent,
   RadialTimerComponent,
+  NotificationsComponent,
   SnackBarComponent,
   ...ControlComponents,
   SubmittedCounterComponent,

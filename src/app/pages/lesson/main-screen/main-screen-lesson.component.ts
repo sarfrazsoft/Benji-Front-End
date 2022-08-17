@@ -1,5 +1,5 @@
 import { viewClassName } from '@angular/compiler';
-import { AfterViewInit, ChangeDetectorRef, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -25,7 +25,7 @@ import { BaseLessonComponent } from '../shared/base-lesson.component';
   selector: 'benji-main-screen-lesson',
   templateUrl: './main-screen-lesson.component.html',
 })
-export class MainScreenLessonComponent extends BaseLessonComponent implements OnInit {
+export class MainScreenLessonComponent extends BaseLessonComponent implements AfterViewInit {
   dialogRef: any;
 
   // board-menu variables
@@ -35,6 +35,9 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
   @ViewChild(MainScreenToolbarComponent) msToolbar: MainScreenToolbarComponent;
   navType: string;
   sideNavPosition: 'start' | 'end';
+  sideNavMode: 'side' | 'over';
+  public innerWidth: any;
+  boardsMenuClosed = true;
 
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
@@ -63,14 +66,6 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
       ref,
       matSnackBar
     );
-
-    // groupingToolService.showGroupingToolMainScreen$.subscribe((val) => {
-    //   this.showGroupingOnScreen = val;
-    //   console.log(val);
-    //   if (val) {
-    //     this.openParticipantGroupingToolDialog();
-    //   }
-    // });
   }
 
   at: typeof ActivityTypes = ActivityTypes;
@@ -90,28 +85,51 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements On
     this.at.montyHall,
   ];
 
+  ngAfterViewInit() {
+    this.innerWidth = window.innerWidth;
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = event.target.innerWidth; 
+    this.innerWidth < 848 && this.navType === 'boards' ? 
+      this.sideNavMode = 'over' : 
+      this.sideNavMode = 'side'; 
+  }
+
   isPaused() {
     const activity_type = this.serverMessage.activity_type.toLowerCase();
     return this.serverMessage[activity_type].is_paused;
   }
 
-  openSideNav(type: 'board-settings' | 'boards') {
-    if (type === 'board-settings') {
+  openSettingsMenu() {
       this.navType = 'board-settings';
       this.sideNavPosition = 'end';
-    } else if (type === 'boards') {
-      this.navType = 'boards';
-      // this.sideNavPosition = 'start';
-      this.sideNavPosition = 'end';
-    }
-    type ? this.sidenav.open() : this.sidenav.close();
+      this.sideNavMode = 'over';
+      this.sidenav.open();
+      this.boardsMenuClosed = true;
   }
 
   openBoardSettings() {
-    this.openSideNav('board-settings');
+    this.openSettingsMenu();
   }
 
   close() {
     this.sidenav.close();
+    this.sideNavMode = null;
+    this.navType = null;
+    this.sideNavPosition = null;
   }
+
+  toggleBoardsMenu() {
+    this.navType = 'boards';
+    this.sideNavPosition = 'start';
+    this.innerWidth < 848 ?
+      this.sideNavMode = 'over' :
+      this.sideNavMode = 'side';
+    const result = this.sidenav.toggle().then(val => {
+      this.boardsMenuClosed = val == 'open' ? false : true;
+    });
+  }
+
 }

@@ -113,6 +113,7 @@ export class AuthService {
     this.contextService.user = res.user;
     this.layoutService.hideSidebar = false;
     localStorage.setItem('user', JSON.stringify(res.user));
+    localStorage.setItem('benji_branding', JSON.stringify(res.user.branding));
   }
 
   createParticipant(username: string, enteredRoomCode: number, user?: number) {

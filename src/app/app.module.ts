@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
+import { AccountProviders } from './dashboard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -52,10 +53,12 @@ import { GoogleLoginProvider } from 'angularx-social-login';
               '1045008906243-hfer3eo1mh91gg3oi6khdg000guqg4lq.apps.googleusercontent.com'
             ),
           },
+
         ],
       } as SocialAuthServiceConfig,
     },
     { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } },
+    AccountProviders
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

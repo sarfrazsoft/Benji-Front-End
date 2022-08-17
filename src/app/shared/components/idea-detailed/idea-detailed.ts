@@ -6,13 +6,25 @@ import {
   trigger,
   // ...
 } from '@angular/animations';
-import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { iframely } from '@iframely/embed.js';
 import { Uppy } from '@uppy/core';
 import GoogleDrive from '@uppy/google-drive';
 import Tus from '@uppy/tus';
 import Webcam from '@uppy/webcam';
 import XHRUpload from '@uppy/xhr-upload';
+import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ContextService } from 'src/app/services';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
@@ -115,6 +127,9 @@ export type IdeaUserRole = 'owner' | 'viewer';
       transition('* => void', [animate('0.5s 0ms ease-in-out', style({ transform: 'translateY(100%)' }))]),
     ]),
   ],
+  host: {
+    '(document:keydown)': 'handleKeyboardEvent($event)',
+  },
 })
 export class IdeaDetailedComponent implements OnInit, OnChanges {
   showCategoriesDropdown = false;
@@ -149,10 +164,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   videoURLConverted: string;
   video = false;
   video_id: number;
+  videoCleared = false;
 
   webcamImageId: number;
   webcamImage = false;
   webcamImageURL: string;
+  webcamImageCleared = false;
+
+  iframeAvailable = false;
+  iframeData: any;
+  meta: any;
+  iframeRemoved = false;
 
   showInline = false;
 
@@ -168,8 +190,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.showModal = false;
     },
   };
-
-  uppy: Uppy = new Uppy({ id: 'idea-detailed', debug: true, autoProceed: false });
 
   @Input() data: IdeaDetailedInfo;
   @Output() sendMessage = new EventEmitter<any>();
@@ -188,23 +208,19 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   color = '';
   hoverColor = '';
 
+  pdfCleared = false;
+  emptyUserIdeaText: boolean;
+
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
+    private httpClient: HttpClient,
     private deleteDialog: MatDialog,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService
   ) {}
 
   ngOnInit(): void {
-    this.uppy
-      .use(Webcam, { countdown: 5 })
-      // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
-      .use(GoogleDrive, { companionUrl: 'https://companion.uppy.io' })
-      .use(XHRUpload, {
-        endpoint: 'http://my-website.org/upload',
-      });
-
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.isHost = true;
@@ -216,10 +232,25 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         this.isHost = false;
       }
     });
+
+    if (!this.userIdeaText || this.userIdeaText?.length < 7) {
+      this.emptyUserIdeaText = true;
+    } else {
+      this.emptyUserIdeaText = false;
+    }
   }
 
   ngOnChanges() {
     this.initIdea();
+  }
+
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      this.nextArrowClicked();
+    }
+    if (event.key === 'ArrowLeft') {
+      this.previousArrowClicked();
+    }
   }
 
   isUploadCare(url: string) {
@@ -281,6 +312,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.removeVideo();
     }
 
+    // check if idea has and iframe and attach it
+    this.meta = cloneDeep(this.data.item.meta);
+    if (this.meta && this.meta.iframe) {
+      if (this.meta.iframe && this.meta.iframe.iframeHTML) {
+        this.iframeAvailable = true;
+        this.iframeData = this.meta.iframe;
+      }
+    } else {
+      this.removeIframe();
+    }
+
     this.userRole = this.data.userRole;
 
     if (this.data.participantCode) {
@@ -314,9 +356,19 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     if (event) {
       this.ideaEditEvent.emit(true);
     }
+    // check if user entered a link in the titlebox
+    this.checkIfLink(event);
+  }
+
+  removeIdeaDocumentFromBE() {
+    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
   }
 
   onSubmit() {
+    if (this.pdfCleared || this.webcamImageCleared || this.videoCleared) {
+      this.removeIdeaDocumentFromBE();
+    }
+    console.log(this.iframeData);
     this.submit.emit({
       ...this.idea,
       text: this.userIdeaText,
@@ -328,6 +380,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       video_id: this.video_id,
       webcamImageId: this.webcamImageId,
       selectedpdfDoc: this.selectedpdfDoc,
+      meta: this.meta,
     });
   }
 
@@ -339,12 +392,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   remove() {
     if (this.pdfSelected) {
       this.clearPDF();
+
+      this.pdfCleared = true;
     } else if (this.video) {
       this.removeVideo();
+      this.videoCleared = true;
+    } else if (this.iframeAvailable) {
+      this.removeIframe();
     } else {
       this.removeImage();
+      this.webcamImageCleared = true;
     }
-    this.sendMessage.emit(new RemoveIdeaDocumentEvent(this.idea.id));
     this.uploadPanelExpanded = true;
     this.ideaEditEvent.emit(true);
   }
@@ -355,7 +413,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.imageSrc = null;
     this.selectedImageUrl = null;
     this.selectedThirdPartyImageUrl = null;
-    this.idea.idea_image = null;
+    // this.idea.idea_image = null;
     this.removeWebcamImage();
   }
 
@@ -376,6 +434,14 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.webcamImage = false;
     this.webcamImageId = null;
     this.webcamImageURL = null;
+  }
+
+  removeIframe() {
+    this.iframeAvailable = false;
+    this.iframeData = null;
+    this.meta.iframe = null;
+
+    this.iframeRemoved = true;
   }
 
   openImagePickerDialog() {
@@ -454,6 +520,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   submitComment(ideaId, val) {
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+    this.brainstormService.removeDraftComment(this.commentKey);
   }
 
   getInitials(nameString: string) {
@@ -493,7 +560,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   toggle() {
-    if (!this.imageSelected && !this.pdfSelected) {
+    if (!this.isItemSelected()) {
       this.uploadPanelExpanded = !this.uploadPanelExpanded;
     }
   }
@@ -524,6 +591,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
       this.video = true;
       this.video_id = res.id;
+      if (this.videoCleared) {
+        this.removeIdeaDocumentFromBE();
+      }
+      this.videoCleared = false;
     } else if (res.document_type === 'image') {
       if (res.document_url) {
         this.webcamImageURL = res.document_url;
@@ -532,6 +603,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       }
       this.webcamImage = true;
       this.webcamImageId = res.id;
+
+      if (this.webcamImageCleared) {
+        this.removeIdeaDocumentFromBE();
+      }
+      this.webcamImageCleared = false;
     } else if (res.document_type === 'document') {
       this.selectedpdfDoc = res.id;
       if (res.document_url_converted) {
@@ -543,6 +619,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.webcamImage = false;
       this.video = false;
       this.pdfSelected = true;
+      if (this.pdfCleared) {
+        this.removeIdeaDocumentFromBE();
+      }
+      this.pdfCleared = false;
     }
     this.ideaEditEvent.emit(true);
   }
@@ -560,6 +640,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   descriptionTextChanged($event: string) {
     this.userIdeaText = $event;
     this.ideaEditEvent.emit(true);
+    this.checkIfLink(this.userIdeaText);
   }
 
   categoryChanged(category) {
@@ -570,7 +651,46 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     return this.data.board.allow_comment;
   }
 
+  areHeartsAllowed() {
+    return this.data.board.allow_heart;
+  }
+
   changeOnHover($event) {
     this.hoverColor = $event.type === 'mouseover' ? 'primary-color' : 'white-color';
+  }
+
+  isItemSelected() {
+    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
+      return false;
+    }
+    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
+      return true;
+    }
+    return false;
+  }
+
+  checkIfLink(link: string) {
+    if (this.isItemSelected()) {
+      // Don't run if an item is already attached to the post
+      return;
+    }
+    // link can be
+    // https://something.com
+    // abc https://something.com
+    // https://www.canadianstage.com/
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const link2 = link.match(urlRegex);
+    if (link2) {
+      // send to iframely
+      this.httpClient
+        .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
+        .subscribe((res: any) => {
+          this.iframeAvailable = true;
+          this.iframeRemoved = false;
+          this.iframeData = { iframeHTML: res.html, url: res.url };
+          this.meta = { ...this.meta, iframe: this.iframeData };
+          // iframely.load();
+        });
+    }
   }
 }

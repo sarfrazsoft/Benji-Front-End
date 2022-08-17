@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="24px">
       <div fxLayout="row" fxLayoutAlign="space-between">
         <h2 class="heading">
-          {{ createSession ? "Create new session" : "Session Summary" }}
+          {{ createSession ? "Create new space" : "Space Summary" }}
         </h2>
       </div>
       <div class="edit">
@@ -18,7 +18,8 @@
           required
           type="text"
           formControlName="title"
-          placeholder="Give your session a title"
+          placeholder="Give your space a title"
+          maxlength="80"
         >
       </div>
       <div class="edit">
@@ -35,6 +36,36 @@
           placeholder="This is where the instructions go..."
         ></textarea>
       </div>
+      <div class="edit">
+        <div class="title">Cover Photo</div>
+        <div
+          *ngIf="!coverPhoto"
+          (click)="openImagePickerDialog()" 
+          class="cover-container" 
+          fxLayoutAlign="center center" 
+          fxLayout="column" 
+          fxLayoutGap="8px">
+          <img src="/assets/img/dashboard/add-cover.svg"/>
+          <div>
+            <div class="call-to-action">Add Cover Photo</div>
+          </div>
+        </div>
+        <div 
+          *ngIf="coverPhoto" 
+          class="cover-photo" 
+          fxLayoutAlign="center center"
+          (mouseenter)="showEdit = true"
+          (mouseleave)="showEdit = false"> 
+          <img [src]="coverPhoto" alt="">
+          <div 
+            class="edit-photo"
+            fxLayoutAlign="center center"
+            [style.opacity]="showEdit ? 1 : 0">
+            <img src="/assets/img/dashboard/edit-photo.svg" (click)="openImagePickerDialog()"/>
+            <img src="/assets/img/dashboard/delete-photo.svg" (click)="deleteCoverPhoto()"/>
+          </div>
+        </div>
+      </div>
       <div 
         benji-click-stop-propagation 
         class="controls-container" 
@@ -45,9 +76,9 @@
           class="dialog-controls bg-primary-color white-color start-resume-buttons"
           type="submit"
         >
-          {{ createSession ? "Create Session" : "Save" }} 
+          {{ createSession ? "Create" : "Save" }} 
         </button>
-        <button class="dialog-controls primary-color bg-sky" matDialogClose>
+        <button class="dialog-controls cancel-button" matDialogClose>
           Cancel
         </button>
       </div>

@@ -251,6 +251,12 @@ benji-ms-brainstorming-activity {
         .brainstorm-idea {
           width: 320px;
           max-width: 320px;
+          .feedback .user-feed .grey-bg .comment {
+            max-width: 220px;
+          }
+          .comment-input-container .input-comment {
+            width: 200px;
+          }
         }
       }
       // .delete-icon mat-icon {
@@ -360,7 +366,7 @@ benji-ms-brainstorming-activity {
             height: 32px;
             padding: 0px 16px;
             color: #828282;
-            margin-top: -8px;
+            margin-bottom: 16px;
             span {
               font-size: 14px;
               line-height: 17px;
@@ -607,6 +613,7 @@ benji-categorized-ideas {
         font-weight: 600;
         line-height: 20px;
         letter-spacing: -0.011em;
+        overflow-wrap: break-word;
         &.spaced {
           margin-bottom: 4px;
         }
@@ -762,8 +769,8 @@ benji-categorized-ideas {
   text-align: center;
   line-height: 0;
   img {
-    max-height: 300px;
-    max-width: 100%;
+    //max-height: 300px;
+    width: 100%;
   }
 }
 
@@ -868,7 +875,8 @@ benji-ps-brainstorming-activity {
   }
   .brainstorm-header {
     padding: 24px 32px;
-    width: 1200px;
+    width: 100vw;
+    max-width: 1200px;
     .instructions {
       width: 100%;
       .prose {
@@ -883,13 +891,13 @@ benji-ps-brainstorming-activity {
       }
     }
     .brainstorm-h2 .title {
+      color: #37352F;
       box-shadow: none;
       width: 100%;
       font-weight: 700;
       font-size: 32px;
       line-height: 40px;
       letter-spacing: -0.02em;
-      margin-bottom: 16px;
       border: 0px;
       border-radius: 0px;
       margin-right: 10px;
@@ -902,21 +910,10 @@ benji-ps-brainstorming-activity {
     }
     .sub-header {
       width: 100%;
-      // line-height: 0px; 
-      // input {
-      //   width: 571px;
-      //   font-size: 16px;
-      //   line-height: 24px;
-      //   font-weight: 400;
-      //   letter-spacing: -0.011em;
-      //   color: $black;
-      //   border: 0px;
-      //   border-radius: 0px;
-      //   resize: none;
-      //   &:focus-visible {
-      //     outline: 0px;
-      //   }
-      // }
+      margin-top: 16px;
+      &.no-sub-instructions {
+        display: none;
+      }
     }
     .menus {
       .ng-select-container {
@@ -958,15 +955,15 @@ benji-ps-brainstorming-activity {
         }
       }
       .options-buttons {
-        width: 40%;
+        width: 50%;
         .brainstorm-image, .prompt-video {
           //width: 400px;
           width: auto;
           height: auto;
           img, video {
             border-radius: 16px;
-            max-height: 480px;
-            max-width: 400px;
+            max-height: 680px;
+            max-width: 600px;
             //width: auto;
           }
         }
@@ -974,6 +971,9 @@ benji-ps-brainstorming-activity {
       .import-button {
         margin-top: 24px;
       }
+    }
+    &.without-sub-header {
+      place-content: center space-between !important;
     }
     benji-tiptap-editor .ProseMirror {
       min-height: unset;
@@ -983,9 +983,9 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 1280px) {
   .brainstorm-main .brainstorm-header {
-    width: calc(100vw - 17px);
-    .brainstorm-h2 .title {
-      margin-bottom: 8px;
+    width: 100vw;
+    .sub-header {
+      margin-top: 8px;
     }
   }
 }
@@ -1025,7 +1025,7 @@ benji-ps-brainstorming-activity {
     // .sub-header, .brainstorm-h2 {
     // }
     &.with-media {
-      width: calc(100vw - 17px);
+      width: 100vw;
       .options-buttons {
         width: 100%;
         margin-top: 24px;
@@ -1141,6 +1141,12 @@ ng-dropdown-panel {
       .options-buttons {
         margin-top: 16px;
       }
+      &.with-media .instructions {
+        width: 100%;
+        .level-one .level-two {
+          margin-right: 0px;
+        }
+      }
     }
   }
   .mainscreen-toolbar {
@@ -1181,9 +1187,13 @@ ng-dropdown-panel {
       padding: 16px 8px 0px 8px;
       height: calc(100vh - 206px);
       overflow-x: hidden;
-      .ideas-list-container .brainstorm-idea {
-        min-width: calc(100vw - 32px);
-        max-width: 100%;
+      .ideas-list-container {
+        width: unset;
+        min-width: unset;
+        .brainstorm-idea {
+          min-width: calc(100vw - 32px);
+          max-width: 100%;
+        }
       }
       ul {
         li {

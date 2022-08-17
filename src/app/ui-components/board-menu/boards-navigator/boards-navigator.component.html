@@ -1,52 +1,78 @@
 <div 
   *ngIf="navType=='boards'" 
   class="boards-navigation" 
-  fxLayout="column" 
-  fxLayoutGap="16px">
-
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div class="boards">Boards</div>
-    <img class="close" (click)="closeNav()" src="../../../assets/img/side-nav/close.svg"/>
-  </div>
-
-  <div fxLayout="column">
-    <ng-container *ngxPermissionsOnly="'ADMIN'">
-      <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
-        <div 
-          class="setting"
-          benji-click-stop-propagation
-          fxLayout="row"
-          fxLayoutAlign="space-between">
-          <div>
-            <div class="label">Meeting Mode</div>
-            <div class="sub-label">Participants see the board you’re on.</div>
-          </div>
-          <label class="switch">
-            <input 
-              type="checkbox" 
-              [checked]="meetingMode"
-              (change)="toggleMeetingMode($event)">
-            <span class="slider round"></span>
-          </label>
+  fxLayout="column"
+  fxLayoutAlign="space-between">
+  <div class="top-area">
+    <div class="header-area" fxLayout="column" fxLayoutGap="24px">
+      <!-- <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="24px">
+        <div class="close" (click)="closeNav()">
+            <img src="/assets/img/side-nav/navigation.svg" /> 
         </div>
+        <img [src]="darkLogo" alt="Benji Logo" class="logo">
+      </div> -->
+      <div class="space-info" fxLayout="column" fxLayoutGap="8px">
+        <div class="space-title"> {{ lessonName }} </div>
+        <div class="space-description"> {{ lessonDescription }} </div>
       </div>
-    </ng-container>
-    <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
-      <div class="posting-settings info-card" *ngIf="meetingMode">
-        <div class="label">Meeting Mode is active</div>
-        <div class="sub-label">Your host has activated Meeting Mode. You will see whichever board they are on.</div>
+    </div>
+    <div 
+      cdkDropList
+      [cdkDropListData]="boards"
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListDisabled]="isParticipant"
+      class="boards-container"
+      fxLayout="column"
+      fxLayoutGap="4px">
+      <div
+        cdkDrag
+        [cdkDragData]="getDragData(board)"
+        *ngFor="let board of boards; let j = index"
+        class="board-container">
+          <div
+            fxLayout="row" 
+            class="board"
+            [ngClass]="{
+              'selected': selectedBoard?.id === board?.id, 
+              'closed': board.status === 'closed',
+              'hidden': board.status === 'closed' && isParticipant
+            }"
+            (click)="navigateToBoard(board)"
+            fxLayoutAlign="space-between center"
+            (mouseover)="!boardHovered">
+            <ng-container>
+              <div class="title">
+                {{ board?.board_activity.instructions 
+                  ? board?.board_activity.instructions : 'Untitled' 
+                }}
+              </div>
+              <ng-container *ngIf="board.status === 'closed'">
+                <img class="closed-eye" src="../../../assets/img/side-nav/closed-board.svg"/>
+              </ng-container>
+              <ng-container *ngxPermissionsOnly="'ADMIN'">
+                <button
+                  [matMenuTriggerFor]="menu"
+                  benji-click-stop-propagation
+                  disableRipple
+                  (click)="setMenuBoard(board)"
+                  class="three-dots"
+                  fxLayoutAlign="center center">
+                  <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
+                </button>
+              </ng-container>
+            </ng-container>
+          </div>
       </div>
-    </ng-container>
+    </div>
   </div>
-
-  <div 
+  <!-- <div 
     cdkDropList
     [cdkDropListData]="boards"
     (cdkDropListDropped)="drop($event)"
     [cdkDropListDisabled]="dragDisabled"
     class="boards-container"
     fxLayout="column"
-    fxLayoutGap="16px">
+    fxLayoutGap="4px">
     <div
       cdkDrag
       [cdkDragData]="getDragData(board)"
@@ -102,13 +128,49 @@
           </ng-container>
         </div>
     </div>
-  </div>
-  <ng-container *ngxPermissionsOnly="'ADMIN'" >
+  </div> -->
+  <div class="bottom-area" *ngxPermissionsOnly="'ADMIN'">
+    <div fxLayoutGap="8px" class="meeting-mode admin-mode">
+      <div fxLayout="column">
+        <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+          <div 
+            class="setting"
+            benji-click-stop-propagation
+            fxLayout="row"
+            fxLayoutAlign="space-between">
+            <div>
+              <div class="label">Bring everyone to me</div>
+              <div class="sub-label">Everyone sees the board you’re on.</div>
+            </div>
+            <label class="switch">
+              <input 
+                type="checkbox" 
+                [checked]="meetingMode"
+                (change)="toggleMeetingMode($event)">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
     <button 
       (click)="addBoard(boards[boards.length - 1])"
-      class="add-board-button bg-primary-color">
+      class="add-board-button bg-primary-color"
+      fxLayoutAlign="center center">
       + Add New Board
     </button>
+  </div>
+  <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+    <div class="bottom-area" *ngIf="meetingMode">
+      <div fxLayoutGap="8px" class="meeting-mode">
+        <div fxLayout="column">
+          <div class="posting-settings info-card" *ngIf="meetingMode">
+            <div class="label">“Follow Me” mode is on</div>
+            <div class="sub-label">Your host has activated Meeting Mode. You will see whichever board they are on.</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </ng-container>
 </div>
 

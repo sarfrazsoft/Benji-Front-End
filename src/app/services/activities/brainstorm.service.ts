@@ -141,6 +141,12 @@ export class BrainstormService {
       for (let j = 0; j < existingCategories.length; j++) {
         const existingCategory = existingCategories[j];
         if (BECategory.id === existingCategory.id) {
+          BECategory.brainstormidea_set = BECategory.brainstormidea_set.filter(
+            (idea) => idea && !idea.removed
+          );
+          existingCategory.brainstormidea_set = existingCategory.brainstormidea_set.filter(
+            (idea) => idea && !idea.removed
+          );
           if (BECategory.brainstormidea_set.length > existingCategory.brainstormidea_set.length) {
             // if the number of ideas are  greater in the BE category
             // then the idea was added here
@@ -156,8 +162,12 @@ export class BrainstormService {
               BECategory.brainstormidea_set,
               'id'
             );
-            const ideaIndex = findIndex(existingCategory.brainstormidea_set, { id: diff[0].id });
-            existingCategory.brainstormidea_set.splice(ideaIndex, 1);
+            diff.forEach((diffItem) => {
+              if (diffItem) {
+                const ideaIndex = findIndex(existingCategory.brainstormidea_set, { id: diffItem.id });
+                existingCategory.brainstormidea_set.splice(ideaIndex, 1);
+              }
+            });
           }
         }
       }
@@ -250,7 +260,9 @@ export class BrainstormService {
             );
             for (let i = 0; i < myDifferences.length; i++) {
               const element = myDifferences[i];
-              remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === element.id);
+              if (element) {
+                remove(existingCategory.brainstormidea_set, (idea: any) => idea.id === element.id);
+              }
             }
           }
         }
@@ -404,6 +416,7 @@ export class BrainstormService {
         existingIdeas[existingIdeaIndex].idea_document = newIdea.idea_document;
         existingIdeas[existingIdeaIndex].idea_image = newIdea.idea_image;
         existingIdeas[existingIdeaIndex].idea_video = newIdea.idea_video;
+        existingIdeas[existingIdeaIndex].meta = newIdea.meta;
       }
     });
   }

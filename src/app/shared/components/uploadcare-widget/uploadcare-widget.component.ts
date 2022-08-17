@@ -133,7 +133,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
           });
         }
       } else if (!info.isImage) {
-        // now we convert the file
+        // if it's a video
         this.convertVideoFormat('mp4', info.uuid).subscribe(
           (data: ConvertedFile) => {
             this.video = true;
@@ -181,10 +181,6 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
         if (tab === 'camera') {
           this.testCamera();
         } else if (tab === 'file') {
-          const buttons: HTMLCollectionOf<HTMLElement> = document.getElementsByClassName(
-            'uploadcare--tab__action-button'
-          ) as HTMLCollectionOf<HTMLElement>;
-          buttons[0].click();
         }
       });
     });
@@ -324,6 +320,17 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
         const tracks = stream.getTracks();
         tracks.forEach((track) => {
           track.stop();
+        });
+
+        const deviceSelector = document.getElementsByClassName('uploadcare--camera__device-select')[0];
+        this.onVisible(deviceSelector, () => {
+          const elem = deviceSelector;
+          const elCount = elem.childElementCount;
+          elem.remove();
+          // if (elCount > 1) {
+            const container = document.getElementsByClassName('uploadcare--camera__video-container')[0];
+            container.appendChild(elem);
+          // }
         });
       },
       () => {

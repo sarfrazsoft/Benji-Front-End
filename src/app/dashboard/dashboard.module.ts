@@ -5,16 +5,26 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 import { DashboardComponents, DashboardEntryComponents, DashboardProviders } from './';
-import { DashboardRoutes } from './dashboard.routing';
-import { ActiveLessonsComponent } from './lessons/lessons-list/active-lessons/active-lessons.component';
+import { DashboardRoutes, DashboardRoutesWithoutResolve } from './dashboard.routing';
+import { LessonListComponent } from './lessons/lessons-list/lesson-list/lesson-list.component';
 import { LessonTileComponent } from './lessons/lessons-list/lesson-tile/lesson-tile.component';
 
+import { ColorPickerModule } from 'ngx-color-picker';
 import { NgxEditorModule } from 'ngx-editor';
 
 @NgModule({
-  imports: [CommonModule, DashboardRoutes, FormsModule, ReactiveFormsModule, SharedModule, NgxEditorModule],
+  imports: [
+    CommonModule,
+    DashboardRoutes,
+    DashboardRoutesWithoutResolve,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    NgxEditorModule,
+    ColorPickerModule,
+  ],
   exports: [RouterModule],
-  declarations: [...DashboardComponents, LessonTileComponent, ActiveLessonsComponent],
+  declarations: [...DashboardComponents, LessonTileComponent, LessonListComponent],
   entryComponents: DashboardEntryComponents,
   providers: DashboardProviders,
 })

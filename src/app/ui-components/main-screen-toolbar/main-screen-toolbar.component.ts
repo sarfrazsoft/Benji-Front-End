@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, BoardParticipants, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Branding, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -58,7 +58,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
   @Input() participantCode: number;
+  @Input() boardsMenuClosed: boolean;
 
+  count = 4;
   showTimer = false;
   currentActivityIndex;
 
@@ -79,7 +81,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   reason = '';
   counterAfter = 4;
 
-  @Output() sideNavEvent = new EventEmitter<string>();
+  @Output() openSettingsMenuEvent = new EventEmitter;
+  @Output() toggleBoardsMenuEvent = new EventEmitter;
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
@@ -102,10 +105,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
-
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
+    
+    this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.darkLogo = info.parameters.darkLogo;
+        this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 
@@ -252,8 +255,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
   }
 
-  openSideNav(type: 'board-settings' | 'boards') {
-    this.sideNavEvent.emit(type);
+  openSettingsMenu() {
+    this.openSettingsMenuEvent.emit();
+  }
+
+  toggleBoardsMenu() {
+    this.toggleBoardsMenuEvent.emit();
   }
 
   loadParticipantCodes() {
@@ -378,66 +385,4 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
   }
 
-  // changeBoard(move: 'next' | 'previous') {
-  //   const currentBoard = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
-  //   if (move === 'next') {
-  //     let nextBoard;
-  //     if (currentBoard.next_board) {
-  //       if (this.isHost) {
-  //         nextBoard = this.getBoardById(currentBoard.next_board);
-  //       } else {
-  //         nextBoard = this.getParticipantNextBoard(currentBoard);
-  //       }
-  //     }
-  //     if (nextBoard) {
-  //       this.navigateToBoard(nextBoard.id);
-  //     }
-  //   } else if (move === 'previous') {
-  //     let prevBoard;
-  //     if (currentBoard.previous_board) {
-  //       if (this.isHost) {
-  //         prevBoard = this.getBoardById(currentBoard.previous_board);
-  //       } else {
-  //         prevBoard = this.getParticipantPrevBoard(currentBoard);
-  //       }
-  //     }
-  //     if (prevBoard) {
-  //       this.navigateToBoard(prevBoard.id);
-  //     }
-  //   }
-  // }
-
-  // getParticipantNextBoard(board: Board): Board | null {
-  //   let newBoard: Board = this.getBoardById(board.next_board);
-  //   while (newBoard.status === 'closed') {
-  //     if (newBoard.next_board) {
-  //       newBoard = this.getBoardById(newBoard.next_board);
-  //     } else {
-  //       newBoard = null;
-  //     }
-  //   }
-  //   return newBoard;
-  // }
-
-  // getParticipantPrevBoard(board: Board): Board | null {
-  //   let newBoard: Board = this.getBoardById(board.previous_board);
-  //   while (newBoard.status === 'closed') {
-  //     if (newBoard.next_board) {
-  //       newBoard = this.getBoardById(newBoard.previous_board);
-  //     } else {
-  //       newBoard = null;
-  //     }
-  //   }
-  //   return newBoard;
-  // }
-
-  // getBoardById(boardId: number): Board {
-  //   const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-  //   for (let i = 0; i < visibleBrds.length; i++) {
-  //     const board = visibleBrds[i];
-  //     if (board.id === boardId) {
-  //       return board;
-  //     }
-  //   }
-  // }
 }

@@ -4,16 +4,16 @@ import { Title } from '@angular/platform-browser';
 
 import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
+import { Branding, User } from './services/backend/schema';
 import { PartnerInfo } from './services/backend/schema/whitelabel_info';
+// import { Branding } from './services/backend/schema/whitelabel_info';
 import { ContextService } from './services/context.service';
 import { LayoutService } from './services/layout.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [
-    './app.component.scss',
-  ],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   apiUrl = 'test';
@@ -27,78 +27,47 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    
-    this.contextService.partnerInfo$.subscribe((info: PartnerInfo) => {
-      if (info) {
-        this.title.setTitle(info.parameters.tabTitle);
-        this._document.getElementById('appFavicon').setAttribute('href', info.favicon);
+    let color = '#555BEA';
+    let favicon;
 
-        const cssCode = `
+    this.contextService.brandingInfo$.subscribe((branding: Branding) => {
+      if (branding) {
+        color = branding.color ? branding.color : '#555BEA';
+        favicon = branding.favicon ? branding.favicon : '/assets/img/favicon.ico';
+        this._document
+          .getElementById('appFavicon')
+          .setAttribute('href', favicon.replace(/https|http/g, 'https'));
+      }
+      const cssCode = `
         * {
-          caret-color: ${info.parameters.primary};
+          caret-color: ${color};
         }
         .bg-primary-color {
-          background: ${info.parameters.primary};
-        }
-
-        .bg-primary-color-dark {
-          background: ${info.parameters.primary_dark};
-        }
-
-        .bg-primary-color-darkest {
-          background: ${info.parameters.primary_darkest};
-        }
-
-        .bg-primary-color-light {
-          background: ${info.parameters.primary_light};
-        }
-
-        .bg-primary-color-lighter {
-          background: ${info.parameters.primary_lighter};
+          background: ${color} !important;
         }
 
         .primary-color {
-          color: ${info.parameters.primary} !important;
-        }
-
-        .primary-color-dark {
-          color: ${info.parameters.primary_dark};
-        }
-
-        .primary-color-light {
-          color: ${info.parameters.primary_light};
-        }
-
-        .primary-colorjoin-session-header-lighter {
-          color: ${info.parameters.primary_lighter};
+          color: ${color} !important;
         }
 
         .b-standard-button.selected {
-          background: ${info.parameters.primary};
+          background: ${color};
         }
 
         .b-standard-button.selected:hover {
-          background: ${info.parameters.primary};
+          background: ${color};
         }
 
         .editor-content-button {
-          background: ${this.hexToRGB(info.parameters.primary, 0.1)};
-        }
-
-        .indigo-launch-button:active {
-          background: ${info.parameters.primary_darker};
-        }
-
-        .indigo-launch-button-sub:active {
-          background: ${info.parameters.primary_darker};
+          background: ${this.hexToRGB(color, 0.1)};
         }
 
         benji-ps-build-pitch-activity .b-flat-card__body .pitch-form .pitch-segment span {
-          border-bottom-color: ${info.parameters.primary};
+          border-bottom-color: ${color};
         }
 
         benji-ps-build-pitch-activity benji-vote-pitch .b-standard-button em {
-          color: ${info.parameters.primary};
+          color: ${color};
         }
 
         benji-ps-build-pitch-activity benji-vote-pitch .b-standard-button.selected em {
@@ -106,160 +75,182 @@ export class AppComponent implements OnInit {
         }
 
         mat-toolbar.mat-toolbar {
-          border-bottom-color: ${info.parameters.primary}
+          border-bottom-color: ${color}
         }
 
         benji-ps-build-pitch-activity .b-flat-card__body .your-pitch em {
-          color: ${info.parameters.primary};
-          border-bottom-color: ${info.parameters.primary};
+          color: ${color};
+          border-bottom-color: ${color};
         }
 
         .launch-session:hover span {
-          border-bottom-color: ${info.parameters.primary};
+          border-bottom-color: ${color};
         }
 
         .overview-button:hover span {
-          border-bottom-color: ${info.parameters.primary};
+          border-bottom-color: ${color};
         }
 
         .dashboard-secondary-button {
-          border: 2px solid ${info.parameters.primary};
+          border: 2px solid ${color};
         }
 
         .dashboard-secondary-button.active {
-          border-color: ${info.parameters.primary};
-          color: ${info.parameters.primary};
+          border-color: ${color};
+          color: ${color};
         }
 
         .dashboard-secondary-button:hover {
-          border: 2px solid ${info.parameters.primary};
-          color: ${info.parameters.primary};
-          background-color: white;
+          border: 2px solid ${color};
+          color: ${color};
+          background-color: white !important;
         }
 
         .dashboard-secondary-button.delete:hover {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
           color: white !important;
         }
 
         .selected-primary-border.selected {
-          border-color: ${info.parameters.primary} !important;
-          background-color: ${this.hexToRGB(info.parameters.primary, 0.08)} !important;
+          border-color: ${color} !important;
+          background-color: ${this.hexToRGB(color, 0.08)} !important;
         }
 
         .selected-primary-border-only.selected {
-          border-color: ${info.parameters.primary} !important;
+          border-color: ${color} !important;
         }
 
         .selected-primary-border-bg.selected {
-          border-color: ${info.parameters.primary} !important;
-          background-color: ${this.hexToRGB(info.parameters.primary, 0.08)} !important;
-        }
-
-        .report-cards .card-header {
-          color: ${info.parameters.primary_darkest};
-          color: black;
+          border-color: ${color} !important;
+          background-color: ${this.hexToRGB(color, 0.08)} !important;
         }
 
         .dashboard-table .table-link {
-          color: ${info.parameters.primary};
+          color: ${color};
         }
 
         .low-response-dialog mat-dialog-container {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
         }
 
         .low-response-dialog mat-dialog-container.mat-dialog-container .content button {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
         }
 
         .mat-progress-spinner circle, .mat-spinner circle {
-          stroke: ${info.parameters.primary};
+          stroke: ${color};
         }
 
         .border-color-primary {
-          border-color: ${info.parameters.primary} !important;
+          border-color: ${color} !important;
         }
 
         .mat-tab-label-active {
-          color: ${info.parameters.primary} !important;
+          color: ${color} !important;
         }
 
         .activity-type.selected,
         .activity-type:hover,
         benji-overview-panel .panel .activity-list .activity-container .activity.active {
-          border: 2px solid ${info.parameters.primary} !important;
+          border: 2px solid ${color} !important;
         }
 
         .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-          background-color: ${info.parameters.primary} !important;
+          background-color: ${color} !important;
         }
 
         benji-ms-sharing-tool .mainscreen-activity .content .speaker-cue-container .speaker-list .name-row.current-speaker {
-          border-color: ${info.parameters.primary};
+          border-color: ${color};
         }
         .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-          border-color: ${info.parameters.primary};
+          border-color: ${color};
         }
 
         .mat-radio-button.mat-accent .mat-radio-inner-circle {
-          color: ${info.parameters.primary};
-          background-color: ${info.parameters.primary};
+          color: ${color};
+          background-color: ${color};
         }
 
         .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
         }
         .dash-input:focus {
-          box-shadow: 0px 0px 0pt 0.2pt ${info.parameters.primary};
+          box-shadow: 0px 0px 0pt 0.2pt ${color};
         }
         .board-settings-navigation input:checked + .slider {
-            background-color: ${info.parameters.primary};
+            background-color: ${color};
         }
         .board-settings-navigation .board-status-dropdown ng-dropdown-panel .ng-dropdown-panel-items {
-            border: 2px solid ${info.parameters.primary};
+            border: 2px solid ${color};
         }
         .posting-settings input:checked + .slider {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
         }
         .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color {
-          background: ${info.parameters.primary};
+          background: ${color};
         }
         .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color:hover {
-          background: ${info.parameters.primary};
+          background: ${color};
         }
         .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
         }
         .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame {
-          border-color: ${info.parameters.primary};
+          border-color: ${color};
         }
         .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-          background-color: ${info.parameters.primary};
+          background-color: ${color};
         }
         .uploadcare--dialog__container .uploadcare--button_muted:focus, .uploadcare--dialog__container .uploadcare--button_muted:hover {
-          color: ${info.parameters.primary};
+          color: ${color};
         }
         .uploadcare--dialog__container .uploadcare--button_primary {
-          background: ${info.parameters.primary};
+          background: ${color};
         }
         .uploadcare--dialog__container .uploadcare--button_muted:focus, .uploadcare--dialog__container .uploadcare--button_muted:hover {
-          color: ${info.parameters.primary};
+          color: ${color};
         }
         benji-ms-brainstorming-activity .prose-sm p a, .idea-detailed-dialog mat-dialog-container .content-area .prose-sm p a {
-          color: ${info.parameters.primary};
+          color: ${color};
+        }
+        .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .post:hover {
+          color: ${color};
+          background: #fff !important;
+        }
+        .primary-box-shadow {
+          box-shadow: 0 0 0 2px ${color};
+        }
+        .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
+          color: ${color};
+        }
+        .board-settings-navigation .close:hover, .boards-navigation .close:hover, .close-button:hover {
+          color: ${color};
+        }
+        ng-dropdown-panel.post-idea-categories-dropdown .ng-dropdown-panel-items {
+          border: 2px solid ${color};
         }
         `;
 
-        let additionalCssStyle = document.getElementById('additionalCss');
-        if (!additionalCssStyle) {
-          additionalCssStyle = document.createElement('style');
-          additionalCssStyle.id = 'additionalCss';
-          document.head.appendChild(additionalCssStyle);
-        }
-        additionalCssStyle.innerText = cssCode;
+      let additionalCssStyle = document.getElementById('additionalCss');
+      if (!additionalCssStyle) {
+        additionalCssStyle = document.createElement('style');
+        additionalCssStyle.id = 'additionalCss';
+        document.head.appendChild(additionalCssStyle);
       }
+      additionalCssStyle.innerText = cssCode;
     });
+
+    if (localStorage.getItem('benji_branding')) {
+      const savedBrandingInfo = JSON.parse(localStorage.getItem('benji_branding'));
+      console.log(savedBrandingInfo);
+      this.contextService.brandingInfo = savedBrandingInfo;
+    } else {
+      this.contextService.brandingInfo = {
+        color: '#555BEA',
+        logo: '/assets/img/Benji_logo.svg',
+        favicon: '/assets/img/favicon.ico',
+      };
+    }
   }
 
   hexToRGB(hex, alpha) {
@@ -273,5 +264,4 @@ export class AppComponent implements OnInit {
       return 'rgb(' + r + ', ' + g + ', ' + b + ')';
     }
   }
-
 }

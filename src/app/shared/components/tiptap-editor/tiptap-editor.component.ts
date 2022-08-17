@@ -37,8 +37,12 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
         class: 'prose prose-sm focus:outline-none',
       },
     },
-    onUpdate: (u) => {
-      this.textChanged.emit(this.defaultValue);
+    onUpdate: (update: { editor: Editor; transaction: any }) => {
+      if (!update.editor.getText()) {
+        this.textChanged.emit('');
+      } else {
+        this.textChanged.emit(this.defaultValue);
+      }
     },
   });
 

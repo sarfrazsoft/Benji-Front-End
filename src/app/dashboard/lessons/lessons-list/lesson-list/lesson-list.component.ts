@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -19,19 +19,24 @@ export interface TableRowInformation {
   lesson_title: string;
   host: string;
   lesson_description: string;
+  boards: number;
   participants: number;
   startDate: string;
   lessonId: number;
   hostId: number;
+  lesson_image_id?: number;
+  lesson_image?: string;
+  image_url?: string;
 }
 @Component({
-  selector: 'benji-active-lessons',
-  templateUrl: './active-lessons.component.html',
+  selector: 'benji-lesson-list',
+  templateUrl: './lesson-list.component.html',
 })
-export class ActiveLessonsComponent implements OnInit {
+export class LessonListComponent implements OnInit {
   @Input() lessonRuns: Array<Lesson> = [];
+  @Output() updateLessonsRuns = new EventEmitter();
 
-  displayedColumns: string[] = ['title', 'host', 'participants', 'startDate', 'options'];
+  displayedColumns: string[] = ['title', 'host', 'boards', 'participants', 'startDate', 'options'];
   dataSource: TableRowInformation[] = [];
 
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -39,21 +44,22 @@ export class ActiveLessonsComponent implements OnInit {
   options = [
     {
       option: 'Open',
-      icon: '../../../../assets/img/dashboard-active-sessions/open.svg',
+      icon: '../../../../assets/img/dashboard/open.svg',
     },
     {
       option: 'View only',
-      icon: '../../../../assets/img/dashboard-active-sessions/view-only.svg',
+      icon: '../../../../assets/img/dashboard/view-only.svg',
     },
     {
       option: 'Closed',
-      icon: '../../../../assets/img/dashboard-active-sessions/closed.svg',
+      icon: '../../../../assets/img/dashboard/closed.svg',
     },
   ];
 
   selectedCategory = 'Open';
 
   hostname = window.location.host + '/participant/join?link=';
+  maxIdIndex: any;
 
   constructor(
     private router: Router,
@@ -71,6 +77,13 @@ export class ActiveLessonsComponent implements OnInit {
     this.dataSource = [];
     const slicedArray = this.lessonRuns;
     slicedArray.forEach((val: any, index: number) => {
+      
+      const ids = val.lessonrun_images.map(object => {
+        return object.id;
+      });
+      const max = Math.max(...ids);
+      this.maxIdIndex  = val.lessonrun_images.findIndex(x => x.id === max);
+      
       this.dataSource.push({
         index: index,
         lessonRunCode: val.lessonrun_code,
@@ -79,8 +92,12 @@ export class ActiveLessonsComponent implements OnInit {
         lesson_description: val.lesson.lesson_description,
         host: val.host.first_name + ' ' + val.host.last_name,
         hostId: val.host.id,
+        boards: val.board_count,
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
+        lesson_image_id: val.lessonrun_images[this.maxIdIndex ]?.id,
+        lesson_image: val.lessonrun_images[this.maxIdIndex ]?.img,
+        image_url: val.lessonrun_images[this.maxIdIndex ]?.image_url,
       });
     });
   }
@@ -115,7 +132,10 @@ export class ActiveLessonsComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
-          this.http.delete(request, {}).subscribe((response) => console.log(response));
+          this.http.delete(request, {}).subscribe((response) => {
+            console.log(response)
+            this.updateLessonsRuns.emit();
+          });
           this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
           this.dataSource = this.dataSource.filter((value) => {
             return value.lessonRunCode !== val.lessonRunCode;
@@ -158,6 +178,7 @@ export class ActiveLessonsComponent implements OnInit {
                         this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
                           this.lessonRuns = lessonsRuns;
                           this.getActiveSessions();
+                          this.updateLessonsRuns.emit();
                           this.utilsService.openSuccessNotification(
                             `Session successfully duplicated.`,
                             `close`
@@ -180,6 +201,7 @@ export class ActiveLessonsComponent implements OnInit {
   }
 
   openSessionSettings(val: TableRowInformation) {
+    console.log(val);
     this.matDialog
       .open(SessionSettingsDialogComponent, {
         data: {
@@ -187,13 +209,28 @@ export class ActiveLessonsComponent implements OnInit {
           id: val.lessonId,
           title: val.lesson_title,
           description: val.lesson_description,
+          lessonImage: val.lesson_image,
+          imageUrl: val.image_url,
           createSession: false,
         },
         panelClass: 'session-settings-dialog',
       })
       .afterClosed()
       .subscribe((data) => {
-        this.dataSource[data.index].lesson_title = data.lesson_name;
+        if (data) {
+          this.dataSource[data.index].lesson_title = data?.lesson_name;
+          this.adminService.updateLessonRunImage(val.lessonRunCode, data.lesson_image, data.lesson_image_name, data.image_url, val.lesson_image_id)
+          .subscribe(
+            (data) => {
+              this.updateLessonsRuns.emit();
+              this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                this.lessonRuns = lessonsRuns;
+                this.getActiveSessions();
+              });
+            },
+            (error) => console.log(error)
+          );
+        }
       });
   }
 }

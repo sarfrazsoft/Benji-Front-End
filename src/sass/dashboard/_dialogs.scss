@@ -165,6 +165,7 @@
             margin-right: 24px;
             &.mat-tab-label-active {
               background-color: unset;
+              border-bottom: 3px solid;
             }
           }
         }
@@ -504,6 +505,9 @@
               opacity: 1;
             }
           }
+          .idea-creation-select {
+            margin-right: 16px;
+          }
         }
       }
     }
@@ -518,7 +522,7 @@
         border-radius: 17px;
         width: auto;
         border: 0px;
-        max-width: 200px;
+        max-width: 180px;
       }
     }
   }
@@ -527,7 +531,6 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   width: auto !important;
   border-radius: 8px !important;
   .ng-dropdown-panel-items {
-    border: 2px solid #555BEA;
     border-radius: 8px;
     padding: 8px 0px;
     background: #fff;
@@ -636,7 +639,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       border: 1px solid #f3f4f7;
       box-shadow: 0px 1px 2px #e7e7e7;
       border-radius: 4px;
-      width: 140px;
+      width: 200px;
       .ng-option.ng-option-selected,
       .ng-option.ng-option-selected.ng-option-marked {
         background-color: #f3f4f7;
@@ -717,17 +720,30 @@ ng-dropdown-panel.post-idea-categories-dropdown {
     border-radius: 16px;
     box-shadow: unset;
     padding: unset;
+    max-height: 90vh;
+    .mobile-panel {
+      &.set-min-height {
+        min-height: 640px;
+      }
+    }
     .back-text {
       display: none !important;
     }
     .image-area {
+      .opnClose {
+        border-right: 1px solid #E7E7E7;
+        height: 100%;
+      }
       .select-image {
-        width: 385px;
-        height: 324px;
+        width: 33vw;
+        max-width: 400px;
+        height: calc(100% - 80px);
+        min-height: 400px;
         background: #f1f2f4;
         border-radius: 16px;
         margin: 40px;
         padding: 24px;
+        box-sizing: border-box;
         .attachments {
           border: 2px dashed #d4d4d4;
           box-sizing: border-box;
@@ -761,22 +777,24 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .preview-image {
         position: relative;
-        width: 512px;
+        min-width: 512px;
         height: 100%;
-        background: #000;
+        background: #f2f3f2;
+        max-width: 800px;
         .back-circle {
           display: none !important;
         }
         img {
           max-width: 100%;
-          max-height: 100%;
+          max-height: 90vh;
         }
         .remove-button {
           position: absolute;
           width: 64px;
           height: 24px;
           top: 16px;
-          background: #f3f4f7;
+          background: rgba(0, 0, 0, 0.4);
+          color: #fff;
           border-radius: 4px;
           right: 16px;
           font-weight: 500;
@@ -789,14 +807,21 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             opacity: 1;
           }
         }
+        .pdf-wrapper {
+          width: 44vw;
+        }
       }
     }
     .content-area {
       padding: 32px 32px 0px 32px;
-      max-width: 448px;
-      min-width: 336px;
+      box-sizing: border-box;
+      width: 36vw;
+      max-width: 512px;
       background: #fff;
       z-index: 2;
+      &.space-bottom {
+        margin-bottom: 32px;
+      }
       .title {
         font-size: 24px;
         line-height: 32px;
@@ -888,6 +913,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         margin-bottom: 9px;
         margin-top: 6px;
         padding: 0px;
+        &.space-bottom {
+          margin-bottom: 0px;
+        }
         .name {
           font-size: 14px;
           font-weight: 500;
@@ -896,8 +924,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .ps-brainstorm-dropdown-controls .ng-select-container {
         height: 32px;
-        width: 130px;
+        width: 200px;
         margin-bottom: 16px;
+        margin-top: 16px;
       }
       .discussion-tabs {
         .mat-tab-nav-bar,
@@ -923,6 +952,25 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         .likes-area {
           margin-top: 16px;
         }
+        &.comments-empty {
+          .mat-tab-body-content {
+            overflow: hidden;
+          }
+        }
+        .no-comments, .no-likes {
+          height: 100%;
+          padding: 40px 0px;
+          line-height: 16px;
+          color: #37352F;
+          .text {
+            font-weight: 600;
+            font-size: 20px;
+          }
+          .sub-text {
+            font-weight: 400;
+            font-size: 14px;
+          }
+        }
       }
       .idea-creation-controls {
         margin-bottom: 16px;
@@ -936,6 +984,10 @@ ng-dropdown-panel.post-idea-categories-dropdown {
             background: #e7e7e7;
             &:hover {
               background: #dedede;
+              &.disabled {
+                opacity: 0.7;
+                background: #e7e7e7;
+              }
             }
             &.pinned, &.unpinned {
               img {
@@ -943,6 +995,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
                 left: 10px;
                 position: absolute;
               }
+            }
+            &.disabled {
+              opacity: 0.7;
             }
           }
         }
@@ -963,6 +1018,7 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
       .comments-container {
         margin-top: 16px;
+        height: 100%;
         .comment {
           margin-bottom: 8px;
           .comment-bg {
@@ -986,12 +1042,32 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
     }
     .content {
+      &.content-blank {
+        display: none !important;
+      }
+      &.only-area {
+        min-width: 512px;
+        .content-area {
+          width: 100%;
+        }
+      }
       .scrollable-area {
         width: 100%;
         overflow: auto;
-        max-height: 80vh;
+        max-height: 70vh;    
+        height: 100%;
+        min-height: 432px;
         &::-webkit-scrollbar {
           display: none;
+        }
+        mat-tab-group {
+          flex-grow: 1;
+          .mat-tab-body-wrapper {
+            height: 100%;
+            .comments-area {
+              height: 100%;
+            }
+          }
         }
       }
       .add-comment-container {
@@ -1017,11 +1093,23 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   }
 }
 
-@media (max-width: 1140px) and (min-width: 768px) {
+@media (max-width: 1164px) and (min-width: 848px) {
   .idea-detailed-dialog mat-dialog-container .image-area .preview-image {
-    width: unset;
+    width: 40vw;
     max-width: 512px;
-    min-width: 200px;
+    min-width: 40vw;
+    &.only-area {
+      min-width: 512px;
+    }
+  }
+  .idea-detailed-dialog mat-dialog-container .image-area .select-image {
+    margin: 0px;
+    padding: 16px;
+    height: 100%;
+    border-radius: 16px 0px 0px 16px;
+  }
+  .idea-detailed-dialog mat-dialog-container .content-area {
+    min-width: 32vw;
   }
   .idea-detailed-dialog mat-dialog-container .slide-arrow.right {
     right: 3%;
@@ -1124,6 +1212,9 @@ ng-dropdown-panel.post-idea-categories-dropdown {
           font-weight: 500;
           font-size: 12px;
         }
+        .pdf-wrapper {
+          width: 100%;
+        }
       }
     }
     .content-area {
@@ -1198,6 +1289,20 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         }
         .likes-area {
           margin-top: 16px;
+        }
+        .no-comments, .no-likes {
+          //height: 100%;
+          padding: 48px 0px;
+          line-height: 16px;
+          color: #37352F;
+          .text {
+            font-weight: 600;
+            font-size: 18px;
+          }
+          .sub-text {
+            font-weight: 400;
+            font-size: 14px;
+          }
         }
       }
       .idea-creation-controls {

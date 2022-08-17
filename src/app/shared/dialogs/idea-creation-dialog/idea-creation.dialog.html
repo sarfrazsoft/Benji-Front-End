@@ -22,10 +22,10 @@
             class="title" 
             placeholder="Title (optional)" 
             [(ngModel)]="ideaTitle"
-          >
+            (ngModelChange)="checkIfLink($event)">
           </textarea>
           <div class="close-button" fxLayoutAlign="end start">
-            <img src="/assets/img/idea-creation/cross.svg" matDialogClose>
+            <mat-icon class="close" matDialogClose>clear</mat-icon>
           </div>
         </div>
         <div [ngClass]="{ 'image-selected': !isItemSelected() }">
@@ -33,6 +33,13 @@
             [defaultValue]="userIdeaText"
             (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>
+        </div>
+        <div class="benji-iframely" *ngIf="iframeAvailable">
+          <p bind-innerHTML="iframeData.iframeHTML | safeHtml"></p>
+          <button
+            class="remove-button" (click)="removeIframelyEmbed()">
+            Remove
+          </button>
         </div>
         <div class="preview-image" 
           *ngIf="imageSelected || pdfSelected || video || webcamImage || mediaUploading" 
@@ -156,9 +163,9 @@
           class="post bg-primary-color" 
           (click)="onSubmit()"
           [ngClass]="{
-            'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video
+            'active': !descriptionIsEmpty || ideaTitle || imageSelected || pdfSelected || webcamImage || video || iframeAvailable
           }"
-          [disabled]="mediaUploading || descriptionIsEmpty && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected ? 'disabled': null">
+          [disabled]="mediaUploading || descriptionIsEmpty && !ideaTitle && !webcamImage && !video && !imageSelected && !pdfSelected && !iframeAvailable ? 'disabled': null">
             Post
         </button>
       </div>

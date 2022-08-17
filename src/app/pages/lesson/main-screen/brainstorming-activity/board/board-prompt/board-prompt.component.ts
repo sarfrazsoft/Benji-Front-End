@@ -1,18 +1,22 @@
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
+
 import { cloneDeep } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { BrainstormService } from 'src/app/services';
 import {
   Board,
@@ -25,6 +29,8 @@ import {
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
+
+// declare var iframely: any;
 
 @Component({
   selector: 'benji-board-prompt',
@@ -40,7 +46,7 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
 
   showParticipantsGroupsDropdown = false;
   @Input() participantCode;
-  @ViewChild('title') InstructionsElement: ElementRef;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @ViewChild('instructions') SubInstructionsElement: ElementRef;
 
   title_instructions = '';
@@ -64,7 +70,8 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     private permissionsService: NgxPermissionsService,
     private brainstormService: BrainstormService,
     private topicMediaService: TopicMediaService,
-    private boardStatusService: BoardStatusService
+    private boardStatusService: BoardStatusService,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -172,8 +179,15 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
   getParticipantGroup(participantCode, participantGroups) {
     return this.brainstormService.getMyGroup(participantCode, participantGroups);
   }
+
   getNewBoardInstruction(board: Board) {
     this.title_instructions = board.board_activity.instructions;
+    this._ngZone.onStable.pipe(take(1)).subscribe(() => {
+      setTimeout(() => {
+        this.title_instructions = board.board_activity.instructions;
+        this.autosize.resizeToFitContent(true);
+      }, 100);
+    });
   }
 
   getNewSubInstruction(board: Board) {
@@ -184,10 +198,10 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     this.sendMessage.emit($event);
   }
 
-  typingStoped(type: string) {
+  typingStoped(type: string, $event) {
     clearTimeout(this.typingTimer);
     this.typingTimer = setTimeout(() => {
-      this.doneTyping(type);
+      this.doneTyping(type, $event);
     }, 500);
   }
 
@@ -196,14 +210,12 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
     clearTimeout(this.typingTimer);
   }
 
-  doneTyping(type: string) {
+  doneTyping(type: string, event) {
     if (!this.isHost) {
       return;
     }
     if (type === 'title') {
-      this.sendMessage.emit(
-        new BrainstormEditInstructionEvent(this.InstructionsElement.nativeElement.value, this.board.id)
-      );
+      this.sendMessage.emit(new BrainstormEditInstructionEvent(event.target.value, this.board.id));
     } else if (type === 'instructions') {
       this.sendMessage.emit(
         new BrainstormEditSubInstructionEvent(this.SubInstructionsElement.nativeElement.value, this.board.id)

@@ -16,12 +16,16 @@ export interface SidenavItem {
 })
 export class SidenavItemComponent implements OnInit {
   @Input() sidenavItem: SidenavItem;
-  icon;
+  icon: string;
+  activeIcon: string;
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     if (this.sidenavItem.icon) {
       this.icon = this.sidenavItem.icon;
+    }
+    if (this.sidenavItem.activeIcon) {
+      this.activeIcon = this.sidenavItem.activeIcon;
     }
   }
 

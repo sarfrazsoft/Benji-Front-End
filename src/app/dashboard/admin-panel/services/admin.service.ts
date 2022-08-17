@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from } from 'rxjs';
 import { Observable, of } from 'rxjs';
@@ -7,15 +7,26 @@ import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { TeamUser, User } from 'src/app/services/backend/schema';
 import { Course, Lesson, PaginatedResponse } from 'src/app/services/backend/schema/course_details';
+import { UtilsService } from 'src/app/services/utils.service';
+import { Url } from 'url';
 
 @Injectable()
 export class AdminService {
-  constructor(private http: HttpClient, private contextService: ContextService) {}
+  constructor(
+    private http: HttpClient,
+    private contextService: ContextService,
+    private utilsService: UtilsService,
+    private httpClient: HttpClient
+  ) {}
 
+  // TODO remove duplicate function from is-admin guard
   getUser(): Observable<TeamUser> {
     return this.http.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
       map((res: TeamUser) => {
         this.contextService.user = res;
+        if (res.branding) {
+          this.contextService.brandingInfo = res.branding;
+        }
         return res;
       })
     );
@@ -114,5 +125,48 @@ export class AdminService {
 
   updateLesson(lesson: Lesson, id): Observable<any[]> {
     return this.http.patch<any[]>(global.apiRoot + `/course_details/lesson/${id}/`, lesson);
+  }
+
+  addLessonRunImage(lessonrunCode: number, lessonImage: Blob, lessonImageName: string, imageUrl: string) {
+    const url = global.apiRoot + '/course_details/lesson_run/' + lessonrunCode + '/upload_image/';
+    const formData: FormData = new FormData();
+    if (lessonImage) {
+      formData.append('img', lessonImage, lessonImageName);
+    }
+    if (imageUrl) {
+      formData.append('image_url', imageUrl);
+    }
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', null);
+    headers.set('Accept', 'multipart/form-data');
+    const params = new HttpParams();
+    return this.httpClient.post(url, formData, { params, headers }).map((res: any) => {
+      return res;
+    });
+  }
+
+  updateLessonRunImage(
+    lessonrunCode: number,
+    lessonImage: Blob,
+    lessonImageName: string,
+    imageUrl: string,
+    imageId: number
+  ) {
+    const url =
+      global.apiRoot + '/course_details/lesson_run/' + lessonrunCode + '/upload_image/?image_id=' + imageId;
+    const formData: FormData = new FormData();
+    if (lessonImage) {
+      formData.append('img', lessonImage, lessonImageName);
+    }
+    if (imageUrl) {
+      formData.append('image_url', imageUrl);
+    }
+    const headers = new HttpHeaders();
+    headers.set('Content-Type', null);
+    headers.set('Accept', 'multipart/form-data');
+    const params = new HttpParams();
+    return this.httpClient.post(url, formData, { params, headers }).map((res: any) => {
+      return res;
+    });
   }
 }
