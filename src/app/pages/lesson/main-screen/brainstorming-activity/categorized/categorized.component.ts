@@ -232,16 +232,10 @@ export class CategorizedComponent implements OnInit, OnChanges {
                 );
               }
             });
-
-            // this.postLayoutService.itemMovedByTheHost(
-            //   this.grid,
-            //   this.board.meta.post_order as Array<PostOrder>
-            // );
           } else if (this.board.meta.updated === 'category_changed') {
             let container;
             let previousContainer;
             const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo = this.board.meta.post_order;
-            // console.log(colsIdeaOrderInfo);
             this.columns.forEach((column: Category) => {
               if (column.id.toString() === colsIdeaOrderInfo.container) {
                 container = column;
@@ -250,12 +244,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
                 previousContainer = column;
               }
             });
-            // console.log(
-            //   previousContainer.brainstormidea_set,
-            //   container.brainstormidea_set,
-            //   colsIdeaOrderInfo.previousIndex,
-            //   colsIdeaOrderInfo.currentIndex
-            // );
 
             transferArrayItem(
               previousContainer.brainstormidea_set,
@@ -264,10 +252,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
               colsIdeaOrderInfo.currentIndex
             );
           }
-          // this.secondRunAllowed = false;
-          // setTimeout(() => {
-          //   this.secondRunAllowed = true;
-          // }, 1000);
         }
       }
     }
@@ -405,7 +389,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
           event.previousIndex,
           event.currentIndex
         );
-        // this.sendCategorizeEvent(event);
+        this.sendCategorizeEvent(event);
       }
     }
     // });

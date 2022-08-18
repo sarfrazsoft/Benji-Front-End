@@ -242,7 +242,6 @@ export class AppComponent implements OnInit {
 
     if (localStorage.getItem('benji_branding')) {
       const savedBrandingInfo = JSON.parse(localStorage.getItem('benji_branding'));
-      console.log(savedBrandingInfo);
       this.contextService.brandingInfo = savedBrandingInfo;
     } else {
       this.contextService.brandingInfo = {

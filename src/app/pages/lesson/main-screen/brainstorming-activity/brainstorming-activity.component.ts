@@ -157,7 +157,6 @@ export class MainScreenBrainstormingActivityComponent
   onChanges() {
     this.eventType = this.getEventType();
     this.isHost = this.activityState.isHost;
-    console.log(this.eventType);
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (

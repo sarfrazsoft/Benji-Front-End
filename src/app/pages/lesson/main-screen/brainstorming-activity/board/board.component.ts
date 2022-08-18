@@ -249,7 +249,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
-    console.log(this.act);
     if (this.elementView && this.elementView.nativeElement) {
       this.headWrapperHeight = this.elementView.nativeElement.offsetHeight + 49;
     }
@@ -259,7 +258,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       this.getBoardInstructions();
 
-      console.log(this.elementView.nativeElement.offsetHeight);
+      // console.log(this.elementView.nativeElement.offsetHeight);
       // this.headWrapperHeight = this.elementView.nativeElement.offsetHeight;
     } else {
       // populate groupings dropdown

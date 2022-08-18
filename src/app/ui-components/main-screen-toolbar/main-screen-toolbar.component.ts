@@ -15,7 +15,14 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, BoardParticipants, Branding, Timer, UpdateMessage, User } from 'src/app/services/backend/schema';
+import {
+  Board,
+  BoardParticipants,
+  Branding,
+  Timer,
+  UpdateMessage,
+  User,
+} from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -81,8 +88,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   reason = '';
   counterAfter = 4;
 
-  @Output() openSettingsMenuEvent = new EventEmitter;
-  @Output() toggleBoardsMenuEvent = new EventEmitter;
+  @Output() openSettingsMenuEvent = new EventEmitter();
+  @Output() toggleBoardsMenuEvent = new EventEmitter();
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
@@ -105,10 +112,10 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
-    
+
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.darkLogo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.darkLogo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
 
@@ -360,7 +367,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.router.navigate(['/dashboard/']);
     } else if (this.isParticipant) {
       this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-        if (participant.participant_code === this.participantCode && participant.email) {
+        if (participant.participant_code === this.participantCode && participant?.user?.id) {
           this.router.navigate(['/dashboard/']);
         }
       });
@@ -384,5 +391,4 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     }
   }
-
 }
