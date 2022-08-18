@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface ConfirmationDialogData {
   confirmationTitle?: string;
@@ -16,7 +16,8 @@ export class ConfirmationDialogComponent implements OnInit {
   public confirmationTitle: string;
   public confirmationMessage: string;
   public actionButton: string;
-  public cancelButton: string;
+  public actionButton: string;
+  public cancelButton2: string;
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmationDialogComponent>,

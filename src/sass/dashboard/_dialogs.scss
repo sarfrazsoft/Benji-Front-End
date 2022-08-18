@@ -1290,6 +1290,20 @@ ng-dropdown-panel.post-idea-categories-dropdown {
         .likes-area {
           margin-top: 16px;
         }
+        .no-comments, .no-likes {
+          //height: 100%;
+          padding: 48px 0px;
+          line-height: 16px;
+          color: #37352F;
+          .text {
+            font-weight: 600;
+            font-size: 18px;
+          }
+          .sub-text {
+            font-weight: 400;
+            font-size: 14px;
+          }
+        }
       }
       .idea-creation-controls {
         margin-bottom: 16px;

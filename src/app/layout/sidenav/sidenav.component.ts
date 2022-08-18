@@ -138,7 +138,7 @@ export class SidenavComponent implements OnInit {
     this.contextService.user$.subscribe((user) => {
       this.sidenavTopSections = [
         this.dashboard,
-        this.templatesSection,
+        //this.templatesSection,
         //this.notifications,
       ];
       this.sidenavBottomSections = [

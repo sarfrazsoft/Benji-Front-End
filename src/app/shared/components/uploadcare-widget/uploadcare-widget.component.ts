@@ -327,10 +327,10 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
           const elem = deviceSelector;
           const elCount = elem.childElementCount;
           elem.remove();
-          if (elCount > 1) {
+          // if (elCount > 1) {
             const container = document.getElementsByClassName('uploadcare--camera__video-container')[0];
             container.appendChild(elem);
-          }
+          // }
         });
       },
       () => {

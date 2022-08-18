@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
@@ -30,7 +30,7 @@ export class SessionSettingsDialogComponent implements OnInit {
   selectedImage: Blob;
   imageUrl: string;
   selectedImageName: string;
-  
+
   hostLocation = window.location.host;
 
   constructor(
@@ -52,7 +52,9 @@ export class SessionSettingsDialogComponent implements OnInit {
     this.createSession = this.data.createSession;
 
     if (this.data.lessonImage || this.data.imageUrl) {
-      this.coverPhoto = this.data.lessonImage? this.hostLocation + this.data.lessonImage : this.data.imageUrl;
+      this.coverPhoto = this.data.lessonImage
+        ? this.hostLocation + this.data.lessonImage
+        : this.data.imageUrl;
     }
   }
 
@@ -94,11 +96,12 @@ export class SessionSettingsDialogComponent implements OnInit {
           catchError((error) => error)
         )
         .subscribe((res: Lesson) => {
+          console.log(res);
           this.dialogRef.close(l);
         });
     }
   }
-  
+
   openImagePickerDialog() {
     this.imageDialogRef = this.matDialog
       .open(ImagePickerDialogComponent, {
@@ -118,18 +121,18 @@ export class SessionSettingsDialogComponent implements OnInit {
             };
             reader.readAsDataURL(file);
             this.utilsService
-            .resizeImage({
-              file: file,
-              maxSize: 1500,
-            })
-            .then((resizedImage: Blob) => {
-              this.selectedImage = resizedImage;
-              this.selectedImageName = file.name;
-              this.imageUrl = null;
-            })
-            .catch(function (err) {
-              console.error(err);
-            });
+              .resizeImage({
+                file: file,
+                maxSize: 1500,
+              })
+              .then((resizedImage: Blob) => {
+                this.selectedImage = resizedImage;
+                this.selectedImageName = file.name;
+                this.imageUrl = null;
+              })
+              .catch(function (err) {
+                console.error(err);
+              });
           } else if (res.type === 'unsplash') {
             this.coverPhoto = res.data;
             this.imageUrl = res.data;
@@ -148,5 +151,4 @@ export class SessionSettingsDialogComponent implements OnInit {
     this.data.lessonImage = null;
     this.data.imageUrl = null;
   }
-
 }
