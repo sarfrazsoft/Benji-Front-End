@@ -11,19 +11,9 @@
     <img src="/assets/img/idea-creation/arrow-left.svg"> 
     <span>Back</span>
   </div>
+
   <div class="image-area" fxLayoutAlign="center center">
-    <!-- <div 
-      class="opnClose"
-      [@openClose]="uploadPanelExpanded && !data.isMobile ? 'open' : 'closed' "
-      [@openupClosedown]="uploadPanelExpanded && data.isMobile ? 'openUp' : 'closeDown' "
-      > -->
     <div class="opnClose" *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video && !webcamImage">
-      <!-- <div 
-        class="select-image" 
-        [@flyInOut]="uploadPanelExpanded && !data.isMobile ? 'in' : 'out' " 
-        [@flyUpDown]="uploadPanelExpanded && data.isMobile ? 'up' : 'down' " 
-        *ngIf="!imageSelected && !pdfSelected && uploadPanelExpanded && !video">
-        > -->
       <div class="select-image">
         <div class="attachments" fxLayout="column" fxLayoutAlign="center center">
           <div [ngStyle]="{'display': !mediaUploading ? 'block' : 'none' }">
@@ -148,8 +138,9 @@
       </ng-container>
 
       <ng-container *ngIf="iframeData">
-        <div style="width: 100%;">
-          <p bind-innerHTML="iframeData.iframeHTML | safeHtml"></p>
+        <img src="/assets/img/white_background.jpg" style="opacity: 0;" alt="">
+        <div class="idea-detailed-iframely">
+          <div bind-innerHTML="iframeData.iframeHTML | safeHtml"></div>
         </div>
       </ng-container>
 
