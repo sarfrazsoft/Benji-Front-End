@@ -203,8 +203,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         }
       }
       this.facilitatorConnected = true;
-      this.serverMessage = msg.updatemessage;
-      this.serverMessage.eventType = msg.eventtype;
+
+      // this.serverMessage = msg.updatemessage;
+      // this.serverMessage.eventType = msg.eventtype;
+
+      this.serverMessage = {
+        ...msg.updatemessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;

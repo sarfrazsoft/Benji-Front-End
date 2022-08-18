@@ -34,6 +34,7 @@ export interface UpdateMessage {
   lesson_run: LessonRun;
   running_tools: RunningTools;
   eventType: string;
+  isHost: boolean;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
   buildapitchactivity?: BuildAPitchActivity;

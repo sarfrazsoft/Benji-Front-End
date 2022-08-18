@@ -82,7 +82,6 @@ export class CategorizedComponent implements OnInit, OnChanges {
 
   columns = [];
   cycle = 'first';
-  isAdmin = false;
   secondRunAllowed = true;
 
   public masonryOptions: NgxMasonryOptions = {
@@ -108,6 +107,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges($event: SimpleChanges) {
+    // console.log($event);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
       console.log(this.columns);
@@ -219,58 +219,56 @@ export class CategorizedComponent implements OnInit, OnChanges {
           // host just turned off meeting mode.
           // do nothing
         }
-      } else if (this.eventType === 'SetMetaDataBoardEvent' && this.secondRunAllowed) {
-        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-          if (val) {
-            if (this.board.meta.updated === 'post_order') {
-              const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.post_order;
-              this.columns.forEach((column: Category) => {
-                if (column.id.toString() === colsIdeaOrderInfo.container) {
-                  moveItemInArray(
-                    column.brainstormidea_set,
-                    colsIdeaOrderInfo.previousIndex,
-                    colsIdeaOrderInfo.currentIndex
-                  );
-                }
-              });
+      } else if (this.eventType === 'SetMetaDataBoardEvent') {
+        if (!this.isHost) {
+          if (this.board.meta.updated === 'post_order') {
+            const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.post_order;
+            this.columns.forEach((column: Category) => {
+              if (column.id.toString() === colsIdeaOrderInfo.container) {
+                moveItemInArray(
+                  column.brainstormidea_set,
+                  colsIdeaOrderInfo.previousIndex,
+                  colsIdeaOrderInfo.currentIndex
+                );
+              }
+            });
 
-              // this.postLayoutService.itemMovedByTheHost(
-              //   this.grid,
-              //   this.board.meta.post_order as Array<PostOrder>
-              // );
-            } else if (this.board.meta.updated === 'category_changed') {
-              // let container;
-              // let previousContainer;
-              const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo = this.board.meta.post_order;
-              console.log(colsIdeaOrderInfo);
-              // this.columns.forEach((column: Category) => {
-              //   if (column.id.toString() === colsIdeaOrderInfo.container) {
-              //     container = column;
-              //   }
-              //   if (column.id.toString() === colsIdeaOrderInfo.previousContainer) {
-              //     previousContainer = column;
-              //   }
-              // });
-              // console.log(
-              //   previousContainer.brainstormidea_set,
-              //   container.brainstormidea_set,
-              //   colsIdeaOrderInfo.previousIndex,
-              //   colsIdeaOrderInfo.currentIndex
-              // );
+            // this.postLayoutService.itemMovedByTheHost(
+            //   this.grid,
+            //   this.board.meta.post_order as Array<PostOrder>
+            // );
+          } else if (this.board.meta.updated === 'category_changed') {
+            let container;
+            let previousContainer;
+            const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo = this.board.meta.post_order;
+            // console.log(colsIdeaOrderInfo);
+            this.columns.forEach((column: Category) => {
+              if (column.id.toString() === colsIdeaOrderInfo.container) {
+                container = column;
+              }
+              if (column.id.toString() === colsIdeaOrderInfo.previousContainer) {
+                previousContainer = column;
+              }
+            });
+            // console.log(
+            //   previousContainer.brainstormidea_set,
+            //   container.brainstormidea_set,
+            //   colsIdeaOrderInfo.previousIndex,
+            //   colsIdeaOrderInfo.currentIndex
+            // );
 
-              // transferArrayItem(
-              //   previousContainer.brainstormidea_set,
-              //   container.brainstormidea_set,
-              //   colsIdeaOrderInfo.previousIndex,
-              //   colsIdeaOrderInfo.currentIndex
-              // );
-            }
-            // this.secondRunAllowed = false;
-            // setTimeout(() => {
-            //   this.secondRunAllowed = true;
-            // }, 1000);
+            transferArrayItem(
+              previousContainer.brainstormidea_set,
+              container.brainstormidea_set,
+              colsIdeaOrderInfo.previousIndex,
+              colsIdeaOrderInfo.currentIndex
+            );
           }
-        });
+          // this.secondRunAllowed = false;
+          // setTimeout(() => {
+          //   this.secondRunAllowed = true;
+          // }, 1000);
+        }
       }
     }
   }
@@ -364,53 +362,53 @@ export class CategorizedComponent implements OnInit, OnChanges {
   }
 
   drop(event: CdkDragDrop<Idea[]>) {
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        if (event.previousContainer === event.container) {
-          if (event.previousIndex === event.currentIndex) {
-            return;
-          }
-          const category = event.container.element.nativeElement.getAttribute('columnId');
-          const ideasOrder: ColsIdeaOrderInfo = {
-            container: category,
-            previousIndex: event.previousIndex,
-            currentIndex: event.currentIndex,
-          };
-          this.sendMessage.emit(
-            new SetMetaDataBoardEvent(this.board.id, {
-              updated: 'post_order',
-              post_order: ideasOrder,
-              ...this.board.meta,
-            })
-          );
-          moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        } else {
-          const category = event.container.element.nativeElement.getAttribute('columnId');
-          const previousCategory = event.previousContainer.element.nativeElement.getAttribute('columnId');
-
-          const ideasOrder: ColsCategoryChangeIdeaOrderInfo = {
-            container: category,
-            previousContainer: previousCategory,
-            previousIndex: event.previousIndex,
-            currentIndex: event.currentIndex,
-          };
-          this.sendMessage.emit(
-            new SetMetaDataBoardEvent(this.board.id, {
-              ...this.board.meta,
-              updated: 'category_changed',
-              post_order: ideasOrder,
-            })
-          );
-          transferArrayItem(
-            event.previousContainer.data,
-            event.container.data,
-            event.previousIndex,
-            event.currentIndex
-          );
-          this.sendCategorizeEvent(event);
+    // this.permissionsService.hasPermission('ADMIN').then((val) => {
+    if (this.isHost) {
+      if (event.previousContainer === event.container) {
+        if (event.previousIndex === event.currentIndex) {
+          return;
         }
+        const category = event.container.element.nativeElement.getAttribute('columnId');
+        const ideasOrder: ColsIdeaOrderInfo = {
+          container: category,
+          previousIndex: event.previousIndex,
+          currentIndex: event.currentIndex,
+        };
+        this.sendMessage.emit(
+          new SetMetaDataBoardEvent(this.board.id, {
+            ...this.board.meta,
+            updated: 'post_order',
+            post_order: ideasOrder,
+          })
+        );
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      } else {
+        const category = event.container.element.nativeElement.getAttribute('columnId');
+        const previousCategory = event.previousContainer.element.nativeElement.getAttribute('columnId');
+
+        const ideasOrder: ColsCategoryChangeIdeaOrderInfo = {
+          container: category,
+          previousContainer: previousCategory,
+          previousIndex: event.previousIndex,
+          currentIndex: event.currentIndex,
+        };
+        this.sendMessage.emit(
+          new SetMetaDataBoardEvent(this.board.id, {
+            ...this.board.meta,
+            updated: 'category_changed',
+            post_order: ideasOrder,
+          })
+        );
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        );
+        // this.sendCategorizeEvent(event);
       }
-    });
+    }
+    // });
   }
 
   sendCategorizeEvent(event: CdkDragDrop<Idea[]>) {

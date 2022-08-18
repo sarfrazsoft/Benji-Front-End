@@ -70,6 +70,7 @@ import { isSet } from 'src/app/shared/util/value';
 export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   @Input() board: Board;
   @Input() activityState: UpdateMessage;
+  @Input() isHost: boolean;
   @Input() eventType;
   @Input() boardMode: BoardMode;
 
@@ -112,7 +113,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
-  isHost: boolean;
   private typingTimer;
 
   @ViewChild('brainstormHeadWrapper') elementView: ElementRef;
@@ -135,40 +135,34 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.act = this.activityState.brainstormactivity;
 
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.participantCode = this.participantCode;
-        this.isHost = false;
-        if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
-          this.initParticipantGrouping(this.act);
-        }
+    if (!this.isHost) {
+      this.participantCode = this.participantCode;
+      if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
+        this.initParticipantGrouping(this.act);
       }
-    });
+    }
 
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        if (this.eventType === 'AssignGroupingToActivities') {
-        }
-        this.isHost = true;
-        this.applyGroupingOnActivity(this.activityState);
-        this.classificationTypes = [
-          {
-            type: 'everyone',
-            title: 'Everyone',
-            description: `Display everyone's work`,
-            imgUrl: '/assets/img/brainstorm/everyone.svg',
-          },
-          {
-            type: 'groups',
-            title: 'Groups',
-            description: `Display group's work`,
-            imgUrl: '/assets/img/brainstorm/groups.svg',
-          },
-          // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
-          // imgUrl: '/assets/img/brainstorm/individuals.svg' },
-        ];
+    if (this.isHost) {
+      if (this.eventType === 'AssignGroupingToActivities') {
       }
-    });
+      this.applyGroupingOnActivity(this.activityState);
+      this.classificationTypes = [
+        {
+          type: 'everyone',
+          title: 'Everyone',
+          description: `Display everyone's work`,
+          imgUrl: '/assets/img/brainstorm/everyone.svg',
+        },
+        {
+          type: 'groups',
+          title: 'Groups',
+          description: `Display group's work`,
+          imgUrl: '/assets/img/brainstorm/groups.svg',
+        },
+        // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
+        // imgUrl: '/assets/img/brainstorm/individuals.svg' },
+      ];
+    }
 
     this.onChanges();
 
@@ -255,6 +249,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   onChanges() {
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
+    console.log(this.act);
     if (this.elementView && this.elementView.nativeElement) {
       this.headWrapperHeight = this.elementView.nativeElement.offsetHeight + 49;
     }
@@ -268,27 +263,27 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       // this.headWrapperHeight = this.elementView.nativeElement.offsetHeight;
     } else {
       // populate groupings dropdown
-      if (
-        this.board &&
-        this.board.board_activity.grouping &&
-        this.board.board_activity.grouping.groups.length
-      ) {
-        this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-          if (val) {
-            this.initParticipantGrouping(this.act);
-          }
-        });
-        this.permissionsService.hasPermission('ADMIN').then((val) => {
-          if (val) {
-            this.participantGroups = this.board.board_activity.grouping.groups;
-          }
-        });
-      } else {
-        // grouping is null in activity
-        if (this.eventType === 'AssignGroupingToActivities') {
-          this.applyGroupingOnActivity(this.activityState);
-        }
-      }
+      // if (
+      //   this.board &&
+      //   this.board.board_activity.grouping &&
+      //   this.board.board_activity.grouping.groups.length
+      // ) {
+      //   this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      //     if (val) {
+      //       this.initParticipantGrouping(this.act);
+      //     }
+      //   });
+      //   this.permissionsService.hasPermission('ADMIN').then((val) => {
+      //     if (val) {
+      //       this.participantGroups = this.board.board_activity.grouping.groups;
+      //     }
+      //   });
+      // } else {
+      //   // grouping is null in activity
+      //   if (this.eventType === 'AssignGroupingToActivities') {
+      //     this.applyGroupingOnActivity(this.activityState);
+      //   }
+      // }
 
       const sm = this.activityState;
       if (sm && sm.running_tools && sm.running_tools.grouping_tool) {

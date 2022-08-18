@@ -104,6 +104,7 @@ export class MainScreenBrainstormingActivityComponent
   selectedBoardIndex = 0;
   selectedBoard: Board;
   boardMode: BoardMode;
+  isHost: boolean;
 
   participant_set = [];
 
@@ -155,6 +156,8 @@ export class MainScreenBrainstormingActivityComponent
 
   onChanges() {
     this.eventType = this.getEventType();
+    this.isHost = this.activityState.isHost;
+    console.log(this.eventType);
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (
@@ -275,23 +278,18 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   selectUserBoard() {
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.selectedBoard = this.getAdminBoard();
+    if (this.isHost) {
+      this.selectedBoard = this.getAdminBoard();
+      this.brainstormService.selectedBoard = this.selectedBoard;
+      this.boardChangingQueryParams(this.selectedBoard.id);
+    } else {
+      const selectedBoard = this.getParticipantBoard();
+      if (selectedBoard) {
+        this.selectedBoard = selectedBoard;
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
       }
-    });
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        const selectedBoard = this.getParticipantBoard();
-        if (selectedBoard) {
-          this.selectedBoard = selectedBoard;
-          this.brainstormService.selectedBoard = this.selectedBoard;
-          this.boardChangingQueryParams(this.selectedBoard.id);
-        }
-      }
-    });
+    }
   }
 
   changeBoardToParamsBoard(paramBoardId) {

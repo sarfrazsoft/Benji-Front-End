@@ -106,7 +106,7 @@ export class BrainstormService {
         category.brainstormidea_set.forEach((idea) => {
           idea = { ...idea, showClose: false, editing: false, addingIdea: false };
         });
-        category.brainstormidea_set.filter((idea) => !idea.removed);
+        category.brainstormidea_set = category.brainstormidea_set.filter((idea) => !idea.removed);
       } else {
         // Editor preview panel
       }
