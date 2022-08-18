@@ -16,8 +16,7 @@ export class ConfirmationDialogComponent implements OnInit {
   public confirmationTitle: string;
   public confirmationMessage: string;
   public actionButton: string;
-  public actionButton: string;
-  public cancelButton2: string;
+  public cancelButton: string;
 
   constructor(
     private dialogRef: MatDialogRef<ConfirmationDialogComponent>,
