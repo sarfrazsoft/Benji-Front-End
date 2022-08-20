@@ -120,6 +120,12 @@ export class BrainstormService {
   sortIdeas(board: Board, columns) {
     if (board.sort === 'unsorted') {
       // do nothing
+      for (let i = 0; i < columns.length; i++) {
+        const col = columns[i];
+        col.brainstormidea_set = col.brainstormidea_set.sort((a: Idea, b: Idea) => {
+          return a.pinned === b.pinned ? 0 : a.pinned ? -1 : 1;
+        });
+      }
       return columns;
     } else {
       for (let i = 0; i < columns.length; i++) {
@@ -314,7 +320,7 @@ export class BrainstormService {
     return existingCategories;
   }
 
-  updateIdeasPin(act: Board, existingCategories) {
+  updateIdeasPin(act: Board, existingCategories, callback?) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -344,6 +350,9 @@ export class BrainstormService {
         });
       }
     });
+    if (callback) {
+      callback();
+    }
   }
 
   // Uncategorized
