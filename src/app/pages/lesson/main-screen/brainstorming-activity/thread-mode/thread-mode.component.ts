@@ -234,7 +234,8 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
             if (val) {
               this.postLayoutService.itemMovedByTheHost(
                 this.grid,
-                this.board.meta.post_order as Array<PostOrder>
+                this.board.meta.post_order as Array<PostOrder>,
+                this.board.id
               );
             }
           });

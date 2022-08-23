@@ -394,7 +394,6 @@ benji-ms-brainstorming-activity {
         align-content: flex-start;
         flex-direction: row;
         padding-left: 0;
-        min-height: 40px;
       }
     }
 
@@ -1514,11 +1513,12 @@ pdf-bookmark {
   display: none;
 }
 
-
+.benji-muuri-grid-container {
+  padding: 8px;
+}
 .benji-muuri-grid {
   // muuri grid needs relative position
   position: relative;
-  
 }
 
 benji-columns-ideas {

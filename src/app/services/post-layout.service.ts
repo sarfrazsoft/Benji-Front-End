@@ -8,6 +8,7 @@ import {
   Board,
   BoardSort,
   BoardStatus,
+  BrainstormBoardSortOrderEvent,
   SetMetaDataBoardEvent,
   TopicMedia,
   UpdateMessage,
@@ -71,6 +72,11 @@ export class PostLayoutService {
           order: i.toString(),
         });
       });
+      // if (board.sort !== 'unsorted') {
+      //   setTimeout(() => {
+      //     this.sendMessage$.next(new BrainstormBoardSortOrderEvent('unsorted', board_id));
+      //   }, 1000);
+      // }
       this.sendMessage$.next(
         new SetMetaDataBoardEvent(board_id, {
           ...board.meta,
@@ -131,7 +137,7 @@ export class PostLayoutService {
     });
   }
 
-  itemMovedByTheHost(grid: Grid, postOrder: Array<PostOrder>) {
+  itemMovedByTheHost(grid: Grid, postOrder: Array<PostOrder>, boardId: number) {
     const unsortedGridItems = grid.getItems();
     const sortOrder: Array<PostOrder> = postOrder;
     const sortedArray = [];
@@ -142,7 +148,6 @@ export class PostLayoutService {
         }
       });
     });
-    console.log(sortedArray);
     grid.sort(sortedArray);
   }
 }

@@ -1,35 +1,38 @@
-<div
-  #grid 
-  muuriGrid
-  (gridCreated)="onGridCreated($event)"
-  [config]="layoutConfig" 
-  class="uncategorized benji-muuri-grid" 
-  *ngIf="showItems">
-  <div 
-    *ngFor="let idea of ideas; let i = index" 
-    class="uncategorized-idea grid-item"
-    muuriGridItem 
-    style="padding: 20px;position: absolute;" 
-    [attr.order]="i" 
-    [id]="idea.id"
-    [attr.time]="idea.time"
-    [attr.hearts]="idea.hearts.length"
-    [attr.pin]="idea.pinned ? '0' : '1'">
-    <benji-brainstorm-card
-      [board]="board"
-      [item]="idea"
-      [act]="act"
-      [activityState]="activityState"
-      [showUserName]="showUserName"
-      [participantCode]="participantCode"
-      (deleteIdea)="delete($event)"
-      (commentEdited)="refreshGridLayout()"
-      [sendMessage]="sendMessage"
-      [isColumnsLayout]="isColumnsLayout"
-      [myGroup]="myGroup"
-      [avatarSize]="'small'">
-    </benji-brainstorm-card>
+<div class="benji-muuri-grid-container">
+
+  <div
+    #grid 
+    muuriGrid
+    (gridCreated)="onGridCreated($event)"
+    [config]="layoutConfig" 
+    class="uncategorized benji-muuri-grid" 
+    *ngIf="showItems">
+    <div 
+      *ngFor="let idea of ideas; let i = index" 
+      class="uncategorized-idea grid-item"
+      muuriGridItem 
+      style="position: absolute; padding: 8px;" 
+      [attr.order]="i" 
+      [id]="idea.id"
+      [attr.time]="idea.time"
+      [attr.hearts]="idea.hearts.length"
+      [attr.pin]="idea.pinned ? '0' : '1'">
+      <benji-brainstorm-card
+        [board]="board"
+        [item]="idea"
+        [act]="act"
+        [activityState]="activityState"
+        [showUserName]="showUserName"
+        [participantCode]="participantCode"
+        (deleteIdea)="delete($event)"
+        (commentEdited)="refreshGridLayout()"
+        [sendMessage]="sendMessage"
+        [isColumnsLayout]="isColumnsLayout"
+        [myGroup]="myGroup"
+        [avatarSize]="'small'">
+      </benji-brainstorm-card>
+    </div>
   </div>
-</div>
+</div> 
 
   

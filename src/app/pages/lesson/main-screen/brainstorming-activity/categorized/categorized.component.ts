@@ -353,6 +353,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
         if (event.previousIndex === event.currentIndex) {
           return;
         }
+        if (this.board.sort !== 'unsorted') {
+          return;
+        }
         const category = event.container.element.nativeElement.getAttribute('columnId');
         const ideasOrder: ColsIdeaOrderInfo = {
           container: category,

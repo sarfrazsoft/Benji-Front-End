@@ -113,7 +113,6 @@
           ></benji-profile-pictures>
           <div class="name">
             {{ getPersonName(item) }}
-            {{ item.id }}
           </div>
           <div class="time-stamp"><span>&#183;</span>{{timeStamp}}</div>
         </div> 
@@ -140,7 +139,9 @@
         class="pin" 
         src="/assets/img/idea-creation/blue-pin.svg"
         [ngClass]="{'move-left': item.showClose && userRole === 'owner' && !item.idea_image && !item.idea_video }">
-        <div 
+        <div
+          benji-click-stop-propagation
+          (click)="delete(item.id)"
           class="delete-icon" 
           fxLayoutAlign="center center"
           *ngIf="userRole === 'owner'" 
