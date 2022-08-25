@@ -8,6 +8,7 @@ import { Timer } from './backend/schema';
 import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
+export type SideNavAction = 'opened' | 'closed';
 @Injectable()
 export class ContextService {
   constructor(private http: HttpClient, private router: Router) {}
@@ -57,12 +58,23 @@ export class ContextService {
   set showTimerSubject(activityTimer: boolean) {
     this.showTimerSubject$.next(activityTimer);
   }
+
   get showTimerSubject(): boolean {
     return this.showTimerSubject$.getValue();
   }
+
+  set sideNavAction(v: SideNavAction) {
+    this.sideNavAction$.next(v);
+  }
+
+  get sideNavAction(): SideNavAction {
+    return this.sideNavAction$.getValue();
+  }
+
   public set participant(v: Participant) {
     this.p = v;
   }
+
   public get particiapnt(): Participant {
     return this.p;
   }
@@ -101,6 +113,11 @@ export class ContextService {
    * Activity timer
    */
   showTimerSubject$ = new BehaviorSubject<boolean>(null);
+
+  /**
+   * Activity timer
+   */
+  sideNavAction$ = new BehaviorSubject<SideNavAction>(null);
 
   /**
    * participant

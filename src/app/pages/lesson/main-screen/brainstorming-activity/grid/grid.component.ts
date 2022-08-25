@@ -14,7 +14,7 @@ import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { BrainstormService } from 'src/app/services';
+import { BrainstormService, ContextService } from 'src/app/services';
 import {
   Board,
   BoardSort,
@@ -22,6 +22,7 @@ import {
   Idea,
   SetMetaDataBoardEvent,
 } from 'src/app/services/backend/schema';
+import { SideNavAction } from 'src/app/services/context.service';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
 import { environment } from 'src/environments/environment';
 declare var Packery: any;
@@ -66,7 +67,8 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService,
-    private postLayoutService: PostLayoutService
+    private postLayoutService: PostLayoutService,
+    private contextService: ContextService
   ) {
     this.layoutConfig = this.postLayoutService.getLayoutConfig();
     this.layoutConfig.items = this.ideas;
@@ -78,6 +80,14 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
     this.postLayoutService.sendMessage$.subscribe((v) => {
       if (v) {
         this.sendMessage.emit(v);
+      }
+    });
+
+    this.contextService.sideNavAction$.subscribe((v: SideNavAction) => {
+      if (v === 'closed') {
+        this.refreshGridLayout();
+      } else if (v === 'opened') {
+        this.refreshGridLayout();
       }
     });
   }

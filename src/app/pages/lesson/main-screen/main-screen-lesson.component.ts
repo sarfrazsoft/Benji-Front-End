@@ -1,5 +1,13 @@
 import { viewClassName } from '@angular/compiler';
-import { AfterViewInit, ChangeDetectorRef, Component, HostListener, OnChanges, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -88,13 +96,13 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   ngAfterViewInit() {
     this.innerWidth = window.innerWidth;
   }
-  
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.innerWidth = event.target.innerWidth; 
-    this.innerWidth < 848 && this.navType === 'boards' ? 
-      this.sideNavMode = 'over' : 
-      this.sideNavMode = 'side'; 
+    this.innerWidth = event.target.innerWidth;
+    this.innerWidth < 848 && this.navType === 'boards'
+      ? (this.sideNavMode = 'over')
+      : (this.sideNavMode = 'side');
   }
 
   isPaused() {
@@ -103,11 +111,11 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   }
 
   openSettingsMenu() {
-      this.navType = 'board-settings';
-      this.sideNavPosition = 'end';
-      this.sideNavMode = 'over';
-      this.sidenav.open();
-      this.boardsMenuClosed = true;
+    this.navType = 'board-settings';
+    this.sideNavPosition = 'end';
+    this.sideNavMode = 'over';
+    this.sidenav.open();
+    this.boardsMenuClosed = true;
   }
 
   openBoardSettings() {
@@ -124,12 +132,17 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   toggleBoardsMenu() {
     this.navType = 'boards';
     this.sideNavPosition = 'start';
-    this.innerWidth < 848 ?
-      this.sideNavMode = 'over' :
-      this.sideNavMode = 'side';
-    const result = this.sidenav.toggle().then(val => {
-      this.boardsMenuClosed = val == 'open' ? false : true;
+    this.innerWidth < 848 ? (this.sideNavMode = 'over') : (this.sideNavMode = 'side');
+    const result = this.sidenav.toggle().then((val) => {
+      this.boardsMenuClosed = val === 'open' ? false : true;
     });
   }
 
+  sideNavOpenedStart(): void {
+    this.contextService.sideNavAction = 'opened';
+  }
+
+  sideNavClosedStart(): void {
+    this.contextService.sideNavAction = 'closed';
+  }
 }

@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     let color = '#555BEA';
     let favicon;
+    this.title.setTitle('Benji');
 
     this.contextService.brandingInfo$.subscribe((branding: Branding) => {
       if (branding) {
