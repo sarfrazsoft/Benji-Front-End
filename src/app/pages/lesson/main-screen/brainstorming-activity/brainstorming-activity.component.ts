@@ -39,7 +39,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -277,18 +278,23 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   selectUserBoard() {
-    if (this.isHost) {
-      this.selectedBoard = this.getAdminBoard();
-      this.brainstormService.selectedBoard = this.selectedBoard;
-      this.boardChangingQueryParams(this.selectedBoard.id);
-    } else {
-      const selectedBoard = this.getParticipantBoard();
-      if (selectedBoard) {
-        this.selectedBoard = selectedBoard;
+    this.permissionsService.hasPermission('ADMIN').then((val) => {
+      if (val) {
+        this.selectedBoard = this.getAdminBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
       }
-    }
+    });
+    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+      if (val) {
+        const selectedBoard = this.getParticipantBoard();
+        if (selectedBoard) {
+          this.selectedBoard = selectedBoard;
+          this.brainstormService.selectedBoard = this.selectedBoard;
+          this.boardChangingQueryParams(this.selectedBoard.id);
+        }
+      }
+    });
   }
 
   changeBoardToParamsBoard(paramBoardId) {

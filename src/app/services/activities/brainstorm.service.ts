@@ -420,7 +420,7 @@ export class BrainstormService {
         remove(existingIdea.hearts, (idea: any) => idea.id === myDifferences[0].id);
       }
     });
-    // callback(newIdeas);
+    // callback(existingIdeas);
   }
 
   uncategorizedIdeaEdited(board, existingIdeas: Array<Idea>) {
