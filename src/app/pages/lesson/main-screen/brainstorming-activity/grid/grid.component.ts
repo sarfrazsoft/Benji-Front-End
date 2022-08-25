@@ -108,6 +108,7 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
       } else if (this.eventType === 'BrainstormSubmitEvent') {
         this.brainstormService.uncategorizedAddIdea(this.board, this.ideas, () => {
           this.ideas = this.brainstormService.uncategorizedSortIdeas(this.board, this.ideas);
+          this.postLayoutService.sortGrid(this.board.sort, this.grid);
           this.postLayoutService.refreshGridLayout(this.grid, false);
         });
       } else if (

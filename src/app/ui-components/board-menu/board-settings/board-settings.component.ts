@@ -173,6 +173,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       }
     }
     this.hostBoard = this.activityState.brainstormactivity.host_board;
+    this.decideBoardMode(this.boardMode);
   }
 
   initializeBoards() {
