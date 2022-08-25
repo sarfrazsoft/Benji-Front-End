@@ -877,8 +877,8 @@ benji-ps-brainstorming-activity {
   }
   .brainstorm-header {
     padding: 24px 32px;
-    width: 100vw;
     max-width: 1200px;
+    margin: 0 auto;
     .instructions {
       width: 100%;
       .prose {
@@ -985,7 +985,7 @@ benji-ps-brainstorming-activity {
 
 @media (max-width: 1280px) {
   .brainstorm-main .brainstorm-header {
-    width: 100vw;
+    // width: 100vw;
     .sub-header {
       margin-top: 8px;
     }

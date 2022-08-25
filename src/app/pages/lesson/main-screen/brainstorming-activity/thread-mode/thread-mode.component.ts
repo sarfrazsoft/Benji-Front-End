@@ -177,6 +177,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
       ) {
         this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {});
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
         this.eventType === 'BrainstormClearBoardIdeaEvent'
