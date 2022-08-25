@@ -489,7 +489,7 @@ ng-dropdown-panel.groups-controls {
   }
 }
 
-.session-settings-dialog {
+.session-settings-dialog, .new-folder-dialog, .move-to-folder-dialog {
   .mat-dialog-container {
     border-radius: 16px;
     padding: 40px;
@@ -531,7 +531,7 @@ ng-dropdown-panel.groups-controls {
     .heading {
       color: #37352f;
       font-size: 24px;
-      font-weight: 500;
+      font-weight: 600;
     }
     .close-button {
       .mat-icon {
@@ -595,6 +595,70 @@ ng-dropdown-panel.groups-controls {
         background: #f3f4f7;
       }
     }
+  }
+}
+
+.new-folder-dialog, .move-to-folder-dialog {
+  position: relative !important;
+  .close-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+  }
+  .mat-dialog-container {
+    width: 440px;
+  }
+  .create-session .edit .not-editing {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 20px;
+    line-height: unset; 
+  }
+}
+
+.move-to-folder-dialog {
+  .heading {
+    margin-bottom: 24px;
+  }
+  .edit {
+    .folder-name {
+      height: 40px;
+      padding: 0px 24px;
+      border-radius: 8px;
+      &.move-to {
+        margin-top: 4px;
+        &:hover, &.selected {
+          background: #F1F2F6;
+          cursor: pointer;
+        }
+        span {  
+          width: 320px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      } 
+        
+    }
+    .title {
+      margin: 12px 0px;
+    }
+    &.options {
+      margin-bottom: 24px;
+    }
+  }
+  .controls-container {
+    .dialog-controls {
+      height: 40px;
+      padding: unset;
+      &.move-button {
+        margin-right: 8px;
+      }
+    }
+  }
+  .edit-new-folder {
+    margin-top: 4px;
+    height: 40px;
+    padding: 0px 24px !important;
   }
 }
 

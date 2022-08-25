@@ -20,7 +20,7 @@ const routes: Routes = [
     resolve: {
       dashData: AdminResolver,
     },
-    runGuardsAndResolvers: 'always',
+    runGuardsAndResolvers: 'paramsChange',
     children: [
       {
         path: '',
@@ -64,7 +64,7 @@ const routes: Routes = [
       {
         path: 'account/password',
         component: ResetPasswordComponent,
-      },
+      }
     ],
   },
 ];

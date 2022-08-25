@@ -5,18 +5,50 @@
         <img [src]="logo" alt="Benji Logo" />
       </div>
       <div class="nav-section" *ngFor="let section of sidenavTopSections">
-        <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
+        <benji-sidenav-item 
+          *ngFor="let item of section.items" 
+          [sidenavItem]="item"
+          (navItemClickedEvent)="removePostQueryParam()">
+        </benji-sidenav-item>
       </div>
-      <!-- <div class="folders">
+      <div class="folders">
         <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
           <div class="title">Folders</div>
-          <img class="add" src="../../assets/img/dashboard/plus.svg" alt="">
+          <img 
+            class="add" 
+            src="../../assets/img/dashboard/plus.svg"
+            (click)="newFolder(true)">
         </div>
-        <div class="folder" fxLayoutGap="7px" fxLayout="row">
-          <img class="icon" src="../../assets/img/dashboard/folder.svg" alt="">
-          <div class="name">Passport Inc. </div>
-        </div>
-      </div> -->
+        <ng-container *ngFor="let folder of folders">
+          <div 
+            class="folder"
+            [ngClass]="{'selected': selectedFolderId === folder.id}"
+            (click)="selectFolder(folder.id)"
+            fxLayoutAlign="space-between">
+            <div fxLayoutGap="7px" fxLayout="row" fxLayoutAlign="start center">
+              <img class="icon" src="../../assets/img/dashboard/folder.svg">
+              <div class="name">{{ folder.name }}</div>
+            </div>
+            <img 
+              class="nav" 
+              src="../../assets/img/side-nav/three-dots.svg"
+              [matMenuTriggerFor]="menu"
+              [matMenuTriggerData]="{id: folder.id}">
+          </div>
+        </ng-container>
+        <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+          <ng-template matMenuContent let-id="id">
+            <button mat-menu-item (click)="newFolder(false, id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
+              <span>Rename</span>
+            </button>
+            <button mat-menu-item (click)="deleteFolder(id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+              <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+              <span>Delete</span>
+            </button>
+          </ng-template>
+        </mat-menu>
+      </div>
     </div>
     <div class="bottom-sections">
       <div class="nav-section" *ngFor="let section of sidenavBottomSections">

@@ -12,10 +12,12 @@ import { BackendRestService, ContextService } from 'src/app/services';
 import { TeamUser } from 'src/app/services/backend/schema';
 import { Lesson, LessonRunDetails, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { LessonGroupService } from 'src/app/services/lesson-group.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import {
   ConfirmationDialogComponent,
   DuplicateSessionDialogComponent,
+  MoveToFolderDialogComponent,
   SessionSettingsDialogComponent,
   TemplatesDialogComponent,
 } from 'src/app/shared';
@@ -41,6 +43,7 @@ export class LessonTileComponent implements OnInit {
   hostLocation = window.location.host;
   hostname = window.location.host + '/participant/join?link=';
   maxIdIndex: number;
+  folderLessonsIDs = [];
 
   constructor(
     private matDialog: MatDialog,
@@ -50,7 +53,8 @@ export class LessonTileComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private lessonGroupService: LessonGroupService,
   ) {}
 
   ngOnInit() {
@@ -181,7 +185,6 @@ export class LessonTileComponent implements OnInit {
                 this.http
                   .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
                   .subscribe((sessionCreationResponse: any) => {
-                    console.log(sessionCreationResponse);
                     if (sessionCreationResponse.detail) {
                       if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
                       } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
@@ -260,4 +263,43 @@ export class LessonTileComponent implements OnInit {
         }
       });
   }
+  
+  moveToFolder() {
+    this.matDialog
+      .open(MoveToFolderDialogComponent, {
+        panelClass: 'move-to-folder-dialog',
+      })
+      .afterClosed()
+      .subscribe((folder) => {
+        if (folder) {
+          this.lessonGroupService.getFolderDetails(folder.id)
+          .subscribe(
+            (folder) => {
+              const lessons = folder.lesson;
+              this.folderLessonsIDs = [];
+              lessons.forEach((lesson) => {
+                this.folderLessonsIDs.push(lesson.id);
+              });
+              this.folderLessonsIDs.push(this.lesson.id);
+              let request = folder.title ? 
+                              this.lessonGroupService.createNewFolder({title: folder.title, lessonId: this.lesson.id}) : 
+                              this.lessonGroupService.updateFolder({title: folder.name, lessons: this.folderLessonsIDs, id: folder.id});
+              request.subscribe(
+                (data) => {
+                  this.contextService.newFolderAdded = true;
+                  this.lessonGroupService.getAllFolders().subscribe(
+                    (data) => {
+                      //this.contextService.folders = data;
+                    },
+                    (error) => console.log(error)
+                  );
+                },
+                (error) => console.log(error)
+              );
+            }
+          );
+        }
+      });
+  }
+
 }

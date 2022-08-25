@@ -1,0 +1,46 @@
+<div class="build-session-dialog" fxLayout="column">
+  <mat-dialog-content class="create-session">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="24px">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <h2 class="heading">
+          {{ newFolder ? "New folder" : "Rename folder" }}
+        </h2>
+        <div class="close-button" fxLayoutAlign="end start">
+          <mat-icon class="close" matDialogClose>clear</mat-icon>
+        </div>
+      </div>
+      <div class="edit">
+        <div class="title">Title</div>
+        <input
+          id="title"
+          #title
+          class="not-editing"
+          (focus)="focusTitle = true"
+          (blur)="focusTitle = false"
+          [ngClass]="{'border-color-primary': focusTitle}"
+          required
+          type="text"
+          formControlName="title"
+          placeholder="Give your folder a title"
+          maxlength="80"
+        >
+      </div>
+      <div 
+        benji-click-stop-propagation 
+        class="controls-container" 
+        fxLayout="row" 
+        fxLayoutAlign="start" 
+        fxLayoutGap="8px">
+        <button
+          class="dialog-controls bg-primary-color white-color start-resume-buttons"
+          type="submit"
+        >
+          {{ newFolder ? "Create" : "Rename" }} 
+        </button>
+        <button class="dialog-controls cancel-button" matDialogClose>
+          Cancel
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</div>

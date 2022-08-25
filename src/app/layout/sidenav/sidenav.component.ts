@@ -1,17 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
 import { Branding, User } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-import { JoinSessionDialogComponent, LaunchSessionDialogComponent } from '../../shared';
+import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
-
 export interface SidenavSection {
   section: number;
   items: Array<SidenavItem>;
 }
-
+export interface Folder {
+  id: number;
+  lessons: Array<any>;
+  name: string;
+}
 @Component({
   selector: 'benji-menu',
   templateUrl: './sidenav.component.html',
@@ -22,6 +26,9 @@ export class SidenavComponent implements OnInit {
   courses;
   launchArrow = '';
   logo = '';
+  //folders: Array<Folder>;
+  folders: any = [];
+  selectedFolder: any;
 
   dashboard = {
     section: 1,
@@ -92,9 +99,11 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private route: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private lessonGroupService: LessonGroupService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -110,6 +119,19 @@ export class SidenavComponent implements OnInit {
         this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
+
+    this.contextService.selectedFolder$.subscribe((folder) => {
+      this.selectedFolder = folder;
+    });
+    
+    this.contextService.newFolderAdded$.subscribe((value) => {
+      if (value) {
+        this.getAllFolders();
+      }
+    });
+
+    this.getAllFolders();
+
   }
 
   launchSession(): void {
@@ -148,4 +170,77 @@ export class SidenavComponent implements OnInit {
       ];
     });
   }
+
+  getAllFolders() {
+    this.lessonGroupService.getAllFolders()
+    .subscribe(
+      (data) => {
+        this.folders = data;
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  newFolder(isNew: boolean, folderId: number) {
+    const folder = this.folders.filter(x => x.id === folderId);
+    this.dialog
+      .open(NewFolderDialogComponent, {
+        data: {
+          newFolder: isNew,
+          title: folder[0]?.name,
+        },
+        panelClass: 'new-folder-dialog',
+      })
+      .afterClosed()
+      .subscribe((folder) => {
+        if (folder) {
+          let request = isNew ? 
+                          this.lessonGroupService.createNewFolder(folder) : 
+                          this.lessonGroupService.updateFolder({title: folder.title, id: folderId});
+          request.subscribe(
+            (data) => {
+              this.getAllFolders();
+              //console.log(data);
+            },
+            (error) => console.log(error)
+          );
+        }
+      });
+  }
+
+  deleteFolder(id: number) {
+    this.lessonGroupService.deleteFolder(id)
+    .subscribe(
+      (data) => {
+        this.getAllFolders();
+      },
+      (error) => console.log(error)
+    );
+  }
+
+  removePostQueryParam() {
+    this.contextService.selectedFolder = null;
+    this.router.navigate(['/dashboard'], {
+      queryParams: {
+        folder: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  public folderChangingQueryParams(id: number) {
+    const command = this.router.routerState.snapshot.url.includes('account') ? ['/dashboard'] : [] ; 
+    this.router.navigate(command, {
+      relativeTo: null,
+      queryParams: { folder: id },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  selectFolder(id: number) {
+    this.selectedFolder = id;
+    this.folderChangingQueryParams(id);
+    this.contextService.selectedFolder = id;
+  }
+
 }

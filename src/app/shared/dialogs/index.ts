@@ -15,6 +15,8 @@ export * from './import-slides-dialog/import-slides.dialog';
 export * from './participant-grouping-dialog/participant-grouping.dialog';
 export * from './participant-grouping-info-dialog/participant-grouping-info.dialog';
 export * from './session-settings-dialog/session-settings.dialog';
+export * from './new-folder-dialog/new-folder.dialog';
+export * from './move-to-folder-dialog/move-to-folder.dialog';
 
 import { AddVideoDialogComponent } from './add-video-dialog/add-video.dialog';
 import { ConfirmationDialogComponent } from './confirmation/confirmation.dialog';
@@ -38,6 +40,8 @@ import { ParticipantGroupingDialogComponent } from './participant-grouping-dialo
 import { ParticipantGroupingInfoDialogComponent } from './participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { SessionSettingsDialogComponent } from './session-settings-dialog/session-settings.dialog';
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
+import { NewFolderDialogComponent } from './new-folder-dialog/new-folder.dialog';
+import { MoveToFolderDialogComponent } from './move-to-folder-dialog/move-to-folder.dialog';
 
 export const Dialogs = [
   AddVideoDialogComponent,
@@ -62,4 +66,6 @@ export const Dialogs = [
   ParticipantGroupingDialogComponent,
   ParticipantGroupingInfoDialogComponent,
   SessionSettingsDialogComponent,
+  NewFolderDialogComponent,
+  MoveToFolderDialogComponent,
 ];
