@@ -181,7 +181,7 @@ export class SidenavComponent implements OnInit {
     );
   }
 
-  newFolder(isNew: boolean, folderId: number) {
+  newFolder(isNew: boolean, folderId?: number) {
     const folder = this.folders.filter(x => x.id === folderId);
     this.dialog
       .open(NewFolderDialogComponent, {
