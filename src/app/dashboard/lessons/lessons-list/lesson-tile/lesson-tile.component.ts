@@ -125,6 +125,7 @@ export class LessonTileComponent implements OnInit {
       localStorage.setItem('host_' + this.lesson.lessonrun_code, JSON.stringify(user));
     }
     this.router.navigate(['/screen/lesson/' + this.lesson.lessonrun_code]);
+    this.contextService.selectedFolder = null;
   }
 
   copyLink(val) {

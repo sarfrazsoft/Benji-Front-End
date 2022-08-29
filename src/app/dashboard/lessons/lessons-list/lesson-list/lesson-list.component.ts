@@ -115,7 +115,13 @@ export class LessonListComponent implements OnInit {
     if (user.id === element.hostId) {
       localStorage.setItem('host_' + element.lessonRunCode, JSON.stringify(user));
     }
-    this.router.navigate(['/screen/lesson/' + element.lessonRunCode]);
+    this.router.navigate(['/screen/lesson/' + element.lessonRunCode], {
+      queryParams: {
+        folder: null,
+      },
+      queryParamsHandling: 'merge',
+    });
+    this.contextService.selectedFolder = null;
   }
 
   copyLink(val) {
@@ -245,6 +251,9 @@ export class LessonListComponent implements OnInit {
     this.matDialog
       .open(MoveToFolderDialogComponent, {
         panelClass: 'move-to-folder-dialog',
+        data: {
+          lessonId: val.lessonId
+        }
       })
       .afterClosed()
       .subscribe((folder) => {

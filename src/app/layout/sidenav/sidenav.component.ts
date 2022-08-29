@@ -5,7 +5,7 @@ import { AuthService, ContextService } from 'src/app/services';
 import { Branding, User } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
-import { JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
+import { ConfirmationDialogComponent, JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 export interface SidenavSection {
   section: number;
@@ -29,6 +29,7 @@ export class SidenavComponent implements OnInit {
   //folders: Array<Folder>;
   folders: any = [];
   selectedFolder: any;
+  folderLessonsIDs = [];
 
   dashboard = {
     section: 1,
@@ -182,6 +183,9 @@ export class SidenavComponent implements OnInit {
   }
 
   newFolder(isNew: boolean, folderId?: number) {
+    if (folderId) {
+      this.setFolderLessonsIDs(folderId);
+    }
     const folder = this.folders.filter(x => x.id === folderId);
     this.dialog
       .open(NewFolderDialogComponent, {
@@ -196,7 +200,7 @@ export class SidenavComponent implements OnInit {
         if (folder) {
           let request = isNew ? 
                           this.lessonGroupService.createNewFolder(folder) : 
-                          this.lessonGroupService.updateFolder({title: folder.title, id: folderId});
+                          this.lessonGroupService.updateFolder({title: folder.title, id: folderId, lessons: this.folderLessonsIDs});
           request.subscribe(
             (data) => {
               this.getAllFolders();
@@ -207,15 +211,30 @@ export class SidenavComponent implements OnInit {
         }
       });
   }
-
-  deleteFolder(id: number) {
-    this.lessonGroupService.deleteFolder(id)
-    .subscribe(
-      (data) => {
-        this.getAllFolders();
-      },
-      (error) => console.log(error)
-    );
+  
+  deleteFolder(id: number, name: string) {
+    const msg = 'Are you sure you want to delete ' + name + '?';
+    const dialogRef = this.dialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: msg,
+        },
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          this.lessonGroupService.deleteFolder(id)
+          .subscribe(
+            (data) => {
+              this.getAllFolders();
+              this.removePostQueryParam();
+            },
+            (error) => console.log(error)
+          );
+        }
+      });
   }
 
   removePostQueryParam() {
@@ -241,6 +260,20 @@ export class SidenavComponent implements OnInit {
     this.selectedFolder = id;
     this.folderChangingQueryParams(id);
     this.contextService.selectedFolder = id;
+  }
+  
+  setFolderLessonsIDs(folderId: number) {
+    this.folderLessonsIDs = [];
+    this.lessonGroupService.getFolderDetails(folderId)
+    .subscribe(
+      (folder) => {
+        const lessons = folder.lesson;
+        this.folderLessonsIDs = [];
+        lessons.forEach((lesson) => {
+          this.folderLessonsIDs.push(lesson.id);
+        });
+      }
+    );
   }
 
 }

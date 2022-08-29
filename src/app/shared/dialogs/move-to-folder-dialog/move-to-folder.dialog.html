@@ -9,7 +9,14 @@
       </div>
       <div class="edit">
         <div class="title">Currently in:</div>
-        <div class="folder-name" fxLayoutAlign="start center">All</div>
+        <div *ngIf="currentlyIn.length==0" class="folder-name" fxLayoutAlign="start center">
+          None
+        </div>
+        <ng-container *ngFor="let folder of currentlyIn">
+          <div class="folder-name" fxLayoutAlign="start center">
+            {{ folder.name }}
+          </div>
+        </ng-container>
       </div>
       <div class="edit options">
         <div class="title">Move to:</div>

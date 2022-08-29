@@ -20,7 +20,9 @@ export class LessonGroupService {
   getAllFolders(): Observable<any>  {
     return this.http.get(global.apiRoot + `/course_details/lesson_group/`).pipe(
       map((res: PaginatedResponse<Folder>) => {
-        return res.results;
+        return res.results.sort(function (a, b) {
+          return a.creation_time.localeCompare(b.creation_time);
+      });
       })
     );
   }
@@ -38,7 +40,6 @@ export class LessonGroupService {
   }
 
   updateFolder(folder): Observable<any> {
-    console.log(folder.lessons);
     const data = {
       name: folder.title,
       lessons: folder?.lessons,

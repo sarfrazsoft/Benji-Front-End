@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
 @Component({
   selector: 'benji-move-to-folder-dialog',
@@ -12,15 +12,19 @@ export class MoveToFolderDialogComponent implements OnInit {
   showEdit: boolean;
   isNewFolder = false;
   selectedFolderId: number;
+  spaceId: number;
   folderName: string;
-
-  folders = [ ];
+  folders = [];
+  currentlyIn = [];
   
   constructor(
     private lessonGroupService: LessonGroupService,
     private dialogRef: MatDialogRef<MoveToFolderDialogComponent>,
     private builder: FormBuilder,
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {
+    this.spaceId = data.lessonId;
+  }
 
   ngOnInit() {
     this.form = this.builder.group({
@@ -34,6 +38,7 @@ export class MoveToFolderDialogComponent implements OnInit {
     .subscribe(
       (data) => {
         this.folders = data;
+        this.currentlyIn = data.filter(folder => folder.lesson.includes(this.spaceId));
       },
       (error) => console.log(error)
     );
