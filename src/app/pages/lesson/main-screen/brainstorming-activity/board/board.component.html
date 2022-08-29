@@ -6,7 +6,7 @@
 </ng-container>
 
 <ng-container *ngIf="boardStatus !== 'closed' || isHost">
-  <div fxLayout="column" class="brainstorm-main">
+  <div fxLayout="column" class="brainstorm-main" style="height: 100%;">
     <div 
       #brainstormHeadWrapper 
       id="brainstorm-head-wrapper" 
@@ -20,7 +20,11 @@
         (sendMessage)="sendMessage.emit($event)">
       </benji-board-prompt>
     </div>
-    <div class="brainstorm-container">
+    <div class="brainstorm-container"
+      [ngStyle]="{
+        'height': (boardMode == 'columns' || boardMode == 'grid') ? '100%' : '',
+        'overflow': (boardMode == 'grid') ? 'auto' : ''
+      }">
       <ng-container *ngIf="boardMode=='columns'">
         <benji-categorized-ideas
           [board]="board"

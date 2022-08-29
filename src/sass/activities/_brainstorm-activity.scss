@@ -510,6 +510,9 @@ benji-categorized-ideas {
     max-width: 264px;
     overflow: hidden;
   }
+  .submitted-ideas {
+    min-height: 100%;
+  }
 }
 .cdk-drag-preview.brainstorm-idea,
 .cdk-drag-dragging.brainstorm-idea,

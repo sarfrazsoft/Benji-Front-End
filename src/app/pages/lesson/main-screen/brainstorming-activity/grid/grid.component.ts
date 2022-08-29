@@ -83,13 +83,13 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
       }
     });
 
-    this.contextService.sideNavAction$.subscribe((v: SideNavAction) => {
-      if (v === 'closed') {
-        this.refreshGridLayout();
-      } else if (v === 'opened') {
-        this.refreshGridLayout();
-      }
-    });
+    // this.contextService.sideNavAction$.subscribe((v: SideNavAction) => {
+    //   if (v === 'closed') {
+    //     this.refreshGridLayout();
+    //   } else if (v === 'opened') {
+    //     this.refreshGridLayout();
+    //   }
+    // });
   }
 
   ngOnChanges($event: SimpleChanges) {

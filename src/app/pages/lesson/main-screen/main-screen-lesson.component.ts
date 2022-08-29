@@ -139,10 +139,12 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   }
 
   sideNavOpenedStart(): void {
+    // console.log('hur');
     this.contextService.sideNavAction = 'opened';
   }
 
   sideNavClosedStart(): void {
+    // console.log('dhur');
     this.contextService.sideNavAction = 'closed';
   }
 }
