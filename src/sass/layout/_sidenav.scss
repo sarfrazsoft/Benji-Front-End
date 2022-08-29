@@ -43,26 +43,46 @@ mat-sidenav-container.mat-sidenav-container {
     .top-sections, .bottom-sections {
       width: 100%;
       .folders {
-        margin: 22px 16px 0px 20px;
-        color: #a4a4a4;
-        font-weight: 600;
-        font-size: 12px;
+        margin: 22px 8px;
+        color: #8F9094;
+        font-weight: 400;
+        font-size: 14px;
+        .header {
+          margin: 0px 8px 8px 12px;
+        }
         .add {
           padding: 4px;
           cursor: pointer;
         }
         .folder {
-          margin-top: 16px;
+          height: 32px;
+          padding: 0px 12px;
+          border-radius: 4px;
+          margin-top: 4px;
           font-weight: 400;
           cursor: pointer;
-          &:hover, &.active {
+          &:hover, &.selected {
             color: #37352F;
+            background-color: #fff;
             .icon {
               opacity: 1;
+            }
+            .nav {
+              display: flex;
+              width: 14px;
             }
           }
           .icon {
             opacity: 0.4;
+            width: 14px;
+          }
+          .nav {
+            display: none;
+          }
+          .name {
+            width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       }

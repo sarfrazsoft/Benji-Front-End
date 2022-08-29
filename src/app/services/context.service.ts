@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as jwt_decode from 'jwt-decode';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { Timer } from './backend/schema';
 import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
@@ -79,6 +77,27 @@ export class ContextService {
     return this.p;
   }
 
+  set folders(folders: any) {
+    this.folders$.next(folders);
+  }
+  get folders(): any {
+    return this.folders$.getValue();
+  }
+
+  set selectedFolder(folder: any) {
+    this.selectedFolder$.next(folder);
+  }
+  get selectedFolder(): number {
+    return this.selectedFolder$.getValue();
+  }
+  
+  set newFolderAdded(value: boolean) {
+    this.newFolderAdded$.next(value);
+  }
+  get newFolderAdded(): boolean {
+    return this.newFolderAdded$.getValue();
+  }
+  
   /**
    * Current User
    */
@@ -123,6 +142,21 @@ export class ContextService {
    * participant
    */
   p: Participant;
+
+  /**
+   * folders
+   */
+   folders$ = new BehaviorSubject<any>(null);
+
+  /**
+   * Selected Folder
+   */
+   selectedFolder$ = new BehaviorSubject<any>(null);
+
+  /**
+   * Notify if new Folder added
+   */
+   newFolderAdded$ = new BehaviorSubject<any>(null);
 
   destroyActivityTimer() {
     this.activityTimer$.next(null);

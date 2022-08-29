@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuthService } from 'src/app/services';
 
 export interface SidenavItem {
@@ -16,6 +16,8 @@ export interface SidenavItem {
 })
 export class SidenavItemComponent implements OnInit {
   @Input() sidenavItem: SidenavItem;
+  @Output() navItemClickedEvent = new EventEmitter();
+
   icon: string;
   activeIcon: string;
   constructor(private authService: AuthService) {}
@@ -35,6 +37,7 @@ export class SidenavItemComponent implements OnInit {
     } else if (navName === 'Help Center') {
       window.open('https://guides.mybenji.com/', '_blank');
     }
+    this.navItemClickedEvent.emit();
   }
 
   logout() {

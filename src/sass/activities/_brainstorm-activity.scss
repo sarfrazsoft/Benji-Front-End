@@ -1288,6 +1288,11 @@ ng-dropdown-panel {
       }
     }
   }
+  button {
+    img.dots {
+      width: 16px;
+    }
+  }
 }
 
 .column.cdk-drop-list-dragging .cdk-drag {

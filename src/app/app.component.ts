@@ -224,7 +224,11 @@ export class AppComponent implements OnInit {
         .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
           color: ${color};
         }
-        .board-settings-navigation .close:hover, .boards-navigation .close:hover, .close-button:hover {
+        .board-settings-navigation .close:hover, 
+        .boards-navigation .close:hover, 
+        .close-button:hover, 
+        .move-to-folder-dialog .close-button:hover .mat-icon,
+        .new-folder-dialog .close-button:hover .mat-icon {
           color: ${color};
         }
         ng-dropdown-panel.post-idea-categories-dropdown .ng-dropdown-panel-items {
