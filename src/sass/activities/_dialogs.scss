@@ -630,6 +630,9 @@ ng-dropdown-panel.groups-controls {
         &:hover, &.selected {
           background: #F1F2F6;
           cursor: pointer;
+        } 
+        &.selected {
+          color: #fff;
         }
         span {  
           width: 320px;
@@ -653,6 +656,10 @@ ng-dropdown-panel.groups-controls {
       &.move-button {
         margin-right: 8px;
       }
+    }
+    button {
+      padding: 0px 16px !important;
+      font-weight: 500 !important;
     }
   }
   .edit-new-folder {

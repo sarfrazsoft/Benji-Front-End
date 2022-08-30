@@ -2,6 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { HttpClient } from '@angular/common/http';
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostListener,
   Inject,
@@ -9,6 +10,7 @@ import {
   OnChanges,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { cloneDeep } from 'lodash';
@@ -34,6 +36,7 @@ import { ConfirmationDialogComponent } from '../../dialogs/confirmation/confirma
 import { GiphyPickerDialogComponent } from '../../dialogs/giphy-picker-dialog/giphy-picker.dialog';
 import { ImagePickerDialogComponent } from '../../dialogs/image-picker-dialog/image-picker.dialog';
 import { FileProgress } from '../uploadcare-widget/uploadcare-widget.component';
+
 export interface IdeaDetailedInfo {
   showCategoriesDropdown: boolean;
   categories: Array<Category>;
@@ -184,10 +187,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   @Output() submit = new EventEmitter<any>();
   @Output() closeView = new EventEmitter<any>();
   @Output() ideaEditEvent = new EventEmitter<boolean>();
-
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
-  classGrey: boolean;
+
+  addCommentFocused: boolean;
+  titleFocused: boolean;
+  tiptapFocus: boolean;
   commentKey: string;
   fileProgress: FileProgress;
   mediaUploading = false;
@@ -232,11 +237,17 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'ArrowRight') {
-      this.nextArrowClicked();
+    const el = document.getElementsByClassName('scrollable-area')[0];
+    if (el.contains(document.activeElement)) {
+      return;
     }
-    if (event.key === 'ArrowLeft') {
-      this.previousArrowClicked();
+    if (!this.addCommentFocused && !this.titleFocused) {
+      if (event.key === 'ArrowRight') {
+        this.nextArrowClicked();
+      }
+      if (event.key === 'ArrowLeft') {
+        this.previousArrowClicked();
+      }
     }
   }
 
@@ -560,8 +571,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.nextItemRequested.emit();
   }
 
-  participantIsOwner() {}
-
   mediaUploadProgress(fileProgress: FileProgress) {
     this.fileProgress = fileProgress;
     this.mediaUploading = true;
@@ -615,10 +624,16 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   onCommentFocus() {
-    this.classGrey = true;
+    this.addCommentFocused = true;
   }
   onCommentBlur() {
-    this.classGrey = false;
+    this.addCommentFocused = false;
+  }
+  focusOnEdit() {
+    this.titleFocused = true;
+  }
+  unfocusedEdit() {
+    this.titleFocused = false;
   }
   commentTyped() {
     this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
@@ -672,11 +687,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.httpClient
         .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
         .subscribe((res: any) => {
-          this.iframeAvailable = true;
-          this.iframeRemoved = false;
-          this.iframeData = { iframeHTML: res.html, url: res.url };
-          this.meta = { ...this.meta, iframe: this.iframeData };
-          // iframely.load();
+          if (res.html) {
+            this.iframeAvailable = true;
+            this.iframeRemoved = false;
+            this.iframeData = { iframeHTML: res.html, url: res.url };
+            this.meta = { ...this.meta, iframe: this.iframeData };
+            // iframely.load();
+          }
         });
     }
   }

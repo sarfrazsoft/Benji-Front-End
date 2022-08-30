@@ -80,7 +80,7 @@ export class LessonTileComponent implements OnInit {
         return;
       }
 
-      this.coverPhoto = image_url ?? this.hostLocation + img;
+      this.coverPhoto = image_url ?? img;
     } else {
       this.setDefaultCoverPhoto();
     }
@@ -269,6 +269,9 @@ export class LessonTileComponent implements OnInit {
     this.matDialog
       .open(MoveToFolderDialogComponent, {
         panelClass: 'move-to-folder-dialog',
+        data: {
+          lessonId: this.lesson.id
+        }
       })
       .afterClosed()
       .subscribe((folder) => {
