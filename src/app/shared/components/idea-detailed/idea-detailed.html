@@ -222,6 +222,8 @@
             placeholder="Title (optional)" 
             [(ngModel)]="ideaTitle"
             (ngModelChange)="ideaIsEdited($event)"
+            (focus)="focusOnEdit()"
+            (blur)="unfocusedEdit()"
             cdkTextareaAutosize
             #autosize="cdkTextareaAutosize"
             cdkAutosizeMinRows="1"
@@ -356,7 +358,7 @@
         class="comment-input-container detailed" 
         fxFlex="row" 
         fxLayoutAlign="start center"
-        [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
+        [ngClass]="{'grey': addCommentFocused, 'greyed': commentModel.length}">
         <textarea
           matInput
           cdkTextareaAutosize
