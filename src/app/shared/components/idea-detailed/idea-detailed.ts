@@ -687,11 +687,13 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       this.httpClient
         .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
         .subscribe((res: any) => {
-          this.iframeAvailable = true;
-          this.iframeRemoved = false;
-          this.iframeData = { iframeHTML: res.html, url: res.url };
-          this.meta = { ...this.meta, iframe: this.iframeData };
-          // iframely.load();
+          if (res.html) {
+            this.iframeAvailable = true;
+            this.iframeRemoved = false;
+            this.iframeData = { iframeHTML: res.html, url: res.url };
+            this.meta = { ...this.meta, iframe: this.iframeData };
+            // iframely.load();
+          }
         });
     }
   }
