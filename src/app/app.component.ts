@@ -234,6 +234,9 @@ export class AppComponent implements OnInit {
         ng-dropdown-panel.post-idea-categories-dropdown .ng-dropdown-panel-items {
           border: 2px solid ${color};
         }
+        .move-to-folder-dialog .edit .folder-name.move-to.selected {
+          background: ${color};
+        }
         `;
 
       let additionalCssStyle = document.getElementById('additionalCss');
