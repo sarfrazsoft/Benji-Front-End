@@ -237,6 +237,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   handleKeyboardEvent(event: KeyboardEvent) {
+    const el = document.getElementsByClassName('scrollable-area')[0];
+    if (el.contains(document.activeElement)) {
+      return;
+    }
     if (!this.addCommentFocused && !this.titleFocused) {
       if (event.key === 'ArrowRight') {
         this.nextArrowClicked();
