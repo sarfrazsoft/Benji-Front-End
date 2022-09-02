@@ -210,7 +210,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private deleteDialog: MatDialog,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
