@@ -221,6 +221,9 @@ export class AppComponent implements OnInit {
         .primary-box-shadow {
           box-shadow: 0 0 0 2px ${color};
         }
+        .new-space:hover {
+          border: 2px solid ${color};
+        }
         .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
           color: ${color};
         }

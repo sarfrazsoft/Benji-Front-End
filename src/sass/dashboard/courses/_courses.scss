@@ -49,6 +49,7 @@
       .name {
         font-weight: 600;
         font-size: 16px;
+        line-height: 20px;
         color: #37352F;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -92,6 +93,9 @@
       width: 16px;
       height: 16px;
     }
+  }
+  &:hover {
+    border: 2px solid;
   }
 }
 

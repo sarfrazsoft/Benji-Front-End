@@ -267,9 +267,22 @@
       }
     }
     &.closed {
-      &.selected, &:hover {
+      &:hover {
         .closed-eye {
-          display: none;
+          display: none !important;
+        }
+      }
+      &.selected {
+        .closed-eye {
+          display: flex !important;
+        }
+        button.three-dots {
+          display: none !important;
+        }
+        &:hover {
+          .closed-eye {
+            display: none !important;
+          }
         }
       }
       &:hover {
