@@ -21,6 +21,7 @@ import {
   BoardSort,
   BrainstormActivity,
   Idea,
+  PostOrder,
   SetMetaDataBoardEvent,
 } from 'src/app/services/backend/schema';
 import { SideNavAction } from 'src/app/services/context.service';
@@ -29,10 +30,7 @@ import { environment } from 'src/environments/environment';
 declare var Packery: any;
 declare var Draggabilly: any;
 
-export interface PostOrder {
-  ideaId: string;
-  order: string;
-}
+
 
 @Component({
   selector: 'benji-grid-ideas',

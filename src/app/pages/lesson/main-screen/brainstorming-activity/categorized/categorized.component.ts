@@ -35,25 +35,15 @@ import {
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Category,
+  ColsCategoryChangeIdeaOrderInfo,
+  ColsIdeaOrderInfo,
   Group,
   Idea,
   SetMetaDataBoardEvent,
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
-
-export interface ColsIdeaOrderInfo {
-  container: string;
-  previousIndex: number;
-  currentIndex: number;
-}
-
-export interface ColsCategoryChangeIdeaOrderInfo {
-  previousContainer: string;
-  container: string;
-  previousIndex: number;
-  currentIndex: number;
-}
+import { BaseActivityComponent } from '../../../shared/base-activity.component';
 
 @Component({
   selector: 'benji-categorized-ideas',
@@ -224,7 +214,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
       } else if (this.eventType === 'SetMetaDataBoardEvent') {
         if (!this.isHost) {
           if (this.board.meta.updated === 'post_order') {
-            const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.post_order;
+            const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.colsIdeaOrderInfo;
             this.columns.forEach((column: Category) => {
               if (column.id.toString() === colsIdeaOrderInfo.container) {
                 moveItemInArray(
@@ -237,7 +227,8 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           } else if (this.board.meta.updated === 'category_changed') {
             let container;
             let previousContainer;
-            const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo = this.board.meta.post_order;
+            const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo =
+              this.board.meta.colsCategoryChangeIdeaOrderInfo;
             this.columns.forEach((column: Category) => {
               if (column.id.toString() === colsIdeaOrderInfo.container) {
                 container = column;
@@ -358,7 +349,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           return;
         }
         const category = event.container.element.nativeElement.getAttribute('columnId');
-        const ideasOrder: ColsIdeaOrderInfo = {
+        const colsIdeaOrderInfo: ColsIdeaOrderInfo = {
           container: category,
           previousIndex: event.previousIndex,
           currentIndex: event.currentIndex,
@@ -367,7 +358,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           new SetMetaDataBoardEvent(this.board.id, {
             ...this.board.meta,
             updated: 'post_order',
-            post_order: ideasOrder,
+            colsIdeaOrderInfo: colsIdeaOrderInfo,
           })
         );
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -385,7 +376,7 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
           new SetMetaDataBoardEvent(this.board.id, {
             ...this.board.meta,
             updated: 'category_changed',
-            post_order: ideasOrder,
+            colsCategoryChangeIdeaOrderInfo: ideasOrder,
           })
         );
         transferArrayItem(

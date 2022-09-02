@@ -194,7 +194,7 @@ export class UnsortedComponent implements OnInit, OnChanges, AfterViewInit {
               setTimeout(() => {
                 // this.showItems = true;
                 const ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
-                const sortedIdeas = this.sortOnOrder(ideas, this.board.meta.post_order);
+                const sortedIdeas = this.sortOnOrder(ideas, this.board.meta.post_order as any);
                 this.ideas = sortedIdeas;
                 this.brainstormService.uncategorizedIdeas = this.ideas;
                 setTimeout(() => {

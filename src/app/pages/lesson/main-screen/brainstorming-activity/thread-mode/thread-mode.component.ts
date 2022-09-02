@@ -20,12 +20,11 @@ import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
-import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
+import { Board, BrainstormSubmitEvent, Category, Idea, PostOrder } from 'src/app/services/backend/schema';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
-import { PostOrder } from '../grid/grid.component';
 
 @Component({
   selector: 'benji-thread-mode-ideas',
