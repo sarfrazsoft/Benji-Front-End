@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     private restService: BackendRestService,
     private title: Title,
     @Inject(DOCUMENT) private _document: HTMLDocument
-  ) {}
+  ) { }
 
   ngOnInit() {
     let color = '#555BEA';
@@ -193,10 +193,12 @@ export class AppComponent implements OnInit {
         .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color:hover {
           background: ${color};
         }
-        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+        .build-session-dialog .mat-checkbox-checked.mat-accent .mat-checkbox-background {
           background-color: ${color};
         }
-        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame {
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame,
+        .build-session-dialog .mat-checkbox-layout:hover .mat-checkbox-frame {
           border-color: ${color};
         }
         .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {

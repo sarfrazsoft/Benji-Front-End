@@ -1424,41 +1424,44 @@ ng-dropdown-panel.post-idea-categories-dropdown {
       }
     }
   }
-  .session-duplication {
-    .dialog-heading {
-      margin-bottom: 24px !important;
+}
+
+.session-duplication, .build-session-dialog {
+  .dialog-heading {
+    margin-bottom: 24px !important;
+  }
+  .dialog-instructions {
+    color: #37352f;
+  }
+  mat-checkbox {
+    display: block;
+    margin-bottom: 16px;
+  }
+  .mat-checkbox-inner-container {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    .mat-checkbox-frame {
+      color: #bdbdbd;
+      border: 1px solid #BDBDBD;
+      border-radius: 4px;
     }
-    .dialog-instructions {
-      color: #37352f;
-    }
-    .copying-options {
-      .mat-checkbox-inner-container {
-        margin-right: 12px;
-        width: 20px;
-        height: 20px;
-        .mat-checkbox-frame {
-          color: #bdbdbd;
-          border: 1px solid #BDBDBD;
-          border-radius: 4px;
-        }
-      }
-      .mat-checkbox-label {
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 400;
-      }
-      .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-        border-radius: 4px;
-      }
-      .mat-checkbox-ripple {
-        display: none;
-      }
-    }
-    .controls-container {
-      .dialog-controls {
-        &.duplicate {
-          color: #fff;
-        }
+  }
+  .mat-checkbox-label {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+  .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    border-radius: 4px;
+  }
+  .mat-checkbox-ripple {
+    display: none;
+  }
+  .controls-container {
+    .dialog-controls {
+      &.duplicate {
+        color: #fff;
       }
     }
   }

@@ -16,7 +16,7 @@ export class MoveToFolderDialogComponent implements OnInit {
   folderName: string;
   folders = [];
   currentlyIn = [];
-  
+
   constructor(
     private lessonGroupService: LessonGroupService,
     private dialogRef: MatDialogRef<MoveToFolderDialogComponent>,
@@ -35,13 +35,13 @@ export class MoveToFolderDialogComponent implements OnInit {
 
   getAllFolders() {
     this.lessonGroupService.getAllFolders()
-    .subscribe(
-      (data) => {
-        this.folders = data;
-        this.currentlyIn = data.filter(folder => folder.lesson.includes(this.spaceId));
-      },
-      (error) => console.log(error)
-    );
+      .subscribe(
+        (data) => {
+          this.folders = data;
+          this.currentlyIn = data.filter(folder => folder.lesson.includes(this.spaceId));
+        },
+        (error) => console.log(error)
+      );
   }
 
   get title(): AbstractControl {
@@ -57,7 +57,7 @@ export class MoveToFolderDialogComponent implements OnInit {
   newFolderClicked() {
     this.isNewFolder = true;
   }
-  
+
   onSubmit(): void {
     if (this.isNewFolder && this.form.valid) {
       const val = this.form.value;
