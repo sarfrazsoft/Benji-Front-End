@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
-import { User,Branding } from 'src/app/services/backend/schema';
+import { Branding, TeamUser, User } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 
 @Injectable()
@@ -13,14 +13,14 @@ export class AccountService {
   constructor(
     private httpClient: HttpClient,
     private contextService: ContextService,
-    private utilsService: UtilsService,
+    private utilsService: UtilsService
   ) {}
 
-  saveUser(user): Observable<User> {
-    const saveUserObservable$ =  this.httpClient
+  saveUser(user): Observable<TeamUser> {
+    const saveUserObservable$ = this.httpClient
       .patch(global.apiRoot + '/tenants/users/' + user.id + '/', user)
       .pipe(
-        map((res: User) => {
+        map((res: TeamUser) => {
           this.contextService.user = res;
           return res;
         })
@@ -29,7 +29,6 @@ export class AccountService {
   }
 
   createBranding(val, type: string): Observable<Branding> {
-
     const logo: Blob = val.logo;
     const favicon: Blob = val.favicon;
     const formData: FormData = new FormData();
@@ -41,45 +40,35 @@ export class AccountService {
 
     if (type === 'logo') {
       formData.append('logo', logo);
-      const brandingInfoObservable$ = this.httpClient
-        .post(url, formData, { params, headers })
-        .pipe(
-          map((res: Branding) => {
-            this.contextService.brandingInfo = res;
-            return res;
-          })
-        );
+      const brandingInfoObservable$ = this.httpClient.post(url, formData, { params, headers }).pipe(
+        map((res: Branding) => {
+          this.contextService.brandingInfo = res;
+          return res;
+        })
+      );
       return brandingInfoObservable$;
-    }
-    else if (type === 'favicon') {
+    } else if (type === 'favicon') {
       formData.append('favicon', favicon);
-      const brandingInfoObservable$ = this.httpClient
-        .post(url, formData, { params, headers })
-        .pipe (
-          map((res: Branding) => {
-            this.contextService.brandingInfo = res;
-            return res;
-          })
-        );
+      const brandingInfoObservable$ = this.httpClient.post(url, formData, { params, headers }).pipe(
+        map((res: Branding) => {
+          this.contextService.brandingInfo = res;
+          return res;
+        })
+      );
       return brandingInfoObservable$;
-    }
-    else if (type === 'color') {
+    } else if (type === 'color') {
       formData.append('color', val.color);
-      const brandingInfoObservable$ =  this.httpClient
-        .post(url, formData, { params, headers })
-        .pipe(
-          map((res: Branding) => {
-            this.contextService.brandingInfo = res;
-            return res;
-          })
-        );
+      const brandingInfoObservable$ = this.httpClient.post(url, formData, { params, headers }).pipe(
+        map((res: Branding) => {
+          this.contextService.brandingInfo = res;
+          return res;
+        })
+      );
       return brandingInfoObservable$;
     }
-    
   }
 
   updateBranding(val, type: string) {
-
     const logo: File = val.logo;
     const favicon: File = val.favicon;
     const formData: FormData = new FormData();
@@ -95,41 +84,39 @@ export class AccountService {
         return this.httpClient
           .put(url, formData, { params, headers })
           .map((res: Branding) => {
-              this.contextService.brandingInfo = res;
-              localStorage.setItem('benji_branding', JSON.stringify(res));
-              return res;
-            })
+            this.contextService.brandingInfo = res;
+            localStorage.setItem('benji_branding', JSON.stringify(res));
+            return res;
+          })
           .subscribe(
             (data) => {},
             (error) => console.log(error)
           );
-      }
-      else if (logo) {
+      } else if (logo) {
         this.utilsService
-        .resizeImage({
-          file: logo,
-          maxSize: 152,
-        })
-        .then((resizedImage: Blob) => {
-          console.log(resizedImage);
-          formData.append('logo', resizedImage, logo.name);
-          return this.httpClient
-            .put(url, formData, { params, headers })
-            .map((res: Branding) => {
+          .resizeImage({
+            file: logo,
+            maxSize: 152,
+          })
+          .then((resizedImage: Blob) => {
+            console.log(resizedImage);
+            formData.append('logo', resizedImage, logo.name);
+            return this.httpClient
+              .put(url, formData, { params, headers })
+              .map((res: Branding) => {
                 this.contextService.brandingInfo = res;
                 localStorage.setItem('benji_branding', JSON.stringify(res));
                 return res;
               })
-            .subscribe(
-              (data) => {},
-              (error) => console.log(error)
-            );
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-      } 
-      else {
+              .subscribe(
+                (data) => {},
+                (error) => console.log(error)
+              );
+          })
+          .catch(function (err) {
+            console.error(err);
+          });
+      } else {
         formData.append('logo', '');
         return this.httpClient
           .put(url, formData, { params, headers })
@@ -142,48 +129,45 @@ export class AccountService {
             (data) => {},
             (error) => console.log(error)
           );
-      } 
-    }
-    else if (type === 'favicon') {
+      }
+    } else if (type === 'favicon') {
       if (favicon !== null && favicon.type === 'image/svg+xml') {
         formData.append('favicon', favicon, favicon.name);
         return this.httpClient
           .put(url, formData, { params, headers })
           .map((res: Branding) => {
-              this.contextService.brandingInfo = res;
-              localStorage.setItem('benji_branding', JSON.stringify(res));
-              return res;
-            })
+            this.contextService.brandingInfo = res;
+            localStorage.setItem('benji_branding', JSON.stringify(res));
+            return res;
+          })
           .subscribe(
             (data) => {},
             (error) => console.log(error)
           );
-      } 
-      else if (favicon) {
+      } else if (favicon) {
         this.utilsService
-        .resizeImage({
-          file: favicon,
-          maxSize: 16,
-        })
-        .then((resizedImage: Blob) => {
-          formData.append('favicon', resizedImage, favicon.name);
-          return this.httpClient
-            .put(url, formData, { params, headers })
-            .map((res: Branding) => {
-              this.contextService.brandingInfo = res;
-              localStorage.setItem('benji_branding', JSON.stringify(res));
-              return res;
-            })
-            .subscribe(
-              (data) => {},
-              (error) => console.log(error)
-            );
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
-      } 
-      else {
+          .resizeImage({
+            file: favicon,
+            maxSize: 16,
+          })
+          .then((resizedImage: Blob) => {
+            formData.append('favicon', resizedImage, favicon.name);
+            return this.httpClient
+              .put(url, formData, { params, headers })
+              .map((res: Branding) => {
+                this.contextService.brandingInfo = res;
+                localStorage.setItem('benji_branding', JSON.stringify(res));
+                return res;
+              })
+              .subscribe(
+                (data) => {},
+                (error) => console.log(error)
+              );
+          })
+          .catch(function (err) {
+            console.error(err);
+          });
+      } else {
         formData.append('favicon', '');
         return this.httpClient
           .put(url, formData, { params, headers })
@@ -196,9 +180,8 @@ export class AccountService {
             (data) => {},
             (error) => console.log(error)
           );
-      } 
-    }
-    else if (type === 'color') {
+      }
+    } else if (type === 'color') {
       formData.append('color', val.color);
       return this.httpClient
         .put(url, formData, { params, headers })
@@ -219,11 +202,8 @@ export class AccountService {
     const passwords = {
       old_password: oldPassword,
       new_password1: newPassword1,
-      new_password2: newPassword2
+      new_password2: newPassword2,
     };
-    return this.httpClient.post(
-      global.apiRoot + '/rest-auth/password/change/',
-      passwords
-    );
+    return this.httpClient.post(global.apiRoot + '/rest-auth/password/change/', passwords);
   }
 }

@@ -28,10 +28,10 @@ export class IsAdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const user: User = this.contextService.user;
+    const user: TeamUser = this.contextService.user;
     if (this.contextService.user) {
       if (user) {
-        if (user.local_admin_permission) {
+        if (user.effective_permissions) {
           return true;
         }
       }
@@ -41,7 +41,7 @@ export class IsAdminGuard implements CanActivate {
   }
 
   canLoad(route: Route) {
-    if (this.contextService.user && this.contextService.user.local_admin_permission) {
+    if (this.contextService.user && this.contextService.user) {
       return true;
     }
     return false;
@@ -51,7 +51,7 @@ export class IsAdminGuard implements CanActivate {
     return this.httpClient.get(global.apiRoot + '/tenants/users/who_am_i/').pipe(
       map((res: TeamUser) => {
         this.contextService.user = res;
-        if(res.branding) {
+        if (res.branding) {
           this.contextService.brandingInfo = res.branding;
         }
         return res;

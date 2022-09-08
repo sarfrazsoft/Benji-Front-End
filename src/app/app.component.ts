@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import * as LogRocket from 'logrocket';
 
 import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
@@ -229,9 +230,9 @@ export class AppComponent implements OnInit {
         .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
           color: ${color};
         }
-        .board-settings-navigation .close:hover, 
-        .boards-navigation .close:hover, 
-        .close-button:hover, 
+        .board-settings-navigation .close:hover,
+        .boards-navigation .close:hover,
+        .close-button:hover,
         .move-to-folder-dialog .close-button:hover .mat-icon,
         .new-folder-dialog .close-button:hover .mat-icon {
           color: ${color};
@@ -263,6 +264,12 @@ export class AppComponent implements OnInit {
         favicon: '/assets/img/favicon.ico',
       };
     }
+
+    this.contextService.user$.subscribe((user) => {
+      if (user) {
+        LogRocket.identify(user.id.toString(), { name: user.first_name + user.last_name, email: user.email });
+      }
+    });
   }
 
   hexToRGB(hex, alpha) {

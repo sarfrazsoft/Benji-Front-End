@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import * as moment from 'moment';
 import { SnackBarComponent } from '../ui-components/snack-bar-component/snack-bar.component';
 @Injectable()
 export class UtilsService {
@@ -140,7 +141,7 @@ export class UtilsService {
       canvas.width = width;
       canvas.height = height;
       canvas.getContext('2d').drawImage(image, 0, 0, width, height);
-      //const dataUrl = canvas.toDataURL('image/jpeg');
+      // const dataUrl = canvas.toDataURL('image/jpeg');
       const dataUrl = canvas.toDataURL('image');
       return dataURItoBlob(dataUrl);
     };
@@ -157,6 +158,40 @@ export class UtilsService {
       };
       reader.readAsDataURL(file);
     });
+  }
+
+
+  calculateTimeStamp(time: string) {
+    let timeStamp = '';
+    // Test string
+    // timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
+    // timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+    if (!time) {
+      return;
+    }
+    timeStamp = moment(time).fromNow().toString();
+    if (timeStamp === 'a few seconds ago' || timeStamp === 'in a few seconds') {
+      timeStamp = '1m ago';
+    } else if (timeStamp.includes('an hour ago')) {
+      timeStamp = '1hr ago';
+    } else if (timeStamp.includes('a minute ago')) {
+      timeStamp = '1m ago';
+    } else if (timeStamp.includes('minutes')) {
+      timeStamp = timeStamp.replace(/\sminutes/, 'm');
+    } else if (timeStamp.includes('hours')) {
+      timeStamp = timeStamp.replace(/\shours/, 'hr');
+    } else if (timeStamp.includes('days')) {
+      timeStamp = timeStamp.replace(/\sdays/, 'd');
+    } else if (timeStamp.includes('a month')) {
+      timeStamp = timeStamp.replace(/a month/, '1mo');
+    } else if (timeStamp.includes('months')) {
+      timeStamp = timeStamp.replace(/\smonths/, 'mo');
+    } else if (timeStamp.includes('a year')) {
+      timeStamp = timeStamp.replace(/a year/, '1yr');
+    } else if (timeStamp.includes('years')) {
+      timeStamp = timeStamp.replace(/\syears/, 'yr');
+    }
+    return timeStamp;
   }
 }
 

@@ -24,6 +24,7 @@ import {
   HostChangeBoardEvent,
   Idea,
   ParticipantChangeBoardEvent,
+  QueryParamsObject,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -39,8 +40,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -108,17 +108,20 @@ export class MainScreenBrainstormingActivityComponent
   isHost: boolean;
 
   participant_set = [];
+  queryParamSubscription;
 
   ngOnInit() {
     super.ngOnInit();
 
     const el = document.getElementById('rt');
     iframely.load(el);
-    const paramBoardId = this.activatedRoute.snapshot.queryParams['board'];
-    if (paramBoardId) {
-      // tslint:disable-next-line:radix
-      this.changeBoardToParamsBoard(parseInt(paramBoardId));
-    }
+
+    this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
+      if (p.board) {
+        // tslint:disable-next-line:radix
+        this.changeBoardToParamsBoard(parseInt(p.board));
+      }
+    });
     this.participantCode = this.getParticipantCode();
     this.act = this.activityState.brainstormactivity;
 
@@ -208,6 +211,9 @@ export class MainScreenBrainstormingActivityComponent
     }
     if (this.dialogRef) {
       this.dialogRef.close();
+    }
+    if (this.queryParamSubscription) {
+      this.queryParamSubscription.unsubscribe();
     }
   }
 

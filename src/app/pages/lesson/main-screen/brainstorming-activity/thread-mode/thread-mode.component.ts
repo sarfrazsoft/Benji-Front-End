@@ -253,6 +253,11 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       this.postLayoutService.refreshGridLayout(this.grid, true);
     }, 1000);
+
+    // refresh muuri layout after (hopefully) all iframes are loaded
+    setTimeout(() => {
+      this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 3000);
   }
 
   onGridCreated(grid: Grid) {
@@ -264,11 +269,11 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     this.postLayoutService.refreshGridLayout(this.grid, false);
   }
 
-  refreshMasonryLayout() {
-    if (this.masonry) {
-      this.masonry.layout();
-    }
-  }
+  // refreshMasonryLayout() {
+  //   if (this.masonry) {
+  //     this.masonry.layout();
+  //   }
+  // }
 
   resetMasonry() {
     if (this.masonry) {

@@ -13,21 +13,19 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   @Input() showTooltip = true;
   @Input() size: string;
   @Input() name: string;
- 
+
   remainingCount = 0;
   displayCodes: [];
 
-  constructor(private activitiesService: ActivitiesService) {}
+  constructor(private activitiesService: ActivitiesService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngOnChanges(): void {
     if (this.participantCodes && this.participantCodes.length > this.counterAfter) {
       this.remainingCount = this.participantCodes.length - this.counterAfter;
       this.participantCodes = this.participantCodes.slice(0, this.counterAfter);
-    }
-    else {
+    } else {
       this.remainingCount = 0;
     }
   }
@@ -37,7 +35,10 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
   }
 
   getInitials(code: number) {
-    let nameString = this.activitiesService.getParticipantName(this.activityState, code);
+    let nameString = '';
+
+    nameString = this.activitiesService.getParticipantName(this.activityState, code);
+
     const fullName = this.name ? this.name.split(' ') : nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';
     if (fullName.length === 1) {

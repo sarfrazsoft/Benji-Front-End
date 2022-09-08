@@ -199,6 +199,11 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       this.postLayoutService.refreshGridLayout(this.grid, true);
     }, 1000);
+
+    // refresh muuri layout after (hopefully) all iframes are loaded
+    setTimeout(() => {
+      this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 3000);
   }
 
   onGridCreated(grid: Grid) {

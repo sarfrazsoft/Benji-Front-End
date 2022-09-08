@@ -50,18 +50,18 @@ export class AddGroupsComponent implements OnInit {
     this.isSignupClicked = true;
     if (this.form.valid) {
       const group_name = this.form.value.group_name;
-      const org = this.contextService.user.organization;
+      // const org = this.contextService.user.organization;
       // this.eventsSubject.next(val);
-      this.groupService.addGroup(org, group_name).subscribe(
-        (res: Group) => {
-          this.isSubmitted = true;
-          this.groupSaved = true;
-          this.groupId = res.id;
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+      // this.groupService.addGroup(org, group_name).subscribe(
+      //   (res: Group) => {
+      //     this.isSubmitted = true;
+      //     this.groupSaved = true;
+      //     this.groupId = res.id;
+      //   },
+      //   (err) => {
+      //     console.log(err);
+      //   }
+      // );
     }
   }
 

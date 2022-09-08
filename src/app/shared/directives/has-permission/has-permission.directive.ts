@@ -1,9 +1,9 @@
 import { Directive, HostBinding, HostListener, OnInit } from '@angular/core';
 import { ContextService } from 'src/app/services';
-import { User } from 'src/app/services/backend/schema';
+import { TeamUser, User } from 'src/app/services/backend/schema';
 
 @Directive({
-  selector: '[benji-has-permission]'
+  selector: '[benji-has-permission]',
 })
 export class HasPermissionDirective implements OnInit {
   @HostBinding('style.display')
@@ -12,8 +12,8 @@ export class HasPermissionDirective implements OnInit {
   constructor(private contextService: ContextService) {}
 
   ngOnInit() {
-    this.contextService.user$.subscribe((user: User) => {
-      if (!user.local_admin_permission) {
+    this.contextService.user$.subscribe((user: TeamUser) => {
+      if (!user) {
         this.display = 'none';
       }
     });

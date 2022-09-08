@@ -203,6 +203,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   pdfCleared = false;
   emptyUserIdeaText: boolean;
 
+  userSubmittedComment = false;
+  userSubmittedSuccesfully = false;
+
   constructor(
     private activitiesService: ActivitiesService,
     private matDialog: MatDialog,
@@ -366,7 +369,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     if (this.pdfCleared || this.webcamImageCleared || this.videoCleared) {
       this.removeIdeaDocumentFromBE();
     }
-    console.log(this.iframeData);
     this.submit.emit({
       ...this.idea,
       text: this.userIdeaText,
@@ -517,8 +519,46 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   submitComment(ideaId, val) {
+    this.userSubmittedComment = true;
+    this.userSubmittedSuccesfully = false;
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+  }
+
+  clearDraftComment(): void {
+    this.commentModel = '';
     this.brainstormService.removeDraftComment(this.commentKey);
+  }
+
+  onCommentFocus() {
+    this.addCommentFocused = true;
+  }
+  onCommentBlur() {
+    this.addCommentFocused = false;
+  }
+  commentTyped() {
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+  }
+
+  ideaCommentSuccessfullySubmitted(): void {
+    this.userSubmittedSuccesfully = true;
+    this.userSubmittedComment = false;
+    this.clearDraftComment();
+  }
+  brainstormSubmitIdeaCommentEvent(): void {
+    if (this.userSubmittedComment) {
+      const existingComment = this.commentModel;
+      this.idea.comments.forEach(c => {
+        if (c.comment === existingComment &&
+          (c.participant === this.participantCode || !this.participantCode) &&
+          !this.userSubmittedSuccesfully) {
+          // there is a comment by this participant in the comments that is identical to commentModal
+          // safe to assume the comment is submitted
+          this.userSubmittedSuccesfully = true;
+          this.userSubmittedComment = false;
+          this.clearDraftComment();
+        }
+      });
+    }
   }
 
   getInitials(nameString: string) {
@@ -623,20 +663,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.ideaEditEvent.emit(true);
   }
 
-  onCommentFocus() {
-    this.addCommentFocused = true;
-  }
-  onCommentBlur() {
-    this.addCommentFocused = false;
-  }
+
   focusOnEdit() {
     this.titleFocused = true;
   }
   unfocusedEdit() {
     this.titleFocused = false;
-  }
-  commentTyped() {
-    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 
   descriptionTextChanged($event: string) {

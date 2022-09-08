@@ -359,11 +359,12 @@
         fxFlex="row" 
         fxLayoutAlign="start center"
         [ngClass]="{'grey': addCommentFocused, 'greyed': commentModel.length}">
+        <!-- <div *ngIf="userSubmittedComment && !userSubmittedSuccesfully">submitting</div> -->
         <textarea
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="5"
+          cdkAutosizeMaxRows="5000"
           placeholder="Add a comment"  
           class="input-comment detailed"
           [(ngModel)]="commentModel"
@@ -371,11 +372,11 @@
           [ngClass]="{'active': commentModel.length}"
           (focus)="onCommentFocus()"
           (blur)="onCommentBlur()"
-          (keyup.enter)="submitComment(idea.id, commentModel); commentModel = ''">
+          (keyup.enter)="submitComment(idea.id, commentModel)">
         </textarea>
         <div  
           class="send-comment detailed primary-color" 
-          (click)="submitComment(idea.id, commentModel); commentModel = ''"
+          (click)="submitComment(idea.id, commentModel)"
           [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
           Post
         </div>

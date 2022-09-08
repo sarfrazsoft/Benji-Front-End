@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -13,9 +14,11 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as LogRocket from 'logrocket';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { fromEvent } from 'rxjs';
 import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
@@ -27,9 +30,11 @@ import {
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Idea,
+  QueryParamsObject,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
+import { UtilsService } from 'src/app/services/utils.service';
 import { IdeaDetailedInfo, IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
@@ -60,7 +65,7 @@ import { environment } from 'src/environments/environment';
     ]),
   ],
 })
-export class BrainstormCardComponent implements OnInit, OnChanges {
+export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() item: Idea;
   @Input() category;
@@ -84,7 +89,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
 
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
-  @Output() commentEdited = new EventEmitter<any>();
+  @Output() viewChanged = new EventEmitter<any>();
 
   commentModel = '';
   submittingUser = undefined;
@@ -107,6 +112,14 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   startX;
   startY;
 
+
+  ideaDetailedDialogRef: MatDialogRef<IdeaDetailedDialogComponent, any>;
+  userSubmittedComment = false;
+  userSubmittedSuccesfully = false;
+  queryParamSubscription;
+
+  @ViewChild('iframeContainer') iframeContainer: ElementRef;
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
@@ -118,19 +131,21 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     private ngxPermissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
     private breakpointObserver: BreakpointObserver,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
     // get parameters
     if (this.eventType !== 'BrainstormSetCategoryEvent') {
-      const paramPostId = this.activatedRoute.snapshot.queryParams['post'];
-      if (paramPostId) {
-        // tslint:disable-next-line:radix
-        if (parseInt(paramPostId) === this.item.id) {
-          this.showDetailedIdea(this.item);
+      this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
+        if (p.post) {
+          // tslint:disable-next-line:radix
+          if (parseInt(p.post) === this.item.id) {
+            this.showDetailedIdea(this.item);
+          }
         }
-      }
+      });
     }
 
     if (this.item && this.item.submitting_participant) {
@@ -174,6 +189,30 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy() {
+
+    if (this.queryParamSubscription) {
+      this.queryParamSubscription.unsubscribe();
+    }
+  }
+
+  ngAfterViewInit() {
+    // const i = this.item.meta.iframe;
+    // if (i && i.iframeHTML && i.iframeHTML.length > 0) {
+    //   const el = this.iframeContainer;
+    // const iframex = el.nativeElement.getElementsByTagName('iframe')[0];
+    // fromEvent(iframex, 'load').subscribe(() => console.log('loaded'));
+    // el.nativeElement.onresize = () => {
+    //   console.log('iframe loaded');
+    //   this.viewChanged.emit();
+    // };
+    // el.nativeElement.getElementsByTagName('iframe')[0].onload = () => {
+    //   console.log('iframe loaded');
+    //   this.viewChanged.emit();
+    // };
+    // }
+  }
+
   areCommentsAllowed() {
     return this.board.allow_comment;
   }
@@ -182,7 +221,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     return this.board.allow_heart;
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes) {
     if (this.eventType === 'BrainstormEditIdeaSubmitEvent') {
       if (this.item.idea_video && this.videoAvailable) {
         if (this.oldVideo !== this.item.idea_video.id) {
@@ -193,6 +232,33 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
             this.videoAvailable = true;
           }, 5);
         }
+      }
+    } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
+      if (this.ideaDetailedDialogRef) {
+        this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
+      }
+      if (this.userSubmittedComment) {
+        let existingComment = '';
+        if (this.ideaDetailedDialogRef) {
+          existingComment = this.brainstormService.getDraftComment(this.commentKey);
+        } else {
+          existingComment = this.commentModel;
+        }
+        this.item.comments.forEach(c => {
+          if (c.comment === existingComment &&
+            (c.participant === this.participantCode || !this.participantCode) &&
+            !this.userSubmittedSuccesfully) {
+            // there is a comment by this participant in the comments that is identical to commentModal
+            // safe to assume the comment is submitted
+            this.userSubmittedSuccesfully = true;
+            this.userSubmittedComment = false;
+            this.removeDraftComment();
+
+            if (this.ideaDetailedDialogRef) {
+              this.ideaDetailedDialogRef.componentInstance.ideaCommentSuccessfullySubmitted();
+            }
+          }
+        });
       }
     }
   }
@@ -257,8 +323,26 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
   }
 
   submitComment(ideaId, val) {
+    this.userSubmittedComment =  true;
+    this.userSubmittedSuccesfully = false;
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+  }
+
+  removeDraftComment() {
+    this.commentModel = '';
     this.brainstormService.removeDraftComment(this.commentKey);
+  }
+
+  onCommentFocus() {
+    this.classGrey = true;
+  }
+  onCommentBlur() {
+    this.classGrey = false;
+  }
+
+  commentTyped() {
+    this.viewChanged.emit();
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 
   removeComment(commentId, ideaId) {
@@ -390,6 +474,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         board: this.board,
       } as IdeaDetailedInfo,
     });
+
     const sub = dialogRef.componentInstance.sendMessage.subscribe((event) => {
       this.sendMessage.emit(event);
     });
@@ -403,6 +488,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
       if (result) {
         this.brainstormService.saveIdea$.next(result);
       }
+      this.ideaDetailedDialogRef = null;
       this.removePostQueryParam();
     });
 
@@ -416,22 +502,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
         dialogRef.removePanelClass('idea-detailed-mobile-dialog');
       }
     });
-  }
 
-  onCommentFocus() {
-    this.classGrey = true;
-  }
-  onCommentBlur() {
-    this.classGrey = false;
-  }
-
-  commentTyped() {
-    this.commentEdited.emit();
-    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+    this.ideaDetailedDialogRef = dialogRef;
   }
 
   videoLoaded() {
-    this.commentEdited.emit();
+    this.viewChanged.emit();
   }
 
   typeOfImage(item: Idea) {
@@ -468,34 +544,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges {
     // !isColumnsLayout && (userRole !== 'owner')
   }
 
-  calculateTimeStamp() {
-    // Test string
-    // this.timeStamp = moment('Thu May 09 2022 17:32:03 GMT+0500').fromNow().toString();
-    // this.timeStamp = moment('Thu Oct 25 1881 17:30:03 GMT+0300').fromNow().toString();
+  calculateTimeStamp(): void {
     if (!this.item) {
       return;
     }
-    this.timeStamp = moment(this.item.time).fromNow().toString();
-    if (this.timeStamp === 'a few seconds ago' || this.timeStamp === 'in a few seconds') {
-      this.timeStamp = '1m ago';
-    } else if (this.timeStamp.includes('an hour ago')) {
-      this.timeStamp = '1hr ago';
-    } else if (this.timeStamp.includes('a minute ago')) {
-      this.timeStamp = '1m ago';
-    } else if (this.timeStamp.includes('minutes')) {
-      this.timeStamp = this.timeStamp.replace(/\sminutes/, 'm');
-    } else if (this.timeStamp.includes('hours')) {
-      this.timeStamp = this.timeStamp.replace(/\shours/, 'hr');
-    } else if (this.timeStamp.includes('days')) {
-      this.timeStamp = this.timeStamp.replace(/\sdays/, 'd');
-    } else if (this.timeStamp.includes('a month')) {
-      this.timeStamp = this.timeStamp.replace(/a month/, '1mo');
-    } else if (this.timeStamp.includes('months')) {
-      this.timeStamp = this.timeStamp.replace(/\smonths/, 'mo');
-    } else if (this.timeStamp.includes('a year')) {
-      this.timeStamp = this.timeStamp.replace(/a year/, '1yr');
-    } else if (this.timeStamp.includes('years')) {
-      this.timeStamp = this.timeStamp.replace(/\syears/, 'yr');
-    }
+    this.timeStamp = this.utilsService.calculateTimeStamp(this.item.time);
   }
 }

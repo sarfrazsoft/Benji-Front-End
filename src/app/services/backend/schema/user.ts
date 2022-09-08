@@ -34,6 +34,8 @@ export interface TeamUser {
   username: string;
   verified_email?: boolean;
   branding: Branding;
+  preferred_host_theme: any;
+  preferred_host_theme_label: any;
 }
 
 export interface Team {

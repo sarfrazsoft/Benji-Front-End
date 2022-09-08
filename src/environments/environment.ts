@@ -7,6 +7,7 @@ export const environment = {
   host: 'staging.mybenji.com',
   web_protocol: 'https',
   socket_protocl: 'wss',
+  logrocket: '9wuhxc/benji',
 };
 
 /*

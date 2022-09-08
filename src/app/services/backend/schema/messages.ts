@@ -25,6 +25,7 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
+import { Notification } from './notification';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
@@ -34,6 +35,7 @@ export interface UpdateMessage {
   lesson_run: LessonRun;
   running_tools: RunningTools;
   eventType: string;
+  notifications: Array<Notification>;
   isHost: boolean;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
@@ -88,6 +90,12 @@ export interface ServerMessage {
   servererror?: ServerError;
   servernotification?: ServerNotification;
   eventtype: string;
+}
+
+
+export interface QueryParamsObject {
+  board: string;
+  post: string;
 }
 
 // export class Ddatemessage implements UpdateMessage {
@@ -1101,6 +1109,13 @@ export class UpdatePromptVideoEvent extends ActivityEvent {
   constructor(board: number, prompt_video) {
     super();
     this.extra_args = { prompt_video: prompt_video, board: board };
+  }
+}
+export class MarkNotificationsReadEvent extends ActivityEvent {
+  event_name = 'MarkNotificationsReadEvent';
+  constructor(ids: Array<number>) {
+    super();
+    this.extra_args = { notification_ids: ids };
   }
 }
 

@@ -5,8 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
-import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
-// import { EditorService } from 'src/app/dashboard/editor/services';
 import * as global from 'src/app/globals';
 import { BackendRestService, ContextService } from 'src/app/services';
 import { TeamUser } from 'src/app/services/backend/schema';
@@ -54,7 +52,7 @@ export class LessonTileComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
     private utilsService: UtilsService,
-    private lessonGroupService: LessonGroupService,
+    private lessonGroupService: LessonGroupService
   ) {}
 
   ngOnInit() {
@@ -264,46 +262,46 @@ export class LessonTileComponent implements OnInit {
         }
       });
   }
-  
+
   moveToFolder() {
     this.matDialog
       .open(MoveToFolderDialogComponent, {
         panelClass: 'move-to-folder-dialog',
         data: {
-          lessonId: this.lesson.id
-        }
+          lessonId: this.lesson.id,
+        },
       })
       .afterClosed()
       .subscribe((folder) => {
         if (folder) {
-          this.lessonGroupService.getFolderDetails(folder.id)
-          .subscribe(
-            (folder) => {
-              const lessons = folder.lesson;
-              this.folderLessonsIDs = [];
-              lessons.forEach((lesson) => {
-                this.folderLessonsIDs.push(lesson.id);
-              });
-              this.folderLessonsIDs.push(this.lesson.id);
-              let request = folder.title ? 
-                              this.lessonGroupService.createNewFolder({title: folder.title, lessonId: this.lesson.id}) : 
-                              this.lessonGroupService.updateFolder({title: folder.name, lessons: this.folderLessonsIDs, id: folder.id});
-              request.subscribe(
-                (data) => {
-                  this.contextService.newFolderAdded = true;
-                  this.lessonGroupService.getAllFolders().subscribe(
-                    (data) => {
-                      //this.contextService.folders = data;
-                    },
-                    (error) => console.log(error)
-                  );
-                },
-                (error) => console.log(error)
-              );
-            }
-          );
+          this.lessonGroupService.getFolderDetails(folder.id).subscribe((folder) => {
+            const lessons = folder.lesson;
+            this.folderLessonsIDs = [];
+            lessons.forEach((lesson) => {
+              this.folderLessonsIDs.push(lesson.id);
+            });
+            this.folderLessonsIDs.push(this.lesson.id);
+            const request = folder.title
+              ? this.lessonGroupService.createNewFolder({ title: folder.title, lessonId: this.lesson.id })
+              : this.lessonGroupService.updateFolder({
+                  title: folder.name,
+                  lessons: this.folderLessonsIDs,
+                  id: folder.id,
+                });
+            request.subscribe(
+              (data) => {
+                this.contextService.newFolderAdded = true;
+                this.lessonGroupService.getAllFolders().subscribe(
+                  (data) => {
+                    // this.contextService.folders = data;
+                  },
+                  (error) => console.log(error)
+                );
+              },
+              (error) => console.log(error)
+            );
+          });
         }
       });
   }
-
 }

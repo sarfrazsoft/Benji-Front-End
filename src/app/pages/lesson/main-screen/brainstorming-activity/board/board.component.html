@@ -43,45 +43,7 @@
           (viewImage)="viewImage($event)"
           (deleteIdea)="deleteIdea($event)">
         </benji-categorized-ideas>
-        <!-- <benji-columns-ideas
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [minWidth]="getMinWidth()"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="true"
-          [myGroup]="myGroup"
-          [isHost]="isHost"
-          [headWrapperHeight]="headWrapperHeight"
-          (addCardUnderCategory)="addCardUnderCategory($event)"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)"
-        >
-        </benji-columns-ideas> -->
       </ng-container>
-
-      <!-- <ng-container *ngIf="boardMode=='grid'">
-        <benji-uncategorized-ideas
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [minWidth]="getMinWidth()"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="false"
-          [myGroup]="myGroup"
-          [isHost]="isHost"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)">
-        </benji-uncategorized-ideas>
-      </ng-container> -->
 
       <ng-container *ngIf="boardMode=='grid'">
         <ng-container *ngIf="isSet(isHost)">

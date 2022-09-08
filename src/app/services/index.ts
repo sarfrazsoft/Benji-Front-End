@@ -8,6 +8,7 @@ import { BoardStatusService } from './board-status.service';
 import { EmojiLookupService } from './emoji-lookup.service';
 import { GroupingToolService } from './grouping-tool.service';
 import { LayoutService } from './layout.service';
+import { NotificationService } from './notification.service';
 import { PastSessionsService } from './past-sessions.service';
 import { PostLayoutService } from './post-layout.service';
 import { SharingToolService } from './sharing-tool.service';
@@ -35,6 +36,7 @@ export {
   SharingToolService,
   GroupingToolService,
   PostLayoutService,
+  NotificationService,
 };
 
 export const ServicesProviders = [
@@ -55,5 +57,6 @@ export const ServicesProviders = [
   TopicMediaService,
   LessonGroupService,
   PostLayoutService,
+  NotificationService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 ];

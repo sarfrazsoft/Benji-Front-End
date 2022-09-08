@@ -71,6 +71,7 @@
     "hls.js": "^0.12.4",
     "jwt-decode": "2.2.0",
     "lodash": "^4.17.11",
+    "logrocket": "^3.0.1",
     "masonry-layout": "^4.2.2",
     "material-design-icons": "^3.0.1",
     "moment": "^2.24.0",
