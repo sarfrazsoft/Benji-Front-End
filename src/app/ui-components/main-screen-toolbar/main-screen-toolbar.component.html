@@ -105,7 +105,7 @@
             matTooltip="Notifications"
             show-delay="100">
               <img src="/assets/img/navigation/notifications.svg"/>
-              <span class="count" fxLayoutAlign="center center"> 
+              <span *ngIf="notificationCount > 0" class="count" fxLayoutAlign="center center"> 
                 {{ notificationCount }} 
               </span>
               <mat-menu 

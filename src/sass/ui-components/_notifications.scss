@@ -18,9 +18,10 @@ benji-notifications {
       font-weight: 400;
       line-height: 16px;
       color: rgba(55, 53, 47, 0.5);
-      // &:hover {
-      //   color: #37352f;
-      // }
+      transition: all 0.2s;
+      &:hover {
+        color: #8f8989;
+      }
     }
     .empty-state {
       .message {
@@ -79,6 +80,7 @@ benji-notifications {
       &.unread-notification {
         .happenings .mark-as-read .circle {
           background: blue;
+          border: 0px;
         }
       }
       &.read-notification {

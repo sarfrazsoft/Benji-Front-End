@@ -24,7 +24,8 @@ export class NotificationsComponent implements OnInit {
   constructor(
     private notificationsService: NotificationService,
     private router: Router,
-    private utilsService: UtilsService) {}
+    private utilsService: UtilsService
+  ) {}
 
   ngOnInit() {
     // Get all notfications at the start
@@ -39,17 +40,17 @@ export class NotificationsComponent implements OnInit {
       }
       if (!this.isDashboard) {
         this.notificationList = this.notificationList.filter(
-          n => n.extra.lessonrun_code === this.activityState?.lesson_run.lessonrun_code
+          (n) => n.extra.lessonrun_code === this.activityState?.lesson_run.lessonrun_code
         );
-        console.log(this.notificationList.filter(x => !x.read).length);
-        this.updateNotificationCount.emit(this.notificationList.filter(x => !x.read).length);
+        console.log(this.notificationList.filter((x) => !x.read).length);
+        this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
       }
     });
   }
 
   updateNotifications(notifications: Array<Notification>) {
     this.notificationList = notifications;
-    this.updateNotificationCount.emit(this.notificationList.filter(x => !x.read).length);
+    this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
   }
 
   getLessonName(notification: Notification): string {
@@ -67,13 +68,13 @@ export class NotificationsComponent implements OnInit {
       const id = notification.id;
       notification.read = true;
       this.markAsReadNotifications.emit([id]);
-      this.updateNotificationCount.emit(this.notificationList.filter(x => !x.read).length);
+      this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
     }
   }
 
   markAllAsRead(): void {
     if (this.isDashboard) {
-      this.notificationsService.markAllasRead().subscribe(r => {
+      this.notificationsService.markAllasRead().subscribe((r) => {
         // console.log(r);
       });
     } else {
@@ -87,6 +88,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   navigateToPost(notification: Notification): void {
+    this.markAsRead(notification);
     this.router.navigate(['/screen/lesson/' + notification.extra.lessonrun_code], {
       queryParams: {
         board: notification.extra.board_id,
@@ -94,7 +96,7 @@ export class NotificationsComponent implements OnInit {
       },
       queryParamsHandling: 'merge',
       skipLocationChange: false,
-      replaceUrl: true
+      replaceUrl: true,
     });
   }
 

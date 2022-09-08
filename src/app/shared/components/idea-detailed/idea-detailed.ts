@@ -213,7 +213,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private deleteDialog: MatDialog,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
@@ -547,10 +547,12 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   brainstormSubmitIdeaCommentEvent(): void {
     if (this.userSubmittedComment) {
       const existingComment = this.commentModel;
-      this.idea.comments.forEach(c => {
-        if (c.comment === existingComment &&
+      this.idea.comments.forEach((c) => {
+        if (
+          c.comment === existingComment &&
           (c.participant === this.participantCode || !this.participantCode) &&
-          !this.userSubmittedSuccesfully) {
+          !this.userSubmittedSuccesfully
+        ) {
           // there is a comment by this participant in the comments that is identical to commentModal
           // safe to assume the comment is submitted
           this.userSubmittedSuccesfully = true;
@@ -663,7 +665,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.ideaEditEvent.emit(true);
   }
 
-
   focusOnEdit() {
     this.titleFocused = true;
   }
@@ -720,6 +721,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
         .subscribe((res: any) => {
           if (res.html) {
+            if (this.uploadPanelExpanded) {
+              this.uploadPanelExpanded = false;
+            }
             this.iframeAvailable = true;
             this.iframeRemoved = false;
             this.iframeData = { iframeHTML: res.html, url: res.url };

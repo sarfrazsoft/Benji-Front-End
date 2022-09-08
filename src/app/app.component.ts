@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     private restService: BackendRestService,
     private title: Title,
     @Inject(DOCUMENT) private _document: HTMLDocument
-  ) { }
+  ) {}
 
   ngOnInit() {
     let color = '#555BEA';
@@ -155,6 +155,10 @@ export class AppComponent implements OnInit {
         .activity-type:hover,
         benji-overview-panel .panel .activity-list .activity-container .activity.active {
           border: 2px solid ${color} !important;
+        }
+
+        .notifications-container .header .mark-all:hover {
+          color: ${color};
         }
 
         .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
