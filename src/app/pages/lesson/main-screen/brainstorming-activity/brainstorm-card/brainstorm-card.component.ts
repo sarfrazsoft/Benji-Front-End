@@ -112,7 +112,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   startX;
   startY;
 
-
   ideaDetailedDialogRef: MatDialogRef<IdeaDetailedDialogComponent, any>;
   userSubmittedComment = false;
   userSubmittedSuccesfully = false;
@@ -190,7 +189,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   ngOnDestroy() {
-
     if (this.queryParamSubscription) {
       this.queryParamSubscription.unsubscribe();
     }
@@ -244,10 +242,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         } else {
           existingComment = this.commentModel;
         }
-        this.item.comments.forEach(c => {
-          if (c.comment === existingComment &&
+        this.item.comments.forEach((c) => {
+          if (
+            c.comment === existingComment &&
             (c.participant === this.participantCode || !this.participantCode) &&
-            !this.userSubmittedSuccesfully) {
+            !this.userSubmittedSuccesfully
+          ) {
             // there is a comment by this participant in the comments that is identical to commentModal
             // safe to assume the comment is submitted
             this.userSubmittedSuccesfully = true;
@@ -323,7 +323,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   submitComment(ideaId, val) {
-    this.userSubmittedComment =  true;
+    this.userSubmittedComment = true;
     this.userSubmittedSuccesfully = false;
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
   }
@@ -414,7 +414,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
     if (diffX < this.delta && diffY < this.delta) {
       // Click!
-      this.showDetailedIdea(idea);
+      // as the query parameters are changed the
+      // post will open up by subscription
+      this.ideaChangingQueryParams(this.item.id);
     }
   }
 
@@ -455,7 +457,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   openDialog(idea: Idea, assignedClass, isDesktop) {
-    this.ideaChangingQueryParams(this.item.id);
     const dialogRef = this.dialog.open(IdeaDetailedDialogComponent, {
       disableClose: true,
       hasBackdrop: isDesktop,
