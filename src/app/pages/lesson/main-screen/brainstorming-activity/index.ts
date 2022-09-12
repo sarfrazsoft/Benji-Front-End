@@ -1,6 +1,7 @@
 import { BoardPromptComponent as BrainstormBoardPromptComponent } from './board/board-prompt/board-prompt.component';
 import { BoardComponent } from './board/board.component';
 import { BrainstormCardComponent } from './brainstorm-card/brainstorm-card.component';
+import { BrainstormLayoutComponent } from './brainstorm-layout.component';
 import { MainScreenBrainstormingActivityComponent } from './brainstorming-activity.component';
 import { CategorizedComponent as BrainstormCategorizedComponent } from './categorized/categorized.component';
 import { ColumnsComponent as BrainstormColumnsComponent } from './columns/columns.component';
@@ -18,6 +19,7 @@ export { BrainstormColumnsComponent };
 export { BrainstormThreadModeComponent };
 export { MainScreenBrainstormingActivityComponent };
 export { BrainstormBoardPromptComponent };
+export { BrainstormLayoutComponent };
 
 export const MainScreenBrainStormComponents = [
   BoardComponent,
@@ -30,4 +32,5 @@ export const MainScreenBrainStormComponents = [
   BrainstormUnsortedComponentComponent,
   BrainstormGridComponentComponent,
   BrainstormColumnsComponent,
+  // BrainstormLayoutComponent,
 ];

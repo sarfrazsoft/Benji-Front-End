@@ -83,6 +83,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Input() myGroup;
   @Input() avatarSize;
   @Input() userRole: IdeaUserRole;
+  @Input() ideaDetailedDialogOpen: boolean;
   @ViewChild('colName') colNameElement: ElementRef;
   @ViewChild('player') player: ElementRef;
   hostname = environment.web_protocol + '://' + environment.host;
@@ -90,6 +91,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Output() viewImage = new EventEmitter<string>();
   @Output() deleteIdea = new EventEmitter<Idea>();
   @Output() viewChanged = new EventEmitter<any>();
+  @Output() ideaDetailedDialogOpened = new EventEmitter<any>();
+  @Output() ideaDetailedDialogClosed = new EventEmitter<any>();
 
   commentModel = '';
   submittingUser = undefined;
@@ -138,7 +141,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     // get parameters
     if (this.eventType !== 'BrainstormSetCategoryEvent') {
       this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
-        if (p.post) {
+        if (p.post && !this.ideaDetailedDialogOpen) {
           // tslint:disable-next-line:radix
           if (parseInt(p.post) === this.item.id) {
             this.showDetailedIdea(this.item);
@@ -491,6 +494,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       }
       this.ideaDetailedDialogRef = null;
       this.removePostQueryParam();
+      this.ideaDetailedDialogClosed.emit();
     });
 
     // detect screen size changes
@@ -505,6 +509,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     });
 
     this.ideaDetailedDialogRef = dialogRef;
+    this.ideaDetailedDialogOpened.emit();
   }
 
   videoLoaded() {

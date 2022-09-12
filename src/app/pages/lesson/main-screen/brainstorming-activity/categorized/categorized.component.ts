@@ -40,8 +40,7 @@ import {
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
-import { BaseActivityComponent } from '../../../shared/base-activity.component';
-import { PostOrder } from '../grid/grid.component';
+import { BrainstormLayoutComponent } from '../brainstorm-layout.component';
 
 export interface ColsIdeaOrderInfo {
   container: string;
@@ -60,7 +59,7 @@ export interface ColsCategoryChangeIdeaOrderInfo {
   selector: 'benji-categorized-ideas',
   templateUrl: './categorized.component.html',
 })
-export class CategorizedComponent implements OnInit, OnChanges {
+export class CategorizedComponent extends BrainstormLayoutComponent implements OnInit, OnChanges {
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
@@ -99,7 +98,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     if (!this.participantCode) {
