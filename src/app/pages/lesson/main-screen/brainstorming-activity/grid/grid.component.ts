@@ -14,7 +14,7 @@ import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { BrainstormLayoutComponent } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
+import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { BrainstormService, ContextService } from 'src/app/services';
 import {
   Board,
@@ -38,7 +38,7 @@ export interface PostOrder {
   selector: 'benji-grid-ideas',
   templateUrl: './grid.component.html',
 })
-export class GridComponent extends BrainstormLayoutComponent implements OnInit, OnChanges, AfterViewInit {
+export class GridComponent extends BrainstormLayout implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;

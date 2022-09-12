@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
+import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
 import {
   Board,
@@ -40,7 +41,6 @@ import {
 } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
-import { BrainstormLayoutComponent } from '../brainstorm-layout.component';
 
 export interface ColsIdeaOrderInfo {
   container: string;
@@ -59,7 +59,7 @@ export interface ColsCategoryChangeIdeaOrderInfo {
   selector: 'benji-categorized-ideas',
   templateUrl: './categorized.component.html',
 })
-export class CategorizedComponent extends BrainstormLayoutComponent implements OnInit, OnChanges {
+export class CategorizedComponent extends BrainstormLayout implements OnInit, OnChanges {
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;

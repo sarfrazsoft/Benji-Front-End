@@ -17,6 +17,7 @@ import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'mu
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
+import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
 import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
@@ -91,7 +92,7 @@ import { PostOrder } from '../grid/grid.component';
     ]),
   ],
 })
-export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
+export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() act;
   @Input() activityState;
@@ -124,6 +125,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     private ngxPermissionsService: NgxPermissionsService,
     private postLayoutService: PostLayoutService
   ) {
+    super();
     this.layoutConfig = this.postLayoutService.getLayoutConfig();
     this.layoutConfig.items = this.ideas;
     const sortDataPreset = this.postLayoutService.getSortPresetsData();

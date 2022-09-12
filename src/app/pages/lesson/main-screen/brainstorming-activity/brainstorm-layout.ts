@@ -1,8 +1,8 @@
-import { Directive, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Directive } from '@angular/core';
 
 @Directive()
 // tslint:disable-next-line:directive-class-suffix
-export abstract class BrainstormLayoutComponent {
+export abstract class BrainstormLayout {
   ideaDetailedDialogOpen = false;
 
   ideaDetailedDialogOpened(): void {
