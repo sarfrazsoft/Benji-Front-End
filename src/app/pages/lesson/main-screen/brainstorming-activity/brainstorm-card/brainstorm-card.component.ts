@@ -328,6 +328,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   submitComment(ideaId, val) {
     this.userSubmittedComment = true;
     this.userSubmittedSuccesfully = false;
+    this.commentModel = val;
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
   }
 

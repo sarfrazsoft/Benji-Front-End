@@ -1,14 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  AfterViewInit,
-  Component,
-  HostListener,
-  Inject,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, HostListener, Inject, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
@@ -24,7 +15,7 @@ import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.
   selector: 'benji-idea-creation-dialog',
   templateUrl: 'idea-creation.dialog.html',
 })
-export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
+export class IdeaCreationDialogComponent implements OnInit {
   showCategoriesDropdown = false;
   categories: Array<Category> = [];
   selectedCategory: Category;
@@ -65,14 +56,6 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
 
   @ViewChild('pdfViewerAutoLoad') pdfViewerAutoLoad;
 
-  @HostListener('window:keyup.esc') onKeyUp() {
-    if (this.userIdeaText.length || this.ideaTitle.length) {
-      this.askUserConfirmation();
-    } else {
-      this.dialogRef.close();
-    }
-  }
-
   constructor(
     private dialogRef: MatDialogRef<IdeaCreationDialogComponent>,
     private httpClient: HttpClient,
@@ -103,24 +86,22 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
     this.dialogRef.disableClose = true;
 
     this.dialogRef.backdropClick().subscribe((_) => {
-      if (this.userIdeaText.length || this.ideaTitle.length || this.isItemSelected()) {
-        this.askUserConfirmation();
-      } else {
-        this.dialogRef.close();
-      }
+      this.decideShouldClose();
     });
-    this.dialogRef.keydownEvents().subscribe(event => {
-      if (event.key === "Escape") {
-        if (this.userIdeaText.length || this.ideaTitle.length || this.isItemSelected()) {
-          this.askUserConfirmation();
-        } else {
-          this.dialogRef.close();
-        }
+    this.dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
+        this.decideShouldClose();
       }
     });
   }
 
-  ngAfterViewInit(): void {}
+  decideShouldClose() {
+    if (this.userIdeaText.length || this.ideaTitle.length || this.isItemSelected()) {
+      this.askUserConfirmation();
+    } else {
+      this.dialogRef.close();
+    }
+  }
 
   askUserConfirmation() {
     this.matDialog
@@ -156,7 +137,7 @@ export class IdeaCreationDialogComponent implements OnInit, AfterViewInit {
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    this.decideShouldClose();
   }
 
   openImagePickerDialog() {

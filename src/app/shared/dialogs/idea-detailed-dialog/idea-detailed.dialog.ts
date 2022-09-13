@@ -86,7 +86,6 @@ export class IdeaDetailedDialogComponent implements OnInit {
         this.dialogRef.close();
       }
     });
-
     this.dialogRef.keydownEvents().subscribe((event) => {
       if (event.key === 'Escape') {
         if (this.isEdited) {

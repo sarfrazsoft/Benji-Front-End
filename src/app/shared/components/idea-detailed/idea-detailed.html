@@ -372,7 +372,8 @@
           [ngClass]="{'active': commentModel.length}"
           (focus)="onCommentFocus()"
           (blur)="onCommentBlur()"
-          (keyup.enter)="submitComment(idea.id, commentModel)">
+          (keydown.enter)="submitComment(idea.id, commentModel)"
+          [disabled]="userSubmittedComment && !userSubmittedSuccesfully">
         </textarea>
         <div  
           class="send-comment detailed primary-color" 
