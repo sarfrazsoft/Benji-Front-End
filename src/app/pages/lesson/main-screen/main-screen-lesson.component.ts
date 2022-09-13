@@ -122,7 +122,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
     this.openSettingsMenu();
   }
 
-  close() {
+  closeAndResetNav() {
     this.sidenav.close();
     this.sideNavMode = null;
     this.navType = null;
@@ -139,12 +139,11 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   }
 
   sideNavOpenedStart(): void {
-    // console.log('hur');
     this.contextService.sideNavAction = 'opened';
   }
 
   sideNavClosedStart(): void {
-    // console.log('dhur');
+    this.closeAndResetNav();
     this.contextService.sideNavAction = 'closed';
   }
 }

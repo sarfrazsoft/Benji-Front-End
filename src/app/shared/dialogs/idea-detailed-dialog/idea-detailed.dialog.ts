@@ -49,6 +49,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
   ideaTitle;
   lessonRunCode;
   imageSelected = false;
+  disableArrows: boolean;
 
   imagesList: FileList;
   imageSrc;
@@ -76,7 +77,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: IdeaDetailedInfo,
     private brainstormService: BrainstormService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {
@@ -98,6 +99,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
   }
 
   openConfirmationDialog() {
+    this.disableArrows = true;
     this.matDialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -112,6 +114,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
+        this.disableArrows = false;
         if (res) {
           this.dialogRef.close();
         }
@@ -129,13 +132,17 @@ export class IdeaDetailedDialogComponent implements OnInit {
   }
 
   nextItemRequested() {
-    const checkIndex = 1;
-    this.getItemByCheckIndex(checkIndex);
+    if (!this.disableArrows) {
+      const checkIndex = 1;
+      this.getItemByCheckIndex(checkIndex);
+    }
   }
 
   previousItemRequested() {
-    const checkIndex = -1;
-    this.getItemByCheckIndex(checkIndex);
+    if (!this.disableArrows) {
+      const checkIndex = -1;
+      this.getItemByCheckIndex(checkIndex);
+    }
   }
 
   public ideaChangingQueryParams(ideaId: number) {

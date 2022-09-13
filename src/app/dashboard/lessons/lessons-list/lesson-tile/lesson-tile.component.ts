@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import * as global from 'src/app/globals';
 import { BackendRestService, ContextService } from 'src/app/services';
 import { TeamUser } from 'src/app/services/backend/schema';
+import { environment } from 'src/environments/environment';
 import { Lesson, LessonRunDetails, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
@@ -37,11 +38,11 @@ export class LessonTileComponent implements OnInit {
   timeStamp: string;
   participantsCount: number;
   coverPhoto: string;
-
-  hostLocation = window.location.host;
   hostname = window.location.host + '/participant/join?link=';
   maxIdIndex: number;
   folderLessonsIDs = [];
+
+  hostLocation = environment.web_protocol + '://' + environment.host;
 
   constructor(
     private matDialog: MatDialog,
@@ -53,7 +54,7 @@ export class LessonTileComponent implements OnInit {
     private contextService: ContextService,
     private utilsService: UtilsService,
     private lessonGroupService: LessonGroupService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.participantsCount = this.lesson.participant_set.length;
@@ -78,7 +79,7 @@ export class LessonTileComponent implements OnInit {
         return;
       }
 
-      this.coverPhoto = image_url ?? img;
+      this.coverPhoto = image_url ?? this.hostLocation + img;
     } else {
       this.setDefaultCoverPhoto();
     }
@@ -284,10 +285,10 @@ export class LessonTileComponent implements OnInit {
             const request = folder.title
               ? this.lessonGroupService.createNewFolder({ title: folder.title, lessonId: this.lesson.id })
               : this.lessonGroupService.updateFolder({
-                  title: folder.name,
-                  lessons: this.folderLessonsIDs,
-                  id: folder.id,
-                });
+                title: folder.name,
+                lessons: this.folderLessonsIDs,
+                id: folder.id,
+              });
             request.subscribe(
               (data) => {
                 this.contextService.newFolderAdded = true;

@@ -213,7 +213,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private deleteDialog: MatDialog,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
@@ -695,10 +695,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   isItemSelected() {
-    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
+    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage && !this.iframeData) {
       return false;
     }
-    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
+    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage || this.iframeData) {
       return true;
     }
     return false;
