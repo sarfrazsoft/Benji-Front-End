@@ -24,7 +24,7 @@
   <mat-sidenav 
     #sidenav
     [mode]="sideNavMode" 
-    (keydown.escape)="close()"
+    (keydown.escape)="closeAndResetNav()"
     [position]="sideNavPosition"
     (openedStart)="sideNavOpenedStart()" 
     (closedStart)="sideNavClosedStart()">
