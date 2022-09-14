@@ -24,9 +24,9 @@ export class NotificationService {
   getNotifications(unread: boolean): Observable<Array<Notification>> {
     let filterParams = '';
     if (unread) {
-      filterParams = '&unread=True';
+      filterParams = '?&unread=True';
     }
-    return this.http.get(global.apiRoot + '/notifications/?' + filterParams).pipe(
+    return this.http.get(global.apiRoot + '/notifications/' + filterParams).pipe(
       map((res: NotificationResult) => {
         return res.results;
       })

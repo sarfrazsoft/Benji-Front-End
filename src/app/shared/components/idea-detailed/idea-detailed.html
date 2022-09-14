@@ -152,7 +152,7 @@
         >
         <img src="/assets/img/idea-creation/arrow-left.svg">
       </div>
-      <button *ngIf="userRole === 'owner'" class="remove-button" (click)="remove()">
+      <button *ngIf="isUserRoleOwner()" class="remove-button" (click)="remove()">
         Remove
       </button>
     </div>
@@ -169,7 +169,7 @@
         class="idea-creation-controls" 
         fxLayout="row" 
         fxLayoutAlign="space-between center"
-        *ngIf="userRole === 'owner'">
+        *ngIf="isUserRoleOwner()">
         <div fxLayout="row">
           <div class="settings" fxLayout="row"fxLayoutGap="12px">
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div> -->
@@ -215,9 +215,9 @@
           >Update</button>
       </div>
       <div class="scrollable-area" fxLayout="column">
-        <ng-container *ngIf="userRole === 'owner' || ideaTitle">
+        <ng-container *ngIf="isUserRoleOwner() || ideaTitle">
           <textarea 
-            [readonly]="userRole !== 'owner'"
+            [readonly]="!isUserRoleOwner()"
             class="title" 
             placeholder="Title (optional)" 
             [(ngModel)]="ideaTitle"
@@ -230,9 +230,9 @@
             cdkAutosizeMaxRows="5">
           </textarea>
         </ng-container>
-        <ng-container *ngIf="userRole === 'owner' || userIdeaText">
+        <ng-container *ngIf="isUserRoleOwner() || userIdeaText">
           <benji-tiptap-editor
-            [editable]="userRole === 'owner'"
+            [editable]="isUserRoleOwner()"
             [defaultValue]="userIdeaText"
             (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>
@@ -273,7 +273,7 @@
                 (change)="categoryChanged($event)"
                 [searchable]="false"
                 [clearable]="false"
-                [disabled]="userRole !== 'owner'">
+                [disabled]="!isUserRoleOwner()">
               </ng-select>
             </div>
           </div>

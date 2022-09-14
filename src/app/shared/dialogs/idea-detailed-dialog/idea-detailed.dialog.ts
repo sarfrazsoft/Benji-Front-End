@@ -77,7 +77,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: IdeaDetailedInfo,
     private brainstormService: BrainstormService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.dialogRef.backdropClick().subscribe(() => {

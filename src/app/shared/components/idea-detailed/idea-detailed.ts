@@ -213,7 +213,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     private deleteDialog: MatDialog,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.ngxPermissionsService.hasPermission('ADMIN').then((val) => {
@@ -239,18 +239,29 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.initIdea();
   }
 
+  isUserRoleOwner(): boolean {
+    return this.userRole === 'owner';
+  }
+
   handleKeyboardEvent(event: KeyboardEvent) {
     const el = document.getElementsByClassName('scrollable-area')[0];
-    if (el.contains(document.activeElement)) {
+    // if the user is owner and editables items have focus then return
+    // if the user is not owner then don't return in any case
+    if (this.isUserRoleOwner() && el.contains(document.activeElement)) {
+      // if focus is on any of the editable areas
+      console.log('returned');
       return;
     }
-    if (!this.addCommentFocused && !this.titleFocused) {
-      if (event.key === 'ArrowRight') {
-        this.nextArrowClicked();
-      }
-      if (event.key === 'ArrowLeft') {
-        this.previousArrowClicked();
-      }
+    if ((!this.addCommentFocused && !this.titleFocused) || !this.isUserRoleOwner()) {
+      this.executeAction(event);
+    }
+  }
+  executeAction(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      this.nextArrowClicked();
+    }
+    if (event.key === 'ArrowLeft') {
+      this.previousArrowClicked();
     }
   }
 
@@ -385,7 +396,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   closeDialog() {
-    // this.dialogRef.close();
     this.closeView.emit();
   }
 
