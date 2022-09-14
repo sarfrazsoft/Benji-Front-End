@@ -99,7 +99,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
   }
 
   openConfirmationDialog() {
-    this.disableArrows = true;
+    this.disableNavArrows(true);
     this.matDialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -114,11 +114,15 @@ export class IdeaDetailedDialogComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
-        this.disableArrows = false;
+        this.disableNavArrows(false);
         if (res) {
           this.dialogRef.close();
         }
       });
+  }
+
+  disableNavArrows(event: boolean): void {
+    this.disableArrows = event;
   }
 
   ideaIsEdited(event) {

@@ -186,6 +186,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   @Output() deleteIdea = new EventEmitter<any>();
   @Output() submit = new EventEmitter<any>();
   @Output() closeView = new EventEmitter<any>();
+  @Output() disableArrows = new EventEmitter<boolean>();
   @Output() ideaEditEvent = new EventEmitter<boolean>();
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
@@ -592,6 +593,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   delete() {
+    this.disableArrows.emit(true);
     this.deleteDialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -603,6 +605,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
+        this.disableArrows.emit(false);
         if (res) {
           this.deleteIdea.emit(this.idea.id);
         }

@@ -163,7 +163,7 @@
     fxLayout="column" 
     fxLayoutAlign="space-between start" 
     [ngClass]="{'content-blank': !areCommentsAllowed() && !isHost && !ideaTitle.length && emptyUserIdeaText ,
-                'only-area': !imageSelected && !pdfSelected && !uploadPanelExpanded && !video && !webcamImage}">
+                'only-area': !imageSelected && !pdfSelected && !uploadPanelExpanded && !video && !webcamImage && !iframeData}">
     <div class="content-area" [ngClass]="{'space-bottom': !areCommentsAllowed()}">
       <div 
         class="idea-creation-controls" 
