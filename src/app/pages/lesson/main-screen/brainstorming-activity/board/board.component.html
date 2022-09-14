@@ -23,7 +23,7 @@
     <div class="brainstorm-container"
       [ngStyle]="{
         'height': (boardMode == 'columns' || boardMode == 'grid') ? '100%' : '',
-        'overflow': (boardMode == 'grid') ? 'auto' : ''
+        'overflow': (boardMode == 'grid') ? '' : ''
       }">
       <ng-container *ngIf="boardMode=='columns'">
         <benji-categorized-ideas
