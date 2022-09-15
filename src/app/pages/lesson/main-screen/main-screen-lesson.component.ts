@@ -139,11 +139,21 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   }
 
   sideNavOpenedStart(): void {
-    this.contextService.sideNavAction = 'opened';
+    // this.contextService.sideNavAction = 'opened';
   }
 
   sideNavClosedStart(): void {
     this.closeAndResetNav();
-    this.contextService.sideNavAction = 'closed';
+    // this.contextService.sideNavAction = 'closed';
+  }
+
+  openedChange(state: boolean): void {
+    if (state) {
+      // opened
+      this.contextService.sideNavAction = 'opened';
+    } else {
+      // closed
+      this.contextService.sideNavAction = 'closed';
+    }
   }
 }

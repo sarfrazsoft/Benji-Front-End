@@ -428,10 +428,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     return arr;
   }
 
-  // getVoteSubmittedUsersCount(act: BrainstormActivity) {
-  //   return act.participant_vote_counts.length;
-  // }
-
   deleteIdea(id) {
     this.sendMessage.emit(new BrainstormRemoveSubmissionEvent(id));
   }
