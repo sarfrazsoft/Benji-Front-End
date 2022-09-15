@@ -252,6 +252,18 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     );
   }
 
+  addPage(previousBoard: Board) {
+    this.sendMessage.emit(
+      new BrainstormAddBoardEventBaseEvent(
+        'Board ' + this.boards.length,
+        previousBoard.id,
+        previousBoard.next_board,
+        '',
+        ''
+      )
+    );
+  }
+
   openDeleteDialog(boardID?: number) {
     this.dialog
       .open(ConfirmationDialogComponent, {

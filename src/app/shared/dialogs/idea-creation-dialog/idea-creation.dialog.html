@@ -25,7 +25,7 @@
             (ngModelChange)="checkIfLink($event)">
           </textarea>
           <div class="close-button" fxLayoutAlign="end start">
-            <mat-icon class="close" matDialogClose>clear</mat-icon>
+            <mat-icon class="close" (click)="closeDialog()">clear</mat-icon>
           </div>
         </div>
         <div [ngClass]="{ 'image-selected': !isItemSelected() }">

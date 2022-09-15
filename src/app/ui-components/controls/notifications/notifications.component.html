@@ -1,0 +1,104 @@
+<div 
+  [ngClass]="isDashboard ? 'is-dashboard' : 'not-dashboard'"
+  class="admin-panel" 
+  fxLayout="column"
+  benji-click-stop-propagation>
+  <div class="dashboard-header notifications">
+    <div class="dashboard-heading">
+      <h1>Notifications</h1>
+    </div>
+  </div>
+  <div class="notifications-container" fxLayout="column">
+    <div class="header">
+      <div class="notific">Notifications</div>
+      <div class="mark-all" (click)="markAllAsRead()">
+        Mark all as read
+      </div>
+    </div>
+    <div
+      *ngIf="notificationList?.length === 0"
+      class="empty-state" 
+      fxLayoutAlign="center center">
+      <div class="message" fxLayout="column">
+        <div class="bell" fxLayoutAlign="center center">
+          <img src="/assets/img/navigation/notific-bell.svg">
+        </div>
+        <div class="title">No notifications yet</div>
+        <div class="sub-title">We'll notify you when something arrives.</div>
+      </div>
+    </div>
+    <ng-container *ngIf="notificationList?.length > 0">
+      <ng-container *ngFor="let notification of notificationList; let last=last">
+        <div class="container">
+          <div 
+            class="notification" 
+            [ngClass]="{
+              'read-notification': notification.read,
+              'unread-notification': !notification.read
+            }"
+            benji-click-stop-propagation
+            (click)="navigateToPost(notification)">
+            <div 
+              class="happenings" 
+              fxLayout="row" 
+              fxLayoutAlign="space-between center">
+              <div fxLayout="row" fxLayoutGap="16px">
+                <!-- <div class="profile-picture">
+                  <benji-profile-pictures
+                    [activityState]="activityState"
+                    [participantCodes]="[submitting_participant]"
+                    [showTooltip]="false"
+                    [size]="'large'"
+                  ></benji-profile-pictures>
+                </div> -->
+                <!-- <div class="profile-picture">
+                  <benji-profile-pictures
+                    [activityState]="activityState"
+                    [name]="[notification.extra?.name]"
+                    [showTooltip]="false"
+                    [size]="'custom48'"
+                  ></benji-profile-pictures>
+                </div> -->
+                <div class="content" fxLayout="column" fxLayoutGap="4px">
+                  <div class="statement">
+                    {{ notification.extra?.name }}
+                    <ng-container *ngIf="notification.extra?.action ==='posted'">
+                      <span class="happened"> 
+                        {{ notification.extra?.action }} 
+                      </span>
+                      in
+                    </ng-container>
+                    <ng-container *ngIf="notification.extra?.action ==='commented'">
+                      <span class="happened"> 
+                        {{ notification.extra?.action }} 
+                      </span>
+                      on a post in 
+                    </ng-container>
+                    <ng-container *ngIf="notification.extra?.action ==='heart'">
+                      <span class="happened"> 
+                        liked
+                      </span>
+                        your post in 
+                    </ng-container>
+                      {{ getLessonName(notification) }}
+                  </div>
+                  <div class="time-stamp">
+                    {{ getTime(notification) }}
+                  </div>
+                </div>
+              </div>
+              <div
+                class="mark-as-read" 
+                (click)="markAsRead(notification)"
+                benji-click-stop-propagation>
+                <span class="circle"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <span *ngIf="!last" class="solid"></span>
+      </ng-container>
+    </ng-container>
+  </div>
+
+</div>

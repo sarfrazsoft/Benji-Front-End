@@ -7,7 +7,7 @@ export class ActivitiesService {
   constructor() {}
 
   getParticipantName(activityState: UpdateMessage, code: number) {
-    const host = activityState.lesson_run.host;
+    const host = activityState.lesson_run?.host;
     let name = host.first_name + ' ' + host.last_name;
     if (host) {
       name = 'Facilitator';

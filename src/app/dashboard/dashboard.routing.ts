@@ -1,7 +1,7 @@
 import { NONE_TYPE } from '@angular/compiler';
 import { RouterModule, Routes } from '@angular/router';
 import { IsAdminGuard } from 'src/app/services/auth/is-admin.guard';
-import { NotificationsComponent } from '../ui-components/notifications/notifications.component';
+import { NotificationsComponent } from '../ui-components/controls/notifications/notifications.component';
 import {
   AccountComponent,
   AdminPanelComponent,
@@ -84,7 +84,6 @@ const routesWithoutResolve: Routes = [
     ],
   },
 ];
-
 
 export const DashboardRoutes = RouterModule.forChild(routes);
 

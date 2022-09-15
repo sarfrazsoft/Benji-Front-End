@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 import { ImagePickerDialogComponent } from '../image-picker-dialog/image-picker.dialog';
 @Component({
   selector: 'benji-session-settings-dialog',
@@ -31,7 +32,7 @@ export class SessionSettingsDialogComponent implements OnInit {
   imageUrl: string;
   selectedImageName: string;
 
-  hostLocation = window.location.host;
+  hostLocation = environment.web_protocol + '://' + environment.host;
 
   constructor(
     private httpClient: HttpClient,

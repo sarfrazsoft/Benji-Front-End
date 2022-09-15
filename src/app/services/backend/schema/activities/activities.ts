@@ -324,8 +324,30 @@ export interface Board {
 }
 
 export interface BoardMetaData {
-  post_order: any;
-  updated: 'post_order';
+  post_order?: Array<PostOrder>;
+  colsCategoryChangeIdeaOrderInfo?: ColsCategoryChangeIdeaOrderInfo;
+  colsIdeaOrderInfo?: ColsIdeaOrderInfo;
+  updated?: 'post_order' | 'category_changed';
+}
+
+
+
+export interface PostOrder {
+  ideaId: string;
+  order: string;
+}
+
+export interface ColsCategoryChangeIdeaOrderInfo {
+  previousContainer: string;
+  container: string;
+  previousIndex: number;
+  currentIndex: number;
+}
+
+export interface ColsIdeaOrderInfo {
+  container: string;
+  previousIndex: number;
+  currentIndex: number;
 }
 
 export interface TopicMedia {

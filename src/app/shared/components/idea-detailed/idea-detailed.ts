@@ -186,6 +186,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   @Output() deleteIdea = new EventEmitter<any>();
   @Output() submit = new EventEmitter<any>();
   @Output() closeView = new EventEmitter<any>();
+  @Output() disableArrows = new EventEmitter<boolean>();
   @Output() ideaEditEvent = new EventEmitter<boolean>();
   @Output() previousItemRequested = new EventEmitter<any>();
   @Output() nextItemRequested = new EventEmitter<any>();
@@ -202,6 +203,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
 
   pdfCleared = false;
   emptyUserIdeaText: boolean;
+
+  userSubmittedComment = false;
+  userSubmittedSuccesfully = false;
 
   constructor(
     private activitiesService: ActivitiesService,
@@ -236,18 +240,29 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.initIdea();
   }
 
+  isUserRoleOwner(): boolean {
+    return this.userRole === 'owner';
+  }
+
   handleKeyboardEvent(event: KeyboardEvent) {
     const el = document.getElementsByClassName('scrollable-area')[0];
-    if (el.contains(document.activeElement)) {
+    // if the user is owner and editables items have focus then return
+    // if the user is not owner then don't return in any case
+    if (this.isUserRoleOwner() && el.contains(document.activeElement)) {
+      // if focus is on any of the editable areas
+      console.log('returned');
       return;
     }
-    if (!this.addCommentFocused && !this.titleFocused) {
-      if (event.key === 'ArrowRight') {
-        this.nextArrowClicked();
-      }
-      if (event.key === 'ArrowLeft') {
-        this.previousArrowClicked();
-      }
+    if ((!this.addCommentFocused && !this.titleFocused) || !this.isUserRoleOwner()) {
+      this.executeAction(event);
+    }
+  }
+  executeAction(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      this.nextArrowClicked();
+    }
+    if (event.key === 'ArrowLeft') {
+      this.previousArrowClicked();
     }
   }
 
@@ -366,7 +381,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     if (this.pdfCleared || this.webcamImageCleared || this.videoCleared) {
       this.removeIdeaDocumentFromBE();
     }
-    console.log(this.iframeData);
     this.submit.emit({
       ...this.idea,
       text: this.userIdeaText,
@@ -383,7 +397,6 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   closeDialog() {
-    // this.dialogRef.close();
     this.closeView.emit();
   }
 
@@ -517,8 +530,48 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   submitComment(ideaId, val) {
+    this.userSubmittedComment = true;
+    this.userSubmittedSuccesfully = false;
     this.sendMessage.emit(new BrainstormSubmitIdeaCommentEvent(val, ideaId));
+  }
+
+  clearDraftComment(): void {
+    this.commentModel = '';
     this.brainstormService.removeDraftComment(this.commentKey);
+  }
+
+  onCommentFocus() {
+    this.addCommentFocused = true;
+  }
+  onCommentBlur() {
+    this.addCommentFocused = false;
+  }
+  commentTyped() {
+    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
+  }
+
+  ideaCommentSuccessfullySubmitted(): void {
+    this.userSubmittedSuccesfully = true;
+    this.userSubmittedComment = false;
+    this.clearDraftComment();
+  }
+  brainstormSubmitIdeaCommentEvent(): void {
+    if (this.userSubmittedComment) {
+      const existingComment = this.commentModel.trim();
+      this.idea.comments.forEach((c) => {
+        if (
+          c.comment === existingComment &&
+          (c.participant === this.participantCode || !this.participantCode) &&
+          !this.userSubmittedSuccesfully
+        ) {
+          // there is a comment by this participant in the comments that is identical to commentModal
+          // safe to assume the comment is submitted
+          this.userSubmittedSuccesfully = true;
+          this.userSubmittedComment = false;
+          this.clearDraftComment();
+        }
+      });
+    }
   }
 
   getInitials(nameString: string) {
@@ -540,6 +593,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   delete() {
+    this.disableArrows.emit(true);
     this.deleteDialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -551,6 +605,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
       })
       .afterClosed()
       .subscribe((res) => {
+        this.disableArrows.emit(false);
         if (res) {
           this.deleteIdea.emit(this.idea.id);
         }
@@ -623,20 +678,11 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
     this.ideaEditEvent.emit(true);
   }
 
-  onCommentFocus() {
-    this.addCommentFocused = true;
-  }
-  onCommentBlur() {
-    this.addCommentFocused = false;
-  }
   focusOnEdit() {
     this.titleFocused = true;
   }
   unfocusedEdit() {
     this.titleFocused = false;
-  }
-  commentTyped() {
-    this.brainstormService.saveDraftComment(this.commentKey, this.commentModel);
   }
 
   descriptionTextChanged($event: string) {
@@ -662,10 +708,10 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
 
   isItemSelected() {
-    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage) {
+    if (!this.imageSelected && !this.pdfSelected && !this.video && !this.webcamImage && !this.iframeData) {
       return false;
     }
-    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage) {
+    if (this.imageSelected || this.pdfSelected || this.video || this.webcamImage || this.iframeData) {
       return true;
     }
     return false;
@@ -688,6 +734,9 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
         .get(`https://cdn.iframe.ly/api/iframely/?api_key=a8a6ac85153a6cb7d321bc&url=${link2[0]}`)
         .subscribe((res: any) => {
           if (res.html) {
+            if (this.uploadPanelExpanded) {
+              this.uploadPanelExpanded = false;
+            }
             this.iframeAvailable = true;
             this.iframeRemoved = false;
             this.iframeData = { iframeHTML: res.html, url: res.url };

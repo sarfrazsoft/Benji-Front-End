@@ -9,8 +9,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IntercomModule } from 'ng-intercom';
 import { AppRoutingModule } from './app-routing.module';
 
-//import { EntryComponents } from 'src/app/pages';
+// import { EntryComponents } from 'src/app/pages';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AccountProviders } from './dashboard';
 import { ServicesProviders } from './index';
 import { LayoutModule } from './layout/layout.module';
 
@@ -19,7 +20,12 @@ import { AppComponent } from './app.component';
 
 import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
-import { AccountProviders } from './dashboard';
+import * as LogRocket from 'logrocket';
+import { environment } from 'src/environments/environment';
+
+if (environment.production) {
+  LogRocket.init(environment.logrocket);
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +43,7 @@ import { AccountProviders } from './dashboard';
       // will automatically run `update` on router event changes. Default: `false`
       updateOnRouterChange: true,
     }),
-    SocialLoginModule
+    SocialLoginModule,
   ],
   providers: [
     ...ServicesProviders,
@@ -53,12 +59,11 @@ import { AccountProviders } from './dashboard';
               '1045008906243-hfer3eo1mh91gg3oi6khdg000guqg4lq.apps.googleusercontent.com'
             ),
           },
-
         ],
       } as SocialAuthServiceConfig,
     },
     { provide: MAT_RIPPLE_GLOBAL_OPTIONS, useValue: { disabled: true } },
-    AccountProviders
+    AccountProviders,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

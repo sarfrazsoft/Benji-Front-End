@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import * as LogRocket from 'logrocket';
 
 import { DefaultwhiteLabelInfo } from './globals';
 import { BackendRestService } from './services';
@@ -156,6 +157,10 @@ export class AppComponent implements OnInit {
           border: 2px solid ${color} !important;
         }
 
+        .notifications-container .header .mark-all:hover {
+          color: ${color};
+        }
+
         .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
           background-color: ${color} !important;
         }
@@ -193,10 +198,12 @@ export class AppComponent implements OnInit {
         .idea-detailed-dialog mat-dialog-container .content-area .idea-creation-controls .settings .bg-primary-color:hover {
           background: ${color};
         }
-        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+        .build-session-dialog .mat-checkbox-checked.mat-accent .mat-checkbox-background {
           background-color: ${color};
         }
-        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame {
+        .confirmation-dialog .session-duplication .copying-options .mat-checkbox-layout:hover .mat-checkbox-frame,
+        .build-session-dialog .mat-checkbox-layout:hover .mat-checkbox-frame {
           border-color: ${color};
         }
         .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
@@ -221,12 +228,15 @@ export class AppComponent implements OnInit {
         .primary-box-shadow {
           box-shadow: 0 0 0 2px ${color};
         }
+        .new-space:hover {
+          border: 2px solid ${color};
+        }
         .mainscreen-toolbar .benji-logo-container .session-title:hover.admin {
           color: ${color};
         }
-        .board-settings-navigation .close:hover, 
-        .boards-navigation .close:hover, 
-        .close-button:hover, 
+        .board-settings-navigation .close:hover,
+        .boards-navigation .close:hover,
+        .close-button:hover,
         .move-to-folder-dialog .close-button:hover .mat-icon,
         .new-folder-dialog .close-button:hover .mat-icon {
           color: ${color};
@@ -258,6 +268,12 @@ export class AppComponent implements OnInit {
         favicon: '/assets/img/favicon.ico',
       };
     }
+
+    this.contextService.user$.subscribe((user) => {
+      if (user) {
+        LogRocket.identify(user.id.toString(), { name: user.first_name + user.last_name, email: user.email });
+      }
+    });
   }
 
   hexToRGB(hex, alpha) {

@@ -37,11 +37,10 @@ export class SidenavItemComponent implements OnInit {
     } else if (navName === 'Help Center') {
       window.open('https://guides.mybenji.com/', '_blank');
     }
-    this.navItemClickedEvent.emit();
+    // this.navItemClickedEvent.emit();
   }
 
   logout() {
     this.authService.signOut();
   }
-
 }

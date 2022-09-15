@@ -152,7 +152,7 @@
         >
         <img src="/assets/img/idea-creation/arrow-left.svg">
       </div>
-      <button *ngIf="userRole === 'owner'" class="remove-button" (click)="remove()">
+      <button *ngIf="isUserRoleOwner()" class="remove-button" (click)="remove()">
         Remove
       </button>
     </div>
@@ -163,13 +163,13 @@
     fxLayout="column" 
     fxLayoutAlign="space-between start" 
     [ngClass]="{'content-blank': !areCommentsAllowed() && !isHost && !ideaTitle.length && emptyUserIdeaText ,
-                'only-area': !imageSelected && !pdfSelected && !uploadPanelExpanded && !video && !webcamImage}">
+                'only-area': !imageSelected && !pdfSelected && !uploadPanelExpanded && !video && !webcamImage && !iframeData}">
     <div class="content-area" [ngClass]="{'space-bottom': !areCommentsAllowed()}">
       <div 
         class="idea-creation-controls" 
         fxLayout="row" 
         fxLayoutAlign="space-between center"
-        *ngIf="userRole === 'owner'">
+        *ngIf="isUserRoleOwner()">
         <div fxLayout="row">
           <div class="settings" fxLayout="row"fxLayoutGap="12px">
             <!-- <div class="options" fxLayoutAlign="center center"><img src="/assets/img/idea-creation/three-dots.svg"></div> -->
@@ -215,9 +215,9 @@
           >Update</button>
       </div>
       <div class="scrollable-area" fxLayout="column">
-        <ng-container *ngIf="userRole === 'owner' || ideaTitle">
+        <ng-container *ngIf="isUserRoleOwner() || ideaTitle">
           <textarea 
-            [readonly]="userRole !== 'owner'"
+            [readonly]="!isUserRoleOwner()"
             class="title" 
             placeholder="Title (optional)" 
             [(ngModel)]="ideaTitle"
@@ -230,9 +230,9 @@
             cdkAutosizeMaxRows="5">
           </textarea>
         </ng-container>
-        <ng-container *ngIf="userRole === 'owner' || userIdeaText">
+        <ng-container *ngIf="isUserRoleOwner() || userIdeaText">
           <benji-tiptap-editor
-            [editable]="userRole === 'owner'"
+            [editable]="isUserRoleOwner()"
             [defaultValue]="userIdeaText"
             (textChanged)="descriptionTextChanged($event)">
           </benji-tiptap-editor>
@@ -273,7 +273,7 @@
                 (change)="categoryChanged($event)"
                 [searchable]="false"
                 [clearable]="false"
-                [disabled]="userRole !== 'owner'">
+                [disabled]="!isUserRoleOwner()">
               </ng-select>
             </div>
           </div>
@@ -359,11 +359,12 @@
         fxFlex="row" 
         fxLayoutAlign="start center"
         [ngClass]="{'grey': addCommentFocused, 'greyed': commentModel.length}">
+        <!-- <div *ngIf="userSubmittedComment && !userSubmittedSuccesfully">submitting</div> -->
         <textarea
           matInput
           cdkTextareaAutosize
           cdkAutosizeMinRows="1"
-          cdkAutosizeMaxRows="5"
+          cdkAutosizeMaxRows="5000"
           placeholder="Add a comment"  
           class="input-comment detailed"
           [(ngModel)]="commentModel"
@@ -371,11 +372,12 @@
           [ngClass]="{'active': commentModel.length}"
           (focus)="onCommentFocus()"
           (blur)="onCommentBlur()"
-          (keyup.enter)="submitComment(idea.id, commentModel); commentModel = ''">
+          (keydown.enter)="submitComment(idea.id, commentModel)"
+          [disabled]="userSubmittedComment && !userSubmittedSuccesfully">
         </textarea>
         <div  
           class="send-comment detailed primary-color" 
-          (click)="submitComment(idea.id, commentModel); commentModel = ''"
+          (click)="submitComment(idea.id, commentModel)"
           [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
           Post
         </div>

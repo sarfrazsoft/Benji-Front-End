@@ -17,14 +17,14 @@ import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'mu
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
+import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
-import { Board, BrainstormSubmitEvent, Category, Idea } from 'src/app/services/backend/schema';
+import { Board, BrainstormSubmitEvent, Category, Idea, PostOrder } from 'src/app/services/backend/schema';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
 import { environment } from 'src/environments/environment';
-import { PostOrder } from '../grid/grid.component';
 
 @Component({
   selector: 'benji-thread-mode-ideas',
@@ -91,7 +91,7 @@ import { PostOrder } from '../grid/grid.component';
     ]),
   ],
 })
-export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
+export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() act;
   @Input() activityState;
@@ -124,6 +124,7 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     private ngxPermissionsService: NgxPermissionsService,
     private postLayoutService: PostLayoutService
   ) {
+    super();
     this.layoutConfig = this.postLayoutService.getLayoutConfig();
     this.layoutConfig.items = this.ideas;
     const sortDataPreset = this.postLayoutService.getSortPresetsData();
@@ -253,6 +254,11 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       this.postLayoutService.refreshGridLayout(this.grid, true);
     }, 1000);
+
+    // refresh muuri layout after (hopefully) all iframes are loaded
+    setTimeout(() => {
+      this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 3000);
   }
 
   onGridCreated(grid: Grid) {
@@ -264,11 +270,11 @@ export class ThreadModeComponent implements OnInit, OnChanges, AfterViewInit {
     this.postLayoutService.refreshGridLayout(this.grid, false);
   }
 
-  refreshMasonryLayout() {
-    if (this.masonry) {
-      this.masonry.layout();
-    }
-  }
+  // refreshMasonryLayout() {
+  //   if (this.masonry) {
+  //     this.masonry.layout();
+  //   }
+  // }
 
   resetMasonry() {
     if (this.masonry) {

@@ -68,6 +68,14 @@ export class AdminPanelComponent implements OnInit, OnChanges {
 
     this.adminName = this.contextService.user.first_name;
 
+    this.route.queryParams
+      .subscribe(params => {
+        if(params.folder) {
+          this.contextService.selectedFolder = params.folder;
+        }
+      }
+    );
+
     this.contextService.selectedFolder$.subscribe((folder) => {
       if (folder === null) {
         this.initDashData();

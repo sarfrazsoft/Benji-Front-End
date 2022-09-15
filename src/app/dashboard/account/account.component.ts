@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { merge } from 'lodash';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService, ContextService } from 'src/app/services';
-import { Branding, User } from 'src/app/services/backend/schema';
+import { Branding, TeamUser, User } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AccountService } from './services';
 @Component({
@@ -19,7 +19,7 @@ export class AccountComponent implements OnInit {
   focusEm: boolean;
   form: FormGroup;
   isSubmitted = false;
-  accontInfo: User;
+  accontInfo: TeamUser;
   brandingInfo: Branding;
   imagesList: FileList;
   brandColor = '';

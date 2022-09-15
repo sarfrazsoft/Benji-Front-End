@@ -24,6 +24,7 @@ import {
   User,
 } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
+import { Notification } from 'src/app/services/backend/schema/notification';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
@@ -35,6 +36,7 @@ import {
   GetUpdatedLessonDetailEvent,
   HostChangeBoardEvent,
   JumpEvent,
+  MarkNotificationsReadEvent,
   NextInternalEvent,
   ParticipantChangeBoardEvent,
   PauseActivityEvent,
@@ -42,6 +44,7 @@ import {
   ResetEvent,
   ResumeActivityEvent,
 } from '../../services/backend/schema/messages';
+import { NotificationsComponent } from '../controls/notifications/notifications.component';
 
 @Component({
   selector: 'benji-main-screen-toolbar',
@@ -67,7 +70,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() participantCode: number;
   @Input() boardsMenuClosed: boolean;
 
-  count = 4;
   showTimer = false;
   currentActivityIndex;
 
@@ -98,6 +100,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   selectedBoard: Board;
   isHost: boolean;
   isParticipant: boolean;
+
+  // nofications
+  @ViewChild(NotificationsComponent) notificationsComponent: NotificationsComponent;
+
+  notificationList: Array<Notification> = [];
+  notificationCount = 0;
 
   constructor(
     public contextService: ContextService,
@@ -165,6 +173,24 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.lessonName = this.lesson.lesson_name;
     this.showParticipantGroupingButton();
     this.loadParticipantCodes();
+
+    if (this.activityState.eventType === 'NotificationEvent') {
+      this.notificationList = this.activityState.notifications;
+      this.notificationsComponent.updateNotifications(this.notificationList);
+    }
+  }
+
+  updateNotificationCount(count: number): void {
+    this.notificationCount = count;
+  }
+
+  notificationMenuOpened(): void {
+    // const ids = this.notificationList.map((n) => n.id);
+    // this.socketMessage.emit(new MarkNotificationsReadEvent(ids));
+  }
+
+  markAsReadNotifications(notifications: Array<number>): void {
+    this.socketMessage.emit(new MarkNotificationsReadEvent(notifications));
   }
 
   controlClicked(eventType) {

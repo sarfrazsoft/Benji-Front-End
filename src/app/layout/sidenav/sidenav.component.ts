@@ -159,16 +159,9 @@ export class SidenavComponent implements OnInit {
 
   initNavigation() {
     this.contextService.user$.subscribe((user) => {
-      this.sidenavTopSections = [
-        this.dashboard,
-        //this.templatesSection,
-        //this.notifications,
-      ];
-      this.sidenavBottomSections = [
-        this.accountSection,
-        this.helpCenter,
-        this.authSection,
-      ];
+      this.sidenavTopSections = [this.dashboard, this.notifications];
+
+      this.sidenavBottomSections = [this.accountSection, this.helpCenter, this.authSection];
     });
   }
 

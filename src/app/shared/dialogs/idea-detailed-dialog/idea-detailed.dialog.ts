@@ -6,13 +6,13 @@ import {
   trigger,
   // ...
 } from '@angular/animations';
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BrainstormService } from 'src/app/services/activities';
 import { Category, Group, Idea, UpdateMessage } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
-import { IdeaDetailedInfo } from '../../components/idea-detailed/idea-detailed';
+import { IdeaDetailedComponent, IdeaDetailedInfo } from '../../components/idea-detailed/idea-detailed';
 import { ConfirmationDialogComponent } from '../confirmation/confirmation.dialog';
 
 @Component({
@@ -49,6 +49,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
   ideaTitle;
   lessonRunCode;
   imageSelected = false;
+  disableArrows: boolean;
 
   imagesList: FileList;
   imageSrc;
@@ -63,6 +64,8 @@ export class IdeaDetailedDialogComponent implements OnInit {
   @Output() deleteIdea = new EventEmitter<any>();
   @Output() previousItem = new EventEmitter<any>();
   @Output() nextItem = new EventEmitter<any>();
+
+  @ViewChild(IdeaDetailedComponent) ideaDetailedComponent: IdeaDetailedComponent;
 
   isEdited: boolean;
 
@@ -84,9 +87,8 @@ export class IdeaDetailedDialogComponent implements OnInit {
         this.dialogRef.close();
       }
     });
-    
-    this.dialogRef.keydownEvents().subscribe(event => {
-      if (event.key === "Escape") {
+    this.dialogRef.keydownEvents().subscribe((event) => {
+      if (event.key === 'Escape') {
         if (this.isEdited) {
           this.openConfirmationDialog();
         } else {
@@ -97,6 +99,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
   }
 
   openConfirmationDialog() {
+    this.disableNavArrows(true);
     this.matDialog
       .open(ConfirmationDialogComponent, {
         data: {
@@ -111,10 +114,15 @@ export class IdeaDetailedDialogComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((res) => {
+        this.disableNavArrows(false);
         if (res) {
           this.dialogRef.close();
         }
       });
+  }
+
+  disableNavArrows(event: boolean): void {
+    this.disableArrows = event;
   }
 
   ideaIsEdited(event) {
@@ -128,13 +136,17 @@ export class IdeaDetailedDialogComponent implements OnInit {
   }
 
   nextItemRequested() {
-    const checkIndex = 1;
-    this.getItemByCheckIndex(checkIndex);
+    if (!this.disableArrows) {
+      const checkIndex = 1;
+      this.getItemByCheckIndex(checkIndex);
+    }
   }
 
   previousItemRequested() {
-    const checkIndex = -1;
-    this.getItemByCheckIndex(checkIndex);
+    if (!this.disableArrows) {
+      const checkIndex = -1;
+      this.getItemByCheckIndex(checkIndex);
+    }
   }
 
   public ideaChangingQueryParams(ideaId: number) {
@@ -191,5 +203,12 @@ export class IdeaDetailedDialogComponent implements OnInit {
 
   delete(event) {
     this.deleteIdea.emit(event);
+  }
+
+  ideaCommentSuccessfullySubmitted(): void {
+    this.ideaDetailedComponent.ideaCommentSuccessfullySubmitted();
+  }
+  brainstormSubmitIdeaCommentEvent(): void {
+    this.ideaDetailedComponent.brainstormSubmitIdeaCommentEvent();
   }
 }

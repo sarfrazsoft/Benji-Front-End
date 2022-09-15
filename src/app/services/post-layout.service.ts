@@ -3,15 +3,15 @@ import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { PostOrder } from '../pages/lesson/main-screen/brainstorming-activity/grid/grid.component';
 import {
   Board,
   BoardSort,
   BoardStatus,
   BrainstormBoardSortOrderEvent,
+  PostOrder,
   SetMetaDataBoardEvent,
   TopicMedia,
-  UpdateMessage,
+  UpdateMessage
 } from './backend/schema';
 @Injectable()
 export class PostLayoutService {

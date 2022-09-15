@@ -1,4 +1,4 @@
-import { ConvoCardsActivity, GoogleSlidesActivity } from './activities';
+import { BoardMetaData, ColsCategoryChangeIdeaOrderInfo, ColsIdeaOrderInfo, ConvoCardsActivity, GoogleSlidesActivity } from './activities';
 import {
   BaseActivity,
   BrainstormActivity,
@@ -25,6 +25,7 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
+import { Notification } from './notification';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
@@ -34,6 +35,7 @@ export interface UpdateMessage {
   lesson_run: LessonRun;
   running_tools: RunningTools;
   eventType: string;
+  notifications: Array<Notification>;
   isHost: boolean;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
@@ -88,6 +90,12 @@ export interface ServerMessage {
   servererror?: ServerError;
   servernotification?: ServerNotification;
   eventtype: string;
+}
+
+
+export interface QueryParamsObject {
+  board: string;
+  post: string;
 }
 
 // export class Ddatemessage implements UpdateMessage {
@@ -1012,7 +1020,7 @@ export class DuplicateBoardEvent extends ActivityEvent {
 }
 export class SetMetaDataBoardEvent extends ActivityEvent {
   event_name = 'SetMetaDataBoardEvent';
-  constructor(board: number, meta: { updated: 'post_order' | 'category_changed'; post_order: any }) {
+  constructor(board: number, meta: BoardMetaData) {
     super();
     this.extra_args = { board: board, meta: meta };
   }
@@ -1031,7 +1039,8 @@ export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
     previousBoard: number,
     nextBoard: number,
     instructions: string,
-    sub_instructions: string
+    sub_instructions: string,
+    meta?: any
   ) {
     super();
     this.extra_args = {
@@ -1040,6 +1049,7 @@ export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
       next_board: nextBoard,
       instructions: instructions,
       sub_instructions: sub_instructions,
+      meta: meta
     };
   }
 }
@@ -1101,6 +1111,13 @@ export class UpdatePromptVideoEvent extends ActivityEvent {
   constructor(board: number, prompt_video) {
     super();
     this.extra_args = { prompt_video: prompt_video, board: board };
+  }
+}
+export class MarkNotificationsReadEvent extends ActivityEvent {
+  event_name = 'MarkNotificationsReadEvent';
+  constructor(ids: Array<number>) {
+    super();
+    this.extra_args = { notification_ids: ids };
   }
 }
 

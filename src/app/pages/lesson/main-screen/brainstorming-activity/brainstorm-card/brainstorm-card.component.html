@@ -252,6 +252,7 @@
             fxFlex="row" 
             fxLayoutAlign="start center"
             [ngClass]="{'grey': classGrey, 'greyed': commentModel.length}">
+            <!-- <div *ngIf="userSubmittedComment && !userSubmittedSuccesfully">submitting</div> -->
             <textarea
               matInput
               cdkTextareaAutosize
@@ -264,32 +265,16 @@
               [ngClass]="{'active': commentModel.length}"
               (focus)="onCommentFocus()"
               (blur)="onCommentBlur()"
-              (keyup.enter)="submitComment(item.id, commentModel); commentModel = ''">
+              (keydown.enter)="submitComment(item.id, commentModel)"
+              [disabled]="userSubmittedComment && !userSubmittedSuccesfully">
             </textarea>
             <div  
               class="send-comment primary-color" 
-              (click)="submitComment(item.id, commentModel); commentModel = ''"
+              (click)="submitComment(item.id, commentModel)"
               [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'">
               Send
             </div>
           </div>
-          <!-- <div class="comment-input-container" fxLayoutAlign="start center">
-            <div
-              class="input-comment" 
-              data-placeholder="Add a comment"
-              contenteditable
-              (mousedown)="$event.stopPropagation()"
-              [textContent]="commentModel" (input)="commentModel=$event.target.textContent">
-            </div>
-            <div 
-              class="send-comment" 
-              (click)="submitComment(item.id, commentModel); commentModel = ''"
-              [@enableDisable]="commentModel.length ? 'enabled' : 'disabled'"
-              fxLayoutAlign="end end">
-              <img src="/assets/img/submit-vector.svg">
-              Send
-            </div>
-          </div> -->
         </div>
       </ng-container>
     </div>

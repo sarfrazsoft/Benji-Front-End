@@ -14,12 +14,14 @@ import { orderBy } from 'lodash';
 import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { BrainstormService, ContextService } from 'src/app/services';
 import {
   Board,
   BoardSort,
   BrainstormActivity,
   Idea,
+  PostOrder,
   SetMetaDataBoardEvent,
 } from 'src/app/services/backend/schema';
 import { SideNavAction } from 'src/app/services/context.service';
@@ -28,16 +30,13 @@ import { environment } from 'src/environments/environment';
 declare var Packery: any;
 declare var Draggabilly: any;
 
-export interface PostOrder {
-  ideaId: string;
-  order: string;
-}
+
 
 @Component({
   selector: 'benji-grid-ideas',
   templateUrl: './grid.component.html',
 })
-export class GridComponent implements OnInit, OnChanges, AfterViewInit {
+export class GridComponent extends BrainstormLayout implements OnInit, OnChanges, AfterViewInit {
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
@@ -70,6 +69,7 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
     private postLayoutService: PostLayoutService,
     private contextService: ContextService
   ) {
+    super();
     this.layoutConfig = this.postLayoutService.getLayoutConfig();
     this.layoutConfig.items = this.ideas;
     const sortDataPreset = this.postLayoutService.getSortPresetsData();
@@ -199,6 +199,11 @@ export class GridComponent implements OnInit, OnChanges, AfterViewInit {
     setTimeout(() => {
       this.postLayoutService.refreshGridLayout(this.grid, true);
     }, 1000);
+
+    // refresh muuri layout after (hopefully) all iframes are loaded
+    setTimeout(() => {
+      this.postLayoutService.refreshGridLayout(this.grid, true);
+    }, 3000);
   }
 
   onGridCreated(grid: Grid) {

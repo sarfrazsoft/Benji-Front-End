@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
+import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { BrainstormService } from 'src/app/services/activities/brainstorm.service';
 import {
   Board,
@@ -34,6 +35,8 @@ import {
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
   Category,
+  ColsCategoryChangeIdeaOrderInfo,
+  ColsIdeaOrderInfo,
   Group,
   Idea,
   SetMetaDataBoardEvent,
@@ -41,26 +44,12 @@ import {
 import { UtilsService } from 'src/app/services/utils.service';
 import { environment } from 'src/environments/environment';
 import { BaseActivityComponent } from '../../../shared/base-activity.component';
-import { PostOrder } from '../grid/grid.component';
-
-export interface ColsIdeaOrderInfo {
-  container: string;
-  previousIndex: number;
-  currentIndex: number;
-}
-
-export interface ColsCategoryChangeIdeaOrderInfo {
-  previousContainer: string;
-  container: string;
-  previousIndex: number;
-  currentIndex: number;
-}
 
 @Component({
   selector: 'benji-categorized-ideas',
   templateUrl: './categorized.component.html',
 })
-export class CategorizedComponent implements OnInit, OnChanges {
+export class CategorizedComponent extends BrainstormLayout implements OnInit, OnChanges {
   @Input() board: Board;
   @Input() act: BrainstormActivity;
   @Input() activityState;
@@ -99,7 +88,9 @@ export class CategorizedComponent implements OnInit, OnChanges {
     private utilsService: UtilsService,
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     if (!this.participantCode) {
@@ -223,7 +214,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
       } else if (this.eventType === 'SetMetaDataBoardEvent') {
         if (!this.isHost) {
           if (this.board.meta.updated === 'post_order') {
-            const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.post_order;
+            const colsIdeaOrderInfo: ColsIdeaOrderInfo = this.board.meta.colsIdeaOrderInfo;
             this.columns.forEach((column: Category) => {
               if (column.id.toString() === colsIdeaOrderInfo.container) {
                 moveItemInArray(
@@ -236,7 +227,8 @@ export class CategorizedComponent implements OnInit, OnChanges {
           } else if (this.board.meta.updated === 'category_changed') {
             let container;
             let previousContainer;
-            const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo = this.board.meta.post_order;
+            const colsIdeaOrderInfo: ColsCategoryChangeIdeaOrderInfo =
+              this.board.meta.colsCategoryChangeIdeaOrderInfo;
             this.columns.forEach((column: Category) => {
               if (column.id.toString() === colsIdeaOrderInfo.container) {
                 container = column;
@@ -357,7 +349,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
           return;
         }
         const category = event.container.element.nativeElement.getAttribute('columnId');
-        const ideasOrder: ColsIdeaOrderInfo = {
+        const colsIdeaOrderInfo: ColsIdeaOrderInfo = {
           container: category,
           previousIndex: event.previousIndex,
           currentIndex: event.currentIndex,
@@ -366,7 +358,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
           new SetMetaDataBoardEvent(this.board.id, {
             ...this.board.meta,
             updated: 'post_order',
-            post_order: ideasOrder,
+            colsIdeaOrderInfo: colsIdeaOrderInfo,
           })
         );
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -384,7 +376,7 @@ export class CategorizedComponent implements OnInit, OnChanges {
           new SetMetaDataBoardEvent(this.board.id, {
             ...this.board.meta,
             updated: 'category_changed',
-            post_order: ideasOrder,
+            colsCategoryChangeIdeaOrderInfo: ideasOrder,
           })
         );
         transferArrayItem(

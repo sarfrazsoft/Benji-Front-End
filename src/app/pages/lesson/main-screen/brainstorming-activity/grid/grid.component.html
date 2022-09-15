@@ -25,11 +25,15 @@
         [showUserName]="showUserName"
         [participantCode]="participantCode"
         (deleteIdea)="delete($event)"
-        (commentEdited)="refreshGridLayout()"
+        (ideaDetailedDialogOpened)="ideaDetailedDialogOpened($event)"
+        (ideaDetailedDialogClosed)="ideaDetailedDialogClosed($event)"
+        [ideaDetailedDialogOpen]="ideaDetailedDialogOpen"
+        (viewChanged)="refreshGridLayout()"
         [sendMessage]="sendMessage"
         [isColumnsLayout]="isColumnsLayout"
         [myGroup]="myGroup"
-        [avatarSize]="'small'">
+        [avatarSize]="'small'"
+        [eventType]="eventType">
       </benji-brainstorm-card>
     </div>
   </div>

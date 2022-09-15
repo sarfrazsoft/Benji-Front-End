@@ -4,7 +4,14 @@ import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
 import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
-import { Board, BoardStatus, BrainstormActivity, Category, Idea } from '../backend/schema';
+import {
+  Board,
+  BoardStatus,
+  BrainstormActivity,
+  Category,
+  ColsCategoryChangeIdeaOrderInfo,
+  Idea,
+} from '../backend/schema';
 
 @Injectable()
 export class BrainstormService {

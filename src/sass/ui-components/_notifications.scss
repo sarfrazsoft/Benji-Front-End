@@ -1,0 +1,212 @@
+.notifications {
+  &.dashboard-header {
+    max-width: 720px;
+  }
+}
+benji-notifications {
+  .notifications-container {
+    background-color: #fff;
+    border: 1px solid #E2E6EC;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.06);
+    border-radius: 16px;
+    padding: 8px 0px;
+    .header {
+      border-bottom: 1px solid #E2E6EC;
+    }
+    .mark-all {
+      cursor: pointer;
+      font-weight: 400;
+      line-height: 16px;
+      color: rgba(55, 53, 47, 0.5);
+      transition: all 0.2s;
+      &:hover {
+        color: #8f8989;
+      }
+    }
+    .empty-state {
+      .message {
+        text-align: center;
+        .bell {
+          background: rgba(55, 53, 47, 0.07);
+          margin: 0px auto;
+          border-radius: 143px;
+        }
+        .title {
+          font-weight: 500;
+          color: #37352F;
+          margin: 16px 0px 8px 0px;
+        }
+        .sub-title {
+          font-weight: 400;
+          color: rgba(55, 53, 47, 0.5);
+        }
+      }
+    }
+    .container {
+      cursor: pointer;
+      &:hover {
+        background: #F8F8F9;
+      }
+    }
+    .solid {
+      border-bottom: 1px solid #E2E6EC;
+    }
+    .notification  {
+      margin: 16px 24px;
+      .happenings {
+        .statement {
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          color: $black; 
+          .happened {
+            font-weight: 400;
+          }
+        }
+        .time-stamp {
+          font-size: 12px;
+          color: #C2C4C7;
+        }
+        .mark-as-read {
+          margin-left: 28px;
+          .circle {
+            width: 12px;
+            height: 12px;
+            border: 1px solid #C2C4C7;
+            border-radius: 50%;
+            display: inline-block;
+          }
+        }
+      }
+      &.unread-notification {
+        .happenings .mark-as-read .circle {
+          background: blue;
+          border: 0px;
+        }
+      }
+      &.read-notification {
+        .happenings .mark-as-read .circle {
+          background-color: #fff;
+        }
+      }
+    }
+  }
+  .is-dashboard {
+    .notifications-container {
+      max-width: 720px;
+      .header {
+        padding: 9px 24px 16px;
+        .mark-all {
+          font-size: 16px;
+          text-align: right;
+        }
+        .notific {
+          display: none;
+        }
+      }
+      .empty-state {
+        height: 328px;
+        .message {
+          .bell {
+            width: 160px;
+            height: 160px;
+          }
+          .title {
+            font-size: 20px;
+            line-height: 24px;
+          }
+          .sub-title {
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+      }
+      .notification  {
+        margin: 16px 24px;
+        .happenings {
+          .statement {
+            font-size: 16px;
+            line-height: 24px;
+          }
+          .time-stamp {
+            font-weight: 500;
+            line-height: 16px;
+          }
+        }
+      }
+    }
+  }
+  
+  .not-dashboard {
+    .notifications {
+      &.dashboard-header {
+        display: none !important;
+      }
+    }
+    padding: 0px;
+    min-height: unset;
+    .notifications-container {
+      .header {
+        flex-direction: row;
+        box-sizing: border-box;
+        display: flex;
+        place-content: center space-between;
+        align-items: center;
+        padding: 9px 24px 16px 24px;
+        .mark-all {
+          font-size: 14px;
+        }
+        .notific {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 16px;
+          color: #37352F;
+        }
+      }
+      .empty-state {
+        height: 236px;
+        .message {
+          .bell {
+            width: 108px;
+            height: 108px;
+            img {
+              width: 27px;
+            }
+          }
+          .title {
+            font-size: 16px;
+            line-height: 20px;
+          }
+          .sub-title {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+      .notification  {
+        padding: 16px;
+        margin: 0px;
+        .happenings {
+          .statement {
+            font-size: 14px;
+            line-height: 20px;
+          }
+          .time-stamp {
+            font-weight: 400;
+            line-height: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.notify-menu {
+  border-radius: 16px !important;
+  margin-top: 16px;
+  width: 400px;
+  max-width: 400px !important;
+  .mat-menu-content:not(:empty) {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+}

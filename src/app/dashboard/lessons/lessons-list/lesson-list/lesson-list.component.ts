@@ -35,7 +35,7 @@ export interface TableRowInformation {
   selector: 'benji-lesson-list',
   templateUrl: './lesson-list.component.html',
 })
-export class LessonListComponent implements OnInit {
+export class LessonListComponent implements OnInit, OnChanges {
   @Input() lessonRuns: Array<Lesson> = [];
   @Output() updateLessonsRuns = new EventEmitter();
 
@@ -72,7 +72,7 @@ export class LessonListComponent implements OnInit {
     private http: HttpClient,
     private adminService: AdminService,
     private contextService: ContextService,
-    private lessonGroupService: LessonGroupService,
+    private lessonGroupService: LessonGroupService
   ) {}
 
   ngOnInit() {
@@ -87,11 +87,11 @@ export class LessonListComponent implements OnInit {
     this.dataSource = [];
     const slicedArray = this.lessonRuns;
     slicedArray.forEach((val: any, index: number) => {
-      const ids = val.lessonrun_images.map(object => {
+      const ids = val.lessonrun_images.map((object) => {
         return object.id;
       });
       const max = Math.max(...ids);
-      this.maxIdIndex  = val.lessonrun_images.findIndex(x => x.id === max);
+      this.maxIdIndex = val.lessonrun_images.findIndex((x) => x.id === max);
       this.dataSource.push({
         index: index,
         lessonRunCode: val.lessonrun_code,
@@ -103,9 +103,9 @@ export class LessonListComponent implements OnInit {
         boards: val.board_count,
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
-        lesson_image_id: val.lessonrun_images[this.maxIdIndex ]?.id,
-        lesson_image: val.lessonrun_images[this.maxIdIndex ]?.img,
-        image_url: val.lessonrun_images[this.maxIdIndex ]?.image_url,
+        lesson_image_id: val.lessonrun_images[this.maxIdIndex]?.id,
+        lesson_image: val.lessonrun_images[this.maxIdIndex]?.img,
+        image_url: val.lessonrun_images[this.maxIdIndex]?.image_url,
       });
     });
   }
@@ -147,7 +147,7 @@ export class LessonListComponent implements OnInit {
         if (res) {
           const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
           this.http.delete(request, {}).subscribe((response) => {
-            console.log(response)
+            console.log(response);
             this.updateLessonsRuns.emit();
           });
           this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
@@ -232,17 +232,24 @@ export class LessonListComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.dataSource[data.index].lesson_title = data?.lesson_name;
-          this.adminService.updateLessonRunImage(val.lessonRunCode, data.lesson_image, data.lesson_image_name, data.image_url, val.lesson_image_id)
-          .subscribe(
-            (data) => {
-              this.updateLessonsRuns.emit();
-              this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
-                this.lessonRuns = lessonsRuns;
-                this.getActiveSessions();
-              });
-            },
-            (error) => console.log(error)
-          );
+          this.adminService
+            .updateLessonRunImage(
+              val.lessonRunCode,
+              data.lesson_image,
+              data.lesson_image_name,
+              data.image_url,
+              val.lesson_image_id
+            )
+            .subscribe(
+              (data) => {
+                this.updateLessonsRuns.emit();
+                this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                  this.lessonRuns = lessonsRuns;
+                  this.getActiveSessions();
+                });
+              },
+              (error) => console.log(error)
+            );
         }
       });
   }
@@ -252,40 +259,40 @@ export class LessonListComponent implements OnInit {
       .open(MoveToFolderDialogComponent, {
         panelClass: 'move-to-folder-dialog',
         data: {
-          lessonId: val.lessonId
-        }
+          lessonId: val.lessonId,
+        },
       })
       .afterClosed()
       .subscribe((folder) => {
         if (folder) {
-          this.lessonGroupService.getFolderDetails(folder.id)
-          .subscribe(
-            (folder) => {
-              const lessons = folder.lesson;
-              this.folderLessonsIDs = [];
-              lessons.forEach((lesson) => {
-                this.folderLessonsIDs.push(lesson.id);
-              });
-              this.folderLessonsIDs.push(val.lessonId);
-              let request = folder.title ? 
-                              this.lessonGroupService.createNewFolder({title: folder.title, lessonId: val.lessonId}) : 
-                              this.lessonGroupService.updateFolder({title: folder.name, lessons: this.folderLessonsIDs, id: folder.id});
-              request.subscribe(
-                (data) => {
-                  this.contextService.newFolderAdded = true;
-                  this.lessonGroupService.getAllFolders().subscribe(
-                    (data) => {
-                      //this.contextService.folders = data;
-                    },
-                    (error) => console.log(error)
-                  );
-                },
-                (error) => console.log(error)
-              );
-            }
-          );
+          this.lessonGroupService.getFolderDetails(folder.id).subscribe((folder) => {
+            const lessons = folder.lesson;
+            this.folderLessonsIDs = [];
+            lessons.forEach((lesson) => {
+              this.folderLessonsIDs.push(lesson.id);
+            });
+            this.folderLessonsIDs.push(val.lessonId);
+            const request = folder.title
+              ? this.lessonGroupService.createNewFolder({ title: folder.title, lessonId: val.lessonId })
+              : this.lessonGroupService.updateFolder({
+                  title: folder.name,
+                  lessons: this.folderLessonsIDs,
+                  id: folder.id,
+                });
+            request.subscribe(
+              (data) => {
+                this.contextService.newFolderAdded = true;
+                this.lessonGroupService.getAllFolders().subscribe(
+                  (data) => {
+                    // this.contextService.folders = data;
+                  },
+                  (error) => console.log(error)
+                );
+              },
+              (error) => console.log(error)
+            );
+          });
         }
       });
   }
-
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Timer } from './backend/schema';
+import { TeamUser, Timer } from './backend/schema';
 import { Participant } from './backend/schema/course_details';
 import { PartnerInfo } from './backend/schema/whitelabel_info';
 
@@ -11,10 +11,10 @@ export type SideNavAction = 'opened' | 'closed';
 export class ContextService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  set user(user: any) {
+  set user(user: TeamUser) {
     this.user$.next(user);
   }
-  get user(): any {
+  get user(): TeamUser {
     return this.user$.getValue();
   }
 
@@ -90,18 +90,18 @@ export class ContextService {
   get selectedFolder(): number {
     return this.selectedFolder$.getValue();
   }
-  
+
   set newFolderAdded(value: boolean) {
     this.newFolderAdded$.next(value);
   }
   get newFolderAdded(): boolean {
     return this.newFolderAdded$.getValue();
   }
-  
+
   /**
    * Current User
    */
-  user$ = new BehaviorSubject<any>(null);
+  user$ = new BehaviorSubject<TeamUser>(null);
 
   /**
    * Branding Info
@@ -146,17 +146,17 @@ export class ContextService {
   /**
    * folders
    */
-   folders$ = new BehaviorSubject<any>(null);
+  folders$ = new BehaviorSubject<any>(null);
 
   /**
    * Selected Folder
    */
-   selectedFolder$ = new BehaviorSubject<any>(null);
+  selectedFolder$ = new BehaviorSubject<any>(null);
 
   /**
    * Notify if new Folder added
    */
-   newFolderAdded$ = new BehaviorSubject<any>(null);
+  newFolderAdded$ = new BehaviorSubject<any>(null);
 
   destroyActivityTimer() {
     this.activityTimer$.next(null);

@@ -108,7 +108,7 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  setLoggedInUserSession(res) {
+  setLoggedInUserSession(res: LoginResponse) {
     localStorage.setItem('token', res.token);
     this.contextService.user = res.user;
     this.layoutService.hideSidebar = false;

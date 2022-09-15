@@ -65,70 +65,6 @@
       </div>
     </div>
   </div>
-  <!-- <div 
-    cdkDropList
-    [cdkDropListData]="boards"
-    (cdkDropListDropped)="drop($event)"
-    [cdkDropListDisabled]="dragDisabled"
-    class="boards-container"
-    fxLayout="column"
-    fxLayoutGap="4px">
-    <div
-      cdkDrag
-      [cdkDragData]="getDragData(board)"
-      *ngFor="let board of boards; let j = index"
-      class="board-container"
-      fxLayout="column"
-      fxLayoutGap="12px">
-        <div
-          fxLayout="column" 
-          class="board" 
-          fxLayoutGap="8px"
-          [ngClass]="{
-            'border-color-primary': selectedBoard?.id === board?.id, 
-             closed: board.status === 'closed'
-          }"
-          (click)="navigateToBoard(board)">
-          <ng-container *ngIf="board.status === 'closed'">
-            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="16px">
-              <img class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
-              <span>This board is hidden for now</span>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="board.status !== 'closed'">
-            <div fxLayout="row" fxLayoutAlign="space-between">
-              <div class="title">
-                {{ board?.board_activity.instructions 
-                  ? board?.board_activity.instructions : 'Untitled' 
-                }}
-              </div>
-              <ng-container *ngxPermissionsOnly="'ADMIN'">
-                <button
-                  [matMenuTriggerFor]="menu"
-                  benji-click-stop-propagation
-                  disableRipple
-                  (click)="setMenuBoard(board)"
-                  class="three-dots">
-                  <img class="dots" src="../../../assets/img/side-nav/three-dots.svg"/>
-                </button>
-              </ng-container>
-            </div>
-            <ng-container *ngIf="board">
-              <div class="sub-title" [innerHTML]="board.board_activity.sub_instructions">
-              </div>
-            </ng-container>
-            <div class="persons" *ngIf="getBoardParticipantCodes(board)">
-              <benji-profile-pictures
-                [activityState]="activityState"
-                [participantCodes]="getBoardParticipantCodes(board)"
-                [size]="'medium'"
-                [counterAfter]="9"
-              ></benji-profile-pictures>
-            </div>
-          </ng-container>
-        </div>
-    </div>
-  </div> -->
   <div class="bottom-area" *ngxPermissionsOnly="'ADMIN'">
     <div fxLayoutGap="8px" class="meeting-mode admin-mode">
       <div fxLayout="column">
@@ -159,6 +95,12 @@
       fxLayoutAlign="center center">
       + Add New Board
     </button>
+    <!-- <button 
+      (click)="addPage(boards[boards.length - 1])"
+      class="add-board-button bg-primary-color"
+      fxLayoutAlign="center center">
+      + Add New Page
+    </button> -->
   </div>
   <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
     <div class="bottom-area" *ngIf="meetingMode">
