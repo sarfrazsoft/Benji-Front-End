@@ -242,10 +242,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         let existingComment = '';
         if (this.ideaDetailedDialogRef) {
           existingComment = this.brainstormService.getDraftComment(this.commentKey);
+          existingComment = existingComment.trim();
         } else {
           existingComment = this.commentModel;
+          existingComment = existingComment.trim();
         }
         this.item.comments.forEach((c) => {
+          existingComment = existingComment.trim();
           if (
             c.comment === existingComment &&
             (c.participant === this.participantCode || !this.participantCode) &&

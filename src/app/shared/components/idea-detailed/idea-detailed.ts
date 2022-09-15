@@ -557,7 +557,7 @@ export class IdeaDetailedComponent implements OnInit, OnChanges {
   }
   brainstormSubmitIdeaCommentEvent(): void {
     if (this.userSubmittedComment) {
-      const existingComment = this.commentModel;
+      const existingComment = this.commentModel.trim();
       this.idea.comments.forEach((c) => {
         if (
           c.comment === existingComment &&
