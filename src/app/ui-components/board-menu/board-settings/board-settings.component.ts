@@ -114,7 +114,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
     private utilsService: UtilsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.brainstormService.selectedBoard$.subscribe((board: Board) => {
@@ -342,7 +342,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     }
   }
 
-  duplicateBoard() { }
+  duplicateBoard() {}
 
   setBoardStatus() {
     const selected = this.currentboardStatus;

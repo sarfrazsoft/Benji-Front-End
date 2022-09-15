@@ -247,6 +247,7 @@ export class MainScreenBrainstormingActivityComponent
       if (val) {
         this.selectedBoard = this.getParticipantBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
+        this.boardChangingQueryParams(this.selectedBoard.id);
       }
     });
   }
