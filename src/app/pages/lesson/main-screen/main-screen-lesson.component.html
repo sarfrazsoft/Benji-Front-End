@@ -20,14 +20,16 @@
   ></benji-main-screen-toolbar>
 
 <mat-sidenav-container
-    class="example-container" (backdropClick)="closeAndResetNav()">
+    class="example-container"
+    (backdropClick)="closeAndResetNav()">
   <mat-sidenav 
     #sidenav
     [mode]="sideNavMode" 
     (keydown.escape)="closeAndResetNav()"
     [position]="sideNavPosition"
     (openedStart)="sideNavOpenedStart()" 
-    (closedStart)="sideNavClosedStart()">
+    (closedStart)="sideNavClosedStart()"
+    (openedChange)="openedChange($event)">
       <benji-board-menu *ngIf="serverMessage"
         #boardMenu
         [sidenav]="sidenav" 

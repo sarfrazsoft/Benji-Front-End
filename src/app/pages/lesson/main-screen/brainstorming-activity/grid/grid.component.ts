@@ -30,8 +30,6 @@ import { environment } from 'src/environments/environment';
 declare var Packery: any;
 declare var Draggabilly: any;
 
-
-
 @Component({
   selector: 'benji-grid-ideas',
   templateUrl: './grid.component.html',
@@ -83,13 +81,13 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
       }
     });
 
-    // this.contextService.sideNavAction$.subscribe((v: SideNavAction) => {
-    //   if (v === 'closed') {
-    //     this.refreshGridLayout();
-    //   } else if (v === 'opened') {
-    //     this.refreshGridLayout();
-    //   }
-    // });
+    this.contextService.sideNavAction$.subscribe((v: SideNavAction) => {
+      if (v === 'closed') {
+        this.refreshGridLayout();
+      } else if (v === 'opened') {
+        this.refreshGridLayout();
+      }
+    });
   }
 
   ngOnChanges($event: SimpleChanges) {
