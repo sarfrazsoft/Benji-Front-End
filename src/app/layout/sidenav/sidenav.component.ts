@@ -105,7 +105,7 @@ export class SidenavComponent implements OnInit {
     private contextService: ContextService,
     private lessonGroupService: LessonGroupService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initNavigation();
@@ -124,7 +124,7 @@ export class SidenavComponent implements OnInit {
     this.contextService.selectedFolder$.subscribe((folder) => {
       this.selectedFolder = folder;
     });
-    
+
     this.contextService.newFolderAdded$.subscribe((value) => {
       if (value) {
         this.getAllFolders();
@@ -141,7 +141,7 @@ export class SidenavComponent implements OnInit {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((user) => {});
+      .subscribe((user) => { });
   }
 
   joinSession(): void {
@@ -150,7 +150,7 @@ export class SidenavComponent implements OnInit {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((user) => {});
+      .subscribe((user) => { });
   }
 
   logout() {
@@ -167,12 +167,12 @@ export class SidenavComponent implements OnInit {
 
   getAllFolders() {
     this.lessonGroupService.getAllFolders()
-    .subscribe(
-      (data) => {
-        this.folders = data;
-      },
-      (error) => console.log(error)
-    );
+      .subscribe(
+        (data) => {
+          this.folders = data;
+        },
+        (error) => console.log(error)
+      );
   }
 
   newFolder(isNew: boolean, folderId?: number) {
@@ -191,9 +191,9 @@ export class SidenavComponent implements OnInit {
       .afterClosed()
       .subscribe((folder) => {
         if (folder) {
-          let request = isNew ? 
-                          this.lessonGroupService.createNewFolder(folder) : 
-                          this.lessonGroupService.updateFolder({title: folder.title, id: folderId, lessons: this.folderLessonsIDs});
+          let request = isNew ?
+            this.lessonGroupService.createNewFolder(folder) :
+            this.lessonGroupService.updateFolder({ title: folder.title, id: folderId, lessons: this.folderLessonsIDs });
           request.subscribe(
             (data) => {
               this.getAllFolders();
@@ -204,7 +204,7 @@ export class SidenavComponent implements OnInit {
         }
       });
   }
-  
+
   deleteFolder(id: number, name: string) {
     const msg = 'Are you sure you want to delete ' + name + '?';
     const dialogRef = this.dialog
@@ -219,13 +219,13 @@ export class SidenavComponent implements OnInit {
       .subscribe((res) => {
         if (res) {
           this.lessonGroupService.deleteFolder(id)
-          .subscribe(
-            (data) => {
-              this.getAllFolders();
-              this.removePostQueryParam();
-            },
-            (error) => console.log(error)
-          );
+            .subscribe(
+              (data) => {
+                this.getAllFolders();
+                this.removePostQueryParam();
+              },
+              (error) => console.log(error)
+            );
         }
       });
   }
@@ -241,7 +241,8 @@ export class SidenavComponent implements OnInit {
   }
 
   public folderChangingQueryParams(id: number) {
-    const command = this.router.routerState.snapshot.url.includes('account') ? ['/dashboard'] : [] ; 
+    const url = this.router.routerState.snapshot.url
+    const command = url.includes('account') || url.includes('notifications') ? ['/dashboard'] : [];
     this.router.navigate(command, {
       relativeTo: null,
       queryParams: { folder: id },
@@ -254,19 +255,19 @@ export class SidenavComponent implements OnInit {
     this.folderChangingQueryParams(id);
     this.contextService.selectedFolder = id;
   }
-  
+
   setFolderLessonsIDs(folderId: number) {
     this.folderLessonsIDs = [];
     this.lessonGroupService.getFolderDetails(folderId)
-    .subscribe(
-      (folder) => {
-        const lessons = folder.lesson;
-        this.folderLessonsIDs = [];
-        lessons.forEach((lesson) => {
-          this.folderLessonsIDs.push(lesson.id);
-        });
-      }
-    );
+      .subscribe(
+        (folder) => {
+          const lessons = folder.lesson;
+          this.folderLessonsIDs = [];
+          lessons.forEach((lesson) => {
+            this.folderLessonsIDs.push(lesson.id);
+          });
+        }
+      );
   }
 
 }

@@ -8,7 +8,7 @@
         <benji-sidenav-item 
           *ngFor="let item of section.items" 
           [sidenavItem]="item"
-          (navItemClickedEvent)="removePostQueryParam()">
+          (loadHomeEvent)="removePostQueryParam()">
         </benji-sidenav-item>
       </div>
       <div class="folders">

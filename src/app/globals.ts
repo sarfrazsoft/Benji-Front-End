@@ -206,3 +206,8 @@ export const DefaultwhiteLabelInfo1 = {
     // primary_darkest: '#830700'
   },
 };
+
+export enum Move {
+  next = 'next',
+  previous = 'previous'
+}
