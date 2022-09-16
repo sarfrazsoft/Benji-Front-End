@@ -9,6 +9,8 @@ import {
 import { Component, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Move } from 'src/app/globals';
+
 import { BrainstormService } from 'src/app/services/activities';
 import { Category, Group, Idea, UpdateMessage } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
@@ -98,7 +100,7 @@ export class IdeaDetailedDialogComponent implements OnInit {
     });
   }
 
-  openConfirmationDialog() {
+  openConfirmationDialog(move?: Move) {
     this.disableNavArrows(true);
     this.matDialog
       .open(ConfirmationDialogComponent, {
@@ -116,7 +118,17 @@ export class IdeaDetailedDialogComponent implements OnInit {
       .subscribe((res) => {
         this.disableNavArrows(false);
         if (res) {
-          this.dialogRef.close();
+          if (move === 'next') {
+            const checkIndex = 1;
+            this.getItemByCheckIndex(checkIndex);
+            this.isEdited = false;
+          } else if (move === 'previous') {
+            const checkIndex = -1;
+            this.getItemByCheckIndex(checkIndex);
+            this.isEdited = false;
+          } else {
+            this.dialogRef.close();
+          }
         }
       });
   }
@@ -137,15 +149,23 @@ export class IdeaDetailedDialogComponent implements OnInit {
 
   nextItemRequested() {
     if (!this.disableArrows) {
-      const checkIndex = 1;
-      this.getItemByCheckIndex(checkIndex);
+      if (this.isEdited) {
+        this.openConfirmationDialog(Move.next);
+      } else {
+        const checkIndex = 1;
+        this.getItemByCheckIndex(checkIndex);
+      }
     }
   }
 
   previousItemRequested() {
     if (!this.disableArrows) {
-      const checkIndex = -1;
-      this.getItemByCheckIndex(checkIndex);
+      if (this.isEdited) {
+        this.openConfirmationDialog(Move.previous);
+      } else {
+        const checkIndex = -1;
+        this.getItemByCheckIndex(checkIndex);
+      }
     }
   }
 

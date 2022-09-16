@@ -16,11 +16,11 @@ export interface SidenavItem {
 })
 export class SidenavItemComponent implements OnInit {
   @Input() sidenavItem: SidenavItem;
-  @Output() navItemClickedEvent = new EventEmitter();
+  @Output() loadHomeEvent = new EventEmitter();
 
   icon: string;
   activeIcon: string;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     if (this.sidenavItem.icon) {
@@ -36,8 +36,9 @@ export class SidenavItemComponent implements OnInit {
       this.logout();
     } else if (navName === 'Help Center') {
       window.open('https://guides.mybenji.com/', '_blank');
+    } else if (navName === 'Home') {
+      this.loadHomeEvent.emit();
     }
-    // this.navItemClickedEvent.emit();
   }
 
   logout() {
