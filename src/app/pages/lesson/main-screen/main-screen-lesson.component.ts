@@ -118,6 +118,10 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
 
   closeAndResetNav() {
     this.sidenav.close();
+    this.nullNavVars();
+  }
+
+  nullNavVars() {
     this.sideNavMode = null;
     this.navType = null;
     this.sideNavPosition = null;
@@ -137,7 +141,7 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
   }
 
   sideNavClosedStart(): void {
-    this.closeAndResetNav();
+    this.nullNavVars();
     // this.contextService.sideNavAction = 'closed';
   }
 
