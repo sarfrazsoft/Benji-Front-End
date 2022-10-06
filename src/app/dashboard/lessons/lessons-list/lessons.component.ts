@@ -1,24 +1,32 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextService } from 'src/app/services';
-import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { AdminService } from '../../admin-panel/services';
-
+import * as global from 'src/app/globals';
 import { orderBy, sortBy } from 'lodash';
 import { Subject } from 'rxjs';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, MoveToFolderDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared';
+import { LessonInformation } from 'src/app/services/backend/schema';
+import { HttpClient } from '@angular/common/http';
+import { UtilsService } from 'src/app/services/utils.service';
+import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { LessonListComponent } from './lesson-list/lesson-list.component';
 @Component({
   selector: 'benji-lessons-list',
   templateUrl: './lessons.component.html',
+
 })
 export class LessonsComponent implements OnInit {
+  @ViewChild('lessonList', { static: false }) lessonListComponent: LessonListComponent;
   @Input() lessons: Array<Lesson> = [];
-  @Input() lessonRuns: Array<Lesson> = [];
+  @Input() lessonRuns: Array<any> = [];
   @Input() isTemplates = false;
   @Input() layout;
   @Output() openCreateSessionEvent = new EventEmitter();
-
   eventsSubject: Subject<void> = new Subject<void>();
+  folderLessonsIDs: Array<number> = [];
 
   edit(lesson, $event) {
     if (!this.isTemplates) {
@@ -30,8 +38,12 @@ export class LessonsComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private router: Router,
+    private http: HttpClient,
+    private matDialog: MatDialog,
+    private utilsService: UtilsService,
     private activatedRoute: ActivatedRoute,
-    private contextService: ContextService
+    private contextService: ContextService,
+    private lessonGroupService: LessonGroupService
   ) {}
 
   ngOnInit() {
@@ -73,5 +85,167 @@ export class LessonsComponent implements OnInit {
   openCreateSession() {
     this.openCreateSessionEvent.emit();
   }
-  
+
+
+  deleteSession(val: LessonInformation) {
+    this.openSessionSettings(val);
+  }
+
+  deleteSpace(val: LessonInformation) {
+    const msg = 'Are you sure you want to delete ' + val.lessonTitle + '?';
+    const dialogRef = this.matDialog
+      .open(ConfirmationDialogComponent, {
+        data: {
+          confirmationMessage: msg,
+        },
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
+          this.http.delete(request, {}).subscribe((response) => {
+            this.updateLessonsRuns();
+          });
+          this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
+          this.lessonRuns = this.lessonRuns.filter((value) => {
+            return value.lessonrun_code !== val.lessonRunCode;
+          });
+        }
+      });
+  }
+
+  duplicateSession(val: LessonInformation) {
+    const dialogRef = this.matDialog
+      .open(DuplicateSessionDialogComponent, {
+        disableClose: true,
+        panelClass: 'confirmation-dialog',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res[0] || res[1]) {
+          let duplicateDoardIdeas: Boolean;
+          res[1] ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
+          let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
+          this.http.post(request, {}).subscribe((response: SessionInformation) => {
+            if (response) {
+              request =
+                global.apiRoot +
+                '/course_details/lesson/' +
+                val.lessonId +
+                '/duplicate-session/' +
+                response.id +
+                '/boards/';
+              const interval = setInterval(() => {
+                // method to be executed;
+                this.http
+                  .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
+                  .subscribe((sessionCreationResponse: any) => {
+                    console.log(sessionCreationResponse);
+                    if (sessionCreationResponse.detail) {
+                      if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
+                      } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
+                        clearInterval(interval);
+                        this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
+                          this.lessonRuns = lessonsRuns;
+                          // this.getActiveSessions();
+                          this.updateLessonsRuns();
+                          this.utilsService.openSuccessNotification(
+                            `Session successfully duplicated.`,
+                            `close`
+                          );
+                        });
+                      }
+                    }
+                  });
+              }, 500);
+              // TODO // investigate nested subscribes and 500ms timeout
+            } else {
+              this.utilsService.openWarningNotification('Something went wrong.', '');
+            }
+          });
+        } else {
+          dialogRef.closed;
+        }
+      });
+  }
+
+  openSessionSettings(val: LessonInformation) {
+    this.matDialog
+      .open(SessionSettingsDialogComponent, {
+        data: {
+          id: val.lessonId,
+          title: val.lessonTitle,
+          description: val.lessonDescription,
+          lessonImage: val.lessonImage,
+          imageUrl: val.imageUrl,
+          createSession: false,
+        },
+        panelClass: 'session-settings-dialog',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          if (val.index > -1) {
+            this.lessonListComponent.updateLessonName(data.lesson_name, val.lessonRunCode);
+          }
+          this.lessonRuns.find(item => item.lessonrun_code == val.lessonRunCode).lesson.lesson_name = data.lesson_name;
+          this.adminService
+            .updateLessonRunImage(
+              val.lessonRunCode,
+              data.lesson_image,
+              data.lesson_image_name,
+              data.image_url,
+              val.lessonId
+            )
+            .subscribe(
+              (data) => {
+                this.updateLessonsRuns();
+              },
+              (error) => console.log(error)
+            );
+        }
+      });
+  }
+
+  moveToFolder(val: LessonInformation) {
+    this.matDialog
+      .open(MoveToFolderDialogComponent, {
+        panelClass: 'move-to-folder-dialog',
+        data: {
+          lessonId: val.lessonId,
+        },
+      })
+      .afterClosed()
+      .subscribe((folder) => {
+        if (folder) {
+          this.lessonGroupService.getFolderDetails(folder.id).subscribe((folder) => {
+            const lessons = folder.lesson;
+            this.folderLessonsIDs = [];
+            lessons.forEach((lesson) => {
+              this.folderLessonsIDs.push(lesson.id);
+            });
+            this.folderLessonsIDs.push(val.lessonId);
+            const request = folder.title
+              ? this.lessonGroupService.createNewFolder({ title: folder.title, lessonId: val.lessonId })
+              : this.lessonGroupService.updateFolder({
+                title: folder.name,
+                lessons: this.folderLessonsIDs,
+                id: folder.id,
+              });
+            request.subscribe(
+              (data) => {
+                this.contextService.newFolderAdded = true;
+                this.lessonGroupService.getAllFolders().subscribe(
+                  (error) => console.log(error)
+                );
+              },
+              (error) => console.log(error)
+            );
+          });
+        }
+      });
+  }
+
 }

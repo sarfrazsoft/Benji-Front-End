@@ -622,3 +622,13 @@ export interface MontyHallResult {
   losers_who_changed_choice: number;
   losers_who_didnt_change: number;
 }
+
+export interface LessonInformation {
+  index?: number;
+  lessonId: number;
+  lessonRunCode: number;
+  lessonTitle: string;
+  lessonDescription: string;
+  lessonImage?: string;
+  imageUrl?: string;
+}

@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit {
   //folders: Array<Folder>;
   folders: any = [];
   selectedFolder: any;
-  folderLessonsIDs = [];
+  folderLessonsIDs: Array<number> = [];
 
   dashboard = {
     section: 1,
@@ -105,7 +105,7 @@ export class SidenavComponent implements OnInit {
     private contextService: ContextService,
     private lessonGroupService: LessonGroupService,
     private router: Router,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initNavigation();
@@ -141,7 +141,7 @@ export class SidenavComponent implements OnInit {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((user) => { });
+      .subscribe((user) => {});
   }
 
   joinSession(): void {
@@ -150,7 +150,7 @@ export class SidenavComponent implements OnInit {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((user) => { });
+      .subscribe((user) => {});
   }
 
   logout() {
