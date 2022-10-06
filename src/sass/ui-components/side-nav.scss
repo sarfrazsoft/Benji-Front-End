@@ -290,6 +290,7 @@
       &:hover {
         button.three-dots {
           display: flex !important;
+          padding: 4px 12px;
         }
       }
     }
@@ -304,7 +305,7 @@
       margin-right: 4px;
     }
     button.three-dots {
-      padding: 0px 4px;
+      padding: 8px 3px;
       background: unset;
       .dots {
         cursor: pointer;
