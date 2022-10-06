@@ -176,10 +176,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.notificationsComponent.updateNotifications(this.notificationList);
     }
 
-    this.contextService.isLessonUpdatedSubject$.subscribe((update: boolean) => {
-      this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
-
-    });
   }
 
   updateNotificationCount(count: number): void {
