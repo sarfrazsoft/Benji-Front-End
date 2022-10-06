@@ -19,24 +19,26 @@
             src="../../assets/img/dashboard/plus.svg"
             (click)="newFolder(true)">
         </div>
-        <ng-container *ngFor="let folder of folders">
-          <div 
-            class="folder"
-            [ngClass]="{'selected': selectedFolderId === folder.id}"
-            (click)="selectFolder(folder.id)"
-            fxLayoutAlign="space-between">
-            <div fxLayoutGap="7px" fxLayout="row" fxLayoutAlign="start center">
-              <img class="icon" src="../../assets/img/dashboard/folder.svg">
-              <div class="name">{{ folder.name }}</div>
+        <div class="folders-list">
+          <ng-container *ngFor="let folder of folders">
+            <div 
+              class="folder"
+              [ngClass]="{'selected': selectedFolderId === folder.id}"
+              (click)="selectFolder(folder.id)"
+              fxLayoutAlign="space-between">
+              <div fxLayoutGap="7px" fxLayout="row" fxLayoutAlign="start center">
+                <img class="icon" src="../../assets/img/dashboard/folder.svg">
+                <div class="name">{{ folder.name }}</div>
+              </div>
+              <img 
+                class="nav" 
+                src="../../assets/img/side-nav/three-dots.svg"
+                [matMenuTriggerFor]="menu"
+                [matMenuTriggerData]="{id: folder.id, name: folder.name}"
+                benji-click-stop-propagation>
             </div>
-            <img 
-              class="nav" 
-              src="../../assets/img/side-nav/three-dots.svg"
-              [matMenuTriggerFor]="menu"
-              [matMenuTriggerData]="{id: folder.id, name: folder.name}"
-              benji-click-stop-propagation>
-          </div>
-        </ng-container>
+          </ng-container>
+        </div>
         <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
           <ng-template matMenuContent let-id="id" let-name="name">
             <button mat-menu-item (click)="newFolder(false, id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">

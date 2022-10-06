@@ -61,6 +61,14 @@ export class ContextService {
     return this.showTimerSubject$.getValue();
   }
 
+  set isLessonUpdated(lessonUpdated: boolean) {
+    this.isLessonUpdatedSubject$.next(lessonUpdated);
+  }
+
+  get isLessonUpdated(): boolean {
+    return this.isLessonUpdatedSubject$.getValue();
+  }
+
   set sideNavAction(v: SideNavAction) {
     this.sideNavAction$.next(v);
   }
@@ -132,6 +140,11 @@ export class ContextService {
    * Activity timer
    */
   showTimerSubject$ = new BehaviorSubject<boolean>(null);
+
+  /**
+   * Lesson is updated
+   */
+  isLessonUpdatedSubject$ = new BehaviorSubject<boolean>(null);
 
   /**
    * Activity timer

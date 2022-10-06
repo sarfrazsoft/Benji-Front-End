@@ -59,36 +59,40 @@ mat-sidenav-container.mat-sidenav-container {
             border-radius: 4px;
           }
         }
-        .folder {
-          height: 32px;
-          padding: 0px 12px;
-          border-radius: 4px;
-          margin-top: 4px;
-          font-weight: 400;
-          cursor: pointer;
-          &:hover, &.selected {
-            color: #37352F;
-            background-color: #fff;
-            .icon {
-              opacity: 1;
+        .folders-list {
+          max-height: 33vh;
+          overflow: auto;
+          .folder {
+            height: 32px;
+            padding: 0px 12px;
+            border-radius: 4px;
+            margin-top: 4px;
+            font-weight: 400;
+            cursor: pointer;
+            &:hover, &.selected {
+              color: #37352F;
+              background-color: #fff;
+              .icon {
+                opacity: 1;
+              }
+              .nav {
+                display: flex;
+                width: 14px;
+              }
             }
-            .nav {
-              display: flex;
+            .icon {
+              opacity: 0.4;
               width: 14px;
             }
-          }
-          .icon {
-            opacity: 0.4;
-            width: 14px;
-          }
-          .nav {
-            display: none;
-          }
-          .name {
-            width: 120px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            .nav {
+              display: none;
+            }
+            .name {
+              max-width: 120px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
           }
         }
       }

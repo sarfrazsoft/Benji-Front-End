@@ -90,6 +90,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   @Output() openSettingsMenuEvent = new EventEmitter();
   @Output() toggleBoardsMenuEvent = new EventEmitter();
+  @Output() socketMessage = new EventEmitter<any>();
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
@@ -113,8 +114,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private permissionsService: NgxPermissionsService,
     private router: Router,
   ) {}
-
-  @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
@@ -176,6 +175,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.notificationList = this.activityState.notifications;
       this.notificationsComponent.updateNotifications(this.notificationList);
     }
+
+    this.contextService.isLessonUpdatedSubject$.subscribe((update: boolean) => {
+      this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
+
+    });
   }
 
   updateNotificationCount(count: number): void {
