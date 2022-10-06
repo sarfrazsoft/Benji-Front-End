@@ -86,12 +86,7 @@ export class LessonsComponent implements OnInit {
     this.openCreateSessionEvent.emit();
   }
 
-
   deleteSession(val: LessonInformation) {
-    this.openSessionSettings(val);
-  }
-
-  deleteSpace(val: LessonInformation) {
     const msg = 'Are you sure you want to delete ' + val.lessonTitle + '?';
     const dialogRef = this.matDialog
       .open(ConfirmationDialogComponent, {
