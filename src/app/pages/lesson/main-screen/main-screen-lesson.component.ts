@@ -1,14 +1,10 @@
-import { viewClassName } from '@angular/compiler';
 import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
   HostListener,
-  OnChanges,
-  OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -23,9 +19,7 @@ import {
   GroupingToolService,
   SharingToolService,
 } from 'src/app/services';
-import { UpdateMessage } from 'src/app/services/backend/schema';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { MainScreenToolbarComponent } from 'src/app/ui-components/main-screen-toolbar/main-screen-toolbar.component';
 import { BaseLessonComponent } from '../shared/base-lesson.component';
 

@@ -55,6 +55,7 @@ export interface LessonRun {
   host: any;
   participant_set: Array<Participant>;
   branding: Branding;
+  lesson: Lesson;
 }
 
 export interface RunningTools {
@@ -111,7 +112,7 @@ export interface LessonRunDetails {
   branding: Branding;
   idea_count: number;
   board_count: number;
-  lessonrun_images:  Array<any>;
+  lessonrun_images: Array<any>;
 }
 
 export interface Participant {
