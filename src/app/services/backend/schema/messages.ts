@@ -1,4 +1,10 @@
-import { BoardMetaData, ColsCategoryChangeIdeaOrderInfo, ColsIdeaOrderInfo, ConvoCardsActivity, GoogleSlidesActivity } from './activities';
+import {
+  BoardMetaData,
+  ColsCategoryChangeIdeaOrderInfo,
+  ColsIdeaOrderInfo,
+  ConvoCardsActivity,
+  GoogleSlidesActivity,
+} from './activities';
 import {
   BaseActivity,
   BrainstormActivity,
@@ -33,7 +39,6 @@ export interface UpdateMessage {
   // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson: Lesson;
   lesson_run: LessonRun;
-  running_tools: RunningTools;
   eventType: string;
   notifications: Array<Notification>;
   isHost: boolean;
@@ -91,7 +96,6 @@ export interface ServerMessage {
   servernotification?: ServerNotification;
   eventtype: string;
 }
-
 
 export interface QueryParamsObject {
   board: string;
@@ -1049,7 +1053,7 @@ export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
       next_board: nextBoard,
       instructions: instructions,
       sub_instructions: sub_instructions,
-      meta: meta
+      meta: meta,
     };
   }
 }

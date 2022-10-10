@@ -137,9 +137,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
     if (!this.isHost) {
       this.participantCode = this.participantCode;
-      if (this.board.board_activity.grouping && this.board.board_activity.grouping.groups.length) {
-        this.initParticipantGrouping(this.act);
-      }
     }
 
     if (this.isHost) {
@@ -213,34 +210,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     // });
   }
 
-  applyGroupingOnActivity(state: UpdateMessage) {
-    // const activityType = this.getActivityType().toLowerCase();
-    if (this.board.board_activity.grouping !== null) {
-      // if grouping is already applied return
-      return;
-    }
-    // if grouping is not applied check if grouping tool has
-    // information if grouping should be applied on this activity or not
-    const sm = state;
-    if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-      const gt = sm.running_tools.grouping_tool;
-      for (const grouping of gt.groupings) {
-        // if (
-        //   grouping.assignedActivities &&
-        //   grouping.assignedActivities.includes(state[activityType].activity_id)
-        // ) {
-        // const assignedActivities = ['1637726964645'];
-        // if (assignedActivities.includes(state[activityType].activity_id)) {
-        // if (activityType === 'brainstormactivity') {
-        this.sendMessage.emit(new StartBrainstormGroupEvent(grouping.id, this.board.id));
-        // } else if (activityType === 'casestudyactivity') {
-        //   this.sendMessage.emit(new StartCaseStudyGroupEvent(grouping.id));
-        // }
-        break;
-        // }
-      }
-    }
-  }
+  applyGroupingOnActivity(state: UpdateMessage) {}
 
   ngOnChanges() {
     this.onChanges();
@@ -257,39 +227,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
       this.getBoardInstructions();
-
-      // console.log(this.elementView.nativeElement.offsetHeight);
-      // this.headWrapperHeight = this.elementView.nativeElement.offsetHeight;
     } else {
-      // populate groupings dropdown
-      // if (
-      //   this.board &&
-      //   this.board.board_activity.grouping &&
-      //   this.board.board_activity.grouping.groups.length
-      // ) {
-      //   this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      //     if (val) {
-      //       this.initParticipantGrouping(this.act);
-      //     }
-      //   });
-      //   this.permissionsService.hasPermission('ADMIN').then((val) => {
-      //     if (val) {
-      //       this.participantGroups = this.board.board_activity.grouping.groups;
-      //     }
-      //   });
-      // } else {
-      //   // grouping is null in activity
-      //   if (this.eventType === 'AssignGroupingToActivities') {
-      //     this.applyGroupingOnActivity(this.activityState);
-      //   }
-      // }
-
-      const sm = this.activityState;
-      if (sm && sm.running_tools && sm.running_tools.grouping_tool) {
-        const gt = sm.running_tools.grouping_tool;
-        this.sharingToolService.updateParticipantGroupingToolDialog(gt);
-      }
-
       this.joinedUsers = this.activityState.lesson_run.participant_set;
 
       this.getBoardInstructions();
@@ -309,52 +247,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     if (this.dialogRef) {
       this.dialogRef.close();
     }
-  }
-
-  getParticipantGroup(participantCode, participantGroups) {
-    return this.brainstormService.getMyGroup(participantCode, participantGroups);
-  }
-
-  initParticipantGrouping(act: BrainstormActivity) {
-    // Check if groups are created
-    // if groups are present then check if participant is in the group
-    // if participant is not present in the group then open grouping info dialog
-    this.participantGroups = this.board.board_activity.grouping.groups;
-    if (this.participantGroups.length > 0) {
-      this.myGroup = this.getParticipantGroup(this.participantCode, this.participantGroups);
-      if (this.myGroup === null) {
-        // There are groups in the activity but this participant is not in any groups
-        if (this.dialogRef) {
-          this.sharingToolService.updateParticipantGroupingInfoDialog(
-            this.activityState.running_tools.grouping_tool
-          );
-          // this.dialogRef.close();
-          // this.dialogRef = null;
-        } else if (!this.dialogRef || !this.dialogRef.componentInstance) {
-          this.dialogRef = this.sharingToolService.openParticipantGroupingInfoDialog(
-            this.activityState,
-            this.participantCode
-          );
-          // this.dialogRef =
-          // this.sharingToolService.openParticipantGroupingToolDialog(this.activityState);
-          this.sharingToolService.sendMessage$.subscribe((v) => {
-            if (v) {
-              this.sendMessage.emit(v);
-            }
-          });
-        }
-      } else {
-        // filter ideas on participant screen by the group they are in.
-        this.filterIdeasBasedOnGroup(this.myGroup);
-        if (this.dialogRef) {
-          this.dialogRef.close();
-        }
-      }
-    }
-  }
-
-  resetGrouping() {
-    this.sendMessage.emit(new ResetGroupingEvent(this.board.board_activity.grouping.id));
   }
 
   getPersonName(idea: Idea) {

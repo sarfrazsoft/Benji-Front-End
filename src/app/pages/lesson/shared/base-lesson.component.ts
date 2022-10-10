@@ -253,66 +253,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  getIsSharing() {
-    const sm = this.serverMessage;
-    if (sm && sm.running_tools && sm.running_tools.share) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getTimerTool() {
-    const sm = this.serverMessage;
-    if (sm && sm.running_tools && sm.running_tools.timer_tool) {
-      return sm.running_tools.timer_tool;
-    } else {
-      return sm.running_tools.timer_tool;
-    }
-  }
-
-  getIsGrouping() {
-    const sm = this.serverMessage;
-    if (
-      sm &&
-      sm.running_tools &&
-      sm.running_tools.grouping_tool &&
-      sm.running_tools.grouping_tool.selectedGrouping
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getIsGroupingAppliedToActivity() {
-    const sm = this.serverMessage;
-    if (
-      sm &&
-      sm.running_tools &&
-      sm.running_tools.grouping_tool &&
-      sm.running_tools.grouping_tool.selectedGrouping
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getIsGroupingShowing() {
-    const sm = this.serverMessage;
-    if (
-      sm &&
-      sm.running_tools &&
-      sm.running_tools.grouping_tool &&
-      sm.running_tools.grouping_tool.viewGrouping
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   isLastActivity() {
     if (this.serverMessage) {
       const activity_type = this.serverMessage.activity_type.toLowerCase();

@@ -29,7 +29,8 @@ export interface DraftIdea {
 })
 export class ParticipantBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges
+{
   act: BrainstormActivity;
   userIdeaText = '';
   selectedIdeas = [];
@@ -103,8 +104,6 @@ export class ParticipantBrainstormingActivityComponent
   ngOnChanges() {
     this.act = this.activityState.brainstormactivity;
     const userID = this.getParticipantCode();
-
-    this.timer = this.getTimerTool();
 
     // Show thank you for idea submission
 

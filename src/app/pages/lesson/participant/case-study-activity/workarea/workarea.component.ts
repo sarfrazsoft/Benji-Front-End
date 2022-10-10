@@ -106,11 +106,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
       let moddedGroupId;
       if (myGroup && myGroup.id) {
         this.groupId = myGroup.id.toString();
-        if (selectedGrouping) {
-          moddedGroupId = selectedGrouping + this.groupId;
-        } else {
-          moddedGroupId = this.groupId;
-        }
+
         // create a unique ID by combining groupId and Lesson run code
       } else {
         // if participant is not part of any group
@@ -138,16 +134,7 @@ export class WorkAreaComponent implements OnInit, OnChanges {
     }
   }
 
-  getMyGrouping() {
-    const state = this.activityState;
-    if (
-      state.running_tools &&
-      state.running_tools.grouping_tool &&
-      state.running_tools.grouping_tool.selectedGrouping
-    ) {
-      return state.running_tools.grouping_tool.selectedGrouping;
-    }
-  }
+  getMyGrouping() {}
 
   editorUpdated(json) {
     // console.log(json);
