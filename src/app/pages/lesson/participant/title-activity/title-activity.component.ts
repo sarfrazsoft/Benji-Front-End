@@ -29,7 +29,6 @@ export class ParticipantTitleActivityComponent extends BaseActivityComponent imp
   ngOnChanges() {
     const act = this.activityState;
     this.loadVariables(act.titleactivity);
-    this.timer = this.getTimerTool();
   }
 
   loadVariables(act: TitleActivity) {

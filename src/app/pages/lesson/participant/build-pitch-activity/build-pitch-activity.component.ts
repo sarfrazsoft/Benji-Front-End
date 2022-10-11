@@ -26,7 +26,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantBuildPitchActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges
+{
   builtPitch_set;
   builtPitch_setNew;
   act: BuildAPitchActivity;
@@ -151,7 +152,6 @@ export class ParticipantBuildPitchActivityComponent
   // }
 
   ngOnChanges() {
-    this.timer = this.getTimerTool();
     this.act = this.activityState.buildapitchactivity;
     this.act.buildapitchblank_set = this.act.buildapitchblank_set.sort((a, b) => a.order - b.order);
     this.setTimer(this.act);

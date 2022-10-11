@@ -98,22 +98,6 @@ export abstract class BaseActivityComponent implements OnInit {
     return this.activityState.lesson_run.participant_set.filter((x) => x.is_active);
   }
 
-  getIsSharing() {
-    const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.share) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getTimerTool() {
-    const sm = this.activityState;
-    if (sm && sm.running_tools && sm.running_tools.timer_tool) {
-      return sm.running_tools.timer_tool;
-    }
-  }
-
   sendSocketMessage($event) {
     this.sendMessage.emit($event);
   }

@@ -15,15 +15,9 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import {
-  Board,
-  BoardParticipants,
-  Branding,
-  Timer,
-  UpdateMessage,
-} from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Branding, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
-import { Notification } from 'src/app/services/backend/schema/notification';
+import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
@@ -103,7 +97,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   // nofications
   @ViewChild(NotificationsComponent) notificationsComponent: NotificationsComponent;
 
-  notificationList: Array<Notification> = [];
+  notificationList: Array<Notification | LessonRunNotification> = [];
   notificationCount = 0;
 
   constructor(
@@ -112,7 +106,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private sharingToolService: SharingToolService,
     private matDialog: MatDialog,
     private permissionsService: NgxPermissionsService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -175,7 +169,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.notificationList = this.activityState.notifications;
       this.notificationsComponent.updateNotifications(this.notificationList);
     }
-
   }
 
   updateNotificationCount(count: number): void {
@@ -238,16 +231,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
   }
 
-  startSharingTool() {
-    const as = this.activityState;
-
-    if (as && as.running_tools && as.running_tools.share) {
-      this.endSharingTool();
-    } else {
-      this.socketMessage.emit(new BeginShareEvent());
-      this.sharingToolService.sharingToolControl$.next(this.activityState);
-    }
-  }
+  startSharingTool() {}
 
   endSharingTool() {
     this.socketMessage.emit(new EndShareEvent());

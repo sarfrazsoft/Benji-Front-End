@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { UpdateMessage } from 'src/app/services/backend/schema';
-import { Notification } from 'src/app/services/backend/schema/notification';
+import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
@@ -13,7 +13,7 @@ export class NotificationsComponent implements OnInit {
   @Input() avatarSize = 'large';
   @Input() isDashboard = true;
 
-  @Input() notificationList: Array<Notification> = [];
+  @Input() notificationList: Array<Notification | LessonRunNotification> = [];
   @Input() activityState: UpdateMessage;
   @Input() participantCode: number;
   @Input() roomCode: string;
@@ -48,7 +48,7 @@ export class NotificationsComponent implements OnInit {
     });
   }
 
-  updateNotifications(notifications: Array<Notification>) {
+  updateNotifications(notifications: Array<Notification | LessonRunNotification>) {
     this.notificationList = notifications;
     this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
   }

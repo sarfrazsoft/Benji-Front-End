@@ -73,10 +73,6 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
         editor: false,
       };
     }
-
-    if (this.getTimerTool()) {
-      this.contextService.activityTimer = this.getTimerTool();
-    }
   }
 
   ngOnChanges() {
@@ -104,9 +100,7 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
         this.contextService.activityTimer = this.timer;
       }
     } else {
-      if (this.getTimerTool()) {
-        this.contextService.activityTimer = this.getTimerTool();
-        this.timer = this.getTimerTool();
+      if (false) {
       } else {
         const time = moment().format();
         this.timer = {
@@ -285,14 +279,5 @@ export class DynamicTimerComponent implements OnInit, OnDestroy, OnChanges {
     //     editor: false,
     //   };
     // }
-  }
-
-  getTimerTool() {
-    const sm = this.updateMessage;
-    if (sm && sm.running_tools && sm.running_tools.timer_tool) {
-      return sm.running_tools.timer_tool;
-    } else {
-      return sm.running_tools.timer_tool;
-    }
   }
 }

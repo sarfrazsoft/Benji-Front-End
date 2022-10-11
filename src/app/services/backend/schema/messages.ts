@@ -1,4 +1,10 @@
-import { BoardMetaData, ColsCategoryChangeIdeaOrderInfo, ColsIdeaOrderInfo, ConvoCardsActivity, GoogleSlidesActivity } from './activities';
+import {
+  BoardMetaData,
+  ColsCategoryChangeIdeaOrderInfo,
+  ColsIdeaOrderInfo,
+  ConvoCardsActivity,
+  GoogleSlidesActivity,
+} from './activities';
 import {
   BaseActivity,
   BrainstormActivity,
@@ -25,7 +31,7 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
-import { Notification } from './notification';
+import { LessonRunNotification, Notification } from './notification';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
@@ -33,9 +39,8 @@ export interface UpdateMessage {
   // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
   lesson: Lesson;
   lesson_run: LessonRun;
-  running_tools: RunningTools;
   eventType: string;
-  notifications: Array<Notification>;
+  notifications: Array<LessonRunNotification>;
   isHost: boolean;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
@@ -89,9 +94,9 @@ export interface ServerMessage {
   clienterror?: ClientError;
   servererror?: ServerError;
   servernotification?: ServerNotification;
-  eventtype: string;
+  notifications?: Array<LessonRunNotification>;
+  eventtype: string | 'NotificationEvent';
 }
-
 
 export interface QueryParamsObject {
   board: string;
@@ -1049,7 +1054,7 @@ export class BrainstormAddBoardEventBaseEvent extends ActivityEvent {
       next_board: nextBoard,
       instructions: instructions,
       sub_instructions: sub_instructions,
-      meta: meta
+      meta: meta,
     };
   }
 }

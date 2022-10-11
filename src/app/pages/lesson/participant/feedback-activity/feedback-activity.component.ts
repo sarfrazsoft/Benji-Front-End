@@ -26,9 +26,7 @@ export class ParticipantFeedbackActivityComponent extends BaseActivityComponent 
     }
   }
 
-  ngOnChanges() {
-    this.timer = this.getTimerTool();
-  }
+  ngOnChanges() {}
 
   getUserId(): number {
     return this.getParticipantCode();
