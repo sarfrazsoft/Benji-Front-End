@@ -11,7 +11,7 @@ import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, MoveToFol
 import { LessonInformation } from 'src/app/services/backend/schema';
 import { HttpClient } from '@angular/common/http';
 import { UtilsService } from 'src/app/services/utils.service';
-import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { Folder, LessonGroupService, MoveToFolderData } from 'src/app/services/lesson-group.service';
 import { LessonListComponent } from './lesson-list/lesson-list.component';
 @Component({
   selector: 'benji-lessons-list',
@@ -204,43 +204,36 @@ export class LessonsComponent implements OnInit {
       });
   }
 
-  moveToFolder(val: LessonInformation) {
-    this.matDialog
-      .open(MoveToFolderDialogComponent, {
-        panelClass: 'move-to-folder-dialog',
-        data: {
-          lessonId: val.lessonId,
-        },
-      })
-      .afterClosed()
-      .subscribe((folder) => {
-        if (folder) {
-          this.lessonGroupService.getFolderDetails(folder.id).subscribe((folder) => {
-            const lessons = folder.lesson;
-            this.folderLessonsIDs = [];
-            lessons.forEach((lesson) => {
-              this.folderLessonsIDs.push(lesson.id);
-            });
-            this.folderLessonsIDs.push(val.lessonId);
-            const request = folder.title
-              ? this.lessonGroupService.createNewFolder({ title: folder.title, lessonId: val.lessonId })
-              : this.lessonGroupService.updateFolder({
-                title: folder.name,
-                lessons: this.folderLessonsIDs,
-                id: folder.id,
-              });
-            request.subscribe(
-              (data) => {
-                this.contextService.newFolderAdded = true;
-                this.lessonGroupService.getAllFolders().subscribe(
+  moveToFolders(val: LessonInformation) {
+    this.lessonGroupService.getAllFolders()
+      .subscribe(
+        (data: Array<Folder>) => {
+          this.matDialog
+            .open(MoveToFolderDialogComponent, {
+              panelClass: 'move-to-folder-dialog',
+              data: {
+                lessonId: val.lessonId,
+                folders: data,
+                lessonFolders: val.lessonFolders,
+              },
+            })
+            .afterClosed()
+            .subscribe((folders: MoveToFolderData) => {
+              if (folders) {
+                val.lessonFolders = folders.lessonFolders;
+                this.lessonGroupService.addToFolders(val.lessonId, folders.lessonFolders).subscribe(
+                  (data) => {
+                    this.lessonGroupService.getAllFolders().subscribe(
+                      (error) => console.log(error)
+                    );
+                  },
                   (error) => console.log(error)
                 );
-              },
-              (error) => console.log(error)
-            );
-          });
-        }
-      });
+              }
+            });
+        },
+        (error) => console.log(error)
+      );
   }
 
 }

@@ -19,6 +19,7 @@ export interface TableRowInformation {
   lessonImageId?: number;
   lessonImage?: string;
   imageUrl?: string;
+  lessonFolders?: Array<number>;
 }
 @Component({
   selector: 'benji-lesson-list',
@@ -28,7 +29,7 @@ export class LessonListComponent implements OnChanges {
   @Input() lessonRuns: Array<Lesson> = [];
   @Output() editSessionEvent = new EventEmitter<TableRowInformation>();
   @Output() duplicateSessionEvent = new EventEmitter<TableRowInformation>();
-  @Output() moveToFolderEvent = new EventEmitter<TableRowInformation>();
+  @Output() moveToFoldersEvent = new EventEmitter<TableRowInformation>();
   @Output() deleteSessionEvent = new EventEmitter<TableRowInformation>();
 
   displayedColumns: string[] = ['title', 'host', 'boards', 'participants', 'startDate', 'options'];
@@ -90,6 +91,7 @@ export class LessonListComponent implements OnChanges {
         lessonImageId: val.lessonrun_images[this.maxIdIndex]?.id,
         lessonImage: val.lessonrun_images[this.maxIdIndex]?.img,
         imageUrl: val.lessonrun_images[this.maxIdIndex]?.image_url,
+        lessonFolders: val.lesson.lesson_folders,
       });
     });
   }
@@ -124,8 +126,8 @@ export class LessonListComponent implements OnChanges {
     this.duplicateSessionEvent.emit(val);
   }
 
-  moveToFolder(val: TableRowInformation) {
-    this.moveToFolderEvent.emit(val);
+  moveToFolders(val: TableRowInformation) {
+    this.moveToFoldersEvent.emit(val);
   }
 
   updateLessonName(name: string, code: number): void {

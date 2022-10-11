@@ -1,3 +1,4 @@
+import { Time } from '@angular/common';
 import { Branding, TeamUser, User } from './user';
 import { Timer } from './utils';
 
@@ -24,6 +25,7 @@ export class Lesson {
   single_user_lesson?: boolean;
   lesson_length_minutes?: number;
   lesson_description?: string;
+  lesson_folders?: Array<number>;
   lesson_long_description?: string;
   lesson_plan?: string;
   lesson_plan_json?: Array<any>;
@@ -126,15 +128,24 @@ export interface Participant {
 }
 
 export interface SessionInformation {
-  id: number,
-  lessonrun_code: number,
-  screen_socket: string,
-  theme_label: null,
-  start_time: string,
-  end_time: null,
-  is_facilitator_active: true,
-  lesson: number,
-  host: number,
-  theme: null,
-  current_activity: null
+  id: number;
+  lessonrun_code: number;
+  screen_socket: string;
+  theme_label: null;
+  start_time: string;
+  end_time: null;
+  is_facilitator_active: true;
+  lesson: number;
+  host: number;
+  theme: null;
+  current_activity: null;
+}
+
+export interface Folder {
+  id: number;
+  name: string;
+  lesson: Array<any>;
+  created_by: number;
+  creation_time: String;
+  selected: boolean;
 }

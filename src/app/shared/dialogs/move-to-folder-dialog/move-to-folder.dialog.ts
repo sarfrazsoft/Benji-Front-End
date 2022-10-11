@@ -1,75 +1,90 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ContextService } from 'src/app/services';
+import { Folder, FolderInfo, LessonGroupService, MoveToFolderData } from 'src/app/services/lesson-group.service';
+import { NewFolderDialogComponent } from '..';
 @Component({
   selector: 'benji-move-to-folder-dialog',
   templateUrl: 'move-to-folder.dialog.html',
 })
 export class MoveToFolderDialogComponent implements OnInit {
-  form: FormGroup;
-  focusTitle;
-  showEdit: boolean;
-  isNewFolder = false;
-  selectedFolderId: number;
-  spaceId: number;
-  folderName: string;
-  folders = [];
-  currentlyIn = [];
+  folders: Array<Folder> = [];
+  lessonFolders: Array<number> = [];
+  isNewFolder: boolean;
 
   constructor(
     private lessonGroupService: LessonGroupService,
+    private contextService: ContextService,
     private dialogRef: MatDialogRef<MoveToFolderDialogComponent>,
-    private builder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: MoveToFolderData,
   ) {
-    this.spaceId = data.lessonId;
+    this.folders = data.folders;
+    this.lessonFolders = data.lessonFolders;
   }
 
   ngOnInit() {
-    this.form = this.builder.group({
-      title: new FormControl('', [Validators.required]),
-    });
-    this.getAllFolders();
   }
 
   getAllFolders() {
     this.lessonGroupService.getAllFolders()
       .subscribe(
-        (data) => {
+        (data: Array<Folder>) => {
           this.folders = data;
-          this.currentlyIn = data.filter(folder => folder.lesson.includes(this.spaceId));
         },
         (error) => console.log(error)
       );
   }
 
-  get title(): AbstractControl {
-    return this.form.get('title');
-  }
-
-  moveToFolder(folder) {
-    this.selectedFolderId = folder.id;
-    this.folderName = folder.name;
-    this.isNewFolder = false;
+  valueChange(folder: Folder, $event) {
+    if ($event.checked) {
+      if (!this.lessonFolders.includes(folder.id)) {
+        this.lessonFolders.push(folder.id);
+      }
+    }
+    else {
+      this.lessonFolders = this.lessonFolders.filter(id => id != folder.id);
+    }
   }
 
   newFolderClicked() {
     this.isNewFolder = true;
+    this.newFolder(true);
+  }
+
+  newFolder(isNew: boolean, folderId?: number) {
+    const folder = this.folders.filter(x => x.id === folderId);
+    this.dialog
+      .open(NewFolderDialogComponent, {
+        data: {
+          newFolder: isNew,
+          title: folder[0]?.name,
+        },
+        panelClass: 'new-folder-dialog',
+      })
+      .afterClosed()
+      .subscribe((folder: FolderInfo) => {
+        if (folder) {
+          let request = isNew ?
+            this.lessonGroupService.createNewFolder(folder) :
+            this.lessonGroupService.updateFolder({ title: folder.title, id: folderId, lessonsIds: null });
+          request.subscribe(
+            (data) => {
+              this.getAllFolders();
+              if (isNew) {
+                this.contextService.newFolderAdded = true;
+              }
+            },
+            (error) => console.log(error)
+          );
+        }
+      });
   }
 
   onSubmit(): void {
-    if (this.isNewFolder && this.form.valid) {
-      const val = this.form.value;
-      this.dialogRef.close({
-        title: val.title
-      });
-    } else {
-      this.dialogRef.close({
-        id: this.selectedFolderId,
-        name: this.folderName
-      });
-    }
+    this.dialogRef.close({
+      lessonFolders: this.lessonFolders,
+    });
   }
 
 }

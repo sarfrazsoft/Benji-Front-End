@@ -14,7 +14,7 @@ export class LessonTileComponent implements OnInit {
   @Input() lesson: LessonRunDetails;
   @Output() editSessionEvent = new EventEmitter<any>();
   @Output() duplicateSessionEvent = new EventEmitter<any>();
-  @Output() moveToFolderEvent = new EventEmitter<any>();
+  @Output() moveToFoldersEvent = new EventEmitter<any>();
   @Output() deleteSessionEvent = new EventEmitter<any>();
 
   showSettings: boolean;
@@ -108,8 +108,8 @@ export class LessonTileComponent implements OnInit {
     this.duplicateSessionEvent.emit(this.getLessonDetails());
   }
 
-  moveToFolder() {
-    this.moveToFolderEvent.emit(this.getLessonDetails());
+  moveToFolders() {
+    this.moveToFoldersEvent.emit(this.getLessonDetails());
   }
 
 }

@@ -631,4 +631,5 @@ export interface LessonInformation {
   lessonDescription: string;
   lessonImage?: string;
   imageUrl?: string;
+  lessonFolders?: Array<number>;
 }

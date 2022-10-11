@@ -1455,6 +1455,10 @@ ng-dropdown-panel.post-idea-categories-dropdown {
   .mat-checkbox-ripple {
     display: none;
   }
+  .folders-names {
+    max-height: 64vh;
+    overflow: auto;
+  }
   .controls-container {
     .dialog-controls {
       &.duplicate {

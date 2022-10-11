@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
-import { Branding, User } from 'src/app/services/backend/schema';
+import { Branding } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
 import { ConfirmationDialogComponent, JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
@@ -100,7 +100,6 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private contextService: ContextService,
     private lessonGroupService: LessonGroupService,
@@ -193,7 +192,7 @@ export class SidenavComponent implements OnInit {
         if (folder) {
           let request = isNew ?
             this.lessonGroupService.createNewFolder(folder) :
-            this.lessonGroupService.updateFolder({ title: folder.title, id: folderId, lessons: this.folderLessonsIDs });
+            this.lessonGroupService.updateFolder({ title: folder.title, id: folderId, lessonsIds: this.folderLessonsIDs });
           request.subscribe(
             (data) => {
               this.getAllFolders();

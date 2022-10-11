@@ -164,7 +164,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
             this.folderLessonsIDs.push(res.lesson);
             console.log(this.selectedFolderId + " " + this.folderLessonsIDs);
             if (folderId) {
-              this.lessonGroupService.updateFolder({ title: this.folderName, lessons: this.folderLessonsIDs, id: folderId })
+              this.lessonGroupService.updateFolder({ title: this.folderName, lessonsIds: this.folderLessonsIDs, id: folderId })
                 .subscribe(
                   (data) => {
                     console.log(data);
