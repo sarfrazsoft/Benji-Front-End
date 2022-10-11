@@ -16,6 +16,8 @@ import { Validators } from 'ngx-editor';
 
 import doc from './../../shared/ngx-editor/doc';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { Title } from '@angular/platform-browser';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -46,6 +48,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   }
   constructor(
     public intercom: Intercom,
+    private title: Title,
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
     private contextService: ContextService,
@@ -53,12 +56,14 @@ export class AdminPanelComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private utilsService: UtilsService,
     private lessonGroupService: LessonGroupService,
   ) {
     this.initDashData();
   }
 
   ngOnInit() {
+    this.utilsService.setDefaultPageTitle();
     const savedBrandingInfo = JSON.parse(localStorage.getItem('benji_branding'));
     this.contextService.brandingInfo = savedBrandingInfo;
 

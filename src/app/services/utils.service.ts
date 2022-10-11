@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { SnackBarComponent } from '../ui-components/snack-bar-component/snack-bar.component';
@@ -9,7 +10,14 @@ export class UtilsService {
     horizontalPosition: 'center',
     verticalPosition: 'top',
   };
-  constructor(protected matSnackBar: MatSnackBar) {}
+  constructor(
+    protected matSnackBar: MatSnackBar,
+    private title: Title,
+  ) {}
+
+  setDefaultPageTitle() {
+    this.title.setTitle('Benji');
+  }
 
   copyToClipboard(val: string) {
     const selBox = document.createElement('textarea');

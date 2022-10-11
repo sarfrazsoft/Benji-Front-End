@@ -1,15 +1,9 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import * as LogRocket from 'logrocket';
-
-import { DefaultwhiteLabelInfo } from './globals';
-import { BackendRestService } from './services';
-import { Branding, User } from './services/backend/schema';
-import { PartnerInfo } from './services/backend/schema/whitelabel_info';
-// import { Branding } from './services/backend/schema/whitelabel_info';
+import { Branding } from './services/backend/schema';
 import { ContextService } from './services/context.service';
-import { LayoutService } from './services/layout.service';
+import { UtilsService } from './services/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -20,17 +14,15 @@ export class AppComponent implements OnInit {
   apiUrl = 'test';
 
   constructor(
-    private layoutService: LayoutService,
     private contextService: ContextService,
-    private restService: BackendRestService,
-    private title: Title,
+    private utilsService: UtilsService,
     @Inject(DOCUMENT) private _document: HTMLDocument
   ) {}
 
   ngOnInit() {
     let color = '#555BEA';
     let favicon;
-    this.title.setTitle('Benji');
+    this.utilsService.setDefaultPageTitle();
 
     this.contextService.brandingInfo$.subscribe((branding: Branding) => {
       if (branding) {
