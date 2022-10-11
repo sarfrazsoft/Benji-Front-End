@@ -15,7 +15,7 @@
       <img 
         class="add" 
         src="../../assets/img/dashboard/plus.svg"
-        (click)="newFolder(true)">
+        (click)="createOrUpdateFolder(true)">
     </div>
     <div class="folders folders-names">
       <div class="folders-list">
@@ -40,7 +40,7 @@
       </div>
       <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
         <ng-template matMenuContent let-id="id" let-name="name">
-          <button mat-menu-item (click)="newFolder(false, id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+          <button mat-menu-item (click)="createOrUpdateFolder(false, id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
             <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
             <span>Rename</span>
           </button>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
 import { Branding } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { FolderInfo, LessonGroupService } from 'src/app/services/lesson-group.service';
 import { ConfirmationDialogComponent, JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 export interface SidenavSection {
@@ -174,7 +174,7 @@ export class SidenavComponent implements OnInit {
       );
   }
 
-  newFolder(isNew: boolean, folderId?: number) {
+  createOrUpdateFolder(isNew: boolean, folderId?: number) {
     if (folderId) {
       this.setFolderLessonsIDs(folderId);
     }
@@ -188,11 +188,11 @@ export class SidenavComponent implements OnInit {
         panelClass: 'new-folder-dialog',
       })
       .afterClosed()
-      .subscribe((folder) => {
-        if (folder) {
+      .subscribe((folderInfo: FolderInfo) => {
+        if (folderInfo) {
           let request = isNew ?
-            this.lessonGroupService.createNewFolder(folder) :
-            this.lessonGroupService.updateFolder({ title: folder.title, id: folderId, lessonsIds: this.folderLessonsIDs });
+            this.lessonGroupService.createNewFolder(folderInfo) :
+            this.lessonGroupService.updateFolder({ title: folderInfo.title, id: folderId, lessonsIds: this.folderLessonsIDs });
           request.subscribe(
             (data) => {
               this.getAllFolders();
