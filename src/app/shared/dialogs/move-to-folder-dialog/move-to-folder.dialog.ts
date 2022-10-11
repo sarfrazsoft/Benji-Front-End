@@ -46,11 +46,11 @@ export class MoveToFolderDialogComponent implements OnInit {
     }
   }
 
-  newFolder(isNew: boolean) {
+  newFolder() {
     this.dialog
       .open(NewFolderDialogComponent, {
         data: {
-          newFolder: isNew,
+          newFolder: true,
         },
         panelClass: 'new-folder-dialog',
       })
@@ -60,9 +60,7 @@ export class MoveToFolderDialogComponent implements OnInit {
           this.lessonGroupService.createNewFolder(folder).subscribe(
             (data) => {
               this.getAllFolders();
-              if (isNew) {
-                this.contextService.newFolderAdded = true;
-              }
+              this.contextService.newFolderAdded = true;
             },
             (error) => console.log(error)
           );
