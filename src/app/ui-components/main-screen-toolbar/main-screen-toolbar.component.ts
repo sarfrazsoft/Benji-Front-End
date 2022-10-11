@@ -15,17 +15,9 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import {
-  Board,
-  BoardParticipants,
-  Branding,
-  Timer,
-  UpdateMessage,
-  User,
-} from 'src/app/services/backend/schema';
+import { Board, BoardParticipants, Branding, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
-import { Notification } from 'src/app/services/backend/schema/notification';
-import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
+import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
@@ -92,6 +84,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   @Output() openSettingsMenuEvent = new EventEmitter();
   @Output() toggleBoardsMenuEvent = new EventEmitter();
+  @Output() socketMessage = new EventEmitter<any>();
 
   @ViewChild('groupingMenuTrigger') groupingMenuTrigger: MatMenuTrigger;
   @ViewChild('activitySettingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
@@ -104,7 +97,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   // nofications
   @ViewChild(NotificationsComponent) notificationsComponent: NotificationsComponent;
 
-  notificationList: Array<Notification> = [];
+  notificationList: Array<Notification | LessonRunNotification> = [];
   notificationCount = 0;
 
   constructor(
@@ -115,8 +108,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     private permissionsService: NgxPermissionsService,
     private router: Router
   ) {}
-
-  @Output() socketMessage = new EventEmitter<any>();
 
   ngOnInit() {
     this.shareFacilitatorLink = window.location.href + '?share=facilitator';
@@ -171,9 +162,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.lessonName = this.lesson.lesson_name;
+
     this.showParticipantGroupingButton();
     this.loadParticipantCodes();
-
     if (this.activityState.eventType === 'NotificationEvent') {
       this.notificationList = this.activityState.notifications;
       this.notificationsComponent.updateNotifications(this.notificationList);
@@ -240,16 +231,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     }
   }
 
-  startSharingTool() {
-    const as = this.activityState;
-
-    if (as && as.running_tools && as.running_tools.share) {
-      this.endSharingTool();
-    } else {
-      this.socketMessage.emit(new BeginShareEvent());
-      this.sharingToolService.sharingToolControl$.next(this.activityState);
-    }
-  }
+  startSharingTool() {}
 
   endSharingTool() {
     this.socketMessage.emit(new EndShareEvent());

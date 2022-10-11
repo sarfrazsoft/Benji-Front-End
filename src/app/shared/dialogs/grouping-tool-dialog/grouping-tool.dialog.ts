@@ -10,7 +10,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { difference } from 'lodash';
 import { Observable } from 'rxjs-compat/Observable';
 import { ActivityTypes } from 'src/app/globals';
@@ -97,10 +97,7 @@ export class GroupingToolDialogComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     const state = this.activityState;
-    const grouping = {
-      groupings: state.running_tools.grouping_tool.groupings,
-      selectedGrouping: state.running_tools.grouping_tool.selectedGrouping,
-    };
+    const grouping = {};
 
     const type = state.activity_type.toLowerCase();
     if (state[type].grouping && state[type].grouping.id) {

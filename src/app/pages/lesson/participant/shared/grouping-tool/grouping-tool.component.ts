@@ -30,9 +30,7 @@ export class ParticipantGroupingToolComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  ngOnChanges() {
-    this.initSelectedGroup(this.activityState.running_tools.grouping_tool);
-  }
+  ngOnChanges() {}
 
   initSelectedGroup(grouping) {
     grouping.groupings.forEach((g: GroupingToolGroups) => {

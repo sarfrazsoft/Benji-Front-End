@@ -1,24 +1,24 @@
 <div class="nav-container">
-  <div class="top-bottom-sections" fxLayout="column" fxLayoutAlign="space-between start">
-    <div class="top-sections">
-      <div class="logo" routerLink="/dashboard">
-        <img [src]="logo" alt="Benji Logo" />
-      </div>
-      <div class="nav-section" *ngFor="let section of sidenavTopSections">
-        <benji-sidenav-item 
-          *ngFor="let item of section.items" 
-          [sidenavItem]="item"
-          (loadHomeEvent)="removePostQueryParam()">
-        </benji-sidenav-item>
-      </div>
-      <div class="folders">
-        <div class="header" fxLayout="row" fxLayoutAlign="space-between center">
-          <div class="title">Folders</div>
-          <img 
-            class="add" 
-            src="../../assets/img/dashboard/plus.svg"
-            (click)="newFolder(true)">
-        </div>
+  <div class="logo" routerLink="/dashboard">
+    <img [src]="logo" alt="Benji Logo" />
+  </div>
+  <div class="sections">
+    <div class="nav-section nav-top" *ngFor="let section of sidenavTopSections">
+      <benji-sidenav-item 
+        *ngFor="let item of section.items" 
+        [sidenavItem]="item"
+        (loadHomeEvent)="removePostQueryParam()">
+      </benji-sidenav-item>
+    </div>
+    <div class="folders-header scrollable" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="title">Folders</div>
+      <img 
+        class="add" 
+        src="../../assets/img/dashboard/plus.svg"
+        (click)="createOrUpdateFolder(true)">
+    </div>
+    <div class="folders folders-names">
+      <div class="folders-list">
         <ng-container *ngFor="let folder of folders">
           <div 
             class="folder"
@@ -37,24 +37,22 @@
               benji-click-stop-propagation>
           </div>
         </ng-container>
-        <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
-          <ng-template matMenuContent let-id="id" let-name="name">
-            <button mat-menu-item (click)="newFolder(false, id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-              <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
-              <span>Rename</span>
-            </button>
-            <button mat-menu-item (click)="deleteFolder(id, name)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
-              <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
-              <span>Delete</span>
-            </button>
-          </ng-template>
-        </mat-menu>
       </div>
+      <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+        <ng-template matMenuContent let-id="id" let-name="name">
+          <button mat-menu-item (click)="createOrUpdateFolder(false, id)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <img class="dots" src="../../../assets/img/side-nav/edit.svg"/>
+            <span>Rename</span>
+          </button>
+          <button mat-menu-item (click)="deleteFolder(id, name)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <img class="dots" src="../../../assets/img/side-nav/delete.svg"/>
+            <span>Delete</span>
+          </button>
+        </ng-template>
+      </mat-menu>
     </div>
-    <div class="bottom-sections">
-      <div class="nav-section" *ngFor="let section of sidenavBottomSections">
-        <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
-      </div>
+    <div class="nav-section nav-bottom" *ngFor="let section of sidenavBottomSections">
+      <benji-sidenav-item *ngFor="let item of section.items" [sidenavItem]="item"></benji-sidenav-item>
     </div>
   </div>
 </div>

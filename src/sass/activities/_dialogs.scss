@@ -650,6 +650,7 @@ ng-dropdown-panel.groups-controls {
     }
   }
   .controls-container {
+    margin-top: 24px;
     .dialog-controls {
       height: 40px;
       padding: unset;
@@ -666,6 +667,11 @@ ng-dropdown-panel.groups-controls {
     margin-top: 4px;
     height: 40px;
     padding: 0px 24px !important;
+  }
+  .close-button {
+    position: absolute;
+    top: -24px;
+    right: -25px;
   }
 }
 

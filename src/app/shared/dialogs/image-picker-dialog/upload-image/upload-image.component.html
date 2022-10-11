@@ -6,13 +6,11 @@
       <div class="call-to-action">Choose your image to upload</div>
       <div class="what-works">Works with any .JPG, .PNG, or .GIF file.</div>
     </div>
-    <div class="medium-button bg-primary-color" fxLayoutAlign="center center">
+    <div fxLayoutAlign="center center">
       <label fxLayout="row" fxLayoutAlign="center center">
         <input type="file" accept="image/*" onclick="this.value = null" (change)="onFileSelect($event)" />
-        <div class="white-color" fxLayoutAlign="space-evenly center">
-          <div>
-            Choose File
-          </div>
+        <div class="white-color file-selector bg-primary-color" fxLayoutAlign="center center">
+          Choose File
         </div>
       </label>
     </div>

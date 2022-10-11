@@ -16,6 +16,8 @@ import { Validators } from 'ngx-editor';
 
 import doc from './../../shared/ngx-editor/doc';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
+import { Title } from '@angular/platform-browser';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -31,7 +33,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   adminName = '';
   selectedFolderId: number;
   folderName: string;
-  folderLessonsIDs = [];
+  folderLessonsIDs: Array<number> = [];
 
   form = new FormGroup({
     editorContent: new FormControl(doc, Validators.required()),
@@ -46,6 +48,7 @@ export class AdminPanelComponent implements OnInit, OnChanges {
   }
   constructor(
     public intercom: Intercom,
+    private title: Title,
     private activatedRoute: ActivatedRoute,
     private adminService: AdminService,
     private contextService: ContextService,
@@ -53,12 +56,14 @@ export class AdminPanelComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private utilsService: UtilsService,
     private lessonGroupService: LessonGroupService,
   ) {
     this.initDashData();
   }
 
   ngOnInit() {
+    this.utilsService.setDefaultPageTitle();
     const savedBrandingInfo = JSON.parse(localStorage.getItem('benji_branding'));
     this.contextService.brandingInfo = savedBrandingInfo;
 
@@ -70,11 +75,11 @@ export class AdminPanelComponent implements OnInit, OnChanges {
 
     this.route.queryParams
       .subscribe(params => {
-        if(params.folder) {
+        if (params.folder) {
           this.contextService.selectedFolder = params.folder;
         }
       }
-    );
+      );
 
     this.contextService.selectedFolder$.subscribe((folder) => {
       if (folder === null) {
@@ -84,24 +89,24 @@ export class AdminPanelComponent implements OnInit, OnChanges {
       else if (folder) {
         this.selectedFolderId = folder;
         this.lessonGroupService.getFolderDetails(folder)
-        .subscribe(
-          (folder) => {
-            this.folderName = folder.name;
-            this.lessons = folder.lesson;
-            this.setFolderLessonsIDs();
-            this.lessonRuns = [];
-            this.activatedRoute.data.forEach((data: any) => {
-              data.dashData.lessonRuns.forEach((lessonRun) => {
-                this.lessons.forEach((lesson) => {
-                  if (lessonRun.lesson.id === lesson.id) {
-                    this.lessonRuns.push(lessonRun);
-                  } 
+          .subscribe(
+            (folder) => {
+              this.folderName = folder.name;
+              this.lessons = folder.lesson;
+              this.setFolderLessonsIDs();
+              this.lessonRuns = [];
+              this.activatedRoute.data.forEach((data: any) => {
+                data.dashData.lessonRuns.forEach((lessonRun) => {
+                  this.lessons.forEach((lesson) => {
+                    if (lessonRun.lesson.id === lesson.id) {
+                      this.lessonRuns.push(lessonRun);
+                    }
+                  });
                 });
               });
-            });
-          },
-          (error) => console.log(error)
-        );
+            },
+            (error) => console.log(error)
+          );
       }
     });
 
@@ -154,19 +159,19 @@ export class AdminPanelComponent implements OnInit, OnChanges {
                 },
                 (error) => console.log(error)
               );
-              console.log(res);
-              const folderId = this.selectedFolderId;
-              this.folderLessonsIDs.push(res.lesson);
-              console.log(this.selectedFolderId + " " + this.folderLessonsIDs);
-              if (folderId) {
-                this.lessonGroupService.updateFolder({ title: this.folderName, lessons: this.folderLessonsIDs, id: folderId })
+            console.log(res);
+            const folderId = this.selectedFolderId;
+            this.folderLessonsIDs.push(res.lesson);
+            console.log(this.selectedFolderId + " " + this.folderLessonsIDs);
+            if (folderId) {
+              this.lessonGroupService.updateFolder({ title: this.folderName, lessonsIds: this.folderLessonsIDs, id: folderId })
                 .subscribe(
                   (data) => {
                     console.log(data);
                   },
                   (error) => console.log(error)
                 );
-              }
+            }
             // user object was stored when this user logged in.
             // Now we need to store it as host so other modules know who is host
             // for this particular session

@@ -41,3 +41,13 @@ export interface NotificationExtra {
   name: string;
   lesson_name: string;
 }
+
+export interface LessonRunNotification {
+  created: string;
+  deleted: boolean;
+  extra: NotificationExtra;
+  from: any;
+  id: number;
+  notification: string;
+  read: boolean;
+}

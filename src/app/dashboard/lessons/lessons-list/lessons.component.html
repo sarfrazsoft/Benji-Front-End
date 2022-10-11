@@ -1,17 +1,22 @@
 <div *ngIf="layout == 'listLayout'" class="lessons-list">
   <benji-lesson-list
+    #lessonList
     [lessonRuns]="lessonRuns"
-    (updateLessonsRuns)="updateLessonsRuns()"
+    (editSessionEvent)="openSessionSettings($event)"
+    (duplicateSessionEvent)="duplicateSession($event)"
+    (moveToFoldersEvent)="moveToFolders($event)"
+    (deleteSessionEvent)="deleteSession($event)"
   ></benji-lesson-list>
 </div>
 <div  *ngIf="layout == 'tilesLayout'" class="lessons-tiles">
   <div class="courses" fxLayoutGap="16px" fxLayout="row wrap">
-     <!-- <div (click)="openDetails(lesson)" *ngFor="let lesson of lessons">  -->
     <div *ngFor="let lesson of lessonRuns">
-      <benji-lesson-tile 
+      <benji-lesson-tile
         [lesson]="lesson"
-        [isTemplates]="isTemplates" 
-        (updateLessonsRuns)="updateLessonsRuns()" 
+        (editSessionEvent)="openSessionSettings($event)"
+        (duplicateSessionEvent)="duplicateSession($event)"
+        (moveToFoldersEvent)="moveToFolders($event)"
+        (deleteSessionEvent)="deleteSession($event)"
         ></benji-lesson-tile>
     </div>
     <div (click)="openCreateSession()" class="new-space" fxLayout="row" fxLayoutAlign="center center">

@@ -86,10 +86,9 @@ export class SessionSettingsDialogComponent implements OnInit {
       const l: any = {
         lesson_name: val.title,
         lesson_description: val.description,
-        index: this.data.index,
-        lesson_image: this.selectedImage,
-        lesson_image_name: this.selectedImageName,
-        image_url: this.imageUrl,
+        lesson_image: this.selectedImage ? this.selectedImage : this.data.lessonImage,
+        lesson_image_name: this.selectedImageName ? this.selectedImageName : null, // Ask Mahin what name to pass
+        image_url: this.imageUrl ? this.imageUrl : this.data.imageUrl,
       };
       this.updateLesson(l, this.data.id)
         .pipe(
@@ -97,7 +96,6 @@ export class SessionSettingsDialogComponent implements OnInit {
           catchError((error) => error)
         )
         .subscribe((res: Lesson) => {
-          console.log(res);
           this.dialogRef.close(l);
         });
     }

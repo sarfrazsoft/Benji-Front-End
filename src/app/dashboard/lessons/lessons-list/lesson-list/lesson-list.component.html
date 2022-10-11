@@ -5,7 +5,7 @@
 
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef> Title </th>
-        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.lesson_title}} </td>
+        <td (click)="navigateToSession(element)" mat-cell *matCellDef="let element"> {{element.lessonTitle}} </td>
       </ng-container>
     
       <ng-container matColumnDef="host">
@@ -38,7 +38,7 @@
                 (click)="copyLink(element)" 
                 src="../../../../assets/img/dashboard/copy-link.svg">
             </div>
-            <div (click)="openSessionSettings(element)" class="grey-bg" fxLayoutAlign="center center">
+            <div (click)="edit(element)" class="grey-bg" fxLayoutAlign="center center">
               <img src="../../../../assets/img/dashboard/edit-pen.svg" alt="">
             </div>
 
@@ -58,7 +58,7 @@
               <img class="dots" src="../../../assets/img/side-nav/duplicate.svg"/>
               <span>Duplicate</span>
             </button>
-            <button mat-menu-item (click)="moveToFolder(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+            <button mat-menu-item (click)="moveToFolders(element)" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
               <img class="dots" src="../../../assets/img/side-nav/move-to-folder.svg"/>
               <span>Move to folder</span>
             </button>

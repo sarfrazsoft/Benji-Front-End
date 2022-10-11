@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AllowParticipantGroupingMidActivityEvent, UpdateMessage } from 'src/app/services/backend/schema';
 import {
   GroupingTool,
@@ -37,9 +37,7 @@ export class ParticipantGroupingInfoDialogComponent implements OnInit, OnChanges
     this.participantCode = data.participantCode;
   }
 
-  ngOnInit() {
-    this.initSelectedGroup(this.activityState.running_tools.grouping_tool);
-  }
+  ngOnInit() {}
 
   ngOnChanges() {}
 

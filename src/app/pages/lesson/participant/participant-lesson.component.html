@@ -4,21 +4,8 @@
   (sendMessage)="sendSocketMessage($event)">
 </benji-participant-toolbar>
 
-<ng-container *ngIf="getIsSharing()">
-  <benji-ps-sharing-tool
-    [activityState]="serverMessage"
-    (sendMessage)="sendSocketMessage($event)">
-  </benji-ps-sharing-tool>
-</ng-container>
 
 <div fxFill *ngIf="isConnected() && serverMessage">
-
-  <ng-container *ngIf="getIsGroupingShowing()">
-    <benji-ps-grouping-tool
-      [activityState]="serverMessage"
-      (sendMessage)="sendSocketMessage($event)">
-    </benji-ps-grouping-tool>
-  </ng-container>
 
   <benji-ps-brainstorming-activity
     *ngIf="getActivityType() === at.brainStorm"

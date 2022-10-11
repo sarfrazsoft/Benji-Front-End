@@ -25,7 +25,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class ParticipantCaseStudyActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy {
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() actEditor = false;
   @Input() facilitatorSelectedGroup: Group;
   @Input() showingToFacilitator = false;
@@ -78,8 +79,6 @@ export class ParticipantCaseStudyActivityComponent
       this.participantCode = this.getParticipantCode();
     }
     this.populateQuestions();
-
-    this.timer = this.getTimerTool();
   }
 
   populateQuestions() {
@@ -94,21 +93,6 @@ export class ParticipantCaseStudyActivityComponent
 
   ngOnChanges() {
     this.act = this.activityState.casestudyactivity;
-    this.timer = this.getTimerTool();
-
-    const state = this.activityState;
-    if (state.running_tools && state.running_tools && state.running_tools.share) {
-      const share = state.running_tools.share;
-      if (share.selectedParticipant && share.selectedParticipant !== this.selectedParticipant) {
-        this.selectedParticipant = share.selectedParticipant;
-        this.saved = false;
-      }
-
-      if (share.selectedParticipant && share.selectedParticipant === this.participantCode && !this.saved) {
-        this.saved = true;
-        this.saveEditCollab();
-      }
-    }
   }
 
   getMyNoteTaker() {
@@ -145,16 +129,7 @@ export class ParticipantCaseStudyActivityComponent
     }
   }
 
-  getMyGrouping() {
-    const state = this.activityState;
-    if (
-      state.running_tools &&
-      state.running_tools.grouping_tool &&
-      state.running_tools.grouping_tool.selectedGrouping
-    ) {
-      return state.running_tools.grouping_tool.selectedGrouping;
-    }
-  }
+  getMyGrouping() {}
 
   submitCaseStudyDone() {
     // this.doneTyping(() => this.sendMessage.emit(new CaseStudyTeamDoneEvent()));

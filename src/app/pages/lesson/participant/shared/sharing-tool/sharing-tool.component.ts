@@ -23,10 +23,7 @@ export class ParticipantSharingToolComponent implements OnInit, OnChanges {
 
   ngOnChanges() {}
 
-  amISharing() {
-    const volunteers = this.activityState.running_tools.share.volunteers;
-    return volunteers.includes(this.getParticipantCode());
-  }
+  amISharing() {}
 
   getParticipantCode(): number {
     // let details: Participant;

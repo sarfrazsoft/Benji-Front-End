@@ -116,12 +116,6 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     if (this.activityState) {
       this.participants = this.activityState.lesson_run.participant_set;
     }
-
-    const as = this.activityState;
-
-    if (as && as.running_tools && as.running_tools.share) {
-      this.sharingToolService.sharingToolControl$.next(this.activityState);
-    }
   }
 
   copyLink(val: string) {
@@ -228,16 +222,7 @@ export class MainScreenFooterComponent implements OnInit, OnChanges {
     }
   }
 
-  startSharingTool() {
-    const as = this.activityState;
-
-    if (as && as.running_tools && as.running_tools.share) {
-      this.endSharingTool();
-    } else {
-      this.socketMessage.emit(new BeginShareEvent());
-      this.sharingToolService.sharingToolControl$.next(this.activityState);
-    }
-  }
+  startSharingTool() {}
   endSharingTool() {
     this.socketMessage.emit(new EndShareEvent());
   }

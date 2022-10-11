@@ -163,11 +163,9 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-    // console.log(this.socket);
     this.socket.subscribe(
-      (msg: ServerMessage) => {
-        // console.log('handling server message ' + msg);
-        this.handleServerMessage(msg);
+      (serverMessage: ServerMessage) => {
+        this.handleServerMessage(serverMessage);
       },
       (err) => {
         console.log('Error subscribing to to socket');
@@ -211,6 +209,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
+    } else if (msg.eventtype === 'NotificationEvent') {
+      console.log(msg);
+      this.serverMessage = {
+        ...this.serverMessage,
+        notifications: msg.notifications,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+      console.log(this.serverMessage);
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;
@@ -250,66 +257,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       return this.serverMessage.activity_type;
     } else {
       return null;
-    }
-  }
-
-  getIsSharing() {
-    const sm = this.serverMessage;
-    if (sm && sm.running_tools && sm.running_tools.share) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getTimerTool() {
-    const sm = this.serverMessage;
-    if (sm && sm.running_tools && sm.running_tools.timer_tool) {
-      return sm.running_tools.timer_tool;
-    } else {
-      return sm.running_tools.timer_tool;
-    }
-  }
-
-  getIsGrouping() {
-    const sm = this.serverMessage;
-    if (
-      sm &&
-      sm.running_tools &&
-      sm.running_tools.grouping_tool &&
-      sm.running_tools.grouping_tool.selectedGrouping
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getIsGroupingAppliedToActivity() {
-    const sm = this.serverMessage;
-    if (
-      sm &&
-      sm.running_tools &&
-      sm.running_tools.grouping_tool &&
-      sm.running_tools.grouping_tool.selectedGrouping
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  getIsGroupingShowing() {
-    const sm = this.serverMessage;
-    if (
-      sm &&
-      sm.running_tools &&
-      sm.running_tools.grouping_tool &&
-      sm.running_tools.grouping_tool.viewGrouping
-    ) {
-      return true;
-    } else {
-      return false;
     }
   }
 

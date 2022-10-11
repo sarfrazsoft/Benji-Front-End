@@ -2,28 +2,6 @@
   <div class="opt-in-out" fxLayoutAlign="center center">
     <div fxLayout="row" class="sharing-tools" fxLayoutGap="48px" fxLayoutAlign="center center">
       <div fxLayout="row" class="hands trigger" fxLayoutAlign="center center">
-        <ng-container *ngIf="!amISharing()">
-          <div fxLayout="column"
-            fxLayoutAlign="center center"
-            fxLayoutGap="4px"
-            (click)="optIn()">
-            <img class="grey-color" src="/assets/img/yellowPointerUp.svg" alt="">
-            <span>
-              Queue
-            </span>
-          </div>
-        </ng-container>
-        <ng-container *ngIf="amISharing()">
-          <div fxLayout="column"
-            fxLayoutAlign="center center"
-            fxLayoutGap="4px"
-            (click)="optOut()">
-            <img class="sky-color" src="/assets/img/yellowPointerUp.svg" alt="">
-            <span>
-              Lower hand
-            </span>
-          </div>
-        </ng-container>
       </div>
       <div fxLayout="row" class="react trigger" fxLayoutAlign="center center" [matMenuTriggerFor]="reactionMenu" #rmt="matMenuTrigger">
         <ng-container>

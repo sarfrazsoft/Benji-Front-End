@@ -1,11 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService, ContextService } from 'src/app/services';
-import { Branding, User } from 'src/app/services/backend/schema';
+import { Branding } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
-import { LessonGroupService } from 'src/app/services/lesson-group.service';
-import { ConfirmationDialogComponent, JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
+import { FolderInfo, LessonGroupService } from 'src/app/services/lesson-group.service';
+import {
+  ConfirmationDialogComponent,
+  JoinSessionDialogComponent,
+  LaunchSessionDialogComponent,
+  NewFolderDialogComponent,
+} from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 export interface SidenavSection {
   section: number;
@@ -26,10 +31,10 @@ export class SidenavComponent implements OnInit {
   courses;
   launchArrow = '';
   logo = '';
-  //folders: Array<Folder>;
+  // folders: Array<Folder>;
   folders: any = [];
   selectedFolder: any;
-  folderLessonsIDs = [];
+  folderLessonsIDs: Array<number> = [];
 
   dashboard = {
     section: 1,
@@ -100,12 +105,11 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private contextService: ContextService,
     private lessonGroupService: LessonGroupService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.initNavigation();
@@ -132,7 +136,6 @@ export class SidenavComponent implements OnInit {
     });
 
     this.getAllFolders();
-
   }
 
   launchSession(): void {
@@ -141,7 +144,7 @@ export class SidenavComponent implements OnInit {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((user) => { });
+      .subscribe((user) => {});
   }
 
   joinSession(): void {
@@ -150,7 +153,7 @@ export class SidenavComponent implements OnInit {
         panelClass: 'dashboard-dialog',
       })
       .afterClosed()
-      .subscribe((user) => { });
+      .subscribe((user) => {});
   }
 
   logout() {
@@ -166,20 +169,19 @@ export class SidenavComponent implements OnInit {
   }
 
   getAllFolders() {
-    this.lessonGroupService.getAllFolders()
-      .subscribe(
-        (data) => {
-          this.folders = data;
-        },
-        (error) => console.log(error)
-      );
+    this.lessonGroupService.getAllFolders().subscribe(
+      (data) => {
+        this.folders = data;
+      },
+      (error) => console.log(error)
+    );
   }
 
-  newFolder(isNew: boolean, folderId?: number) {
+  createOrUpdateFolder(isNew: boolean, folderId?: number) {
     if (folderId) {
       this.setFolderLessonsIDs(folderId);
     }
-    const folder = this.folders.filter(x => x.id === folderId);
+    const folder = this.folders.filter((x) => x.id === folderId);
     this.dialog
       .open(NewFolderDialogComponent, {
         data: {
@@ -189,15 +191,19 @@ export class SidenavComponent implements OnInit {
         panelClass: 'new-folder-dialog',
       })
       .afterClosed()
-      .subscribe((folder) => {
-        if (folder) {
-          let request = isNew ?
-            this.lessonGroupService.createNewFolder(folder) :
-            this.lessonGroupService.updateFolder({ title: folder.title, id: folderId, lessons: this.folderLessonsIDs });
+      .subscribe((folderInfo: FolderInfo) => {
+        if (folderInfo) {
+          const request = isNew
+            ? this.lessonGroupService.createNewFolder(folderInfo)
+            : this.lessonGroupService.updateFolder({
+                title: folderInfo.title,
+                id: folderId,
+                lessonsIds: this.folderLessonsIDs,
+              });
           request.subscribe(
             (data) => {
               this.getAllFolders();
-              //console.log(data);
+              // console.log(data);
             },
             (error) => console.log(error)
           );
@@ -218,14 +224,13 @@ export class SidenavComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.lessonGroupService.deleteFolder(id)
-            .subscribe(
-              (data) => {
-                this.getAllFolders();
-                this.removePostQueryParam();
-              },
-              (error) => console.log(error)
-            );
+          this.lessonGroupService.deleteFolder(id).subscribe(
+            (data) => {
+              this.getAllFolders();
+              this.removePostQueryParam();
+            },
+            (error) => console.log(error)
+          );
         }
       });
   }
@@ -241,7 +246,7 @@ export class SidenavComponent implements OnInit {
   }
 
   public folderChangingQueryParams(id: number) {
-    const url = this.router.routerState.snapshot.url
+    const url = this.router.routerState.snapshot.url;
     const command = url.includes('account') || url.includes('notifications') ? ['/dashboard'] : [];
     this.router.navigate(command, {
       relativeTo: null,
@@ -258,16 +263,12 @@ export class SidenavComponent implements OnInit {
 
   setFolderLessonsIDs(folderId: number) {
     this.folderLessonsIDs = [];
-    this.lessonGroupService.getFolderDetails(folderId)
-      .subscribe(
-        (folder) => {
-          const lessons = folder.lesson;
-          this.folderLessonsIDs = [];
-          lessons.forEach((lesson) => {
-            this.folderLessonsIDs.push(lesson.id);
-          });
-        }
-      );
+    this.lessonGroupService.getFolderDetails(folderId).subscribe((folder) => {
+      const lessons = folder.lesson;
+      this.folderLessonsIDs = [];
+      lessons.forEach((lesson) => {
+        this.folderLessonsIDs.push(lesson.id);
+      });
+    });
   }
-
 }

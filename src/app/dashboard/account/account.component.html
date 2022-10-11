@@ -60,7 +60,7 @@
                 *ngIf="email.invalid && (email.dirty || email.touched)"
                 class="alert alert-danger"
               >
-                <div *ngIf="email.errors.required">Brand colour is required.</div>
+                <div *ngIf="email.errors.required">Email is required.</div>
               </mat-error>
           </div>
           <p class="reset-pw primary-color" (click)="passwordPage()">Reset Password</p>
@@ -123,13 +123,14 @@
           <div class="brand-color" fxLayout="column" fxLayoutGap="12px">
             <div class="title">Brand Colour</div>
               <input 
+                #color
                 formControlName="color"
                 class="code" 
                 [cpOutputFormat]="'hex'"
                 [(colorPicker)]="brandColor" 
                 [style.background]="brandColor"
                 [cpAlphaChannel]="'disabled'"
-                [(ngModel)]="brandColor"
+                (colorPickerChange)="brandColor=$event; onColorChange($event)"
                 [value]="brandColor"/>
                 <mat-error
                   *ngIf="color.invalid && (color.dirty || color.touched)"

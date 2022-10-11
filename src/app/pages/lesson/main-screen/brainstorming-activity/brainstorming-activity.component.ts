@@ -14,6 +14,7 @@ import { iframely } from '@iframely/embed.js';
 import { cloneDeep, forOwn } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable } from 'rxjs';
+import { Title } from "@angular/platform-browser";
 import { BrainstormService, ContextService, SharingToolService } from 'src/app/services';
 import {
   Board,
@@ -58,7 +59,8 @@ export class MainScreenBrainstormingActivityComponent
     private brainstormService: BrainstormService,
     private permissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
-    private topicMediaService: TopicMediaService
+    private topicMediaService: TopicMediaService,
+    private title: Title
   ) {
     super();
     iframely.load();
@@ -156,6 +158,7 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnChanges() {
     this.onChanges();
+    this.title.setTitle(this.activityState.lesson_run.lesson.lesson_name);
   }
 
   onChanges() {

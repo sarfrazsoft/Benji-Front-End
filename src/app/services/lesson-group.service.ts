@@ -12,22 +12,34 @@ export class Folder {
   created_by: number;
   creation_time: string;
 }
+export class FolderInfo {
+  id?: number;
+  title?: string;
+  lessonId?: number;
+  lessonsIds?: Array<number>;
+  newFolder?: boolean;
+}
+export class MoveToFolderData {
+  lessonId?: number;
+  folders?: Array<Folder>;
+  lessonFolders?: Array<number>;
+}
 
 @Injectable()
 export class LessonGroupService {
   constructor(private http: HttpClient) {}
 
-  getAllFolders(): Observable<any>  {
+  getAllFolders(): Observable<any> {
     return this.http.get(global.apiRoot + `/course_details/lesson_group/`).pipe(
       map((res: PaginatedResponse<Folder>) => {
         return res.results.sort(function (a, b) {
           return a.creation_time.localeCompare(b.creation_time);
-      });
+        });
       })
     );
   }
 
-  createNewFolder(folder): Observable<any> {
+  createNewFolder(folder: FolderInfo): Observable<any> {
     const data = {
       name: folder.title,
       lessons: [folder?.lessonId],
@@ -39,11 +51,10 @@ export class LessonGroupService {
     );
   }
 
-  updateFolder(folder): Observable<any> {
+  updateFolder(folder: FolderInfo): Observable<any> {
     const data = {
       name: folder.title,
-      lessons: folder?.lessons,
-      // lessons: [644, 670, 633],
+      lessons: folder?.lessonsIds,
     };
     return this.http.patch(global.apiRoot + `/course_details/lesson_group/${folder.id}/`, data).pipe(
       map((res) => {
@@ -52,16 +63,29 @@ export class LessonGroupService {
     );
   }
 
-  getFolderDetails(folderId): Observable<any> {
+  getFolderDetails(folderId: number): Observable<any> {
     return this.http.get(global.apiRoot + `/course_details/lesson_group/${folderId}/`).pipe(
+      map((res) => {
+        console.log(res);
+        return res;
+      })
+    );
+  }
+
+  deleteFolder(folderId: number): Observable<any> {
+    return this.http.delete(global.apiRoot + `/course_details/lesson_group/${folderId}/`).pipe(
       map((res) => {
         return res;
       })
     );
   }
 
-  deleteFolder(folderId): Observable<any> {
-    return this.http.delete(global.apiRoot + `/course_details/lesson_group/${folderId}/`).pipe(
+  addToFolders(lessonId: number, foldersIds: Array<number>): Observable<any> {
+    const data = {
+      lesson: lessonId,
+      groups: foldersIds,
+    };
+    return this.http.patch(global.apiRoot + `/course_details/lesson_group/bulk-update/`, data).pipe(
       map((res) => {
         return res;
       })

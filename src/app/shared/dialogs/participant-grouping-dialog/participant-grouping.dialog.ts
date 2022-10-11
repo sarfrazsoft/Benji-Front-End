@@ -37,9 +37,7 @@ export class ParticipantGroupingDialogComponent implements OnInit, OnChanges {
     this.participantCode = data.participantCode;
   }
 
-  ngOnInit() {
-    this.initSelectedGroup(this.activityState.running_tools.grouping_tool);
-  }
+  ngOnInit() {}
 
   ngOnChanges() {}
 

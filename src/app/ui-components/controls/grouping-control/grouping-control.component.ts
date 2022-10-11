@@ -45,41 +45,9 @@ export class GroupingControlComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {}
 
-  ngOnChanges() {
-    this.initExistingGroupins();
+  ngOnChanges() {}
 
-    if (this.activityState.eventType === 'CreateGroupingEvent') {
-      const rt = this.activityState.running_tools;
-      if (rt && rt.grouping_tool) {
-        const grouping = {
-          groupings: this.activityState.running_tools.grouping_tool.groupings,
-          selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-        };
-        grouping.groupings.forEach((g: GroupingToolGroups) => {
-          if (grouping.selectedGrouping === g.id) {
-            this.selectedGroup = g;
-            this.openGroupingToolDialog(g);
-            this.dialogRef.componentInstance.updateGroupData(g);
-          }
-        });
-      }
-    } else {
-      this.initSelectedGroup();
-    }
-  }
-
-  initExistingGroupins() {
-    const rt = this.activityState.running_tools;
-    this.currentlyAppliedGrouping = this.getCurrentlyAppliedGrouping(this.activityState);
-
-    if (rt && rt.grouping_tool) {
-      const grouping = {
-        groupings: this.activityState.running_tools.grouping_tool.groupings,
-        selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-      };
-      this.existingGroupings = grouping.groupings;
-    }
-  }
+  initExistingGroupins() {}
 
   getCurrentlyAppliedGrouping(state: UpdateMessage) {
     const activityType = this.activitiesService.getActivityType(this.activityState);
@@ -90,24 +58,7 @@ export class GroupingControlComponent implements OnInit, OnChanges {
     }
   }
 
-  initSelectedGroup() {
-    const rt = this.activityState.running_tools;
-    if (rt && rt.grouping_tool) {
-      const grouping = {
-        groupings: this.activityState.running_tools.grouping_tool.groupings,
-        selectedGrouping: this.activityState.running_tools.grouping_tool.selectedGrouping,
-      };
-      grouping.groupings.forEach((g: GroupingToolGroups) => {
-        if (grouping.selectedGrouping === g.id) {
-          this.selectedGroup = g;
-          if (this.dialogRef && this.dialogRef.componentInstance) {
-            // if the trainer grouping dialog is open then update the data for it
-            this.dialogRef.componentInstance.updateGroupData(this.selectedGroup);
-          }
-        }
-      });
-    }
-  }
+  initSelectedGroup() {}
 
   editGrouping(grouping: GroupingToolGroups) {
     // open the grouping modal for the trainer and
