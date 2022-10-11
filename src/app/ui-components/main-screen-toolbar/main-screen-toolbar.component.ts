@@ -17,7 +17,7 @@ import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'sr
 import { ContextService, SharingToolService } from 'src/app/services';
 import { Board, BoardParticipants, Branding, Timer, UpdateMessage } from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
-import { Notification } from 'src/app/services/backend/schema/notification';
+import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
@@ -97,7 +97,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   // nofications
   @ViewChild(NotificationsComponent) notificationsComponent: NotificationsComponent;
 
-  notificationList: Array<Notification> = [];
+  notificationList: Array<Notification | LessonRunNotification> = [];
   notificationCount = 0;
 
   constructor(

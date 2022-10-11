@@ -163,11 +163,9 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       this.lessonRun,
       this.participantDetails ? this.participantDetails.participant_code : null
     );
-    // console.log(this.socket);
     this.socket.subscribe(
-      (msg: ServerMessage) => {
-        // console.log('handling server message ' + msg);
-        this.handleServerMessage(msg);
+      (serverMessage: ServerMessage) => {
+        this.handleServerMessage(serverMessage);
       },
       (err) => {
         console.log('Error subscribing to to socket');
@@ -211,6 +209,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
+    } else if (msg.eventtype === 'NotificationEvent') {
+      console.log(msg);
+      this.serverMessage = {
+        ...this.serverMessage,
+        notifications: msg.notifications,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+      console.log(this.serverMessage);
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;

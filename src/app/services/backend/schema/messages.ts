@@ -31,7 +31,7 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
-import { Notification } from './notification';
+import { LessonRunNotification, Notification } from './notification';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
@@ -40,7 +40,7 @@ export interface UpdateMessage {
   lesson: Lesson;
   lesson_run: LessonRun;
   eventType: string;
-  notifications: Array<Notification>;
+  notifications: Array<LessonRunNotification>;
   isHost: boolean;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
@@ -94,7 +94,8 @@ export interface ServerMessage {
   clienterror?: ClientError;
   servererror?: ServerError;
   servernotification?: ServerNotification;
-  eventtype: string;
+  notifications?: Array<LessonRunNotification>;
+  eventtype: string | 'NotificationEvent';
 }
 
 export interface QueryParamsObject {
