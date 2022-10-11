@@ -134,16 +134,6 @@ export class AccountComponent implements OnInit {
           this.onCreateBranding('favicon');
         }
       });
-    this.brandForm
-      .get('color')
-      .valueChanges.pipe(debounceTime(1500))
-      .subscribe((val) => {
-        if (this.color.touched && this.brandingInfo) {
-          this.onUpdateBranding('color');
-        } else if (this.color.touched && !this.brandingInfo) {
-          this.onCreateBranding('color');
-        }
-      });
   }
 
   onSubmit(): void {
@@ -277,4 +267,14 @@ export class AccountComponent implements OnInit {
       this.onUpdateBranding('favicon');
     }
   }
+
+  onColorChange(color: string) {
+    this.brandColor = color;
+    if (this.brandingInfo) {
+      this.onUpdateBranding('color');
+    } else if (!this.brandingInfo) {
+      this.onCreateBranding('color');
+    }
+  }
+
 }
