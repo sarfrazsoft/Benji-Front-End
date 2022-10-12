@@ -42,7 +42,6 @@ export class NotificationsComponent implements OnInit {
         this.notificationList = this.notificationList.filter(
           (n) => n.extra.lessonrun_code === this.activityState?.lesson_run.lessonrun_code
         );
-        console.log(this.notificationList.filter((x) => !x.read).length);
         this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
       }
     });
@@ -74,8 +73,10 @@ export class NotificationsComponent implements OnInit {
 
   markAllAsRead(): void {
     if (this.isDashboard) {
-      this.notificationsService.markAllasRead().subscribe((r) => {
-        // console.log(r);
+      this.notificationsService.markAllasRead().subscribe((r: { message: string }) => {
+        if (r.message === 'All notification is set to read successfully.') {
+          this.loadNotifications();
+        }
       });
     } else {
       const ids = this.notificationList.map((e) => {

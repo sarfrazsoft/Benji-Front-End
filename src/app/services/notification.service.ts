@@ -42,11 +42,15 @@ export class NotificationService {
   }
 
   markAllasRead() {
-    return this.http.post(global.apiRoot + `/notifications/mark-all/`, {}).pipe(
-      map((res: Notification) => {
-        return res;
+    return this.http
+      .post(global.apiRoot + `/notifications/mark-all/?action=read`, {
+        action: 'read',
       })
-    );
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
   }
 
   // TODO implement types
