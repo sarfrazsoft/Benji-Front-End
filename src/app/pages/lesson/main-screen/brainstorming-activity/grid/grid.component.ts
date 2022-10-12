@@ -97,7 +97,6 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
       this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
       this.brainstormService.uncategorizedIdeas = this.ideas;
       this.cycle = 'second';
-      this.postLayoutService.sortGrid(this.board.sort, this.grid);
     } else {
       if (
         this.eventType === 'BrainstormEditBoardInstruction' ||

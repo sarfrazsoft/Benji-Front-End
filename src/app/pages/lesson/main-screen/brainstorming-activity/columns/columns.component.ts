@@ -316,13 +316,10 @@ export class ColumnsComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.boardGrid.refreshItems().layout(true);
-      console.log(this.boardGrid.getElement().childElementCount);
       this.newColLeftPx = (this.boardGrid.getElement().childElementCount - 1) * 288 + 'px';
-      console.log(this.newColLeftPx);
     }, 1000);
 
     setTimeout(() => {
-      console.log(this.colGrids);
       this.colGrids.forEach((grid) => {
         grid.refreshItems().layout(true);
       });

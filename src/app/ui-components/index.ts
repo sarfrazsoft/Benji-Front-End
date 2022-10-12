@@ -20,6 +20,7 @@ import { SubmittedCounterComponent } from './submitted-counter/submitted-counter
 import { BoardMenuComponent } from './board-menu/board-menu.component';
 import { BoardSettingsComponent } from './board-menu/board-settings/board-settings.component';
 import { TopicMediaComponent } from './board-menu/board-settings/topic-media/topic-media.component';
+import { AddControlsComponent } from './board-menu/boards-navigator/add-controls/add-controls.component';
 import { BoardsNavigatorComponent } from './board-menu/boards-navigator/boards-navigator.component';
 
 export const UIComponents = [
@@ -42,4 +43,5 @@ export const UIComponents = [
   TopicMediaComponent,
   BoardsNavigatorComponent,
   BoardSettingsComponent,
+  AddControlsComponent,
 ];

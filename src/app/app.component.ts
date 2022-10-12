@@ -44,6 +44,10 @@ export class AppComponent implements OnInit {
           color: ${color} !important;
         }
 
+        .hover-color-primary:hover {
+          color: ${color} !important;
+        }
+
         .b-standard-button.selected {
           background: ${color};
         }

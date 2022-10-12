@@ -1,3 +1,4 @@
+import { PageComponent as BrainstormPageComponent } from './board/benji-page/page.component';
 import { BoardPromptComponent as BrainstormBoardPromptComponent } from './board/board-prompt/board-prompt.component';
 import { BoardComponent } from './board/board.component';
 import { BrainstormCardComponent } from './brainstorm-card/brainstorm-card.component';
@@ -20,6 +21,7 @@ export { BrainstormThreadModeComponent };
 export { MainScreenBrainstormingActivityComponent };
 export { BrainstormBoardPromptComponent };
 export { BrainstormLayout };
+export { BrainstormPageComponent };
 
 export const MainScreenBrainStormComponents = [
   BoardComponent,
@@ -32,4 +34,5 @@ export const MainScreenBrainStormComponents = [
   BrainstormUnsortedComponentComponent,
   BrainstormGridComponentComponent,
   BrainstormColumnsComponent,
+  BrainstormPageComponent,
 ];

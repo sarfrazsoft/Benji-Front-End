@@ -17,6 +17,7 @@ import {
   Board,
   BoardSort,
   BoardStatus,
+  BoardTypes,
   BrainstormAddBoardEventBaseEvent,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
@@ -30,11 +31,13 @@ import {
   BrainstormToggleParticipantNameEvent,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
+  SettingsTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
+import { isSet } from 'src/app/shared/util/value';
 
 @Component({
   selector: 'benji-board-menu',
@@ -45,40 +48,21 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
   @Output() sendMessage = new EventEmitter<any>();
-  postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
-    {
-      value: 'newest_to_oldest',
-      name: 'Newest to oldest',
-    },
-    {
-      value: 'oldest_to_newest',
-      name: 'Oldest to newest',
-    },
-    {
-      value: 'likes',
-      name: 'Likes',
-    },
-  ];
-  boardStatusDropdown: Array<{ value: BoardStatus; name: string }> = [
-    {
-      value: 'open',
-      name: 'Open',
-    },
-    {
-      value: 'closed',
-      name: 'Hidden',
-    },
-    {
-      value: 'view_only',
-      name: 'View Only',
-    },
-    {
-      value: 'private',
-      name: 'Private',
-    },
-  ];
+
   defaultSort = 'newest_to_oldest';
   participants = [];
+
+  allowedSettings: Array<SettingsTypes> = [];
+  boardSetttings: Array<SettingsTypes> = [
+    SettingsTypes.TOPIC_MEDIA,
+    SettingsTypes.BOARD_STATUS,
+    SettingsTypes.POST,
+    SettingsTypes.POST_ORDER,
+    SettingsTypes.BOARD_MODE,
+    SettingsTypes.ADMIN,
+  ];
+
+  pageSetttings = [SettingsTypes.BOARD_STATUS, SettingsTypes.ADMIN];
 
   meetingMode: boolean;
   showAuthorship: boolean;
@@ -97,8 +81,8 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   hostBoard: number;
 
   showBottom = true;
-  dragDisabled = false;
-  private typingTimer;
+  boardType: BoardTypes;
+  boardTypes = BoardTypes;
 
   constructor(
     private dialog: MatDialog,
@@ -127,7 +111,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.dragDisabled = true;
+        // this.dragDisabled = true;
       }
     });
 
@@ -139,12 +123,16 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   selectedBoardChanged(board) {
     this.selectedBoard = board;
     this.boardMode = this.selectedBoard.board_activity.mode;
-    // this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.currentboardStatus = board.status;
     if (board.sort) {
       this.defaultSort = board.sort;
     }
+    this.boardType = this.selectedBoard?.meta?.boardType
+      ? this.selectedBoard?.meta?.boardType
+      : this.boardTypes.POSTS;
+
+    this.allowedSettings = this.boardType === this.boardTypes.PAGE ? this.pageSetttings : this.boardSetttings;
   }
 
   ngOnChanges(): void {
@@ -224,57 +212,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
-  getDragData(board: Board) {
-    return { boardID: board.id };
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
-    const draggedBoardID = event.item.data.boardID;
-    let previous_board;
-    let next_board;
-    for (let i = 0; i < this.boards.length; i++) {
-      const board = this.boards[i];
-      if (board.id === draggedBoardID) {
-        if (i === 0) {
-          previous_board = null;
-          if (this.boards[i + 1]) {
-            next_board = this.boards[i + 1].id;
-          } else {
-            next_board = null;
-          }
-        } else if (i === this.boards.length - 1) {
-          // last board
-          next_board = null;
-          if (this.boards[i - 1]) {
-            previous_board = this.boards[i - 1].id;
-          } else {
-            previous_board = null;
-          }
-        } else {
-          if (this.boards[i + 1]) {
-            next_board = this.boards[i + 1].id;
-            previous_board = this.boards[i - 1].id;
-          }
-        }
-      }
-    }
-
-    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
-  }
-
-  addBoard(previousBoard: Board) {
-    this.sendMessage.emit(
-      new BrainstormAddBoardEventBaseEvent(
-        'Board ' + this.boards.length,
-        previousBoard.id,
-        previousBoard.next_board,
-        '',
-        ''
-      )
-    );
-  }
-
   openDeleteDialog(boardID?: number) {
     this.dialog
       .open(ConfirmationDialogComponent, {
@@ -304,5 +241,9 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.sendMessage.emit(new HostChangeBoardEvent(board.id));
       }
     });
+  }
+
+  isSet(boardType) {
+    return isSet(boardType);
   }
 }

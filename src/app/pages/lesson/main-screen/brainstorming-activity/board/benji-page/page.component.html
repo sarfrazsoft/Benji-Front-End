@@ -1,0 +1,11 @@
+<div class="benji-page-container">
+  <div class="benji-page">
+    <benji-tiptap-editor
+      [lessonRunCode]="lessonRunCode"
+      [benjiPages]="true"
+      (textChanged)="pageTextUpdated($event)"
+      [defaultValue]="sub_instructions"
+      [editable]="isHost">
+    </benji-tiptap-editor>
+  </div>
+</div>

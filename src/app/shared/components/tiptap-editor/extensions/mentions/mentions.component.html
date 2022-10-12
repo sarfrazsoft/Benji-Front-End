@@ -1,0 +1,20 @@
+<div 
+  class="floating-menu"
+  fxLayout="column"
+  fxLayoutGap="8px">
+  <div 
+    *ngFor="let group of items; index as groupIndex">
+    <div class="type-title">{{ group.title }}</div>
+    <div *ngFor="let item of group.childCommands; index as itemIndex; first as isFirst">
+      <button
+          class="item"
+          [ngClass]="{'is-selected': itemIndex === selectedItemIndex && groupIndex === selectedGroupIndex}"
+          (click)="selectItem(itemIndex, groupIndex)">
+          <div fxLayout="row" fxLayoutGap="12px" fxLayoutAlign="start center">
+            <img [src]="'/assets/img/floating-menu/' + item.icon">
+            <span>{{ item.name }}</span>
+          </div>
+        </button>
+    </div>
+  </div>
+</div>

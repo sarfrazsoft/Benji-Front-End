@@ -1,0 +1,5 @@
+Iframe link goes here
+<input type="text" *ngIf="!iframeHTML" [ngModel]="userAddedUrl" (ngModelChange)="userChangedUrl($event)">
+
+
+<div *ngIf="iframeHTML" bind-innerHTML="iframeHTML | safeHtml"></div>

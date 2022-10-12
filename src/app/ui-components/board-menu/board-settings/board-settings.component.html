@@ -9,7 +9,7 @@
     <mat-icon class="close" (click)="closeNav()">clear</mat-icon>
   </div>
 
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.TOPIC_MEDIA)">
     <div class="title">Topic Media</div>
     <div class="topic-media">
       <!-- Topic media -->
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.BOARD_STATUS)">
     <div class="title">Board Status</div>
     <div class="board-status">
       <ng-select
@@ -41,7 +41,7 @@
   </div>
 
   <!-- Authorship on cards -->
-  <div fxLayout="column" fxLayoutGap="8px">
+  <div fxLayout="column" fxLayoutGap="8px" *ngIf="allowedSettings.includes(settingTypes.POST)">
     <div>
       <div class="title">Post</div>
       <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
@@ -118,7 +118,7 @@
     </div>
   </div>
   
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.POST_ORDER)">
     <div class="title">Posts Order</div>
     <div class="board-status">
       <ng-select
@@ -141,7 +141,7 @@
     </div>
   </div>
 
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.BOARD_MODE)">
     <div class="title">Board Mode</div>
     <div 
       class="board-mode" 
@@ -190,7 +190,7 @@
     </div>
   </div>
 
-  <div fxLayout="column">
+  <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.ADMIN)">
     <div class="title">Admin</div>
     <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
       <div 
@@ -225,14 +225,4 @@
       </div>
     </div>
   </div>
-  
-  <!-- <button 
-    (click)="openDeleteDialog(selectedBoard.id)"
-    class="delete-button"
-    [ngClass]="{'disabled': boardsCount==1}"
-    [disabled]="boardsCount==1 ? 'disabled': null"
-  >
-    Delete Board
-  </button> -->
-
 </div>
