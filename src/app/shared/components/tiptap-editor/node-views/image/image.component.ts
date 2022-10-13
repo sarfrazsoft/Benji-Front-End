@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgxPermissionsService } from 'ngx-permissions';
 import { AngularNodeViewComponent } from 'ngx-tiptap';
 import { IdeaDocument } from 'src/app/services/backend/schema';
 import { FileProgress } from '../../../uploadcare-widget/uploadcare-widget.component';
@@ -11,6 +12,10 @@ export class NodeviewImageComponent extends AngularNodeViewComponent implements 
   image;
 
   ngOnInit() {}
+
+  constructor(protected permissionsService: NgxPermissionsService) {
+    super();
+  }
 
   _noFileSelected(): void {
     this.deleteNode();

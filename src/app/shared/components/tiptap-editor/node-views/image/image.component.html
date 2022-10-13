@@ -1,13 +1,15 @@
-<div class="angular-component" [ngClass]="{'selected': this.selected}" tiptapDraggable>
-
-  <div class="content">
-    <benji-uploadcare-widget
-      [tabs]="'file_benjiPage'"
-      [lessonRunCode]="node.attrs['lessonRunCode']"
-      (mediaUploaded)="mediaUploaded($event)"
-      (mediaUploading)="mediaUploadProgress($event)"
-      (noFileSelected)="_noFileSelected()"
-      [icon]="'/assets/img/idea-creation/attach.svg'">
-    </benji-uploadcare-widget>
+<ng-container *ngxPermissionsOnly="'ADMIN'">
+  <div class="angular-component" [ngClass]="{'selected': this.selected}" tiptapDraggable>
+  
+    <div class="content">
+      <benji-uploadcare-widget
+        [tabs]="'file_benjiPage'"
+        [lessonRunCode]="node.attrs['lessonRunCode']"
+        (mediaUploaded)="mediaUploaded($event)"
+        (mediaUploading)="mediaUploadProgress($event)"
+        (noFileSelected)="_noFileSelected()"
+        [icon]="'/assets/img/idea-creation/attach.svg'">
+      </benji-uploadcare-widget>
+    </div>
   </div>
-</div>
+</ng-container>
