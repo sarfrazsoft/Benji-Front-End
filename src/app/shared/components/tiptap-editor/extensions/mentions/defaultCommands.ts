@@ -1,9 +1,5 @@
-// import formatKeyboardShortcut from '../helpers/formatKeyboardShortcut';
 import { SlashMenuGroups, SlashMenuItem } from './SlashMenuItem';
 
-/**
- * An array containing commands for creating all default blocks.
- */
 export const defaultCommands: Array<Array<SlashMenuItem>> = [
   [
     new SlashMenuItem(

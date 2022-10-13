@@ -41,6 +41,9 @@ export class PageComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.isHost && this.eventType === 'BrainstormEditSubInstruction') {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);
+    } else if (this.eventType === 'HostChangeBoardEvent') {
+      const sub_instructions = this.board.board_activity?.sub_instructions;
+      this.setupPageContents(sub_instructions);
     }
   }
 
