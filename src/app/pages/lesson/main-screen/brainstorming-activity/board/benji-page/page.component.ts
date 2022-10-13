@@ -11,7 +11,7 @@ import {
   selector: 'benji-page',
   templateUrl: './page.component.html',
 })
-export class PageComponent implements OnInit, OnChanges, OnDestroy {
+export class PageComponent implements OnInit, OnChanges {
   @Input() lessonRunCode;
   @Input() board: Board;
   @Input() isHost: boolean;
@@ -45,25 +45,18 @@ export class PageComponent implements OnInit, OnChanges, OnDestroy {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);
     }
+    console.log(this.eventType);
   }
 
   setupPageContents(contents: string) {
-    if (contents) {
-      this.sub_instructions = contents;
-    }
+    this.sub_instructions = contents;
   }
-
-  ngOnDestroy() {}
 
   sendSocketMessage($event): void {
     this.sendMessage.emit($event);
   }
 
   pageTextUpdated($event: string): void {
-    // if (!this.isHost) {
-    //   return;
-    // }
-    // console.log($event);
     this.myObservable.next($event);
   }
 
