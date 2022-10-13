@@ -45,7 +45,6 @@ export class PageComponent implements OnInit, OnChanges {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);
     }
-    console.log(this.eventType);
   }
 
   setupPageContents(contents: string) {
