@@ -23,8 +23,6 @@
     [mode]="sideNavMode" 
     (keydown.escape)="closeAndResetNav()"
     [position]="sideNavPosition"
-    (openedStart)="sideNavOpenedStart()" 
-    (closedStart)="sideNavClosedStart()"
     (openedChange)="openedChange($event)">
       <benji-board-menu *ngIf="serverMessage"
         #boardMenu
