@@ -14,6 +14,22 @@ benji-tiptap-editor {
       height: auto;
       max-width: 100%;
     }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #37352F;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #37352F;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #37352F;
+    }
   }
   .ProseMirror {
     > * + * {
