@@ -38,13 +38,13 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormlyModule } from '@ngx-formly/core';
-import { EntryComponents as RegistrationEntryComponents } from 'src/app/pages';
-import { Components, EntryComponents } from './index';
 
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxMasonryModule } from 'ngx-masonry';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { UcWidgetModule } from 'ngx-uploadcare-widget';
+import { EntryComponents as RegistrationEntryComponents } from 'src/app/pages';
+import { Components, EntryComponents } from './index';
 
 import nodeViews from './ngx-editor/nodeviews';
 import plugins from './ngx-editor/plugins';

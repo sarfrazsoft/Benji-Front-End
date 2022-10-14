@@ -215,25 +215,77 @@
         color: #616161;
       }
     }
-    &.admin-mode {
-      margin-bottom: 16px;
-    }
   }
   .add-group .plus {
     cursor: pointer;
   }
-  .add-board-button {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: center;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 4px;
-    width: 100%;
-    height: 40px;
-  }
   .bottom-area {
+    .add-board-button-container {
+      position: relative;
+      .add-board-button {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 4px;
+        width: 100%;
+        height: 40px;
+      }
+      .add-new-popup {
+        width: 272px;
+        position: absolute;
+        bottom: 60px;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        // text-align: center;
+        .wrapper {
+          padding: 8px;
+          border: 1px solid #E7E7E7;
+          border-radius: 8px;
+          background: #fff;
+          button {
+            background: #fff;
+            text-align: left;
+            padding: 8px;
+            border-radius: 4px;
+            transition: all 0.1s;
+            &:hover {
+              background-color: #F3F4F7;
+              .icon-wrapper {
+                background: #fff;
+              }
+              .title {
+                color: inherit;
+              }
+              .sub-title {
+                color: inherit;
+              }
+
+            }
+            .icon-wrapper {
+              width: 40px;
+              height: 40px;
+              background: #F3F4F7;
+              border-radius: 4px;
+            }
+            .title {
+              color: #37352FE5;
+              font-weight: 500;
+              font-size: 14px;
+            }
+            .sub-title {
+              font-weight: 400;
+              font-size: 12px;
+              color: #868A8E;
+            }
+          }
+        }
+      }
+    }
     border-top: 1px solid #E2E6EC;
     padding: 24px 0px;
     margin-top: 12px;

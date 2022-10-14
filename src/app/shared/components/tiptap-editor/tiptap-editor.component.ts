@@ -1,11 +1,28 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Editor } from '@tiptap/core';
+import { findParentNode } from '@tiptap/core';
+import Document from '@tiptap/extension-document';
+import { Image } from '@tiptap/extension-image';
 import Link from '@tiptap/extension-link';
 import Placeholder from '@tiptap/extension-placeholder';
+import TaskItem from '@tiptap/extension-task-item';
+import TaskList from '@tiptap/extension-task-list';
 import { Underline } from '@tiptap/extension-underline';
 import StarterKit from '@tiptap/starter-kit';
-import { UtilsService } from 'src/app/services/utils.service';
+import {
+  CounterComponentExtension,
+  EditableComponentExtension,
+  IframeComponentExtension,
+  ImageComponentExtension,
+} from './extensions/extensions';
+import { GetSlashMenuExtension } from './extensions/mentions/slash-menu-extension';
+import { GetPlaceholderExtension } from './extensions/placeholder';
+
+export const findBlock = findParentNode((node) => node.type.name === 'block');
+
+const CustomDocument = Document.extend({
+  content: 'heading block*',
+});
 
 @Component({
   selector: 'benji-tiptap-editor',
@@ -13,80 +30,79 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class TiptapEditorComponent implements OnInit, OnChanges {
   @Input() defaultValue;
+  @Input() lessonRunCode;
   @Input() editable = true;
+  @Input() benjiPages = false;
   @Output() textChanged = new EventEmitter<string>();
 
   editorContent;
-  editor = new Editor({
-    extensions: [
-      StarterKit,
+  editor;
+
+  tippyOptionsBubble = {
+    duration: [100, 250],
+  };
+
+  constructor(private injector: Injector) {}
+
+  ngOnInit(): void {
+    this.editor = new Editor({
+      extensions: this.getEditorExtensions(),
+      editorProps: {
+        attributes: {
+          class: 'prose prose-sm focus:outline-none',
+          lessonRunCode: this.lessonRunCode,
+        },
+      },
+      onUpdate: (update: { editor: Editor; transaction: any }) => {
+        if (!update.editor.getText()) {
+          this.textChanged.emit('');
+        } else {
+          this.textChanged.emit(this.defaultValue);
+        }
+      },
+    });
+    this.editor.setEditable(this.editable);
+  }
+  ngOnChanges() {}
+
+  getEditorExtensions(): any {
+    const defaultExtensions = [
       Underline,
-      Placeholder.configure({
-        emptyEditorClass: 'is-editor-empty',
-        placeholder: 'Description...',
-      }),
       Link.configure({
         HTMLAttributes: {
           class: 'benji-link-class',
         },
         openOnClick: false,
       }),
-    ],
-    editorProps: {
-      attributes: {
-        class: 'prose prose-sm focus:outline-none',
-      },
-    },
-    onUpdate: (update: { editor: Editor; transaction: any }) => {
-      if (!update.editor.getText()) {
-        this.textChanged.emit('');
-      } else {
-        this.textChanged.emit(this.defaultValue);
-      }
-    },
-  });
-
-  tippyOptions = {
-    duration: [100, 250],
-  };
-
-  value = `
-    <h2>
-      Hi there,
-    </h2>
-    <p>
-      this is a basic <em>basic</em> example of <strong>tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-    </p>
-    <ul>
-      <li>
-        That’s a bullet list with one …
-      </li>
-      <li>
-        … or two list items.
-      </li>
-    </ul>
-    <p>
-      Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-    </p>
-  <pre><code class="language-css">body {
-  display: none;
-  }</code></pre>
-    <p>
-      I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-    </p>
-    <blockquote>
-      Wow, that’s amazing. Good work, boy! 👏
-      <br />
-      — Mom
-    </blockquote>
-  `;
-
-  constructor(private utilsService: UtilsService, private httpClient: HttpClient) {}
-
-  ngOnInit(): void {
-    this.editor.setEditable(this.editable);
+    ];
+    if (this.benjiPages) {
+      return [
+        ...defaultExtensions,
+        CustomDocument,
+        TaskList,
+        Image,
+        TaskItem.configure({
+          nested: true,
+        }),
+        StarterKit.configure({ document: false }),
+        GetPlaceholderExtension(),
+        CounterComponentExtension(this.injector),
+        ImageComponentExtension(this.injector),
+        IframeComponentExtension(this.injector),
+        EditableComponentExtension(this.injector),
+        GetSlashMenuExtension(this.injector),
+      ];
+    } else {
+      return [
+        StarterKit,
+        Placeholder.configure({
+          emptyEditorClass: 'is-editor-empty',
+          placeholder: 'Description...',
+        }),
+        ...defaultExtensions,
+      ];
+    }
   }
-  ngOnChanges() {}
 
   setLink() {
     const previousUrl = this.editor.getAttributes('link').href;
@@ -110,5 +126,12 @@ export class TiptapEditorComponent implements OnInit, OnChanges {
 
     // update link
     this.editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  }
+
+  addIframeTemplate() {
+    this.editor.commands.insertContent(`
+      <angular-component-iframe
+        lessonRunCode="${this.lessonRunCode}">
+        </angular-component-iframe>`);
   }
 }

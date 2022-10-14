@@ -1542,6 +1542,22 @@ strong {
   font-weight: bolder
 }
 
+.ProseMirror .is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #a7a7a7;
+  pointer-events: none;
+  height: 0;
+}
+
+[data-headingtype] > .blockContent.isEmpty div::before {
+  content: "Heading";
+}
+
+[data-listtype] > .blockContent.isEmpty div::before {
+  content: "List";
+}
+
 // code,
 // kbd,
 // pre,

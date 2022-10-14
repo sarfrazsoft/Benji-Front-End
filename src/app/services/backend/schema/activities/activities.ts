@@ -328,9 +328,8 @@ export interface BoardMetaData {
   colsCategoryChangeIdeaOrderInfo?: ColsCategoryChangeIdeaOrderInfo;
   colsIdeaOrderInfo?: ColsIdeaOrderInfo;
   updated?: 'post_order' | 'category_changed';
+  boardType?: BoardTypes;
 }
-
-
 
 export interface PostOrder {
   ideaId: string;
@@ -386,6 +385,21 @@ export interface BoardInfo {
 }
 
 export type BoardMode = 'columns' | 'thread' | 'grid';
+
+// export type BoardType = 'page' | 'posts';
+
+export enum BoardTypes {
+  PAGE = 'page',
+  POSTS = 'posts',
+}
+export enum SettingsTypes {
+  TOPIC_MEDIA = 'Topic Media',
+  BOARD_STATUS = 'Board Status',
+  POST = 'Post',
+  POST_ORDER = 'Post Order',
+  BOARD_MODE = 'Board Mode',
+  ADMIN = 'Admin',
+}
 
 export interface Category {
   status: string;

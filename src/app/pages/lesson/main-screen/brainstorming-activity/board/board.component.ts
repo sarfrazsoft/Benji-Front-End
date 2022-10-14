@@ -25,7 +25,8 @@ import {
 } from 'angular-animations';
 import { clone, cloneDeep, uniqBy } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import {
@@ -38,6 +39,7 @@ import {
   Board,
   BoardMode,
   BoardStatus,
+  BoardTypes,
   BrainstormActivity,
   BrainstormEditDocumentIdeaEvent,
   BrainstormEditIdeaSubmitEvent,
@@ -100,6 +102,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   selectedParticipantGroup: Group;
   myGroup: Group;
   boardStatus: BoardStatus;
+  boardTypes = BoardTypes;
 
   imagesURLs = [
     'localhost/media/Capture_LGXPk9s.JPG',
@@ -113,6 +116,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   imageSrc;
   imageDialogRef;
   selectedImageUrl;
+  lessonRunCode;
   private typingTimer;
 
   @ViewChild('brainstormHeadWrapper') elementView: ElementRef;
@@ -134,6 +138,7 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.act = this.activityState.brainstormactivity;
+    this.lessonRunCode = this.activityState?.lesson_run?.lessonrun_code;
 
     if (!this.isHost) {
       this.participantCode = this.participantCode;

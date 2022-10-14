@@ -240,30 +240,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
   }
 
-  addBoard(previousBoard: Board) {
-    this.sendMessage.emit(
-      new BrainstormAddBoardEventBaseEvent(
-        'Board ' + this.boards.length,
-        previousBoard.id,
-        previousBoard.next_board,
-        '',
-        ''
-      )
-    );
-  }
-
-  addPage(previousBoard: Board) {
-    this.sendMessage.emit(
-      new BrainstormAddBoardEventBaseEvent(
-        'Board ' + this.boards.length,
-        previousBoard.id,
-        previousBoard.next_board,
-        '',
-        ''
-      )
-    );
-  }
-
   openDeleteDialog(boardID?: number) {
     this.dialog
       .open(ConfirmationDialogComponent, {
@@ -304,10 +280,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.sendMessage.emit(
       new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
     );
-  }
-
-  toggleMeetingMode($event) {
-    this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));
   }
 
   toggleShowAuthorship() {

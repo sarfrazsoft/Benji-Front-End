@@ -10,6 +10,26 @@ benji-tiptap-editor {
 
     }
     // &[itemSelected]="isItemSelected()"
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #37352F;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #37352F;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #37352F;
+    }
   }
   .ProseMirror {
     > * + * {
@@ -28,6 +48,43 @@ benji-tiptap-editor {
       }
       &::before {
         content: none;
+      }
+    }
+  }
+
+
+  ul[data-type="taskList"] {
+    list-style: none;
+    padding: 0;
+  
+    p {
+      margin: 0;
+    }
+  
+    li {
+      display: flex;
+      padding-left: 0px !important;
+      &::before {
+        content: none;
+      }
+      &:first-child {
+        margin-top: 7px !important;
+      }
+      >:first-child {
+        margin-top: 7px !important;
+      }
+      >:last-child {
+        margin-bottom: 2px !important;
+      }
+  
+      > label {
+        flex: 0 0 auto;
+        margin-right: 0.5rem;
+        user-select: none;
+      }
+  
+      > div {
+        flex: 1 1 auto;
       }
     }
   }
@@ -223,6 +280,152 @@ pre.callout-container {
     }
   }
 }
+
+.benji-page-container {
+  padding-top: 32px;
+  .benji-page {
+    max-width: 904px;
+    margin: 0px auto;
+    background: #FFFFFF;
+    border: 1px solid #E2E6EC;
+    border-radius: 16px;
+    color: #37352F;
+    box-sizing: border-box;
+    tiptap-editor {
+      .ProseMirror {
+        width: 85%;
+        margin: 0 auto;
+        max-width: 85%;
+        padding: 40px 0px;
+      }
+    }
+    .page-title {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 48px;
+      letter-spacing: -0.02em;
+    }
+    .paragraph {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 28px;
+      letter-spacing: -0.011em;
+    }
+    .header {
+      font-weight: 600;
+      letter-spacing: -0.011em;
+    }
+    .header-one {
+      font-size: 32px;
+      line-height: 40px;
+    }
+    .header-two {
+      font-size: 24px;
+      line-height: 32px;
+    }
+    .header-three {
+      font-size: 20px;
+      line-height: 28px;  
+    }
+    .media{
+      margin: 8px 0px;
+      img {
+        border-radius: 16px;
+        width: 100%;
+      }
+    }
+    .board {
+      height: 100px;
+      .image {
+        width: 180px;
+        border-radius: 16px 0px 0px 16px;
+      }
+      .intro {
+        width: 100%;
+        padding: 24px;
+        border: 1px solid #DFDFDF;
+        border-radius: 0px 16px 16px 0px;
+        .title {
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 20px;
+        }
+        .para {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+}
+
+.bubble-menu {
+  padding: 0px 4px;
+  height: 40px;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px rgba(56, 48, 48, 0.11);
+  border-radius: 4px;
+  button {
+    padding: 6px 4px;
+    background-color: #fff;
+    height: 100%;
+    &:hover {
+      background: #F3F4F7;
+    }
+    div {
+      place-content: center;
+      align-items: center;
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+    }
+  }
+}
+
+
+.floating-menu {    
+  background: #FFFFFF;
+  border: 1px solid #DFDFDF;
+  border-radius: 8px;
+  width: 184px;
+  padding: 16px 8px;
+  .type-title {
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
+    color: #A6A6A6;
+    padding: 0px 8px;
+  }
+  .is-selected {
+    background: #F3F4F7;
+  }
+  button {
+    padding: 8px 8px;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 4px;
+    &:hover {
+      background: #F3F4F7;
+    }
+    div {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 12px;
+    }
+    // div {
+    //   place-content: center;
+    //   align-items: center;
+    //   flex-direction: row;
+    //   box-sizing: border-box;
+    //   display: flex;
+    // }
+  }
+}
+
+
+
 
 
 

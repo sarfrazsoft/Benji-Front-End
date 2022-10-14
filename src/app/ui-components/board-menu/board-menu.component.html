@@ -7,9 +7,11 @@
   </benji-boards-navigator>
 </ng-container>
 
-<ng-container *ngIf="navType=='board-settings'">
+<ng-container *ngIf="navType=='board-settings' && isSet(boardType)">
   <benji-board-settings
     [activityState]="activityState"
+    [boardType]="boardType"
+    [allowedSettings]="allowedSettings"
     [sidenav]="sidenav"
     [navType]="navType"
     (sendMessage)="sendMessage.emit($event)">

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as LogRocket from 'logrocket';
 import * as moment from 'moment';
 import { Observable, of } from 'rxjs';
 import { retryWhen, tap } from 'rxjs/operators';
@@ -34,6 +35,7 @@ export class BackendSocketService {
       openObserver: {
         next: (val: any) => {
           this.typingTimer = setTimeout(() => {
+            LogRocket.error('Facilitator not awake. retrying');
             this.httpClient
               .get<any[]>(global.apiRoot + `/course_details/lesson/${lessonRun.id}/restart_lesson/`)
               .subscribe((v) => {

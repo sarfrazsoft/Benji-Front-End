@@ -221,11 +221,12 @@ export class LessonsComponent implements OnInit {
             .subscribe((folders: MoveToFolderData) => {
               if (folders) {
                 val.lessonFolders = folders.lessonFolders;
-                this.lessonGroupService.addToFolders(val.lessonId, folders.lessonFolders).subscribe(
+                this.lessonGroupService.bulkUpdateFolders(val.lessonId, folders.lessonFolders).subscribe(
                   (data) => {
-                    this.lessonGroupService.getAllFolders().subscribe(
-                      (error) => console.log(error)
-                    );
+                    if (!folders.lessonFolders.includes(this.contextService.selectedFolder)) {
+                      //This will cause the currently selected folder to update its lessons list
+                      this.contextService.selectedFolder = this.contextService.selectedFolder;
+                    }
                   },
                   (error) => console.log(error)
                 );

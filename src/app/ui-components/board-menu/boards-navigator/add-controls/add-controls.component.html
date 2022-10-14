@@ -1,0 +1,77 @@
+<div (clickOutside)="close($event)">
+  <div class="bottom-area mode-setting" fxLayout="column" fxLayoutGap="16px" *ngxPermissionsOnly="'ADMIN'">
+    <div class="add-board-button-container">
+      <button 
+        (click)="showAddNewPopup()"
+        class="add-board-button bg-primary-color">
+        + Add New
+      </button>
+      <div class="add-new-popup" *ngIf="isAddNewPopupShown" [@openClose]>
+        <div class="wrapper" fxLayout="column" fxLayoutGap="10px" >
+          <button 
+            class="add-button hover-color-primary" 
+            (click)="addBoard(boards[boards.length - 1])">
+            <div fxLayout="row" fxLayoutGap="12px">
+              <div class="icon-wrapper" fxLayoutAlign="center center">
+                <img [src]="addBoardSrc" alt="">
+              </div>
+              <div fxLayout="column" fxLayoutGap="4px" fxLayoutAlign="center">
+                <div class="title">Add board</div>
+                <div class="sub-title">Collect posts on a board</div>
+              </div>
+            </div>
+          </button>
+          <button 
+            class="add-button hover-color-primary" 
+            (click)="addPage(boards[boards.length - 1])">
+            <div fxLayout="row" fxLayoutGap="12px">
+              <div class="icon-wrapper" fxLayoutAlign="center center">
+                <img [src]="addPageSrc" alt="">
+              </div>
+              <div fxLayout="column" fxLayoutGap="4px" fxLayoutAlign="center">
+                <div class="title">Add page</div>
+                <div class="sub-title">Collect posts on a board</div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div fxLayoutGap="8px" class="meeting-mode admin-mode">
+      <div fxLayout="column">
+        <div class="posting-settings" fxLayout="column" fxLayoutGap="16px">
+          <div 
+            class="setting"
+            benji-click-stop-propagation
+            fxLayout="row"
+            fxLayoutAlign="space-between">
+            <div>
+              <div class="label">Bring everyone to me</div>
+              <div class="sub-label">Everyone sees the board you’re on.</div>
+            </div>
+            <label class="switch">
+              <input 
+                type="checkbox" 
+                [checked]="meetingMode"
+                (change)="toggleMeetingMode($event)">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
+    <div class="bottom-area" *ngIf="meetingMode">
+      <div fxLayoutGap="8px" class="meeting-mode">
+        <div fxLayout="column">
+          <div class="posting-settings info-card" *ngIf="meetingMode">
+            <div class="label">“Follow Me” mode is on</div>
+            <div class="sub-label">Your host has activated Meeting Mode. You will see whichever board they are on.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+

@@ -44,6 +44,7 @@ if (environment.production) {
       updateOnRouterChange: true,
     }),
     SocialLoginModule,
+    // NgxPopper,
   ],
   providers: [
     ...ServicesProviders,

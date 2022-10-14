@@ -6,53 +6,87 @@
 </ng-container>
 
 <ng-container *ngIf="boardStatus !== 'closed' || isHost">
-  <div fxLayout="column" class="brainstorm-main" style="height: 100%;">
-    <div 
-      #brainstormHeadWrapper 
-      id="brainstorm-head-wrapper" 
-      class="head-wrapper">
-      <benji-board-prompt
+  <ng-container *ngIf="board.meta?.boardType === boardTypes.PAGE">
+    <div *ngIf="lessonRunCode">
+      <benji-page
+        [lessonRunCode]="lessonRunCode"
         [board]="board"
+        (sendMessage)="sendMessage.emit($event)"
         [isHost]="isHost"
-        [activityState]="activityState"
-        [eventType]="eventType"
-        (postIdeaEventEmitter)="postIdeaClickedInChild()"
-        (sendMessage)="sendMessage.emit($event)">
-      </benji-board-prompt>
+        [eventType]="eventType">
+      </benji-page>
     </div>
-    <div class="brainstorm-container"
-      [ngStyle]="{
-        'height': (boardMode == 'columns' || boardMode == 'grid') ? '100%' : '',
-        'overflow': (boardMode == 'grid') ? '' : ''
-      }">
-      <ng-container *ngIf="boardMode=='columns'">
-        <benji-categorized-ideas
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [minWidth]="getMinWidth()"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="true"
-          [myGroup]="myGroup"
-          [isHost]="isHost"
-          (addCardUnderCategory)="addCardUnderCategory($event)"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)">
-        </benji-categorized-ideas>
-      </ng-container>
+  </ng-container>
 
-      <ng-container *ngIf="boardMode=='grid'">
-        <ng-container *ngIf="isSet(isHost)">
-          <benji-grid-ideas
-            [ngClass]="{'thread-mode': boardMode=='thread'}"
+  <!-- To have backwards compatibility we can only check against boardTypes.PAGE-->
+  <ng-container *ngIf="board.meta?.boardType != boardTypes.PAGE">
+    <div fxLayout="column" class="brainstorm-main" style="height: 100%;">
+      <div 
+        #brainstormHeadWrapper 
+        id="brainstorm-head-wrapper" 
+        class="head-wrapper">
+        <benji-board-prompt
+          [board]="board"
+          [isHost]="isHost"
+          [activityState]="activityState"
+          [eventType]="eventType"
+          (postIdeaEventEmitter)="postIdeaClickedInChild()"
+          (sendMessage)="sendMessage.emit($event)">
+        </benji-board-prompt>
+      </div>
+      <div class="brainstorm-container"
+        [ngStyle]="{
+          'height': (boardMode == 'columns' || boardMode == 'grid') ? '100%' : '',
+          'overflow': (boardMode == 'grid') ? '' : ''
+        }">
+        <ng-container *ngIf="boardMode=='columns'">
+          <benji-categorized-ideas
             [board]="board"
             [act]="act"
             [activityState]="activityState"
             [minWidth]="getMinWidth()"
+            [sendMessage]="sendMessage"
+            [joinedUsers]="joinedUsers"
+            [showUserName]="showUserName"
+            [participantCode]="participantCode"
+            [eventType]="eventType"
+            [isColumnsLayout]="true"
+            [myGroup]="myGroup"
+            [isHost]="isHost"
+            (addCardUnderCategory)="addCardUnderCategory($event)"
+            (viewImage)="viewImage($event)"
+            (deleteIdea)="deleteIdea($event)">
+          </benji-categorized-ideas>
+        </ng-container>
+  
+        <ng-container *ngIf="boardMode=='grid'">
+          <ng-container *ngIf="isSet(isHost)">
+            <benji-grid-ideas
+              [ngClass]="{'thread-mode': boardMode=='thread'}"
+              [board]="board"
+              [act]="act"
+              [activityState]="activityState"
+              [minWidth]="getMinWidth()"
+              [sendMessage]="sendMessage"
+              [joinedUsers]="joinedUsers"
+              [showUserName]="showUserName"
+              [participantCode]="participantCode"
+              [eventType]="eventType"
+              [isColumnsLayout]="false"
+              [myGroup]="myGroup"
+              [isHost]="isHost"
+              (viewImage)="viewImage($event)"
+              (deleteIdea)="deleteIdea($event)">
+            </benji-grid-ideas>
+          </ng-container>
+        </ng-container>
+  
+        <ng-container *ngIf="boardMode=='thread'">
+          <benji-thread-mode-ideas
+            [ngClass]="{'thread-mode': boardMode=='thread'}"
+            [board]="board"
+            [act]="act"
+            [activityState]="activityState"
             [sendMessage]="sendMessage"
             [joinedUsers]="joinedUsers"
             [showUserName]="showUserName"
@@ -63,28 +97,74 @@
             [isHost]="isHost"
             (viewImage)="viewImage($event)"
             (deleteIdea)="deleteIdea($event)">
-          </benji-grid-ideas>
+          </benji-thread-mode-ideas>
         </ng-container>
-      </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
 
-      <ng-container *ngIf="boardMode=='thread'">
-        <benji-thread-mode-ideas
-          [ngClass]="{'thread-mode': boardMode=='thread'}"
-          [board]="board"
-          [act]="act"
-          [activityState]="activityState"
-          [sendMessage]="sendMessage"
-          [joinedUsers]="joinedUsers"
-          [showUserName]="showUserName"
-          [participantCode]="participantCode"
-          [eventType]="eventType"
-          [isColumnsLayout]="false"
-          [myGroup]="myGroup"
-          [isHost]="isHost"
-          (viewImage)="viewImage($event)"
-          (deleteIdea)="deleteIdea($event)">
-        </benji-thread-mode-ideas>
-      </ng-container>
+
+
+<!-- 
+<div 
+  class="benji-page"
+  fxLayout="column"
+  fxLayoutGap="24px">
+  <div class="page-title">
+    Here is today’s Agenda
+  </div>
+  <div class="paragraph">
+    AngelList reading Beta-tester. Healthcare platform consumer newsletter. Generalist-reading secondary markets buyer. Chamath-like, sketchy venture capitalist. LTV/CAC focused mentally exhausted startup founders. Doc-sending, TAM boosted IPO leading founder.
+  </div>
+  <div fxLayout="column" fxLayoutGap="16px">
+    <div class="header header-one">
+      Header 1
+    </div>
+    <div class="paragraph">
+      Python-learning destitute growth hacker. Figma using Tik-Toker libertarian. Google Employee DeFi hacking. Nostalgic YikYaking Instagram Employee. Tether selling van life hiker.
     </div>
   </div>
-</ng-container>
+  <div class="embed">
+    <div class="media">
+      <img src="assets/img/temporary/field.jpg">
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutGap="16px">
+    <div class="header header-two">
+      AngelList reading Beta-tester.  - Header 2
+    </div>
+    <div class="paragraph">
+      San Franciscan contrarian Conference attendee CBD gummy eating, hacker house resident. Ethereum ecosystem-based cloud hosting. Nostalgic YikYaking Instagram Employee. Microdosing CryptoPunk rationalist.
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutGap="16px">
+    <div class="header header-three">
+      AngelList reading Beta-tester. 
+    </div>
+    <div class="paragraph">
+      Defence-contracting Tel Aviv startup accelerator. Solidity focused crypto mining installation. Ethereum ecosystem-based cloud hosting. Product Hunt posting digital e-vape tool.
+    </div>
+  </div>
+  <div class="header header-three">
+    Today’s Boards
+  </div>
+  <div class="board" fxLayout="row" >
+    <img class="image" src="assets/img/temporary/field.jpg">
+    <div class="intro" fxLayout="column" fxLayoutGap="8px">
+      <div class="title">Introduce yourself</div>
+      <div class="para">
+        Here is where you’ll do this, and that. And this and that
+      </div>
+    </div>
+  </div>
+  <div class="board" fxLayout="row" >
+    <img class="image" src="assets/img/temporary/red.jpg">
+    <div class="intro" fxLayout="column" fxLayoutGap="8px">
+      <div class="title">What do you want to do today?</div>
+      <div class="para">
+        Here is where you’ll do this, and that. And this and that
+      </div>
+    </div>
+  </div>
+</div> -->

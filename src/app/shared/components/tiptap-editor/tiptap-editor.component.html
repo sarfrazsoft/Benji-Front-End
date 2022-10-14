@@ -1,5 +1,6 @@
-<tiptap-editor [editor]="editor" [(ngModel)]="defaultValue"></tiptap-editor>
-<tiptap-bubble-menu [editor]="editor" [tippyOptions]="tippyOptions">
+<tiptap-editor [editor]="editor"  [(ngModel)]="defaultValue"></tiptap-editor>
+
+<benji-bubble-menu [editor]="editor">
   <div
     class="bubble-menu"
     fxLayout="row"
@@ -76,25 +77,15 @@
               : '/assets/img/idea-creation/double-quotes-l.svg'}}">
       </div>
     </button>
-    <!-- <button (click)="editor.chain().focus().toggleCode().run()">
-      <div *ngIf="!editor.isActive('code');else code_active">
-        <img src="/assets/img/idea-creation/code-view.svg">
+
+    <!-- <button (click)="addImageTemplate()">
+      <div>
+        <img
+          src="{{
+            editor.isActive('link') ?
+              '/assets/img/idea-creation/active/link.svg'
+              : '/assets/img/idea-creation/link.svg'}}">
       </div>
-      <ng-template #code_active>
-        <img src="/assets/img/idea-creation/active/code-view.svg">
-      </ng-template>
     </button> -->
   </div>
-  <!-- <button
-    onClick={() => editor.chain().focus().toggleItalic().run()}
-    className={editor.isActive('italic') ? 'is-active' : ''}
-  >
-    italic
-  </button>
-  <button
-    onClick={() => editor.chain().focus().toggleStrike().run()}
-    className={editor.isActive('strike') ? 'is-active' : ''}
-  >
-    strike
-  </button> -->
-</tiptap-bubble-menu>
+</benji-bubble-menu>

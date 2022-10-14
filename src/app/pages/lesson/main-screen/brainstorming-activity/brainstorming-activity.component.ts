@@ -191,6 +191,9 @@ export class MainScreenBrainstormingActivityComponent
     } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
       this.changeBoardStatus();
       this.selectUserBoard();
+    } else if (this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent') {
+      console.log('board added');
+      this.navigateToNewlyAddedBoard();
     } else {
       this.selectUserBoard();
     }
@@ -268,6 +271,13 @@ export class MainScreenBrainstormingActivityComponent
         this.topicMediaService.topicMedia = board.prompt_video;
       }
     });
+  }
+
+  navigateToNewlyAddedBoard() {
+    const sortedBoards = [...this.act.boards].sort((a, b) => b.id - a.id);
+    if (sortedBoards[0]) {
+      this.sendMessage.emit(new HostChangeBoardEvent(sortedBoards[0].id));
+    }
   }
 
   initBoardInstructions() {

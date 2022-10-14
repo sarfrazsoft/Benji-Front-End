@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Directive, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import * as LogRocket from 'logrocket';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -55,11 +56,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('participant_' + this.roomCode)) {
+    if (localStorage.getItem('host_' + this.roomCode)) {
+      LogRocket.log({ localStorage });
+      this.permissionsService.loadPermissions(['ADMIN']);
+    } else if (localStorage.getItem('participant_' + this.roomCode)) {
       this.permissionsService.loadPermissions(['PARTICIPANT']);
       this.clientType = 'participant';
-    } else if (localStorage.getItem('host_' + this.roomCode)) {
-      this.permissionsService.loadPermissions(['ADMIN']);
     } else if (localStorage.getItem('participant')) {
       const participant: Participant = JSON.parse(localStorage.getItem('participant'));
       if (participant.lessonrun_code === this.roomCode) {
@@ -168,9 +170,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         this.handleServerMessage(serverMessage);
       },
       (err) => {
-        console.log('Error subscribing to to socket');
-        console.log(err);
-        console.log(moment());
+        LogRocket.error('Error subscribing to to socket', err);
         this.connectAndSubscribe();
       },
       () => {

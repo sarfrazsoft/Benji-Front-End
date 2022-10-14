@@ -80,7 +80,7 @@ export class LessonGroupService {
     );
   }
 
-  addToFolders(lessonId: number, foldersIds: Array<number>): Observable<any> {
+  bulkUpdateFolders(lessonId: number, foldersIds: Array<number>): Observable<any> {
     const data = {
       lesson: lessonId,
       groups: foldersIds,

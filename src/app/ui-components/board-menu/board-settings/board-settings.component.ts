@@ -1,37 +1,23 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
   Board,
+  BoardMode,
   BoardSort,
   BoardStatus,
-  BrainstormAddBoardEventBaseEvent,
+  BoardTypes,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
   BrainstormChangeModeEvent,
   BrainstormClearBoardIdeaEvent,
-  BrainstormEditInstructionEvent,
-  BrainstormEditSubInstructionEvent,
-  BrainstormRearrangeBoardEvent,
-  BrainstormRemoveBoardEvent,
   BrainstormToggleAllowCommentEvent,
   BrainstormToggleAllowHeartEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
-  HostChangeBoardEvent,
-  ParticipantChangeBoardEvent,
+  SettingsTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
@@ -46,6 +32,9 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
+  @Input() boardType: BoardTypes;
+  @Input() allowedSettings: Array<SettingsTypes> = [];
+
   @Output() sendMessage = new EventEmitter<any>();
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
@@ -91,7 +80,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   allowCommenting: boolean;
   allowHearting: boolean;
   board: Board;
-  boardMode: string;
+  boardMode: BoardMode;
   gridMode: boolean;
   threadMode: boolean;
   columnsMode: boolean;
@@ -105,8 +94,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   hostBoard: number;
 
   showBottom = true;
-  dragDisabled = false;
-  private typingTimer;
+  settingTypes = SettingsTypes;
 
   constructor(
     private dialog: MatDialog,
@@ -130,14 +118,8 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     });
 
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
-    this.initializeBoards();
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
 
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.dragDisabled = true;
-      }
-    });
+    this.hostBoard = this.activityState.brainstormactivity.host_board;
 
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
@@ -163,56 +145,20 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
       this.resetBoards();
+    } else if (this.activityState.eventType === 'BrainstormChangeModeEvent') {
+      if (this.selectedBoard && this.selectedBoard.board_activity.mode) {
+        this.decideBoardMode(this.selectedBoard.board_activity.mode);
+      }
     }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === 'HostChangeBoardEvent') {
       } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
         this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
       } else {
-        this.initializeBoards();
       }
     }
     this.hostBoard = this.activityState.brainstormactivity.host_board;
     this.decideBoardMode(this.boardMode);
-  }
-
-  initializeBoards() {
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        const unSortedBoards: Array<Board> = this.getBoardsForAdmin();
-        this.sortBoards(unSortedBoards);
-      }
-    });
-
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        const unSortedBoards: Array<Board> = this.getBoardsForParticipant();
-        this.sortBoards(unSortedBoards);
-      }
-    });
-  }
-
-  sortBoards(unSortedBoards: Array<Board>) {
-    let firstBoard;
-    for (let i = 0; i < unSortedBoards.length; i++) {
-      const board = unSortedBoards[i];
-      if (board.previous_board === null) {
-        firstBoard = board;
-      }
-    }
-    const boards: Array<Board> = [];
-    boards.push(firstBoard);
-    for (let i = 0; i < boards.length; i++) {
-      const sortedBoard = boards[i];
-      for (let j = 0; j < unSortedBoards.length; j++) {
-        const unSortedBoard = unSortedBoards[j];
-        if (sortedBoard.next_board === unSortedBoard.id) {
-          boards.push(unSortedBoard);
-          break;
-        }
-      }
-    }
-    this.boards = boards;
   }
 
   getBoardsForAdmin() {
@@ -235,94 +181,12 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
-  getDragData(board: Board) {
-    return { boardID: board.id };
-  }
-
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.boards, event.previousIndex, event.currentIndex);
-    const draggedBoardID = event.item.data.boardID;
-    let previous_board;
-    let next_board;
-    for (let i = 0; i < this.boards.length; i++) {
-      const board = this.boards[i];
-      if (board.id === draggedBoardID) {
-        if (i === 0) {
-          previous_board = null;
-          if (this.boards[i + 1]) {
-            next_board = this.boards[i + 1].id;
-          } else {
-            next_board = null;
-          }
-        } else if (i === this.boards.length - 1) {
-          // last board
-          next_board = null;
-          if (this.boards[i - 1]) {
-            previous_board = this.boards[i - 1].id;
-          } else {
-            previous_board = null;
-          }
-        } else {
-          if (this.boards[i + 1]) {
-            next_board = this.boards[i + 1].id;
-            previous_board = this.boards[i - 1].id;
-          }
-        }
-      }
-    }
-
-    this.sendMessage.emit(new BrainstormRearrangeBoardEvent(draggedBoardID, previous_board, next_board));
-  }
-
-  addBoard(previousBoard: Board) {
-    this.sendMessage.emit(
-      new BrainstormAddBoardEventBaseEvent(
-        'Board ' + this.boards.length,
-        previousBoard.id,
-        previousBoard.next_board,
-        'Untitled Board ' + this.boards.length,
-        'Sub Instructions'
-      )
-    );
-  }
-
-  openDeleteDialog(boardID?: number) {
-    this.dialog
-      .open(ConfirmationDialogComponent, {
-        data: {
-          confirmationMessage: 'You are about to delete this board. This can’t be undone.',
-        },
-        panelClass: 'confirmation-dialog',
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res === true) {
-          const id = boardID ? boardID : this.menuBoard;
-          this.sendMessage.emit(new BrainstormRemoveBoardEvent(id));
-        }
-      });
-  }
-
-  navigateToBoard(board: Board) {
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
-      }
-    });
-
-    this.permissionsService.hasPermission('ADMIN').then((val) => {
-      if (val) {
-        this.sendMessage.emit(new HostChangeBoardEvent(board.id));
-      }
-    });
-  }
-
-  setBoardMode(mode: string) {
+  setBoardMode(mode: BoardMode) {
     this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
     this.decideBoardMode(mode);
   }
 
-  decideBoardMode(mode: string) {
+  decideBoardMode(mode: BoardMode): void {
     this.boardMode = mode;
     switch (mode) {
       case 'grid':

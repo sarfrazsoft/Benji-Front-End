@@ -15,6 +15,7 @@ import { distinctUntilChanged, skipWhile, switchMap, takeWhile, tap } from 'rxjs
 import * as global from 'src/app/globals';
 import { IdeaDocument } from 'src/app/services/backend/schema';
 import uploadcare from 'uploadcare-widget';
+import { isSet } from '../../util/value';
 
 export type IdeaUserRole = 'owner' | 'viewer';
 declare var MediaRecorder: any;
@@ -61,6 +62,7 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
   @Input() ucWidgetId;
   @Output() mediaUploaded = new EventEmitter<IdeaDocument | IncompleteFileInfo | any>();
   @Output() mediaUploading = new EventEmitter<FileProgress>();
+  @Output() noFileSelected = new EventEmitter<void>();
 
   widgetRef;
   convertedVideoURL: string;
@@ -183,7 +185,17 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
         } else if (tab === 'file') {
         }
       });
+
+      dialog.always((x) => {
+        if (!isSet(x)) {
+          this.noFileSelected.emit();
+        }
+      });
     });
+
+    if (this.tabs.split('_')[1] && this.tabs.split('_')[1] === 'benjiPage') {
+      this.openDialog();
+    }
   }
 
   onVisible(element, callback) {
@@ -328,8 +340,8 @@ export class UploadcareWidgetComponent implements OnInit, OnChanges, AfterViewIn
           const elCount = elem.childElementCount;
           elem.remove();
           // if (elCount > 1) {
-            const container = document.getElementsByClassName('uploadcare--camera__video-container')[0];
-            container.appendChild(elem);
+          const container = document.getElementsByClassName('uploadcare--camera__video-container')[0];
+          container.appendChild(elem);
           // }
         });
       },
