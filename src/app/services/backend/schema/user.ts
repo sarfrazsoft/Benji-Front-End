@@ -18,8 +18,8 @@ export interface User {
 export interface Branding {
   id: number;
   user: number;
-  logo: File;
-  favicon: File;
+  logo: string;
+  favicon: string;
   color: string;
 }
 
