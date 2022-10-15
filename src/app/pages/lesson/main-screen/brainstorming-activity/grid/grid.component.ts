@@ -209,7 +209,9 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
   }
 
   refreshGridLayout() {
-    this.postLayoutService.refreshGridLayout(this.grid, false);
+    if (this.grid) {
+      this.postLayoutService.refreshGridLayout(this.grid, false);
+    }
   }
 
   isAbsolutePath(imageUrl: string) {
