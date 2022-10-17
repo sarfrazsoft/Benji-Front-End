@@ -180,43 +180,13 @@
           </ng-container>
 
           <!-- Board navigation arrows -->
-          <div fxLayout="row" fxLayoutGap="8px">
-            <div 
-              class="back-next"
-              [ngClass]="{'is-first': isFirstBoard()}"
-              fxLayout="row" 
-              fxLayoutGap="6px"
-              fxLayoutAlign="center center"
-              (click)="changeBoard('previous')">
-                <mat-icon>arrow_back</mat-icon>
-                <span>back</span>
-            </div>
-            <div 
-              class="back-next"
-              [ngClass]="{'is-last': isLastBoard()}"
-              fxLayout="row" 
-              fxLayoutGap="6px"
-              fxLayoutAlign="center center"
-              (click)="changeBoard('next')">
-                <span>next</span>
-                <mat-icon>arrow_forward</mat-icon>
-            </div>
-          </div>
+          <benji-board-navigation-buttons
+            [activityState]="activityState"
+            [participantCode]="participantCode"
+            (socketMessage)="socketMessage.emit($event)">
+          </benji-board-navigation-buttons>
 
         </div>
-
-        <ng-container *ngxPermissionsOnly="'PARTICIPANT'">
-          <div fxLayout="row" fxLayoutGap="8px">
-            <!-- Participant grouping -->
-            <div class="participant-grouping" 
-              *ngIf="openGroupAccess">
-              <button
-                (click)="openGroupingParticipantDialog()">
-                {{ 'Select group'}}
-              </button>
-            </div>
-          </div>
-        </ng-container>
       </div>
     </ng-container>
 

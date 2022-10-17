@@ -4,12 +4,12 @@ import { DynamicTimerComponent } from '../ui-components/dynamic-timer/dynamic-ti
 import { AttentionOverlayComponent } from '../ui-components/linear-timer/attention-overlay/attention-overlay.component';
 import { LinearTimerComponent } from '../ui-components/linear-timer/linear-timer.component';
 import { MainScreenFooterComponent } from '../ui-components/main-screen-footer/main-screen-footer.component';
-import { MainScreenToolbarComponent } from '../ui-components/main-screen-toolbar/main-screen-toolbar.component';
 import { NumberTimerComponent } from '../ui-components/number-timer/number-timer.component';
 import { ParticipantTimerComponent } from '../ui-components/participant-timer/participant-timer.component';
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
 import { NotificationsComponent } from './controls/notifications/notifications.component';
+import { ToolbarComponents } from './main-screen-toolbar';
 
 import { SnackBarComponent } from './snack-bar-component/snack-bar.component';
 
@@ -31,13 +31,13 @@ export const UIComponents = [
   AttentionOverlayComponent,
   LinearTimerComponent,
   MainScreenFooterComponent,
-  MainScreenToolbarComponent,
   NumberTimerComponent,
   ParticipantTimerComponent,
   RadialTimerComponent,
   NotificationsComponent,
   SnackBarComponent,
   ...ControlComponents,
+  ...ToolbarComponents,
   SubmittedCounterComponent,
   BoardMenuComponent,
   TopicMediaComponent,

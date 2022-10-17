@@ -26,11 +26,9 @@ import {
   BrainstormSubmissionCompleteInternalEvent,
   EndShareEvent,
   GetUpdatedLessonDetailEvent,
-  HostChangeBoardEvent,
   JumpEvent,
   MarkNotificationsReadEvent,
   NextInternalEvent,
-  ParticipantChangeBoardEvent,
   PauseActivityEvent,
   PreviousEvent,
   ResetEvent,
@@ -306,68 +304,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       .subscribe((data) => {
         this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
       });
-  }
-
-  isFirstBoard() {
-    const currentBoard: Board = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
-
-    return currentBoard ? currentBoard.previous_board === null : false;
-  }
-
-  isLastBoard() {
-    const currentBoard: Board = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
-    return currentBoard ? currentBoard.next_board === null : false;
-  }
-
-  getHostBoard(): Board {
-    const visibleBoards = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let hostBoard;
-    visibleBoards.forEach((brd: Board) => {
-      if (this.activityState.brainstormactivity.host_board === brd.id) {
-        hostBoard = brd;
-      }
-    });
-    return hostBoard;
-  }
-
-  getParticipantBoard(): Board {
-    const participants: BoardParticipants = this.activityState.brainstormactivity.participants;
-    let participantBoardId: number;
-    // tslint:disable-next-line:forin
-    for (const brdId in participants) {
-      participants[brdId].forEach((code) => {
-        if (code === this.participantCode) {
-          participantBoardId = Number(brdId);
-        }
-      });
-    }
-    const visibleBrds = this.activityState.brainstormactivity.boards.filter((board) => !board.removed);
-    let participantBoard;
-    visibleBrds.forEach((brd: Board) => {
-      if (brd.id === participantBoardId) {
-        participantBoard = brd;
-      }
-    });
-    return participantBoard;
-  }
-
-  changeBoard(move: 'next' | 'previous') {
-    const currentBoard = this.isHost ? this.getHostBoard() : this.getParticipantBoard();
-    if (move === 'next') {
-      if (currentBoard.next_board) {
-        this.navigateToBoard(currentBoard.next_board);
-      }
-    } else if (move === 'previous') {
-      if (currentBoard.previous_board) {
-        this.navigateToBoard(currentBoard.previous_board);
-      }
-    }
-  }
-
-  navigateToBoard(boardId: number) {
-    this.isHost
-      ? this.socketMessage.emit(new HostChangeBoardEvent(boardId))
-      : this.socketMessage.emit(new ParticipantChangeBoardEvent(boardId));
   }
 
   logoClicked() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { cloneDeep, differenceBy, find, findIndex, includes, orderBy, remove, sortBy } from 'lodash';
+import { cloneDeep, differenceBy, find, findIndex, forOwn, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
@@ -545,5 +545,29 @@ export class BrainstormService {
       return true;
     }
     return false;
+  }
+
+  getParticipantBoard(act: BrainstormActivity, participantCode: number): Board | null {
+    let selectedBoard: Board;
+    const boardParticipants = act.participants;
+    if (boardParticipants) {
+      forOwn(boardParticipants, (boardParticipantArray, participantsBoardId) => {
+        for (let i = 0; i < boardParticipantArray.length; i++) {
+          const pCode = boardParticipantArray[i];
+          if (pCode === participantCode) {
+            act.boards.forEach((board) => {
+              if (Number(participantsBoardId) === board.id) {
+                selectedBoard = board;
+              }
+            });
+          }
+        }
+      });
+    }
+    if (selectedBoard) {
+      return selectedBoard;
+    } else {
+      return null;
+    }
   }
 }

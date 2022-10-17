@@ -1,4 +1,3 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {
   Component,
@@ -13,24 +12,13 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import {
-  expandRightOnEnterAnimation,
-  fadeInOnEnterAnimation,
-  fadeInRightOnEnterAnimation,
-  fadeInUpOnEnterAnimation,
-  fadeOutOnLeaveAnimation,
-  slideInRightOnEnterAnimation,
-  slideInUpOnEnterAnimation,
-  slideOutRightOnLeaveAnimation,
-} from 'angular-animations';
 import { clone, cloneDeep, uniqBy } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 import * as global from 'src/app/globals';
 import { ImageViewDialogComponent } from 'src/app/pages/lesson/shared/dialogs/image-view/image-view.dialog';
 import {
   ActivitySettingsService,
+  BoardsNavigationService,
   BrainstormService,
   ContextService,
   SharingToolService,
@@ -44,8 +32,6 @@ import {
   BrainstormEditDocumentIdeaEvent,
   BrainstormEditIdeaSubmitEvent,
   BrainstormEditIdeaVideoSubmitEvent,
-  BrainstormEditInstructionEvent,
-  BrainstormEditSubInstructionEvent,
   BrainstormRemoveSubmissionEvent,
   BrainstormSubmitDocumentEvent,
   BrainstormSubmitEvent,
@@ -55,7 +41,6 @@ import {
   Group,
   Idea,
   ResetGroupingEvent,
-  StartBrainstormGroupEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -133,7 +118,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     private permissionsService: NgxPermissionsService,
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
-    private boardStatusService: BoardStatusService
+    private boardStatusService: BoardStatusService,
+    private boardsNavigationService: BoardsNavigationService
   ) {}
 
   ngOnInit() {
@@ -145,42 +131,15 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (this.isHost) {
-      if (this.eventType === 'AssignGroupingToActivities') {
-      }
-      this.applyGroupingOnActivity(this.activityState);
-      this.classificationTypes = [
-        {
-          type: 'everyone',
-          title: 'Everyone',
-          description: `Display everyone's work`,
-          imgUrl: '/assets/img/brainstorm/everyone.svg',
-        },
-        {
-          type: 'groups',
-          title: 'Groups',
-          description: `Display group's work`,
-          imgUrl: '/assets/img/brainstorm/groups.svg',
-        },
-        // { type: 'individuals', title: 'Individuals', description: `Display single persons work`,
-        // imgUrl: '/assets/img/brainstorm/individuals.svg' },
-      ];
     }
 
     this.onChanges();
 
     this.settingsSubscription = this.activitySettingsService.settingChange$.subscribe((val) => {
       if (val && val.controlName === 'participantNames') {
-        // this.showUserName = val.state;
-        // this.sendMessage.emit(new BrainstormToggleParticipantNameEvent());
       }
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
-      }
-      if (val && val.controlName === 'resetGrouping') {
-        if (this.board.board_activity.grouping) {
-          const groupingID = this.board.board_activity.grouping.id;
-          this.sendMessage.emit(new ResetGroupingEvent(groupingID));
-        }
       }
       if (val && val.controlName === 'cardSize') {
         this.minWidth = val.state.name;
@@ -199,23 +158,15 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       }
     });
 
-    this.getBoardInstructions();
+    // if it is a participant and the board is hidden
+    // navigate to next available board
+    if (!this.isHost && this.board.status === 'closed') {
+      const navigationStatus = this.boardsNavigationService.navigateToNextAvailableBoard(
+        this.act.boards,
+        this.board
+      );
+    }
   }
-
-  getBoardInstructions() {
-    // this.brainstormService.boardTitle$.subscribe((title: string) => {
-    //   if (title) {
-    //     this.title_instructions = title;
-    //   }
-    // });
-    // this.brainstormService.boardInstructions$.subscribe((instructions: string) => {
-    //   if (instructions) {
-    //     this.sub_instructions = instructions;
-    //   }
-    // });
-  }
-
-  applyGroupingOnActivity(state: UpdateMessage) {}
 
   ngOnChanges() {
     this.onChanges();
@@ -231,11 +182,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
-      this.getBoardInstructions();
     } else {
       this.joinedUsers = this.activityState.lesson_run.participant_set;
-
-      this.getBoardInstructions();
 
       this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
@@ -265,21 +213,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   getMinWidth() {
     return this.minWidth === 'small' ? 288 : this.minWidth === 'medium' ? 360 : 480;
-  }
-  classificationTypeChanged(selectedClassificationType) {
-    const sct = selectedClassificationType;
-    if (sct.type === 'everyone') {
-      // this.participantGroups = null;
-      this.selectedParticipantGroup = null;
-      this.showParticipantsGroupsDropdown = false;
-
-      this.act = cloneDeep(this.activityState.brainstormactivity);
-    } else if (sct.type === 'groups') {
-      this.participantGroups = this.board.board_activity.grouping.groups;
-      this.showParticipantsGroupsDropdown = true;
-    } else if (sct.type === 'individuals') {
-      this.participantGroups = null;
-    }
   }
 
   ParticipantGroupChanged(selectedParticipantGroup: Group) {
@@ -609,20 +542,10 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   isSet(val) {
     return isSet(val);
   }
-  submitWithIframeData(idea) {
-    let i: any = {
-      text: idea.text,
-      title: idea.title,
-      categoryId: idea.category.id,
-      meta: {
-        iframe: idea.iframeData,
-      },
-    };
-    if (idea.id) {
-      i = { ...i, id: i.id };
-      this.sendMessage.emit(new BrainstormEditIdeaSubmitEvent(i));
-    } else {
-      this.sendMessage.emit(new BrainstormSubmitEvent(i));
+
+  getBoardType() {
+    if (this.board.meta?.boardType) {
+      return this.board.meta?.boardType;
     }
   }
 }

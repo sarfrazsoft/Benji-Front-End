@@ -1,12 +1,12 @@
 <ng-container *ngIf="boardStatus === 'closed' && !isHost">
   <div class="empty-board" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="48px">
-    <img style="width: 310px;" class="closed" src="../../../assets/img/side-nav/closed-board.svg"/>
+    <img style="width: 310px;" class="closed" src="assets/img/side-nav/closed-board.svg"/>
     <span>This board is hidden for now</span>
   </div>
 </ng-container>
 
 <ng-container *ngIf="boardStatus !== 'closed' || isHost">
-  <ng-container *ngIf="board.meta?.boardType === boardTypes.PAGE">
+  <ng-container *ngIf="getBoardType() === boardTypes.PAGE">
     <div *ngIf="lessonRunCode">
       <benji-page
         [lessonRunCode]="lessonRunCode"
@@ -19,7 +19,7 @@
   </ng-container>
 
   <!-- To have backwards compatibility we can only check against boardTypes.PAGE-->
-  <ng-container *ngIf="board.meta?.boardType != boardTypes.PAGE">
+  <ng-container *ngIf="getBoardType() !== boardTypes.PAGE">
     <div fxLayout="column" class="brainstorm-main" style="height: 100%;">
       <div 
         #brainstormHeadWrapper 

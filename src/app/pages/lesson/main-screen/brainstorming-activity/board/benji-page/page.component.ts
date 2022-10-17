@@ -41,7 +41,10 @@ export class PageComponent implements OnInit, OnChanges {
     if (!this.isHost && this.eventType === 'BrainstormEditSubInstruction') {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);
-    } else if (this.eventType === 'HostChangeBoardEvent') {
+    } else if (
+      this.eventType === 'HostChangeBoardEvent' ||
+      this.eventType === 'ParticipantChangeBoardEvent'
+    ) {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);
     }
