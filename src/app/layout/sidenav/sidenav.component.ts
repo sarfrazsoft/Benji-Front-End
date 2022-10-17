@@ -5,7 +5,12 @@ import { AuthService, ContextService } from 'src/app/services';
 import { Branding } from 'src/app/services/backend/schema';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { FolderInfo, LessonGroupService } from 'src/app/services/lesson-group.service';
-import { ConfirmationDialogComponent, JoinSessionDialogComponent, LaunchSessionDialogComponent, NewFolderDialogComponent } from '../../shared';
+import {
+  ConfirmationDialogComponent,
+  JoinSessionDialogComponent,
+  LaunchSessionDialogComponent,
+  NewFolderDialogComponent,
+} from '../../shared';
 import { SidenavItem } from './sidenav-item/sidenav-item.component';
 export interface SidenavSection {
   section: number;
@@ -26,7 +31,7 @@ export class SidenavComponent implements OnInit {
   courses;
   launchArrow = '';
   logo = '';
-  //folders: Array<Folder>;
+  // folders: Array<Folder>;
   folders: any = [];
   selectedFolder: any;
   folderLessonsIDs: Array<number> = [];
@@ -103,7 +108,7 @@ export class SidenavComponent implements OnInit {
     private authService: AuthService,
     private contextService: ContextService,
     private lessonGroupService: LessonGroupService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -131,7 +136,6 @@ export class SidenavComponent implements OnInit {
     });
 
     this.getAllFolders();
-
   }
 
   launchSession(): void {
@@ -165,20 +169,19 @@ export class SidenavComponent implements OnInit {
   }
 
   getAllFolders() {
-    this.lessonGroupService.getAllFolders()
-      .subscribe(
-        (data) => {
-          this.folders = data;
-        },
-        (error) => console.log(error)
-      );
+    this.lessonGroupService.getAllFolders().subscribe(
+      (data) => {
+        this.folders = data;
+      },
+      (error) => console.log(error)
+    );
   }
 
   createOrUpdateFolder(isNew: boolean, folderId?: number) {
     if (folderId) {
       this.setFolderLessonsIDs(folderId);
     }
-    const folder = this.folders.filter(x => x.id === folderId);
+    const folder = this.folders.filter((x) => x.id === folderId);
     this.dialog
       .open(NewFolderDialogComponent, {
         data: {
@@ -190,13 +193,17 @@ export class SidenavComponent implements OnInit {
       .afterClosed()
       .subscribe((folderInfo: FolderInfo) => {
         if (folderInfo) {
-          let request = isNew ?
-            this.lessonGroupService.createNewFolder(folderInfo) :
-            this.lessonGroupService.updateFolder({ title: folderInfo.title, id: folderId, lessonsIds: this.folderLessonsIDs });
+          const request = isNew
+            ? this.lessonGroupService.createNewFolder(folderInfo)
+            : this.lessonGroupService.updateFolder({
+                title: folderInfo.title,
+                id: folderId,
+                lessonsIds: this.folderLessonsIDs,
+              });
           request.subscribe(
             (data) => {
               this.getAllFolders();
-              //console.log(data);
+              // console.log(data);
             },
             (error) => console.log(error)
           );
@@ -217,14 +224,13 @@ export class SidenavComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res) {
-          this.lessonGroupService.deleteFolder(id)
-            .subscribe(
-              (data) => {
-                this.getAllFolders();
-                this.removePostQueryParam();
-              },
-              (error) => console.log(error)
-            );
+          this.lessonGroupService.deleteFolder(id).subscribe(
+            (data) => {
+              this.getAllFolders();
+              this.removePostQueryParam();
+            },
+            (error) => console.log(error)
+          );
         }
       });
   }
@@ -240,7 +246,7 @@ export class SidenavComponent implements OnInit {
   }
 
   public folderChangingQueryParams(id: number) {
-    const url = this.router.routerState.snapshot.url
+    const url = this.router.routerState.snapshot.url;
     const command = url.includes('account') || url.includes('notifications') ? ['/dashboard'] : [];
     this.router.navigate(command, {
       relativeTo: null,
@@ -257,16 +263,12 @@ export class SidenavComponent implements OnInit {
 
   setFolderLessonsIDs(folderId: number) {
     this.folderLessonsIDs = [];
-    this.lessonGroupService.getFolderDetails(folderId)
-      .subscribe(
-        (folder) => {
-          const lessons = folder.lesson;
-          this.folderLessonsIDs = [];
-          lessons.forEach((lesson) => {
-            this.folderLessonsIDs.push(lesson.id);
-          });
-        }
-      );
+    this.lessonGroupService.getFolderDetails(folderId).subscribe((folder) => {
+      const lessons = folder.lesson;
+      this.folderLessonsIDs = [];
+      lessons.forEach((lesson) => {
+        this.folderLessonsIDs.push(lesson.id);
+      });
+    });
   }
-
 }
