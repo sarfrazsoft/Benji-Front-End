@@ -38,5 +38,11 @@ export class CopyTemplateComponent implements OnInit {
     //     this.router.navigate(['/login']);
     //   });
     // });
+    //     curl --location --request POST '<hostname>/api/course_details/use-template/' \
+    // --header 'Authorization: Bearer <token>' \
+    // --header 'Content-Type: application/json' \
+    // --data-raw '{
+    //     "lesson_run_code": 85274
+    // }'
   }
 }
