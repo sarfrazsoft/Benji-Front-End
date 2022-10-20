@@ -78,7 +78,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   hostname = window.location.host + '/participant/join?link=';
   boardsCount: number;
   menuBoard: any;
-  hostBoard: number;
 
   showBottom = true;
   boardType: BoardTypes;
@@ -107,7 +106,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
     this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
@@ -150,7 +148,6 @@ export class BoardMenuComponent implements OnInit, OnChanges {
         this.initializeBoards();
       }
     }
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
   }
 
   initializeBoards() {

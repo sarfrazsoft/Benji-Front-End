@@ -21,6 +21,7 @@ import {
   BoardMode,
   BoardStatus,
   BrainstormActivity,
+  EventTypes,
   Group,
   HostChangeBoardEvent,
   Idea,
@@ -41,8 +42,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -142,7 +142,7 @@ export class MainScreenBrainstormingActivityComponent
     });
 
     this.changeBoardStatus();
-    this.onChanges();
+    this.title.setTitle(this.activityState?.lesson_run?.lesson?.lesson_name ?? 'Benji');
   }
 
   ngAfterViewInit(): void {
@@ -159,7 +159,6 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnChanges() {
     this.onChanges();
-    this.title.setTitle(this.activityState.lesson_run.lesson.lesson_name);
   }
 
   onChanges() {
@@ -196,6 +195,8 @@ export class MainScreenBrainstormingActivityComponent
       if (this.isHost) {
         this.navigateToNewlyAddedBoard();
       }
+    } else if (this.eventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+      console.log('no on changes down the tree should fire');
     } else {
       this.selectUserBoard();
     }

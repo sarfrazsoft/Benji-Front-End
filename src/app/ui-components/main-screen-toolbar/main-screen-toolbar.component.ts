@@ -51,7 +51,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() disableControls: boolean;
   @Input() isSharing: boolean;
   @Input() isGroupingShowing: boolean;
-  @Input() isLastActivity: boolean;
   @Input() showHeader: boolean;
   @Input() lesson;
   @Input() roomCode: string;

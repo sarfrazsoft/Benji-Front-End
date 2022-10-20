@@ -21,7 +21,6 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
   logo;
   timer: Timer;
   @Input() activityState: UpdateMessage;
-  @Input() isLastActivity = false;
   at: typeof ActivityTypes = ActivityTypes;
   @Input() showTimer = false;
 
@@ -30,10 +29,9 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
   constructor(private contextService: ContextService, private router: Router) {}
 
   ngOnInit() {
-    
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
 

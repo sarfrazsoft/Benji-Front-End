@@ -10,6 +10,7 @@ import { BackendRestService } from 'src/app/services/backend/backend-rest.servic
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import {
   ActivityEvent,
+  EventTypes,
   ServerMessage,
   TeamUser,
   Timer,
@@ -118,10 +119,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  ngOnChanges() {
-    // this.timer = this.getTimerTool();
-    // console.log(this.timer);
-  }
+  ngOnChanges() {}
 
   ngOnDestroy() {}
 
@@ -209,15 +207,19 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-    } else if (msg.eventtype === 'NotificationEvent') {
-      console.log(msg);
+    } else if (msg.eventtype === EventTypes.notificationEvent) {
       this.serverMessage = {
         ...this.serverMessage,
         notifications: msg.notifications,
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-      console.log(this.serverMessage);
+    } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.serverMessage = {
+        event_msg: msg.event_msg,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;
@@ -257,13 +259,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
       return this.serverMessage.activity_type;
     } else {
       return null;
-    }
-  }
-
-  isLastActivity() {
-    if (this.serverMessage) {
-      const activity_type = this.serverMessage.activity_type.toLowerCase();
-      return !this.serverMessage[activity_type].next_activity;
     }
   }
 

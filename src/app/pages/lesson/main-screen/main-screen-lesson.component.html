@@ -3,7 +3,6 @@
   <benji-main-screen-toolbar 
     [activityState]="serverMessage"
     *ngIf="isConnected() && serverMessage && navType==='boards'"
-    [isLastActivity]="!isLastActivity()"
     [showHeader]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lesson]="serverMessage.lesson"
@@ -43,7 +42,6 @@
       <benji-main-screen-toolbar 
         [activityState]="serverMessage"
         *ngIf="isConnected() && serverMessage && navType!=='boards'"
-        [isLastActivity]="!isLastActivity()"
         [showHeader]="getActivityType() !== at.lobby"
         [roomCode]="serverMessage.lesson_run.lessonrun_code"
         [lesson]="serverMessage.lesson"
