@@ -36,6 +36,8 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   facilitatorConnected = false;
   timer;
 
+  participantCode: number;
+
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
     protected utilsService: UtilsService,
@@ -271,8 +273,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public getParticipantCode(): number {
+    return this.participantCode;
+  }
+
+  private setParticipantCode(): number {
     let details: Participant;
-    const lessonRunCode = this.serverMessage.lesson_run.lessonrun_code;
+    const lessonRunCode = this.roomCode;
     if (localStorage.getItem('participant_' + lessonRunCode)) {
       details = JSON.parse(localStorage.getItem('participant_' + lessonRunCode));
       return details.participant_code;

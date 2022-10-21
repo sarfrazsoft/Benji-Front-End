@@ -15,7 +15,14 @@ import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
 import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, BoardParticipants, Branding, Timer, UpdateMessage } from 'src/app/services/backend/schema';
+import {
+  Board,
+  BoardParticipants,
+  Branding,
+  EventTypes,
+  Timer,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
 import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
 import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -52,9 +59,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isSharing: boolean;
   @Input() isGroupingShowing: boolean;
   @Input() showHeader: boolean;
-  @Input() lesson;
-  @Input() roomCode: string;
-  @Input() isPaused: boolean;
+  lesson;
   @Input() isGrouping: boolean;
   @Input() participantCode: number;
   @Input() boardsMenuClosed: boolean;
@@ -69,6 +74,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
   activitySettingsAllowed = ActivitySettingsAllowed;
+  roomCode: string;
 
   openGroupAccess = false;
 
@@ -123,11 +129,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     });
 
-    this.showParticipantGroupingButton();
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
     }
-    this.shareParticipantLink = this.hostname + this.roomCode;
+    if (!this.roomCode) {
+      this.roomCode = this.activityState?.lesson_run?.lessonrun_code?.toString();
+      this.shareParticipantLink = this.hostname + this.roomCode;
+    }
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       val ? (this.isParticipant = true) : (this.isParticipant = false);
@@ -138,30 +146,16 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     });
   }
 
-  showParticipantGroupingButton() {
-    if (!this.activityState || !this.activityState.activity_type) {
-      return;
-    }
-    const currentActivity = this.activityState[this.activityState.activity_type.toLowerCase()];
-    const grouping: GroupingToolGroups = currentActivity.grouping;
-    if (grouping) {
-      if (grouping.style === 'hostAssigned') {
-        this.openGroupAccess = false;
-      } else if (grouping.style === 'selfAssigned') {
-        this.openGroupAccess = true;
-      }
-    }
-  }
-
   copyMessage(val: string) {
     this.utilsService.copyToClipboard(val);
   }
 
   ngOnChanges() {
-    this.lessonName = this.lesson.lesson_name;
+    if (this.activityState.eventType === EventTypes.joinEvent) {
+      this.lessonName = this.activityState.lesson.lesson_name;
+      this.loadParticipantCodes();
+    }
 
-    this.showParticipantGroupingButton();
-    this.loadParticipantCodes();
     if (this.activityState.eventType === 'NotificationEvent') {
       this.notificationList = this.activityState.notifications;
       this.notificationsComponent.updateNotifications(this.notificationList);

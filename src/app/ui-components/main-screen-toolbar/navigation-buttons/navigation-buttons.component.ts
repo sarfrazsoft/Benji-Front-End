@@ -30,9 +30,15 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges() {
-    this.allBoards = this.activityState.brainstormactivity.boards;
-    this.hostBoardId = this.activityState.brainstormactivity.host_board;
-    this.isHost = this.activityState.isHost;
+    if (this.activityState?.brainstormactivity?.boards) {
+      this.allBoards = this.activityState.brainstormactivity.boards;
+    }
+    if (this.activityState?.brainstormactivity?.host_board) {
+      this.hostBoardId = this.activityState.brainstormactivity.host_board;
+    }
+    if (this.activityState?.isHost) {
+      this.isHost = this.activityState.isHost;
+    }
   }
 
   propagate($event) {
