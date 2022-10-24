@@ -29,6 +29,7 @@ import {
   BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
+  EventTypes,
   Idea,
   QueryParamsObject,
   UpdateMessage,
@@ -120,6 +121,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   userSubmittedSuccesfully = false;
   queryParamSubscription;
 
+  localActivityState: UpdateMessage;
+
   @ViewChild('iframeContainer') iframeContainer: ElementRef;
 
   constructor(
@@ -138,6 +141,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   ) {}
 
   ngOnInit(): void {
+    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.localActivityState = this.activityState;
+    }
     // get parameters
     if (this.eventType !== 'BrainstormSetCategoryEvent') {
       this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
@@ -325,7 +331,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   getParticipantName(code: number) {
-    return this.activitiesService.getParticipantName(this.activityState, code);
+    return this.activitiesService.getParticipantName(this.localActivityState, code);
   }
 
   submitComment(ideaId, val) {

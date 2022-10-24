@@ -38,6 +38,7 @@ import {
   BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
   Category,
+  EventTypes,
   Group,
   Idea,
   ResetGroupingEvent,
@@ -180,11 +181,11 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     }
     if (
       this.eventType === 'BrainstormEditBoardInstruction' ||
-      this.eventType === 'BrainstormEditSubInstruction'
+      this.eventType === 'BrainstormEditSubInstruction' ||
+      this.eventType === EventTypes.brainstormSubmitIdeaCommentEvent
     ) {
-    } else {
+    } else if (this.eventType === EventTypes.joinEvent || EventTypes.brainstormToggleParticipantNameEvent) {
       this.joinedUsers = this.activityState.lesson_run.participant_set;
-
       this.showUserName = this.board.board_activity.show_participant_name_flag;
     }
   }

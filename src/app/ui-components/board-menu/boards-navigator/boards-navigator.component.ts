@@ -30,6 +30,7 @@ import {
   BrainstormToggleParticipantNameEvent,
   Branding,
   DuplicateBoardEvent,
+  EventTypes,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
@@ -134,7 +135,9 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         this.initializeBoards();
       }
     }
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
+    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.hostBoard = this.activityState?.brainstormactivity?.host_board;
+    }
   }
 
   updateLessonInfo() {
