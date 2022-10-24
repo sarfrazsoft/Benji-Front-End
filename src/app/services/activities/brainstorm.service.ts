@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { cloneDeep, differenceBy, find, findIndex, forOwn, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
 import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import {
   Board,
@@ -11,6 +10,7 @@ import {
   Category,
   ColsCategoryChangeIdeaOrderInfo,
   Idea,
+  PostOrder,
 } from '../backend/schema';
 
 @Injectable()

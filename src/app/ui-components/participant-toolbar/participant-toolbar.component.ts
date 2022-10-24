@@ -26,7 +26,7 @@ export class ParticipantToolbarComponent implements OnInit, OnChanges {
 
   @Output() sendMessage = new EventEmitter<any>();
 
-  constructor(private contextService: ContextService, private router: Router) {}
+  constructor(private contextService: ContextService, public router: Router) {}
 
   ngOnInit() {
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
