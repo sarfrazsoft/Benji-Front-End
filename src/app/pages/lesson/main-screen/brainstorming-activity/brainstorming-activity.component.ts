@@ -175,10 +175,6 @@ export class MainScreenBrainstormingActivityComponent
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
       this._activityState = this.activityState;
-    } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
-      // update the data in service. no children components will fire ngonchanges
-      this.brainstormEventService.ideaCommentEvent = this.activityState;
-      console.log('no on changes down the tree should fire');
     }
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
@@ -211,6 +207,9 @@ export class MainScreenBrainstormingActivityComponent
       if (this.isHost) {
         this.navigateToNewlyAddedBoard();
       }
+    } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+      // update the data in service. no children components will fire ngonchanges
+      this.brainstormEventService.ideaCommentEvent = this.activityState;
     } else {
       this.selectUserBoard();
     }

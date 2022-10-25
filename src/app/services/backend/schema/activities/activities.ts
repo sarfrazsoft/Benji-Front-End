@@ -421,13 +421,21 @@ export interface Idea {
   pinned: boolean;
   editing?: boolean;
   addingIdea?: boolean;
-  comments: Array<{ id: number; participant: number; comment: string }>;
+  comments: Array<IdeaComment>;
   hearts: Array<{ id: number; participant: number }>;
   version: number;
   time: string;
   idea_document: IdeaDocument;
   idea_video: IdeaDocument;
   meta: any;
+}
+
+export class IdeaComment {
+  comment: string;
+  comment_hearts: Array<number>;
+  id: number;
+  participant: number;
+  reply_comments?: Array<IdeaComment>;
 }
 export interface IdeaDocument {
   id: number;

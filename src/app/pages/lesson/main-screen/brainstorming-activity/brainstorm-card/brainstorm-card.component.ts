@@ -198,6 +198,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     }
 
     this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+      // Add the comment to the card
       console.log(v);
     });
   }
@@ -246,8 +247,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         }
       }
     } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-      console.log(changes);
-      console.log(this.activityState);
       if (this.ideaDetailedDialogRef) {
         this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
       }
