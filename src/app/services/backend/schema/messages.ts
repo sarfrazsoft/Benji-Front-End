@@ -31,16 +31,17 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
+import { EventType } from './events';
 import { LessonRunNotification, Notification } from './notification';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
 
 export interface UpdateMessage {
   // TODO: This is a hack and must go. Use the proper REST view (course_details/lesson/) to get this.
-  lesson: Lesson;
-  lesson_run: LessonRun;
-  eventType: string;
-  notifications: Array<LessonRunNotification>;
+  lesson?: Lesson;
+  lesson_run?: LessonRun;
+  eventType: EventType;
+  notifications?: Array<LessonRunNotification>;
   isHost: boolean;
   brainstormactivity?: BrainstormActivity;
   imageactivity?: ImageActivity;
@@ -51,7 +52,7 @@ export interface UpdateMessage {
   externalgroupingactivity?: ExternalGroupingActivity;
   pitchomaticactivity?: PitchoMaticActivity;
   // activity type should be specifi rather than a string
-  activity_type: string;
+  activity_type?: string;
   lobbyactivity?: LobbyActivity;
   titleactivity?: TitleActivity;
   mcqactivity?: MCQActivity;
@@ -68,6 +69,8 @@ export interface UpdateMessage {
   feedbackactivity?: FeedbackActivity;
   wheredoyoustandactivity?: WhereDoYouStandActivity;
   triadgroupingactivity?: TriadGroupingActivity;
+
+  event_msg?: BrainstormSubmitIdeaCommentResponse;
 }
 
 export interface ClientError {
@@ -96,24 +99,13 @@ export interface ServerMessage {
   servernotification?: ServerNotification;
   notifications?: Array<LessonRunNotification>;
   eventtype: string | 'NotificationEvent';
+  event_msg?: BrainstormSubmitIdeaCommentResponse;
 }
 
 export interface QueryParamsObject {
   board: string;
   post: string;
 }
-
-// export class Ddatemessage implements UpdateMessage {
-//   updateMessage;
-//   activity_type;
-//   base_activity;
-//   lesson_run;
-//   lesson;
-
-//   getActivity() {
-//     return this.updateMessage[this.activity_type.toLowerCase]
-//   }
-// }
 
 export class ActivityEvent {
   event_name = 'Event';
@@ -594,6 +586,14 @@ export class BrainstormSubmitIdeaCommentEvent extends ActivityEvent {
       brainstormidea: ideaId,
     };
   }
+}
+
+export class BrainstormSubmitIdeaCommentResponse {
+  board_id: number;
+  brainstormidea_id: number;
+  comment: string;
+  id: number;
+  participant: any;
 }
 
 export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {

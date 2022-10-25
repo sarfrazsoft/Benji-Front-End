@@ -18,6 +18,7 @@ import doc from './../../shared/ngx-editor/doc';
 import { LessonGroupService } from 'src/app/services/lesson-group.service';
 import { Title } from '@angular/platform-browser';
 import { UtilsService } from 'src/app/services/utils.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'benji-admin-panel',
@@ -81,14 +82,13 @@ export class AdminPanelComponent implements OnInit, OnChanges {
       }
       );
 
-    this.contextService.selectedFolder$.subscribe((folder) => {
-      if (folder === null) {
+    this.contextService.selectedFolder$.subscribe((folderId) => {
+      if (folderId === null) {
         this.initDashData();
         this.folderName = null;
-      }
-      else if (folder) {
-        this.selectedFolderId = folder;
-        this.lessonGroupService.getFolderDetails(folder)
+      } else if (folderId) {
+        this.selectedFolderId = folderId;
+        this.lessonGroupService.getFolderDetails(folderId)
           .subscribe(
             (folder) => {
               this.folderName = folder.name;
@@ -183,5 +183,13 @@ export class AdminPanelComponent implements OnInit, OnChanges {
 
   toggleLayout(type: string) {
     this.layout = type;
+  }
+
+  setLessonRuns(lesRuns: Array<any>) {
+    this.activatedRoute.data.forEach((data: any) => {
+      // To exclude template lessons
+      this.lessons = data.dashData.lessons.filter((lesson) => lesson.public_permission !== 'duplicate');
+      data.dashData.lessonRuns = lesRuns;
+    });
   }
 }

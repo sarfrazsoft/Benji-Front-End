@@ -89,11 +89,6 @@ export abstract class BaseActivityComponent implements OnInit {
     return this.activityState[activity_type].next_activity_delay_seconds;
   }
 
-  isLastActivity() {
-    const activity_type = this.activityState.activity_type.toLowerCase();
-    return !this.activityState[activity_type].next_activity;
-  }
-
   getActiveParticipants() {
     return this.activityState.lesson_run.participant_set.filter((x) => x.is_active);
   }

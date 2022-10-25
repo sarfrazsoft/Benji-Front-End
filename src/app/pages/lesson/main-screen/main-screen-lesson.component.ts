@@ -99,11 +99,6 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
       : (this.sideNavMode = 'side');
   }
 
-  isPaused() {
-    const activity_type = this.serverMessage.activity_type.toLowerCase();
-    return this.serverMessage[activity_type].is_paused;
-  }
-
   openSettingsMenu() {
     this.navType = 'board-settings';
     this.sideNavPosition = 'end';

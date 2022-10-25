@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { cloneDeep, differenceBy, find, findIndex, forOwn, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
 import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import {
   Board,
   BoardStatus,
   BrainstormActivity,
+  BrainstormSubmitIdeaCommentResponse,
   Category,
   ColsCategoryChangeIdeaOrderInfo,
   Idea,
+  PostOrder,
 } from '../backend/schema';
 
 @Injectable()
@@ -400,8 +401,19 @@ export class BrainstormService {
     }
   }
 
-  uncategorizedIdeaCommented(board, existingIdeas: Array<Idea>) {
-    const newIdeas = this.uncategorizedPopulateIdeas(board);
+  uncategorizedIdeaCommentAdded(existingIdeas: Array<Idea>, newComment: BrainstormSubmitIdeaCommentResponse) {
+    const existingIdea = find(existingIdeas, { id: newComment.brainstormidea_id });
+    existingIdea.comments.push({
+      comment: newComment.comment,
+      id: newComment.id,
+      participant: newComment.participant,
+      comment_hearts: [],
+      reply_comments: [],
+    });
+  }
+
+  uncategorizedIdeaCommented(newboard, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(newboard);
     newIdeas.forEach((newIdea: Idea) => {
       const existingIdea = find(existingIdeas, { id: newIdea.id });
       if (existingIdea.comments.length < newIdea.comments.length) {

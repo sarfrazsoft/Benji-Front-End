@@ -1,11 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
-import {
-  BackendRestService,
-  ContextService,
-  EitherOrActivityService,
-  EmojiLookupService,
-} from 'src/app/services';
+import { BackendRestService, ContextService, EmojiLookupService } from 'src/app/services';
 import {
   User,
   WhereDoYouStandActivity,
@@ -31,7 +26,6 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent 
   constructor(
     private emoji: EmojiLookupService,
     private restService: BackendRestService,
-    private eitherOrActivityService: EitherOrActivityService,
     private contextService: ContextService
   ) {
     super();
@@ -118,8 +112,8 @@ export class ParticipantEitherOrActivityComponent extends BaseActivityComponent 
     }
   }
 
-  getGroupPreferredChoice(): WhereDoYouStandChoice {
-    return this.eitherOrActivityService.getGroupChoice(this.state, 'num_preferences');
+  getGroupPreferredChoice(): any {
+    // return this.eitherOrActivityService.getGroupChoice(this.state, 'num_preferences');
   }
 
   resetChoices(): void {

@@ -50,7 +50,6 @@ import { NgxPermissionsService } from 'ngx-permissions';
 export class MainScreenFooterComponent implements OnInit, OnChanges {
   @Input() activityState: UpdateMessage;
   @Input() showFastForward: boolean;
-  @Input() isLastActivity: boolean;
   @Input() showFooter: boolean;
   @Input() lessonName: string;
   @Input() roomCode: string;

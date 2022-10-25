@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EitherOrActivityService, EmojiLookupService } from 'src/app/services';
+import { EmojiLookupService } from 'src/app/services';
 import {
   FastForwardEvent,
   NextInternalEvent,
@@ -47,11 +47,7 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
     }
   }
 
-  constructor(
-    private emoji: EmojiLookupService,
-    private eitherOrActivityService: EitherOrActivityService,
-    private dialog: MatDialog
-  ) {
+  constructor(private emoji: EmojiLookupService, private dialog: MatDialog) {
     super();
   }
 
@@ -176,12 +172,12 @@ export class MainScreenEitherOrActivityComponent extends BaseActivityComponent i
     return active.filter((name) => !answered.includes(name));
   }
 
-  getGroupPreferredChoice(): WhereDoYouStandChoice {
-    return this.eitherOrActivityService.getGroupChoice(this.state, 'num_preferences');
+  getGroupPreferredChoice(): any {
+    // return this.eitherOrActivityService.getGroupChoice(this.state, 'num_preferences');
   }
 
-  getGroupPredictionChoice(): WhereDoYouStandChoice {
-    return this.eitherOrActivityService.getGroupChoice(this.state, 'num_predictions');
+  getGroupPredictionChoice(): any {
+    // return this.eitherOrActivityService.getGroupChoice(this.state, 'num_predictions');
   }
 
   getGroupPercentagePrediction() {

@@ -92,16 +92,12 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
     super();
   }
 
-  ngOnInit(): void {
-    if (!this.participantCode) {
-    }
-  }
+  ngOnInit(): void {}
 
   ngOnChanges($event: SimpleChanges) {
     // console.log($event);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
-      console.log(this.columns);
       this.cycle = 'second';
     } else {
       if (
@@ -112,11 +108,13 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         this.brainstormService.addIdeaToCategory(this.board, this.columns, (changedCategory: Category) => {
           console.log(changedCategory);
         });
-      } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-        this.brainstormService.ideaCommented(this.board, this.columns, () => {
-          // this.refreshMasonryLayout();
-        });
-      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
+      }
+      // else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
+      //   this.brainstormService.ideaCommented(this.board, this.columns, () => {
+      //     // this.refreshMasonryLayout();
+      //   });
+      // }
+      else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.ideaCommented(this.board, this.columns, () => {
           this.refreshMasonryLayout();
         });

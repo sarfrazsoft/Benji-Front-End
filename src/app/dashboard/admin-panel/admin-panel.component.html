@@ -34,7 +34,8 @@
       [lessonRuns]="lessonRuns"
       [isTemplates]="false"
       [layout]="layout"
-      (openCreateSessionEvent)="openCreateSession()">
+      (openCreateSession)="openCreateSession()"
+      (setLessonRuns)="setLessonRuns($event)">
     </benji-lessons-list>
   </div>
 </div>
