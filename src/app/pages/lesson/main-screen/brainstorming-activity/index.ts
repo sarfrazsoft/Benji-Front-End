@@ -7,11 +7,9 @@ import { MainScreenBrainstormingActivityComponent } from './brainstorming-activi
 import { CategorizedComponent as BrainstormCategorizedComponent } from './categorized/categorized.component';
 import { GridComponent as BrainstormGridComponentComponent } from './grid/grid.component';
 import { ThreadModeComponent as BrainstormThreadModeComponent } from './thread-mode/thread-mode.component';
-import { UncategorizedComponent as BrainstormUncategorizedComponent } from './uncategorized/uncategorized.component';
 
 export { BrainstormCardComponent, BoardComponent };
 export { BrainstormCategorizedComponent };
-export { BrainstormUncategorizedComponent };
 export { BrainstormGridComponentComponent };
 export { BrainstormThreadModeComponent };
 export { MainScreenBrainstormingActivityComponent };
@@ -25,7 +23,6 @@ export const MainScreenBrainStormComponents = [
   BrainstormBoardPromptComponent,
   MainScreenBrainstormingActivityComponent,
   BrainstormCategorizedComponent,
-  BrainstormUncategorizedComponent,
   BrainstormThreadModeComponent,
   BrainstormGridComponentComponent,
   BrainstormPageComponent,

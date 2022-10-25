@@ -19,7 +19,7 @@ import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { fromEvent } from 'rxjs';
-import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
+import { ActivitiesService, BrainstormEventService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
   BoardStatus,
@@ -131,6 +131,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
+    private brainstormEventService: BrainstormEventService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
@@ -195,6 +196,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.videoAvailable = true;
       this.oldVideo = this.item.idea_video.id;
     }
+
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+      console.log(v);
+    });
   }
 
   ngOnDestroy() {
@@ -241,6 +246,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
         }
       }
     } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
+      console.log(changes);
+      console.log(this.activityState);
       if (this.ideaDetailedDialogRef) {
         this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
       }

@@ -101,7 +101,6 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
     // console.log($event);
     if (this.cycle === 'first' || this.eventType === 'filtered') {
       this.columns = this.brainstormService.populateCategories(this.board, this.columns);
-      console.log(this.columns);
       this.cycle = 'second';
     } else {
       if (

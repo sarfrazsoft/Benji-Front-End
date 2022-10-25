@@ -15,7 +15,12 @@ import { iframely } from '@iframely/embed.js';
 import { cloneDeep, forOwn } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable } from 'rxjs';
-import { BrainstormService, ContextService, SharingToolService } from 'src/app/services';
+import {
+  BrainstormEventService,
+  BrainstormService,
+  ContextService,
+  SharingToolService,
+} from 'src/app/services';
 import {
   Board,
   BoardMode,
@@ -46,6 +51,7 @@ export class MainScreenBrainstormingActivityComponent
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
+  _activityState: UpdateMessage;
   peakBackStage = null;
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
@@ -58,6 +64,7 @@ export class MainScreenBrainstormingActivityComponent
     private contextService: ContextService,
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
+    private brainstormEventService: BrainstormEventService,
     private permissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
     private topicMediaService: TopicMediaService,
@@ -162,41 +169,48 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   onChanges() {
-    this.eventType = this.getEventType();
     this.isHost = this.activityState.isHost;
+    const currentEventType = this.getEventType();
+    if (currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
+      this.eventType = currentEventType;
+      this._activityState = this.activityState;
+    } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+      // update the data in service. no children components will fire ngonchanges
+      this.brainstormEventService.ideaCommentEvent = this.activityState;
+      console.log('no on changes down the tree should fire');
+    }
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (
-      this.eventType === 'BrainstormEditBoardInstruction' ||
-      this.eventType === 'BrainstormEditSubInstruction'
+      currentEventType === 'BrainstormEditBoardInstruction' ||
+      currentEventType === 'BrainstormEditSubInstruction'
     ) {
       this.selectUserBoard();
-    } else if (this.eventType === 'UpdatePromptVideoEvent') {
+    } else if (currentEventType === 'UpdatePromptVideoEvent') {
       this.updatePromptMedia();
-    } else if (this.eventType === 'JoinEvent') {
+    } else if (currentEventType === EventTypes.joinEvent) {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
-    } else if (this.eventType === 'HostChangeBoardEvent') {
+    } else if (currentEventType === 'HostChangeBoardEvent') {
       this.hostChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
-    } else if (this.eventType === 'ParticipantChangeBoardEvent') {
+    } else if (currentEventType === 'ParticipantChangeBoardEvent') {
       this.participantChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
-    } else if (this.eventType === 'BrainstormChangeModeEvent') {
+    } else if (currentEventType === 'BrainstormChangeModeEvent') {
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
       });
-    } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
+    } else if (currentEventType === 'BrainstormChangeBoardStatusEvent') {
       this.changeBoardStatus();
       this.selectUserBoard();
-    } else if (this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent') {
+    } else if (currentEventType === 'BrainstormAddBoardEventBaseEvent') {
       if (this.isHost) {
         this.navigateToNewlyAddedBoard();
       }
-    } else if (this.eventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
-      console.log('no on changes down the tree should fire');
     } else {
       this.selectUserBoard();
     }
