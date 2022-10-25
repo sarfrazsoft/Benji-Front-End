@@ -401,11 +401,7 @@ export class BrainstormService {
     }
   }
 
-  uncategorizedIdeaCommentAdded(
-    newboard,
-    existingIdeas: Array<Idea>,
-    newComment: BrainstormSubmitIdeaCommentResponse
-  ) {
+  uncategorizedIdeaCommentAdded(existingIdeas: Array<Idea>, newComment: BrainstormSubmitIdeaCommentResponse) {
     const existingIdea = find(existingIdeas, { id: newComment.brainstormidea_id });
     existingIdea.comments.push({
       comment: newComment.comment,

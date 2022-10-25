@@ -93,10 +93,9 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
 
     this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
       // Add the comment to the card
-      console.log(v);
       if (this.board.id === v.event_msg.board_id) {
         // the comment was added in the board
-        this.brainstormService.uncategorizedIdeaCommentAdded(this.board, this.ideas, v.event_msg);
+        this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v.event_msg);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       }
     });

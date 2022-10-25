@@ -188,28 +188,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   handleServerMessage(msg: ServerMessage) {
-    if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
-      if (this.serverMessage) {
-        const sMActivity_type = this.serverMessage.activity_type.toLowerCase();
-        const uMActivity_type = msg.updatemessage.activity_type.toLowerCase();
-        if (
-          this.serverMessage[sMActivity_type].activity_id !== msg.updatemessage[uMActivity_type].activity_id
-        ) {
-          this.serverMessage = null;
-          this.ref.detectChanges();
-        }
-      }
-      this.facilitatorConnected = true;
-
-      // this.serverMessage = msg.updatemessage;
-      // this.serverMessage.eventType = msg.eventtype;
-
-      this.serverMessage = {
-        ...msg.updatemessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
-    } else if (msg.eventtype === EventTypes.notificationEvent) {
+    if (msg.eventtype === EventTypes.notificationEvent) {
       this.serverMessage = {
         ...this.serverMessage,
         notifications: msg.notifications,
@@ -243,7 +222,30 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
           this.facilitatorConnected = false;
         }
       }
+    } else if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
+      // if (this.serverMessage) {
+      //   const sMActivity_type = this.serverMessage.activity_type.toLowerCase();
+      //   const uMActivity_type = msg.updatemessage.activity_type.toLowerCase();
+      //   if (
+      //     this.serverMessage['brainstormactivity'].activity_id !==
+      //     msg.updatemessage['brainstormactivity'].activity_id
+      //   ) {
+      //     this.serverMessage = null;
+      //     this.ref.detectChanges();
+      //   }
+      // }
+      this.facilitatorConnected = true;
+
+      // this.serverMessage = msg.updatemessage;
+      // this.serverMessage.eventType = msg.eventtype;
+
+      this.serverMessage = {
+        ...msg.updatemessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     }
+
     if (msg.messagetime !== null && msg.updatemessage !== undefined) {
       this.serverOffsets.push(msg.messagetime - Date.now());
       if (this.serverOffsets.length > 10) {

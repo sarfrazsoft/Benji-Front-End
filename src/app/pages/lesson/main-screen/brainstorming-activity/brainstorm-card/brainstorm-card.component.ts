@@ -200,6 +200,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
       // Add the comment to the card
       console.log(v);
+      this.addComment();
     });
   }
 
@@ -209,22 +210,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 
-  ngAfterViewInit() {
-    // const i = this.item.meta.iframe;
-    // if (i && i.iframeHTML && i.iframeHTML.length > 0) {
-    //   const el = this.iframeContainer;
-    // const iframex = el.nativeElement.getElementsByTagName('iframe')[0];
-    // fromEvent(iframex, 'load').subscribe(() => console.log('loaded'));
-    // el.nativeElement.onresize = () => {
-    //   console.log('iframe loaded');
-    //   this.viewChanged.emit();
-    // };
-    // el.nativeElement.getElementsByTagName('iframe')[0].onload = () => {
-    //   console.log('iframe loaded');
-    //   this.viewChanged.emit();
-    // };
-    // }
-  }
+  ngAfterViewInit() {}
 
   areCommentsAllowed() {
     return this.board.allow_comment;
@@ -246,38 +232,40 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
           }, 5);
         }
       }
-    } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-      if (this.ideaDetailedDialogRef) {
-        this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
-      }
-      if (this.userSubmittedComment) {
-        let existingComment = '';
-        if (this.ideaDetailedDialogRef) {
-          existingComment = this.brainstormService.getDraftComment(this.commentKey);
-          existingComment = existingComment.trim();
-        } else {
-          existingComment = this.commentModel;
-          existingComment = existingComment.trim();
-        }
-        this.item.comments.forEach((c) => {
-          existingComment = existingComment.trim();
-          if (
-            c.comment === existingComment &&
-            (c.participant === this.participantCode || !this.participantCode) &&
-            !this.userSubmittedSuccesfully
-          ) {
-            // there is a comment by this participant in the comments that is identical to commentModal
-            // safe to assume the comment is submitted
-            this.userSubmittedSuccesfully = true;
-            this.userSubmittedComment = false;
-            this.removeDraftComment();
+    }
+  }
 
-            if (this.ideaDetailedDialogRef) {
-              this.ideaDetailedDialogRef.componentInstance.ideaCommentSuccessfullySubmitted();
-            }
-          }
-        });
+  addComment() {
+    if (this.ideaDetailedDialogRef) {
+      this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
+    }
+    if (this.userSubmittedComment) {
+      let existingComment = '';
+      if (this.ideaDetailedDialogRef) {
+        existingComment = this.brainstormService.getDraftComment(this.commentKey);
+        existingComment = existingComment.trim();
+      } else {
+        existingComment = this.commentModel;
+        existingComment = existingComment.trim();
       }
+      this.item.comments.forEach((c) => {
+        existingComment = existingComment.trim();
+        if (
+          c.comment === existingComment &&
+          (c.participant === this.participantCode || !this.participantCode) &&
+          !this.userSubmittedSuccesfully
+        ) {
+          // there is a comment by this participant in the comments that is identical to commentModal
+          // safe to assume the comment is submitted
+          this.userSubmittedSuccesfully = true;
+          this.userSubmittedComment = false;
+          this.removeDraftComment();
+
+          if (this.ideaDetailedDialogRef) {
+            this.ideaDetailedDialogRef.componentInstance.ideaCommentSuccessfullySubmitted();
+          }
+        }
+      });
     }
   }
 
