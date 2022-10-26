@@ -323,7 +323,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     //   return;
     // }
     // idea.idea_image when idea is being edited
-    console.log(idea);
     if (idea.imagesList || idea.selectedThirdPartyImageUrl || idea.idea_image) {
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
@@ -427,7 +426,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         maxSize: 500,
       })
       .then((resizedImage: Blob) => {
-        console.log(resizedImage);
         const formData: FormData = new FormData();
         formData.append('document', resizedImage, file.name);
         formData.append('participant_code', participant_code ? participant_code.toString() : '');
