@@ -47,8 +47,7 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -335,6 +334,7 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   changeBoardToParamsBoard(paramBoardId) {
+    console.log(paramBoardId);
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.selectedBoard = this.getAdminBoard();

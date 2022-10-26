@@ -128,7 +128,10 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       this.updateLessonInfo();
     }
     if (this.navType === 'boards') {
-      if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
+      if (
+        this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
+        this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent
+      ) {
       } else if (this.activityState.eventType === EventTypes.brainstormToggleMeetingMode) {
         this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
       } else {
