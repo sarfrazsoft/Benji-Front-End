@@ -66,7 +66,6 @@ export class LessonGroupService {
   getFolderDetails(folderId: number): Observable<any> {
     return this.http.get(global.apiRoot + `/course_details/lesson_group/${folderId}/`).pipe(
       map((res) => {
-        console.log(res);
         return res;
       })
     );

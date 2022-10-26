@@ -388,6 +388,12 @@ export type BoardMode = 'columns' | 'thread' | 'grid';
 
 // export type BoardType = 'page' | 'posts';
 
+export enum NotificationTypes {
+  DUPLICATE = 'duplicate',
+  DELETE = 'delete',
+  NONE = 'none',
+}
+
 export enum BoardTypes {
   PAGE = 'page',
   POSTS = 'posts',

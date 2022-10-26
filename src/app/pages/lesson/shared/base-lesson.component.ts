@@ -268,7 +268,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public getParticipantCode(): number {
-    console.log(this.participantCode);
     return this.participantCode;
   }
 
