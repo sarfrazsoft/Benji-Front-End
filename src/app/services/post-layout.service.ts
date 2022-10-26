@@ -1,18 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
-import { NgxPermissionsService } from 'ngx-permissions';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import {
-  Board,
-  BoardSort,
-  BoardStatus,
-  BrainstormBoardSortOrderEvent,
-  PostOrder,
-  SetMetaDataBoardEvent,
-  TopicMedia,
-  UpdateMessage
-} from './backend/schema';
+import { Board, BoardSort, PostOrder, SetMetaDataBoardEvent, UpdateMessage } from './backend/schema';
 @Injectable()
 export class PostLayoutService {
   sendMessage$ = new BehaviorSubject<any>(null);
@@ -57,9 +47,7 @@ export class PostLayoutService {
       // console.log(items);
     });
 
-    grid.on('remove', (items) => {
-      console.log(items);
-    });
+    grid.on('remove', (items) => {});
 
     grid.on('dragEnd', (item: Item, event: DraggerEndEvent | DraggerCancelEvent) => {
       const elemGrid = item.getGrid();
