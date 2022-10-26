@@ -37,6 +37,7 @@ import {
   Category,
   ColsCategoryChangeIdeaOrderInfo,
   ColsIdeaOrderInfo,
+  EventTypes,
   Group,
   Idea,
   SetMetaDataBoardEvent,
@@ -174,8 +175,8 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
         //   this.sortAndResetMasonry();
         // });
       } else if (
-        this.eventType === 'HostChangeBoardEvent' ||
-        this.eventType === 'ParticipantChangeBoardEvent'
+        this.eventType === EventTypes.hostChangeBoardEvent ||
+        this.eventType === EventTypes.participantChangeBoardEvent
       ) {
         if ($event.board) {
           if ($event.board.currentValue.id === $event.board.previousValue.id) {

@@ -31,7 +31,7 @@ import {
   WhereDoYouStandChoice,
 } from './activities';
 import { Lesson, LessonRun, RunningTools } from './course_details';
-import { EventType } from './events';
+import { EventType, EventTypes } from './events';
 import { LessonRunNotification, Notification } from './notification';
 import { User } from './user';
 import { BuildAPitchBlank, FeedbackQuestion, MCQChoice, MCQQuestion } from './utils';
@@ -1003,14 +1003,14 @@ export class BrainstormEditInstructionEvent extends ActivityEvent {
   }
 }
 export class HostChangeBoardEvent extends ActivityEvent {
-  event_name = 'HostChangeBoardEvent';
+  event_name = EventTypes.hostChangeBoardEvent;
   constructor(board: number) {
     super();
     this.extra_args = { host_board: board };
   }
 }
 export class ParticipantChangeBoardEvent extends ActivityEvent {
-  event_name = 'ParticipantChangeBoardEvent';
+  event_name = EventTypes.participantChangeBoardEvent;
   constructor(board: number) {
     super();
     this.extra_args = { board: board };
@@ -1084,7 +1084,7 @@ export class BrainstormRemoveBoardEvent extends ActivityEvent {
   }
 }
 export class BrainstormToggleMeetingMode extends ActivityEvent {
-  event_name = 'BrainstormToggleMeetingMode';
+  event_name = EventTypes.brainstormToggleMeetingMode;
   constructor(val: boolean) {
     super();
     this.extra_args = { meeting_mode: val };

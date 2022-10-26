@@ -6,6 +6,7 @@ import {
   BoardTypes,
   BrainstormAddBoardEventBaseEvent,
   BrainstormToggleMeetingMode,
+  EventTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { openClose } from 'src/app/shared/util/animations';
@@ -39,8 +40,8 @@ export class AddControlsComponent implements OnInit, OnChanges {
     } else if (this.activityState.eventType === 'BrainstormRemoveBoardEvent') {
     } else if (this.activityState.eventType === 'GetUpdatedLessonDetailEvent') {
     }
-    if (this.activityState.eventType === 'HostChangeBoardEvent') {
-    } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
+    if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
+    } else if (this.activityState.eventType === EventTypes.brainstormToggleMeetingMode) {
       this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     } else {
     }

@@ -17,6 +17,7 @@ import {
   BrainstormToggleAllowHeartEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
+  EventTypes,
   SettingsTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -151,8 +152,8 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       }
     }
     if (this.navType === 'boards') {
-      if (this.activityState.eventType === 'HostChangeBoardEvent') {
-      } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
+      if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
+      } else if (this.activityState.eventType === EventTypes.brainstormToggleMeetingMode) {
         this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
       } else {
       }
