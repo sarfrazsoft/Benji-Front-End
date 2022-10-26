@@ -54,7 +54,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   timer: Timer;
   @Input() activityState: UpdateMessage;
   @Input() hideControls = false;
-  @Input() isEditor = false;
   @Input() disableControls: boolean;
   @Input() isSharing: boolean;
   @Input() isGroupingShowing: boolean;
@@ -103,6 +102,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   notificationList: Array<Notification | LessonRunNotification> = [];
   notificationCount = 0;
 
+  _activityState: UpdateMessage;
+
   constructor(
     public contextService: ContextService,
     private utilsService: UtilsService,
@@ -133,7 +134,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.hostname = 'https://' + this.hostname;
     }
     if (!this.roomCode) {
-      this.roomCode = this.activityState?.lesson_run?.lessonrun_code?.toString();
+      this.roomCode = this._activityState?.lesson_run?.lessonrun_code?.toString();
       this.shareParticipantLink = this.hostname + this.roomCode;
     }
 
@@ -151,12 +152,17 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    // if event is brainstormSubmitIdeaCommentEvent don't assign it to local
+    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this._activityState = this.activityState;
+    }
+
     if (this.activityState.eventType === EventTypes.joinEvent) {
       this.lessonName = this.activityState.lesson.lesson_name;
       this.loadParticipantCodes();
     }
 
-    if (this.activityState.eventType === 'NotificationEvent') {
+    if (this.activityState.eventType === EventTypes.notificationEvent) {
       this.notificationList = this.activityState.notifications;
       this.notificationsComponent.updateNotifications(this.notificationList);
     }
@@ -235,24 +241,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.socketMessage.emit(new JumpEvent($event));
   }
 
-  setCurrentActivityIndex(dropdownActivities) {
-    const currentActivityId = this.activityState[this.activityState.activity_type.toLowerCase()].activity_id;
-    dropdownActivities.forEach((act, i) => {
-      if (act.activity_id === currentActivityId) {
-        this.currentActivityIndex = i + 1;
-      }
-    });
-  }
-
-  openGroupingParticipantDialog() {
-    const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
-      panelClass: 'participant-grouping-dialog',
-      data: { activityState: this.activityState, participantCode: this.participantCode },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
-
   isActivitySettingsAllowed(activityState: UpdateMessage) {
     if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
       return true;
@@ -272,7 +260,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   loadParticipantCodes() {
     this.participantCodes.length = 0;
     const p = [];
-    this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+    this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
       p.push(participant.participant_code);
     });
     this.participantCodes = p;
@@ -303,7 +291,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (this.isHost) {
       this.router.navigate(['/dashboard/']);
     } else if (this.isParticipant) {
-      this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
         if (participant.participant_code === this.participantCode && participant?.user?.id) {
           this.router.navigate(['/dashboard/']);
         }
