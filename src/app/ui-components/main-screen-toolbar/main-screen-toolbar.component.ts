@@ -23,13 +23,12 @@ import {
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
+import { GroupingToolGroups, Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
-  BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
   EndShareEvent,
   GetUpdatedLessonDetailEvent,
@@ -58,22 +57,22 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   @Input() isSharing: boolean;
   @Input() isGroupingShowing: boolean;
   @Input() showHeader: boolean;
-  lesson;
+  @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
   @Input() participantCode: number;
   @Input() boardsMenuClosed: boolean;
+
+  lesson: Lesson;
+  roomCode: number;
 
   showTimer = false;
   currentActivityIndex;
 
   at: typeof ActivityTypes = ActivityTypes;
 
-  shareParticipantLink = '';
-  hostname = window.location.host + '/participant/join?link=';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
   activitySettingsAllowed = ActivitySettingsAllowed;
-  roomCode: string;
 
   openGroupAccess = false;
 
@@ -107,7 +106,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   constructor(
     public contextService: ContextService,
     private utilsService: UtilsService,
-    private sharingToolService: SharingToolService,
     private matDialog: MatDialog,
     private permissionsService: NgxPermissionsService,
     private router: Router
@@ -129,14 +127,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         this.showTimer = false;
       }
     });
-
-    if (!this.hostname.includes('localhost')) {
-      this.hostname = 'https://' + this.hostname;
-    }
-    if (!this.roomCode) {
-      this.roomCode = this._activityState?.lesson_run?.lessonrun_code?.toString();
-      this.shareParticipantLink = this.hostname + this.roomCode;
-    }
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       val ? (this.isParticipant = true) : (this.isParticipant = false);
@@ -160,6 +150,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (this.activityState.eventType === EventTypes.joinEvent) {
       this.lessonName = this.activityState.lesson.lesson_name;
       this.loadParticipantCodes();
+
+      this.lesson = this.activityState.lesson;
+      this.roomCode = this.activityState.lesson_run.lessonrun_code;
     }
 
     if (this.activityState.eventType === EventTypes.notificationEvent) {
@@ -260,14 +253,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   loadParticipantCodes() {
     this.participantCodes.length = 0;
     const p = [];
+
     this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-      p.push(participant.participant_code);
+      if (participant.is_active) {
+        p.push(participant.participant_code);
+      }
     });
     this.participantCodes = p;
-  }
-
-  copyLink(val: string) {
-    this.utilsService.copyToClipboard(val);
   }
 
   openSessionSettings() {

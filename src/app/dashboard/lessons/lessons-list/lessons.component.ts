@@ -1,22 +1,26 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContextService } from 'src/app/services';
-import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
-import { AdminService } from '../../admin-panel/services';
-import * as global from 'src/app/globals';
 import { orderBy } from 'lodash';
 import { Subject } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, MoveToFolderDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared';
+import * as global from 'src/app/globals';
+import { ContextService } from 'src/app/services';
 import { LessonInformation, NotificationTypes } from 'src/app/services/backend/schema';
-import { HttpClient } from '@angular/common/http';
-import { UtilsService } from 'src/app/services/utils.service';
+import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { Folder, LessonGroupService, MoveToFolderData } from 'src/app/services/lesson-group.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import {
+  ConfirmationDialogComponent,
+  DuplicateSessionDialogComponent,
+  MoveToFolderDialogComponent,
+  SessionSettingsDialogComponent,
+} from 'src/app/shared';
+import { AdminService } from '../../admin-panel/services';
 import { LessonListComponent } from './lesson-list/lesson-list.component';
 @Component({
   selector: 'benji-lessons-list',
   templateUrl: './lessons.component.html',
-
 })
 export class LessonsComponent implements OnInit {
   @ViewChild('lessonList', { static: false }) lessonListComponent: LessonListComponent;
@@ -89,10 +93,7 @@ export class LessonsComponent implements OnInit {
       if (notify === this.notificationTypes.DELETE) {
         this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
       } else if (notify === this.notificationTypes.DUPLICATE) {
-        this.utilsService.openSuccessNotification(
-          `Session successfully duplicated.`,
-          `close`
-        );
+        this.utilsService.openSuccessNotification(`Session successfully duplicated.`, `close`);
       }
     });
   }
@@ -157,7 +158,8 @@ export class LessonsComponent implements OnInit {
     // If inside a folder then first add to folder and then updateLessonRuns from there
     if (currentFolder) {
       this.addToFolder(currentFolder, lessonId);
-    } else { //if not in a folder
+    } else {
+      // if not in a folder
       this.updateLessonRuns(this.notificationTypes.DUPLICATE);
     }
   }
@@ -184,22 +186,22 @@ export class LessonsComponent implements OnInit {
           }
         });
     }, 500);
-
   }
 
   addToFolder(folderId: number, lessonId: number) {
-    // First fetch the folder details 
+    // First fetch the folder details
     this.lessonGroupService.getFolderDetails(folderId).subscribe((res) => {
-      const spacesIds = res.lesson.map(space => space.id);
+      const spacesIds = res.lesson.map((space) => space.id);
       // Then include the lessonId in the above folder
       spacesIds.push(lessonId);
-      this.lessonGroupService.updateFolder({ id: res.id, title: res.name, lessonsIds: spacesIds }).subscribe((res) => {
-        if (res) {
-          this.updateLessonRuns(this.notificationTypes.DUPLICATE);
-        }
-      });
+      this.lessonGroupService
+        .updateFolder({ id: res.id, title: res.name, lessonsIds: spacesIds })
+        .subscribe((res) => {
+          if (res) {
+            this.updateLessonRuns(this.notificationTypes.DUPLICATE);
+          }
+        });
     });
-
   }
 
   openSessionSettings(val: LessonInformation) {
@@ -221,7 +223,8 @@ export class LessonsComponent implements OnInit {
           if (val.index > -1) {
             this.lessonListComponent.updateLessonName(data.lesson_name, val.lessonRunCode);
           }
-          this.lessonRuns.find(item => item.lessonrun_code == val.lessonRunCode).lesson.lesson_name = data.lesson_name;
+          this.lessonRuns.find((item) => item.lessonrun_code === val.lessonRunCode).lesson.lesson_name =
+            data.lesson_name;
           this.adminService
             .updateLessonRunImage(
               val.lessonRunCode,
@@ -241,36 +244,35 @@ export class LessonsComponent implements OnInit {
   }
 
   moveToFolders(val: LessonInformation) {
-    this.lessonGroupService.getAllFolders()
-      .subscribe(
-        (data: Array<Folder>) => {
-          this.matDialog
-            .open(MoveToFolderDialogComponent, {
-              panelClass: 'move-to-folder-dialog',
-              data: {
-                lessonId: val.lessonId,
-                folders: data,
-                lessonFolders: val.lessonFolders,
-              },
-            })
-            .afterClosed()
-            .subscribe((folders: MoveToFolderData) => {
-              if (folders) {
-                val.lessonFolders = folders.lessonFolders;
-                this.lessonGroupService.bulkUpdateFolders(val.lessonId, folders.lessonFolders).subscribe(
-                  (data) => {
-                    if (!folders.lessonFolders.includes(this.contextService.selectedFolder)) {
-                      //This will cause the currently selected folder to update its lessons list
-                      this.resetSelectedFolder();
-                    }
-                  },
-                  (error) => console.log(error)
-                );
-              }
-            });
-        },
-        (error) => console.log(error)
-      );
+    this.lessonGroupService.getAllFolders().subscribe(
+      (data: Array<Folder>) => {
+        this.matDialog
+          .open(MoveToFolderDialogComponent, {
+            panelClass: 'move-to-folder-dialog',
+            data: {
+              lessonId: val.lessonId,
+              folders: data,
+              lessonFolders: val.lessonFolders,
+            },
+          })
+          .afterClosed()
+          .subscribe((folders: MoveToFolderData) => {
+            if (folders) {
+              val.lessonFolders = folders.lessonFolders;
+              this.lessonGroupService.bulkUpdateFolders(val.lessonId, folders.lessonFolders).subscribe(
+                (data) => {
+                  if (!folders.lessonFolders.includes(this.contextService.selectedFolder)) {
+                    // This will cause the currently selected folder to update its lessons list
+                    this.resetSelectedFolder();
+                  }
+                },
+                (error) => console.log(error)
+              );
+            }
+          });
+      },
+      (error) => console.log(error)
+    );
   }
 
   resetSelectedFolder() {

@@ -1,0 +1,68 @@
+<div class="standard-dialog" fxLayout="column">
+  <mat-dialog-content class="create-session">
+    <div fxLayout="column" fxLayoutGap="24px">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <h2 class="main-heading">
+          Share “{{ spaceTitle }}”
+        </h2>
+      </div>
+      <div class="settings-title">
+        Participants with access
+      </div>
+      <div class="members">
+        <div *ngFor="let person of data.participants" class="person">
+          <div fxLayout="row" fxLayoutAlign="space-between">
+            <div 
+              fxLayoutGap="8px"
+              fxLayout="row"
+              fxLayoutAlign="start center"
+              [ngClass]="{'space-bottom': !areCommentsAllowed}">
+                <benji-profile-pictures
+                  [name]="person.name"
+                  [showTooltip]="false"
+                  [size]="'medium'"
+                  [activityState]="activityState"
+                ></benji-profile-pictures>
+                <div fxLayout="column" fxLayoutGap="6px">
+                  <div class="name">{{ person.name }}</div>
+                  <div class="about" *ngIf="person.about">{{ person.about }}</div>
+                </div>
+            </div>          
+            <div class="role" fxLayout="row" fxLayoutGap="8px">
+              <div class="access">
+                {{ person.role }}
+              </div>
+              <mat-icon *ngIf="person.role != 'Host'" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{code: person.participant_code}">keyboard_arrow_down</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-menu #menu="matMenu" xPosition="before" class="active-lesson-menu">
+        <ng-template matMenuContent let-aliasMenuItems="code">
+          <button mat-menu-item (click)="bootParticipant(aliasMenuItems)" fxLayoutAlign="center center">
+            <span class="remove-access">Remove Access</span>
+          </button>
+        </ng-template>
+      </mat-menu>
+      <div 
+        benji-click-stop-propagation 
+        class="controls-container" 
+        fxLayout="row" 
+        fxLayoutAlign="space-between" 
+        fxLayoutGap="8px">
+        <div 
+          class="button border-color-primary primary-color copy-link" 
+          fxLayout="row" 
+          fxLayoutAlign="center center" 
+          fxLayoutGap="8px"
+          (click)="copyLink()">
+          <mat-icon>link</mat-icon>
+          <span>Copy Link</span>
+        </div>
+        <div class="button bg-primary-color white-color" fxLayoutAlign="center center" matDialogClose>
+          Done
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+</div>

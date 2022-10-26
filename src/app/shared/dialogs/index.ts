@@ -39,6 +39,7 @@ import { MCQFeedbackDialogComponent } from './mcq-feedback/mcq-feedback.dialog';
 import { ParticipantGroupingDialogComponent } from './participant-grouping-dialog/participant-grouping.dialog';
 import { ParticipantGroupingInfoDialogComponent } from './participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { SessionSettingsDialogComponent } from './session-settings-dialog/session-settings.dialog';
+import { ShareSpaceDialogComponent } from './share-space-dialog/share-space.dialog'
 import { TemplatesDialogComponent } from './templates-dialog/templates.dialog';
 import { NewFolderDialogComponent } from './new-folder-dialog/new-folder.dialog';
 import { MoveToFolderDialogComponent } from './move-to-folder-dialog/move-to-folder.dialog';
@@ -66,6 +67,7 @@ export const Dialogs = [
   ParticipantGroupingDialogComponent,
   ParticipantGroupingInfoDialogComponent,
   SessionSettingsDialogComponent,
+  ShareSpaceDialogComponent,
   NewFolderDialogComponent,
   MoveToFolderDialogComponent,
 ];
