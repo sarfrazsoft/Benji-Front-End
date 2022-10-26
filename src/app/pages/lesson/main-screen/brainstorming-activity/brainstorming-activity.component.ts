@@ -47,7 +47,8 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit
+{
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
@@ -188,11 +189,11 @@ export class MainScreenBrainstormingActivityComponent
     } else if (currentEventType === EventTypes.joinEvent) {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
-    } else if (currentEventType === 'HostChangeBoardEvent') {
+    } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
       this.hostChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
-    } else if (currentEventType === 'ParticipantChangeBoardEvent') {
+    } else if (currentEventType === EventTypes.participantChangeBoardEvent) {
       this.participantChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();

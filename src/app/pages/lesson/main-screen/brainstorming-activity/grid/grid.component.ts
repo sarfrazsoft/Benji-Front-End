@@ -20,6 +20,7 @@ import {
   Board,
   BoardSort,
   BrainstormActivity,
+  EventTypes,
   Idea,
   PostOrder,
   SetMetaDataBoardEvent,
@@ -137,8 +138,8 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
-        this.eventType === 'HostChangeBoardEvent' ||
-        this.eventType === 'ParticipantChangeBoardEvent'
+        this.eventType === EventTypes.hostChangeBoardEvent ||
+        this.eventType === EventTypes.participantChangeBoardEvent
       ) {
         if ($event.board) {
           if ($event.board.currentValue.id === $event.board.previousValue.id) {
@@ -160,7 +161,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
         this.postLayoutService.refreshGridLayout(this.grid, false);
-      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+      } else if (this.eventType === EventTypes.brainstormToggleMeetingMode) {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
           // take all users to new board

@@ -5,6 +5,7 @@ import {
   Board,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  EventTypes,
 } from 'src/app/services/backend/schema';
 
 @Component({
@@ -42,8 +43,8 @@ export class PageComponent implements OnInit, OnChanges {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);
     } else if (
-      this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'ParticipantChangeBoardEvent'
+      this.eventType === EventTypes.hostChangeBoardEvent ||
+      this.eventType === EventTypes.participantChangeBoardEvent
     ) {
       const sub_instructions = this.board.board_activity?.sub_instructions;
       this.setupPageContents(sub_instructions);

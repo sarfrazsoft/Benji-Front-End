@@ -20,7 +20,14 @@ import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormService } from 'src/app/services';
-import { Board, BrainstormSubmitEvent, Category, Idea, PostOrder } from 'src/app/services/backend/schema';
+import {
+  Board,
+  BrainstormSubmitEvent,
+  Category,
+  EventTypes,
+  Idea,
+  PostOrder,
+} from 'src/app/services/backend/schema';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ImagePickerDialogComponent } from 'src/app/shared/dialogs/image-picker-dialog/image-picker.dialog';
@@ -188,8 +195,8 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
-        this.eventType === 'HostChangeBoardEvent' ||
-        this.eventType === 'ParticipantChangeBoardEvent'
+        this.eventType === EventTypes.hostChangeBoardEvent ||
+        this.eventType === EventTypes.participantChangeBoardEvent
       ) {
         if ($event.board) {
           if ($event.board.currentValue.id === $event.board.previousValue.id) {
@@ -210,7 +217,7 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
         this.postLayoutService.refreshGridLayout(this.grid, false);
-      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+      } else if (this.eventType === EventTypes.brainstormToggleMeetingMode) {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
           // take all users to new board
