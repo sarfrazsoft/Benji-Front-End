@@ -201,6 +201,14 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
+    } else if (msg.eventtype === EventTypes.joinEvent) {
+      this.participantCode = this.setParticipantCode();
+      this.facilitatorConnected = true;
+      this.serverMessage = {
+        ...msg.updatemessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;
@@ -223,22 +231,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         }
       }
     } else if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
-      // if (this.serverMessage) {
-      //   const sMActivity_type = this.serverMessage.activity_type.toLowerCase();
-      //   const uMActivity_type = msg.updatemessage.activity_type.toLowerCase();
-      //   if (
-      //     this.serverMessage['brainstormactivity'].activity_id !==
-      //     msg.updatemessage['brainstormactivity'].activity_id
-      //   ) {
-      //     this.serverMessage = null;
-      //     this.ref.detectChanges();
-      //   }
-      // }
       this.facilitatorConnected = true;
-
-      // this.serverMessage = msg.updatemessage;
-      // this.serverMessage.eventType = msg.eventtype;
-
       this.serverMessage = {
         ...msg.updatemessage,
         eventType: msg.eventtype,
@@ -275,6 +268,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public getParticipantCode(): number {
+    console.log(this.participantCode);
     return this.participantCode;
   }
 

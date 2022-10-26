@@ -90,10 +90,12 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   }
 
   getParticipantBoard(): Board {
-    return this.brainstormService.getParticipantBoard(
-      this.activityState.brainstormactivity,
-      this.participantCode
-    );
+    if (this.participantCode) {
+      return this.brainstormService.getParticipantBoard(
+        this.activityState.brainstormactivity,
+        this.participantCode
+      );
+    }
   }
 
   navigateToBoard(boardId: number) {
