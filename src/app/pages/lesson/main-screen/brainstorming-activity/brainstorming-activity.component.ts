@@ -334,7 +334,6 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   changeBoardToParamsBoard(paramBoardId) {
-    console.log(paramBoardId);
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.selectedBoard = this.getAdminBoard();

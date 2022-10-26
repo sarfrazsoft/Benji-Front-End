@@ -8,6 +8,7 @@ import {
   Input,
   NgZone,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -66,7 +67,7 @@ import { environment } from 'src/environments/environment';
     ]),
   ],
 })
-export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit {
+export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() board: Board;
   @Input() item: Idea;
   @Input() category;
@@ -199,7 +200,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
 
     this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
       // Add the comment to the card
-      console.log(v);
       this.addComment();
     });
   }
