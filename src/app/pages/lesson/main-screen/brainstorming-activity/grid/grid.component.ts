@@ -75,6 +75,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
   }
 
   ngOnInit(): void {
+    this.layoutConfig.dragEnabled = this.isHost;
     this.postLayoutService.sendMessage$.subscribe((v) => {
       if (v) {
         this.sendMessage.emit(v);
