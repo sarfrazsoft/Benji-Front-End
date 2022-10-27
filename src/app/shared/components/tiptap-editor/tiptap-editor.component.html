@@ -1,6 +1,6 @@
 <tiptap-editor [editor]="editor"  [(ngModel)]="defaultValue"></tiptap-editor>
 
-<benji-bubble-menu [editor]="editor">
+<benji-bubble-menu [editor]="editor" *ngIf="editable">
   <div
     class="bubble-menu"
     fxLayout="row"
