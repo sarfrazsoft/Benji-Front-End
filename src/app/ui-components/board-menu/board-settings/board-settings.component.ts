@@ -162,10 +162,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     this.decideBoardMode(this.boardMode);
   }
 
-  getBoardsForAdmin() {
-    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-  }
-
   getBoardsForParticipant() {
     return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
   }

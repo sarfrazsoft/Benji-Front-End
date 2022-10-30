@@ -1,0 +1,65 @@
+
+.share-space-dialog {
+  .mat-dialog-container {
+    border-radius: 16px;
+    padding: 40px 40px 24px 40px;
+    width: 512px;
+    .mat-dialog-content {
+      max-height: 80vh;
+      .main-heding {
+        color: #37352f;
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .setting-title {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #37352F;
+      }
+      .members {
+        overflow: auto;
+        max-height: 55vh;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #E2E2E2;
+        .person {
+          margin-bottom: 16px;
+          .name {
+            font-size: 14px;
+            line-height: 14px;
+            font-weight: 500;
+            color: #37352f;
+          }
+          .about {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 12px;
+            color: #A6A6A6;
+          }
+        }
+        .role {
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 16px;
+          color: #55595E;
+          .material-icons {
+            cursor: pointer;
+            line-height: 0.7;
+          }
+        }
+      }
+      .button {
+        height: 40px;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+        padding: 0px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        &.copy-link {
+          border: 1px solid;
+        }
+      }
+    }
+  }
+}

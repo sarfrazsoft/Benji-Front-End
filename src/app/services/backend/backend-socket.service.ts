@@ -49,7 +49,10 @@ export class BackendSocketService {
     const w: WebSocketSubject<ServerMessage> = webSocket(webSocketSubjectConfig);
     w.subscribe(
       (data) => {},
-      (error) => console.log(error, moment()),
+      (error) => {
+        console.log(error);
+        console.log(moment.now());
+      },
       () => {
         console.log('complete');
       }
