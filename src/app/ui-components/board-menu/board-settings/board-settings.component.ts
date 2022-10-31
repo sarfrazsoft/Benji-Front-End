@@ -122,7 +122,9 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       this.meetingMode = meetingMode;
     });
 
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
+    this.brainstormService.hostBoard$.subscribe((hostBoard: number) => {
+      this.hostBoard = hostBoard;
+    });
 
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
@@ -157,7 +159,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
       }
     }
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
     this.decideBoardMode(this.boardMode);
   }
 

@@ -270,7 +270,28 @@ export class BrainstormService {
     callback(existingCategories);
   }
 
-  ideaCommented(act: Board, existingCategories, callback?) {
+  categorizedIdeaCommentAdded(
+    newComment: BrainstormSubmitIdeaCommentResponse,
+    existingCategories: Array<Category>
+  ) {
+    // we have existing categories and we have id of the idea
+    for (let i = 0; i < existingCategories.length; i++) {
+      const existingCategory: Category = existingCategories[i];
+      const existingIdea = find(existingCategory.brainstormidea_set, { id: newComment.brainstormidea_id });
+      if (existingIdea) {
+        existingIdea.comments.push({
+          comment: newComment.comment,
+          id: newComment.id,
+          participant: newComment.participant,
+          comment_hearts: [],
+          reply_comments: [],
+        });
+        break;
+      }
+    }
+  }
+
+  ideaCommented(act: Board, existingCategories: Array<Category>, callback?) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {

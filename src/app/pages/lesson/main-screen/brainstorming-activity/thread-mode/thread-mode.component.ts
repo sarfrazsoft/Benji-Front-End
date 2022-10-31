@@ -19,7 +19,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
 import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
-import { BrainstormService } from 'src/app/services';
+import { BrainstormEventService, BrainstormService } from 'src/app/services';
 import {
   Board,
   BrainstormSubmitEvent,
@@ -27,6 +27,7 @@ import {
   EventTypes,
   Idea,
   PostOrder,
+  UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -129,6 +130,7 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
     private utilsService: UtilsService,
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService,
+    private brainstormEventService: BrainstormEventService,
     private postLayoutService: PostLayoutService
   ) {
     super();
@@ -153,6 +155,15 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
         this.sendMessage.emit(v);
       }
     });
+
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+      // Add the comment to the card
+      if (this.board.id === v.event_msg.board_id) {
+        // the comment was added in the board
+        this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v.event_msg);
+        this.postLayoutService.refreshGridLayout(this.grid, false);
+      }
+    });
   }
 
   ngOnChanges($event: SimpleChanges) {
@@ -173,10 +184,7 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
           this.postLayoutService.sortGrid(this.board.sort, this.grid);
           this.postLayoutService.refreshGridLayout(this.grid, false);
         });
-      } else if (
-        this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
-        this.eventType === 'BrainstormRemoveIdeaCommentEvent'
-      ) {
+      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
