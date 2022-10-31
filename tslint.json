@@ -71,7 +71,8 @@
       }
     ],
     "unified-signatures": true,
-    "variable-name": false,
+    "variable-name": true,
+    "no-unused-variable": true,
     "whitespace": [
       true,
       "check-branch",

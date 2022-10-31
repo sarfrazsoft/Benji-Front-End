@@ -26,15 +26,51 @@ export class BrainstormService {
   set selectedBoard(l: any) {
     this.selectedBoard$.next(l);
   }
+
   get selectedBoard(): any {
     return this.selectedBoard$.getValue();
   }
+
+  get meetingMode(): boolean {
+    return this.meetingMode$.getValue();
+  }
+  set meetingMode(mode: boolean) {
+    this.meetingMode$.next(mode);
+  }
+
+  get hostBoard(): number {
+    return this.hostBoard$.getValue();
+  }
+  set hostBoard(h: number) {
+    this.hostBoard$.next(h);
+  }
+
+  get lessonName(): string {
+    return this.lessonName$.getValue();
+  }
+  set lessonName(mode: string) {
+    this.lessonName$.next(mode);
+  }
+
+  get lessonDescription(): string {
+    return this.lessonDescription$.getValue();
+  }
+  set lessonDescription(h: string) {
+    this.lessonDescription$.next(h);
+  }
+
   constructor() {}
   uncategorizedIdeas;
 
   saveIdea$ = new BehaviorSubject<any>(null);
 
   selectedBoard$ = new BehaviorSubject<any>(null);
+
+  meetingMode$ = new BehaviorSubject<boolean>(false);
+  hostBoard$ = new BehaviorSubject<number>(null);
+
+  lessonName$ = new BehaviorSubject<string>(null);
+  lessonDescription$ = new BehaviorSubject<string>(null);
 
   boardTitle$ = new BehaviorSubject<string>(null);
   set boardTitle(l: string) {
@@ -234,7 +270,28 @@ export class BrainstormService {
     callback(existingCategories);
   }
 
-  ideaCommented(act: Board, existingCategories, callback?) {
+  categorizedIdeaCommentAdded(
+    newComment: BrainstormSubmitIdeaCommentResponse,
+    existingCategories: Array<Category>
+  ) {
+    // we have existing categories and we have id of the idea
+    for (let i = 0; i < existingCategories.length; i++) {
+      const existingCategory: Category = existingCategories[i];
+      const existingIdea = find(existingCategory.brainstormidea_set, { id: newComment.brainstormidea_id });
+      if (existingIdea) {
+        existingIdea.comments.push({
+          comment: newComment.comment,
+          id: newComment.id,
+          participant: newComment.participant,
+          comment_hearts: [],
+          reply_comments: [],
+        });
+        break;
+      }
+    }
+  }
+
+  ideaCommented(act: Board, existingCategories: Array<Category>, callback?) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {

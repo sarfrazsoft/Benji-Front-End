@@ -118,9 +118,13 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       }
     });
 
-    this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
+    this.brainstormService.meetingMode$.subscribe((meetingMode: boolean) => {
+      this.meetingMode = meetingMode;
+    });
 
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
+    this.brainstormService.hostBoard$.subscribe((hostBoard: number) => {
+      this.hostBoard = hostBoard;
+    });
 
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
@@ -153,12 +157,8 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
-      } else if (this.activityState.eventType === EventTypes.brainstormToggleMeetingMode) {
-        this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
-      } else {
       }
     }
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
     this.decideBoardMode(this.boardMode);
   }
 

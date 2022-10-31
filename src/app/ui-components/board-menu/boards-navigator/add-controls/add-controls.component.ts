@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { ContextService } from 'src/app';
+import { BrainstormService, ContextService } from 'src/app';
 import {
   Board,
-  BoardStatus,
   BoardTypes,
   BrainstormAddBoardEventBaseEvent,
   BrainstormToggleMeetingMode,
@@ -29,23 +28,15 @@ export class AddControlsComponent implements OnInit, OnChanges {
   addBoardSrc = '/assets/img/side-nav/rectangles.svg';
   addPageSrc = '/assets/img/side-nav/paper.svg';
 
-  constructor(public contextService: ContextService) {}
+  constructor(public contextService: ContextService, private brainstormService: BrainstormService) {}
 
   ngOnInit(): void {
-    this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
+    this.brainstormService.meetingMode$.subscribe((meetingMode: boolean) => {
+      this.meetingMode = meetingMode;
+    });
   }
 
-  ngOnChanges(): void {
-    if (this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent') {
-    } else if (this.activityState.eventType === 'BrainstormRemoveBoardEvent') {
-    } else if (this.activityState.eventType === 'GetUpdatedLessonDetailEvent') {
-    }
-    if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
-    } else if (this.activityState.eventType === EventTypes.brainstormToggleMeetingMode) {
-      this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
-    } else {
-    }
-  }
+  ngOnChanges(): void {}
 
   addBoard(previousBoard: Board) {
     this.sendMessage.emit(

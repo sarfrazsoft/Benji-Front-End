@@ -188,6 +188,7 @@ export class MainScreenBrainstormingActivityComponent
     } else if (currentEventType === EventTypes.joinEvent) {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
+      this.updateLessonInfo();
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
       this.hostChangedBoard();
       this.changeBoardStatus();
@@ -210,6 +211,10 @@ export class MainScreenBrainstormingActivityComponent
     } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
       // update the data in service. no children components will fire ngonchanges
       this.brainstormEventService.ideaCommentEvent = this.activityState;
+    } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
+      this.updateMeetingMode();
+    } else if (this.activityState.eventType === EventTypes.getUpdatedLessonDetailEvent) {
+      this.updateLessonInfo();
     } else {
       this.selectUserBoard();
     }
@@ -243,6 +248,15 @@ export class MainScreenBrainstormingActivityComponent
     this.getBoardStatus(this.act, (status: BoardStatus) => {
       this.boardStatusService.boardStatus = status;
     });
+  }
+
+  updateMeetingMode() {
+    this.brainstormService.meetingMode = this.activityState.brainstormactivity.meeting_mode;
+  }
+
+  updateLessonInfo() {
+    this.brainstormService.lessonName = this.activityState.lesson.lesson_name;
+    this.brainstormService.lessonDescription = this.activityState.lesson.lesson_description;
   }
 
   hostChangedBoard() {
