@@ -157,7 +157,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
     if (this.activityState.eventType === EventTypes.notificationEvent) {
       this.notificationList = this.activityState.notifications;
-      this.notificationsComponent.updateNotifications(this.notificationList);
+      if (this.notificationsComponent) {
+        this.notificationsComponent.updateNotifications(this.notificationList);
+      }
     }
   }
 

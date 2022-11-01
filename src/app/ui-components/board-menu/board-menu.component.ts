@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BrainstormService } from 'src/app';
-import { Board, BoardTypes, SettingsTypes, UpdateMessage } from 'src/app/services/backend/schema';
+import { Board, BoardTypes, EventTypes, SettingsTypes, UpdateMessage } from 'src/app/services/backend/schema';
 import { isSet } from 'src/app/shared/util/value';
 
 @Component({
@@ -30,6 +30,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
 
   boardType: BoardTypes;
   boardTypes = BoardTypes;
+  oldActivityState: UpdateMessage;
 
   constructor(private brainstormService: BrainstormService) {}
 
@@ -51,7 +52,11 @@ export class BoardMenuComponent implements OnInit, OnChanges {
     this.allowedSettings = this.boardType === this.boardTypes.PAGE ? this.pageSetttings : this.boardSetttings;
   }
 
-  ngOnChanges(): void {}
+  ngOnChanges(): void {
+    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.oldActivityState = this.activityState;
+    }
+  }
 
   isSet(boardType) {
     return isSet(boardType);

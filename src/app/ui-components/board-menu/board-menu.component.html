@@ -1,6 +1,6 @@
 <ng-container *ngIf="navType=='boards'" >
   <benji-boards-navigator
-    [activityState]="activityState"
+    [activityState]="oldActivityState"
     [sidenav]="sidenav"
     [navType]="navType"
     (sendMessage)="sendMessage.emit($event)">

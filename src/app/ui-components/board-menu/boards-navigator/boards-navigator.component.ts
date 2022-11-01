@@ -85,6 +85,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     });
 
+    console.log('called from on init');
     this.initializeBoards();
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
