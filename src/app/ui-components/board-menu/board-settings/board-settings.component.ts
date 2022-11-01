@@ -81,10 +81,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   allowCommenting: boolean;
   allowHearting: boolean;
   board: Board;
-  boardMode: BoardMode;
-  gridMode: boolean;
-  threadMode: boolean;
-  columnsMode: boolean;
+
   currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
@@ -133,8 +130,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   selectedBoardChanged(board) {
     this.selectedBoard = board;
-    this.boardMode = this.selectedBoard.board_activity.mode;
-    this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.allowCommenting = this.selectedBoard.allow_comment;
     this.allowHearting = this.selectedBoard.allow_heart;
@@ -150,16 +145,11 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
       this.resetBoards();
-    } else if (this.activityState.eventType === 'BrainstormChangeModeEvent') {
-      if (this.selectedBoard && this.selectedBoard.board_activity.mode) {
-        this.decideBoardMode(this.selectedBoard.board_activity.mode);
-      }
     }
     if (this.navType === 'boards') {
       if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
       }
     }
-    this.decideBoardMode(this.boardMode);
   }
 
   getBoardsForParticipant() {
@@ -178,39 +168,14 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     this.sidenav.close();
   }
 
-  setBoardMode(mode: BoardMode) {
-    this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
-    this.decideBoardMode(mode);
-  }
-
-  decideBoardMode(mode: BoardMode): void {
-    this.boardMode = mode;
-    switch (mode) {
-      case 'grid':
-        this.gridMode = true;
-        this.threadMode = false;
-        this.columnsMode = false;
-        break;
-      case 'thread':
-        this.gridMode = false;
-        this.threadMode = true;
-        this.columnsMode = false;
-        break;
-      default:
-        this.gridMode = false;
-        this.threadMode = false;
-        this.columnsMode = true;
-    }
-  }
-
-  duplicateBoard() {}
-
   setBoardStatus() {
     const selected = this.currentboardStatus;
     this.sendMessage.emit(
       new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
     );
   }
+
+  duplicateBoard() {}
 
   toggleMeetingMode($event) {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));

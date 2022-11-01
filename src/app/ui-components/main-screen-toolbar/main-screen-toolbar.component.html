@@ -50,7 +50,7 @@
           <!--Share Lesson Link-->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
             <benji-share-lesson-link
-              [activityState]="activityState"
+              [activityState]="_activityState"
               [participantCode]="participantCode"
               [lesson]="lesson"
               [roomCode]="roomCode"
