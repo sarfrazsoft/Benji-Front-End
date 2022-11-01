@@ -2,9 +2,8 @@
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <div fxFlex class="benji-logo-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
       <!-- Activity board navigation -->
-      <ng-container *ngIf="(_activityState && _activityState.activity_type !== 'LobbyActivity')">
-        <div 
-          *ngIf="isActivitySettingsAllowed(_activityState)"
+      <ng-container>
+        <div
           class="boards-nav" 
           fxLayoutAlign="center center"
           matTooltip="Boards Navigation"
@@ -35,7 +34,7 @@
         </div>
       </ng-container>
     </div>
-    <ng-container *ngIf="(_activityState && _activityState.activity_type !== 'LobbyActivity')">
+    <ng-container>
       <div>
         <div fxLayout="row" fxLayoutGap="16px">
           <!-- circles with their initials-->
@@ -100,8 +99,7 @@
 
           <!-- Activity board settings -->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <div 
-              *ngIf="isActivitySettingsAllowed(_activityState)"
+            <div
               class="option" 
               (click)="openSettingsMenu()"
               fxLayoutAlign="center center"

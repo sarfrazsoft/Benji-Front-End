@@ -143,7 +143,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // if event is brainstormSubmitIdeaCommentEvent don't assign it to local
-    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+    if (this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+    } else {
       this._activityState = this.activityState;
     }
 
