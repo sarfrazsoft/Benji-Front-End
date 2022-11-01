@@ -82,7 +82,7 @@ export class ShareLinkComponent implements OnInit, OnChanges {
         });
       }
     });
-    if (this.shareLinkDialogRef) {
+    if (this.shareLinkDialogRef && this.shareLinkDialogRef.componentInstance) {
       this.shareLinkDialogRef.componentInstance.data.participants = this.participants;
     }
   }
