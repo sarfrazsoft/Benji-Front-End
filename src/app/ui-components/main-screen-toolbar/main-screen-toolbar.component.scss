@@ -65,11 +65,14 @@
       }
     }
   }
-  .share-link {
+  .tool-text {
     font-size: 14px;
     font-weight: 500;
     color: #616161;
     cursor: pointer;
+    &.share-link {
+      height: 32px;
+    }
   }
   .toolbar-initials-circles {
     .initials {
@@ -117,7 +120,7 @@
 
 @media (max-width: 750px) { 
   .mainscreen-toolbar {
-    .share-link, .timer, .groups, .toolbar-initials-circles {
+    .tool-text, .timer, .groups, .toolbar-initials-circles {
       display: none !important;
     }
     .back-next {

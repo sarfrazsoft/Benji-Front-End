@@ -1,22 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ContextService } from 'src/app/services';
-import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
-import { AdminService } from '../../admin-panel/services';
-import * as global from 'src/app/globals';
-import { orderBy, sortBy } from 'lodash';
-import { Subject } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent, DuplicateSessionDialogComponent, MoveToFolderDialogComponent, SessionSettingsDialogComponent } from 'src/app/shared';
-import { LessonInformation } from 'src/app/services/backend/schema';
 import { HttpClient } from '@angular/common/http';
-import { UtilsService } from 'src/app/services/utils.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { orderBy } from 'lodash';
+import { Subject } from 'rxjs';
+import * as global from 'src/app/globals';
+import { ContextService } from 'src/app/services';
+import { LessonInformation, NotificationTypes } from 'src/app/services/backend/schema';
+import { Lesson, SessionInformation } from 'src/app/services/backend/schema/course_details';
 import { Folder, LessonGroupService, MoveToFolderData } from 'src/app/services/lesson-group.service';
+import { UtilsService } from 'src/app/services/utils.service';
+import {
+  ConfirmationDialogComponent,
+  DuplicateSessionDialogComponent,
+  MoveToFolderDialogComponent,
+  SessionSettingsDialogComponent,
+} from 'src/app/shared';
+import { AdminService } from '../../admin-panel/services';
 import { LessonListComponent } from './lesson-list/lesson-list.component';
 @Component({
   selector: 'benji-lessons-list',
   templateUrl: './lessons.component.html',
-
 })
 export class LessonsComponent implements OnInit {
   @ViewChild('lessonList', { static: false }) lessonListComponent: LessonListComponent;
@@ -24,9 +28,11 @@ export class LessonsComponent implements OnInit {
   @Input() lessonRuns: Array<any> = [];
   @Input() isTemplates = false;
   @Input() layout;
-  @Output() openCreateSessionEvent = new EventEmitter();
+  @Output() openCreateSession = new EventEmitter();
+  @Output() setLessonRuns = new EventEmitter();
   eventsSubject: Subject<void> = new Subject<void>();
   folderLessonsIDs: Array<number> = [];
+  notificationTypes = NotificationTypes;
 
   edit(lesson, $event) {
     if (!this.isTemplates) {
@@ -76,14 +82,24 @@ export class LessonsComponent implements OnInit {
     });
   }
 
-  updateLessonsRuns() {
-    this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
-      this.lessonRuns = lessonsRuns;
+  updateLessonRuns(notify: NotificationTypes) {
+    this.adminService.getLessonRuns().subscribe((lessonRuns) => {
+      this.lessonRuns = lessonRuns;
+      // If inside a folder then the following code with update the folder lessons
+      if (this.contextService.selectedFolder) {
+        this.setLessonRuns.emit(this.lessonRuns);
+        this.resetSelectedFolder();
+      }
+      if (notify === this.notificationTypes.DELETE) {
+        this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
+      } else if (notify === this.notificationTypes.DUPLICATE) {
+        this.utilsService.openSuccessNotification(`Session successfully duplicated.`, `close`);
+      }
     });
   }
 
-  openCreateSession() {
-    this.openCreateSessionEvent.emit();
+  openCreateSessionDialog() {
+    this.openCreateSession.emit();
   }
 
   deleteSession(val: LessonInformation) {
@@ -101,9 +117,11 @@ export class LessonsComponent implements OnInit {
         if (res) {
           const request = global.apiRoot + '/course_details/lesson_run/' + val.lessonRunCode + '/';
           this.http.delete(request, {}).subscribe((response) => {
-            this.updateLessonsRuns();
+            if (response) {
+              // Get the new list of lessons runs excluded the lesson deleted
+              this.updateLessonRuns(this.notificationTypes.DELETE);
+            }
           });
-          this.utilsService.openSuccessNotification(`Lesson successfully deleted.`, `close`);
           this.lessonRuns = this.lessonRuns.filter((value) => {
             return value.lessonrun_code !== val.lessonRunCode;
           });
@@ -120,50 +138,70 @@ export class LessonsComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res[0] || res[1]) {
-          let duplicateDoardIdeas: Boolean;
-          res[1] ? (duplicateDoardIdeas = true) : (duplicateDoardIdeas = false);
-          let request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
+          let duplicateBoardIdeas: Boolean;
+          res[1] ? (duplicateBoardIdeas = true) : (duplicateBoardIdeas = false);
+          const request = global.apiRoot + '/course_details/lesson/' + val.lessonId + '/duplicate-session/';
           this.http.post(request, {}).subscribe((response: SessionInformation) => {
             if (response) {
-              request =
-                global.apiRoot +
-                '/course_details/lesson/' +
-                val.lessonId +
-                '/duplicate-session/' +
-                response.id +
-                '/boards/';
-              const interval = setInterval(() => {
-                // method to be executed;
-                this.http
-                  .post(request, { duplicate_board_ideas: duplicateDoardIdeas })
-                  .subscribe((sessionCreationResponse: any) => {
-                    console.log(sessionCreationResponse);
-                    if (sessionCreationResponse.detail) {
-                      if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
-                      } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
-                        clearInterval(interval);
-                        this.adminService.getLessonRuns().subscribe((lessonsRuns) => {
-                          this.lessonRuns = lessonsRuns;
-                          // this.getActiveSessions();
-                          this.updateLessonsRuns();
-                          this.utilsService.openSuccessNotification(
-                            `Session successfully duplicated.`,
-                            `close`
-                          );
-                        });
-                      }
-                    }
-                  });
-              }, 500);
-              // TODO // investigate nested subscribes and 500ms timeout
+              this.duplicateSessionBoards(val.lessonId, response.id, duplicateBoardIdeas);
+              this.getAllLessonRuns(response.lesson);
             } else {
               this.utilsService.openWarningNotification('Something went wrong.', '');
             }
           });
-        } else {
-          dialogRef.closed;
         }
       });
+  }
+
+  getAllLessonRuns(lessonId: number) {
+    const currentFolder = this.contextService.selectedFolder;
+    // If inside a folder then first add to folder and then updateLessonRuns from there
+    if (currentFolder) {
+      this.addToFolder(currentFolder, lessonId);
+    } else {
+      // if not in a folder
+      this.updateLessonRuns(this.notificationTypes.DUPLICATE);
+    }
+  }
+
+  duplicateSessionBoards(fromLessonId, toLessonId, duplicateBoardIdeas) {
+    const request =
+      global.apiRoot +
+      '/course_details/lesson/' +
+      fromLessonId +
+      '/duplicate-session/' +
+      toLessonId +
+      '/boards/';
+    const interval = setInterval(() => {
+      // TODO // investigate 500ms timeout
+      // method to be executed;
+      this.http
+        .post(request, { duplicate_board_ideas: duplicateBoardIdeas })
+        .subscribe((sessionCreationResponse: any) => {
+          if (sessionCreationResponse.detail) {
+            if (sessionCreationResponse.detail.includes('Brainstorm session is not created yet')) {
+            } else if (sessionCreationResponse.detail.includes('Boards are created successfully')) {
+              clearInterval(interval);
+            }
+          }
+        });
+    }, 500);
+  }
+
+  addToFolder(folderId: number, lessonId: number) {
+    // First fetch the folder details
+    this.lessonGroupService.getFolderDetails(folderId).subscribe((res) => {
+      const spacesIds = res.lesson.map((space) => space.id);
+      // Then include the lessonId in the above folder
+      spacesIds.push(lessonId);
+      this.lessonGroupService
+        .updateFolder({ id: res.id, title: res.name, lessonsIds: spacesIds })
+        .subscribe((res) => {
+          if (res) {
+            this.updateLessonRuns(this.notificationTypes.DUPLICATE);
+          }
+        });
+    });
   }
 
   openSessionSettings(val: LessonInformation) {
@@ -185,7 +223,8 @@ export class LessonsComponent implements OnInit {
           if (val.index > -1) {
             this.lessonListComponent.updateLessonName(data.lesson_name, val.lessonRunCode);
           }
-          this.lessonRuns.find(item => item.lessonrun_code == val.lessonRunCode).lesson.lesson_name = data.lesson_name;
+          this.lessonRuns.find((item) => item.lessonrun_code === val.lessonRunCode).lesson.lesson_name =
+            data.lesson_name;
           this.adminService
             .updateLessonRunImage(
               val.lessonRunCode,
@@ -196,7 +235,7 @@ export class LessonsComponent implements OnInit {
             )
             .subscribe(
               (data) => {
-                this.updateLessonsRuns();
+                this.updateLessonRuns(this.notificationTypes.NONE);
               },
               (error) => console.log(error)
             );
@@ -205,36 +244,38 @@ export class LessonsComponent implements OnInit {
   }
 
   moveToFolders(val: LessonInformation) {
-    this.lessonGroupService.getAllFolders()
-      .subscribe(
-        (data: Array<Folder>) => {
-          this.matDialog
-            .open(MoveToFolderDialogComponent, {
-              panelClass: 'move-to-folder-dialog',
-              data: {
-                lessonId: val.lessonId,
-                folders: data,
-                lessonFolders: val.lessonFolders,
-              },
-            })
-            .afterClosed()
-            .subscribe((folders: MoveToFolderData) => {
-              if (folders) {
-                val.lessonFolders = folders.lessonFolders;
-                this.lessonGroupService.bulkUpdateFolders(val.lessonId, folders.lessonFolders).subscribe(
-                  (data) => {
-                    if (!folders.lessonFolders.includes(this.contextService.selectedFolder)) {
-                      //This will cause the currently selected folder to update its lessons list
-                      this.contextService.selectedFolder = this.contextService.selectedFolder;
-                    }
-                  },
-                  (error) => console.log(error)
-                );
-              }
-            });
-        },
-        (error) => console.log(error)
-      );
+    this.lessonGroupService.getAllFolders().subscribe(
+      (data: Array<Folder>) => {
+        this.matDialog
+          .open(MoveToFolderDialogComponent, {
+            panelClass: 'move-to-folder-dialog',
+            data: {
+              lessonId: val.lessonId,
+              folders: data,
+              lessonFolders: val.lessonFolders,
+            },
+          })
+          .afterClosed()
+          .subscribe((folders: MoveToFolderData) => {
+            if (folders) {
+              val.lessonFolders = folders.lessonFolders;
+              this.lessonGroupService.bulkUpdateFolders(val.lessonId, folders.lessonFolders).subscribe(
+                (data) => {
+                  if (!folders.lessonFolders.includes(this.contextService.selectedFolder)) {
+                    // This will cause the currently selected folder to update its lessons list
+                    this.resetSelectedFolder();
+                  }
+                },
+                (error) => console.log(error)
+              );
+            }
+          });
+      },
+      (error) => console.log(error)
+    );
   }
 
+  resetSelectedFolder() {
+    this.contextService.selectedFolder = this.contextService.selectedFolder;
+  }
 }

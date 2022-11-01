@@ -8,6 +8,7 @@ import {
   Input,
   NgZone,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -19,7 +20,7 @@ import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { fromEvent } from 'rxjs';
-import { ActivitiesService, BrainstormService } from 'src/app/services/activities';
+import { ActivitiesService, BrainstormEventService, BrainstormService } from 'src/app/services/activities';
 import {
   Board,
   BoardStatus,
@@ -29,6 +30,7 @@ import {
   BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
   BrainstormSubmitIdeaHeartEvent,
+  EventTypes,
   Idea,
   QueryParamsObject,
   UpdateMessage,
@@ -65,7 +67,7 @@ import { environment } from 'src/environments/environment';
     ]),
   ],
 })
-export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit {
+export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() board: Board;
   @Input() item: Idea;
   @Input() category;
@@ -120,6 +122,8 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   userSubmittedSuccesfully = false;
   queryParamSubscription;
 
+  localActivityState: UpdateMessage;
+
   @ViewChild('iframeContainer') iframeContainer: ElementRef;
 
   constructor(
@@ -128,6 +132,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     private matDialog: MatDialog,
     private activitiesService: ActivitiesService,
     private brainstormService: BrainstormService,
+    private brainstormEventService: BrainstormEventService,
     private deviceService: DeviceDetectorService,
     private _ngZone: NgZone,
     private ngxPermissionsService: NgxPermissionsService,
@@ -138,6 +143,9 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   ) {}
 
   ngOnInit(): void {
+    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.localActivityState = this.activityState;
+    }
     // get parameters
     if (this.eventType !== 'BrainstormSetCategoryEvent') {
       this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
@@ -189,6 +197,11 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.videoAvailable = true;
       this.oldVideo = this.item.idea_video.id;
     }
+
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+      // Add the comment to the card
+      this.addComment();
+    });
   }
 
   ngOnDestroy() {
@@ -197,22 +210,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     }
   }
 
-  ngAfterViewInit() {
-    // const i = this.item.meta.iframe;
-    // if (i && i.iframeHTML && i.iframeHTML.length > 0) {
-    //   const el = this.iframeContainer;
-    // const iframex = el.nativeElement.getElementsByTagName('iframe')[0];
-    // fromEvent(iframex, 'load').subscribe(() => console.log('loaded'));
-    // el.nativeElement.onresize = () => {
-    //   console.log('iframe loaded');
-    //   this.viewChanged.emit();
-    // };
-    // el.nativeElement.getElementsByTagName('iframe')[0].onload = () => {
-    //   console.log('iframe loaded');
-    //   this.viewChanged.emit();
-    // };
-    // }
-  }
+  ngAfterViewInit() {}
 
   areCommentsAllowed() {
     return this.board.allow_comment;
@@ -234,38 +232,40 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
           }, 5);
         }
       }
-    } else if (this.eventType === 'BrainstormSubmitIdeaCommentEvent') {
-      if (this.ideaDetailedDialogRef) {
-        this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
-      }
-      if (this.userSubmittedComment) {
-        let existingComment = '';
-        if (this.ideaDetailedDialogRef) {
-          existingComment = this.brainstormService.getDraftComment(this.commentKey);
-          existingComment = existingComment.trim();
-        } else {
-          existingComment = this.commentModel;
-          existingComment = existingComment.trim();
-        }
-        this.item.comments.forEach((c) => {
-          existingComment = existingComment.trim();
-          if (
-            c.comment === existingComment &&
-            (c.participant === this.participantCode || !this.participantCode) &&
-            !this.userSubmittedSuccesfully
-          ) {
-            // there is a comment by this participant in the comments that is identical to commentModal
-            // safe to assume the comment is submitted
-            this.userSubmittedSuccesfully = true;
-            this.userSubmittedComment = false;
-            this.removeDraftComment();
+    }
+  }
 
-            if (this.ideaDetailedDialogRef) {
-              this.ideaDetailedDialogRef.componentInstance.ideaCommentSuccessfullySubmitted();
-            }
-          }
-        });
+  addComment() {
+    if (this.ideaDetailedDialogRef) {
+      this.ideaDetailedDialogRef.componentInstance.brainstormSubmitIdeaCommentEvent();
+    }
+    if (this.userSubmittedComment) {
+      let existingComment = '';
+      if (this.ideaDetailedDialogRef) {
+        existingComment = this.brainstormService.getDraftComment(this.commentKey);
+        existingComment = existingComment.trim();
+      } else {
+        existingComment = this.commentModel;
+        existingComment = existingComment.trim();
       }
+      this.item.comments.forEach((c) => {
+        existingComment = existingComment.trim();
+        if (
+          c.comment === existingComment &&
+          (c.participant === this.participantCode || !this.participantCode) &&
+          !this.userSubmittedSuccesfully
+        ) {
+          // there is a comment by this participant in the comments that is identical to commentModal
+          // safe to assume the comment is submitted
+          this.userSubmittedSuccesfully = true;
+          this.userSubmittedComment = false;
+          this.removeDraftComment();
+
+          if (this.ideaDetailedDialogRef) {
+            this.ideaDetailedDialogRef.componentInstance.ideaCommentSuccessfullySubmitted();
+          }
+        }
+      });
     }
   }
 
@@ -325,7 +325,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   }
 
   getParticipantName(code: number) {
-    return this.activitiesService.getParticipantName(this.activityState, code);
+    return this.activitiesService.getParticipantName(this.localActivityState, code);
   }
 
   submitComment(ideaId, val) {

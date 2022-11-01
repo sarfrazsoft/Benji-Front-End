@@ -15,12 +15,18 @@ import { iframely } from '@iframely/embed.js';
 import { cloneDeep, forOwn } from 'lodash';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { Observable } from 'rxjs';
-import { BrainstormService, ContextService, SharingToolService } from 'src/app/services';
+import {
+  BrainstormEventService,
+  BrainstormService,
+  ContextService,
+  SharingToolService,
+} from 'src/app/services';
 import {
   Board,
   BoardMode,
   BoardStatus,
   BrainstormActivity,
+  EventTypes,
   Group,
   HostChangeBoardEvent,
   Idea,
@@ -41,11 +47,11 @@ import { BaseActivityComponent } from '../../shared/base-activity.component';
 })
 export class MainScreenBrainstormingActivityComponent
   extends BaseActivityComponent
-  implements OnInit, OnChanges, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() peakBackState = false;
   @Input() activityStage: Observable<string>;
   @Output() firstLaunchEvent = new EventEmitter<string>();
+  _activityState: UpdateMessage;
   peakBackStage = null;
   showParticipantUI = false;
   showParticipantsGroupsDropdown = false;
@@ -58,6 +64,7 @@ export class MainScreenBrainstormingActivityComponent
     private contextService: ContextService,
     private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
+    private brainstormEventService: BrainstormEventService,
     private permissionsService: NgxPermissionsService,
     private boardStatusService: BoardStatusService,
     private topicMediaService: TopicMediaService,
@@ -142,7 +149,7 @@ export class MainScreenBrainstormingActivityComponent
     });
 
     this.changeBoardStatus();
-    this.onChanges();
+    this.title.setTitle(this.activityState?.lesson_run?.lesson?.lesson_name ?? 'Benji');
   }
 
   ngAfterViewInit(): void {
@@ -159,44 +166,62 @@ export class MainScreenBrainstormingActivityComponent
 
   ngOnChanges() {
     this.onChanges();
-    this.title.setTitle(this.activityState.lesson_run.lesson.lesson_name);
   }
 
   onChanges() {
-    this.eventType = this.getEventType();
     this.isHost = this.activityState.isHost;
+    const currentEventType = this.getEventType();
+    if (currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
+      this.eventType = currentEventType;
+      this._activityState = this.activityState;
+    }
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
     if (
-      this.eventType === 'BrainstormEditBoardInstruction' ||
-      this.eventType === 'BrainstormEditSubInstruction'
+      currentEventType === 'BrainstormEditBoardInstruction' ||
+      currentEventType === 'BrainstormEditSubInstruction'
     ) {
       this.selectUserBoard();
-    } else if (this.eventType === 'UpdatePromptVideoEvent') {
+    } else if (currentEventType === 'UpdatePromptVideoEvent') {
       this.updatePromptMedia();
-    } else if (this.eventType === 'JoinEvent') {
+    } else if (currentEventType === EventTypes.joinEvent) {
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
-    } else if (this.eventType === 'HostChangeBoardEvent') {
+      this.updateLessonInfo();
+    } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
       this.hostChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
-    } else if (this.eventType === 'ParticipantChangeBoardEvent') {
+    } else if (currentEventType === EventTypes.participantChangeBoardEvent) {
       this.participantChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
-    } else if (this.eventType === 'BrainstormChangeModeEvent') {
+    } else if (currentEventType === 'BrainstormChangeModeEvent') {
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
+        this.brainstormService.boardMode = this.boardMode;
       });
-    } else if (this.eventType === 'BrainstormChangeBoardStatusEvent') {
+    } else if (currentEventType === 'BrainstormChangeBoardStatusEvent') {
       this.changeBoardStatus();
       this.selectUserBoard();
-    } else if (this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent') {
+    } else if (currentEventType === 'BrainstormAddBoardEventBaseEvent') {
       if (this.isHost) {
         this.navigateToNewlyAddedBoard();
       }
-    } else {
+    } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+      // update the data in service. no children components will fire ngonchanges
+      this.brainstormEventService.ideaCommentEvent = this.activityState;
+    } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
+      this.updateMeetingMode();
+    } else if (this.activityState.eventType === EventTypes.getUpdatedLessonDetailEvent) {
+      this.updateLessonInfo();
+    }
+    // else if (this.activityState.eventType === EventTypes.brainstormChangeModeEvent) {
+    //   console.log('hi');
+    //   this.selectUserBoard();
+    // }
+    else {
       this.selectUserBoard();
     }
   }
@@ -229,6 +254,15 @@ export class MainScreenBrainstormingActivityComponent
     this.getBoardStatus(this.act, (status: BoardStatus) => {
       this.boardStatusService.boardStatus = status;
     });
+  }
+
+  updateMeetingMode() {
+    this.brainstormService.meetingMode = this.activityState.brainstormactivity.meeting_mode;
+  }
+
+  updateLessonInfo() {
+    this.brainstormService.lessonName = this.activityState.lesson.lesson_name;
+    this.brainstormService.lessonDescription = this.activityState.lesson.lesson_description;
   }
 
   hostChangedBoard() {

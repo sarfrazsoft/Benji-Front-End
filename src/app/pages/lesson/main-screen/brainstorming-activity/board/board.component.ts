@@ -38,6 +38,7 @@ import {
   BrainstormSubmitVideoEvent,
   BrainstormToggleCategoryModeEvent,
   Category,
+  EventTypes,
   Group,
   Idea,
   ResetGroupingEvent,
@@ -173,8 +174,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onChanges() {
-    const act = this.activityState.brainstormactivity;
-    this.act = cloneDeep(this.activityState.brainstormactivity);
     if (this.elementView && this.elementView.nativeElement) {
       this.headWrapperHeight = this.elementView.nativeElement.offsetHeight + 49;
     }
@@ -182,10 +181,13 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       this.eventType === 'BrainstormEditBoardInstruction' ||
       this.eventType === 'BrainstormEditSubInstruction'
     ) {
-    } else {
+      // don't do anything
+    } else if (this.eventType === EventTypes.joinEvent || EventTypes.brainstormToggleParticipantNameEvent) {
+      this.act = cloneDeep(this.activityState.brainstormactivity);
       this.joinedUsers = this.activityState.lesson_run.participant_set;
-
       this.showUserName = this.board.board_activity.show_participant_name_flag;
+    } else {
+      this.act = cloneDeep(this.activityState.brainstormactivity);
     }
   }
 
@@ -321,7 +323,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     //   return;
     // }
     // idea.idea_image when idea is being edited
-    console.log(idea);
     if (idea.imagesList || idea.selectedThirdPartyImageUrl || idea.idea_image) {
       this.submitImageNIdea(idea);
     } else if (idea.selectedpdfDoc) {
@@ -425,7 +426,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         maxSize: 500,
       })
       .then((resizedImage: Blob) => {
-        console.log(resizedImage);
         const formData: FormData = new FormData();
         formData.append('document', resizedImage, file.name);
         formData.append('participant_code', participant_code ? participant_code.toString() : '');

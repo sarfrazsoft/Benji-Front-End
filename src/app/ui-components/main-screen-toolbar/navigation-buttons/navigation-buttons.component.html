@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutGap="8px">
   <div 
     class="back-next"
-    [ngClass]="{'is-first': !isPreviousNavigableBoardAvailable()}"
+    [ngClass]="{'is-first': !_isPreviousNavigableBoardAvailable}"
     fxLayout="row" 
     fxLayoutGap="6px"
     fxLayoutAlign="center center"
@@ -11,7 +11,7 @@
   </div>
   <div 
     class="back-next"
-    [ngClass]="{'is-last': !isNextNavigableBoardAvailable()}"
+    [ngClass]="{'is-last': !_isNextNavigableBoardAvailable}"
     fxLayout="row" 
     fxLayoutGap="6px"
     fxLayoutAlign="center center"

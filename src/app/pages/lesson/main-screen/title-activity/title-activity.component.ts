@@ -31,9 +31,6 @@ export class MainScreenTitleActivityComponent extends BaseActivityComponent impl
 
   ngOnInit() {
     super.ngOnInit();
-    if (this.isLastActivity()) {
-      this.isEndSession = true;
-    }
     const act = this.activityState.titleactivity;
     this.loadVariables(act);
   }

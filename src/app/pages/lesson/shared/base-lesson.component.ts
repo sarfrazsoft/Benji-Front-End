@@ -10,6 +10,7 @@ import { BackendRestService } from 'src/app/services/backend/backend-rest.servic
 import { BackendSocketService } from 'src/app/services/backend/backend-socket.service';
 import {
   ActivityEvent,
+  EventTypes,
   ServerMessage,
   TeamUser,
   Timer,
@@ -34,6 +35,8 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   avgServerTimeOffset: number;
   facilitatorConnected = false;
   timer;
+
+  participantCode: number;
 
   constructor(
     protected deviceDetectorService: DeviceDetectorService,
@@ -118,10 +121,7 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  ngOnChanges() {
-    // this.timer = this.getTimerTool();
-    // console.log(this.timer);
-  }
+  ngOnChanges() {}
 
   ngOnDestroy() {}
 
@@ -188,36 +188,27 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   handleServerMessage(msg: ServerMessage) {
-    if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
-      if (this.serverMessage) {
-        const sMActivity_type = this.serverMessage.activity_type.toLowerCase();
-        const uMActivity_type = msg.updatemessage.activity_type.toLowerCase();
-        if (
-          this.serverMessage[sMActivity_type].activity_id !== msg.updatemessage[uMActivity_type].activity_id
-        ) {
-          this.serverMessage = null;
-          this.ref.detectChanges();
-        }
-      }
-      this.facilitatorConnected = true;
-
-      // this.serverMessage = msg.updatemessage;
-      // this.serverMessage.eventType = msg.eventtype;
-
-      this.serverMessage = {
-        ...msg.updatemessage,
-        eventType: msg.eventtype,
-        isHost: this.clientType === 'participant' ? false : true,
-      };
-    } else if (msg.eventtype === 'NotificationEvent') {
-      console.log(msg);
+    if (msg.eventtype === EventTypes.notificationEvent) {
       this.serverMessage = {
         ...this.serverMessage,
         notifications: msg.notifications,
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-      console.log(this.serverMessage);
+    } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.serverMessage = {
+        event_msg: msg.event_msg,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
+    } else if (msg.eventtype === EventTypes.joinEvent) {
+      this.participantCode = this.setParticipantCode();
+      this.facilitatorConnected = true;
+      this.serverMessage = {
+        ...msg.updatemessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     } else if (msg.clienterror !== null && msg.clienterror !== undefined) {
       // console.log(msg);
       const obj = msg.clienterror.error_detail;
@@ -239,7 +230,15 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
           this.facilitatorConnected = false;
         }
       }
+    } else if (msg.updatemessage !== null && msg.updatemessage !== undefined) {
+      this.facilitatorConnected = true;
+      this.serverMessage = {
+        ...msg.updatemessage,
+        eventType: msg.eventtype,
+        isHost: this.clientType === 'participant' ? false : true,
+      };
     }
+
     if (msg.messagetime !== null && msg.updatemessage !== undefined) {
       this.serverOffsets.push(msg.messagetime - Date.now());
       if (this.serverOffsets.length > 10) {
@@ -260,13 +259,6 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  isLastActivity() {
-    if (this.serverMessage) {
-      const activity_type = this.serverMessage.activity_type.toLowerCase();
-      return !this.serverMessage[activity_type].next_activity;
-    }
-  }
-
   public sendSocketMessage(evt: ActivityEvent) {
     this.socket.next(evt.toMessage());
   }
@@ -276,8 +268,12 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public getParticipantCode(): number {
+    return this.participantCode;
+  }
+
+  private setParticipantCode(): number {
     let details: Participant;
-    const lessonRunCode = this.serverMessage.lesson_run.lessonrun_code;
+    const lessonRunCode = this.roomCode;
     if (localStorage.getItem('participant_' + lessonRunCode)) {
       details = JSON.parse(localStorage.getItem('participant_' + lessonRunCode));
       return details.participant_code;

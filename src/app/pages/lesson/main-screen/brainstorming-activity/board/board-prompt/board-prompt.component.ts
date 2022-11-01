@@ -25,6 +25,7 @@ import {
   BrainstormActivity,
   BrainstormEditInstructionEvent,
   BrainstormEditSubInstructionEvent,
+  EventTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
@@ -165,9 +166,9 @@ export class BoardPromptComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     if (
-      this.eventType === 'HostChangeBoardEvent' ||
-      this.eventType === 'ParticipantChangeBoardEvent' ||
-      this.eventType === 'BrainstormToggleMeetingMode'
+      this.eventType === EventTypes.hostChangeBoardEvent ||
+      this.eventType === EventTypes.participantChangeBoardEvent ||
+      this.eventType === EventTypes.brainstormToggleMeetingMode
     ) {
       this.getNewBoardInstruction(this.board);
       this.getNewSubInstruction(this.board);

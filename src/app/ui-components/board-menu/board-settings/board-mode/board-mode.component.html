@@ -1,0 +1,48 @@
+<div fxLayout="column">
+  <div class="title">Board Mode</div>
+  <div 
+    class="board-mode" 
+    fxLayout="row" 
+    fxLayoutGap="12px"
+    (click)="setBoardMode('grid')">
+    <img src="../../../assets/img/side-nav/grid.svg"/>
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="label">Grid</div>
+      <div class="sub-label">A compact way to show many participant posts.</div>
+    </div>
+    <img
+      class="selected" 
+      [ngClass]="{'active': gridMode}" 
+      src="../../../assets/img/side-nav/selected.svg"/>
+  </div>
+  <div 
+    class="board-mode" 
+    fxLayout="row" 
+    fxLayoutGap="12px"
+    (click)="setBoardMode('thread')">
+    <img src="../../../assets/img/side-nav/thread.svg"/>
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="label">Thread</div>
+      <div class="sub-label">Display posts in a single thread like popular social feeds.</div>
+    </div>
+    <img
+      class="selected" 
+      [ngClass]="{'active': threadMode}" 
+      src="../../../assets/img/side-nav/selected.svg"/>
+  </div>
+  <div 
+    class="board-mode" 
+    fxLayout="row" 
+    fxLayoutGap="12px"
+    (click)="setBoardMode('columns')">
+    <img src="../../../assets/img/side-nav/columns.svg"/>
+    <div fxLayout="column" fxLayoutAlign="center start">
+      <div class="label">Columns</div>
+      <div class="sub-label">Organize submissions into categories.</div>
+    </div>
+    <img 
+      class="selected"
+      [ngClass]="{'active': columnsMode}" 
+      src="../../../assets/img/side-nav/selected.svg"/>
+  </div>
+</div>

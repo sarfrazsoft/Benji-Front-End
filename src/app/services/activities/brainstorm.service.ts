@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { cloneDeep, differenceBy, find, findIndex, forOwn, includes, orderBy, remove, sortBy } from 'lodash';
 import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { PostOrder } from 'src/app/pages/lesson/main-screen/brainstorming-activity/unsorted/unsorted.component';
 import { IdeaUserRole } from 'src/app/shared/components/idea-detailed/idea-detailed';
 import {
   Board,
   BoardStatus,
   BrainstormActivity,
+  BrainstormSubmitIdeaCommentResponse,
   Category,
   ColsCategoryChangeIdeaOrderInfo,
   Idea,
+  PostOrder,
 } from '../backend/schema';
 
 @Injectable()
@@ -25,15 +26,59 @@ export class BrainstormService {
   set selectedBoard(l: any) {
     this.selectedBoard$.next(l);
   }
+
   get selectedBoard(): any {
     return this.selectedBoard$.getValue();
   }
+
+  get meetingMode(): boolean {
+    return this.meetingMode$.getValue();
+  }
+  set meetingMode(mode: boolean) {
+    this.meetingMode$.next(mode);
+  }
+
+  get hostBoard(): number {
+    return this.hostBoard$.getValue();
+  }
+  set hostBoard(h: number) {
+    this.hostBoard$.next(h);
+  }
+
+  get lessonName(): string {
+    return this.lessonName$.getValue();
+  }
+  set lessonName(mode: string) {
+    this.lessonName$.next(mode);
+  }
+
+  get lessonDescription(): string {
+    return this.lessonDescription$.getValue();
+  }
+  set lessonDescription(h: string) {
+    this.lessonDescription$.next(h);
+  }
+
+  get boardMode(): string {
+    return this.boardMode$.getValue();
+  }
+  set boardMode(h: string) {
+    this.boardMode$.next(h);
+  }
+
   constructor() {}
   uncategorizedIdeas;
 
   saveIdea$ = new BehaviorSubject<any>(null);
 
   selectedBoard$ = new BehaviorSubject<any>(null);
+
+  meetingMode$ = new BehaviorSubject<boolean>(false);
+  hostBoard$ = new BehaviorSubject<number>(null);
+
+  lessonName$ = new BehaviorSubject<string>(null);
+  lessonDescription$ = new BehaviorSubject<string>(null);
+  boardMode$ = new BehaviorSubject<string>(null);
 
   boardTitle$ = new BehaviorSubject<string>(null);
   set boardTitle(l: string) {
@@ -233,7 +278,28 @@ export class BrainstormService {
     callback(existingCategories);
   }
 
-  ideaCommented(act: Board, existingCategories, callback?) {
+  categorizedIdeaCommentAdded(
+    newComment: BrainstormSubmitIdeaCommentResponse,
+    existingCategories: Array<Category>
+  ) {
+    // we have existing categories and we have id of the idea
+    for (let i = 0; i < existingCategories.length; i++) {
+      const existingCategory: Category = existingCategories[i];
+      const existingIdea = find(existingCategory.brainstormidea_set, { id: newComment.brainstormidea_id });
+      if (existingIdea) {
+        existingIdea.comments.push({
+          comment: newComment.comment,
+          id: newComment.id,
+          participant: newComment.participant,
+          comment_hearts: [],
+          reply_comments: [],
+        });
+        break;
+      }
+    }
+  }
+
+  ideaCommented(act: Board, existingCategories: Array<Category>, callback?) {
     act.brainstormcategory_set.forEach((category, categoryIndex) => {
       if (category.brainstormidea_set) {
         existingCategories.forEach((existingCategory) => {
@@ -400,8 +466,19 @@ export class BrainstormService {
     }
   }
 
-  uncategorizedIdeaCommented(board, existingIdeas: Array<Idea>) {
-    const newIdeas = this.uncategorizedPopulateIdeas(board);
+  uncategorizedIdeaCommentAdded(existingIdeas: Array<Idea>, newComment: BrainstormSubmitIdeaCommentResponse) {
+    const existingIdea = find(existingIdeas, { id: newComment.brainstormidea_id });
+    existingIdea.comments.push({
+      comment: newComment.comment,
+      id: newComment.id,
+      participant: newComment.participant,
+      comment_hearts: [],
+      reply_comments: [],
+    });
+  }
+
+  uncategorizedIdeaCommented(newboard, existingIdeas: Array<Idea>) {
+    const newIdeas = this.uncategorizedPopulateIdeas(newboard);
     newIdeas.forEach((newIdea: Idea) => {
       const existingIdea = find(existingIdeas, { id: newIdea.id });
       if (existingIdea.comments.length < newIdea.comments.length) {

@@ -8,20 +8,14 @@ import { NumberTimerComponent } from '../ui-components/number-timer/number-timer
 import { ParticipantTimerComponent } from '../ui-components/participant-timer/participant-timer.component';
 import { ParticipantToolbarComponent } from '../ui-components/participant-toolbar/participant-toolbar.component';
 import { RadialTimerComponent } from '../ui-components/radial-timer/radial-timer.component';
-import { NotificationsComponent } from './controls/notifications/notifications.component';
-import { ToolbarComponents } from './main-screen-toolbar';
-
-import { SnackBarComponent } from './snack-bar-component/snack-bar.component';
-
-import { ControlComponents } from './controls';
-
-import { SubmittedCounterComponent } from './submitted-counter/submitted-counter.component';
-
-import { BoardMenuComponent } from './board-menu/board-menu.component';
-import { BoardSettingsComponent } from './board-menu/board-settings/board-settings.component';
-import { TopicMediaComponent } from './board-menu/board-settings/topic-media/topic-media.component';
+import { BoardMenuComponents } from './board-menu';
 import { AddControlsComponent } from './board-menu/boards-navigator/add-controls/add-controls.component';
 import { BoardsNavigatorComponent } from './board-menu/boards-navigator/boards-navigator.component';
+import { ControlComponents } from './controls';
+import { NotificationsComponent } from './controls/notifications/notifications.component';
+import { ToolbarComponents } from './main-screen-toolbar';
+import { SnackBarComponent } from './snack-bar-component/snack-bar.component';
+import { SubmittedCounterComponent } from './submitted-counter/submitted-counter.component';
 
 export const UIComponents = [
   DynamicTimerComponent,
@@ -39,9 +33,7 @@ export const UIComponents = [
   ...ControlComponents,
   ...ToolbarComponents,
   SubmittedCounterComponent,
-  BoardMenuComponent,
-  TopicMediaComponent,
+  ...BoardMenuComponents,
   BoardsNavigatorComponent,
-  BoardSettingsComponent,
   AddControlsComponent,
 ];
