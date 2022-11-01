@@ -6,6 +6,7 @@ export type EventType =
   | 'HostChangeBoardEvent'
   | 'BrainstormToggleMeetingMode'
   | 'GetUpdatedLessonDetailEvent'
+  | 'BrainstormChangeModeEvent'
   | string;
 
 export enum EventTypes {
@@ -17,4 +18,5 @@ export enum EventTypes {
   hostChangeBoardEvent = 'HostChangeBoardEvent',
   brainstormToggleMeetingMode = 'BrainstormToggleMeetingMode',
   getUpdatedLessonDetailEvent = 'GetUpdatedLessonDetailEvent',
+  brainstormChangeModeEvent = 'BrainstormChangeModeEvent',
 }

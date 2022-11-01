@@ -59,6 +59,13 @@ export class BrainstormService {
     this.lessonDescription$.next(h);
   }
 
+  get boardMode(): string {
+    return this.boardMode$.getValue();
+  }
+  set boardMode(h: string) {
+    this.boardMode$.next(h);
+  }
+
   constructor() {}
   uncategorizedIdeas;
 
@@ -71,6 +78,7 @@ export class BrainstormService {
 
   lessonName$ = new BehaviorSubject<string>(null);
   lessonDescription$ = new BehaviorSubject<string>(null);
+  boardMode$ = new BehaviorSubject<string>(null);
 
   boardTitle$ = new BehaviorSubject<string>(null);
   set boardTitle(l: string) {

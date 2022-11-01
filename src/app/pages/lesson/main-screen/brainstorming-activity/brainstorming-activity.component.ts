@@ -200,6 +200,7 @@ export class MainScreenBrainstormingActivityComponent
     } else if (currentEventType === 'BrainstormChangeModeEvent') {
       this.getNewBoardMode(act, (mode) => {
         this.boardMode = mode;
+        this.brainstormService.boardMode = this.boardMode;
       });
     } else if (currentEventType === 'BrainstormChangeBoardStatusEvent') {
       this.changeBoardStatus();
@@ -215,7 +216,12 @@ export class MainScreenBrainstormingActivityComponent
       this.updateMeetingMode();
     } else if (this.activityState.eventType === EventTypes.getUpdatedLessonDetailEvent) {
       this.updateLessonInfo();
-    } else {
+    }
+    // else if (this.activityState.eventType === EventTypes.brainstormChangeModeEvent) {
+    //   console.log('hi');
+    //   this.selectUserBoard();
+    // }
+    else {
       this.selectUserBoard();
     }
   }

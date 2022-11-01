@@ -1,17 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { BoardsNavigationService, BrainstormService, ContextService } from 'src/app/services';
-import { Board, EventTypes, UpdateMessage } from 'src/app/services/backend/schema';
+import { EventTypes, UpdateMessage } from 'src/app/services/backend/schema';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
+import { BootParticipantEvent } from 'src/app/services/backend/schema/messages';
 import {
   ParticipantsData,
   ShareSpaceDialogComponent,
 } from 'src/app/shared/dialogs/share-space-dialog/share-space.dialog';
-import {
-  BootParticipantEvent,
-  HostChangeBoardEvent,
-  ParticipantChangeBoardEvent,
-} from '../../../services/backend/schema/messages';
 
 @Component({
   selector: 'benji-share-lesson-link',
@@ -29,6 +24,7 @@ export class ShareLinkComponent implements OnInit, OnChanges {
   shareParticipantLink = '';
   participants: Array<ParticipantsData>;
   shareLinkDialogRef: MatDialogRef<ShareSpaceDialogComponent>;
+  // oldActivityState: UpdateMessage;
 
   constructor(private matDialog: MatDialog) {}
 
@@ -40,6 +36,10 @@ export class ShareLinkComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    // // don't update activityState when idea comment is submitted
+    // if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+    //   this.oldActivityState = this.activityState;
+    // }
     if (this.activityState.eventType === EventTypes.joinEvent) {
       this.setParticipantsData();
     }
