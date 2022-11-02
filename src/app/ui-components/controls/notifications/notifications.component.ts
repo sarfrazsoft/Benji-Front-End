@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { BrainstormEventService } from 'src/app/services';
 import { UpdateMessage } from 'src/app/services/backend/schema';
 import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -23,6 +24,7 @@ export class NotificationsComponent implements OnInit {
 
   constructor(
     private notificationsService: NotificationService,
+    private brainstormEventService: BrainstormEventService,
     private router: Router,
     private utilsService: UtilsService
   ) {}
@@ -30,6 +32,14 @@ export class NotificationsComponent implements OnInit {
   ngOnInit() {
     // Get all notfications at the start
     this.loadNotifications();
+    if (this.isDashboard) {
+      this.brainstormEventService.notifications$.subscribe((notifications: Array<LessonRunNotification>) => {
+        if (notifications.length) {
+          this.notificationList = this.activityState.notifications;
+          this.updateNotifications(this.notificationList);
+        }
+      });
+    }
   }
 
   loadNotifications() {

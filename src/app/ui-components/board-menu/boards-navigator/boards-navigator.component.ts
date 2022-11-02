@@ -85,7 +85,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     });
 
-    console.log('called from on init');
     this.initializeBoards();
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
@@ -119,7 +118,8 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     }
     if (
       this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
-      this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent
+      this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent ||
+      this.activityState.eventType === EventTypes.notificationEvent
     ) {
     } else {
       this.initializeBoards();

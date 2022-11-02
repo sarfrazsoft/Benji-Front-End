@@ -171,7 +171,10 @@ export class MainScreenBrainstormingActivityComponent
   onChanges() {
     this.isHost = this.activityState.isHost;
     const currentEventType = this.getEventType();
-    if (currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+    if (
+      currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
+      currentEventType !== EventTypes.notificationEvent
+    ) {
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
       this._activityState = this.activityState;
@@ -214,14 +217,12 @@ export class MainScreenBrainstormingActivityComponent
       this.brainstormEventService.ideaCommentEvent = this.activityState;
     } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
       this.updateMeetingMode();
+      this.bringUsersToHostBoard();
     } else if (this.activityState.eventType === EventTypes.getUpdatedLessonDetailEvent) {
       this.updateLessonInfo();
-    }
-    // else if (this.activityState.eventType === EventTypes.brainstormChangeModeEvent) {
-    //   console.log('hi');
-    //   this.selectUserBoard();
-    // }
-    else {
+    } else if (this.activityState.eventType === EventTypes.notificationEvent) {
+      this.updateNotifications();
+    } else {
       this.selectUserBoard();
     }
   }
@@ -256,6 +257,14 @@ export class MainScreenBrainstormingActivityComponent
     });
   }
 
+  bringUsersToHostBoard() {
+    if (this.act.meeting_mode) {
+      this.selectedBoard = this.getAdminBoard();
+      this.brainstormService.selectedBoard = this.selectedBoard;
+      this.boardChangingQueryParams(this.selectedBoard.id);
+    }
+  }
+
   updateMeetingMode() {
     this.brainstormService.meetingMode = this.activityState.brainstormactivity.meeting_mode;
   }
@@ -263,6 +272,10 @@ export class MainScreenBrainstormingActivityComponent
   updateLessonInfo() {
     this.brainstormService.lessonName = this.activityState.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson.lesson_description;
+  }
+
+  updateNotifications() {
+    this.brainstormEventService.notifications = this.activityState?.notifications;
   }
 
   hostChangedBoard() {

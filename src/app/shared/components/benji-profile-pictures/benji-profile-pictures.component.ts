@@ -32,7 +32,7 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
       this.remainingCount = 0;
     }
 
-    if (this.activityState.eventType === EventTypes.joinEvent) {
+    if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
       // only update activity state when join event occurs
       this._activityState = this.activityState;
     }

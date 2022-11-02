@@ -82,6 +82,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   reason = '';
   counterAfter = 4;
+  shareParticipantLink = '';
 
   @Output() openSettingsMenuEvent = new EventEmitter();
   @Output() toggleBoardsMenuEvent = new EventEmitter();
@@ -98,10 +99,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   // nofications
   @ViewChild(NotificationsComponent) notificationsComponent: NotificationsComponent;
 
-  notificationList: Array<Notification | LessonRunNotification> = [];
+  // notificationList: Array<Notification | LessonRunNotification> = [];
   notificationCount = 0;
+  hostname = window.location.host + '/participant/join?link=';
 
   _activityState: UpdateMessage;
+  oldParticipantCode: number;
 
   constructor(
     public contextService: ContextService,
@@ -135,6 +138,11 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       val ? (this.isHost = true) : (this.isHost = false);
     });
+
+    this.shareParticipantLink = this.hostname + this.roomCode;
+    if (!this.hostname.includes('localhost')) {
+      this.hostname = 'https://' + this.hostname;
+    }
   }
 
   copyMessage(val: string) {
@@ -143,9 +151,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // if event is brainstormSubmitIdeaCommentEvent don't assign it to local
-    if (this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
+    if (
+      this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent ||
+      this.activityState.eventType === EventTypes.notificationEvent
+    ) {
     } else {
       this._activityState = this.activityState;
+      this.oldParticipantCode = this.participantCode;
     }
 
     if (this.activityState.eventType === EventTypes.joinEvent) {
@@ -156,12 +168,12 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       this.roomCode = this.activityState.lesson_run.lessonrun_code;
     }
 
-    if (this.activityState.eventType === EventTypes.notificationEvent) {
-      this.notificationList = this.activityState.notifications;
-      if (this.notificationsComponent) {
-        this.notificationsComponent.updateNotifications(this.notificationList);
-      }
-    }
+    // if (this.activityState.eventType === EventTypes.notificationEvent) {
+    //   this.notificationList = this.activityState.notifications;
+    //   if (this.notificationsComponent) {
+    //     this.notificationsComponent.updateNotifications(this.notificationList);
+    //   }
+    // }
   }
 
   updateNotificationCount(count: number): void {
@@ -310,5 +322,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         return true;
       }
     }
+  }
+
+  copyLink() {
+    this.utilsService.copyToClipboard(this.shareParticipantLink);
   }
 }

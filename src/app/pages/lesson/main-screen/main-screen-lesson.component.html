@@ -2,7 +2,7 @@
       
   <benji-main-screen-toolbar 
     [activityState]="serverMessage"
-    *ngIf="isConnected() && serverMessage && navType==='boards'"
+    *ngIf="isConnected() && serverMessage"
     [showHeader]="getActivityType() !== at.lobby"
     [disableControls]="disableControls"
     [participantCode]="getParticipantCode()"
@@ -36,7 +36,7 @@
 
     <div class="ms-fullheight-container" [ngClass]="{'boards-menu-opened': !boardsMenuClosed}">
 
-      <benji-main-screen-toolbar 
+      <!-- <benji-main-screen-toolbar 
         [activityState]="serverMessage"
         *ngIf="isConnected() && serverMessage && navType!=='boards'"
         [showHeader]="getActivityType() !== at.lobby"
@@ -46,7 +46,7 @@
         (openSettingsMenuEvent)="openSettingsMenu()"
         (toggleBoardsMenuEvent)="toggleBoardsMenu()"
         [boardsMenuClosed]="boardsMenuClosed"
-      ></benji-main-screen-toolbar>
+      ></benji-main-screen-toolbar> -->
 
       <div
         *ngIf="isConnected() && serverMessage"

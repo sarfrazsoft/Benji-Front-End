@@ -32,7 +32,7 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  ngOnChanges() {
+  ngOnChanges(changes) {
     if (this.activityState?.brainstormactivity?.boards) {
       this.allBoards = this.activityState.brainstormactivity.boards;
     }
@@ -42,6 +42,8 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
     if (this.activityState?.isHost) {
       this.isHost = this.activityState.isHost;
     }
+
+    console.log(changes);
 
     if (
       this.activityState.eventType === EventTypes.joinEvent ||

@@ -143,9 +143,6 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   ) {}
 
   ngOnInit(): void {
-    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
-      this.localActivityState = this.activityState;
-    }
     // get parameters
     if (this.eventType !== 'BrainstormSetCategoryEvent') {
       this.queryParamSubscription = this.activatedRoute.queryParams.subscribe((p: QueryParamsObject) => {
@@ -232,6 +229,13 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
           }, 5);
         }
       }
+    }
+
+    if (
+      this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
+      this.activityState.eventType !== EventTypes.notificationEvent
+    ) {
+      this.localActivityState = this.activityState;
     }
   }
 
