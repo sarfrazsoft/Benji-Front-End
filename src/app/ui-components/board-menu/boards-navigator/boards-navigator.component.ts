@@ -132,14 +132,14 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   initializeBoards() {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        const unSortedBoards: Array<Board> = this.getBoardsForAdmin();
+        const unSortedBoards: Array<Board> = this.getBoards();
         this.sortBoards(unSortedBoards);
       }
     });
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const unSortedBoards: Array<Board> = this.getBoardsForParticipant();
+        const unSortedBoards: Array<Board> = this.getBoards();
         this.sortBoards(unSortedBoards);
       }
     });
@@ -168,11 +168,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.boards = boards;
   }
 
-  getBoardsForAdmin() {
-    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-  }
-
-  getBoardsForParticipant() {
+  getBoards() {
     return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
   }
 

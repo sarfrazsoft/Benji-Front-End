@@ -3,7 +3,6 @@
   <benji-main-screen-toolbar 
     [activityState]="serverMessage"
     *ngIf="isConnected() && serverMessage"
-    [showHeader]="getActivityType() !== at.lobby"
     [disableControls]="disableControls"
     [participantCode]="getParticipantCode()"
     (socketMessage)="sendSocketMessage($event)"
@@ -25,7 +24,8 @@
         [sidenav]="sidenav" 
         [navType]="navType"
         [activityState]="serverMessage"
-        (sendMessage)="sendSocketMessage($event)">
+        (sendMessage)="sendSocketMessage($event)"
+        (settingsNavClosed)="nullNavVars()">
       </benji-board-menu>
   </mat-sidenav>
 
@@ -39,7 +39,6 @@
       <!-- <benji-main-screen-toolbar 
         [activityState]="serverMessage"
         *ngIf="isConnected() && serverMessage && navType!=='boards'"
-        [showHeader]="getActivityType() !== at.lobby"
         [disableControls]="disableControls"
         [participantCode]="getParticipantCode()"
         (socketMessage)="sendSocketMessage($event)"

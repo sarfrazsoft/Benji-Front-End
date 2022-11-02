@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  HostListener,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -140,5 +134,4 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
       this.contextService.sideNavAction = 'closed';
     }
   }
-
 }

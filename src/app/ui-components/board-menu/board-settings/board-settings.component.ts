@@ -37,6 +37,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   @Input() allowedSettings: Array<SettingsTypes> = [];
 
   @Output() sendMessage = new EventEmitter<any>();
+  @Output() settingsNavClosed = new EventEmitter<any>();
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
       value: 'newest_to_oldest',
@@ -166,6 +167,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   closeNav() {
     this.sidenav.close();
+    this.settingsNavClosed.emit();
   }
 
   setBoardStatus() {

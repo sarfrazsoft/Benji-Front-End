@@ -43,8 +43,6 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
       this.isHost = this.activityState.isHost;
     }
 
-    console.log(changes);
-
     if (
       this.activityState.eventType === EventTypes.joinEvent ||
       this.activityState.eventType === EventTypes.participantChangeBoardEvent ||

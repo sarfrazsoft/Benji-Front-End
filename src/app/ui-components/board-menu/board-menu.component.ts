@@ -13,6 +13,7 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   @Input() sidenav: MatSidenav;
   @Input() navType: string;
   @Output() sendMessage = new EventEmitter<any>();
+  @Output() settingsNavClosed = new EventEmitter<any>();
 
   allowedSettings: Array<SettingsTypes> = [];
   boardSetttings: Array<SettingsTypes> = [
@@ -53,7 +54,10 @@ export class BoardMenuComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+    if (
+      this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
+      this.activityState.eventType !== EventTypes.notificationEvent
+    ) {
       this.oldActivityState = this.activityState;
     }
   }

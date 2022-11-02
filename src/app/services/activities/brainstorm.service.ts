@@ -65,28 +65,23 @@ export class BrainstormService {
   set boardMode(h: string) {
     this.boardMode$.next(h);
   }
-
-  constructor() {}
-  uncategorizedIdeas;
-
-  saveIdea$ = new BehaviorSubject<any>(null);
-
-  selectedBoard$ = new BehaviorSubject<any>(null);
-
-  meetingMode$ = new BehaviorSubject<boolean>(false);
-  hostBoard$ = new BehaviorSubject<number>(null);
-
-  lessonName$ = new BehaviorSubject<string>(null);
-  lessonDescription$ = new BehaviorSubject<string>(null);
-  boardMode$ = new BehaviorSubject<string>(null);
-
-  boardTitle$ = new BehaviorSubject<string>(null);
   set boardTitle(l: string) {
     this.boardTitle$.next(l);
   }
   get boardTitle(): string {
     return this.boardTitle$.getValue();
   }
+
+  constructor() {}
+  uncategorizedIdeas;
+  saveIdea$ = new BehaviorSubject<any>(null);
+  selectedBoard$ = new BehaviorSubject<any>(null);
+  meetingMode$ = new BehaviorSubject<boolean>(false);
+  hostBoard$ = new BehaviorSubject<number>(null);
+  lessonName$ = new BehaviorSubject<string>(null);
+  lessonDescription$ = new BehaviorSubject<string>(null);
+  boardMode$ = new BehaviorSubject<string>(null);
+  boardTitle$ = new BehaviorSubject<string>(null);
 
   boardInstructions$ = new BehaviorSubject<string>(null);
   set boardInstructions(l: string) {
