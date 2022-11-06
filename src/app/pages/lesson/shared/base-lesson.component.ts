@@ -195,12 +195,24 @@ export class BaseLessonComponent implements OnInit, OnDestroy, OnChanges {
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
-    } else if (msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent) {
+    } else if (
+      msg.eventtype === EventTypes.brainstormSubmitIdeaCommentEvent ||
+      msg.eventtype === EventTypes.hostChangeBoardEvent ||
+      msg.eventtype === EventTypes.participantChangeBoardEvent
+    ) {
       this.serverMessage = {
         event_msg: msg.event_msg,
         eventType: msg.eventtype,
         isHost: this.clientType === 'participant' ? false : true,
       };
+
+      // this.serverMessage = {
+      //   eventType: 'HostChangeBoardEvent',
+      //   event_msg: {
+      //     host_board: 2537,
+      //   },
+      //   isHost: this.clientType === 'participant' ? false : true,
+      // };
     } else if (msg.eventtype === EventTypes.joinEvent) {
       this.participantCode = this.setParticipantCode();
       this.facilitatorConnected = true;

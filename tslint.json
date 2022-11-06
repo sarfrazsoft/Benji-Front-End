@@ -71,7 +71,7 @@
       }
     ],
     "unified-signatures": true,
-    "variable-name": true,
+    "variable-name": false,
     "no-unused-variable": true,
     "whitespace": [
       true,

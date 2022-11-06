@@ -70,7 +70,10 @@ export interface UpdateMessage {
   wheredoyoustandactivity?: WhereDoYouStandActivity;
   triadgroupingactivity?: TriadGroupingActivity;
 
-  event_msg?: BrainstormSubmitIdeaCommentResponse;
+  event_msg?:
+    | BrainstormSubmitIdeaCommentResponse
+    | ParticipantChangeBoardResponse
+    | HostChangeBoardEventResponse;
 }
 
 export interface ClientError {
@@ -99,7 +102,10 @@ export interface ServerMessage {
   servernotification?: ServerNotification;
   notifications?: Array<LessonRunNotification>;
   eventtype: string | 'NotificationEvent';
-  event_msg?: BrainstormSubmitIdeaCommentResponse;
+  event_msg?:
+    | BrainstormSubmitIdeaCommentResponse
+    | ParticipantChangeBoardResponse
+    | HostChangeBoardEventResponse;
 }
 
 export interface QueryParamsObject {
@@ -594,6 +600,12 @@ export class BrainstormSubmitIdeaCommentResponse {
   comment: string;
   id: number;
   participant: any;
+}
+export class ParticipantChangeBoardResponse {
+  board_id: number;
+}
+export class HostChangeBoardEventResponse {
+  host_board: number;
 }
 
 export class BrainstormRemoveIdeaCommentEvent extends ActivityEvent {

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Subject } from 'rxjs/internal/Subject';
-import { UpdateMessage } from '../backend/schema';
+import { BrainstormSubmitIdeaCommentResponse, UpdateMessage } from '../backend/schema';
 import { LessonRunNotification } from '../backend/schema/notification';
 
 @Injectable()
 export class BrainstormEventService {
-  set ideaCommentEvent(l: UpdateMessage) {
+  set ideaCommentEvent(l: BrainstormSubmitIdeaCommentResponse) {
     this.ideaCommentEvent$.next(l);
   }
 
@@ -16,7 +16,7 @@ export class BrainstormEventService {
 
   constructor() {}
 
-  ideaCommentEvent$ = new Subject<UpdateMessage>();
+  ideaCommentEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
 
   notifications$ = new BehaviorSubject<Array<LessonRunNotification>>(null);
 }

@@ -29,6 +29,7 @@ import {
   BrainstormRemoveIdeaHeartEvent,
   BrainstormRemoveIdeaPinEvent,
   BrainstormSubmitIdeaCommentEvent,
+  BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartEvent,
   EventTypes,
   Idea,
@@ -195,7 +196,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.oldVideo = this.item.idea_video.id;
     }
 
-    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
       // Add the comment to the card
       this.addComment();
     });

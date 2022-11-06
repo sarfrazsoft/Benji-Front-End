@@ -26,6 +26,7 @@ import {
   BoardMode,
   BoardStatus,
   BrainstormActivity,
+  BrainstormSubmitIdeaCommentResponse,
   EventTypes,
   Group,
   HostChangeBoardEvent,
@@ -173,7 +174,9 @@ export class MainScreenBrainstormingActivityComponent
     const currentEventType = this.getEventType();
     if (
       currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
-      currentEventType !== EventTypes.notificationEvent
+      currentEventType !== EventTypes.notificationEvent &&
+      currentEventType !== EventTypes.hostChangeBoardEvent &&
+      currentEventType !== EventTypes.participantChangeBoardEvent
     ) {
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
@@ -214,7 +217,8 @@ export class MainScreenBrainstormingActivityComponent
       }
     } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
       // update the data in service. no children components will fire ngonchanges
-      this.brainstormEventService.ideaCommentEvent = this.activityState;
+      this.brainstormEventService.ideaCommentEvent = this.activityState
+        .event_msg as BrainstormSubmitIdeaCommentResponse;
     } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
       this.updateMeetingMode();
       this.bringUsersToHostBoard();
@@ -289,7 +293,10 @@ export class MainScreenBrainstormingActivityComponent
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         if (this.act.meeting_mode) {
-          this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+          this.selectedBoard = this.brainstormService.getParticipantBoard(
+            this._activityState.brainstormactivity,
+            this.participantCode
+          );
           this.brainstormService.selectedBoard = this.selectedBoard;
           this.boardChangingQueryParams(this.selectedBoard.id);
         }
@@ -300,7 +307,10 @@ export class MainScreenBrainstormingActivityComponent
   participantChangedBoard() {
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        this.selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
       }
@@ -316,7 +326,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const board = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const board = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         this.topicMediaService.topicMedia = board.prompt_video;
       }
     });
@@ -339,7 +352,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const board = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const board = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         this.brainstormService.boardTitle = board.board_activity.instructions;
         this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
       }
@@ -356,7 +372,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         if (selectedBoard) {
           this.selectedBoard = selectedBoard;
           this.brainstormService.selectedBoard = this.selectedBoard;
@@ -380,7 +399,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        this.selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         if (this.selectedBoard.id === paramBoardId) {
           // we're on the right board
         } else {
@@ -393,9 +415,9 @@ export class MainScreenBrainstormingActivityComponent
 
   getAdminBoard() {
     let selectedBoard: Board;
-    const hostBoardID = this.act.host_board;
+    const hostBoardID = this._activityState.brainstormactivity.host_board;
     if (hostBoardID) {
-      this.act.boards.forEach((v) => {
+      this._activityState.brainstormactivity.boards.forEach((v) => {
         if (hostBoardID === v.id) {
           selectedBoard = v;
         }
@@ -415,7 +437,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        this.selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         mode = this.selectedBoard.board_activity.mode;
         onSuccess(mode);
       }
@@ -431,7 +456,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const board = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const board = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         onSuccess(board.status);
       }
     });
