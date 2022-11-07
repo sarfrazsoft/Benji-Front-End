@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { BoardsNavigationService, BrainstormService, ContextService } from 'src/app/services';
+import {
+  BoardsNavigationService,
+  BrainstormEventService,
+  BrainstormService,
+  ContextService,
+} from 'src/app/services';
 import { Board, EventTypes, UpdateMessage } from 'src/app/services/backend/schema';
 import { HostChangeBoardEvent, ParticipantChangeBoardEvent } from '../../../services/backend/schema/messages';
 
@@ -19,7 +24,8 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   isParticipant: boolean;
 
   allBoards: Array<Board> = [];
-  hostBoardId;
+  hostBoardId: number;
+  participantBoardId: number;
 
   _isNextNavigableBoardAvailable = false;
   _isPreviousNavigableBoardAvailable = false;
@@ -27,10 +33,26 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   constructor(
     public contextService: ContextService,
     private brainstormService: BrainstormService,
+    private brainstormEventService: BrainstormEventService,
     private boardsNavigationService: BoardsNavigationService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.brainstormEventService.hostBoardId$.subscribe((hostBoardId: number) => {
+      if (hostBoardId) {
+        this.hostBoardId = hostBoardId;
+        this.setUpNavigationButtons();
+      }
+    });
+
+    this.brainstormEventService.participantBoardId$.subscribe((participantBoardId: number) => {
+      if (participantBoardId) {
+        this.participantBoardId = participantBoardId;
+        this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
+        this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+      }
+    });
+  }
 
   ngOnChanges(changes) {
     if (this.activityState?.brainstormactivity?.boards) {
@@ -49,9 +71,13 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
       this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
       this.activityState.eventType === EventTypes.brainstormToggleMeetingMode
     ) {
-      this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
-      this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+      this.setUpNavigationButtons();
     }
+  }
+
+  setUpNavigationButtons() {
+    this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
+    this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
   }
 
   propagate($event) {

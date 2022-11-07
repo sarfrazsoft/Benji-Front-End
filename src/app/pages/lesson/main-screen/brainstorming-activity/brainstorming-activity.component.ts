@@ -30,8 +30,10 @@ import {
   EventTypes,
   Group,
   HostChangeBoardEvent,
+  HostChangeBoardEventResponse,
   Idea,
   ParticipantChangeBoardEvent,
+  ParticipantChangeBoardResponse,
   QueryParamsObject,
   Timer,
   UpdateMessage,
@@ -181,6 +183,8 @@ export class MainScreenBrainstormingActivityComponent
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
       this._activityState = this.activityState;
+      // update available activity state when it is none of above events
+      this.brainstormEventService.activityState = this._activityState;
     }
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
@@ -196,6 +200,7 @@ export class MainScreenBrainstormingActivityComponent
       this.selectUserBoard();
       this.updateLessonInfo();
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
+      this.eventType = currentEventType;
       this.hostChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
@@ -276,7 +281,7 @@ export class MainScreenBrainstormingActivityComponent
   updateLessonInfo() {
     this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
-    //this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
+    // this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
   }
 
   updateNotifications() {
@@ -284,6 +289,9 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   hostChangedBoard() {
+    const eventMessage = this.activityState.event_msg as HostChangeBoardEventResponse;
+    this.brainstormEventService.hostBoardId = eventMessage.host_board;
+    this._activityState.brainstormactivity.host_board = eventMessage.host_board;
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
         this.selectedBoard = this.getAdminBoard();
@@ -306,12 +314,15 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   participantChangedBoard() {
+    const eventMessage = this.activityState.event_msg as ParticipantChangeBoardResponse;
+    this.brainstormEventService.participantBoardId = eventMessage.board_id;
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
         this.selectedBoard = this.brainstormService.getParticipantBoard(
           this._activityState.brainstormactivity,
           this.participantCode
         );
+
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
       }

@@ -14,9 +14,27 @@ export class BrainstormEventService {
     this.notifications$.next(l);
   }
 
+  set activityState(l: UpdateMessage) {
+    this.activityState$.next(l);
+  }
+
+  set hostBoardId(l: number) {
+    this.hostBoardId$.next(l);
+  }
+
+  set participantBoardId(l: number) {
+    this.hostBoardId$.next(l);
+  }
+
   constructor() {}
 
   ideaCommentEvent$ = new Subject<BrainstormSubmitIdeaCommentResponse>();
 
   notifications$ = new BehaviorSubject<Array<LessonRunNotification>>(null);
+
+  activityState$ = new BehaviorSubject<UpdateMessage>(null);
+
+  hostBoardId$ = new BehaviorSubject<number>(null);
+
+  participantBoardId$ = new BehaviorSubject<number>(null);
 }

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angu
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgxPermissionsService } from 'ngx-permissions';
-import { BrainstormService, ContextService } from 'src/app';
+import { BrainstormEventService, BrainstormService, ContextService } from 'src/app';
 import {
   Board,
   BoardSort,
@@ -56,6 +56,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   constructor(
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
+    private brainstormEventService: BrainstormEventService,
     private boardStatusService: BoardStatusService,
     private permissionsService: NgxPermissionsService,
     private utilsService: UtilsService,
@@ -79,13 +80,19 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     });
 
+    this.brainstormEventService.activityState$.subscribe((v: UpdateMessage) => {
+      if (v) {
+        this.activityState = v;
+        this.hostBoard = this.activityState.brainstormactivity.host_board;
+        this.initializeBoards();
+      }
+    });
+
     this.boardStatusService.boardStatus$.subscribe((status: BoardStatus) => {
       if (status) {
         this.currentboardStatus = status;
       }
     });
-
-    this.initializeBoards();
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
@@ -118,15 +125,16 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     }
     if (
       this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
+      this.activityState.eventType === EventTypes.participantChangeBoardEvent ||
       this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent ||
       this.activityState.eventType === EventTypes.notificationEvent
     ) {
     } else {
       this.initializeBoards();
     }
-    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
-      this.hostBoard = this.activityState?.brainstormactivity?.host_board;
-    }
+    // if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+    //   this.hostBoard = this.activityState.brainstormactivity.host_board;
+    // }
   }
 
   initializeBoards() {

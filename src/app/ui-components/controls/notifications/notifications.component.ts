@@ -39,6 +39,13 @@ export class NotificationsComponent implements OnInit {
           this.updateNotifications(this.notificationList);
         }
       });
+    } else {
+      this.brainstormEventService.activityState$.subscribe((v: UpdateMessage) => {
+        if (v) {
+          this.activityState = v;
+          this.loadActivityStateNotifications();
+        }
+      });
     }
   }
 
@@ -49,12 +56,16 @@ export class NotificationsComponent implements OnInit {
         this.notificationList = notifications;
       }
       if (!this.isDashboard) {
-        this.notificationList = this.notificationList.filter(
-          (n) => n.extra.lessonrun_code === this.activityState?.lesson_run.lessonrun_code
-        );
-        this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
+        this.loadActivityStateNotifications();
       }
     });
+  }
+
+  loadActivityStateNotifications() {
+    this.notificationList = this.notificationList.filter(
+      (n) => n.extra.lessonrun_code === this.activityState?.lesson_run.lessonrun_code
+    );
+    this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
   }
 
   updateNotifications(notifications: Array<Notification | LessonRunNotification>) {

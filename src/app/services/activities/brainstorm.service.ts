@@ -627,6 +627,8 @@ export class BrainstormService {
     return false;
   }
 
+  // TODO change this method to accept a list of boards, participant board Id
+  // and it will return the board
   getParticipantBoard(act: BrainstormActivity, participantCode: number): Board | null {
     let selectedBoard: Board;
     const boardParticipants = act.participants;
