@@ -1465,7 +1465,7 @@ benji-main-screen-lesson {
 
 benji-participant-join {
   .join-screen {
-    height: 100vh;
+    min-height: 100vh;
     background: #f3f4f7;
     .bg-white {
       z-index: -1;
