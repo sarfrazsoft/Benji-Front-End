@@ -48,7 +48,6 @@ export class Lesson {
   status?: string;
 }
 
-
 export interface LessonRun {
   id: number;
   start_time: string;

@@ -14,19 +14,16 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { ContextService, SharingToolService } from 'src/app/services';
+import { BrainstormService, ContextService } from 'src/app/services';
 import {
   Board,
-  BoardParticipants,
   Branding,
   EventTypes,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
-import { GroupingToolGroups, Lesson, Participant } from 'src/app/services/backend/schema/course_details';
-import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
+import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
   BrainstormSubmissionCompleteInternalEvent,
@@ -107,6 +104,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   oldParticipantCode: number;
 
   constructor(
+    private brainstormService: BrainstormService,
     public contextService: ContextService,
     private utilsService: UtilsService,
     private matDialog: MatDialog,
@@ -143,6 +141,21 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
     }
+
+    this.brainstormService.lessonDescription$.subscribe((lessonDescription: string) => {
+      if (lessonDescription) {
+        this.lesson.lesson_description = lessonDescription;
+      }
+    });
+
+    this.brainstormService.lessonName$.subscribe((lessonName: string) => {
+      if (lessonName) {
+        setTimeout(() => {
+          this.lessonName = lessonName;
+        }, 0);
+        this.lesson.lesson_name = lessonName;
+      }
+    });
   }
 
   copyMessage(val: string) {

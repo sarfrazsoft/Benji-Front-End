@@ -270,8 +270,9 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   updateLessonInfo() {
-    this.brainstormService.lessonName = this.activityState.lesson.lesson_name;
-    this.brainstormService.lessonDescription = this.activityState.lesson.lesson_description;
+    this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
+    this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
+    //this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
   }
 
   updateNotifications() {

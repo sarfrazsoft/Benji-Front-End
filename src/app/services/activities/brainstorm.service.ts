@@ -59,6 +59,13 @@ export class BrainstormService {
     this.lessonDescription$.next(h);
   }
 
+  get lessonImage(): string {
+    return this.lessonImage$.getValue();
+  }
+  set lessonImage(i: string) {
+    this.lessonImage$.next(i);
+  }
+
   get boardMode(): string {
     return this.boardMode$.getValue();
   }
@@ -80,6 +87,7 @@ export class BrainstormService {
   hostBoard$ = new BehaviorSubject<number>(null);
   lessonName$ = new BehaviorSubject<string>(null);
   lessonDescription$ = new BehaviorSubject<string>(null);
+  lessonImage$ = new BehaviorSubject<string>(null);
   boardMode$ = new BehaviorSubject<string>(null);
   boardTitle$ = new BehaviorSubject<string>(null);
 
