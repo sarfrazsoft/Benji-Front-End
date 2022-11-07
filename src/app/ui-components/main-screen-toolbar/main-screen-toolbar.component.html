@@ -48,20 +48,13 @@
           </div>
           <!--Share Lesson Link-->
           <ng-container *ngxPermissionsOnly="'ADMIN'">
-            <div 
-              class="share-link"
-              style="cursor: pointer;"
-              fxLayoutAlign="center center"
-              (click)="copyLink(shareParticipantLink)">
-              Share
-            </div>
-            <!-- <benji-share-lesson-link
+            <benji-share-lesson-link
               [activityState]="_activityState"
               [participantCode]="participantCode"
               [lesson]="lesson"
               [roomCode]="roomCode"
               (socketMessage)="socketMessage.emit($event)">
-            </benji-share-lesson-link> -->
+            </benji-share-lesson-link>
           </ng-container>
           <!--A guest can sign-up straight from a session-->
           <ng-container *ngxPermissionsOnly="'PARTICIPANT'">

@@ -1,36 +1,130 @@
-<div class="join-screen">
-  <ng-container *ngIf="!joinLinkExists">
-    <div class="participant-start" fxLayout="column" fxLayoutAlign="center center">
-      <img 
-        [src]="darkLogo" 
-        alt="Benji Logo"
-        class="benji-logo"/>
-      <div class="container">
-        <div class="title">Learn Together</div>
-        <div class="about">The workspace that invites everyone to share, connect, and learn more. </div>
-        <button class="blue-buttton bg-primary-color" fxLayoutAlign="center center" (click)="router.navigate(['/login'])">Host Sign In</button>
-        <div class="or">or</div>
-        <div class="have-code">Have a session code?</div>
-        <p class="warning-color" *ngIf="(roomCode.invalid && roomCode.touched) || isRoomCodeValid === false">
-          Invalid Room Code
-        </p>
-        <input 
-          class="enter-code"
-          placeholder="Enter Session Code"
-          type="number"
-          pattern="[0-9]*"
-          [formControl]="roomCode"
-          (input)="onRoomCodeChange($event.target.value)"
-        />
+<ng-container *ngIf="isRoomCodeValid">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    class="lobby-wrapper"> 
+    <div
+      fxLayout="column"
+      class="content-wrapper">
+      <ng-container *ngIf="coverPhoto">
+        <div class="prompt-image"
+          fxLayoutAlign="center center">
+          <div 
+            class="background-img" 
+            [style.backgroundImage]="'url(' + coverPhoto + ')'">
+          </div>
+        </div>
+      </ng-container>
+      <div class="session-join-wrapper" [ngClass]="{'with-cover': coverPhoto}">
+        <div fxLayout="column" class="session-details" [ngClass]="{'signup': loadSignUp}">
+          <div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <div class="session-title">
+                {{ beforeLessonRunDetails?.title }} 
+              </div>
+            </div>
+            <div class="session-host" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="9px">
+              <!-- <img src="{{session_host.photo}}" alt/> -->
+              <div
+                class="initials" 
+                fxLayout="column" 
+                fxLayoutAlign="center center"
+                *ngIf="beforeLessonRunDetails">
+                  {{getInitials(beforeLessonRunDetails.host)}}
+              </div>
+              <div fxLayout="column" *ngIf="beforeLessonRunDetails">
+                <div class="is-admin"> Hosted by </div>
+                <div class="name"> {{beforeLessonRunDetails?.host}} </div>
+              </div>
+            </div>
+            <div class="description" *ngIf="beforeLessonRunDetails">
+              {{beforeLessonRunDetails.description}} 
+            </div>
+          </div>
+        </div>
+        <div fxLayout="column" class="join-session">
+          <div *ngIf="!loadLogin && !loadForgotPassword && !loadSignUp">
+            <div class="sub-title"> Join Session </div>
+            <!-- <div class="label"> Name </div> -->
+            <p class="warning-color" *ngIf="loginError">
+              Oops! What should we call you? Drop in your name.<br />
+            </p>
+            <p class="warning-color" *ngIf="participantAlreadyExistsError">
+              Someone with that name is already in the session. Try adding your last name or an initial.<br />
+            </p>
+            <input
+              class="name-input" 
+              type="text"
+              placeholder="Enter your name"
+              [formControl]="username">
+            <!-- <div class="label"> Choose your avatar </div>
+            <div class="edit-profile" fxLayout="row" fxLayoutAlign="start center">
+              <img src="">
+              <div class="initials" fxLayout="column" fxLayoutAlign="center center">MK</div>
+              <img class="edit-pen" src="/assets/img/edit-pen.svg">
+              <div class="change-profile">Change profile</div>
+            </div> -->
+            <div 
+              class="bg-primary-color button guest-button"
+              fxLayoutAlign="center center"
+              (click)="joinSessionAsGuestParticipant()"
+              [ngClass]="{
+                active: username.value,
+                inactive: !username.value
+              }">
+                Join as guest
+            </div>
+            <div class="member-join">
+              <div class="cta">Join session as a member</div>
+              <div class="actions primary-color">
+                <a (click)="loadLoginComponent()">Log-in</a>
+                <span> / </span>
+                <a (click)="loadSignUpComponent()">Sign-up</a>
+              </div>
+            </div>
+          </div>
+          <div class="participant-login">
+            <ng-container *ngIf="loadLogin">
+              <benji-dashboard-login
+                [joinSessionScreen]="true"
+                (forgotPasswordClicked)="loadForgotPasswordComponent()"
+                (signUpClicked)="loadSignUpComponent()"
+                (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
+              ></benji-dashboard-login>
+            </ng-container>
+            <ng-container *ngIf="loadForgotPassword">
+              <benji-forgot-password
+                [joinSession]="true"
+                (signInClicked)="loadLoginComponent()">
+              </benji-forgot-password>
+            </ng-container>
+            <ng-container *ngIf="loadSignUp">
+              <benji-dashboard-signup 
+                [joinSessionScreen]="true"
+                (signInClicked)="loadLoginComponent()"
+                (userSignedInSuccessfully)="joinSessionAsLoggedInUser()"
+              ></benji-dashboard-signup>
+            </ng-container>
+          </div>
+          <div *ngIf="participantLobbyScreeen" class="session-joined" fxLayout="column" fxLayoutAlign="center center">
+            Wait for your host to start the session.
+          </div>
+        </div>
       </div>
     </div>
-  </ng-container>  
-  
-  <ng-container *ngIf="joinLinkExists">
-    <benji-session-lobby-layout
-      [beforeLessonRunDetails]="beforeLessonRunDetails"
-      [participantJoinScreeen]="true">
-    </benji-session-lobby-layout>
-  </ng-container>
-  
-</div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="isRoomCodeValid === false">
+  <div class="sign-up-section" fxLayout="column">
+    <img [src]="logo" loading="lazy" height="32" alt="">
+    <div class="log-in-card">
+      <div class="div-block-183 incorrect-code">
+        <ng-container *ngIf="!requestSubmitted">
+          <div class="title">We can’t find this session</div>
+          <div class="text-block-89">Make sure that you have the correct URL and the session exists. Check with your host.</div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-container>

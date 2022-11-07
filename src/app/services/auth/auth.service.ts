@@ -125,7 +125,6 @@ export class AuthService {
       })
       .pipe(
         map((res: Participant) => {
-          console.log(res);
           this.setParticipantSession(res);
           return res;
         }),

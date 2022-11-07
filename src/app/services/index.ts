@@ -20,6 +20,7 @@ import { WhiteLabelResolver } from './white-label.resolver';
 import { ActivitiesServices } from './activities';
 import { DeactivateGuard } from './auth/deactivate-guard';
 import { LessonGroupService } from './lesson-group.service';
+import { LessonService } from './lesson.service';
 
 export * from './activities';
 export { AuthGuard } from './auth/auth.guard';
@@ -56,6 +57,7 @@ export const ServicesProviders = [
   BoardStatusService,
   TopicMediaService,
   LessonGroupService,
+  LessonService,
   PostLayoutService,
   NotificationService,
   { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

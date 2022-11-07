@@ -24,7 +24,6 @@ export class ShareLinkComponent implements OnInit, OnChanges {
   shareParticipantLink = '';
   participants: Array<ParticipantsData>;
   shareLinkDialogRef: MatDialogRef<ShareSpaceDialogComponent>;
-  // oldActivityState: UpdateMessage;
 
   constructor(private matDialog: MatDialog) {}
 
@@ -36,11 +35,10 @@ export class ShareLinkComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    // // don't update activityState when idea comment is submitted
-    // if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
-    //   this.oldActivityState = this.activityState;
-    // }
-    if (this.activityState.eventType === EventTypes.joinEvent) {
+    if (
+      this.activityState.eventType === EventTypes.joinEvent ||
+      this.activityState.eventType === EventTypes.bootParticipantEvent
+    ) {
       this.setParticipantsData();
     }
   }

@@ -11,7 +11,7 @@
       </div>
       <div class="members">
         <div *ngFor="let person of data.participants" class="person">
-          <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxLayout="row" fxLayoutAlign="space-between center">
             <div 
               fxLayoutGap="8px"
               fxLayout="row"
@@ -28,11 +28,11 @@
                   <div class="about" *ngIf="person.about">{{ person.about }}</div>
                 </div>
             </div>          
-            <div class="role" fxLayout="row" fxLayoutGap="8px">
+            <div class="role" fxLayout="row" fxLayoutGap="8px" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{code: person.participant_code}">
               <div class="access">
                 {{ person.role }}
               </div>
-              <mat-icon *ngIf="person.role != 'Host'" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{code: person.participant_code}">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="person.role != 'Host'">keyboard_arrow_down</mat-icon>
             </div>
           </div>
         </div>
