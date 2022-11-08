@@ -627,8 +627,6 @@ export class BrainstormService {
     return false;
   }
 
-  // TODO change this method to accept a list of boards, participant board Id
-  // and it will return the board
   getParticipantBoard(act: BrainstormActivity, participantCode: number): Board | null {
     let selectedBoard: Board;
     const boardParticipants = act.participants;
@@ -651,5 +649,15 @@ export class BrainstormService {
     } else {
       return null;
     }
+  }
+
+  getParticipantBoardFromList(boards: Array<Board>, participantsBoardId: number): Board {
+    let selectedBoard: Board;
+    boards.forEach((board) => {
+      if (participantsBoardId === board.id) {
+        selectedBoard = board;
+      }
+    });
+    return selectedBoard;
   }
 }

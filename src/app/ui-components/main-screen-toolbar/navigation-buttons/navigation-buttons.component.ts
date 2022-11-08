@@ -48,8 +48,7 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
     this.brainstormEventService.participantBoardId$.subscribe((participantBoardId: number) => {
       if (participantBoardId) {
         this.participantBoardId = participantBoardId;
-        this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
-        this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+        this.setUpNavigationButtons();
       }
     });
   }
@@ -67,8 +66,6 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
 
     if (
       this.activityState.eventType === EventTypes.joinEvent ||
-      this.activityState.eventType === EventTypes.participantChangeBoardEvent ||
-      this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
       this.activityState.eventType === EventTypes.brainstormToggleMeetingMode
     ) {
       this.setUpNavigationButtons();
@@ -76,8 +73,10 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   }
 
   setUpNavigationButtons() {
-    this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
-    this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+    setTimeout(() => {
+      this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
+      this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+    }, 0);
   }
 
   propagate($event) {
@@ -129,11 +128,15 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   }
 
   getParticipantBoard(): Board {
-    if (this.participantCode) {
-      return this.brainstormService.getParticipantBoard(
-        this.activityState.brainstormactivity,
-        this.participantCode
-      );
+    if (this.activityState.brainstormactivity) {
+      if (this.participantCode) {
+        return this.brainstormService.getParticipantBoard(
+          this.activityState.brainstormactivity,
+          this.participantCode
+        );
+      }
+    } else if (this.participantBoardId) {
+      return this.brainstormService.getParticipantBoardFromList(this.allBoards, this.participantBoardId);
     }
   }
 

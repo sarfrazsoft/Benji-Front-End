@@ -23,7 +23,10 @@ export class BrainstormEventService {
   }
 
   set participantBoardId(l: number) {
-    this.hostBoardId$.next(l);
+    this.participantBoardId$.next(l);
+  }
+  get participantBoardId() {
+    return this.participantBoardId$.value;
   }
 
   constructor() {}
