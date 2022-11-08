@@ -134,4 +134,5 @@ export class MainScreenLessonComponent extends BaseLessonComponent implements Af
       this.contextService.sideNavAction = 'closed';
     }
   }
+
 }

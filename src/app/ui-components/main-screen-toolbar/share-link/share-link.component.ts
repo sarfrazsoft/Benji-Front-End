@@ -67,7 +67,7 @@ export class ShareLinkComponent implements OnInit, OnChanges {
     const host = this.activityState.lesson_run.host;
     this.participants.push({
       name: host.first_name + ' ' + host.last_name,
-      about: host.username,
+      about: host.email,
       role: 'Host',
     });
     this.activityState.lesson_run.participant_set.forEach((p) => {

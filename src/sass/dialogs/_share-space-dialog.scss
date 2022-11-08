@@ -46,6 +46,9 @@
           .material-icons {
             line-height: 0.7;
           }
+          &.guest {
+            cursor: default;
+          }
         }
       }
       .button {
