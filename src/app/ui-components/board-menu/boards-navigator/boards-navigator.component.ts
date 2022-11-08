@@ -132,9 +132,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     } else {
       this.initializeBoards();
     }
-    // if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
-    //   this.hostBoard = this.activityState.brainstormactivity.host_board;
-    // }
   }
 
   initializeBoards() {
