@@ -8,6 +8,7 @@ export type EventType =
   | 'GetUpdatedLessonDetailEvent'
   | 'BootParticipantEvent'
   | 'BrainstormChangeModeEvent'
+  | 'BrainstormChangeBoardStatusEvent'
   | string;
 
 export enum EventTypes {
@@ -21,4 +22,5 @@ export enum EventTypes {
   getUpdatedLessonDetailEvent = 'GetUpdatedLessonDetailEvent',
   bootParticipantEvent = 'BootParticipantEvent',
   brainstormChangeModeEvent = 'BrainstormChangeModeEvent',
+  brainstormChangeBoardStatusEvent = 'BrainstormChangeBoardStatusEvent',
 }

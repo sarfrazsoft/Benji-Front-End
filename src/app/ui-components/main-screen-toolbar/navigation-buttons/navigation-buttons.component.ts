@@ -66,7 +66,8 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
 
     if (
       this.activityState.eventType === EventTypes.joinEvent ||
-      this.activityState.eventType === EventTypes.brainstormToggleMeetingMode
+      this.activityState.eventType === EventTypes.brainstormToggleMeetingMode ||
+      this.activityState.eventType === EventTypes.brainstormChangeBoardStatusEvent
     ) {
       this.setUpNavigationButtons();
     }
@@ -86,13 +87,21 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   isPreviousNavigableBoardAvailable() {
     const currentBoard: Board = this.getCurrentBoard();
 
-    return this.boardsNavigationService.isPreviousBoardAvailableToNavigate(this.allBoards, currentBoard);
+    return this.boardsNavigationService.isPreviousBoardAvailableToNavigate(
+      this.allBoards,
+      currentBoard,
+      this.isHost
+    );
   }
 
   isNextNavigableBoardAvailable() {
     const currentBoard: Board = this.getCurrentBoard();
 
-    const x = this.boardsNavigationService.isNextBoardAvailableToNavigate(this.allBoards, currentBoard);
+    const x = this.boardsNavigationService.isNextBoardAvailableToNavigate(
+      this.allBoards,
+      currentBoard,
+      this.isHost
+    );
     return x;
   }
 

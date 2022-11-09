@@ -20,6 +20,8 @@ export class ShareLinkComponent implements OnInit, OnChanges {
 
   @Output() socketMessage = new EventEmitter<any>();
 
+  oldActivityState: UpdateMessage;
+
   hostname = window.location.host + '/participant/join?link=';
   shareParticipantLink = '';
   participants: Array<ParticipantsData>;
@@ -40,6 +42,7 @@ export class ShareLinkComponent implements OnInit, OnChanges {
       this.activityState.eventType === EventTypes.bootParticipantEvent
     ) {
       this.setParticipantsData();
+      this.oldActivityState = this.activityState;
     }
   }
 
@@ -50,7 +53,7 @@ export class ShareLinkComponent implements OnInit, OnChanges {
         title: this.lesson.lesson_name,
         link: this.shareParticipantLink,
         participants: this.participants,
-        activityState: this.activityState,
+        activityState: this.oldActivityState,
       },
       panelClass: 'share-space-dialog',
     });

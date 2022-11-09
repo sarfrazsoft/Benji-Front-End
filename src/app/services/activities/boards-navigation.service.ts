@@ -6,20 +6,21 @@ import { Board, BrainstormActivity } from '../backend/schema';
 export class BoardsNavigationService {
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
-  navigateToNextAvailableBoard(boards: Array<Board>, board: Board): void {
-    const b = this.isNextBoardAvailableToNavigate(boards, board);
+  navigateToNextAvailableBoard(boards: Array<Board>, board: Board, isHost: boolean): void {
+    const b = this.isNextBoardAvailableToNavigate(boards, board, isHost);
     if (b) {
       this.boardChangingQueryParams(b.id);
     }
     return null;
   }
 
-  isNextBoardAvailableToNavigate(boards: Array<Board>, currentBoard: Board): Board | null {
+  isNextBoardAvailableToNavigate(boards: Array<Board>, currentBoard: Board, isHost: boolean): Board | null {
     let nextBoardExists = true;
     for (let i = 0; i < boards.length; i++) {
       const b = boards[i];
-      if (currentBoard.next_board === b.id && b.status !== 'closed') {
-        // navigate if the board is not closed
+      if (currentBoard.next_board === b.id && (b.status !== 'closed' || isHost)) {
+        // allow navigation if the board is available AND
+        // (not closed for participant OR it's the host who's asking)
         const nextBoard = b;
         return nextBoard;
       } else if (!currentBoard.next_board) {
@@ -34,11 +35,15 @@ export class BoardsNavigationService {
     }
   }
 
-  isPreviousBoardAvailableToNavigate(boards: Array<Board>, currentBoard: Board): Board | null {
+  isPreviousBoardAvailableToNavigate(
+    boards: Array<Board>,
+    currentBoard: Board,
+    isHost: boolean
+  ): Board | null {
     let previousBoardExists = true;
     for (let i = 0; i < boards.length; i++) {
       const b = boards[i];
-      if (currentBoard.previous_board === b.id && b.status !== 'closed') {
+      if (currentBoard.previous_board === b.id && (b.status !== 'closed' || isHost)) {
         // navigate if the board is not closed
         const nextBoard = b;
         return nextBoard;

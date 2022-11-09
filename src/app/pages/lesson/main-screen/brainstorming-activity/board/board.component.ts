@@ -164,7 +164,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.isHost && this.board.status === 'closed') {
       const navigationStatus = this.boardsNavigationService.navigateToNextAvailableBoard(
         this.act.boards,
-        this.board
+        this.board,
+        this.isHost
       );
     }
   }
