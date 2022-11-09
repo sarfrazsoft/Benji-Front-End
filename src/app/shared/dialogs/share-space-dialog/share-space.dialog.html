@@ -18,21 +18,28 @@
               fxLayoutAlign="start center"
               [ngClass]="{'space-bottom': !areCommentsAllowed}">
                 <benji-profile-pictures
-                  [name]="person.name"
+                  [participantCodes]="[person.participant_code]"
                   [showTooltip]="false"
                   [size]="'medium'"
                   [activityState]="activityState"
                 ></benji-profile-pictures>
                 <div fxLayout="column" fxLayoutGap="6px">
                   <div class="name">{{ person.name }}</div>
-                  <div class="about" *ngIf="person.about">{{ person.about }}</div>
+                  <div class="about">{{ person.about ?? 'Guest' }}</div>
                 </div>
             </div>          
-            <div class="role" fxLayout="row" fxLayoutGap="8px" [matMenuTriggerFor]="menu" [matMenuTriggerData]="{code: person.participant_code}">
-              <div class="access">
-                {{ person.role }}
-              </div>
-              <mat-icon *ngIf="person.role != 'Host'">keyboard_arrow_down</mat-icon>
+            <div *ngIf="person.role === 'Host'" class="role guest">
+              <span>Guest</span>
+            </div>          
+            <div 
+              *ngIf="person.role != 'Host'"
+              class="role" 
+              fxLayout="row" 
+              fxLayoutGap="8px" 
+              [matMenuTriggerFor]="menu" 
+              [matMenuTriggerData]="{code: person.participant_code}">
+              <span>{{ person.role }}</span>
+              <mat-icon>keyboard_arrow_down</mat-icon>
             </div>
           </div>
         </div>

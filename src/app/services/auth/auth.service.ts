@@ -116,12 +116,13 @@ export class AuthService {
     localStorage.setItem('benji_branding', JSON.stringify(res.user.branding));
   }
 
-  createParticipant(username: string, enteredRoomCode: number, user?: number) {
+  createParticipant(username: string, enteredRoomCode: number, userEmail?: string, user?: number) {
     return this.http
       .post(global.apiRoot + '/course_details/participant/', {
         lessonrun_code: enteredRoomCode,
         display_name: username,
         user: user,
+        email: userEmail,
       })
       .pipe(
         map((res: Participant) => {
@@ -274,7 +275,7 @@ export class AuthService {
   joinSessionAsLoggedInUser(user: TeamUser, lessonCode, callback?) {
     const name = user.first_name + ' ' + user.last_name;
 
-    this.createParticipant(name, lessonCode, user.id).subscribe(
+    this.createParticipant(name, lessonCode, user.email, user.id).subscribe(
       (res) => {
         let loginError = false;
         if (res.lessonrun_code) {
