@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   roomCode: any;
   participantCode: any;
   loginError: any;
+  templateId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -83,6 +84,9 @@ export class LoginComponent implements OnInit {
       // alert(this.route.snapshot.queryParams['link']);
       this.roomCode = this.route.snapshot.queryParams['link'];
     }
+    if (this.route.snapshot.queryParams['templateId']) {
+      this.templateId = this.route.snapshot.queryParams['templateId'];
+    }
     if (this.route.snapshot.queryParams['userCode']) {
       // alert(this.route.snapshot.queryParams['userCode']);
       this.participantCode = this.route.snapshot.queryParams['userCode'];
@@ -115,11 +119,16 @@ export class LoginComponent implements OnInit {
             if (this.authService.redirectURL.length) {
               window.location.href = this.authService.redirectURL;
             } else {
-              this.deviceDetectorService.isMobile()
-                ? this.router.navigate(['/participant/join'])
-                : this.joinSessionScreen
-                ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
-                : this.router.navigate(['/dashboard']);
+              if (this.templateId) {
+                // if user is trying to copy a template
+                this.router.navigate(['/import', this.templateId]);
+              } else {
+                this.deviceDetectorService.isMobile()
+                  ? this.router.navigate(['/participant/join'])
+                  : this.joinSessionScreen
+                  ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
+                  : this.router.navigate(['/dashboard']);
+              }
             }
           }
         },
