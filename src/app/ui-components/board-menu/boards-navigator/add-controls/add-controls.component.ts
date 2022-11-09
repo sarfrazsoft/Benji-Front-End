@@ -36,7 +36,8 @@ export class AddControlsComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(): void {}
+  ngOnChanges(): void {
+  }
 
   addBoard(previousBoard: Board) {
     this.sendMessage.emit(

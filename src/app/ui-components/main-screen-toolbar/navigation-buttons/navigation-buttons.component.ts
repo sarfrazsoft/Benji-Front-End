@@ -99,12 +99,12 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   changeBoard(move: 'next' | 'previous') {
     const currentBoard = this.getCurrentBoard();
     if (move === 'next') {
-      if (currentBoard.next_board) {
-        this.navigateToBoard(currentBoard.next_board);
+      if (currentBoard?.next_board) {
+        this.navigateToBoard(currentBoard?.next_board);
       }
     } else if (move === 'previous') {
-      if (currentBoard.previous_board) {
-        this.navigateToBoard(currentBoard.previous_board);
+      if (currentBoard?.previous_board) {
+        this.navigateToBoard(currentBoard?.previous_board);
       }
     }
   }
@@ -137,6 +137,10 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
       }
     } else if (this.participantBoardId) {
       return this.brainstormService.getParticipantBoardFromList(this.allBoards, this.participantBoardId);
+    } else if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
+      // triggred when host changes board with meeting mode active
+      const eventMessage = this.activityState.event_msg as any;
+      return this.brainstormService.getParticipantBoardFromList(this.allBoards, eventMessage.host_board);
     }
   }
 
