@@ -650,4 +650,14 @@ export class BrainstormService {
       return null;
     }
   }
+
+  getParticipantBoardFromList(boards: Array<Board>, participantsBoardId: number): Board {
+    let selectedBoard: Board;
+    boards.forEach((board) => {
+      if (participantsBoardId === board.id) {
+        selectedBoard = board;
+      }
+    });
+    return selectedBoard;
+  }
 }

@@ -34,6 +34,7 @@ import {
   BrainstormSetCategoryEvent,
   BrainstormSubmitEvent,
   BrainstormSubmitIdeaCommentEvent,
+  BrainstormSubmitIdeaCommentResponse,
   BrainstormSubmitIdeaHeartEvent,
   Category,
   ColsCategoryChangeIdeaOrderInfo,
@@ -98,11 +99,11 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
   }
 
   ngOnInit(): void {
-    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
       // Add the comment to the card
-      if (this.board.id === v.event_msg.board_id) {
+      if (this.board.id === v.board_id) {
         // the comment was added in the board
-        this.brainstormService.categorizedIdeaCommentAdded(v.event_msg, this.columns);
+        this.brainstormService.categorizedIdeaCommentAdded(v, this.columns);
       }
     });
   }

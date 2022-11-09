@@ -26,11 +26,14 @@ import {
   BoardMode,
   BoardStatus,
   BrainstormActivity,
+  BrainstormSubmitIdeaCommentResponse,
   EventTypes,
   Group,
   HostChangeBoardEvent,
+  HostChangeBoardEventResponse,
   Idea,
   ParticipantChangeBoardEvent,
+  ParticipantChangeBoardResponse,
   QueryParamsObject,
   Timer,
   UpdateMessage,
@@ -173,11 +176,15 @@ export class MainScreenBrainstormingActivityComponent
     const currentEventType = this.getEventType();
     if (
       currentEventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
-      currentEventType !== EventTypes.notificationEvent
+      currentEventType !== EventTypes.notificationEvent &&
+      currentEventType !== EventTypes.hostChangeBoardEvent &&
+      currentEventType !== EventTypes.participantChangeBoardEvent
     ) {
       // prevent changes down the tree when it is BrainstormSubmitIdeaCommentEvent
       this.eventType = currentEventType;
       this._activityState = this.activityState;
+      // update available activity state when it is none of above events
+      this.brainstormEventService.activityState = this._activityState;
     }
     const act = this.activityState.brainstormactivity;
     this.act = cloneDeep(this.activityState.brainstormactivity);
@@ -192,11 +199,15 @@ export class MainScreenBrainstormingActivityComponent
       this.detectNewParticipantJoined(this.activityState);
       this.selectUserBoard();
       this.updateLessonInfo();
+      // set meeting mode at the start
+      this.updateMeetingMode();
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
+      this.eventType = currentEventType;
       this.hostChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
     } else if (currentEventType === EventTypes.participantChangeBoardEvent) {
+      this.eventType = currentEventType;
       this.participantChangedBoard();
       this.changeBoardStatus();
       this.updatePromptMedia();
@@ -214,7 +225,8 @@ export class MainScreenBrainstormingActivityComponent
       }
     } else if (currentEventType === EventTypes.brainstormSubmitIdeaCommentEvent) {
       // update the data in service. no children components will fire ngonchanges
-      this.brainstormEventService.ideaCommentEvent = this.activityState;
+      this.brainstormEventService.ideaCommentEvent = this.activityState
+        .event_msg as BrainstormSubmitIdeaCommentResponse;
     } else if (currentEventType === EventTypes.brainstormToggleMeetingMode) {
       this.updateMeetingMode();
       this.bringUsersToHostBoard();
@@ -272,7 +284,7 @@ export class MainScreenBrainstormingActivityComponent
   updateLessonInfo() {
     this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
-    //this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
+    // this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
   }
 
   updateNotifications() {
@@ -280,8 +292,11 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   hostChangedBoard() {
+    const eventMessage = this.activityState.event_msg as HostChangeBoardEventResponse;
+    this._activityState.brainstormactivity.host_board = eventMessage.host_board;
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
+        this.brainstormEventService.hostBoardId = eventMessage.host_board;
         this.selectedBoard = this.getAdminBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
@@ -289,8 +304,9 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        if (this.act.meeting_mode) {
-          this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        if (this._activityState.brainstormactivity.meeting_mode) {
+          this.brainstormEventService.participantBoardId = eventMessage.host_board;
+          this.selectedBoard = this.getAdminBoard();
           this.brainstormService.selectedBoard = this.selectedBoard;
           this.boardChangingQueryParams(this.selectedBoard.id);
         }
@@ -299,9 +315,15 @@ export class MainScreenBrainstormingActivityComponent
   }
 
   participantChangedBoard() {
+    const eventMessage = this.activityState.event_msg as ParticipantChangeBoardResponse;
+    this.brainstormEventService.participantBoardId = eventMessage.board_id;
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        this.selectedBoard = this.brainstormService.getParticipantBoardFromList(
+          this._activityState.brainstormactivity.boards,
+          eventMessage.board_id
+        );
+
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
       }
@@ -317,7 +339,19 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const board = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        let board: Board;
+        if (this._activityState.brainstormactivity) {
+          board = this.brainstormService.getParticipantBoard(
+            this._activityState.brainstormactivity,
+            this.participantCode
+          );
+        } else {
+          // get participant board id from event service
+          board = this.brainstormService.getParticipantBoardFromList(
+            this._activityState.brainstormactivity.boards,
+            this.brainstormEventService.participantBoardId
+          );
+        }
         this.topicMediaService.topicMedia = board.prompt_video;
       }
     });
@@ -340,7 +374,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const board = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const board = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         this.brainstormService.boardTitle = board.board_activity.instructions;
         this.brainstormService.boardInstructions = board.board_activity.sub_instructions;
       }
@@ -357,7 +394,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         if (selectedBoard) {
           this.selectedBoard = selectedBoard;
           this.brainstormService.selectedBoard = this.selectedBoard;
@@ -381,8 +421,23 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
-        if (this.selectedBoard.id === paramBoardId) {
+        let boardId: number;
+        if (this.brainstormEventService.participantBoardId) {
+          boardId = this.brainstormEventService.participantBoardId;
+        } else if (this._activityState.brainstormactivity) {
+          boardId = this.brainstormService.getParticipantBoard(
+            this._activityState.brainstormactivity,
+            this.participantCode
+          ).id;
+        } else {
+          // get participant board id from event service
+          boardId = this.brainstormService.getParticipantBoardFromList(
+            this._activityState.brainstormactivity.boards,
+            this.brainstormEventService.participantBoardId
+          ).id;
+        }
+
+        if (boardId === paramBoardId) {
           // we're on the right board
         } else {
           // this.changeParticipantBoard(paramBoardId);
@@ -394,9 +449,9 @@ export class MainScreenBrainstormingActivityComponent
 
   getAdminBoard() {
     let selectedBoard: Board;
-    const hostBoardID = this.act.host_board;
+    const hostBoardID = this._activityState.brainstormactivity.host_board;
     if (hostBoardID) {
-      this.act.boards.forEach((v) => {
+      this._activityState.brainstormactivity.boards.forEach((v) => {
         if (hostBoardID === v.id) {
           selectedBoard = v;
         }
@@ -416,7 +471,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        this.selectedBoard = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         mode = this.selectedBoard.board_activity.mode;
         onSuccess(mode);
       }
@@ -432,7 +490,10 @@ export class MainScreenBrainstormingActivityComponent
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const board = this.brainstormService.getParticipantBoard(this.act, this.participantCode);
+        const board = this.brainstormService.getParticipantBoard(
+          this._activityState.brainstormactivity,
+          this.participantCode
+        );
         onSuccess(board.status);
       }
     });

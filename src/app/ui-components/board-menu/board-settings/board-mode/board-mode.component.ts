@@ -34,7 +34,9 @@ export class BoardModeComponent implements OnInit {
     });
 
     this.brainstormService.boardMode$.subscribe((boardMode: BoardMode) => {
-      this.decideBoardMode(boardMode);
+      if (boardMode) {
+        this.decideBoardMode(boardMode);
+      }
     });
   }
 

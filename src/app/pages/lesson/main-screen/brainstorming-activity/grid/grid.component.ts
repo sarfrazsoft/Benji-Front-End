@@ -20,6 +20,7 @@ import {
   Board,
   BoardSort,
   BrainstormActivity,
+  BrainstormSubmitIdeaCommentResponse,
   EventTypes,
   Idea,
   PostOrder,
@@ -93,11 +94,11 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
       }
     });
 
-    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
       // Add the comment to the card
-      if (this.board.id === v.event_msg.board_id) {
+      if (this.board.id === v.board_id) {
         // the comment was added in the board
-        this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v.event_msg);
+        this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       }
     });
@@ -175,6 +176,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
               this.ideas = [];
               this.ideas = this.brainstormService.uncategorizedPopulateIdeas(this.board);
               this.brainstormService.uncategorizedIdeas = this.ideas;
+              this.refreshGridLayout();
             }
           });
         } else {
