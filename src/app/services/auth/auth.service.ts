@@ -7,7 +7,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 import * as global from '../../globals';
-import { TeamUser, UserInvitation } from '../backend/schema';
+import { TeamUser, UserInvitation, UseTemplateResponse } from '../backend/schema';
 import { Participant } from '../backend/schema/course_details';
 import { LayoutService } from '../layout.service';
 import { UtilsService } from '../utils.service';
@@ -303,5 +303,21 @@ export class AuthService {
         }
       }
     );
+  }
+
+  useTemplate(templateId: number): Observable<UseTemplateResponse> {
+    return this.http
+      .post(global.apiRoot + '/course_details/use-template/', {
+        lesson_run_code: templateId,
+      })
+      .pipe(
+        map((res: UseTemplateResponse) => {
+          return res;
+        }),
+        catchError((err) => {
+          console.log(err);
+          return of(err.error);
+        })
+      );
   }
 }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   AcceptInviteComponent,
   ActivateAccountComponent,
+  CopyTemplateComponent,
   ForgotPasswordComponent,
   LoginComponent,
   ResetPasswordComponent,

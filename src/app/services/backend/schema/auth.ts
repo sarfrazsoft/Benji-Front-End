@@ -11,3 +11,7 @@ export interface UserInvitation {
   inviter: string;
   suggested_orggroup: number;
 }
+
+export interface UseTemplateResponse {
+  detail: string;
+}

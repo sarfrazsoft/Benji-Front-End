@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import {
+  CopyTemplateComponent,
   MainScreenLessonComponent,
   ParticipantLessonComponent,
   SessionEndComponent,
@@ -67,6 +68,10 @@ const routes: Routes = [
     resolve: {
       labelInfo: WhiteLabelResolver,
     },
+  },
+  {
+    path: 'import/:templateId',
+    component: CopyTemplateComponent,
   },
 ];
 
