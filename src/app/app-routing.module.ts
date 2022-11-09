@@ -14,7 +14,8 @@ import { WhiteLabelResolver } from './services';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('src/app/layout/layout.module').then((m) => m.LayoutModule),
+    pathMatch: 'full',
+    redirectTo: '/login',
   },
   {
     path: 'login/:partner',

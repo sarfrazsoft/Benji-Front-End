@@ -14,7 +14,6 @@ import { LayoutComponent } from './layout.component';
 
 // TODO; make separate modules for main screen and particicpants
 const routes: Routes = [
-  { path: '', redirectTo: '/participant/join', pathMatch: 'full' },
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent,
