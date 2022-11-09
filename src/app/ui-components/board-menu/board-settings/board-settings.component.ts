@@ -17,6 +17,7 @@ import {
   BrainstormToggleAllowHeartEvent,
   BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
+  EventTypes,
   SettingsTypes,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -36,6 +37,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   @Input() allowedSettings: Array<SettingsTypes> = [];
 
   @Output() sendMessage = new EventEmitter<any>();
+  @Output() settingsNavClosed = new EventEmitter<any>();
   postOrderDropdown: Array<{ value: BoardSort; name: string }> = [
     {
       value: 'newest_to_oldest',
@@ -80,10 +82,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
   allowCommenting: boolean;
   allowHearting: boolean;
   board: Board;
-  boardMode: BoardMode;
-  gridMode: boolean;
-  threadMode: boolean;
-  columnsMode: boolean;
+
   currentboardStatus: BoardStatus;
   selectedBoard: Board;
   boards: Array<Board> = [];
@@ -117,9 +116,13 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       }
     });
 
-    this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
+    this.brainstormService.meetingMode$.subscribe((meetingMode: boolean) => {
+      this.meetingMode = meetingMode;
+    });
 
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
+    this.brainstormService.hostBoard$.subscribe((hostBoard: number) => {
+      this.hostBoard = hostBoard;
+    });
 
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
@@ -128,8 +131,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   selectedBoardChanged(board) {
     this.selectedBoard = board;
-    this.boardMode = this.selectedBoard.board_activity.mode;
-    this.decideBoardMode(this.boardMode);
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.allowCommenting = this.selectedBoard.allow_comment;
     this.allowHearting = this.selectedBoard.allow_heart;
@@ -145,24 +146,11 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
       this.resetBoards();
-    } else if (this.activityState.eventType === 'BrainstormChangeModeEvent') {
-      if (this.selectedBoard && this.selectedBoard.board_activity.mode) {
-        this.decideBoardMode(this.selectedBoard.board_activity.mode);
-      }
     }
     if (this.navType === 'boards') {
-      if (this.activityState.eventType === 'HostChangeBoardEvent') {
-      } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
-        this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
-      } else {
+      if (this.activityState.eventType === EventTypes.hostChangeBoardEvent) {
       }
     }
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
-    this.decideBoardMode(this.boardMode);
-  }
-
-  getBoardsForAdmin() {
-    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
   }
 
   getBoardsForParticipant() {
@@ -179,34 +167,8 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
 
   closeNav() {
     this.sidenav.close();
+    this.settingsNavClosed.emit();
   }
-
-  setBoardMode(mode: BoardMode) {
-    this.sendMessage.emit(new BrainstormChangeModeEvent(mode, this.selectedBoard.id));
-    this.decideBoardMode(mode);
-  }
-
-  decideBoardMode(mode: BoardMode): void {
-    this.boardMode = mode;
-    switch (mode) {
-      case 'grid':
-        this.gridMode = true;
-        this.threadMode = false;
-        this.columnsMode = false;
-        break;
-      case 'thread':
-        this.gridMode = false;
-        this.threadMode = true;
-        this.columnsMode = false;
-        break;
-      default:
-        this.gridMode = false;
-        this.threadMode = false;
-        this.columnsMode = true;
-    }
-  }
-
-  duplicateBoard() {}
 
   setBoardStatus() {
     const selected = this.currentboardStatus;
@@ -214,6 +176,8 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
       new BrainstormChangeBoardStatusEvent(this.currentboardStatus, this.selectedBoard.id)
     );
   }
+
+  duplicateBoard() {}
 
   toggleMeetingMode($event) {
     this.sendMessage.emit(new BrainstormToggleMeetingMode($event.currentTarget.checked));

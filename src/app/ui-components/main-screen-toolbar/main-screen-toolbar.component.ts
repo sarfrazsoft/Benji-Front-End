@@ -14,15 +14,18 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { ContextService, SharingToolService } from 'src/app/services';
-import { Board, BoardParticipants, Branding, Timer, UpdateMessage } from 'src/app/services/backend/schema';
-import { GroupingToolGroups, Participant } from 'src/app/services/backend/schema/course_details';
-import { LessonRunNotification, Notification } from 'src/app/services/backend/schema/notification';
+import { BrainstormService, ContextService } from 'src/app/services';
+import {
+  Board,
+  Branding,
+  EventTypes,
+  Timer,
+  UpdateMessage,
+} from 'src/app/services/backend/schema';
+import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { ParticipantGroupingDialogComponent } from 'src/app/shared/dialogs/participant-grouping-dialog/participant-grouping.dialog';
 import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
-  BeginShareEvent,
   BrainstormSubmissionCompleteInternalEvent,
   EndShareEvent,
   GetUpdatedLessonDetailEvent,
@@ -47,26 +50,23 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   timer: Timer;
   @Input() activityState: UpdateMessage;
   @Input() hideControls = false;
-  @Input() isEditor = false;
   @Input() disableControls: boolean;
   @Input() isSharing: boolean;
   @Input() isGroupingShowing: boolean;
-  @Input() isLastActivity: boolean;
   @Input() showHeader: boolean;
-  @Input() lesson;
-  @Input() roomCode: string;
   @Input() isPaused: boolean;
   @Input() isGrouping: boolean;
   @Input() participantCode: number;
   @Input() boardsMenuClosed: boolean;
+
+  lesson: Lesson;
+  roomCode: number;
 
   showTimer = false;
   currentActivityIndex;
 
   at: typeof ActivityTypes = ActivityTypes;
 
-  shareParticipantLink = '';
-  hostname = window.location.host + '/participant/join?link=';
   shareFacilitatorLink = '';
   allowShareActivities = AllowShareActivities;
   activitySettingsAllowed = ActivitySettingsAllowed;
@@ -79,6 +79,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
 
   reason = '';
   counterAfter = 4;
+  shareParticipantLink = '';
 
   @Output() openSettingsMenuEvent = new EventEmitter();
   @Output() toggleBoardsMenuEvent = new EventEmitter();
@@ -95,13 +96,17 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   // nofications
   @ViewChild(NotificationsComponent) notificationsComponent: NotificationsComponent;
 
-  notificationList: Array<Notification | LessonRunNotification> = [];
+  // notificationList: Array<Notification | LessonRunNotification> = [];
   notificationCount = 0;
+  hostname = window.location.host + '/participant/join?link=';
+
+  _activityState: UpdateMessage;
+  oldParticipantCode: number;
 
   constructor(
+    private brainstormService: BrainstormService,
     public contextService: ContextService,
     private utilsService: UtilsService,
-    private sharingToolService: SharingToolService,
     private matDialog: MatDialog,
     private permissionsService: NgxPermissionsService,
     private router: Router
@@ -124,12 +129,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     });
 
-    this.showParticipantGroupingButton();
-    if (!this.hostname.includes('localhost')) {
-      this.hostname = 'https://' + this.hostname;
-    }
-    this.shareParticipantLink = this.hostname + this.roomCode;
-
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       val ? (this.isParticipant = true) : (this.isParticipant = false);
     });
@@ -137,21 +136,26 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       val ? (this.isHost = true) : (this.isHost = false);
     });
-  }
 
-  showParticipantGroupingButton() {
-    if (!this.activityState || !this.activityState.activity_type) {
-      return;
+    this.shareParticipantLink = this.hostname + this.roomCode;
+    if (!this.hostname.includes('localhost')) {
+      this.hostname = 'https://' + this.hostname;
     }
-    const currentActivity = this.activityState[this.activityState.activity_type.toLowerCase()];
-    const grouping: GroupingToolGroups = currentActivity.grouping;
-    if (grouping) {
-      if (grouping.style === 'hostAssigned') {
-        this.openGroupAccess = false;
-      } else if (grouping.style === 'selfAssigned') {
-        this.openGroupAccess = true;
+
+    this.brainstormService.lessonDescription$.subscribe((lessonDescription: string) => {
+      if (lessonDescription) {
+        this.lesson.lesson_description = lessonDescription;
       }
-    }
+    });
+
+    this.brainstormService.lessonName$.subscribe((lessonName: string) => {
+      if (lessonName) {
+        setTimeout(() => {
+          this.lessonName = lessonName;
+        }, 0);
+        this.lesson.lesson_name = lessonName;
+      }
+    });
   }
 
   copyMessage(val: string) {
@@ -159,14 +163,30 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.lessonName = this.lesson.lesson_name;
-
-    this.showParticipantGroupingButton();
-    this.loadParticipantCodes();
-    if (this.activityState.eventType === 'NotificationEvent') {
-      this.notificationList = this.activityState.notifications;
-      this.notificationsComponent.updateNotifications(this.notificationList);
+    // if event is brainstormSubmitIdeaCommentEvent don't assign it to local
+    if (
+      this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent ||
+      this.activityState.eventType === EventTypes.notificationEvent
+    ) {
+    } else {
+      this._activityState = this.activityState;
+      this.oldParticipantCode = this.participantCode;
     }
+
+    if (this.activityState.eventType === EventTypes.joinEvent) {
+      this.lessonName = this.activityState.lesson.lesson_name;
+      this.loadParticipantCodes();
+
+      this.lesson = this.activityState.lesson;
+      this.roomCode = this.activityState.lesson_run.lessonrun_code;
+    }
+
+    // if (this.activityState.eventType === EventTypes.notificationEvent) {
+    //   this.notificationList = this.activityState.notifications;
+    //   if (this.notificationsComponent) {
+    //     this.notificationsComponent.updateNotifications(this.notificationList);
+    //   }
+    // }
   }
 
   updateNotificationCount(count: number): void {
@@ -242,24 +262,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     this.socketMessage.emit(new JumpEvent($event));
   }
 
-  setCurrentActivityIndex(dropdownActivities) {
-    const currentActivityId = this.activityState[this.activityState.activity_type.toLowerCase()].activity_id;
-    dropdownActivities.forEach((act, i) => {
-      if (act.activity_id === currentActivityId) {
-        this.currentActivityIndex = i + 1;
-      }
-    });
-  }
-
-  openGroupingParticipantDialog() {
-    const dialogRef = this.matDialog.open(ParticipantGroupingDialogComponent, {
-      panelClass: 'participant-grouping-dialog',
-      data: { activityState: this.activityState, participantCode: this.participantCode },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
-
   isActivitySettingsAllowed(activityState: UpdateMessage) {
     if (activityState && this.activitySettingsAllowed.includes(activityState.activity_type)) {
       return true;
@@ -279,14 +281,13 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   loadParticipantCodes() {
     this.participantCodes.length = 0;
     const p = [];
-    this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
-      p.push(participant.participant_code);
+
+    this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      if (participant.is_active) {
+        p.push(participant.participant_code);
+      }
     });
     this.participantCodes = p;
-  }
-
-  copyLink(val: string) {
-    this.utilsService.copyToClipboard(val);
   }
 
   openSessionSettings() {
@@ -310,7 +311,7 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (this.isHost) {
       this.router.navigate(['/dashboard/']);
     } else if (this.isParticipant) {
-      this.activityState.lesson_run.participant_set.forEach((participant: Participant) => {
+      this._activityState.lesson_run.participant_set.forEach((participant: Participant) => {
         if (participant.participant_code === this.participantCode && participant?.user?.id) {
           this.router.navigate(['/dashboard/']);
         }
@@ -334,5 +335,9 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
         return true;
       }
     }
+  }
+
+  copyLink() {
+    this.utilsService.copyToClipboard(this.shareParticipantLink);
   }
 }

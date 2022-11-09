@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { BoardsNavigationService, BrainstormService, ContextService } from 'src/app/services';
-import { Board, UpdateMessage } from 'src/app/services/backend/schema';
+import { Board, EventTypes, UpdateMessage } from 'src/app/services/backend/schema';
 import { HostChangeBoardEvent, ParticipantChangeBoardEvent } from '../../../services/backend/schema/messages';
 
 @Component({
@@ -21,6 +21,9 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   allBoards: Array<Board> = [];
   hostBoardId;
 
+  _isNextNavigableBoardAvailable = false;
+  _isPreviousNavigableBoardAvailable = false;
+
   constructor(
     public contextService: ContextService,
     private brainstormService: BrainstormService,
@@ -29,10 +32,26 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  ngOnChanges() {
-    this.allBoards = this.activityState.brainstormactivity.boards;
-    this.hostBoardId = this.activityState.brainstormactivity.host_board;
-    this.isHost = this.activityState.isHost;
+  ngOnChanges(changes) {
+    if (this.activityState?.brainstormactivity?.boards) {
+      this.allBoards = this.activityState.brainstormactivity.boards;
+    }
+    if (this.activityState?.brainstormactivity?.host_board) {
+      this.hostBoardId = this.activityState.brainstormactivity.host_board;
+    }
+    if (this.activityState?.isHost) {
+      this.isHost = this.activityState.isHost;
+    }
+
+    if (
+      this.activityState.eventType === EventTypes.joinEvent ||
+      this.activityState.eventType === EventTypes.participantChangeBoardEvent ||
+      this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
+      this.activityState.eventType === EventTypes.brainstormToggleMeetingMode
+    ) {
+      this._isNextNavigableBoardAvailable = this.isNextNavigableBoardAvailable() ? true : false;
+      this._isPreviousNavigableBoardAvailable = this.isPreviousNavigableBoardAvailable() ? true : false;
+    }
   }
 
   propagate($event) {
@@ -84,10 +103,12 @@ export class NavigationButtonsComponent implements OnInit, OnChanges {
   }
 
   getParticipantBoard(): Board {
-    return this.brainstormService.getParticipantBoard(
-      this.activityState.brainstormactivity,
-      this.participantCode
-    );
+    if (this.participantCode) {
+      return this.brainstormService.getParticipantBoard(
+        this.activityState.brainstormactivity,
+        this.participantCode
+      );
+    }
   }
 
   navigateToBoard(boardId: number) {

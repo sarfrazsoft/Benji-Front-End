@@ -6,3 +6,4 @@ export * from './auth';
 export * from './reports';
 export * from './editor';
 export * from './tools';
+export * from './events';

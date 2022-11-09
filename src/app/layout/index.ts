@@ -6,7 +6,6 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 import { MainScreenLessonComponent } from '../pages/lesson/main-screen/main-screen-lesson.component';
-import { ParticipantJoinComponent } from '../pages/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
 
 import {
@@ -30,7 +29,6 @@ export const LayoutDeclarations = [
   CaseStudyCheckinDialogComponent,
   ImageViewDialogComponent,
   LayoutComponent,
-  ParticipantJoinComponent,
   ParticipantLoginComponent,
   MainScreenLessonComponent,
   ToolbarComponent,

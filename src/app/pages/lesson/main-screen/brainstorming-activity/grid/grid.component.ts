@@ -15,14 +15,16 @@ import * as moment from 'moment';
 import Grid, { DraggerCancelEvent, DraggerEndEvent, GridOptions, Item } from 'muuri';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
-import { BrainstormService, ContextService } from 'src/app/services';
+import { BrainstormEventService, BrainstormService, ContextService } from 'src/app/services';
 import {
   Board,
   BoardSort,
   BrainstormActivity,
+  EventTypes,
   Idea,
   PostOrder,
   SetMetaDataBoardEvent,
+  UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { SideNavAction } from 'src/app/services/context.service';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
@@ -64,6 +66,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
   constructor(
     private brainstormService: BrainstormService,
     private ngxPermissionsService: NgxPermissionsService,
+    private brainstormEventService: BrainstormEventService,
     private postLayoutService: PostLayoutService,
     private contextService: ContextService
   ) {
@@ -75,6 +78,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
   }
 
   ngOnInit(): void {
+    this.layoutConfig.dragEnabled = this.isHost;
     this.postLayoutService.sendMessage$.subscribe((v) => {
       if (v) {
         this.sendMessage.emit(v);
@@ -86,6 +90,15 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         this.refreshGridLayout();
       } else if (v === 'opened') {
         this.refreshGridLayout();
+      }
+    });
+
+    this.brainstormEventService.ideaCommentEvent$.subscribe((v: UpdateMessage) => {
+      // Add the comment to the card
+      if (this.board.id === v.event_msg.board_id) {
+        // the comment was added in the board
+        this.brainstormService.uncategorizedIdeaCommentAdded(this.ideas, v.event_msg);
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       }
     });
   }
@@ -108,10 +121,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
           this.postLayoutService.sortGrid(this.board.sort, this.grid);
           this.postLayoutService.refreshGridLayout(this.grid, false);
         });
-      } else if (
-        this.eventType === 'BrainstormSubmitIdeaCommentEvent' ||
-        this.eventType === 'BrainstormRemoveIdeaCommentEvent'
-      ) {
+      } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
@@ -129,8 +139,8 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         this.brainstormService.uncategorizedIdeaEdited(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
-        this.eventType === 'HostChangeBoardEvent' ||
-        this.eventType === 'ParticipantChangeBoardEvent'
+        this.eventType === EventTypes.hostChangeBoardEvent ||
+        this.eventType === EventTypes.participantChangeBoardEvent
       ) {
         if ($event.board) {
           if ($event.board.currentValue.id === $event.board.previousValue.id) {
@@ -152,7 +162,7 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
       } else if (this.eventType === 'BrainstormToggleParticipantNameEvent') {
         this.postLayoutService.refreshGridLayout(this.grid, false);
-      } else if (this.eventType === 'BrainstormToggleMeetingMode') {
+      } else if (this.eventType === EventTypes.brainstormToggleMeetingMode) {
         if (this.act.meeting_mode) {
           // host just turned on meeting mode
           // take all users to new board

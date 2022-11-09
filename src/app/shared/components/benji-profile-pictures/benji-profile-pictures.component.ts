@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { toInteger } from 'lodash';
 import { ActivitiesService } from 'src/app/services/activities';
-import { UpdateMessage } from 'src/app/services/backend/schema';
+import { EventTypes, UpdateMessage } from 'src/app/services/backend/schema';
 @Component({
   selector: 'benji-profile-pictures',
   templateUrl: './benji-profile-pictures.component.html',
@@ -16,10 +16,13 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
 
   remainingCount = 0;
   displayCodes: [];
+  _activityState: UpdateMessage;
 
-  constructor(private activitiesService: ActivitiesService) { }
+  constructor(private activitiesService: ActivitiesService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this._activityState = this.activityState;
+  }
 
   ngOnChanges(): void {
     if (this.participantCodes && this.participantCodes.length > this.counterAfter) {
@@ -28,16 +31,21 @@ export class BenjiProfilePicturesComponent implements OnInit, OnChanges {
     } else {
       this.remainingCount = 0;
     }
+
+    if (this.activityState && this.activityState.eventType === EventTypes.joinEvent) {
+      // only update activity state when join event occurs
+      this._activityState = this.activityState;
+    }
   }
 
   getName(code: number) {
-    return this.activitiesService.getParticipantName(this.activityState, code);
+    return this.activitiesService.getParticipantName(this._activityState, code);
   }
 
   getInitials(code: number) {
     let nameString = '';
 
-    nameString = this.activitiesService.getParticipantName(this.activityState, code);
+    nameString = this.activitiesService.getParticipantName(this._activityState, code);
 
     const fullName = this.name ? this.name.split(' ') : nameString.split(' ');
     const first = fullName[0] ? fullName[0].charAt(0) : '';

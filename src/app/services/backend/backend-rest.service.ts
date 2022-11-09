@@ -94,7 +94,6 @@ export class BackendRestService {
 
   public validateRoomCode(roomCode) {
     const lessonRun = this.httpClient.get(`${global.apiRoot}/course_details/lesson_run/${roomCode}/`);
-    console.log(lessonRun);
     return lessonRun;
   }
 

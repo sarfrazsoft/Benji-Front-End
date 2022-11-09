@@ -49,7 +49,7 @@
 @import './activities/mcq-result';
 @import './activities/single-column-activity';
 @import './activities/top-banner-two-column';
-@import './activities/dialogs';
+@import './dialogs/dialogs';
 @import './activities/hint-word';
 @import './activities/timers';
 @import './activities/icons';
@@ -1466,7 +1466,7 @@ benji-main-screen-lesson {
 
 benji-participant-join {
   .join-screen {
-    height: 100vh;
+    min-height: 100vh;
     background: #f3f4f7;
     .bg-white {
       z-index: -1;

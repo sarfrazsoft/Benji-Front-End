@@ -41,9 +41,4 @@ export class SingleUserComponent extends BaseLessonComponent implements OnInit {
       matSnackBar
     );
   }
-
-  isPaused() {
-    const activity_type = this.serverMessage.activity_type.toLowerCase();
-    return this.serverMessage[activity_type].is_paused;
-  }
 }

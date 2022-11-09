@@ -68,10 +68,6 @@ export class TopicMediaComponent implements OnInit {
     this.selectedBoard = board;
   }
 
-  getBoardsForAdmin() {
-    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-  }
-
   mediaUploaded(media: any) {
     this.uploadingTopicMedia = false;
     this.uploadedTopicMedia = true;

@@ -6,6 +6,7 @@ import { LessonInformation, TeamUser } from 'src/app/services/backend/schema';
 import { environment } from 'src/environments/environment';
 import { LessonRunDetails } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
+import { LessonService } from 'src/app/services/lesson.service';
 @Component({
   selector: 'benji-lesson-tile',
   templateUrl: './lesson-tile.component.html',
@@ -33,39 +34,17 @@ export class LessonTileComponent implements OnInit {
     private router: Router,
     private contextService: ContextService,
     private utilsService: UtilsService,
+    private lessonService: LessonService
   ) {}
 
   ngOnInit() {
     this.participantsCount = this.lesson.participant_set.length;
-    this.setCoverPhoto();
+    this.coverPhoto = this.lessonService.setCoverPhoto(this.lesson.lessonrun_images) ??
+      'assets/img/temporary/dummy.png';
     this.calculateTimeStamp();
     setInterval(() => {
       this.calculateTimeStamp();
     }, 60000);
-  }
-
-  setCoverPhoto() {
-    if (this.lesson.lessonrun_images.length > 0) {
-      const ids = this.lesson.lessonrun_images.map((object) => object.id);
-      const max = Math.max(...ids);
-      this.maxIdIndex = this.lesson.lessonrun_images.findIndex((x) => x.id === max);
-
-      const image_url = this.lesson.lessonrun_images[this.maxIdIndex]?.image_url;
-      const img = this.lesson.lessonrun_images[this.maxIdIndex]?.img;
-
-      if (!image_url && !img) {
-        this.setDefaultCoverPhoto();
-        return;
-      }
-
-      this.coverPhoto = image_url ?? this.hostLocation + img;
-    } else {
-      this.setDefaultCoverPhoto();
-    }
-  }
-
-  setDefaultCoverPhoto() {
-    this.coverPhoto = 'assets/img/temporary/dummy.png';
   }
 
   calculateTimeStamp() {

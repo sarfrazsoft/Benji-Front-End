@@ -1,310 +1,235 @@
 .lobby-wrapper {
-  height: calc(100vh);
-  //margin-top: 52px;
+  min-height: 100vh;
   .content-wrapper {
-    max-width: 960px;
+    margin: 32px 16px;
+    width: 560px;
+    max-width: 560px;
     box-shadow: 0px 25px 125px rgba(32, 34, 34, 0.05), 0px 16.2037px 73.206px rgba(32, 34, 34, 0.037963), 0px 9.62963px 39.8148px rgba(32, 34, 34, 0.0303704), 0px 5px 20.3125px rgba(32, 34, 34, 0.025), 0px 2.03704px 10.1852px rgba(32, 34, 34, 0.0196296), 0px 0.462963px 4.91898px rgba(32, 34, 34, 0.012037);
-    border-radius: 16px;
+    border-radius: 24px;
     background: #fff;
-    .session-details {
-      background: #F9F9FB;
-      padding: 40px;
-      border-radius: 16px 0px 0px 16px;
-      align-items: stretch;
-      &.signup {
-        min-height: 559px;
+    .prompt-image {
+      height: 175px;
+      .background-img {
+        border-radius: 24px 24px 0px 0px;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        width: 100%;
       }
-      &.adminLobby {
-        margin-right: 0px;
-        max-width: unset;
-        width: 70vw;
-      }
-      .session-title {
-        font-size: 32px;
-        font-weight: 700;
-        color: #37352f;
-        margin-bottom: 24px;
-      }
-      .session-start {
-        font-size: 16px;
-        .join-code {
-          color: #616161;
-          font-weight: 500;
-          cursor: pointer;
-          span {
-            font-weight: 700;
-          }
-        }
-        img {
-          background: #f3f4f7;
-          padding: 8px;
-          border-radius: 8px;
-          cursor: pointer;
-        }
-        .start-button {
+    }
+    .session-join-wrapper {
+      padding: 32px 40px;
+      .session-details {
+        .session-title {
+          font-size: 32px;
+          line-height: 40px;
           font-weight: 700;
-          padding: 11px 32px;
-          border-radius: 8px;
-          cursor: pointer;
-          width: 106px;
-        }
-      }
-      .session-host {
-        margin-bottom: 16px;
-        img {
-          width: 32px;
-          height: 32px;
-          border-radius: 50%;
-        }
-        .initials {
-          color: #fff;
-          font-size: 14px;
-          font-weight: 600;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: #5e8deb;
-          line-height: 0px;
-        }
-        .name {
-          font-size: 18px;
-          font-weight: 500;
           color: #37352f;
-          text-transform: capitalize;
-          margin-bottom: 4px;
-        }
-        .is-admin {
-          color: #828282;
-          font-size: 14px;
-          font-weight: 500;
-        }
-      }
-      .description {
-        color: #37352f;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        // padding-bottom: 28px;
-        // margin-bottom: 32px;
-        // border-bottom: 2px solid #eaeaea;
-        width: 320px;
-      }
-      // .session-participants {
-      //   font-size: 24px;
-      //   font-weight: 700;
-      //   color: #37352f;
-      //   margin-bottom: 24px;
-      //   .participant {
-      //     img {
-      //       width: 40px;
-      //       height: 40px;
-      //       border-radius: 50%;
-      //     }
-      //     .name {
-      //       font-size: 14px;
-      //       font-weight: 400;
-      //       color: #000;
-      //       text-transform: capitalize;
-      //     }
-      //   }
-      // }
-      // .participants-list {
-      //   max-height: 168px;
-      //   overflow-y: auto;
-      // }
-    }
-    .sub-title {
-      font-weight: 600;
-      font-size: 20px;
-      line-height: 20px;
-      color: #37352f;
-      margin-bottom: 24px;
-    }
-    .join-session {
-      padding: 40px;
-      max-width: 400px;
-      border-radius: 0px 16px 16px 0px;
-      .sub-title {
-        margin-bottom: 16px;
-      }
-      .label {
-        color: #37352f;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 8px;
-      }
-      .email-control, .password-control {
-        margin-bottom: 16px !important;
-      }
-      mat-error > div {
-        position: relative;
-      }
-      input:not([type="submit"]) {
-        border-radius: 8px;
-        width: 288px;
-        height: 48px;
-        padding: 0px 16px;
-        font-size: 16px;
-        font-weight: 500;
-        border: 0px;
-        color: #37352f;
-        margin-bottom: 16px;
-        background: #F3F4F7;
-        &:focus {
-          outline-width: 0;
-          &::placeholder {
-            opacity: 0;
-          }
-        }
-        &::placeholder {
-          color: #828282;
-        }
-        &.name-input {
-          font-weight: 400;
           margin-bottom: 8px;
         }
-      }
-      .edit-profile {
-        margin-bottom: 24px;
-        cursor: pointer;
-        .edit-pen {
-          width: 16px;
-          height: 16px;
-          margin-right: 8px;
+        .session-host {
+          padding-bottom: 24px;
+          margin-bottom: 16px;
+          border-bottom: 1px solid #E2E2E2;;
+          img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+          }
+          .initials {
+            color: #fff;
+            font-weight: 500;
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+            border-radius: 50%;
+            background: #5e8deb;
+            line-height: 0px;
+          }
+          .name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #37352f;
+            text-transform: capitalize;
+          }
+          .is-admin {
+            color: #828282;
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 4px;
+          }
         }
-        .change-profile {
+        .description {
+          color: #37352f;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 24px;
+          margin-bottom: 32px;
+        }
+      }
+      .sub-title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 20px;
+        color: #37352f;
+        margin-bottom: 24px;
+      }
+      .join-session {
+        .sub-title {
+          margin-bottom: 16px;
+        }
+        .label {
+          color: #37352f;
+          font-size: 14px;
+          font-weight: 500;
+          margin-bottom: 8px;
+        }
+        mat-error > div {
+          position: relative;
+        }
+        input:not([type="submit"]) {
+          border-radius: 8px;
+          width: calc(100% - 32px);
+          height: 48px;
+          padding: 0px 16px;
           font-size: 16px;
           font-weight: 500;
-          color: #828282;
-        }
-      }
-      .button {
-        height: 40px;
-        text-align: center;
-        border-radius: 8px;
-        color: #fff;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        &.inactive {
-          //opacity: 0.4;
-        }
-        &.guest-button {
-          height: 48px;
-          line-height: 48px;
-        }
-      }
-      .session-joined {
-        width: 400px;
-        min-height: 330px;
-        font-weight: 600;
-        font-size: 24px;
-        text-align: center;
-      }
-      .member-join {
-        margin-top: 16px;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        color: #828282;
-        .actions {
-          font-weight: 500;
-          color: #555BEA;
-          cursor: pointer;
-          span {
+          border: 0px;
+          color: #37352f;
+          margin-bottom: 16px;
+          background: #F3F4F7;
+          &:focus {
+            outline-width: 0;
+            &::placeholder {
+              opacity: 0;
+            }
+          }
+          &::placeholder {
             color: #828282;
-            cursor: none;
+          }
+          &.name-input {
+            font-weight: 400;
+            margin-bottom: 16px;
           }
         }
-      }
-      // .or {
-      //   font-size: 14px;
-      //   font-weight: 600;
-      //   color: #616161;
-      //   text-align: center;
-      //   position: relative;
-      //   margin-bottom: 24px;
-      //   margin-top: 24px;
-      //   &:before {
-      //     content: "";
-      //     display: block;
-      //     width: 144px;
-      //     height: 1px;
-      //     background: #e7e7e7;
-      //     position: absolute;
-      //     left: 0;
-      //     top: 50%;
-      //   }
-      //   &:after {
-      //     content: "";
-      //     display: block;
-      //     width: 144px;
-      //     height: 1px;
-      //     background: #e7e7e7;
-      //     position: absolute;
-      //     right: 0;
-      //     top: 50%;
-      //   }
-      // }
-      .participant-login {
-        .sign-up-section {
-          height: unset;
-          img {
-            display: none;
+        .edit-profile {
+          margin-bottom: 24px;
+          cursor: pointer;
+          .edit-pen {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
           }
-          .log-in-card, .sign-up-card {
-            margin-top: 0px;
-            width: unset;
-            .div-block-183 {
-              margin: 0;
-              align-items: flex-start;
-              .title {
-                font-size: 20px;
-                font-weight: 600;
-                margin-bottom: 8px;
-                text-align: left;
-              }
-              .text-block-89 {
-                font-size: 16px;
-                text-align: left;
-                margin-top: 8px;
-              }
-              .small-form-text {
-                width: 100%;
-              }
-              .forgot-form {
-                margin-top: 16px;
-              }
-              .form-block-8 > form {
-                margin-top: 16px;
-                > div {
-                  margin-bottom: 0px;
-                }
-                .tos-text {
-                  margin-bottom: 16px;
-                }
-              }
-              .log-in-form, .form-block-8 > form {
-                .email-control, .password-control {
-                  margin-bottom: 0px;
-                }
-                input {
-                  font-weight: 400;
-                }
-                input[type=submit] {
-                  height: 40px;
+          .change-profile {
+            font-size: 16px;
+            font-weight: 500;
+            color: #828282;
+          }
+        }
+        .button {
+          height: 40px;
+          text-align: center;
+          border-radius: 8px;
+          color: #fff;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          &.inactive {
+            //opacity: 0.4;
+          }
+          &.guest-button {
+            height: 48px;
+            line-height: 48px;
+          }
+        }
+        .session-joined {
+          width: 400px;
+          min-height: 330px;
+          font-weight: 600;
+          font-size: 24px;
+          text-align: center;
+        }
+        .member-join {
+          margin-top: 16px;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: #828282;
+          text-align: center;
+          .actions {
+            font-weight: 500;
+            color: #555BEA;
+            cursor: pointer;
+            a {
+              line-height: 26px;
+            }
+            span {
+              color: #828282;
+              cursor: none;
+            }
+          }
+        }
+        .participant-login {
+          .sign-up-section {
+            height: unset;
+            img {
+              display: none;
+            }
+            .log-in-card, .sign-up-card {
+              margin-top: 0px;
+              width: 100%;
+              .div-block-183 {
+                margin: 0;
+                align-items: flex-start;
+                .title {
+                  font-size: 20px;
                   font-weight: 600;
+                  margin-bottom: 0px;
+                  text-align: left;
+                }
+                .text-block-89 {
+                  font-size: 16px;
+                  text-align: left;
+                  margin-top: 8px;
+                }
+                .small-form-text {
                   width: 100%;
                 }
-              }
-              .already-member {
-                margin-top: 16px;
-                &.joining {
-                  margin-top: 24px;
+                .forgot-form {
+                  margin-top: 16px;
                 }
-              }
-              &.incorrect-code {
-                padding: 48px 40px;
+                .form-block-8 > form {
+                  margin-top: 16px;
+                  > div {
+                    margin-bottom: 0px;
+                  }
+                  .tos-text {
+                    margin-bottom: 16px;
+                  }
+                }
+                .log-in-form, .form-block-8 > form {
+                  .email-control, .password-control {
+                    margin-bottom: 0px;
+                  }
+                  input {
+                    font-weight: 400;
+                  }
+                  input[type=submit] {
+                    height: 40px;
+                    font-weight: 600;
+                    width: 100%;
+                  }
+                }
+                .already-member {
+                  margin-top: 16px;
+                  &.joining {
+                    margin-top: 24px;
+                  }
+                }
+                &.incorrect-code {
+                  padding: 48px 40px;
+                }
               }
             }
           }
@@ -326,83 +251,30 @@
   }
 }
 
-@media (max-width: 1250px) {
-  .lobby-wrapper {
-    &.participant-lobby {
-      //height: auto;
-      padding: 16px;
-    }
-    .content-wrapper {
-      .session-details {
-        margin-right: 0px;
-        float: none;
-        &.adminLobby {
-          .session-title {
-            font-size: 32px;
-          }
-          .sub-title {
-            font-size: 20px;
-          }
-        }
-        .description {
-          width: 250px;
-        }
-      }
-      .join-session {
-        float: none;
-        input {
-          width: calc(100% - 30px);
-        }
-        .session-joined {
-          margin: 0px auto;
-          min-height: 180px;
-        }
-        // .or {
-        //   &:before, &:after  {
-        //     width: 44%;
-        //   }
-        // }
-      }
-    }
-  }
-}
-
-@media (max-width: 750px) {
+@media (max-width: 575px) {
   .lobby-wrapper {
     .content-wrapper {
-      display: block !important;
       width: 100%;
-      .session-details, .session-details.signup {
-        min-height: unset;
-        width: 100%;
-        background: #fff;
-        border-radius: 16px 16px 0px 0px;
-        padding: 32px 24px 24px 24px;
+      .prompt-image {
+        height: 124px;
       }
-      .join-session {
-        width: 100%;
-        max-width: 100%;
-        float: none;
+      .session-join-wrapper {
         padding: 24px;
-        background: #f9f9fb;
-        border-radius: 0px 0px 16px 16px;
-        input, input:not([type="submit"]) {
-          width: calc(100% - 32px);
-          background: #fff;
+        &.with-cover {
+          padding-top: 16px;
         }
-        .session-joined {
-          width: auto;
+        .session-details {
+          .session-title {
+            font-size: 28px;
+          }
+          .description {
+            margin-bottom: 24px;
+          }
         }
         .sub-title {
-          font-size: 20px;
+          font-size: 18px;
         }
       }
     }
-  }
-}
-.mobile-participant-login {
-  .sign-up-section {
-    height: unset;
-    margin-top: 24px;
   }
 }

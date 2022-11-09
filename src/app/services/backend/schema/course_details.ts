@@ -48,7 +48,6 @@ export class Lesson {
   status?: string;
 }
 
-
 export interface LessonRun {
   id: number;
   start_time: string;
@@ -58,6 +57,13 @@ export interface LessonRun {
   participant_set: Array<Participant>;
   branding: Branding;
   lesson: Lesson;
+  lessonrun_images: Array<CoverPhoto>;
+}
+
+export interface CoverPhoto {
+  id: number;
+  image_url: string;
+  img: string;
 }
 
 export interface RunningTools {
@@ -114,7 +120,7 @@ export interface LessonRunDetails {
   branding: Branding;
   idea_count: number;
   board_count: number;
-  lessonrun_images: Array<any>;
+  lessonrun_images: Array<CoverPhoto>;
 }
 
 export interface Participant {

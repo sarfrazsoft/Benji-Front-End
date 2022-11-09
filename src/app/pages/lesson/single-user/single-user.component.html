@@ -3,13 +3,6 @@
 </div>
 
 <div class="ms-fullheight-container">
-  <benji-main-screen-toolbar
-    *ngIf="isConnected() && serverMessage"
-    [showHeader]="getActivityType() !== at.lobby"
-    [roomCode]="serverMessage.lesson_run.lessonrun_code"
-    [lessonName]="serverMessage.lesson.lesson_name"
-    [isPaused]="isPaused()"
-    (socketMessage)="sendSocketMessage($event)"></benji-main-screen-toolbar>
 
   <div
     *ngIf="isConnected() && serverMessage"
@@ -170,13 +163,12 @@
 
     <div *ngIf="getActivityType() === null">Lesson has ended</div>
   </div>
-  <benji-main-screen-footer
+  <!-- <benji-main-screen-footer
     *ngIf="isConnected() && serverMessage"
     [showFastForward]="getActivityType() === at.pitchoMatic"
     [showFooter]="getActivityType() !== at.lobby"
     [roomCode]="serverMessage.lesson_run.lessonrun_code"
     [lessonName]="serverMessage.lesson.lesson_name"
-    [isPaused]="isPaused()"
     (socketMessage)="sendSocketMessage($event)"
-  ></benji-main-screen-footer>
+  ></benji-main-screen-footer> -->
 </div>

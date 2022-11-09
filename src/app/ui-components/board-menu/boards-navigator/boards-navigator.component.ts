@@ -1,14 +1,5 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NgxPermissionsService } from 'ngx-permissions';
@@ -17,19 +8,15 @@ import {
   Board,
   BoardSort,
   BoardStatus,
-  BrainstormAddBoardEventBaseEvent,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
-  BrainstormChangeModeEvent,
   BrainstormClearBoardIdeaEvent,
-  BrainstormEditInstructionEvent,
-  BrainstormEditSubInstructionEvent,
   BrainstormRearrangeBoardEvent,
   BrainstormRemoveBoardEvent,
-  BrainstormToggleMeetingMode,
   BrainstormToggleParticipantNameEvent,
   Branding,
   DuplicateBoardEvent,
+  EventTypes,
   HostChangeBoardEvent,
   ParticipantChangeBoardEvent,
   UpdateMessage,
@@ -49,7 +36,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   @Output() sendMessage = new EventEmitter<any>();
   participants = [];
 
-  meetingMode: boolean;
   board: Board;
   currentboardStatus: BoardStatus;
   selectedBoard: Board;
@@ -82,6 +68,16 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         this.selectedBoardChanged(board);
       }
     });
+    this.brainstormService.lessonName$.subscribe((lessonName: string) => {
+      if (lessonName) {
+        this.lessonName = lessonName;
+      }
+    });
+    this.brainstormService.lessonDescription$.subscribe((lessonDescription: string) => {
+      if (lessonDescription) {
+        this.lessonDescription = lessonDescription;
+      }
+    });
 
     this.boardStatusService.boardStatus$.subscribe((status: BoardStatus) => {
       if (status) {
@@ -89,9 +85,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       }
     });
 
-    this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
     this.initializeBoards();
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
@@ -108,8 +102,6 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
         this.darkLogo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
     });
-
-    this.updateLessonInfo();
   }
 
   selectedBoardChanged(board) {
@@ -123,36 +115,31 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       this.activityState.eventType === 'BrainstormAddBoardEventBaseEvent'
     ) {
       this.resetBoards();
-    } else if (this.activityState.eventType === 'GetUpdatedLessonDetailEvent') {
-      this.updateLessonInfo();
     }
-    if (this.navType === 'boards') {
-      if (this.activityState.eventType === 'HostChangeBoardEvent') {
-      } else if (this.activityState.eventType === 'BrainstormToggleMeetingMode') {
-        this.meetingMode = this.activityState.brainstormactivity.meeting_mode;
-      } else {
-        this.initializeBoards();
-      }
+    if (
+      this.activityState.eventType === EventTypes.hostChangeBoardEvent ||
+      this.activityState.eventType === EventTypes.brainstormSubmitIdeaCommentEvent ||
+      this.activityState.eventType === EventTypes.notificationEvent
+    ) {
+    } else {
+      this.initializeBoards();
     }
-    this.hostBoard = this.activityState.brainstormactivity.host_board;
-  }
-
-  updateLessonInfo() {
-    this.lessonName = this.activityState.lesson.lesson_name;
-    this.lessonDescription = this.activityState.lesson.lesson_description;
+    if (this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent) {
+      this.hostBoard = this.activityState?.brainstormactivity?.host_board;
+    }
   }
 
   initializeBoards() {
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
-        const unSortedBoards: Array<Board> = this.getBoardsForAdmin();
+        const unSortedBoards: Array<Board> = this.getBoards();
         this.sortBoards(unSortedBoards);
       }
     });
 
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
       if (val) {
-        const unSortedBoards: Array<Board> = this.getBoardsForParticipant();
+        const unSortedBoards: Array<Board> = this.getBoards();
         this.sortBoards(unSortedBoards);
       }
     });
@@ -181,11 +168,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
     this.boards = boards;
   }
 
-  getBoardsForAdmin() {
-    return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
-  }
-
-  getBoardsForParticipant() {
+  getBoards() {
     return this.activityState.brainstormactivity.boards.filter((board) => board.removed === false);
   }
 
@@ -320,9 +303,5 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
 
   changeOrder(order: { value: BoardSort; name: string }) {
     this.sendMessage.emit(new BrainstormBoardSortOrderEvent(order.value, this.selectedBoard.id));
-  }
-
-  mediaUploaded(event) {
-    console.log(event);
   }
 }
