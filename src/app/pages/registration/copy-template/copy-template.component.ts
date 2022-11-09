@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services';
-import { UserInvitation } from 'src/app/services/backend/schema';
+import { UserInvitation, UseTemplateResponse } from 'src/app/services/backend/schema';
 
 @Component({
   selector: 'benji-copy-template',
@@ -19,30 +19,17 @@ export class CopyTemplateComponent implements OnInit {
   ngOnInit() {
     const templateId = Number(this.activatedRoute.snapshot.params['templateId']);
     if (this.authService.isLoggedIn()) {
-      console.log(templateId);
-      // setTimeout(() => {
-      //   this.router.navigate(['/dashboard']);
-      // }, 3000);
+      this.authService.useTemplate(templateId).subscribe((res: UseTemplateResponse) => {
+        if (res.detail.includes('Template is created successfully')) {
+          this.router.navigate(['/dashboard']);
+        }
+      });
     } else {
-      this.router.navigate(['/login?templateId=' + templateId]);
+      this.router.navigate(['/login'], {
+        relativeTo: this.activatedRoute,
+        queryParams: { templateId: templateId },
+        queryParamsHandling: 'merge',
+      });
     }
-    // console.log(params['inviteId']);
-    // console.log(params['inviteToken']);
-    // const templateId = Number(params['templateId']);
-
-    // this.authService
-    //   .getInivitationDetails(params['inviteId'], params['inviteToken'])
-    //   .subscribe((res: UserInvitation) => {
-    //     // console.log(res);
-    //     this.authService.userInvitation = res;
-    //     this.router.navigate(['/login']);
-    //   });
-    // });
-    //     curl --location --request POST '<hostname>/api/course_details/use-template/' \
-    // --header 'Authorization: Bearer <token>' \
-    // --header 'Content-Type: application/json' \
-    // --data-raw '{
-    //     "lesson_run_code": 85274
-    // }'
   }
 }
