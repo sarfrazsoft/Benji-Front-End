@@ -5,7 +5,6 @@ import {
   MainScreenLessonComponent,
   ParticipantLessonComponent,
   SessionEndComponent,
-  SingleUserComponent,
 } from 'src/app/pages';
 import { ParticipantJoinComponent } from '../pages/participant/join/participant-join.component';
 import { ParticipantLoginComponent } from '../pages/participant/login/participant-login.component';
@@ -17,13 +16,6 @@ const routes: Routes = [
   {
     path: 'screen/lesson/:roomCode',
     component: MainScreenLessonComponent,
-    resolve: {
-      labelInfo: WhiteLabelResolver,
-    },
-  },
-  {
-    path: 'user/lesson/:roomCode',
-    component: SingleUserComponent,
     resolve: {
       labelInfo: WhiteLabelResolver,
     },

@@ -4,12 +4,8 @@ export * from './dialogs';
 
 import {
   MainScreenBrainStormComponents,
-  MainScreenBuildPitchActivityComponent,
-  MainScreenConvoCardsActivityComponent,
-  MainScreenFeedbackActivityComponent,
   MainScreenPollComponent,
   MainScreenPopQuizComponent,
-  MainScreenTitleActivityComponent,
 } from 'src/app/pages/lesson/main-screen';
 import {
   BuildPitchComponents,
@@ -58,15 +54,9 @@ const ActivityComponents = [
   ParticipantConvoCardsActivityComponent,
   ParticipantPollComponent,
   VotePitchComponent,
-  // ...ParticipantSharedComponents,
   ...ParticipantBrainStormComponents,
   ParticipantBrainstormingActivityComponent,
   VoteIdeaComponent,
-  // ...BuildPitchComponents,
-  MainScreenBuildPitchActivityComponent,
-  MainScreenTitleActivityComponent,
-  MainScreenFeedbackActivityComponent,
-  MainScreenConvoCardsActivityComponent,
   ...MainScreenBrainStormComponents,
   MainScreenPopQuizComponent,
   MainScreenPollComponent,
