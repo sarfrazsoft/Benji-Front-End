@@ -107,7 +107,6 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
   @Input() minWidth;
   @Input() sendMessage;
   @Input() joinedUsers;
-  @Input() showUserName;
   @Input() participantCode;
   @Input() eventType;
   @Input() isColumnsLayout;

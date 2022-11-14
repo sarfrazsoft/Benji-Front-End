@@ -70,7 +70,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
 
   voteScreen = false;
   VnSComplete = false;
-  showUserName = true;
   minWidth = 'small';
   colDeleted = 0;
   joinedUsers = [];
@@ -189,7 +188,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       this.act = cloneDeep(this.activityState.brainstormactivity);
       this.joinedUsers = this.activityState.lesson_run.participant_set;
-      this.showUserName = this.board.board_activity.show_participant_name_flag;
     } else {
       this.act = cloneDeep(this.activityState.brainstormactivity);
     }

@@ -60,7 +60,6 @@ export class CategorizedComponent extends BrainstormLayout implements OnInit, On
   @Input() minWidth;
   @Input() sendMessage;
   @Input() joinedUsers;
-  @Input() showUserName;
   @Input() participantCode;
   @Input() eventType;
   @Input() isColumnsLayout;

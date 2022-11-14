@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import * as LogRocket from 'logrocket';
 import * as moment from 'moment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -43,6 +44,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/dialogs';
 import { IdeaDetailedDialogComponent } from 'src/app/shared/dialogs/idea-detailed-dialog/idea-detailed.dialog';
 import { environment } from 'src/environments/environment';
 
+@UntilDestroy()
 @Component({
   selector: 'benji-brainstorm-card',
   templateUrl: './brainstorm-card.component.html',
@@ -79,7 +81,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   @Input() minWidth;
   @Input() sendMessage;
   @Input() joinedUsers;
-  @Input() showUserName;
+  showUserName;
   @Input() participantCode;
   @Input() eventType;
   @Input() isColumnsLayout;
@@ -199,6 +201,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     this.brainstormEventService.ideaCommentEvent$.subscribe((v: BrainstormSubmitIdeaCommentResponse) => {
       // Add the comment to the card
       this.addComment();
+    });
+
+    this.brainstormService.selectedBoard$.pipe(untilDestroyed(this)).subscribe((board: Board) => {
+      if (board) {
+        this.showUserName = board.board_activity?.show_participant_name_flag;
+      }
     });
   }
 

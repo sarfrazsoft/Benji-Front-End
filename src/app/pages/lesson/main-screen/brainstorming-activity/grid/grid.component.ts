@@ -44,7 +44,6 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
   @Input() minWidth;
   @Input() sendMessage;
   @Input() joinedUsers;
-  @Input() showUserName;
   @Input() participantCode;
   @Input() eventType;
   @Input() isColumnsLayout;
