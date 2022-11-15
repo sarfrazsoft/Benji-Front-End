@@ -7,23 +7,10 @@ import { SidenavItemComponent } from './sidenav/sidenav-item/sidenav-item.compon
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
-import {
-  CaseStudyCheckinDialogComponent,
-  ImageViewDialogComponent,
-  LowAttendanceDialogComponent,
-  LowResponseDialogComponent,
-  MainScreenComponents,
-  ParticipantScreenComponents,
-  PeakBackDialogComponent,
-} from '../index';
+import { ImageViewDialogComponent, MainScreenComponents } from '../index';
 
 export const LayoutDeclarations = [
   ...MainScreenComponents,
-  ...ParticipantScreenComponents,
-  LowAttendanceDialogComponent,
-  LowResponseDialogComponent,
-  PeakBackDialogComponent,
-  CaseStudyCheckinDialogComponent,
   ImageViewDialogComponent,
   LayoutComponent,
   ParticipantLoginComponent,
@@ -33,10 +20,4 @@ export const LayoutDeclarations = [
   SidenavItemComponent,
 ];
 
-export const EntryComponents = [
-  LowAttendanceDialogComponent,
-  LowResponseDialogComponent,
-  PeakBackDialogComponent,
-  CaseStudyCheckinDialogComponent,
-  ImageViewDialogComponent,
-];
+export const EntryComponents = [ImageViewDialogComponent];

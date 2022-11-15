@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -8,15 +9,13 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { LowAttendanceDialogComponent } from 'src/app/pages/lesson/shared/dialogs';
+import * as global from 'src/app/globals';
 import { ContextService } from 'src/app/services';
 import { LobbySetNicknameEvent, LobbyStartButtonClickEvent } from 'src/app/services/backend/schema';
+import { BeforeLessonRunDetails } from 'src/app/services/backend/schema/course_details';
 import { PartnerInfo } from 'src/app/services/backend/schema/whitelabel_info';
 import { UtilsService } from 'src/app/services/utils.service';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
-import * as global from 'src/app/globals';
-import { HttpClient } from '@angular/common/http';
-import { BeforeLessonRunDetails } from 'src/app/services/backend/schema/course_details';
 
 @Component({
   selector: 'benji-ms-lobby',
@@ -24,7 +23,6 @@ import { BeforeLessonRunDetails } from 'src/app/services/backend/schema/course_d
   encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenLobbyComponent extends BaseActivityComponent implements OnInit, OnDestroy, OnChanges {
-  
   public beforeLessonRunDetails: BeforeLessonRunDetails;
   startSessionLabel = '';
   joinLobbyUrl = '';
@@ -40,20 +38,20 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
     private dialog: MatDialog,
     private contextService: ContextService,
     private utilsService: UtilsService,
-    private http: HttpClient,
+    private http: HttpClient
   ) {
     super();
   }
 
   openLowAttendanceDialog(): void {
-    this.dialogRef = this.dialog
-      .open(LowAttendanceDialogComponent, {
-        data: {},
-        disableClose: true,
-        panelClass: 'low-response-dialog',
-      })
-      .afterClosed()
-      .subscribe((res) => {});
+    // this.dialogRef = this.dialog
+    //   .open(LowAttendanceDialogComponent, {
+    //     data: {},
+    //     disableClose: true,
+    //     panelClass: 'low-response-dialog',
+    //   })
+    //   .afterClosed()
+    //   .subscribe((res) => {});
   }
 
   ngOnInit() {
@@ -86,7 +84,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
     // if (this.activityState.lesson_run.participant_set.length < 2) {
     //   this.openLowAttendanceDialog();
     // } else {
-    if(msg=="startLesson") {
+    if (msg === 'startLesson') {
       this.sendMessage.emit(new LobbyStartButtonClickEvent());
     }
     // }
@@ -98,7 +96,7 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
 
   getBeforeLessonRunDetails(lessonrun_code) {
     const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';
-    return this.http.post(request,{});
+    return this.http.post(request, {});
   }
 
   updateBeforeLessonRunDetails() {
@@ -106,5 +104,4 @@ export class MainScreenLobbyComponent extends BaseActivityComponent implements O
       this.beforeLessonRunDetails = res;
     });
   }
-
 }

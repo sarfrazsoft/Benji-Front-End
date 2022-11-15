@@ -7,28 +7,6 @@ import {
   MainScreenPollComponent,
   MainScreenPopQuizComponent,
 } from 'src/app/pages/lesson/main-screen';
-import {
-  BuildPitchComponents,
-  CaseStudyWorkAreaComponent,
-  ParticipantBrainStormComponents,
-  ParticipantBrainstormingActivityComponent,
-  ParticipantBuildPitchActivityComponent,
-  ParticipantCaseStudyActivityComponent,
-  ParticipantConvoCardsActivityComponent,
-  ParticipantFeedbackActivityComponent,
-  ParticipantFeedbackMCQComponent,
-  // ParticipantSharedComponents,
-  ParticipantGroupingToolComponent,
-  ParticipantInstructionTemplateComponent,
-  ParticipantPollComponent,
-  ParticipantPopQuizComponent,
-  ParticipantSharingToolComponent,
-  ParticipantTitleActivityComponent,
-  QuestionFormComponent,
-  QuestionLayoutComponent,
-  VoteIdeaComponent,
-  VotePitchComponent,
-} from 'src/app/pages/lesson/participant';
 import { ParticipantLobbyComponents } from 'src/app/pages/participant';
 import { SafeHtmlPipe } from '../services/safe-html.pipe';
 import { SafePipe } from '../services/safe.pipe';
@@ -39,24 +17,6 @@ import { Directives } from './directives';
 import { CustomMenuComponent } from './ngx-editor/custom-menu/custom-menu.component';
 
 const ActivityComponents = [
-  ParticipantFeedbackActivityComponent,
-  ParticipantTitleActivityComponent,
-  ParticipantPopQuizComponent,
-  ParticipantCaseStudyActivityComponent,
-  CaseStudyWorkAreaComponent,
-  ParticipantInstructionTemplateComponent,
-  QuestionFormComponent,
-  ParticipantFeedbackMCQComponent,
-  QuestionLayoutComponent,
-  ParticipantSharingToolComponent,
-  ParticipantGroupingToolComponent,
-  ParticipantBuildPitchActivityComponent,
-  ParticipantConvoCardsActivityComponent,
-  ParticipantPollComponent,
-  VotePitchComponent,
-  ...ParticipantBrainStormComponents,
-  ParticipantBrainstormingActivityComponent,
-  VoteIdeaComponent,
   ...MainScreenBrainStormComponents,
   MainScreenPopQuizComponent,
   MainScreenPollComponent,
