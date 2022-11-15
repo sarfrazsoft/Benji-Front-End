@@ -34,15 +34,16 @@ export class NotificationsComponent implements OnInit {
     this.loadNotifications();
     if (this.isDashboard) {
       this.brainstormEventService.notifications$.subscribe((notifications: Array<LessonRunNotification>) => {
-        if (notifications.length) {
+        if (notifications && notifications.length) {
           this.notificationList = this.activityState.notifications;
           this.updateNotifications(this.notificationList);
         }
       });
     } else {
-      this.brainstormEventService.activityState$.subscribe((v: UpdateMessage) => {
-        if (v) {
-          this.activityState = v;
+      // not on dashboard
+      this.brainstormEventService.notifications$.subscribe((notifications: Array<LessonRunNotification>) => {
+        if (notifications && notifications.length) {
+          this.notificationList = notifications;
           this.loadActivityStateNotifications();
         }
       });
@@ -62,9 +63,11 @@ export class NotificationsComponent implements OnInit {
   }
 
   loadActivityStateNotifications() {
-    this.notificationList = this.notificationList.filter(
-      (n) => n.extra.lessonrun_code === this.activityState?.lesson_run.lessonrun_code
-    );
+    if (this.activityState) {
+      this.notificationList = this.notificationList.filter(
+        (n) => n.extra?.lessonrun_code === this.activityState?.lesson_run?.lessonrun_code
+      );
+    }
     this.updateNotificationCount.emit(this.notificationList.filter((x) => !x.read).length);
   }
 
@@ -97,6 +100,12 @@ export class NotificationsComponent implements OnInit {
       this.notificationsService.markAllasRead().subscribe((r: { message: string }) => {
         if (r.message === 'All notification is set to read successfully.') {
           this.loadNotifications();
+          this.notificationsService.getNotifications(null).subscribe((notifications: Array<Notification>) => {
+            this.notificationList = notifications;
+            if (!this.isDashboard) {
+              this.loadActivityStateNotifications();
+            }
+          });
         }
       });
     } else {
