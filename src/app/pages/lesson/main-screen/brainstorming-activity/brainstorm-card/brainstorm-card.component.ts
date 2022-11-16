@@ -161,6 +161,12 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
     if (this.item && this.item.submitting_participant) {
       this.submittingUser = this.item.submitting_participant.participant_code;
       this.commentKey = 'comment_' + this.item.id + this.submittingUser;
+    } else {
+      // it is host's idea
+      if (this.participantCode) {
+        // a participant is viewing it
+        this.commentKey = 'comment_' + this.item.id + 'host';
+      }
     }
 
     if (this.participantCode) {
