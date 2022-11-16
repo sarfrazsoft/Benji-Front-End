@@ -204,7 +204,6 @@ export class MainScreenBrainstormingActivityComponent
     } else if (currentEventType === EventTypes.hostChangeBoardEvent) {
       this.eventType = currentEventType;
       this.hostChangedBoard();
-      this.changeBoardStatus();
       this.updatePromptMedia();
     } else if (currentEventType === EventTypes.participantChangeBoardEvent) {
       this.eventType = currentEventType;
@@ -265,7 +264,7 @@ export class MainScreenBrainstormingActivityComponent
 
   changeBoardStatus() {
     this.getBoardStatus(this.act, (status: BoardStatus) => {
-      this.boardStatusService.boardStatus = status;
+      this.updateBoardStatus(status);
     });
   }
 
@@ -300,6 +299,7 @@ export class MainScreenBrainstormingActivityComponent
         this.selectedBoard = this.getAdminBoard();
         this.brainstormService.selectedBoard = this.selectedBoard;
         this.boardChangingQueryParams(this.selectedBoard.id);
+        this.updateBoardStatus(this.selectedBoard.status);
       }
     });
     this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
@@ -309,9 +309,14 @@ export class MainScreenBrainstormingActivityComponent
           this.selectedBoard = this.getAdminBoard();
           this.brainstormService.selectedBoard = this.selectedBoard;
           this.boardChangingQueryParams(this.selectedBoard.id);
+          this.updateBoardStatus(this.selectedBoard.status);
         }
       }
     });
+  }
+
+  updateBoardStatus(status: BoardStatus) {
+    this.boardStatusService.boardStatus = status;
   }
 
   participantChangedBoard() {
