@@ -2,6 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormEventService, BrainstormService, ContextService } from 'src/app';
 import {
@@ -25,6 +26,7 @@ import { BoardStatusService } from 'src/app/services/board-status.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation/confirmation.dialog';
 
+@UntilDestroy()
 @Component({
   selector: 'benji-boards-navigator',
   templateUrl: 'boards-navigator.component.html',
@@ -52,6 +54,7 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   lessonName: string;
   lessonDescription: string;
   boardHovered = false;
+  meetingMode = false;
 
   constructor(
     private dialog: MatDialog,
@@ -108,6 +111,10 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
       if (info) {
         this.darkLogo = info.logo ? info.logo.toString() : '/assets/img/Benji_logo.svg';
       }
+    });
+
+    this.brainstormService.meetingMode$.pipe(untilDestroyed(this)).subscribe((mode: boolean) => {
+      this.meetingMode = mode;
     });
   }
 
@@ -246,11 +253,13 @@ export class BoardsNavigatorComponent implements OnInit, OnChanges {
   }
 
   navigateToBoard(board: Board) {
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
-      }
-    });
+    if (!this.meetingMode) {
+      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+        if (val) {
+          this.sendMessage.emit(new ParticipantChangeBoardEvent(board.id));
+        }
+      });
+    }
 
     this.permissionsService.hasPermission('ADMIN').then((val) => {
       if (val) {
