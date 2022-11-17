@@ -321,18 +321,21 @@ export class MainScreenBrainstormingActivityComponent
 
   participantChangedBoard() {
     const eventMessage = this.activityState.event_msg as ParticipantChangeBoardResponse;
-    this.brainstormEventService.participantBoardId = eventMessage.board_id;
-    this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
-      if (val) {
-        this.selectedBoard = this.brainstormService.getParticipantBoardFromList(
-          this._activityState.brainstormactivity.boards,
-          eventMessage.board_id
-        );
+    if (this.participantCode === eventMessage.participant_code) {
+      this.brainstormEventService.participantBoardId = eventMessage.board_id;
+      this.permissionsService.hasPermission('PARTICIPANT').then((val) => {
+        if (val) {
+          this.selectedBoard = this.brainstormService.getParticipantBoardFromList(
+            this._activityState.brainstormactivity.boards,
+            eventMessage.board_id
+          );
 
-        this.brainstormService.selectedBoard = this.selectedBoard;
-        this.boardChangingQueryParams(this.selectedBoard.id);
-      }
-    });
+          this.brainstormService.selectedBoard = this.selectedBoard;
+          this.boardChangingQueryParams(this.selectedBoard.id);
+          this.updateBoardStatus(this.selectedBoard.status);
+        }
+      });
+    }
   }
 
   updatePromptMedia() {

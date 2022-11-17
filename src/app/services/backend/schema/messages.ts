@@ -603,6 +603,7 @@ export class BrainstormSubmitIdeaCommentResponse {
 }
 export class ParticipantChangeBoardResponse {
   board_id: number;
+  participant_code: number;
 }
 export class HostChangeBoardEventResponse {
   host_board: number;
