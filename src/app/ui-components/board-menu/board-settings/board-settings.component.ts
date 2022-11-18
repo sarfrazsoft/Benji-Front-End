@@ -1,17 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
-import { NgxPermissionsService } from 'ngx-permissions';
 import { BrainstormService } from 'src/app';
 import {
   Board,
-  BoardMode,
   BoardSort,
   BoardStatus,
   BoardTypes,
   BrainstormBoardSortOrderEvent,
   BrainstormChangeBoardStatusEvent,
-  BrainstormChangeModeEvent,
   BrainstormClearBoardIdeaEvent,
   BrainstormToggleAllowCommentEvent,
   BrainstormToggleAllowHeartEvent,
@@ -99,7 +96,6 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     private dialog: MatDialog,
     private brainstormService: BrainstormService,
     private boardStatusService: BoardStatusService,
-    private permissionsService: NgxPermissionsService,
     private utilsService: UtilsService
   ) {}
 
@@ -129,7 +125,7 @@ export class BoardSettingsComponent implements OnInit, OnChanges {
     }
   }
 
-  selectedBoardChanged(board) {
+  selectedBoardChanged(board: Board) {
     this.selectedBoard = board;
     this.showAuthorship = this.selectedBoard.board_activity.show_participant_name_flag;
     this.allowCommenting = this.selectedBoard.allow_comment;

@@ -1124,6 +1124,13 @@ export class BrainstormBoardSortOrderEvent extends ActivityEvent {
     this.extra_args = { sort: sort, board: board };
   }
 }
+export class BrainstormBoardPostSizeEvent extends ActivityEvent {
+  event_name = 'BrainstormBoardPostSizeEvent';
+  constructor(postSize: string, boardId: number) {
+    super();
+    this.extra_args = { post_size: postSize, board: boardId };
+  }
+}
 export class UpdatePromptVideoEvent extends ActivityEvent {
   event_name = 'UpdatePromptVideoEvent';
   constructor(board: number, prompt_video) {

@@ -34,6 +34,7 @@ import {
   BrainstormSubmitIdeaHeartEvent,
   EventTypes,
   Idea,
+  PostSize,
   QueryParamsObject,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -112,6 +113,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   boardStatus: BoardStatus;
   mobileSize = false;
   timeStamp: string;
+  postSize: PostSize;
 
   videoAvailable = false;
   oldVideo;
@@ -128,6 +130,7 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
   localActivityState: UpdateMessage;
 
   @ViewChild('iframeContainer') iframeContainer: ElementRef;
+  hostAvatarSize: string;
 
   constructor(
     private router: Router,
@@ -209,6 +212,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
       this.addComment();
     });
 
+    if (this.board.post_size) {
+      this.postSize = this.board.post_size;
+      this.hostAvatarSize = this.postSize === 'small' && this.minWidth > 264 ? 'small' : 'medium';
+    }
     this.brainstormService.selectedBoard$.pipe(untilDestroyed(this)).subscribe((board: Board) => {
       if (board) {
         this.showUserName = board.board_activity?.show_participant_name_flag;
@@ -244,9 +251,10 @@ export class BrainstormCardComponent implements OnInit, OnChanges, AfterViewInit
           }, 5);
         }
       }
-    }
-
-    if (
+    } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
+      this.postSize = this.board.post_size;
+      this.hostAvatarSize = this.postSize === 'small' ? 'small' : 'medium';
+    } else if (
       this.activityState.eventType !== EventTypes.brainstormSubmitIdeaCommentEvent &&
       this.activityState.eventType !== EventTypes.notificationEvent
     ) {

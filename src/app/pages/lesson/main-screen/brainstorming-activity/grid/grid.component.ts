@@ -121,6 +121,8 @@ export class GridComponent extends BrainstormLayout implements OnInit, OnChanges
           this.postLayoutService.sortGrid(this.board.sort, this.grid);
           this.postLayoutService.refreshGridLayout(this.grid, false);
         });
+      } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
+        this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (this.eventType === 'BrainstormRemoveIdeaCommentEvent') {
         this.brainstormService.uncategorizedIdeaCommented(this.board, this.ideas);
         this.postLayoutService.refreshGridLayout(this.grid, false);

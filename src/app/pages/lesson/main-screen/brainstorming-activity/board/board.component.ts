@@ -41,7 +41,6 @@ import {
   EventTypes,
   Group,
   Idea,
-  ResetGroupingEvent,
   Timer,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
@@ -102,21 +101,17 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
   imageDialogRef;
   selectedImageUrl;
   lessonRunCode;
-  private typingTimer;
 
   @ViewChild('brainstormHeadWrapper') elementView: ElementRef;
   headWrapperHeight;
 
   @Output() sendMessage = new EventEmitter<any>();
   constructor(
-    private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
     private matDialog: MatDialog,
     private utilsService: UtilsService,
     private activitySettingsService: ActivitySettingsService,
     private httpClient: HttpClient,
-    private permissionsService: NgxPermissionsService,
-    private sharingToolService: SharingToolService,
     private brainstormService: BrainstormService,
     private boardStatusService: BoardStatusService,
     private boardsNavigationService: BoardsNavigationService
@@ -141,9 +136,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       if (val && val.controlName === 'categorize') {
         this.sendMessage.emit(new BrainstormToggleCategoryModeEvent());
       }
-      if (val && val.controlName === 'cardSize') {
-        this.minWidth = val.state.name;
-      }
     });
 
     this.saveIdeaSubscription = this.brainstormService.saveIdea$.subscribe((val) => {
@@ -167,6 +159,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
         this.isHost
       );
     }
+
+    this.minWidth = this.board?.post_size;
   }
 
   ngOnChanges() {
@@ -188,6 +182,8 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
     ) {
       this.act = cloneDeep(this.activityState.brainstormactivity);
       this.joinedUsers = this.activityState.lesson_run.participant_set;
+    } else if (this.activityState.eventType === EventTypes.brainstormBoardPostSizeEvent) {
+      this.minWidth = this.board?.post_size;
     } else {
       this.act = cloneDeep(this.activityState.brainstormactivity);
     }
@@ -213,10 +209,6 @@ export class BoardComponent implements OnInit, OnChanges, OnDestroy {
       );
       return user.display_name;
     }
-  }
-
-  getMinWidth() {
-    return this.minWidth === 'small' ? 288 : this.minWidth === 'medium' ? 360 : 480;
   }
 
   ParticipantGroupChanged(selectedParticipantGroup: Group) {

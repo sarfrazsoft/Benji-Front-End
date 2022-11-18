@@ -51,6 +51,7 @@ export class BoardModeComponent implements OnInit {
   }
 
   decideBoardMode(mode: BoardMode): void {
+    console.log(mode);
     this.boardMode = mode;
     switch (mode) {
       case 'grid':

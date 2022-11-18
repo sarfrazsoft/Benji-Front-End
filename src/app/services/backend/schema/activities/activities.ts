@@ -316,6 +316,7 @@ export interface Board {
   removed: boolean;
   status: BoardStatus;
   sort: BoardSort;
+  post_size: PostSize;
   brainstormcategory_set: Array<Category>;
   prompt_video: any;
   allow_comment: boolean;
@@ -356,6 +357,8 @@ export interface TopicMedia {
 export type BoardStatus = 'open' | 'view_only' | 'closed' | 'private';
 
 export type BoardSort = 'newest_to_oldest' | 'oldest_to_newest' | 'likes' | 'unsorted';
+
+export type PostSize = 'small' | 'medium' | 'large';
 
 export interface BoardParticipants {
   [boardID: string]: Array<number>;

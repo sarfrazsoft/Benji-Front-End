@@ -5,6 +5,7 @@ export type EventType =
   | 'ParticipantChangeBoardEvent'
   | 'HostChangeBoardEvent'
   | 'BrainstormToggleMeetingMode'
+  | 'BrainstormBoardPostSizeEvent'
   | 'GetUpdatedLessonDetailEvent'
   | 'BootParticipantEvent'
   | 'BrainstormChangeModeEvent'
@@ -19,6 +20,7 @@ export enum EventTypes {
   participantChangeBoardEvent = 'ParticipantChangeBoardEvent',
   hostChangeBoardEvent = 'HostChangeBoardEvent',
   brainstormToggleMeetingMode = 'BrainstormToggleMeetingMode',
+  brainstormBoardPostSizeEvent = 'BrainstormBoardPostSizeEvent',
   getUpdatedLessonDetailEvent = 'GetUpdatedLessonDetailEvent',
   bootParticipantEvent = 'BootParticipantEvent',
   brainstormChangeModeEvent = 'BrainstormChangeModeEvent',

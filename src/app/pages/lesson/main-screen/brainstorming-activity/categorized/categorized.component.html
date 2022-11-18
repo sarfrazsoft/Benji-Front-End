@@ -6,6 +6,7 @@
     <ng-container *ngIf="!column.removed">
       <div
         class="column"
+        [ngClass]="columnSize"
         cdkDropList
         [cdkDropListData]="column.brainstormidea_set"
         (cdkDropListDropped)="drop($event)"

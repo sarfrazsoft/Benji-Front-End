@@ -2,6 +2,7 @@
   <div
     *ngIf="!item.removed"
     class="brainstorm-idea"
+    [ngClass]="postSize"
     [class.show-user] = ""
     (mouseenter)="item.showClose = true"
     (mouseleave)="item.showClose = false"
@@ -109,7 +110,7 @@
             [activityState]="activityState"
             [participantCodes]="[submittingUser]"
             [showTooltip]="false"
-            [size]="avatarSize"
+            [size]="hostAvatarSize"
           ></benji-profile-pictures>
           <div class="name">
             {{ getPersonName(item) }}
@@ -162,7 +163,7 @@
     </div>
     <div 
       class="content"
-      [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image && showUserName , 
+      [ngClass]="{'no-image': !item.idea_video && !item.idea_document && !item.idea_image || showUserName , 
                   'host-pinned': !item.idea_video && !item.idea_document && !item.idea_image && !showUserName && item.pinned }"
       *ngIf="item.title || item.idea" 
       benji-click-stop-propagation

@@ -141,6 +141,12 @@
     </div>
   </div>
 
+  <div fxLayout="column" *ngIf="allowedSettings.includes(settingTypes.POST_ORDER)">
+    <benji-post-size
+      (sendMessage)="sendMessage.emit($event)">
+    </benji-post-size>
+  </div>
+
   <div *ngIf="allowedSettings.includes(settingTypes.BOARD_MODE)">
     <benji-board-mode
       (sendMessage)="sendMessage.emit($event)">

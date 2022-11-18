@@ -18,7 +18,6 @@ import { NgxMasonryComponent, NgxMasonryOptions } from 'ngx-masonry';
 import { NgxPermissionsService } from 'ngx-permissions';
 import * as global from 'src/app/globals';
 import { BrainstormLayout } from 'src/app/pages/lesson/main-screen/brainstorming-activity';
-import { fadeAnimation, listAnimation } from 'src/app/pages/lesson/main-screen/shared/app.animations';
 import { BrainstormEventService, BrainstormService } from 'src/app/services';
 import {
   Board,
@@ -28,6 +27,7 @@ import {
   EventTypes,
   Idea,
   PostOrder,
+  PostSize,
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { PostLayoutService } from 'src/app/services/post-layout.service';
@@ -38,7 +38,6 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'benji-thread-mode-ideas',
   templateUrl: './thread-mode.component.html',
-  // animations: [fadeAnimation, listAnimation],
   animations: [
     trigger('anim', [
       transition('* => void', [
@@ -123,6 +122,7 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
 
   public layoutConfig: GridOptions = null;
   grid: Grid;
+  postSize: PostSize;
 
   constructor(
     private dialog: MatDialog,
@@ -150,6 +150,9 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
   masonryPrepend: boolean;
 
   ngOnInit(): void {
+    if (this.board.post_size) {
+      this.postSize = this.board.post_size;
+    }
     this.postLayoutService.sendMessage$.subscribe((v) => {
       if (v) {
         this.sendMessage.emit(v);
@@ -193,6 +196,9 @@ export class ThreadModeComponent extends BrainstormLayout implements OnInit, OnC
       ) {
         this.brainstormService.uncategorizedIdeaHearted(this.board, this.ideas, (val) => {});
         this.postLayoutService.sortGrid(this.board.sort, this.grid);
+        this.postLayoutService.refreshGridLayout(this.grid, false);
+      } else if (this.eventType === EventTypes.brainstormBoardPostSizeEvent) {
+        this.postSize = this.board.post_size;
         this.postLayoutService.refreshGridLayout(this.grid, false);
       } else if (
         this.eventType === 'BrainstormRemoveSubmissionEvent' ||
