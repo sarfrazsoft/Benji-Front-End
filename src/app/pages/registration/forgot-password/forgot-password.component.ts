@@ -8,11 +8,11 @@ import { Branding, PartnerInfo } from 'src/app/services/backend/schema/whitelabe
 @Component({
   selector: 'benji-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent implements OnInit {
   @Input() joinSession: boolean;
   @Output() signInClicked = new EventEmitter();
+  @Output() guestJoinClicked = new EventEmitter();
   form: FormGroup;
   requestSubmitted = false;
   emailPasswordError = false;
@@ -31,7 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 
@@ -62,5 +62,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   openSignInScreen() {
     this.joinSession ? this.signInClicked.emit() : this.router.navigate(['/login']);
+  }
+
+  guestJoinClick() {
+    this.guestJoinClicked.emit();
   }
 }

@@ -18,6 +18,7 @@ export class SignupComponent implements OnInit {
   @Input() joinSessionScreen: boolean;
   @Output() signInClicked = new EventEmitter();
   @Output() userSignedInSuccessfully = new EventEmitter();
+  @Output() guestJoinClicked = new EventEmitter();
   form: FormGroup;
   isSignupClicked = false;
   isSubmitted = false;
@@ -65,10 +66,10 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.contextService.brandingInfo$.subscribe((info: Branding) => {
       if (info) {
-        this.logo =  info.logo? info.logo.toString() : "/assets/img/Benji_logo.svg";
+        this.logo = info.logo ? info.logo.toString() : "/assets/img/Benji_logo.svg";
       }
     });
 
@@ -92,8 +93,8 @@ export class SignupComponent implements OnInit {
           .get('name')
           .setValue(
             this.authService.userInvitation.suggested_first_name +
-              ' ' +
-              this.authService.userInvitation.suggested_last_name
+            ' ' +
+            this.authService.userInvitation.suggested_last_name
           );
         // this.form.get('lastName').setValue(this.authService.userInvitation.suggested_last_name);
       }
@@ -183,8 +184,8 @@ export class SignupComponent implements OnInit {
                     this.deviceService.isMobile()
                       ? this.router.navigate(['/participant/join'])
                       : this.roomCode
-                      ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
-                      : this.router.navigate(['/dashboard']);
+                        ? this.joinSessionAsLoggedInUser(res.user, this.roomCode)
+                        : this.router.navigate(['/dashboard']);
                     // }
                   } else {
                   }
@@ -239,5 +240,9 @@ export class SignupComponent implements OnInit {
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  guestJoinClick() {
+    this.guestJoinClicked.emit();
   }
 }

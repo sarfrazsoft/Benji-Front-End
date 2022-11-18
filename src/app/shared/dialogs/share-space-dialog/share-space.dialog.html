@@ -12,23 +12,22 @@
               fxLayoutGap="8px"
               fxLayout="row"
               fxLayoutAlign="start center"
-              [ngClass]="{'space-bottom': !areCommentsAllowed}"
-            >
-              <benji-profile-pictures
-                [participantCodes]="[person.participant_code]"
-                [showTooltip]="false"
-                [size]="'medium'"
-                [activityState]="activityState"
-              ></benji-profile-pictures>
-              <div fxLayout="column" fxLayoutGap="6px">
-                <div class="name">{{ person.name }}</div>
-                <div class="about">{{ person.about ?? 'Guest' }}</div>
-              </div>
-            </div>
-            <div *ngIf="person.role === 'Host'" class="role guest">
+              [ngClass]="{'space-bottom': !areCommentsAllowed}">
+                <benji-profile-pictures
+                  [participantCodes]="[person.participant_code]"
+                  [showTooltip]="false"
+                  [size]="'medium'"
+                  [activityState]="activityState"
+                ></benji-profile-pictures>
+                <div fxLayout="column" fxLayoutGap="6px">
+                  <div class="name">{{ person.name }}</div>
+                  <div class="about">{{ person.about ?? 'Guest' }}</div>
+                </div>
+            </div>          
+            <div *ngIf="person.role === 'Host'" class="role host">
               <span>Host</span>
-            </div>
-            <div
+            </div>          
+            <div 
               *ngIf="person.role != 'Host'"
               class="role"
               fxLayout="row"

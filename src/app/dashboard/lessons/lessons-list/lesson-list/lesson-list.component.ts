@@ -63,7 +63,7 @@ export class LessonListComponent implements OnChanges {
   constructor(
     private router: Router,
     private utilsService: UtilsService,
-    private contextService: ContextService,
+    private contextService: ContextService
   ) {}
 
   ngOnChanges() {
@@ -91,9 +91,9 @@ export class LessonListComponent implements OnChanges {
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
         lessonImageId: val.lessonrun_images[this.maxIdIndex]?.id,
-        lessonImage: val.lessonrun_images[this.maxIdIndex]?.img ?
-          this.hostLocation + val.lessonrun_images[this.maxIdIndex].img :
-          null,
+        lessonImage: val.lessonrun_images[this.maxIdIndex]?.img
+          ? this.hostLocation + val.lessonrun_images[this.maxIdIndex].img
+          : null,
         imageUrl: val.lessonrun_images[this.maxIdIndex]?.image_url,
         lessonFolders: val.lesson.lesson_folders,
       });
@@ -135,6 +135,6 @@ export class LessonListComponent implements OnChanges {
   }
 
   updateLessonName(name: string, code: number): void {
-    this.dataSource.find(item => item.lessonRunCode == code).lessonTitle = name;
+    this.dataSource.find((item) => item.lessonRunCode === code).lessonTitle = name;
   }
 }

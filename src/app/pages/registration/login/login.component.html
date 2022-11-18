@@ -57,11 +57,11 @@
           <div>Oops! Something went wrong while submitting the form.</div>
         </div>
       </div>
-      <div 
-        class="small-form-text already-member"
-        (click)="signUpClick()">
-        Don’t have an account yet?
-        <br><div class="bold-text-7 sign-up primary-color">Sign up</div>
+      <div class="small-form-text already-member">
+        Don’t have an account?
+        <br><a class="bold-text-7 sign-up primary-color" (click)="signUpClick()">Sign up</a>
+        <span> / </span>
+        <a class="bold-text-7 sign-up primary-color" (click)="guestJoinClick()">Join as guest</a>
       </div>
     </div>
   </div>

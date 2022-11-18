@@ -201,6 +201,11 @@ export class ParticipantJoinComponent implements OnInit {
     this.loadForgotPassword = false;
     this.loadLogin = false;
   }
+  loadGuestJoin() {
+    this.loadSignUp = false;
+    this.loadForgotPassword = false;
+    this.loadLogin = false;
+  }
 
   getBeforeLessonRunDetails(lessonrun_code) {
     const request = global.apiRoot + '/course_details/lesson_run/' + lessonrun_code + '/lessonrun_details/';

@@ -166,7 +166,7 @@
             }
             span {
               color: #828282;
-              cursor: none;
+              cursor: text;
             }
           }
         }
@@ -225,6 +225,9 @@
                   margin-top: 16px;
                   &.joining {
                     margin-top: 24px;
+                  }
+                  span {
+                    cursor: text;
                   }
                 }
                 &.incorrect-code {
