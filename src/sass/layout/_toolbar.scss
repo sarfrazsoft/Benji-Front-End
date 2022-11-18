@@ -63,3 +63,125 @@ mat-toolbar.mat-toolbar {
     }
   }
 }
+
+.mainscreen-toolbar {
+  padding: 8px 16px;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0; /* required */
+  z-index: 2;
+  filter: drop-shadow(0px 1px 1px #D5D9DE);
+  .benji-logo-container {
+    .boards-nav {
+      img {
+        margin-right: 8px;
+        &.close-nav {
+          transform: rotate(180deg);
+        }
+      }
+    }
+    .logo {
+      height: 24px;
+      padding-right: 16px;
+      cursor: pointer;
+      &.has-name {
+        border-right: 1px solid #E7E7E7;
+      }
+    }
+    .session-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #37352F;
+      line-height: normal;
+      &:hover {
+        &.admin {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .option {
+    &.notify {
+      .count {
+        position: absolute;
+        top: 8px;
+        margin-left: 16px;
+        width: 16px;
+        height: 16px;
+        background: #EF4E4F;
+        font-weight: 600;
+        font-size: 10px;
+        line-height: 10px;
+        color: #fff;
+        border-radius: 8px;
+      }
+    }
+  }
+  .tool-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #616161;
+    cursor: pointer;
+    &.share-link {
+      height: 32px;
+    }
+  }
+  .toolbar-initials-circles {
+    .initials {
+      margin-left: -4px;
+    }
+  }
+  .time-info {
+    .number-text {
+      color: #616161;
+      font-size: 16px;
+      width: 44px;
+    }
+    .ms-header-timer {
+      margin-left: 8px;
+    }
+  }
+  .back-next {
+    border: 1px solid #e7e7e7;
+    border-radius: 4px;
+    color: #616161;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 16px;
+    cursor: pointer;
+    &:hover {
+      border-color: #f3f4f7;
+      background-color: #f3f4f7;
+      color: #37352f;
+    }
+    .mat-icon {
+      height: 15px;
+      width: 15px;
+      font-size: 16px;
+    }
+    &.is-last, &.is-first {
+      color: #bdbdbd;
+      cursor: unset;
+      &:hover {
+        border-color: #e7e7e7;
+        background-color: unset;
+      }
+    }
+  }
+}
+
+@media (max-width: 750px) { 
+  .mainscreen-toolbar {
+    .tool-text, .timer, .groups, .toolbar-initials-circles {
+      display: none !important;
+    }
+    .back-next {
+      span {
+        display: none;
+      }
+      padding: 0px;
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

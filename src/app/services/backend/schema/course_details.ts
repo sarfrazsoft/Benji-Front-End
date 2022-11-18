@@ -66,6 +66,14 @@ export interface CoverPhoto {
   img: string;
 }
 
+export interface LessonRunImageData {
+  lessonrunCode: number,
+  lessonImage: Blob,
+  lessonImageName: string,
+  imageUrl: string,
+  imageId: number
+}
+
 export interface RunningTools {
   share?: {
     selectedParticipant: number;

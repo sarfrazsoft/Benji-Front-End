@@ -5,6 +5,7 @@ import { ContextService } from 'src/app/services';
 import { Lesson } from 'src/app/services/backend/schema/course_details';
 import { TeamUser } from 'src/app/services/backend/schema/user';
 import { UtilsService } from 'src/app/services/utils.service';
+import { environment } from 'src/environments/environment';
 export interface TableRowInformation {
   index: number;
   lessonRunCode: number;
@@ -55,6 +56,7 @@ export class LessonListComponent implements OnChanges {
   selectedCategory = 'Open';
 
   hostname = window.location.host + '/participant/join?link=';
+  hostLocation = environment.web_protocol + '://' + environment.host;
   maxIdIndex: any;
   folderLessonsIDs: Array<number> = [];
 
@@ -89,7 +91,9 @@ export class LessonListComponent implements OnChanges {
         participants: val.participant_set.length,
         startDate: moment(val.start_time).format('MMM D, YYYY'),
         lessonImageId: val.lessonrun_images[this.maxIdIndex]?.id,
-        lessonImage: val.lessonrun_images[this.maxIdIndex]?.img,
+        lessonImage: val.lessonrun_images[this.maxIdIndex]?.img ?
+          this.hostLocation + val.lessonrun_images[this.maxIdIndex].img :
+          null,
         imageUrl: val.lessonrun_images[this.maxIdIndex]?.image_url,
         lessonFolders: val.lesson.lesson_folders,
       });

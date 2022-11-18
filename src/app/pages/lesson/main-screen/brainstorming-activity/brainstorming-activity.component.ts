@@ -39,6 +39,7 @@ import {
   UpdateMessage,
 } from 'src/app/services/backend/schema';
 import { BoardStatusService } from 'src/app/services/board-status.service';
+import { LessonService } from 'src/app/services/lesson.service';
 import { TopicMediaService } from 'src/app/services/topic-media.service';
 import { ParticipantGroupingInfoDialogComponent } from 'src/app/shared/dialogs/participant-grouping-info-dialog/participant-grouping-info.dialog';
 import { BaseActivityComponent } from '../../shared/base-activity.component';
@@ -65,7 +66,7 @@ export class MainScreenBrainstormingActivityComponent
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contextService: ContextService,
-    private sharingToolService: SharingToolService,
+    private lessonService: LessonService,
     private brainstormService: BrainstormService,
     private brainstormEventService: BrainstormEventService,
     private permissionsService: NgxPermissionsService,
@@ -283,7 +284,7 @@ export class MainScreenBrainstormingActivityComponent
   updateLessonInfo() {
     this.brainstormService.lessonName = this.activityState.lesson_run.lesson.lesson_name;
     this.brainstormService.lessonDescription = this.activityState.lesson_run.lesson.lesson_description;
-    // this.brainstormService.lessonImage = this.activityState.lesson_run.lessonrun_images;
+    this.brainstormService.lessonImage = this.lessonService.setCoverPhoto(this.activityState.lesson_run.lessonrun_images);
   }
 
   updateNotifications() {

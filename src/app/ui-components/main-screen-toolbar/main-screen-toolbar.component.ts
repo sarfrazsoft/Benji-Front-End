@@ -8,13 +8,12 @@ import {
   ViewChild,
   ViewEncapsulation,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { ActivitySettingsAllowed, ActivityTypes, AllowShareActivities } from 'src/app/globals';
-import { BrainstormService, ContextService } from 'src/app/services';
+import { ContextService } from 'src/app/services';
 import {
   Board,
   Branding,
@@ -24,11 +23,9 @@ import {
 } from 'src/app/services/backend/schema';
 import { Lesson, Participant } from 'src/app/services/backend/schema/course_details';
 import { UtilsService } from 'src/app/services/utils.service';
-import { SessionSettingsDialogComponent } from 'src/app/shared/dialogs/session-settings-dialog/session-settings.dialog';
 import {
   BrainstormSubmissionCompleteInternalEvent,
   EndShareEvent,
-  GetUpdatedLessonDetailEvent,
   JumpEvent,
   MarkNotificationsReadEvent,
   NextInternalEvent,
@@ -42,7 +39,6 @@ import { NotificationsComponent } from '../controls/notifications/notifications.
 @Component({
   selector: 'benji-main-screen-toolbar',
   templateUrl: './main-screen-toolbar.component.html',
-  styleUrls: ['./main-screen-toolbar.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class MainScreenToolbarComponent implements OnInit, OnChanges {
@@ -104,10 +100,8 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
   oldParticipantCode: number;
 
   constructor(
-    private brainstormService: BrainstormService,
     public contextService: ContextService,
     private utilsService: UtilsService,
-    private matDialog: MatDialog,
     private permissionsService: NgxPermissionsService,
     private router: Router
   ) {}
@@ -141,21 +135,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
     if (!this.hostname.includes('localhost')) {
       this.hostname = 'https://' + this.hostname;
     }
-
-    this.brainstormService.lessonDescription$.subscribe((lessonDescription: string) => {
-      if (lessonDescription) {
-        this.lesson.lesson_description = lessonDescription;
-      }
-    });
-
-    this.brainstormService.lessonName$.subscribe((lessonName: string) => {
-      if (lessonName) {
-        setTimeout(() => {
-          this.lessonName = lessonName;
-        }, 0);
-        this.lesson.lesson_name = lessonName;
-      }
-    });
   }
 
   copyMessage(val: string) {
@@ -288,23 +267,6 @@ export class MainScreenToolbarComponent implements OnInit, OnChanges {
       }
     });
     this.participantCodes = p;
-  }
-
-  openSessionSettings() {
-    this.matDialog
-      .open(SessionSettingsDialogComponent, {
-        data: {
-          id: this.lesson.id,
-          title: this.lesson.lesson_name,
-          description: this.lesson.lesson_description,
-          Create: false,
-        },
-        panelClass: 'session-settings-dialog',
-      })
-      .afterClosed()
-      .subscribe((data) => {
-        this.socketMessage.emit(new GetUpdatedLessonDetailEvent());
-      });
   }
 
   logoClicked() {

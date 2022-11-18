@@ -24,6 +24,8 @@ export class LessonTileComponent implements OnInit {
   timeStamp: string;
   participantsCount: number;
   coverPhoto: string;
+  lessonImage: string;
+  imageUrl: string;
   hostname = window.location.host + '/participant/join?link=';
   maxIdIndex: number;
   folderLessonsIDs: Array<number> = [];
@@ -65,13 +67,29 @@ export class LessonTileComponent implements OnInit {
   }
 
   getLessonDetails(): LessonInformation {
+    this.setImageValues();
     return {
       lessonId: this.lesson.lesson.id,
       lessonRunCode: this.lesson.lessonrun_code,
       lessonTitle: this.lesson.lesson.lesson_name,
       lessonDescription: this.lesson.lesson.lesson_description,
-      lessonImage: this.lesson.lessonrun_images[this.maxIdIndex]?.img,
-      imageUrl: this.lesson.lessonrun_images[this.maxIdIndex]?.image_url,
+      lessonImage: this.lessonImage,
+      imageUrl: this.imageUrl,
+    }
+  }
+
+  setImageValues() {
+    if (this.coverPhoto) {
+      if (this.coverPhoto.includes('media')) {
+        this.lessonImage = this.coverPhoto;
+        this.imageUrl = null;
+      } else {
+        this.imageUrl = this.coverPhoto;
+        this.lessonImage = null;
+      }
+    } else {
+      this.imageUrl = null;
+      this.lessonImage = null;
     }
   }
 
