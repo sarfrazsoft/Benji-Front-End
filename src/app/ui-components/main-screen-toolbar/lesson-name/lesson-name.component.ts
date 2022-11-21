@@ -17,8 +17,8 @@ export class LessonNameComponent implements OnInit {
   lessonRun: LessonRun;
   lessonName: string;
   coverPhoto: string;
-  lessonImage: string;
-  imageUrl: string;
+  lessonImage: string = null;
+  imageUrl: string = null;
 
   constructor(
     private matDialog: MatDialog,
@@ -45,7 +45,9 @@ export class LessonNameComponent implements OnInit {
     });
 
     this.brainstormService.lessonImage$.subscribe((lessonImage) => {
-      this.coverPhoto = lessonImage;
+      if (lessonImage) {
+        this.coverPhoto = lessonImage;
+      }
     });
   }
 
@@ -59,7 +61,7 @@ export class LessonNameComponent implements OnInit {
           description: this.lessonRun.lesson.lesson_description,
           lessonImage: this.lessonImage,
           imageUrl: this.imageUrl,
-          Create: false,
+          createSession: false,
         },
         panelClass: 'session-settings-dialog',
       })
